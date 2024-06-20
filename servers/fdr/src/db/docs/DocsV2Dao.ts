@@ -61,7 +61,12 @@ export interface DocsV2Dao {
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse>;
 
-    listAllDocsUrls(limit?: number, page?: number): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
+    listAllDocsUrls(opts: {
+        limit?: number;
+        page?: number;
+        customOnly?: boolean;
+        domainSuffix: string;
+    }): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
@@ -179,19 +184,36 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         });
     }
 
-    public async listAllDocsUrls(limit: number = 1000, page: number = 1): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
-        limit = Math.min(limit, 2000);
-        const response = await this.prisma.docsV2.groupBy({
+    public async listAllDocsUrls({
+        limit = 1000,
+        page = 1,
+        customOnly = false,
+        domainSuffix,
+    }: {
+        limit?: number;
+        page?: number;
+        customOnly?: boolean;
+        domainSuffix: string;
+    }): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
+        limit = Math.min(limit, 1000);
+        const response = await this.prisma.docsV2.findMany({
+            select: {
+                orgID: true,
+                domain: true,
+                path: true,
+                updatedTime: true,
+            },
             where: {
                 isPreview: false,
                 authType: "PUBLIC",
+                domain: customOnly ? { not: { endsWith: domainSuffix } } : undefined,
             },
-            by: ["orgID", "domain", "path", "updatedTime"],
+            distinct: "domain",
             orderBy: {
                 updatedTime: "desc",
             },
             take: limit,
-            skip: limit * (page - 1),
+            skip: Math.min(limit * (page - 1), 0),
         });
 
         return {

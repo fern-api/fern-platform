@@ -198,6 +198,83 @@ export class Read {
     }
 
     /**
+     * Returns a list of all public docs.
+     *
+     * @param {FernRegistry.docs.v2.read.ListAllDocsUrlsRequest} request
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.docs.v2.read.listAllDocsUrls({
+     *         page: 1,
+     *         limit: 1,
+     *         custom: true
+     *     })
+     */
+    public async listAllDocsUrls(
+        request: FernRegistry.docs.v2.read.ListAllDocsUrlsRequest = {},
+        requestOptions?: Read.RequestOptions
+    ): Promise<
+        core.APIResponse<
+            FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
+            FernRegistry.docs.v2.read.listAllDocsUrls.Error
+        >
+    > {
+        const { page, limit, custom } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (page != null) {
+            _queryParams["page"] = page.toString();
+        }
+
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        if (custom != null) {
+            _queryParams["custom"] = custom.toString();
+        }
+
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/urls/list"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: _response.body as FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.docs.v2.read.listAllDocsUrls.Error)?.error) {
+                case "UnauthorizedError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.docs.v2.read.listAllDocsUrls.Error,
+                    };
+            }
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.docs.v2.read.listAllDocsUrls.Error._unknown(_response.error),
+        };
+    }
+
+    /**
      * Loads the Docs Config and any referenced APIs by ID.
      *
      * @param {FernRegistry.DocsConfigId} docsConfigId
@@ -311,68 +388,6 @@ export class Read {
         return {
             ok: false,
             error: FernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment.Error._unknown(_response.error),
-        };
-    }
-
-    /**
-     * Returns a list of all public docs.
-     *
-     * @param {FernRegistry.docs.v2.read.ListAllDocsUrlsRequest} request
-     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await fernRegistry.docs.v2.read.listAllDocsUrls({
-     *         page: 1,
-     *         limit: 1
-     *     })
-     */
-    public async listAllDocsUrls(
-        request: FernRegistry.docs.v2.read.ListAllDocsUrlsRequest = {},
-        requestOptions?: Read.RequestOptions
-    ): Promise<
-        core.APIResponse<
-            FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
-            FernRegistry.docs.v2.read.listAllDocsUrls.Error
-        >
-    > {
-        const { page, limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (page != null) {
-            _queryParams["page"] = page.toString();
-        }
-
-        if (limit != null) {
-            _queryParams["limit"] = limit.toString();
-        }
-
-        const _response = await core.fetcher({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/v2/registry/docs/urls"
-            ),
-            method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return {
-                ok: true,
-                body: _response.body as FernRegistry.docs.v2.read.ListAllDocsUrlsResponse,
-            };
-        }
-
-        return {
-            ok: false,
-            error: FernRegistry.docs.v2.read.listAllDocsUrls.Error._unknown(_response.error),
         };
     }
 

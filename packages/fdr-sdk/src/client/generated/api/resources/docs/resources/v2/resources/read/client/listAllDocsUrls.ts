@@ -5,20 +5,35 @@
 import * as FernRegistry from "../../../../../../../index";
 import * as core from "../../../../../../../../core";
 
-export type Error = FernRegistry.docs.v2.read.listAllDocsUrls.Error._Unknown;
+export type Error =
+    | FernRegistry.docs.v2.read.listAllDocsUrls.Error.UnauthorizedError
+    | FernRegistry.docs.v2.read.listAllDocsUrls.Error._Unknown;
 
 export declare namespace Error {
+    interface UnauthorizedError {
+        error: "UnauthorizedError";
+        content: string;
+    }
+
     interface _Unknown {
         error: void;
         content: core.Fetcher.Error;
     }
 
     interface _Visitor<_Result> {
+        unauthorizedError: (value: string) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
 
 export const Error = {
+    unauthorizedError: (value: string): FernRegistry.docs.v2.read.listAllDocsUrls.Error.UnauthorizedError => {
+        return {
+            content: value,
+            error: "UnauthorizedError",
+        };
+    },
+
     _unknown: (fetcherError: core.Fetcher.Error): FernRegistry.docs.v2.read.listAllDocsUrls.Error._Unknown => {
         return {
             error: undefined,
@@ -31,6 +46,8 @@ export const Error = {
         visitor: FernRegistry.docs.v2.read.listAllDocsUrls.Error._Visitor<_Result>
     ): _Result => {
         switch (value.error) {
+            case "UnauthorizedError":
+                return visitor.unauthorizedError(value.content);
             default:
                 return visitor._other(value as any);
         }

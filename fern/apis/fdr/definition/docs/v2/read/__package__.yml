@@ -50,6 +50,26 @@ service:
         - DomainNotRegisteredError
         - rootCommons.UnauthorizedError
 
+    listAllDocsUrls:
+      method: GET
+      auth: true
+      path: /urls/list
+      request:
+        name: ListAllDocsUrlsRequest
+        query-parameters:
+          page: optional<integer>
+          limit: optional<integer>
+          custom:
+            type: optional<boolean>
+            docs: If true, filters to only docs with a custom URL.
+      response: ListAllDocsUrlsResponse
+      docs: Returns a list of all public docs.
+      errors:
+        - rootCommons.UnauthorizedError
+      # pagination:
+      #   offset: $request.page
+      #   results: $response.urls
+
     getDocsConfigById:
       method: GET
       path: /{docsConfigId}
@@ -72,21 +92,6 @@ service:
       response: GetSearchApiKeyForIndexSegmentResponse
       errors:
         - IndexSegmentNotFoundError
-
-    listAllDocsUrls:
-      auth: true
-      method: GET
-      path: /urls
-      request:
-        name: ListAllDocsUrlsRequest
-        query-parameters:
-          page: optional<integer>
-          limit: optional<integer>
-      response: ListAllDocsUrlsResponse
-      docs: Returns a list of all public docs.
-      # pagination:
-      #   offset: $request.page
-      #   results: $response.urls
 
 types:
   GetDocsConfigByIdResponse:

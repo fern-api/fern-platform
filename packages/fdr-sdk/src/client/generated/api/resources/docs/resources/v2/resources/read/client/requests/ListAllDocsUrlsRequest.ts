@@ -6,10 +6,15 @@
  * @example
  *     {
  *         page: 1,
- *         limit: 1
+ *         limit: 1,
+ *         custom: true
  *     }
  */
 export interface ListAllDocsUrlsRequest {
     page?: number;
     limit?: number;
+    /**
+     * If true, filters to only docs with a custom URL.
+     */
+    custom?: boolean;
 }

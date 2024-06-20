@@ -65,14 +65,21 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             const searchApiKey = app.services.algoliaIndexSegmentManager.generateAndCacheApiKey(indexSegmentId);
             return res.send({ searchApiKey });
         },
-        async listAllDocsUrls(req, res) {
+        listAllDocsUrls: async (req, res) => {
             // must be a fern employee
             await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: "fern",
             });
 
-            return res.send(await app.dao.docsV2().listAllDocsUrls(req.query.limit, req.query.page));
+            return res.send(
+                await app.dao.docsV2().listAllDocsUrls({
+                    limit: req.query.limit,
+                    page: req.query.page,
+                    customOnly: req.query.custom,
+                    domainSuffix: app.config.domainSuffix,
+                }),
+            );
         },
     });
 }

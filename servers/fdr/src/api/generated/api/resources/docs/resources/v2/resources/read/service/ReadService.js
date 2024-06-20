@@ -116,6 +116,36 @@ export class ReadService {
                 next(error);
             }
         }));
+        this.router.get("/urls/list", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.methods.listAllDocsUrls(req, {
+                    send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
+                        res.json(responseBody);
+                    }),
+                    cookie: res.cookie.bind(res),
+                    locals: res.locals,
+                });
+                next();
+            }
+            catch (error) {
+                console.error(error);
+                if (error instanceof errors.FernRegistryError) {
+                    switch (error.errorName) {
+                        case "UnauthorizedError":
+                            break;
+                        default:
+                            console.warn(`Endpoint 'listAllDocsUrls' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.");
+                    }
+                    yield error.send(res);
+                }
+                else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        }));
         this.router.get("/:docsConfigId", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getDocsConfigById(req, {
@@ -168,31 +198,6 @@ export class ReadService {
                                 ` If this was intentional, please add ${error.constructor.name} to` +
                                 " the endpoint's errors list in your Fern Definition.");
                     }
-                    yield error.send(res);
-                }
-                else {
-                    res.status(500).json("Internal Server Error");
-                }
-                next(error);
-            }
-        }));
-        this.router.get("/urls", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.methods.listAllDocsUrls(req, {
-                    send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
-                        res.json(responseBody);
-                    }),
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
-                next();
-            }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'listAllDocsUrls' unexpectedly threw ${error.constructor.name}.` +
-                        ` If this was intentional, please add ${error.constructor.name} to` +
-                        " the endpoint's errors list in your Fern Definition.");
                     yield error.send(res);
                 }
                 else {
