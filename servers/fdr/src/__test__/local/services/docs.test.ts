@@ -155,3 +155,19 @@ it("docs reindex", async () => {
 
     expect(first.definition.search.value).not.toEqual(second.definition.search.value);
 });
+
+test.sequential("revalidates a custom docs domain", async () => {
+    const fdr = getClient({ authed: true, url: inject("url") });
+
+    const resp = await fdr.docs.v2.read.listAllDocsUrls();
+    console.log(resp);
+
+    if (!resp.ok) {
+        throw new Error("Failed to list all docs urls");
+    }
+
+    const { urls } = resp.body;
+    console.log(urls);
+
+    expect(urls.length).toBeGreaterThan(0);
+});
