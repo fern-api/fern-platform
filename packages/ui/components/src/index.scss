@@ -128,11 +128,11 @@
     }
 
     .fern-segmented-control {
-        @apply bg-white dark:bg-white/5 rounded-[10px] shadow-sm h-9;
-        @apply space-x-px p-0.5 flex items-center ring-1 ring-inset ring-concealed;
+        @apply bg-white dark:bg-white/5 rounded-[6px] h-9;
+        @apply space-x-px p-0.5 flex items-center ring-1 ring-default;
 
-        > .fern-button {
-            @apply rounded-lg shrink min-w-0;
+        .fern-button {
+            @apply rounded-[4px] shrink min-w-0;
         }
     }
 
@@ -269,18 +269,14 @@
 
         &:not(.disabled) {
             &.minimal {
-                @apply bg-transparent;
+                @apply bg-transparent t-muted;
+
+                &:hover {
+                    @apply t-default;
+                }
 
                 // @apply t-muted hover:t-default;
                 @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default  data-[selected=true]:bg-tag-default;
-
-                .fern-button-text {
-                    @apply t-muted;
-
-                    &:hover {
-                        @apply t-default;
-                    }
-                }
 
                 .fa-icon {
                     @apply bg-text-default/60;

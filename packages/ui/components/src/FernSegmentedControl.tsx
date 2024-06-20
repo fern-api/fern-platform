@@ -35,7 +35,8 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
                         <div className="min-w-0 flex-1 shrink">
                             <ToggleGroup.Item asChild={true} className={itemClassName} value={option.value}>
                                 <FernButton
-                                    variant={"minimal"}
+                                    icon={option.icon}
+                                    variant="minimal"
                                     intent={muted ? "none" : option.value === value ? "primary" : "none"}
                                     className="w-full"
                                 >

@@ -1,11 +1,13 @@
-import { FernChip } from "@fern-ui/components";
-import { Cross1Icon } from "@radix-ui/react-icons";
+import { FernSegmentedControl } from "@fern-ui/components";
 import { FC, PropsWithChildren } from "react";
+import { AppleShortcuts } from "../../icons/apple-shortcuts";
+import { RadioSignal } from "../../icons/radio-signal";
 
 export declare namespace StreamingEnabledToggle {
     export interface Props {
         value: boolean;
         setValue: (enabled: boolean) => void;
+        className?: string;
     }
 }
 
@@ -15,7 +17,11 @@ export declare namespace StreamingEnabledToggle {
 // const SELECT_ITEM_CLSX =
 //     "text-text-default data-[disabled]:text-text-disabled relative flex h-8 select-none items-center rounded-[5px] pl-[25px] pr-[35px] text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-contrast";
 
-export const StreamingEnabledToggle: FC<PropsWithChildren<StreamingEnabledToggle.Props>> = ({ value, setValue }) => {
+export const StreamingEnabledToggle: FC<PropsWithChildren<StreamingEnabledToggle.Props>> = ({
+    value,
+    setValue,
+    className,
+}) => {
     // return (
     //     <Select.Root onValueChange={(e) => setValue(e === "true")} value={value ? "true" : "false"}>
     //         <Select.Trigger asChild={true}>
@@ -56,14 +62,16 @@ export const StreamingEnabledToggle: FC<PropsWithChildren<StreamingEnabledToggle
     // );
 
     return (
-        <span className="inline-flex gap-2 items-center">
-            {/* <span className={clsx(value ? "text-accent-aaa" : "text-text-muted", "text-sm")}>
-                {value ? STREAMING_ENABLED : STREAMING_DISABLED}
-            </span> */}
-
-            <FernChip onClick={() => setValue(!value)} rounded variant="subtle" colorScheme="accent">
-                {value ? <Cross1Icon className="-mx-2" /> : "Enable streaming"}
-            </FernChip>
-        </span>
+        <FernSegmentedControl
+            options={[
+                { type: "value", value: "batch", label: "Batch", icon: <AppleShortcuts /> },
+                { type: "value", value: "stream", label: "Stream", icon: <RadioSignal /> },
+            ]}
+            onValueChange={(value) => {
+                setValue(value === "stream");
+            }}
+            value={value ? "stream" : "batch"}
+            className={className}
+        />
     );
 };
