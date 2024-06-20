@@ -184,7 +184,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         page: number = 1,
         customOnly: boolean = false,
     ): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
-        limit = Math.min(limit, 2000);
+        limit = Math.min(limit, 1000);
         const response = await this.prisma.docsV2.findMany({
             select: {
                 orgID: true,
