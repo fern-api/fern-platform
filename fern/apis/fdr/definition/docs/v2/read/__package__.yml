@@ -74,6 +74,7 @@ service:
         - IndexSegmentNotFoundError
 
     listAllDocsUrls:
+      auth: true
       method: GET
       path: /urls
       request:
