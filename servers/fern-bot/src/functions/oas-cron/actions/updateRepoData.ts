@@ -31,11 +31,13 @@ export async function updateRepoDataInternal(env: Env): Promise<void> {
 
     // Write the data to S3
     const csvContent = json2csv(repos);
-    console.log(csvContent);
+    const bucket = env.REPO_DATA_S3_BUCKET ?? "fern-bot-data";
+    const key = env.REPO_DATA_S3_KEY ?? "lambdas/repos.csv";
+    console.log(`Writing repo data to S3 at ${bucket}/${key}`);
     const s3 = new S3();
     await s3.putObject({
-        Bucket: "fern-bot-data",
-        Key: "lambdas/repos.csv",
+        Bucket: bucket,
+        Key: key,
         Body: csvContent,
     });
 }
