@@ -179,7 +179,8 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         });
     }
 
-    public async listAllDocsUrls(limit: number = 100, page: number = 1): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
+    public async listAllDocsUrls(limit: number = 1000, page: number = 1): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
+        limit = Math.min(limit, 2000);
         const response = await this.prisma.docsV2.groupBy({
             where: {
                 isPreview: false,
