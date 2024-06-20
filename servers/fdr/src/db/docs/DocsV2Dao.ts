@@ -197,7 +197,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             urls: response.map(
                 (r): DocsV2Read.DocsDomainItem => ({
                     domain: r.domain,
-                    basePath: r.path,
+                    basePath: r.path.length > 1 ? r.path : undefined,
                     organizationId: r.orgID,
                     updatedAt: r.updatedTime.toISOString(),
                 }),
