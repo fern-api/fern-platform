@@ -61,7 +61,7 @@ export interface DocsV2Dao {
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse>;
 
-    listAllDocsUrls(limit?: number, page?: number): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
+    listAllDocsUrls(limit?: number, page?: number, customOnly?: boolean): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
@@ -179,14 +179,25 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         });
     }
 
-    public async listAllDocsUrls(limit: number = 1000, page: number = 1): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
+    public async listAllDocsUrls(
+        limit: number = 1000,
+        page: number = 1,
+        customOnly: boolean = false,
+    ): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
         limit = Math.min(limit, 2000);
-        const response = await this.prisma.docsV2.groupBy({
+        const response = await this.prisma.docsV2.findMany({
+            select: {
+                orgID: true,
+                domain: true,
+                path: true,
+                updatedTime: true,
+            },
             where: {
                 isPreview: false,
                 authType: "PUBLIC",
+                domain: customOnly ? { not: { endsWith: ".docs.buildwithfern.com" } } : undefined,
             },
-            by: ["orgID", "domain", "path", "updatedTime"],
+            distinct: "domain",
             orderBy: {
                 updatedTime: "desc",
             },

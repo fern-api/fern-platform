@@ -72,7 +72,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
                 orgId: "fern",
             });
 
-            return res.send(await app.dao.docsV2().listAllDocsUrls(req.query.limit, req.query.page));
+            return res.send(await app.dao.docsV2().listAllDocsUrls(req.query.limit, req.query.page, req.query.custom));
         },
     });
 }

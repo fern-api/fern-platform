@@ -323,7 +323,8 @@ export class Read {
      * @example
      *     await fernRegistry.docs.v2.read.listAllDocsUrls({
      *         page: 1,
-     *         limit: 1
+     *         limit: 1,
+     *         custom: true
      *     })
      */
     public async listAllDocsUrls(
@@ -335,7 +336,7 @@ export class Read {
             FernRegistry.docs.v2.read.listAllDocsUrls.Error
         >
     > {
-        const { page, limit } = request;
+        const { page, limit, custom } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
@@ -343,6 +344,10 @@ export class Read {
 
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
+        }
+
+        if (custom != null) {
+            _queryParams["custom"] = custom.toString();
         }
 
         const _response = await core.fetcher({

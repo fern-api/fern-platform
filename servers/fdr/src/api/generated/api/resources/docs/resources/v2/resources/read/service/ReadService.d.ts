@@ -34,6 +34,7 @@ export interface ReadServiceMethods {
     listAllDocsUrls(req: express.Request<never, FernRegistry.docs.v2.read.ListAllDocsUrlsResponse, never, {
         page?: number;
         limit?: number;
+        custom?: boolean;
     }>, res: {
         send: (responseBody: FernRegistry.docs.v2.read.ListAllDocsUrlsResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
