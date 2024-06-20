@@ -61,7 +61,7 @@ export interface DocsV2Dao {
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse>;
 
-    listAllDocsUrls(): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
+    listAllDocsUrls(limit?: number, page?: number): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
@@ -179,8 +179,8 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         });
     }
 
-    public listAllDocsUrls(): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
-        const response = this.prisma.docsV2.groupBy({
+    public async listAllDocsUrls(limit: number = 100, page: number = 1): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
+        const response = await this.prisma.docsV2.groupBy({
             where: {
                 isPreview: false,
                 authType: "PUBLIC",
@@ -189,8 +189,20 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             orderBy: {
                 updatedTime: "desc",
             },
-            take: 100,
+            take: limit,
+            skip: limit * (page - 1),
         });
+
+        return {
+            urls: response.map(
+                (r): DocsV2Read.DocsDomainItem => ({
+                    domain: r.domain,
+                    basePath: r.path,
+                    organizationId: r.orgID,
+                    updatedAt: r.updatedTime.toISOString(),
+                }),
+            ),
+        };
     }
 
     async replaceDocsDefinition({

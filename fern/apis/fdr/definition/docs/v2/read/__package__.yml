@@ -79,12 +79,12 @@ service:
       request:
         name: ListAllDocsUrlsRequest
         query-parameters:
-          pageNumber: optional<integer>
-          pageSize: optional<integer>
+          page: optional<integer>
+          limit: optional<integer>
       response: ListAllDocsUrlsResponse
       docs: Returns a list of all public docs.
       # pagination:
-      #   offset: $request.pageNumber
+      #   offset: $request.page
       #   results: $response.urls
 
 types:

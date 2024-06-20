@@ -65,5 +65,8 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             const searchApiKey = app.services.algoliaIndexSegmentManager.generateAndCacheApiKey(indexSegmentId);
             return res.send({ searchApiKey });
         },
+        async listAllDocsUrls(req, res) {
+            return res.send(await app.dao.docsV2().listAllDocsUrls(req.query.limit, req.query.page));
+        },
     });
 }

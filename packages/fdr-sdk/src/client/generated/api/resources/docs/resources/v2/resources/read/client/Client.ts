@@ -317,12 +317,17 @@ export class Read {
     /**
      * Returns a list of all public docs.
      *
+     * @param {FernRegistry.docs.v2.read.ListAllDocsUrlsRequest} request
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.read.listAllDocsUrls()
+     *     await fernRegistry.docs.v2.read.listAllDocsUrls({
+     *         page: 1,
+     *         limit: 1
+     *     })
      */
     public async listAllDocsUrls(
+        request: FernRegistry.docs.v2.read.ListAllDocsUrlsRequest = {},
         requestOptions?: Read.RequestOptions
     ): Promise<
         core.APIResponse<
@@ -330,6 +335,16 @@ export class Read {
             FernRegistry.docs.v2.read.listAllDocsUrls.Error
         >
     > {
+        const { page, limit } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (page != null) {
+            _queryParams["page"] = page.toString();
+        }
+
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
@@ -343,6 +358,7 @@ export class Read {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
