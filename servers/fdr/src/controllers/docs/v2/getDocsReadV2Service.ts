@@ -73,14 +73,12 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             });
 
             return res.send(
-                await app.dao
-                    .docsV2()
-                    .listAllDocsUrls({
-                        limit: req.query.limit,
-                        page: req.query.page,
-                        customOnly: req.query.custom,
-                        domainSuffix: app.config.domainSuffix,
-                    }),
+                await app.dao.docsV2().listAllDocsUrls({
+                    limit: req.query.limit,
+                    page: req.query.page,
+                    customOnly: req.query.custom,
+                    domainSuffix: app.config.domainSuffix,
+                }),
             );
         },
     });
