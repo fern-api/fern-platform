@@ -1,5 +1,33 @@
 const assetPrefix =
     process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
+
+const DOCS_FILES_ALLOWLIST = [
+    {
+        protocol: "https",
+        hostname: "fdr-prod-docs-files.s3.us-east-1.amazonaws.com",
+        port: "",
+    },
+    {
+        protocol: "https",
+        hostname: "fdr-prod-docs-files-public.s3.amazonaws.com",
+        port: "",
+    },
+    {
+        protocol: "https",
+        hostname: "fdr-dev2-docs-files.s3.us-east-1.amazonaws.com",
+        port: "",
+    },
+    {
+        protocol: "https",
+        hostname: "fdr-dev2-docs-files-public.s3.amazonaws.com",
+        port: "",
+    },
+];
+
+const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
+    ({ protocol, hostname, port }) => `${protocol}://${hostname}${port ? `:${port}` : ""}`,
+);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
@@ -20,6 +48,110 @@ const nextConfig = {
      * Note that local development should not set the CDN_URI to ensure that the assets are served from the local server.
      */
     assetPrefix,
+    headers: async () => {
+        const defaultSrc = ["'self'", "https://*.buildwithfern.com", "https://*.ferndocs.com", ...DOCS_FILES_URLS];
+
+        const connectSrc = [
+            "'self'",
+            "https://*.buildwithfern.com",
+            "https://*.ferndocs.com",
+            "wss://websocket.proxy.ferndocs.com",
+            "https://*.algolia.net",
+            "https://*.algolianet.com",
+            "https://*.algolia.io",
+            "https://*.posthog.com",
+            "https://cdn.segment.com",
+            "https://api.segment.io",
+        ];
+
+        const scriptSrc = [
+            "'self'",
+            "'unsafe-eval'",
+            "'unsafe-inline'",
+            "https://*.posthog.com",
+            "https://cdn.segment.com",
+            ...DOCS_FILES_URLS,
+        ];
+
+        const styleSrc = ["'self'", "'unsafe-inline'"];
+
+        if (process.env.VERCEL) {
+            if (process.env.VERCEL_ENV !== "production") {
+                // enable vercel toolbar
+                scriptSrc.push("https://vercel.live");
+                connectSrc.push("https://vercel.live");
+                connectSrc.push("wss://*.pusher.com");
+                styleSrc.push("https://vercel.live");
+            }
+        }
+
+        const ContentSecurityPolicy = [
+            `default-src ${defaultSrc.join(" ")}`,
+            `script-src ${scriptSrc.join(" ")}`,
+            `style-src ${styleSrc.join(" ")}`,
+            "img-src 'self' https: blob: data:",
+            `connect-src ${connectSrc.join(" ")}`,
+            "frame-src 'self' https:",
+            "object-src 'none'",
+            "base-uri 'self'",
+            "form-action 'self'",
+            "frame-ancestors 'none'",
+            // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
+        ];
+
+        const reportUri =
+            "https://o4507138224160768.ingest.sentry.io/api/4507148139495424/security/?sentry_key=216ad381a8f652e036b1833af58627e5";
+
+        const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
+
+        if (process.env.VERCEL) {
+            if (process.env.VERCEL_ENV !== "production") {
+                ContentSecurityPolicy.push("worker-src 'self' blob:");
+            }
+        }
+
+        ContentSecurityPolicy.push(`report-uri ${reportUri}`);
+        ContentSecurityPolicy.push("report-to csp-endpoint");
+
+        const ContentSecurityHeaders = [
+            { key: "Content-Security-Policy-Report-Only", value: ContentSecurityPolicy.join("; ") },
+            { key: "Report-To", value: ReportTo },
+        ];
+
+        const AccessControlHeaders = [
+            {
+                key: "Access-Control-Allow-Origin",
+                value: "*",
+            },
+            {
+                key: "Access-Control-Allow-Methods",
+                value: "GET, POST, PUT, DELETE, OPTIONS",
+            },
+            {
+                key: "Access-Control-Allow-Headers",
+                value: "Content-Type, Authorization",
+            },
+            {
+                key: "Access-Control-Allow-Credentials",
+                value: "true",
+            },
+        ];
+
+        return [
+            {
+                source: "/api/fern-docs/auth/:path*",
+                headers: AccessControlHeaders,
+            },
+            {
+                source: "/:prefix*/api/fern-docs/auth/:path*",
+                headers: AccessControlHeaders,
+            },
+            {
+                source: "/:path*",
+                headers: ContentSecurityHeaders,
+            },
+        ];
+    },
     rewrites: async () => {
         const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
         // const HAS_X_FORWARDED_HOST = { type: "header", key: "x-forwarded-host", value: "(?<host>.*)" };
@@ -114,28 +246,7 @@ const nextConfig = {
         };
     },
     images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "fdr-prod-docs-files.s3.us-east-1.amazonaws.com",
-                port: "",
-            },
-            {
-                protocol: "https",
-                hostname: "fdr-prod-docs-files-public.s3.amazonaws.com",
-                port: "",
-            },
-            {
-                protocol: "https",
-                hostname: "fdr-dev2-docs-files.s3.us-east-1.amazonaws.com",
-                port: "",
-            },
-            {
-                protocol: "https",
-                hostname: "fdr-dev2-docs-files-public.s3.amazonaws.com",
-                port: "",
-            },
-        ],
+        remotePatterns: DOCS_FILES_ALLOWLIST,
         path: assetPrefix != null ? `${assetPrefix}_next/image` : undefined,
     },
     env: {

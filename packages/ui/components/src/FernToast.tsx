@@ -1,14 +1,18 @@
-import { FC } from "react";
 import { AlertCircle, CheckCircle, Info, Loader, XCircle } from "react-feather";
 import { Toaster as SonnerToaster } from "sonner";
 
 export { toast } from "sonner";
 export type { ToastT } from "sonner";
 
-export const Toaster: FC = () => {
+interface ToasterProps {
+    // Sonner doesn't export this type or it's props, so we're manually copying them over
+    position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "top-center" | "bottom-center";
+}
+
+export const Toaster: React.FC<ToasterProps> = ({ position = "bottom-center" }: ToasterProps) => {
     return (
         <SonnerToaster
-            position="bottom-center"
+            position={position}
             toastOptions={{
                 unstyled: true,
                 classNames: {
