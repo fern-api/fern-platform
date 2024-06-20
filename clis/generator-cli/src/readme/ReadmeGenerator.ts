@@ -141,10 +141,7 @@ export class ReadmeGenerator {
             });
         }
         writer.writeLine();
-        writer.writeLine(
-            `The ${this.organizationPascalCase} ${this.languageTitle} library provides convenient access to the ${this.organizationPascalCase} API from ${this.languageTitle}.`,
-        );
-        writer.writeLine();
+        this.writeIntroudction({ writer });
     }
 
     private writeBanner({ writer, bannerLink }: { writer: Writer; bannerLink: string }): void {
@@ -156,6 +153,15 @@ export class ReadmeGenerator {
         writer.writeLine(
             "[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)",
         );
+    }
+
+    private writeIntroudction({ writer }: { writer: Writer }): void {
+        writer.writeLine(
+            this.readmeConfig.introduction != null
+                ? this.readmeConfig.introduction
+                : `The ${this.organizationPascalCase} ${this.languageTitle} library provides convenient access to the ${this.organizationPascalCase} API from ${this.languageTitle}.`,
+        );
+        writer.writeLine();
     }
 
     private generateDocumentation({ docsLink }: { docsLink: string }): Block {
