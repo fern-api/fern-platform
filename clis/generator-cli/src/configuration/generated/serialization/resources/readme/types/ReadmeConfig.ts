@@ -17,6 +17,7 @@ export const ReadmeConfig: core.serialization.ObjectSchema<
     language: LanguageInfo,
     organization: core.serialization.string(),
     bannerLink: core.serialization.string().optional(),
+    introduction: core.serialization.string().optional(),
     apiReferenceLink: core.serialization.string().optional(),
     requirements: core.serialization.list(core.serialization.string()).optional(),
     features: core.serialization.list(ReadmeFeature).optional(),
@@ -28,6 +29,7 @@ export declare namespace ReadmeConfig {
         language: LanguageInfo.Raw;
         organization: string;
         bannerLink?: string | null;
+        introduction?: string | null;
         apiReferenceLink?: string | null;
         requirements?: string[] | null;
         features?: ReadmeFeature.Raw[] | null;

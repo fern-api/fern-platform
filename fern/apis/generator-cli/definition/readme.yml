@@ -16,6 +16,7 @@ types:
       language: LanguageInfo
       organization: string
       bannerLink: optional<string>
+      introduction: optional<string>
       apiReferenceLink: optional<string>
       requirements: optional<list<string>>
       features:
