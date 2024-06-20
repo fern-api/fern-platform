@@ -4,3 +4,4 @@ export * as getDocsForUrl from "./getDocsForUrl";
 export * as getPrivateDocsForUrl from "./getPrivateDocsForUrl";
 export * as getDocsConfigById from "./getDocsConfigById";
 export * as getSearchApiKeyForIndexSegment from "./getSearchApiKeyForIndexSegment";
+export * as listAllDocsUrls from "./listAllDocsUrls";

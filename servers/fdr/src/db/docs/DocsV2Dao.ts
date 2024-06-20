@@ -2,7 +2,7 @@ import { migrateDocsDbDefinition } from "@fern-api/fdr-sdk";
 import { AuthType, PrismaClient } from "@prisma/client";
 import urljoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Db } from "../../api";
+import { DocsV1Db, DocsV2Read } from "../../api";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
@@ -60,6 +60,8 @@ export interface DocsV2Dao {
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse>;
+
+    listAllDocsUrls(limit?: number, page?: number): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
@@ -175,6 +177,33 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 domains: [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls],
             };
         });
+    }
+
+    public async listAllDocsUrls(limit: number = 1000, page: number = 1): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
+        limit = Math.min(limit, 2000);
+        const response = await this.prisma.docsV2.groupBy({
+            where: {
+                isPreview: false,
+                authType: "PUBLIC",
+            },
+            by: ["orgID", "domain", "path", "updatedTime"],
+            orderBy: {
+                updatedTime: "desc",
+            },
+            take: limit,
+            skip: limit * (page - 1),
+        });
+
+        return {
+            urls: response.map(
+                (r): DocsV2Read.DocsDomainItem => ({
+                    domain: r.domain,
+                    basePath: r.path.length > 1 ? r.path : undefined,
+                    organizationId: r.orgID,
+                    updatedAt: r.updatedTime.toISOString(),
+                }),
+            ),
+        };
     }
 
     async replaceDocsDefinition({
