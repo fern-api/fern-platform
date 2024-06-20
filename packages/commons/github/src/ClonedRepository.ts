@@ -20,7 +20,7 @@ export class ClonedRepository {
 
     private async readFile({ relativeFilePath }: { relativeFilePath: string }): Promise<string | undefined> {
         const absoluteFilePath = path.join(this.clonePath, relativeFilePath);
-        if (!doesPathExist(absoluteFilePath)) {
+        if (!(await doesPathExist(absoluteFilePath))) {
             return undefined;
         }
         return await readFile(absoluteFilePath, "utf-8");
