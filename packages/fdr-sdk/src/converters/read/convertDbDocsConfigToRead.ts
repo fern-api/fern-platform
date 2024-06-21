@@ -163,6 +163,7 @@ export function transformNavigationTabV2ForDb(dbShape: DocsV1Db.NavigationTabV2)
                 fullSlug: undefined,
             };
         case "changelog":
+        case "changelogV3":
             return dbShape;
         default:
             assertNever(dbShape);
@@ -180,17 +181,16 @@ export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): 
                 ...dbShape,
                 showErrors: dbShape.showErrors ?? false,
             };
-        case "page":
-        case "link":
-            return dbShape;
         case "section":
             return {
                 ...dbShape,
                 items: dbShape.items.map((item) => transformNavigationItemForDb(item)),
             };
+        case "page":
+        case "link":
         case "changelog":
-            return dbShape;
         case "apiV2":
+        case "changelogV3":
             return dbShape;
         default:
             assertNever(dbShape);

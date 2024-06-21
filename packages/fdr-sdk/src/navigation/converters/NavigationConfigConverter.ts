@@ -97,7 +97,7 @@ export class NavigationConfigConverter {
                     id,
                     type: "tabbed",
                     children: tabbed.tabs.map((tab): FernNavigation.TabChild => {
-                        if (tab.type === "group" || (tab.type == null && Array.isArray(tab.items))) {
+                        if (tab.type === "group") {
                             return this.#idgen.with(tab.urlSlug, (id) => {
                                 const slug = parentSlug.apply(tab);
                                 const child: FernNavigation.SidebarRootNode = this.#idgen.with(tab.urlSlug, (id) => ({
