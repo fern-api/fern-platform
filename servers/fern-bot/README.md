@@ -1,19 +1,15 @@
-# Serverless - AWS Node.js Typescript
+# Fern Bot - Serverless Framework Project
 
 For detailed instructions, please refer to the [documentation](https://www.serverless.com/framework/docs/providers/aws/).
 
 ## Installation/deployment instructions
-
-> **Requirements**: NodeJS `lts/fermium (v.14.15.0)`. If you're using [nvm](https://github.com/nvm-sh/nvm), run `nvm use` to ensure you're using the same Node version in local and in your lambda's runtime.
 
 - Run `pnpm install` to install the project dependencies
 - Run `pnpm deploy` to deploy this stack to AWS
 
 ## Deployment
 
-You may notice there is no Github action explicitly configured to deploy this bot, that is because we're using Serverless' platform to monitor + deploy for us for now. This handles preview deploys as well as true production deploys.
-
-More information on this can be found here: https://www.serverless.com/framework/docs/guides/dashboard/cicd
+Take a look at `deploy-fern-bot-dev.yml` and `deploy-fern-bot-prod.yml` for how we currently deploy fern-bot's lambda functions.
 
 ## Bots
 
@@ -21,6 +17,8 @@ We have two bots, one for staging/testing, and another that's the production app
 
 - **Test:** [[Development] Fern Bot](https://github.com/organizations/fern-api/settings/apps/development-fern-bot)
 - **Production:** [Fern API](https://github.com/organizations/fern-api/settings/apps/fern-api)
+
+Credentials to both live within 1Password, and so you can easily create a `.env.dev` and a `.env.prod` to test your functions with fern-bot creds.
 
 ## Testing locally
 
@@ -65,11 +63,6 @@ curl --location --request POST 'https://myApiEndpoint/dev/hello' \
 
 ## Project structure
 
-> [!NOTE]
->
-> This structure was the default structure that came with the template we used, but it is still representative of where files should go,
-> what files are meant to do and how the project is generally structured.
-
 The project code base is mainly located within the `src` folder. This folder is divided in:
 
 - `functions` - containing code base and configuration for your lambda functions
@@ -79,13 +72,11 @@ The project code base is mainly located within the `src` folder. This folder is 
 .
 ├── src
 │   ├── functions               # Lambda configuration and source code folder
-│   │   ├── hello
-│   │   │   ├── handler.ts      # `Hello` lambda source code
-│   │   │   ├── index.ts        # `Hello` lambda Serverless configuration
-│   │   │   ├── mock.json       # `Hello` lambda input parameter, if any, for local invocation
-│   │   │   └── schema.ts       # `Hello` lambda input event JSON-Schema
-│   │   │
-│   │   └── index.ts            # Import/export of all lambda configurations
+│   │   └── hello
+│   │       ├── actions
+│   │       │   └── hello.ts    # `Hello` lambda source code
+│   │       └── hello.ts        # `Hello` lambda handler code
+│   │
 │   │
 │   └── libs                    # Lambda shared code
 │       └── apiGateway.ts       # API Gateway specific helpers
@@ -97,3 +88,37 @@ The project code base is mainly located within the `src` folder. This folder is 
 ├── tsconfig.json               # Typescript compiler configuration
 └── tsconfig.paths.json         # Typescript paths
 ```
+
+## Adding a new function
+
+1. Create a new folder within `./src/functions`
+2. Create a handler file, this is mostly boiler plate, so I'd look at the other functions to see how they export their handlers look for `export const handler`
+3. Write the actual logic for the function
+4. Write the `serverless` configuration for your function to get it depolyed
+
+   1. In most cases, this should be as simple as adding an entry to the `functions` block:
+      ```
+        reallyCoolFunction:
+          handler: "src/functions/my-new-function/myNewFunction.handler"
+      ```
+   2. If your function interacts with git, you'll need to add the following layer to ensure git is installed within the lambda's execution environment:
+      ```
+        reallyCoolFunction:
+          handler: "src/functions/my-new-function/myNewFunction.handler"
+          layers:
+              - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
+      ```
+   3. Specify your trigger:
+      ```
+        reallyCoolFunction:
+          handler: "src/functions/my-new-function/myNewFunction.handler"
+          events:
+            - schedule:
+                rate: cron(0 0 * * ? *)
+                enabled: true
+      ```
+      View the full list of events here: https://www.serverless.com/framework/docs/providers/aws/guide/events
+
+5. Test your function locally (as explained above): `dotenv -e .env.local -- pnpm invoke local --function reallyCoolFunction`
+6. [Optional] Deploy to dev and test it within the AWS console
+7. Submit a PR! The existing GitHub actions deploy the whole project, which will then include your new function already
