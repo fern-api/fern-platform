@@ -10,4 +10,5 @@ jspm_packages
 
 # local env files
 .env.local
+.env.dev
 .env.prod

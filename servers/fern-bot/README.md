@@ -18,6 +18,8 @@ We have two bots, one for staging/testing, and another that's the production app
 - **Test:** [[Development] Fern Bot](https://github.com/organizations/fern-api/settings/apps/development-fern-bot)
 - **Production:** [Fern API](https://github.com/organizations/fern-api/settings/apps/fern-api)
 
+Credentials to both live within 1Password, and so you can easily create a `.env.dev` and a `.env.prod` to test your functions with fern-bot creds.
+
 ## Testing locally
 
 (There's a way to write tests, but for now let's talk about invoking this)
