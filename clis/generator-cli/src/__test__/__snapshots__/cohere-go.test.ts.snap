@@ -8,7 +8,9 @@ exports[`cohere-go > cohere-go > generate readme 1`] = `
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 [![go shield](https://img.shields.io/badge/go-docs-blue)](https://pkg.go.dev/github.com/cohere-ai/cohere-go)
 
-The Cohere Go library provides convenient access to the Cohere API from Go.
+The Cohere Go SDK allows access to Cohere models across many different platforms: the cohere platform,
+AWS (Bedrock, Sagemaker), Azure, GCP and Oracle OCI. For a full list of support and snippets, please
+take a look at the [SDK support docs](https://docs.cohere.com/docs/cohere-works-everywhere) page.
 
 ## Documentation
 

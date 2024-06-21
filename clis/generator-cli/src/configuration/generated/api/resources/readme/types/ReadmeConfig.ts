@@ -17,6 +17,7 @@ export interface ReadmeConfig {
     language: FernGeneratorCli.LanguageInfo;
     organization: string;
     bannerLink?: string;
+    introduction?: string;
     apiReferenceLink?: string;
     requirements?: string[];
     /**

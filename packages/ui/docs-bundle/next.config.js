@@ -1,5 +1,4 @@
-const assetPrefix =
-    process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
+const cdnUri = process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI) : undefined;
 
 const DOCS_FILES_ALLOWLIST = [
     {
@@ -47,7 +46,7 @@ const nextConfig = {
      *
      * Note that local development should not set the CDN_URI to ensure that the assets are served from the local server.
      */
-    assetPrefix,
+    assetPrefix: cdnUri != null ? cdnUri.href : undefined,
     headers: async () => {
         const defaultSrc = ["'self'", "https://*.buildwithfern.com", "https://*.ferndocs.com", ...DOCS_FILES_URLS];
 
@@ -74,6 +73,12 @@ const nextConfig = {
         ];
 
         const styleSrc = ["'self'", "'unsafe-inline'"];
+
+        if (cdnUri != null) {
+            scriptSrc.push(`${cdnUri.origin}`);
+            connectSrc.push(`${cdnUri.origin}`);
+            styleSrc.push(`${cdnUri.origin}`);
+        }
 
         if (process.env.VERCEL) {
             if (process.env.VERCEL_ENV !== "production") {
@@ -247,7 +252,7 @@ const nextConfig = {
     },
     images: {
         remotePatterns: DOCS_FILES_ALLOWLIST,
-        path: assetPrefix != null ? `${assetPrefix}_next/image` : undefined,
+        path: cdnUri != null ? `${cdnUri.href}_next/image` : undefined,
     },
     env: {
         VERSION: process.env.VERSION,
