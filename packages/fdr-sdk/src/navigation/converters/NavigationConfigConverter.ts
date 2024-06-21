@@ -97,7 +97,7 @@ export class NavigationConfigConverter {
                     id,
                     type: "tabbed",
                     children: tabbed.tabs.map((tab): FernNavigation.TabChild => {
-                        if (tab.type === "group" || (tab.type == null && Array.isArray(tab.items))) {
+                        if (tab.type === "group" || tab.type == null) {
                             return this.#idgen.with(tab.urlSlug, (id) => {
                                 const slug = parentSlug.apply(tab);
                                 const child: FernNavigation.SidebarRootNode = this.#idgen.with(tab.urlSlug, (id) => ({
@@ -130,6 +130,8 @@ export class NavigationConfigConverter {
                         } else if (tab.type === "changelog") {
                             const slug = parentSlug.apply(tab);
                             return ChangelogNavigationConverter.convert(tab, slug, this.#idgen);
+                        } else if (tab.type === "changelogV3") {
+                            return tab.node as unknown as FernNavigation.ChangelogNode;
                         } else {
                             assertNever(tab as never);
                         }
@@ -235,6 +237,7 @@ export class NavigationConfigConverter {
             changelog: (changelog) => ChangelogNavigationConverter.convert(changelog, parentSlug, this.#idgen),
             // Note: apiSection.node is imported from `navigation`, and is guaranteed to be a FernNavigation.ApiReferenceNode
             apiV2: (apiSection) => apiSection.node as unknown as FernNavigation.ApiReferenceNode,
+            changelogV3: (changelog) => changelog.node as unknown as FernNavigation.ChangelogNode,
             _other: (value) => assertNever(value as never),
         });
     }

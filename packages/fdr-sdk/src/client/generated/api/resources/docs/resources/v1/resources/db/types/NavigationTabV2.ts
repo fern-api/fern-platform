@@ -7,7 +7,8 @@ import * as FernRegistry from "../../../../../../../index";
 export type NavigationTabV2 =
     | FernRegistry.docs.v1.db.NavigationTabV2.Group
     | FernRegistry.docs.v1.db.NavigationTabV2.Link
-    | FernRegistry.docs.v1.db.NavigationTabV2.Changelog;
+    | FernRegistry.docs.v1.db.NavigationTabV2.Changelog
+    | FernRegistry.docs.v1.db.NavigationTabV2.ChangelogV3;
 
 export declare namespace NavigationTabV2 {
     interface Group extends FernRegistry.docs.v1.db.NavigationTabGroup {
@@ -20,5 +21,9 @@ export declare namespace NavigationTabV2 {
 
     interface Changelog extends FernRegistry.docs.v1.read.ChangelogSection {
         type: "changelog";
+    }
+
+    interface ChangelogV3 extends FernRegistry.docs.v1.read.ChangelogSectionV3 {
+        type: "changelogV3";
     }
 }

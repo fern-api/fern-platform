@@ -4,6 +4,6 @@
 
 import * as FernRegistry from "../../../../../../../index";
 
-export interface ChangelogSectionV1 extends FernRegistry.docs.v1.read.ChangelogSection {
-    type: "changelog";
+export interface ChangelogSectionV3 {
+    node: FernRegistry.navigation.ChangelogNode;
 }

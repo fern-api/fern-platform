@@ -4,6 +4,10 @@ import { BottomNavigationButton } from "./BottomNavigationButton";
 
 export const BottomNavigationButtons: FC<{ showPrev?: boolean }> = ({ showPrev = false }) => {
     const { resolvedPath } = useNavigationContext();
+    if (resolvedPath.type === "changelog") {
+        return null;
+    }
+
     const { prev: leftNeighbor, next: rightNeighbor } = resolvedPath.neighbors;
 
     if (leftNeighbor == null && rightNeighbor == null) {

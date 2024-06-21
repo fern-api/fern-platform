@@ -81,9 +81,11 @@ export class NodeCollector {
             this.#lastNeighboringNode = undefined;
         }
 
-        if (!hasMetadata(node)) {
+        // there's currently no visitable page for changelog months and years
+        if (!hasMetadata(node) || node.type === "changelogMonth" || node.type === "changelogYear") {
             return;
         }
+
         const existing = this.slugToNode[node.slug];
         if (existing == null) {
             this.#setNode(node.slug, node, parents);

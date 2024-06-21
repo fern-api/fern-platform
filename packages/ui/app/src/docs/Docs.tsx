@@ -1,12 +1,14 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
+import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { memo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useNavigationContext } from "../contexts/navigation-context";
 import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { useCreateSearchService } from "../services/useSearchService";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
@@ -29,6 +31,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const { layout, colors, currentVersionId } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
+    const { resolvedPath } = useNavigationContext();
 
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();
@@ -78,11 +81,14 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             `}
                     </style>
                     <Sidebar
-                        className={
+                        className={clsx(
                             layout?.disableHeader !== true
                                 ? "fern-sidebar-container bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block"
-                                : "fern-sidebar-container bg-sidebar border-concealed fixed hidden h-vh-minus-header w-sidebar-width lg:block"
-                        }
+                                : "fern-sidebar-container bg-sidebar border-concealed fixed hidden h-vh-minus-header w-sidebar-width lg:block",
+                            {
+                                invisible: resolvedPath.type === "changelog-entry",
+                            },
+                        )}
                         logoHeight={logoHeight}
                         logoHref={logoHref}
                         showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}

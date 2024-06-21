@@ -4,6 +4,6 @@
 
 import * as FernRegistry from "../../../../../../../index";
 
-export interface NavigationTabLinkV1 extends FernRegistry.docs.v1.read.NavigationTabLink {
-    type: "link";
+export interface ChangelogSectionV3 {
+    node: FernRegistry.navigation.ChangelogNode;
 }

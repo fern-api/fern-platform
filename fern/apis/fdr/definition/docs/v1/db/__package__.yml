@@ -134,6 +134,7 @@ types:
       group: NavigationTabGroup
       link: docsReadV1.NavigationTabLink
       changelog: docsReadV1.ChangelogSection
+      changelogV3: docsReadV1.ChangelogSectionV3
 
   NavigationTabGroup:
     properties:
@@ -166,8 +167,10 @@ types:
       section: DocsSection
       link: docsReadV1.LinkMetadata
       changelog: docsReadV1.ChangelogSection
+      changelogV3: docsReadV1.ChangelogSectionV3
 
   ApiSection:
+    availability: deprecated
     properties:
       title: string
       icon: optional<string>

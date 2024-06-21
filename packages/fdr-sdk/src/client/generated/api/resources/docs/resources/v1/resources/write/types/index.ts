@@ -37,6 +37,7 @@ export * from "./ApiNavigationConfigItem";
 export * from "./ApiNavigationConfigSubpackage";
 export * from "./ChangelogSection";
 export * from "./ChangelogSectionV2";
+export * from "./ChangelogSectionV3";
 export * from "./ChangelogItem";
 export * from "./DocsSection";
 export * from "./ApiArtifacts";

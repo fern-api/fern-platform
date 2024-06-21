@@ -171,26 +171,11 @@ types:
       tabs: list<NavigationTab>
 
   NavigationTab:
-    discriminated: false
     union:
-      - NavigationTabGroupV1
-      - NavigationTabLinkV1
-      - ChangelogSectionV1
-
-  NavigationTabGroupV1:
-    extends: NavigationTabGroup
-    properties:
-      type: optional<literal<"group">>
-
-  NavigationTabLinkV1:
-    extends: NavigationTabLink
-    properties:
-      type: literal<"link">
-
-  ChangelogSectionV1:
-    extends: ChangelogSection
-    properties:
-      type: literal<"changelog">
+      group: NavigationTabGroup
+      link: NavigationTabLink
+      changelog: ChangelogSection
+      changelogV3: ChangelogSectionV3
 
   NavigationTabGroup:
     extends: NavigationNodeMetadata
@@ -273,6 +258,7 @@ types:
       section: DocsSection
       link: LinkMetadata
       changelog: ChangelogSection
+      changelogV3: ChangelogSectionV3
 
   PageMetadata:
     extends: NavigationNodeMetadata
@@ -294,6 +280,7 @@ types:
       url: string
 
   ApiSection:
+    availability: deprecated
     extends: NavigationNodeMetadata
     properties:
       title: string
@@ -341,6 +328,10 @@ types:
       description: optional<string>
       pageId: optional<commons.PageId>
       items: list<ChangelogItem>
+
+  ChangelogSectionV3:
+    properties:
+      node: navigation.ChangelogNode
 
   ChangelogItem:
     properties:

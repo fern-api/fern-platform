@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import type { SerializedMdxContent } from "../mdx/mdx";
 import { ResolvedRootPackage } from "./types";
@@ -20,17 +21,23 @@ export declare namespace ResolvedPath {
     }
 
     interface ChangelogPage {
-        type: "changelog-page";
-        fullSlug: string;
-        title: string;
+        type: "changelog";
+        pages: Record<FernNavigation.PageId, SerializedMdxContent>;
+        node: FernNavigation.ChangelogNode;
         sectionTitleBreadcrumbs: string[];
-        markdown: SerializedMdxContent | null;
-        items: {
-            date: string;
-            dateString: string;
-            markdown: SerializedMdxContent;
-        }[];
+        fullSlug: string;
+        // neighbors: Neighbors;
+    }
+
+    interface ChangelogEntryPage {
+        type: "changelog-entry";
+        changelogTitle: string;
+        changelogSlug: string;
+        pages: Record<FernNavigation.PageId, SerializedMdxContent>;
+        node: FernNavigation.ChangelogEntryNode;
+        sectionTitleBreadcrumbs: string[];
         neighbors: Neighbors;
+        fullSlug: string;
     }
 
     interface CustomMarkdownPage {
@@ -53,5 +60,9 @@ export declare namespace ResolvedPath {
     }
 }
 
-export type ResolvedPath = ResolvedPath.CustomMarkdownPage | ResolvedPath.ApiPage | ResolvedPath.ChangelogPage;
+export type ResolvedPath =
+    | ResolvedPath.CustomMarkdownPage
+    | ResolvedPath.ApiPage
+    | ResolvedPath.ChangelogPage
+    | ResolvedPath.ChangelogEntryPage;
 // | ResolvedPath.RedirectPage;
