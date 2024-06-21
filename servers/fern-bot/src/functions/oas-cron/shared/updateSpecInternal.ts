@@ -1,12 +1,13 @@
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { generateChangelog, generateCommitMessage } from "@libs/cohere";
+import { execFernCli } from "@libs/fern";
+import { createOrUpdatePullRequest } from "@libs/github";
+import { RepoData } from "@libs/schemas";
 import { mkdir } from "fs/promises";
 import { Octokit } from "octokit";
 import * as path from "path";
 import simpleGit from "simple-git";
 import tmp from "tmp-promise";
-import { execFernCli } from "../../../libs/fern";
-import { createOrUpdatePullRequest } from "../github/utilities";
 
 const OPENAPI_UPDATE_BRANCH = "fern/update-api-specs";
 

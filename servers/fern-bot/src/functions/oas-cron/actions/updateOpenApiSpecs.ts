@@ -1,6 +1,6 @@
 import { Env } from "@libs/env";
+import { setupGithubApp } from "@libs/github";
 import { App } from "octokit";
-import { setupGithubApp } from "../github/octokit";
 import { updateSpecInternal } from "../shared/updateSpecInternal";
 
 export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {

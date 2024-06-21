@@ -1,8 +1,8 @@
 import { Env } from "@libs/env";
+import { setupGithubApp } from "@libs/github";
 import { S3 } from "aws-sdk";
 import { json2csv } from "json-2-csv";
 import { App } from "octokit";
-import { setupGithubApp } from "../github/octokit";
 
 interface RepoData {
     id: string;
@@ -35,9 +35,11 @@ export async function updateRepoDataInternal(env: Env): Promise<void> {
     const key = env.REPO_DATA_S3_KEY ?? "lambdas/repos.csv";
     console.log(`Writing repo data to S3 at ${bucket}/${key}`);
     const s3 = new S3();
-    await s3.putObject({
-        Bucket: bucket,
-        Key: key,
-        Body: csvContent,
-    });
+    await s3
+        .putObject({
+            Bucket: bucket,
+            Key: key,
+            Body: csvContent,
+        })
+        .promise();
 }

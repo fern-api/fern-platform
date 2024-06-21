@@ -40,16 +40,10 @@ provider:
           Resource: arn:aws:s3:::fern-bot-${opt:stage}/*
 
 functions:
-  # For on-demand invoking update, especially useful for triggering one-off updates
-  updateOpenApiSpecs:
-    timeout: 900
-    memorySize: 10240
-    ephemeralStorageSize: 10240
-    handler: "src/functions/oas-cron/updateOpenApiSpecs.handler"
-    layers:
-      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
-
+  # ========== Updater Step Function ============
   # The functions needed for the step function
+  #
+  # Gets metadata on repo installations for the github app
   updateRepoDataset:
     # 900 second timeout, e.g. 15 minutes
     timeout: 900
@@ -66,11 +60,23 @@ functions:
       REPO_DATA_S3_BUCKET: "fern-bot-${opt:stage}"
       REPO_DATA_S3_KEY: "lambdas/repos.csv"
 
+  # Processes one repo at a time, from the updateRepoDataset metadata
   updateOpenApiSpec:
     timeout: 900
     memorySize: 10240
     ephemeralStorageSize: 10240
     handler: "src/functions/oas-cron/updateOpenApiSpec.handler"
+    layers:
+      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
+
+  # =============================================
+
+  # For on-demand invoking update, especially useful for triggering one-off updates
+  updateOpenApiSpecs:
+    timeout: 900
+    memorySize: 10240
+    ephemeralStorageSize: 10240
+    handler: "src/functions/oas-cron/updateOpenApiSpecs.handler"
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
 
