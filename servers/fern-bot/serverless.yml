@@ -63,7 +63,7 @@ functions:
   # Processes one repo at a time, from the updateRepoDataset metadata
   updateOpenApiSpec:
     timeout: 900
-    memorySize: 10240
+    memorySize: 5120
     ephemeralStorageSize: 10240
     handler: "src/functions/oas-cron/updateOpenApiSpec.handler"
     layers:
@@ -121,7 +121,15 @@ stepFunctions:
                     FunctionName:
                       Fn::GetAtt: [updateOpenApiSpec, Arn]
                   End: true
+                  # Try to discard whatever result AWS has for us
+                  # since we'll hit a size limit otherwise, and
+                  # the output is useless to us.
+                  ResultPath: null
+                  OutputPath: null
             End: true
+            # Same as above, try to discard the result
+            ResultPath: null
+            OutputPath: null
 
 resources:
   Resources:
