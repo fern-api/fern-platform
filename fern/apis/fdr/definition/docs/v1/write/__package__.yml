@@ -175,6 +175,7 @@ types:
       group: NavigationTabGroup
       link: NavigationTabLink
       changelog: ChangelogSectionV2
+      changelogV3: ChangelogSectionV3
 
   NavigationTabGroup:
     extends: NavigationNodeMetadata
@@ -257,6 +258,7 @@ types:
       section: DocsSection
       link: LinkMetadata
       changelog: ChangelogSectionV2
+      changelogV3: ChangelogSectionV3
 
   PageMetadata:
     extends: NavigationNodeMetadata
@@ -286,6 +288,7 @@ types:
       url: string
 
   ApiSection:
+    availability: deprecated
     extends: NavigationNodeMetadata
     properties:
       title: string
@@ -356,6 +359,10 @@ types:
       description: optional<string>
       pageId: optional<string>
       items: list<ChangelogItem>
+
+  ChangelogSectionV3:
+    properties:
+      node: navigation.ChangelogNode
 
   ChangelogItem:
     properties:
