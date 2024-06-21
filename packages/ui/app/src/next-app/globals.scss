@@ -1,45 +1,9 @@
-@import "@radix-ui/colors/gray.css";
-@import "@radix-ui/colors/mauve.css";
-@import "@radix-ui/colors/slate.css";
-@import "@radix-ui/colors/sage.css";
-@import "@radix-ui/colors/olive.css";
-@import "@radix-ui/colors/sand.css";
-@import "@radix-ui/colors/gray-alpha.css";
-@import "@radix-ui/colors/mauve-alpha.css";
-@import "@radix-ui/colors/slate-alpha.css";
-@import "@radix-ui/colors/sage-alpha.css";
-@import "@radix-ui/colors/olive-alpha.css";
-@import "@radix-ui/colors/sand-alpha.css";
-@import "@radix-ui/colors/green.css";
-@import "@radix-ui/colors/green-alpha.css";
-@import "@radix-ui/colors/grass-alpha.css";
-@import "@radix-ui/colors/red.css";
-@import "@radix-ui/colors/red-alpha.css";
-@import "@radix-ui/colors/amber.css";
-@import "@radix-ui/colors/amber-alpha.css";
-@import "@radix-ui/colors/blue.css";
-@import "@radix-ui/colors/blue-alpha.css";
-@import "@radix-ui/colors/gray-dark.css";
-@import "@radix-ui/colors/mauve-dark.css";
-@import "@radix-ui/colors/slate-dark.css";
-@import "@radix-ui/colors/sage-dark.css";
-@import "@radix-ui/colors/olive-dark.css";
-@import "@radix-ui/colors/sand-dark.css";
-@import "@radix-ui/colors/gray-dark-alpha.css";
-@import "@radix-ui/colors/mauve-dark-alpha.css";
-@import "@radix-ui/colors/slate-dark-alpha.css";
-@import "@radix-ui/colors/sage-dark-alpha.css";
-@import "@radix-ui/colors/olive-dark-alpha.css";
-@import "@radix-ui/colors/sand-dark-alpha.css";
-@import "@radix-ui/colors/green-dark-alpha.css";
-@import "@radix-ui/colors/grass-dark-alpha.css";
-@import "@radix-ui/colors/red-dark-alpha.css";
-@import "@radix-ui/colors/amber-dark-alpha.css";
-@import "@radix-ui/colors/blue-dark-alpha.css";
+@import "tailwindcss/base";
+@import "../css/colors.css";
+
+@import "tailwind/components";
 @import "@fern-ui/components/src/index";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwind/utilities";
 
 @layer base {
     html,

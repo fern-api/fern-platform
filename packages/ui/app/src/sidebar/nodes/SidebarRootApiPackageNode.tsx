@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
+import { SidebarRootHeading } from "./SidebarRootHeading";
 
 export interface SidebarRootApiPackageNodeProps {
     node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode;
@@ -49,23 +50,7 @@ export function SidebarRootApiPackageNode({
 
     return (
         <>
-            {node.overviewPageId == null ? (
-                <div className={clsx("fern-sidebar-heading px-4 lg:px-3 flex items-center", className)}>
-                    <h6 className="m-0 text-base leading-6 lg:text-sm lg:leading-5">{node.title}</h6>
-                </div>
-            ) : (
-                <SidebarSlugLink
-                    nodeId={node.id}
-                    linkClassName="font-semibold !text-text-default"
-                    icon={node.icon}
-                    className={className}
-                    registerScrolledToPathListener={registerScrolledToPathListener}
-                    title={node.title}
-                    hidden={node.hidden}
-                    slug={node.slug}
-                    selected={node.id === selectedNodeId}
-                />
-            )}
+            <SidebarRootHeading node={node} className={className} />
 
             <ul className={clsx("fern-sidebar-group")}>
                 {node.children.map((child) => (
