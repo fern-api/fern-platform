@@ -254,6 +254,11 @@ export class AlgoliaSearchRecordGenerator {
             return [];
         } else if (item.type === "changelog") {
             return this.generateAlgoliaSearchRecordsForChangelogSection(item, context);
+        } else if (item.type === "changelogV3") {
+            return this.generateAlgoliaSearchRecordsForChangelogNode(
+                item.node as FernNavigation.ChangelogNode,
+                context,
+            );
         } else if (item.type === "apiV2") {
             return this.generateAlgoliaSearchRecordsForApiReferenceNode(
                 item.node as FernNavigation.ApiReferenceNode,
@@ -377,6 +382,78 @@ export class AlgoliaSearchRecordGenerator {
                     },
                 });
             } else if (FernNavigation.hasMarkdown(node)) {
+                const pageId = FernNavigation.utils.getPageId(node);
+                if (pageId == null) {
+                    return;
+                }
+
+                const md = this.config.docsDefinition.pages[pageId]?.markdown;
+                if (md == null) {
+                    LOGGER.error("Failed to find markdown for node", node);
+                    return;
+                }
+
+                records.push(
+                    compact({
+                        type: "page-v3",
+                        objectID: uuid(),
+                        title: node.title,
+                        content: md,
+                        breadcrumbs: toBreadcrumbs(parents),
+                        slug: node.slug,
+                        version,
+                        indexSegmentId: context.indexSegment.id,
+                    }),
+                );
+            }
+            return;
+        });
+
+        return records;
+    }
+
+    private generateAlgoliaSearchRecordsForChangelogNode(
+        root: FernNavigation.ChangelogNode,
+        context: NavigationContext,
+    ): AlgoliaSearchRecord[] {
+        const records: AlgoliaSearchRecord[] = [];
+
+        const breadcrumbs = context.pathParts.map((part) => part.name);
+
+        const version =
+            context.indexSegment.type === "versioned"
+                ? {
+                      id: context.indexSegment.version.id,
+                      slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                  }
+                : undefined;
+
+        function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): string[] {
+            return [
+                ...breadcrumbs,
+                ...parents
+                    .filter(FernNavigation.hasMetadata)
+                    .filter((parent) =>
+                        parent.type === "apiReference"
+                            ? parent.hideTitle !== true
+                            : parent.type === "changelogMonth" || parent.type === "changelogYear"
+                              ? false
+                              : true,
+                    )
+                    .map((parent) => parent.title),
+            ];
+        }
+
+        FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
+            if (!FernNavigation.hasMetadata(node)) {
+                return;
+            }
+
+            if (node.hidden) {
+                return "skip";
+            }
+
+            if (FernNavigation.hasMarkdown(node)) {
                 const pageId = FernNavigation.utils.getPageId(node);
                 if (pageId == null) {
                     return;

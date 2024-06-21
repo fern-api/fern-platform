@@ -12,6 +12,7 @@ export declare namespace Node {
     interface Found {
         type: "found";
         node: NavigationNodePage;
+        parents: NavigationNode[];
         breadcrumb: string[];
         root: FernNavigation.RootNode;
         versions: FernNavigation.VersionNode[];
@@ -60,6 +61,7 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
             type: "found",
             node: found.node,
             breadcrumb: createBreadcrumb(found.parents),
+            parents: found.parents,
             root,
             // this is used to render the version switcher
             versions: collector.getVersionNodes().map((node) => {

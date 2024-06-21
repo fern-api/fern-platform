@@ -180,6 +180,9 @@ function transformNavigationTabV2ForDb(writeShape: DocsV1Write.NavigationTabV2):
         case "changelog": {
             return { type: "changelog", ...toChangelogDb(writeShape) };
         }
+        case "changelogV3": {
+            return writeShape;
+        }
     }
 }
 
@@ -259,6 +262,8 @@ export function transformNavigationItemForDb(
             return { type: "changelog", ...toChangelogDb(writeShape) };
         case "apiV2":
             return writeShape;
+        case "changelogV3":
+            return writeShape;
         default:
             assertNever(writeShape);
     }
@@ -315,6 +320,8 @@ function getReferencedApiDefinitionIdFromItem(item: DocsV1Db.NavigationItem): Fd
             return [];
         case "apiV2":
             return [item.node.apiDefinitionId];
+        case "changelogV3":
+            return [];
         default:
             assertNever(item);
     }

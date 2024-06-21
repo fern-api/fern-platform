@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { useIsReady } from "../contexts/useIsReady";
+import { ChangelogEntryPage } from "./ChangelogEntryPage";
 
 const CustomDocsPage = dynamic(
     () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
@@ -35,8 +36,10 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
         return <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} resolvedPath={resolvedPath} />;
     } else if (resolvedPath.type === "api-page") {
         return <ApiPage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />;
-    } else if (resolvedPath.type === "changelog-page") {
+    } else if (resolvedPath.type === "changelog") {
         return <ChangelogPage resolvedPath={resolvedPath} />;
+    } else if (resolvedPath.type === "changelog-entry") {
+        return <ChangelogEntryPage resolvedPath={resolvedPath} />;
     } else {
         return null;
     }
