@@ -34,5 +34,5 @@ jobs:
         # For now we're just invoking all the functions to confirm they're functional
         run: |
           pnpm --filter "@fern-platform/fern-bot" invoke local --function updateRepoDataset --stage development
-          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpecs --stage development
+          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpec --stage development
           pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpecs --stage development
