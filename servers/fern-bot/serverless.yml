@@ -98,6 +98,7 @@ stepFunctions:
             Next: UpdateSpecsInRepo
           UpdateSpecsInRepo:
             Type: Map
+            MaxConcurrency: 50
             ItemReader:
               ReaderConfig:
                 InputType: CSV
