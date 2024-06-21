@@ -1,0 +1,38 @@
+name: Test FernBot Dev
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "servers/fern-bot/**"
+      - ".github/workflows/deploy-fern-bot-dev.yml"
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+  GITHUB_APP_LOGIN_NAME: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_LOGIN_NAME }}
+  GITHUB_APP_LOGIN_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_LOGIN_ID }}
+  GITHUB_APP_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_ID }}
+  GITHUB_APP_PRIVATE_KEY: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_PRIVATE_KEY }}
+  GITHUB_APP_CLIENT_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_ID }}
+  GITHUB_APP_CLIENT_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_SECRET }}
+  GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_WEBHOOK_SECRET }}
+  CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
+
+jobs:
+  test_dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
+      - name: 🚀 serverless deploy
+        env:
+          CI: false
+        # For now we're just invoking all the functions to confirm they're functional
+        run: |
+          pnpm invoke local --function updateRepoDataset --stage development
+          pnpm invoke local --function updateOpenApiSpecs --stage development
+          pnpm invoke local --function updateOpenApiSpecs --stage development
