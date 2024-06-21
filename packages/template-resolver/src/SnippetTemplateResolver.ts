@@ -1,5 +1,7 @@
-import { get } from "lodash-es";
+import { accessByPath } from "./accessByPath";
+import { formatSnippet } from "./formatSnippet";
 import {
+    AuthPayload,
     CustomSnippetPayload,
     EndpointSnippetTemplate,
     ParameterPayload,
@@ -35,7 +37,10 @@ export class SnippetTemplateResolver {
     }
 
     private accessByPath(jsonObject: unknown, path?: string | string[]): unknown {
-        return path != null && jsonObject != null && path.length > 0 ? get(jsonObject, path) : jsonObject;
+        if (path != null && jsonObject != null && path.length > 0) {
+            return accessByPath(jsonObject, path);
+        }
+        return jsonObject;
     }
 
     private accessParameterPayloadByPath(
@@ -52,6 +57,13 @@ export class SnippetTemplateResolver {
             }
         }
         // Could not find the named parameter for this example.
+        return undefined;
+    }
+
+    private accessAuthPayloadByPath(authPayload?: AuthPayload, locationPath?: string): unknown {
+        if (authPayload != null) {
+            return this.accessByPath(authPayload, locationPath);
+        }
         return undefined;
     }
 
@@ -72,6 +84,8 @@ export class SnippetTemplateResolver {
                 return this.accessParameterPayloadByPath(this.payload.pathParameters, location.path);
             case "HEADERS":
                 return this.accessParameterPayloadByPath(this.payload.headers, location.path);
+            case "AUTH":
+                return this.accessAuthPayloadByPath(this.payload.auth, location.path);
             default:
                 throw new Error(`Unknown payload input type: ${location.location}`);
         }
@@ -106,6 +120,7 @@ export class SnippetTemplateResolver {
                         if (payloadOverride == null && input.value.isOptional && input.value.type === "enum") {
                             continue;
                         }
+
                         const evaluatedInput = this.resolveV1Template(input.value, payloadOverride);
                         if (evaluatedInput != null) {
                             evaluatedInputs.push(evaluatedInput);
@@ -245,7 +260,10 @@ export class SnippetTemplateResolver {
     }
 
     private resolveSnippetV1TemplateString(template: SnippetTemplate): string {
-        const clientSnippet = template.clientInstantiation;
+        const clientSnippet =
+            typeof template.clientInstantiation === "string"
+                ? template.clientInstantiation
+                : this.resolveV1Template(template.clientInstantiation);
         let endpointSnippet: V1Snippet | undefined;
         if (this.isPayloadEmpty()) {
             let invocation: string;
@@ -276,9 +294,21 @@ export class SnippetTemplateResolver {
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
-        return `${[...new Set(endpointSnippet?.imports ?? [])].join("\n")}\n\n${clientSnippet}\n${
-            endpointSnippet?.invocation
-        }`;
+        const dedupedImports = new Set();
+        if (typeof clientSnippet !== "string") {
+            clientSnippet?.imports.forEach((value) => {
+                dedupedImports.add(value);
+            });
+        }
+        endpointSnippet?.imports.forEach((value) => {
+            dedupedImports.add(value);
+        });
+
+        return `${[...dedupedImports].join("\n")}
+
+${typeof clientSnippet === "string" ? clientSnippet : clientSnippet?.invocation}        
+${endpointSnippet?.invocation}
+`;
     }
 
     private resolveSnippetV1TemplateToSnippet(sdk: Sdk, template: SnippetTemplate): Snippet {
@@ -316,6 +346,17 @@ export class SnippetTemplateResolver {
         switch (template.type) {
             case "v1":
                 return this.resolveSnippetV1TemplateToSnippet(sdk, template);
+            default:
+                throw new Error(`Unknown template version: ${template.type}`);
+        }
+    }
+
+    public async resolveWithFormatting(): Promise<Snippet> {
+        const sdk: Sdk = this.endpointSnippetTemplate.sdk;
+        const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
+        switch (template.type) {
+            case "v1":
+                return await formatSnippet(this.resolveSnippetV1TemplateToSnippet(sdk, template));
             default:
                 throw new Error(`Unknown template version: ${template.type}`);
         }

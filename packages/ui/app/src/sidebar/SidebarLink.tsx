@@ -3,7 +3,6 @@ import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import cn, { clsx } from "clsx";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
-import Link from "next/link";
 import {
     HTMLAttributeAnchorTarget,
     JSX,
@@ -21,8 +20,9 @@ import {
     useRef,
 } from "react";
 import { ChevronDown } from "react-feather";
-import urljoin from "url-join";
+import { FernLink } from "../components/FernLink";
 import { getRouteNodeWithAnchor } from "../util/anchor";
+import { slugToHref } from "../util/slugToHref";
 import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
@@ -94,7 +94,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
         const linkClassName = cn(linkClassNameProp, "fern-sidebar-link", { "opacity-50": hidden });
 
         return href != null ? (
-            <Link
+            <FernLink
                 href={href}
                 className={linkClassName}
                 onClick={(e) => {
@@ -110,7 +110,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
                 rel={rel}
             >
                 {child}
-            </Link>
+            </FernLink>
         ) : (
             <button
                 className={linkClassName}
@@ -232,7 +232,7 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
             <SidebarLink
                 {...innerProps}
                 ref={ref}
-                href={slug != null ? urljoin("/", slug) : undefined}
+                href={slug != null ? slugToHref(slug) : undefined}
                 onClick={handleClick}
             />
         );

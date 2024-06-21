@@ -9,5 +9,6 @@ export * from "./TemplateInput";
 export * from "./PayloadLocation";
 export * from "./PayloadInput";
 export * from "./SnippetTemplate";
+export * from "./ClientInstantiation";
 export * from "./VersionedSnippetTemplate";
 export * from "./EndpointSnippetTemplate";

@@ -26,6 +26,16 @@ export interface DocsDefinitionCache {
         indexSegments: IndexSegment[];
     }): Promise<void>;
 
+    replaceDocsForInstanceId({
+        instanceId,
+        dbDocsDefinition,
+        indexSegments,
+    }: {
+        instanceId: string;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
+        indexSegments: IndexSegment[];
+    }): Promise<void>;
+
     initialize(): Promise<void>;
 
     isInitialized(): boolean;
@@ -179,7 +189,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<void> {
-        await this.dao.docsV2().storeDocsDefinition({
+        const resp = await this.dao.docsV2().storeDocsDefinition({
             docsRegistrationInfo,
             dbDocsDefinition,
             indexSegments,
@@ -187,7 +197,36 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
         // cache fern URL + custom URLs
         await Promise.all(
-            [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls].map(async (docsUrl) => {
+            resp.domains.map(async (docsUrl) => {
+                // the write monitor is used to block reads from writing to the cache while we are updating it
+                // it also prevents two cache-write operations to the same hostname from happening at the same time
+                return await this.getDocsWriteMonitor(docsUrl.hostname).use(async () => {
+                    const url = docsUrl.toURL();
+                    const dbResponse = await this.getDocsForUrlFromDatabase({ url });
+                    await this.cacheResponse({ url, value: dbResponse });
+                });
+            }),
+        );
+    }
+
+    public async replaceDocsForInstanceId({
+        instanceId,
+        dbDocsDefinition,
+        indexSegments,
+    }: {
+        instanceId: string;
+        dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
+        indexSegments: IndexSegment[];
+    }): Promise<void> {
+        const resp = await this.dao.docsV2().replaceDocsDefinition({
+            instanceId,
+            dbDocsDefinition,
+            indexSegments,
+        });
+
+        // cache fern URL + custom URLs
+        await Promise.all(
+            resp.domains.map(async (docsUrl) => {
                 // the write monitor is used to block reads from writing to the cache while we are updating it
                 // it also prevents two cache-write operations to the same hostname from happening at the same time
                 return await this.getDocsWriteMonitor(docsUrl.hostname).use(async () => {

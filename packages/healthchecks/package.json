@@ -20,7 +20,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "dist:cli": "tsup ./src/cli.ts --format cjs",
+    "compile": "tsup ./src/cli.ts --format cjs",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -34,8 +34,10 @@
   "devDependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-fern/vercel": "0.0.7",
+    "@fern-ui/core-utils": "workspace:*",
     "@types/jest": "^29.5.11",
     "@types/node": "^18.7.18",
+    "@types/node-emoji": "^2.1.0",
     "@types/yargs": "^17.0.32",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.15",
     "depcheck": "^1.4.3",
@@ -47,5 +49,11 @@
     "typescript": "4.9.5",
     "vitest": "^1.5.0",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "@algolia/client-search": "^4.23.3",
+    "algoliasearch": "^4.22.1",
+    "console-table-printer": "^2.12.0",
+    "node-emoji": "^2.1.3"
   }
 }

@@ -1,4 +1,6 @@
 export * from "./ReadmeConfig";
+export * from "./Remote";
+export * from "./GithubRemote";
 export * from "./ReadmeFeature";
 export * from "./LanguageInfo";
 export * from "./TypescriptInfo";

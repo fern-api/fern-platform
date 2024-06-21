@@ -300,6 +300,20 @@ types:
       pathParameters: optional<list<ParameterPayload>>
       queryParameters: optional<list<ParameterPayload>>
       requestBody: optional<unknown>
+      auth: optional<AuthPayload>
+
+  AuthPayload:
+    union:
+      bearer: BearerTokenAuthPayload
+      basic: BasicAuthPayload
+      # Add more auth types here as needed
+  BearerTokenAuthPayload:
+    properties:
+      token: string
+  BasicAuthPayload:
+    properties:
+      username: string
+      password: string
 
   SnippetsPage:
     properties:

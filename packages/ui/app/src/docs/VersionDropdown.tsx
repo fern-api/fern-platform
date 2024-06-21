@@ -1,10 +1,11 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton } from "@fern-ui/components";
 import { getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import urljoin from "url-join";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
+import { slugToHref } from "../util/slugToHref";
 
 export declare namespace VersionDropdown {
     export interface Props {}
@@ -29,7 +30,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
                     value: id,
                     disabled: availability == null,
-                    href: urljoin("/", slug, unversionedSlug),
+                    href: slugToHref(FernNavigation.utils.slugjoin(slug, unversionedSlug)),
                 }))}
             >
                 <FernButton

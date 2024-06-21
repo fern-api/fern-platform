@@ -6,7 +6,7 @@ groups:
         version: 0.20.9
         output:
           location: local-file-system
-          path: ../../../packages/generator-cli/src/configuration/generated
+          path: ../../../clis/generator-cli/src/configuration/generated
         config:
           includeUtilsOnUnionMembers: true
           useBrandedStringAliases: true
@@ -24,6 +24,17 @@ groups:
         config:
           includeUtilsOnUnionMembers: true
           useBrandedStringAliases: true
+
+      - name: fernapi/fern-python-sdk
+        version: 2.9.9
+        output:
+          location: pypi
+          url: pypi.buildwithfern.com
+          package-name: "fern-fern-generator-cli-sdk"
+        config:
+          package_name: "generatorcli"
+          pydantic_config:
+            include_union_utils: true
 
       - name: fernapi/fern-go-sdk
         version: 0.22.0

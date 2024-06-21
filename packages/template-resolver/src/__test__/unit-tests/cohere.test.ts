@@ -1,17 +1,37 @@
 import { SnippetTemplateResolver } from "../../SnippetTemplateResolver";
-import { CHAT_COMPLETION_SNIPPET } from "../cohere";
+import { CHAT_COMPLETION_SNIPPET, CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION } from "../cohere";
 
 describe("Snippet Template Resolver", () => {
-    it("Test Chat Completion snippet", () => {
+    it("Test Chat Completion snippet", async () => {
         const resolver = new SnippetTemplateResolver({
             payload: {
+                auth: {
+                    type: "bearer",
+                    token: "BE_1234",
+                },
+                headers: [
+                    {
+                        name: "X-Client-Name",
+                        value: "Cohere's Client",
+                    },
+                ],
                 requestBody: {
                     message: "Hello world!",
+                    chat_history: [
+                        {
+                            role: "USER",
+                            message: "Hello",
+                        },
+                        {
+                            role: "CHATBOT",
+                            message: "Hi! How can I help you today?",
+                        },
+                    ],
                 },
             },
             endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
         });
-        const customSnippet = resolver.resolve();
+        const customSnippet = await resolver.resolveWithFormatting();
 
         if (customSnippet.type !== "typescript") {
             throw new Error("Expected snippet to be typescript");
@@ -20,12 +40,12 @@ describe("Snippet Template Resolver", () => {
         expect(customSnippet.client).toMatchSnapshot();
     });
 
-    it("Test empty payload", () => {
+    it("Test empty payload", async () => {
         const resolver = new SnippetTemplateResolver({
             payload: {},
-            endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
+            endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION,
         });
-        const customSnippet = resolver.resolve();
+        const customSnippet = await resolver.resolveWithFormatting();
 
         if (customSnippet.type !== "typescript") {
             throw new Error("Expected snippet to be typescript");

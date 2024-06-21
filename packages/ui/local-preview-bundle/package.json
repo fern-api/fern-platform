@@ -49,7 +49,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-jsx": "^5.1.2",
-    "url-join": "4.0.1"
+    "url-join": "5.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
@@ -61,7 +61,6 @@
     "@types/node-fetch": "2.6.9",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.2.18",
-    "@types/url-join": "4.0.1",
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",

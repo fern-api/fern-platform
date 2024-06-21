@@ -241,40 +241,37 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
             >
                 <div className="space-y-1 pb-2 pt-8">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
-                    <div className="flex items-center">
-                        <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                        <span>
                             <h1 className="my-0 inline leading-none">
                                 <AnimatedTitle>{endpoint.title}</AnimatedTitle>
                             </h1>
-
-                            {endpointProp.stream != null && (
-                                <span className="inline-block ml-2 align-text-bottom">
-                                    <StreamingEnabledToggle
-                                        value={isStream}
-                                        setValue={(value) => {
-                                            setIsStream(value);
-                                            const endpoint =
-                                                value && endpointProp.stream != null
-                                                    ? endpointProp.stream
-                                                    : endpointProp;
-                                            void router.replace(`/${endpoint.slug}`, undefined, {
-                                                shallow: true,
-                                            });
-                                            setTimeout(() => {
-                                                if (ref.current != null) {
-                                                    ref.current.scrollIntoView({ behavior: "instant" });
-                                                }
-                                            }, 0);
-                                        }}
-                                    />
-                                </span>
-                            )}
                             {endpoint.availability != null && (
                                 <span className="inline-block ml-2 align-text-bottom">
                                     <EndpointAvailabilityTag availability={endpoint.availability} minimal={true} />
                                 </span>
                             )}
-                        </div>
+                        </span>
+
+                        {endpointProp.stream != null && (
+                            <StreamingEnabledToggle
+                                className="ml-2 w-[200px]"
+                                value={isStream}
+                                setValue={(value) => {
+                                    setIsStream(value);
+                                    const endpoint =
+                                        value && endpointProp.stream != null ? endpointProp.stream : endpointProp;
+                                    void router.replace(`/${endpoint.slug}`, undefined, {
+                                        shallow: true,
+                                    });
+                                    setTimeout(() => {
+                                        if (ref.current != null) {
+                                            ref.current.scrollIntoView({ behavior: "instant" });
+                                        }
+                                    }, 0);
+                                }}
+                            />
+                        )}
                     </div>
                     <EndpointUrlWithOverflow
                         path={endpoint.path}

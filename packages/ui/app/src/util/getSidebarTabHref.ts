@@ -1,12 +1,13 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab } from "@fern-ui/fdr-utils";
-import urljoin from "url-join";
+import { slugToHref } from "./slugToHref";
 
 export function getSidebarTabHref(tab: SidebarTab): string {
-    return visitDiscriminatedUnion(tab, "type")._visit({
-        tabGroup: (value) => urljoin("/", value.pointsTo ?? value.slug),
+    const href = visitDiscriminatedUnion(tab, "type")._visit({
+        tabGroup: (value) => slugToHref(value.pointsTo ?? value.slug),
         tabLink: (value) => value.url,
-        tabChangelog: (value) => urljoin("/", value.slug),
+        tabChangelog: (value) => slugToHref(value.slug),
         _other: () => "/",
     });
+    return href;
 }
