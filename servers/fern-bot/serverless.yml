@@ -51,7 +51,7 @@ functions:
     memorySize: 10240
     # 10GB storage
     ephemeralStorageSize: 10240
-    handler: "src/functions/oas-cron/updateRepoData.handler"
+    handler: "src/functions/update-repo-data/updateRepoData.handler"
     # Adding a layer to have git available in the lambda
     # https://github.com/lambci/git-lambda-layer
     layers:
@@ -83,6 +83,7 @@ functions:
 stepFunctions:
   stateMachines:
     updateSpecs:
+      name: updateSpecs
       events:
         - schedule:
             rate: cron(0 0 * * ? *)

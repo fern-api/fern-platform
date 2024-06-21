@@ -2070,6 +2070,9 @@ importers:
 
   servers/fern-bot:
     dependencies:
+      '@aws-sdk/client-s3':
+        specifier: ^3.335.0
+        version: 3.572.0
       '@fern-api/core-utils':
         specifier: 0.15.0-rc63
         version: 0.15.0-rc63
@@ -2079,9 +2082,6 @@ importers:
       '@octokit/openapi-types':
         specifier: ^22.1.0
         version: 22.2.0
-      aws-sdk:
-        specifier: ^2.1643.0
-        version: 2.1646.0
       cohere-ai:
         specifier: ^7.9.5
         version: 7.9.5
