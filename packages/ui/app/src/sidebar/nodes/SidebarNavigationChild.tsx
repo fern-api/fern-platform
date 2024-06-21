@@ -1,11 +1,16 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import clsx from "clsx";
+import dynamic from "next/dynamic";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
-import { SidebarChangelogNode } from "./SidebarChangelogNode";
 import { SidebarLinkNode } from "./SidebarLinkNode";
 import { SidebarPageNode } from "./SidebarPageNode";
 import { SidebarSectionNode } from "./SidebarSectionNode";
+
+const SidebarChangelogNode = dynamic(
+    () => import("./SidebarChangelogNode").then(({ SidebarChangelogNode }) => SidebarChangelogNode),
+    { ssr: true },
+);
 
 interface SidebarNavigationChildProps {
     node: FernNavigation.NavigationChild;
