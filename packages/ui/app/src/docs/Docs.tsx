@@ -32,7 +32,6 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const openSearchDialog = useOpenSearchDialog();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
     const { resolvedPath } = useNavigationContext();
-    console.log(resolvedPath);
 
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();

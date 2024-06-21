@@ -97,7 +97,7 @@ export class NavigationConfigConverter {
                     id,
                     type: "tabbed",
                     children: tabbed.tabs.map((tab): FernNavigation.TabChild => {
-                        if (tab.type === "group") {
+                        if (tab.type === "group" || tab.type == null) {
                             return this.#idgen.with(tab.urlSlug, (id) => {
                                 const slug = parentSlug.apply(tab);
                                 const child: FernNavigation.SidebarRootNode = this.#idgen.with(tab.urlSlug, (id) => ({
@@ -130,6 +130,8 @@ export class NavigationConfigConverter {
                         } else if (tab.type === "changelog") {
                             const slug = parentSlug.apply(tab);
                             return ChangelogNavigationConverter.convert(tab, slug, this.#idgen);
+                        } else if (tab.type === "changelogV3") {
+                            return tab.node as unknown as FernNavigation.ChangelogNode;
                         } else {
                             assertNever(tab as never);
                         }

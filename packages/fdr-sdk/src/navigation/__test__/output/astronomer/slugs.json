@@ -40,10 +40,7 @@
   "docs/api/platform-api-reference/workspace/update-workspace",
   "docs/api/platform-api-reference/workspace/delete-workspace",
   "docs/api/platform-api-reference/changelog",
-  "docs/api/platform-api-reference/changelog/2024",
-  "docs/api/platform-api-reference/changelog/2024/5",
   "docs/api/platform-api-reference/changelog/2024/5/15",
-  "docs/api/platform-api-reference/changelog/2024/4",
   "docs/api/platform-api-reference/changelog/2024/4/23",
   "docs/api/platform-api-reference/changelog/2024/4/12",
   "docs/api/iam-api-reference",
@@ -82,7 +79,5 @@
   "docs/api/iam-api-reference/user/get-user",
   "docs/api/iam-api-reference/user/update-user-roles",
   "docs/api/iam-api-reference/changelog",
-  "docs/api/iam-api-reference/changelog/2024",
-  "docs/api/iam-api-reference/changelog/2024/4",
   "docs/api/iam-api-reference/changelog/2024/4/12"
 ]
