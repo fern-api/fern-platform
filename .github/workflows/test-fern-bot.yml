@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: 📥 Install
         uses: ./.github/actions/install
-      - name: 🚀 serverless deploy
+      - name: 🚀 serverless function run-thru
         env:
           CI: false
         # For now we're just invoking all the functions to confirm they're functional
