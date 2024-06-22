@@ -15,7 +15,7 @@ export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps)
     if (node.overviewPageId == null) {
         return (
             <div className={clsx("fern-sidebar-heading px-4 lg:px-3 inline-flex items-center", className)}>
-                <RemoteFontAwesomeIcon icon="code" className="mr-3 text-faded shrink-0" />
+                {node.icon != null && <RemoteFontAwesomeIcon icon={node.icon} className="mr-3 text-faded shrink-0" />}
                 <span className="m-0 text-base leading-6 lg:text-sm lg:leading-5 font-semibold">{node.title}</span>
             </div>
         );

@@ -2,7 +2,6 @@ import * as RadioGroup from "@radix-ui/react-radio-group";
 import cn from "clsx";
 import { FC } from "react";
 import { FernDropdown } from "./FernDropdown";
-import "./FernRadioGroup.css";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
 interface FernRadioGroupProps extends RadioGroup.RadioGroupProps {

@@ -1,0 +1,73 @@
+@layer utilities {
+    .mask-grad-top-1 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 4px);
+    }
+
+    .mask-grad-top-2 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 8px);
+    }
+
+    .mask-grad-top-3 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px);
+    }
+
+    .mask-grad-top-4 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 16px);
+    }
+
+    .mask-grad-top-5 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 20px);
+    }
+
+    .mask-grad-top-6 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px);
+    }
+
+    .mask-grad-y-6 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+    }
+
+    .mask-grad-top-7 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 28px);
+    }
+
+    .mask-grad-top-8 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 32px);
+    }
+
+    .mask-grad-bottom-6 {
+        mask-image: linear-gradient(to top, transparent 0, black 24px);
+    }
+
+    .mask-grad-bottom-7 {
+        mask-image: linear-gradient(to top, transparent 0, black 28px);
+    }
+
+    .mask-grad-bottom-8 {
+        mask-image: linear-gradient(to top, transparent 0, black 32px);
+    }
+
+    .mask-grad-bottom-9 {
+        mask-image: linear-gradient(to top, transparent 0, black 36px);
+    }
+
+    .mask-grad-bottom-10 {
+        mask-image: linear-gradient(to top, transparent 0, black 40px);
+    }
+
+    .clipped-background {
+        @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
+
+        clip-path: inset(0);
+    }
+
+    .description-mask {
+        @apply overflow-hidden line-clamp-3;
+
+        text-overflow: -o-ellipsis-lastline;
+    }
+
+    .font-mono {
+        font-family: var(--typography-code-font-family, var(--code-font-fallback)) !important;
+    }
+}
