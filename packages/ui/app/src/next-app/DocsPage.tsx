@@ -18,7 +18,7 @@ export declare namespace DocsPage {
         tabs: SidebarTab[];
         currentVersionId: FernNavigation.VersionId | undefined;
         versions: SidebarVersionInfo[];
-        sidebar: FernNavigation.SidebarRootNode;
+        sidebar: FernNavigation.SidebarRootNode | undefined;
     }
 
     export interface Props {

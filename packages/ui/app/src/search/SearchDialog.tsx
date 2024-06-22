@@ -150,12 +150,15 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 
 function createSearchPlaceholderWithVersion(
     activeVersion: SidebarVersionInfo | undefined,
-    sidebar: FernNavigation.SidebarRootNode,
+    sidebar: FernNavigation.SidebarRootNode | undefined,
 ): string {
     return `Search ${activeVersion != null ? `across ${activeVersion.id} ` : ""}for ${createSearchPlaceholder(sidebar)}...`;
 }
 
-function createSearchPlaceholder(sidebar: FernNavigation.SidebarRootNode): string {
+function createSearchPlaceholder(sidebar: FernNavigation.SidebarRootNode | undefined): string {
+    if (sidebar == null) {
+        return "guides and endpoints";
+    }
     const hasGuides = checkHasGuides(sidebar);
     const hasEndpoints = checkHasEndpoints(sidebar);
     if (hasGuides && hasEndpoints) {

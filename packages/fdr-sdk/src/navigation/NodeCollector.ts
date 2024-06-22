@@ -22,11 +22,15 @@ interface NavigationNodeWithMetadataAndParents {
 const NodeCollectorInstances = new WeakMap<NavigationNode, NodeCollector>();
 
 export class NodeCollector {
+    private static readonly EMPTY = new NodeCollector(undefined);
     private idToNode = new Map<FernNavigation.NodeId, NavigationNode>();
     private slugToNode: Record<FernNavigation.Slug, NavigationNodeWithMetadataAndParents> = {};
     private orphanedNodes: NavigationNodeWithMetadata[] = [];
 
-    public static collect(rootNode: NavigationNode): NodeCollector {
+    public static collect(rootNode: NavigationNode | undefined): NodeCollector {
+        if (rootNode == null) {
+            return NodeCollector.EMPTY;
+        }
         const existing = NodeCollectorInstances.get(rootNode);
         if (existing != null) {
             return existing;
@@ -52,7 +56,10 @@ export class NodeCollector {
     }
 
     private defaultVersion: FernNavigation.VersionNode | undefined;
-    constructor(rootNode: NavigationNode) {
+    constructor(rootNode: NavigationNode | undefined) {
+        if (rootNode == null) {
+            return;
+        }
         traverseNavigation(rootNode, (node, _index, parents) => {
             this.idToNode.set(node.id, node);
 

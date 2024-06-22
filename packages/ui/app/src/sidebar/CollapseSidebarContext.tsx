@@ -109,6 +109,10 @@ export const CollapseSidebarProvider: FC<
         const parentIdMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
         const parentToChildrenMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
 
+        if (sidebar == null) {
+            return { parentIdMap, parentToChildrenMap };
+        }
+
         FernNavigation.utils.traverseNavigation(sidebar, (node, _index, parents) => {
             if (FernNavigation.hasMetadata(node)) {
                 parentIdMap.set(
@@ -177,10 +181,11 @@ export const CollapseSidebarProvider: FC<
     // If there is only one pageGroup with only one page, hide the sidebar content
     // this is useful for tabs that only have one page
     if (
-        sidebar.children.length === 1 &&
-        sidebar.children[0].type === "sidebarGroup" &&
-        sidebar.children[0].children.length === 1 &&
-        sidebar.children[0].children[0].type === "page"
+        sidebar == null ||
+        (sidebar.children.length === 1 &&
+            sidebar.children[0].type === "sidebarGroup" &&
+            sidebar.children[0].children.length === 1 &&
+            sidebar.children[0].children[0].type === "page")
     ) {
         return null;
     }

@@ -1,3 +1,4 @@
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernLink } from "../components/FernLink";
@@ -11,15 +12,17 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
     return (
         <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
             <div className="w-full min-w-0 pt-8">
-                <article className="mx-auto w-fit break-words lg:ml-0 xl:mx-auto">
+                <article className="mx-auto xl:w-fit break-words lg:ml-0 xl:mx-auto">
                     <section id={resolvedPath.node.date} className="flex items-stretch">
-                        <div className="prose relative mr-6 max-w-content-width flex-1 dark:prose-invert">
+                        <div className="max-xl:hidden w-sidebar-width" />
+                        <div className="relative mr-6 max-w-content-width flex-1 max-xl:mx-auto">
                             <header className="mb-8">
                                 <div className="space-y-1">
                                     <div className="not-prose">
                                         <FernLink href={`/${resolvedPath.changelogSlug}`}>
-                                            <span className="t-accent shrink truncate whitespace-nowrap text-sm font-semibold">
-                                                {resolvedPath.changelogTitle}
+                                            <span className="t-accent shrink truncate whitespace-nowrap text-sm font-semibold inline-flex gap-1 items-center">
+                                                <ArrowLeftIcon className="size-4" />
+                                                Back to {resolvedPath.changelogTitle}
                                             </span>
                                         </FernLink>
                                     </div>
@@ -35,19 +38,15 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
                                     </div>
                                 )}
                             </header>
-                            <MdxContent mdx={page} />
-                        </div>
-                        <div className="-mt-2 w-72 pl-4 text-right">
-                            {/* <span className="t-muted text-base sticky top-header-height-padded">
-                                {resolvedPath.node.title}
-                            </span> */}
-                        </div>
-                    </section>
+                            <div className="prose dark:prose-invert">
+                                <MdxContent mdx={page} />
+                            </div>
 
-                    <div className="max-w-content-width">
-                        <BottomNavigationButtons />
-                    </div>
-                    <div className="h-36" />
+                            <BottomNavigationButtons />
+                        </div>
+                        <div className="-mt-2 w-72 pl-4 text-right max-xl:hidden" />
+                    </section>
+                    <div className="h-48" />
                 </article>
             </div>
         </div>
