@@ -1,4 +1,4 @@
-import * as prettier from "prettier/standalone";
+import * as prettier from "prettier";
 import { Snippet } from "./generated/api";
 
 export async function formatSnippet(snippet: Snippet): Promise<Snippet> {
