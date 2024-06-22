@@ -27,7 +27,10 @@ export interface ApiGroup {
     items: FernNavigation.NavigationNodeApiLeaf[];
 }
 
-export function flattenApiSection(root: FernNavigation.SidebarRootNode): ApiGroup[] {
+export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefined): ApiGroup[] {
+    if (root == null) {
+        return [];
+    }
     const result: ApiGroup[] = [];
     FernNavigation.utils.traverseNavigation(root, (node, _, parents) => {
         if (node.type === "changelog") {

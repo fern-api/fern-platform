@@ -17,9 +17,9 @@ export declare namespace Node {
         root: FernNavigation.RootNode;
         versions: FernNavigation.VersionNode[];
         currentVersion: FernNavigation.VersionNode | undefined;
-        currentTab: FernNavigation.TabNode | undefined;
+        currentTab: FernNavigation.TabNode | FernNavigation.ChangelogNode | undefined;
         tabs: FernNavigation.TabChild[];
-        sidebar: FernNavigation.SidebarRootNode;
+        sidebar: FernNavigation.SidebarRootNode | undefined;
         apiReference: FernNavigation.ApiReferenceNode | undefined;
         next: NavigationNodeNeighbor | undefined;
         prev: NavigationNodeNeighbor | undefined;
@@ -55,8 +55,14 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
 
     const sidebar = found.parents.find((node): node is FernNavigation.SidebarRootNode => node.type === "sidebarRoot");
     const currentVersion = found.parents.find((node): node is FernNavigation.VersionNode => node.type === "version");
-    if (isPage(found.node) && sidebar != null) {
+    if (isPage(found.node)) {
         const rootChild = (currentVersion ?? root).child;
+        const parentsAndNode = [...found.parents, found.node];
+        const tabs = rootChild.type === "tabbed" ? rootChild.children : [];
+        const tabbedNodeIndex = parentsAndNode.findIndex(
+            (node): node is FernNavigation.TabbedNode => node.type === "tabbed",
+        );
+        const currentTab = tabbedNodeIndex !== -1 ? parentsAndNode[tabbedNodeIndex + 1] : undefined;
         return {
             type: "found",
             node: found.node,
@@ -75,9 +81,9 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
                 }
                 return node;
             }),
-            tabs: rootChild.type === "tabbed" ? rootChild.children : [],
+            tabs,
             currentVersion,
-            currentTab: found.parents.findLast((node): node is FernNavigation.TabNode => node.type === "tab"),
+            currentTab: currentTab?.type === "tab" || currentTab?.type === "changelog" ? currentTab : undefined,
             sidebar,
             apiReference:
                 found.parents.find((node): node is FernNavigation.ApiReferenceNode => node.type === "apiReference") ??
@@ -91,6 +97,8 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
     if (root.type === "root" && root.slug === slugToFind && root.pointsTo != null) {
         return { type: "redirect", redirect: root.pointsTo };
     }
+
+    console.log(found.node);
 
     const redirect = hasRedirect(found.node) ? found.node.pointsTo : currentVersion?.pointsTo ?? root.pointsTo;
 

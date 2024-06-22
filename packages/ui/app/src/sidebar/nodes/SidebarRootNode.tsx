@@ -8,7 +8,7 @@ import { SidebarRootApiPackageNode } from "./SidebarRootApiPackageNode";
 import { SidebarRootSectionNode } from "./SidebarRootSectionNode";
 
 interface SidebarRootNodeProps {
-    node: FernNavigation.SidebarRootNode;
+    node: FernNavigation.SidebarRootNode | undefined;
 }
 
 type ApiGroupOrSection =
@@ -18,7 +18,7 @@ type ApiGroupOrSection =
 export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElement {
     return (
         <ul className="fern-sidebar-group">
-            {node.children.map((child) =>
+            {node?.children.map((child) =>
                 visitDiscriminatedUnion(child, "type")._visit({
                     sidebarGroup: (group) => (
                         <li key={child.id} className="mt-6">
