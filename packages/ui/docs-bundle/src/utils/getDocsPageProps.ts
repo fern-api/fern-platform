@@ -174,7 +174,6 @@ async function convertDocsToDocsPageProps({
 
     const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
     const node = FernNavigation.utils.findNode(root, slug);
-    console.log(node);
 
     if (node.type === "notFound") {
         // eslint-disable-next-line no-console
