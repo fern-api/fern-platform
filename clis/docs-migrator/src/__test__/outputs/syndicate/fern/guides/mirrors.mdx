@@ -1,0 +1,197 @@
+---
+title: Mirrors
+slug: guides/mirrors
+---
+
+
+Syndicate's mirrors allow you to send data from blockchains or HTTP resources to target blockchains.
+This becomes useful when creating cross-chain applications that could benefit from data that lives outside of a single blockchain.
+
+### Dependencies
+
+Our data mirror service is a simple HTTP server that listens to events on desired blockchains or polls HTTP resources and allows you to broadcast transactions
+to target blockchains using Syndicate's API.
+
+Before getting started, ensure you have created an [account](https://dashboard.syndicate.io/signup) with Syndicate.
+Additionally make sure you have [bun](https://bun.sh/docs/installation) installed on your system.
+
+Next, clone the [mirror repository](https://github.com/SyndicateProtocol/mirror) and add your Syndicate project ID and API key to your environment
+
+```bash
+touch .env
+```
+
+```bash .env
+SYNDICATE_API_KEY=
+SYNDICATE_PROJECT_ID=
+```
+
+### Install dependencies
+
+```bash
+bun i
+```
+
+### Run the server
+
+```bash
+bun dev
+```
+
+Upon starting the server two listeners will be initialized, a `ChainListener` and an `HttpListener`.
+
+These two listeners implement the logic necessary for retreiving data from their sources
+
+- `ChainListener`: queries events emitted on a blockchain
+- `HttpListener`: polls HTTP resources
+
+### `ChainListener`
+
+On start, chain listeners will immediately query all events emitted from the `fromBlock` to the most recent block and will continue listening to all
+future events. An example is shown below for listening to all purchases of a CryptoPunk and minting an NFT for the purchaser on Base.
+
+The following parameters can be passed to define a `ChainListener`:
+
+- `rpcUrl`: the RPC URL of the target chain you are mirroring data from
+- `fromBlock`: the block from which you want to start mirroring
+- `event`: the ABI of the event emitted from `contractAddress`
+- `contractAddress`: the source contract address that emits an `event`
+- `onData`: callback that receives all data emitted in the event
+- `pollingInterval`: (optional) value in seconds to poll for `event`
+
+```typescript
+import { waitForHash } from '@syndicateio/syndicate-node/utils'
+import { v5 } from 'uuid'
+import { formatEther, parseAbiItem } from 'viem'
+import syndicate from '~/clients/syndicate'
+import { env } from '~/env'
+import { ChainListener } from '~/listeners/chain'
+
+const ETH_MAINNET_RPC_URL = 'https://eth.drpc.org'
+const PUNK_LISTEN_FROM_BLOCK = BigInt(19963995)
+const PUNK_ADDRESS = '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB'
+const PUNK_BOUGHT_EVENT = parseAbiItem(
+  'event PunkBought(uint indexed punkIndex, uint value, address indexed fromAddress, address indexed toAddress)'
+)
+
+const TARGET_CONTRACT_ADDRESS = '0x1194b2a8fff08f6518af7d66b072938e35c71706' // NFT contract address to be minted to purchaser
+const TARGET_CHAIN_ID = 8_453 // Base chain ID
+
+const chainListener = new ChainListener({
+  rpcUrl: ETH_MAINNET_RPC_URL,
+  fromBlock: PUNK_LISTEN_FROM_BLOCK,
+  event: PUNK_BOUGHT_EVENT,
+  contractAddress: PUNK_ADDRESS,
+  onData: async ({ logs }) => {
+    const promises = logs.map(
+      async ({
+        args: { punkIndex, fromAddress, toAddress },
+        transactionHash
+      }) => {
+        // We generate a unique uuid to prevent duplicate transactions
+        const requestId = v5(
+          `${transactionHash}-${punkIndex}-${fromAddress}-${toAddress}`,
+          v5.URL
+        )
+
+        // Mint an NFT on base to the purchaser of a cryptopunk
+        const { transactionId } = await syndicate.transact
+          .sendTransaction({
+            requestId,
+            chainId: TARGET_CHAIN_ID,
+            contractAddress: TARGET_CONTRACT_ADDRESS,
+            projectId: env.SYNDICATE_PROJECT_ID,
+            functionSignature: 'mintTo(address to)',
+            args: {
+              to: args.toAddress
+            }
+          })
+          .catch((_) => {
+            throw new Error(
+              `request ID: ${requestId} has already been processed`
+            )
+          })
+        const hash = await waitForHash(syndicate, {
+          transactionId,
+          projectId: env.SYNDICATE_PROJECT_ID
+        })
+        console.log(`got hash: ${hash} for transaction ID: ${transactionId}`)
+      }
+    )
+
+    const settled = await Promise.allSettled(promises)
+    const rejected = settled.filter((p) => p.status === 'rejected')
+    if (rejected.length > 0) {
+      console.error(`rejected: ${rejected.length}`)
+      for (const promise of rejected) {
+        console.error(promise)
+      }
+    }
+  }
+})
+
+chainListener.init()
+```
+
+### `HttpListener`
+
+An `HttpListener` allows you to query multiple HTTP resources and broadcast data to a target blockchain.
+
+The following parameters can be passed to define an `HttpListener`
+
+- `getters`: array of `HttpGetters` used to query HTTP resources and normalize data utilizing their `onJson` callback
+- `onData`: callback that receives data from the HTTP resources
+- `pollingInterval`: (optional) value in seconds to poll the HTTP resources
+
+```typescript
+import { waitForHash } from '@syndicateio/syndicate-node/utils'
+import syndicate from '~/clients/syndicate'
+import { env } from '~/env'
+import { HttpGetter } from '~/getters/httpGetter'
+import { HttpListener } from '../../http'
+
+const TARGET_CONTRACT_ADDRESS = '0x2a3B6469F084Fe592BC50EeAbC148631AdAcB92e' // Contract address on Degen
+const DEGEN_CHAIN_ID = 666_666_666 // Degen chain ID
+
+type CoinGeckoResponse = {
+  'degen-base': { usd: number }
+}
+
+const httpListener = new HttpListener<number>({
+  getters: [
+    new HttpGetter<CoinGeckoResponse, number>({
+      url: 'https://api.coingecko.com/api/v3/simple/price?ids=degen-base&vs_currencies=usd',
+      onJson: (json) => {
+        return json['degen-base'].usd
+      }
+    })
+  ],
+  onData: async ({ fulfilled: prices, logger }) => {
+    const { transactionId } = await syndicate.transact
+      .sendTransaction({
+        chainId: DEGEN_CHAIN_ID,
+        contractAddress: TARGET_CONTRACT_ADDRESS,
+        projectId: env.SYNDICATE_PROJECT_ID,
+        functionSignature: 'updatePrice(uint256 price)',
+        args: { price: prices[0] }
+      })
+      .catch((_) => {
+        throw new Error('Could not get price')
+      })
+    const hash = await waitForHash(syndicate, {
+      transactionId,
+      projectId: env.SYNDICATE_PROJECT_ID
+    })
+    console.log(`got hash: ${hash} for transaction ID: ${transactionId}`)
+  }
+})
+
+httpListener.init()
+```
+
+### Hosting
+
+Our data mirror service is open source and should be self-hosted. It does not use external dependencies such as a database
+or memory-cache and it can be deployed to any cloud provider such as [Render](https://render.com/), [fly.io](https://fly.io/), [Heroku](https://id.heroku.com/login).
+When hosting you will want to ensure the instance is **always on** so the service is able to continually poll resources. A Dockerfile can be
+found in the repository [here](https://github.com/SyndicateProtocol/mirror/blob/main/Dockerfile) if you are running your service in a container.

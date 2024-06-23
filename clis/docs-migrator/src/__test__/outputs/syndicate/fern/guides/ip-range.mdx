@@ -1,0 +1,61 @@
+---
+title: IP Allowlisting
+slug: guides/ip-range
+---
+
+
+We strongly recommend that you configure per-project IP range allowlists to ensure that only your backend services are able to make calls to Syndicate. We support both IPV4 and IPV6 CIDR's and configuring the allowlist for all the API keys in a project only takes a single API call. By the end of this guide you'll have:
+
+- An understanding of the important of IP allowlisting
+- Set up the infrastructure needed to support this security measure
+- Created an IP range allowlist for your project
+- Queried existing IP ranges for your project
+- Updated an IP range
+
+### Why IP Allowlisting?
+
+Syndicate API keys are tied to a specific project and are used to authenticate requests to the Syndicate API for that project only. Since the keys can be used to execute high-value actions like minting NFTs, attesting to data, and updating metadata, it's important to ensure that only your backend services are able to make calls to Syndicate. IP allowlisting can thus be thought of as a second factor of authentication separate from the key itself that Syndicate can use verify the authenticity of the request. We suggest you set up allowlisting before broadcasting your first transaction as it should only take a few minutes to configure.
+
+### Infrastructure Needed
+
+For IP allowlisting to be effective, all calls to the specific project must originate from one, or potentially several, static IP addresses. Most cloud providers support this functionality and you can find instructions for the most popular ones below. Note that multiple ranges can be associated with a single project if you have multiple backend services that need to make calls to Syndicate. Syndicate performs an OR check against all the ranges associated with a project so if any of the ranges match the request, it will be allowed.
+
+- [AWS](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/generate-a-static-outbound-ip-address-using-a-lambda-function-amazon-vpc-and-a-serverless-architecture.html)
+- [Azure](https://learn.microsoft.com/en-us/azure/app-service/overview-inbound-outbound-ips#get-a-static-outbound-ip)
+- [GCP Cloud Run](https://cloud.google.com/run/docs/configuring/static-outbound-ip)
+- [GCP Cloud Function](https://cloud.google.com/functions/docs/networking/network-settings#associate-static-ip)
+
+### Create an IP Range Allowlist
+
+Since many cloud providers egress traffic through a range of static IPs reserved for your application, our creation endpoint expects a IPV4 or IPV6 CIDR. You can learn more about CIDR's [here](https://cidr.xyz/). To create an allowlist, Copy the `curl` command below and replace the `<api-key>`, `<project-id>`, and `<cidr>` with your own values, the first two can be found in the dashboard Settings (⚙️). For complete documentation on the endpoint, see the [Create IP Range Allowlist](../open-api/admin/post-ip-range.mdx).
+
+```bash
+curl -X POST \
+     -H 'Authorization: Bearer <api-key>' \
+     -H "Content-type: application/json" \
+     -d '{"projectId": "<project-id>","ipRange": "<cidr>"}' \
+     'https://api.syndicate.io/admin/allowedIP'
+```
+
+### Query IP Ranges
+
+To query all the ranges associated with a project, run the `curl` command below. For complete documentation on the endpoint, see the [Get IP Range Allowlist
+](../open-api/admin/get-ip-range.mdx). Note that `id` returned in the response body can be used below for updating a range so keep it handy if needed.
+
+```bash
+curl -H 'Authorization: Bearer <api-key>' \
+     'https://api.syndicate.io/admin/project/{projectId}/allowedIPRanges'
+```
+
+### Update an IP Range
+
+If you wish to change a specific IP range associated with a project, first delete the existing range and then create a new one. To delete an IP range, run the `curl` command below with the `<IPId>` from the step above. For complete documentation on the endpoint, see the [Delete IP Range Allowlist](../open-api/admin/delete-ip-range.mdx).
+
+```bash
+curl -X DELETE -H 'Authorization: Bearer <api-key>' \
+     'https://api.syndicate.io/admin/project/{projectId}/allowedIP/{IPId}'
+```
+
+### What's next?
+
+If you haven't sent your first transaction yet, follow our [Send and Monitor Transactions Guide](transactions.mdx) to get started.

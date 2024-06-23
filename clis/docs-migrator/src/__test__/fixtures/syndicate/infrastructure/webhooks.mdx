@@ -1,0 +1,175 @@
+---
+title: Webhooks
+---
+
+Build highly responsive experiences with Syndicate's webhook service and skip having to build and maintain a costly indexer. With a single API call you can subscribe to all the transaction status updates associated with your project and get notified of onchain events faster than traditional indexers and APIs. As soon as a transaction is confirmed you can dynamically re-render your application, send a push notification, or kick off a background job. These webhooks are designed with reliability in mind, and reconcile data across both onchain and off-chain sources for accuracy.
+
+## Authenticating Syndicate Events
+
+For security, Syndicate webhooks are signed with a unique secret, verifying that the events originate from Syndicate, not an imposter. Each event from Syndicate includes a `Syndicate-Signature` header. Authenticate this signature by generating a SHA256 HMAC with your webhook secret and the event payload, then compare this to the Syndicate-Signature header value.
+
+## Guarding Against Replay Attacks
+
+Each Syndicate-Signature header contains a timestamp in milliseconds, a crucial element in preventing replay attacks. To enhance security, we strongly advise that you only trust messages with timestamps that are less than 5 minutes old and discard any others.
+
+## Example of Syndicate Signature format
+
+Below is an example showcasing the format of a Syndicate-Signature.
+
+```
+syndicate-signature: t=823230245000,s=e212625c3ee9a48f940aab506f8c65915f4512fa0da46bc960878eb413d024b7
+```
+
+## Verifying Signatures
+
+### Step 1: Read the Syndicate-Signature header
+
+Retrieve the `syndicate-signature` header from the webhook request.
+Divide the header string using `,` to separate elements. Further divide each element with = to identify prefix and value pairs. The prefix `t` indicates the timestamp in milliseconds, and `s` the signature.
+
+### Step 2: Generate the payload
+
+To form the `payload`, merge the following elements:
+
+- Get the actual JSON body (your request body). This body will have the following format: `{ data: CallbackInformation, eventType: EventType}`
+
+```JSON
+{
+   "data": {
+      "testField": "test",
+      "testObject": {
+         "field1": 123,
+         "field2": "hello"
+      }
+   },
+   "eventType": "TransactionStatusChange",
+}
+```
+
+- Attach a `triggeredAt` field with the timestamp of the signature.
+
+The `payload` should look like this:
+
+```JSON
+{
+   "data": {
+      "testField": "test",
+      "testObject": {
+         "field1": 123,
+         "field2": "hello"
+      }
+   },
+   "eventType": "TransactionStatusChange",
+   "triggeredAt": 1701458678392
+}
+```
+
+<Note>
+  Note: The payload parameters are returned in alphabetical order, which is
+  critical for signature validation. Ensure to maintain this order when
+  generating hashes to avoid validation issues.
+</Note>
+
+### Step 3: Calculating the Expected Signature
+
+Generate an HMAC using the SHA256 hashing algorithm. The signing secret of the endpoint serves as the key, and the `payload` string as the message.
+
+### Step 4: Validating Signature Accuracy
+
+Match the signature in the header against the calculated signature. Evaluate the time difference between the current and the received timestamps, checking if it falls within your acceptable range. To counter timing attacks, employ a constant-time string comparison method when matching the expected signature against the received ones.
+
+## Rotate secret
+
+Syndicate allows you to rotate your webhook secret at any time. To do so, simply update your webhook secret in the Syndicate dashboard or via API call. This will immediately invalidate the old secret and generate a new one. You can then use the new secret to validate callbacks.
+
+## Webhook Events and Payloads
+
+### TransactionStatusChange
+
+This event is triggered each time there is an update to a transaction's status. The event payload includes the following details:
+
+```JSON
+{
+   "data": {
+      "blockNumber": "optional<number_of_the_block>",
+      "chainId": "<blockchain_chain_id>",
+      "previousStatus": "<status_before_change>",
+      "projectId": "<your_project_id>",
+      "status": "<current_status>",
+      "transactionHash": "<hash_of_transaction>",
+      "transactionId": "<unique_transaction_id>",
+      "reverted": "optional<true_or_false>"
+   },
+   "eventType": "TransactionStatusChange"
+}
+```
+
+## Example of Signature Validation
+
+This code snippet demonstrates how to validate the signature of a webhook request using a Node.js app:
+
+```javascript
+import * as crypto from 'crypto';
+import * as express from 'express';
+
+const app = express();
+app.use(express.json());
+
+const WEBHOOK_SECRET = 'YOUR_WEBHOOK_SECRET_HERE';
+
+app.post('/webhook', (req, res) => {
+    const signatureHeader = req.headers['syndicate-signature'] as string;
+    if (!signatureHeader) {
+        return res.status(401).send('No signature header provided');
+    }
+
+    const { timestamp, signature } = parseSignatureHeader(signatureHeader);
+    if (!timestamp || !signature) {
+        return res.status(401).send('Invalid signature header');
+    }
+
+    const fiveMinutesAgo = Date.now() - (5 * 60 * 1000);
+    if (timestamp < fiveMinutesAgo) {
+        return res.status(403).send('Request is too old to be trusted');
+    }
+
+    const expectedSignature = generateSignature(req.body, timestamp, WEBHOOK_SECRET);
+    if (crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSignature))) {
+        res.status(200).send('Signature verified successfully');
+    } else {
+        res.status(401).send('Invalid signature');
+    }
+});
+
+function parseSignatureHeader(header: string): {  timestamp?: number, signature?: string;} {
+    const elements = header.split(',');
+    const timestamp = parseInt(elements.find((e) => e.startsWith('t='))?.split('=')[1] || '');
+    const signature = elements.find(e => e.startsWith('s='))?.split('=')[1];
+    return { timestamp, signature };
+}
+
+function generateSignature(body: object, timestamp: number, secret: string): string {
+    const payload = JSON.stringify({
+        ...body,
+        triggeredAt: timestamp
+    });
+    return crypto.createHmac('sha256', secret)
+                 .update(payload)
+                 .digest('hex');
+}
+
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Webhook listener running on port ${port}`);
+});
+```
+
+<Note>
+  Our system is designed to ensure reliable delivery of webhooks. If the initial
+  attempt to send a webhook fails, the system will automatically retry up to
+  five times. After five unsuccessful attempts, it will cease further retries.
+  The system expects a successful response, specifically an HTTP status code
+  below 300, to confirm that the webhook has been successfully delivered.
+</Note>
+
+[Learn more about how to set up your first webhooks today.](/open-api/webhook/post-create-callback)

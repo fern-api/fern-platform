@@ -1,0 +1,83 @@
+---
+title: 'Quickstart'
+---
+
+<AccordionGroup>
+  <Accordion title="1) Create your account">
+
+        Create an organization for free via our [dashboard](https://dashboard.syndicate.io/signup)
+
+  </Accordion>
+    <Accordion title="2) Create a project">
+
+        1. Click the "Create project" button on the top right hand side of your dashboard
+        2. Add your project name, environment type, and network
+        3. Upon creation, an API key and transaction wallet will be generated for you automatically. If you ever need to, in the future, you can add additional networks. [Contact us to learn more](https://syndicate.io/contact-us).
+
+      </Accordion>
+
+<Accordion title="3) Add funds to your transaction wallet">
+  You’ll need to add tokens to your transaction wallet in order to broadcast your first transaction.
+                  - Within your new project, select the “Wallets & Gas” tab
+                    - **If your transaction wallet is on a testnet**, first find a faucet and add your testnet tokens to your new transaction broadcasting wallet. Here are a few faucets to check out:
+                      - [faucet.triangleplatform.com](https://faucet.triangleplatform.com/)
+                      - [faucet.quicknode.com](https://faucet.quicknode.com/drip)
+                      - [sepolia faucet](https://www.alchemy.com/faucets/ethereum-sepolia)
+                    - **If your transaction wallet is on a mainnet**, you’ll need to acquire mainnet tokens yourself
+                    
+                    
+Manually topping up transaction broadcasting wallets to handle gas costs can be a nuisance. If you’re interested in having Syndicate manage gas for you, [reach out to us](https://syndicate.io/contact-us).
+
+</Accordion>
+
+      <Accordion title="4) Use Syndicate API to call a test contract">
+
+
+Use the script below to mint an NFT from one of our test contracts:
+
+            ```json
+            curl -H 'Authorization: Bearer API_KEY' \
+            -H "Content-type: application/json" \
+            -d '{
+            "projectId": "PROJECT_ID",
+            "contractAddress": "CONTRACT_ADDRESS",
+            "chainId": CHAIN_ID,
+            "functionSignature": "mint(address account)",
+            "args": {
+              "account": "0xAddressToReceiveNFT",
+            }
+            }' \
+            'https://api.syndicate.io/transact/sendTransaction'
+
+            ```
+
+Be sure to replace `API_KEY`, `PROJECT_ID`, and `CHAIN_ID`, `0xAddressToReceiveNFT`, according to your project’s credentials. Replace `CONTRACT_ADDRESS` with one of the test contracts corresponding to your project.
+
+| Chain            | Contract address                             |
+| ---------------- | -------------------------------------------- |
+| Arbitrum Nova    | `0xf15ae576A2D856E9A3643B60C21749f8CdbD7D4b` |
+| Arbitrum One     | `0xf15ae576A2D856E9A3643B60C21749f8CdbD7D4b` |
+| Arbitrum Sepolia | `0xf15ae576A2D856E9A3643B60C21749f8CdbD7D4b` |
+| Avalanche        | `0x61F00D865E7F7620dBbA68c6266A8Edd0722A465` |
+| Avalanche Fuji   | `0xf15ae576A2D856E9A3643B60C21749f8CdbD7D4b` |
+| Base             | `0xe01d2428D8338Bb929d9c3DC45E12DAbA31Aedb2` |
+| Base Sepolia     | `0x52962dd492dDDef76d4eFb2bB7E505aeAE4554A1` |
+| Degen            | `0xBB4b805290fc491494A208e784153FDa0EA4cd48` |
+| ETH Mainnet      | `0x63ab3758FF9d32dDc8c560cD1692Ce90A6c211E3` |
+| ETH Sepolia      | `0xB94ef4731Ecb56283512ea9E2Ddd7315Fd36359d` |
+| Gold             | `0x1C49788116571876B7D76D032E355E1015e56B5D` |
+| Optimism Sepolia | `0xf15ae576A2D856E9A3643B60C21749f8CdbD7D4b` |
+| Optimism Mainnet | `0xf15ae576A2D856E9A3643B60C21749f8CdbD7D4b` |
+| Polygon Amoy     | `0xcF4d532a981a34411E6A6147D242512E669E13c3` |
+| Polygon Mainnet  | `0x9B78E31D4805fa785d52912290A9F58102963C23` |
+| Syndicate Frame  | `0x2160C427deA2D8441534051dE8440398e5f96dA0` |
+
+      </Accordion>
+
+  </AccordionGroup>
+
+Learn about [Transaction Broadcasting](/infrastructure/transaction-broadcasting)
+
+Learn about [Signing & Attestations](/infrastructure/signing-and-attestations)
+
+Learn about [Webhooks](/infrastructure/webhooks)

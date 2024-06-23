@@ -1,0 +1,883 @@
+openapi: 3.1.0
+info:
+  title: custom-syndicate-api
+  version: ''
+paths:
+  /transact/call:
+    post:
+      description: Read data from a view function on a smart contract
+      operationId: wallet_call
+      tags:
+        - Wallet
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/walletReadContractRequest'
+  /{chainId}/{tokenAddress}/{tokenId}:
+    servers:
+      - url: https://metadata.syndicate.io
+        description: Public Metadata
+    get:
+      description: Get metadata for a specific token ID
+      operationId: metadata_metadata_getMetadata
+      tags:
+        - MetadataMetadata
+      parameters:
+        - name: chainId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: tokenAddress
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/MetadataResponse'
+              examples:
+                json:
+                  value:
+                    name: Syndicate
+                    description: Syndicate Metadata
+                    image: ipfs://QmTaJLGKdNitrU3b72Mg5tWbTrEP2gi4znBYNGYEkE5axD
+        '500':
+          description: ''
+  /transact/sendTransaction:
+    post:
+      x-codeSamples:
+        - lang: 'python'
+          label: 'Python'
+          source: |
+            import requests
+            url = "https://api.syndicate.io/transact/sendTransaction"
+
+            payload = {
+                "requestId": "083be671-9f3f-41c0-9377-8c33aab3b413",
+                "projectId": "638d1d78-d63d-4cda-9f1e-4d0799acfeee",
+                "contractAddress": "0x94f6E9c420Db1566A3c035Df291F206eBfAfC762",
+                "chainId": 80001,
+                "functionSignature": "addPerson((string name, uint16 age) person))",
+                "args": {"person": {
+                        "name": "Person",
+                        "age": 55
+                    }}
+            }
+            headers = {
+                "Authorization": "Bearer <token>",
+                "Content-Type": "application/json"
+            }
+
+            response = requests.request("POST", url, json=payload, headers=headers)
+
+            print(response.text)
+        - lang: 'javascript'
+          label: 'JavaScript'
+          source: |
+            const options = {
+                method: 'POST',
+                headers: {Authorization: 'Bearer <token>', 'Content-Type': 'application/json'},
+                body: '{"requestId":"083be671-9f3f-41c0-9377-8c33aab3b413","projectId":"638d1d78-d63d-4cda-9f1e-4d0799acfeee","contractAddress":"0x94f6E9c420Db1566A3c035Df291F206eBfAfC762","chainId":80001,"functionSignature":"addPerson((string name, uint16 age) person))","args":{"person":{"name":"Person","age":55}}}'
+            };
+            fetch('https://api.syndicate.io/transact/sendTransaction', options)
+              .then(response => response.json())
+              .then(response => console.log(response))
+              .catch(err => console.error(err));
+        - lang: 'php'
+          label: 'PHP'
+          source: |
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.syndicate.io/transact/sendTransaction",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => "{\n  \"requestId\": \"083be671-9f3f-41c0-9377-8c33aab3b413\",\n  \"projectId\": \"638d1d78-d63d-4cda-9f1e-4d0799acfeee\",\n  \"contractAddress\": \"0x94f6E9c420Db1566A3c035Df291F206eBfAfC762\",\n  \"chainId\": 80001,\n  \"functionSignature\": \"addPerson((string name, uint16 age) person))\",\n  \"args\": {\n    \"person\": {\n      \"name\": \"Person\",\n      \"age\": 55\n    }\n  }\n}",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer <token>",
+                "Content-Type: application/json"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: 'java'
+          label: 'Java'
+          source: |
+            HttpResponse<String> response = Unirest.post("https://api.syndicate.io/transact/sendTransaction")
+            .header("Authorization", "Bearer <token>")
+            .header("Content-Type", "application/json")
+            .body("{\n  \"requestId\": \"083be671-9f3f-41c0-9377-8c33aab3b413\",\n  \"projectId\": \"638d1d78-d63d-4cda-9f1e-4d0799acfeee\",\n  \"contractAddress\": \"0x94f6E9c420Db1566A3c035Df291F206eBfAfC762\",\n  \"chainId\": 80001,\n  \"functionSignature\": \"addPerson((string name, uint16 age) person))\",\n  \"args\": {\n    \"person\": {\n      \"name\": \"Person\",\n      \"age\": 55\n    }\n  }\n}")
+            .asString();
+        - lang: 'javascript'
+          label: 'JavaScript SDK'
+          source: |
+            import { SyndicateClient } from "@syndicateio/syndicate-node";
+
+            const syndicate = new SyndicateClient({ token: 'YOUR_ACCESS_TOKEN' })
+
+            const tx = await syndicate.transact.sendTransaction({
+              projectId: 'eb7dab54-f66b-4739-8c18-f5a6196f7117',
+              contractAddress: '0x4Bc7a03C46c0BBb290d5455ff7f03d30263809e4',
+              chainId: 80001,
+              functionSignature: 'mintTo(address to)',
+              args: {
+                to: '0x18F33CEf45817C428d98C4E188A770191fDD4B79'
+              },
+            })
+            console.log('Transaction ID Received:', tx.transactionId)
+        - lang: 'go'
+          label: 'Go'
+          source: |
+            package main
+            import (
+              "fmt"
+              "strings"
+              "net/http"
+              "io/ioutil"
+            )
+
+            func main() {
+
+              url := "https://api.syndicate.io/transact/sendTransaction"
+
+              payload := strings.NewReader("{\n  \"requestId\": \"083be671-9f3f-41c0-9377-8c33aab3b413\",\n  \"projectId\": \"638d1d78-d63d-4cda-9f1e-4d0799acfeee\",\n  \"contractAddress\": \"0x94f6E9c420Db1566A3c035Df291F206eBfAfC762\",\n  \"chainId\": 80001,\n  \"functionSignature\": \"addPerson((string name, uint16 age) person))\",\n  \"args\": {\n    \"person\": {\n      \"name\": \"Person\",\n      \"age\": 55\n    }\n  }\n}")
+
+              req, _ := http.NewRequest("POST", url, payload)
+
+              req.Header.Add("Authorization", "Bearer <token>")
+              req.Header.Add("Content-Type", "application/json")
+
+              res, _ := http.DefaultClient.Do(req)
+
+              defer res.Body.Close()
+              body, _ := ioutil.ReadAll(res.Body)
+
+              fmt.Println(res)
+              fmt.Println(string(body))
+
+            }
+        - lang: 'bash'
+          label: 'cURL'
+          source: |
+            curl --request POST \
+             --url https://api.syndicate.io/transact/sendTransaction \
+             --header 'Authorization: Bearer <token>' \
+             --header 'Content-Type: application/json' \
+             --data '{
+             "requestId": "083be671-9f3f-41c0-9377-8c33aab3b413",
+             "projectId": "638d1d78-d63d-4cda-9f1e-4d0799acfeee",
+             "contractAddress": "0x94f6E9c420Db1566A3c035Df291F206eBfAfC762",
+             "chainId": 80001,
+             "functionSignature": "addPerson((string name, uint16 age) person))",
+             "args": {
+               "person": {
+                 "name": "Person",
+                 "age": 55
+               }
+             }
+             }'
+        
+      description: Send transaction to blockchain
+      operationId: transact_sendTransaction
+      tags:
+        - Transact
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactSendTransactionResponse'
+              examples:
+                Example1:
+                  value:
+                    transactionId: 561b77ed-6e35-4248-87ef-c6af93f3bad9
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactErrorBody'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactErrorBody'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactErrorBody'
+        '500':
+          description: ''
+      security: &ref_0
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transactSendTransactionRequest'
+            examples:
+              Example1:
+                value:
+                  requestId: 083be671-9f3f-41c0-9377-8c33aab3b413
+                  projectId: 638d1d78-d63d-4cda-9f1e-4d0799acfeee
+                  contractAddress: '0x94f6E9c420Db1566A3c035Df291F206eBfAfC762'
+                  chainId: 80001
+                  functionSignature: addPerson((string name, uint16 age) person))
+                  args:
+                    person:
+                      name: Person
+                      age: 55
+  /token-metadata/media/{projectId}/{chainId}/{tokenAddress}:
+    post:
+      description: Upload media
+      operationId: metadata_uploadMedia
+      tags:
+        - Metadata
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: chainId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: tokenAddress
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataUploadMediaResponse'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataErrorWithMessage'
+      security: *ref_0
+      x-codeSamples:
+        - lang: python
+          source: |
+            import requests
+            url = "https://api.syndicate.io/token-metadata/media/{projectId}/{chainId}/{tokenAddress}"
+
+            payload = {}
+            files=[
+              ('file',('filename.png',open('/path/to/file/filename.png','rb'),'image/png'))
+            ]
+            headers = {
+              'Authorization': 'Bearer <token>'
+            }
+
+            response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+            print(response.text)
+        - lang: javascript
+          source: |
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer <token>");
+
+            const formdata = new FormData();
+            formdata.append("file", fileInput.files[0], "jobs.png");
+
+            const options = {
+              method: "POST",
+              headers: myHeaders,
+              body: formdata,
+              redirect: "follow"
+            };
+
+            fetch("https://api.syndicate.io/token-metadata/media/{projectId}/{chainId}/{tokenAddress}", options)
+              .then((response) => response.text())
+              .then((result) => console.log(result))
+              .catch((error) => console.error(error));
+        - lang: php
+          source: |
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://api.syndicate.io/token-metadata/media/{projectId}/{chainId}/{tokenAddress}',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'POST',
+              CURLOPT_POSTFIELDS => array('file'=> new CURLFILE('/path/to/file/filename.png')),
+              CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer <token>'
+              ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            echo $response;
+        - lang: go
+          source: |
+            package main
+
+            import (
+              "fmt"
+              "bytes"
+              "mime/multipart"
+              "os"
+              "path/filepath"
+              "io"
+              "net/http"
+              "io/ioutil"
+            )
+
+            func main() {
+
+              url := "https://api.syndicate.io/token-metadata/media/{projectId}/{chainId}/{tokenAddress}"
+              method := "POST"
+
+              payload := &bytes.Buffer{}
+              writer := multipart.NewWriter(payload)
+              file, errFile1 := os.Open("/path/to/file/filename.png")
+              defer file.Close()
+              part1,
+                    errFile1 := writer.CreateFormFile("file",filepath.Base("/path/to/file/filename.png"))
+              _, errFile1 = io.Copy(part1, file)
+              if errFile1 != nil {
+                fmt.Println(errFile1)
+                return
+              }
+              err := writer.Close()
+              if err != nil {
+                fmt.Println(err)
+                return
+              }
+
+
+              client := &http.Client {
+              }
+              req, err := http.NewRequest(method, url, payload)
+
+              if err != nil {
+                fmt.Println(err)
+                return
+              }
+              req.Header.Add("Authorization", "Bearer <token>")
+
+              req.Header.Set("Content-Type", writer.FormDataContentType())
+              res, err := client.Do(req)
+              if err != nil {
+                fmt.Println(err)
+                return
+              }
+              defer res.Body.Close()
+
+              body, err := ioutil.ReadAll(res.Body)
+              if err != nil {
+                fmt.Println(err)
+                return
+              }
+              fmt.Println(string(body))
+            }
+        - lang: java
+          source: |
+            Unirest.setTimeouts(0, 0);
+            HttpResponse<String> response = Unirest.post("https://api.syndicate.io/token-metadata/media/{projectId}/{chainId}/{tokenAddress}")
+              .header("Authorization", "Bearer <token>")
+              .field("file", new File("/path/to/file/filename.png"))
+              .asString();
+        - lang: bash
+          source: |
+            curl --request POST 'https://api.syndicate.io/token-metadata/media/{projectId}/{chainId}/{tokenAddress}' \
+            --header 'Authorization: Bearer <token>' \
+            --form 'file=@"/path/to/file/filename.png"'
+  /wallet/project/{projectId}/request/{transactionId}:
+    get:
+      x-codeSamples:
+        - lang: "bash"
+          label: "cURL"
+          source: |
+            curl --request GET \
+              --url https://api.syndicate.io/wallet/project/{projectId}/request/{transactionId} \
+              --header 'Authorization: Bearer <token>'
+        - lang: "python"
+          label: "Python"
+          source: >
+            import requests
+
+            url =
+            "https://api.syndicate.io/wallet/project/{projectId}/request/{transactionId}"
+
+            headers = {"Authorization": "Bearer <token>"}
+
+            response = requests.request("GET", url, headers=headers)
+
+            print(response.text)
+        - lang: "php"
+          label: "PHP"
+          source: |
+            <?php
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://api.syndicate.io/wallet/project/{projectId}/request/{transactionId}",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer <token>"
+              ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
+            }
+        - lang: "java"
+          label: "Java"
+          source: >
+            HttpResponse<String> response =
+            Unirest.get("https://api.syndicate.io/wallet/project/{projectId}/request/{transactionId}")
+              .header("Authorization", "Bearer <token>")
+              .asString();
+        - lang: "javascript"
+          label: "JavaScript"
+          source: >
+            const options = {method: 'GET', headers: {Authorization: 'Bearer
+            <token>'}};
+
+
+            fetch('https://api.syndicate.io/wallet/project/{projectId}/request/{transactionId}',
+            options)
+              .then(response => response.json())
+              .then(response => console.log(response))
+              .catch(err => console.error(err));
+        - lang: "javascript"
+          label: "JavaScript SDK"
+          source: >
+            import { SyndicateClient } from "@syndicateio/syndicate-node";
+
+            const syndicate = new SyndicateClient({ token: 'YOUR_ACCESS_TOKEN'
+            })
+
+            const tx = await syndicate.transact.getTransactionRequest({
+              projectId: "YOUR_PROJECT_ID",
+              transactionId: string
+            })
+        - lang: "Go"
+          label: "go"
+          source: |
+            package main
+
+            import (
+              "fmt"
+              "net/http"
+              "io/ioutil"
+            )
+
+            func main() {
+
+              url := "https://api.syndicate.io/wallet/project/{projectId}/request/{transactionId}"
+
+              req, _ := http.NewRequest("GET", url, nil)
+
+              req.Header.Add("Authorization", "Bearer <token>")
+
+              res, _ := http.DefaultClient.Do(req)
+
+              defer res.Body.Close()
+              body, _ := ioutil.ReadAll(res.Body)
+
+              fmt.Println(res)
+              fmt.Println(string(body))
+
+            }
+      description: Get a transaction request by id
+      operationId: wallet_getTransactionRequest
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/walletTransactionResponse"
+        "404":
+          description: ""
+      security:
+        - BearerAuth: []
+  /wallet/project/{projectId}/requests:
+    get:
+      description: Gets a list of transaction requests for a project
+      operationId: wallet_getTransactionRequestsByProject
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: search
+          in: query
+          description: >-
+            Optional search parameter will filter by function signature,
+            contract address, or transaction id
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: invalid
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/walletTransactionRequestsByProjectResponse
+        '404':
+          description: ''
+      security:
+        - BearerAuth: []
+
+components:
+  schemas:
+    walletTransactionRequestsByProjectResponse:
+      title: walletTransactionRequestsByProjectResponse
+      type: object
+      properties:
+        transactionRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/walletTransactionResponse'
+        total:
+          type: integer
+      required:
+        - transactionRequests
+        - total
+    walletReadContractRequest:
+      title: walletReadContractRequest
+      type: object
+      properties:
+        chainId:
+          type: integer
+          format: int64
+          description: The chain ID for the network
+        functionSignature:
+          type: string
+          description: The human readable ABI function signature you want to call
+        contractAddress:
+          type: string
+          description: The contract address to read from
+        args:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: >-
+            (Optional) The function arguments if any. The keys are the argument
+            names or index from the provided function signature and the values
+            are the argument values
+      required:
+        - chainId
+        - functionSignature
+        - contractAddress
+    metadataUploadMediaResponse:
+      title: metadataUploadMediaResponse
+      type: object
+      properties:
+        ipfsHash:
+          type: string
+      required:
+        - ipfsHash
+    metadataErrorWithMessage:
+      title: metadataErrorWithMessage
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    MetadataResponse:
+      type: object
+      additionalProperties: {}
+      description: >-
+        Valid JSON will be returned. This could be a string, object, or array depending on the data posted to the `POST` metadata endpoints ([Update Metadata](https://docs.syndicate.io/open-api/metadata/update-metadata), 
+        [Bulk Update Metadata](https://docs.syndicate.io/open-api/metadata/bulk-update-metadata), [Range Update Metadata](https://docs.syndicate.io/open-api/metadata/range-update-metadata), [Set Default Metadata](https://docs.syndicate.io/open-api/metadata/set-default)). We recommend following the [OpenSea Metadata Standards](https://docs.opensea.io/docs/metadata-standards#metadata-structure)
+        when updating metadata.
+    transactErrorBody:
+      title: transactErrorBody
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    transactSendTransactionRequest:
+      title: transactSendTransactionRequest
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid
+          nullable: true
+          description: >-
+            (Optional) ID of the request. Needs to be a valid UUID. If provided,
+            it will be saved and returned as the transactionId of the response.
+            If not provided, we will generate one for you and return it as the
+            transactionId.
+        projectId:
+          type: string
+          format: uuid
+          description: ID of the project you want this request to be sent from
+          example: 638d1d78-d63d-4cda-9f1e-4d0799acfeee
+        contractAddress:
+          type: string
+          description: The contract address to send request to
+          example: '0x94f6E9c420Db1566A3c035Df291F206eBfAfC762'
+        chainId:
+          type: integer
+          format: int64
+          description: >-
+            The chain ID for the network (e.g. 1 for Ethereum Mainnet, 137 for
+            Polygon Mainnet, 80001 for Polygon Mumbai). For a complete list of
+            chain IDs, see
+            [ChainList](https://chainlist.org/?search=&testnets=true).
+          example: 80001
+        functionSignature:
+          type: string
+          description: The human readable signature to call on the contract
+          example: addPerson((string name, uint16 age) person))
+        args:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: >-
+            (Optional) The function arguments for the transaction if any. The
+            keys are the argument names or index from the provided function
+            signature and the values are the argument values.
+      required:
+        - projectId
+        - contractAddress
+        - chainId
+        - functionSignature
+    transactSendTransactionResponse:
+      title: transactSendTransactionResponse
+      type: object
+      properties:
+        transactionId:
+          type: string
+          format: uuid
+          example: 561b77ed-6e35-4248-87ef-c6af93f3bad9
+      required:
+        - transactionId
+    walletTransactionResponse:
+      title: walletTransactionResponse
+      type: object
+      properties:
+        transactionId:
+          type: string
+        chainId:
+          type: integer
+        projectId:
+          type: string
+        invalid:
+          type: boolean
+        contractAddress:
+          type: string
+        functionSignature:
+          type: string
+        data:
+          type: string
+          description: >-
+            ABI encoded representation of the function name and parameters
+            passed as input
+        decodedData:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: >-
+            Decoded function arguments passed as input to the contract's
+            function identified by 'functionSignature'
+        value:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        transactionAttempts:
+          type: array
+          items:
+            $ref: "#/components/schemas/walletTransactionAttempt"
+          nullable: true
+      required:
+        - transactionId
+        - chainId
+        - projectId
+        - invalid
+        - contractAddress
+        - functionSignature
+        - data
+        - value
+        - createdAt
+        - updatedAt
+    walletTransactionAttempt:
+      title: walletTransactionAttempt
+      type: object
+      properties:
+        transactionId:
+          type: string
+        hash:
+          type: string
+        chainId:
+          type: integer
+        version:
+          type: integer
+        status:
+          $ref: "#/components/schemas/walletTransactionStatus"
+        block:
+          type: integer
+        blockCreatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        signedTxn:
+          type: string
+        walletAddress:
+          type: string
+        reverted:
+          type: boolean
+        nonce:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - transactionId
+        - hash
+        - chainId
+        - version
+        - status
+        - block
+        - signedTxn
+        - walletAddress
+        - reverted
+        - nonce
+        - createdAt
+        - updatedAt
+    walletTransactionStatus:
+      title: walletTransactionStatus
+      type: string
+      enum:
+        - PENDING
+        - PROCESSED
+        - SUBMITTED
+        - CONFIRMED
+        - PAUSED
+        - ABANDONED  
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://api.syndicate.io
+    description: Production

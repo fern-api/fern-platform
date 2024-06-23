@@ -1,0 +1,155 @@
+---
+title: Send and Monitor Transactions
+slug: guides/transactions
+---
+
+
+Syndicate's transaction broadcasting and monitoring infrastructure allows you to put any transaction on any EVM-compatible chain without having to manage private keys, host your own secure signing infrastructure, or worry about technical nuances like nonce conflicts.
+
+We ensure that any valid transaction will end up in a block regardless of reorgs, dropped transactions, or gas spikes all while supporting throughput of 5,000+ transaction requests per second. By the end of this guide you'll have:
+
+- Authorized a new contract call on your project
+- Broadcast a transaction via the Syndicate API
+- Registered a webhook to receive realtime updates about transaction statuses
+- Queried the status of the transaction to get the full receipt
+
+### Authorizing a contract call
+
+By default, projects are created without contract allowlists. However, if you'd like to ensure the security of your project, you can explicitly set the contract addresses and function ABI's that can be called. In the Syndicate [dashboard](https://dashboard.syndicate.io/) go to your project and then click Settings (⚙️) > Contracts > Toggle on contract allowlist enabled > Add Contract. In this guide we'll be calling our Demo mint module on Mumbai but you can enter in any valid ABI on any EVM-compatible chain. Enter in the following information in the form:
+
+<table>
+  <thead>
+    <tr>
+      <th>Input</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Syndicate Demo Mint Module</td>
+    </tr>
+    <tr>
+      <td>Contract Address</td>
+      <td>`0xbEc332E1eb3EE582B36F979BF803F98591BB9E24`</td>
+    </tr>
+    <tr>
+      <td>Contract ABI</td>
+      <td>`[{"inputs": [{"name": "account","type": "address"}],"name": "mint","outputs": [],"stateMutability": "nonpayable","type": "function"}]`</td>
+    </tr>
+    <tr>
+      <td>Allowed Functions</td>
+      <td>"mint"</td>
+    </tr>
+    <tr>
+      <td>Network</td>
+      <td>Polygon Mumbai</td>
+    </tr>
+  </tbody>
+</table>
+
+### Broadcast your transaction
+
+Syndicate's infrastructure submits your requested transaction from the most optimal wallet associated with your project to achieve maximum transaction throughput. Ensure that all of the wallets in your project have enough funds to cover gas to submit your transaction. The command will return a transactionID `UUID` that you can use in the next steps to query the status of your request so keep it handy. Copy the `curl` command below and replace the `<api-key>`, `<project-id>`, and `<recipient-address>` with your own values, the first two can be found in the dashboard Settings (⚙️).
+
+```bash
+curl -H 'Authorization: Bearer <api-key>' \
+     -H "Content-type: application/json" \
+     -d '{ "projectId": "<project-id>","contractAddress":"0xbEc332E1eb3EE582B36F979BF803F98591BB9E24","chainId":80001,
+     "functionSignature":"mint(address account)",
+     "args":{"account":"<recipient-address>"}}' \
+     'https://api.syndicate.io/transact/sendTransaction'
+```
+
+<Note>
+  The type of `functionSignature` is [Human Readable
+  ABI](https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi).
+  This is the format displayed in the Contracts page after you authorize a
+  function so we recommend you start there.
+</Note>
+
+### Register a webhook for transaction status
+
+If you would like to be notified about changes in the status of your broadcast transaction you can register a webhook via the API. By listening to transactions as they update from pending in our system to included in a block, you can build rich in-app experiences for your users with response times faster than any indexing service.
+
+To register your webhook, you can use the following curl command. Your webhook callback URL should be in the format of `https://your-app-webhook-endpoint.com/webhook`, where the endpoint path, `/webhook` in this case, will receive the incoming transaction status updates.  
+For complete webhook documentation, see our [feature post](../infrastructure/webhooks.mdx) and its corresponding [endpoints](../open-api/webhook/post-create-callback.mdx).
+
+### Query the status of your transaction
+
+You can query an individual transaction with the [Get Request by ID](../open-api/transactions/get-request.mdx) endpoint using the `transactionId` from the steps above:
+
+```bash
+curl -H 'Authorization: Bearer <api-key>' \
+     'https://api.syndicate.io/wallet/project/{projectId}/request/{transactionId}'
+```
+
+Let's break down some of the fields in the response object you'll receive.
+
+    <table>
+      <thead>
+        <tr>
+          <th>Selected Field</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>data</td>
+          <td>This is the RLP encoding of your requested transaction.</td>
+        </tr>
+        <tr>
+          <td>invalid</td>
+          <td>If true, we determined your transaction request was malformed and cannot be submitted to the chain.</td>
+        </tr>
+        <tr>
+          <td>transactionAttempts</td>
+          <td>If an empty list is returned, your transaction request is still being processed by our infrastructure and should be submitted to the mempool shortly.</td>
+        </tr>
+      </tbody>
+    </table>
+
+Let's dive further into transactionAttempts. Since Syndicate handles dropped transactions, reorgs and gas spikes for you, we may need to submit your transaction multiple times before it is included in a block. Each time we submit your transaction we create a new transactionAttempt object, let's review some key fields in the object.
+
+    <table>
+      <thead>
+        <tr>
+          <th>Selected Field</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>hash</td>
+          <td>This is the transaction hash of the submitted transaction. If a value is present you can query it in the blockviewer associated with the chain like etherscan.io for Ethereum mainnet.</td>
+        </tr>
+        <tr>
+          <td>nonce</td>
+          <td>The sequentially increasing and unique integer the wallet chosen used to submit the transaction.</td>
+        </tr>
+        <tr>
+          <td>reverted</td>
+          <td>If true, the transaction made it onchain but reverted. [Learn more](https://docs.alchemy.com/docs/revert-transactions) about that status.</td>
+        </tr>
+        <tr>
+          <td>status</td>
+          <td>
+          `PENDING` means the transaction attempt is currently in the mempool.
+
+          `PROCESSED` means the transaction has been included in a recent block, but there's still a chance it could be dropped in a reorg.
+
+          `SUBMITTED` means the transaction is in a confirmed block, but Syndicate will continue to monitor it for rare large reorgs.
+
+          `CONFIRMED` means Syndicate has identified that the transaction is permanently onchain and will not be dropped.
+          </td>
+        </tr>
+        <tr>
+          <td>walletAddress</td>
+          <td>The wallet in your project Syndicate selected to submit the transaction with.</td>
+        </tr>
+      </tbody>
+    </table>
+
+### What's next?
+
+To see Syndicate's scaling power at work, submit many transactions simultaneously and let our infrastructure handle the rest. You can also authorize additional contracts and functions to call in your project to expand your application's functionality. If you haven't already set up an IP range allowlist for your project, follow our [IP Allowlist Guide](ip-range.mdx) to protect your keys.

@@ -1,0 +1,138 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Syndicate Docs",
+  "logo": {
+    "dark": "/logo/logo-dark.svg",
+    "light": "/logo/logo-light.svg"
+  },
+  "favicon": "/logo/favicon.svg",
+  "colors": {
+    "primary": "#000000",
+    "light": "#FFFFFF",
+    "dark": "#000000",
+    "background": {
+      "light": "#FFFFFF",
+      "dark": "#000000"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Contact us",
+      "url": "https://syndicate.io/contact-us"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://dashboard.syndicate.io"
+  },
+  "tabs": [],
+  "anchors": [],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": ["get-started/introduction", "get-started/quickstart"]
+    },
+    {
+      "group": "Infrastructure",
+      "pages": [
+        {
+          "group": "Transaction Cloud",
+          "pages": [
+            "infrastructure/overview",
+            "infrastructure/transaction-broadcasting",
+            "infrastructure/lifecycle-of-a-transaction",
+            "infrastructure/signing-and-attestations",
+            "infrastructure/webhooks",
+            "infrastructure/managed-gas"
+          ]
+        },
+        "infrastructure/l2-l3s",
+        "infrastructure/smart-rpc",
+        "infrastructure/mirrors"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "guides/transactions",
+        "guides/ip-range",
+        "guides/mirrors"
+      ]
+    },
+    {
+      "group": "API",
+      "pages": [
+        {
+          "group": "Admin",
+          "pages": [
+            {
+              "group": "Projects",
+              "pages": [
+                "open-api/admin/post-project",
+                "open-api/admin/update-project-name",
+                "open-api/admin/get-project"
+              ]
+            },
+            {
+              "group": "Contracts & Function Signatures",
+              "pages": [
+                "open-api/admin/authorize-with-fn-sigs",
+                "open-api/admin/authorize-with-json-abi",
+                "open-api/admin/claim-contract",
+                "open-api/admin/delete-contract",
+                "open-api/admin/delete-function-signature"
+              ]
+            },
+            {
+              "group": "IP Ranges",
+              "pages": [
+                "open-api/admin/post-ip-range",
+                "open-api/admin/get-ip-range",
+                "open-api/admin/delete-ip-range"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Signatures",
+          "pages": [
+            "open-api/signatures/personal-sign",
+            "open-api/signatures/sign-typed-data",
+            "open-api/signatures/sign-typed-data-with-lookup",
+            "open-api/signatures/get-project-signatures",
+            "open-api/signatures/get-signature"
+          ]
+        },
+        {
+          "group": "Transactions",
+          "pages": [
+            "open-api/transactions/get-request",
+            "open-api/transactions/get-project-requests",
+            "open-api/transactions/get-project-transactions",
+            "open-api/transactions/post-sendtransaction",
+            "open-api/transactions/call"
+          ]
+        },
+        {
+          "group": "Wallets",
+          "pages": ["open-api/wallets/get-wallets-by-project"]
+        },
+        {
+          "group": "Webhooks",
+          "pages": [
+            "open-api/webhook/get-callback",
+            "open-api/webhook/get-callbacks-by-project",
+            "open-api/webhook/post-create-callback",
+            "open-api/webhook/post-rotate-callback",
+            "open-api/webhook/post-update-callback",
+            "open-api/webhook/delete-callback"
+          ]
+        }
+      ]
+    }
+  ],
+  "footerSocials": {
+    "x": "https://x.com/syndicateio",
+    "linkedin": "https://linkedin.com/company/syndicate-io"
+  }
+}

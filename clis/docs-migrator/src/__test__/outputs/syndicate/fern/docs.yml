@@ -1,0 +1,80 @@
+instances: []
+title: Syndicate Docs
+logo:
+  light: logo/logo-light.svg
+  dark: logo/logo-dark.svg
+  height: 28
+favicon: logo/favicon.svg
+colors:
+  accent-primary:
+    dark: "#000000"
+    light: "#FFFFFF"
+  background:
+    dark: "#000000"
+    light: "#FFFFFF"
+navbar-links:
+  - type: secondary
+    text: Contact us
+    url: https://syndicate.io/contact-us
+  - type: primary
+    text: Dashboard
+    url: https://dashboard.syndicate.io
+tabs: {}
+layout:
+  tabs-placement: sidebar
+  searchbar-placement: header
+navigation:
+  - section: Get Started
+    contents:
+      - page: Why Syndicate
+        path: get-started/introduction.mdx
+      - page: Quickstart
+        path: get-started/quickstart.mdx
+  - section: Infrastructure
+    contents:
+      - section: Transaction Cloud
+        contents:
+          - page: Overview
+            path: infrastructure/overview.mdx
+          - page: Transaction Broadcasting
+            path: infrastructure/transaction-broadcasting.mdx
+          - page: Lifecycle of a Syndicate Transaction
+            path: infrastructure/lifecycle-of-a-transaction.mdx
+          - page: Signing & Attestations
+            path: infrastructure/signing-and-attestations.mdx
+          - page: Webhooks
+            path: infrastructure/webhooks.mdx
+          - page: Managed Gas
+            path: infrastructure/managed-gas.mdx
+      - page: L2 / L3 Chains
+        path: infrastructure/l2-l3s.mdx
+      - page: Smart RPC
+        path: infrastructure/smart-rpc.mdx
+      - page: Mirrors
+        path: infrastructure/mirrors.mdx
+  - section: Guides
+    contents:
+      - page: Send and Monitor Transactions
+        path: guides/transactions.mdx
+      - page: IP Allowlisting
+        path: guides/ip-range.mdx
+      - page: Mirrors
+        path: guides/mirrors.mdx
+  - section: API
+    contents:
+      - section: Admin
+        contents:
+          - section: Projects
+            contents: []
+          - section: Contracts & Function Signatures
+            contents: []
+          - section: IP Ranges
+            contents: []
+      - section: Signatures
+        contents: []
+      - section: Transactions
+        contents: []
+      - section: Wallets
+        contents: []
+      - section: Webhooks
+        contents: []

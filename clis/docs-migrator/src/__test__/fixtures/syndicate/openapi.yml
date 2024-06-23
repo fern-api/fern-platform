@@ -1,0 +1,2651 @@
+openapi: 3.0.1
+info:
+  title: syndicate-api
+  version: ''
+  description: >-
+    # Introduction
+
+
+    Welcome to the Syndicate API documentation, your gateway to seamless web3
+    integration.
+
+    Discover comprehensive endpoints and robust functionalities that empower you
+    to build powerful applications and leverage Syndicate's cutting-edge
+    services.
+
+
+    # List of Services
+
+
+    - [Transact](#tag/Transact)
+
+    - [Wallet](#tag/Wallet)
+
+    - [Admin](#tag/Admin)
+paths:
+  /funding/project/{projectId}/transactions:
+    get:
+      description: Get transactions by project
+      operationId: funding_getTransactionsByProjects
+      tags:
+        - Funding
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fundingTransactionsByProjectResponse'
+      security:
+        - BearerAuth: []
+  /transact/sendTransaction:
+    post:
+      description: Send transaction to blockchain
+      operationId: transact_sendTransaction
+      tags:
+        - Transact
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactSendTransactionResponse'
+              examples:
+                Example1:
+                  value:
+                    transactionId: 561b77ed-6e35-4248-87ef-c6af93f3bad9
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactErrorBody'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactErrorBody'
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactErrorBody'
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transactSendTransactionRequest'
+            examples:
+              Example1:
+                value:
+                  requestId: 083be671-9f3f-41c0-9377-8c33aab3b413
+                  projectId: 638d1d78-d63d-4cda-9f1e-4d0799acfeee
+                  contractAddress: '0x94f6E9c420Db1566A3c035Df291F206eBfAfC762'
+                  chainId: 80001
+                  functionSignature: addPerson((string name, uint16 age) person))
+                  args:
+                    person:
+                      name: Person
+                      age: 55
+  /token-metadata/{projectId}:
+    get:
+      description: Get token metadata for a project
+      operationId: metadata_getProjectTokenMetadata
+      tags:
+        - Metadata
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataGetProjectTokenMetadataResponse'
+      security:
+        - BearerAuth: []
+  /token-metadata/update/{projectId}/{chainId}/{tokenAddress}/{tokenId}:
+    post:
+      description: Set metadata for a specific token ID
+      operationId: metadata_setMetadata
+      tags:
+        - Metadata
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          examples:
+            json:
+              value: b03c8fc7-674f-4f57-b217-dd13f303fef7
+            redirectUrl:
+              value: b03c8fc7-674f-4f57-b217-dd13f303fef7
+        - name: chainId
+          in: path
+          required: true
+          schema:
+            type: integer
+          examples:
+            json:
+              value: 1
+            redirectUrl:
+              value: 1
+        - name: tokenAddress
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            json:
+              value: '0x57c4EF7a0C175B8F09aeF8aB0082614eC50Bbf76'
+            redirectUrl:
+              value: '0x57c4EF7a0C175B8F09aeF8aB0082614eC50Bbf76'
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            json:
+              value: '0'
+            redirectUrl:
+              value: '0'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataMetadataResponse'
+              examples:
+                json:
+                  value:
+                    type: json
+                    content:
+                      name: Syndicate
+                      description: Syndicate Metadata
+                      image: ipfs://QmTaJLGKdNitrU3b72Mg5tWbTrEP2gi4znBYNGYEkE5axD
+                redirectUrl:
+                  value:
+                    type: redirectUrl
+                    content: https://metadata-server.com/1.json
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataErrorWithMessage'
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/metadataSetMetadataRequest'
+            examples:
+              json:
+                value:
+                  type: json
+                  content:
+                    name: Syndicate
+                    description: Syndicate Metadata
+                    image: ipfs://QmTaJLGKdNitrU3b72Mg5tWbTrEP2gi4znBYNGYEkE5axD
+              redirectUrl:
+                value:
+                  type: redirectUrl
+                  content: https://metadata-server.com/1.json
+  /token-metadata/default/{projectId}/{chainId}/{tokenAddress}:
+    post:
+      description: Sets metadata for all tokens that do not have metadata explicitly set
+      operationId: metadata_setDefaultMetadata
+      tags:
+        - Metadata
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          examples:
+            json:
+              value: b03c8fc7-674f-4f57-b217-dd13f303fef7
+            redirectUrl:
+              value: b03c8fc7-674f-4f57-b217-dd13f303fef7
+        - name: chainId
+          in: path
+          required: true
+          schema:
+            type: integer
+          examples:
+            json:
+              value: 1
+            redirectUrl:
+              value: 1
+        - name: tokenAddress
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            json:
+              value: '0x57c4EF7a0C175B8F09aeF8aB0082614eC50Bbf76'
+            redirectUrl:
+              value: '0x57c4EF7a0C175B8F09aeF8aB0082614eC50Bbf76'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataMetadataResponse'
+              examples:
+                json:
+                  value:
+                    type: json
+                    content:
+                      name: Syndicate
+                      description: Syndicate Metadata
+                      image: ipfs://QmTaJLGKdNitrU3b72Mg5tWbTrEP2gi4znBYNGYEkE5axD
+                redirectUrl:
+                  value:
+                    type: redirectUrl
+                    content: https://metadata-server.com/1.json
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataErrorWithMessage'
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/metadataSetMetadataRequest'
+            examples:
+              json:
+                value:
+                  type: json
+                  content:
+                    name: Syndicate
+                    description: Syndicate Metadata
+                    image: ipfs://QmTaJLGKdNitrU3b72Mg5tWbTrEP2gi4znBYNGYEkE5axD
+              redirectUrl:
+                value:
+                  type: redirectUrl
+                  content: https://metadata-server.com/1.json
+  /token-metadata/bulk/{projectId}/{chainId}/{tokenAddress}:
+    post:
+      description: Set metadata for many distinct token IDs
+      operationId: metadata_setBulkMetadata
+      tags:
+        - Metadata
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          examples:
+            json:
+              value: b03c8fc7-674f-4f57-b217-dd13f303fef7
+            redirectUrl:
+              value: b03c8fc7-674f-4f57-b217-dd13f303fef7
+        - name: chainId
+          in: path
+          required: true
+          schema:
+            type: integer
+          examples:
+            json:
+              value: 1
+            redirectUrl:
+              value: 1
+        - name: tokenAddress
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            json:
+              value: '0x57c4EF7a0C175B8F09aeF8aB0082614eC50Bbf76'
+            redirectUrl:
+              value: '0x57c4EF7a0C175B8F09aeF8aB0082614eC50Bbf76'
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+          examples:
+            json:
+              value: '1'
+            redirectUrl:
+              value: '1'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataMetadataResponse'
+              examples:
+                json:
+                  value:
+                    type: json
+                    content:
+                      name: Syndicate
+                      description: Syndicate Metadata
+                      image: ipfs://QmTaJLGKdNitrU3b72Mg5tWbTrEP2gi4znBYNGYEkE5axD
+                redirectUrl:
+                  value:
+                    type: redirectUrl
+                    content: https://metadata-server.com/1.json
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataErrorWithMessage'
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/metadataSetMetadataRequest'
+            examples:
+              json:
+                value:
+                  type: json
+                  content:
+                    name: Syndicate
+                    description: Syndicate Metadata
+                    image: ipfs://QmTaJLGKdNitrU3b72Mg5tWbTrEP2gi4znBYNGYEkE5axD
+              redirectUrl:
+                value:
+                  type: redirectUrl
+                  content: https://metadata-server.com/1.json
+  /token-metadata/range/{projectId}/{chainId}/{tokenAddress}:
+    post:
+      description: Set metadata for a range of token IDs
+      operationId: metadata_setRangeMetadata
+      tags:
+        - Metadata
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          examples:
+            json:
+              value: b03c8fc7-674f-4f57-b217-dd13f303fef7
+            redirectUrl:
+              value: b03c8fc7-674f-4f57-b217-dd13f303fef7
+        - name: chainId
+          in: path
+          required: true
+          schema:
+            type: integer
+          examples:
+            json:
+              value: 1
+            redirectUrl:
+              value: 1
+        - name: tokenAddress
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            json:
+              value: '0x57c4EF7a0C175B8F09aeF8aB0082614eC50Bbf76'
+            redirectUrl:
+              value: '0x57c4EF7a0C175B8F09aeF8aB0082614eC50Bbf76'
+        - name: start
+          in: query
+          required: true
+          schema:
+            type: string
+          examples:
+            json:
+              value: '0'
+            redirectUrl:
+              value: '0'
+        - name: end
+          in: query
+          required: true
+          schema:
+            type: string
+          examples:
+            json:
+              value: '1'
+            redirectUrl:
+              value: '1'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataMetadataResponse'
+              examples:
+                json:
+                  value:
+                    type: json
+                    content:
+                      name: Syndicate
+                      description: Syndicate Metadata
+                      image: ipfs://QmTaJLGKdNitrU3b72Mg5tWbTrEP2gi4znBYNGYEkE5axD
+                redirectUrl:
+                  value:
+                    type: redirectUrl
+                    content: https://metadata-server.com/1.json
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataErrorWithMessage'
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/metadataSetMetadataRequest'
+            examples:
+              json:
+                value:
+                  type: json
+                  content:
+                    name: Syndicate
+                    description: Syndicate Metadata
+                    image: ipfs://QmTaJLGKdNitrU3b72Mg5tWbTrEP2gi4znBYNGYEkE5axD
+              redirectUrl:
+                value:
+                  type: redirectUrl
+                  content: https://metadata-server.com/1.json
+  /token-metadata/media/{projectId}/{chainId}/{tokenAddress}:
+    post:
+      description: Upload media to pin to IPFS. Maximum upload size is 1 MB.
+      operationId: metadata_uploadMedia
+      tags:
+        - Metadata
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: chainId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: tokenAddress
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataUploadMediaResponse'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metadataErrorWithMessage'
+      security:
+        - BearerAuth: []
+  /webhook/project/{projectId}/eventCallback:
+    post:
+      description: Create an event callback
+      operationId: webhookService_createEventCallback
+      tags:
+        - WebhookService
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook-serviceEventCallback'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook-serviceErrorBody'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook-serviceErrorBody'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webhook-serviceCreateEventCallbackRequest'
+    get:
+      description: Get all event callbacks for a project
+      operationId: webhookService_getEventCallbacksByProject
+      tags:
+        - WebhookService
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/webhook-serviceEventCallback'
+        '404':
+          description: ''
+  /webhook/project/{projectId}/eventCallback/{callbackEventId}:
+    delete:
+      description: Delete an event callback
+      operationId: webhookService_deleteEventCallback
+      tags:
+        - WebhookService
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: callbackEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+    get:
+      description: Get event callback info by id
+      operationId: webhookService_getEventCallback
+      tags:
+        - WebhookService
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: callbackEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook-serviceEventCallback'
+        '404':
+          description: ''
+  /webhook/project/{projectId}/eventCallback/{callbackEventId}/update:
+    post:
+      description: Update the callback URL of an event callback
+      operationId: webhookService_updateEventCallback
+      tags:
+        - WebhookService
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: callbackEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook-serviceEventCallback'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook-serviceErrorBody'
+        '404':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/webhook-serviceUpdateEventCallbackRequest'
+  /webhook/project/{projectId}/eventCallback/{callbackEventId}/rotateSecret:
+    post:
+      description: Rotate the secret for an event callback
+      operationId: webhookService_rotateSecret
+      tags:
+        - WebhookService
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: callbackEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook-serviceEventCallback'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook-serviceErrorBody'
+  /wallet/project/{projectId}/request/{transactionId}:
+    get:
+      description: Get a transaction request by id
+      operationId: wallet_getTransactionRequest
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletTransactionResponse'
+        '404':
+          description: ''
+      security:
+        - BearerAuth: []
+  /wallet/project/{projectId}/requests:
+    get:
+      description: Gets a list of transaction requests for a project
+      operationId: wallet_getTransactionRequestsByProject
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: search
+          in: query
+          description: >-
+            Optional search parameter will filter by function signature,
+            contract address, or transaction id
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: invalid
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: noAttempts
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/walletRequestStatus'
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/walletTransactionRequestsByProjectResponse
+        '404':
+          description: ''
+      security:
+        - BearerAuth: []
+  /wallet/project/{projectId}/wallets:
+    get:
+      description: Gets a list of wallets for a project
+      operationId: wallet_getWalletsByProject
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: withData
+          in: query
+          description: >-
+            Optional parameter to return this address's balance and total count
+            of confirmed transactions
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/walletWalletWithTxCountAndBalance'
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+  /wallet/project/{projectId}/transactions:
+    get:
+      description: Gets a list of transaction attempts for a project
+      operationId: wallet_getTransactionsByProject
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: search
+          in: query
+          description: >-
+            Optional search parameter will filter by transaction hash, wallet
+            address, or transaction id
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: reverted
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/walletAttemptStatus'
+              nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletTransactionsByProjectResponse'
+      security:
+        - BearerAuth: []
+  /wallet/project/{projectId}/personalSign:
+    post:
+      description: Sign EIP191 compliant message
+      operationId: wallet_personalSign
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletSignatureResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletErrorBody'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletErrorBody'
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/walletPersonalSignRequest'
+  /wallet/project/{projectId}/signTypedData:
+    post:
+      description: Sign EIP712 compliant typed data
+      operationId: wallet_signTypedData
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletSignatureResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletErrorBody'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletErrorBody'
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/walletSignTypedDataRequest'
+  /wallet/project/{projectId}/signTypedDataWithLookup:
+    post:
+      description: >-
+        Sign EIP712 compliant typed data after asserting all lookups are valid.
+        Lookups can be view or pure functions on smart contracts. Responses are
+        compared to specified values in the request.
+      operationId: wallet_signTypedDataWithLookup
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletSignatureResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletErrorBody'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletErrorBody'
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/walletSignTypedDataWithLookupRequest'
+  /wallet/project/{projectId}/signatures:
+    get:
+      description: Get signatures for a project
+      operationId: wallet_getProjectSignatures
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/walletSignature'
+      security:
+        - BearerAuth: []
+  /wallet/project/{projectId}/signature/{signatureId}:
+    get:
+      description: Get a signature by ID
+      operationId: wallet_getSignature
+      tags:
+        - Wallet
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: signatureId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletSignature'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/walletErrorBody'
+      security:
+        - BearerAuth: []
+  /wallet/chains:
+    get:
+      description: Get supported chains
+      operationId: wallet_getChains
+      tags:
+        - Wallet
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/walletChain'
+      security:
+        - BearerAuth: []
+  /wallet/call:
+    post:
+      description: Read data from a view function on a smart contract
+      operationId: wallet_call
+      tags:
+        - Wallet
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/walletReadContractRequest'
+  /admin/allowedIP:
+    post:
+      description: Create an IP range allowlist
+      operationId: apiKeyManager_admin_createAllowedIPRange
+      tags:
+        - ApiKeyManagerAdmin
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-key-managerAllowlistIpRange'
+        '400':
+          description: ''
+        '401':
+          description: ''
+        '404':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-key-managerCreateAllowedIPRangeRequest'
+  /admin/project/{projectId}/allowedIP/{IPId}:
+    delete:
+      description: Delete an IP range allowlist
+      operationId: apiKeyManager_admin_deleteAllowedIPRange
+      tags:
+        - ApiKeyManagerAdmin
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: IPId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+        '404':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+  /admin/project/{projectId}/functionSignature/{functionSignatureId}:
+    delete:
+      description: Delete a function signature
+      operationId: apiKeyManager_admin_deleteFunctionSignature
+      tags:
+        - ApiKeyManagerAdmin
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: functionSignatureId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+        '404':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+  /admin/project:
+    post:
+      description: Create a new project. Only available with environment wide API keys.
+      operationId: apiKeyManager_admin_createProject
+      tags:
+        - ApiKeyManagerAdmin
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-key-managerProject'
+        '400':
+          description: ''
+        '403':
+          description: ''
+        '404':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-key-managerCreateProjectRequest'
+  /admin/project/{projectId}/updateName:
+    post:
+      description: Update a project name
+      operationId: apiKeyManager_admin_updateProjectName
+      tags:
+        - ApiKeyManagerAdmin
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-key-managerProject'
+        '400':
+          description: ''
+        '401':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-key-managerUpdateProjectNameRequest'
+  /admin/project/{projectId}:
+    get:
+      description: Get a specific project
+      operationId: apiKeyManager_admin_getProject
+      tags:
+        - ApiKeyManagerAdmin
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-key-managerProject'
+        '401':
+          description: ''
+      security:
+        - BearerAuth: []
+  /admin/project/{projectId}/allowedIPRanges:
+    get:
+      description: Get allowed IP ranges by project ID
+      operationId: apiKeyManager_admin_getProjectAllowedIPRanges
+      tags:
+        - ApiKeyManagerAdmin
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/api-key-managerAllowlistIpRange'
+        '401':
+          description: ''
+      security:
+        - BearerAuth: []
+  /admin/contract/authorizeWithFunctionSignatures:
+    post:
+      description: Authorize a contract with function signatures
+      operationId: apiKeyManager_admin_authorizeContractWithFunctionSignatures
+      tags:
+        - ApiKeyManagerAdmin
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-key-managerContract'
+        '400':
+          description: ''
+        '404':
+          description: ''
+        '409':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/api-key-managerAuthorizeContractWithFunctionSignaturesRequest
+  /admin/contract/authorizeWithJSONABI:
+    post:
+      description: >-
+        Authorize a contract and its corresponding function signatures using the
+        JSON ABI format.
+      operationId: apiKeyManager_admin_authorizeContractWithJSONABI
+      tags:
+        - ApiKeyManagerAdmin
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-key-managerContract'
+              examples:
+                Example1:
+                  value:
+                    id: 70c2891a-6471-4b50-844b-6a58b69ff8fb
+                    createdAt: '2023-10-25T13:00:49.667604Z'
+                    updatedAt: '2023-10-25T13:00:49.667604Z'
+                    projectId: 638d1d78-d63d-4cda-9f1e-4d0799acfeee
+                    chainId: 80001
+                    address: '0x94f6E9c420Db1566A3c035Df291F206eBfAfC762'
+                    name: My Contract
+                    functionSignatures:
+                      - id: 4416002f-6b79-4c24-b367-80572c37f35a
+                        createdAt: '2023-10-25T13:00:49.667604Z'
+                        signature: addPerson((string name, uint16 age) person))
+                        functionAbi:
+                          type: function
+                          name: addPerson
+                          inputs:
+                            - name: person
+                              type: tuple
+                              components:
+                                - name: name
+                                  type: string
+                                - name: age
+                                  type: uint16
+                          stateMutability: nonpayable
+                        hashedSignature: '0x1234'
+                        contractId: 70c2891a-6471-4b50-844b-6a58b69ff8fb
+                        payable: false
+        '400':
+          description: ''
+        '404':
+          description: ''
+        '409':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/api-key-managerAuthorizeContractWithJSONABIRequest
+            examples:
+              Example1:
+                value:
+                  chainId: 80001
+                  address: '0x94f6E9c420Db1566A3c035Df291F206eBfAfC762'
+                  name: My Contract
+                  projectId: 638d1d78-d63d-4cda-9f1e-4d0799acfeee
+                  abi:
+                    - type: function
+                      name: addPerson
+                      constant: false
+                      payable: false
+                      inputs:
+                        - type: tuple
+                          name: person
+                          components:
+                            - type: string
+                              name: name
+                            - type: uint16
+                              name: age
+                      outputs: []
+  /admin/project/{projectId}/contract/{contractId}:
+    delete:
+      description: Delete a contract
+      operationId: apiKeyManager_admin_deleteContract
+      tags:
+        - ApiKeyManagerAdmin
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: contractId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+        '404':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+  /admin/project/{projectId}/contract/{chainId}/{contractAddress}/claim:
+    post:
+      description: >-
+        Claim a contract. This contract must be authorized in your project
+        first. See [Authorize Contract with Function
+        Signatures](https://docs.syndicate.io/open-api/admin/authorize-with-fn-sigs)
+        to authorize a contract in your project.
+      operationId: apiKeyManager_admin_claimContract
+      tags:
+        - ApiKeyManagerAdmin
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: chainId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: contractAddress
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-key-managerContract'
+        '400':
+          description: ''
+        '404':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    fundingTransactionsByProjectResponse:
+      title: fundingTransactionsByProjectResponse
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/fundingTransaction'
+        total:
+          type: integer
+      required:
+        - transactions
+        - total
+    fundingTransaction:
+      title: fundingTransaction
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        chainId:
+          type: integer
+        projectId:
+          type: string
+        fromAddress:
+          type: string
+        toAddress:
+          type: string
+        amount:
+          type: string
+        hash:
+          type: string
+        signedTxn:
+          type: string
+        block:
+          type: integer
+        status:
+          $ref: '#/components/schemas/fundingTransactionStatus'
+        blockCreatedAt:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - chainId
+        - projectId
+        - fromAddress
+        - toAddress
+        - amount
+        - hash
+        - signedTxn
+        - block
+        - status
+    fundingTransactionStatus:
+      title: fundingTransactionStatus
+      type: string
+      enum:
+        - PENDING
+        - PROCESSED
+        - SUBMITTED
+        - CONFIRMED
+        - FAILED
+    transactErrorBody:
+      title: transactErrorBody
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    transactSendTransactionRequest:
+      title: transactSendTransactionRequest
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid
+          nullable: true
+          description: >-
+            (Optional) ID of the request. Needs to be a valid UUID. If provided,
+            it will be saved and returned as the transactionId of the response.
+            If not provided, we will generate one for you and return it as the
+            transactionId.
+        projectId:
+          type: string
+          format: uuid
+          description: ID of the project you want this request to be sent from
+          example: 638d1d78-d63d-4cda-9f1e-4d0799acfeee
+        contractAddress:
+          type: string
+          description: The contract address to send request to
+          example: '0x94f6E9c420Db1566A3c035Df291F206eBfAfC762'
+        chainId:
+          type: integer
+          format: int64
+          description: >-
+            The chain ID for the network (e.g. 1 for Ethereum Mainnet, 137 for
+            Polygon Mainnet, 80001 for Polygon Mumbai). For a complete list of
+            chain IDs, see
+            [ChainList](https://chainlist.org/?search=&testnets=true).
+          example: 80001
+        functionSignature:
+          type: string
+          description: The human readable signature to call on the contract
+          example: addPerson((string name, uint16 age) person))
+        args:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: >-
+            (Optional) The function arguments for the transaction if any. The
+            keys are the argument names or index from the provided function
+            signature and the values are the argument values.
+      required:
+        - projectId
+        - contractAddress
+        - chainId
+        - functionSignature
+    transactSendTransactionResponse:
+      title: transactSendTransactionResponse
+      type: object
+      properties:
+        transactionId:
+          type: string
+          format: uuid
+          example: 561b77ed-6e35-4248-87ef-c6af93f3bad9
+      required:
+        - transactionId
+    metadataTokenMetadata:
+      title: metadataTokenMetadata
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        chainId:
+          type: integer
+        tokenAddress:
+          type: string
+        tokenId:
+          type: string
+        metadataId:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+        - createdAt
+        - updatedAt
+        - chainId
+        - tokenAddress
+        - tokenId
+        - metadataId
+    metadataErrorWithMessage:
+      title: metadataErrorWithMessage
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    metadataUploadMediaResponse:
+      title: metadataUploadMediaResponse
+      type: object
+      properties:
+        ipfsHash:
+          type: string
+      required:
+        - ipfsHash
+    metadataGetProjectTokenMetadataResponse:
+      title: metadataGetProjectTokenMetadataResponse
+      type: object
+      properties:
+        metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/metadataTokenMetadata'
+        total:
+          type: integer
+      required:
+        - metadata
+        - total
+    metadataMetadataJSON:
+      title: metadataMetadataJSON
+      type: object
+      description: >-
+        The metadata JSON blob to store. This blob will be pinned to IPFS. We
+        recommend you follow [OpenSea's Metadata
+        Standards](https://docs.opensea.io/docs/metadata-standards#metadata-structure).
+      properties:
+        content: {}
+      required:
+        - content
+    metadataMetadataRedirectURL:
+      title: metadataMetadataRedirectURL
+      type: object
+      description: >-
+        The redirect URL to where the metadata resides. Attempts to resolve the
+        URL will timeout after 5 seconds.
+      properties:
+        content:
+          type: string
+      required:
+        - content
+    metadataSetMetadataRequest:
+      title: metadataSetMetadataRequest
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - json
+            - $ref: '#/components/schemas/metadataMetadataJSON'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - redirectUrl
+            - $ref: '#/components/schemas/metadataMetadataRedirectURL'
+          required:
+            - type
+    metadataMetadataResponse:
+      title: metadataMetadataResponse
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - json
+            - $ref: '#/components/schemas/metadataMetadataJSON'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - redirectUrl
+            - $ref: '#/components/schemas/metadataMetadataRedirectURL'
+          required:
+            - type
+    webhook-serviceEventTypeEnum:
+      title: webhook-serviceEventTypeEnum
+      type: string
+      enum:
+        - TransactionStatusChange
+        - WalletBalanceLow
+    webhook-serviceEventCallbackStats:
+      title: webhook-serviceEventCallbackStats
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        eventCallbackId:
+          type: string
+        responseStatus:
+          type: integer
+        data: {}
+      required:
+        - createdAt
+        - eventCallbackId
+        - responseStatus
+        - data
+    webhook-serviceEventCallback:
+      title: webhook-serviceEventCallback
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        callbackURL:
+          type: string
+        eventType:
+          $ref: '#/components/schemas/webhook-serviceEventTypeEnum'
+        secret:
+          type: string
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/webhook-serviceEventCallbackStats'
+          nullable: true
+      required:
+        - id
+        - projectId
+        - callbackURL
+        - eventType
+        - secret
+    webhook-serviceCreateEventCallbackRequest:
+      title: webhook-serviceCreateEventCallbackRequest
+      type: object
+      properties:
+        callbackURL:
+          type: string
+        eventType:
+          $ref: '#/components/schemas/webhook-serviceEventTypeEnum'
+      required:
+        - callbackURL
+        - eventType
+    webhook-serviceUpdateEventCallbackRequest:
+      title: webhook-serviceUpdateEventCallbackRequest
+      type: object
+      properties:
+        callbackURL:
+          type: string
+      required:
+        - callbackURL
+    webhook-serviceErrorBody:
+      title: webhook-serviceErrorBody
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    walletReadContractRequest:
+      title: walletReadContractRequest
+      type: object
+      properties:
+        chainId:
+          type: integer
+          format: int64
+          description: The chain ID for the network
+        functionSignature:
+          type: string
+          description: The human readable abi function signature you want to call
+        contractAddress:
+          type: string
+          description: The contract address to read from
+        args:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: >-
+            (Optional) The function arguments if any. The keys are the argument
+            names or index from the provided function signature and the values
+            are the argument values
+      required:
+        - chainId
+        - functionSignature
+        - contractAddress
+    walletPersonalSignRequest:
+      title: walletPersonalSignRequest
+      type: object
+      properties:
+        signatureId:
+          type: string
+          format: uuid
+          nullable: true
+          description: >-
+            (Optional) ID of the request. Needs to be a valid UUID. If provided,
+            it will be saved and returned as the signatureId of the response. If
+            not provided, we will generate one for you and return it as the
+            signatureId.
+        signerAddress:
+          type: string
+          description: Address of a project wallet that will be used to sign the 'message'.
+        message:
+          type: string
+          description: Data to be signed by the 'signerAddress'
+      required:
+        - signerAddress
+        - message
+    walletSignTypedDataRequest:
+      title: walletSignTypedDataRequest
+      type: object
+      properties:
+        signatureId:
+          type: string
+          format: uuid
+          nullable: true
+          description: >-
+            (Optional) ID of the request. Needs to be a valid UUID. If provided,
+            it will be saved and returned as the signatureId of the response. If
+            not provided, we will generate one for you and return it as the
+            signatureId.
+        signerAddress:
+          type: string
+          description: Address of a project wallet that will be used to sign the 'message'.
+        message:
+          type: object
+          additionalProperties: true
+          description: >-
+            Data to be signed by the 'signerAddress'. The message's structure
+            must be correctly defined in the 'types' mapping, specified by the
+            'primaryType'.
+        domain:
+          $ref: '#/components/schemas/walletEIP712Domain'
+          description: >-
+            Components of the [domain
+            seperator](https://eips.ethereum.org/EIPS/eip-712#definition-of-domainseparator).
+            At least one field is required.
+        types:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/walletEIP712Types'
+          description: >-
+            Type definitions of the domain and data you are requesting signature
+            of. At minimum you must define the domain with key 'EIP712Domain'
+            and the type of your message with key specified by 'primaryType'.
+            More information
+            [here](https://eips.ethereum.org/EIPS/eip-712#definition-of-typed-structured-data-%F0%9D%95%8A).
+        primaryType:
+          type: string
+          description: >-
+            Specifies the name of the key in 'types' that describes the shape of
+            the 'message'.
+      required:
+        - signerAddress
+        - message
+        - domain
+        - types
+        - primaryType
+    walletEIP712Domain:
+      title: walletEIP712Domain
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+        chainId:
+          type: integer
+        verifyingContract:
+          type: string
+          nullable: true
+        salt:
+          type: string
+          nullable: true
+      required:
+        - chainId
+    walletEIP712Types:
+      title: walletEIP712Types
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+      required:
+        - name
+        - type
+    walletSignTypedDataWithLookupRequest:
+      title: walletSignTypedDataWithLookupRequest
+      type: object
+      properties:
+        lookups:
+          type: array
+          items:
+            $ref: '#/components/schemas/walletLookup'
+          description: >-
+            Specify a maximum of 5 contract lookups to compare data with. All
+            lookups must be valid to receive a signature by the 'signerAddress'.
+      required:
+        - lookups
+      allOf:
+        - $ref: '#/components/schemas/walletSignTypedDataRequest'
+    walletLookup:
+      title: walletLookup
+      $ref: '#/components/schemas/walletContractLookup'
+      description: >-
+        Smart contract call with operation and value to make an assertion about
+        onchain data. Supported operations are equal to (eq), greater than (gt),
+        and less than (lt). The data returned by the contract in conjunction
+        with the specified 'operation' and 'value' must be valid to receive a
+        signature.
+    walletLookupOperation:
+      title: walletLookupOperation
+      type: string
+      enum:
+        - eq
+        - gt
+        - lt
+    walletBaseLookup:
+      title: walletBaseLookup
+      type: object
+      properties:
+        value:
+          type: string
+        operation:
+          $ref: '#/components/schemas/walletLookupOperation'
+      required:
+        - value
+        - operation
+    walletLookupType:
+      title: walletLookupType
+      type: string
+      enum:
+        - contract
+    walletContractLookup:
+      title: walletContractLookup
+      type: object
+      description: >-
+        Specify a pure or view function on a contract at 'contractAddress' on a
+        specific 'chainId' to read data from. 'args' are optional, but must be
+        passed if specified in the human readable 'functionSignature'
+      properties:
+        type:
+          $ref: '#/components/schemas/walletLookupType'
+        contractAddress:
+          type: string
+          description: The contract address to send request to
+        functionSignature:
+          type: string
+          description: The human readable signature to call on the contract
+        args:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: >-
+            (Optional) The function arguments for the read contract call. The
+            keys are the argument names or index from the provided
+            'functionSignature' and the values are the argument values.
+        chainId:
+          type: integer
+          description: >-
+            The chain ID for the network (e.g. 1 for Ethereum Mainnet, 137 for
+            Polygon Mainnet, 80001 for Polygon Mumbai). For a complete list of
+            chain IDs, see
+            [ChainList](https://chainlist.org/?search=&testnets=true).
+      required:
+        - type
+        - contractAddress
+        - functionSignature
+        - chainId
+      allOf:
+        - $ref: '#/components/schemas/walletBaseLookup'
+    walletSignature:
+      title: walletSignature
+      type: object
+      properties:
+        signatureId:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        walletAddress:
+          type: string
+        domain:
+          $ref: '#/components/schemas/walletEIP712Domain'
+        types:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/walletEIP712Types'
+        message:
+          type: object
+          additionalProperties: true
+        primaryType:
+          type: string
+        signature:
+          type: string
+        lookups:
+          type: array
+          items:
+            $ref: '#/components/schemas/walletLookup'
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - signatureId
+        - projectId
+        - walletAddress
+        - domain
+        - types
+        - message
+        - primaryType
+        - signature
+        - createdAt
+    walletSignatureResponse:
+      title: walletSignatureResponse
+      type: object
+      properties:
+        message:
+          description: The raw data requested to be signed.
+        signature:
+          type: string
+          description: The signature of 'message' by the 'signerAddress'.
+        signerAddress:
+          type: string
+          description: The address of the signer of the 'signature'.
+        signatureId:
+          type: string
+          format: uuid
+          description: UUID of the signature request.
+      required:
+        - message
+        - signature
+        - signerAddress
+        - signatureId
+    walletWallet:
+      title: walletWallet
+      type: object
+      properties:
+        walletId:
+          type: string
+          format: uuid
+        walletAddress:
+          type: string
+        chainId:
+          type: integer
+        nonce:
+          type: integer
+        isActive:
+          type: boolean
+        projectId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        walletType:
+          $ref: '#/components/schemas/walletWalletType'
+      required:
+        - walletId
+        - walletAddress
+        - chainId
+        - nonce
+        - isActive
+        - projectId
+        - createdAt
+        - updatedAt
+        - walletType
+    walletWalletType:
+      title: walletWalletType
+      type: string
+      enum:
+        - BROADCAST
+        - SIGNING
+    walletWalletWithTxCountAndBalance:
+      title: walletWalletWithTxCountAndBalance
+      type: object
+      properties:
+        txCount:
+          type: integer
+          nullable: true
+          description: Number of confirmed transactions submitted by this address
+        balance:
+          type: string
+          nullable: true
+          description: >-
+            Balance in wei of this address's native gas token, as defined by
+            chainId
+      allOf:
+        - $ref: '#/components/schemas/walletWallet'
+    walletTransactionResponse:
+      title: walletTransactionResponse
+      type: object
+      properties:
+        transactionId:
+          type: string
+        chainId:
+          type: integer
+        projectId:
+          type: string
+        invalid:
+          type: boolean
+        contractAddress:
+          type: string
+        functionSignature:
+          type: string
+        data:
+          type: string
+          description: >-
+            ABI encoded representation of the function name and parameters
+            passed as input
+        decodedData:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: >-
+            Decoded function arguments passed as input to the contract's
+            function identified by 'functionSignature'
+        value:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        transactionAttempts:
+          type: array
+          items:
+            $ref: '#/components/schemas/walletTransactionAttempt'
+          nullable: true
+      required:
+        - transactionId
+        - chainId
+        - projectId
+        - invalid
+        - contractAddress
+        - functionSignature
+        - data
+        - value
+        - createdAt
+        - updatedAt
+    walletTransactionAttempt:
+      title: walletTransactionAttempt
+      type: object
+      properties:
+        transactionId:
+          type: string
+        hash:
+          type: string
+        chainId:
+          type: integer
+        version:
+          type: integer
+        status:
+          $ref: '#/components/schemas/walletAttemptStatus'
+        block:
+          type: integer
+        blockCreatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        signedTxn:
+          type: string
+        walletAddress:
+          type: string
+        reverted:
+          type: boolean
+        nonce:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - transactionId
+        - hash
+        - chainId
+        - version
+        - status
+        - block
+        - signedTxn
+        - walletAddress
+        - reverted
+        - nonce
+        - createdAt
+        - updatedAt
+    walletTransactionsByProjectResponse:
+      title: walletTransactionsByProjectResponse
+      type: object
+      properties:
+        transactionAttempts:
+          type: array
+          items:
+            $ref: '#/components/schemas/walletTransactionAttempt'
+        total:
+          type: integer
+      required:
+        - transactionAttempts
+        - total
+    walletTransactionRequestsByProjectResponse:
+      title: walletTransactionRequestsByProjectResponse
+      type: object
+      properties:
+        transactionRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/walletTransactionResponse'
+        total:
+          type: integer
+      required:
+        - transactionRequests
+        - total
+    walletAttemptStatus:
+      title: walletAttemptStatus
+      type: string
+      enum:
+        - PENDING
+        - PROCESSED
+        - SUBMITTED
+        - CONFIRMED
+        - PAUSED
+        - ABANDONED
+    walletRequestStatus:
+      title: walletRequestStatus
+      type: string
+      enum:
+        - ENQUEUED
+        - ATTEMPTED
+        - FAILED_TO_ENQUEUE
+        - INVALID
+    walletChain:
+      title: walletChain
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        nativeCurrency:
+          $ref: '#/components/schemas/walletNativeCurrency'
+        blockExplorer:
+          $ref: '#/components/schemas/walletBlockExplorer'
+          nullable: true
+        testnet:
+          type: boolean
+      required:
+        - id
+        - name
+        - nativeCurrency
+        - testnet
+    walletNativeCurrency:
+      title: walletNativeCurrency
+      type: object
+      properties:
+        name:
+          type: string
+        symbol:
+          type: string
+        decimals:
+          type: integer
+      required:
+        - name
+        - symbol
+        - decimals
+    walletBlockExplorer:
+      title: walletBlockExplorer
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        apiUrl:
+          type: string
+          nullable: true
+      required:
+        - name
+        - url
+    walletErrorBody:
+      title: walletErrorBody
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    api-key-managerCreateAllowedIPRangeRequest:
+      title: api-key-managerCreateAllowedIPRangeRequest
+      type: object
+      properties:
+        projectId:
+          type: string
+        ipRange:
+          type: string
+          description: The IP range to allow, specified in CIDR notation.
+        note:
+          type: string
+          nullable: true
+          description: Must be alphanumeric and may include spaces, . ! ? , ' -
+      required:
+        - projectId
+        - ipRange
+    api-key-managerCreateProjectRequest:
+      title: api-key-managerCreateProjectRequest
+      type: object
+      properties:
+        name:
+          type: string
+        environment:
+          $ref: '#/components/schemas/api-key-managerProjectEnvironment'
+        chainId:
+          type: integer
+        organizationId:
+          type: string
+          format: uuid
+        numWallets:
+          type: integer
+          nullable: true
+          description: >-
+            Number of wallets to create for the project. Defaults to 1. Max is
+            10.
+      required:
+        - name
+        - environment
+        - chainId
+        - organizationId
+    api-key-managerUpdateProjectNameRequest:
+      title: api-key-managerUpdateProjectNameRequest
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    api-key-managerCreateContractRequest:
+      title: api-key-managerCreateContractRequest
+      type: object
+      properties:
+        chainId:
+          type: integer
+        address:
+          type: string
+        name:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - chainId
+        - address
+        - name
+        - projectId
+    api-key-managerAuthorizeContractWithFunctionSignaturesRequest:
+      title: api-key-managerAuthorizeContractWithFunctionSignaturesRequest
+      type: object
+      properties:
+        functionSignatures:
+          type: array
+          items:
+            type: string
+      required:
+        - functionSignatures
+      allOf:
+        - $ref: '#/components/schemas/api-key-managerCreateContractRequest'
+    api-key-managerAuthorizeContractWithJSONABIRequest:
+      title: api-key-managerAuthorizeContractWithJSONABIRequest
+      type: object
+      properties:
+        abi:
+          type: array
+          items: {}
+      required:
+        - abi
+      allOf:
+        - $ref: '#/components/schemas/api-key-managerCreateContractRequest'
+    api-key-managerBase:
+      title: api-key-managerBase
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - id
+        - createdAt
+    api-key-managerFunctionSignature:
+      title: api-key-managerFunctionSignature
+      type: object
+      properties:
+        signature:
+          type: string
+        functionAbi:
+          nullable: true
+          description: >-
+            JSON ABI of the function signature. Null if function signature is
+            unable to be parsed.
+        hashedSignature:
+          type: string
+        contractId:
+          type: string
+          format: uuid
+        payable:
+          type: boolean
+      required:
+        - signature
+        - hashedSignature
+        - contractId
+        - payable
+      allOf:
+        - $ref: '#/components/schemas/api-key-managerBase'
+    api-key-managerProject:
+      title: api-key-managerProject
+      type: object
+      properties:
+        name:
+          type: string
+        environment:
+          $ref: '#/components/schemas/api-key-managerProjectEnvironment'
+        organizationId:
+          type: string
+          format: uuid
+        contracts:
+          type: array
+          items:
+            $ref: '#/components/schemas/api-key-managerContract'
+        allowlistIpRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/api-key-managerAllowlistIpRange'
+      required:
+        - name
+        - environment
+        - organizationId
+        - contracts
+        - allowlistIpRanges
+      allOf:
+        - $ref: '#/components/schemas/api-key-managerBase'
+    api-key-managerContract:
+      title: api-key-managerContract
+      type: object
+      properties:
+        chainId:
+          type: integer
+          example: 80001
+        address:
+          type: string
+          example: '0x94f6E9c420Db1566A3c035Df291F206eBfAfC762'
+        name:
+          type: string
+          example: My Contract
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+        functionSignatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/api-key-managerFunctionSignature'
+        projectId:
+          type: string
+          format: uuid
+          example: 638d1d78-d63d-4cda-9f1e-4d0799acfeee
+        claimedByOrganizationId:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+        - chainId
+        - address
+        - name
+        - functionSignatures
+        - projectId
+      allOf:
+        - $ref: '#/components/schemas/api-key-managerBase'
+    api-key-managerAllowlistIpRange:
+      title: api-key-managerAllowlistIpRange
+      type: object
+      properties:
+        ipRange:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+      required:
+        - ipRange
+        - projectId
+      allOf:
+        - $ref: '#/components/schemas/api-key-managerBase'
+    api-key-managerProjectEnvironment:
+      title: api-key-managerProjectEnvironment
+      type: string
+      enum:
+        - staging
+        - production
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://api.syndicate.io
+    description: Production

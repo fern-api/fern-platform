@@ -1,0 +1,40 @@
+---
+title: Lifecycle of a Syndicate Transaction
+slug: infrastructure/lifecycle-of-a-transaction
+---
+
+
+Developers are able to review transaction requests and failures in real-time via Syndicate’s Dashboard. 
+
+**We provide automatic handling of re-orgs on the blockchain. Below are the stages to track onchain state of a transaction.**
+
+<Steps>
+  <Step title="Pending">
+    The transaction request has been signed & sent to the blockchain
+  </Step>
+  <Step title="Processed">
+    The transaction has been included in a block
+  </Step>
+  <Step title="Submitted">
+    The transaction has been successfully included in a block, with a multi-block confirmation securing its place onchain. For Ethereum, this confirmation requires 3 blocks, while for Base, Optimism, Arbitrum, Polygon, Gnosis, and Avalanche, it extends to 10 blocks
+  </Step>
+  <Step title="Confirmed">
+    The transaction is finalized and guaranteed on the blockchain
+  </Step>
+</Steps>
+
+**If the transaction is reverted**
+
+The transaction passed simulation tests but encountered a failure upon execution onchain. Such occurrences typically stem from errors within the contract logic, invalid recipient addresses, code bugs, insufficient wallet balances, or reaching the maximum supply limit of an NFT collection.
+
+
+**If the transaction is invalid**
+
+The transaction simulation failed and was not submitted to the chain.
+
+**If the transaction is paused**
+
+Your wallet is low on funds. After funding your wallet, you may restart your transactions by following the flow on transactions page within your project. You can eliminate the risk of running low on funds by enabling Managed Gas, as we offer continuous monitoring and automated funding. [Contact us](https://syndicate.zapier.app/interest-form) to learn more.
+
+
+
