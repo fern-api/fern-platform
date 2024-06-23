@@ -44,7 +44,14 @@ export class MigrateFromMintlify {
         mintJsonFiles.forEach((file) => files.delete(file));
         this.markdownFiles = Array.from(files).filter((file) => file.endsWith(".md") || file.endsWith(".mdx"));
         this.imageFiles = Array.from(files).filter(
-            (file) => file.endsWith(".png") || file.endsWith(".jpg") || file.endsWith(".jpeg") || file.endsWith(".svg") || file.endsWith(".gif") || file.endsWith(".mov") || file.endsWith(".ico"),
+            (file) =>
+                file.endsWith(".png") ||
+                file.endsWith(".jpg") ||
+                file.endsWith(".jpeg") ||
+                file.endsWith(".svg") ||
+                file.endsWith(".gif") ||
+                file.endsWith(".mov") ||
+                file.endsWith(".ico"),
         );
 
         // find shortest mint.json filename:
