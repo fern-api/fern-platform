@@ -17,7 +17,6 @@ import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useNavigationContext } from "../contexts/navigation-context";
-import "./base-components.scss";
 
 /**
  * By default, next will use /host/current/slug in SSG.

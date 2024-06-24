@@ -1,25 +1,27 @@
-.fern-anchor {
-    @apply absolute hidden md:block;
+@layer components {
+    .fern-anchor {
+        @apply absolute hidden md:block;
 
-    a {
-        @apply flex items-center border-0 relative h-6 rounded-md;
-    }
+        a {
+            @apply flex items-center border-0 relative h-6 rounded-md;
+        }
 
-    .fern-anchor-icon {
-        @apply absolute left-0 flex size-6 items-center justify-center rounded-md;
-    }
+        .fern-anchor-icon {
+            @apply absolute left-0 flex size-6 items-center justify-center rounded-md;
+        }
 
-    .fern-anchor-icon:not(.copied) {
-        @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-default;
+        .fern-anchor-icon:not(.copied) {
+            @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-default;
 
-        // @apply dark:ring-transparent dark:hover:ring-white/20;
-    }
+            // @apply dark:ring-transparent dark:hover:ring-white/20;
+        }
 
-    .fern-anchor-icon.copied {
-        @apply bg-tag-primary ring-border-accent-muted ring-1 backdrop-blur;
+        .fern-anchor-icon.copied {
+            @apply bg-tag-primary ring-border-accent-muted ring-1 backdrop-blur;
 
-        > svg {
-            @apply t-accent size-4;
+            > svg {
+                @apply t-accent size-4;
+            }
         }
     }
 }

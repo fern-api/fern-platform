@@ -1,7 +1,9 @@
-.fern-collapse-with-button {
-    @apply flex flex-col;
+@layer components {
+    .fern-collapse-with-button {
+        @apply flex flex-col;
 
-    .fern-collapse-trigger {
-        @apply ease-shift data-[state=open]:rounded-b-none data-[state=opening]:rounded-b-none data-[state=closing]:rounded-b-none;
+        .fern-collapse-trigger {
+            @apply ease-shift data-[state=open]:rounded-b-none data-[state=opening]:rounded-b-none data-[state=closing]:rounded-b-none;
+        }
     }
 }
