@@ -1,4 +1,5 @@
-import prettierPluginBabel from "prettier/plugins/babel";
+import parserBabel from "prettier/plugins/babel";
+import * as prettierPluginEstree from "prettier/plugins/estree";
 import * as prettier from "prettier/standalone";
 import { Snippet } from "./generated/api";
 
@@ -8,7 +9,7 @@ export async function formatSnippet(snippet: Snippet): Promise<Snippet> {
             const client = await prettier.format(snippet.client, {
                 tabWidth: 4,
                 parser: "babel",
-                plugins: [prettierPluginBabel],
+                plugins: [parserBabel, prettierPluginEstree],
             });
             return {
                 ...snippet,
