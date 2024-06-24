@@ -17,7 +17,7 @@ import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
@@ -61,7 +61,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
 
-    const layoutBreakpoint = useLayoutBreakpoint();
+    const layoutBreakpoint = useLayoutBreakpointValue();
 
     useEffect(() => {
         if (typeof window === "undefined" || scrollAreaRef.current == null) {

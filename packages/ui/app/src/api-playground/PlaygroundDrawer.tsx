@@ -11,7 +11,7 @@ import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "r
 import { capturePosthogEvent } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import {
     FlattenedRootPackage,
     ResolvedApiDefinition,
@@ -103,7 +103,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
 
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
-    const layoutBreakpoint = useLayoutBreakpoint();
+    const layoutBreakpoint = useLayoutBreakpointValue();
     const [height, setHeight] = usePlaygroundHeight();
 
     const x = useMotionValue(layoutBreakpoint !== "mobile" ? height : windowHeight);

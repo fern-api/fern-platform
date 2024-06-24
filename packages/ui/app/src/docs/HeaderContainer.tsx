@@ -2,7 +2,7 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { FC, useCallback } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useCloseMobileSidebar, useOpenMobileSidebar } from "../sidebar/atom";
 import { BgImageGradient } from "./BgImageGradient";
 import { Header } from "./Header";
@@ -18,7 +18,7 @@ interface HeaderContainerProps {
 export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen, logoHeight, logoHref }) => {
     const { colors, layout, tabs, navbarLinks } = useDocsContext();
     const isScrolled = useIsScrolled();
-    const layoutBreakpoint = useLayoutBreakpoint();
+    const layoutBreakpoint = useLayoutBreakpointValue();
     const openMobileSidebar = useOpenMobileSidebar();
     const closeMobileSidebar = useCloseMobileSidebar();
 

@@ -175,7 +175,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     const jsonLineLength = responseCodeSnippet?.split("\n").length ?? 0;
     const [requestHeight, responseHeight] = useMemo((): [number, number] => {
-        if (!["lg", "xl", "2xl"].includes(layoutBreakpoint)) {
+        if (layoutBreakpoint.max("lg")) {
             const requestLines = Math.min(MOBILE_MAX_LINES + 1, selectedExampleClientLineCount);
             const responseLines = Math.min(MOBILE_MAX_LINES + 1, jsonLineLength);
             const requestContainerHeight = requestLines * LINE_HEIGHT + CONTENT_PADDING;
@@ -212,7 +212,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         selectedClient.exampleCall?.responseBody,
     ]);
 
-    const padding = ["mobile", "sm", "md"].includes(layoutBreakpoint) ? 0 : 26;
+    const padding = layoutBreakpoint.max("lg") ? 0 : 26;
     const initialExampleHeight =
         requestHeight + responseHeight + (responseHeight > 0 && requestHeight > 0 ? GAP_6 : 0) + padding;
 
@@ -286,7 +286,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
                         style={{
                             // TODO: do we still need to set minHeight here?
-                            minHeight: ["mobile", "sm"].includes(layoutBreakpoint) ? undefined : `${exampleHeight}px`,
+                            minHeight: layoutBreakpoint.min("md") ? `${exampleHeight}px` : undefined,
                         }}
                     >
                         <ApiPageDescription
@@ -320,7 +320,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             "md:py-8 md:mt-0 md:top-header-height",
                         )}
                         style={{
-                            minHeight: `${exampleHeight}px`,
+                            minHeight: layoutBreakpoint.min("md") ? `${exampleHeight + 64}px` : `${exampleHeight}px`,
                         }}
                     >
                         {isInViewport && (

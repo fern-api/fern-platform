@@ -1,3 +1,4 @@
+import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { createRef, FC, useCallback, useEffect, useMemo } from "react";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
@@ -38,22 +39,9 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     const codeBlockRef = createRef<HTMLPreElement>();
     const viewportRef = createRef<ScrollToHandle>();
 
-    useEffect(() => {
-        if (measureHeight == null || codeBlockRef.current == null) {
-            return;
-        }
-
-        const resizeObserver = new ResizeObserver(([entry]) => {
-            if (entry != null) {
-                measureHeight(entry.contentRect.height);
-            }
-        });
-
-        resizeObserver.observe(codeBlockRef.current);
-        return () => {
-            resizeObserver.disconnect();
-        };
-    }, [codeBlockRef, measureHeight]);
+    useResizeObserver(codeBlockRef, ([entry]) => {
+        measureHeight?.(entry.contentRect.height);
+    });
 
     const requestHighlightLines = useMemo(() => {
         if (hoveredPropertyPath == null || hoveredPropertyPath.length === 0 || jsonStartLine === -1) {

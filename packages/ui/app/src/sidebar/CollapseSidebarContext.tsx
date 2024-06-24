@@ -1,5 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import fastdom from "fastdom";
 import { noop } from "lodash-es";
 import { useRouter } from "next/router";
 import {
@@ -11,6 +12,7 @@ import {
     useContext,
     useEffect,
     useMemo,
+    useRef,
     useState,
 } from "react";
 import urljoin from "url-join";
@@ -80,26 +82,30 @@ export const CollapseSidebarProvider: FC<
         };
     }, [invokeListeners, nodeCollector.slugMap, router.events]);
 
+    const stopMeasuring = useRef<() => void>(noop);
+
     const registerScrolledToPathListener = useCallback(
         (nodeId: FernNavigation.NodeId, targetRef: RefObject<HTMLDivElement>) =>
             registerListener(nodeId, () => {
-                if (scrollContainerRef.current == null || targetRef.current == null) {
-                    return;
-                }
+                stopMeasuring.current();
+                stopMeasuring.current = fastdom.measure(() => {
+                    if (scrollContainerRef.current == null || targetRef.current == null) {
+                        return;
+                    }
+                    // if the target is already in view, don't scroll
+                    if (
+                        targetRef.current.offsetTop >= scrollContainerRef.current.scrollTop &&
+                        targetRef.current.offsetTop + targetRef.current.clientHeight <=
+                            scrollContainerRef.current.scrollTop + scrollContainerRef.current.clientHeight
+                    ) {
+                        return;
+                    }
 
-                // if the target is already in view, don't scroll
-                if (
-                    targetRef.current.offsetTop >= scrollContainerRef.current.scrollTop &&
-                    targetRef.current.offsetTop + targetRef.current.clientHeight <=
-                        scrollContainerRef.current.scrollTop + scrollContainerRef.current.clientHeight
-                ) {
-                    return;
-                }
-
-                // if the target is outside of the scroll container, scroll to it (centered)
-                scrollContainerRef.current.scrollTo({
-                    top: targetRef.current.offsetTop - scrollContainerRef.current.clientHeight / 2,
-                    behavior: "smooth",
+                    // if the target is outside of the scroll container, scroll to it (centered)
+                    scrollContainerRef.current.scrollTo({
+                        top: targetRef.current.offsetTop - scrollContainerRef.current.clientHeight / 2,
+                        behavior: "smooth",
+                    });
                 });
             }),
         [registerListener, scrollContainerRef],

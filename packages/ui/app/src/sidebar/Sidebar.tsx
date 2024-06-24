@@ -4,7 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { clsx as cn } from "clsx";
 import { Fragment, memo, useRef } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
@@ -25,7 +25,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({ logoHeight, logo
     const { layout, tabs, currentTabIndex, sidebar } = useDocsContext();
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
-    const layoutBreakpoint = useLayoutBreakpoint();
+    const layoutBreakpoint = useLayoutBreakpointValue();
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const searchService = useSearchService();
 
@@ -106,7 +106,7 @@ function MobileSidebar(props: SidebarProps) {
 }
 
 export const Sidebar = memo<SidebarProps & { className: string }>(function Sidebar({ className, ...props }) {
-    const breakpoint = useLayoutBreakpoint();
+    const breakpoint = useLayoutBreakpointValue();
     if (["lg", "xl", "2xl"].includes(breakpoint)) {
         return (
             <div className={className}>

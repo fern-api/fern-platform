@@ -1,6 +1,7 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
@@ -67,19 +68,10 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 
     const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (ref.current != null) {
-            measureHeight(ref.current.clientHeight);
-            const resizeObserver = new ResizeObserver(([entry]) => {
-                measureHeight(entry.contentRect.height);
-            });
-            resizeObserver.observe(ref.current);
-            return () => {
-                resizeObserver.disconnect();
-            };
-        }
-        return;
-    }, [measureHeight]);
+    useResizeObserver(ref, ([entry]) => {
+        console.log("entry", endpoint.id, entry.contentRect.height);
+        measureHeight(entry.contentRect.height);
+    });
 
     const [selectedErrorExample, setSelectedErrorExample] = useState<ResolvedExampleError | undefined>(undefined);
 

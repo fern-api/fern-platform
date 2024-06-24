@@ -23,7 +23,7 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
             }
             let stopMeasuring: () => void = noop;
             const measure = () => {
-                stopMeasuring();
+                fastdom.clear(stopMeasuring);
                 stopMeasuring = fastdom.measure(() => {
                     // check if scrolled to right > 0px
                     setShowLeftMask(refCurrent.scrollLeft >= 3);

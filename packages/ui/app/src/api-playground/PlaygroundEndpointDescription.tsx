@@ -1,7 +1,7 @@
-import { useBooleanState } from "@fern-ui/react-commons";
+import { useBooleanState, useResizeObserver } from "@fern-ui/react-commons";
 import cn from "clsx";
 import dynamic from "next/dynamic";
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useRef, useState } from "react";
 import { ResolvedEndpointDefinition } from "../resolver/types";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
@@ -17,21 +17,12 @@ export function PlaygroundEndpointDescription({ endpoint }: PlaygroundEndpointDe
     const { value: showFullDescription, toggleValue: toggleShowFullDescription } = useBooleanState(false);
     const [descriptionIsClamped, setDescriptionIsClamped] = useState(false);
 
-    useEffect(() => {
-        const descriptionResizeObserver = new ResizeObserver(([e]) => {
-            if (e != null && !showFullDescription) {
-                setDescriptionIsClamped(e.target.scrollHeight > e.target.clientHeight);
-            }
-        });
-
-        if (descriptionRef.current != null) {
-            descriptionResizeObserver.observe(descriptionRef.current);
-            return () => {
-                descriptionResizeObserver.disconnect();
-            };
+    useResizeObserver(descriptionRef, ([entry]) => {
+        if (!showFullDescription) {
+            setDescriptionIsClamped(entry.target.scrollHeight > entry.target.clientHeight);
         }
-        return undefined;
-    }, [showFullDescription]);
+    });
+
     return (
         <section className="callout-soft mt-4 hidden rounded-xl p-4" onClick={toggleShowFullDescription}>
             <div

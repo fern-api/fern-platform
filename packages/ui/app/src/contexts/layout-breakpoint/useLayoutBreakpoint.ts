@@ -1,6 +1,10 @@
 import { useContext } from "react";
-import { LayoutBreakpoint, type LayoutBreakpointValue } from "./LayoutBreakpoint";
+import { Breakpoint, LayoutBreakpoint } from "./LayoutBreakpoint";
 
-export function useLayoutBreakpoint(): LayoutBreakpointValue {
+export function useLayoutBreakpointValue(): Breakpoint {
+    return useContext(LayoutBreakpoint).value;
+}
+
+export function useLayoutBreakpoint() {
     return useContext(LayoutBreakpoint);
 }

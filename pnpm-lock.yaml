@@ -621,6 +621,9 @@ importers:
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../../core-utils
+      fastdom:
+        specifier: ^1.0.12
+        version: 1.0.12
       immer:
         specifier: ^9.0.15
         version: 9.0.21
