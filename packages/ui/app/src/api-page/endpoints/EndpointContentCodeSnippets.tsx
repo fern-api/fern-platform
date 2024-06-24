@@ -69,7 +69,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     const ref = useRef<HTMLDivElement>(null);
 
     useResizeObserver(ref, ([entry]) => {
-        console.log("entry", endpoint.id, entry.contentRect.height);
         measureHeight(entry.contentRect.height);
     });
 
