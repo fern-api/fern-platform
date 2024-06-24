@@ -60,13 +60,13 @@ const Login: React.FC = () => {
                     </FernButton>
                 </div>
 
-                <div className="h-fit">
-                    <div className="relative -bottom-40">
+                <div>
+                    <div className="mt-40">
                         <span className="text-muted">Input OpenAPI. Output SDKs and Docs.</span>
                         <h1 className="text-white">Welcome to</h1>
                     </div>
                     <div className="pointer-events-none relative overflow-hidden bottom-0">
-                        <div className="aspect-[4/1.75] z-100" />
+                        <div className="aspect-[6/1.75] z-100" />
                         <FernLogo className="absolute fill-background -bottom-5 z-0" />
                     </div>
                 </div>

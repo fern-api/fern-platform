@@ -28,7 +28,7 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 });
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
-    const { layout, colors, currentVersionId } = useDocsContext();
+    const { layout, colors, currentVersionId, sidebar } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
     const { resolvedPath } = useNavigationContext();
@@ -67,8 +67,10 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                 )}
 
                 <div className="relative mx-auto flex min-h-0 w-full min-w-0 max-w-page-width flex-1">
-                    <style>
-                        {`
+                    {sidebar != null && resolvedPath.type !== "changelog-entry" && (
+                        <>
+                            <style>
+                                {`
                                 .fern-sidebar-container {
                                     border-right-width: ${colors.light?.sidebarBackground == null ? 0 : 1}px;
                                     border-left-width: ${colors.light?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
@@ -79,21 +81,20 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                                     border-left-width: ${colors.dark?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
                                 }
                             `}
-                    </style>
-                    <Sidebar
-                        className={clsx(
-                            layout?.disableHeader !== true
-                                ? "fern-sidebar-container bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block"
-                                : "fern-sidebar-container bg-sidebar border-concealed fixed hidden h-vh-minus-header w-sidebar-width lg:block",
-                            {
-                                invisible: resolvedPath.type === "changelog-entry",
-                            },
-                        )}
-                        logoHeight={logoHeight}
-                        logoHref={logoHref}
-                        showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}
-                    />
-                    {layout?.disableHeader && <div className="hidden w-sidebar-width lg:block" />}
+                            </style>
+                            <Sidebar
+                                className={clsx(
+                                    layout?.disableHeader !== true
+                                        ? "fern-sidebar-container bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block"
+                                        : "fern-sidebar-container bg-sidebar border-concealed fixed hidden h-vh-minus-header w-sidebar-width lg:block",
+                                )}
+                                logoHeight={logoHeight}
+                                logoHref={logoHref}
+                                showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}
+                            />
+                            {layout?.disableHeader && <div className="hidden w-sidebar-width lg:block" />}
+                        </>
+                    )}
 
                     <main className="fern-main">
                         {isInlineFeedbackEnabled ? (

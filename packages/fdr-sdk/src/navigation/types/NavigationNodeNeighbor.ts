@@ -7,8 +7,15 @@ export type NavigationNodeNeighbor =
     | NavigationNodeApiLeaf
     | FernNavigation.PageNode
     | FernNavigation.ChangelogNode
+    | FernNavigation.ChangelogEntryNode
     | NavigationNodeSectionOverview;
 
 export function isNeighbor(node: NavigationNode): node is NavigationNodeNeighbor {
-    return isApiLeaf(node) || node.type === "page" || node.type === "changelog" || isSectionOverview(node);
+    return (
+        isApiLeaf(node) ||
+        node.type === "page" ||
+        node.type === "changelog" ||
+        node.type === "changelogEntry" ||
+        isSectionOverview(node)
+    );
 }

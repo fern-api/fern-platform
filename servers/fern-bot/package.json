@@ -17,6 +17,7 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.335.0",
     "@fern-api/core-utils": "0.15.0-rc63",
     "@fern-api/fs-utils": "0.15.0-rc63",
     "@octokit/openapi-types": "^22.1.0",
@@ -24,7 +25,9 @@
     "fern-api": "^0.21.0",
     "find-up": "^7.0.0",
     "js-yaml": "^4.1.0",
+    "json-2-csv": "^5.5.1",
     "octokit": "^3.2.0",
+    "serverless-step-functions": "^3.21.0",
     "simple-git": "^3.24.0",
     "tmp-promise": "^3.0.3",
     "zod": "^3.22.4"
