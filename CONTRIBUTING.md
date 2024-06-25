@@ -117,3 +117,7 @@ https://vellum.docs.buildwithfern.com -> https://vellum.docs.staging.buildwithfe
 https://docs.buildwithfern.com -> https://fern.docs.staging.buildwithfern.com
 https://documentation.sayari.com -> https://sayari.docs.staging.buildwithfern.com
 ```
+
+### Create preview link
+
+When in a demo or customer repo can run `fern generate --docs --preview` which will generate a preview URL that can be used in .env.local for developing against a specific commit or branch within the customer's repo. You need access to the customer's organization in order to run this command. If the command is failing you can run `fern generate --docs --preview --log-level debug` to get a verbose output to see why it's failing.
