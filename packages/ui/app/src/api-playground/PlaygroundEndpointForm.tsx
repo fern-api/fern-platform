@@ -175,7 +175,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     <div className="mb-4 px-4">
                         <h5 className="t-muted m-0">Headers</h5>
                     </div>
-                    <FernCard className="rounded-xl p-4 shadow-sm">
+                    <FernCard className="rounded-lg p-4 shadow-sm">
                         <PlaygroundObjectPropertiesForm
                             id="header"
                             properties={endpoint.headers}
@@ -192,7 +192,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     <div className="mb-4 px-4">
                         <h5 className="t-muted m-0">Path Parameters</h5>
                     </div>
-                    <FernCard className="rounded-xl p-4 shadow-sm">
+                    <FernCard className="rounded-lg p-4 shadow-sm">
                         <PlaygroundObjectPropertiesForm
                             id="path"
                             properties={endpoint.pathParameters}
@@ -209,7 +209,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     <div className="mb-4 px-4">
                         <h5 className="t-muted m-0">Query Parameters</h5>
                     </div>
-                    <FernCard className="rounded-xl p-4 shadow-sm">
+                    <FernCard className="rounded-lg p-4 shadow-sm">
                         <PlaygroundObjectPropertiesForm
                             id="query"
                             properties={endpoint.queryParameters}
@@ -230,7 +230,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                 <div className="mb-4 px-4">
                                     <h5 className="t-muted m-0">{titleCase(formData.name)}</h5>
                                 </div>
-                                <FernCard className="rounded-xl p-4 shadow-sm">
+                                <FernCard className="rounded-lg p-4 shadow-sm">
                                     <ul className="list-none space-y-8">
                                         {formData.properties.map((property) =>
                                             visitDiscriminatedUnion(property, "type")._visit({
@@ -302,7 +302,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             <div className="mb-4 px-4">
                                 <h5 className="t-muted m-0">Body</h5>
                             </div>
-                            <FernCard className="rounded-xl p-4 shadow-sm">
+                            <FernCard className="rounded-lg p-4 shadow-sm">
                                 <PlaygroundFileUploadForm
                                     id="body"
                                     propertyKey="body"
@@ -327,7 +327,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                     <div className="mb-4 px-4">
                                         <h5 className="t-muted m-0">Body Parameters</h5>
                                     </div>
-                                    <FernCard className="rounded-xl p-4 shadow-sm">
+                                    <FernCard className="rounded-lg p-4 shadow-sm">
                                         <PlaygroundObjectPropertiesForm
                                             id="body"
                                             properties={dereferenceObjectProperties(shape, types)}
@@ -344,7 +344,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                                     <div className="mb-4 px-4">
                                         <h5 className="t-muted m-0">Optional Body</h5>
                                     </div>
-                                    <FernCard className="rounded-xl p-4 shadow-sm">
+                                    <FernCard className="rounded-lg p-4 shadow-sm">
                                         <PlaygroundTypeReferenceForm
                                             id="body"
                                             shape={shape.shape}
@@ -360,7 +360,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
                         return (
                             <div>
-                                <FernCard className="rounded-xl p-4 shadow-sm">
+                                <FernCard className="rounded-lg p-4 shadow-sm">
                                     <div className="mb-4">
                                         <h5 className="t-muted m-0">Body</h5>
                                     </div>

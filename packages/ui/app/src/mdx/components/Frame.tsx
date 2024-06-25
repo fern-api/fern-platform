@@ -11,7 +11,7 @@ export declare namespace Frame {
 export const Frame: FC<PropsWithChildren<Frame.Props>> = ({ caption, background = "default", children }) => {
     return (
         <figure
-            className={clsx("not-prose fern-card relative mb-6 mt-4 overflow-hidden rounded-xl p-2 first:mt-0", {
+            className={clsx("not-prose fern-card relative mb-6 mt-4 overflow-hidden rounded-lg p-2 first:mt-0", {
                 "bg-tag-default-soft": background === "subtle",
             })}
         >

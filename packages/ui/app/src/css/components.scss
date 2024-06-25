@@ -1,6 +1,6 @@
 @layer components {
     .fern-main {
-        @apply relative w-full min-w-0 flex-1 mt-header-height;
+        @apply relative w-full min-w-0 flex-1 border-default border rounded-lg;
     }
 
     .fern-search-bar {
@@ -102,7 +102,7 @@
     }
 
     .fern-sidebar-link-expand[data-state="active"] {
-        @apply after:content-[''] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary t-accent after:pointer-events-none;
+        @apply after:content-[''] after:absolute after:inset-1 after:rounded-lg lg:after:rounded-md after:bg-tag-primary t-accent after:pointer-events-none;
     }
 
     .fern-mdx-link {

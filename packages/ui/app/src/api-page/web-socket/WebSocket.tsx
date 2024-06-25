@@ -147,7 +147,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                 }
                                 route={route}
                                 headingElement={
-                                    <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
+                                    <div className="border-default -mx-2 flex items-center justify-between rounded-lg border px-2 py-1 transition-colors">
                                         <EndpointUrlWithOverflow
                                             path={websocket.path}
                                             method="GET"
@@ -310,7 +310,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                     </section>
                     <aside className="max-w-content-width">
                         {
-                            <div className="sticky top-header-height flex max-h-vh-minus-header scroll-mt-header-height flex-col gap-6 py-8">
+                            <div className="sticky top-0 flex max-h-vh-minus-header scroll-0 flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
                                     actions={node != null ? <PlaygroundButton state={node} /> : undefined}
@@ -374,7 +374,7 @@ function CardedSection({
         <section
             {...props}
             data-route={anchorRoute}
-            className="border-default divide-default -mx-4 divide-y rounded-xl border"
+            className="border-default divide-default -mx-4 divide-y rounded-lg border"
         >
             <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
                 <h2 className="relative mt-0 flex items-center">

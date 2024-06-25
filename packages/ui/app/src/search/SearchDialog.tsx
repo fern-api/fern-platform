@@ -91,7 +91,7 @@ function FernInstantSearch({ searchClient, searchService, inputRef }: FernInstan
     );
     return (
         <InstantSearch searchClient={searchClient} indexName={searchService.index}>
-            <div className="bg-background-translucent border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
+            <div className="bg-background-translucent border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-lg border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}
                     placeholder={placeholder}

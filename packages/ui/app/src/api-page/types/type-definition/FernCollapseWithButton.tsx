@@ -32,7 +32,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
         <div
             className={cn(
                 "fern-collapse-with-button data-[state=opening]:overflow-hidden data-[state=closing]:overflow-hidden",
-                "ring-default flex flex-col max-md:rounded-xl rounded-lg ring-1 m-px",
+                "ring-default flex flex-col max-md:rounded-lg rounded-lg ring-1 m-px",
                 {
                     "w-full": isFullWidth,
                     "w-fit max-sm:w-full": !isFullWidth,

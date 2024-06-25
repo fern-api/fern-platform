@@ -34,7 +34,7 @@ export const Card: React.FC<Card.Props> = ({
     href,
     badge,
 }) => {
-    const className = cn("text-base border p-6 not-prose rounded-xl relative block");
+    const className = cn("text-base border p-6 not-prose rounded-lg relative block");
 
     const content = (
         <>

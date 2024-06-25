@@ -140,7 +140,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
             layout !== "reference"
                 ? h(
                       "aside",
-                      { class: "top-header-height h-vh-minus-header w-sidebar-width sticky hidden shrink-0 xl:block" },
+                      { class: "top-0 h-vh-minus-header w-sidebar-width sticky hidden shrink-0 xl:block" },
                       matter?.["hide-toc"] !== true
                           ? {
                                 type: "mdxJsxFlowElement",

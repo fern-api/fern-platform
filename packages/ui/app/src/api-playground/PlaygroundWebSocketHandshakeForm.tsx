@@ -91,7 +91,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                         <div className="mb-4 px-4">
                             <h5 className="t-muted m-0">Headers</h5>
                         </div>
-                        <FernCard className="rounded-xl p-4 shadow-sm">
+                        <FernCard className="rounded-lg p-4 shadow-sm">
                             <PlaygroundObjectPropertiesForm
                                 id="header"
                                 properties={websocket.headers}
@@ -109,7 +109,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                         <div className="mb-4 px-4">
                             <h5 className="t-muted m-0">Path Parameters</h5>
                         </div>
-                        <FernCard className="rounded-xl p-4 shadow-sm">
+                        <FernCard className="rounded-lg p-4 shadow-sm">
                             <PlaygroundObjectPropertiesForm
                                 id="path"
                                 properties={websocket.pathParameters}
@@ -127,7 +127,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                         <div className="mb-4 px-4">
                             <h5 className="t-muted m-0">Query Parameters</h5>
                         </div>
-                        <FernCard className="rounded-xl p-4 shadow-sm">
+                        <FernCard className="rounded-lg p-4 shadow-sm">
                             <PlaygroundObjectPropertiesForm
                                 id="query"
                                 properties={websocket.queryParameters}

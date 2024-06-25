@@ -1,7 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import cn from "clsx";
+import cn, { clsx } from "clsx";
 import { useAtomValue } from "jotai";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
 import { FernLinkButton } from "../components/FernLinkButton";
@@ -53,7 +53,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     navbarLink.type === "github" ? null : (
                         <FernLinkButton
                             key={idx}
-                            className="group cursor-pointer"
+                            className={clsx("group cursor-pointer")}
                             href={navbarLink.url}
                             icon={navbarLink.icon}
                             intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
@@ -86,7 +86,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     return (
         <nav
             aria-label="primary"
-            className={cn("flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full", className)}
+            className={cn("flex justify-between items-center px-4 shrink-0 h-full", className)}
             ref={ref}
             style={style}
         >

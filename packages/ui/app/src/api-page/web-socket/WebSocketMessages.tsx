@@ -96,7 +96,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                     "group-focus-within:ring-border-primary":
                                         message.origin === APIV1Read.WebSocketMessageOrigin.Server,
                                     "group-focus-within:ring-default": message.origin == null,
-                                    "mb-px rounded-b-xl": index === messages.length - 1,
+                                    "mb-px rounded-b-lg": index === messages.length - 1,
                                 },
                             )}
                         />

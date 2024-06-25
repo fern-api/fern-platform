@@ -37,8 +37,8 @@ module.exports = {
                 "header-height-real": "var(--spacing-header-height-real)",
                 "header-height": "var(--spacing-header-height)",
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
-                "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
-                "vh-minus-header-padded": "calc(100vh - var(--spacing-header-height) - 2rem)",
+                "vh-minus-header": "calc(100vh - var(--spacing-header-height) - 1.5rem - 2px)",
+                "vh-minus-header-padded": "calc(100vh - var(--spacing-header-height) - 3.5rem - 2px)",
                 icon: "15px",
             },
             flex: {

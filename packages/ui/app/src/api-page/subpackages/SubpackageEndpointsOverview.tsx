@@ -11,7 +11,7 @@ export declare namespace SubpackageEndpointsOverview {
 
 export const SubpackageEndpointsOverview: React.FC<SubpackageEndpointsOverview.Props> = ({ subpackage }) => {
     return (
-        <div className="border-default flex flex-col overflow-hidden rounded-xl border">
+        <div className="border-default flex flex-col overflow-hidden rounded-lg border">
             <div className="border-default flex h-10 items-center justify-between border-b bg-white/10 px-3 py-1">
                 <div className="text-xs uppercase tracking-wide text-neutral-300">Endpoints</div>
             </div>

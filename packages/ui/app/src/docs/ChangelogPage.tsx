@@ -51,7 +51,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                                 </div>
                                             </div>
                                             <div className="-mt-2 w-72 pl-4 text-right max-xl:hidden">
-                                                <span className="t-muted text-base sticky top-header-height-padded">
+                                                <span className="t-muted text-base sticky top-0">
                                                     <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
                                                 </span>
                                             </div>

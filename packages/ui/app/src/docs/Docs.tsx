@@ -3,7 +3,8 @@ import { PLATFORM } from "@fern-ui/core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
-import { memo } from "react";
+import { useRouter } from "next/router";
+import { memo, useEffect, useRef } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
@@ -11,7 +12,6 @@ import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayou
 import { useNavigationContext } from "../contexts/navigation-context";
 import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { useCreateSearchService } from "../services/useSearchService";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom";
 import { DocsMainContent } from "./DocsMainContent";
 import { HeaderContainer } from "./HeaderContainer";
@@ -32,6 +32,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     const openSearchDialog = useOpenSearchDialog();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
     const { resolvedPath } = useNavigationContext();
+    const router = useRouter();
 
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();
@@ -55,9 +56,27 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     const docsMainContent = <DocsMainContent />;
 
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleScroll = (_path: string, { shallow }: { shallow: boolean }) => {
+            if (ref.current != null && !shallow) {
+                ref.current.scrollTo(0, 0);
+            }
+        };
+        router.events.on("routeChangeComplete", handleScroll);
+
+        return () => {
+            router.events.off("routeChangeComplete", handleScroll);
+        };
+    });
+
     return (
         <PlaygroundContextProvider>
-            <div id="docs-content" className="relative flex min-h-screen flex-1 flex-col z-0">
+            <div
+                id="docs-content"
+                className="absolute inset-0 flex h-screen flex-1 flex-col z-0 p-3 overflow-hidden gap-3"
+            >
                 {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                     <HeaderContainer
                         isMobileSidebarOpen={isMobileSidebarOpen}
@@ -66,7 +85,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                     />
                 )}
 
-                <div className="relative mx-auto flex min-h-0 w-full min-w-0 max-w-page-width flex-1">
+                <div className="relative mx-auto flex min-h-0 w-full min-w-0 max-w-page-width flex-1 gap-3">
                     {sidebar != null && resolvedPath.type !== "changelog-entry" && (
                         <>
                             <style>
@@ -84,9 +103,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             </style>
                             <Sidebar
                                 className={clsx(
-                                    layout?.disableHeader !== true
-                                        ? "fern-sidebar-container bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block"
-                                        : "fern-sidebar-container bg-sidebar border-concealed fixed hidden h-vh-minus-header w-sidebar-width lg:block",
+                                    "fern-sidebar-container bg-sidebar border-default border rounded-lg hidden w-sidebar-width lg:block",
                                 )}
                                 logoHeight={logoHeight}
                                 logoHref={logoHref}
@@ -96,18 +113,18 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                         </>
                     )}
 
-                    <main className="fern-main">
+                    <main className="fern-main bg-[#FAFAFA] overflow-auto" ref={ref}>
                         {isInlineFeedbackEnabled ? (
                             <FeedbackPopover>{docsMainContent}</FeedbackPopover>
                         ) : (
                             docsMainContent
                         )}
+                        {/* <BuiltWithFern className="absolute bottom-0 left-1/2 z-50 my-8 flex w-fit -translate-x-1/2 justify-center" /> */}
                     </main>
-                    <BuiltWithFern className="absolute bottom-0 left-1/2 z-50 my-8 flex w-fit -translate-x-1/2 justify-center" />
                 </div>
 
                 {/* Enables footer DOM injection */}
-                <footer id="fern-footer" />
+                {/* <footer id="fern-footer" /> */}
             </div>
         </PlaygroundContextProvider>
     );

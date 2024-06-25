@@ -24,7 +24,7 @@ export const SdkCardLayout: React.FC<SdkCardLayout.Props> = ({ icon, title, subt
     return (
         <div
             className={cn(
-                "h-[120px] flex items-center justify-between rounded-xl border border-neutral-700 bg-neutral-800/20 px-5 py-8",
+                "h-[120px] flex items-center justify-between rounded-lg border border-neutral-700 bg-neutral-800/20 px-5 py-8",
                 {
                     "cursor-pointer hover:bg-neutral-800/50": onClick != null,
                 },

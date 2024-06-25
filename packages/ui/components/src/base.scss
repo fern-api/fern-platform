@@ -29,27 +29,31 @@
     }
 
     h1 {
-        @apply text-[2.25rem] font-extrabold leading-tight;
+        @apply text-[2.25rem] font-[420] leading-tight;
+        font-variant-ligatures: common-ligatures;
+        font-variation-settings:
+            "cuts" 300,
+            "move" 300;
     }
 
     h2 {
-        @apply text-[1.5rem] font-bold leading-tight;
+        @apply text-[1.5rem] font-normal leading-tight;
     }
 
     h3 {
-        @apply text-[1.25rem] font-semibold leading-tight;
+        @apply text-[1.25rem] font-normal leading-tight;
     }
 
     h4 {
-        @apply text-[1.125rem] font-semibold leading-tight;
+        @apply text-[1.125rem] font-normal leading-tight;
     }
 
     h5 {
-        @apply text-[1rem] font-semibold;
+        @apply text-[1rem] font-normal;
     }
 
     h6 {
-        @apply text-[0.875rem] font-semibold;
+        @apply text-[0.875rem] font-normal;
     }
 
     input[type="search"]::-webkit-search-cancel-button {

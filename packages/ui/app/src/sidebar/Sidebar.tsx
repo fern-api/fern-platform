@@ -32,7 +32,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({ logoHeight, logo
     return (
         <nav
             className={cn("h-full w-full flex flex-col", {
-                "lg:pl-1": layout?.disableHeader !== true,
+                // "lg:pl-1": layout?.disableHeader !== true,
             })}
             aria-label="secondary"
         >
@@ -90,7 +90,7 @@ function MobileSidebar(props: SidebarProps) {
                 />
                 <Transition.Child
                     as={Dialog.Panel}
-                    className="bg-background-translucent border-concealed absolute inset-0 backdrop-blur-lg sm:w-72 sm:border-r"
+                    className="bg-background- border-concealed absolute inset-0 backdrop-blur-lg sm:w-72 sm:border-r"
                     enter="transition ease-in-out duration-300 transform"
                     enterFrom="opacity-0 sm:opacity-100 sm:translate-y-0 sm:-translate-x-full"
                     enterTo="opacity-100 translate-x-0 translate-y-0"

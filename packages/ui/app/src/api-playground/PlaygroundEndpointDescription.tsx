@@ -24,7 +24,7 @@ export function PlaygroundEndpointDescription({ endpoint }: PlaygroundEndpointDe
     });
 
     return (
-        <section className="callout-soft mt-4 hidden rounded-xl p-4" onClick={toggleShowFullDescription}>
+        <section className="callout-soft mt-4 hidden rounded-lg p-4" onClick={toggleShowFullDescription}>
             <div
                 className={cn({
                     ["description-mask"]: !showFullDescription,

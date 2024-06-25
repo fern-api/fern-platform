@@ -317,7 +317,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                             "max-h-[150vh] md:max-h-vh-minus-header",
                             "flex",
                             // header offset
-                            "md:py-8 md:mt-0 md:top-header-height",
+                            "md:py-8 md:mt-0 md:top-0",
                         )}
                         style={{
                             minHeight: layoutBreakpoint.min("md") ? `${exampleHeight + 64}px` : `${exampleHeight}px`,
