@@ -6,7 +6,6 @@ types:
       The information here should really be all defined by the generator, and not user provided.
       We intentionally keep this a bit flexible in the event SDKs structure their package/module
       references in a unique way for the same API.
-
     properties:
       sections: list<ReferenceSection>
       language:
@@ -21,19 +20,16 @@ types:
 
   EndpointReference:
     properties:
-      topLevelSnippet: TopLevelSnippet
+      title:
+        type: MethodInvocationSnippet
+        docs: |
+          The title is a code snippet that is shown when the endpoint's reference is collapsed. 
+          For example, `client.subpackage.method({ ...params }) -> ReturnValue`.
       description: optional<string>
-      usageSnippet:
+      snippet:
         type: string
         docs: |
-          Differing from the top-level snippet, this usage snippet is meant to be the "full" snippet, showing
-          all the parameters, with a full example.
-          Think top-level:
-          ```typescript
-          client.subpackage.method({ ...params }) -> ReturnValue
-          ```
-
-          vs usage:
+          A "full" snippet, showing all the parameters, with a full example.
           ```typescript
           await client.subpackage.method({
               expiresIn: 300,
@@ -41,9 +37,9 @@ types:
           ```
       parameters: list<ParameterReference>
 
-  TopLevelSnippet:
+  MethodInvocationSnippet:
     docs: |
-      The top-level snippet is one which appears when the endpoint's reference is collapsed.
+      The method invocation snippet is one which appears when the endpoint's reference is collapsed.
       It is meant to give a high-level overview of the endpoint -- e.g. the method name and it's return value.
 
       The snippet itself should be a list of concatable content, which the CLI will handle hyperlinking. Note that this
@@ -68,10 +64,12 @@ types:
       required: boolean
 
   RelativeLocation:
-    type: string
-    docs: |
-      A relative location is a path to a file or directory relative to the root of the repository.
-      This is used to specify a link for a type or a function that the `reference.md` can point users to.
+    properties:
+      path:
+        type: string
+        docs: |
+          A relative location is a path to a file or directory relative to the root of the repository.
+          This is used to specify a link for a type or a function that the `reference.md` can point users to.
 
   Language:
     enum:
