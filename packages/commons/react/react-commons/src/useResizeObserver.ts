@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { noop } from "@fern-ui/core-utils";
 import fastdom from "fastdom";
 import { RefObject, useEffect, useMemo, useRef } from "react";
@@ -7,6 +8,7 @@ export function useResizeObserver(
     ref: RefObject<HTMLElement>,
     measure: (entries: ResizeObserverEntry[]) => void,
 ): void {
+    // ResizeObserver is not supported in SSG, so this hook should be disabled on the server-side
     if (typeof ResizeObserver === "undefined") {
         return;
     }

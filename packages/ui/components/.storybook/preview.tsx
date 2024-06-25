@@ -3,8 +3,7 @@ import type { Preview } from "@storybook/react";
 import React from "react";
 import { Toaster } from "../src/FernToast";
 import { FernTooltipProvider } from "../src/FernTooltip";
-import "../src/index.scss";
-import "./variables.css";
+import "./styles.scss";
 
 const globalDecorator = (Story) => (
     <React.Fragment>
