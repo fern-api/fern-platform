@@ -53,7 +53,6 @@ types:
       we wanted to be specific about what portion of the snippet we hyperlink, etc.
     properties:
       snippetParts: list<LinkedText>
-      location: optional<RelativeLocation>
 
   LinkedText:
     properties:

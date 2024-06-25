@@ -16,5 +16,4 @@ import * as FernGeneratorCli from "../../../index";
  */
 export interface TopLevelSnippet {
     snippetParts: FernGeneratorCli.LinkedText[];
-    location?: FernGeneratorCli.RelativeLocation;
 }
