@@ -2,7 +2,6 @@ import { FernButton, FernButtonProps, FernCollapse } from "@fern-ui/components";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, useState } from "react";
-import "./FernCollapseWithButton.scss";
 
 interface FernCollapseWithButtonProps {
     isOpen: boolean;

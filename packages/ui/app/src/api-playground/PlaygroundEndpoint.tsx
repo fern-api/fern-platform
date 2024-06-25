@@ -15,7 +15,6 @@ import {
     ResolvedHttpRequestBodyShape,
     ResolvedTypeDefinition,
 } from "../resolver/types";
-import "./PlaygroundEndpoint.css";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { blobToDataURL } from "./fetch-utils/blobToDataURL";

@@ -1,6 +1,8 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { noop } from "@fern-ui/core-utils";
 import { NextSeo } from "@fern-ui/next-seo";
 import { useEventCallback } from "@fern-ui/react-commons";
+import fastdom from "fastdom";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
@@ -36,6 +38,7 @@ const setUserIsNotScrolling = debounce(
 let resizeObserver: ResizeObserver | undefined;
 let lastScrollY: number | undefined;
 
+let cancelMeasure = noop;
 function startScrollTracking(route: string, scrolledHere: boolean = false) {
     if (!userIsScrolling && !scrolledHere) {
         getRouteNodeWithAnchor(route)?.node?.scrollIntoView({ behavior: "auto" });
@@ -45,35 +48,38 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     lastScrollY = window.scrollY;
     let lastNode: HTMLElement | undefined;
     function handleObservation() {
-        const { node } = getRouteNodeWithAnchor(route);
-        if (node != null) {
-            if (lastNode !== node) {
-                lastActiveNavigatableOffsetTop = undefined;
-            }
-            lastNode = node;
-            if (lastActiveNavigatableOffsetTop == null && !userHasScrolled) {
-                node.scrollIntoView({ behavior: "auto" });
-            }
-            const currentActiveNavigatableOffsetTop =
-                node.getBoundingClientRect().top + document.documentElement.scrollTop;
-            if (lastActiveNavigatableOffsetTop == null || lastScrollY == null) {
-                lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
-            } else {
-                if (lastActiveNavigatableOffsetTop !== currentActiveNavigatableOffsetTop) {
-                    const diff = lastActiveNavigatableOffsetTop - currentActiveNavigatableOffsetTop;
-                    const newScrollY = lastScrollY - diff;
-                    if (!userHasScrolled) {
-                        node.scrollIntoView({ behavior: "auto" });
-                    } else {
-                        window.scrollTo(0, newScrollY);
-                        lastScrollY = newScrollY;
-                    }
+        fastdom.clear(cancelMeasure);
+        cancelMeasure = fastdom.measure(() => {
+            const { node } = getRouteNodeWithAnchor(route);
+            if (node != null) {
+                if (lastNode !== node) {
+                    lastActiveNavigatableOffsetTop = undefined;
+                }
+                lastNode = node;
+                if (lastActiveNavigatableOffsetTop == null && !userHasScrolled) {
+                    node.scrollIntoView({ behavior: "auto" });
+                }
+                const currentActiveNavigatableOffsetTop =
+                    node.getBoundingClientRect().top + document.documentElement.scrollTop;
+                if (lastActiveNavigatableOffsetTop == null || lastScrollY == null) {
                     lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
                 } else {
-                    lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
+                    if (lastActiveNavigatableOffsetTop !== currentActiveNavigatableOffsetTop) {
+                        const diff = lastActiveNavigatableOffsetTop - currentActiveNavigatableOffsetTop;
+                        const newScrollY = lastScrollY - diff;
+                        if (!userHasScrolled) {
+                            node.scrollIntoView({ behavior: "auto" });
+                        } else {
+                            window.scrollTo(0, newScrollY);
+                            lastScrollY = newScrollY;
+                        }
+                        lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
+                    } else {
+                        lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
+                    }
                 }
             }
-        }
+        });
     }
     if (justNavigatedTo !== route) {
         justNavigatedTo = route;

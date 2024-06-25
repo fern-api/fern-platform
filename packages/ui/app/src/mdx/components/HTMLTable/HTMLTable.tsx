@@ -5,7 +5,6 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
 import { MDXRemoteProps } from "next-mdx-remote";
 import { ComponentProps, FC, useState } from "react";
-import "./HTMLTable.scss";
 
 const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
     const [isFullScreen, setIsFullScreen] = useState(false);

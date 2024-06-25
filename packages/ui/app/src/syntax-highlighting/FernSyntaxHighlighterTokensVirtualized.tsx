@@ -6,7 +6,6 @@ import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
 import { visit } from "unist-util-visit";
 import { HastToJSX } from "../mdx/common/HastToJsx";
 import { parseStringStyle } from "../util/parseStringStyle";
-import "./FernSyntaxHighlighter.css";
 import {
     FernSyntaxHighlighterTokensProps,
     ScrollToHandle,

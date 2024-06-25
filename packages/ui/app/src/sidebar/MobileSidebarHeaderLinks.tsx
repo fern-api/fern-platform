@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ReactElement } from "react";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 
 interface HeaderSidebarSlugLinkProps {
     navbarLink: DocsV1Read.NavbarLink;
@@ -20,7 +20,6 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
         <Link
             className={cn(
                 "text-sm group pl-4 pr-3 py-1.5 border border-border-accent-muted hover:border-2 flex space-x-1.5 items-center t-accent hover:t-accent transition rounded-lg hover:bg-tag-primary",
-                "hover:py-[calc(theme(spacing.1.5)-1px)] hover:pr-[calc(theme(spacing.3)-1px)] hover:pl-[calc(theme(spacing.4)-1px)]",
             )}
             href={navbarLink.url}
             target="_blank"
@@ -37,7 +36,7 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
 
 export function MobileSidebarHeaderLinks(): ReactElement | null {
     const { layout, navbarLinks } = useDocsContext();
-    const layoutBreakpoint = useLayoutBreakpoint();
+    const layoutBreakpoint = useLayoutBreakpointValue();
     if (navbarLinks == null || navbarLinks.length === 0) {
         return null;
     }

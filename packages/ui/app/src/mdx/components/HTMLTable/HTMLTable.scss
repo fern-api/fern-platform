@@ -1,44 +1,46 @@
-.fern-table-root {
-    @apply border border-grayscale-a5 bg-white/70 dark:bg-grayscale-a2 rounded-md;
-    @apply text-sm overflow-hidden backdrop-blur-2xl;
+@layer components {
+    .fern-table-root {
+        @apply border border-grayscale-a5 bg-white/70 dark:bg-grayscale-a2 rounded-md;
+        @apply text-sm overflow-hidden backdrop-blur-2xl;
 
-    /* hack to make the table scrollable */
-    display: flex;
-    flex-direction: column;
-}
-
-.fern-table {
-    @apply w-full;
-
-    thead .fern-table-row .fern-table-cell {
-        @apply bg-tag-default-soft;
+        /* hack to make the table scrollable */
+        display: flex;
+        flex-direction: column;
     }
 
-    .fern-table-cell {
-        @apply h-9 p-2 text-left;
-        @apply border-b border-grayscale-a5;
+    .fern-table {
+        @apply w-full;
+
+        thead .fern-table-row .fern-table-cell {
+            @apply bg-tag-default-soft;
+        }
+
+        .fern-table-cell {
+            @apply h-9 p-2 text-left;
+            @apply border-b border-grayscale-a5;
+        }
+
+        tbody > .fern-table-row:last-child > .fern-table-cell {
+            @apply border-b-0;
+        }
     }
 
-    tbody > .fern-table-row:last-child > .fern-table-cell {
-        @apply border-b-0;
+    .fern-table-root.fullscreen .fern-table thead .fern-table-cell {
+        @apply sticky top-0 relative;
+
+        box-shadow: inset 0 -1px var(--grayscale-a5);
+        border-bottom: 0;
+
+        &::after {
+            @apply content-[''] absolute inset-0 pointer-events-none bg-grayscale-a2;
+        }
     }
-}
 
-.fern-table-root.fullscreen .fern-table thead .fern-table-cell {
-    @apply sticky top-0 relative;
+    .fern-table-root.fullscreen {
+        @apply text-base bg-background-translucent shadow-2xl rounded-lg;
 
-    box-shadow: inset 0 -1px var(--grayscale-a5);
-    border-bottom: 0;
-
-    &::after {
-        @apply content-[''] absolute inset-0 pointer-events-none bg-grayscale-a2;
-    }
-}
-
-.fern-table-root.fullscreen {
-    @apply text-base bg-background-translucent shadow-2xl rounded-lg;
-
-    .fern-table .fern-table-cell {
-        @apply h-10 p-3 bg-background;
+        .fern-table .fern-table-cell {
+            @apply h-10 p-3 bg-background;
+        }
     }
 }

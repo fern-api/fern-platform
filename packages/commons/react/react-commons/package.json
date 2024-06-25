@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@fern-ui/core-utils": "workspace:*",
+    "fastdom": "^1.0.12",
     "immer": "^9.0.15",
     "lodash-es": "^4.17.21",
     "react": "^18.2.0"
@@ -41,11 +42,11 @@
     "@types/react": "^18.0.20",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
-    "vitest": "^1.5.0",
     "organize-imports-cli": "^0.10.0",
-    "prettier": "^3.2.4",
+    "prettier": "^3.3.2",
     "stylelint": "^16.1.0",
     "typescript": "5.4.3",
-    "vite": "^5.2.6"
+    "vite": "^5.2.6",
+    "vitest": "^1.5.0"
   }
 }

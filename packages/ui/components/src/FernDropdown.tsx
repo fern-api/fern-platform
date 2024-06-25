@@ -1,3 +1,4 @@
+import { useResizeObserver } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
@@ -132,21 +133,10 @@ function FernDropdownItemValue({
     }, [option.value, value]);
 
     const [isEllipsisActive, setIsEllipsisActive] = useState(false);
-    useEffect(() => {
-        if (helperTextRef.current == null) {
-            return;
+    useResizeObserver(helperTextRef, (entries) => {
+        for (const entry of entries) {
+            setIsEllipsisActive(entry.target.scrollWidth > entry.target.clientWidth);
         }
-
-        const observer = new ResizeObserver((entries) => {
-            for (const entry of entries) {
-                setIsEllipsisActive(entry.target.scrollWidth > entry.target.clientWidth);
-            }
-        });
-
-        observer.observe(helperTextRef.current);
-        return () => {
-            observer.disconnect();
-        };
     });
 
     function renderButtonContent() {

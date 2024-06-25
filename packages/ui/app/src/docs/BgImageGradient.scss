@@ -1,5 +1,7 @@
-.fern-background {
-    @apply fixed inset-0 -z-10 bg-background pointer-events-none overscroll-y-none;
+@layer components {
+    .fern-background {
+        @apply fixed inset-0 -z-10 bg-background pointer-events-none overscroll-y-none;
+    }
 }
 
 :not(.dark) .fern-background.fern-background-image,

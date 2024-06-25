@@ -11,10 +11,10 @@ import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";
+import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
-import "./globals.scss";
 
 const store = createStore();
 

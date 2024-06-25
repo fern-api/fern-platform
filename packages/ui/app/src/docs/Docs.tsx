@@ -7,7 +7,7 @@ import { memo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { useCreateSearchService } from "../services/useSearchService";
@@ -51,7 +51,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
     });
 
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
-    const layoutBreakpoint = useLayoutBreakpoint();
+    const layoutBreakpoint = useLayoutBreakpointValue();
 
     const docsMainContent = <DocsMainContent />;
 

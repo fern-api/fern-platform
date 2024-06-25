@@ -1,18 +1,20 @@
-.fern-steps {
-    @apply ml-2 mb-12 mt-4 border-l border-default pl-7;
+@layer components {
+    .fern-steps {
+        @apply ml-2 mb-12 mt-4 border-l border-default pl-7;
 
-    counter-reset: step;
-}
+        counter-reset: step;
+    }
 
-.fern-steps h3 {
-    counter-increment: step;
+    .fern-steps h3 {
+        counter-increment: step;
 
-    &::before {
-        @apply absolute size-[24px];
-        @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-default;
-        @apply rounded-md text-base font-normal text-center -indent-px;
-        @apply ml-[-40px];
+        &::before {
+            @apply absolute size-[24px];
+            @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-default;
+            @apply rounded-md text-base font-normal text-center -indent-px;
+            @apply ml-[-40px];
 
-        content: counter(step);
+            content: counter(step);
+        }
     }
 }

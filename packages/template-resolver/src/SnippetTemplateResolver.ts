@@ -1,5 +1,4 @@
 import { accessByPath } from "./accessByPath";
-import { formatSnippet } from "./formatSnippet";
 import {
     AuthPayload,
     CustomSnippetPayload,
@@ -352,6 +351,7 @@ ${endpointSnippet?.invocation}
     }
 
     public async resolveWithFormatting(): Promise<Snippet> {
+        const { formatSnippet } = await import("./formatSnippet");
         const sdk: Sdk = this.endpointSnippetTemplate.sdk;
         const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {

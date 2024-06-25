@@ -1,5 +1,5 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import { LayoutBreakpoint } from "./LayoutBreakpoint";
+import { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import { BREAKPOINTS, Breakpoint, LayoutBreakpoint } from "./LayoutBreakpoint";
 
 /*
 theme: {
@@ -23,7 +23,7 @@ theme: {
 */
 
 export const LayoutBreakpointProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-    const [layoutBreakpoint, setBreakpoint] = useState<"mobile" | "sm" | "md" | "lg" | "xl" | "2xl">("lg");
+    const [layoutBreakpoint, setBreakpoint] = useState<Breakpoint>("lg");
 
     useEffect(() => {
         if (window == null) {
@@ -75,5 +75,25 @@ export const LayoutBreakpointProvider: React.FC<PropsWithChildren<unknown>> = ({
         };
     }, []);
 
-    return <LayoutBreakpoint.Provider value={layoutBreakpoint}>{children}</LayoutBreakpoint.Provider>;
+    const value = useMemo(
+        () => ({
+            value: layoutBreakpoint,
+            min: (breakpoint: Breakpoint): boolean => {
+                const breakpointIndex = BREAKPOINTS.indexOf(breakpoint);
+                const currentBreakpointIndex = BREAKPOINTS.indexOf(layoutBreakpoint);
+                return currentBreakpointIndex >= breakpointIndex;
+            },
+            max: (breakpoint: Breakpoint): boolean => {
+                const breakpointIndex = BREAKPOINTS.indexOf(breakpoint);
+                if (breakpointIndex === 0) {
+                    return true;
+                }
+                const currentBreakpointIndex = BREAKPOINTS.indexOf(layoutBreakpoint);
+                return currentBreakpointIndex < breakpointIndex;
+            },
+        }),
+        [layoutBreakpoint],
+    );
+
+    return <LayoutBreakpoint.Provider value={value}>{children}</LayoutBreakpoint.Provider>;
 };

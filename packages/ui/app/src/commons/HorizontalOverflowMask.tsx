@@ -2,7 +2,6 @@ import cn from "clsx";
 import fastdom from "fastdom";
 import { noop } from "lodash-es";
 import React, { PropsWithChildren, useEffect, useImperativeHandle, useRef, useState } from "react";
-import "./HorizontalOverflowMask.scss";
 
 export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWithChildren<{ className?: string }>>(
     function HorizontalOverflowMask({ children, className }, parentRef) {
@@ -24,7 +23,7 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
             }
             let stopMeasuring: () => void = noop;
             const measure = () => {
-                stopMeasuring();
+                fastdom.clear(stopMeasuring);
                 stopMeasuring = fastdom.measure(() => {
                     // check if scrolled to right > 0px
                     setShowLeftMask(refCurrent.scrollLeft >= 3);

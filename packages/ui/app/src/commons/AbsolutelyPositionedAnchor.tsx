@@ -6,7 +6,6 @@ import { Url } from "next/dist/shared/lib/router/router";
 import { Fragment, memo } from "react";
 import { Check } from "react-feather";
 import { FernLink } from "../components/FernLink";
-import "./AbsolutelyPositionedAnchor.scss";
 
 export declare namespace AbsolutelyPositionedAnchor {
     export interface Props {

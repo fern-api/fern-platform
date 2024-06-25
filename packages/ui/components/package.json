@@ -84,7 +84,7 @@
     "jsdom": "^24.0.0",
     "organize-imports-cli": "^0.10.0",
     "postcss-import": "^16.0.1",
-    "prettier": "^3.2.4",
+    "prettier": "^3.3.2",
     "sass": "^1.74.1",
     "storybook": "^8.1.1",
     "stylelint": "^16.1.0",

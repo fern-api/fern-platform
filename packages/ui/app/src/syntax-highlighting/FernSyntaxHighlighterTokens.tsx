@@ -6,7 +6,6 @@ import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 import { visit } from "unist-util-visit";
 import { HastToJSX } from "../mdx/common/HastToJsx";
 import { parseStringStyle } from "../util/parseStringStyle";
-import "./FernSyntaxHighlighter.css";
 import { HighlightedTokens } from "./fernShiki";
 import { flattenHighlightLines, getMaxHeight, type HighlightLine } from "./utils";
 

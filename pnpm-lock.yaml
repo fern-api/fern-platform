@@ -14,6 +14,9 @@ importers:
 
   .:
     dependencies:
+      '@radix-ui/colors':
+        specifier: ^3.0.0
+        version: 3.0.0
       fern-api:
         specifier: ^0.21.0
         version: 0.21.0
@@ -124,8 +127,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -157,8 +160,8 @@ importers:
         specifier: ^4.7.1
         version: 4.9.3
       turbo:
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: ^2.0.4
+        version: 2.0.4
       typescript:
         specifier: 5.4.3
         version: 5.4.3
@@ -212,7 +215,7 @@ importers:
         version: 11.0.4
       unified-prettier:
         specifier: ^2.0.1
-        version: 2.0.1(prettier@3.2.5)
+        version: 2.0.1(prettier@3.3.2)
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -278,8 +281,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.31)(ts-node@10.9.2)(typescript@4.9.5)
@@ -327,8 +330,8 @@ importers:
         specifier: ^2.118.0
         version: 2.141.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       typescript:
         specifier: 5.4.3
         version: 5.4.3
@@ -367,8 +370,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -404,8 +407,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -441,8 +444,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       simple-git:
         specifier: ^3.24.0
         version: 3.24.0
@@ -478,8 +481,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -518,8 +521,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -558,8 +561,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -598,8 +601,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -618,6 +621,9 @@ importers:
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../../core-utils
+      fastdom:
+        specifier: ^1.0.12
+        version: 1.0.12
       immer:
         specifier: ^9.0.15
         version: 9.0.21
@@ -650,8 +656,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -696,8 +702,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -750,8 +756,8 @@ importers:
         version: 0.3.26(@typescript-eslint/eslint-plugin@7.3.1)(eslint@8.57.0)(typescript@5.4.3)(vitest@1.6.0)
     devDependencies:
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
 
   packages/fdr-sdk:
     dependencies:
@@ -817,8 +823,8 @@ importers:
         specifier: ^8.56.0
         version: 8.57.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       typescript:
         specifier: 5.4.3
         version: 5.4.3
@@ -878,8 +884,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.31)(ts-node@10.9.2)(typescript@4.9.5)
@@ -936,8 +942,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       typescript:
         specifier: 5.4.3
         version: 5.4.3
@@ -948,8 +954,8 @@ importers:
   packages/template-resolver:
     dependencies:
       prettier:
-        specifier: ^2.8.8
-        version: 2.8.8
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -1328,8 +1334,8 @@ importers:
         specifier: ^16.0.1
         version: 16.1.0(postcss@8.4.31)
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       react-test-renderer:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
@@ -1432,7 +1438,7 @@ importers:
         version: link:../../configs
       '@storybook/addon-essentials':
         specifier: ^8.1.1
-        version: 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)
+        version: 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
       '@storybook/addon-interactions':
         specifier: ^8.1.1
         version: 8.1.1(vitest@1.6.0)
@@ -1447,13 +1453,13 @@ importers:
         version: 8.1.1
       '@storybook/blocks':
         specifier: ^8.1.1
-        version: 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)
+        version: 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
       '@storybook/react':
         specifier: ^8.1.1
-        version: 8.1.1(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3)
+        version: 8.1.1(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3)
       '@storybook/react-vite':
         specifier: ^8.1.1
-        version: 8.1.1(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3)(vite@5.2.11)
+        version: 8.1.1(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3)(vite@5.2.11)
       '@storybook/test':
         specifier: ^8.1.1
         version: 8.1.1(vitest@1.6.0)
@@ -1500,8 +1506,8 @@ importers:
         specifier: ^16.0.1
         version: 16.1.0(postcss@8.4.31)
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       sass:
         specifier: ^1.74.1
         version: 1.77.0
@@ -1633,8 +1639,8 @@ importers:
         specifier: 8.4.31
         version: 8.4.31
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       sass:
         specifier: ^1.74.1
         version: 1.77.0
@@ -1875,8 +1881,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -1987,8 +1993,8 @@ importers:
         specifier: 8.4.31
         version: 8.4.31
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       sass:
         specifier: ^1.74.1
         version: 1.77.0
@@ -2174,8 +2180,8 @@ importers:
         specifier: ^3.0.0
         version: 3.1.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       prisma:
         specifier: 5.13.0
         version: 5.13.0
@@ -2226,8 +2232,8 @@ importers:
         specifier: ^2.139.0
         version: 2.141.0
       prettier:
-        specifier: ^3.2.4
-        version: 3.2.5
+        specifier: ^3.3.2
+        version: 3.3.2
       redis-cli:
         specifier: ^2.1.2
         version: 2.1.2
@@ -8883,10 +8889,10 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/addon-controls@8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1):
+  /@storybook/addon-controls@8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-KJXW/hjIWM+VLqqUAvdGIkX7hTDs8FtQOuUFSC/FPDqKveUoWz0hd+WaoT9HhNF8gyzFXYACoeb9XkQVVcDATA==}
     dependencies:
-      '@storybook/blocks': 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/blocks': 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
       dequal: 2.0.3
       lodash: 4.17.21
       ts-dedent: 2.2.0
@@ -8928,12 +8934,12 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/addon-docs@8.1.1(@types/react-dom@18.3.0)(prettier@3.2.5):
+  /@storybook/addon-docs@8.1.1(@types/react-dom@18.3.0)(prettier@3.3.2):
     resolution: {integrity: sha512-vMU26AYQBstOj73MX3egqJlY/VUjawfWVcTlDJjSa43GzWfp8wrbr1fNXRy2MoLe19UKZ9Kx+m4CfsrGsXHogg==}
     dependencies:
       '@babel/core': 7.24.5
       '@mdx-js/react': 3.0.1(@types/react@18.3.1)(react@18.3.1)
-      '@storybook/blocks': 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/blocks': 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
       '@storybook/client-logger': 8.1.1
       '@storybook/components': 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
       '@storybook/csf-plugin': 8.1.1
@@ -8983,19 +8989,19 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/addon-essentials@8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1):
+  /@storybook/addon-essentials@8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-1MfjgNuhh0iuSVunrDyZFsDNNs3rkssjqfvqt9FM7/l96cbBku8b39vPUW5kYNtA8wgIYCVXIw6c+9zhhJDoDg==}
     dependencies:
       '@storybook/addon-actions': 8.1.1
       '@storybook/addon-backgrounds': 8.1.1
-      '@storybook/addon-controls': 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)
-      '@storybook/addon-docs': 8.1.1(@types/react-dom@18.3.0)(prettier@3.2.5)
+      '@storybook/addon-controls': 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/addon-docs': 8.1.1(@types/react-dom@18.3.0)(prettier@3.3.2)
       '@storybook/addon-highlight': 8.1.1
       '@storybook/addon-measure': 8.1.1
       '@storybook/addon-outline': 8.1.1
       '@storybook/addon-toolbars': 8.1.1
       '@storybook/addon-viewport': 8.1.1
-      '@storybook/core-common': 8.1.1(prettier@3.2.5)
+      '@storybook/core-common': 8.1.1(prettier@3.3.2)
       '@storybook/manager-api': 8.1.1(react-dom@18.3.1)(react@18.3.1)
       '@storybook/node-logger': 8.1.1
       '@storybook/preview-api': 8.1.1
@@ -9199,7 +9205,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/blocks@8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1):
+  /@storybook/blocks@8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-D+jUlkA2dxYPSY97+yM5sbLXPABKlsZAhmDy6gw05UoSpfBu1MnKd18Qj4fTbyqLYIJGH9z/whGd3tTcuZn8KQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
@@ -9215,7 +9221,7 @@ packages:
       '@storybook/components': 8.1.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
       '@storybook/core-events': 8.1.1
       '@storybook/csf': 0.1.7
-      '@storybook/docs-tools': 8.1.1(prettier@3.2.5)
+      '@storybook/docs-tools': 8.1.1(prettier@3.3.2)
       '@storybook/global': 5.0.0
       '@storybook/icons': 1.2.9(react-dom@18.3.1)(react@18.3.1)
       '@storybook/manager-api': 8.1.1(react-dom@18.3.1)(react@18.3.1)
@@ -9266,11 +9272,11 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/builder-manager@8.1.1(prettier@3.2.5):
+  /@storybook/builder-manager@8.1.1(prettier@3.3.2):
     resolution: {integrity: sha512-WKpeDCtsmsesQYYYcXlCP17U1wdMGv6LnRY9BetKYbUPSHJo4eUBH8NmfW/ZjogczaUDw9sml6Sq5jIT35+Yuw==}
     dependencies:
       '@fal-works/esbuild-plugin-global-externals': 2.1.2
-      '@storybook/core-common': 8.1.1(prettier@3.2.5)
+      '@storybook/core-common': 8.1.1(prettier@3.3.2)
       '@storybook/manager': 8.1.1
       '@storybook/node-logger': 8.1.1
       '@types/ejs': 3.1.5
@@ -9289,7 +9295,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/builder-vite@8.1.1(prettier@3.2.5)(typescript@5.4.3)(vite@5.2.11):
+  /@storybook/builder-vite@8.1.1(prettier@3.3.2)(typescript@5.4.3)(vite@5.2.11):
     resolution: {integrity: sha512-+BSmXuZ9j95oKCvHcKztzjZNzBVeXYMoRO2TuflLnknMUA0v9ySp1PhiQxHM4DgAW6t9db1akzc9HoTA5sjTWg==}
     peerDependencies:
       '@preact/preset-vite': '*'
@@ -9306,7 +9312,7 @@ packages:
     dependencies:
       '@storybook/channels': 8.1.1
       '@storybook/client-logger': 8.1.1
-      '@storybook/core-common': 8.1.1(prettier@3.2.5)
+      '@storybook/core-common': 8.1.1(prettier@3.3.2)
       '@storybook/core-events': 8.1.1
       '@storybook/csf-plugin': 8.1.1
       '@storybook/node-logger': 8.1.1
@@ -9444,7 +9450,7 @@ packages:
       jscodeshift: 0.15.2(@babel/preset-env@7.24.5)
       leven: 3.1.0
       ora: 5.4.1
-      prettier: 3.2.5
+      prettier: 3.3.2
       prompts: 2.4.2
       read-pkg-up: 7.0.1
       semver: 7.6.2
@@ -9470,12 +9476,12 @@ packages:
       '@babel/types': 7.24.5
       '@ndelangen/get-tarball': 3.0.9
       '@storybook/codemod': 8.1.1
-      '@storybook/core-common': 8.1.1(prettier@3.2.5)
+      '@storybook/core-common': 8.1.1(prettier@3.3.2)
       '@storybook/core-events': 8.1.1
-      '@storybook/core-server': 8.1.1(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/core-server': 8.1.1(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
       '@storybook/csf-tools': 8.1.1
       '@storybook/node-logger': 8.1.1
-      '@storybook/telemetry': 8.1.1(prettier@3.2.5)
+      '@storybook/telemetry': 8.1.1(prettier@3.3.2)
       '@storybook/types': 8.1.1
       '@types/semver': 7.5.8
       '@yarnpkg/fslib': 2.10.3
@@ -9494,7 +9500,7 @@ packages:
       jscodeshift: 0.15.2(@babel/preset-env@7.24.5)
       leven: 3.1.0
       ora: 5.4.1
-      prettier: 3.2.5
+      prettier: 3.3.2
       prompts: 2.4.2
       read-pkg-up: 7.0.1
       semver: 7.6.2
@@ -9545,7 +9551,7 @@ packages:
       globby: 14.0.1
       jscodeshift: 0.15.2(@babel/preset-env@7.24.5)
       lodash: 4.17.21
-      prettier: 3.2.5
+      prettier: 3.3.2
       recast: 0.23.6
       tiny-invariant: 1.3.3
     transitivePeerDependencies:
@@ -9567,7 +9573,7 @@ packages:
       globby: 14.0.1
       jscodeshift: 0.15.2(@babel/preset-env@7.24.5)
       lodash: 4.17.21
-      prettier: 3.2.5
+      prettier: 3.3.2
       recast: 0.23.6
       tiny-invariant: 1.3.3
     transitivePeerDependencies:
@@ -9654,7 +9660,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/core-common@8.1.1(prettier@3.2.5):
+  /@storybook/core-common@8.1.1(prettier@3.3.2):
     resolution: {integrity: sha512-cjECiKD8+fdlhf3UGrjgrPMBeBwB/gbF5ZVLpa1EYFsr23BHGnZADpmyCb71fl+aUSiGuZ106AS6RQt20w7fXw==}
     peerDependencies:
       prettier: ^2 || ^3
@@ -9683,8 +9689,8 @@ packages:
       node-fetch: 2.7.0
       picomatch: 2.3.1
       pkg-dir: 5.0.0
-      prettier: 3.2.5
-      prettier-fallback: /prettier@3.2.5
+      prettier: 3.3.2
+      prettier-fallback: /prettier@3.3.2
       pretty-hrtime: 1.0.3
       resolve-from: 5.0.0
       semver: 7.6.2
@@ -9771,16 +9777,16 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@storybook/core-server@8.1.1(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1):
+  /@storybook/core-server@8.1.1(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-/r70ORN9PdrLTLOeZfZkYhR/UBe6dj5DhcQ21zJhKU/0b10nuLJh4SGVD93Hah2wAYEN7YoJzX1bZMo6zRkTRQ==}
     dependencies:
       '@aw-web-design/x-default-browser': 1.4.126
       '@babel/core': 7.24.5
       '@babel/parser': 7.24.5
       '@discoveryjs/json-ext': 0.5.7
-      '@storybook/builder-manager': 8.1.1(prettier@3.2.5)
+      '@storybook/builder-manager': 8.1.1(prettier@3.3.2)
       '@storybook/channels': 8.1.1
-      '@storybook/core-common': 8.1.1(prettier@3.2.5)
+      '@storybook/core-common': 8.1.1(prettier@3.3.2)
       '@storybook/core-events': 8.1.1
       '@storybook/csf': 0.1.7
       '@storybook/csf-tools': 8.1.1
@@ -9790,7 +9796,7 @@ packages:
       '@storybook/manager-api': 8.1.1(react-dom@18.3.1)(react@18.3.1)
       '@storybook/node-logger': 8.1.1
       '@storybook/preview-api': 8.1.1
-      '@storybook/telemetry': 8.1.1(prettier@3.2.5)
+      '@storybook/telemetry': 8.1.1(prettier@3.3.2)
       '@storybook/types': 8.1.1
       '@types/detect-port': 1.3.5
       '@types/diff': 5.2.1
@@ -9927,10 +9933,10 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/docs-tools@8.1.1(prettier@3.2.5):
+  /@storybook/docs-tools@8.1.1(prettier@3.3.2):
     resolution: {integrity: sha512-BPq9e6bl4uRru0GSLHS56eg0SV5LEMJSzrMIzeSrTf9xoZdBeLM05oblo2oebEGZUE97uduhKoaUeUJtsuMIxw==}
     dependencies:
-      '@storybook/core-common': 8.1.1(prettier@3.2.5)
+      '@storybook/core-common': 8.1.1(prettier@3.3.2)
       '@storybook/core-events': 8.1.1
       '@storybook/preview-api': 8.1.1
       '@storybook/types': 8.1.1
@@ -10284,7 +10290,7 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
     dev: true
 
-  /@storybook/react-vite@8.1.1(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3)(vite@5.2.11):
+  /@storybook/react-vite@8.1.1(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3)(vite@5.2.11):
     resolution: {integrity: sha512-9XqrapUBS2eD/EkW8ND2uqEwrp9wdp2AkngZTTPwGQEvX5Jb9K1nwKZHc7Ewj8ja84MRUgYw6vc9bd6pHGJs1g==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
@@ -10294,9 +10300,9 @@ packages:
     dependencies:
       '@joshwooding/vite-plugin-react-docgen-typescript': 0.3.1(typescript@5.4.3)(vite@5.2.11)
       '@rollup/pluginutils': 5.1.0(rollup@2.78.0)
-      '@storybook/builder-vite': 8.1.1(prettier@3.2.5)(typescript@5.4.3)(vite@5.2.11)
+      '@storybook/builder-vite': 8.1.1(prettier@3.3.2)(typescript@5.4.3)(vite@5.2.11)
       '@storybook/node-logger': 8.1.1
-      '@storybook/react': 8.1.1(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3)
+      '@storybook/react': 8.1.1(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3)
       '@storybook/types': 8.1.1
       find-up: 5.0.0
       magic-string: 0.30.10
@@ -10356,7 +10362,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/react@8.1.1(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3):
+  /@storybook/react@8.1.1(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.3):
     resolution: {integrity: sha512-J4DIn9Lo2quYuaU/vLfQM1N4XcXIURWxAet1/y32K5Du0debNnKTPJnwBUT9b4bucBpldEWdN9uw3JvHQyb3qA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
@@ -10368,7 +10374,7 @@ packages:
         optional: true
     dependencies:
       '@storybook/client-logger': 8.1.1
-      '@storybook/docs-tools': 8.1.1(prettier@3.2.5)
+      '@storybook/docs-tools': 8.1.1(prettier@3.3.2)
       '@storybook/global': 5.0.0
       '@storybook/preview-api': 8.1.1
       '@storybook/react-dom-shim': 8.1.1(react-dom@18.3.1)(react@18.3.1)
@@ -10429,11 +10435,11 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/telemetry@8.1.1(prettier@3.2.5):
+  /@storybook/telemetry@8.1.1(prettier@3.3.2):
     resolution: {integrity: sha512-yyrAc5t4UUb2OW6zpHM7/aI3ePiPcgMTyJqqn5X5+S9OHy0yHI7NHi7ZslTg6D5yXV6g3OTfa3Yq3pXkOBV3uw==}
     dependencies:
       '@storybook/client-logger': 8.1.1
-      '@storybook/core-common': 8.1.1(prettier@3.2.5)
+      '@storybook/core-common': 8.1.1(prettier@3.3.2)
       '@storybook/csf-tools': 8.1.1
       chalk: 4.1.2
       detect-package-manager: 2.0.1
@@ -10831,7 +10837,7 @@ packages:
     resolution: {integrity: sha512-p2t+ogeXkDNTtYNoVy6xiSz7VE7oCNCt/oitMufMmXx0vtrtj8Eks5uvXGGcc52V8bl1XEypIf+oMdB2zET/Ng==}
     engines: {node: '>=12'}
     dependencies:
-      prettier: 3.2.5
+      prettier: 3.3.2
       zod: 3.23.8
     dev: true
 
@@ -22861,14 +22867,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  /prettier@2.8.8:
-    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    dev: false
-
-  /prettier@3.2.5:
-    resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
+  /prettier@3.3.2:
+    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -26151,64 +26151,64 @@ packages:
     engines: {node: '>=0.6.11 <=0.7.0 || >=0.7.3'}
     dev: true
 
-  /turbo-darwin-64@2.0.1:
-    resolution: {integrity: sha512-GO391pUmI6c6l/EpUIaXNzwbVDWRvYahm5oLB176dAWRYKYO+Osqs/XBdOM0G3l7ZFdR6nUtRJc8qinJp7qDUQ==}
+  /turbo-darwin-64@2.0.4:
+    resolution: {integrity: sha512-x9mvmh4wudBstML8Z8IOmokLWglIhSfhQwnh2gBCSqabgVBKYvzl8Y+i+UCNPxheCGTgtsPepTcIaKBIyFIcvw==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@2.0.1:
-    resolution: {integrity: sha512-rmjJoxeq7nmH/F2aWKapahrDE2zE2Uc15rvs4Rz6qHOzSqC8R5uyLpQyTKIPIZ95O/z9nKfLfVPyiRENuk5vpw==}
+  /turbo-darwin-arm64@2.0.4:
+    resolution: {integrity: sha512-/B1Ih8zPRGVw5vw4SlclOf3C/woJ/2T6ieH6u54KT4wypoaVyaiyMqBcziIXycdObIYr7jQ+raHO7q3mhay9/A==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@2.0.1:
-    resolution: {integrity: sha512-vwTOc4v4jm6tM+9WlsiDlN+zwHP8A2wlsAYiNqz2u0DZL55aCWaVdivh2VpVLN36Mr9HgREGH0Fw+jx6ObcNRg==}
+  /turbo-linux-64@2.0.4:
+    resolution: {integrity: sha512-6aG670e5zOWu6RczEYcB81nEl8EhiGJEvWhUrnAfNEUIMBEH1pR5SsMmG2ol5/m3PgiRM12r13dSqTxCLcHrVg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@2.0.1:
-    resolution: {integrity: sha512-DkVt76fjwY940DfmqznWhpYIlKYduvKAoTtylkERrDlcWUpDYWwqNbcf9PRRIbnjnv9lIxvuom1KZmMY+cw/Ig==}
+  /turbo-linux-arm64@2.0.4:
+    resolution: {integrity: sha512-AXfVOjst+mCtPDFT4tCu08Qrfv12Nj7NDd33AjGwV79NYN1Y1rcFY59UQ4nO3ij3rbcvV71Xc+TZJ4csEvRCSg==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@2.0.1:
-    resolution: {integrity: sha512-XskV34kYuXVIHbRbgH8jr35Y8uA6kJOQ0LJStU4jFk7piiyk0a4n2GNDymMtvIwAxYdbuTe+pKuPCThFdirHBQ==}
+  /turbo-windows-64@2.0.4:
+    resolution: {integrity: sha512-QOnUR9hKl0T5gq5h1fAhVEqBSjpcBi/BbaO71YGQNgsr6pAnCQdbG8/r3MYXet53efM0KTdOhieWeO3KLNKybA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@2.0.1:
-    resolution: {integrity: sha512-R2/RmKr2uQxkOCtXK5LNxdD3Iv7lUm56iy2FrDwTDgPI7X7K6WRjrxdirmFIu/fABYE5n6EampU3ejbG5mmGtg==}
+  /turbo-windows-arm64@2.0.4:
+    resolution: {integrity: sha512-3v8WpdZy1AxZw0gha0q3caZmm+0gveBQ40OspD6mxDBIS+oBtO5CkxhIXkFJJW+jDKmDlM7wXDIGfMEq+QyNCQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@2.0.1:
-    resolution: {integrity: sha512-sJhxfBaN14pYj//xxAG6zAyStkE2j4HI9JVXVMob35SGob6dz/HuSqV/4QlVqw0uKAkwc1lXIsnykbe8RLmOOw==}
+  /turbo@2.0.4:
+    resolution: {integrity: sha512-Ilme/2Q5kYw0AeRr+aw3s02+WrEYaY7U8vPnqSZU/jaDG/qd6jHVN6nRWyd/9KXvJGYM69vE6JImoGoyNjLwaw==}
     hasBin: true
     optionalDependencies:
-      turbo-darwin-64: 2.0.1
-      turbo-darwin-arm64: 2.0.1
-      turbo-linux-64: 2.0.1
-      turbo-linux-arm64: 2.0.1
-      turbo-windows-64: 2.0.1
-      turbo-windows-arm64: 2.0.1
+      turbo-darwin-64: 2.0.4
+      turbo-darwin-arm64: 2.0.4
+      turbo-linux-64: 2.0.4
+      turbo-linux-arm64: 2.0.4
+      turbo-windows-64: 2.0.4
+      turbo-windows-arm64: 2.0.4
     dev: true
 
   /tween-functions@1.2.0:
@@ -26451,12 +26451,12 @@ packages:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
 
-  /unified-prettier@2.0.1(prettier@3.2.5):
+  /unified-prettier@2.0.1(prettier@3.3.2):
     resolution: {integrity: sha512-6KKgdlY8wLsUMdGOFx61RVfCggKF47iE1cFvUcrs5jjH9xbkVMaQ48Qy8MXNjhexzKwxsoBYB/Qc7ZtPw7/Oyg==}
     peerDependencies:
       prettier: ^3.0.0
     dependencies:
-      prettier: 3.2.5
+      prettier: 3.3.2
       unified: 11.0.4
     dev: false
 
