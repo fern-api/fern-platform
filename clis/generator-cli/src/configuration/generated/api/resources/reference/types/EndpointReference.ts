@@ -5,18 +5,14 @@
 import * as FernGeneratorCli from "../../../index";
 
 export interface EndpointReference {
-    topLevelSnippet: FernGeneratorCli.TopLevelSnippet;
+    /**
+     * The title is a code snippet that is shown when the endpoint's reference is collapsed.
+     * For example, `client.subpackage.method({ ...params }) -> ReturnValue`.
+     */
+    title: FernGeneratorCli.MethodInvocationSnippet;
     description?: string;
     /**
-     * Differing from the top-level snippet, this usage snippet is meant to be the "full" snippet, showing
-     * all the parameters, with a full example.
-     * Think top-level:
-     *
-     * ```typescript
-     * client.subpackage.method({ ...params }) -> ReturnValue
-     * ```
-     *
-     * vs usage:
+     * A "full" snippet, showing all the parameters, with a full example.
      *
      * ```typescript
      * await client.subpackage.method({
@@ -24,6 +20,6 @@ export interface EndpointReference {
      * });
      * ```
      */
-    usageSnippet: string;
+    snippet: string;
     parameters: FernGeneratorCli.ParameterReference[];
 }

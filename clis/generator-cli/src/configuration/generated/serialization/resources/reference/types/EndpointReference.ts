@@ -5,24 +5,24 @@
 import * as serializers from "../../../index";
 import * as FernGeneratorCli from "../../../../api/index";
 import * as core from "../../../../core";
-import { TopLevelSnippet } from "./TopLevelSnippet";
+import { MethodInvocationSnippet } from "./MethodInvocationSnippet";
 import { ParameterReference } from "./ParameterReference";
 
 export const EndpointReference: core.serialization.ObjectSchema<
     serializers.EndpointReference.Raw,
     FernGeneratorCli.EndpointReference
 > = core.serialization.object({
-    topLevelSnippet: TopLevelSnippet,
+    title: MethodInvocationSnippet,
     description: core.serialization.string().optional(),
-    usageSnippet: core.serialization.string(),
+    snippet: core.serialization.string(),
     parameters: core.serialization.list(ParameterReference),
 });
 
 export declare namespace EndpointReference {
     interface Raw {
-        topLevelSnippet: TopLevelSnippet.Raw;
+        title: MethodInvocationSnippet.Raw;
         description?: string | null;
-        usageSnippet: string;
+        snippet: string;
         parameters: ParameterReference.Raw[];
     }
 }
