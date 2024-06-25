@@ -1,6 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import clsx from "clsx";
+import { ReactElement } from "react";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 
@@ -9,7 +10,7 @@ interface SidebarRootHeadingProps {
     className: string | undefined;
 }
 
-export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps) {
+export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps): ReactElement {
     const { registerScrolledToPathListener, selectedNodeId } = useCollapseSidebar();
 
     if (node.overviewPageId == null) {

@@ -49,7 +49,7 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     let lastNode: HTMLElement | undefined;
     function handleObservation() {
         fastdom.clear(cancelMeasure);
-        fastdom.measure(() => {
+        cancelMeasure = fastdom.measure(() => {
             const { node } = getRouteNodeWithAnchor(route);
             if (node != null) {
                 if (lastNode !== node) {
