@@ -5,16 +5,16 @@
       "description": "This package contains all endpoints on accounts...",
       "endpoints": [
         {
-          "topLevelSnippet": {
+          "title": {
             "snippetParts": [
               {
                 "text": "client.accounts.get()",
-                "location": "./src/accounts.py"
+                "location": { "path": "./src/accounts.py" }
               }
             ]
           },
           "description": "Some description specific to the endpoint about accounts, etc. etc.\n\nIt can also be multi-line.",
-          "usageSnippet": "client.accounts.get(account_id=\"ID\")",
+          "snippet": "client.accounts.get(account_id=\"ID\")",
           "parameters": [
             {
               "name": "account_id",
@@ -31,16 +31,16 @@
       "description": "This package contains all endpoints on users...",
       "endpoints": [
         {
-          "topLevelSnippet": {
+          "title": {
             "snippetParts": [
               {
                 "text": "client.users.get()",
-                "location": "./src/users.py"
+                "location": { "path": "./src/users.py" }
               }
             ]
           },
           "description": "Some description specific to the endpoint about users, etc. etc.",
-          "usageSnippet": "client.users.get(user_id=\"ID\", account_id=\"ACCOUNT_ID\")",
+          "snippet": "client.users.get(user_id=\"ID\", account_id=\"ACCOUNT_ID\")",
           "parameters": [
             {
               "name": "user_id",
@@ -57,21 +57,21 @@
           ]
         },
         {
-          "topLevelSnippet": {
+          "title": {
             "snippetParts": [
               {
                 "text": "client.users.update()",
-                "location": "./src/users.py"
+                "location": { "path": "./src/users.py" }
               }
             ]
           },
           "description": "Some description specific to the endpoint about users, etc. etc.",
-          "usageSnippet": "client.users.get(update=User(id=\"ID\")",
+          "snippet": "client.users.get(update=User(id=\"ID\")",
           "parameters": [
             {
               "name": "update",
               "type": "User",
-              "location": "./src/users.py",
+              "location": { "path": "./src/users.py" },
               "description": "The updated user object to send to the server.",
               "required": true
             }
@@ -80,5 +80,5 @@
       ]
     }
   ],
-  "language": "python"
+  "language": "PYTHON"
 }

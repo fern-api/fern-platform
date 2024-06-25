@@ -1,6 +1,12 @@
 import fs from "fs";
 import { FernGeneratorCli } from "../configuration/generated";
-import { EndpointReference, LinkedText, ParameterReference, ReferenceSection } from "../configuration/generated/api";
+import {
+    EndpointReference,
+    LinkedText,
+    ParameterReference,
+    ReferenceSection,
+    RelativeLocation,
+} from "../configuration/generated/api";
 import { StreamWriter, StringWriter, Writer } from "../utils/Writer";
 
 export class ReferenceGenerator {
@@ -36,7 +42,7 @@ export class ReferenceGenerator {
         stringWriter.writeLine(
             `#### 🔌 Usage\n\n${this.writeIndentedBlock(
                 this.writeIndentedBlock(
-                    "```" + this.referenceConfig.language.toLowerCase() + "\n" + endpoint.usageSnippet + "\n```",
+                    "```" + this.referenceConfig.language.toLowerCase() + "\n" + endpoint.snippet + "\n```",
                 ),
             )}\n`,
         );
@@ -51,7 +57,7 @@ export class ReferenceGenerator {
         }
 
         writer.writeLine(
-            `<details><summary><code>${this.wrapInLinksAndJoin(endpoint.topLevelSnippet.snippetParts)}</code></summary>`,
+            `<details><summary><code>${this.wrapInLinksAndJoin(endpoint.title.snippetParts)}</code></summary>`,
         );
         writer.writeLine(this.writeIndentedBlock(stringWriter.toString()));
         writer.writeLine(`</details>\n`);
@@ -74,7 +80,7 @@ export class ReferenceGenerator {
         return content.map(({ text, location }) => this.wrapInLink(text, location)).join("");
     }
 
-    private wrapInLink(content: string, link?: string) {
-        return link !== undefined ? `<a href="${link}">${content}</a>` : content;
+    private wrapInLink(content: string, link?: RelativeLocation) {
+        return link !== undefined ? `<a href="${link.path}">${content}</a>` : content;
     }
 }
