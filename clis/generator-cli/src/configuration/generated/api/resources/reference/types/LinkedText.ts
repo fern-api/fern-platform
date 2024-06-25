@@ -6,5 +6,5 @@ import * as FernGeneratorCli from "../../../index";
 
 export interface LinkedText {
     text: string;
-    location: FernGeneratorCli.RelativeLocation;
+    location?: FernGeneratorCli.RelativeLocation;
 }

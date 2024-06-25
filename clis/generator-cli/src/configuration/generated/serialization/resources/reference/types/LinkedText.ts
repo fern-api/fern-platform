@@ -10,12 +10,12 @@ import { RelativeLocation } from "./RelativeLocation";
 export const LinkedText: core.serialization.ObjectSchema<serializers.LinkedText.Raw, FernGeneratorCli.LinkedText> =
     core.serialization.object({
         text: core.serialization.string(),
-        location: RelativeLocation,
+        location: RelativeLocation.optional(),
     });
 
 export declare namespace LinkedText {
     interface Raw {
         text: string;
-        location: RelativeLocation.Raw;
+        location?: RelativeLocation.Raw | null;
     }
 }

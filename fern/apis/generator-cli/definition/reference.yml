@@ -58,7 +58,7 @@ types:
   LinkedText:
     properties:
       text: string
-      location: RelativeLocation
+      location: optional<RelativeLocation>
 
   ParameterReference:
     properties:
