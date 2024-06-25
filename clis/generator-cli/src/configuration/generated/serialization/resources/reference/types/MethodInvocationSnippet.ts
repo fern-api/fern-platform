@@ -7,14 +7,14 @@ import * as FernGeneratorCli from "../../../../api/index";
 import * as core from "../../../../core";
 import { LinkedText } from "./LinkedText";
 
-export const TopLevelSnippet: core.serialization.ObjectSchema<
-    serializers.TopLevelSnippet.Raw,
-    FernGeneratorCli.TopLevelSnippet
+export const MethodInvocationSnippet: core.serialization.ObjectSchema<
+    serializers.MethodInvocationSnippet.Raw,
+    FernGeneratorCli.MethodInvocationSnippet
 > = core.serialization.object({
     snippetParts: core.serialization.list(LinkedText),
 });
 
-export declare namespace TopLevelSnippet {
+export declare namespace MethodInvocationSnippet {
     interface Raw {
         snippetParts: LinkedText.Raw[];
     }

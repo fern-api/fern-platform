@@ -6,14 +6,15 @@ import * as serializers from "../../../index";
 import * as FernGeneratorCli from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const RelativeLocation: core.serialization.Schema<
+export const RelativeLocation: core.serialization.ObjectSchema<
     serializers.RelativeLocation.Raw,
     FernGeneratorCli.RelativeLocation
-> = core.serialization.string().transform({
-    transform: FernGeneratorCli.RelativeLocation,
-    untransform: (value) => value,
+> = core.serialization.object({
+    path: core.serialization.string(),
 });
 
 export declare namespace RelativeLocation {
-    type Raw = string;
+    interface Raw {
+        path: string;
+    }
 }
