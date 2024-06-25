@@ -60,7 +60,7 @@ export class ReferenceGenerator {
             `<details><summary><code>${this.wrapInLinksAndJoin(endpoint.title.snippetParts)}</code></summary>`,
         );
         writer.writeLine(this.writeIndentedBlock(stringWriter.toString()));
-        writer.writeLine(`</details>\n`);
+        writer.writeLine("</details>\n");
     }
 
     private writeParameter(parameter: ParameterReference): string {
