@@ -2,15 +2,43 @@ import clsx from "clsx";
 import { Fragment, ReactElement } from "react";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { FilterContextProvider } from "../contexts/filter-context/FilterContextProvider";
 import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
+import { FilterPanel } from "./FilterPanel";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
     const { sidebar } = useDocsContext();
     const fullWidth = sidebar == null;
     const overview =
         resolvedPath.node.overviewPageId != null ? resolvedPath.pages[resolvedPath.node.overviewPageId] : undefined;
+
+    const getYearsForFilterPanel = () => {
+        const allYears = resolvedPath.node.children.flatMap((year) =>
+            year.children.flatMap((month) => month.children.map((entry) => entry.title.split(", ")[1])),
+        );
+        return [...new Set(allYears)];
+    };
+
+    const getTagsForFilterPanel = () => {
+        const allTags = resolvedPath.node.children.flatMap((year) =>
+            year.children.flatMap((month) =>
+                month.children.reduce((acc, currentEntry) => {
+                    let newAcc = [...acc];
+                    const page = resolvedPath.pages[currentEntry.pageId];
+                    if (page != null && typeof page !== "string") {
+                        const { tags = [] } = page.frontmatter;
+                        newAcc = [...acc, ...tags];
+                    }
+                    return newAcc;
+                }, [] as string[]),
+            ),
+        );
+
+        return allTags.length > 0 ? [...new Set(allTags)] : ["none"];
+    };
+
     return (
         <div className="flex justify-between px-4 md:px-6 lg:px-8">
             <div className={clsx("w-full min-w-0 pt-8", { "sm:pt-8 lg:pt-24": fullWidth })}>
@@ -102,6 +130,11 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                     )}
                     <div className="h-48" />
                 </article>
+            </div>
+            <div className="w-1/4">
+                <FilterContextProvider>
+                    <FilterPanel yearsArray={getYearsForFilterPanel()} tagsArray={getTagsForFilterPanel()} />
+                </FilterContextProvider>
             </div>
         </div>
     );
