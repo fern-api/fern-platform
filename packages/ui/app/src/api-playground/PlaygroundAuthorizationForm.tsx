@@ -61,7 +61,6 @@ function BearerAuthForm({
                         value={value?.type === "bearerAuth" ? value.token : ""}
                         autoComplete="off"
                         data-1p-ignore="true"
-                        aria-description="BearerAuthForm"
                         rightElement={
                             <FernButton
                                 onClick={openSecretsModal}
@@ -206,7 +205,6 @@ function HeaderAuthForm({
                     value={value?.type === "header" ? value.headers[header.headerWireValue] : ""}
                     autoComplete="off"
                     data-1p-ignore="true"
-                    aria-description="HeaderAuthForm"
                     rightElement={
                         <FernButton
                             onClick={openSecretsModal}
