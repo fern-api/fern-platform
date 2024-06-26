@@ -7,10 +7,16 @@ types:
       We intentionally keep this a bit flexible in the event SDKs structure their package/module
       references in a unique way for the same API.
     properties:
+      root_section: optional<RootPackageReferenceSection>
       sections: list<ReferenceSection>
       language:
         type: Language
         docs: Similar to in README generation, the language property is used to determine the language to use when generating code blocks in markdown.
+
+  RootPackageReferenceSection:
+    properties:
+      description: optional<string>
+      endpoints: list<EndpointReference>
 
   ReferenceSection:
     properties:

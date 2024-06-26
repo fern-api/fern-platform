@@ -1,4 +1,28 @@
 {
+  "rootSection": {
+    "endpoints": [
+      {
+        "title": {
+          "snippetParts": [
+            {
+              "text": "client.get_user()",
+              "location": { "path": "./src/client.py" }
+            }
+          ]
+        },
+        "description": "Some description specific to the endpoint about users, etc. etc.\n\nIt can also be multi-line.",
+        "snippet": "client.get(user_id=\"ID\")",
+        "parameters": [
+          {
+            "name": "user_id",
+            "type": "str",
+            "description": "The ID of the user to retrieve.",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
   "sections": [
     {
       "title": "Accounts",
