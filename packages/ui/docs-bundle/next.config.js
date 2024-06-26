@@ -61,6 +61,8 @@ const nextConfig = {
             "https://*.posthog.com",
             "https://cdn.segment.com",
             "https://api.segment.io",
+            "https://browser-intake-datadoghq.com",
+            "wss://api.getkoala.com",
         ];
 
         const scriptSrc = [
@@ -80,15 +82,11 @@ const nextConfig = {
             styleSrc.push(`${cdnUri.origin}`);
         }
 
-        if (process.env.VERCEL) {
-            if (process.env.VERCEL_ENV !== "production") {
-                // enable vercel toolbar
-                scriptSrc.push("https://vercel.live");
-                connectSrc.push("https://vercel.live");
-                connectSrc.push("wss://*.pusher.com");
-                styleSrc.push("https://vercel.live");
-            }
-        }
+        // enable vercel toolbar
+        scriptSrc.push("https://vercel.live");
+        connectSrc.push("https://vercel.live");
+        connectSrc.push("wss://*.pusher.com");
+        styleSrc.push("https://vercel.live");
 
         const ContentSecurityPolicy = [
             `default-src ${defaultSrc.join(" ")}`,
@@ -109,11 +107,7 @@ const nextConfig = {
 
         const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
 
-        if (process.env.VERCEL) {
-            if (process.env.VERCEL_ENV !== "production") {
-                ContentSecurityPolicy.push("worker-src 'self' blob:");
-            }
-        }
+        ContentSecurityPolicy.push("worker-src 'self' blob:");
 
         ContentSecurityPolicy.push(`report-uri ${reportUri}`);
         ContentSecurityPolicy.push("report-to csp-endpoint");
