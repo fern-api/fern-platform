@@ -2,13 +2,7 @@ name: Publish Generator CLI
 
 on:
   push:
-    branches: main
-    paths:
-      - "fern/apis/generator-cli/**"
-      - "fern/fern.config.json"
-      - ".github/workflows/publish-generator-cli.yml"
-      - "clis/generator-cli/**"
-      - "pnpm-lock.yaml"
+    tags: ["*"]
 
 env:
   PACKAGE_NAME: "@fern-api/generator-cli"
@@ -20,6 +14,7 @@ env:
 
 jobs:
   publish_sdk:
+    if: github.ref_type == 'tag' && github.event_name == 'push'  && startsWith(github.ref, 'refs/tags/generator-cli@')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
