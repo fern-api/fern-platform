@@ -12,10 +12,12 @@ export const MethodInvocationSnippet: core.serialization.ObjectSchema<
     FernGeneratorCli.MethodInvocationSnippet
 > = core.serialization.object({
     snippetParts: core.serialization.list(LinkedText),
+    returnValue: LinkedText.optional(),
 });
 
 export declare namespace MethodInvocationSnippet {
     interface Raw {
         snippetParts: LinkedText.Raw[];
+        returnValue?: LinkedText.Raw | null;
     }
 }

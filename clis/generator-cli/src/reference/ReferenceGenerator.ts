@@ -73,9 +73,11 @@ export class ReferenceGenerator {
             );
         }
 
-        writer.writeLine(
-            `<details><summary><code>${this.wrapInLinksAndJoin(endpoint.title.snippetParts)}</code></summary>`,
-        );
+        let linkedSnippet = this.wrapInLinksAndJoin(endpoint.title.snippetParts);
+        if (endpoint.title.returnValue != null) {
+            linkedSnippet += ` -> ${this.wrapInLink(endpoint.title.returnValue.text, endpoint.title.returnValue.location)}`;
+        }
+        writer.writeLine(`<details><summary><code>${linkedSnippet}</code></summary>`);
         writer.writeLine(this.writeIndentedBlock(stringWriter.toString()));
         writer.writeLine("</details>\n");
     }

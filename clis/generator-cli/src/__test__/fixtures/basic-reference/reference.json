@@ -8,7 +8,10 @@
               "text": "client.get_user()",
               "location": { "path": "./src/client.py" }
             }
-          ]
+          ],
+          "returnValue": {
+            "text": "str"
+          }
         },
         "description": "Some description specific to the endpoint about users, etc. etc.\n\nIt can also be multi-line.",
         "snippet": "client.get(user_id=\"ID\")",
@@ -35,7 +38,11 @@
                 "text": "client.accounts.get()",
                 "location": { "path": "./src/accounts.py" }
               }
-            ]
+            ],
+            "returnValue": {
+              "text": "Account",
+              "location": { "path": "./src/accounts.py" }
+            }
           },
           "description": "Some description specific to the endpoint about accounts, etc. etc.\n\nIt can also be multi-line.",
           "snippet": "client.accounts.get(account_id=\"ID\")",

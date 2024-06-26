@@ -2,7 +2,7 @@
 
 exports[`basic-reference > basic-reference > generate reference file 1`] = `
 "# Reference
-<details><summary><code><a href="./src/client.py">client.get_user()</a></code></summary>
+<details><summary><code><a href="./src/client.py">client.get_user()</a> -> str</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +60,7 @@ client.get(user_id="ID")
 
 ## Accounts
 This package contains all endpoints on accounts...
-<details><summary><code><a href="./src/accounts.py">client.accounts.get()</a></code></summary>
+<details><summary><code><a href="./src/accounts.py">client.accounts.get()</a> -> <a href="./src/accounts.py">Account</a></code></summary>
 <dl>
 <dd>
 
