@@ -15,7 +15,6 @@ types:
 
   RootPackageReferenceSection:
     properties:
-      title: optional<string>
       description: optional<string>
       endpoints: list<EndpointReference>
 

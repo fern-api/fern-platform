@@ -11,14 +11,12 @@ export const RootPackageReferenceSection: core.serialization.ObjectSchema<
     serializers.RootPackageReferenceSection.Raw,
     FernGeneratorCli.RootPackageReferenceSection
 > = core.serialization.object({
-    title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
     endpoints: core.serialization.list(EndpointReference),
 });
 
 export declare namespace RootPackageReferenceSection {
     interface Raw {
-        title?: string | null;
         description?: string | null;
         endpoints: EndpointReference.Raw[];
     }

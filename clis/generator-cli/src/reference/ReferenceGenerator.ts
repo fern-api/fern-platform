@@ -19,6 +19,8 @@ export class ReferenceGenerator {
 
     public async generate({ output }: { output: fs.WriteStream }): Promise<void> {
         const writer = new StreamWriter(output);
+        writer.writeLine("# Reference");
+
         if (this.referenceConfig.rootSection !== undefined) {
             this.writeRootSection({ section: this.referenceConfig.rootSection, writer });
         }
@@ -29,9 +31,6 @@ export class ReferenceGenerator {
     }
 
     private writeRootSection({ section, writer }: { section: RootPackageReferenceSection; writer: Writer }): void {
-        if (section.title !== undefined) {
-            writer.writeLine(`${section.title}`);
-        }
         if (section.description !== undefined) {
             writer.writeLine(`${section.description}`);
         }

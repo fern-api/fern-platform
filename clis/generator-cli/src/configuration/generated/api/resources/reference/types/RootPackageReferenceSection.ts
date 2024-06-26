@@ -5,7 +5,6 @@
 import * as FernGeneratorCli from "../../../index";
 
 export interface RootPackageReferenceSection {
-    title?: string;
     description?: string;
     endpoints: FernGeneratorCli.EndpointReference[];
 }
