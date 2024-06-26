@@ -3,6 +3,7 @@ export type { ProxyRequest, ProxyResponse } from "./api-playground/types";
 export { DEFAULT_FEATURE_FLAGS } from "./contexts/FeatureFlagContext";
 export type { FeatureFlags } from "./contexts/FeatureFlagContext";
 export { LocalPreviewContextProvider } from "./contexts/LocalPreviewContext";
+export type { GitHubProps } from "./docs/HeaderGitHubWidget";
 export { useSetThemeColors } from "./docs/ThemeProvider";
 export * from "./next-app/DocsPage";
 export { NextApp } from "./next-app/NextApp";
