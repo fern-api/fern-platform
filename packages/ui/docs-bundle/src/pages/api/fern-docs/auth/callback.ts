@@ -2,6 +2,7 @@ import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 import { getJwtTokenSecret, getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
 import { notFoundResponse, redirectResponse } from "../../../../utils/serverResponse";
+import { getFeatureFlags } from "../feature-flags";
 // export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 //     // The authorization code returned by AuthKit
 //     const code = req.query.code as string;
@@ -72,13 +73,20 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         // --------------------------------------------------------------------------------------WORK OSe
     } else {
         console.log('!!!!!! non workos token');
-        
-        
+        const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
+        if (!xFernHost) {
+            throw new Error("NEXT_PUBLIC_DOCS_DOMAIN is not set");
+        }
+
+        const {apiInjectionConfig} = await getFeatureFlags(xFernHost);    
+    
         if (apiInjectionConfig == null) {
             throw new Error("API injection config is not set");
         }
 
-        const response = await fetch(apiInjectionConfig.authEndpointUrl, {
+        console.log('!!!!!! apiInjectionConfig: ', apiInjectionConfig);
+
+        const response = await fetch(apiInjectionConfig['auth-endpoint'], {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
