@@ -31,6 +31,7 @@ export const DocsContext = React.createContext<DocsContextValue>({
     searchInfo: undefined,
     navbarLinks: [],
     apis: [],
+    apiKey: undefined,
 });
 
 export interface DocsContextValue extends DocsPage.Navigation {
@@ -45,6 +46,7 @@ export interface DocsContextValue extends DocsPage.Navigation {
     navbarLinks: DocsV1Read.NavbarLink[];
     apis: FdrAPI.ApiDefinitionId[];
     nodes: NodeCollector;
+    apiKey: string | undefined;
 
     resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.File_ | undefined;
 }

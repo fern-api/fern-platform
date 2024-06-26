@@ -55,6 +55,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     types,
 }) => {
     const { domain } = useDocsContext();
+    
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
@@ -62,6 +63,15 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
 
     const layoutBreakpoint = useLayoutBreakpointValue();
+
+    const { apiKey } = useDocsContext();
+    
+    if (apiKey) {
+        formState.auth = {
+            type: "bearerAuth",
+            token: apiKey,
+        };
+    }
 
     useEffect(() => {
         if (typeof window === "undefined" || scrollAreaRef.current == null) {
@@ -83,7 +93,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
             {endpoint.auth != null && (
                 <PlaygroundAuthorizationFormCard
                     auth={endpoint.auth}
-                    authState={formState?.auth}
+                    authState={formState?.auth ?? {}}
                     setAuthorization={(newState) =>
                         setFormState((oldState) => ({
                             ...oldState,

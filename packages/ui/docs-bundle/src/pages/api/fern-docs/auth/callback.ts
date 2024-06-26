@@ -42,6 +42,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     console.log('????? DEBUG, code: ', code)
 
+    const res = redirectResponse(req.nextUrl.origin);
     if (req.nextUrl.origin.includes("workos.com")) {
         const startTime = Date.now();
         const { user } = await getWorkOS().userManagement.authenticateWithCode({
@@ -115,9 +116,32 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             .setExpirationTime("30d")
             .setIssuer("https://buildwithfern.com")
             .sign(getJwtTokenSecret());
-    }
+        
+        res.cookies.set("apiKey" , data.apiKey, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            path: "/",
+            maxAge: 2592000,
+        });
 
-    const res = redirectResponse(req.nextUrl.origin);
+        res.cookies.set("refreshToken" , data.refreshToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            path: "/",
+            maxAge: 2592000,
+        });
+
+        res.cookies.set("expiresAt" , data.expiresAt, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            path: "/",
+            maxAge: 2592000,
+        });
+    }
+    
     res.cookies.set("fern_token", token, {
         httpOnly: true,
         secure: false,
@@ -125,5 +149,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         path: "/",
         maxAge: 2592000,
     });
+    
     return res;
 }

@@ -28,6 +28,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const searchInfo = useDeepCompareMemoize(pageProps.search);
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const apis = useDeepCompareMemoize(pageProps.apis);
+    const apiKey = useDeepCompareMemoize(pageProps.apiKey);
     const { resolvedTheme: theme } = useTheme();
 
     const { domain, basePath } = pageProps.baseUrl;
@@ -69,6 +70,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             searchInfo,
             navbarLinks,
             apis,
+            apiKey
         }),
         [
             domain,
@@ -87,6 +89,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             searchInfo,
             navbarLinks,
             apis,
+            apiKey
         ],
     );
 

@@ -8,6 +8,7 @@ import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
 import { Key } from "react-feather";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 
+import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";
@@ -275,6 +276,7 @@ export function PlaygroundAuthorizationFormCard({
     const isOpen = useBooleanState(false);
     const { apiInjectionConfig } = useFeatureFlags();
     console.log('apiInjectionConfig:', apiInjectionConfig)
+    const { apiKey } = useDocsContext();
 
     const redirectOrOpenAuthForm = () => {
         if (apiInjectionConfig) {
@@ -299,7 +301,7 @@ export function PlaygroundAuthorizationFormCard({
 
     return (
         <div>
-            {isAuthed(auth, authState) ? (
+            {isAuthed(auth, authState) || apiKey ? (
                 <FernButton
                     className="w-full text-left"
                     size="large"
@@ -347,15 +349,6 @@ export function PlaygroundAuthorizationFormCard({
                     </div>
                 </div>
             </FernCollapse>
-{/*             
-            <PlaygroundAuthRedirectModal
-                authEndpointUrl={apiInjectionConfig.authEndpoint}
-                secret={apiInjectionConfig.secret}
-                isOpen={isAuthModalOpen}
-                onClose={closeAuthModal}
-                onAuth={setAuthorization}
-                code={urlParams.get('code') ?? ""}
-            /> */}
         </div>
     );
 }

@@ -80,6 +80,7 @@ export async function getPrivateDocsPageProps(
     xFernHost: string,
     slug: string[],
     token: string,
+    apiKey: string | undefined,
     res: ServerResponse<IncomingMessage>,
 ): Promise<DocsPageResult<DocsPage.Props>> {
     const user: User = await getUser(token);
@@ -122,7 +123,7 @@ export async function getPrivateDocsPageProps(
         throw new Error("Failed to fetch private docs");
     }
 
-    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost, apiKey });
 }
 
 async function getUser(token: string | undefined): Promise<User> {
@@ -149,11 +150,13 @@ async function convertDocsToDocsPageProps({
     slug,
     url,
     xFernHost,
+    apiKey
 }: {
     docs: DocsV2Read.LoadDocsForUrlResponse;
     slug: string[];
     url: string;
     xFernHost: string;
+    apiKey?: string;
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
@@ -294,6 +297,7 @@ async function convertDocsToDocsPageProps({
             docs.definition.apis,
             node.node,
         ),
+        apiKey
     };
 
     return {

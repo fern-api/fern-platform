@@ -20,6 +20,7 @@ const getDocsServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ para
     const slugArray = params.slug == null ? [] : Array.isArray(params.slug) ? params.slug : [params.slug];
 
     const token = req.cookies.fern_token;
+    const apiKey = req.cookies.apiKey;
 
     if (token == null) {
         const result = await getDocsPageProps(xFernHost, slugArray);
@@ -32,7 +33,8 @@ const getDocsServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ para
             _other: () => Promise.resolve({ notFound: true }),
         });
     } else {
-        const result = await getPrivateDocsPageProps(xFernHost, slugArray, token, res);
+        const result = await getPrivateDocsPageProps(xFernHost, slugArray, token, apiKey, res);
+        console.log('DECODED token', result);
 
         return visitDiscriminatedUnion(result, "type")._visit<ReturnType<GetServerSideProps<DocsPage.Props>>>({
             notFound: () => Promise.resolve({ notFound: true }),
