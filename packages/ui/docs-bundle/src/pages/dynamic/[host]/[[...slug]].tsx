@@ -34,7 +34,6 @@ const getDocsServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ para
         });
     } else {
         const result = await getPrivateDocsPageProps(xFernHost, slugArray, token, apiKey, res);
-        console.log('DECODED token', result);
 
         return visitDiscriminatedUnion(result, "type")._visit<ReturnType<GetServerSideProps<DocsPage.Props>>>({
             notFound: () => Promise.resolve({ notFound: true }),

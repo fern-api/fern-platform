@@ -30,8 +30,6 @@ import { getFeatureFlags } from "../feature-flags";
 
 export const runtime = "edge";
 export default async function GET(req: NextRequest): Promise<NextResponse> {
-    console.log('????? THIS IS A BACKEND CALLBACK HANDLER');
-
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
 
@@ -40,8 +38,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
     let token;
 
-    console.log('????? DEBUG, code: ', code)
-
     const res = redirectResponse(req.nextUrl.origin);
     if (req.nextUrl.origin.includes("workos.com")) {
         const startTime = Date.now();
@@ -49,6 +45,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             code,
             clientId: getWorkOSClientId(),
         });
+        const cookieDefaultSettings = {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            path: "/",
+            maxAge: 2592000,
+        };
 
         const beforeSigningTime = Date.now();
 
@@ -85,8 +88,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             throw new Error("API injection config is not set");
         }
 
-        console.log('!!!!!! apiInjectionConfig: ', apiInjectionConfig);
-
         const response = await fetch(apiInjectionConfig['auth-endpoint'], {
             method: "POST",
             headers: {
@@ -102,7 +103,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         }
 
         const data = await response.json();
-        console.log('!! data: ', data);
 
         token = await new SignJWT({
             // Here you might lookup and retrieve user details from your database
