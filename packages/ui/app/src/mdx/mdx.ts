@@ -16,40 +16,47 @@ import { PageHeaderProps, rehypeFernLayout } from "./plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
 
-/**
- * The layout used for guides. This is the default layout.
- * Guides are typically long-form content that is meant to be read from start to finish.
- */
-type GuideLayout = "guide";
+export declare namespace Layout {
+    /**
+     * The layout used for guides. This is the default layout.
+     * Guides are typically long-form content that is meant to be read from start to finish.
+     */
+    type GuideLayout = "guide";
 
-/**
- * Overview pages are typically meant to be a landing page for a section of the documentation.
- * These pages are 50% wider than guide pages, but the table of contents is still visible.
- */
-type OverviewLayout = "overview";
+    /**
+     * Overview pages are typically meant to be a landing page for a section of the documentation.
+     * These pages are 50% wider than guide pages, but the table of contents is still visible.
+     */
+    type OverviewLayout = "overview";
 
-/**
- * Reference pages are best used for API docs or other material that is meant to have a right-hand column.
- * Refrence pages are 2x the width of guide pages, and should be paired with <Aside> component.
- * Aside will generate a sticky right-hand column for the page, which is useful for code snippets.
- * Table of contents are always hidden on reference pages.
- */
-type ReferenceLayout = "reference";
+    /**
+     * Reference pages are best used for API docs or other material that is meant to have a right-hand column.
+     * Refrence pages are 2x the width of guide pages, and should be paired with <Aside> component.
+     * Aside will generate a sticky right-hand column for the page, which is useful for code snippets.
+     * Table of contents are always hidden on reference pages.
+     */
+    type ReferenceLayout = "reference";
 
-/**
- * The layout used for full-width pages. This is useful for landing pages or other custom layouts.
- * Both the navigation sidebar and the table of contents are hidden.
- * The content will take up the full width of the page-width container, which is set by docs.yml.
- */
-type PageLayout = "page";
+    /**
+     * The layout used for full-width pages. This is useful for landing pages or other custom layouts.
+     * Both the navigation sidebar and the table of contents are hidden.
+     * The content will take up the full width of the page-width container, which is set by docs.yml.
+     */
+    type PageLayout = "page";
 
-/**
- * This layout takes over 100% of the viewport width, below the header.
- * Unlike PageLayout, the content will not be constrained to the page-width container, and does not have padding.
- */
-type CustomLayout = "custom";
+    /**
+     * This layout takes over 100% of the viewport width, below the header.
+     * Unlike PageLayout, the content will not be constrained to the page-width container, and does not have padding.
+     */
+    type CustomLayout = "custom";
+}
 
-type Layout = GuideLayout | OverviewLayout | ReferenceLayout | PageLayout | CustomLayout;
+type Layout =
+    | Layout.GuideLayout
+    | Layout.OverviewLayout
+    | Layout.ReferenceLayout
+    | Layout.PageLayout
+    | Layout.CustomLayout;
 
 export interface FernDocsFrontmatter extends DocsV1Read.MetadataConfig {
     /**

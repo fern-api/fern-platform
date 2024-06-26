@@ -1,28 +1,33 @@
+import { isPlainObject } from "@fern-ui/core-utils";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import { Breadcrumbs } from "../api-page/Breadcrumbs";
 import { MdxContent } from "../mdx/MdxContent";
 
 interface MarkdownHeaderProps {
-    sectionTitleBreadcrumbs: string[];
+    breadcrumbs: string[];
     title: string;
-    subtitle: MDXRemoteSerializeResult | string | undefined;
+    subtitle: MDXRemoteSerializeResult | ReactNode | undefined;
 }
 
-export const MarkdownHeader = ({ sectionTitleBreadcrumbs, title, subtitle }: MarkdownHeaderProps): ReactElement => {
+export const MarkdownHeader = ({ breadcrumbs, title, subtitle }: MarkdownHeaderProps): ReactElement => {
     return (
         <header className="mb-8">
             <div className="space-y-1">
-                <Breadcrumbs breadcrumbs={sectionTitleBreadcrumbs} />
+                <Breadcrumbs breadcrumbs={breadcrumbs} />
 
                 <h1 className="my-0 inline-block leading-tight">{title}</h1>
             </div>
 
             {subtitle != null && (
-                <div className="prose prose-lg mt-2 leading-7 prose-p:t-muted dark:prose-invert">
-                    <MdxContent mdx={subtitle} />
+                <div className="prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7 prose-p:max-w-content-wide-width max-w-content-wide-width">
+                    {isMdxRemoteSerializeResult(subtitle) ? <MdxContent mdx={subtitle} /> : subtitle}
                 </div>
             )}
         </header>
     );
 };
+
+function isMdxRemoteSerializeResult(node: MDXRemoteSerializeResult | ReactNode): node is MDXRemoteSerializeResult {
+    return isPlainObject(node) && typeof node.compiledSource === "string";
+}

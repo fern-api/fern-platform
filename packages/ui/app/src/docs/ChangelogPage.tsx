@@ -20,7 +20,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                         <div className="max-w-content-width w-full max-xl:mx-auto">
                             <MarkdownHeader
                                 title={resolvedPath.node.title}
-                                sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
+                                breadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
                                 subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
                             />
                             {overview != null && (
