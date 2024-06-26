@@ -1,6 +1,4 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { PLATFORM } from "@fern-ui/core-utils";
-import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { memo } from "react";
@@ -10,9 +8,8 @@ import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
-import { useCreateSearchService } from "../services/useSearchService";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom";
+import { useIsMobileSidebarOpen, useMessageHandler } from "../sidebar/atom";
 import { DocsMainContent } from "./DocsMainContent";
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -28,27 +25,12 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 });
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
-    const { layout, colors, currentVersionId, sidebar } = useDocsContext();
-    const openSearchDialog = useOpenSearchDialog();
+    const { layout, colors, sidebar } = useDocsContext();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
     const { resolvedPath } = useNavigationContext();
 
     // set up message handler to listen for messages from custom scripts
     useMessageHandler();
-
-    // set up search service
-    useCreateSearchService(currentVersionId);
-
-    useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
-    useKeyboardPress({
-        key: "Slash",
-        onPress: () => {
-            const activeElementTag = document.activeElement?.tagName.toLowerCase();
-            if (activeElementTag !== "input" && activeElementTag !== "textarea" && activeElementTag !== "select") {
-                openSearchDialog();
-            }
-        },
-    });
 
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const layoutBreakpoint = useLayoutBreakpointValue();

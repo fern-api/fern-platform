@@ -10,6 +10,7 @@ import { DocsPage } from "../../next-app/DocsPage";
 import { getThemeColor } from "../../next-app/utils/getColorVariables";
 import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet";
 import { DocsContext } from "./DocsContext";
+import { getHumeScript } from "./HumeScript";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<DocsPage.Props>;
@@ -135,6 +136,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
             <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(domain) }} />
             <CustomerAnalytics domain={domain} />
+            {domain.includes("hume") && (
+                <Script id="inkeep-script" dangerouslySetInnerHTML={{ __html: getHumeScript() }} />
+            )}
         </DocsContext.Provider>
     );
 };

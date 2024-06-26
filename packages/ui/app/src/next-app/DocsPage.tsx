@@ -65,7 +65,9 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
                     domain={baseUrl.domain}
                     basePath={baseUrl.basePath}
                 >
-                    <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
+                    {!baseUrl.domain.includes("hume") && (
+                        <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
+                    )}
                     <Docs logoHeight={logoHeight} logoHref={logoHref} />
                 </NavigationContextProvider>
             </DocsContextProvider>

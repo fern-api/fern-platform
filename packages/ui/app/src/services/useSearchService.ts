@@ -1,4 +1,3 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { once } from "lodash-es";
 import { useEffect, useMemo } from "react";
@@ -58,8 +57,8 @@ export function useSearchService(): SearchService {
     return useAtomValue(SEARCH_SERVICE_ATOM);
 }
 
-export function useCreateSearchService(currentVersionId: FernNavigation.VersionId | undefined): void {
-    const { searchInfo, versions } = useDocsContext();
+export function useCreateSearchService(): void {
+    const { searchInfo, versions, currentVersionId } = useDocsContext();
     const [, setSearchService] = useAtom(SEARCH_SERVICE_ATOM);
     const { isLocalPreview } = useLocalPreviewContext();
 

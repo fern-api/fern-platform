@@ -1,5 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { PLATFORM } from "@fern-ui/core-utils";
 import { SidebarVersionInfo } from "@fern-ui/fdr-utils";
+import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { Dialog, Transition } from "@headlessui/react";
 import algolia, { SearchClient } from "algoliasearch";
 import cn from "clsx";
@@ -8,8 +10,13 @@ import { InstantSearch } from "react-instantsearch";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { useSearchService, type SearchCredentials, type SearchService } from "../services/useSearchService";
-import { useCloseSearchDialog, useIsSearchDialogOpen } from "../sidebar/atom";
+import {
+    useCreateSearchService,
+    useSearchService,
+    type SearchCredentials,
+    type SearchService,
+} from "../services/useSearchService";
+import { useCloseSearchDialog, useIsSearchDialogOpen, useOpenSearchDialog } from "../sidebar/atom";
 import { SearchBox, SearchMobileBox } from "./SearchBox";
 import { SearchHits, SearchMobileHits } from "./SearchHits";
 
@@ -21,6 +28,7 @@ export declare namespace SearchDialog {
 
 export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
     const { fromHeader } = providedProps;
+    const openSearchDialog = useOpenSearchDialog();
     const [credentials, setSearchCredentials] = useState<SearchCredentials | undefined>(undefined);
     const inputRef = useRef<HTMLInputElement>(null);
     const layoutBreakpoint = useLayoutBreakpointValue();
@@ -28,6 +36,20 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
     const searchService = useSearchService();
     const isSearchDialogOpen = useIsSearchDialogOpen();
     const closeSearchDialog = useCloseSearchDialog();
+
+    // set up search service
+    useCreateSearchService();
+
+    useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
+    useKeyboardPress({
+        key: "Slash",
+        onPress: () => {
+            const activeElementTag = document.activeElement?.tagName.toLowerCase();
+            if (activeElementTag !== "input" && activeElementTag !== "textarea" && activeElementTag !== "select") {
+                openSearchDialog();
+            }
+        },
+    });
 
     useEffect(() => {
         if (searchService.isAvailable) {
