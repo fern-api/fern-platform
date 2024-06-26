@@ -9,7 +9,7 @@ import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
+import { FeedbackPopover } from "../markdown-page/FeedbackPopover";
 import { useCreateSearchService } from "../services/useSearchService";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { useIsMobileSidebarOpen, useMessageHandler, useOpenSearchDialog } from "../sidebar/atom";

@@ -5,7 +5,7 @@ import { useIsReady } from "../contexts/useIsReady";
 import { ChangelogEntryPage } from "./ChangelogEntryPage";
 
 const CustomDocsPage = dynamic(
-    () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
+    () => import("../markdown-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
     {
         ssr: true,
     },

@@ -23,27 +23,40 @@ import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
 type GuideLayout = "guide";
 
 /**
- * The layout used for overview pages.
  * Overview pages are typically meant to be a landing page for a section of the documentation.
- * These pages are 50% wider than guide pages, and is best used with <Column> components.
+ * These pages are 50% wider than guide pages, but the table of contents is still visible.
  */
 type OverviewLayout = "overview";
 
 /**
- * The layout used for reference pages.
- * Reference pages are the widest layout and are best used for tables and other wide content.
+ * Reference pages are best used for API docs or other material that is meant to have a right-hand column.
  * Refrence pages are 2x the width of guide pages, and should be paired with <Aside> component.
  * Aside will generate a sticky right-hand column for the page, which is useful for code snippets.
  * Table of contents are always hidden on reference pages.
  */
 type ReferenceLayout = "reference";
 
+/**
+ * The layout used for full-width pages. This is useful for landing pages or other custom layouts.
+ * Both the navigation sidebar and the table of contents are hidden.
+ * The content will take up the full width of the page-width container, which is set by docs.yml.
+ */
+type PageLayout = "page";
+
+/**
+ * This layout takes over 100% of the viewport width, below the header.
+ * Unlike PageLayout, the content will not be constrained to the page-width container, and does not have padding.
+ */
+type CustomLayout = "custom";
+
+type Layout = GuideLayout | OverviewLayout | ReferenceLayout | PageLayout | CustomLayout;
+
 export interface FernDocsFrontmatter extends DocsV1Read.MetadataConfig {
     /**
      * The layout of the page. This will determine the width of the content.
      * Defaults to "guide"
      */
-    layout?: GuideLayout | OverviewLayout | ReferenceLayout;
+    layout?: Layout;
 
     /**
      * The title of the page. If not set, the title will inherit what's set in the sidebar.

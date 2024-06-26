@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { Fragment, ReactElement } from "react";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
+import { MarkdownHeader } from "../markdown-page/MarkdownHeader";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
 
@@ -18,10 +18,10 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                     <section className="flex">
                         {fullWidth && <div className="max-xl:hidden w-sidebar-width" />}
                         <div className="max-w-content-width w-full max-xl:mx-auto">
-                            <CustomDocsPageHeader
+                            <MarkdownHeader
                                 title={resolvedPath.node.title}
                                 sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
-                                excerpt={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
+                                subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
                             />
                             {overview != null && (
                                 <section className="prose w-content-width dark:prose-invert">
