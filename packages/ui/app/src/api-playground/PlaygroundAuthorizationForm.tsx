@@ -6,9 +6,20 @@ import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
 import { isEmpty } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
 import { Key } from "react-feather";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
+
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";
+
+const LOGIN_ENABLED: boolean = true;
+
+interface LoginSetup {
+    host: string;
+    loginEndpoint: string;
+    authEndpoint: string;
+    secret: string;
+}
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
@@ -58,6 +69,7 @@ function BearerAuthForm({
                         value={value?.type === "bearerAuth" ? value.token : ""}
                         autoComplete="off"
                         data-1p-ignore="true"
+                        aria-description="BearerAuthForm"
                         rightElement={
                             <FernButton
                                 onClick={openSecretsModal}
@@ -202,6 +214,7 @@ function HeaderAuthForm({
                     value={value?.type === "header" ? value.headers[header.headerWireValue] : ""}
                     autoComplete="off"
                     data-1p-ignore="true"
+                    aria-description="HeaderAuthForm"
                     rightElement={
                         <FernButton
                             onClick={openSecretsModal}
@@ -260,6 +273,29 @@ export function PlaygroundAuthorizationFormCard({
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const isOpen = useBooleanState(false);
+    const { apiInjectionConfig } = useFeatureFlags();
+    console.log('apiInjectionConfig:', apiInjectionConfig)
+
+    const redirectOrOpenAuthForm = () => {
+        if (apiInjectionConfig) {
+            
+            const redirect = encodeURIComponent(window.location.protocol + '//' + window.location.host + '/api/fern-docs/auth/callback');
+            const state = 'test_state';
+
+            const loginUrl = `${apiInjectionConfig['login-endpoint']}?redirect=${redirect}&state=${state}`;
+            window.location.href = loginUrl;
+        } else {
+            isOpen.toggleValue();
+        }
+    }
+    const authButtonCopy = LOGIN_ENABLED ? 'Login to send a real request' : 'Authenticate with your API key to send a real request';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const {
+        value: isAuthModalOpen,
+        setTrue: openAuthModal,
+        setFalse: closeAuthModal,
+    } = useBooleanState(urlParams.get('code') != null);
 
     return (
         <div>
@@ -285,14 +321,14 @@ export function PlaygroundAuthorizationFormCard({
                     size="large"
                     intent="danger"
                     variant="outlined"
-                    text="Authenticate with your API key to send a real request"
+                    text={authButtonCopy}
                     icon={<Key />}
                     rightIcon={
                         <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
                             Connect
                         </span>
                     }
-                    onClick={isOpen.toggleValue}
+                    onClick={redirectOrOpenAuthForm}
                     active={isOpen.value}
                 />
             )}
@@ -311,6 +347,15 @@ export function PlaygroundAuthorizationFormCard({
                     </div>
                 </div>
             </FernCollapse>
+{/*             
+            <PlaygroundAuthRedirectModal
+                authEndpointUrl={apiInjectionConfig.authEndpoint}
+                secret={apiInjectionConfig.secret}
+                isOpen={isAuthModalOpen}
+                onClose={closeAuthModal}
+                onAuth={setAuthorization}
+                code={urlParams.get('code') ?? ""}
+            /> */}
         </div>
     );
 }
