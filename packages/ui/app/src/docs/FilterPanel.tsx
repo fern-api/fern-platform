@@ -11,7 +11,7 @@ export function FilterPanel({ yearsArray, tagsArray }: FilterPanelProps): ReactE
     const { activeFilters, handleSetActiveFilters } = useFilterContext();
 
     return (
-        <div className="border p-4 border-black rounded-lg mt-80 fixed mx-12">
+        <div className="p-4 mt-20 fixed mx-12 max-w-80">
             <div className="text-md underline m-2">Filter entries</div>
             <div className="flex flex-wrap gap-1.5">
                 {yearsArray &&

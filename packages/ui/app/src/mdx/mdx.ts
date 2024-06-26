@@ -87,6 +87,11 @@ export interface FernDocsFrontmatter extends DocsV1Read.MetadataConfig {
      */
     "hide-feedback"?: boolean;
 
+    /**
+     * Any array of Tag strings
+     */
+    tags?: string[];
+
     // deprecated:
     editThisPageUrl?: string; // use "edit-this-page-url" instead
     excerpt?: string; // use subtitle instead

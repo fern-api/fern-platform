@@ -39,6 +39,8 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
         return allTags.length > 0 ? [...new Set(allTags)] : ["none"];
     };
 
+    // const filteredEntries = useMemo(() => {}, active)
+
     return (
         <div className="flex justify-between px-4 md:px-6 lg:px-8">
             <div className={clsx("w-full min-w-0 pt-8", { "sm:pt-8 lg:pt-24": fullWidth })}>
