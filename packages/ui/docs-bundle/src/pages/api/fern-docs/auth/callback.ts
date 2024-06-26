@@ -94,13 +94,21 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             body: JSON.stringify({ code, secret: apiInjectionConfig.secret }),
         });
 
-        console.log('!! response: ', response);
+        if (!response.ok) {
+            const error = await response.json();
+            
+            throw new Error(error.message);
+        }
 
+        const data = await response.json();
+        console.log('!! data: ', data);
 
         token = await new SignJWT({
             // Here you might lookup and retrieve user details from your database
-            code,
-            state: req.nextUrl.searchParams.get("state"),
+            name: data.name,
+            apiKey: data.apiKey,
+            refreshToken: data.refreshToken,
+            expiresAt: data.expires
         })
             .setProtectedHeader({ alg: "HS256", typ: "JWT" })
             .setIssuedAt()
