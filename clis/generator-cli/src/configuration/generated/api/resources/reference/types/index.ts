@@ -1,4 +1,5 @@
 export * from "./ReferenceConfig";
+export * from "./RootPackageReferenceSection";
 export * from "./ReferenceSection";
 export * from "./EndpointReference";
 export * from "./MethodInvocationSnippet";

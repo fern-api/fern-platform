@@ -6,6 +6,7 @@ import {
     ParameterReference,
     ReferenceSection,
     RelativeLocation,
+    RootPackageReferenceSection,
 } from "../configuration/generated/api";
 import { StreamWriter, StringWriter, Writer } from "../utils/Writer";
 
@@ -18,15 +19,32 @@ export class ReferenceGenerator {
 
     public async generate({ output }: { output: fs.WriteStream }): Promise<void> {
         const writer = new StreamWriter(output);
+        if (this.referenceConfig.rootSection !== undefined) {
+            this.writeRootSection({ section: this.referenceConfig.rootSection, writer });
+        }
         for (const section of this.referenceConfig.sections) {
             this.writeSection({ section, writer });
         }
         writer.end();
     }
 
+    private writeRootSection({ section, writer }: { section: RootPackageReferenceSection; writer: Writer }): void {
+        if (section.title !== undefined) {
+            writer.writeLine(`${section.title}`);
+        }
+        if (section.description !== undefined) {
+            writer.writeLine(`${section.description}`);
+        }
+        for (const endpoint of section.endpoints) {
+            this.writeEndpoint({ endpoint, writer });
+        }
+    }
+
     private writeSection({ section, writer }: { section: ReferenceSection; writer: Writer }): void {
         writer.writeLine(`## ${section.title}`);
-        writer.writeLine(`${section.description}`);
+        if (section.description !== undefined) {
+            writer.writeLine(`${section.description}`);
+        }
         for (const endpoint of section.endpoints) {
             this.writeEndpoint({ endpoint, writer });
         }

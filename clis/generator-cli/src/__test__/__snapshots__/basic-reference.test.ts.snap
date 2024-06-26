@@ -1,7 +1,63 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`basic-reference > basic-reference > generate reference file 1`] = `
-"## Accounts
+"<details><summary><code><a href="./src/client.py">client.get_user()</a></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Some description specific to the endpoint about users, etc. etc.
+
+It can also be multi-line.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+\`\`\`python
+client.get(user_id="ID")
+\`\`\`
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** \`str\` — The ID of the user to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Accounts
 This package contains all endpoints on accounts...
 <details><summary><code><a href="./src/accounts.py">client.accounts.get()</a></code></summary>
 <dl>
