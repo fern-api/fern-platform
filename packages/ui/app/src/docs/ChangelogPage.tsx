@@ -76,9 +76,15 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
     }, [activeFilters, allEntries, getTagsForEntry]);
 
     return (
+<<<<<<< HEAD
         <div className="flex justify-between px-4 md:px-6 lg:px-8">
             <div className={clsx("w-full min-w-0 pt-8", { "sm:pt-8 lg:pt-24": fullWidth })}>
                 <article className={clsx("mx-auto xl:w-fit break-words", { " xl:ml-8": !fullWidth })}>
+=======
+        <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
+            <div className={clsx("w-full min-w-0 pt-8", { "w-2/3 sm:pt-16 lg:pt-32": fullWidth })}>
+                <article className="mx-auto xl:w-fit break-words lg:ml-0 xl:mx-auto">
+>>>>>>> 229486040 (wip)
                     <section className="flex">
                         {fullWidth ? (
                             <>
@@ -170,7 +176,11 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                     <div className="h-48" />
                 </article>
             </div>
+<<<<<<< HEAD
             <div className="w-1/4 max-lg:hidden">
+=======
+            <div className="w-1/3 max-w-64">
+>>>>>>> 229486040 (wip)
                 <FilterPanel yearsArray={getYearsForFilterPanel()} tagsArray={getTagsForFilterPanel()} />
             </div>
         </div>
