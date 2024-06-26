@@ -13,9 +13,15 @@ export function FilterPanel({ yearsArray, tagsArray, horizontal = false }: Filte
     const { activeFilters, handleSetActiveFilters } = useFilterContext();
 
     return (
+<<<<<<< HEAD
         <div className={clsx("p-4 mt-20 fixed mx-12 max-w-80 flex-col", { "flex-row": horizontal })}>
             <div className="text-md underline m-2">Filter entries</div>
             <div className="flex flex-wrap gap-1.5">
+=======
+        <div className="p-4 mt-20 fixed mx-12 max-w-80">
+            <div className="text-md ml-1 mb-4">Filter</div>
+            <div className="flex flex-wrap gap-2">
+>>>>>>> 2c08eeb6e (Changing styling of filter panel)
                 {yearsArray &&
                     yearsArray.map((yearId) => (
                         <FilterTag
@@ -26,8 +32,8 @@ export function FilterPanel({ yearsArray, tagsArray, horizontal = false }: Filte
                         />
                     ))}
             </div>
-            <hr className="my-4 mx-2" />
-            <div className="flex flex-wrap gap-1.5">
+            <hr className="my-3" />
+            <div className="flex flex-wrap gap-2">
                 {tagsArray &&
                     tagsArray.map((tagId) => (
                         <FilterTag
