@@ -269,7 +269,7 @@ export function PlaygroundAuthorizationFormCard({
     const redirectOrOpenAuthForm = () => {
         if (apiInjectionConfig) {
             
-            const redirect = encodeURIComponent(window.location.protocol + '//' + window.location.host + '/api/fern-docs/auth/callback');
+            const redirect = encodeURIComponent(window.location.origin + '/api/fern-docs/auth/callback');
             const state = 'test_state';
 
             const loginUrl = `${apiInjectionConfig['login-endpoint']}?redirect=${redirect}&state=${state}`;
