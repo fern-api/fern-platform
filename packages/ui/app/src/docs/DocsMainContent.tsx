@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { FilterContextProvider } from "../contexts/filter-context/FilterContextProvider";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { useIsReady } from "../contexts/useIsReady";
 import { ChangelogEntryPage } from "./ChangelogEntryPage";
@@ -37,7 +38,11 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
     } else if (resolvedPath.type === "api-page") {
         return <ApiPage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />;
     } else if (resolvedPath.type === "changelog") {
-        return <ChangelogPage resolvedPath={resolvedPath} />;
+        return (
+            <FilterContextProvider>
+                <ChangelogPage resolvedPath={resolvedPath} />
+            </FilterContextProvider>
+        );
     } else if (resolvedPath.type === "changelog-entry") {
         return <ChangelogEntryPage resolvedPath={resolvedPath} />;
     } else {
