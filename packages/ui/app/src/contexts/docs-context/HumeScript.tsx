@@ -40,18 +40,7 @@ const inkeepSettings = {
 };
 
 // The Fern search triggers, which we'll reuse to trigger the Inkeep modal
-const searchButtonContainerIds = [
-  "fern-search-bar",
-];
-
-// Clone and replace the search triggers, needed to remove existing event listeners
-const clonedSearchButtonContainers = searchButtonContainerIds.map((id) => {
-  const originalElement = document.getElementById(id);
-  const clonedElement = originalElement.cloneNode(true);
-  originalElement.parentNode.replaceChild(clonedElement, originalElement);
-
-  return clonedElement;
-});
+const searchButtons = document.querySelectorAll(".fern-search-bar");
 
 // Load the Inkeep component library
 const inkeepScript = document.createElement("script");
@@ -98,7 +87,7 @@ inkeepScript.addEventListener("load", function () {
   });
 
   // When the Fern search bar elements are clicked, open the Inkeep search modal
-  clonedSearchButtonContainers.forEach((trigger) => {
+  searchButtons.forEach((trigger) => {
     trigger.addEventListener("click", function () {
       inkeepSearchModal.render({
         isOpen: true,
@@ -111,8 +100,8 @@ inkeepScript.addEventListener("load", function () {
     "keydown",
     (event) => {
       if (
-        (event.metaKey || event.ctrlKey) &&
-        (event.key === "k" || event.key === "K")
+        ((event.metaKey || event.ctrlKey) &&
+        (event.key === "k" || event.key === "K")) || event.key === "/"
       ) {
         event.stopPropagation();
         inkeepSearchModal.render({ isOpen: true });
