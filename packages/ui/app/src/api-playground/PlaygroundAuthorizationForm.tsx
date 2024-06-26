@@ -13,15 +13,6 @@ import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";
 
-const LOGIN_ENABLED: boolean = true;
-
-interface LoginSetup {
-    host: string;
-    loginEndpoint: string;
-    authEndpoint: string;
-    secret: string;
-}
-
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
     value: PlaygroundRequestFormAuth | undefined;
@@ -275,7 +266,6 @@ export function PlaygroundAuthorizationFormCard({
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const isOpen = useBooleanState(false);
     const { apiInjectionConfig } = useFeatureFlags();
-    console.log('apiInjectionConfig:', apiInjectionConfig)
     const { apiKey } = useDocsContext();
 
     const redirectOrOpenAuthForm = () => {
@@ -290,7 +280,7 @@ export function PlaygroundAuthorizationFormCard({
             isOpen.toggleValue();
         }
     }
-    const authButtonCopy = LOGIN_ENABLED ? 'Login to send a real request' : 'Authenticate with your API key to send a real request';
+    const authButtonCopy = apiInjectionConfig !== undefined ? 'Login to send a real request' : 'Authenticate with your API key to send a real request';
 
     const urlParams = new URLSearchParams(window.location.search);
     const {
