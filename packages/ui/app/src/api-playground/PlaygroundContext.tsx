@@ -93,21 +93,19 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     }, [router.query]);
 
     useEffect(() => {  
-        if (!isPlaygroundOpen) {
+        if (!isPlaygroundOpen) {                
             const params = new URLSearchParams(searchParams.toString())
-            if (params.has('playgroundState') || params.has('playgroundOpen')) {
-                params.delete('playgroundState')
-                params.delete('playgroundOpen')
-                window.history.pushState(null, '', `?${params.toString()}`)
-            }
+            params.delete('playgroundState')
+            params.delete('playgroundOpen')
+            window.history.pushState(null, '', `?${params.toString()}`)
+            
         } else {
             const params = new URLSearchParams(searchParams.toString())
             params.set('playgroundState', encodeURIComponent(JSON.stringify(selectionState)))
             params.set('playgroundOpen', encodeURIComponent(JSON.stringify(isPlaygroundOpen)))
             window.history.pushState(null, '', `?${params.toString()}`)
         }
-        
-    }, [selectionState, router]);
+    }, [selectionState, isPlaygroundOpen, router.query]);
 
     const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
