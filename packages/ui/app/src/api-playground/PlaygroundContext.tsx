@@ -83,18 +83,16 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     useEffect(() => {
         if(!router.isReady) return;
         
-        const {playgroundNodeId, playgroundOpen} = router.query;
+        const {playgroundNodeId} = router.query;
         const node = nodes.get(FernNavigation.NodeId(decodeURIComponent(playgroundNodeId as string)));
         
         if (node != null && "apiDefinitionId" in node) {
-            console.log('load playground node 2');
             setSelectionState(node as FernNavigation.NavigationNodeApiLeaf);
+            setPlaygroundOpen(true);
+        } else {
+            setSelectionState(undefined);
+            setPlaygroundOpen(false);
         }
-        
-        if (typeof playgroundOpen === "string" && playgroundOpen.length > 0) {
-            setPlaygroundOpen(JSON.parse(decodeURIComponent(playgroundOpen)));
-        }
-        
     }, [router, router.isReady, nodes]);
 
     useEffect(() => {  
@@ -103,13 +101,10 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
         const params = new URLSearchParams(searchParams.toString());
         if (!isPlaygroundOpen) {
             params.delete("playgroundNodeId");
-            params.delete("playgroundOpen");
-            
             const paramString = params.toString();
             window.history.pushState(null, "", paramString !== "" ? `?${paramString}` : window.location.pathname);
         } else {
             params.set("playgroundNodeId", encodeURIComponent(selectionState?.id ?? ""));
-            params.set("playgroundOpen", encodeURIComponent(isPlaygroundOpen));
             window.history.pushState(null, "", `?${params.toString()}`);
         }
     }, [selectionState, isPlaygroundOpen, router.query, router.isReady]); //, searchParams]);
