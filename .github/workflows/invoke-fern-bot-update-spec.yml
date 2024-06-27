@@ -36,7 +36,7 @@ jobs:
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
-          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpec --stage development
+          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpecs --stage development
 
   invoke_prod:
     if: ${{ github.event.inputs.environment == 'production' }}
@@ -60,4 +60,4 @@ jobs:
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
-          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpec --stage production
+          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpecs --stage production
