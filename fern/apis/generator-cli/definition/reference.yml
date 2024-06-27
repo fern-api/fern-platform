@@ -7,7 +7,7 @@ types:
       We intentionally keep this a bit flexible in the event SDKs structure their package/module
       references in a unique way for the same API.
     properties:
-      root_section: optional<RootPackageReferenceSection>
+      rootSection: optional<RootPackageReferenceSection>
       sections: list<ReferenceSection>
       language:
         type: Language

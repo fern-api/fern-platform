@@ -13,14 +13,14 @@ export const ReferenceConfig: core.serialization.ObjectSchema<
     serializers.ReferenceConfig.Raw,
     FernGeneratorCli.ReferenceConfig
 > = core.serialization.object({
-    rootSection: core.serialization.property("root_section", RootPackageReferenceSection.optional()),
+    rootSection: RootPackageReferenceSection.optional(),
     sections: core.serialization.list(ReferenceSection),
     language: Language,
 });
 
 export declare namespace ReferenceConfig {
     interface Raw {
-        root_section?: RootPackageReferenceSection.Raw | null;
+        rootSection?: RootPackageReferenceSection.Raw | null;
         sections: ReferenceSection.Raw[];
         language: Language.Raw;
     }
