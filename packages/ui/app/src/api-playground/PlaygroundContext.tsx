@@ -84,11 +84,11 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
         const {playgroundNodeId, playgroundOpen} = router.query;
         const node = nodes.get(FernNavigation.NodeId(decodeURIComponent(playgroundNodeId as string)));
 
-        if (node != null && 'apiDefinitionId' in node) {
+        if (node != null && "apiDefinitionId" in node) {
             setSelectionState(node as FernNavigation.NavigationNodeApiLeaf);
         }
         
-        if (typeof playgroundOpen === 'string' && playgroundOpen.length > 0) {
+        if (typeof playgroundOpen === "string" && playgroundOpen.length > 0) {
             setPlaygroundOpen(JSON.parse(decodeURIComponent(playgroundOpen)));
         }
     }, [router.query]);
@@ -96,15 +96,15 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     useEffect(() => {  
         const params = new URLSearchParams(searchParams.toString());
         if (!isPlaygroundOpen) {                
-            params.delete('playgroundNodeId');
-            params.delete('playgroundOpen');
+            params.delete("playgroundNodeId");
+            params.delete("playgroundOpen");
             
             const paramString = params.toString();
-            window.history.pushState(null, '', paramString !== "" ? `?${paramString}` : window.location.pathname);
+            window.history.pushState(null, "", paramString !== "" ? `?${paramString}` : window.location.pathname);
         } else {
-            params.set('playgroundNodeId', encodeURIComponent(selectionState?.id ?? ''))
-            params.set('playgroundOpen', encodeURIComponent(isPlaygroundOpen))
-            window.history.pushState(null, '', `?${params.toString()}`)
+            params.set("playgroundNodeId", encodeURIComponent(selectionState?.id ?? ''));
+            params.set("playgroundOpen", encodeURIComponent(isPlaygroundOpen));
+            window.history.pushState(null, '', `?${params.toString()}`);
         }
     }, [selectionState, isPlaygroundOpen, router.query]);
 
