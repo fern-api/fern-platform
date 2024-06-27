@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
 import { Fragment, ReactElement, useCallback, useEffect, useState } from "react";
 import { FernLink } from "../components/FernLink";
@@ -6,7 +7,7 @@ import { useFilterContext } from "../contexts/filter-context/useFilterContext";
 import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
-import { FilterPanel } from "./FilterPanel";
+import { FilterDropdown } from "./FilterDropdown";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
     const allEntries = resolvedPath.node.children.flatMap((year) =>
@@ -14,12 +15,12 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
     );
     const { sidebar } = useDocsContext();
     const { activeFilters } = useFilterContext();
-    const [filteredEntries, setFilteredEntries] = useState<object[]>(allEntries);
+    const [filteredEntries, setFilteredEntries] = useState<FernNavigation.ChangelogEntryNode[]>(allEntries);
     const fullWidth = sidebar == null;
     const overview =
         resolvedPath.node.overviewPageId != null ? resolvedPath.pages[resolvedPath.node.overviewPageId] : undefined;
 
-    const getYearsForFilterPanel = () => {
+    const getYearsForFilterDropdown = () => {
         const allYears = resolvedPath.node.children.flatMap((year) =>
             year.children.flatMap((month) => month.children.map((entry) => entry.title.split(", ")[1])),
         );
@@ -27,18 +28,23 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
     };
 
     const getTagsForEntry = useCallback(
-        (entry: object) => {
-            let tags = [];
+        (entry: FernNavigation.ChangelogEntryNode) => {
+            let tags: string[] = [];
             const page = resolvedPath.pages[entry.pageId];
-            if (page != null && typeof page !== "string") {
-                tags = page.frontmatter.tags;
+            if (
+                !!page &&
+                typeof page !== "string" &&
+                typeof page.frontmatter === "object" &&
+                Object.hasOwn(page.frontmatter, "tags")
+            ) {
+                tags = page.frontmatter.tags as string[];
             }
             return tags;
         },
         [resolvedPath.pages],
     );
 
-    const getTagsForFilterPanel = () => {
+    const getTagsForFilterDropdown = () => {
         const allTags = resolvedPath.node.children.flatMap((year) =>
             year.children.flatMap((month) =>
                 month.children.reduce((acc, currentEntry) => {
@@ -55,37 +61,32 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
         return allTags.length > 0 ? [...new Set(allTags)] : ["none"];
     };
 
-    useEffect(() => {
-        const getFilteredEntries = () => {
-            let allFilteredEntries = [...allEntries];
-            if (activeFilters.length > 0) {
-                const filteredEntriesByTag = allEntries.filter((entry) => {
-                    const entryTags = getTagsForEntry(entry);
-                    return activeFilters.some((filter) => entryTags?.includes(filter));
-                });
+    const getFilteredEntries = useCallback(() => {
+        let allFilteredEntries = [...allEntries];
+        if (activeFilters.length > 0) {
+            const filteredEntriesByTag = allEntries.filter((entry) => {
+                const entryTags = getTagsForEntry(entry);
+                return activeFilters.some((filter) => entryTags?.includes(filter));
+            });
 
-                const filterEntriesByYear = allEntries.filter((entry) => {
-                    return activeFilters.some((filter) => entry.title.split(", ")[1] === filter);
-                });
+            const filterEntriesByYear = allEntries.filter((entry) => {
+                return activeFilters.some((filter) => entry.title.split(", ")[1] === filter);
+            });
 
-                allFilteredEntries = [...filteredEntriesByTag, ...filterEntriesByYear];
-            }
-            setFilteredEntries(allFilteredEntries);
-        };
-        getFilteredEntries();
+            allFilteredEntries = [...filteredEntriesByTag, ...filterEntriesByYear];
+        }
+        setFilteredEntries(allFilteredEntries);
     }, [activeFilters, allEntries, getTagsForEntry]);
 
+    useEffect(() => {
+        getFilteredEntries();
+    }, [activeFilters, getFilteredEntries]);
+
     return (
-<<<<<<< HEAD
         <div className="flex justify-between px-4 md:px-6 lg:px-8">
             <div className={clsx("w-full min-w-0 pt-8", { "sm:pt-8 lg:pt-24": fullWidth })}>
                 <article className={clsx("mx-auto xl:w-fit break-words", { " xl:ml-8": !fullWidth })}>
-=======
-        <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
-            <div className={clsx("w-full min-w-0 pt-8", { "w-2/3 sm:pt-16 lg:pt-32": fullWidth })}>
-                <article className="mx-auto xl:w-fit break-words lg:ml-0 xl:mx-auto">
->>>>>>> 229486040 (wip)
-                    <section className="flex">
+                    <section className="flex flex-col ml-64">
                         {fullWidth ? (
                             <>
                                 <div className="flex-initial max-md:hidden w-64" />
@@ -118,11 +119,10 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                 )}
                             </div>
                         )}
-                        <div>
-                            <FilterPanel
-                                yearsArray={getYearsForFilterPanel()}
-                                tagsArray={getTagsForFilterPanel()}
-                                horizontal
+                        <div className="">
+                            <FilterDropdown
+                                yearsArray={getYearsForFilterDropdown()}
+                                tagsArray={getTagsForFilterDropdown()}
                             />
                         </div>
                     </section>
@@ -175,13 +175,6 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                     ,
                     <div className="h-48" />
                 </article>
-            </div>
-<<<<<<< HEAD
-            <div className="w-1/4 max-lg:hidden">
-=======
-            <div className="w-1/3 max-w-64">
->>>>>>> 229486040 (wip)
-                <FilterPanel yearsArray={getYearsForFilterPanel()} tagsArray={getTagsForFilterPanel()} />
             </div>
         </div>
     );

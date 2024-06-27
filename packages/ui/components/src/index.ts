@@ -3,6 +3,7 @@ export * from "./FernAudioPlayer";
 export * from "./FernButton";
 export * from "./FernCard";
 export * from "./FernCheckbox";
+export * from "./FernCheckboxDropdown";
 export * from "./FernChip";
 export * from "./FernCollapse";
 export * from "./FernDropdown";

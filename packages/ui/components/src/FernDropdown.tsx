@@ -19,10 +19,11 @@ import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 export declare namespace FernDropdown {
     export interface ValueOption {
         type: "value";
+        value: string;
+        active?: boolean;
         label?: ReactNode;
         helperText?: ReactNode;
         children?: ReactNode | ((active: boolean) => ReactNode);
-        value: string;
         icon?: ReactNode;
         rightElement?: ReactNode;
         tooltip?: ReactNode;
