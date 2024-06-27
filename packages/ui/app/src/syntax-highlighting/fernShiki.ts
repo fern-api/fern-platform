@@ -39,25 +39,6 @@ function hasLanguage(lang: string): boolean {
     return highlighter?.getLoadedLanguages().includes(parseLang(lang)) ?? false;
 }
 
-// export function highlight(
-//     highlighter: Highlighter,
-//     code: string,
-//     rawLang: string,
-//     meta?: Record<string, unknown>,
-// ): { hast: Root; language: string } {
-//     const lang = parseLang(rawLang);
-//     const root = highlighter.codeToHast(code, {
-//         lang,
-//         themes: {
-//             light: LIGHT_THEME,
-//             dark: DARK_THEME,
-//         },
-//         transformers: [transformerMetaHighlight()],
-//         meta,
-//     });
-//     return { hast: root as Root, language: lang };
-// }
-
 export interface HighlightedTokens {
     code: string;
     lang: string;
