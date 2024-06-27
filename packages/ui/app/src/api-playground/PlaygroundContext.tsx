@@ -91,7 +91,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
         if (typeof playgroundOpen === "string" && playgroundOpen.length > 0) {
             setPlaygroundOpen(JSON.parse(decodeURIComponent(playgroundOpen)));
         }
-    }, [router.query]);
+    }, [router.query, nodes, setPlaygroundOpen]);
 
     useEffect(() => {  
         const params = new URLSearchParams(searchParams.toString());
@@ -106,7 +106,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
             params.set("playgroundOpen", encodeURIComponent(isPlaygroundOpen));
             window.history.pushState(null, "", `?${params.toString()}`);
         }
-    }, [selectionState, isPlaygroundOpen, router.query]);
+    }, [selectionState, isPlaygroundOpen, router.query, searchParams]);
 
     const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
