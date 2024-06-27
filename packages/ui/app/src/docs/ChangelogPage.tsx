@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
-import { Fragment, ReactElement, useCallback, useEffect, useState } from "react";
+import { Fragment, ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useFilterContext } from "../contexts/filter-context/useFilterContext";
@@ -10,8 +10,12 @@ import { ResolvedPath } from "../resolver/ResolvedPath";
 import { FilterDropdown } from "./FilterDropdown";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
-    const allEntries = resolvedPath.node.children.flatMap((year) =>
-        year.children.flatMap((month) => month.children.map((entry) => entry)),
+    const allEntries = useMemo(
+        () =>
+            resolvedPath.node.children.flatMap((year) =>
+                year.children.flatMap((month) => month.children.map((entry) => entry)),
+            ),
+        [resolvedPath],
     );
     const { sidebar } = useDocsContext();
     const { activeFilters } = useFilterContext();
@@ -172,7 +176,6 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                             </Fragment>
                         );
                     })}
-                    ,
                     <div className="h-48" />
                 </article>
             </div>

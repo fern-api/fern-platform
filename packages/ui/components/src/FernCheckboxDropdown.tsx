@@ -17,8 +17,8 @@ export declare namespace FernCheckboxDropdown {
 
     export interface Props {
         options: Option[];
-        onSelectOption?: (value: string) => void;
-        value?: string;
+        onSelectOption: (value: string) => void;
+        value: string;
         onOpen?: () => void;
         side?: "top" | "right" | "bottom" | "left";
         align?: "start" | "center" | "end";
@@ -40,7 +40,9 @@ export const FernCheckboxDropdown = forwardRef<HTMLButtonElement, PropsWithChild
 
         const handleItemSelect = (e: Event, filterValue: string) => {
             e.preventDefault();
-            onSelectOption(filterValue);
+            if (!!filterValue && typeof filterValue === "string") {
+                onSelectOption(filterValue);
+            }
         };
 
         const renderDropdownContent = () => (
