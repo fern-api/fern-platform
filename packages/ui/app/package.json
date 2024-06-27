@@ -61,7 +61,6 @@
     "@sentry/nextjs": "^7.105.0",
     "@shikijs/transformers": "^1.2.2",
     "@types/nprogress": "^0.2.3",
-    "@vercel/edge-config": "^1.1.0",
     "algoliasearch": "^4.22.1",
     "bezier-easing": "^2.1.0",
     "clsx": "^2.1.0",
