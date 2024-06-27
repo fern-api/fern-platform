@@ -48,7 +48,7 @@ export declare namespace DocsPage {
 
         seo: DefaultSeoProps;
 
-        github?: GitHubProps
+        github?: GitHubProps;
     }
 }
 

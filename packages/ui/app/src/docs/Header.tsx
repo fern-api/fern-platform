@@ -61,7 +61,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                             rightIcon={
                                 navbarLink.rightIcon ??
                                 (navbarLink.type === "primary" ||
-                                    (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
+                                (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
                                     <ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />
                                 ) : undefined)
                             }
@@ -69,8 +69,8 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                                 navbarLink.type === "primary"
                                     ? "outlined"
                                     : navbarLink.type === "secondary"
-                                        ? "minimal"
-                                        : navbarLink.type
+                                      ? "minimal"
+                                      : navbarLink.type
                             }
                             rounded={navbarLink.rounded}
                         >

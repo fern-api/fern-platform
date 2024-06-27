@@ -70,7 +70,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             searchInfo,
             navbarLinks,
             apis,
-            github
+            github,
         }),
         [
             domain,
@@ -89,7 +89,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             searchInfo,
             navbarLinks,
             apis,
-            github
+            github,
         ],
     );
 
