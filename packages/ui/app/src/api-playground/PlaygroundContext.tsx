@@ -72,30 +72,36 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     }, [data, setApis]);
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
+    const searchParams = useSearchParams();
 
     const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
     const [playgroundHeight, setPlaygroundHeight] = usePlaygroundHeight();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
-    
-    const router = useRouter();
-    const searchParams = useSearchParams();
 
-    useEffect(() => {        
+    const router = useRouter();
+
+    useEffect(() => {
+        if(!router.isReady) return;
+        
         const {playgroundNodeId, playgroundOpen} = router.query;
         const node = nodes.get(FernNavigation.NodeId(decodeURIComponent(playgroundNodeId as string)));
-
+        
         if (node != null && "apiDefinitionId" in node) {
+            console.log('load playground node 2');
             setSelectionState(node as FernNavigation.NavigationNodeApiLeaf);
         }
         
         if (typeof playgroundOpen === "string" && playgroundOpen.length > 0) {
             setPlaygroundOpen(JSON.parse(decodeURIComponent(playgroundOpen)));
         }
-    }, [router.query, nodes, setPlaygroundOpen]);
+        
+    }, [router, router.isReady, nodes]);
 
     useEffect(() => {  
+        if(!router.isReady) return;
+
         const params = new URLSearchParams(searchParams.toString());
-        if (!isPlaygroundOpen) {                
+        if (!isPlaygroundOpen) {
             params.delete("playgroundNodeId");
             params.delete("playgroundOpen");
             
@@ -106,7 +112,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
             params.set("playgroundOpen", encodeURIComponent(isPlaygroundOpen));
             window.history.pushState(null, "", `?${params.toString()}`);
         }
-    }, [selectionState, isPlaygroundOpen, router.query, searchParams]);
+    }, [selectionState, isPlaygroundOpen, router.query, router.isReady]); //, searchParams]);
 
     const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
