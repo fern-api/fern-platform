@@ -21,7 +21,7 @@ export class ReferenceGenerator {
         const writer = new StreamWriter(output);
         writer.writeLine("# Reference");
 
-        if (this.referenceConfig.rootSection !== undefined) {
+        if (this.referenceConfig.rootSection != null) {
             this.writeRootSection({ section: this.referenceConfig.rootSection, writer });
         }
         for (const section of this.referenceConfig.sections) {
@@ -31,7 +31,7 @@ export class ReferenceGenerator {
     }
 
     private writeRootSection({ section, writer }: { section: RootPackageReferenceSection; writer: Writer }): void {
-        if (section.description !== undefined) {
+        if (section.description != null) {
             writer.writeLine(`${section.description}`);
         }
         for (const endpoint of section.endpoints) {
@@ -41,7 +41,7 @@ export class ReferenceGenerator {
 
     private writeSection({ section, writer }: { section: ReferenceSection; writer: Writer }): void {
         writer.writeLine(`## ${section.title}`);
-        if (section.description !== undefined) {
+        if (section.description != null) {
             writer.writeLine(`${section.description}`);
         }
         for (const endpoint of section.endpoints) {
@@ -51,7 +51,7 @@ export class ReferenceGenerator {
 
     private writeEndpoint({ endpoint, writer }: { endpoint: EndpointReference; writer: Writer }): void {
         const stringWriter = new StringWriter();
-        if (endpoint.description !== undefined) {
+        if (endpoint.description != null) {
             stringWriter.writeLine(
                 `#### 📝 Description\n\n${this.writeIndentedBlock(this.writeIndentedBlock(endpoint.description))}\n`,
             );
@@ -84,9 +84,9 @@ export class ReferenceGenerator {
 
     private writeParameter(parameter: ParameterReference): string {
         const desc = parameter.description?.match(/[^\r\n]+/g)?.length;
-        const containsLineBreak = desc !== undefined && desc > 1;
+        const containsLineBreak = desc != null && desc > 1;
         return `**${parameter.name}:** \`${this.wrapInLink(parameter.type, parameter.location)}\` ${
-            parameter.description !== undefined ? (containsLineBreak ? "\n\n" : "— ") + parameter.description : ""
+            parameter.description != null ? (containsLineBreak ? "\n\n" : "— ") + parameter.description : ""
         }
     `;
     }
@@ -100,6 +100,6 @@ export class ReferenceGenerator {
     }
 
     private wrapInLink(content: string, link?: RelativeLocation) {
-        return link !== undefined ? `<a href="${link.path}">${content}</a>` : content;
+        return link != null ? `<a href="${link.path}">${content}</a>` : content;
     }
 }
