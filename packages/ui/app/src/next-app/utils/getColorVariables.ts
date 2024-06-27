@@ -13,7 +13,7 @@ interface ColorConfig {
     light: DocsV1Read.RgbaColor;
 }
 
-const DEFAULT_COLORS: {
+export const DEFAULT_COLORS: {
     accentPrimary: ColorConfig;
     background: ColorConfig;
 } = {

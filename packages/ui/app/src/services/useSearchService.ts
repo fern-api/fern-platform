@@ -1,12 +1,11 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { atom, useAtom, useAtomValue } from "jotai";
-import { once } from "lodash-es";
-import { useEffect, useMemo } from "react";
-import { captureSentryError } from "../analytics/sentry";
+/* eslint-disable react-hooks/rules-of-hooks */
+import { noop } from "@fern-ui/core-utils";
+import type { SearchConfig } from "@fern-ui/search-utils";
+import { useCallback } from "react";
+import useSWR, { mutate } from "swr";
+import urljoin from "url-join";
 import { useLocalPreviewContext } from "../contexts/LocalPreviewContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { getEnvConfig, type EnvironmentConfig } from "../env";
-import { REGISTRY_SERVICE } from "./registry";
 
 export type SearchCredentials = {
     appId: string;
@@ -27,99 +26,39 @@ export declare namespace SearchService {
 
 export type SearchService = SearchService.Available | SearchService.Unavailable;
 
-function createSearchApiKeyLoader(envConfig: EnvironmentConfig, indexSegmentId: string) {
-    return async () => {
-        const resp = await REGISTRY_SERVICE.docs.v2.read.getSearchApiKeyForIndexSegment({
-            indexSegmentId,
-        });
-        if (!resp.ok) {
-            // eslint-disable-next-line no-console
-            console.error(resp.error);
-
-            captureSentryError(resp.error, {
-                context: "SearchService",
-                errorSource: "createSearchApiKeyLoader",
-                errorDescription: "[P0] Failed to fetch index segment api key.",
-            });
-
-            return undefined;
-        }
-        const { searchApiKey } = resp.body;
-        return {
-            appId: envConfig.algoliaAppId,
-            searchApiKey,
-        };
-    };
-}
-
-const SEARCH_SERVICE_ATOM = atom<SearchService>({ isAvailable: false });
-
-export function useSearchService(): SearchService {
-    return useAtomValue(SEARCH_SERVICE_ATOM);
-}
-
-export function useCreateSearchService(currentVersionId: FernNavigation.VersionId | undefined): void {
-    const { searchInfo, versions } = useDocsContext();
-    const [, setSearchService] = useAtom(SEARCH_SERVICE_ATOM);
+export function useSearchConfig(): [SearchConfig, refresh: () => void] {
+    const { searchInfo, basePath } = useDocsContext();
     const { isLocalPreview } = useLocalPreviewContext();
 
-    const searchService = useMemo<SearchService>(() => {
-        if (isLocalPreview) {
-            return { isAvailable: false };
-        }
+    if (isLocalPreview) {
+        return [{ isAvailable: false }, noop];
+    }
 
-        try {
-            const envConfig = getEnvConfig();
-            if (typeof searchInfo !== "object" || searchInfo.type === "legacyMultiAlgoliaIndex") {
-                return { isAvailable: false };
-            } else if (searchInfo.value.type === "unversioned") {
-                if (envConfig.algoliaSearchIndex == null) {
-                    throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX"');
-                }
-                const { indexSegment } = searchInfo.value;
+    const key = urljoin(basePath ?? "/", "/api/fern-docs/search");
 
-                return {
-                    isAvailable: true,
-                    loadCredentials: once(createSearchApiKeyLoader(envConfig, indexSegment.id)),
-                    index: envConfig.algoliaSearchIndex,
-                };
-            } else {
-                const currentVersion = versions.find((v) => v.id === currentVersionId);
-                if (currentVersion == null) {
-                    throw new Error("Inconsistent State: Received search info is versioned but docs are unversioned");
-                }
-                const versionId = currentVersion.id;
-                const { indexSegmentsByVersionId } = searchInfo.value;
-                const indexSegment = indexSegmentsByVersionId[versionId];
-                if (indexSegment == null) {
-                    throw new Error(
-                        `Inconsistent State: Did not receive index segment for version "${versionId}". This may indicate a backend bug.`,
-                    );
-                }
-                if (envConfig.algoliaSearchIndex == null) {
-                    throw new Error('Missing environment variable "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX"');
-                }
-                return {
-                    isAvailable: true,
-                    loadCredentials: once(createSearchApiKeyLoader(envConfig, indexSegment.id)),
-                    index: envConfig.algoliaSearchIndex,
-                };
-            }
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error("Failed to initialize search service", e);
-
-            captureSentryError(e, {
-                context: "SearchService",
-                errorSource: "useCreateSearchService",
-                errorDescription: "Failed to initialize search service",
+    const { data } = useSWR<SearchConfig>(
+        key,
+        async (url: string) => {
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    searchInfo,
+                }),
             });
+            return res.json();
+        },
+        {
+            refreshInterval: 1000 * 60 * 60 * 2, // 2 hours
+            revalidateOnFocus: false,
+        },
+    );
 
-            return { isAvailable: false };
-        }
-    }, [currentVersionId, isLocalPreview, searchInfo, versions]);
+    const refresh = useCallback(() => {
+        void mutate(key);
+    }, [key]);
 
-    useEffect(() => {
-        setSearchService(searchService);
-    }, [searchService, setSearchService]);
+    return [data ?? { isAvailable: false }, refresh];
 }

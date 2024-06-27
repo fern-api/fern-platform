@@ -7,7 +7,6 @@ import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
-import { useSearchService } from "../services/useSearchService";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
@@ -27,7 +26,6 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({ logoHeight, logo
     const isScrolled = useIsScrolled(scrollRef);
     const layoutBreakpoint = useLayoutBreakpointValue();
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
-    const searchService = useSearchService();
 
     return (
         <nav
@@ -42,7 +40,7 @@ const SidebarInner = memo<SidebarProps>(function SidebarInner({ logoHeight, logo
                 logoHeight={logoHeight}
                 logoHref={logoHref}
             />
-            <SearchSidebar searchService={searchService}>
+            <SearchSidebar>
                 <FernScrollArea
                     rootClassName="flex-1"
                     className={cn("group/sidebar mask-grad-y-6 px-4 pb-12", {

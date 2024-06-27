@@ -1,3 +1,5 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import urljoin from "url-join";
 import type { SearchRecord } from "./types";
 
@@ -38,4 +40,62 @@ function getLeadingPathForSearchRecord(record: SearchRecord): string[] {
         default:
             return [];
     }
+}
+
+export function createSearchPlaceholderWithVersion(
+    activeVersion: SidebarVersionInfo | undefined,
+    sidebar: FernNavigation.SidebarRootNode | undefined,
+): string {
+    return `Search ${activeVersion != null ? `across ${activeVersion.id} ` : ""}for ${createSearchPlaceholder(sidebar)}...`;
+}
+
+function createSearchPlaceholder(sidebar: FernNavigation.SidebarRootNode | undefined): string {
+    if (sidebar == null) {
+        return "guides and endpoints";
+    }
+    const hasGuides = checkHasGuides(sidebar);
+    const hasEndpoints = checkHasEndpoints(sidebar);
+    if (hasGuides && hasEndpoints) {
+        return "guides and endpoints";
+    }
+
+    if (hasGuides) {
+        return "guides";
+    }
+
+    if (hasEndpoints) {
+        return "endpoints";
+    }
+
+    return "guides and endpoints";
+}
+
+function checkHasGuides(sidebar: FernNavigation.SidebarRootNode): boolean {
+    let hasGuides = false;
+    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+        if (node.type === "page") {
+            hasGuides = true;
+            return false;
+        }
+        if (node.type === "changelog") {
+            return "skip";
+        }
+        return;
+    });
+    return hasGuides;
+}
+
+function checkHasEndpoints(sidebar: FernNavigation.SidebarRootNode): boolean {
+    let hasEndpoints = false;
+    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+        if (node.type === "apiReference") {
+            hasEndpoints = true;
+            return false;
+        }
+        if (node.type === "changelog") {
+            return "skip";
+        }
+        return;
+    });
+    return hasEndpoints;
 }

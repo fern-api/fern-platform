@@ -6,6 +6,7 @@ import { updateSpecInternal } from "../shared/updateSpecInternal";
 export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
     const app: App = setupGithubApp(env);
 
+    let foundRepo = false;
     if (env.REPO_TO_RUN_ON !== undefined) {
         console.log("REPO_TO_RUN_ON has been specified, only running on:", env.REPO_TO_RUN_ON);
     }
@@ -18,6 +19,7 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
             return;
         } else if (env.REPO_TO_RUN_ON !== undefined) {
             console.log("REPO_TO_RUN_ON has been found, running logic.");
+            foundRepo = true;
         }
 
         await updateSpecInternal(
@@ -33,4 +35,8 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
             env.GITHUB_APP_LOGIN_ID,
         );
     });
+
+    if (!foundRepo && env.REPO_TO_RUN_ON !== undefined) {
+        console.log("REPO_TO_RUN_ON has been specified, but no matching repos were found, so no action was taken.");
+    }
 }
