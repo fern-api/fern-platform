@@ -5,7 +5,6 @@ import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { HeaderLogoSection } from "../docs/HeaderLogoSection";
 import { ThemeButton } from "../docs/ThemeButton";
 import { SidebarSearchBar } from "./SidebarSearchBar";
-import { useOpenSearchDialog } from "./atom";
 
 export declare namespace SidebarFixedItemsSection {
     export interface Props {
@@ -25,16 +24,15 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     logoHeight,
     logoHref,
 }) => {
-    const openSearchDialog = useOpenSearchDialog();
     const { layout, colors } = useDocsContext();
 
     const searchBar = useMemo(() => {
         return showSearchBar ? (
             <div className="mb-3 hidden last:mb-0 lg:block">
-                <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
+                <SidebarSearchBar className="w-full" />
             </div>
         ) : null;
-    }, [showSearchBar, openSearchDialog]);
+    }, [showSearchBar]);
 
     if (!showSearchBar) {
         return null;

@@ -6,8 +6,8 @@ import { useAtomValue } from "jotai";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { SEARCH_BOX_MOUNTED } from "../search/SearchBox";
-import { useSearchService } from "../services/useSearchService";
+import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
+import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { useOpenSearchDialog } from "../sidebar/atom";
 import { HeaderLogoSection } from "./HeaderLogoSection";
@@ -44,7 +44,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const { colors } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
-    const searchService = useSearchService();
+    const [searchService] = useSearchConfig();
 
     const navbarLinksSection = (
         <div className="hidden lg:block">
@@ -98,7 +98,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         invisible: isSearchBoxMounted,
                     })}
                 >
-                    <SidebarSearchBar onClick={openSearchDialog} className="w-full" />
+                    <SidebarSearchBar className="w-full" />
                 </div>
             )}
 
