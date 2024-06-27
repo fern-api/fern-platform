@@ -4,8 +4,8 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import urljoin from "url-join";
@@ -102,9 +102,9 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
             const paramString = params.toString();
             window.history.pushState(null, "", paramString !== "" ? `?${paramString}` : window.location.pathname);
         } else {
-            params.set("playgroundNodeId", encodeURIComponent(selectionState?.id ?? ''));
+            params.set("playgroundNodeId", encodeURIComponent(selectionState?.id ?? ""));
             params.set("playgroundOpen", encodeURIComponent(isPlaygroundOpen));
-            window.history.pushState(null, '', `?${params.toString()}`);
+            window.history.pushState(null, "", `?${params.toString()}`);
         }
     }, [selectionState, isPlaygroundOpen, router.query]);
 
