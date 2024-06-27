@@ -4,6 +4,8 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import urljoin from "url-join";
@@ -74,6 +76,38 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
     const [playgroundHeight, setPlaygroundHeight] = usePlaygroundHeight();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
+    
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    useEffect(() => {        
+        const {playgroundState, playgroundOpen} = router.query;
+        
+        if (typeof playgroundState === 'string' && playgroundState.length > 0) {
+            setSelectionState(JSON.parse(decodeURIComponent(playgroundState)));
+        }
+        
+        if (typeof playgroundOpen === 'string' && playgroundOpen.length > 0) {
+            setPlaygroundOpen(JSON.parse(decodeURIComponent(playgroundOpen)));
+        }
+    }, [router.query]);
+
+    useEffect(() => {  
+        if (!isPlaygroundOpen) {
+            const params = new URLSearchParams(searchParams.toString())
+            if (params.has('playgroundState') || params.has('playgroundOpen')) {
+                params.delete('playgroundState')
+                params.delete('playgroundOpen')
+                window.history.pushState(null, '', `?${params.toString()}`)
+            }
+        } else {
+            const params = new URLSearchParams(searchParams.toString())
+            params.set('playgroundState', encodeURIComponent(JSON.stringify(selectionState)))
+            params.set('playgroundOpen', encodeURIComponent(JSON.stringify(isPlaygroundOpen)))
+            window.history.pushState(null, '', `?${params.toString()}`)
+        }
+        
+    }, [selectionState, router]);
 
     const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
