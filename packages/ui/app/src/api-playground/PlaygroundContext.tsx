@@ -57,7 +57,7 @@ const fetcher = async (url: string) => {
 export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
-    const { basePath } = useDocsContext();
+    const { basePath, nodes } = useDocsContext();
     const [selectionState, setSelectionState] = useState<FernNavigation.NavigationNodeApiLeaf | undefined>();
 
     const key = urljoin(basePath ?? "/", "/api/fern-docs/resolve-api");
@@ -81,10 +81,11 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const searchParams = useSearchParams();
 
     useEffect(() => {        
-        const {playgroundState, playgroundOpen} = router.query;
-        
-        if (typeof playgroundState === 'string' && playgroundState.length > 0) {
-            setSelectionState(JSON.parse(decodeURIComponent(playgroundState)));
+        const {playgroundNodeId, playgroundOpen} = router.query;
+        const node = nodes.get(FernNavigation.NodeId(decodeURIComponent(playgroundNodeId as string)));
+
+        if (node != null && 'apiDefinitionId' in node) {
+            setSelectionState(node as FernNavigation.NavigationNodeApiLeaf);
         }
         
         if (typeof playgroundOpen === 'string' && playgroundOpen.length > 0) {
@@ -93,16 +94,16 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     }, [router.query]);
 
     useEffect(() => {  
+        const params = new URLSearchParams(searchParams.toString());
         if (!isPlaygroundOpen) {                
-            const params = new URLSearchParams(searchParams.toString())
-            params.delete('playgroundState')
-            params.delete('playgroundOpen')
-            window.history.pushState(null, '', `?${params.toString()}`)
+            params.delete('playgroundNodeId');
+            params.delete('playgroundOpen');
             
+            const paramString = params.toString();
+            window.history.pushState(null, '', paramString !== "" ? `?${paramString}` : window.location.pathname);
         } else {
-            const params = new URLSearchParams(searchParams.toString())
-            params.set('playgroundState', encodeURIComponent(JSON.stringify(selectionState)))
-            params.set('playgroundOpen', encodeURIComponent(JSON.stringify(isPlaygroundOpen)))
+            params.set('playgroundNodeId', encodeURIComponent(selectionState?.id ?? ''))
+            params.set('playgroundOpen', encodeURIComponent(isPlaygroundOpen))
             window.history.pushState(null, '', `?${params.toString()}`)
         }
     }, [selectionState, isPlaygroundOpen, router.query]);
