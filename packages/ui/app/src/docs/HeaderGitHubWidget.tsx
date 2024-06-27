@@ -1,11 +1,12 @@
 import { GitHubLogoIcon, StarIcon } from "@radix-ui/react-icons";
+import clsx from "clsx";
 import { GitFork } from "iconoir-react";
 import React from "react";
+import useSWR from "swr";
+import { FernLinkButton } from "../components/FernLinkButton";
 
 export type GitHubProps = {
-    repo: string;
-    stars: number;
-    forks: number;
+    url: string;
 };
 
 const GitHubStat: React.FC<{
@@ -15,29 +16,57 @@ const GitHubStat: React.FC<{
     return (
         <div className="flex items-center gap-1">
             <Icon className="size-3" />
-            {value}
+            {value >= 0 ? value : ""}
         </div>
     );
 };
 
-export const HeaderGitHubWidget: React.FC<GitHubProps> = ({ repo, stars, forks }) => {
+interface GitHubInfo {
+    stars: number;
+    forks: number;
+    repo: string;
+}
+
+export const HeaderGitHubWidget: React.FC<GitHubProps> = ({ url }) => {
+    const repo = url.match(/^https:\/\/(www\.)?github\.com\/([\w-]+\/[\w-]+)\/?$/)?.[2];
+    const { data } = useSWR<GitHubInfo | null>(
+        url,
+        async () => {
+            if (repo == null) {
+                return null;
+            }
+            const res = await fetch(`https://api.github.com/repos/${repo}`);
+            if (res.ok) {
+                const result = await res.json();
+                return {
+                    repo: result.full_name,
+                    stars: result.stargazers_count,
+                    forks: result.forks,
+                };
+            }
+            return null;
+        },
+        {
+            refreshInterval: 1000 * 60 * 60, // 1 hour
+            keepPreviousData: true,
+        },
+    );
+
+    if (repo == null) {
+        return null;
+    }
+
     return (
-        <div className="flex items-center gap-3">
-            <GitHubLogoIcon className="size-6" />
-            <div>
-                <a
-                    href={`https://github.com/${repo}`}
-                    target="_blank"
-                    className="hover:underline font-semibold"
-                    rel="noreferrer"
-                >
-                    {repo}
-                </a>
-                <div className="flex gap-2 text-xs">
-                    <GitHubStat icon={StarIcon} value={stars} />
-                    <GitHubStat icon={GitFork} value={forks} />
-                </div>
+        <FernLinkButton href={url} icon={<GitHubLogoIcon className="!size-5" />} variant="minimal" className="h-10">
+            <div className="font-medium">{data?.repo ?? repo}</div>
+            <div
+                className={clsx("flex gap-2 text-xs", {
+                    invisible: data == null,
+                })}
+            >
+                <GitHubStat icon={StarIcon} value={data?.stars ?? 0} />
+                <GitHubStat icon={GitFork} value={data?.forks ?? 0} />
             </div>
-        </div>
+        </FernLinkButton>
     );
 };

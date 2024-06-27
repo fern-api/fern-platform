@@ -9,7 +9,6 @@ import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvide
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { Docs, SearchDialog } from "../docs/Docs";
-import { GitHubProps } from "../docs/HeaderGitHubWidget";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { type ResolvedPath } from "../resolver/ResolvedPath";
 
@@ -48,7 +47,7 @@ export declare namespace DocsPage {
 
         seo: DefaultSeoProps;
 
-        github?: GitHubProps;
+        fallback: Record<string, any> | undefined;
     }
 }
 

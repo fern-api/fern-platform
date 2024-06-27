@@ -42,7 +42,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     },
     ref,
 ) {
-    const { colors, github } = useDocsContext();
+    const { colors } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const [searchService] = useSearchConfig();
@@ -51,7 +51,9 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         <div className="hidden lg:block">
             <FernButtonGroup>
                 {navbarLinks?.map((navbarLink, idx) =>
-                    navbarLink.type === "github" ? null : (
+                    navbarLink.type === "github" ? (
+                        <HeaderGitHubWidget key={idx} url={navbarLink.url} />
+                    ) : (
                         <FernLinkButton
                             key={idx}
                             className="group cursor-pointer"
@@ -108,8 +110,6 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     "flex-1": showSearchBar,
                 })}
             >
-                {github && <HeaderGitHubWidget {...github} />}
-
                 {navbarLinksSection}
 
                 <div className="flex lg:hidden">

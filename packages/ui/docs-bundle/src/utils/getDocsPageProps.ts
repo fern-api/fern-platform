@@ -294,27 +294,32 @@ async function convertDocsToDocsPageProps({
             docs.definition.apis,
             node.node,
         ),
+
+        // TODO: collect SWR fallbacks here
+        // https://swr.vercel.app/docs/with-nextjs#pre-rendering-with-default-data
+        fallback: undefined,
     };
 
+    // TODO: how do rate limits work in getStaticProps?
     // if the user specifies a github navbar link, grab the repo name from it
-    const githubUrlMatch = docsConfig.navbarLinks
-        ?.find((link) => link.type === "github")
-        ?.url.match(/^https:\/\/(www\.)?github\.com\/([\w-]+\/[\w-]+)\/?$/);
+    // const githubUrlMatch = docsConfig.navbarLinks
+    //     ?.find((link) => link.type === "github")
+    //     ?.url.match(/^https:\/\/(www\.)?github\.com\/([\w-]+\/[\w-]+)\/?$/);
 
-    // make sure that the github url is valid
-    if (githubUrlMatch) {
-        // and then fetch the stars and forks
-        const res = await fetch(`https://api.github.com/repos/${githubUrlMatch[2]}`);
-        if (res.ok) {
-            // if the response is succesful, augment the props with github info
-            const repo = await res.json();
-            props.github = {
-                repo: repo.full_name,
-                stars: repo.stargazers_count,
-                forks: repo.forks,
-            };
-        }
-    }
+    // // make sure that the github url is valid
+    // if (githubUrlMatch) {
+    //     // and then fetch the stars and forks
+    //     const res = await fetch(`https://api.github.com/repos/${githubUrlMatch[2]}`);
+    //     if (res.ok) {
+    //         // if the response is succesful, augment the props with github info
+    //         const repo = await res.json();
+    //         props.github = {
+    //             repo: repo.full_name,
+    //             stars: repo.stargazers_count,
+    //             forks: repo.forks,
+    //         };
+    //     }
+    // }
 
     return {
         type: "props",
