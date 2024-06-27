@@ -32,13 +32,14 @@ export const runtime = "edge";
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
+    const state = req.nextUrl.searchParams.get("state") ?? '/';
 
     if (typeof code !== "string") {
         return notFoundResponse();
     }
     let token;
 
-    const res = redirectResponse(req.nextUrl.origin);
+    const res = redirectResponse(req.nextUrl.origin || state);
     if (req.nextUrl.origin.includes("workos.com")) {
         const startTime = Date.now();
         const { user } = await getWorkOS().userManagement.authenticateWithCode({

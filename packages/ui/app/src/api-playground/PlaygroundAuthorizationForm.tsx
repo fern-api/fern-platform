@@ -1,5 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { FernButton, FernCollapse, FernInput } from "@fern-ui/components";
+import { FernButton, FernCard, FernCollapse, FernInput } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
@@ -269,7 +269,7 @@ export function PlaygroundAuthorizationFormCard({
         if (apiInjectionConfig) {
             
             const redirect = encodeURIComponent(window.location.origin + '/api/fern-docs/auth/callback');
-            const state = 'test_state';
+            const state = encodeURIComponent(window.location.href);
 
             const loginUrl = `${apiInjectionConfig['login-endpoint']}?redirect=${redirect}&state=${state}`;
             window.location.href = loginUrl;
@@ -277,7 +277,8 @@ export function PlaygroundAuthorizationFormCard({
             isOpen.toggleValue();
         }
     }
-    const authButtonCopy = apiInjectionConfig !== undefined ? 'Login to send a real request' : 'Authenticate with your API key to send a real request';
+    const hasApiInjectionConfig = apiInjectionConfig !== undefined;
+    const authButtonCopy = hasApiInjectionConfig ? 'Login to send a real request' : 'Authenticate with your API key to send a real request';
 
     const urlParams = new URLSearchParams(window.location.search);
     const {
@@ -286,9 +287,77 @@ export function PlaygroundAuthorizationFormCard({
         setFalse: closeAuthModal,
     } = useBooleanState(urlParams.get('code') != null);
 
+
     return (
         <div>
-            {isAuthed(auth, authState) || apiKey ? (
+            {hasApiInjectionConfig && !apiKey && (
+              <>
+                <FernCard className="rounded-xl p-4 shadow-sm mb-3"
+                    title="Login to send a real request"
+                >
+                    <h5 className="t-muted m-0">Login with Rightbrain to send a real request</h5>
+                
+                    <div className="flex justify-center my-5 gap-2">
+                        <FernButton
+                            size="normal"
+                            intent="primary"
+                            text="Login"
+                            icon={<PersonIcon />}
+                            onClick={redirectOrOpenAuthForm}
+                        />
+                        <FernButton
+                            size="normal"
+                            intent="none"
+                            variant="outlined"
+                            icon={<Key />}
+                            text="Provide token manually"
+                            onClick={() => isOpen.toggleValue()}
+                        />
+                    </div>
+                </FernCard>
+              </>
+            )}
+
+            {hasApiInjectionConfig && apiKey && (
+              <>
+                <FernCard className="rounded-xl p-4 shadow-sm mb-3"
+                    title="Login to send a real request"
+                >
+                    <FernButton
+                        className="w-full text-left"
+                        size="large"
+                        intent="success"
+                        variant="outlined"
+                        text="Logged in with Rightbrain"
+                        icon={<Key />}
+                        onClick={isOpen.toggleValue}
+                        active={true}
+                    />
+                
+                    <div className="flex justify-center my-5 gap-2">
+                        <FernButton
+                            size="normal"
+                            intent="none"
+                            variant="outlined"
+                            icon={<Key />}
+                            text="Override token manually"
+                            onClick={() => isOpen.toggleValue()}
+                        />
+                        
+                        <FernButton
+                            size="normal"
+                            intent="danger"
+                            variant="outlined"
+                            icon={<PersonIcon />}
+                            text="Log out"
+                            onClick={() => isOpen.toggleValue()}
+                        />
+                    </div>
+                </FernCard>
+              </>
+            )}
+            
+            {(!hasApiInjectionConfig && (isAuthed(auth, authState) || apiKey)) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"
@@ -304,7 +373,8 @@ export function PlaygroundAuthorizationFormCard({
                     onClick={isOpen.toggleValue}
                     active={isOpen.value}
                 />
-            ) : (
+            )}
+            {(!hasApiInjectionConfig && !(isAuthed(auth, authState) || apiKey)) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"
