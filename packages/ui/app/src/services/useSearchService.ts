@@ -52,6 +52,7 @@ export function useSearchConfig(): [SearchConfig, refresh: () => void] {
         },
         {
             refreshInterval: 1000 * 60 * 60 * 2, // 2 hours
+            revalidateOnFocus: false,
         },
     );
 
