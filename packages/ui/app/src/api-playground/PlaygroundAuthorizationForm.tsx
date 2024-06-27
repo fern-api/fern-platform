@@ -7,7 +7,6 @@ import { isEmpty } from "lodash-es";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
 import { Key } from "react-feather";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";

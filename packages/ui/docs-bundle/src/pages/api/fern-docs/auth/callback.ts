@@ -45,13 +45,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             code,
             clientId: getWorkOSClientId(),
         });
-        const cookieDefaultSettings = {
-            httpOnly: true,
-            secure: false,
-            sameSite: "lax",
-            path: "/",
-            maxAge: 2592000,
-        };
 
         const beforeSigningTime = Date.now();
 
@@ -76,7 +69,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         console.debug(`Time to sign JWT: ${afterSigningTime - beforeSigningTime}ms`);
         // --------------------------------------------------------------------------------------WORK OSe
     } else {
-        console.log('!!!!!! non workos token');
         const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
         if (!xFernHost) {
             throw new Error("NEXT_PUBLIC_DOCS_DOMAIN is not set");
