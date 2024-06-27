@@ -84,10 +84,10 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
         if (!router.isReady) {
             return;
         }
-        
-        const {playgroundNodeId} = router.query;
+
+        const { playgroundNodeId } = router.query;
         const node = nodes.get(FernNavigation.NodeId(decodeURIComponent(playgroundNodeId as string)));
-        
+
         if (node != null && "apiDefinitionId" in node) {
             setSelectionState(node as FernNavigation.NavigationNodeApiLeaf);
             setPlaygroundOpen(true);
@@ -97,7 +97,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
         }
     }, [router, router.isReady, nodes, setPlaygroundOpen]);
 
-    useEffect(() => {  
+    useEffect(() => {
         if (!router.isReady) {
             return;
         }
