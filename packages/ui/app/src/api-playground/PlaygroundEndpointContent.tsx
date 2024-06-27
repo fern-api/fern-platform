@@ -93,7 +93,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
             {endpoint.auth != null && (
                 <PlaygroundAuthorizationFormCard
                     auth={endpoint.auth}
-                    authState={formState?.auth ?? {}}
+                    authState={formState?.auth}
                     setAuthorization={(newState) =>
                         setFormState((oldState) => ({
                             ...oldState,
