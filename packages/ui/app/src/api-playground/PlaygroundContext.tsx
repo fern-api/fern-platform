@@ -81,7 +81,9 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const router = useRouter();
 
     useEffect(() => {
-        if(!router.isReady) return;
+        if (!router.isReady) {
+            return;
+        }
         
         const {playgroundNodeId} = router.query;
         const node = nodes.get(FernNavigation.NodeId(decodeURIComponent(playgroundNodeId as string)));
@@ -93,10 +95,12 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
             setSelectionState(undefined);
             setPlaygroundOpen(false);
         }
-    }, [router, router.isReady, nodes]);
+    }, [router, router.isReady, nodes, setPlaygroundOpen]);
 
     useEffect(() => {  
-        if(!router.isReady) return;
+        if (!router.isReady) {
+            return;
+        }
 
         const params = new URLSearchParams(searchParams.toString());
         if (!isPlaygroundOpen) {
@@ -107,7 +111,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
             params.set("playgroundNodeId", encodeURIComponent(selectionState?.id ?? ""));
             window.history.pushState(null, "", `?${params.toString()}`);
         }
-    }, [selectionState, isPlaygroundOpen, router.query, router.isReady]); //, searchParams]);
+    }, [selectionState, isPlaygroundOpen, router.query, router.isReady, searchParams]);
 
     const expandPlayground = useCallback(() => {
         capturePosthogEvent("api_playground_opened");
