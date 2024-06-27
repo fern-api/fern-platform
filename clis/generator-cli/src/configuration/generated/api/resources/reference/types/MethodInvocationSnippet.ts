@@ -16,4 +16,5 @@ import * as FernGeneratorCli from "../../../index";
  */
 export interface MethodInvocationSnippet {
     snippetParts: FernGeneratorCli.LinkedText[];
+    returnValue?: FernGeneratorCli.LinkedText;
 }

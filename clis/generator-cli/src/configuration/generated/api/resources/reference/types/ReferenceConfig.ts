@@ -12,6 +12,7 @@ import * as FernGeneratorCli from "../../../index";
  * references in a unique way for the same API.
  */
 export interface ReferenceConfig {
+    rootSection?: FernGeneratorCli.RootPackageReferenceSection;
     sections: FernGeneratorCli.ReferenceSection[];
     /** Similar to in README generation, the language property is used to determine the language to use when generating code blocks in markdown. */
     language: FernGeneratorCli.Language;
