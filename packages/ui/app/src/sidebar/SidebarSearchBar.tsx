@@ -1,28 +1,47 @@
+import { useEventCallback } from "@fern-ui/react-commons";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { memo, type MouseEventHandler } from "react";
-import { useSearchService } from "../services/useSearchService";
+import { useSetAtom } from "jotai";
+import { memo } from "react";
+import { INKEEP_TRIGGER } from "../search/inkeep/InkeepCustomTrigger";
+import { useSearchConfig } from "../services/useSearchService";
+import { useOpenSearchDialog } from "./atom";
 
 export declare namespace SidebarSearchBar {
     export interface Props {
-        onClick: MouseEventHandler<HTMLButtonElement>;
         className?: string;
+        hideKeyboardShortcutHint?: boolean;
     }
 }
 
 export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function UnmemoizedSidebarSearchBar({
-    onClick,
     className,
+    hideKeyboardShortcutHint,
 }) {
-    const searchService = useSearchService();
+    const openSearchDialog = useOpenSearchDialog();
+    const openInkeepCustomTrigger = useSetAtom(INKEEP_TRIGGER);
+    const [searchService] = useSearchConfig();
+
+    const handleClick = useEventCallback(() => {
+        if (searchService.isAvailable && searchService.type === "inkeep") {
+            openInkeepCustomTrigger(true);
+        } else {
+            openSearchDialog();
+        }
+    });
+
     return (
-        <button onClick={onClick} className={cn("fern-search-bar", className)} disabled={!searchService.isAvailable}>
+        <button
+            onClick={handleClick}
+            className={cn("fern-search-bar", className)}
+            disabled={!searchService.isAvailable}
+        >
             <span className="search-placeholder">
                 <MagnifyingGlassIcon className="size-5" />
                 <span>Search...</span>
             </span>
 
-            <span className="keyboard-shortcut-hint">{"/"}</span>
+            {!hideKeyboardShortcutHint && <kbd className="keyboard-shortcut-hint">{"/"}</kbd>}
         </button>
     );
 });

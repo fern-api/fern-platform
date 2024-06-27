@@ -1,0 +1,1 @@
+{ "ignores": ["@fern-platform/configs", "@types/node", "vite", "@types/react"], "ignore-patterns": ["dist"] }

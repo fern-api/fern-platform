@@ -9,6 +9,7 @@
         @apply bg-tag-default;
         @apply hover:bg-tag-default-hover transition-[background,shadow];
         @apply ring-inset ring-default hover:ring-default ring-1;
+        @apply max-sm:h-10 max-sm:text-base;
 
         .search-placeholder {
             @apply inline-flex flex-1 items-center space-x-2.5;
