@@ -63,15 +63,20 @@ export interface SearchRequest {
 }
 
 export async function getSearchConfig(domain: string, { searchInfo }: SearchRequest): Promise<SearchConfig> {
-    const config = await getAll<EdgeConfigResponse>(FEATURE_FLAGS);
-    const maybeInkeep = config["inkeep-enabled"]?.[domain];
+    try {
+        const config = await getAll<EdgeConfigResponse>(FEATURE_FLAGS);
+        const maybeInkeep = config["inkeep-enabled"]?.[domain];
 
-    if (maybeInkeep?.baseSettings.integrationId != null) {
-        return {
-            isAvailable: true,
-            type: "inkeep",
-            ...maybeInkeep,
-        };
+        if (maybeInkeep?.baseSettings.integrationId != null) {
+            return {
+                isAvailable: true,
+                type: "inkeep",
+                ...maybeInkeep,
+            };
+        }
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Error fetching edge config", e);
     }
 
     if (typeof searchInfo !== "object" || searchInfo.type === "legacyMultiAlgoliaIndex") {
