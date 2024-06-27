@@ -5,7 +5,7 @@ import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
 import { DocsPage, DocsPageResult, convertNavigatableToResolvedPath, getDefaultSeoProps } from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
-import type { IncomingMessage, ServerResponse } from "node:http";
+import { type IncomingMessage, type ServerResponse } from "node:http";
 import urljoin from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
@@ -80,10 +80,10 @@ export async function getPrivateDocsPageProps(
     xFernHost: string,
     slug: string[],
     token: string,
-    apiKey: string | undefined,
     res: ServerResponse<IncomingMessage>,
 ): Promise<DocsPageResult<DocsPage.Props>> {
     const user: User = await getUser(token);
+    const apiKey: string | undefined = await getApiKey(token);
 
     if (!user.isAuthenticated) {
         // Clear the token if it's invalid, then redirect to `/` to reset the login flow
@@ -142,6 +142,18 @@ async function getUser(token: string | undefined): Promise<User> {
         };
     } catch {
         return { isAuthenticated: false };
+    }
+}
+
+async function getApiKey(token: string): Promise<string | undefined> {
+    if (token == null) {
+        return undefined;
+    }
+    try {
+        const verifiedToken = await jwtVerify(token, getJwtTokenSecret());
+        return verifiedToken.payload.apiKey as string;
+    } catch {
+        return undefined;
     }
 }
 
