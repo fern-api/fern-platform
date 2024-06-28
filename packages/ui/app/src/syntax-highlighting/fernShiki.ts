@@ -3,6 +3,7 @@ import { h } from "hastscript";
 import { memoize } from "lodash-es";
 import { useCallback, useEffect, useState } from "react";
 import { BundledLanguage, BundledTheme, Highlighter, SpecialLanguage, bundledLanguages, getHighlighter } from "shiki";
+import { additionalLanguages } from "./syntaxes";
 
 let highlighterPromise: Promise<Highlighter>;
 let highlighter: Highlighter;
@@ -19,7 +20,7 @@ export const getHighlighterInstance: (language: string) => Promise<Highlighter> 
 
         if (highlighterPromise == null) {
             highlighterPromise = getHighlighter({
-                langs: [lang],
+                langs: [additionalLanguages[lang] ?? lang],
                 themes: [LIGHT_THEME, DARK_THEME],
             });
         }
@@ -27,7 +28,7 @@ export const getHighlighterInstance: (language: string) => Promise<Highlighter> 
         highlighter = await highlighterPromise;
 
         if (!highlighter.getLoadedLanguages().includes(lang)) {
-            await highlighter.loadLanguage(lang);
+            await highlighter.loadLanguage(additionalLanguages[lang] ?? lang);
         }
 
         return highlighter;
@@ -37,25 +38,6 @@ export const getHighlighterInstance: (language: string) => Promise<Highlighter> 
 function hasLanguage(lang: string): boolean {
     return highlighter?.getLoadedLanguages().includes(parseLang(lang)) ?? false;
 }
-
-// export function highlight(
-//     highlighter: Highlighter,
-//     code: string,
-//     rawLang: string,
-//     meta?: Record<string, unknown>,
-// ): { hast: Root; language: string } {
-//     const lang = parseLang(rawLang);
-//     const root = highlighter.codeToHast(code, {
-//         lang,
-//         themes: {
-//             light: LIGHT_THEME,
-//             dark: DARK_THEME,
-//         },
-//         transformers: [transformerMetaHighlight()],
-//         meta,
-//     });
-//     return { hast: root as Root, language: lang };
-// }
 
 export interface HighlightedTokens {
     code: string;
@@ -87,7 +69,7 @@ export function trimCode(code: string): string {
 export const LIGHT_THEME: BundledTheme = "min-light";
 export const DARK_THEME: BundledTheme = "material-theme-darker";
 
-export function parseLang(lang: string): BundledLanguage | SpecialLanguage {
+export function parseLang(lang: string): string {
     lang = lang.trim();
 
     if (lang == null) {
@@ -102,6 +84,9 @@ export function parseLang(lang: string): BundledLanguage | SpecialLanguage {
     }
     if (lang === "curl") {
         return "bash";
+    }
+    if (Object.keys(additionalLanguages).includes(lang)) {
+        return lang as SpecialLanguage;
     }
     return "txt";
 }
