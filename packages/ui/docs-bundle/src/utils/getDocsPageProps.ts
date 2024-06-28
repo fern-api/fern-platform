@@ -85,8 +85,6 @@ export async function getPrivateDocsPageProps(
     const user: User = await getUser(token);
     const partnerLogin = await getPartnerLogin(token);
 
-    console.log('PARTNER LOGIN', partnerLogin)
-
     if (!user.isAuthenticated) {
         // Clear the token if it's invalid, then redirect to `/` to reset the login flow
         res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");

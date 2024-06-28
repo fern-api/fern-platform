@@ -86,4 +86,4 @@ export interface PartnerLogin {
     expiresAt: number;
     refreshToken: string;
     loggedInAt: number;
-};
+}

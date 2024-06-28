@@ -32,11 +32,11 @@ export const runtime = "edge";
 
 function redirectWithLoginError(originalURL: string | null, errorMessage: string): NextResponse {
     if (originalURL == null) {
-        return redirectResponse('/?loginError=' + errorMessage);
+        return redirectResponse("/?loginError=" + errorMessage);
     }
 
     const url = new URL(originalURL);
-    url.searchParams.append('loginError', errorMessage);
+    url.searchParams.append("loginError", errorMessage);
     return redirectResponse(url.toString());
 }
 
@@ -87,7 +87,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         }
 
         try {
-            const response = await fetch(apiInjectionConfig['auth-endpoint'], {
+            const response = await fetch(apiInjectionConfig["auth-endpoint"], {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
