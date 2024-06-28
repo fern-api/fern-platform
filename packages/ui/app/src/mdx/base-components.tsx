@@ -84,13 +84,14 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
 
 export interface ImgProps extends ComponentProps<"img"> {
     noZoom?: boolean;
+    enableZoom?: boolean;
 }
 
 function isImgElement(element: ReactElement): element is ReactElement<ImgProps> {
     return element.type === Image;
 }
 
-export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, style, ...rest }) => {
+export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, enableZoom, style, ...rest }) => {
     const { files } = useDocsContext();
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
@@ -126,7 +127,7 @@ export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoo
 
     const { isImageZoomDisabled } = useFeatureFlags();
 
-    if (noZoom || isImageZoomDisabled) {
+    if (isImageZoomDisabled ? !enableZoom : noZoom) {
         return fernImage;
     }
 
