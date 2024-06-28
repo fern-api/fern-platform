@@ -297,7 +297,7 @@ export function PlaygroundAuthorizationFormCard({
     }, [router.query, router.isReady]);
 
     // TODO change this login
-    if (apiKey && authState && authState.type == "bearerAuth") {
+    if (apiKey && authState && authState.type === "bearerAuth") {
         if (authState.token === "") {
             setAuthorization({ type: "bearerAuth", token: apiKey });
         }
@@ -442,7 +442,7 @@ export function PlaygroundAuthorizationFormCard({
 }
 
 function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundRequestFormAuth | undefined): boolean {
-    if (authState === null || authState === undefined) {
+    if (authState == null) {
         return false;
     }
 
