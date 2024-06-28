@@ -304,7 +304,7 @@ async function convertDocsToDocsPageProps({
         fallback: {},
     };
 
-    // if the user specifies a github navbar link, grab the repo name from it
+    // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
     const githubNavbarLink = docsConfig.navbarLinks?.find((link) => link.type === "github");
     if (githubNavbarLink) {
         const repo = getGitHubRepo(githubNavbarLink.url);

@@ -8,6 +8,8 @@ import {
     FeatureFlags,
     convertNavigatableToResolvedPath,
     getDefaultSeoProps,
+    getGitHubInfo,
+    getGitHubRepo,
 } from "@fern-ui/ui";
 import urljoin from "url-join";
 
@@ -138,7 +140,20 @@ export async function getDocsPageProps(
             docs.definition.apis,
             node.node,
         ),
+        fallback: {},
     };
+
+    // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
+    const githubNavbarLink = docs.definition.config.navbarLinks?.find((link) => link.type === "github");
+    if (githubNavbarLink) {
+        const repo = getGitHubRepo(githubNavbarLink.url);
+        if (repo) {
+            const data = await getGitHubInfo(repo);
+            if (data) {
+                props.fallback[repo] = data;
+            }
+        }
+    }
 
     return {
         type: "props",
