@@ -4,7 +4,8 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
 import { isEmpty } from "lodash-es";
-import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
+import { useRouter } from "next/router";
+import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Key } from "react-feather";
 import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
@@ -264,9 +265,9 @@ export function PlaygroundAuthorizationFormCard({
     const isOpen = useBooleanState(false);
     const { apiInjectionConfig } = useFeatureFlags();
     const { partnerLogin } = useDocsContext();
+    const router = useRouter();
     const apiKey = partnerLogin?.apiKey;
-
-    console.log('DEBUG FE 1:', apiKey, apiInjectionConfig, partnerLogin);
+    const [loginError, setLoginError] = useState<string | null>(null);
 
     const redirectOrOpenAuthForm = () => {
         if (apiInjectionConfig) {
@@ -282,15 +283,19 @@ export function PlaygroundAuthorizationFormCard({
     }
     const hasApiInjectionConfig = apiInjectionConfig !== undefined;
     const authButtonCopy = hasApiInjectionConfig ? 'Login to send a real request' : 'Authenticate with your API key to send a real request';
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const {
-        value: isAuthModalOpen,
-        setTrue: openAuthModal,
-        setFalse: closeAuthModal,
-    } = useBooleanState(urlParams.get('code') != null);
-
     
+    useEffect(() => {
+        if (!router.isReady) {
+            return;
+        }
+
+        const { loginError } = router.query;
+        if (loginError) {
+            setLoginError(loginError as string);
+        }
+    }, [router.isReady]);
+
+    // TODO change this login
     if (apiKey && authState && authState.type == 'bearerAuth') {
         if (authState.token == '') {
             setAuthorization(
@@ -302,11 +307,19 @@ export function PlaygroundAuthorizationFormCard({
         <div>
             {hasApiInjectionConfig && !apiKey && (
               <>
-                <FernCard className="rounded-xl p-4 shadow-sm mb-3"
-                    title="Login to send a real request"
-                >
-                    <h5 className="t-muted m-0">Login with Rightbrain to send a real request</h5>
-                
+                <FernCard className="rounded-xl p-4 shadow-sm mb-2">
+                    {loginError && (
+                        <FernButton
+                            className="w-full text-left pointer-events-none mb-2"
+                            size="large"
+                            intent="danger"
+                            variant="outlined"
+                            text={loginError}
+                            active={true}
+                        />
+                    )}
+
+                    <h5 className="t-muted m-0">Login to send a real request</h5>
                     <div className="flex justify-center my-5 gap-2">
                         <FernButton
                             size="normal"

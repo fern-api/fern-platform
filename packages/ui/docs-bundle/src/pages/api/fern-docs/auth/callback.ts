@@ -29,6 +29,17 @@ import { getFeatureFlags } from "../feature-flags";
 // };
 
 export const runtime = "edge";
+
+function redirectWithLoginError(originalURL: string | null, errorMessage: string): NextResponse {
+    if (originalURL == null) {
+        return redirectResponse('/?loginError=' + errorMessage);
+    }
+
+    const url = new URL(originalURL);
+    url.searchParams.append('loginError', errorMessage);
+    return redirectResponse(url.toString());
+}
+
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
@@ -85,15 +96,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             });
 
             if (!response.ok) {
-                const errorUrl = `${state}?loginError=Couldn't login, please try again`;
-                return redirectResponse(errorUrl);
+                return redirectWithLoginError(state, "Couldn't login, please try again");
             }
             
             const data = await response.json();
 
             if (data.apiKey == null || data.expiresAt == null) {
-                const errorUrl = `${state}?loginError=Couldn't login, please try again`;
-                return redirectResponse(errorUrl);
+                return redirectWithLoginError(state, "Couldn't login, please try again");
             }
             
             token = await new SignJWT({
@@ -112,9 +121,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
                 .sign(getJwtTokenSecret());
             
         } catch (error) {
-            console.log('DEBUG5');
-            const errorUrl = `${state}?loginError=Couldn't login, please try again`;
-            return redirectResponse(errorUrl);
+            return redirectWithLoginError(state, "Couldn't login, please try again");
         }
     }
     
