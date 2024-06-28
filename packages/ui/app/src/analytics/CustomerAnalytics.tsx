@@ -25,6 +25,10 @@ const CUSTOMER_ANALYTICS: Record<string, Analytics> = {
         ga4: {
             id: "G-5MGM6QQVFS",
         },
+    fern: {
+        ga4: {
+            id: "GTM-WR6BQ98Q",
+        },
     },
 };
 
