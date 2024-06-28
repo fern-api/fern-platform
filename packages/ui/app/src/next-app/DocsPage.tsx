@@ -46,6 +46,8 @@ export declare namespace DocsPage {
         apis: FdrAPI.ApiDefinitionId[];
 
         seo: DefaultSeoProps;
+
+        fallback: Record<string, any>;
     }
 }
 
