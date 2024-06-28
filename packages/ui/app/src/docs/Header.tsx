@@ -51,7 +51,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const navbarLinksSection = (
         <div className="hidden lg:block">
             <FernButtonGroup>
-                {navbarLinks?.map((navbarLink, idx) => {
+                {navbarLinks.map((navbarLink, idx) => {
                     if (navbarLink.type === "github") {
                         const repo = getGitHubRepo(navbarLink.url);
                         return repo && <GitHubWidget key={idx} repo={repo} />;
@@ -90,6 +90,9 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
         </div>
     );
 
+    const githubLink = navbarLinks.find((link) => link.type === "github");
+    const githubRepo = githubLink && getGitHubRepo(githubLink.url);
+
     return (
         <nav
             aria-label="primary"
@@ -116,7 +119,9 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             >
                 {navbarLinksSection}
 
-                <div className="flex lg:hidden">
+                <div className="flex items-center lg:hidden">
+                    {githubRepo && <GitHubWidget repo={githubRepo} />}
+
                     {colors.dark && colors.light && <ThemeButton size="large" />}
 
                     {searchService.isAvailable && (
