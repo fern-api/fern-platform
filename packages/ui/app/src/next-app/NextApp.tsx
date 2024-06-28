@@ -43,7 +43,10 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                                 <RouteListenerContextProvider>
                                     <DatadogInit />
                                     <LayoutBreakpointProvider>
-                                        <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                                        <NextNProgress
+                                            options={{ showSpinner: false, speed: 400 }}
+                                            showOnShallow={false}
+                                        />
                                         <Component {...pageProps} />
                                     </LayoutBreakpointProvider>
                                 </RouteListenerContextProvider>
