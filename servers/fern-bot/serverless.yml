@@ -69,6 +69,18 @@ functions:
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
 
+  updateGeneratorVersion:
+    timeout: 900
+    memorySize: 5120
+    ephemeralStorageSize: 10240
+    handler: "src/functions/generator-updates/updateGeneratorVersion.handler"
+    layers:
+      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
+    events:
+      - schedule:
+          rate: cron(0 1 * * MON *)
+          enabled: true
+
   # =============================================
 
   # For on-demand invoking update, especially useful for triggering one-off updates
@@ -77,6 +89,14 @@ functions:
     memorySize: 10240
     ephemeralStorageSize: 10240
     handler: "src/functions/oas-cron/updateOpenApiSpecs.handler"
+    layers:
+      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
+
+  updateGeneratorVersions:
+    timeout: 900
+    memorySize: 10240
+    ephemeralStorageSize: 10240
+    handler: "src/functions/generator-updates/updateGeneratorVersions.handler"
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
 

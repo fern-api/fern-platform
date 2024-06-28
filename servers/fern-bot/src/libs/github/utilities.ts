@@ -1,4 +1,10 @@
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { components } from "@octokit/openapi-types";
+import { mkdir } from "fs/promises";
 import { Octokit } from "octokit";
+import * as path from "path";
+import simpleGit, { SimpleGit } from "simple-git";
+import tmp from "tmp-promise";
 
 interface CreatePRRequest {
     title: string;
@@ -86,4 +92,57 @@ function getErrorMessage(error: unknown) {
         return error.message;
     }
     return String(error);
+}
+
+export const DEFAULT_REMOTE_NAME = "origin";
+export type Repository = components["schemas"]["repository"];
+
+export async function configureGit(repository: Repository): Promise<[SimpleGit, string]> {
+    const tmpDir = await tmp.dir();
+    const fullRepoPath = AbsoluteFilePath.of(path.join(tmpDir.path, repository.id.toString(), repository.name));
+    if (!(await doesPathExist(fullRepoPath))) {
+        await mkdir(fullRepoPath, { recursive: true });
+    }
+    return [simpleGit(fullRepoPath), fullRepoPath];
+}
+
+export async function cloneRepo(
+    git: SimpleGit,
+    repository: Repository,
+    octokit: Octokit,
+    fernBotLoginName: string,
+    fernBotLoginId: string,
+): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const installationToken = ((await octokit.auth({ type: "installation" })) as any).token;
+
+    const authedCloneUrl = repository.clone_url.replace("https://", `https://x-access-token:${installationToken}@`);
+    // Clone the repo to fullRepoPath and update the branch
+    await git.clone(authedCloneUrl, ".");
+    // Configure git to show the app as the committer
+    await git.addConfig("user.name", fernBotLoginName);
+    await git.addConfig("user.email", `${fernBotLoginId}+${fernBotLoginName}@users.noreply.github.com`);
+}
+
+export async function getOrUpdateBranch(
+    git: SimpleGit,
+    defaultBranchName: string,
+    branchToCheckoutName: string,
+): Promise<void> {
+    try {
+        // If you can fetch the branch, checkout the branch
+        await git.fetch(DEFAULT_REMOTE_NAME, branchToCheckoutName);
+        console.log("Branch exists, checking out");
+        await git.checkout(branchToCheckoutName);
+        // Merge the default branch into this branch to update it
+        // prefer the default branch changes
+        //
+        // TODO: we could honestly probably just delete the branch and recreate it
+        // my concern with that is if there are more changes we decide to make in other actions
+        // to the same branch that are not OpenAPI related, that we'd lose if we deleted and reupdated the spec.
+        await git.merge(["-X", "theirs", defaultBranchName]);
+    } catch (e) {
+        console.log("Branch does not exist, create and checkout");
+        await git.checkoutBranch(branchToCheckoutName, defaultBranchName);
+    }
 }
