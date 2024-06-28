@@ -1,12 +1,11 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
-import { useSetAtom } from "jotai";
 import { ReactElement } from "react";
 import { FernLink } from "../components/FernLink";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { ResolvedEndpointDefinition } from "../resolver/types";
-import { PLAYGROUND_OPEN_ATOM } from "./PlaygroundContext";
+import { useClosePlayground } from "./hooks/usePlaygroundNodeId";
 
 interface PlaygroundEndpointFormButtonsProps {
     endpoint: ResolvedEndpointDefinition;
@@ -21,7 +20,7 @@ export function PlaygroundEndpointFormButtons({
 }: PlaygroundEndpointFormButtonsProps): ReactElement {
     const { activeNavigatable } = useNavigationContext();
     const apiReferenceId = FernNavigation.utils.getApiReferenceId(activeNavigatable);
-    const setPlaygroundOpen = useSetAtom(PLAYGROUND_OPEN_ATOM);
+    const closePlayground = useClosePlayground();
     return (
         <div className="flex justify-between items-center">
             <FernButtonGroup>
@@ -37,7 +36,7 @@ export function PlaygroundEndpointFormButtons({
                 href={`/${endpoint.slug}`}
                 shallow={apiReferenceId === endpoint.apiSectionId}
                 className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
-                onClick={() => setPlaygroundOpen(false)}
+                onClick={closePlayground}
             >
                 <span>View in API Reference</span>
                 <ArrowTopRightIcon className="size-4" />

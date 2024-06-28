@@ -10,6 +10,8 @@ import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { useOpenSearchDialog } from "../sidebar/atom";
+import { getGitHubRepo } from "../util/github";
+import { GitHubWidget } from "./GitHubWidget";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { ThemeButton } from "./ThemeButton";
 
@@ -49,8 +51,13 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const navbarLinksSection = (
         <div className="hidden lg:block">
             <FernButtonGroup>
-                {navbarLinks?.map((navbarLink, idx) =>
-                    navbarLink.type === "github" ? null : (
+                {navbarLinks.map((navbarLink, idx) => {
+                    if (navbarLink.type === "github") {
+                        const repo = getGitHubRepo(navbarLink.url);
+                        return repo && <GitHubWidget key={idx} repo={repo} />;
+                    }
+
+                    return (
                         <FernLinkButton
                             key={idx}
                             className="group cursor-pointer"
@@ -75,13 +82,16 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         >
                             {navbarLink.text}
                         </FernLinkButton>
-                    ),
-                )}
+                    );
+                })}
 
                 {colors.dark && colors.light && <ThemeButton className="hidden lg:flex" />}
             </FernButtonGroup>
         </div>
     );
+
+    const githubLink = navbarLinks.find((link) => link.type === "github");
+    const githubRepo = githubLink && getGitHubRepo(githubLink.url);
 
     return (
         <nav
@@ -109,7 +119,9 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             >
                 {navbarLinksSection}
 
-                <div className="flex lg:hidden">
+                <div className="flex items-center lg:hidden">
+                    {githubRepo && <GitHubWidget repo={githubRepo} />}
+
                     {colors.dark && colors.light && <ThemeButton size="large" />}
 
                     {searchService.isAvailable && (

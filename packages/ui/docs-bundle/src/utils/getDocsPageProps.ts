@@ -2,7 +2,14 @@ import { FdrClient, FernNavigation, type DocsV2Read } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
-import { DocsPage, DocsPageResult, convertNavigatableToResolvedPath, getDefaultSeoProps } from "@fern-ui/ui";
+import {
+    DocsPage,
+    DocsPageResult,
+    convertNavigatableToResolvedPath,
+    getDefaultSeoProps,
+    getGitHubInfo,
+    getGitHubRepo,
+} from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import { type IncomingMessage, type ServerResponse } from "node:http";
@@ -318,7 +325,20 @@ async function convertDocsToDocsPageProps({
             node.node,
         ),
         partnerLogin,
+        fallback: {},
     };
+
+    // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
+    const githubNavbarLink = docsConfig.navbarLinks?.find((link) => link.type === "github");
+    if (githubNavbarLink) {
+        const repo = getGitHubRepo(githubNavbarLink.url);
+        if (repo) {
+            const data = await getGitHubInfo(repo);
+            if (data) {
+                props.fallback[repo] = data;
+            }
+        }
+    }
 
     return {
         type: "props",

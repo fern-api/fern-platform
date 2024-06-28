@@ -26,6 +26,11 @@ const CUSTOMER_ANALYTICS: Record<string, Analytics> = {
             id: "G-5MGM6QQVFS",
         },
     },
+    fern: {
+        gtm: {
+            id: "GTM-WR6BQ98Q",
+        },
+    },
 };
 
 export function CustomerAnalytics({ domain }: { domain: string }): ReactElement | null {

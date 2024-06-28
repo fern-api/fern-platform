@@ -47,6 +47,8 @@ export declare namespace DocsPage {
 
         seo: DefaultSeoProps;
         partnerLogin: PartnerLogin | undefined;
+
+        fallback: Record<string, any>;
     }
 }
 

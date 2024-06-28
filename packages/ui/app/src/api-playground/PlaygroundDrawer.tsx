@@ -5,10 +5,9 @@ import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { motion, useAnimate, useMotionValue } from "framer-motion";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
-import { capturePosthogEvent } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
@@ -22,11 +21,18 @@ import {
     isEndpoint,
     isWebSocket,
 } from "../resolver/types";
-import { PLAYGROUND_FORM_STATE_ATOM, PLAYGROUND_OPEN_ATOM, usePlaygroundContext } from "./PlaygroundContext";
+import { usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
+import {
+    PLAYGROUND_FORM_STATE_ATOM,
+    useClosePlayground,
+    useIsPlaygroundOpen,
+    usePlaygroundHeight,
+    useTogglePlayground,
+} from "./hooks/usePlaygroundNodeId";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
@@ -56,35 +62,14 @@ const EMPTY_WEBSOCKET_FORM_STATE: PlaygroundWebSocketRequestFormState = {
     messages: {},
 };
 
-export const PLAYGROUND_HEIGHT_ATOM = atom<number>(0);
-
-export function usePlaygroundHeight(): [number, Dispatch<SetStateAction<number>>] {
-    const { layout } = useDocsContext();
-    const headerHeight =
-        layout?.headerHeight == null
-            ? 60
-            : layout.headerHeight.type === "px"
-              ? layout.headerHeight.value
-              : layout.headerHeight.type === "rem"
-                ? layout.headerHeight.value * 16
-                : 60;
-    const [playgroundHeight, setHeight] = useAtom(PLAYGROUND_HEIGHT_ATOM);
-    const windowHeight = useWindowHeight();
-    const height =
-        windowHeight != null
-            ? Math.max(Math.min(windowHeight - headerHeight, playgroundHeight), windowHeight / 3)
-            : playgroundHeight;
-
-    return [height, setHeight];
-}
-
 interface PlaygroundDrawerProps {
     apis: Record<string, FlattenedRootPackage>;
 }
 
 export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
-    const { selectionState, hasPlayground, collapsePlayground } = usePlaygroundContext();
+    const { selectionState, hasPlayground } = usePlaygroundContext();
     const windowHeight = useWindowHeight();
+    const collapsePlayground = useClosePlayground();
 
     const { sidebar } = useDocsContext();
     const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
@@ -131,7 +116,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
         }
     }, [animate, height, isResizing, layoutBreakpoint, scope, windowHeight, x]);
 
-    const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
+    const isPlaygroundOpen = useIsPlaygroundOpen();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
 
     const setPlaygroundEndpointFormState = useCallback<Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>>(
@@ -178,17 +163,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
 
     const playgroundFormState = selectionState != null ? globalFormState[selectionState.id] : undefined;
 
-    const togglePlayground = useCallback(
-        (usingKeyboardShortcut: boolean) => {
-            return setPlaygroundOpen((current) => {
-                if (!current) {
-                    capturePosthogEvent("api_playground_opened", { usingKeyboardShortcut });
-                }
-                return !current;
-            });
-        },
-        [setPlaygroundOpen],
-    );
+    const togglePlayground = useTogglePlayground();
 
     const matchedEndpoint =
         selectionState?.type === "endpoint"
@@ -253,7 +228,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
         // if keyboard press "ctrl + `", open playground
         const togglePlaygroundHandler = (e: KeyboardEvent) => {
             if (e.ctrlKey && e.key === "`") {
-                togglePlayground(true);
+                togglePlayground();
             }
         };
         document.addEventListener("keydown", togglePlaygroundHandler, false);
@@ -324,7 +299,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             showError={true}
             reset={resetWithoutExample}
         >
-            <Dialog.Root open={isPlaygroundOpen} onOpenChange={setPlaygroundOpen} modal={false}>
+            <Dialog.Root open={isPlaygroundOpen} onOpenChange={togglePlayground} modal={false}>
                 <Dialog.Portal>
                     <Dialog.Content
                         className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
