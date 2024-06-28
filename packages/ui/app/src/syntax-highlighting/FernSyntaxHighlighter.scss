@@ -1,3 +1,7 @@
+:root {
+    --shiki-dark: white;
+}
+
 @layer components {
     .code-block-root {
         @apply overflow-hidden flex flex-col w-full;

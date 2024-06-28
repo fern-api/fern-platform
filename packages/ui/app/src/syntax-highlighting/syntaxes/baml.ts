@@ -2,7 +2,7 @@ import type { LanguageRegistration } from "shiki";
 
 export default {
     fileTypes: ["baml"],
-    name: "Baml",
+    name: "baml",
     patterns: [{ include: "#comment" }, { include: "#schema" }],
     repository: {
         $self: {},
