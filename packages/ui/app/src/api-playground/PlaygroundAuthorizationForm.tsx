@@ -263,7 +263,10 @@ export function PlaygroundAuthorizationFormCard({
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const isOpen = useBooleanState(false);
     const { apiInjectionConfig } = useFeatureFlags();
-    const { apiKey } = useDocsContext();
+    const { partnerLogin } = useDocsContext();
+    const apiKey = partnerLogin?.apiKey;
+
+    console.log('DEBUG FE 1:', apiKey, apiInjectionConfig, partnerLogin);
 
     const redirectOrOpenAuthForm = () => {
         if (apiInjectionConfig) {
@@ -287,8 +290,7 @@ export function PlaygroundAuthorizationFormCard({
         setFalse: closeAuthModal,
     } = useBooleanState(urlParams.get('code') != null);
 
-    console.log('auth', auth)
-    console.log('authState', authState);
+    
     if (apiKey && authState && authState.type == 'bearerAuth') {
         if (authState.token == '') {
             setAuthorization(
@@ -348,7 +350,7 @@ export function PlaygroundAuthorizationFormCard({
                             disabled={disabled}
                         />
                     </div>
-                    {apiKey !== authState?.token && (
+                    {authState?.type === "bearerAuth" && apiKey !== authState.token &&  (
                         <div className="flex justify-end  gap-2">
                             {apiKey && (
                                 <FernButton

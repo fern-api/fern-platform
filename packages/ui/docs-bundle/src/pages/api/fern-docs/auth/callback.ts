@@ -33,7 +33,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
     const state = req.nextUrl.searchParams.get("state");
-    console.log('state redirect', state)
 
     if (typeof code !== "string") {
         return notFoundResponse();
@@ -52,10 +51,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         // eslint-disable-next-line no-console
         console.debug(`Time to authenticate with WorkOS: ${beforeSigningTime - startTime}ms`);
         
-
-        // Create a JWT token with the user's information
         token = await new SignJWT({
-            // Here you might lookup and retrieve user details from your database
             user,
         })
             .setProtectedHeader({ alg: "HS256", typ: "JWT" })
@@ -68,7 +64,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
         // eslint-disable-next-line no-console
         console.debug(`Time to sign JWT: ${afterSigningTime - beforeSigningTime}ms`);
-        // --------------------------------------------------------------------------------------WORK OSe
     } else {
         const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
         if (!xFernHost) {
@@ -76,39 +71,51 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         }
 
         const {apiInjectionConfig} = await getFeatureFlags(xFernHost);    
-    
         if (apiInjectionConfig == null) {
             throw new Error("API injection config is not set");
         }
 
-        const response = await fetch(apiInjectionConfig['auth-endpoint'], {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ code, secret: apiInjectionConfig.secret }),
-        });
+        try {
+            const response = await fetch(apiInjectionConfig['auth-endpoint'], {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ code, secret: apiInjectionConfig.secret }),
+            });
 
-        if (!response.ok) {
-            const error = await response.json();
+            if (!response.ok) {
+                const errorUrl = `${state}?loginError=Couldn't login, please try again`;
+                return redirectResponse(errorUrl);
+            }
             
-            throw new Error(error.message);
+            const data = await response.json();
+
+            if (data.apiKey == null || data.expiresAt == null) {
+                const errorUrl = `${state}?loginError=Couldn't login, please try again`;
+                return redirectResponse(errorUrl);
+            }
+            
+            token = await new SignJWT({
+                partnerLogin: {
+                    name: data.name,
+                    apiKey: data.apiKey,
+                    expiresAt: data.expires,
+                    refreshToken: data.refreshToken,
+                    loggedInAt: Date.now(),
+                }
+            })
+                .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+                .setIssuedAt()
+                .setExpirationTime("30d")
+                .setIssuer("https://buildwithfern.com")
+                .sign(getJwtTokenSecret());
+            
+        } catch (error) {
+            console.log('DEBUG5');
+            const errorUrl = `${state}?loginError=Couldn't login, please try again`;
+            return redirectResponse(errorUrl);
         }
-
-        const data = await response.json();
-
-        token = await new SignJWT({
-            // Here you might lookup and retrieve user details from your database
-            name: data.name,
-            apiKey: data.apiKey,
-            refreshToken: data.refreshToken,
-            expiresAt: data.expires
-        })
-            .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-            .setIssuedAt()
-            .setExpirationTime("30d")
-            .setIssuer("https://buildwithfern.com")
-            .sign(getJwtTokenSecret());
     }
     
     const res = redirectResponse(state ?? req.nextUrl.origin);

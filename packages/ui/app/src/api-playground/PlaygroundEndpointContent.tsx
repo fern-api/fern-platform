@@ -64,7 +64,8 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
 
     const layoutBreakpoint = useLayoutBreakpointValue();
 
-    const { apiKey } = useDocsContext();
+    const { partnerLogin } = useDocsContext();
+    const apiKey = partnerLogin?.apiKey;
     
     if (apiKey && formState.auth == null) {
         formState.auth = {

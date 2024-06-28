@@ -83,7 +83,9 @@ export async function getPrivateDocsPageProps(
     res: ServerResponse<IncomingMessage>,
 ): Promise<DocsPageResult<DocsPage.Props>> {
     const user: User = await getUser(token);
-    const apiKey: string | undefined = await getApiKey(token);
+    const partnerLogin = await getPartnerLogin(token);
+
+    console.log('PARTNER LOGIN', partnerLogin)
 
     if (!user.isAuthenticated) {
         // Clear the token if it's invalid, then redirect to `/` to reset the login flow
@@ -123,7 +125,7 @@ export async function getPrivateDocsPageProps(
         throw new Error("Failed to fetch private docs");
     }
 
-    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost, apiKey });
+    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost, partnerLogin });
 }
 
 async function getUser(token: string | undefined): Promise<User> {
@@ -145,13 +147,21 @@ async function getUser(token: string | undefined): Promise<User> {
     }
 }
 
-async function getApiKey(token: string): Promise<string | undefined> {
+export interface PartnerLogin {
+    name: string;
+    apiKey: string;
+    expiresAt: number;
+    refreshToken: string;
+    loggedInAt: number;
+};
+
+async function getPartnerLogin(token: string): Promise<PartnerLogin | undefined> {
     if (token == null) {
         return undefined;
     }
     try {
         const verifiedToken = await jwtVerify(token, getJwtTokenSecret());
-        return verifiedToken.payload.apiKey as string;
+        return verifiedToken.payload.partnerLogin as PartnerLogin;
     } catch {
         return undefined;
     }
@@ -162,13 +172,13 @@ async function convertDocsToDocsPageProps({
     slug,
     url,
     xFernHost,
-    apiKey
+    partnerLogin
 }: {
     docs: DocsV2Read.LoadDocsForUrlResponse;
     slug: string[];
     url: string;
     xFernHost: string;
-    apiKey?: string;
+    partnerLogin?: PartnerLogin;
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
@@ -309,7 +319,7 @@ async function convertDocsToDocsPageProps({
             docs.definition.apis,
             node.node,
         ),
-        apiKey
+        partnerLogin
     };
 
     return {
