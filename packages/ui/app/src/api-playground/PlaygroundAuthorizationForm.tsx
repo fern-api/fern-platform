@@ -287,7 +287,15 @@ export function PlaygroundAuthorizationFormCard({
         setFalse: closeAuthModal,
     } = useBooleanState(urlParams.get('code') != null);
 
-
+    console.log('auth', auth)
+    console.log('authState', authState);
+    if (apiKey && authState && authState.type == 'bearerAuth') {
+        if (authState.token == '') {
+            setAuthorization(
+                { type: 'bearerAuth', token: apiKey }
+            )  
+        }
+    }
     return (
         <div>
             {hasApiInjectionConfig && !apiKey && (
@@ -324,26 +332,37 @@ export function PlaygroundAuthorizationFormCard({
                     title="Login to send a real request"
                 >
                     <FernButton
-                        className="w-full text-left"
+                        className="w-full text-left pointer-events-none"
                         size="large"
                         intent="success"
                         variant="outlined"
                         text="Successfully logged in"
                         icon={<Key />}
-                        onClick={isOpen.toggleValue}
                         active={true}
                     />
-                
-                    <div className="flex justify-center my-5 gap-2">
-                        <FernButton
-                            size="normal"
-                            intent="none"
-                            variant="outlined"
-                            icon={<Key />}
-                            text="Override token manually"
-                            onClick={() => isOpen.toggleValue()}
+                    <div className="-mx-4">
+                        <PlaygroundAuthorizationForm
+                            auth={auth}
+                            value={authState}
+                            onChange={setAuthorization}
+                            disabled={disabled}
                         />
                     </div>
+                    {apiKey !== authState?.token && (
+                        <div className="flex justify-end  gap-2">
+                            {apiKey && (
+                                <FernButton
+                                    text="Reset token to default"
+                                    intent="none"
+                                    icon={<Key />}
+                                    onClick={() => setAuthorization({ type: "bearerAuth", token: apiKey })}
+                                    size="normal"
+                                    variant="outlined"
+                                />
+                            )}
+                        </div>
+                    )}
+                    
                 </FernCard>
               </>
             )}
@@ -396,7 +415,7 @@ export function PlaygroundAuthorizationFormCard({
                             <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
                             {apiKey && (
                                 <FernButton
-                                    text="Teset token to default"
+                                    text="Reset token to default"
                                     intent="none"
                                     onClick={() => setAuthorization({ type: "bearerAuth", token: apiKey })}
                                     size="normal"

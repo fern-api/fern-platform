@@ -66,7 +66,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
 
     const { apiKey } = useDocsContext();
     
-    if (apiKey && (formState.auth == null || (formState.auth.type === "bearerAuth" && formState.auth.token == ""))) {
+    if (apiKey && formState.auth == null) {
         formState.auth = {
             type: "bearerAuth",
             token: apiKey,
