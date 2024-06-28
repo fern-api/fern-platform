@@ -138,6 +138,8 @@ export async function getDocsPageProps(
             docs.definition.apis,
             node.node,
         ),
+        partnerLogin: undefined,
+
     };
 
     return {

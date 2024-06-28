@@ -151,7 +151,7 @@ export interface PartnerLogin {
     expiresAt: number;
     refreshToken: string;
     loggedInAt: number;
-};
+}
 
 async function getPartnerLogin(token: string): Promise<PartnerLogin | undefined> {
     if (token == null) {
