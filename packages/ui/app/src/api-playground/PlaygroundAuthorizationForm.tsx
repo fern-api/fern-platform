@@ -328,7 +328,7 @@ export function PlaygroundAuthorizationFormCard({
                         size="large"
                         intent="success"
                         variant="outlined"
-                        text="Logged in with Rightbrain"
+                        text="Successfully logged in"
                         icon={<Key />}
                         onClick={isOpen.toggleValue}
                         active={true}
@@ -341,15 +341,6 @@ export function PlaygroundAuthorizationFormCard({
                             variant="outlined"
                             icon={<Key />}
                             text="Override token manually"
-                            onClick={() => isOpen.toggleValue()}
-                        />
-                        
-                        <FernButton
-                            size="normal"
-                            intent="danger"
-                            variant="outlined"
-                            icon={<PersonIcon />}
-                            text="Log out"
                             onClick={() => isOpen.toggleValue()}
                         />
                     </div>
@@ -400,8 +391,18 @@ export function PlaygroundAuthorizationFormCard({
                             onChange={setAuthorization}
                             disabled={disabled}
                         />
-                        <div className="flex justify-end p-4 pt-2">
+                        
+                        <div className="flex justify-end p-4 pt-2 gap-2">
                             <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
+                            {apiKey && (
+                                <FernButton
+                                    text="Teset token to default"
+                                    intent="none"
+                                    onClick={() => setAuthorization({ type: "bearerAuth", token: apiKey })}
+                                    size="normal"
+                                    variant="outlined"
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
