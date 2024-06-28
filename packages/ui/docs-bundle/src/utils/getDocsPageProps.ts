@@ -170,7 +170,7 @@ async function convertDocsToDocsPageProps({
     slug,
     url,
     xFernHost,
-    partnerLogin
+    partnerLogin,
 }: {
     docs: DocsV2Read.LoadDocsForUrlResponse;
     slug: string[];
@@ -317,7 +317,7 @@ async function convertDocsToDocsPageProps({
             docs.definition.apis,
             node.node,
         ),
-        partnerLogin
+        partnerLogin,
     };
 
     return {

@@ -24,7 +24,6 @@ const getDocsServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ para
     if (token == null) {
         const result = await getDocsPageProps(xFernHost, slugArray);
 
-
         return visitDiscriminatedUnion(result, "type")._visit<ReturnType<GetServerSideProps<DocsPage.Props>>>({
             notFound: () => Promise.resolve({ notFound: true }),
             redirect: (redirect) => Promise.resolve({ redirect: redirect.redirect }),

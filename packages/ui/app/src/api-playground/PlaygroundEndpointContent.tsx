@@ -55,7 +55,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     types,
 }) => {
     const { domain } = useDocsContext();
-    
+
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
@@ -66,7 +66,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
 
     const { partnerLogin } = useDocsContext();
     const apiKey = partnerLogin?.apiKey;
-    
+
     if (apiKey && formState.auth == null) {
         formState.auth = {
             type: "bearerAuth",

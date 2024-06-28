@@ -61,7 +61,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
         // eslint-disable-next-line no-console
         console.debug(`Time to authenticate with WorkOS: ${beforeSigningTime - startTime}ms`);
-        
+
         token = await new SignJWT({
             user,
         })
@@ -81,7 +81,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             throw new Error("NEXT_PUBLIC_DOCS_DOMAIN is not set");
         }
 
-        const {apiInjectionConfig} = await getFeatureFlags(xFernHost);    
+        const { apiInjectionConfig } = await getFeatureFlags(xFernHost);
         if (apiInjectionConfig == null) {
             throw new Error("API injection config is not set");
         }
@@ -98,13 +98,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             if (!response.ok) {
                 return redirectWithLoginError(state, "Couldn't login, please try again");
             }
-            
+
             const data = await response.json();
 
             if (data.apiKey == null || data.expiresAt == null) {
                 return redirectWithLoginError(state, "Couldn't login, please try again");
             }
-            
+
             token = await new SignJWT({
                 partnerLogin: {
                     name: data.name,
@@ -112,19 +112,18 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
                     expiresAt: data.expires,
                     refreshToken: data.refreshToken,
                     loggedInAt: Date.now(),
-                }
+                },
             })
                 .setProtectedHeader({ alg: "HS256", typ: "JWT" })
                 .setIssuedAt()
                 .setExpirationTime("30d")
                 .setIssuer("https://buildwithfern.com")
                 .sign(getJwtTokenSecret());
-            
         } catch (error) {
             return redirectWithLoginError(state, "Couldn't login, please try again");
         }
     }
-    
+
     const res = redirectResponse(state ?? req.nextUrl.origin);
     res.cookies.set("fern_token", token, {
         httpOnly: true,
@@ -133,6 +132,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         path: "/",
         maxAge: 2592000,
     });
-    
+
     return res;
 }

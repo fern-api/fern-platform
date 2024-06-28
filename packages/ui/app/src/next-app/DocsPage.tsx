@@ -79,7 +79,6 @@ export type DocsPageResult<Props> =
     | { type: "redirect"; redirect: Redirect; revalidate?: number | boolean }
     | { type: "notFound"; notFound: true; revalidate?: number | boolean };
 
-
 export interface PartnerLogin {
     name: string;
     apiKey: string;

@@ -139,7 +139,6 @@ export async function getDocsPageProps(
             node.node,
         ),
         partnerLogin: undefined,
-
     };
 
     return {

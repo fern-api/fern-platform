@@ -5,7 +5,6 @@ import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 
-
 const FEATURE_FLAGS = [
     "api-playground-enabled" as const,
     "api-scrolling-disabled" as const,
@@ -33,17 +32,35 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
     try {
         const config = await getAll<EdgeConfigResponse>(FEATURE_FLAGS);
 
-        const isApiPlaygroundEnabled = checkDomainMatchesCustomers(domain, config["api-playground-enabled"] as CompanyList);
-        const isApiScrollingDisabled = checkDomainMatchesCustomers(domain, config["api-scrolling-disabled"] as CompanyList);
+        const isApiPlaygroundEnabled = checkDomainMatchesCustomers(
+            domain,
+            config["api-playground-enabled"] as CompanyList,
+        );
+        const isApiScrollingDisabled = checkDomainMatchesCustomers(
+            domain,
+            config["api-scrolling-disabled"] as CompanyList,
+        );
         const isWhitelabeled = checkDomainMatchesCustomers(domain, config.whitelabeled as CompanyList);
         const isSeoDisabled = checkDomainMatchesCustomers(domain, config["seo-disabled"] as CompanyList);
         const isTocDefaultEnabled = checkDomainMatchesCustomers(domain, config["toc-default-enabled"] as CompanyList);
-        const isSnippetTemplatesEnabled = checkDomainMatchesCustomers(domain, config["snippet-template-enabled"] as CompanyList);
-        const isHttpSnippetsEnabled = checkDomainMatchesCustomers(domain, config["http-snippets-enabled"] as CompanyList);
-        const isInlineFeedbackEnabled = checkDomainMatchesCustomers(domain, config["inline-feedback-enabled"] as CompanyList);
+        const isSnippetTemplatesEnabled = checkDomainMatchesCustomers(
+            domain,
+            config["snippet-template-enabled"] as CompanyList,
+        );
+        const isHttpSnippetsEnabled = checkDomainMatchesCustomers(
+            domain,
+            config["http-snippets-enabled"] as CompanyList,
+        );
+        const isInlineFeedbackEnabled = checkDomainMatchesCustomers(
+            domain,
+            config["inline-feedback-enabled"] as CompanyList,
+        );
         const isDarkCodeEnabled = checkDomainMatchesCustomers(domain, config["dark-code-enabled"] as CompanyList);
 
-        const apiInjectionConfig = getFeatureConfigForCustomer(domain, config["api-key-injection"] as CustomerFeatureConfigs);
+        const apiInjectionConfig = getFeatureConfigForCustomer(
+            domain,
+            config["api-key-injection"] as CustomerFeatureConfigs,
+        );
 
         const proxyShouldUseAppBuildwithfernCom = checkDomainMatchesCustomers(
             domain,
@@ -61,7 +78,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isInlineFeedbackEnabled,
             isDarkCodeEnabled,
             proxyShouldUseAppBuildwithfernCom,
-            apiInjectionConfig
+            apiInjectionConfig,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -89,9 +106,8 @@ function checkDomainMatchesCustomers(domain: string, customers: readonly string[
 type CustomerFeatureConfig = Record<string, string> | undefined;
 
 type CustomerFeatureConfigs = {
-    [key: string]: CustomerFeatureConfig
+    [key: string]: CustomerFeatureConfig;
 };
-
 
 function getFeatureConfigForCustomer(domain: string, customers: CustomerFeatureConfigs): CustomerFeatureConfig {
     for (const customer in customers) {

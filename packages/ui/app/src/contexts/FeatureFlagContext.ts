@@ -25,7 +25,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isInlineFeedbackEnabled: false,
     isDarkCodeEnabled: false,
     proxyShouldUseAppBuildwithfernCom: false,
-    apiInjectionConfig: undefined
+    apiInjectionConfig: undefined,
 };
 
 export const FeatureFlagContext = createContext<FeatureFlags>(DEFAULT_FEATURE_FLAGS);
