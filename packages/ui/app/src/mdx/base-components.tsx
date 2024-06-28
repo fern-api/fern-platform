@@ -16,6 +16,7 @@ import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAncho
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 
 /**
@@ -123,7 +124,9 @@ export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoo
         />
     );
 
-    if (noZoom) {
+    const { isImageZoomDisabled } = useFeatureFlags();
+
+    if (noZoom || isImageZoomDisabled) {
         return fernImage;
     }
 
