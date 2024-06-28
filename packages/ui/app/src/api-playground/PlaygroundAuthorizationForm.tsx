@@ -272,17 +272,17 @@ export function PlaygroundAuthorizationFormCard({
     const redirectOrOpenAuthForm = () => {
         if (apiInjectionConfig) {
             
-            const redirect = encodeURIComponent(window.location.origin + '/api/fern-docs/auth/callback');
+            const redirect = encodeURIComponent(window.location.origin + "/api/fern-docs/auth/callback");
             const state = encodeURIComponent(window.location.href);
 
-            const loginUrl = `${apiInjectionConfig['login-endpoint']}?redirect=${redirect}&state=${state}`;
+            const loginUrl = `${apiInjectionConfig["login-endpoint"]}?redirect=${redirect}&state=${state}`;
             window.location.href = loginUrl;
         } else {
             isOpen.toggleValue();
         }
     }
     const hasApiInjectionConfig = apiInjectionConfig !== undefined;
-    const authButtonCopy = hasApiInjectionConfig ? 'Login to send a real request' : 'Authenticate with your API key to send a real request';
+    const authButtonCopy = hasApiInjectionConfig ? "Login to send a real request" : "Authenticate with your API key to send a real request";
     
     useEffect(() => {
         if (!router.isReady) {
@@ -296,10 +296,10 @@ export function PlaygroundAuthorizationFormCard({
     }, [router.isReady]);
 
     // TODO change this login
-    if (apiKey && authState && authState.type == 'bearerAuth') {
-        if (authState.token == '') {
+    if (apiKey && authState && authState.type == "bearerAuth") {
+        if (authState.token == "") {
             setAuthorization(
-                { type: 'bearerAuth', token: apiKey }
+                { type: "bearerAuth", token: apiKey }
             )  
         }
     }
