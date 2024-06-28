@@ -2,7 +2,14 @@ import { FdrClient, FernNavigation, type DocsV2Read } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
-import { DocsPage, DocsPageResult, convertNavigatableToResolvedPath, getDefaultSeoProps } from "@fern-ui/ui";
+import {
+    DocsPage,
+    DocsPageResult,
+    convertNavigatableToResolvedPath,
+    getDefaultSeoProps,
+    getGitHubInfo,
+    getGitHubRepo,
+} from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
@@ -294,25 +301,18 @@ async function convertDocsToDocsPageProps({
             docs.definition.apis,
             node.node,
         ),
+        fallback: {},
     };
 
     // if the user specifies a github navbar link, grab the repo name from it
-    const githubUrlMatch = docsConfig.navbarLinks
-        ?.find((link) => link.type === "github")
-        ?.url.match(/^https:\/\/(www\.)?github\.com\/([\w-]+\/[\w-]+)\/?$/);
-
-    // make sure that the github url is valid
-    if (githubUrlMatch) {
-        // and then fetch the stars and forks
-        const res = await fetch(`https://api.github.com/repos/${githubUrlMatch[2]}`);
-        if (res.ok) {
-            // if the response is succesful, augment the props with github info
-            const repo = await res.json();
-            props.github = {
-                repo: repo.full_name,
-                stars: repo.stargazers_count,
-                forks: repo.forks,
-            };
+    const githubNavbarLink = docsConfig.navbarLinks?.find((link) => link.type === "github");
+    if (githubNavbarLink) {
+        const repo = getGitHubRepo(githubNavbarLink.url);
+        if (repo) {
+            const data = await getGitHubInfo(repo);
+            if (data) {
+                props.fallback[repo] = data;
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import type { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
+import { SWRConfig } from "swr";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
@@ -34,22 +35,24 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     return (
         <FernTooltipProvider>
             <DefaultSeo {...pageProps?.seo} />
-            <JotaiProvider store={store}>
-                <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                    <ThemeProvider colors={pageProps?.colors}>
-                        <IsReadyProvider>
-                            <RouteListenerContextProvider>
-                                <DatadogInit />
-                                <LayoutBreakpointProvider>
-                                    <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                                    <Component {...pageProps} />
-                                </LayoutBreakpointProvider>
-                            </RouteListenerContextProvider>
-                        </IsReadyProvider>
-                        <Toaster />
-                    </ThemeProvider>
-                </FernErrorBoundary>
-            </JotaiProvider>
+            <SWRConfig value={{ fallback: pageProps?.fallback }}>
+                <JotaiProvider store={store}>
+                    <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+                        <ThemeProvider colors={pageProps?.colors}>
+                            <IsReadyProvider>
+                                <RouteListenerContextProvider>
+                                    <DatadogInit />
+                                    <LayoutBreakpointProvider>
+                                        <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                                        <Component {...pageProps} />
+                                    </LayoutBreakpointProvider>
+                                </RouteListenerContextProvider>
+                            </IsReadyProvider>
+                            <Toaster />
+                        </ThemeProvider>
+                    </FernErrorBoundary>
+                </JotaiProvider>
+            </SWRConfig>
         </FernTooltipProvider>
     );
 }

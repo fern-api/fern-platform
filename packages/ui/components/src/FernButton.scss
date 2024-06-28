@@ -359,7 +359,7 @@
     }
 
     .fern-button-group {
-        @apply inline-flex items-stretch;
+        @apply inline-flex items-center;
 
         > .fern-button {
             + .fern-button.outlined,

@@ -10,7 +10,8 @@ import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { useOpenSearchDialog } from "../sidebar/atom";
-import { HeaderGitHubWidget } from "./HeaderGitHubWidget";
+import { getGitHubRepo } from "../util/github";
+import { GitHubWidget } from "./GitHubWidget";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { ThemeButton } from "./ThemeButton";
 
@@ -42,7 +43,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     },
     ref,
 ) {
-    const { colors, github } = useDocsContext();
+    const { colors } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const [searchService] = useSearchConfig();
@@ -50,8 +51,13 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const navbarLinksSection = (
         <div className="hidden lg:block">
             <FernButtonGroup>
-                {navbarLinks?.map((navbarLink, idx) =>
-                    navbarLink.type === "github" ? null : (
+                {navbarLinks?.map((navbarLink, idx) => {
+                    if (navbarLink.type === "github") {
+                        const repo = getGitHubRepo(navbarLink.url);
+                        return repo && <GitHubWidget key={idx} repo={repo} />;
+                    }
+
+                    return (
                         <FernLinkButton
                             key={idx}
                             className="group cursor-pointer"
@@ -61,7 +67,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                             rightIcon={
                                 navbarLink.rightIcon ??
                                 (navbarLink.type === "primary" ||
-                                (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
+                                    (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
                                     <ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />
                                 ) : undefined)
                             }
@@ -69,15 +75,15 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                                 navbarLink.type === "primary"
                                     ? "outlined"
                                     : navbarLink.type === "secondary"
-                                      ? "minimal"
-                                      : navbarLink.type
+                                        ? "minimal"
+                                        : navbarLink.type
                             }
                             rounded={navbarLink.rounded}
                         >
                             {navbarLink.text}
                         </FernLinkButton>
-                    ),
-                )}
+                    );
+                })}
 
                 {colors.dark && colors.light && <ThemeButton className="hidden lg:flex" />}
             </FernButtonGroup>
@@ -108,8 +114,6 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     "flex-1": showSearchBar,
                 })}
             >
-                {github && <HeaderGitHubWidget {...github} />}
-
                 {navbarLinksSection}
 
                 <div className="flex lg:hidden">
