@@ -1,6 +1,5 @@
 import { FernButton, FernCheckboxDropdown, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import clsx from "clsx";
 import { ReactElement, useMemo } from "react";
 import { useFilterContext } from "../contexts/filter-context/useFilterContext";
 
@@ -10,11 +9,7 @@ interface FilterDropdownProps {
     vertical?: boolean;
 }
 
-export function FilterDropdown({
-    yearsArray = [],
-    tagsArray = [],
-    vertical = false,
-}: FilterDropdownProps): ReactElement {
+export function FilterDropdown({ yearsArray = [], tagsArray = [] }: FilterDropdownProps): ReactElement {
     const { activeFilters, handleSetActiveFilters } = useFilterContext();
     const rawFilterValues = [...yearsArray, { type: "separator" }, ...tagsArray] as
         | FernCheckboxDropdown.Option[]
@@ -42,26 +37,23 @@ export function FilterDropdown({
         [activeFilters],
     );
 
-    // going to need to pass active filters into the checkbox dropdown in order to determine which items are checked
-
     return (
-        <div className={clsx("flex max-w-80 flex-col min-w-1/2", { "mx-12 mt-20 fixed p-4": vertical })}>
-            <FernCheckboxDropdown
-                value="Filter"
-                options={getDropdownOptions(rawFilterValues)}
-                onSelectOption={(value) => {
-                    handleSetActiveFilters(value);
-                }}
-            >
-                <FernButton
-                    icon={<RemoteFontAwesomeIcon className="bg-accent size-4" icon="filter" />}
-                    rightIcon={<ChevronDownIcon />}
-                    text="Filter"
-                    size="small"
-                    variant="outlined"
-                    mono={true}
-                />
-            </FernCheckboxDropdown>
-        </div>
+        <FernCheckboxDropdown
+            value="Filter"
+            options={getDropdownOptions(rawFilterValues)}
+            onSelectOption={(value) => {
+                handleSetActiveFilters(value);
+            }}
+        >
+            <FernButton
+                className="w-32 bg-white"
+                icon={<RemoteFontAwesomeIcon className="bg-accent size-4" icon="bars-filter" />}
+                rightIcon={<ChevronDownIcon />}
+                text="Filter"
+                size="small"
+                variant="outlined"
+                mono={true}
+            />
+        </FernCheckboxDropdown>
     );
 }

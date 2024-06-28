@@ -46,7 +46,7 @@ export const FernCheckboxDropdown = forwardRef<HTMLButtonElement, PropsWithChild
         };
 
         const renderDropdownContent = () => (
-            <DropdownMenu.Content className="fern-dropdown" sideOffset={4} side={side} align={align}>
+            <DropdownMenu.Content className="fern-dropdown bg-white" sideOffset={4} side={side} align={align}>
                 <FernScrollArea rootClassName="min-h-0 shrink" className="p-1" scrollbars="vertical">
                     <DropdownMenu.Group>
                         {options.map((option, idx) =>

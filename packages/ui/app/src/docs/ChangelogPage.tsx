@@ -90,10 +90,9 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
         <div className="flex justify-between px-4 md:px-6 lg:px-8">
             <div className={clsx("w-full min-w-0 pt-8", { "sm:pt-8 lg:pt-24": fullWidth })}>
                 <article className={clsx("mx-auto xl:w-fit break-words", { " xl:ml-8": !fullWidth })}>
-                    <section className="flex flex-col ml-64">
+                    <section className="flex flex-row ml-64 justify-start">
                         {fullWidth ? (
                             <>
-                                <div className="flex-initial max-md:hidden w-64" />
                                 <div className="relative mr-6 max-w-content-width flex-auto">
                                     <CustomDocsPageHeader
                                         title={resolvedPath.node.title}
@@ -123,7 +122,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                 )}
                             </div>
                         )}
-                        <div className="">
+                        <div className="flex items-center">
                             <FilterDropdown
                                 yearsArray={getYearsForFilterDropdown()}
                                 tagsArray={getTagsForFilterDropdown()}
@@ -140,7 +139,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                     {fullWidth ? (
                                         <>
                                             <div className="flex-initial max-md:hidden min-w-64">
-                                                <div className="sticky top-header-height-padded t-muted text-base mb-8">
+                                                <div className="sticky top-44 t-muted text-base mb-8">
                                                     <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
                                                 </div>
                                             </div>
