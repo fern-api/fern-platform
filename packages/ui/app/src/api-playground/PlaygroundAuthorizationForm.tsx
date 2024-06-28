@@ -293,14 +293,14 @@ export function PlaygroundAuthorizationFormCard({
         if (loginError) {
             setLoginError(loginError as string);
         }
-    }, [router.isReady]);
+    }, [router.query, router.isReady]);
 
     // TODO change this login
     if (apiKey && authState && authState.type == "bearerAuth") {
-        if (authState.token == "") {
+        if (authState.token === "") {
             setAuthorization(
                 { type: "bearerAuth", token: apiKey }
-            )  
+            );
         }
     }
     return (
@@ -446,7 +446,7 @@ export function PlaygroundAuthorizationFormCard({
 }
 
 function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundRequestFormAuth | undefined): boolean {
-    if (authState == null) {
+    if (authState === null || authState === undefined) {
         return false;
     }
 
