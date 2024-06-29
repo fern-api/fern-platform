@@ -16,6 +16,7 @@ import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAncho
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 
 /**
@@ -83,13 +84,14 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, chil
 
 export interface ImgProps extends ComponentProps<"img"> {
     noZoom?: boolean;
+    enableZoom?: boolean;
 }
 
 function isImgElement(element: ReactElement): element is ReactElement<ImgProps> {
     return element.type === Image;
 }
 
-export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, style, ...rest }) => {
+export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, enableZoom, style, ...rest }) => {
     const { files } = useDocsContext();
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
@@ -123,7 +125,9 @@ export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoo
         />
     );
 
-    if (noZoom) {
+    const { isImageZoomDisabled } = useFeatureFlags();
+
+    if (isImageZoomDisabled ? !enableZoom : noZoom) {
         return fernImage;
     }
 

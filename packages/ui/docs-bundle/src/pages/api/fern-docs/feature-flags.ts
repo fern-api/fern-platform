@@ -16,6 +16,7 @@ const FEATURE_FLAGS = [
     "inline-feedback-enabled" as const,
     "dark-code-enabled" as const,
     "proxy-uses-app-buildwithfern" as const,
+    "image-zoom-disabled" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -44,6 +45,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             domain,
             config["proxy-uses-app-buildwithfern"],
         );
+        const isImageZoomDisabled = checkDomainMatchesCustomers(domain, config["image-zoom-disabled"]);
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -56,6 +58,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isInlineFeedbackEnabled,
             isDarkCodeEnabled,
             proxyShouldUseAppBuildwithfernCom,
+            isImageZoomDisabled,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -71,6 +74,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isInlineFeedbackEnabled: isFern(domain),
             isDarkCodeEnabled: false,
             proxyShouldUseAppBuildwithfernCom: false,
+            isImageZoomDisabled: false,
         };
     }
 }
