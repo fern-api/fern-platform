@@ -140,6 +140,7 @@ export async function getDocsPageProps(
             docs.definition.apis,
             node.node,
         ),
+        breadcrumb: undefined,
         fallback: {},
     };
 

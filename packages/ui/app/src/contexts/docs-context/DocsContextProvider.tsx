@@ -136,7 +136,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
             <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(domain) }} />
             <CustomerAnalytics domain={domain} />
-            {pageProps.breadcrumb.itemListElement.length > 0 && (
+            {pageProps.breadcrumb != null && pageProps.breadcrumb.itemListElement.length > 0 && (
                 <JsonLd.Breadcrumb breadcrumbList={pageProps.breadcrumb} />
             )}
         </DocsContext.Provider>

@@ -46,7 +46,7 @@ export declare namespace DocsPage {
         apis: FdrAPI.ApiDefinitionId[];
 
         seo: DefaultSeoProps;
-        breadcrumb: JsonLd.BreadcrumbListSchema;
+        breadcrumb: JsonLd.BreadcrumbListSchema | undefined;
 
         fallback: Record<string, any>;
     }
