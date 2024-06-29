@@ -1,6 +1,6 @@
 import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
-import type { DefaultSeoProps } from "@fern-ui/next-seo";
+import type { DefaultSeoProps, JsonLd } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import { ReactElement } from "react";
@@ -46,6 +46,7 @@ export declare namespace DocsPage {
         apis: FdrAPI.ApiDefinitionId[];
 
         seo: DefaultSeoProps;
+        breadcrumb: JsonLd.BreadcrumbListSchema | undefined;
 
         fallback: Record<string, any>;
     }

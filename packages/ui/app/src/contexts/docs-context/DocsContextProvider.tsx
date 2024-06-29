@@ -1,4 +1,5 @@
 import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { JsonLd } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useTheme } from "next-themes";
 import Head from "next/head";
@@ -135,6 +136,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
             <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(domain) }} />
             <CustomerAnalytics domain={domain} />
+            {pageProps.breadcrumb != null && pageProps.breadcrumb.itemListElement.length > 0 && (
+                <JsonLd.Breadcrumb breadcrumbList={pageProps.breadcrumb} />
+            )}
         </DocsContext.Provider>
     );
 };

@@ -23,6 +23,7 @@ export declare namespace Node {
         apiReference: FernNavigation.ApiReferenceNode | undefined;
         next: NavigationNodeNeighbor | undefined;
         prev: NavigationNodeNeighbor | undefined;
+        collector: NodeCollector;
     }
 
     interface Redirect {
@@ -90,6 +91,7 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
                 (found.node.type === "apiReference" ? found.node : undefined),
             next: found.next,
             prev: found.prev,
+            collector,
         };
     }
 
@@ -97,8 +99,6 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
     if (root.type === "root" && root.slug === slugToFind && root.pointsTo != null) {
         return { type: "redirect", redirect: root.pointsTo };
     }
-
-    console.log(found.node);
 
     const redirect = hasRedirect(found.node) ? found.node.pointsTo : currentVersion?.pointsTo ?? root.pointsTo;
 

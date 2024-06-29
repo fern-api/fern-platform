@@ -238,7 +238,7 @@
     ]
   },
   "slug": "docs",
-  "title": "Fern Docs",
+  "title": "AssemblyAI | Reference",
   "hidden": false,
   "pointsTo": "docs/api-reference/overview"
 }

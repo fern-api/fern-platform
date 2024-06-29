@@ -11,6 +11,7 @@ import { SlugGenerator } from "./SlugGenerator";
 
 export class NavigationConfigConverter {
     private constructor(
+        private title: string | undefined,
         private config: DocsV1Read.NavigationConfig,
         private apis: Record<string, APIV1Read.ApiDefinition>,
         private basePath: string | undefined,
@@ -18,12 +19,13 @@ export class NavigationConfigConverter {
     ) {}
 
     public static convert(
+        title: string | undefined,
         config: DocsV1Read.NavigationConfig,
         apis: Record<string, APIV1Read.ApiDefinition>,
         basePath: string | undefined,
         lexicographic?: boolean,
     ): FernNavigation.RootNode {
-        return new NavigationConfigConverter(config, apis, basePath, lexicographic).convert();
+        return new NavigationConfigConverter(title, config, apis, basePath, lexicographic).convert();
     }
 
     #idgen = new NodeIdGenerator();
@@ -48,8 +50,7 @@ export class NavigationConfigConverter {
                 child,
                 slug: baseSlug.get(),
 
-                // the following don't matter:
-                title: "Fern Docs",
+                title: this.title ?? "Documentation",
                 hidden: false,
                 icon: undefined,
                 pointsTo,
