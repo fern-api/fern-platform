@@ -33,7 +33,7 @@ export function getBreadcrumbList(
 
     parents.forEach((parent) => {
         if (FernNavigation.hasMetadata(parent)) {
-            elements.push(JsonLd.listItem(elements.length + 1, node.title, toUrl(domain, node.slug)));
+            elements.push(JsonLd.listItem(elements.length + 1, parent.title, toUrl(domain, node.slug)));
         }
     });
 
