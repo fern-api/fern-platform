@@ -1,8 +1,8 @@
 import Script from "next/script";
 import { ReactElement } from "react";
-import { BreadcrumbList } from "./types/breadcrumbs";
+import { BreadcrumbListSchema } from "../types/breadcrumbs";
 
-export function Breadcrumb({ breadcrumbList }: { breadcrumbList: BreadcrumbList }): ReactElement {
+export function Breadcrumb({ breadcrumbList }: { breadcrumbList: BreadcrumbListSchema }): ReactElement {
     return (
         <Script
             type="application/ld+json"
