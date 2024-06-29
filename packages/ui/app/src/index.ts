@@ -7,7 +7,7 @@ export { useSetThemeColors } from "./docs/ThemeProvider";
 export * from "./next-app/DocsPage";
 export { NextApp } from "./next-app/NextApp";
 export { getBreadcrumbList } from "./next-app/utils/getBreadcrumbList";
-export { getDefaultSeoProps } from "./next-app/utils/getSeoProp";
+export { getDefaultSeoProps, getFrontmatter } from "./next-app/utils/getSeoProp";
 export { ApiDefinitionResolver } from "./resolver/ApiDefinitionResolver";
 export { ApiTypeResolver } from "./resolver/ApiTypeResolver";
 export * from "./resolver/types";
