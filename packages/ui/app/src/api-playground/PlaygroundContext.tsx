@@ -1,9 +1,10 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import * as Sentry from "@sentry/nextjs";
 import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 import { mapValues, noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo } from "react";
+import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
@@ -17,14 +18,8 @@ import {
     isWebSocket,
 } from "../resolver/types";
 import { APIS } from "../sidebar/atom";
-import { getInitialEndpointRequestFormStateWithExample } from "./PlaygroundDrawer";
-import {
-    PLAYGROUND_FORM_STATE_ATOM,
-    useInitPlaygroundRouter,
-    useOpenPlayground,
-    usePlaygroundHeight,
-    usePlaygroundNode,
-} from "./hooks/usePlaygroundNodeId";
+import { getInitialEndpointRequestFormStateWithExample, usePlaygroundHeight } from "./PlaygroundDrawer";
+import { PlaygroundRequestFormState } from "./types";
 
 const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => m.PlaygroundDrawer), {
     ssr: false,
@@ -34,13 +29,23 @@ interface PlaygroundContextValue {
     hasPlayground: boolean;
     selectionState: FernNavigation.NavigationNodeApiLeaf | undefined;
     setSelectionStateAndOpen: (state: FernNavigation.NavigationNodeApiLeaf) => void;
+    expandPlayground: () => void;
+    collapsePlayground: () => void;
 }
 
 const PlaygroundContext = createContext<PlaygroundContextValue>({
     hasPlayground: false,
     selectionState: undefined,
     setSelectionStateAndOpen: noop,
+    expandPlayground: noop,
+    collapsePlayground: noop,
 });
+
+export const PLAYGROUND_OPEN_ATOM = atomWithStorage<boolean>("api-playground-is-open", false);
+export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, PlaygroundRequestFormState | undefined>>(
+    "api-playground-selection-state-alpha",
+    {},
+);
 
 const fetcher = async (url: string) => {
     const res = await fetch(url);
@@ -51,6 +56,8 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const { isApiPlaygroundEnabled } = useFeatureFlags();
     const [apis, setApis] = useAtom(APIS);
     const { basePath } = useDocsContext();
+    const [selectionState, setSelectionState] = useState<FernNavigation.NavigationNodeApiLeaf | undefined>();
+
     const key = urljoin(basePath ?? "/", "/api/fern-docs/resolve-api");
 
     const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {
@@ -64,13 +71,19 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
-    const [playgroundHeight] = usePlaygroundHeight();
+    const [isPlaygroundOpen, setPlaygroundOpen] = useAtom(PLAYGROUND_OPEN_ATOM);
+    const [playgroundHeight, setPlaygroundHeight] = usePlaygroundHeight();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
 
-    useInitPlaygroundRouter();
-
-    const selectionState = usePlaygroundNode();
-    const openPlayground = useOpenPlayground();
+    const expandPlayground = useCallback(() => {
+        capturePosthogEvent("api_playground_opened");
+        setPlaygroundHeight((currentHeight) => {
+            const windowHeight: number = window.innerHeight;
+            return currentHeight < windowHeight ? windowHeight : currentHeight;
+        });
+        setPlaygroundOpen(true);
+    }, [setPlaygroundHeight, setPlaygroundOpen]);
+    const collapsePlayground = useCallback(() => setPlaygroundOpen(false), [setPlaygroundOpen]);
 
     const setSelectionStateAndOpen = useCallback(
         async (newSelectionState: FernNavigation.NavigationNodeApiLeaf) => {
@@ -87,7 +100,8 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 if (matchedEndpoint == null) {
                     Sentry.captureMessage("Could not find endpoint for API playground selection state", "fatal");
                 }
-                openPlayground(newSelectionState.id);
+                setSelectionState(newSelectionState);
+                expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
                     endpointId: newSelectionState.endpointId,
                     endpointName: matchedEndpoint?.title,
@@ -112,35 +126,36 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
                 if (matchedWebSocket == null) {
                     Sentry.captureMessage("Could not find websocket for API playground selection state", "fatal");
                 }
-                openPlayground(newSelectionState.id);
+                setSelectionState(newSelectionState);
+                expandPlayground();
                 capturePosthogEvent("api_playground_opened", {
                     webSocketId: newSelectionState.webSocketId,
                     webSocketName: matchedWebSocket?.title,
                 });
             }
         },
-        [flattenedApis, globalFormState, openPlayground, setGlobalFormState],
-    );
-
-    const hasPlayground = Object.keys(apis).length > 0;
-    const value = useMemo(
-        () => ({
-            hasPlayground,
-            selectionState,
-            setSelectionStateAndOpen,
-        }),
-        [hasPlayground, selectionState, setSelectionStateAndOpen],
+        [expandPlayground, flattenedApis, globalFormState, setGlobalFormState],
     );
 
     if (!isApiPlaygroundEnabled) {
         return <>{children}</>;
     }
 
+    const hasPlayground = Object.keys(apis).length > 0;
+
     return (
-        <PlaygroundContext.Provider value={value}>
+        <PlaygroundContext.Provider
+            value={{
+                hasPlayground,
+                selectionState,
+                setSelectionStateAndOpen,
+                expandPlayground,
+                collapsePlayground,
+            }}
+        >
             {children}
             <PlaygroundDrawer apis={flattenedApis} />
-            {true && hasPlayground && <div style={{ height: playgroundHeight }} />}
+            {isPlaygroundOpen && hasPlayground && <div style={{ height: playgroundHeight }} />}
         </PlaygroundContext.Provider>
     );
 };
