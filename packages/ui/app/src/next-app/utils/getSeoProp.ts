@@ -18,12 +18,12 @@ function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1
     });
 }
 
-export function getFrontmatter(content: string): FernDocsFrontmatter {
+export function getFrontmatter(content: string): [FernDocsFrontmatter, string] {
     try {
         const gm = grayMatter(content);
-        return gm.data;
+        return [gm.data, gm.content];
     } catch (e) {
-        return {};
+        return [{}, content];
     }
 }
 
@@ -51,7 +51,7 @@ export function getDefaultSeoProps(
     let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? {};
 
     if (pageId != null && pages[pageId]) {
-        const frontmatter = getFrontmatter(pages[pageId].markdown);
+        const [frontmatter] = getFrontmatter(pages[pageId].markdown);
         ogMetadata = { ...ogMetadata, ...frontmatter };
 
         // retrofit og:image

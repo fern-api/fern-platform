@@ -1629,6 +1629,9 @@ importers:
       cssnano:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.4.31)
+      feed:
+        specifier: ^4.2.2
+        version: 4.2.2
       jose:
         specifier: ^5.2.3
         version: 5.2.4
@@ -17890,6 +17893,13 @@ packages:
     resolution: {integrity: sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==}
     dev: false
 
+  /feed@4.2.2:
+    resolution: {integrity: sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==}
+    engines: {node: '>=0.4.0'}
+    dependencies:
+      xml-js: 1.6.11
+    dev: false
+
   /fern-api@0.21.0:
     resolution: {integrity: sha512-/Zf/24Cg4YoRsbwJ8Joot0AcosQwUyvGQvZ6Qi0Cu/c83FfrWvQ73cb3ddJQCyzWhM06McgO5uguviSmgFyQWQ==}
     hasBin: true
@@ -29315,6 +29325,13 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+
+  /xml-js@1.6.11:
+    resolution: {integrity: sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==}
+    hasBin: true
+    dependencies:
+      sax: 1.3.0
+    dev: false
 
   /xml-name-validator@5.0.0:
     resolution: {integrity: sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg==}

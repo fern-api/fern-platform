@@ -202,6 +202,8 @@ const nextConfig = {
                 { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
                 { source: "/robots.txt", destination: "/api/fern-docs/robots.txt" },
                 { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
+                { source: "/:path*.rss", destination: "/api/fern-docs/changelog?format=rss&path=:path*" },
+                { source: "/:path*.atom", destination: "/api/fern-docs/changelog?format=atom&path=:path*" },
 
                 // backwards compatibility with currently deployed FDR
                 { source: "/api/revalidate-all", destination: "/api/fern-docs/revalidate-all" },

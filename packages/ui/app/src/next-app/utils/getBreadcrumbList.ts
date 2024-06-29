@@ -16,7 +16,7 @@ export function getBreadcrumbList(
     if (FernNavigation.isPage(node)) {
         const pageId = FernNavigation.utils.getPageId(node);
         if (pageId != null && pages[pageId] != null) {
-            const frontmatter = getFrontmatter(pages[pageId].markdown);
+            const [frontmatter] = getFrontmatter(pages[pageId].markdown);
             if (frontmatter["jsonld:breadcrumb"] != null) {
                 const breadcrumb = JsonLd.BreadcrumbListSchema.safeParse(frontmatter["jsonld:breadcrumb"]);
                 if (breadcrumb.success) {
