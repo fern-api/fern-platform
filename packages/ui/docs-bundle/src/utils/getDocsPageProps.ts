@@ -6,6 +6,7 @@ import {
     DocsPage,
     DocsPageResult,
     convertNavigatableToResolvedPath,
+    getBreadcrumbList,
     getDefaultSeoProps,
     getGitHubInfo,
     getGitHubRepo,
@@ -301,6 +302,7 @@ async function convertDocsToDocsPageProps({
             docs.definition.apis,
             node.node,
         ),
+        breadcrumb: getBreadcrumbList(docs.baseUrl.domain, docs.definition.pages, node.parents, node.node),
         fallback: {},
     };
 

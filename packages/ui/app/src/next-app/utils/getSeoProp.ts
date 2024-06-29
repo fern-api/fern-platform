@@ -18,7 +18,7 @@ function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1
     });
 }
 
-function getFrontmatter(content: string): FernDocsFrontmatter {
+export function getFrontmatter(content: string): FernDocsFrontmatter {
     try {
         const gm = grayMatter(content);
         return gm.data;

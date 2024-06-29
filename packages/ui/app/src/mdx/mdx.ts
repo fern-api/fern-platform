@@ -1,4 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { JsonLd } from "@fern-ui/next-seo";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
@@ -86,6 +87,8 @@ export interface FernDocsFrontmatter extends DocsV1Read.MetadataConfig {
      * Hides the feedback form at the bottom of the page.
      */
     "hide-feedback"?: boolean;
+
+    "jsonld:breadcrumb"?: JsonLd.BreadcrumbListSchema;
 
     // deprecated:
     editThisPageUrl?: string; // use "edit-this-page-url" instead
