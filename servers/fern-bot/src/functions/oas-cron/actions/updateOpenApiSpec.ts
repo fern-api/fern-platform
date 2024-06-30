@@ -12,7 +12,7 @@ export async function updateOpenApiSpecInternal(env: Env, repoData: RepoData): P
         if (installation.repository.full_name === repoData.full_name) {
             await updateSpecInternal(
                 installation.octokit,
-                repoData,
+                installation.repository,
                 env.GITHUB_APP_LOGIN_NAME,
                 env.GITHUB_APP_LOGIN_ID,
             );
