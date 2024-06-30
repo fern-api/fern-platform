@@ -11,7 +11,7 @@ import { Octokit } from "octokit";
 
 const GENERATOR_UPDATE_BRANCH = "fern/update-generators";
 
-export async function updateGeneratorVersionInternal(
+export async function updateVersionInternal(
     octokit: Octokit,
     repository: Repository,
     fernBotLoginName: string,

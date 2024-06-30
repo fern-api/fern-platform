@@ -24,13 +24,7 @@ export async function updateOpenApiSpecsInternal(env: Env): Promise<void> {
 
         await updateSpecInternal(
             installation.octokit,
-            {
-                id: installation.repository.id.toString(),
-                name: installation.repository.name,
-                full_name: installation.repository.full_name,
-                default_branch: installation.repository.default_branch,
-                clone_url: installation.repository.clone_url,
-            },
+            installation.repository,
             env.GITHUB_APP_LOGIN_NAME,
             env.GITHUB_APP_LOGIN_ID,
         );

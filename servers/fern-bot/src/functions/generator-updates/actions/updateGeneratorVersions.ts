@@ -1,7 +1,7 @@
 import { Env } from "@libs/env";
 import { setupGithubApp } from "@libs/github/octokit";
 import { App } from "octokit";
-import { updateGeneratorVersionInternal } from "../shared/updateGeneratorInternal";
+import { updateVersionInternal } from "../shared/updateGeneratorInternal";
 
 export async function updateGeneratorVersionsInternal(env: Env): Promise<void> {
     const app: App = setupGithubApp(env);
@@ -16,7 +16,7 @@ export async function updateGeneratorVersionsInternal(env: Env): Promise<void> {
             console.log("REPO_TO_RUN_ON has been found, running logic.");
         }
         console.log("Encountered installation", installation.repository.full_name);
-        await updateGeneratorVersionInternal(
+        await updateVersionInternal(
             installation.octokit,
             installation.repository,
             env.GITHUB_APP_LOGIN_NAME,
