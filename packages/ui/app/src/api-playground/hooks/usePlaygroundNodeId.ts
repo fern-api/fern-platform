@@ -1,6 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { atomWithLocation } from "jotai-location";
 import { atomWithStorage } from "jotai/utils";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect } from "react";
@@ -17,6 +18,8 @@ export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, Playgro
     {},
 );
 
+const LOCATION_ATOM = atomWithLocation();
+
 export function usePlaygroundNodeId(): FernNavigation.NodeId | undefined {
     return useAtomValue(PLAYGROUND_NODE_ID);
 }
@@ -26,15 +29,23 @@ export function useIsPlaygroundOpen(): boolean {
 }
 
 export function useClosePlayground(): () => void {
-    const [nodeId, setNodeId] = useAtom(PLAYGROUND_NODE_ID);
+    const setNodeId = useSetAtom(PLAYGROUND_NODE_ID);
     const setPrevNodeId = useSetAtom(PREV_PLAYGROUND_NODE_ID);
-    const router = useRouter();
+    const setLocation = useSetAtom(LOCATION_ATOM);
     return useEventCallback(() => {
-        setPrevNodeId(nodeId);
-        setNodeId(undefined);
-        const newQuery = { ...router.query };
-        delete newQuery.playground;
-        void router.replace({ query: newQuery }, undefined, { shallow: true });
+        setLocation((currLocation) => {
+            if (currLocation.searchParams == null || !currLocation.searchParams.has("playground")) {
+                return currLocation;
+            }
+
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const prevNodeId = FernNavigation.NodeId(currLocation.searchParams.get("playground")!);
+            setPrevNodeId(prevNodeId);
+            setNodeId(undefined);
+            const newLocation = { ...currLocation, searchParams: new URLSearchParams(currLocation.searchParams) };
+            newLocation.searchParams.delete("playground");
+            return newLocation;
+        });
     });
 }
 
@@ -51,7 +62,10 @@ export function useOpenPlayground(): (nodeId?: FernNavigation.NodeId) => void {
             return;
         }
 
-        void router.replace({ query: { ...router.query, playground: nextNodeId } }, undefined, { shallow: true });
+        void router.replace({ query: { ...router.query, playground: nextNodeId }, href: router.asPath }, undefined, {
+            shallow: true,
+            scroll: false,
+        });
         const node = nodes.get(nextNodeId);
         const apiNode = node != null && FernNavigation.isApiLeaf(node) ? node : undefined;
 

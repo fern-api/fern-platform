@@ -79,6 +79,7 @@
     "iconoir-react": "^7.7.0",
     "instantsearch.js": "^4.63.0",
     "jotai": "^2.8.1",
+    "jotai-location": "^0.5.5",
     "jsonpath": "^1.1.1",
     "lodash-es": "^4.17.21",
     "mdast-util-from-markdown": "^2.0.0",

@@ -1168,6 +1168,9 @@ importers:
       jotai:
         specifier: ^2.8.1
         version: 2.8.1(@types/react@18.3.1)(react@18.3.1)
+      jotai-location:
+        specifier: ^0.5.5
+        version: 0.5.5(jotai@2.8.1)
       jsonpath:
         specifier: ^1.1.1
         version: 1.1.1
@@ -20674,6 +20677,14 @@ packages:
 
   /jose@5.2.4:
     resolution: {integrity: sha512-6ScbIk2WWCeXkmzF6bRPmEuaqy1m8SbsRFMa/FLrSCkGIhj8OLVG/IH+XHVmNMx/KUo8cVWEE6oKR4dJ+S0Rkg==}
+    dev: false
+
+  /jotai-location@0.5.5(jotai@2.8.1):
+    resolution: {integrity: sha512-6QW/7W9IJHjhbn7gRgAw4sC30k0/G6JiC4uPlKi8ZPZGYk7R7r9PyMD2eVhL4XSxxag89JxS1iSyr6BIXsB4Sw==}
+    peerDependencies:
+      jotai: '>=1.11.0'
+    dependencies:
+      jotai: 2.8.1(@types/react@18.3.1)(react@18.3.1)
     dev: false
 
   /jotai@2.8.1(@types/react@18.3.1)(react@18.3.1):
