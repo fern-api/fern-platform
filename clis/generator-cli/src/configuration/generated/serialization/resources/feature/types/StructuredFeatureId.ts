@@ -18,6 +18,7 @@ export const StructuredFeatureId: core.serialization.Schema<
     "REQUEST_OPTIONS",
     "STREAMING",
     "TIMEOUTS",
+    "CUSTOM_CLIENT",
 ]);
 
 export declare namespace StructuredFeatureId {
@@ -29,5 +30,6 @@ export declare namespace StructuredFeatureId {
         | "RETRIES"
         | "REQUEST_OPTIONS"
         | "STREAMING"
-        | "TIMEOUTS";
+        | "TIMEOUTS"
+        | "CUSTOM_CLIENT";
 }

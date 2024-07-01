@@ -21,6 +21,7 @@ types:
       - REQUEST_OPTIONS
       - STREAMING
       - TIMEOUTS
+      - CUSTOM_CLIENT
 
   FeatureConfig:
     docs: |
