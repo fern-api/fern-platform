@@ -63,6 +63,7 @@ const nextConfig = {
             "https://api.segment.io",
             "https://browser-intake-datadoghq.com",
             "wss://api.getkoala.com",
+            "https://www.google-analytics.com",
         ];
 
         const scriptSrc = [
@@ -71,6 +72,7 @@ const nextConfig = {
             "'unsafe-inline'",
             "https://*.posthog.com",
             "https://cdn.segment.com",
+            "https://www.googletagmanager.com",
             ...DOCS_FILES_URLS,
         ];
 
