@@ -11,6 +11,7 @@ export class ReadmeGenerator {
     private ADVANCED_FEATURES: FernGeneratorCli.FeatureId[] = [
         FernGeneratorCli.StructuredFeatureId.Retries,
         FernGeneratorCli.StructuredFeatureId.Timeouts,
+        FernGeneratorCli.StructuredFeatureId.CustomClient,
     ];
 
     private readmeParser: ReadmeParser;
@@ -124,7 +125,7 @@ export class ReadmeGenerator {
     }: {
         feature: FernGeneratorCli.ReadmeFeature;
         heading?: "h2" | "h3";
-        maybeWriter?: Writer;
+        maybeWriter?: StringWriter;
     }): Block {
         const writer = maybeWriter ?? new StringWriter();
         writer.writeLine(`${heading === "h2" ? "##" : "###"} ${featureIDToTitle(feature.id)}`);
