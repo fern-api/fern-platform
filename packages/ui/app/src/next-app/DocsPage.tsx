@@ -4,6 +4,7 @@ import type { DefaultSeoProps, JsonLd } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { Redirect } from "next";
 import { ReactElement } from "react";
+import { CustomerAnalytics } from "../analytics/types";
 import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
@@ -47,6 +48,7 @@ export declare namespace DocsPage {
 
         seo: DefaultSeoProps;
         breadcrumb: JsonLd.BreadcrumbListSchema | undefined;
+        analytics: CustomerAnalytics | undefined;
 
         fallback: Record<string, any>;
     }
