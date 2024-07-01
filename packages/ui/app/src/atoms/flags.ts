@@ -13,6 +13,7 @@ export interface FeatureFlags {
     isDarkCodeEnabled: boolean;
     proxyShouldUseAppBuildwithfernCom: boolean;
     isImageZoomDisabled: boolean;
+    isSyndicate: boolean;
 }
 
 export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
@@ -27,6 +28,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isDarkCodeEnabled: false,
     proxyShouldUseAppBuildwithfernCom: false,
     isImageZoomDisabled: false,
+    isSyndicate: false,
 };
 
 export const FEATURE_FLAGS_ATOM = atom(DEFAULT_FEATURE_FLAGS);
