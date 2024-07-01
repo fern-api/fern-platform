@@ -1,89 +1,119 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { useEventCallback } from "@fern-ui/react-commons";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { atomWithLocation } from "jotai-location";
 import { atomWithStorage } from "jotai/utils";
-import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { useCallbackOne as useStableCallback } from "use-memo-one";
 import { capturePosthogEvent } from "../../analytics/posthog";
+import { CONTENT_HEIGHT_ATOM } from "../../atoms/layout";
+import { LOCATION_ATOM } from "../../atoms/location";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
+import { useAtomEffect } from "../../hooks/useAtomEffect";
 import { PlaygroundRequestFormState } from "../types";
-import { useWindowHeight } from "../useSplitPlane";
 
-export const PLAYGROUND_NODE_ID = atom<FernNavigation.NodeId | undefined>(undefined);
+const PLAYGROUND_IS_OPEN_ATOM = atom(false);
+
+const PLAYGROUND_HEIGHT_VALUE_ATOM = atom<number>(0);
+export const PLAYGROUND_HEIGHT_ATOM = atom(
+    (get) => {
+        const playgroundHeight = Math.max(get(PLAYGROUND_HEIGHT_VALUE_ATOM), 0);
+        const maxPlaygroundHeight = get(CONTENT_HEIGHT_ATOM);
+        return Math.min(maxPlaygroundHeight, playgroundHeight);
+    },
+    (_get, set, update: number) => {
+        set(PLAYGROUND_HEIGHT_VALUE_ATOM, update);
+    },
+);
+
+export const PLAYGROUND_NODE_ID = atom(
+    (get) => {
+        const playgroundParam = get(LOCATION_ATOM).searchParams?.get("playground");
+        if (playgroundParam == null) {
+            return get(PREV_PLAYGROUND_NODE_ID);
+        }
+        return FernNavigation.NodeId(playgroundParam);
+    },
+    (get, set, update: FernNavigation.NodeId | undefined) => {
+        const newLocation = {
+            ...get(LOCATION_ATOM),
+            searchParams: new URLSearchParams(get(LOCATION_ATOM).searchParams),
+        };
+        if (update != null) {
+            // set playground open
+            set(PLAYGROUND_IS_OPEN_ATOM, true);
+
+            newLocation.searchParams.set("playground", update);
+
+            // set playground height to be the window height - header height
+            const contentHeight = get(CONTENT_HEIGHT_ATOM);
+            set(PLAYGROUND_HEIGHT_ATOM, contentHeight);
+        } else {
+            newLocation.searchParams.delete("playground");
+            set(PLAYGROUND_IS_OPEN_ATOM, false);
+        }
+        set(LOCATION_ATOM, newLocation);
+    },
+);
 export const PREV_PLAYGROUND_NODE_ID = atom<FernNavigation.NodeId | undefined>(undefined);
-export const PLAYGROUND_HEIGHT_ATOM = atom<number>(0);
+
 export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, PlaygroundRequestFormState | undefined>>(
     "api-playground-selection-state-alpha",
     {},
 );
 
-const LOCATION_ATOM = atomWithLocation();
+export function usePlaygroundHeight(): number {
+    return useAtomValue(PLAYGROUND_HEIGHT_ATOM);
+}
+
+export function useSetPlaygroundHeight(): (height: number) => void {
+    return useSetAtom(PLAYGROUND_HEIGHT_ATOM);
+}
 
 export function usePlaygroundNodeId(): FernNavigation.NodeId | undefined {
     return useAtomValue(PLAYGROUND_NODE_ID);
 }
 
 export function useIsPlaygroundOpen(): boolean {
-    return useAtomValue(PLAYGROUND_NODE_ID) != null;
+    return useAtomValue(PLAYGROUND_IS_OPEN_ATOM);
 }
 
 export function useClosePlayground(): () => void {
-    const setNodeId = useSetAtom(PLAYGROUND_NODE_ID);
+    const [nodeId, setNodeId] = useAtom(PLAYGROUND_NODE_ID);
     const setPrevNodeId = useSetAtom(PREV_PLAYGROUND_NODE_ID);
-    const setLocation = useSetAtom(LOCATION_ATOM);
-    return useEventCallback(() => {
-        setLocation((currLocation) => {
-            if (currLocation.searchParams == null || !currLocation.searchParams.has("playground")) {
-                return currLocation;
-            }
-
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const prevNodeId = FernNavigation.NodeId(currLocation.searchParams.get("playground")!);
-            setPrevNodeId(prevNodeId);
-            setNodeId(undefined);
-            const newLocation = { ...currLocation, searchParams: new URLSearchParams(currLocation.searchParams) };
-            newLocation.searchParams.delete("playground");
-            return newLocation;
-        });
-    });
+    return useStableCallback(() => {
+        if (nodeId != null) {
+            setPrevNodeId(nodeId);
+        }
+        setNodeId(undefined);
+    }, [nodeId, setNodeId, setPrevNodeId]);
 }
 
 export function useOpenPlayground(): (nodeId?: FernNavigation.NodeId) => void {
     const { nodes } = useDocsContext();
-    const currNodeId = useAtomValue(PLAYGROUND_NODE_ID);
+    const setNodeId = useSetAtom(PLAYGROUND_NODE_ID);
     const prevNodeId = useAtomValue(PREV_PLAYGROUND_NODE_ID);
-    const router = useRouter();
-    return useEventCallback((nodeId?: FernNavigation.NodeId) => {
-        // TODO: "" implicitly means opne + empty state. This is a hack and we should rethink the UX.
-        const nextNodeId = nodeId ?? prevNodeId ?? FernNavigation.NodeId("");
-
-        if (currNodeId === nextNodeId) {
-            return;
-        }
-
-        void router.replace({ query: { ...router.query, playground: nextNodeId }, href: router.asPath }, undefined, {
-            shallow: true,
-            scroll: false,
-        });
-        const node = nodes.get(nextNodeId);
-        const apiNode = node != null && FernNavigation.isApiLeaf(node) ? node : undefined;
-
-        capturePosthogEvent("api_playground_opened", { apiNode });
-    });
+    return useStableCallback(
+        (nodeId?: FernNavigation.NodeId) => {
+            // TODO: "" implicitly means opne + empty state. This is a hack and we should rethink the UX.
+            const nextNodeId = nodeId ?? prevNodeId ?? FernNavigation.NodeId("");
+            setNodeId(nextNodeId);
+            const node = nodes.get(nextNodeId);
+            const apiNode = node != null && FernNavigation.isApiLeaf(node) ? node : undefined;
+            capturePosthogEvent("api_playground_opened", { apiNode });
+        },
+        [nodes, setNodeId, prevNodeId],
+    );
 }
 
 export function useTogglePlayground(): () => void {
     const isPlaygroundOpen = useIsPlaygroundOpen();
     const openPlayground = useOpenPlayground();
     const closePlayground = useClosePlayground();
-    return useEventCallback(() => {
+    return useStableCallback(() => {
         if (isPlaygroundOpen) {
             closePlayground();
         } else {
             openPlayground();
         }
-    });
+    }, [isPlaygroundOpen, openPlayground, closePlayground]);
 }
 
 export function usePlaygroundNode(): FernNavigation.NavigationNodeApiLeaf | undefined {
@@ -100,38 +130,13 @@ export function usePlaygroundNode(): FernNavigation.NavigationNodeApiLeaf | unde
 
 // this should only be invoked once
 export function useInitPlaygroundRouter(): void {
-    const router = useRouter();
-    const setPlaygroundNodeId = useSetAtom(PLAYGROUND_NODE_ID);
-    const setPlaygroundHeight = usePlaygroundHeight()[1];
-    useEffect(() => {
-        const playgroundNodeIdQueryParam =
-            typeof router.query.playground === "string"
-                ? FernNavigation.NodeId(decodeURIComponent(router.query.playground))
-                : undefined;
-        setPlaygroundNodeId(playgroundNodeIdQueryParam);
-        setPlaygroundHeight((currentHeight) => {
-            const windowHeight: number = window.innerHeight;
-            return currentHeight < windowHeight ? windowHeight : currentHeight;
-        });
-    }, [router.query.playground, setPlaygroundHeight, setPlaygroundNodeId]);
-}
-
-export function usePlaygroundHeight(): [number, Dispatch<SetStateAction<number>>] {
-    const { layout } = useDocsContext();
-    const headerHeight =
-        layout?.headerHeight == null
-            ? 60
-            : layout.headerHeight.type === "px"
-              ? layout.headerHeight.value
-              : layout.headerHeight.type === "rem"
-                ? layout.headerHeight.value * 16
-                : 60;
-    const [playgroundHeight, setHeight] = useAtom(PLAYGROUND_HEIGHT_ATOM);
-    const windowHeight = useWindowHeight();
-    const height =
-        windowHeight != null
-            ? Math.max(Math.min(windowHeight - headerHeight, playgroundHeight), windowHeight / 3)
-            : playgroundHeight;
-
-    return [height, setHeight];
+    useAtomEffect(
+        useStableCallback((get, set) => {
+            const nodeId = get(PLAYGROUND_NODE_ID);
+            if (nodeId != null) {
+                set(PLAYGROUND_IS_OPEN_ATOM, true);
+                set(PREV_PLAYGROUND_NODE_ID, nodeId);
+            }
+        }, []),
+    );
 }

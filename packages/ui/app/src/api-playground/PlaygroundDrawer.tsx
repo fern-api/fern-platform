@@ -8,6 +8,7 @@ import { motion, useAnimate, useMotionValue } from "framer-motion";
 import { useAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
+import { useWindowHeight } from "../atoms/window";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
@@ -31,6 +32,7 @@ import {
     useClosePlayground,
     useIsPlaygroundOpen,
     usePlaygroundHeight,
+    useSetPlaygroundHeight,
     useTogglePlayground,
 } from "./hooks/usePlaygroundNodeId";
 import {
@@ -39,7 +41,7 @@ import {
     PlaygroundRequestFormAuth,
     PlaygroundWebSocketRequestFormState,
 } from "./types";
-import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
+import { useVerticalSplitPane } from "./useSplitPlane";
 import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils";
 
 const EMPTY_ENDPOINT_FORM_STATE: PlaygroundEndpointRequestFormState = {
@@ -89,7 +91,8 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
     const layoutBreakpoint = useLayoutBreakpointValue();
-    const [height, setHeight] = usePlaygroundHeight();
+    const height = usePlaygroundHeight();
+    const setHeight = useSetPlaygroundHeight();
 
     const x = useMotionValue(layoutBreakpoint !== "mobile" ? height : windowHeight);
     const [scope, animate] = useAnimate();

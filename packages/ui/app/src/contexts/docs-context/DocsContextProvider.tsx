@@ -1,12 +1,14 @@
 import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { JsonLd } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
+import { useHydrateAtoms } from "jotai/utils";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import Script from "next/script";
 import { PropsWithChildren, useCallback, useMemo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
 import { renderSegmentSnippet } from "../../analytics/segment";
+import { DOCS_LAYOUT_ATOM } from "../../atoms/layout";
 import { DocsPage } from "../../next-app/DocsPage";
 import { getThemeColor } from "../../next-app/utils/getColorVariables";
 import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet";
@@ -30,6 +32,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const apis = useDeepCompareMemoize(pageProps.apis);
     const { resolvedTheme: theme } = useTheme();
+
+    useHydrateAtoms([[DOCS_LAYOUT_ATOM, layout]]);
 
     const { domain, basePath } = pageProps.baseUrl;
     const { currentTabIndex, currentVersionId } = pageProps.navigation;

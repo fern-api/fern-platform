@@ -64,7 +64,7 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
 
     const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
 
-    const [playgroundHeight] = usePlaygroundHeight();
+    const playgroundHeight = usePlaygroundHeight();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
 
     useInitPlaygroundRouter();
