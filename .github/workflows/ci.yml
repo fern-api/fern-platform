@@ -88,9 +88,15 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
       - name: Codegen
         run: |
-          pnpm fern generate --api fdr
+          pnpm fern generate --local --api fdr
           pnpm turbo --filter=@fern-platform/fdr codegen
 
       - name: Ensure no changes to git-tracked files
