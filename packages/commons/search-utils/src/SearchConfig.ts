@@ -16,6 +16,7 @@ export const REGISTRY_SERVICE = new FdrClient({
 const FEATURE_FLAGS = ["inkeep-enabled" as const];
 
 export type InkeepSharedSettings = DeepReadonly<{
+    replaceSearch: boolean;
     baseSettings: InkeepWidgetBaseSettings;
     aiChatSettings?: Partial<InkeepAIChatSettings>;
     searchSettings?: Partial<InkeepSearchSettings>;
@@ -39,16 +40,19 @@ export declare namespace SearchConfig {
     }
 
     interface Inkeep extends InkeepSharedSettings {
-        isAvailable: true;
-        type: "inkeep";
+        replaceSearch: boolean;
     }
 
     interface Algolia {
-        isAvailable: true;
-        type: "algolia";
         appId: string;
         searchApiKey: Unversioned | Versioned;
         index: string;
+    }
+
+    interface Available {
+        isAvailable: true;
+        inkeep?: Inkeep;
+        algolia: Algolia;
     }
 
     interface Unavailable {
@@ -56,31 +60,15 @@ export declare namespace SearchConfig {
     }
 }
 
-export type SearchConfig = SearchConfig.Inkeep | SearchConfig.Algolia | SearchConfig.Unavailable;
+export type SearchConfig = SearchConfig.Available | SearchConfig.Unavailable;
 
 export interface SearchRequest {
     searchInfo: Algolia.SearchInfo | undefined;
 }
 
-export async function getSearchConfig(domain: string, { searchInfo }: SearchRequest): Promise<SearchConfig> {
-    try {
-        const config = await getAll<EdgeConfigResponse>(FEATURE_FLAGS);
-        const maybeInkeep = config["inkeep-enabled"]?.[domain];
-
-        if (maybeInkeep?.baseSettings.integrationId != null) {
-            return {
-                isAvailable: true,
-                type: "inkeep",
-                ...maybeInkeep,
-            };
-        }
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("Error fetching edge config", e);
-    }
-
+async function getAlgoliaSearchConfig({ searchInfo }: SearchRequest): Promise<SearchConfig.Algolia | undefined> {
     if (typeof searchInfo !== "object" || searchInfo.type === "legacyMultiAlgoliaIndex") {
-        return { isAvailable: false };
+        return undefined;
     }
 
     const algoliaAppId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
@@ -95,12 +83,10 @@ export async function getSearchConfig(domain: string, { searchInfo }: SearchRequ
         });
 
         if (!resp.ok) {
-            return { isAvailable: false };
+            return undefined;
         }
 
         return {
-            isAvailable: true,
-            type: "algolia",
             appId: algoliaAppId,
             searchApiKey: {
                 type: "unversioned",
@@ -117,19 +103,17 @@ export async function getSearchConfig(domain: string, { searchInfo }: SearchRequ
             });
 
             if (!resp.ok) {
-                return { isAvailable: false };
+                return undefined;
             }
 
             values[versionId] = resp.body.searchApiKey;
         }
 
         if (Object.keys(values).length === 0) {
-            return { isAvailable: false };
+            return undefined;
         }
 
         return {
-            isAvailable: true,
-            type: "algolia",
             appId: algoliaAppId,
             searchApiKey: {
                 type: "versioned",
@@ -139,5 +123,30 @@ export async function getSearchConfig(domain: string, { searchInfo }: SearchRequ
         };
     }
 
-    return { isAvailable: false };
+    return undefined;
+}
+
+export async function getSearchConfig(domain: string, searchRequest: SearchRequest): Promise<SearchConfig> {
+    const algolia = await getAlgoliaSearchConfig(searchRequest);
+    if (algolia == null) {
+        return { isAvailable: false };
+    }
+
+    try {
+        const config = await getAll<EdgeConfigResponse>(FEATURE_FLAGS);
+        const maybeInkeep = config["inkeep-enabled"]?.[domain];
+
+        if (maybeInkeep?.baseSettings.integrationId != null) {
+            return {
+                isAvailable: true,
+                algolia,
+                inkeep: maybeInkeep,
+            };
+        }
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Error fetching edge config", e);
+    }
+
+    return { isAvailable: true, algolia };
 }
