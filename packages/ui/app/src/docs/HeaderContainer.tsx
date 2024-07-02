@@ -47,31 +47,29 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen,
     return (
         <header id="fern-header">
             <div
-                className="fixed inset-x-0 top-0 z-30 shadow-none backdrop-blur-lg transition-shadow data-[border=show]:dark:shadow-header-dark lg:backdrop-blur h-header-height-real lg:h-header-height"
+                className="fern-header-container width-before-scroll-bar"
                 data-border={
                     isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         ? "show"
                         : "hide"
                 }
             >
-                <div className="absolute inset-0 width-before-scroll-bar">
-                    <div className="bg-header border-concealed h-header-height-real border-b">
-                        {renderBackground()}
-                        <Header
-                            className="mx-auto max-w-page-width"
-                            logoHeight={logoHeight}
-                            logoHref={logoHref}
-                            navbarLinks={navbarLinks}
-                            isMobileSidebarOpen={isMobileSidebarOpen}
-                            openMobileSidebar={openMobileSidebar}
-                            closeMobileSidebar={closeMobileSidebar}
-                            showSearchBar={layout?.searchbarPlacement === "HEADER"}
-                        />
-                    </div>
-                    {tabs.length > 0 && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true && (
-                        <HeaderTabs />
-                    )}
+                <div className="bg-header border-concealed h-header-height-real border-b">
+                    {renderBackground()}
+                    <Header
+                        className="mx-auto max-w-page-width"
+                        logoHeight={logoHeight}
+                        logoHref={logoHref}
+                        navbarLinks={navbarLinks}
+                        isMobileSidebarOpen={isMobileSidebarOpen}
+                        openMobileSidebar={openMobileSidebar}
+                        closeMobileSidebar={closeMobileSidebar}
+                        showSearchBar={layout?.searchbarPlacement === "HEADER"}
+                    />
                 </div>
+                {tabs.length > 0 && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true && (
+                    <HeaderTabs />
+                )}
             </div>
         </header>
     );

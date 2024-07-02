@@ -40,6 +40,7 @@ module.exports = {
                 "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
                 "vh-minus-header-padded": "calc(100vh - var(--spacing-header-height) - 2rem)",
                 icon: "15px",
+                "layout-padding": "var(--spacing-layout-padding)",
             },
             flex: {
                 2: "2 2 0%",

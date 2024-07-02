@@ -9,6 +9,7 @@ const CSS_VARIABLES = {
     SPACING_HEADER_HEIGHT: "--spacing-header-height",
     SPACING_HEADER_HEIGHT_PADDED: "--spacing-header-height-padded",
     SPACING_HEADER_HEIGHT_REAL: "--spacing-header-height-real",
+    SPACING_LAYOUT_PADDING: "--spacing-layout-padding",
 };
 
 type Breakpoint = "root" | "max-lg";
@@ -79,6 +80,7 @@ export function getLayoutVariables(
             [CSS_VARIABLES.SPACING_HEADER_HEIGHT]: layout?.disableHeader ? "0px" : headerHeight,
             [CSS_VARIABLES.SPACING_HEADER_HEIGHT_PADDED]: layout?.disableHeader ? "1rem" : headerHeightPadded,
             [CSS_VARIABLES.SPACING_HEADER_HEIGHT_REAL]: `${headerHeightRem}rem`,
+            [CSS_VARIABLES.SPACING_LAYOUT_PADDING]: "12px",
         },
         "max-lg": {
             [CSS_VARIABLES.SPACING_HEADER_HEIGHT]: headerHeight,

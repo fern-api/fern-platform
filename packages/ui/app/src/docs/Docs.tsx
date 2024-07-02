@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
+import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 import { memo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
@@ -28,6 +29,7 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
     const { layout, colors } = useDocsContext();
     const sidebar = useSidebarNodes();
+    const { resolvedTheme: theme = "light" } = useTheme();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
     const { resolvedPath } = useNavigationContext();
 
@@ -41,7 +43,7 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
 
     return (
         <PlaygroundContextProvider>
-            <div id="docs-content" className="relative flex min-h-screen flex-1 flex-col z-0">
+            <div id="docs-content" className="fern-container">
                 {(layout?.disableHeader !== true || ["mobile", "sm", "md"].includes(layoutBreakpoint)) && (
                     <HeaderContainer
                         isMobileSidebarOpen={isMobileSidebarOpen}
@@ -68,9 +70,10 @@ export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs
                             </style>
                             <Sidebar
                                 className={clsx(
-                                    layout?.disableHeader !== true
-                                        ? "fern-sidebar-container bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block"
-                                        : "fern-sidebar-container bg-sidebar border-concealed fixed hidden h-vh-minus-header w-sidebar-width lg:block",
+                                    layout?.disableHeader ||
+                                        colors[theme as "light" | "dark"]?.sidebarBackground != null
+                                        ? "fern-sidebar-container bg-sidebar border-concealed fixed hidden top-header-height h-vh-minus-header w-sidebar-width lg:block"
+                                        : "fern-sidebar-container bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block",
                                 )}
                                 logoHeight={logoHeight}
                                 logoHref={logoHref}

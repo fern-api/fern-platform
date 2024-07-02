@@ -1,0 +1,13 @@
+@layer components {
+    .fern-container {
+        @apply relative flex min-h-screen flex-1 flex-col z-0;
+        @apply p-layout-padding;
+    }
+
+    .fern-header-container {
+        @apply fixed inset-x-0 top-0 z-30 shadow-none backdrop-blur-lg h-header-height-real lg:h-header-height;
+        @apply data-[border=show]:dark:shadow-header-dark lg:backdrop-blur transition-shadow;
+
+        @apply p-layout-padding;
+    }
+}
