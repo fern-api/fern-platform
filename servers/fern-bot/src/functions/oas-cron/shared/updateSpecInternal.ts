@@ -1,13 +1,7 @@
+import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
 import { generateChangelog, generateCommitMessage } from "@libs/cohere";
 import { execFernCli } from "@libs/fern";
-import {
-    DEFAULT_REMOTE_NAME,
-    Repository,
-    cloneRepo,
-    configureGit,
-    createOrUpdatePullRequest,
-    getOrUpdateBranch,
-} from "@libs/github";
+import { DEFAULT_REMOTE_NAME, Repository, cloneRepo, configureGit } from "@libs/github";
 import { Octokit } from "octokit";
 
 const OPENAPI_UPDATE_BRANCH = "fern/update-api-specs";
@@ -61,5 +55,7 @@ export async function updateSpecInternal(
             repository.full_name,
             OPENAPI_UPDATE_BRANCH,
         );
+    } else {
+        console.log("No changes detected, skipping PR creation");
     }
 }

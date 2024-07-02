@@ -1,12 +1,6 @@
+import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
 import { execFernCli } from "@libs/fern";
-import {
-    DEFAULT_REMOTE_NAME,
-    cloneRepo,
-    configureGit,
-    createOrUpdatePullRequest,
-    getOrUpdateBranch,
-    type Repository,
-} from "@libs/github/utilities";
+import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit, type Repository } from "@libs/github/utilities";
 import { Octokit } from "octokit";
 
 const GENERATOR_UPDATE_BRANCH = "fern/update-generators";
@@ -25,8 +19,8 @@ export async function updateVersionInternal(
     await getOrUpdateBranch(git, originDefaultBranch, GENERATOR_UPDATE_BRANCH);
 
     try {
-        // Run API update command which will pull the new spec from the specified
-        // origin and write it to disk we can then commit it to github from there.
+        // Run fern CLI upgrade as well as generator upgrade which will go through each group in gen.yml
+        // and upgrade the generator version to the latest, non-RC version tagged in DockerHub.
         await execFernCli("upgrade", fullRepoPath);
         await execFernCli("generator upgrade", fullRepoPath);
     } catch (error) {
@@ -58,11 +52,14 @@ export async function updateVersionInternal(
                 body: `## Automated Upgrade PR
 <br/>
 ---
-This Pull Request has been auto-generated as part of Fern's release process.`,
+This pull-request upgrades the Fern CLI and the generators that you subscribe to. To understand 
+what's changed, read our changelogs [here](https://github.com/fern-api/fern?tab=readme-ov-file#-generators).`,
             },
             repository.full_name,
             repository.full_name,
             GENERATOR_UPDATE_BRANCH,
         );
+    } else {
+        console.log("No changes detected, skipping PR creation");
     }
 }
