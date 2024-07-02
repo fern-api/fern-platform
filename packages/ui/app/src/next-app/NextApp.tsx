@@ -1,7 +1,7 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { DefaultSeo } from "@fern-ui/next-seo";
-import { Provider as JotaiProvider, createStore } from "jotai";
+import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import type { Router } from "next/router";
@@ -9,6 +9,7 @@ import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
+import { store } from "../atoms/store";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
 import { IsReadyProvider } from "../contexts/useIsReady";
@@ -17,8 +18,6 @@ import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
-
-const store = createStore();
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props | undefined>): ReactElement {
     useEffect(() => {
