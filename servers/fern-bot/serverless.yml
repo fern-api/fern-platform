@@ -104,13 +104,6 @@ stepFunctions:
         - schedule:
             rate: cron(0 0 * * ? *)
             enabled: true
-          input:
-            shouldUpdateGenerators: false
-        - schedule:
-            rate: cron(0 1 ? * MON *)
-            enabled: true
-          input:
-            shouldUpdateGenerators: false
       definition:
         StartAt: UpdateRepoDataInS3
         States:
