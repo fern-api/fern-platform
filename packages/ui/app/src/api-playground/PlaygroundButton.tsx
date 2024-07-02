@@ -1,10 +1,13 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
+import { useAtomValue } from "jotai";
 import { FC } from "react";
-import { usePlaygroundContext } from "./PlaygroundContext";
+import { HAS_PLAYGROUND_ATOM } from "../atoms/playground";
+import { useSetAndOpenPlayground } from "./PlaygroundContext";
 
 export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf }> = ({ state }) => {
-    const { hasPlayground, setSelectionStateAndOpen } = usePlaygroundContext();
+    const setSelectionStateAndOpen = useSetAndOpenPlayground();
+    const hasPlayground = useAtomValue(HAS_PLAYGROUND_ATOM);
 
     if (!hasPlayground) {
         return null;

@@ -3,13 +3,14 @@ import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { memo } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
+import { useFeatureFlags } from "../atoms/flags";
+import { useSidebarNodes } from "../atoms/navigation";
+import { useIsMobileSidebarOpen, useMessageHandler } from "../atoms/sidebar";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { useIsMobileSidebarOpen, useMessageHandler } from "../sidebar/atom";
 import { DocsMainContent } from "./DocsMainContent";
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -25,7 +26,8 @@ export const SearchDialog = dynamic(() => import("../search/SearchDialog").then(
 });
 
 export const Docs: React.FC<DocsProps> = memo<DocsProps>(function UnmemoizedDocs({ logoHeight, logoHref }) {
-    const { layout, colors, sidebar } = useDocsContext();
+    const { layout, colors } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const { isInlineFeedbackEnabled } = useFeatureFlags();
     const { resolvedPath } = useNavigationContext();
 

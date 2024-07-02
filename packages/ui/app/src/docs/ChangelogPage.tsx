@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import { Fragment, ReactElement } from "react";
+import { useSidebarNodes } from "../atoms/navigation";
 import { FernLink } from "../components/FernLink";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
-    const { sidebar } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const fullWidth = sidebar == null;
     const overview =
         resolvedPath.node.overviewPageId != null ? resolvedPath.pages[resolvedPath.node.overviewPageId] : undefined;

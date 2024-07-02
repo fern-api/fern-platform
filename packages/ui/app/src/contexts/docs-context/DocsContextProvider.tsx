@@ -1,12 +1,17 @@
 import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { JsonLd } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
+import { useHydrateAtoms } from "jotai/utils";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import Script from "next/script";
 import { PropsWithChildren, useCallback, useMemo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
 import { renderSegmentSnippet } from "../../analytics/segment";
+import { FEATURE_FLAGS_ATOM } from "../../atoms/flags";
+import { DOCS_LAYOUT_ATOM } from "../../atoms/layout";
+import { SIDEBAR_ROOT_NODE } from "../../atoms/navigation";
+import { store } from "../../atoms/store";
 import { DocsPage } from "../../next-app/DocsPage";
 import { getThemeColor } from "../../next-app/utils/getColorVariables";
 import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet";
@@ -17,6 +22,7 @@ export declare namespace DocsContextProvider {
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ children, ...pageProps }) => {
+    const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
     const files = useDeepCompareMemoize(pageProps.files);
     const layout = useDeepCompareMemoize(pageProps.layout);
     const colors = useDeepCompareMemoize(pageProps.colors);
@@ -31,6 +37,18 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const apis = useDeepCompareMemoize(pageProps.apis);
     const analytics = useDeepCompareMemoize(pageProps.analytics);
     const { resolvedTheme: theme } = useTheme();
+
+    useHydrateAtoms(
+        [
+            [DOCS_LAYOUT_ATOM, layout],
+            [SIDEBAR_ROOT_NODE, sidebar],
+            [FEATURE_FLAGS_ATOM, featureFlags],
+        ],
+        {
+            store,
+            dangerouslyForceHydrate: true,
+        },
+    );
 
     const { domain, basePath } = pageProps.baseUrl;
     const { currentTabIndex, currentVersionId } = pageProps.navigation;

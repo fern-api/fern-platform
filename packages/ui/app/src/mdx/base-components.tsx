@@ -12,11 +12,11 @@ import {
     useMemo,
 } from "react";
 import Zoom from "react-medium-image-zoom";
+import { useFeatureFlags } from "../atoms/flags";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useNavigationContext } from "../contexts/navigation-context";
 
 /**

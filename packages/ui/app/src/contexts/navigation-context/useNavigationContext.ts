@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useFeatureFlags } from "../FeatureFlagContext";
+import { useFeatureFlags } from "../../atoms/flags";
 import { useIsReady } from "../useIsReady";
 import { NavigationContext, type NavigationContextValue } from "./NavigationContext";
 

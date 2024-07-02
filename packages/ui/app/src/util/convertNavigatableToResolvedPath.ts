@@ -3,7 +3,7 @@ import { isNonNullish } from "@fern-ui/core-utils";
 import grayMatter from "gray-matter";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { captureSentryError } from "../analytics/sentry";
-import { FeatureFlags } from "../contexts/FeatureFlagContext";
+import { FeatureFlags } from "../atoms/flags";
 import {
     FernDocsFrontmatter,
     FernSerializeMdxOptions,

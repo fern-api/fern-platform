@@ -1,8 +1,8 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useState } from "react";
+import { useFeatureFlags } from "../../atoms/flags";
 import { HorizontalOverflowMask } from "../../commons/HorizontalOverflowMask";
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
 import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 

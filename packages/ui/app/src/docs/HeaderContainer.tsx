@@ -1,9 +1,9 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { FC, useCallback } from "react";
+import { useCloseMobileSidebar, useOpenMobileSidebar } from "../atoms/sidebar";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
-import { useCloseMobileSidebar, useOpenMobileSidebar } from "../sidebar/atom";
 import { BgImageGradient } from "./BgImageGradient";
 import { Header } from "./Header";
 import { HeaderTabs } from "./HeaderTabs";

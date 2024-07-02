@@ -3,9 +3,9 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useSetAtom } from "jotai";
 import { memo } from "react";
+import { useOpenSearchDialog } from "../atoms/sidebar";
 import { INKEEP_TRIGGER } from "../search/inkeep/InkeepCustomTrigger";
 import { useSearchConfig } from "../services/useSearchService";
-import { useOpenSearchDialog } from "./atom";
 
 export declare namespace SidebarSearchBar {
     export interface Props {
