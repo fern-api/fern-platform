@@ -1,5 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { assertNever } from "@fern-api/fdr-sdk/src/utils";
+import { assertNever } from "../../util";
 
 export type ReferencedTypes = Record<APIV1Read.TypeId, APIV1Read.TypeDefinition>;
 
