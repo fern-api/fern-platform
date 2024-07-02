@@ -9,25 +9,28 @@ export function useAlgoliaSearchClient(): [SearchClient, index: string] | undefi
     const [searchConfig] = useSearchConfig();
 
     return useMemo(() => {
-        if (!searchConfig.isAvailable || searchConfig.type !== "algolia") {
+        if (!searchConfig.isAvailable) {
             return;
         }
 
-        if (searchConfig.searchApiKey.type === "unversioned") {
-            return [algolia(searchConfig.appId, searchConfig.searchApiKey.value), searchConfig.index];
+        if (searchConfig.algolia.searchApiKey.type === "unversioned") {
+            return [
+                algolia(searchConfig.algolia.appId, searchConfig.algolia.searchApiKey.value),
+                searchConfig.algolia.index,
+            ];
         }
 
-        if (searchConfig.searchApiKey.type === "versioned") {
+        if (searchConfig.algolia.searchApiKey.type === "versioned") {
             assertNonNullish(
                 currentVersionId,
                 "Inconsistent State: Received search info is versioned but docs are unversioned.",
             );
-            const searchApiKey = searchConfig.searchApiKey.values[currentVersionId];
+            const searchApiKey = searchConfig.algolia.searchApiKey.values[currentVersionId];
             assertNonNullish(
                 searchApiKey,
                 `Inconsistent State: Did not receive index segment for version "${currentVersionId}". This may indicate a backend bug.`,
             );
-            return [algolia(searchConfig.appId, searchApiKey), searchConfig.index];
+            return [algolia(searchConfig.algolia.appId, searchApiKey), searchConfig.algolia.index];
         }
         return;
     }, [currentVersionId, searchConfig]);
