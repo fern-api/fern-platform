@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { SimpleGit } from "simple-git";
 import { DEFAULT_REMOTE_NAME } from "./constants";
 
