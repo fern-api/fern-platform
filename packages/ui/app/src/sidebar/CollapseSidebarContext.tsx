@@ -16,7 +16,7 @@ import {
     useState,
 } from "react";
 import urljoin from "url-join";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useSidebarNodes } from "../atoms/navigation";
 import { useActiveValueListeners } from "../hooks/useActiveValueListeners";
 
 interface CollapseSidebarContextValue {
@@ -53,7 +53,7 @@ export const CollapseSidebarProvider: FC<
     }>
 > = ({ children, scrollRef: scrollContainerRef }) => {
     const router = useRouter();
-    const { sidebar } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const nodeCollector = useMemo(() => new NodeCollector(sidebar), [sidebar]);
     const [selectedNodeId, setSelectedNodeId] = useState(() => nodeCollector.slugMap.get(toSlug(router.asPath))?.id);
 

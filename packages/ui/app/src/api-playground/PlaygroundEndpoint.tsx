@@ -7,7 +7,7 @@ import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } fro
 import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
+import { useFeatureFlags } from "../atoms/flags";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import {
     ResolvedEndpointDefinition,

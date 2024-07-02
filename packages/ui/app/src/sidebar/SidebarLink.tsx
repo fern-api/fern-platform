@@ -20,10 +20,10 @@ import {
     useRef,
 } from "react";
 import { ChevronDown } from "react-feather";
+import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "../atoms/sidebar";
 import { FernLink } from "../components/FernLink";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { slugToHref } from "../util/slugToHref";
-import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 
 interface SidebarSlugLinkProps {
     nodeId: FernNavigation.NodeId;

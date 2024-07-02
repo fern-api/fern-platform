@@ -1,4 +1,5 @@
-import { createContext, useContext } from "react";
+import { useAtomValue } from "jotai";
+import { atom } from "jotai/vanilla";
 
 export interface FeatureFlags {
     isApiPlaygroundEnabled: boolean;
@@ -28,8 +29,8 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isImageZoomDisabled: false,
 };
 
-export const FeatureFlagContext = createContext<FeatureFlags>(DEFAULT_FEATURE_FLAGS);
+export const FEATURE_FLAGS_ATOM = atom(DEFAULT_FEATURE_FLAGS);
 
 export function useFeatureFlags(): FeatureFlags {
-    return useContext(FeatureFlagContext);
+    return useAtomValue(FEATURE_FLAGS_ATOM);
 }

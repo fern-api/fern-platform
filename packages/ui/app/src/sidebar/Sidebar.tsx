@@ -3,6 +3,8 @@ import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
 import { Dialog, Transition } from "@headlessui/react";
 import { clsx as cn } from "clsx";
 import { Fragment, memo, useRef } from "react";
+import { useSidebarNodes } from "../atoms/navigation";
+import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "../atoms/sidebar";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useIsScrolled } from "../docs/useIsScrolled";
@@ -11,7 +13,6 @@ import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarTabButton } from "./SidebarTabButton";
-import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "./atom";
 import { SidebarRootNode } from "./nodes/SidebarRootNode";
 
 export interface SidebarProps {
@@ -21,7 +22,8 @@ export interface SidebarProps {
 }
 
 const SidebarInner = memo<SidebarProps>(function SidebarInner({ logoHeight, logoHref, showSearchBar }) {
-    const { layout, tabs, currentTabIndex, sidebar } = useDocsContext();
+    const { layout, tabs, currentTabIndex } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const scrollRef = useRef<HTMLDivElement>(null);
     const isScrolled = useIsScrolled(scrollRef);
     const layoutBreakpoint = useLayoutBreakpointValue();

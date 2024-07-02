@@ -3,7 +3,7 @@ import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
-import { FeatureFlags } from "../contexts/FeatureFlagContext";
+import { FeatureFlags } from "../atoms/flags";
 import { FernSerializeMdxOptions, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
 import { ApiTypeResolver } from "./ApiTypeResolver";
 import { resolveCodeSnippets } from "./resolveCodeSnippets";

@@ -1,19 +1,28 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-// import { Portal, Transition } from "@headlessui/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { motion, useAnimate, useMotionValue } from "framer-motion";
 import { useAtom } from "jotai";
 import { mapValues } from "lodash-es";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
+import { Dispatch, ReactElement, SetStateAction, useCallback, useEffect, useMemo } from "react";
+import { useFlattenedApis } from "../atoms/apis";
+import { useSidebarNodes } from "../atoms/navigation";
+import {
+    PLAYGROUND_FORM_STATE_ATOM,
+    useClosePlayground,
+    useHasPlayground,
+    useIsPlaygroundOpen,
+    usePlaygroundHeight,
+    usePlaygroundNode,
+    useSetPlaygroundHeight,
+    useTogglePlayground,
+} from "../atoms/playground";
 import { useWindowHeight } from "../atoms/window";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import {
-    FlattenedRootPackage,
     ResolvedApiDefinition,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointCall,
@@ -22,19 +31,10 @@ import {
     isEndpoint,
     isWebSocket,
 } from "../resolver/types";
-import { usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
-import {
-    PLAYGROUND_FORM_STATE_ATOM,
-    useClosePlayground,
-    useIsPlaygroundOpen,
-    usePlaygroundHeight,
-    useSetPlaygroundHeight,
-    useTogglePlayground,
-} from "./hooks/usePlaygroundNodeId";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
@@ -64,16 +64,14 @@ const EMPTY_WEBSOCKET_FORM_STATE: PlaygroundWebSocketRequestFormState = {
     messages: {},
 };
 
-interface PlaygroundDrawerProps {
-    apis: Record<string, FlattenedRootPackage>;
-}
-
-export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
-    const { selectionState, hasPlayground } = usePlaygroundContext();
+export function PlaygroundDrawer(): ReactElement | null {
     const windowHeight = useWindowHeight();
     const collapsePlayground = useClosePlayground();
+    const hasPlayground = useHasPlayground();
+    const selectionState = usePlaygroundNode();
+    const apis = useFlattenedApis();
 
-    const { sidebar } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
 
     const matchedSection = selectionState != null ? apis[selectionState.apiDefinitionId] : undefined;
@@ -354,7 +352,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             </Dialog.Root>
         </FernErrorBoundary>
     );
-};
+}
 
 function getInitialEndpointRequestFormState(
     auth: APIV1Read.ApiAuth | null | undefined,

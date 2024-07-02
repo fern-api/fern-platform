@@ -1,12 +1,12 @@
 import { useSetAtom } from "jotai";
 import { PropsWithChildren, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useSidebarNodes } from "../atoms/navigation";
+import { SEARCH_DIALOG_OPEN_ATOM } from "../atoms/sidebar";
 import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
-import { SEARCH_DIALOG_OPEN_ATOM } from "../sidebar/atom";
 import { SearchMobileHits } from "./SearchHits";
 import { AlgoliaSearchDialog } from "./algolia/AlgoliaSearchDialog";
 import { SearchMobileBox } from "./algolia/SearchBox";
@@ -53,7 +53,7 @@ export declare namespace SearchSidebar {
 }
 
 export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = ({ children }) => {
-    const { sidebar } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const { activeVersion } = useNavigationContext();
     const placeholder = useMemo(
         () => createSearchPlaceholderWithVersion(activeVersion, sidebar),

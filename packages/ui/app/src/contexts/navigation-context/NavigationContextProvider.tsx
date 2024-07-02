@@ -6,10 +6,11 @@ import fastdom from "fastdom";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import { useFeatureFlags } from "../../atoms/flags";
+import { useNavigationNodes } from "../../atoms/navigation";
 import { getNextSeoProps } from "../../next-app/utils/getSeoProp";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
-import { useFeatureFlags } from "../FeatureFlagContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
 
@@ -97,8 +98,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     domain,
     basePath,
 }) => {
-    const docsContext = useDocsContext();
-    const { nodes, versions, currentVersionId } = docsContext;
+    const { versions, currentVersionId } = useDocsContext();
+    const nodes = useNavigationNodes();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const router = useRouter();
 

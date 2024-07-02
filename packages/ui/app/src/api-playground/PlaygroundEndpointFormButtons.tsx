@@ -2,10 +2,10 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
+import { useClosePlayground } from "../atoms/playground";
 import { FernLink } from "../components/FernLink";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { ResolvedEndpointDefinition } from "../resolver/types";
-import { useClosePlayground } from "./hooks/usePlaygroundNodeId";
 
 interface PlaygroundEndpointFormButtonsProps {
     endpoint: ResolvedEndpointDefinition;

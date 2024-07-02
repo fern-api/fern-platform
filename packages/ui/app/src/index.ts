@@ -1,7 +1,7 @@
 export { Stream } from "./api-playground/Stream";
 export type { ProxyRequest, ProxyResponse } from "./api-playground/types";
-export { DEFAULT_FEATURE_FLAGS } from "./contexts/FeatureFlagContext";
-export type { FeatureFlags } from "./contexts/FeatureFlagContext";
+export { DEFAULT_FEATURE_FLAGS } from "./atoms/flags";
+export type { FeatureFlags } from "./atoms/flags";
 export { LocalPreviewContextProvider } from "./contexts/LocalPreviewContext";
 export { useSetThemeColors } from "./docs/ThemeProvider";
 export * from "./next-app/DocsPage";

@@ -1,8 +1,8 @@
 import { useAtomValue } from "jotai";
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
+import { useFeatureFlags } from "../../atoms/flags";
+import { FERN_STREAM_ATOM } from "../../atoms/stream";
 import { useNavigationContext, useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
-import { FERN_STREAM_ATOM } from "../../sidebar/atom";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 
