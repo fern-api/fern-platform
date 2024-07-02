@@ -142,6 +142,7 @@ export async function getDocsPageProps(
         ),
         breadcrumb: undefined,
         fallback: {},
+        analytics: undefined,
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

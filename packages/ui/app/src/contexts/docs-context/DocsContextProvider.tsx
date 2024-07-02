@@ -34,6 +34,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const searchInfo = useDeepCompareMemoize(pageProps.search);
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const apis = useDeepCompareMemoize(pageProps.apis);
+    const analytics = useDeepCompareMemoize(pageProps.analytics);
     const { resolvedTheme: theme } = useTheme();
 
     useHydrateAtoms([
@@ -146,7 +147,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
             <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(domain) }} />
-            <CustomerAnalytics domain={domain} />
+            <CustomerAnalytics {...analytics} />
             {pageProps.breadcrumb != null && pageProps.breadcrumb.itemListElement.length > 0 && (
                 <JsonLd.Breadcrumb breadcrumbList={pageProps.breadcrumb} />
             )}

@@ -46,24 +46,6 @@ response, err := client.Chat(
 )
 \`\`\`
 
-## Timeouts
-
-Setting a timeout for each individual request is as simple as
-using the standard \`context\` library. Setting a one second timeout
-for an individual API call looks like the following:
-
-\`\`\`go
-ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-defer cancel()
-
-response, err := client.Chat(
-	ctx,
-	&fern.ChatRequest{
-		Message: "Can you give me a global market overview of solar panels?",
-	},
-)
-\`\`\`
-
 ## Errors
 
 Structured error types are returned from API calls that return non-success status codes.
@@ -83,6 +65,26 @@ if err != nil {
 	}
 	return nil, err
 }
+\`\`\`
+
+## Advanced
+
+### Timeouts
+
+Setting a timeout for each individual request is as simple as
+using the standard \`context\` library. Setting a one second timeout
+for an individual API call looks like the following:
+
+\`\`\`go
+ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+defer cancel()
+
+response, err := client.Chat(
+	ctx,
+	&fern.ChatRequest{
+		Message: "Can you give me a global market overview of solar panels?",
+	},
+)
 \`\`\`
 
 ## Contributing
