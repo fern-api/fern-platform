@@ -7,3 +7,4 @@ export * from "./NavigationNodePageLeaf";
 export * from "./NavigationNodeSection";
 export * from "./NavigationNodeSectionOverview";
 export * from "./NavigationNodeWithMetadata";
+export * from "./NavigationNodeWithRedirect";

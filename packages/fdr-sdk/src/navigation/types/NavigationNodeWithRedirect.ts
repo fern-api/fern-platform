@@ -4,8 +4,8 @@ import { NavigationNode } from "./NavigationNode";
 /**
  * Navigation nodes that extend WithRedirect
  */
-export type NavigationNodeWithMetadata = Extract<NavigationNode, FernNavigation.WithRedirect>;
+export type NavigationNodeWithRedirect = Extract<NavigationNode, FernNavigation.WithRedirect>;
 
-export function hasRedirect(node: NavigationNode): node is NavigationNodeWithMetadata {
-    return typeof (node as NavigationNodeWithMetadata).pointsTo === "string";
+export function hasRedirect(node: NavigationNode): node is NavigationNodeWithRedirect {
+    return typeof (node as NavigationNodeWithRedirect).pointsTo === "string";
 }
