@@ -7,6 +7,7 @@ import {
     visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
+import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
 import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
@@ -603,11 +604,13 @@ export class AlgoliaSearchRecordGenerator {
                     return;
                 }
 
+                const frontmatter = getFrontmatter(md);
+
                 records.push(
                     compact({
                         type: "page-v3",
                         objectID: uuid(),
-                        title: node.title,
+                        title: frontmatter.title ?? node.title,
                         content: truncateToBytes(md, 10_000 - 1),
                         breadcrumbs: toBreadcrumbs(parents),
                         slug: node.slug,
@@ -1029,4 +1032,17 @@ function getSubpackagesMap({
             return [id, subpackage];
         }),
     );
+}
+
+interface Frontmatter {
+    title?: string; // overrides sidebar title
+}
+
+export function getFrontmatter(content: string): Frontmatter {
+    try {
+        const gm = grayMatter(content);
+        return gm.data;
+    } catch (e) {
+        return {};
+    }
 }
