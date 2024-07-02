@@ -57,7 +57,7 @@ export async function resolveCodeSnippets(
 
     if (example.codeExamples.typescriptSdk != null) {
         toRet.push({
-            name: alwaysEnableJavaScriptFetch ? "JavaScript SDK" : undefined,
+            name: alwaysEnableJavaScriptFetch ? `${useJavaScriptAsTypeScript ? "Java" : "Type"}Script SDK` : undefined,
             language: useJavaScriptAsTypeScript ? "javascript" : "typescript",
             install: example.codeExamples.typescriptSdk.install,
             code: example.codeExamples.typescriptSdk.client,
