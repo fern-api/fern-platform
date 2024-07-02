@@ -25,7 +25,6 @@ export async function cloneRepository({
     await git.clone(cloneUrl, ".");
 
     return new ClonedRepository({
-        git,
         clonePath,
     });
 }
