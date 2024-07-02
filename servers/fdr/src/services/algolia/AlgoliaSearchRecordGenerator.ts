@@ -11,6 +11,7 @@ import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
+import { ReferencedTypes, getAllReferencedTypes } from "./getAllReferencedTypes";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
 class NavigationContext {
@@ -408,7 +409,21 @@ export class AlgoliaSearchRecordGenerator {
                             }
                         }
 
-                        // todo: add type references to content
+                        let referencedTypes: ReferencedTypes = {};
+
+                        typeReferences.forEach((typeReference) => {
+                            referencedTypes = {
+                                ...referencedTypes,
+                                ...getAllReferencedTypes({ reference: typeReference, types: holder?.api.types ?? {} }),
+                            };
+                        });
+
+                        if (Object.keys(referencedTypes).length > 0) {
+                            contents.push("## Referenced Types\n");
+                            contents.push("```json\n");
+                            contents.push(JSON.stringify(referencedTypes));
+                            contents.push("\n```\n");
+                        }
 
                         records.push(
                             compact({
@@ -488,7 +503,21 @@ export class AlgoliaSearchRecordGenerator {
                             });
                         }
 
-                        // todo: add type references to content
+                        let referencedTypes: ReferencedTypes = {};
+
+                        typeReferences.forEach((typeReference) => {
+                            referencedTypes = {
+                                ...referencedTypes,
+                                ...getAllReferencedTypes({ reference: typeReference, types: holder?.api.types ?? {} }),
+                            };
+                        });
+
+                        if (Object.keys(referencedTypes).length > 0) {
+                            contents.push("## Referenced Types\n");
+                            contents.push("```json\n");
+                            contents.push(JSON.stringify(referencedTypes));
+                            contents.push("\n```\n");
+                        }
 
                         records.push(
                             compact({
@@ -542,6 +571,22 @@ export class AlgoliaSearchRecordGenerator {
                             });
                         } else {
                             assertNever(webhook.payload.type);
+                        }
+
+                        let referencedTypes: ReferencedTypes = {};
+
+                        typeReferences.forEach((typeReference) => {
+                            referencedTypes = {
+                                ...referencedTypes,
+                                ...getAllReferencedTypes({ reference: typeReference, types: holder?.api.types ?? {} }),
+                            };
+                        });
+
+                        if (Object.keys(referencedTypes).length > 0) {
+                            contents.push("## Referenced Types\n");
+                            contents.push("```json\n");
+                            contents.push(JSON.stringify(referencedTypes));
+                            contents.push("\n```\n");
                         }
 
                         records.push(
