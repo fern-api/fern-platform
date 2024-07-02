@@ -19,14 +19,8 @@ export const Param: React.FC<
         <div className="pt-2.5 pb-5 my-2.5 border-default border-b">
             <div className="flex py-0.5 mr-5 gap-2 items-center">
                 <div className="font-bold text-sm font-mono t-accent">{name}</div>
-                <FernTag {...TAG_PROPS}>
-                    {type}
-                </FernTag>
-                {defaultProp && (
-                    <FernTag {...TAG_PROPS}>
-                        default: &quot;{defaultProp}&quot;
-                    </FernTag>
-                )}
+                <FernTag {...TAG_PROPS}>{type}</FernTag>
+                {defaultProp && <FernTag {...TAG_PROPS}>default: &quot;{defaultProp}&quot;</FernTag>}
                 {deprecated && (
                     <FernTag colorScheme="amber" {...TAG_PROPS}>
                         deprecated
