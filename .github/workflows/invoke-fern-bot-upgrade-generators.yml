@@ -1,0 +1,61 @@
+name: Invoke FernBot - updateGeneratorVersions
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Which environment to run the workflow in
+        options:
+          - production
+          - development
+      repo:
+        description: "The repo to run the action against (of the form `owner/repo_name`), if omitted runs on all repos the app is installed on"
+        type: string
+
+jobs:
+  invoke_dev:
+    if: ${{ github.event.inputs.environment == 'development' }}
+    runs-on: ubuntu-latest
+    env:
+      SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+      GITHUB_APP_LOGIN_NAME: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_LOGIN_NAME }}
+      GITHUB_APP_LOGIN_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_LOGIN_ID }}
+      GITHUB_APP_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_ID }}
+      GITHUB_APP_PRIVATE_KEY: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_PRIVATE_KEY }}
+      GITHUB_APP_CLIENT_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_ID }}
+      GITHUB_APP_CLIENT_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_SECRET }}
+      GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_WEBHOOK_SECRET }}
+      CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
+      REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
+      - name: 🚀 serverless deploy
+        run: |
+          pnpm --filter "@fern-platform/fern-bot" install
+          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateGeneratorVersions --stage development
+
+  invoke_prod:
+    if: ${{ github.event.inputs.environment == 'production' }}
+    runs-on: ubuntu-latest
+    env:
+      SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+      GITHUB_APP_LOGIN_NAME: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_LOGIN_NAME }}
+      GITHUB_APP_LOGIN_ID: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_LOGIN_ID }}
+      GITHUB_APP_ID: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_ID }}
+      GITHUB_APP_PRIVATE_KEY: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_PRIVATE_KEY }}
+      GITHUB_APP_CLIENT_ID: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_CLIENT_ID }}
+      GITHUB_APP_CLIENT_SECRET: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_CLIENT_SECRET }}
+      GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_WEBHOOK_SECRET }}
+      CO_API_KEY: ${{ secrets.PROD_CO_API_KEY }}
+      REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
+      - name: 🚀 serverless deploy
+        run: |
+          pnpm --filter "@fern-platform/fern-bot" install
+          pnpm --filter "@fern-platform/fern-bot" invoke local --function updateGeneratorVersions --stage production
