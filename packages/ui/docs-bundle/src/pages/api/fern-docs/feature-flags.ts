@@ -17,7 +17,8 @@ const FEATURE_FLAGS = [
     "dark-code-enabled" as const,
     "proxy-uses-app-buildwithfern" as const,
     "image-zoom-disabled" as const,
-    "syndicate" as const,
+    "use-javascript-as-typescript" as const,
+    "always-enable-javascript-fetch" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -47,7 +48,11 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             config["proxy-uses-app-buildwithfern"],
         );
         const isImageZoomDisabled = checkDomainMatchesCustomers(domain, config["image-zoom-disabled"]);
-        const isSyndicate = checkDomainMatchesCustomers(domain, config["syndicate"]);
+        const useJavaScriptAsTypeScript = checkDomainMatchesCustomers(domain, config["use-javascript-as-typescript"]);
+        const alwaysEnableJavaScriptFetch = checkDomainMatchesCustomers(
+            domain,
+            config["always-enable-javascript-fetch"],
+        );
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -61,7 +66,8 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isDarkCodeEnabled,
             proxyShouldUseAppBuildwithfernCom,
             isImageZoomDisabled,
-            isSyndicate,
+            useJavaScriptAsTypeScript,
+            alwaysEnableJavaScriptFetch,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -78,7 +84,8 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isDarkCodeEnabled: false,
             proxyShouldUseAppBuildwithfernCom: false,
             isImageZoomDisabled: false,
-            isSyndicate: false,
+            useJavaScriptAsTypeScript: false,
+            alwaysEnableJavaScriptFetch: false,
         };
     }
 }
