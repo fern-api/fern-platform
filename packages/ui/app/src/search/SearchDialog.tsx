@@ -32,20 +32,20 @@ export const SearchDialog: React.FC<SearchDialog.Props> = ({ fromHeader }) => {
         return null;
     }
 
-    if (config.type === "algolia") {
+    if (config.inkeep == null) {
         return <AlgoliaSearchDialog fromHeader={fromHeader} />;
-    }
-
-    if (config.type === "inkeep") {
+    } else {
         return (
             <>
-                <InkeepCustomTrigger />
+                {config.inkeep.replaceSearch ? (
+                    <InkeepCustomTrigger />
+                ) : (
+                    <AlgoliaSearchDialog fromHeader={fromHeader} />
+                )}
                 <InkeepChatButton />
             </>
         );
     }
-
-    return null;
 };
 
 export declare namespace SearchSidebar {
@@ -69,7 +69,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
         return <>{children}</>;
     }
 
-    if (searchConfig.type === "algolia" && algoliaSearchClient != null) {
+    if (searchConfig.inkeep?.replaceSearch !== true && algoliaSearchClient != null) {
         const [searchClient, indexName] = algoliaSearchClient;
 
         return (
@@ -80,7 +80,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
         );
     }
 
-    if (searchConfig.type === "inkeep") {
+    if (searchConfig.inkeep != null) {
         return (
             <>
                 <div className="p-4 pb-0">
