@@ -1,5 +1,10 @@
-import { FernTag } from "@fern-ui/components";
+import { FernTag, FernTagProps } from "@fern-ui/components";
 import React from "react";
+
+const TAG_PROPS: FernTagProps = {
+    size: "sm",
+    variant: "subtle",
+};
 
 export const Param: React.FC<
     React.PropsWithChildren<{
@@ -14,21 +19,21 @@ export const Param: React.FC<
         <div className="pt-2.5 pb-5 my-2.5 border-default border-b">
             <div className="flex py-0.5 mr-5 gap-2 items-center">
                 <div className="font-bold text-sm font-mono t-accent">{name}</div>
-                <FernTag size="sm" variant="subtle">
+                <FernTag {...TAG_PROPS}>
                     {type}
                 </FernTag>
                 {defaultProp && (
-                    <FernTag size="sm" variant="subtle">
+                    <FernTag {...TAG_PROPS}>
                         default: &quot;{defaultProp}&quot;
                     </FernTag>
                 )}
                 {deprecated && (
-                    <FernTag colorScheme="amber" size="sm" variant="subtle">
+                    <FernTag colorScheme="amber" {...TAG_PROPS}>
                         deprecated
                     </FernTag>
                 )}
                 {required && (
-                    <FernTag colorScheme="red" size="sm" variant="subtle">
+                    <FernTag colorScheme="red" {...TAG_PROPS}>
                         required
                     </FernTag>
                 )}
