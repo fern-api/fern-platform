@@ -30,10 +30,22 @@ export function getBreadcrumbList(
     }
 
     const elements: JsonLd.ListElementSchema[] = [];
+    let lastSlug: string | undefined = undefined;
 
     parents.forEach((parent) => {
         if (FernNavigation.hasMetadata(parent)) {
-            elements.push(JsonLd.listItem(elements.length + 1, parent.title, toUrl(domain, parent.slug)));
+            const slug =
+                parent.slug === lastSlug
+                    ? FernNavigation.hasRedirect(parent)
+                        ? parent.pointsTo !== lastSlug
+                            ? parent.pointsTo
+                            : undefined
+                        : undefined
+                    : parent.slug;
+            if (slug != null) {
+                elements.push(JsonLd.listItem(elements.length + 1, parent.title, toUrl(domain, slug)));
+                lastSlug = slug;
+            }
         }
     });
 
