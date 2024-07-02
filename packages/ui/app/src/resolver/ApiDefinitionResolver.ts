@@ -354,6 +354,8 @@ export class ApiDefinitionResolver {
                         example,
                         requestBody,
                         this.featureFlags.isHttpSnippetsEnabled,
+                        this.featureFlags.useJavaScriptAsTypeScript,
+                        this.featureFlags.alwaysEnableJavaScriptFetch,
                     ),
                 };
             }),

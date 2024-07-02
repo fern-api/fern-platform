@@ -27,6 +27,8 @@ export async function resolveCodeSnippets(
     example: APIV1Read.ExampleEndpointCall,
     requestBody: ResolvedExampleEndpointRequest | undefined,
     isHttpSnippetsEnabled: boolean,
+    useJavaScriptAsTypeScript: boolean,
+    alwaysEnableJavaScriptFetch: boolean,
 ): Promise<ResolvedCodeSnippet[]> {
     let toRet: ResolvedCodeSnippet[] = [];
 
@@ -55,8 +57,8 @@ export async function resolveCodeSnippets(
 
     if (example.codeExamples.typescriptSdk != null) {
         toRet.push({
-            name: undefined,
-            language: "typescript",
+            name: alwaysEnableJavaScriptFetch ? `${useJavaScriptAsTypeScript ? "Java" : "Type"}Script SDK` : undefined,
+            language: useJavaScriptAsTypeScript ? "javascript" : "typescript",
             install: example.codeExamples.typescriptSdk.install,
             code: example.codeExamples.typescriptSdk.client,
             // hast: highlight(highlighter, code, "typescript"),
@@ -88,8 +90,12 @@ export async function resolveCodeSnippets(
 
     example.codeSamples.forEach((codeSample) => {
         const language = cleanLanguage(codeSample.language);
-        // Remove any generated code snippets with the same language
-        toRet = toRet.filter((snippet) => (snippet.generated ? snippet.language !== language : true));
+
+        if (!alwaysEnableJavaScriptFetch) {
+            // Remove any generated code snippets with the same language
+            toRet = toRet.filter((snippet) => (snippet.generated ? snippet.language !== language : true));
+        }
+
         toRet.push({
             name: codeSample.name,
             language,
@@ -104,21 +110,23 @@ export async function resolveCodeSnippets(
         if (isHttpSnippetsEnabled) {
             const snippet = new HTTPSnippet(getHarRequest(endpoint, example, requestBody));
             for (const { clientId, targetId } of CLIENTS) {
-                if (toRet.some((snippet) => cleanLanguage(snippet.language) === targetId)) {
-                    continue;
-                }
+                if (!alwaysEnableJavaScriptFetch) {
+                    if (toRet.some((snippet) => cleanLanguage(snippet.language) === targetId)) {
+                        continue;
+                    }
 
-                if (
-                    targetId === "javascript" &&
-                    toRet.some((snippet) => cleanLanguage(snippet.language) === "typescript")
-                ) {
-                    continue;
+                    if (
+                        targetId === "javascript" &&
+                        toRet.some((snippet) => cleanLanguage(snippet.language) === "typescript")
+                    ) {
+                        continue;
+                    }
                 }
 
                 const code = await snippet.convert(targetId, clientId);
                 if (code != null) {
                     toRet.push({
-                        name: undefined,
+                        name: alwaysEnableJavaScriptFetch ? "HTTP Request" : undefined,
                         language: targetId,
                         install: undefined,
                         code: typeof code === "string" ? code : code[0],
