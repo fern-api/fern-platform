@@ -1590,7 +1590,7 @@
     ]
   },
   "slug": "docs",
-  "title": "Fern Docs",
+  "title": "OctoAI",
   "hidden": false,
   "pointsTo": "docs/getting-started/quickstart"
 }

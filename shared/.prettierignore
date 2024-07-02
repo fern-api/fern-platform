@@ -15,6 +15,7 @@ bundle.c?js
 out
 pnpm-lock.yaml
 **/generated/
+**/generated/**
 **/.serverless/**
 clis/docs-migrator/src/__test__/fixtures/**
 clis/docs-migrator/src/__test__/fixtures/bland/api-reference/endpoint/call.mdx

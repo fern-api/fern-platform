@@ -4,12 +4,12 @@ import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } fr
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
+import { useOpenSearchDialog } from "../atoms/sidebar";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
-import { useOpenSearchDialog } from "../sidebar/atom";
 import { getGitHubRepo } from "../util/github";
 import { GitHubWidget } from "./GitHubWidget";
 import { HeaderLogoSection } from "./HeaderLogoSection";

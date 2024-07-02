@@ -1,4 +1,4 @@
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
+import { useFeatureFlags } from "../../atoms/flags";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";

@@ -8,6 +8,12 @@ import { BlockMerger } from "./BlockMerger";
 import { ReadmeParser } from "./ReadmeParser";
 
 export class ReadmeGenerator {
+    private ADVANCED_FEATURES: FernGeneratorCli.FeatureId[] = [
+        FernGeneratorCli.StructuredFeatureId.Retries,
+        FernGeneratorCli.StructuredFeatureId.Timeouts,
+        FernGeneratorCli.StructuredFeatureId.CustomClient,
+    ];
+
     private readmeParser: ReadmeParser;
     private readmeConfig: FernGeneratorCli.ReadmeConfig;
     private originalReadme: string | undefined;
@@ -56,7 +62,13 @@ export class ReadmeGenerator {
         if (this.readmeConfig.language != null && this.readmeConfig.language.publishInfo != null) {
             blocks.push(this.generateInstallation({ language: this.readmeConfig.language }));
         }
-        for (const feature of this.readmeConfig.features ?? []) {
+
+        const coreFeatures =
+            this.readmeConfig.features?.filter((feat) => !this.ADVANCED_FEATURES.includes(feat.id)) ?? [];
+        const advancedFeatures =
+            this.readmeConfig.features?.filter((feat) => this.ADVANCED_FEATURES.includes(feat.id)) ?? [];
+
+        for (const feature of coreFeatures) {
             if (this.shouldSkipFeature({ feature })) {
                 continue;
             }
@@ -66,14 +78,57 @@ export class ReadmeGenerator {
                 }),
             );
         }
+
+        blocks.push(...this.generateNestedFeatureBlocks({ features: advancedFeatures, sectionTitle: "Advanced" }));
+
         blocks.push(this.generateContributing());
 
         return blocks;
     }
 
-    private generateFeatureBlock({ feature }: { feature: FernGeneratorCli.ReadmeFeature }): Block {
+    private generateNestedFeatureBlocks({
+        features,
+        sectionTitle,
+    }: {
+        features: FernGeneratorCli.ReadmeFeature[];
+        sectionTitle: string;
+    }): Block[] {
+        if (!this.hasUnskippedFeatures({ features })) {
+            return [];
+        }
+
+        const blocks: Block[] = [];
+
         const writer = new StringWriter();
-        writer.writeLine(`## ${featureIDToTitle(feature.id)}`);
+        writer.writeLine(`## ${sectionTitle}`);
+        writer.writeLine();
+
+        for (const feature of features) {
+            if (this.shouldSkipFeature({ feature })) {
+                continue;
+            }
+            blocks.push(
+                this.generateFeatureBlock({
+                    feature,
+                    heading: "h3",
+                    maybeWriter: writer,
+                }),
+            );
+        }
+        return blocks;
+    }
+
+    private generateFeatureBlock({
+        feature,
+        heading = "h2",
+        maybeWriter,
+    }: {
+        feature: FernGeneratorCli.ReadmeFeature;
+        heading?: "h2" | "h3";
+        maybeWriter?: StringWriter;
+    }): Block {
+        const writer = maybeWriter ?? new StringWriter();
+        writer.writeLine(`${heading === "h2" ? "##" : "###"} ${featureIDToTitle(feature.id)}`);
         writer.writeLine();
         if (feature.description != null) {
             writer.writeLine(feature.description);
@@ -473,6 +528,10 @@ On the other hand, contributions to the README are always very welcome!
 
     private shouldSkipFeature({ feature }: { feature: FernGeneratorCli.ReadmeFeature }): boolean {
         return !feature.snippetsAreOptional && (feature.snippets == null || feature.snippets.length === 0);
+    }
+
+    private hasUnskippedFeatures({ features }: { features: FernGeneratorCli.ReadmeFeature[] }): boolean {
+        return features.some((feature) => !this.shouldSkipFeature({ feature }));
     }
 }
 

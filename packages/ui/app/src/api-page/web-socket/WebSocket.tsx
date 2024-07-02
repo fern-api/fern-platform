@@ -5,9 +5,9 @@ import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
+import { useFeatureFlags } from "../../atoms/flags";
+import { useNavigationNodes } from "../../atoms/navigation";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import {
     ResolvedTypeDefinition,
@@ -48,7 +48,7 @@ export const WebSocket: FC<WebSocket.Props> = (props) => {
 };
 
 const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) => {
-    const { nodes } = useDocsContext();
+    const nodes = useNavigationNodes();
     const maybeNode = nodes.get(websocket.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
 

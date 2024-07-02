@@ -3,10 +3,10 @@ import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
 import { Fragment, ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
+import { useSidebarNodes } from "../../atoms/navigation";
+import { useCloseSearchDialog, useIsSearchDialogOpen } from "../../atoms/sidebar";
 import { useLayoutBreakpointValue } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useNavigationContext } from "../../contexts/navigation-context";
-import { useCloseSearchDialog, useIsSearchDialogOpen } from "../../sidebar/atom";
 import { SearchHits } from "../SearchHits";
 import { createSearchPlaceholderWithVersion } from "../util";
 import { SearchBox } from "./SearchBox";
@@ -60,7 +60,7 @@ interface FernInstantSearchProps {
 }
 
 function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSearchProps) {
-    const { sidebar } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const { activeVersion } = useNavigationContext();
     const placeholder = useMemo(
         () => createSearchPlaceholderWithVersion(activeVersion, sidebar),

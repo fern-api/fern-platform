@@ -6,6 +6,7 @@ import {
     DocsPage,
     DocsPageResult,
     convertNavigatableToResolvedPath,
+    getBreadcrumbList,
     getDefaultSeoProps,
     getGitHubInfo,
     getGitHubRepo,
@@ -15,6 +16,7 @@ import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import urljoin from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
+import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
 import { getRedirectForPath } from "./hackRedirects";
 
@@ -301,7 +303,9 @@ async function convertDocsToDocsPageProps({
             docs.definition.apis,
             node.node,
         ),
+        breadcrumb: getBreadcrumbList(docs.baseUrl.domain, docs.definition.pages, node.parents, node.node),
         fallback: {},
+        analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

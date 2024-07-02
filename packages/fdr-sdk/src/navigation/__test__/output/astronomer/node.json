@@ -843,7 +843,7 @@
     ]
   },
   "slug": "docs/api",
-  "title": "Fern Docs",
+  "title": "Astro API Reference",
   "hidden": false,
   "pointsTo": "docs/api/overview"
 }

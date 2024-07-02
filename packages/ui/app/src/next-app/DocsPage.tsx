@@ -1,10 +1,10 @@
 import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
-import type { DefaultSeoProps } from "@fern-ui/next-seo";
-import { useDeepCompareMemoize } from "@fern-ui/react-commons";
+import type { DefaultSeoProps, JsonLd } from "@fern-ui/next-seo";
 import { Redirect } from "next";
 import { ReactElement } from "react";
-import { FeatureFlagContext, FeatureFlags } from "../contexts/FeatureFlagContext";
+import { CustomerAnalytics } from "../analytics/types";
+import { FeatureFlags } from "../atoms/flags";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
@@ -46,32 +46,30 @@ export declare namespace DocsPage {
         apis: FdrAPI.ApiDefinitionId[];
 
         seo: DefaultSeoProps;
+        breadcrumb: JsonLd.BreadcrumbListSchema | undefined;
+        analytics: CustomerAnalytics | undefined;
 
         fallback: Record<string, any>;
     }
 }
 
 export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
-    const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
-
     const { baseUrl, layout, logoHeight, logoHref, resolvedPath } = pageProps;
 
     useConsoleMessage();
 
     return (
-        <FeatureFlagContext.Provider value={featureFlags}>
-            <DocsContextProvider {...pageProps}>
-                <BgImageGradient />
-                <NavigationContextProvider
-                    resolvedPath={resolvedPath} // this changes between pages
-                    domain={baseUrl.domain}
-                    basePath={baseUrl.basePath}
-                >
-                    <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
-                    <Docs logoHeight={logoHeight} logoHref={logoHref} />
-                </NavigationContextProvider>
-            </DocsContextProvider>
-        </FeatureFlagContext.Provider>
+        <DocsContextProvider {...pageProps}>
+            <BgImageGradient />
+            <NavigationContextProvider
+                resolvedPath={resolvedPath} // this changes between pages
+                domain={baseUrl.domain}
+                basePath={baseUrl.basePath}
+            >
+                <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
+                <Docs logoHeight={logoHeight} logoHref={logoHref} />
+            </NavigationContextProvider>
+        </DocsContextProvider>
     );
 }
 

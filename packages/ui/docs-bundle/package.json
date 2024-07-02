@@ -52,6 +52,7 @@
     "@vercel/edge-config": "^1.1.0",
     "@workos-inc/node": "^6.1.0",
     "cssnano": "^6.0.3",
+    "feed": "^4.2.2",
     "jose": "^5.2.3",
     "jsonpath": "^1.1.1",
     "next": "^14.2.3",
