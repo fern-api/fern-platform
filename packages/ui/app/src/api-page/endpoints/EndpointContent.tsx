@@ -7,8 +7,8 @@ import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, us
 import { useInView } from "react-intersection-observer";
 import { FERN_LANGUAGE_ATOM } from "../../atoms/lang";
 import { FERN_STREAM_ATOM } from "../../atoms/stream";
+import { useLayoutBreakpoint } from "../../atoms/window";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpoint } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
 import { useViewportSize } from "../../hooks/useViewportSize";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";

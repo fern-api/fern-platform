@@ -3,7 +3,7 @@ import { PropsWithChildren, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
 import { useSidebarNodes } from "../atoms/navigation";
 import { SEARCH_DIALOG_OPEN_ATOM } from "../atoms/sidebar";
-import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useLayoutBreakpointValue } from "../atoms/window";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";

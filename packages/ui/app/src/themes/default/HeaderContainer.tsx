@@ -1,26 +1,22 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
-import cn from "clsx";
-import { FC, useCallback } from "react";
-import { useCloseMobileSidebar, useOpenMobileSidebar } from "../atoms/sidebar";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
-import { BgImageGradient } from "./BgImageGradient";
-import { Header } from "./Header";
-import { HeaderTabs } from "./HeaderTabs";
-import { useIsScrolled } from "./useIsScrolled";
+import cn, { clsx } from "clsx";
+import { ReactElement, useCallback } from "react";
+import { useIsMobileSidebarOpen } from "../../atoms/sidebar";
+import { useLayoutBreakpointValue } from "../../atoms/window";
+import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
+import { BgImageGradient } from "../../docs/BgImageGradient";
+import { Header } from "../../docs/Header";
+import { HeaderTabs } from "../../docs/HeaderTabs";
+import { useIsScrolled } from "../../docs/useIsScrolled";
 
 interface HeaderContainerProps {
-    isMobileSidebarOpen: boolean;
-    logoHeight: DocsV1Read.Height | undefined;
-    logoHref: DocsV1Read.Url | undefined;
+    className?: string;
 }
 
-export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen, logoHeight, logoHref }) => {
-    const { colors, layout, tabs, navbarLinks } = useDocsContext();
+export function HeaderContainer({ className }: HeaderContainerProps): ReactElement {
+    const { colors, layout, tabs } = useDocsContext();
     const isScrolled = useIsScrolled();
     const layoutBreakpoint = useLayoutBreakpointValue();
-    const openMobileSidebar = useOpenMobileSidebar();
-    const closeMobileSidebar = useCloseMobileSidebar();
+    const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
     const renderBackground = useCallback(
         (className?: string) => (
@@ -45,32 +41,32 @@ export const HeaderContainer: FC<HeaderContainerProps> = ({ isMobileSidebarOpen,
     );
 
     return (
-        <header id="fern-header">
+        <header id="fern-header" className={className}>
             <div
-                className="fern-header-container width-before-scroll-bar"
+                className={clsx("fern-header-container width-before-scroll-bar", {
+                    "has-background-light": colors.light?.headerBackground != null,
+                    "has-background-dark": colors.dark?.headerBackground != null,
+                })}
                 data-border={
                     isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
                         ? "show"
                         : "hide"
                 }
             >
-                <div className="bg-header border-concealed h-header-height-real border-b">
+                <div className="fern-header">
                     {renderBackground()}
                     <Header
                         className="mx-auto max-w-page-width"
-                        logoHeight={logoHeight}
-                        logoHref={logoHref}
-                        navbarLinks={navbarLinks}
-                        isMobileSidebarOpen={isMobileSidebarOpen}
-                        openMobileSidebar={openMobileSidebar}
-                        closeMobileSidebar={closeMobileSidebar}
                         showSearchBar={layout?.searchbarPlacement === "HEADER"}
                     />
                 </div>
                 {tabs.length > 0 && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true && (
-                    <HeaderTabs />
+                    <nav aria-label="tabs" className="fern-header-tabs">
+                        {renderBackground()}
+                        <HeaderTabs />
+                    </nav>
                 )}
             </div>
         </header>
     );
-};
+}

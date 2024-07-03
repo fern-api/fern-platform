@@ -3,7 +3,7 @@ import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { APIS } from "../atoms/apis";
 import { useFeatureFlags } from "../atoms/flags";
-import { useIsReady } from "../contexts/useIsReady";
+import { useIsReady } from "../atoms/window";
 import { ResolvedRootPackage } from "../resolver/types";
 import { ApiPackageContents } from "./ApiPackageContents";
 

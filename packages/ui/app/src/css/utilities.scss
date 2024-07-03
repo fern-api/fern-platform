@@ -70,4 +70,12 @@
     .font-mono {
         font-family: var(--typography-code-font-family, var(--code-font-fallback)) !important;
     }
+
+    .font-body {
+        font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
+    }
+
+    .font-heading {
+        font-family: var(--typography-heading-font-family, var(--heading-font-fallback)) !important;
+    }
 }

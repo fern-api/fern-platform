@@ -50,6 +50,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
         },
     );
 
+    const { logoHeight, logoHref } = pageProps;
     const { domain, basePath } = pageProps.baseUrl;
     const { currentTabIndex, currentVersionId } = pageProps.navigation;
 
@@ -72,6 +73,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
 
     const value = useMemo(
         () => ({
+            logoHeight,
+            logoHref,
             domain,
             basePath,
             layout,
@@ -91,6 +94,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             apis,
         }),
         [
+            logoHeight,
+            logoHref,
             domain,
             basePath,
             layout,

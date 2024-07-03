@@ -11,8 +11,6 @@ import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { store } from "../atoms/store";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
-import { IsReadyProvider } from "../contexts/useIsReady";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
@@ -39,18 +37,11 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
                 <JotaiProvider store={store}>
                     <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
                         <ThemeProvider colors={pageProps?.colors}>
-                            <IsReadyProvider>
-                                <RouteListenerContextProvider>
-                                    <DatadogInit />
-                                    <LayoutBreakpointProvider>
-                                        <NextNProgress
-                                            options={{ showSpinner: false, speed: 400 }}
-                                            showOnShallow={false}
-                                        />
-                                        <Component {...pageProps} />
-                                    </LayoutBreakpointProvider>
-                                </RouteListenerContextProvider>
-                            </IsReadyProvider>
+                            <RouteListenerContextProvider>
+                                <DatadogInit />
+                                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                                <Component {...pageProps} />
+                            </RouteListenerContextProvider>
                             <Toaster />
                         </ThemeProvider>
                     </FernErrorBoundary>

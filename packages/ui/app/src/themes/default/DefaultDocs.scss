@@ -1,0 +1,100 @@
+.fern-theme-default.fern-container {
+    @apply relative flex min-h-screen flex-1 flex-col z-0;
+
+    .fern-header-container {
+        @apply fixed inset-x-0 top-0 z-30 shadow-none h-header-height-real lg:h-header-height;
+    }
+
+    .fern-header-container:is(.light *):not(.has-background-light),
+    .fern-header-container:is(.dark *):not(.has-background-dark) {
+        @apply backdrop-blur-lg lg:backdrop-blur;
+        @apply data-[border=show]:dark:shadow-header-dark transition-shadow;
+    }
+
+    .fern-header,
+    .fern-header-tabs {
+        @apply bg-header border-concealed border-b;
+    }
+
+    .fern-header-content {
+        @apply flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full;
+    }
+
+    .fern-header {
+        @apply h-header-height-real;
+    }
+
+    .fern-header-tabs {
+        @apply h-[44px] max-lg:hidden;
+
+        .fern-header-tabs-list {
+            @apply mx-auto flex max-w-page-width shrink-0 list-none items-center justify-start px-1 md:px-3 lg:px-5;
+        }
+
+        .fern-header-tab-button {
+            @apply relative flex h-full min-w-0 flex-1 select-none items-center justify-start p-3 text-base;
+            @apply lg:text-sm;
+
+            .fa-icon {
+                @apply size-3.5;
+            }
+        }
+
+        .fern-header-tab-button[data-state="active"] {
+            @apply t-accent;
+
+            .fa-icon {
+                @apply bg-accent;
+            }
+
+            &:after {
+                content: "";
+                @apply absolute inset-x-3 bottom-0 h-px bg-accent;
+            }
+        }
+
+        .fern-header-tab-button[data-state="inactive"] {
+            @apply t-muted;
+
+            .fa-icon {
+                @apply bg-text-muted;
+            }
+
+            &:hover {
+                @apply t-default;
+
+                .fa-icon {
+                    @apply bg-text-default;
+                }
+            }
+        }
+    }
+
+    .fern-sidebar-desktop {
+        @apply bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block;
+
+        &.fern-sidebar-fixed {
+            @apply fixed mt-0;
+        }
+
+        .fern-sidebar-content {
+            @apply h-full w-full flex flex-col;
+
+            &.header-enabled {
+                @apply lg:pl-1;
+            }
+        }
+    }
+
+    .fern-body {
+        @apply relative mx-auto flex min-h-0 w-full min-w-0 max-w-page-width flex-1;
+    }
+
+    .fern-main {
+        @apply relative min-w-0 flex-1 mt-header-height;
+    }
+
+    .fern-sidebar-content {
+        @apply mask-grad-y-6 px-4 pb-12;
+    }
+}

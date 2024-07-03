@@ -3,8 +3,14 @@ import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
+import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
-import { useOpenSearchDialog } from "../atoms/sidebar";
+import {
+    useCloseMobileSidebar,
+    useIsMobileSidebarOpen,
+    useOpenMobileSidebar,
+    useOpenSearchDialog,
+} from "../atoms/sidebar";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
@@ -19,30 +25,18 @@ export declare namespace Header {
     export interface Props {
         className?: string;
         style?: CSSProperties;
-        navbarLinks: DocsV1Read.NavbarLink[];
-        logoHeight: DocsV1Read.Height | undefined;
-        logoHref: DocsV1Read.Url | undefined;
-        isMobileSidebarOpen: boolean;
-        openMobileSidebar: () => void;
-        closeMobileSidebar: () => void;
         showSearchBar?: boolean;
     }
 }
 
 const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
-    {
-        className,
-        style,
-        navbarLinks,
-        isMobileSidebarOpen,
-        openMobileSidebar,
-        closeMobileSidebar,
-        showSearchBar = true,
-        logoHeight,
-        logoHref,
-    },
+    { className, style, showSearchBar = true },
     ref,
 ) {
+    const { navbarLinks } = useDocsContext();
+    const openMobileSidebar = useOpenMobileSidebar();
+    const closeMobileSidebar = useCloseMobileSidebar();
+    const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const { colors } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
@@ -94,13 +88,8 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const githubRepo = githubLink && getGitHubRepo(githubLink.url);
 
     return (
-        <nav
-            aria-label="primary"
-            className={cn("flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full", className)}
-            ref={ref}
-            style={style}
-        >
-            <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
+        <nav aria-label="primary" className={cn("fern-header-content", className)} ref={ref} style={style}>
+            <HeaderLogoSection />
 
             {showSearchBar && (
                 <div
@@ -167,7 +156,13 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     );
 });
 
-export const Header = memo(UnmemoizedHeader);
+export const Header = memo(
+    UnmemoizedHeader,
+    (prev, next) =>
+        prev.className === next.className &&
+        isEqual(prev.style, next.style) &&
+        prev.showSearchBar === next.showSearchBar,
+);
 
 export declare namespace HeaderPrimaryLink {
     export interface Props {

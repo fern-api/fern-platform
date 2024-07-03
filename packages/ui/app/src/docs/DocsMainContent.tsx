@@ -1,14 +1,15 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { Fragment, ReactElement } from "react";
+import { useFeatureFlags } from "../atoms/flags";
+import { useIsReady } from "../atoms/window";
 import { useNavigationContext } from "../contexts/navigation-context";
-import { useIsReady } from "../contexts/useIsReady";
+import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { ChangelogEntryPage } from "./ChangelogEntryPage";
 
 const CustomDocsPage = dynamic(
     () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
-    {
-        ssr: true,
-    },
+    { ssr: true },
 );
 
 const ApiPage = dynamic(() => import("../api-page/ApiPage").then(({ ApiPage }) => ApiPage), {
@@ -21,7 +22,7 @@ const ChangelogPage = dynamic(() => import("./ChangelogPage").then(({ ChangelogP
 
 export interface DocsMainContentProps {}
 
-export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
+function DocsMainContentInternal(): ReactElement | null {
     const { resolvedPath } = useNavigationContext();
     const hydrated = useIsReady();
 
@@ -43,4 +44,15 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
     } else {
         return null;
     }
-};
+}
+
+export function DocsMainContent(): ReactElement {
+    const { isInlineFeedbackEnabled } = useFeatureFlags();
+
+    const FeedbackPopoverProvider = isInlineFeedbackEnabled ? FeedbackPopover : Fragment;
+    return (
+        <FeedbackPopoverProvider>
+            <DocsMainContentInternal />
+        </FeedbackPopoverProvider>
+    );
+}

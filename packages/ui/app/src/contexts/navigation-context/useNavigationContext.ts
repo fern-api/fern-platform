@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useFeatureFlags } from "../../atoms/flags";
-import { useIsReady } from "../useIsReady";
+import { useIsReady } from "../../atoms/window";
 import { NavigationContext, type NavigationContextValue } from "./NavigationContext";
 
 export function useNavigationContext(): NavigationContextValue {

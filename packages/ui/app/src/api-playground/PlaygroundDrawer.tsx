@@ -19,9 +19,8 @@ import {
     useSetPlaygroundHeight,
     useTogglePlayground,
 } from "../atoms/playground";
-import { useWindowHeight } from "../atoms/window";
+import { useLayoutBreakpointValue, useWindowHeight } from "../atoms/window";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
 import {
     ResolvedApiDefinition,
     ResolvedEndpointDefinition,

@@ -40,7 +40,6 @@ module.exports = {
                 "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
                 "vh-minus-header-padded": "calc(100vh - var(--spacing-header-height) - 2rem)",
                 icon: "15px",
-                "layout-padding": "var(--spacing-layout-padding)",
             },
             flex: {
                 2: "2 2 0%",
@@ -317,6 +316,10 @@ module.exports = {
                     from: { opacity: "0", transform: "translate(0, 48%)" },
                     to: { opacity: "1", transform: "translate(0, 0)" },
                 },
+                "content-show-from-left": {
+                    from: { opacity: "0", transform: "translate(-100%, 0)" },
+                    to: { opacity: "1", transform: "translate(0, 0)" },
+                },
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -334,6 +337,7 @@ module.exports = {
                 "overlay-show": "overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show": "content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show-from-bottom": "content-show-from-bottom 500ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "content-show-from-left": "content-show-from-left 500ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },

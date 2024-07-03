@@ -1,4 +1,3 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { useMemo } from "react";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
@@ -9,8 +8,6 @@ import { SidebarSearchBar } from "./SidebarSearchBar";
 export declare namespace SidebarFixedItemsSection {
     export interface Props {
         className?: string;
-        logoHeight: DocsV1Read.Height | undefined;
-        logoHref: DocsV1Read.Url | undefined;
         showBorder?: boolean;
         showSearchBar?: boolean;
         currentTabIndex?: number | undefined;
@@ -21,8 +18,6 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     className,
     showBorder,
     showSearchBar,
-    logoHeight,
-    logoHref,
 }) => {
     const { layout, colors } = useDocsContext();
 
@@ -40,7 +35,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
 
     const header = layout?.disableHeader && (
         <div className="mx-3 hidden h-header-height-real border-b border-transparent lg:flex lg:items-center lg:justify-between">
-            <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
+            <HeaderLogoSection />
             <div className="-mr-3">{colors.dark && colors.light && <ThemeButton size="large" />}</div>
         </div>
     );
