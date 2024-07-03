@@ -239,7 +239,7 @@ it("get Ruby snippets", async () => {
     // create snippets
     await fdr.snippetsFactory.createSnippetsForSdk({
         orgId: "acme",
-        apiId: "echo",
+        apiId: "bar",
         snippets: {
             type: "ruby",
             sdk: {
@@ -262,7 +262,7 @@ it("get Ruby snippets", async () => {
     // get snippets
     const snippets = getAPIResponse(
         await fdr.snippets.get({
-            apiId: "echo",
+            apiId: "bar",
             orgId: "acme",
             endpoint: {
                 path: "/snippets/load",
@@ -280,7 +280,7 @@ it("get Ruby snippets", async () => {
     const apiDefinitionResponse = getAPIResponse(
         await fdr.api.v1.register.registerApiDefinition({
             orgId: "acme",
-            apiId: "echo",
+            apiId: "bar",
             definition: createApiDefinition({
                 endpointId: "/snippets/load",
                 endpointMethod: "POST",
@@ -303,7 +303,7 @@ it("get Ruby snippets", async () => {
     const startDocsRegisterResponse = getAPIResponse(
         await fdr.docs.v2.write.startDocsRegister({
             orgId: "acme",
-            apiId: "echo",
+            apiId: "bar",
             domain: "https://acme.docs.buildwithfern.com",
             customDomains: [],
             filepaths: ["logo.png", "guides/guide.mdx"],
