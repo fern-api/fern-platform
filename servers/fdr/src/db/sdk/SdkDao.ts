@@ -127,6 +127,16 @@ export class SdkDaoImpl implements SdkDao {
                 result.goSdk = { ...snippetConfig.goSdk, sdkId };
             }
         }
+        if (snippetConfig.rubySdk != null) {
+            const sdkId = await this.getSdkIdForPackage({
+                sdkPackage: snippetConfig.rubySdk.gem,
+                language: Language.RUBY,
+                version: snippetConfig.rubySdk.version,
+            });
+            if (sdkId != null) {
+                result.rubySdk = { ...snippetConfig.rubySdk, sdkId };
+            }
+        }
 
         return result;
     }
