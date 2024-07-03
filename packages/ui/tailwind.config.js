@@ -448,7 +448,7 @@ module.exports = {
                 ".callout-outlined": {
                     "@apply bg-tag-default-soft ring-1 ring-inset ring-border-default-soft": {},
                 },
-                ".callout-outlined-success": {
+                ".callout-outlined-success, .callout-outlined-tip, .callout-outlined-check": {
                     "@apply bg-tag-success-soft ring-1 ring-inset ring-border-success-soft": {},
                 },
                 ".callout-outlined-warning": {
