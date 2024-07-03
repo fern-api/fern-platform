@@ -31,7 +31,7 @@ import { Column, ColumnGroup } from "./components/ColumnGroup";
 import { Frame } from "./components/Frame";
 import { HTML_TABLE_COMPONENTS } from "./components/HTMLTable";
 import { IFrame } from "./components/IFrame";
-import { Param } from "./components/Param";
+import { ParamField } from "./components/ParamField";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
 import { Steps } from "./components/Steps";
 import { TabGroup } from "./components/Tabs";
@@ -58,7 +58,7 @@ export const JSX_COMPONENTS = {
     Frame,
     Feedback,
     Icon: RemoteFontAwesomeIcon,
-    Param,
+    ParamField,
     ScrollArea: FernScrollArea,
     Steps,
     TabGroup,

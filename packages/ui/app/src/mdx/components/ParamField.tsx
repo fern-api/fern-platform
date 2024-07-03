@@ -6,7 +6,7 @@ const TAG_PROPS: FernTagProps = {
     variant: "subtle",
 };
 
-export const Param: React.FC<
+export const ParamField: React.FC<
     React.PropsWithChildren<{
         type: string;
         default?: string;
