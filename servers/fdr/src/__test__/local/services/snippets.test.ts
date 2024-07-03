@@ -234,6 +234,118 @@ it("get Go snippets", async () => {
     );
 });
 
+it("get Ruby snippets", async () => {
+    const fdr = getClient({ authed: true, url: inject("url") });
+    // create snippets
+    await fdr.snippetsFactory.createSnippetsForSdk({
+        orgId: "acme",
+        apiId: "bar",
+        snippets: {
+            type: "ruby",
+            sdk: {
+                gem: "acme_ruby",
+                version: "0.0.10",
+            },
+            snippets: [
+                {
+                    endpoint: {
+                        path: "/snippets/load",
+                        method: FdrAPI.EndpointMethod.Post,
+                    },
+                    snippet: {
+                        client: "client = Acme::Client()\n",
+                    },
+                },
+            ],
+        },
+    });
+    // get snippets
+    const snippets = getAPIResponse(
+        await fdr.snippets.get({
+            apiId: "bar",
+            orgId: "acme",
+            endpoint: {
+                path: "/snippets/load",
+                method: FdrAPI.EndpointMethod.Post,
+            },
+        }),
+    );
+    expect(snippets.length).toEqual(1);
+
+    const snippet = snippets[0] as FdrAPI.RubySnippet;
+    expect(snippet.sdk.gem).toEqual("acme_ruby");
+    expect(snippet.sdk.version).toEqual("0.0.10");
+    expect(snippet.client).toEqual("client = Acme::Client()\n");
+    // register API definition for acme org
+    const apiDefinitionResponse = getAPIResponse(
+        await fdr.api.v1.register.registerApiDefinition({
+            orgId: "acme",
+            apiId: "bar",
+            definition: createApiDefinition({
+                endpointId: "/snippets/load",
+                endpointMethod: "POST",
+                endpointPath: {
+                    parts: [
+                        { type: "literal", value: "/snippets" },
+                        { type: "literal", value: "/load" },
+                    ],
+                    pathParameters: [],
+                },
+                snippetsConfig: {
+                    rubySdk: {
+                        gem: "acme_ruby",
+                    },
+                },
+            }),
+        }),
+    );
+    // register docs
+    const startDocsRegisterResponse = getAPIResponse(
+        await fdr.docs.v2.write.startDocsRegister({
+            orgId: "acme",
+            apiId: "bar",
+            domain: "https://acme.docs.buildwithfern.com",
+            customDomains: [],
+            filepaths: ["logo.png", "guides/guide.mdx"],
+            images: [],
+        }),
+    );
+    await fdr.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
+        docsDefinition: {
+            pages: {},
+            config: {
+                navigation: {
+                    items: [
+                        {
+                            type: "api",
+                            title: "Acme API",
+                            api: apiDefinitionResponse.apiDefinitionId,
+                        },
+                    ],
+                },
+                typography: {
+                    headingsFont: {
+                        name: "Syne",
+                        fontFile: FONT_FILE_ID,
+                    },
+                },
+            },
+        },
+    });
+    // get docs for url
+    const docs = getAPIResponse(
+        await fdr.docs.v2.read.getDocsForUrl({
+            url: "https://acme.docs.buildwithfern.com",
+        }),
+    );
+    const apiDefinition = docs.definition.apis[apiDefinitionResponse.apiDefinitionId];
+    expect(apiDefinition).not.toEqual(undefined);
+    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.rubySdk).not.toEqual(undefined);
+    expect(apiDefinition?.rootPackage.endpoints[0]?.examples[0]?.codeExamples.rubySdk?.client).toEqual(
+        "client = Acme::Client()\n",
+    );
+});
+
 it("get snippets with unregistered API", async () => {
     const fdr = getClient({ authed: true, url: inject("url") });
     // create snippets
