@@ -130,8 +130,20 @@
         }
     }
 
+    .fern-api-property {
+        @apply py-3 space-y-2;
+    }
+
+    .fern-api-property-header {
+        @apply flex items-baseline gap-2;
+    }
+
     .fern-api-property-key {
         @apply font-mono t-default font-semibold text-sm;
+    }
+
+    .fern-api-property-meta {
+        @apply text-inherit inline-flex items-baseline gap-2 text-xs;
     }
 
     .custom-backdrop [data-rmiz-modal-overlay="visible"] {

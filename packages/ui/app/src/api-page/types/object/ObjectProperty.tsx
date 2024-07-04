@@ -109,12 +109,12 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
         <div
             ref={ref}
             data-route={anchorRoute.toLowerCase()}
-            className={cn("py-3 scroll-mt-header-height-padded space-y-2", {
+            className={cn("scroll-mt-header-height-padded", "fern-api-property", {
                 "px-3": !contextValue.isRootTypeDefinition,
                 "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >
-            <div className="flex items-baseline gap-2">
+            <div className="fern-api-property-header">
                 <div className="group/anchor-container relative inline-flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} smallGap />
                     <span

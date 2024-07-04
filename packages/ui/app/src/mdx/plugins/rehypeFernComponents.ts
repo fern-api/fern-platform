@@ -108,7 +108,7 @@ export function rehypeFernComponents(): (tree: Root) => void {
                     transformTabItem(node, index, parent);
                 }
 
-                if (node.name === "Accordion") {
+                if (node.name === "Accordion" || node.name === "Expandable") {
                     transformAccordion(node, index, parent);
                 }
             }
