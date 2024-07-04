@@ -16,10 +16,10 @@ export const ParamField: React.FC<
     const name =
         "query" in props ? props.query : "path" in props ? props.path : "body" in props ? props.body : props.header;
     return (
-        <div className="py-3 space-y-2">
-            <div className="flex items-baseline gap-2">
+        <div className="fern-api-property">
+            <div className="fern-api-property-header">
                 <div className="fern-api-property-key">{name}</div>
-                <div className="text-inherit inline-flex items-baseline gap-2 text-xs">
+                <div className="fern-api-property-meta">
                     <span>{type}</span>
                     {defaultProp && <span>Defaults to {defaultProp}</span>}
                     {deprecated && <span className="t-warning">Deprecated</span>}

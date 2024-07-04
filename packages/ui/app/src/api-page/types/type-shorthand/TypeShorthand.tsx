@@ -30,7 +30,7 @@ export function renderTypeShorthandRoot(
             ? renderDefaultTo(unaliasedShape.shape.value)
             : null;
     return (
-        <span className={clsx("text-inherit inline-flex items-baseline gap-2 text-xs", className)}>
+        <span className={clsx("fern-api-property-meta", className)}>
             <span>{typeShorthand}</span>
             {unaliasedShape.type === "optional" ? (
                 <span>{isResponse ? "Optional" : "Optional"}</span>
