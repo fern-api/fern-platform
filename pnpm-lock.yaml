@@ -1496,6 +1496,9 @@ importers:
       sonner:
         specifier: ^1.4.41
         version: 1.4.41(react-dom@18.3.1)(react@18.3.1)
+      ts-extras:
+        specifier: ^0.11.0
+        version: 0.11.0
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^1.4.0
@@ -27812,6 +27815,13 @@ packages:
       jsdom: 24.0.0
       object-path: 0.11.8
       typescript: 5.4.3
+
+  /ts-extras@0.11.0:
+    resolution: {integrity: sha512-yrbnkpcvtPiPXVFrvHHqNnCxUplqabQGX+UL5s+hpdaBeochNvixdFpgX/0MsPT99uwWv87wivdLCNezLy5OIA==}
+    engines: {node: '>=14.16'}
+    dependencies:
+      type-fest: 2.19.0
+    dev: false
 
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
