@@ -4,9 +4,9 @@ import { useAtom } from "jotai";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import { MOBILE_SIDEBAR_OPEN_ATOM } from "../atoms/sidebar";
 import { useLayoutBreakpoint } from "../atoms/viewport";
-import { DesktopSidebar } from "./DesktopSidebar";
+import { SidebarContainer } from "./SidebarContainer";
 
-const DesktopSidebarMotion = motion(DesktopSidebar);
+const SidebarContainerMotion = motion(SidebarContainer);
 
 export function DismissableSidebar({ className }: { className?: string }): ReactElement {
     const breakpoint = useLayoutBreakpoint();
@@ -50,7 +50,7 @@ export function DismissableSidebar({ className }: { className?: string }): React
                 />
             )}
             {showSidebar && (
-                <DesktopSidebarMotion
+                <SidebarContainerMotion
                     key="sidebar"
                     ref={sidebarRef}
                     className={clsx("dismissable z-50", className)}

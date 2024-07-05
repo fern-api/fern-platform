@@ -13,11 +13,11 @@ import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarTabButton } from "./SidebarTabButton";
 import { SidebarRootNode } from "./nodes/SidebarRootNode";
 
-interface DesktopSidebarProps extends ComponentPropsWithoutRef<"nav"> {
+interface SidebarContainerProps extends ComponentPropsWithoutRef<"nav"> {
     className?: string;
 }
 
-const UnmemoizedDesktopSidebar = forwardRef<HTMLElement, DesktopSidebarProps>(function DesktopSidebar(props, ref) {
+const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps>(function DesktopSidebar(props, ref) {
     const { layout, tabs, currentTabIndex } = useDocsContext();
     const sidebar = useSidebarNodes();
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -62,4 +62,4 @@ const UnmemoizedDesktopSidebar = forwardRef<HTMLElement, DesktopSidebarProps>(fu
     );
 });
 
-export const DesktopSidebar = memo(UnmemoizedDesktopSidebar);
+export const SidebarContainer = memo(UnmemoizedSidebarContainer);
