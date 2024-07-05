@@ -80,7 +80,7 @@
     }
 
     .scroll-mt-content {
-        scroll-margin-top: var(--header-offset, 0px);
+        scroll-margin-top: var(--header-offset, 0);
     }
 
     .scroll-mt-content-padded {
@@ -88,11 +88,11 @@
     }
 
     .top-header-offset {
-        top: var(--header-offset, 0px);
+        top: var(--header-offset, 0);
     }
 
     .mt-header-offset {
-        margin-top: var(--header-offset, 0px);
+        margin-top: var(--header-offset, 0);
     }
 
     .h-below-header {

@@ -47,8 +47,9 @@
                 @apply bg-accent;
             }
 
-            &:after {
+            &::after {
                 content: "";
+
                 @apply absolute inset-x-3 bottom-0 h-px bg-accent;
             }
         }
@@ -117,18 +118,22 @@
             @apply max-w-content-width;
             @apply md:flex-1 md:sticky md:self-start;
             @apply mt-12;
+
             // the 4rem is the same as the h-10 as the Header
             @apply max-h-[150vh] md:max-h-content;
             @apply flex;
+
             // header offset
             @apply md:py-8 md:mt-0 md:top-header-height;
         }
     }
+
     // guide and overview layouts are centered using .fern-layout-toc
     .fern-sidebar-disabled:has(.fern-guide-layout):has(.fern-layout-toc),
     .fern-sidebar-fixed + .fern-main {
         @apply lg:pl-sidebar-width;
     }
+
     .fern-sidebar-disabled:has(.fern-overview-layout):has(.fern-layout-toc) {
         @apply xl:pl-sidebar-width;
     }
