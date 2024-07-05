@@ -2,6 +2,7 @@ import { FernButton } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { EnterFullScreenIcon } from "@radix-ui/react-icons";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { useAtomValue } from "jotai";
 import {
     ComponentProps,
     ReactElement,
@@ -12,6 +13,7 @@ import {
     useRef,
     useState,
 } from "react";
+import { PORTAL_CONTAINER } from "../../atoms/portal";
 
 export declare namespace IFrame {
     export interface Props extends ComponentProps<"iframe"> {
@@ -104,11 +106,12 @@ const ExperimentalIFrameWithFullscreen = ({
             void iframe.requestFullscreen();
         }
     };
+    const portalContainer = useAtomValue(PORTAL_CONTAINER);
     return (
         <Tooltip.TooltipProvider delayDuration={300}>
             <Tooltip.Root>
                 <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
-                <Tooltip.Portal>
+                <Tooltip.Portal container={portalContainer}>
                     <Tooltip.Content side="right" align="start" sideOffset={6} className="animate-popover">
                         <FernButton variant="outlined" icon={<EnterFullScreenIcon />} onClick={enterFullscreen} />
                     </Tooltip.Content>

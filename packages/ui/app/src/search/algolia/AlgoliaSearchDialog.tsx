@@ -1,10 +1,13 @@
-import { Dialog, Transition } from "@headlessui/react";
+// import { Dialog, Transition } from "@headlessui/react";
+import * as Dialog from "@radix-ui/react-dialog";
 import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
-import { Fragment, ReactElement, useMemo, useRef } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
 import { useSidebarNodes } from "../../atoms/navigation";
-import { useCloseSearchDialog, useIsSearchDialogOpen } from "../../atoms/sidebar";
+import { PORTAL_CONTAINER } from "../../atoms/portal";
+import { SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "../../atoms/sidebar";
 import { useLayoutBreakpointValue } from "../../atoms/viewport";
 import { useNavigationContext } from "../../contexts/navigation-context";
 import { SearchHits } from "../SearchHits";
@@ -17,39 +20,31 @@ export function AlgoliaSearchDialog({ fromHeader }: { fromHeader?: boolean }): R
     const layoutBreakpoint = useLayoutBreakpointValue();
 
     const isSearchDialogOpen = useIsSearchDialogOpen();
-    const closeSearchDialog = useCloseSearchDialog();
+    const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     const algoliaSearchClient = useAlgoliaSearchClient();
+    const container = useAtomValue(PORTAL_CONTAINER);
     if (algoliaSearchClient == null || layoutBreakpoint === "mobile") {
         return null;
     }
     const [searchClient, index] = algoliaSearchClient;
     return (
-        <Transition show={isSearchDialogOpen} as={Fragment} appear={true}>
-            <Dialog
-                as="div"
-                className="fixed inset-0 z-30 hidden sm:block"
-                onClose={closeSearchDialog}
-                initialFocus={inputRef}
-            >
-                <Transition.Child
-                    as="div"
-                    className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm"
-                    enter="transition-opacity ease-linear duration-200"
-                    enterFrom="opacity-0 backdrop-blur-none"
-                    enterTo="opacity-100 backdrop-blur-sm"
-                />
-                <Dialog.Panel
-                    className={clsx(
-                        "md:max-w-content-width my-header-height-padded relative z-10 mx-6 max-h-[calc(100vh-var(--spacing-header-height)-var(--spacing-header-height)-2rem)] md:mx-auto flex flex-col",
-                        {
-                            "mt-4": fromHeader,
-                        },
-                    )}
-                >
-                    <FernInstantSearch searchClient={searchClient} indexName={index} inputRef={inputRef} />
-                </Dialog.Panel>
-            </Dialog>
-        </Transition>
+        <Dialog.Root open={isSearchDialogOpen} onOpenChange={setSearchDialogState}>
+            <Dialog.Portal container={container}>
+                <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm max-sm:hidden" />
+                <Dialog.Content className="fixed inset-0 z-30 max-sm:hidden">
+                    <div
+                        className={clsx(
+                            "md:max-w-content-width my-header-height-padded relative z-10 mx-6 max-h-[calc(100vh-var(--spacing-header-height)-var(--spacing-header-height)-2rem)] md:mx-auto flex flex-col",
+                            {
+                                "mt-4": fromHeader,
+                            },
+                        )}
+                    >
+                        <FernInstantSearch searchClient={searchClient} indexName={index} inputRef={inputRef} />
+                    </div>
+                </Dialog.Content>
+            </Dialog.Portal>
+        </Dialog.Root>
     );
 }
 
@@ -68,7 +63,7 @@ function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSea
     );
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
-            <div className="bg-background-translucent border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
+            <div className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}
                     placeholder={placeholder}

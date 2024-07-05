@@ -4,7 +4,7 @@ import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { motion, useAnimate, useMotionValue } from "framer-motion";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, ReactElement, SetStateAction, memo, useCallback, useEffect, useMemo } from "react";
 import { useFlattenedApis } from "../atoms/apis";
@@ -19,6 +19,7 @@ import {
     useSetPlaygroundHeight,
     useTogglePlayground,
 } from "../atoms/playground";
+import { PORTAL_CONTAINER } from "../atoms/portal";
 import { useLayoutBreakpointValue, useWindowHeight } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
@@ -69,6 +70,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     const hasPlayground = useHasPlayground();
     const selectionState = usePlaygroundNode();
     const apis = useFlattenedApis();
+    const portalContainer = useAtomValue(PORTAL_CONTAINER);
 
     const sidebar = useSidebarNodes();
     const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
@@ -301,7 +303,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
         >
             {isPlaygroundOpen && <div style={{ height }} />}
             <Dialog.Root open={isPlaygroundOpen} onOpenChange={togglePlayground} modal={false}>
-                <Dialog.Portal>
+                <Dialog.Portal container={portalContainer}>
                     <Dialog.Content
                         className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
                         onInteractOutside={(e) => {

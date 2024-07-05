@@ -1,11 +1,12 @@
 import { FernScrollArea } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import { Router } from "next/router";
 import { CSSProperties, ReactElement, memo, useEffect, useRef, useState } from "react";
 import { CONTENT_HEIGHT_ATOM } from "../../atoms/layout";
 import { LOGO_TEXT_ATOM } from "../../atoms/logo";
+import { PORTAL_CONTAINER } from "../../atoms/portal";
 import { useLayoutBreakpoint } from "../../atoms/viewport";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { DocsMainContent } from "../../docs/DocsMainContent";
@@ -16,6 +17,7 @@ function UnmemoizedCohereDocs(): ReactElement {
     const { layout } = useDocsContext();
     const breakpoint = useLayoutBreakpoint();
     const showHeader = layout?.disableHeader !== true || breakpoint.max("lg");
+    const setPortalContainer = useSetAtom(PORTAL_CONTAINER);
 
     useHydrateAtoms([[LOGO_TEXT_ATOM, "docs"]], {
         dangerouslyForceHydrate: true,
@@ -44,12 +46,14 @@ function UnmemoizedCohereDocs(): ReactElement {
     return (
         <div
             id="fern-docs"
+            ref={setPortalContainer}
             className="fern-container fern-theme-cohere"
             style={
                 {
                     "--content-height": `${contentHeight}px`,
                     "--header-offset": "0px",
                     "--card-border": "#D8CFC1",
+                    "--bg-search-dialog": "#FAFAFA",
                 } as CSSProperties
             }
         >

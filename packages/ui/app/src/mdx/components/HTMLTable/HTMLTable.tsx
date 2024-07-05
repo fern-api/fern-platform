@@ -3,11 +3,14 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { EnterFullScreenIcon } from "@radix-ui/react-icons";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
+import { useAtomValue } from "jotai";
 import { MDXRemoteProps } from "next-mdx-remote";
 import { ComponentProps, FC, useState } from "react";
+import { PORTAL_CONTAINER } from "../../../atoms/portal";
 
 const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
     const [isFullScreen, setIsFullScreen] = useState(false);
+    const portalContainer = useAtomValue(PORTAL_CONTAINER);
     return (
         <>
             <Tooltip.TooltipProvider delayDuration={300}>
@@ -19,7 +22,7 @@ const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
                             </FernScrollArea>
                         </div>
                     </Tooltip.Trigger>
-                    <Tooltip.Portal>
+                    <Tooltip.Portal container={portalContainer}>
                         <Tooltip.Content side="right" align="start" sideOffset={6} className="animate-popover">
                             <FernButton
                                 variant="outlined"
@@ -31,7 +34,7 @@ const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
                 </Tooltip.Root>
             </Tooltip.TooltipProvider>
             <Dialog.Root open={isFullScreen} onOpenChange={setIsFullScreen}>
-                <Dialog.Portal>
+                <Dialog.Portal container={portalContainer}>
                     <Dialog.Overlay className="fixed inset-0 bg-background/50 data-[state=open]:animate-overlay-show backdrop-blur-sm" />
                     <Dialog.Content
                         className="data-[state=open]:animate-content-show fixed top-1/2 left-1/2 max-h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] md:max-h-[calc(100vh-8rem)] md:w-[calc(100vw-8rem)] -translate-x-1/2 -translate-y-1/2 flex flex-col"

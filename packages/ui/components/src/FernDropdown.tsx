@@ -46,6 +46,7 @@ export declare namespace FernDropdown {
         align?: "start" | "center" | "end";
         defaultOpen?: boolean;
         dropdownMenuElement?: ReactElement;
+        container?: HTMLElement; // portal container
     }
 }
 
@@ -62,6 +63,7 @@ export const FernDropdown = forwardRef<HTMLButtonElement, PropsWithChildren<Fern
             align,
             defaultOpen = false,
             dropdownMenuElement,
+            container,
         },
         ref,
     ): ReactElement => {
@@ -87,6 +89,7 @@ export const FernDropdown = forwardRef<HTMLButtonElement, PropsWithChildren<Fern
                                         option={option}
                                         value={value}
                                         dropdownMenuElement={dropdownMenuElement}
+                                        container={container}
                                     />
                                 ) : (
                                     <DropdownMenu.Separator key={idx} className="mx-2 my-1 h-px bg-border-default" />
@@ -104,7 +107,7 @@ export const FernDropdown = forwardRef<HTMLButtonElement, PropsWithChildren<Fern
                     {children}
                 </DropdownMenu.Trigger>
                 {usePortal ? (
-                    <DropdownMenu.Portal>{renderDropdownContent()}</DropdownMenu.Portal>
+                    <DropdownMenu.Portal container={container}>{renderDropdownContent()}</DropdownMenu.Portal>
                 ) : (
                     renderDropdownContent()
                 )}
@@ -119,10 +122,12 @@ function FernDropdownItemValue({
     option,
     value,
     dropdownMenuElement,
+    container,
 }: {
     option: FernDropdown.ValueOption;
     value: string | undefined;
     dropdownMenuElement: ReactElement | undefined;
+    container?: HTMLElement;
 }) {
     const helperTextRef = useRef<HTMLDivElement>(null);
     const activeRef = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
@@ -184,6 +189,7 @@ function FernDropdownItemValue({
             }
             side="right"
             sideOffset={8}
+            container={container}
         >
             <DropdownMenu.RadioItem asChild={true} value={option.value}>
                 {dropdownMenuElement != null ? (
