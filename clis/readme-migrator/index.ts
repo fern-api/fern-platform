@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import * as fs from "fs";
-import * as https from "https";
 import * as path from "path";
 import * as readline from "readline";
 
@@ -8,30 +7,50 @@ const urlPattern = /<[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA
 const imagePattern =
     /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b(?:[-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
 
-function downloadImage(line: string, levelIn: number): string {
+async function ensureImagesFolder(): Promise<void> {
+    const imagesFolder = path.resolve(__dirname, "images");
+    try {
+        await fs.promises.mkdir(imagesFolder);
+    } catch (err) {
+        
+    }
+}
+
+async function downloadImage(url: string): Promise<void> {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch image from ${url}: ${response.statusText}`);
+        }
+
+        const arrBuff = await response.arrayBuffer();
+        const buffer = Buffer.from(arrBuff);
+        const imgPath = path.join("images", path.basename(url));
+        await fs.promises.writeFile(imgPath, buffer);
+    } catch (err) {
+
+    }
+}
+
+async function downloadImages(line: string, levelIn: number): Promise<string> {
     let pathExtend = "";
     for (let i = 0; i < levelIn; i++) {
         pathExtend += "../";
     }
 
-    if (!fs.existsSync("images")) {
-        fs.mkdirSync("images");
-    }
+    ensureImagesFolder();
+
     const matches = line.match(imagePattern);
     if (matches) {
         for (const link of matches) {
-            https.get(link, (res) => {
-                const imgPath = path.join("images", path.basename(link));
-                const file = fs.createWriteStream(imgPath);
-                res.pipe(file);
-            });
+            await downloadImage(link);
         }
         return line.replace("https://files.readme.io", `${pathExtend}../assets/images`);
     }
     return line;
 }
 
-function convertToMarkdown(content: string[], levelIn: number): string {
+async function convertToMarkdown(content: string[], levelIn: number): Promise<string> {
     let markdown = "";
     let collectingImage = false;
     let collectingCode = false;
@@ -61,7 +80,7 @@ function convertToMarkdown(content: string[], levelIn: number): string {
             if (matches) {
                 newline = `src='${matches[0]}' `;
                 if (newline.includes("files.readme.io")) {
-                    newline = downloadImage(newline, levelIn);
+                    newline = await downloadImages(newline, levelIn);
                 }
                 markdown += newline;
             } else if (line.includes("caption")) {
@@ -74,7 +93,7 @@ function convertToMarkdown(content: string[], levelIn: number): string {
         }
 
         if (line.includes("files.readme.io")) {
-            newline = downloadImage(line, levelIn);
+            newline = await downloadImages(line, levelIn);
         }
 
         if (line.match(/```(\S+)/)) {
@@ -219,14 +238,14 @@ async function copyAndConvertToMdx(srcFolder: string, dstFolder: string, levelIn
                     // if (err instanceof Error) message = err.message;
                     // console.error(`An error occurred while reading the file: ${message}`);
                 }
-                const markdownContent = convertToMarkdown(content, levelIn);
+                const markdownContent = await convertToMarkdown(content, levelIn);
                 saveMarkdownFile(markdownContent, dstPath);
                 // console.log(`Copied "${srcPath}" to "${dstPath}"`);
             } else if (fs.lstatSync(srcPath).isDirectory()) {
-                // if (await promptUser(item)) {
+                if (await promptUser(item)) {
                 const nestedDstFolder = path.join(dstFolder, item);
                 await copyAndConvertToMdx(srcPath, nestedDstFolder, levelIn + 1);
-                // }
+                }
             }
         }
     } catch (err) {
