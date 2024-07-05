@@ -2,9 +2,10 @@ import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { APIS } from "../atoms/apis";
-import { useFeatureFlags } from "../atoms/flags";
-import { useIsReady } from "../atoms/window";
+import { useIsReady } from "../atoms/viewport";
+import { ApiPageContext } from "../contexts/useApiPageContext";
 import { ResolvedRootPackage } from "../resolver/types";
+import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { ApiPackageContents } from "./ApiPackageContents";
 
 export declare namespace ApiPage {
@@ -16,7 +17,6 @@ export declare namespace ApiPage {
 
 export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors }) => {
     const hydrated = useIsReady();
-    const { isApiScrollingDisabled } = useFeatureFlags();
     const setDefinitions = useSetAtom(APIS);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors }) => 
     }, [initialApi, setDefinitions]);
 
     return (
-        <div className="min-h-0 pb-36">
+        <ApiPageContext.Provider value={true}>
             <ApiPackageContents
                 api={initialApi.api}
                 types={initialApi.types}
@@ -34,14 +34,16 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors }) => 
                 anchorIdParts={EMPTY_ARRAY}
             />
 
-            {isApiScrollingDisabled && (
+            {/* {isApiScrollingDisabled && (
                 <div className="mx-4 max-w-content-width md:mx-6 md:max-w-endpoint-width lg:mx-8">
-                    {/* <BottomNavigationButtons showPrev={true} /> */}
+                    <BottomNavigationButtons showPrev={true} />
                 </div>
-            )}
+            )} */}
 
             {/* anchor links should get additional padding to scroll to on initial load */}
             {!hydrated && <div className="h-full" />}
-        </div>
+            <div className="pb-36" />
+            <BuiltWithFern className="w-fit mx-auto my-8" />
+        </ApiPageContext.Provider>
     );
 };

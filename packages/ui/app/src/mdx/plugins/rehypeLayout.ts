@@ -1,13 +1,16 @@
-import { clsx as cn } from "clsx";
-import type { Element, ElementContent, Root } from "hast";
-import { h } from "hastscript";
+import type { ElementContent, Root } from "hast";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
 import type { VFile } from "vfile";
+import { toCustomLayoutHastNode } from "../../layout/CustomLayout";
+import { toGuideLayoutHastNode } from "../../layout/GuideLayout";
+import { toOverviewLayoutHastNode } from "../../layout/OverviewLayout";
+import { toPageLayoutHastNode } from "../../layout/PageLayout";
+import { toReferenceLayoutHastNode } from "../../layout/ReferenceLayout";
 import { FernDocsFrontmatter } from "../mdx";
 import { makeToc } from "./makeToc";
-import { toAttribute } from "./utils";
+import { wrapChildren } from "./to-estree";
 
 export interface PageHeaderProps {
     breadcrumbs: string[];
@@ -29,138 +32,81 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
     return async (tree, vfile) => {
         const matter = vfile.data.matter as FernDocsFrontmatter | undefined;
         props = mergePropsWithMatter(props, matter);
+        vfile.data.matter = props;
         let layout = props?.layout ?? "guide";
 
-        let header: Element | null = null;
-        if (props != null) {
-            const heading = h(
-                "div",
-                {
-                    type: "mdxJsxFlowElement",
-                    name: "Breadcrumbs",
-                    attributes: [toAttribute("breadcrumbs", props.breadcrumbs)],
-                    children: [],
-                },
-                h("div", { class: "mt-1" }, h("h1", { class: "leading-tight" }, props.title)),
-            );
-            const subtitle =
-                props.subtitle != null
-                    ? h(
-                          "div",
-                          {
-                              class: "prose dark:prose-invert prose-p:t-muted prose-lg mt-2 leading-7 prose-p:max-w-content-wide-width max-w-content-wide-width",
-                          },
-                          ...parseMarkdown(props.subtitle),
-                      )
-                    : undefined;
-            header = h("header", { class: "mb-8" }, heading, subtitle);
-        }
-
-        const aside = collectAsideContent(tree);
+        const asideContents = collectAsideContent(tree);
 
         // If there is an aside, enforce reference layout
-        if (aside.length > 0) {
+        if (asideContents.length > 0) {
             layout = "reference";
         }
 
-        const footer = h(
-            "footer",
-            { class: "mt-12 not-prose" },
-            h(
-                "div",
-                { class: "flex sm:justify-between max-sm:flex-col gap-4" },
-                h(
-                    "div",
-                    matter?.["hide-feedback"]
-                        ? undefined
-                        : { type: "mdxJsxFlowElement", name: "Feedback", children: [], attributes: [] },
-                ),
-                props?.editThisPageUrl != null
-                    ? h("div", {
-                          type: "mdxJsxFlowElement",
-                          name: "Button",
-                          children: [],
-                          attributes: [
-                              toAttribute("href", props?.editThisPageUrl),
-                              toAttribute("icon", "duotone pen-to-square"),
-                              toAttribute("text", "Edit this page"),
-                              toAttribute("outlined", true),
-                          ],
-                      })
-                    : undefined,
-            ),
-            props?.hideNavLinks || layout === "overview"
-                ? undefined
-                : {
-                      type: "mdxJsxFlowElement",
-                      name: "BottomNavigationButtons",
-                      children: [],
-                      attributes: [],
-                  },
-        );
+        props.layout = layout;
 
-        const articleClassName = cn("mx-auto w-full break-words lg:ml-0 xl:mx-auto pb-20", {
-            "max-w-content-width": layout === "guide",
-            "max-w-content-wide-width": layout === "overview",
-            "max-w-content-width md:max-w-endpoint-width": layout === "reference",
-        });
-
-        const proseClassName = "prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0";
-
-        const article = h(
-            "article",
-            { class: articleClassName },
-            header,
-            aside.length === 0
-                ? h("section", { class: cn(proseClassName, "max-w-full") }, [...tree.children, footer])
-                : [
-                      h(
-                          "div",
-                          { class: "md:grid md:grid-cols-2 md:gap-8 lg:gap-12 max-md:space-y-12" },
-                          h("section", { class: proseClassName }, ...tree.children, footer),
-                          h(
-                              "aside",
-                              { class: proseClassName },
-                              h(
-                                  "div",
-                                  {
-                                      class: "scroll-mt-header-height md:top-header-height md:sticky md:-my-8 md:py-8",
-                                  },
-                                  aside,
-                              ),
-                          ),
-                      ),
-                  ],
-        );
-
-        return h(
-            "div",
-            { class: "relative flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0" },
-            h("div", { class: "z-10 w-full min-w-0 pt-8 lg:pr-8" }, article),
-            layout !== "reference"
-                ? h(
-                      "aside",
-                      { class: "top-header-height h-vh-minus-header w-sidebar-width sticky hidden shrink-0 xl:block" },
-                      matter?.["hide-toc"] !== true
-                          ? {
-                                type: "mdxJsxFlowElement",
-                                name: "ScrollArea",
-                                attributes: [toAttribute("className", "px-4 pb-12 pt-8 lg:pr-8")],
-                                children: [makeToc(tree, props?.isTocDefaultEnabled)],
-                            }
-                          : undefined,
-                  )
-                : undefined,
-        );
+        const children = tree.children as ElementContent[];
+        const subtitle = props.subtitle != null ? wrapChildren(parseMarkdown(props.subtitle)) : undefined;
+        const tableOfContents = makeToc(tree, props.isTocDefaultEnabled);
+        const aside = wrapChildren(asideContents);
+        switch (layout) {
+            case "custom":
+                return toCustomLayoutHastNode({ children });
+            case "overview":
+                return toOverviewLayoutHastNode({
+                    breadcrumbs: props.breadcrumbs,
+                    title: props.title,
+                    subtitle,
+                    tableOfContents,
+                    children,
+                    editThisPageUrl: props.editThisPageUrl,
+                    hideFeedback: false,
+                });
+            case "page":
+                return toPageLayoutHastNode({
+                    breadcrumbs: props.breadcrumbs,
+                    title: props.title,
+                    subtitle,
+                    tableOfContents,
+                    children,
+                    editThisPageUrl: props.editThisPageUrl,
+                    hideFeedback: false,
+                    hideNavLinks: false,
+                });
+            case "reference":
+                return toReferenceLayoutHastNode({
+                    breadcrumbs: props.breadcrumbs,
+                    title: props.title,
+                    subtitle,
+                    children,
+                    aside,
+                    editThisPageUrl: props.editThisPageUrl,
+                    hideFeedback: false,
+                });
+            default:
+                return toGuideLayoutHastNode({
+                    breadcrumbs: props.breadcrumbs,
+                    title: props.title,
+                    subtitle,
+                    tableOfContents,
+                    children,
+                    editThisPageUrl: props.editThisPageUrl,
+                    hideFeedback: false,
+                    hideNavLinks: false,
+                });
+        }
     };
 }
 
 function mergePropsWithMatter(
     props: PageHeaderProps | undefined,
     matter: FernDocsFrontmatter | undefined,
-): PageHeaderProps | undefined {
+): PageHeaderProps {
     if (matter == null || props == null) {
-        return props;
+        return {
+            breadcrumbs: [],
+            title: "",
+            isTocDefaultEnabled: true,
+        };
     }
 
     return {

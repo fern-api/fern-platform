@@ -1,4 +1,6 @@
 .fern-theme-cohere.fern-container {
+    --card-border: #d8cfc1;
+
     @apply fixed inset-0 p-3;
     @apply flex flex-col gap-3;
 
@@ -20,28 +22,17 @@
     .fern-sidebar-container {
         @apply bg-sidebar w-sidebar-width shrink-0;
         @apply flex flex-col;
-        // @apply max-lg:hidden;
     }
 
-    @media (max-width: 1023px) {
-        .fern-sidebar-container {
-            @apply fixed left-3 bottom-3;
-            @apply max-sm:w-auto max-sm:right-3;
-            @apply shadow-xl;
+    .fern-sidebar-container.dismissable {
+        @apply fixed left-3 bottom-3;
+        @apply max-sm:w-auto max-sm:right-3;
+        @apply shadow-xl;
 
-            top: calc(var(--spacing-header-height-real) + 1.5rem);
+        top: calc(var(--spacing-header-height-real) + 1.5rem);
 
-            .fern-sidebar-content {
-                @apply px-4;
-            }
-
-            &[data-state="closed"] {
-                @apply hidden;
-            }
-
-            &[data-state="open"] {
-                @apply animate-content-show-from-left;
-            }
+        .fern-sidebar-content {
+            @apply px-4;
         }
     }
 
@@ -109,5 +100,45 @@
 
     .fern-sidebar-content {
         @apply mask-grad-y-6 px-3 pb-12;
+    }
+
+    .fern-endpoint-content {
+        @apply px-10;
+
+        .fern-endpoint-content-right {
+            @apply max-w-content-width;
+            @apply md:flex-1 md:sticky md:self-start;
+            @apply mt-12;
+            // the 4rem is the same as the h-10 as the Header
+            // @apply max-h-[150vh] md:max-h-content;
+            @apply max-h-[150vh];
+            @apply flex;
+            // header offset
+            @apply md:py-8 md:mt-0 md:top-0;
+
+            @media (screen(md)) {
+                max-height: var(--content-height);
+            }
+        }
+    }
+
+    .fern-layout-toc {
+        @apply top-header-offset h-content w-sidebar-width sticky max-xl:hidden shrink-0;
+    }
+
+    .fern-guide-layout,
+    .fern-overview-layout,
+    .fern-page-layout {
+        @apply relative;
+    }
+
+    .fern-guide-layout,
+    .fern-overview-layout {
+        @apply flex flex-row-reverse max-w-fit mx-auto gap-3;
+    }
+
+    .fern-layout-content,
+    .fern-page-layout {
+        @apply pt-8 px-10 w-full pb-20;
     }
 }

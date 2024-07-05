@@ -93,7 +93,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
         <div
             ref={ref}
             data-route={anchorRoute.toLowerCase()}
-            className={cn("scroll-mt-header-height-padded relative flex flex-col gap-2 py-3", {
+            className={cn("scroll-mt-content-padded relative flex flex-col gap-2 py-3", {
                 "before:outline-border-accent-muted before:outline-1 before:outline before:outline-offset-0 before:content-[''] before:inset-y-0 before:-inset-x-2 before:rounded-sm":
                     isActive,
             })}

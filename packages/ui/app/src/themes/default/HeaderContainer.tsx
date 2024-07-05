@@ -1,7 +1,7 @@
 import cn, { clsx } from "clsx";
 import { ReactElement, useCallback } from "react";
 import { useIsMobileSidebarOpen } from "../../atoms/sidebar";
-import { useLayoutBreakpointValue } from "../../atoms/window";
+import { useLayoutBreakpointValue } from "../../atoms/viewport";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { BgImageGradient } from "../../docs/BgImageGradient";
 import { Header } from "../../docs/Header";

@@ -1,9 +1,11 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement, memo } from "react";
 import { useFeatureFlags } from "../atoms/flags";
-import { useIsReady } from "../atoms/window";
-import { useNavigationContext } from "../contexts/navigation-context";
+import { useResolvedPath } from "../atoms/navigation";
+import { useIsReady } from "../atoms/viewport";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { ChangelogEntryPage } from "./ChangelogEntryPage";
 
@@ -23,7 +25,7 @@ const ChangelogPage = dynamic(() => import("./ChangelogPage").then(({ ChangelogP
 export interface DocsMainContentProps {}
 
 function DocsMainContentInternal(): ReactElement | null {
-    const { resolvedPath } = useNavigationContext();
+    const resolvedPath = useResolvedPath();
     const hydrated = useIsReady();
 
     const router = useRouter();
@@ -33,26 +35,27 @@ function DocsMainContentInternal(): ReactElement | null {
         }
     }
 
-    if (resolvedPath.type === "custom-markdown-page") {
-        return <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} resolvedPath={resolvedPath} />;
-    } else if (resolvedPath.type === "api-page") {
-        return <ApiPage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />;
-    } else if (resolvedPath.type === "changelog") {
-        return <ChangelogPage resolvedPath={resolvedPath} />;
-    } else if (resolvedPath.type === "changelog-entry") {
-        return <ChangelogEntryPage resolvedPath={resolvedPath} />;
-    } else {
-        return null;
-    }
+    return visitDiscriminatedUnion(resolvedPath)._visit({
+        "custom-markdown-page": (resolvedPath) => (
+            <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} resolvedPath={resolvedPath} />
+        ),
+        "api-page": (resolvedPath) => (
+            <ApiPage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />
+        ),
+        changelog: (resolvedPath) => <ChangelogPage resolvedPath={resolvedPath} />,
+        "changelog-entry": (resolvedPath) => <ChangelogEntryPage resolvedPath={resolvedPath} />,
+        _other: () => null,
+    });
 }
 
-export function DocsMainContent(): ReactElement {
+export const DocsMainContent = memo(function DocsMainContent(): ReactElement {
     const { isInlineFeedbackEnabled } = useFeatureFlags();
-
     const FeedbackPopoverProvider = isInlineFeedbackEnabled ? FeedbackPopover : Fragment;
     return (
-        <FeedbackPopoverProvider>
-            <DocsMainContentInternal />
-        </FeedbackPopoverProvider>
+        <FernErrorBoundary>
+            <FeedbackPopoverProvider>
+                <DocsMainContentInternal />
+            </FeedbackPopoverProvider>
+        </FernErrorBoundary>
     );
-}
+});

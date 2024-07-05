@@ -13,7 +13,7 @@
 
     .fern-header,
     .fern-header-tabs {
-        @apply bg-header border-concealed border-b;
+        @apply bg-header border-concealed border-b relative;
     }
 
     .fern-header-content {
@@ -70,24 +70,36 @@
         }
     }
 
-    .fern-sidebar-desktop {
-        @apply bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-vh-minus-header w-sidebar-width lg:block;
+    .fern-sidebar-container {
+        @apply bg-sidebar border-concealed sticky top-header-height mt-header-height hidden h-below-header w-sidebar-width lg:block;
+        @apply flex flex-col;
 
         &.fern-sidebar-fixed {
             @apply fixed mt-0;
         }
 
+        &:not(.fern-sidebar-fixed) {
+            @apply lg:pl-1;
+        }
+
         .fern-sidebar-content {
             @apply h-full w-full flex flex-col;
-
-            &.header-enabled {
-                @apply lg:pl-1;
-            }
         }
     }
 
+    .fern-sidebar-container.dismissable {
+        @apply fixed left-0 bottom-0 top-header-offset mt-0;
+        @apply bg-background-translucent backdrop-blur-lg;
+        @apply sm:border-concealed sm:border-r;
+        @apply max-sm:w-full max-sm:inset-x-0;
+    }
+
+    .fern-sidebar-container.desktop {
+        @apply max-lg:hidden;
+    }
+
     .fern-body {
-        @apply relative mx-auto flex min-h-0 w-full min-w-0 max-w-page-width flex-1;
+        @apply relative mx-auto flex flex-row-reverse min-h-0 w-full min-w-0 max-w-page-width flex-1;
     }
 
     .fern-main {
@@ -96,5 +108,54 @@
 
     .fern-sidebar-content {
         @apply mask-grad-y-6 px-4 pb-12;
+    }
+
+    .fern-endpoint-content {
+        @apply mx-4 scroll-mt-content md:mx-6 lg:mx-8;
+
+        .fern-endpoint-content-right {
+            @apply max-w-content-width;
+            @apply md:flex-1 md:sticky md:self-start;
+            @apply mt-12;
+            // the 4rem is the same as the h-10 as the Header
+            @apply max-h-[150vh] md:max-h-content;
+            @apply flex;
+            // header offset
+            @apply md:py-8 md:mt-0 md:top-header-height;
+        }
+    }
+    // guide and overview layouts are centered using .fern-layout-toc
+    .fern-sidebar-disabled:has(.fern-guide-layout):has(.fern-layout-toc) {
+        @apply lg:pl-sidebar-width;
+    }
+    .fern-sidebar-disabled:has(.fern-overview-layout):has(.fern-layout-toc) {
+        @apply xl:pl-sidebar-width;
+    }
+
+    .fern-guide-layout,
+    .fern-overview-layout,
+    .fern-page-layout {
+        @apply relative px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0;
+    }
+
+    .fern-guide-layout,
+    .fern-overview-layout {
+        @apply flex flex-row-reverse justify-between gap-8;
+
+        .fern-layout-content {
+            @apply pt-8 mx-auto w-full xl:mx-auto pb-20;
+        }
+    }
+
+    .fern-guide-layout .fern-layout-content {
+        @apply lg:ml-0 xl:mx-auto;
+    }
+
+    .fern-page-layout {
+        @apply pt-8 pb-20;
+    }
+
+    .fern-layout-toc {
+        @apply top-header-offset h-content w-sidebar-width sticky max-xl:hidden shrink-0;
     }
 }

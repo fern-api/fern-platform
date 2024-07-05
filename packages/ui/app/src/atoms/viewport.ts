@@ -17,8 +17,8 @@ export function useIsReady(): boolean {
 }
 
 let clear = noop;
-const WINDOW_SIZE_ATOM = atom<[width: number, height: number]>([0, 0]);
-WINDOW_SIZE_ATOM.onMount = (set) => {
+const VIEWPORT_SIZE_ATOM = atom<[width: number, height: number]>([0, 0]);
+VIEWPORT_SIZE_ATOM.onMount = (set) => {
     if (typeof window === "undefined") {
         return;
     }
@@ -37,11 +37,11 @@ WINDOW_SIZE_ATOM.onMount = (set) => {
     };
 };
 
-export const WINDOW_WIDTH_ATOM = atom((get) => get(WINDOW_SIZE_ATOM)[0]);
-export const WINDOW_HEIGHT_ATOM = atom((get) => get(WINDOW_SIZE_ATOM)[1]);
+export const VIEWPORT_WIDTH_ATOM = atom((get) => get(VIEWPORT_SIZE_ATOM)[0]);
+export const VIEWPORT_HEIGHT_ATOM = atom((get) => get(VIEWPORT_SIZE_ATOM)[1]);
 
 export function useWindowHeight(): number {
-    return useAtomValue(WINDOW_HEIGHT_ATOM);
+    return useAtomValue(VIEWPORT_HEIGHT_ATOM);
 }
 
 export const BREAKPOINTS = [
@@ -63,17 +63,22 @@ const lg = window.matchMedia("(min-width: 1024px)");
 const xl = window.matchMedia("(min-width: 1280px)");
 const xxl = window.matchMedia("(min-width: 1536px)");
 */
-const BREAKPOINT_ATOM = atom<Breakpoint>((get) => {
-    const windowWidth = get(WINDOW_SIZE_ATOM)[0];
-    if (windowWidth > 1536) {
+export const BREAKPOINT_ATOM = atom<Breakpoint>((get) => {
+    const windowWidth = get(VIEWPORT_SIZE_ATOM)[0];
+
+    if (windowWidth === 0) {
+        return "lg"; // default to lg on server
+    }
+
+    if (windowWidth >= 1536) {
         return "2xl";
-    } else if (windowWidth > 1280) {
+    } else if (windowWidth >= 1280) {
         return "xl";
-    } else if (windowWidth > 1024) {
+    } else if (windowWidth >= 1024) {
         return "lg";
-    } else if (windowWidth > 768) {
+    } else if (windowWidth >= 768) {
         return "md";
-    } else if (windowWidth > 640) {
+    } else if (windowWidth >= 640) {
         return "sm";
     } else {
         return "mobile";
@@ -112,8 +117,21 @@ export function useLayoutBreakpoint(): LayoutBreakpointValue {
     );
 }
 
-// export const WINDOW_WIDTH_ATOM = atom(0);
-// WINDOW_WIDTH_ATOM.onMount = (setWidth) => {
+export const MOBILE_SIDEBAR_ENABLED_ATOM = atom((get) => {
+    const breakpoint = get(BREAKPOINT_ATOM);
+    switch (breakpoint) {
+        // sidebar is hidden by default on tablet-sized screens or smaller
+        case "mobile":
+        case "sm":
+        case "md":
+            return true;
+        default:
+            return false;
+    }
+});
+
+// export const VIEWPORT_WIDTH_ATOM = atom(0);
+// VIEWPORT_WIDTH_ATOM.onMount = (setWidth) => {
 //     if (typeof window === "undefined") {
 //         return;
 //     }

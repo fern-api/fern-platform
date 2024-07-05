@@ -15,7 +15,7 @@ import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { useFeatureFlags } from "../atoms/flags";
-import { useLayoutBreakpointValue } from "../atoms/window";
+import { useLayoutBreakpointValue } from "../atoms/viewport";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";

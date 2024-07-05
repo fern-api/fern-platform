@@ -2,9 +2,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, ReactElement } from "react";
 import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "../atoms/sidebar";
 import { DesktopSidebar } from "./DesktopSidebar";
-import { SidebarProps } from "./types";
 
-export function MobileSidebar(props: SidebarProps): ReactElement {
+export function MobileSidebar(): ReactElement {
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const closeMobileSidebar = useCloseMobileSidebar();
 
@@ -28,7 +27,7 @@ export function MobileSidebar(props: SidebarProps): ReactElement {
                     leaveFrom="opacity-100 translate-x-0 translate-y-0"
                     leaveTo="opacity-0 sm:opacity-100 sm:translate-y-0 sm:-translate-x-full"
                 >
-                    <DesktopSidebar {...props} />
+                    <DesktopSidebar />
                 </Transition.Child>
             </Dialog>
         </Transition>

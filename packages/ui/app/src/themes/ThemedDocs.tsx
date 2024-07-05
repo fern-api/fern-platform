@@ -8,7 +8,7 @@ const THEMES = {
 
 export type FernTheme = keyof typeof THEMES;
 
-const THEME: FernTheme = "cohere";
+const THEME: FernTheme = "default";
 
 export function ThemedDocs(): ReactElement {
     const Docs = THEMES[THEME];

@@ -1,12 +1,15 @@
 import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import type { DefaultSeoProps, JsonLd } from "@fern-ui/next-seo";
+import { useHydrateAtoms } from "jotai/utils";
 import { Redirect } from "next";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { CustomerAnalytics } from "../analytics/types";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { FeatureFlags } from "../atoms/flags";
+import { SLUG_ATOM } from "../atoms/location";
+import { RESOLVED_PATH_ATOM } from "../atoms/navigation";
 import { useMessageHandler } from "../atoms/sidebar";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
@@ -65,15 +68,18 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
 
     useConsoleMessage();
     useMessageHandler();
+    useHydrateAtoms(
+        [
+            [RESOLVED_PATH_ATOM, resolvedPath],
+            [SLUG_ATOM, FernNavigation.Slug(resolvedPath.fullSlug)],
+        ],
+        { dangerouslyForceHydrate: true },
+    );
 
     return (
         <DocsContextProvider {...pageProps}>
             <BgImageGradient />
-            <NavigationContextProvider
-                resolvedPath={resolvedPath} // this changes between pages
-                domain={baseUrl.domain}
-                basePath={baseUrl.basePath}
-            >
+            <NavigationContextProvider domain={baseUrl.domain} basePath={baseUrl.basePath}>
                 <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
                 <PlaygroundContextProvider>
                     <ThemedDocs />

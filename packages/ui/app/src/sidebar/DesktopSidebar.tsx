@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { ComponentPropsWithoutRef, forwardRef, memo, useRef } from "react";
 import { useSidebarNodes } from "../atoms/navigation";
 import { useIsMobileSidebarOpen } from "../atoms/sidebar";
-import { useLayoutBreakpointValue } from "../atoms/window";
+import { useLayoutBreakpointValue } from "../atoms/viewport";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
@@ -12,16 +12,12 @@ import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarTabButton } from "./SidebarTabButton";
 import { SidebarRootNode } from "./nodes/SidebarRootNode";
-import { SidebarProps } from "./types";
 
-interface DesktopSidebarProps extends SidebarProps, ComponentPropsWithoutRef<"nav"> {
+interface DesktopSidebarProps extends ComponentPropsWithoutRef<"nav"> {
     className?: string;
 }
 
-const UnmemoizedDesktopSidebar = forwardRef<HTMLElement, DesktopSidebarProps>(function DesktopSidebar(
-    { showSearchBar, ...props },
-    ref,
-) {
+const UnmemoizedDesktopSidebar = forwardRef<HTMLElement, DesktopSidebarProps>(function DesktopSidebar(props, ref) {
     const { layout, tabs, currentTabIndex } = useDocsContext();
     const sidebar = useSidebarNodes();
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -30,14 +26,13 @@ const UnmemoizedDesktopSidebar = forwardRef<HTMLElement, DesktopSidebarProps>(fu
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
     return (
-        <nav aria-label="secondary" ref={ref} {...props}>
+        <nav aria-label="secondary" ref={ref} {...props} className={clsx("fern-sidebar-container", props.className)}>
             <SidebarFixedItemsSection
                 showBorder={isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))}
-                showSearchBar={showSearchBar}
             />
             <SearchSidebar>
                 <FernScrollArea
-                    rootClassName="flex-1"
+                    rootClassName="flex-1 shrink-1"
                     className={clsx("group/sidebar fern-sidebar-content", {
                         "overscroll-contain": layout?.disableHeader === true,
                     })}

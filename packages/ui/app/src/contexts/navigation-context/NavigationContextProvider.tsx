@@ -3,20 +3,21 @@ import { noop } from "@fern-ui/core-utils";
 import { NextSeo } from "@fern-ui/next-seo";
 import { useEventCallback } from "@fern-ui/react-commons";
 import fastdom from "fastdom";
+import { useAtomValue } from "jotai";
 import { debounce } from "lodash-es";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { useFeatureFlags } from "../../atoms/flags";
-import { useNavigationNodes } from "../../atoms/navigation";
+import { SLUG_ATOM } from "../../atoms/location";
+import { useNavigationNodes, useResolvedPath } from "../../atoms/navigation";
 import { getNextSeoProps } from "../../next-app/utils/getSeoProp";
-import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
-        resolvedPath: ResolvedPath;
+        // resolvedPath: ResolvedPath;
         domain: string;
         basePath: string | undefined;
         // title: string | undefined;
@@ -93,7 +94,6 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
 }
 
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
-    resolvedPath,
     children,
     domain,
     basePath,
@@ -101,9 +101,10 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
     const { versions, currentVersionId } = useDocsContext();
     const nodes = useNavigationNodes();
     const { isApiScrollingDisabled } = useFeatureFlags();
+    const slug = useAtomValue(SLUG_ATOM);
     const router = useRouter();
 
-    const [activeNavigatable, setActiveNavigatable] = useState(() => nodes.slugMap.get(resolvedPath.fullSlug));
+    const [activeNavigatable, setActiveNavigatable] = useState(() => nodes.slugMap.get(slug));
 
     const [, anchor] = router.asPath.split("#");
     const selectedSlug = activeNavigatable?.slug ?? "";
@@ -219,6 +220,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         });
     }, [router, navigateToPath]);
 
+    const resolvedPath = useResolvedPath();
     const seo = useMemo(() => getNextSeoProps(resolvedPath, activeNavigatable), [activeNavigatable, resolvedPath]);
 
     return (
@@ -229,7 +231,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                     basePath: basePath != null && basePath.replace("/", "").trim().length > 0 ? basePath : undefined,
                     activeNavigatable,
                     onScrollToPath,
-                    resolvedPath,
                     activeVersion: versions.find((version) => version.id === currentVersionId),
                     selectedSlug,
                     unversionedSlug: FernNavigation.utils.getUnversionedSlug(
@@ -238,16 +239,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                         basePath,
                     ),
                 }),
-                [
-                    activeNavigatable,
-                    basePath,
-                    currentVersionId,
-                    domain,
-                    onScrollToPath,
-                    resolvedPath,
-                    selectedSlug,
-                    versions,
-                ],
+                [activeNavigatable, basePath, currentVersionId, domain, onScrollToPath, selectedSlug, versions],
             )}
         >
             <NextSeo {...seo} />

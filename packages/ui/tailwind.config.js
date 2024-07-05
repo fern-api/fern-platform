@@ -146,6 +146,7 @@ module.exports = {
                 // "border-default": "var(--grayscale-a5)",
                 "border-default": "var(--border)",
                 "border-concealed": "var(--border-concealed)",
+                "card-border": "var(--card-border, var(--border))",
                 "border-accent-muted": "rgba(var(--accent), 0.50)",
                 "border-warning": "var(--amber-a8)",
                 "border-success": "var(--green-a8)",
@@ -185,7 +186,7 @@ module.exports = {
                 DEFAULT: {
                     css: {
                         color: "#000000",
-                        maxWidth: "var(--spacing-content-width)",
+                        maxWidth: "unset",
                         "--tw-prose-bold": "inherit",
                         "--tw-prose-links": "inherit",
                         "--tw-prose-hr": "var(--border)",
@@ -199,15 +200,6 @@ module.exports = {
                         },
                         "tbody td[rowspan]:first-child + td, tfoot td[rowspan]:first-child + td": {
                             paddingLeft: 0,
-                        },
-                        p: {
-                            maxWidth: "var(--spacing-content-width)",
-                        },
-                        ol: {
-                            maxWidth: "var(--spacing-content-width)",
-                        },
-                        ul: {
-                            maxWidth: "var(--spacing-content-width)",
                         },
 
                         // remove quotes from code blocks
@@ -320,6 +312,10 @@ module.exports = {
                     from: { opacity: "0", transform: "translate(-100%, 0)" },
                     to: { opacity: "1", transform: "translate(0, 0)" },
                 },
+                "content-dismiss-to-left": {
+                    from: { opacity: "1", transform: "translate(0, 0)" },
+                    to: { opacity: "0", transform: "translate(-100%, 0)" },
+                },
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -338,6 +334,7 @@ module.exports = {
                 "content-show": "content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show-from-bottom": "content-show-from-bottom 500ms cubic-bezier(0.16, 1, 0.3, 1)",
                 "content-show-from-left": "content-show-from-left 500ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "content-dismiss-to-left": "content-dismiss-to-left 500ms cubic-bezier(0.16, 1, 0.3, 1)",
             },
         },
     },

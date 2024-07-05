@@ -1,50 +1,60 @@
 import { FernScrollArea } from "@fern-ui/components";
+import { useResizeObserver } from "@fern-ui/react-commons";
+import { useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
-import { ReactElement, memo } from "react";
+import { CSSProperties, ReactElement, memo, useRef, useState } from "react";
+import { CONTENT_HEIGHT_ATOM } from "../../atoms/layout";
 import { LOGO_TEXT_ATOM } from "../../atoms/logo";
-import { useSidebarNodes } from "../../atoms/navigation";
-import { useLayoutBreakpoint } from "../../atoms/window";
+import { useLayoutBreakpoint } from "../../atoms/viewport";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { useNavigationContext } from "../../contexts/navigation-context";
 import { DocsMainContent } from "../../docs/DocsMainContent";
-import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
-import { CohereMobileSidebar } from "./CohereMobileSidebar";
+import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
-
-// const DesktopSidebar = dynamic(
-//     () => import("../../sidebar/DesktopSidebar").then(({ DesktopSidebar }) => DesktopSidebar),
-//     {
-//         ssr: true,
-//     },
-// );
 
 function UnmemoizedCohereDocs(): ReactElement {
     const { layout } = useDocsContext();
-    const sidebar = useSidebarNodes();
-    const { resolvedPath } = useNavigationContext();
     const breakpoint = useLayoutBreakpoint();
     const showHeader = layout?.disableHeader !== true || breakpoint.max("lg");
-    const showSidebar = sidebar != null && resolvedPath.type !== "changelog-entry";
 
-    useHydrateAtoms([[LOGO_TEXT_ATOM, "docs"]]);
+    useHydrateAtoms([[LOGO_TEXT_ATOM, "docs"]], {
+        dangerouslyForceHydrate: true,
+    });
+
+    const mainRef = useRef<HTMLDivElement>(null);
+    const [contentHeight, setContentHeight] = useAtom(CONTENT_HEIGHT_ATOM);
+
+    // the maxWidth: contentWidth guards against Radix's ScrollArea, which relies on display: table
+    // where the contents of the table are not constrained by the width of the table itself.
+    // TODO: this is bad for performance, so we'll need to fix this behavior using CSS.
+    const [contentWidth, setContentWidth] = useState<number>();
+    useResizeObserver(mainRef, ([entry]) => {
+        setContentHeight(entry.contentRect.height);
+        setContentWidth(entry.contentRect.width);
+    });
 
     return (
-        <div className="fern-container fern-theme-cohere">
+        <div
+            className="fern-container fern-theme-cohere"
+            style={
+                {
+                    "--content-height": `${contentHeight}px`,
+                    "--header-offset": "0px",
+                    "--card-border": "#D8CFC1",
+                } as CSSProperties
+            }
+        >
             {showHeader && <HeaderContainer />}
-
             <div className="fern-body">
-                {/* {showSidebar && (
-                    <DesktopSidebar showSearchBar={showSearchBarInSidebar} className="fern-sidebar-desktop" />
-                )} */}
-                <FernScrollArea className="fern-main">
-                    <DocsMainContent />
-                    <BuiltWithFern className="mx-auto my-8 w-fit" />
-                </FernScrollArea>
-                {showSidebar && <CohereMobileSidebar />}
-            </div>
+                <FernScrollArea className="fern-main" ref={mainRef} scrollbars="vertical">
+                    <div style={{ maxWidth: contentWidth != null ? `${contentWidth}px` : undefined }}>
+                        <DocsMainContent />
 
-            {/* Enables footer DOM injection */}
-            <footer id="fern-footer" />
+                        {/* Enables footer DOM injection */}
+                        <footer id="fern-footer" />
+                    </div>
+                </FernScrollArea>
+                <Sidebar />
+            </div>
         </div>
     );
 }

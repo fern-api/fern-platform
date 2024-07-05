@@ -78,4 +78,32 @@
     .font-heading {
         font-family: var(--typography-heading-font-family, var(--heading-font-fallback)) !important;
     }
+
+    .scroll-mt-content {
+        scroll-margin-top: var(--header-offset, 0px);
+    }
+
+    .scroll-mt-content-padded {
+        scroll-margin-top: calc(var(--header-offset, 0px) + 1rem);
+    }
+
+    .top-header-offset {
+        top: var(--header-offset, 0px);
+    }
+
+    .h-below-header {
+        height: calc(100vh - var(--header-offset, 0px));
+    }
+
+    .h-content {
+        height: var(--content-height, 100vh);
+    }
+
+    .max-h-content {
+        max-height: var(--content-height, 100vh);
+    }
+
+    .h-content-padded {
+        height: calc(var(--content-height, 100vh) - 1rem);
+    }
 }

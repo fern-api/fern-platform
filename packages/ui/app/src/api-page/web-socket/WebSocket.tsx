@@ -105,13 +105,9 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const headers = websocket.headers.filter((header) => !header.hidden);
 
     return (
-        <div
-            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
-            ref={setTargetRef}
-            data-route={route.toLowerCase()}
-        >
+        <div className={"fern-endpoint-content"} ref={setTargetRef} data-route={route.toLowerCase()}>
             <article
-                className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
+                className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi && !isApiScrollingDisabled,
                 })}
             >
@@ -310,7 +306,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                     </section>
                     <aside className="max-w-content-width">
                         {
-                            <div className="sticky top-header-height flex max-h-vh-minus-header scroll-mt-header-height flex-col gap-6 py-8">
+                            <div className="sticky top-header-height flex max-h-content scroll-mt-content flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
                                     actions={node != null ? <PlaygroundButton state={node} /> : undefined}

@@ -10,8 +10,7 @@ import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
 import { renderSegmentSnippet } from "../../analytics/segment";
 import { FEATURE_FLAGS_ATOM } from "../../atoms/flags";
 import { DOCS_LAYOUT_ATOM } from "../../atoms/layout";
-import { SIDEBAR_ROOT_NODE } from "../../atoms/navigation";
-import { store } from "../../atoms/store";
+import { SIDEBAR_ROOT_NODE_ATOM } from "../../atoms/navigation";
 import { DocsPage } from "../../next-app/DocsPage";
 import { getThemeColor } from "../../next-app/utils/getColorVariables";
 import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet";
@@ -41,13 +40,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     useHydrateAtoms(
         [
             [DOCS_LAYOUT_ATOM, layout],
-            [SIDEBAR_ROOT_NODE, sidebar],
+            [SIDEBAR_ROOT_NODE_ATOM, sidebar],
             [FEATURE_FLAGS_ATOM, featureFlags],
         ],
-        {
-            store,
-            dangerouslyForceHydrate: true,
-        },
+        { dangerouslyForceHydrate: true },
     );
 
     const { logoHeight, logoHref } = pageProps;

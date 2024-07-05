@@ -2,9 +2,10 @@ import clsx from "clsx";
 import { Fragment, ReactElement } from "react";
 import { useSidebarNodes } from "../atoms/navigation";
 import { FernLink } from "../components/FernLink";
-import { CustomDocsPageHeader } from "../custom-docs-page/CustomDocsPage";
+import { PageHeader } from "../components/PageHeader";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
+import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
     const sidebar = useSidebarNodes();
@@ -14,16 +15,16 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
     return (
         <div className="flex justify-between px-4 md:px-6 lg:px-8">
             <div className={clsx("w-full min-w-0 pt-8", { "sm:pt-8 lg:pt-24": fullWidth })}>
-                <article className={clsx("mx-auto xl:w-fit break-words", { " xl:ml-8": !fullWidth })}>
+                <main className={clsx("mx-auto max-w-screen-lg break-words", { " xl:ml-8": !fullWidth })}>
                     <section className="flex">
                         {fullWidth ? (
                             <>
                                 <div className="flex-initial max-md:hidden w-64" />
                                 <div className="relative mr-6 max-w-content-width flex-auto">
-                                    <CustomDocsPageHeader
+                                    <PageHeader
                                         title={resolvedPath.node.title}
-                                        sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
-                                        excerpt={
+                                        breadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
+                                        subtitle={
                                             typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined
                                         }
                                     />
@@ -36,10 +37,10 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                             </>
                         ) : (
                             <div className="relative mr-6 max-w-content-width flex-auto">
-                                <CustomDocsPageHeader
+                                <PageHeader
                                     title={resolvedPath.node.title}
-                                    sectionTitleBreadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
-                                    excerpt={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
+                                    breadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
+                                    subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
                                 />
                                 {overview != null && (
                                     <section className="prose dark:prose-invertw-content-width">
@@ -58,7 +59,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                 return (
                                     <Fragment key={entry.id}>
                                         <hr className="mt-8 mb-16" />
-                                        <section id={entry.date} className="flex items-stretch">
+                                        <article id={entry.date} className="flex items-stretch">
                                             {fullWidth ? (
                                                 <>
                                                     <div className="flex-initial max-md:hidden min-w-64">
@@ -94,14 +95,16 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                                     </div>
                                                 </>
                                             )}
-                                        </section>
+                                        </article>
                                     </Fragment>
                                 );
                             }),
                         ),
                     )}
+
                     <div className="h-48" />
-                </article>
+                    <BuiltWithFern className="w-fit mx-auto my-8" />
+                </main>
             </div>
         </div>
     );

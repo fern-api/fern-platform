@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, memo } from "react";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { Header } from "../../docs/Header";
 import { HeaderTabs } from "../../docs/HeaderTabs";
@@ -7,7 +7,7 @@ interface HeaderContainerProps {
     className?: string;
 }
 
-export function HeaderContainer({ className }: HeaderContainerProps): ReactElement {
+export const HeaderContainer = memo(function HeaderContainer({ className }: HeaderContainerProps): ReactElement {
     const { layout, tabs } = useDocsContext();
 
     const showHeaderTabs = tabs.length > 0 && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true;
@@ -29,4 +29,4 @@ export function HeaderContainer({ className }: HeaderContainerProps): ReactEleme
             </div>
         </header>
     );
-}
+});

@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import Link from "next/link";
 import { ReactElement } from "react";
-import { useLayoutBreakpointValue } from "../atoms/window";
+import { useLayoutBreakpointValue } from "../atoms/viewport";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 

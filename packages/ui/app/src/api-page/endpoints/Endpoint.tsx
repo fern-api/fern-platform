@@ -1,7 +1,8 @@
 import { useAtomValue } from "jotai";
 import { useFeatureFlags } from "../../atoms/flags";
+import { useResolvedPath } from "../../atoms/navigation";
 import { FERN_STREAM_ATOM } from "../../atoms/stream";
-import { useNavigationContext, useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
+import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
@@ -19,7 +20,7 @@ export declare namespace Endpoint {
 
 export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, breadcrumbs, isLastInApi, types }) => {
     const isStream = useAtomValue(FERN_STREAM_ATOM);
-    const { resolvedPath } = useNavigationContext();
+    const resolvedPath = useResolvedPath();
     const { isApiScrollingDisabled } = useFeatureFlags();
 
     const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;

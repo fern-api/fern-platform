@@ -1,5 +1,7 @@
 import cn from "clsx";
+import { useAtomValue } from "jotai";
 import { useMemo } from "react";
+import { SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { HeaderLogoSection } from "../docs/HeaderLogoSection";
 import { ThemeButton } from "../docs/ThemeButton";
@@ -9,16 +11,12 @@ export declare namespace SidebarFixedItemsSection {
     export interface Props {
         className?: string;
         showBorder?: boolean;
-        showSearchBar?: boolean;
         currentTabIndex?: number | undefined;
     }
 }
 
-export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({
-    className,
-    showBorder,
-    showSearchBar,
-}) => {
+export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, showBorder }) => {
+    const showSearchBar = useAtomValue(SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM);
     const { layout, colors } = useDocsContext();
 
     const searchBar = useMemo(() => {
@@ -42,13 +40,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
 
     return (
         <div
-            className={cn(
-                "flex flex-col px-4",
-                {
-                    "lg:pt-4": !header,
-                },
-                className,
-            )}
+            className={cn("flex flex-col px-4", { "lg:pt-4": !header }, className)}
             data-border={showBorder ? "show" : "hide"}
         >
             {header}

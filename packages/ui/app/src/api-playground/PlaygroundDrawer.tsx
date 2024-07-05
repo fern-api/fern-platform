@@ -6,7 +6,7 @@ import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { motion, useAnimate, useMotionValue } from "framer-motion";
 import { useAtom } from "jotai";
 import { mapValues } from "lodash-es";
-import { Dispatch, ReactElement, SetStateAction, useCallback, useEffect, useMemo } from "react";
+import { Dispatch, ReactElement, SetStateAction, memo, useCallback, useEffect, useMemo } from "react";
 import { useFlattenedApis } from "../atoms/apis";
 import { useSidebarNodes } from "../atoms/navigation";
 import {
@@ -19,7 +19,7 @@ import {
     useSetPlaygroundHeight,
     useTogglePlayground,
 } from "../atoms/playground";
-import { useLayoutBreakpointValue, useWindowHeight } from "../atoms/window";
+import { useLayoutBreakpointValue, useWindowHeight } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
     ResolvedApiDefinition,
@@ -63,7 +63,7 @@ const EMPTY_WEBSOCKET_FORM_STATE: PlaygroundWebSocketRequestFormState = {
     messages: {},
 };
 
-export function PlaygroundDrawer(): ReactElement | null {
+export const PlaygroundDrawer = memo((): ReactElement | null => {
     const windowHeight = useWindowHeight();
     const collapsePlayground = useClosePlayground();
     const hasPlayground = useHasPlayground();
@@ -299,6 +299,7 @@ export function PlaygroundDrawer(): ReactElement | null {
             showError={true}
             reset={resetWithoutExample}
         >
+            {isPlaygroundOpen && <div style={{ height }} />}
             <Dialog.Root open={isPlaygroundOpen} onOpenChange={togglePlayground} modal={false}>
                 <Dialog.Portal>
                     <Dialog.Content
@@ -351,7 +352,9 @@ export function PlaygroundDrawer(): ReactElement | null {
             </Dialog.Root>
         </FernErrorBoundary>
     );
-}
+});
+
+PlaygroundDrawer.displayName = "PlaygroundDrawer";
 
 function getInitialEndpointRequestFormState(
     auth: APIV1Read.ApiAuth | null | undefined,

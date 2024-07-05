@@ -7,12 +7,12 @@ import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, us
 import { useInView } from "react-intersection-observer";
 import { FERN_LANGUAGE_ATOM } from "../../atoms/lang";
 import { FERN_STREAM_ATOM } from "../../atoms/stream";
-import { useLayoutBreakpoint } from "../../atoms/window";
+import { useLayoutBreakpoint } from "../../atoms/viewport";
+import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useViewportSize } from "../../hooks/useViewportSize";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
-import { Breadcrumbs } from "../Breadcrumbs";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { AnimatedTitle } from "./AnimatedTitle";
@@ -229,22 +229,22 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
 
     return (
         <div
-            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
+            className={"fern-endpoint-content"}
             onClick={() => setSelectedError(undefined)}
             ref={viewportRef}
+            data-route={`/${endpoint.slug}`}
         >
             <div
-                className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
+                className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
                 ref={ref}
-                data-route={`/${endpoint.slug}`}
             >
                 <div className="space-y-1 pb-2 pt-8">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
                     <div className="flex items-center justify-between">
                         <span>
-                            <h1 className="my-0 inline leading-none">
+                            <h1 className="fern-page-heading">
                                 <AnimatedTitle>{endpoint.title}</AnimatedTitle>
                             </h1>
                             {endpoint.availability != null && (
@@ -309,21 +309,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         />
                     </div>
 
-                    <div
-                        className={cn(
-                            "max-w-content-width",
-                            "md:flex-1 md:sticky md:self-start",
-                            "mt-12",
-                            // the 4rem is the same as the h-10 as the Header
-                            "max-h-[150vh] md:max-h-vh-minus-header",
-                            "flex",
-                            // header offset
-                            "md:py-8 md:mt-0 md:top-header-height",
-                        )}
-                        style={{
-                            minHeight: layoutBreakpoint.min("md") ? `${exampleHeight + 64}px` : `${exampleHeight}px`,
-                        }}
-                    >
+                    <aside className="fern-endpoint-content-right">
                         {isInViewport && (
                             <EndpointContentCodeSnippets
                                 api={api}
@@ -343,7 +329,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 measureHeight={setExampleHeight}
                             />
                         )}
-                    </div>
+                    </aside>
                 </div>
             </div>
         </div>

@@ -24,8 +24,8 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
     return (
         <div
             className={cn(
-                "rounded-xl overflow-hidden flex flex-col bg-card after:ring-default after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
-                "max-md:max-h-vh-minus-header-padded",
+                "rounded-xl overflow-hidden flex flex-col bg-card after:ring-card-border after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
+                "max-md:max-h-content-padded",
                 className,
             )}
             onClick={onClick}
@@ -39,7 +39,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
                     "bg-tag-danger-soft": intent === "danger",
                 })}
             >
-                <div className="mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0] shadow-border-default">
+                <div className="mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0] shadow-card-border">
                     {typeof title === "string" ? (
                         <div
                             className={cn("text-sm px-1", {

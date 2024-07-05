@@ -16,12 +16,12 @@
         }
 
         .keyboard-shortcut-hint {
-            @apply t-muted ring-default shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
+            @apply t-muted ring-card-border shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
             @apply dark:shadow-card-dark bg-card;
         }
 
         &:hover .keyboard-shortcut-hint {
-            @apply ring-default;
+            @apply ring-card-border;
         }
 
         &:disabled {
@@ -132,5 +132,14 @@
 
     .custom-backdrop [data-rmiz-modal-overlay="visible"] {
         @apply bg-text-default/20;
+    }
+
+    .fern-prose {
+        @apply prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 break-words;
+    }
+
+    .fern-page-heading {
+        @apply my-0 inline-block leading-tight;
+        text-wrap: balance;
     }
 }

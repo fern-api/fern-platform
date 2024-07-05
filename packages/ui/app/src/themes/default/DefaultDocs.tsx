@@ -1,61 +1,62 @@
 import clsx from "clsx";
+import { useAtomValue } from "jotai";
 import { useTheme } from "next-themes";
-import dynamic from "next/dynamic";
-import { ReactElement, memo } from "react";
-import { useSidebarNodes } from "../../atoms/navigation";
-import { useLayoutBreakpoint } from "../../atoms/window";
+import { CSSProperties, ReactElement, memo } from "react";
+import { CONTENT_HEIGHT_ATOM, HEADER_OFFSET_ATOM } from "../../atoms/layout";
+import { SIDEBAR_DISABLED_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
+import { useLayoutBreakpoint } from "../../atoms/viewport";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { useNavigationContext } from "../../contexts/navigation-context";
 import { DocsMainContent } from "../../docs/DocsMainContent";
-import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
+import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
-
-const Sidebar = dynamic(() => import("./Sidebar").then(({ Sidebar }) => Sidebar), { ssr: true });
 
 function UnmemoizedDefaultDocs(): ReactElement {
     const { layout, colors } = useDocsContext();
-    const sidebar = useSidebarNodes();
-    const { resolvedTheme: theme = "light" } = useTheme();
-    const { resolvedPath } = useNavigationContext();
-
     const breakpoint = useLayoutBreakpoint();
     const showHeader = layout?.disableHeader !== true || breakpoint.max("lg");
-    const showSidebar = sidebar != null && resolvedPath.type !== "changelog-entry";
+    const { resolvedTheme: theme = "light" } = useTheme();
     const isSidebarFixed = layout?.disableHeader || colors[theme as "light" | "dark"]?.sidebarBackground != null;
 
+    const contentHeight = useAtomValue(CONTENT_HEIGHT_ATOM);
+    const headerOffset = useAtomValue(HEADER_OFFSET_ATOM);
+    const isSidebarDisabled = useAtomValue(SIDEBAR_DISABLED_ATOM);
+    const isSidebarDismissable = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
+
     return (
-        <div className={"fern-container"}>
+        <div
+            className="fern-container fern-theme-default"
+            style={
+                {
+                    "--content-height": `${contentHeight}px`,
+                    "--header-offset": showHeader ? `${headerOffset}px` : "0px",
+                } as CSSProperties
+            }
+        >
             {showHeader && <HeaderContainer />}
 
-            <div className="fern-body">
-                {showSidebar && (
-                    <>
-                        <style>
-                            {`
-                                .fern-sidebar-container {
-                                    border-right-width: ${colors.light?.sidebarBackground == null ? 0 : 1}px;
-                                    border-left-width: ${colors.light?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
-                                }
+            <style>
+                {`
+                        .fern-sidebar-container {
+                            border-right-width: ${colors.light?.sidebarBackground == null ? 0 : 1}px;
+                            border-left-width: ${colors.light?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
+                        }
 
-                                :is(.dark) .fern-sidebar-container {
-                                    border-right-width: ${colors.dark?.sidebarBackground == null ? 0 : 1}px;
-                                    border-left-width: ${colors.dark?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
-                                }
-                            `}
-                        </style>
-                        <Sidebar
-                            className={clsx("fern-sidebar-container", {
-                                "fern-sidebar-fixed": isSidebarFixed,
-                            })}
-                            showSearchBar={layout?.disableHeader || layout?.searchbarPlacement !== "HEADER"}
-                        />
-                        {isSidebarFixed && <div className="hidden w-sidebar-width lg:block" />}
-                    </>
-                )}
-                <main className="fern-main">
+                        :is(.dark) .fern-sidebar-container {
+                            border-right-width: ${colors.dark?.sidebarBackground == null ? 0 : 1}px;
+                            border-left-width: ${colors.dark?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
+                        }
+                    `}
+            </style>
+
+            <div className="fern-body">
+                <div
+                    className={clsx("fern-main", {
+                        "fern-sidebar-disabled": isSidebarDisabled || isSidebarDismissable,
+                    })}
+                >
                     <DocsMainContent />
-                    <BuiltWithFern className="absolute bottom-0 left-1/2 z-50 my-8 flex w-fit -translate-x-1/2 justify-center" />
-                </main>
+                </div>
+                <Sidebar className={isSidebarFixed ? "fern-sidebar-fixed" : undefined} />
             </div>
 
             {/* Enables footer DOM injection */}

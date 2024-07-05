@@ -5,7 +5,7 @@ import { Fragment, ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
 import { useSidebarNodes } from "../../atoms/navigation";
 import { useCloseSearchDialog, useIsSearchDialogOpen } from "../../atoms/sidebar";
-import { useLayoutBreakpointValue } from "../../atoms/window";
+import { useLayoutBreakpointValue } from "../../atoms/viewport";
 import { useNavigationContext } from "../../contexts/navigation-context";
 import { SearchHits } from "../SearchHits";
 import { createSearchPlaceholderWithVersion } from "../util";

@@ -1,6 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
 import { useCallback } from "react";
+import { useCurrentNodeId } from "../../atoms/navigation";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
@@ -16,8 +17,8 @@ export function SidebarApiPackageNode({
     depth,
     className,
 }: SidebarApiPackageNodeProps): React.ReactElement | null {
-    const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener, selectedNodeId } =
-        useCollapseSidebar();
+    const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
+    const selectedNodeId = useCurrentNodeId();
     const handleToggleExpand = useCallback(() => toggleExpanded(node.id), [node.id, toggleExpanded]);
 
     if (node.children.length === 0) {
@@ -41,7 +42,7 @@ export function SidebarApiPackageNode({
                 icon={node.icon}
                 hidden={node.hidden}
                 shallow={selectedNodeId === node.id}
-                scrollOnShallow={true}
+                scrollOnShallow={false}
             />
         );
     }
