@@ -16,7 +16,7 @@ import { NavigationContextProvider } from "../contexts/navigation-context/Naviga
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { type ResolvedPath } from "../resolver/ResolvedPath";
-import { ThemedDocs } from "../themes/ThemedDocs";
+import { ThemedDocs, type FernTheme } from "../themes/ThemedDocs";
 
 const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
     ssr: true,
@@ -60,6 +60,7 @@ export declare namespace DocsPage {
         analytics: CustomerAnalytics | undefined;
 
         fallback: Record<string, any>;
+        theme: FernTheme;
     }
 }
 
@@ -82,7 +83,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
             <NavigationContextProvider domain={baseUrl.domain} basePath={baseUrl.basePath}>
                 <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
                 <PlaygroundContextProvider>
-                    <ThemedDocs />
+                    <ThemedDocs theme={pageProps.theme} />
                 </PlaygroundContextProvider>
             </NavigationContextProvider>
         </DocsContextProvider>

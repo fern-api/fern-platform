@@ -2,7 +2,8 @@ import { FernScrollArea } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
-import { CSSProperties, ReactElement, memo, useRef, useState } from "react";
+import { Router } from "next/router";
+import { CSSProperties, ReactElement, memo, useEffect, useRef, useState } from "react";
 import { CONTENT_HEIGHT_ATOM } from "../../atoms/layout";
 import { LOGO_TEXT_ATOM } from "../../atoms/logo";
 import { useLayoutBreakpoint } from "../../atoms/viewport";
@@ -32,8 +33,17 @@ function UnmemoizedCohereDocs(): ReactElement {
         setContentWidth(entry.contentRect.width);
     });
 
+    useEffect(() => {
+        const handleRouteChange = () => {
+            mainRef.current?.scrollTo(0, 0);
+        };
+        Router.events.on("routeChangeComplete", handleRouteChange);
+        return () => Router.events.off("routeChangeComplete", handleRouteChange);
+    }, []);
+
     return (
         <div
+            id="fern-docs"
             className="fern-container fern-theme-cohere"
             style={
                 {

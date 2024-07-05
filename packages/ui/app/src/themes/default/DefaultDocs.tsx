@@ -24,6 +24,7 @@ function UnmemoizedDefaultDocs(): ReactElement {
 
     return (
         <div
+            id="fern-docs"
             className="fern-container fern-theme-default"
             style={
                 {

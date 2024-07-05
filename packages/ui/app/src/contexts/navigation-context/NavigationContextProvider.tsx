@@ -5,7 +5,7 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
 import { debounce } from "lodash-es";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { useFeatureFlags } from "../../atoms/flags";
 import { SLUG_ATOM } from "../../atoms/location";
@@ -200,17 +200,17 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
             handleRouteChange(route, options);
         };
-        router.events.on("routeChangeComplete", handleRouteChange);
-        router.events.on("hashChangeStart", handleRouteChange);
-        router.events.on("hashChangeComplete", handleRouteChange);
-        router.events.on("routeChangeError", handleRouteChangeError);
+        Router.events.on("routeChangeComplete", handleRouteChange);
+        Router.events.on("hashChangeStart", handleRouteChange);
+        Router.events.on("hashChangeComplete", handleRouteChange);
+        Router.events.on("routeChangeError", handleRouteChangeError);
         return () => {
-            router.events.off("routeChangeComplete", handleRouteChange);
-            router.events.off("hashChangeStart", handleRouteChange);
-            router.events.off("hashChangeComplete", handleRouteChange);
-            router.events.off("routeChangeError", handleRouteChangeError);
+            Router.events.off("routeChangeComplete", handleRouteChange);
+            Router.events.off("hashChangeStart", handleRouteChange);
+            Router.events.off("hashChangeComplete", handleRouteChange);
+            Router.events.off("routeChangeError", handleRouteChangeError);
         };
-    }, [navigateToPath, router.events]);
+    }, [navigateToPath]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
