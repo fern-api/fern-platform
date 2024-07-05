@@ -96,14 +96,13 @@ async function convertToMarkdown(content: string[], levelIn: number): Promise<st
             newline = await downloadImages(line, levelIn);
         }
 
-        if (line.match(/```(\S+)/)) {
+        if (line.match(/```(\S*)/)) {
             if (!collectingCode) {
                 collectingCode = true;
             } else {
                 checkEnd = false;
                 multiblock = true;
             }
-            newline = line.replace(/```(\S+) (\S+.*)/, "```$1 title='$2'");
             codeData.push(newline);
             continue;
         } else if (line === "```\n") {
