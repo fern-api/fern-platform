@@ -44,8 +44,8 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                     error: () => "callout-outlined-danger",
                     note: () => "callout-outlined-info",
                     launch: () => "callout-outlined-primary",
-                    tip: () => "callout-outlined-success",
-                    check: () => "callout-outlined-success",
+                    tip: () => "callout-outlined-tip",
+                    check: () => "callout-outlined-check",
                     _other: () => "callout-outlined",
                 }),
             )}

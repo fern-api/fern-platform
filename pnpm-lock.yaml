@@ -2149,6 +2149,9 @@ importers:
       express:
         specifier: ^4.18.1
         version: 4.19.2
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
       hast:
         specifier: ^1.0.0
         version: 1.0.0
