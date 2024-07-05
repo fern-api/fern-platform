@@ -1,14 +1,17 @@
+import { useArgs } from "@storybook/preview-api";
 import type { Meta, StoryObj } from "@storybook/react";
 import { FernSdk } from "../FernSdk";
 
 const meta: Meta<typeof FernSdk> = {
     title: "General/FernSdk",
     component: FernSdk,
+};
+
+type Story = StoryObj<typeof FernSdk>;
+
+export const Default: Story = {
     args: {
         language: "node",
-        onChange: () => {
-            // do nothing
-        },
         sdks: {
             node: {
                 packageName: "@mergeapi/merge-node-client",
@@ -26,7 +29,7 @@ const meta: Meta<typeof FernSdk> = {
             ruby: {
                 packageName: "merge-ruby-client",
             },
-            "csharp": {
+            csharp: {
                 packageName: "Merge.net",
             },
             swift: {
@@ -34,8 +37,18 @@ const meta: Meta<typeof FernSdk> = {
             },
         },
     },
+    render: (args) => {
+        const [{ language }, updateArgs] = useArgs();
+        return (
+            <FernSdk
+                {...args}
+                language={language}
+                onChange={(language) => {
+                    updateArgs({ language });
+                }}
+            />
+        );
+    },
 };
-
-export const Default: StoryObj<typeof FernSdk> = {};
 
 export default meta;

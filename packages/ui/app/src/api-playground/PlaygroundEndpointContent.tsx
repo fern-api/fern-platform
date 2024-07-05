@@ -148,26 +148,26 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                     content={() =>
                         requestType === "curl"
                             ? stringifyCurl({
-                                endpoint,
-                                formState,
-                                redacted: false,
-                                domain,
-                            })
+                                  endpoint,
+                                  formState,
+                                  redacted: false,
+                                  domain,
+                              })
                             : requestType === "typescript"
-                                ? stringifyFetch({
+                              ? stringifyFetch({
                                     endpoint,
                                     formState,
                                     redacted: false,
                                     isSnippetTemplatesEnabled,
                                 })
-                                : requestType === "python"
-                                    ? stringifyPythonRequests({
-                                        endpoint,
-                                        formState,
-                                        redacted: false,
-                                        isSnippetTemplatesEnabled,
-                                    })
-                                    : ""
+                              : requestType === "python"
+                                ? stringifyPythonRequests({
+                                      endpoint,
+                                      formState,
+                                      redacted: false,
+                                      isSnippetTemplatesEnabled,
+                                  })
+                                : ""
                     }
                     className="-mr-2"
                 />
@@ -229,8 +229,8 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                     response.type === "json"
                                         ? JSON.stringify(response.response.body, null, 2)
                                         : response.type === "stream"
-                                            ? response.response.body
-                                            : ""
+                                          ? response.response.body
+                                          : ""
                                 }
                                 className="-mr-2"
                             />
@@ -255,7 +255,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                     response.type !== "file" ? (
                         <PlaygroundResponsePreview response={response} />
                     ) : response.contentType.startsWith("audio/") ||
-                        (domain.includes("ircamamplify") && response.contentType === "binary/octet-stream") ? (
+                      (domain.includes("ircamamplify") && response.contentType === "binary/octet-stream") ? (
                         <FernAudioPlayer
                             src={response.response.body}
                             className="flex h-full items-center justify-center p-4"

@@ -38,21 +38,21 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
                     onClick?.(e);
                     copyToClipboard?.();
                 }) ?? (
-                        <FernButton
-                            className={cn("group fern-copy-button", className)}
-                            disabled={copyToClipboard == null}
-                            onClickCapture={(e) => {
-                                onClick?.(e);
-                                copyToClipboard?.();
-                            }}
-                            data-testid={testId}
-                            rounded={true}
-                            icon={wasJustCopied ? <Check className="size-4" /> : <CopyIcon className="size-4" />}
-                            variant="minimal"
-                            intent={wasJustCopied ? "success" : "none"}
-                            disableAutomaticTooltip={true}
-                        />
-                    )}
+                    <FernButton
+                        className={cn("group fern-copy-button", className)}
+                        disabled={copyToClipboard == null}
+                        onClickCapture={(e) => {
+                            onClick?.(e);
+                            copyToClipboard?.();
+                        }}
+                        data-testid={testId}
+                        rounded={true}
+                        icon={wasJustCopied ? <Check className="size-4" /> : <CopyIcon className="size-4" />}
+                        variant="minimal"
+                        intent={wasJustCopied ? "success" : "none"}
+                        disableAutomaticTooltip={true}
+                    />
+                )}
             </FernTooltip>
         </FernTooltipProvider>
     );
