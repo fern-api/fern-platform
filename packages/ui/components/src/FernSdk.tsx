@@ -3,7 +3,7 @@ import { arrayIncludes, objectKeys } from "ts-extras";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
 import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
 
-const languages = ["node", "python", "java", "ruby", "go", "c#", "swift"] as const;
+const languages = ["node", "python", "java", "ruby", "go", "csharp", "swift"] as const;
 type SdkLanguage = typeof languages[number];
 
 type InstallCommand = (packageName: string) => string;
@@ -46,7 +46,7 @@ const languageProps: Record<
     color: "#00ADD8",
     installCommand: (packageName: string) => `go get ${packageName}`,
   },
-  "c#": {
+  "csharp": {
     name: "C#",
     icon: "fa-brands fa-microsoft",
     color: "#68217A",
@@ -77,6 +77,28 @@ const FernSdkInstallCommand: React.FC<{
   );
 };
 
+const normalizeLanguage = (language: string): SdkLanguage | undefined => {
+  if (arrayIncludes(languages, language)) {
+    return language;
+  }
+
+  switch (language) {
+    case "js":
+    case "ts":
+    case "javascript":
+    case "typescript":
+    case "nodejs":
+    case "ts-node":
+      return "node";
+    case "py":
+      return "python";
+    case "golang":
+      return "go";
+    default:
+      return undefined;
+  }
+};
+
 export const FernSdk: React.FC<{
   sdks: Partial<
     Record<
@@ -90,7 +112,7 @@ export const FernSdk: React.FC<{
   language: string;
   onChange: (language: string) => void;
 }> = ({ sdks, language, onChange }) => {
-  const activeLanguage = arrayIncludes(languages, language) ? language : undefined;
+  const activeLanguage = normalizeLanguage(language);
   const activeSdk = activeLanguage && sdks[activeLanguage];
   return (
     <div className="border border-default rounded-lg overflow-hidden">

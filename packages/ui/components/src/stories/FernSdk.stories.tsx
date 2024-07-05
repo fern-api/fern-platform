@@ -26,7 +26,7 @@ const meta: Meta<typeof FernSdk> = {
             ruby: {
                 packageName: "merge-ruby-client",
             },
-            "c#": {
+            "csharp": {
                 packageName: "Merge.net",
             },
             swift: {
