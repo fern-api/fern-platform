@@ -7,8 +7,27 @@ const meta: Meta<typeof FernSdk> = {
   args: {
     sdks: {
       "node": {
-        packageName: "@fern/sdk-node",
+        packageName: "@mergeapi/merge-node-client",
+        installCommand: (packageName: string) => `yarn add ${packageName}`,
       },
+      "python": {
+        packageName: "MergePythonClient",
+      },
+      "go": {
+        packageName: "github.com/merge-api/merge-go-client"
+      },
+      "java": {
+        packageName: "dev.merge:merge-java-client"
+      },
+      ruby: {
+        packageName: "merge-ruby-client"
+      },
+      "c#": {
+        packageName: "Merge.net"
+      },
+      "swift": {
+        packageName: "MergeSwiftClient"
+      }
     }
   }
 };

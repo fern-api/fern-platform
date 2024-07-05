@@ -3,11 +3,18 @@ import { useState } from "react";
 import { objectKeys } from "ts-extras";
 import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
 
-type FernSdkLanguage = "node" | "python" | "java";
+type FernSdkLanguage = "node" | "python" | "java" | "ruby" | "go" | "c#" | "swift";
+
+type InstallCommand = (packageName: string) => string;
 
 const languageProps: Record<
   FernSdkLanguage,
-  { name: string; icon: string; installCommand: (packageName: string) => string; color?: string }
+  {
+    name: string;
+    icon: string;
+    installCommand: InstallCommand;
+    color?: string;
+  }
 > = {
   java: {
     name: "Java",
@@ -26,25 +33,55 @@ const languageProps: Record<
     color: "#3776AB",
     installCommand: (packageName: string) => `pip install ${packageName}`,
   },
+  ruby: {
+    name: "Ruby",
+    icon: "fa-solid fa-gem",
+    color: "#CC342D",
+    installCommand: (packageName: string) => `gem install ${packageName}`,
+  },
+  go: {
+    name: "Go",
+    icon: "fa-brands fa-golang",
+    color: "#00ADD8",
+    installCommand: (packageName: string) => `go get ${packageName}`,
+  },
+  "c#": {
+    name: "C#",
+    icon: "fa-brands fa-microsoft",
+    color: "#68217A",
+    installCommand: (packageName: string) => `dotnet add package ${packageName}`,
+  },
+  swift: {
+    name: "Swift",
+    icon: "fa-brands fa-swift",
+    color: "#F05138",
+    installCommand: () => "Edit your Package.swift file",
+  },
 };
 
-const FernSdkInstallCommand: React.FC<{ children: string }> = ({ children }) => {
-  const isOneLine = children.split("\n").filter(Boolean).length === 1;
+const FernSdkInstallCommand: React.FC<{
+  installCommand: InstallCommand;
+  packageName: string;
+}> = ({ installCommand, packageName }) => {
   return (
     <pre>
       <code>
-        {isOneLine && (
-          <>
-            <span className="t-muted">$</span>{" "}</>
-        )}
-        {children}
+        <span className="t-muted">$</span> {installCommand(packageName)}
       </code>
     </pre>
   );
 };
 
 export const FernSdk: React.FC<{
-  sdks: Partial<Record<FernSdkLanguage, { packageName: string }>>;
+  sdks: Partial<
+    Record<
+      FernSdkLanguage,
+      {
+        packageName: string;
+        installCommand?: InstallCommand;
+      }
+    >
+  >;
 }> = ({ sdks }) => {
   const [activeLanguage, setActiveLanguage] = useState<FernSdkLanguage | null>(null);
   const activeSdk = activeLanguage && sdks[activeLanguage];
@@ -58,7 +95,7 @@ export const FernSdk: React.FC<{
             return (
               <button
                 className={cn(
-                  "py-2 flex flex-col gap-2 text-center border-b-2",
+                  "py-2 w-16 flex flex-col items-center gap-2 text-center border-b-2",
                   activeLanguage === language ? "border-primary" : "border-transparent",
                 )}
                 key={language}
@@ -73,22 +110,23 @@ export const FernSdk: React.FC<{
                   icon={icon}
                   size={6}
                 />
-                <div className="text-xs">{name}</div>
+                <div className="text-xs pb-0.5">{name}</div>
               </button>
             );
           })}
         </div>
       </div>
-      <div className="bg-background-tertiary-light px-3 py-4 dark:bg-background-tertiary-dark border-t border-default">
+      <div className="bg-background-tertiary-light px-3 py-4 dark:bg-background-tertiary-dark border-t border-default text-sm">
         {activeSdk ? (
-          <FernSdkInstallCommand>
-            {languageProps[activeLanguage].installCommand(activeSdk.packageName)}
-          </FernSdkInstallCommand>
+          <FernSdkInstallCommand
+            installCommand={activeSdk.installCommand ?? languageProps[activeLanguage].installCommand}
+            packageName={activeSdk.packageName}
+          />
         ) : (
-          <div className="text-sm">
+          <>
             By default, these docs demonstrate using curl to interact with the API over HTTP. Select one of
             our official client libraries to see examples in code.
-          </div>
+          </>
         )}
       </div>
     </div>
