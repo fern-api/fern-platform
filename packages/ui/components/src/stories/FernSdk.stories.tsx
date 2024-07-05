@@ -5,6 +5,10 @@ const meta: Meta<typeof FernSdk> = {
     title: "General/FernSdk",
     component: FernSdk,
     args: {
+        language: "node",
+        onChange: () => {
+            // do nothing
+        },
         sdks: {
             node: {
                 packageName: "@mergeapi/merge-node-client",

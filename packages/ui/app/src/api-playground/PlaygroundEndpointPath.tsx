@@ -1,11 +1,11 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { CopyToClipboardButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../resolver/types";
-import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "./types";
 import { buildRequestUrl, unknownToString } from "./utils";
