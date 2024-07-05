@@ -8,11 +8,12 @@ import { BlockMerger } from "./BlockMerger";
 import { ReadmeParser } from "./ReadmeParser";
 
 export class ReadmeGenerator {
-    private ADVANCED_FEATURES: FernGeneratorCli.FeatureId[] = [
+    private ADVANCED_FEATURE_ID = "ADVANCED";
+    private ADVANCED_FEATURES: Set<FernGeneratorCli.FeatureId> = new Set([
         FernGeneratorCli.StructuredFeatureId.Retries,
         FernGeneratorCli.StructuredFeatureId.Timeouts,
         FernGeneratorCli.StructuredFeatureId.CustomClient,
-    ];
+    ]);
 
     private readmeParser: ReadmeParser;
     private readmeConfig: FernGeneratorCli.ReadmeConfig;
@@ -64,9 +65,9 @@ export class ReadmeGenerator {
         }
 
         const coreFeatures =
-            this.readmeConfig.features?.filter((feat) => !this.ADVANCED_FEATURES.includes(feat.id)) ?? [];
+            this.readmeConfig.features?.filter((feat) => !this.ADVANCED_FEATURES.has(feat.id)) ?? [];
         const advancedFeatures =
-            this.readmeConfig.features?.filter((feat) => this.ADVANCED_FEATURES.includes(feat.id)) ?? [];
+            this.readmeConfig.features?.filter((feat) => this.ADVANCED_FEATURES.has(feat.id)) ?? [];
 
         for (const feature of coreFeatures) {
             if (this.shouldSkipFeature({ feature })) {
@@ -79,56 +80,60 @@ export class ReadmeGenerator {
             );
         }
 
-        blocks.push(...this.generateNestedFeatureBlocks({ features: advancedFeatures, sectionTitle: "Advanced" }));
+        const advancedFeatureBlock = this.generateNestedFeatureBlock({ featureId: this.ADVANCED_FEATURE_ID, features: advancedFeatures });
+        if (advancedFeatureBlock != null) {
+            blocks.push(advancedFeatureBlock);
+        }
 
         blocks.push(this.generateContributing());
 
         return blocks;
     }
 
-    private generateNestedFeatureBlocks({
+    private generateNestedFeatureBlock({
+        featureId,
         features,
-        sectionTitle,
     }: {
+        featureId: string;
         features: FernGeneratorCli.ReadmeFeature[];
-        sectionTitle: string;
-    }): Block[] {
-        if (!this.hasUnskippedFeatures({ features })) {
-            return [];
+    }): Block | undefined {
+        if (!this.shouldGenerateFeatures({ features })) {
+            return undefined;
         }
 
-        const blocks: Block[] = [];
-
         const writer = new StringWriter();
-        writer.writeLine(`## ${sectionTitle}`);
+        writer.writeLine(`## ${featureIDToTitle(featureId)}`);
         writer.writeLine();
 
         for (const feature of features) {
             if (this.shouldSkipFeature({ feature })) {
                 continue;
             }
-            blocks.push(
-                this.generateFeatureBlock({
-                    feature,
-                    heading: "h3",
-                    maybeWriter: writer,
-                }),
-            );
+            this.generateFeatureBlock({
+                feature,
+                heading: "###",
+                maybeWriter: writer,
+            });
         }
-        return blocks;
+        return new Block(
+            {
+                id: featureId,
+                content: writer.toString(),
+            },
+        );
     }
 
     private generateFeatureBlock({
         feature,
-        heading = "h2",
+        heading = "##",
         maybeWriter,
     }: {
         feature: FernGeneratorCli.ReadmeFeature;
-        heading?: "h2" | "h3";
+        heading?: "##" | "###";
         maybeWriter?: StringWriter;
     }): Block {
         const writer = maybeWriter ?? new StringWriter();
-        writer.writeLine(`${heading === "h2" ? "##" : "###"} ${featureIDToTitle(feature.id)}`);
+        writer.writeLine(`${heading} ${featureIDToTitle(feature.id)}`);
         writer.writeLine();
         if (feature.description != null) {
             writer.writeLine(feature.description);
@@ -530,7 +535,7 @@ On the other hand, contributions to the README are always very welcome!
         return !feature.snippetsAreOptional && (feature.snippets == null || feature.snippets.length === 0);
     }
 
-    private hasUnskippedFeatures({ features }: { features: FernGeneratorCli.ReadmeFeature[] }): boolean {
+    private shouldGenerateFeatures({ features }: { features: FernGeneratorCli.ReadmeFeature[] }): boolean {
         return features.some((feature) => !this.shouldSkipFeature({ feature }));
     }
 }
