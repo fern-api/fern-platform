@@ -114,6 +114,7 @@
     :root {
         --bg-translucent: rgba(var(--background), 0.7);
     }
+
     .bg-search-dialog {
         background-color: var(--bg-search-dialog, var(--bg-translucent));
     }
