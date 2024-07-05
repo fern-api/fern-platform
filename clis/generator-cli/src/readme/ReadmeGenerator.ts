@@ -64,8 +64,7 @@ export class ReadmeGenerator {
             blocks.push(this.generateInstallation({ language: this.readmeConfig.language }));
         }
 
-        const coreFeatures =
-            this.readmeConfig.features?.filter((feat) => !this.ADVANCED_FEATURES.has(feat.id)) ?? [];
+        const coreFeatures = this.readmeConfig.features?.filter((feat) => !this.ADVANCED_FEATURES.has(feat.id)) ?? [];
         const advancedFeatures =
             this.readmeConfig.features?.filter((feat) => this.ADVANCED_FEATURES.has(feat.id)) ?? [];
 
@@ -80,7 +79,10 @@ export class ReadmeGenerator {
             );
         }
 
-        const advancedFeatureBlock = this.generateNestedFeatureBlock({ featureId: this.ADVANCED_FEATURE_ID, features: advancedFeatures });
+        const advancedFeatureBlock = this.generateNestedFeatureBlock({
+            featureId: this.ADVANCED_FEATURE_ID,
+            features: advancedFeatures,
+        });
         if (advancedFeatureBlock != null) {
             blocks.push(advancedFeatureBlock);
         }
@@ -115,12 +117,10 @@ export class ReadmeGenerator {
                 maybeWriter: writer,
             });
         }
-        return new Block(
-            {
-                id: featureId,
-                content: writer.toString(),
-            },
-        );
+        return new Block({
+            id: featureId,
+            content: writer.toString(),
+        });
     }
 
     private generateFeatureBlock({
