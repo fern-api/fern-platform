@@ -91,6 +91,10 @@
         top: var(--header-offset, 0px);
     }
 
+    .mt-header-offset {
+        margin-top: var(--header-offset, 0px);
+    }
+
     .h-below-header {
         height: calc(100vh - var(--header-offset, 0px));
     }

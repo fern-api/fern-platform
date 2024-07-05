@@ -45,6 +45,7 @@ function UnmemoizedCohereDocs(): ReactElement {
         >
             {showHeader && <HeaderContainer />}
             <div className="fern-body">
+                <Sidebar />
                 <FernScrollArea className="fern-main" ref={mainRef} scrollbars="vertical">
                     <div style={{ maxWidth: contentWidth != null ? `${contentWidth}px` : undefined }}>
                         <DocsMainContent />
@@ -53,7 +54,6 @@ function UnmemoizedCohereDocs(): ReactElement {
                         <footer id="fern-footer" />
                     </div>
                 </FernScrollArea>
-                <Sidebar />
             </div>
         </div>
     );

@@ -49,6 +49,7 @@ function UnmemoizedDefaultDocs(): ReactElement {
             </style>
 
             <div className="fern-body">
+                <Sidebar className={isSidebarFixed ? "fern-sidebar-fixed" : undefined} />
                 <div
                     className={clsx("fern-main", {
                         "fern-sidebar-disabled": isSidebarDisabled || isSidebarDismissable,
@@ -56,7 +57,6 @@ function UnmemoizedDefaultDocs(): ReactElement {
                 >
                     <DocsMainContent />
                 </div>
-                <Sidebar className={isSidebarFixed ? "fern-sidebar-fixed" : undefined} />
             </div>
 
             {/* Enables footer DOM injection */}

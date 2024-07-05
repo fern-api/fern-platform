@@ -5,13 +5,16 @@ import { MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "./viewport";
 export const DOCS_LAYOUT_ATOM = atom<DocsV1Read.DocsLayoutConfig | undefined>(undefined);
 export const HEADER_HEIGHT_ATOM = atom<number>((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
-    return layout?.headerHeight == null
-        ? 60
-        : layout.headerHeight.type === "px"
-          ? layout.headerHeight.value
-          : layout.headerHeight.type === "rem"
-            ? layout.headerHeight.value * 16
-            : 60;
+    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
+    const headerHeight =
+        layout?.headerHeight == null
+            ? 64
+            : layout.headerHeight.type === "px"
+              ? layout.headerHeight.value
+              : layout.headerHeight.type === "rem"
+                ? layout.headerHeight.value * 16
+                : 64;
+    return isMobileSidebarEnabled || layout?.disableHeader !== true ? headerHeight : 0;
 });
 
 const SETTABLE_HEADER_TABS_HEIGHT_ATOM = atom<number>(44);
