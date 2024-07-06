@@ -52,67 +52,71 @@ export async function serializeMdx(
 
     let fm: FernDocsFrontmatter = {};
 
-    const bundled = await bundleMDX<FernDocsFrontmatter>({
-        source: content,
+    try {
+        const bundled = await bundleMDX<FernDocsFrontmatter>({
+            source: content,
 
-        mdxOptions: (o: Options, frontmatter: FernDocsFrontmatter) => {
-            fm = { ...defaultFrontmatter, ...frontmatter };
+            mdxOptions: (o: Options, frontmatter: FernDocsFrontmatter) => {
+                fm = { ...defaultFrontmatter, ...frontmatter };
 
-            o.remarkRehypeOptions = {
-                ...o.remarkRehypeOptions,
-                ...options,
-                handlers: {
-                    ...o.remarkRehypeOptions?.handlers,
-                    heading: customHeadingHandler,
-                    ...options?.remarkRehypeOptions?.handlers,
-                },
-            };
+                o.remarkRehypeOptions = {
+                    ...o.remarkRehypeOptions,
+                    ...options,
+                    handlers: {
+                        ...o.remarkRehypeOptions?.handlers,
+                        heading: customHeadingHandler,
+                        ...options?.remarkRehypeOptions?.handlers,
+                    },
+                };
 
-            const remarkPlugins: PluggableList = [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji];
+                const remarkPlugins: PluggableList = [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji];
 
-            if (options?.remarkPlugins != null) {
-                remarkPlugins.push(...options.remarkPlugins);
-            }
+                if (options?.remarkPlugins != null) {
+                    remarkPlugins.push(...options.remarkPlugins);
+                }
 
-            o.remarkPlugins = [...(o.remarkPlugins ?? []), ...remarkPlugins, ...(options?.remarkPlugins ?? [])];
+                o.remarkPlugins = [...(o.remarkPlugins ?? []), ...remarkPlugins, ...(options?.remarkPlugins ?? [])];
 
-            const rehypePlugins: PluggableList = [rehypeSlug, rehypeKatex, rehypeFernCode, rehypeFernComponents];
+                const rehypePlugins: PluggableList = [rehypeSlug, rehypeKatex, rehypeFernCode, rehypeFernComponents];
 
-            if (options?.rehypePlugins != null) {
-                rehypePlugins.push(...options.rehypePlugins);
-            }
+                if (options?.rehypePlugins != null) {
+                    rehypePlugins.push(...options.rehypePlugins);
+                }
 
-            if (defaultFrontmatter != null) {
-                rehypePlugins.push([rehypeFernLayout, fm]);
-            }
+                if (defaultFrontmatter != null) {
+                    rehypePlugins.push([rehypeFernLayout, fm]);
+                }
 
-            // Always sanitize JSX at the end.
-            rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
+                // Always sanitize JSX at the end.
+                rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
 
-            o.rehypePlugins = [...(o.rehypePlugins ?? []), ...rehypePlugins, ...(options?.rehypePlugins ?? [])];
+                o.rehypePlugins = [...(o.rehypePlugins ?? []), ...rehypePlugins, ...(options?.rehypePlugins ?? [])];
 
-            o.recmaPlugins = [...(o.recmaPlugins ?? []), ...(options?.recmaPlugins ?? [])];
+                o.recmaPlugins = [...(o.recmaPlugins ?? []), ...(options?.recmaPlugins ?? [])];
 
-            o.development = options.development ?? o.development;
+                o.development = options.development ?? o.development;
 
-            return o;
-        },
-    });
-
-    if (bundled.errors.length > 0) {
-        bundled.errors.forEach((error) => {
-            // eslint-disable-next-line no-console
-            console.error(error);
+                return o;
+            },
         });
 
-        return bundled.matter.content;
-    }
+        if (bundled.errors.length > 0) {
+            bundled.errors.forEach((error) => {
+                // eslint-disable-next-line no-console
+                console.error(error);
+            });
+        }
 
-    return {
-        code: bundled.code,
-        frontmatter: fm,
-        errors: bundled.errors,
-    };
+        return {
+            code: bundled.code,
+            frontmatter: fm,
+            errors: bundled.errors,
+        };
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        return content;
+    }
 }
 
 export function replaceBrokenBrTags(content: string): string {
