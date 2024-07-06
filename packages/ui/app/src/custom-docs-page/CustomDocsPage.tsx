@@ -1,11 +1,11 @@
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { MdxContent } from "../mdx/MdxContent";
-import { type SerializedMdxContent } from "../mdx/mdx";
+import type { BundledMDX } from "../mdx/bundler";
 import { type ResolvedPath } from "../resolver/ResolvedPath";
 
 export declare namespace CustomDocsPage {
     export interface Props {
-        serializedMdxContent: SerializedMdxContent | undefined;
+        serializedMdxContent: BundledMDX | undefined;
         resolvedPath: ResolvedPath.CustomMarkdownPage;
     }
 }

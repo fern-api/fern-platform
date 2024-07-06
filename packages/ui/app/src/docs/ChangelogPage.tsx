@@ -63,7 +63,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                             {fullWidth ? (
                                                 <>
                                                     <div className="flex-initial max-md:hidden min-w-64">
-                                                        <div className="sticky top-header-height-padded t-muted text-base mb-8">
+                                                        <div className="sticky top-header-offset-padded t-muted text-base mb-8">
                                                             <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
                                                         </div>
                                                     </div>
@@ -89,7 +89,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                                         </div>
                                                     </div>
                                                     <div className="-mt-2 w-72 pl-4 text-right max-xl:hidden">
-                                                        <span className="t-muted text-base sticky top-header-height-padded">
+                                                        <span className="t-muted text-base sticky top-header-offset-padded">
                                                             <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
                                                         </span>
                                                     </div>

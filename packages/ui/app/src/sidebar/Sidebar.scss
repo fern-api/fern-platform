@@ -1,0 +1,13 @@
+@layer components {
+    .fern-sidebar-tabs {
+        @apply mt-5 mb-6 flex list-none flex-col;
+    }
+
+    .fern-sidebar-searchbar-container {
+        @apply mb-3 hidden last:mb-0 lg:block;
+    }
+
+    .fern-sidebar-header {
+        @apply mx-3 hidden h-header-height-real border-b border-transparent lg:flex lg:items-center lg:justify-between;
+    }
+}

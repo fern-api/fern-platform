@@ -1,13 +1,13 @@
 import { isPlainObject } from "@fern-ui/core-utils";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { ReactElement, ReactNode } from "react";
 import { MdxContent } from "../mdx/MdxContent";
+import type { BundledMDX } from "../mdx/bundler";
 import { Breadcrumbs } from "./Breadcrumbs";
 
 interface PageHeaderProps {
     breadcrumbs: string[];
     title: string;
-    subtitle: MDXRemoteSerializeResult | ReactNode | undefined;
+    subtitle: BundledMDX | ReactNode | undefined;
 }
 
 export const PageHeader = ({ breadcrumbs, title, subtitle }: PageHeaderProps): ReactElement => {
@@ -28,6 +28,6 @@ export const PageHeader = ({ breadcrumbs, title, subtitle }: PageHeaderProps): R
     );
 };
 
-function isMdxRemoteSerializeResult(node: MDXRemoteSerializeResult | ReactNode): node is MDXRemoteSerializeResult {
-    return isPlainObject(node) && typeof node.compiledSource === "string";
+function isMdxRemoteSerializeResult(node: BundledMDX | ReactNode): node is BundledMDX {
+    return typeof node === "string" || (isPlainObject(node) && typeof node.compiledSource === "string");
 }

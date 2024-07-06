@@ -306,7 +306,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                     </section>
                     <aside className="max-w-content-width">
                         {
-                            <div className="sticky top-header-height flex max-h-content scroll-mt-content flex-col gap-6 py-8">
+                            <div className="sticky top-header-offset flex max-h-content scroll-mt-content flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
                                     actions={node != null ? <PlaygroundButton state={node} /> : undefined}

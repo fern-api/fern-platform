@@ -52,7 +52,7 @@ export function ReferenceLayout({
                         <div className="fern-prose">{children}</div>
                         {aside != null && (
                             <aside className="relative">
-                                <div className="md:top-header-height md:sticky md:py-8 md:-my-8 fern-prose">
+                                <div className="md:top-header-offset md:sticky md:py-8 md:-my-8 fern-prose">
                                     {aside}
                                 </div>
                             </aside>

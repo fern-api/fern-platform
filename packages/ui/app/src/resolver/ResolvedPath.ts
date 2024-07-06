@@ -1,13 +1,12 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import type { SerializedMdxContent } from "../mdx/mdx";
-import { ResolvedRootPackage } from "./types";
+import type { FernNavigation } from "@fern-api/fdr-sdk";
+import type { BundledMDX } from "../mdx/bundler";
+import type { ResolvedRootPackage } from "./types";
 
 export declare namespace ResolvedPath {
     export interface Neighbor {
         fullSlug: string;
         title: string;
-        excerpt: MDXRemoteSerializeResult | string | undefined;
+        excerpt: BundledMDX | undefined;
     }
 
     export interface Neighbors {
@@ -22,7 +21,7 @@ export declare namespace ResolvedPath {
 
     interface ChangelogPage {
         type: "changelog";
-        pages: Record<FernNavigation.PageId, SerializedMdxContent>;
+        pages: Record<FernNavigation.PageId, BundledMDX>;
         node: FernNavigation.ChangelogNode;
         sectionTitleBreadcrumbs: string[];
         fullSlug: string;
@@ -33,7 +32,7 @@ export declare namespace ResolvedPath {
         type: "changelog-entry";
         changelogTitle: string;
         changelogSlug: string;
-        pages: Record<FernNavigation.PageId, SerializedMdxContent>;
+        pages: Record<FernNavigation.PageId, BundledMDX>;
         node: FernNavigation.ChangelogEntryNode;
         sectionTitleBreadcrumbs: string[];
         neighbors: Neighbors;
@@ -44,7 +43,7 @@ export declare namespace ResolvedPath {
         type: "custom-markdown-page";
         fullSlug: string;
         title: string;
-        serializedMdxContent: SerializedMdxContent;
+        serializedMdxContent: BundledMDX;
         neighbors: Neighbors;
         // TODO: downselect apis to only the fields we need
         apis: Record<string, ResolvedRootPackage>;

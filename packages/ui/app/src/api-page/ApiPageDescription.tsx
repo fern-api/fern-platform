@@ -1,6 +1,6 @@
 import cn from "clsx";
 import dynamic from "next/dynamic";
-import { SerializedMdxContent } from "../mdx/mdx";
+import type { BundledMDX } from "../mdx/bundler";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
@@ -9,7 +9,7 @@ const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => 
 export declare namespace ApiPageDescription {
     export interface Props {
         className?: string;
-        description: string | SerializedMdxContent | undefined;
+        description: BundledMDX | undefined;
         isMarkdown: boolean;
     }
 }

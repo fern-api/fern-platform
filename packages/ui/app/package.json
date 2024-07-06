@@ -65,6 +65,7 @@
     "bezier-easing": "^2.1.0",
     "clsx": "^2.1.0",
     "colorjs.io": "^0.5.0",
+    "esbuild": "0.20.2",
     "estree-util-visit": "^2.0.0",
     "fastdom": "^1.0.12",
     "framer-motion": "^11.2.4",
@@ -86,6 +87,7 @@
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-mdx-jsx": "^3.1.0",
     "mdast-util-to-hast": "^13.1.0",
+    "mdx-bundler": "^10.0.2",
     "moment": "^2.30.1",
     "next": "^14.2.3",
     "next-mdx-remote": "^4.4.1",
@@ -122,6 +124,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^1.3.5",
     "@fern-platform/configs": "workspace:*",
+    "@mdx-js/esbuild": "^3.0.1",
     "@storybook/addon-essentials": "8.1.0-alpha.6",
     "@storybook/addon-interactions": "8.1.0-alpha.6",
     "@storybook/addon-links": "8.1.0-alpha.6",

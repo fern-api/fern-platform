@@ -1,10 +1,11 @@
 import { createElement } from "react";
 import renderer from "react-test-renderer";
 import { MdxContent } from "../MdxContent";
-import { replaceBrokenBrTags, serializeMdxWithFrontmatter } from "../mdx";
+import { serializeMdx } from "../bundler";
+import { replaceBrokenBrTags } from "../mdx";
 
 async function renderMdxContent(content: string): Promise<renderer.ReactTestRendererJSON> {
-    const serializedContent = await serializeMdxWithFrontmatter(content, { development: false });
+    const serializedContent = await serializeMdx(content, { options: { development: false } });
     // eslint-disable-next-line deprecation/deprecation
     const result = renderer.create(createElement(MdxContent, { mdx: serializedContent })).toJSON();
 

@@ -91,6 +91,10 @@
         top: var(--header-offset, 0);
     }
 
+    .top-header-offset-padded {
+        top: calc(var(--header-offset, 0px) + 1rem);
+    }
+
     .mt-header-offset {
         margin-top: var(--header-offset, 0);
     }

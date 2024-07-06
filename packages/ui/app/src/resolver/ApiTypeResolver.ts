@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { once } from "lodash-es";
-import { maybeSerializeMdxContent } from "../mdx/mdx";
+import { serializeMdx } from "../mdx/bundler";
 import {
     NonOptionalTypeShapeWithReference,
     ResolvedObjectProperty,
@@ -44,7 +44,7 @@ export class ApiTypeResolver {
                 name,
                 extends: object.extends,
                 properties: await this.resolveObjectProperties(object),
-                description: await maybeSerializeMdxContent(description),
+                description: await serializeMdx(description),
                 availability,
             }),
             enum: async (enum_) => ({
@@ -53,11 +53,11 @@ export class ApiTypeResolver {
                 values: await Promise.all(
                     enum_.values.map(async (enumValue) => ({
                         value: enumValue.value,
-                        description: await maybeSerializeMdxContent(enumValue.description),
+                        description: await serializeMdx(enumValue.description),
                         availability: undefined,
                     })),
                 ),
-                description: await maybeSerializeMdxContent(description),
+                description: await serializeMdx(description),
                 availability,
             }),
             undiscriminatedUnion: async (undiscriminatedUnion) => ({
@@ -67,18 +67,18 @@ export class ApiTypeResolver {
                     undiscriminatedUnion.variants.map(async (variant) => ({
                         displayName: variant.displayName,
                         shape: await this.resolveTypeReference(variant.type),
-                        description: await maybeSerializeMdxContent(variant.description),
+                        description: await serializeMdx(variant.description),
                         availability: variant.availability,
                     })),
                 ),
-                description: await maybeSerializeMdxContent(description),
+                description: await serializeMdx(description),
                 availability,
             }),
             alias: async (alias) => ({
                 type: "alias",
                 name,
                 shape: await this.resolveTypeReference(alias.value),
-                description: await maybeSerializeMdxContent(description),
+                description: await serializeMdx(description),
                 availability,
             }),
             discriminatedUnion: async (discriminatedUnion) => {
@@ -91,11 +91,11 @@ export class ApiTypeResolver {
                             discriminantValue: variant.discriminantValue,
                             extends: variant.additionalProperties.extends,
                             properties: await this.resolveObjectProperties(variant.additionalProperties),
-                            description: await maybeSerializeMdxContent(variant.description),
+                            description: await serializeMdx(variant.description),
                             availability: variant.availability,
                         })),
                     ),
-                    description: await maybeSerializeMdxContent(description),
+                    description: await serializeMdx(description),
                     availability,
                 };
             },
@@ -178,7 +178,7 @@ export class ApiTypeResolver {
             object.properties.map(async (property): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.resolveTypeReference(property.valueType),
-                    maybeSerializeMdxContent(property.description),
+                    serializeMdx(property.description),
                 ]);
                 return {
                     key: property.key,

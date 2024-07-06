@@ -1,10 +1,10 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-ui/core-utils";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { captureSentryError } from "../analytics/sentry";
 import { FeatureFlags } from "../atoms/flags";
+import { serializeMdx, type BundledMDX } from "../mdx/bundler";
 import { getFrontmatter } from "../mdx/frontmatter";
-import { FernSerializeMdxOptions, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
+import { FernSerializeMdxOptions } from "../mdx/mdx";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
@@ -13,7 +13,7 @@ import { slugToHref } from "./slugToHref";
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
     pages: Record<string, DocsV1Read.PageContent>,
-): Promise<MDXRemoteSerializeResult | string | undefined> {
+): Promise<BundledMDX | undefined> {
     const pageId = FernNavigation.utils.getPageId(node);
     if (pageId == null) {
         return;
@@ -26,7 +26,7 @@ async function getSubtitle(
     try {
         const { data: frontmatter } = getFrontmatter(content);
         if (frontmatter.excerpt != null) {
-            return await maybeSerializeMdxContent(frontmatter.excerpt);
+            return await serializeMdx(frontmatter.excerpt);
         }
         return undefined;
     } catch (e) {
@@ -83,7 +83,7 @@ export async function convertNavigatableToResolvedPath({
                     }
                     return {
                         pageId,
-                        markdown: await serializeMdxWithFrontmatter(markdown, mdxOptions),
+                        markdown: await serializeMdx(markdown, mdxOptions),
                     };
                 }),
             )
@@ -101,7 +101,7 @@ export async function convertNavigatableToResolvedPath({
     } else if (node.type === "changelogEntry") {
         const markdown = pages[node.pageId]?.markdown;
 
-        const page = await serializeMdxWithFrontmatter(markdown, mdxOptions);
+        const page = await serializeMdx(markdown, mdxOptions);
 
         const changelogNode = found.parents.find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
         if (changelogNode == null) {
@@ -149,13 +149,13 @@ export async function convertNavigatableToResolvedPath({
         if (pageContent == null) {
             return;
         }
-        const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, {
+        const serializedMdxContent = await serializeMdx(pageContent.markdown, {
             ...mdxOptions,
-            pageHeader: {
+            defaultFrontmatter: {
                 title: node.title,
                 breadcrumbs: found.breadcrumb,
-                editThisPageUrl: pageContent.editThisPageUrl,
-                isTocDefaultEnabled: featureFlags.isTocDefaultEnabled,
+                "edit-this-page-url": pageContent.editThisPageUrl,
+                "force-toc": featureFlags.isTocDefaultEnabled,
             },
         });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
