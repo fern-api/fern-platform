@@ -90,8 +90,6 @@
   },
   "resolutions": {
     "postcss": "8.4.31",
-    "@mdx-js/mdx": "3.0.1",
-    "@mdx-js/react": "3.0.1",
     "esbuild": "0.20.2"
   },
   "packageManager": "pnpm@8.15.4",
