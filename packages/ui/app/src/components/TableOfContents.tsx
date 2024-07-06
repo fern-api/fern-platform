@@ -1,7 +1,7 @@
 import cn from "clsx";
 import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useMemo, useState } from "react";
-import { FernLink } from "../components/FernLink";
+import { FernLink } from "./FernLink";
 
 export declare namespace TableOfContents {
     export interface HTMLProps {

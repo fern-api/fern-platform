@@ -2,7 +2,7 @@ import { FernButton } from "@fern-ui/components";
 import { ExclamationTriangleIcon, ReloadIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { memoize } from "lodash-es";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
@@ -111,11 +111,11 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
                 resetErrorBoundary?.();
             }
         };
-        router.events.on("routeChangeComplete", handleRouteChange);
+        Router.events.on("routeChangeComplete", handleRouteChange);
         return () => {
-            router.events.off("routeChangeComplete", handleRouteChange);
+            Router.events.off("routeChangeComplete", handleRouteChange);
         };
-    }, [resetErrorBoundary, router.events]);
+    }, [resetErrorBoundary]);
 
     return (
         <FernErrorTag

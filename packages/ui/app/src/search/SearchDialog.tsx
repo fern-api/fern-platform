@@ -1,9 +1,9 @@
-import { useSetAtom } from "jotai";
-import { PropsWithChildren, useMemo, useRef } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
 import { useSidebarNodes } from "../atoms/navigation";
 import { SEARCH_DIALOG_OPEN_ATOM } from "../atoms/sidebar";
-import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
@@ -16,13 +16,7 @@ import { InkeepCustomTrigger } from "./inkeep/InkeepCustomTrigger";
 import { useSearchTrigger } from "./useSearchTrigger";
 import { createSearchPlaceholderWithVersion } from "./util";
 
-export declare namespace SearchDialog {
-    export interface Props {
-        fromHeader?: boolean;
-    }
-}
-
-export const SearchDialog: React.FC<SearchDialog.Props> = ({ fromHeader }) => {
+export const SearchDialog = (): ReactElement | null => {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     useSearchTrigger(setSearchDialogState);
 
@@ -33,15 +27,11 @@ export const SearchDialog: React.FC<SearchDialog.Props> = ({ fromHeader }) => {
     }
 
     if (config.inkeep == null) {
-        return <AlgoliaSearchDialog fromHeader={fromHeader} />;
+        return <AlgoliaSearchDialog />;
     } else {
         return (
             <>
-                {config.inkeep.replaceSearch ? (
-                    <InkeepCustomTrigger />
-                ) : (
-                    <AlgoliaSearchDialog fromHeader={fromHeader} />
-                )}
+                {config.inkeep.replaceSearch ? <InkeepCustomTrigger /> : <AlgoliaSearchDialog />}
                 <InkeepChatButton />
             </>
         );
@@ -63,9 +53,9 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
     const [searchConfig] = useSearchConfig();
     const algoliaSearchClient = useAlgoliaSearchClient();
     const inputRef = useRef<HTMLInputElement>(null);
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
-    if (!searchConfig.isAvailable || layoutBreakpoint !== "mobile") {
+    if (!searchConfig.isAvailable || !isMobileScreen) {
         return <>{children}</>;
     }
 

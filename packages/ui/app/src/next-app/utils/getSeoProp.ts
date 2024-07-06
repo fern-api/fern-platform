@@ -1,13 +1,12 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import type { DefaultSeoProps, LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
-import grayMatter from "gray-matter";
 import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
 import { stringHasMarkdown } from "../../mdx/common/util";
-import { FernDocsFrontmatter } from "../../mdx/mdx";
+import { getFrontmatter } from "../../mdx/frontmatter";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { getFontExtension } from "./getFontVariables";
 
@@ -16,15 +15,6 @@ function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1
         fileId: ({ value: fileId }) => files[fileId],
         url: ({ value: url }) => ({ type: "url", url }),
     });
-}
-
-export function getFrontmatter(content: string): [FernDocsFrontmatter, string] {
-    try {
-        const gm = grayMatter(content);
-        return [gm.data, gm.content];
-    } catch (e) {
-        return [{}, content];
-    }
 }
 
 export function getDefaultSeoProps(
@@ -51,7 +41,7 @@ export function getDefaultSeoProps(
     let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? {};
 
     if (pageId != null && pages[pageId]) {
-        const [frontmatter] = getFrontmatter(pages[pageId].markdown);
+        const { data: frontmatter } = getFrontmatter(pages[pageId].markdown);
         ogMetadata = { ...ogMetadata, ...frontmatter };
 
         // retrofit og:image

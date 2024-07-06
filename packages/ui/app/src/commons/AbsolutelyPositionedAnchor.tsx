@@ -1,7 +1,6 @@
 import { useCopyToClipboard, useMounted } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
 import { Link1Icon } from "@radix-ui/react-icons";
-import cn from "clsx";
 import { Url } from "next/dist/shared/lib/router/router";
 import { Fragment, memo } from "react";
 import { Check } from "react-feather";
@@ -40,7 +39,7 @@ function hrefToString(href: Url): string {
  */
 export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>(function AbsolutelyPositionedAnchor({
     href,
-    smallGap = false,
+    // smallGap = false,
 }) {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() => window.location.origin + hrefToString(href));
 
@@ -48,17 +47,7 @@ export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>
 
     return (
         <div className="fern-anchor">
-            <FernLink
-                href={href}
-                shallow={true}
-                replace={true}
-                className={cn({
-                    "-ml-10": !smallGap,
-                    "-ml-8": smallGap,
-                })}
-                onClick={copyToClipboard}
-                tabIndex={-1}
-            >
+            <FernLink href={href} shallow={true} replace={true} onClick={copyToClipboard} tabIndex={-1}>
                 {!wasJustCopied && (
                     <span className="fern-anchor-icon opacity-0 group-hover/anchor-container:opacity-100">
                         <Link1Icon />

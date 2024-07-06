@@ -1,5 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
+import { useCurrentNodeId } from "../../atoms/navigation";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
@@ -11,7 +12,8 @@ interface SidebarRootSectionNodeProps {
 }
 
 export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNodeProps): React.ReactElement | null {
-    const { checkChildSelected, registerScrolledToPathListener, selectedNodeId } = useCollapseSidebar();
+    const { checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
+    const selectedNodeId = useCurrentNodeId();
 
     if (node.children.length === 0) {
         if (node.overviewPageId == null) {
@@ -34,7 +36,7 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
                 icon={node.icon}
                 hidden={node.hidden}
                 shallow={selectedNodeId === node.id}
-                scrollOnShallow={true}
+                scrollOnShallow={false}
             />
         );
     }

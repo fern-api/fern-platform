@@ -7,15 +7,16 @@ import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 interface FernRadioGroupProps extends RadioGroup.RadioGroupProps {
     options: FernDropdown.Option[];
     compact?: boolean;
+    container?: HTMLElement;
 }
 
-export const FernRadioGroup: FC<FernRadioGroupProps> = ({ options, className, compact, ...props }) => (
+export const FernRadioGroup: FC<FernRadioGroupProps> = ({ options, className, compact, container, ...props }) => (
     <RadioGroup.Root className={cn("fern-radio-group", { compact }, className)} {...props}>
         <FernTooltipProvider>
             {options.map(
                 (item) =>
                     item.type === "value" && (
-                        <FernTooltip content={item.tooltip} key={item.value}>
+                        <FernTooltip content={item.tooltip} key={item.value} container={container}>
                             <label className="fern-radio-label">
                                 <RadioGroup.Item value={item.value} className="fern-radio-item">
                                     <RadioGroup.Indicator className="fern-radio-indicator" />

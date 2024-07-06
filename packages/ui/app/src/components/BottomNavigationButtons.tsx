@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { useNavigationContext } from "../contexts/navigation-context";
+import { useResolvedPath } from "../atoms/navigation";
 import { BottomNavigationButton } from "./BottomNavigationButton";
 
 export const BottomNavigationButtons: FC<{ showPrev?: boolean }> = ({ showPrev = false }) => {
-    const { resolvedPath } = useNavigationContext();
+    const resolvedPath = useResolvedPath();
     if (resolvedPath.type === "changelog") {
         return null;
     }

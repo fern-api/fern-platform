@@ -1,7 +1,7 @@
 import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { JsonLd } from "@fern-ui/next-seo";
 import urljoin from "url-join";
-import { getFrontmatter } from "./getSeoProp";
+import { getFrontmatter } from "../../mdx/frontmatter";
 
 function toUrl(domain: string, slug: FernNavigation.Slug): string {
     return urljoin(`https://${domain}`, slug);
@@ -16,7 +16,7 @@ export function getBreadcrumbList(
     if (FernNavigation.isPage(node)) {
         const pageId = FernNavigation.utils.getPageId(node);
         if (pageId != null && pages[pageId] != null) {
-            const [frontmatter] = getFrontmatter(pages[pageId].markdown);
+            const { data: frontmatter } = getFrontmatter(pages[pageId].markdown);
             if (frontmatter["jsonld:breadcrumb"] != null) {
                 const breadcrumb = JsonLd.BreadcrumbListSchema.safeParse(frontmatter["jsonld:breadcrumb"]);
                 if (breadcrumb.success) {

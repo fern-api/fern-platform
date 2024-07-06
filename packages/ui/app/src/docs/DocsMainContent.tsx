@@ -1,14 +1,17 @@
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useNavigationContext } from "../contexts/navigation-context";
-import { useIsReady } from "../contexts/useIsReady";
+import { Fragment, ReactElement, memo } from "react";
+import { useFeatureFlags } from "../atoms/flags";
+import { useResolvedPath } from "../atoms/navigation";
+import { useIsReady } from "../atoms/viewport";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { ChangelogEntryPage } from "./ChangelogEntryPage";
 
 const CustomDocsPage = dynamic(
     () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
-    {
-        ssr: true,
-    },
+    { ssr: true },
 );
 
 const ApiPage = dynamic(() => import("../api-page/ApiPage").then(({ ApiPage }) => ApiPage), {
@@ -21,8 +24,8 @@ const ChangelogPage = dynamic(() => import("./ChangelogPage").then(({ ChangelogP
 
 export interface DocsMainContentProps {}
 
-export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
-    const { resolvedPath } = useNavigationContext();
+function DocsMainContentInternal(): ReactElement | null {
+    const resolvedPath = useResolvedPath();
     const hydrated = useIsReady();
 
     const router = useRouter();
@@ -32,15 +35,27 @@ export const DocsMainContent: React.FC<DocsMainContentProps> = () => {
         }
     }
 
-    if (resolvedPath.type === "custom-markdown-page") {
-        return <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} resolvedPath={resolvedPath} />;
-    } else if (resolvedPath.type === "api-page") {
-        return <ApiPage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />;
-    } else if (resolvedPath.type === "changelog") {
-        return <ChangelogPage resolvedPath={resolvedPath} />;
-    } else if (resolvedPath.type === "changelog-entry") {
-        return <ChangelogEntryPage resolvedPath={resolvedPath} />;
-    } else {
-        return null;
-    }
-};
+    return visitDiscriminatedUnion(resolvedPath)._visit({
+        "custom-markdown-page": (resolvedPath) => (
+            <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} resolvedPath={resolvedPath} />
+        ),
+        "api-page": (resolvedPath) => (
+            <ApiPage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />
+        ),
+        changelog: (resolvedPath) => <ChangelogPage resolvedPath={resolvedPath} />,
+        "changelog-entry": (resolvedPath) => <ChangelogEntryPage resolvedPath={resolvedPath} />,
+        _other: () => null,
+    });
+}
+
+export const DocsMainContent = memo(function DocsMainContent(): ReactElement {
+    const { isInlineFeedbackEnabled } = useFeatureFlags();
+    const FeedbackPopoverProvider = isInlineFeedbackEnabled ? FeedbackPopover : Fragment;
+    return (
+        <FernErrorBoundary>
+            <FeedbackPopoverProvider>
+                <DocsMainContentInternal />
+            </FeedbackPopoverProvider>
+        </FernErrorBoundary>
+    );
+});

@@ -1,30 +1,15 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-ui/core-utils";
-import grayMatter from "gray-matter";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { captureSentryError } from "../analytics/sentry";
 import { FeatureFlags } from "../atoms/flags";
-import {
-    FernDocsFrontmatter,
-    FernSerializeMdxOptions,
-    maybeSerializeMdxContent,
-    serializeMdxWithFrontmatter,
-} from "../mdx/mdx";
+import { getFrontmatter } from "../mdx/frontmatter";
+import { FernSerializeMdxOptions, maybeSerializeMdxContent, serializeMdxWithFrontmatter } from "../mdx/mdx";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
 import { ResolvedRootPackage } from "../resolver/types";
 import { slugToHref } from "./slugToHref";
-
-function getFrontmatter(content: string): FernDocsFrontmatter {
-    const frontmatterMatcher: RegExp = /^---\n([\s\S]*?)\n---/;
-    const frontmatter = content.match(frontmatterMatcher)?.[0];
-    if (frontmatter == null) {
-        return {};
-    }
-    const gm = grayMatter(frontmatter);
-    return gm.data;
-}
 
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
@@ -40,7 +25,7 @@ async function getSubtitle(
     }
 
     try {
-        const frontmatter = getFrontmatter(content);
+        const { data: frontmatter } = getFrontmatter(content);
         if (frontmatter.excerpt != null) {
             return await maybeSerializeMdxContent(frontmatter.excerpt);
         }

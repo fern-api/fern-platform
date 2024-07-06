@@ -306,6 +306,7 @@ async function convertDocsToDocsPageProps({
         breadcrumb: getBreadcrumbList(docs.baseUrl.domain, docs.definition.pages, node.parents, node.node),
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
+        theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

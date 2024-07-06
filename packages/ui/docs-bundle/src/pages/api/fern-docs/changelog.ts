@@ -70,7 +70,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
 
                 const markdown = docs.definition.pages[entry.pageId].markdown;
                 if (markdown != null) {
-                    const [frontmatter, content] = getFrontmatter(markdown);
+                    const { data: frontmatter, content } = getFrontmatter(markdown);
                     item.description = frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
                     item.content = content;
 

@@ -8,6 +8,7 @@ import { ComponentProps, FC, useState } from "react";
 
 const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
     const [isFullScreen, setIsFullScreen] = useState(false);
+
     return (
         <>
             <Tooltip.TooltipProvider delayDuration={300}>

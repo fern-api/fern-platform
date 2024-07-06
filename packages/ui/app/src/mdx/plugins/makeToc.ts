@@ -1,11 +1,11 @@
 import { slug } from "github-slugger";
-import type { ElementContent, Root } from "hast";
+import type { Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { toString } from "hast-util-to-string";
 import { SKIP, visit } from "unist-util-visit";
-import { TableOfContentsItem } from "../../custom-docs-page/TableOfContents";
+import { TableOfContentsItem } from "../../components/TableOfContents";
 import { AccordionItemProps } from "../components/AccordionGroup";
-import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "./utils";
+import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement } from "./utils";
 
 interface FoundHeading {
     depth: number;
@@ -13,7 +13,7 @@ interface FoundHeading {
     id: string;
 }
 
-export function makeToc(tree: Root, isTocDefaultEnabled = false): ElementContent {
+export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContentsItem[] {
     const headings: FoundHeading[] = [];
 
     visit(tree, (node) => {
@@ -112,14 +112,15 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): ElementContent
     });
 
     const minDepth = Math.min(...headings.map((heading) => heading.depth));
+    return makeTree(headings, minDepth);
 
-    const tableOfContents: ElementContent = {
-        type: "mdxJsxFlowElement",
-        name: "TableOfContents",
-        attributes: [toAttribute("tableOfContents", makeTree(headings, minDepth))],
-        children: [],
-    };
-    return tableOfContents;
+    // const tableOfContents: ElementContent = {
+    //     type: "mdxJsxFlowElement",
+    //     name: "TableOfContents",
+    //     attributes: [toAttribute("tableOfContents", makeTree(headings, minDepth))],
+    //     children: [],
+    // };
+    // return tableOfContents;
 }
 
 function makeTree(headings: FoundHeading[], depth: number = 1): TableOfContentsItem[] {

@@ -12,6 +12,7 @@ interface FernSegmentedControlProps {
     value?: string;
     onValueChange: (value: string) => void;
     muted?: boolean;
+    container?: HTMLElement;
 }
 
 export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
@@ -21,6 +22,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
     value,
     onValueChange,
     muted,
+    container,
 }) => (
     <FernTooltipProvider>
         <ToggleGroup.Root
@@ -31,7 +33,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
         >
             {options.map((option) =>
                 option.type === "value" ? (
-                    <FernTooltip key={option.value} content={option.tooltip}>
+                    <FernTooltip key={option.value} content={option.tooltip} container={container}>
                         <div className="min-w-0 flex-1 shrink">
                             <ToggleGroup.Item asChild={true} className={itemClassName} value={option.value}>
                                 <FernButton
