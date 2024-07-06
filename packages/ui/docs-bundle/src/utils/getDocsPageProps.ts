@@ -251,7 +251,7 @@ async function convertDocsToDocsPageProps({
         logoHeight: docs.definition.config.logoHeight,
         logoHref:
             docs.definition.config.logoHref ??
-            (node.landingPage?.slug != null ? `/${node.landingPage.slug}` : undefined),
+            (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined),
         search: docs.definition.search,
         files: docs.definition.filesV2,
         resolvedPath,
