@@ -1,4 +1,3 @@
-import { isPlainObject } from "@fern-ui/core-utils";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { ReactElement, forwardRef, useEffect, useState, type ComponentProps } from "react";
@@ -95,7 +94,7 @@ export function formatUrlString(url: string | UrlObject): string {
     if (url == null) {
         return "";
     }
-    if (isPlainObject(url)) {
+    if (typeof url === "object") {
         return format(url);
     }
     return typeof url === "string" ? url : "";
