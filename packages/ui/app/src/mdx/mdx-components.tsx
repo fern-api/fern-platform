@@ -1,5 +1,5 @@
 import { FernScrollArea, RemoteFontAwesomeIcon } from "@fern-ui/components";
-import type { MDXRemoteProps } from "next-mdx-remote";
+import type { MDXComponents } from "mdx/types";
 import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
@@ -100,7 +100,7 @@ export const JSX_COMPONENTS = {
     IFrame,
 };
 
-export const HTML_COMPONENTS: MDXRemoteProps["components"] = {
+export const HTML_COMPONENTS: MDXComponents = {
     ...HTML_TABLE_COMPONENTS,
     h1: (props) => HeadingRenderer(1, props),
     h2: (props) => HeadingRenderer(2, props),

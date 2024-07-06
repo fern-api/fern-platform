@@ -13,7 +13,7 @@ export const RESOLVED_PATH_ATOM = atomWithReducer<ResolvedPath, ResolvedPath>(
         type: "custom-markdown-page",
         fullSlug: "",
         title: "",
-        serializedMdxContent: "",
+        mdx: "",
         neighbors: { prev: null, next: null },
         apis: {},
     },

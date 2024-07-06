@@ -36,9 +36,7 @@ function DocsMainContentInternal(): ReactElement | null {
     }
 
     return visitDiscriminatedUnion(resolvedPath)._visit({
-        "custom-markdown-page": (resolvedPath) => (
-            <CustomDocsPage serializedMdxContent={resolvedPath.serializedMdxContent} resolvedPath={resolvedPath} />
-        ),
+        "custom-markdown-page": (resolvedPath) => <CustomDocsPage mdx={resolvedPath.mdx} resolvedPath={resolvedPath} />,
         "api-page": (resolvedPath) => (
             <ApiPage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />
         ),

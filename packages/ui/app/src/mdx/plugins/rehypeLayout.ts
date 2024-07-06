@@ -28,10 +28,10 @@ export interface PageHeaderProps {
     isTocDefaultEnabled: boolean;
 }
 
-export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: VFile) => void {
+export function rehypeFernLayout(matter: FernDocsFrontmatter): (tree: Root, vfile: VFile) => void {
     return async (tree, vfile) => {
-        let matter = vfile.data.matter as FernDocsFrontmatter | undefined;
-        matter = mergePropsWithMatter(props, matter);
+        // let matter = vfile.data.matter as FernDocsFrontmatter | undefined;
+        // matter = mergePropsWithMatter(props, matter);
         vfile.data.matter = matter;
 
         const asideContents = collectAsideContent(tree);
@@ -95,27 +95,6 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                     hideNavLinks: false,
                 });
         }
-    };
-}
-
-function mergePropsWithMatter(
-    props: PageHeaderProps | undefined,
-    matter: FernDocsFrontmatter | undefined,
-): FernDocsFrontmatter {
-    if (matter == null || props == null) {
-        return {
-            layout: "guide",
-        };
-    }
-
-    return {
-        title: matter.title ?? props.title,
-        subtitle: matter.subtitle ?? matter.excerpt ?? props.subtitle,
-        "edit-this-page-url": matter["edit-this-page-url"] ?? matter.editThisPageUrl ?? props.editThisPageUrl,
-        layout: props.layout ?? matter.layout ?? "guide",
-        "hide-nav-links": props.hideNavLinks ?? matter["hide-nav-links"],
-        breadcrumbs: matter.breadcrumbs ?? props.breadcrumbs,
-        "force-toc": matter["force-toc"] ?? props.isTocDefaultEnabled,
     };
 }
 
