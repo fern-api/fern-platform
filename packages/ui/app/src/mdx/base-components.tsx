@@ -19,6 +19,7 @@ import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAncho
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useFrontmatter } from "./frontmatter-context";
 
 /**
  * By default, next will use /host/current/slug in SSG.
@@ -94,6 +95,7 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
 
 export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, enableZoom, style, ...rest }) => {
     const { files } = useDocsContext();
+    const { "no-image-zoom": noImageZoom } = useFrontmatter();
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
         if (src == null) {
@@ -128,7 +130,7 @@ export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoo
 
     const { isImageZoomDisabled } = useFeatureFlags();
 
-    if (isImageZoomDisabled ? !enableZoom : noZoom) {
+    if (isImageZoomDisabled || noImageZoom ? !enableZoom : noZoom) {
         return fernImage;
     }
 

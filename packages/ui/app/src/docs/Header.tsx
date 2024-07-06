@@ -1,16 +1,11 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
-import {
-    useCloseMobileSidebar,
-    useIsMobileSidebarOpen,
-    useOpenMobileSidebar,
-    useOpenSearchDialog,
-} from "../atoms/sidebar";
+import { useOpenSearchDialog } from "../atoms/sidebar";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
@@ -19,6 +14,7 @@ import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { getGitHubRepo } from "../util/github";
 import { GitHubWidget } from "./GitHubWidget";
 import { HeaderLogoSection } from "./HeaderLogoSection";
+import { MobileMenuButton } from "./MobileMenuButton";
 import { ThemeButton } from "./ThemeButton";
 
 export declare namespace Header {
@@ -34,16 +30,13 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     ref,
 ) {
     const { navbarLinks } = useDocsContext();
-    const openMobileSidebar = useOpenMobileSidebar();
-    const closeMobileSidebar = useCloseMobileSidebar();
-    const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const { colors } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const [searchService] = useSearchConfig();
 
     const navbarLinksSection = (
-        <div className="hidden lg:block">
+        <div className="lg-menu">
             <FernButtonGroup>
                 {navbarLinks.map((navbarLink, idx) => {
                     if (navbarLink.type === "github") {
@@ -93,7 +86,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
             {showSearchBar && (
                 <div
-                    className={cn("max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2", {
+                    className={cn("fern-header-searchbar", {
                         invisible: isSearchBoxMounted,
                     })}
                 >
@@ -102,13 +95,13 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             )}
 
             <div
-                className={cn("-mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4", {
+                className={cn("fern-header-right-menu", {
                     "flex-1": showSearchBar,
                 })}
             >
                 {navbarLinksSection}
 
-                <div className="flex items-center lg:hidden">
+                <div className="max-lg-menu">
                     {githubRepo && <GitHubWidget repo={githubRepo} />}
 
                     {colors.dark && colors.light && <ThemeButton size="large" />}
@@ -128,28 +121,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                         />
                     )}
 
-                    <FernButton
-                        onClickCapture={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            if (isMobileSidebarOpen) {
-                                closeMobileSidebar();
-                            } else {
-                                openMobileSidebar();
-                            }
-                        }}
-                        icon={
-                            isMobileSidebarOpen ? (
-                                <Cross1Icon className="!size-5" />
-                            ) : (
-                                <HamburgerMenuIcon className="!size-5" />
-                            )
-                        }
-                        intent={isMobileSidebarOpen ? "primary" : "none"}
-                        variant={isMobileSidebarOpen ? "filled" : "minimal"}
-                        rounded={true}
-                        size="large"
-                    />
+                    <MobileMenuButton />
                 </div>
             </div>
         </nav>

@@ -1,6 +1,7 @@
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
 import React from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { FrontmatterContextProvider } from "./frontmatter-context";
 import type { SerializedMdxContent } from "./mdx";
 import { HTML_COMPONENTS, JSX_COMPONENTS } from "./mdx-components";
 
@@ -25,12 +26,14 @@ export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx
 
     return (
         <FernErrorBoundary component="MdxContent">
-            <MDXRemote
-                scope={mdx.scope}
-                frontmatter={mdx.frontmatter}
-                compiledSource={mdx.compiledSource}
-                components={COMPONENTS}
-            />
+            <FrontmatterContextProvider value={mdx.frontmatter}>
+                <MDXRemote
+                    scope={mdx.scope}
+                    frontmatter={mdx.frontmatter}
+                    compiledSource={mdx.compiledSource}
+                    components={COMPONENTS}
+                />
+            </FrontmatterContextProvider>
         </FernErrorBoundary>
     );
 });

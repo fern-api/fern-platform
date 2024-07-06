@@ -1,8 +1,9 @@
 import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
 import clsx from "clsx";
-import { ComponentPropsWithoutRef, forwardRef, memo, useRef } from "react";
+import { useAtom } from "jotai";
+import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
 import { useSidebarNodes } from "../atoms/navigation";
-import { useIsMobileSidebarOpen } from "../atoms/sidebar";
+import { SIDEBAR_SCROLL_CONTAINER_ATOM, useIsMobileSidebarOpen } from "../atoms/sidebar";
 import { useLayoutBreakpointValue } from "../atoms/viewport";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useIsScrolled } from "../docs/useIsScrolled";
@@ -20,8 +21,8 @@ interface SidebarContainerProps extends ComponentPropsWithoutRef<"nav"> {
 const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps>(function DesktopSidebar(props, ref) {
     const { layout, tabs, currentTabIndex } = useDocsContext();
     const sidebar = useSidebarNodes();
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const isScrolled = useIsScrolled(scrollRef);
+    const [scrollRef, setScrollRef] = useAtom(SIDEBAR_SCROLL_CONTAINER_ATOM);
+    const isScrolled = useIsScrolled({ current: scrollRef });
     const layoutBreakpoint = useLayoutBreakpointValue();
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
@@ -37,7 +38,7 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
                         "overscroll-contain": layout?.disableHeader === true,
                     })}
                     scrollbars="vertical"
-                    ref={scrollRef}
+                    ref={setScrollRef}
                 >
                     {tabs.length > 0 && (
                         <ul
@@ -50,7 +51,7 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
                             ))}
                         </ul>
                     )}
-                    <CollapseSidebarProvider scrollRef={scrollRef}>
+                    <CollapseSidebarProvider>
                         <FernTooltipProvider>
                             <SidebarRootNode node={sidebar} />
                         </FernTooltipProvider>

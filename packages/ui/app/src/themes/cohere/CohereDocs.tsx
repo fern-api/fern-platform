@@ -1,12 +1,14 @@
 import { FernScrollArea } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
-import { useAtom, useSetAtom } from "jotai";
+import clsx from "clsx";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import { Router } from "next/router";
 import { CSSProperties, ReactElement, memo, useEffect, useRef, useState } from "react";
 import { CONTENT_HEIGHT_ATOM } from "../../atoms/layout";
 import { LOGO_TEXT_ATOM } from "../../atoms/logo";
 import { PORTAL_CONTAINER } from "../../atoms/portal";
+import { SIDEBAR_DISABLED_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
 import { useLayoutBreakpoint } from "../../atoms/viewport";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { DocsMainContent } from "../../docs/DocsMainContent";
@@ -18,6 +20,9 @@ function UnmemoizedCohereDocs(): ReactElement {
     const breakpoint = useLayoutBreakpoint();
     const showHeader = layout?.disableHeader !== true || breakpoint.max("lg");
     const setPortalContainer = useSetAtom(PORTAL_CONTAINER);
+
+    const isSidebarDisabled = useAtomValue(SIDEBAR_DISABLED_ATOM);
+    const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
 
     useHydrateAtoms([[LOGO_TEXT_ATOM, "docs"]], {
         dangerouslyForceHydrate: true,
@@ -60,7 +65,14 @@ function UnmemoizedCohereDocs(): ReactElement {
             {showHeader && <HeaderContainer />}
             <div className="fern-body">
                 <Sidebar />
-                <FernScrollArea className="fern-main" ref={mainRef} scrollbars="vertical">
+                <FernScrollArea
+                    rootClassName="fern-main"
+                    className={clsx({
+                        "fern-sidebar-hidden": isSidebarDisabled || showDismissableSidebar,
+                    })}
+                    ref={mainRef}
+                    scrollbars="vertical"
+                >
                     <div style={{ maxWidth: contentWidth != null ? `${contentWidth}px` : undefined }}>
                         <DocsMainContent />
 

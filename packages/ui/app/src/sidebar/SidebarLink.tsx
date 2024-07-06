@@ -20,10 +20,12 @@ import {
     useRef,
 } from "react";
 import { ChevronDown } from "react-feather";
-import { useCloseMobileSidebar, useIsMobileSidebarOpen } from "../atoms/sidebar";
+import { SIDEBAR_SCROLL_CONTAINER_ATOM, useCloseMobileSidebar } from "../atoms/sidebar";
 import { FernLink } from "../components/FernLink";
+import { useAtomEffect } from "../hooks/useAtomEffect";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { slugToHref } from "../util/slugToHref";
+import { scrollToCenter } from "./utils";
 
 interface SidebarSlugLinkProps {
     nodeId: FernNavigation.NodeId;
@@ -207,17 +209,22 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
         const ref = useRef<HTMLDivElement>(null);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(parentRef, () => ref.current!);
-        const isMobileSidebarOpen = useIsMobileSidebarOpen();
         const closeMobileSidebar = useCloseMobileSidebar();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
         useEffect(() => registerScrolledToPathListener(props.nodeId, ref), [props.nodeId]);
 
-        useEffect(() => {
-            if (isMobileSidebarOpen && props.selected) {
-                ref.current?.scrollIntoView({ block: "center" });
-            }
-        }, [isMobileSidebarOpen, props.selected]);
+        useAtomEffect(
+            useCallback(
+                (get) => {
+                    if (props.selected) {
+                        scrollToCenter(get(SIDEBAR_SCROLL_CONTAINER_ATOM), ref.current);
+                    }
+                },
+                [props.selected],
+            ),
+        );
+
         const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>>(
             (e) => {
                 onClick?.(e);

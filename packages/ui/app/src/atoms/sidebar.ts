@@ -2,11 +2,12 @@ import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
 import { DOCS_LAYOUT_ATOM } from "./layout";
-import { RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
+import { CURRENT_NODE_ATOM, RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
 import { MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
 export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);
+export const SIDEBAR_SCROLL_CONTAINER_ATOM = atom<HTMLElement | null>(null);
 
 // in certain cases, the sidebar should be completely removed from the DOM.
 export const SIDEBAR_DISABLED_ATOM = atom((get) => {
@@ -64,6 +65,12 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
 
     if (sidebar == null) {
         // this is superceded by SIDEBAR_DISABLED_ATOM
+        return true;
+    }
+
+    const node = get(CURRENT_NODE_ATOM);
+
+    if (node?.hidden) {
         return true;
     }
 

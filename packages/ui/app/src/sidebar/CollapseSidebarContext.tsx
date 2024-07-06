@@ -1,5 +1,4 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
 import { noop } from "lodash-es";
 import {
@@ -11,7 +10,6 @@ import {
     useContext,
     useEffect,
     useMemo,
-    useRef,
     useState,
 } from "react";
 import { useCallbackOne } from "use-memo-one";
@@ -39,13 +37,13 @@ export const useCollapseSidebar = (): CollapseSidebarContextValue => useContext(
 
 export const CollapseSidebarProvider: FC<
     PropsWithChildren<{
-        scrollRef: RefObject<HTMLDivElement>;
+        // scrollRef: RefObject<HTMLDivElement>;
     }>
-> = ({ children, scrollRef: scrollContainerRef }) => {
+> = ({ children }) => {
     const sidebar = useSidebarNodes();
     const selectedNodeId = useAtomValue(CURRENT_NODE_ID_ATOM);
 
-    const { invokeListeners, registerListener } = useActiveValueListeners(selectedNodeId);
+    const { invokeListeners, registerListener: _registerListener } = useActiveValueListeners(selectedNodeId);
 
     useAtomEffect(
         useCallbackOne(
@@ -59,34 +57,34 @@ export const CollapseSidebarProvider: FC<
         ),
     );
 
-    const stopMeasuring = useRef<() => void>(noop);
+    // const stopMeasuring = useRef<() => void>(noop);
 
-    const registerScrolledToPathListener = useCallback(
-        (nodeId: FernNavigation.NodeId, targetRef: RefObject<HTMLDivElement>) =>
-            registerListener(nodeId, () => {
-                fastdom.clear(stopMeasuring.current);
-                stopMeasuring.current = fastdom.measure(() => {
-                    if (scrollContainerRef.current == null || targetRef.current == null) {
-                        return;
-                    }
-                    // if the target is already in view, don't scroll
-                    if (
-                        targetRef.current.offsetTop >= scrollContainerRef.current.scrollTop &&
-                        targetRef.current.offsetTop + targetRef.current.clientHeight <=
-                            scrollContainerRef.current.scrollTop + scrollContainerRef.current.clientHeight
-                    ) {
-                        return;
-                    }
+    // const registerScrolledToPathListener = useCallback(
+    //     (nodeId: FernNavigation.NodeId, targetRef: RefObject<HTMLDivElement>) =>
+    //         registerListener(nodeId, () => {
+    //             fastdom.clear(stopMeasuring.current);
+    //             stopMeasuring.current = fastdom.measure(() => {
+    //                 if (scrollContainerRef.current == null || targetRef.current == null) {
+    //                     return;
+    //                 }
+    //                 // if the target is already in view, don't scroll
+    //                 if (
+    //                     targetRef.current.offsetTop >= scrollContainerRef.current.scrollTop &&
+    //                     targetRef.current.offsetTop + targetRef.current.clientHeight <=
+    //                         scrollContainerRef.current.scrollTop + scrollContainerRef.current.clientHeight
+    //                 ) {
+    //                     return;
+    //                 }
 
-                    // if the target is outside of the scroll container, scroll to it (centered)
-                    scrollContainerRef.current.scrollTo({
-                        top: targetRef.current.offsetTop - scrollContainerRef.current.clientHeight / 3,
-                        behavior: "smooth",
-                    });
-                });
-            }),
-        [registerListener, scrollContainerRef],
-    );
+    //                 // if the target is outside of the scroll container, scroll to it (centered)
+    //                 scrollContainerRef.current.scrollTo({
+    //                     top: targetRef.current.offsetTop - scrollContainerRef.current.clientHeight / 3,
+    //                     behavior: "smooth",
+    //                 });
+    //             });
+    //         }),
+    //     [registerListener, scrollContainerRef],
+    // );
 
     const { parentIdMap, parentToChildrenMap } = useMemo(() => {
         const parentIdMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
@@ -155,22 +153,10 @@ export const CollapseSidebarProvider: FC<
             toggleExpanded,
             checkExpanded,
             checkChildSelected,
-            registerScrolledToPathListener,
+            registerScrolledToPathListener: () => noop,
         }),
-        [expanded, toggleExpanded, checkExpanded, checkChildSelected, registerScrolledToPathListener],
+        [expanded, toggleExpanded, checkExpanded, checkChildSelected],
     );
-
-    // If there is only one pageGroup with only one page, hide the sidebar content
-    // this is useful for tabs that only have one page
-    if (
-        sidebar == null ||
-        (sidebar.children.length === 1 &&
-            sidebar.children[0].type === "sidebarGroup" &&
-            sidebar.children[0].children.length === 1 &&
-            sidebar.children[0].children[0].type === "page")
-    ) {
-        return null;
-    }
 
     return <CollapseSidebarContext.Provider value={value}>{children}</CollapseSidebarContext.Provider>;
 };

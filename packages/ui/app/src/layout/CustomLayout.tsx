@@ -7,7 +7,7 @@ interface CustomLayoutProps {
 }
 
 export function CustomLayout({ children }: CustomLayoutProps): ReactElement {
-    return <main className="fern-prose">{children}</main>;
+    return <main>{children}</main>;
 }
 
 export function toCustomLayoutHastNode({ children }: { children: ElementContent[] }): MdxJsxFlowElementHast {
