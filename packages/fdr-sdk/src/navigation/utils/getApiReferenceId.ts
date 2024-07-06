@@ -32,5 +32,7 @@ export function getApiReferenceId(node: NavigationNode | undefined): FernNavigat
         webSocket: RETURN_API_DEFINITION_ID,
         webhook: RETURN_API_DEFINITION_ID,
         apiPackage: RETURN_API_DEFINITION_ID,
+        unversioned: RETURN_UNDEFINED,
+        landingPage: RETURN_UNDEFINED,
     });
 }

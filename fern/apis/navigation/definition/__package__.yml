@@ -20,8 +20,7 @@ types:
     discriminated: false
     union:
       - VersionedNode
-      - TabbedNode
-      - SidebarRootNode
+      - UnversionedNode
 
   VersionChild:
     discriminated: false
@@ -70,6 +69,13 @@ types:
     properties:
       type: literal<"versioned">
       children: list<VersionNode>
+
+  UnversionedNode:
+    extends: WithNodeId
+    properties:
+      type: literal<"unversioned">
+      child: VersionChild
+      landingPage: optional<LandingPageNode>
 
   TabbedNode:
     extends: WithNodeId
@@ -125,6 +131,7 @@ types:
       versionId: VersionId
       child: VersionChild
       availability: optional<Availability>
+      landingPage: optional<LandingPageNode>
 
   TabNode:
     extends:
@@ -138,6 +145,12 @@ types:
     extends: WithNodeMetadata
     properties:
       type: literal<"page">
+      pageId: PageId
+
+  LandingPageNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"landingPage">
       pageId: PageId
 
   SectionNode:

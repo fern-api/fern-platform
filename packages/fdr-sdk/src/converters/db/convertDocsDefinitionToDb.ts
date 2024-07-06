@@ -145,12 +145,14 @@ function transformUnversionedNavigationConfigForDb(
         untabbed: (config) => {
             return {
                 items: config.items.map(transformNavigationItemForDb),
+                landingPage: transformPageNavigationItemForDb(config.landingPage),
             };
         },
         tabbed: (config) => {
             return {
                 tabs: config.tabs?.map(transformNavigationTabForDb),
                 tabsV2: config.tabsV2?.map(transformNavigationTabV2ForDb),
+                landingPage: transformPageNavigationItemForDb(config.landingPage),
             };
         },
     });
@@ -250,6 +252,7 @@ export function transformNavigationItemForDb(
                 items: writeShape.items.map((item) => transformNavigationItemForDb(item)),
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
                 fullSlug: writeShape.fullSlug,
+                overviewPageId: writeShape.overviewPageId,
             };
         case "link":
             return {

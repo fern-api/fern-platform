@@ -162,6 +162,7 @@ types:
         type: optional<list<NavigationTab>>
         availability: deprecated
       tabsV2: optional<list<NavigationTabV2>>
+      landingPage: optional<PageMetadata>
 
   NavigationTab:
     availability: deprecated
@@ -193,6 +194,7 @@ types:
   UnversionedUntabbedNavigationConfig:
     properties:
       items: list<NavigationItem>
+      landingPage: optional<PageMetadata>
 
   VersionedNavigationConfig:
     properties:
@@ -382,7 +384,7 @@ types:
           This is only applicable to sections that are at the root level in the sidebar.
           If false, the section title will be displayed as a header and the items will be displayed below it, and cannot be collapsed.
       skipUrlSlug: optional<boolean>
-      summaryPageId:
+      overviewPageId:
         type: optional<commons.PageId>
         availability: in-development
         docs: |
