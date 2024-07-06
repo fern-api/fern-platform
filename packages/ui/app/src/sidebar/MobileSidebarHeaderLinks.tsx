@@ -1,9 +1,10 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement } from "react";
-import { useLayoutBreakpointValue } from "../atoms/viewport";
+import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../atoms/viewport";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 
@@ -36,7 +37,7 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
 
 export function MobileSidebarHeaderLinks(): ReactElement | null {
     const { layout, navbarLinks } = useDocsContext();
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     if (navbarLinks == null || navbarLinks.length === 0) {
         return null;
     }
@@ -72,7 +73,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
                                   : navbarLink.type
                         }
                         intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
-                        size={["mobile", "sm", "md"].includes(layoutBreakpoint) ? "large" : "normal"}
+                        size={isMobileSidebarEnabled ? "large" : "normal"}
                     />
                 ),
             )}

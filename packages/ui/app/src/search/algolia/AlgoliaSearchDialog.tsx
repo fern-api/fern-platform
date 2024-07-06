@@ -8,7 +8,7 @@ import { InstantSearch } from "react-instantsearch";
 import { useSidebarNodes } from "../../atoms/navigation";
 import { PORTAL_CONTAINER } from "../../atoms/portal";
 import { SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "../../atoms/sidebar";
-import { useLayoutBreakpointValue } from "../../atoms/viewport";
+import { IS_MOBILE_SCREEN_ATOM } from "../../atoms/viewport";
 import { useNavigationContext } from "../../contexts/navigation-context";
 import { SearchHits } from "../SearchHits";
 import { createSearchPlaceholderWithVersion } from "../util";
@@ -17,13 +17,13 @@ import { useAlgoliaSearchClient } from "./useAlgoliaSearchClient";
 
 export function AlgoliaSearchDialog({ fromHeader }: { fromHeader?: boolean }): ReactElement | null {
     const inputRef = useRef<HTMLInputElement>(null);
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
     const isSearchDialogOpen = useIsSearchDialogOpen();
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     const algoliaSearchClient = useAlgoliaSearchClient();
     const container = useAtomValue(PORTAL_CONTAINER);
-    if (algoliaSearchClient == null || layoutBreakpoint === "mobile") {
+    if (algoliaSearchClient == null || isMobileScreen) {
         return null;
     }
     const [searchClient, index] = algoliaSearchClient;
@@ -31,17 +31,13 @@ export function AlgoliaSearchDialog({ fromHeader }: { fromHeader?: boolean }): R
         <Dialog.Root open={isSearchDialogOpen} onOpenChange={setSearchDialogState}>
             <Dialog.Portal container={container}>
                 <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm max-sm:hidden" />
-                <Dialog.Content className="fixed inset-0 z-30 max-sm:hidden">
-                    <div
-                        className={clsx(
-                            "md:max-w-content-width my-header-height-padded relative z-10 mx-6 max-h-[calc(100vh-var(--spacing-header-height)-var(--spacing-header-height)-2rem)] md:mx-auto flex flex-col",
-                            {
-                                "mt-4": fromHeader,
-                            },
-                        )}
-                    >
-                        <FernInstantSearch searchClient={searchClient} indexName={index} inputRef={inputRef} />
-                    </div>
+                <Dialog.Content
+                    className={clsx(
+                        "fixed md:max-w-content-width my-header-height-padded top-0 inset-x-0 z-10 mx-6 max-h-[calc(100vh-var(--spacing-header-height)-var(--spacing-header-height)-2rem)] md:mx-auto flex flex-col",
+                        { "mt-4": fromHeader },
+                    )}
+                >
+                    <FernInstantSearch searchClient={searchClient} indexName={index} inputRef={inputRef} />
                 </Dialog.Content>
             </Dialog.Portal>
         </Dialog.Root>

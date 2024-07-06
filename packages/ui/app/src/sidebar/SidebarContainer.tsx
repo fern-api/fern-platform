@@ -1,10 +1,10 @@
 import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
 import clsx from "clsx";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
 import { useSidebarNodes } from "../atoms/navigation";
 import { SIDEBAR_SCROLL_CONTAINER_ATOM, useIsMobileSidebarOpen } from "../atoms/sidebar";
-import { useLayoutBreakpointValue } from "../atoms/viewport";
+import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../atoms/viewport";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
@@ -23,14 +23,12 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
     const sidebar = useSidebarNodes();
     const [scrollRef, setScrollRef] = useAtom(SIDEBAR_SCROLL_CONTAINER_ATOM);
     const isScrolled = useIsScrolled({ current: scrollRef });
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
     return (
         <nav aria-label="secondary" ref={ref} {...props} className={clsx("fern-sidebar-container", props.className)}>
-            <SidebarFixedItemsSection
-                showBorder={isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))}
-            />
+            <SidebarFixedItemsSection showBorder={isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled)} />
             <SearchSidebar>
                 <FernScrollArea
                     rootClassName="flex-1 shrink-1"

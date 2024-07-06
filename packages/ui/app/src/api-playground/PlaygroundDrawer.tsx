@@ -20,7 +20,7 @@ import {
     useTogglePlayground,
 } from "../atoms/playground";
 import { PORTAL_CONTAINER } from "../atoms/portal";
-import { useLayoutBreakpointValue, useWindowHeight } from "../atoms/viewport";
+import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, useWindowHeight } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
     ResolvedApiDefinition,
@@ -89,11 +89,12 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
 
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
+    const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     const height = usePlaygroundHeight();
     const setHeight = useSetPlaygroundHeight();
 
-    const x = useMotionValue(layoutBreakpoint !== "mobile" ? height : windowHeight);
+    const x = useMotionValue(isMobileScreen ? height : windowHeight);
     const [scope, animate] = useAnimate();
 
     const setOffset = useCallback(
@@ -107,16 +108,16 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
 
     useEffect(() => {
         if (isResizing) {
-            x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+            x.jump(!isMobileScreen ? height : windowHeight, true);
         } else {
             if (scope.current != null) {
                 // x.setWithVelocity(layoutBreakpoint !== "mobile" ? height : windowHeight, 0);
-                void animate(scope.current, { height: layoutBreakpoint !== "mobile" ? height : windowHeight });
+                void animate(scope.current, { height: !isMobileScreen ? height : windowHeight });
             } else {
-                x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+                x.jump(!isMobileScreen ? height : windowHeight, true);
             }
         }
-    }, [animate, height, isResizing, layoutBreakpoint, scope, windowHeight, x]);
+    }, [animate, height, isMobileScreen, isResizing, scope, windowHeight, x]);
 
     const isPlaygroundOpen = useIsPlaygroundOpen();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
@@ -312,7 +313,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                         asChild
                     >
                         <motion.div style={{ height: x }} ref={scope}>
-                            {layoutBreakpoint !== "mobile" ? (
+                            {!isMobileScreen ? (
                                 <>
                                     <div
                                         className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
@@ -330,7 +331,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                             ) : (
                                 renderMobileHeader()
                             )}
-                            {layoutBreakpoint === "mobile" || layoutBreakpoint === "sm" || layoutBreakpoint === "md" ? (
+                            {isMobileSidebarEnabled ? (
                                 renderContent()
                             ) : (
                                 <HorizontalSplitPane

@@ -40,8 +40,8 @@ export function ReferenceLayout({
 }: ReferenceLayoutProps): ReactElement {
     const isApiPage = useApiPageContext();
     return (
-        <main className="relative flex flex-row-reverse justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
-            <div className="z-10 w-full min-w-0 pt-8 lg:pr-8">
+        <main className="fern-reference-layout">
+            <div className="z-10 w-full min-w-0 pt-8">
                 <article className="mx-auto w-full lg:ml-0 xl:mx-auto pb-20 max-w-content-width md:max-w-endpoint-width">
                     <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
                     <section

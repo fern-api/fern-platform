@@ -5,20 +5,16 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import { Router } from "next/router";
 import { CSSProperties, ReactElement, memo, useEffect, useRef, useState } from "react";
-import { CONTENT_HEIGHT_ATOM } from "../../atoms/layout";
+import { CONTENT_HEIGHT_ATOM, SHOW_HEADER_ATOM } from "../../atoms/layout";
 import { LOGO_TEXT_ATOM } from "../../atoms/logo";
 import { PORTAL_CONTAINER } from "../../atoms/portal";
 import { SIDEBAR_DISABLED_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
-import { useLayoutBreakpoint } from "../../atoms/viewport";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 
 function UnmemoizedCohereDocs(): ReactElement {
-    const { layout } = useDocsContext();
-    const breakpoint = useLayoutBreakpoint();
-    const showHeader = layout?.disableHeader !== true || breakpoint.max("lg");
+    const showHeader = useAtomValue(SHOW_HEADER_ATOM);
     const setPortalContainer = useSetAtom(PORTAL_CONTAINER);
 
     const isSidebarDisabled = useAtomValue(SIDEBAR_DISABLED_ATOM);

@@ -1,16 +1,16 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import { MOBILE_SIDEBAR_OPEN_ATOM } from "../atoms/sidebar";
-import { useLayoutBreakpoint } from "../atoms/viewport";
+import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "../atoms/viewport";
 import { SidebarContainer } from "./SidebarContainer";
 
 const SidebarContainerMotion = motion(SidebarContainer);
 
 export function DismissableSidebar({ className }: { className?: string }): ReactElement {
-    const breakpoint = useLayoutBreakpoint();
-    const isMobile = breakpoint.max("lg");
+    const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
+    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useAtom(MOBILE_SIDEBAR_OPEN_ATOM);
     const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(false);
 
@@ -35,7 +35,7 @@ export function DismissableSidebar({ className }: { className?: string }): React
         };
     }, []);
 
-    const showSidebar = isMobile ? isMobileSidebarOpen : isDesktopSidebarOpen;
+    const showSidebar = isMobileSidebarEnabled ? isMobileSidebarOpen : isDesktopSidebarOpen;
 
     return (
         <AnimatePresence>
@@ -45,7 +45,7 @@ export function DismissableSidebar({ className }: { className?: string }): React
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15, curve: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: isMobileScreen ? 0 : 0.15, curve: [0.16, 1, 0.3, 1] }}
                     onClickCapture={() => setIsMobileSidebarOpen(false)}
                 />
             )}
@@ -57,7 +57,7 @@ export function DismissableSidebar({ className }: { className?: string }): React
                     initial={{ x: "-100%" }}
                     animate={{ x: 0 }}
                     exit={{ x: "-100%" }}
-                    transition={{ duration: 0.15, curve: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: isMobileScreen ? 0 : 0.15, curve: [0.16, 1, 0.3, 1] }}
                 />
             )}
         </AnimatePresence>

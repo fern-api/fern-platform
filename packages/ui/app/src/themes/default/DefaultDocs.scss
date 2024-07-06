@@ -122,7 +122,7 @@
             // the 4rem is the same as the h-10 as the Header
             @apply max-h-[150vh] md:max-h-content;
 
-            @apply md:py-8 md:-my-8;
+            @apply md:py-8 flex;
         }
     }
 
@@ -138,16 +138,27 @@
 
     .fern-guide-layout,
     .fern-overview-layout,
-    .fern-page-layout {
-        @apply relative px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0;
+    .fern-page-layout,
+    .fern-reference-layout {
+        @apply relative px-4 md:px-6 lg:px-8;
+    }
+
+    .fern-reference-layout,
+    .fern-guide-layout,
+    .fern-overview-layout {
+        @apply flex flex-row-reverse justify-between;
     }
 
     .fern-guide-layout,
     .fern-overview-layout {
-        @apply flex flex-row-reverse justify-between gap-8;
+        @apply gap-8;
 
         .fern-layout-content {
             @apply pt-8 mx-auto w-full xl:mx-auto pb-20;
+        }
+
+        &:has(.fern-layout-toc) {
+            @apply xl:pr-0;
         }
     }
 

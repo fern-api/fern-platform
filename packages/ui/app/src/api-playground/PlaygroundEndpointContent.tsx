@@ -10,12 +10,12 @@ import {
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import { DownloadIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { useFeatureFlags } from "../atoms/flags";
-import { useLayoutBreakpointValue } from "../atoms/viewport";
+import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
@@ -61,7 +61,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
 
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
     useEffect(() => {
         if (typeof window === "undefined" || scrollAreaRef.current == null) {
@@ -294,7 +294,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 ref={scrollAreaRef}
                 className="mask-grad-top-6 w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
             >
-                {layoutBreakpoint !== "mobile" ? (
+                {isMobileScreen ? (
                     <HorizontalSplitPane
                         rizeBarHeight={scrollAreaHeight}
                         leftClassName="pl-6 pr-1 mt"

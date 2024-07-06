@@ -1,7 +1,8 @@
 import cn, { clsx } from "clsx";
+import { useAtomValue } from "jotai";
 import { ReactElement, useCallback } from "react";
 import { useIsMobileSidebarOpen } from "../../atoms/sidebar";
-import { useLayoutBreakpointValue } from "../../atoms/viewport";
+import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../../atoms/viewport";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { BgImageGradient } from "../../docs/BgImageGradient";
 import { Header } from "../../docs/Header";
@@ -15,7 +16,7 @@ interface HeaderContainerProps {
 export function HeaderContainer({ className }: HeaderContainerProps): ReactElement {
     const { colors, layout, tabs } = useDocsContext();
     const isScrolled = useIsScrolled();
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
     const renderBackground = useCallback(
@@ -47,11 +48,7 @@ export function HeaderContainer({ className }: HeaderContainerProps): ReactEleme
                     "has-background-light": colors.light?.headerBackground != null,
                     "has-background-dark": colors.dark?.headerBackground != null,
                 })}
-                data-border={
-                    isScrolled || (isMobileSidebarOpen && ["mobile", "sm", "md"].includes(layoutBreakpoint))
-                        ? "show"
-                        : "hide"
-                }
+                data-border={isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled) ? "show" : "hide"}
             >
                 <div className="fern-header">
                     {renderBackground()}

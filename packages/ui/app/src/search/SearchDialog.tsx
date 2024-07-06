@@ -1,9 +1,9 @@
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { PropsWithChildren, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
 import { useSidebarNodes } from "../atoms/navigation";
 import { SEARCH_DIALOG_OPEN_ATOM } from "../atoms/sidebar";
-import { useLayoutBreakpointValue } from "../atoms/viewport";
+import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
@@ -63,9 +63,9 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
     const [searchConfig] = useSearchConfig();
     const algoliaSearchClient = useAlgoliaSearchClient();
     const inputRef = useRef<HTMLInputElement>(null);
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
-    if (!searchConfig.isAvailable || layoutBreakpoint !== "mobile") {
+    if (!searchConfig.isAvailable || !isMobileScreen) {
         return <>{children}</>;
     }
 

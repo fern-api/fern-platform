@@ -85,10 +85,6 @@ export const BREAKPOINT_ATOM = atom<Breakpoint>((get) => {
     }
 });
 
-export function useLayoutBreakpointValue(): Breakpoint {
-    return useAtomValue(BREAKPOINT_ATOM);
-}
-
 export interface LayoutBreakpointValue {
     value: Breakpoint;
     min: (bp: Breakpoint) => boolean; // inclusive
@@ -128,6 +124,11 @@ export const MOBILE_SIDEBAR_ENABLED_ATOM = atom((get) => {
         default:
             return false;
     }
+});
+
+export const IS_MOBILE_SCREEN_ATOM = atom((get) => {
+    const breakpoint = get(BREAKPOINT_ATOM);
+    return breakpoint === "mobile";
 });
 
 // export const VIEWPORT_WIDTH_ATOM = atom(0);

@@ -7,12 +7,16 @@ export const LOCATION_ATOM = atomWithLocation({
     subscribe: (callback) => {
         Router.events.on("routeChangeComplete", callback);
         Router.events.on("routeChangeError", callback);
+        Router.events.on("hashChangeComplete", callback);
         return () => {
             Router.events.off("routeChangeComplete", callback);
             Router.events.off("routeChangeError", callback);
+            Router.events.off("hashChangeComplete", callback);
         };
     },
 });
+
+export const HASH_ATOM = atom((get) => get(LOCATION_ATOM).hash);
 
 const SETTABLE_LOCATION_ATOM = atom(FernNavigation.Slug(""));
 
