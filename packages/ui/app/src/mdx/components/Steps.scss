@@ -3,6 +3,10 @@
         @apply ml-2 mb-12 mt-4 border-l border-default pl-7;
 
         counter-reset: step;
+
+        .fern-steps > a {
+            @apply -ml-10;
+        }
     }
 
     .fern-steps h3 {

@@ -23,5 +23,9 @@
                 @apply t-accent size-4;
             }
         }
+
+        > a {
+            @apply -ml-8;
+        }
     }
 }
