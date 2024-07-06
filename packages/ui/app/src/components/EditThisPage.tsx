@@ -8,7 +8,7 @@ interface EditThisPageButton {
     editThisPageUrl: string | undefined;
 }
 export function EditThisPageButton(props: EditThisPageButton): ReactElement | null {
-    if (props.editThisPageUrl == null || props.editThisPageUrl.trim() === "") {
+    if (typeof props.editThisPageUrl !== "string") {
         return null;
     }
     return (
