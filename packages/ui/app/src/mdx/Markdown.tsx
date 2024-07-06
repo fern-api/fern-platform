@@ -1,7 +1,7 @@
 import cn from "clsx";
 import React from "react";
-import { SerializedMdxContent } from "./mdx";
 import { MdxContent } from "./MdxContent";
+import { SerializedMdxContent } from "./mdx";
 
 export declare namespace Markdown {
     export interface Props {
@@ -17,12 +17,12 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ mdx, notP
     }
 
     return (
-        <article
+        <section
             className={cn(className, "break-words max-w-none", {
                 ["prose dark:prose-invert"]: !notProse,
             })}
         >
             <MdxContent mdx={mdx} />
-        </article>
+        </section>
     );
 });

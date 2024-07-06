@@ -21,7 +21,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
 
     const searchBar = useMemo(() => {
         return showSearchBar ? (
-            <div className="mb-3 hidden last:mb-0 lg:block">
+            <div className="fern-sidebar-searchbar-container">
                 <SidebarSearchBar className="w-full" />
             </div>
         ) : null;
@@ -32,7 +32,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     }
 
     const header = layout?.disableHeader && (
-        <div className="mx-3 hidden h-header-height-real border-b border-transparent lg:flex lg:items-center lg:justify-between">
+        <div className="fern-sidebar-header">
             <HeaderLogoSection />
             <div className="-mr-3">{colors.dark && colors.light && <ThemeButton size="large" />}</div>
         </div>

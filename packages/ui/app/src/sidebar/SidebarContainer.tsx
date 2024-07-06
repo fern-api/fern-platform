@@ -42,7 +42,7 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
                 >
                     {tabs.length > 0 && (
                         <ul
-                            className={clsx("mt-5 mb-6 flex list-none flex-col", {
+                            className={clsx("fern-sidebar-tabs", {
                                 "lg:hidden": layout?.disableHeader !== true && layout?.tabsPlacement === "HEADER",
                             })}
                         >
