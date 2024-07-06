@@ -17,7 +17,7 @@ const DefaultDocsStyle = () => {
         <style jsx global>
             {`
                 :root {
-                    ${contentHeight > 0 ? `--content-height: ${contentHeight}px` : ""};
+                    ${contentHeight > 0 ? `--content-height: ${contentHeight}px;` : ""}
                     --header-offset: ${headerOffset}px;
                 }
             `}

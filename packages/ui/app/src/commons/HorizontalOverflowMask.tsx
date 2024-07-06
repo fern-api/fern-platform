@@ -10,9 +10,7 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
         useImperativeHandle(parentRef, () => ref.current!);
 
         const [showLeftMask, setShowLeftMask] = useState(false);
-        const [hideRightMask, setHideRightMask] = useState(() =>
-            ref.current != null ? ref.current.scrollLeft === ref.current.scrollWidth - ref.current.clientWidth : false,
-        );
+        const [hideRightMask, setHideRightMask] = useState(false);
 
         // check if overflow is visible
         useEffect(() => {
@@ -21,7 +19,7 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
             if (refCurrent == null) {
                 return;
             }
-            let stopMeasuring: () => void = noop;
+            let stopMeasuring = noop;
             const measure = () => {
                 fastdom.clear(stopMeasuring);
                 stopMeasuring = fastdom.measure(() => {

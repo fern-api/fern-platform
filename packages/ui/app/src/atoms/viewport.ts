@@ -12,6 +12,14 @@ IS_READY_ATOM.onMount = (setIsReady) => {
     }
 };
 
+export const SCROLL_BODY_ATOM = atom<HTMLElement | undefined>(undefined);
+SCROLL_BODY_ATOM.onMount = (set) => {
+    if (typeof window === "undefined") {
+        return;
+    }
+    set(document.body);
+};
+
 export function useIsReady(): boolean {
     return useAtomValue(IS_READY_ATOM);
 }

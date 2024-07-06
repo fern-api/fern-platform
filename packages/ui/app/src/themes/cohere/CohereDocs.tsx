@@ -4,10 +4,11 @@ import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import { Router } from "next/router";
-import { ReactElement, memo, useEffect, useRef, useState } from "react";
+import { ReactElement, memo, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { CONTENT_HEIGHT_ATOM, SHOW_HEADER_ATOM } from "../../atoms/layout";
 import { LOGO_TEXT_ATOM } from "../../atoms/logo";
 import { SIDEBAR_DISABLED_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
+import { SCROLL_BODY_ATOM } from "../../atoms/viewport";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
@@ -19,7 +20,7 @@ const CohereDocsStyle = () => {
         <style jsx global>
             {`
                 :root {
-                    ${contentHeight > 0 ? `--content-height: ${contentHeight}px` : ""};
+                    ${contentHeight > 0 ? `--content-height: ${contentHeight}px;` : ""}
                     --header-offset: 0px;
                     --card-border: #d8cfc1;
                     --bg-search-dialog: #fafafa;
@@ -40,6 +41,7 @@ function UnmemoizedCohereDocs(): ReactElement {
     });
 
     const mainRef = useRef<HTMLDivElement>(null);
+    useImperativeHandle(useSetAtom(SCROLL_BODY_ATOM), () => mainRef.current ?? undefined);
     const setContentHeight = useSetAtom(CONTENT_HEIGHT_ATOM);
 
     // the maxWidth: contentWidth guards against Radix's ScrollArea, which relies on display: table

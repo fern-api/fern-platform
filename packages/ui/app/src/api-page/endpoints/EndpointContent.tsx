@@ -10,6 +10,7 @@ import { FERN_LANGUAGE_ATOM } from "../../atoms/lang";
 import { CONTENT_HEIGHT_ATOM } from "../../atoms/layout";
 import { HASH_ATOM } from "../../atoms/location";
 import { CURRENT_NODE_ID_ATOM } from "../../atoms/navigation";
+import { store } from "../../atoms/store";
 import { FERN_STREAM_ATOM } from "../../atoms/stream";
 import { BREAKPOINT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "../../atoms/viewport";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
@@ -86,14 +87,13 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
 
     useImperativeHandle(containerRef, () => ref.current);
 
-    const isCurrentNode = useAtomValue(
-        useMemo(() => atom((get) => get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId), [endpoint.nodeId]),
-    );
-    const [isInViewport, setIsInViewport] = useState(isCurrentNode);
+    const [isInViewport, setIsInViewport] = useState(() => store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId);
     const { ref: viewportRef } = useInView({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
+    useImperativeHandle(viewportRef, () => ref.current ?? undefined);
+
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
     const onHoverRequestProperty = useCallback(
@@ -255,14 +255,13 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
         <div
             className={"fern-endpoint-content"}
             onClick={() => setSelectedError(undefined)}
-            ref={viewportRef}
+            ref={ref}
             data-route={`/${endpoint.slug}`}
         >
             <div
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
-                ref={ref}
             >
                 <div className="space-y-1 pb-2 pt-8">
                     <Breadcrumbs breadcrumbs={breadcrumbs} />

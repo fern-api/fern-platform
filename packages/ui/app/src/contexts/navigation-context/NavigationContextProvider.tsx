@@ -10,6 +10,8 @@ import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { useFeatureFlags } from "../../atoms/flags";
 import { SLUG_ATOM } from "../../atoms/location";
 import { useNavigationNodes, useResolvedPath } from "../../atoms/navigation";
+import { store } from "../../atoms/store";
+import { SCROLL_BODY_ATOM } from "../../atoms/viewport";
 import { getNextSeoProps } from "../../next-app/utils/getSeoProp";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -39,12 +41,13 @@ let lastScrollY: number | undefined;
 
 let cancelMeasure = noop;
 function startScrollTracking(route: string, scrolledHere: boolean = false) {
+    const body = store.get(SCROLL_BODY_ATOM) ?? document.body;
     if (!userIsScrolling && !scrolledHere) {
         getRouteNodeWithAnchor(route)?.node?.scrollIntoView({ behavior: "auto" });
     }
     userHasScrolled = scrolledHere;
     let lastActiveNavigatableOffsetTop: number | undefined;
-    lastScrollY = window.scrollY;
+    lastScrollY = body.scrollTop;
     let lastNode: HTMLElement | undefined;
     function handleObservation() {
         fastdom.clear(cancelMeasure);
@@ -69,7 +72,7 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
                         if (!userHasScrolled) {
                             node.scrollIntoView({ behavior: "auto" });
                         } else {
-                            window.scrollTo(0, newScrollY);
+                            body.scrollTo(0, newScrollY);
                             lastScrollY = newScrollY;
                         }
                         lastActiveNavigatableOffsetTop = currentActiveNavigatableOffsetTop;
