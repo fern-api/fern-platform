@@ -10,7 +10,6 @@ import { FERN_LANGUAGE_ATOM } from "../../atoms/lang";
 import { CONTENT_HEIGHT_ATOM } from "../../atoms/layout";
 import { HASH_ATOM } from "../../atoms/location";
 import { CURRENT_NODE_ID_ATOM } from "../../atoms/navigation";
-import { store } from "../../atoms/store";
 import { FERN_STREAM_ATOM } from "../../atoms/stream";
 import { BREAKPOINT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "../../atoms/viewport";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
@@ -87,7 +86,10 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
 
     useImperativeHandle(containerRef, () => ref.current);
 
-    const [isInViewport, setIsInViewport] = useState(() => store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId);
+    const isCurrentNode = useAtomValue(
+        useMemo(() => atom((get) => get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId), [endpoint.nodeId]),
+    );
+    const [isInViewport, setIsInViewport] = useState(isCurrentNode);
     const { ref: viewportRef } = useInView({
         onChange: setIsInViewport,
         rootMargin: "100%",
@@ -234,7 +236,7 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                     if (breakpoint === "sm" || breakpoint === "mobile") {
                         return 0;
                     } else {
-                        return exampleHeight;
+                        return exampleHeight + 8 * 2 * 4;
                     }
                 }),
             [exampleHeight],

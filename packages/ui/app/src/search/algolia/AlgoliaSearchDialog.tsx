@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
+import { POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM } from "../../atoms/layout";
 import { useSidebarNodes } from "../../atoms/navigation";
 import { PORTAL_CONTAINER } from "../../atoms/portal";
 import { SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "../../atoms/sidebar";
@@ -15,9 +16,10 @@ import { createSearchPlaceholderWithVersion } from "../util";
 import { SearchBox } from "./SearchBox";
 import { useAlgoliaSearchClient } from "./useAlgoliaSearchClient";
 
-export function AlgoliaSearchDialog({ fromHeader }: { fromHeader?: boolean }): ReactElement | null {
+export function AlgoliaSearchDialog(): ReactElement | null {
     const inputRef = useRef<HTMLInputElement>(null);
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
+    const fromHeader = useAtomValue(POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM);
 
     const isSearchDialogOpen = useIsSearchDialogOpen();
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
@@ -33,7 +35,7 @@ export function AlgoliaSearchDialog({ fromHeader }: { fromHeader?: boolean }): R
                 <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm max-sm:hidden" />
                 <Dialog.Content
                     className={clsx(
-                        "fixed md:max-w-content-width my-header-height-padded top-0 inset-x-0 z-10 mx-6 max-h-[calc(100vh-var(--spacing-header-height)-var(--spacing-header-height)-2rem)] md:mx-auto flex flex-col",
+                        "fixed md:max-w-content-width my-[10vh] top-0 inset-x-0 z-10 mx-6 max-h-[80vh] md:mx-auto flex flex-col",
                         { "mt-4": fromHeader },
                     )}
                 >

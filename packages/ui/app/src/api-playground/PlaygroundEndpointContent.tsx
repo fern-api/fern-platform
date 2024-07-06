@@ -294,7 +294,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 ref={scrollAreaRef}
                 className="mask-grad-top-6 w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
             >
-                {isMobileScreen ? (
+                {!isMobileScreen ? (
                     <HorizontalSplitPane
                         rizeBarHeight={scrollAreaHeight}
                         leftClassName="pl-6 pr-1 mt"

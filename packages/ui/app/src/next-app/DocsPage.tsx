@@ -65,7 +65,7 @@ export declare namespace DocsPage {
 }
 
 export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
-    const { baseUrl, layout, resolvedPath } = pageProps;
+    const { baseUrl, resolvedPath } = pageProps;
 
     useConsoleMessage();
     useMessageHandler();
@@ -81,7 +81,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
         <DocsContextProvider {...pageProps}>
             <BgImageGradient />
             <NavigationContextProvider basePath={baseUrl.basePath}>
-                <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
+                <SearchDialog />
                 <PlaygroundContextProvider>
                     <ThemedDocs theme={pageProps.theme} />
                 </PlaygroundContextProvider>

@@ -1,5 +1,5 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import { PropsWithChildren, useMemo, useRef } from "react";
+import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
 import { useSidebarNodes } from "../atoms/navigation";
 import { SEARCH_DIALOG_OPEN_ATOM } from "../atoms/sidebar";
@@ -16,13 +16,7 @@ import { InkeepCustomTrigger } from "./inkeep/InkeepCustomTrigger";
 import { useSearchTrigger } from "./useSearchTrigger";
 import { createSearchPlaceholderWithVersion } from "./util";
 
-export declare namespace SearchDialog {
-    export interface Props {
-        fromHeader?: boolean;
-    }
-}
-
-export const SearchDialog: React.FC<SearchDialog.Props> = ({ fromHeader }) => {
+export const SearchDialog = (): ReactElement | null => {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     useSearchTrigger(setSearchDialogState);
 
@@ -33,15 +27,11 @@ export const SearchDialog: React.FC<SearchDialog.Props> = ({ fromHeader }) => {
     }
 
     if (config.inkeep == null) {
-        return <AlgoliaSearchDialog fromHeader={fromHeader} />;
+        return <AlgoliaSearchDialog />;
     } else {
         return (
             <>
-                {config.inkeep.replaceSearch ? (
-                    <InkeepCustomTrigger />
-                ) : (
-                    <AlgoliaSearchDialog fromHeader={fromHeader} />
-                )}
+                {config.inkeep.replaceSearch ? <InkeepCustomTrigger /> : <AlgoliaSearchDialog />}
                 <InkeepChatButton />
             </>
         );

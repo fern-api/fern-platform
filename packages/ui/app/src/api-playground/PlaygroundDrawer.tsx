@@ -316,7 +316,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                             {!isMobileScreen ? (
                                 <>
                                     <div
-                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
+                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-2 after:z-50 after:h-4 after:content-['']"
                                         onMouseDown={handleVerticalResize}
                                     >
                                         <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
@@ -324,9 +324,6 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                                             <div className="bg-accent h-1 w-10 rounded-full" />
                                         </div>
                                     </div>
-                                    <Dialog.Close asChild className="absolute -translate-y-full -top-2 right-2">
-                                        <FernButton icon={<Cross1Icon />} size="large" rounded variant="minimal" />
-                                    </Dialog.Close>
                                 </>
                             ) : (
                                 renderMobileHeader()

@@ -151,7 +151,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 setActiveNavigatable(nodes.slugMap.get(fullSlug));
                 startScrollTracking(`/${fullSlug}`, true);
             },
-            300,
+            100,
             { trailing: true },
         ),
     );
