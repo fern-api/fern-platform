@@ -116,15 +116,13 @@
 
         .fern-endpoint-content-right {
             @apply max-w-content-width;
-            @apply md:flex-1 md:sticky md:self-start;
-            @apply mt-12;
+            @apply md:flex-1 md:sticky md:self-start md:top-header-offset;
+            @apply max-md:mt-12;
 
             // the 4rem is the same as the h-10 as the Header
             @apply max-h-[150vh] md:max-h-content;
-            @apply flex;
 
-            // header offset
-            @apply md:py-8 md:mt-0 md:top-header-offset;
+            @apply md:py-8 md:-my-8;
         }
     }
 

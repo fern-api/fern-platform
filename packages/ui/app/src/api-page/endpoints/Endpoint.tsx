@@ -1,4 +1,5 @@
-import { useAtomValue } from "jotai";
+import { useAtom } from "jotai";
+import { memo, useEffect } from "react";
 import { useFeatureFlags } from "../../atoms/flags";
 import { useResolvedPath } from "../../atoms/navigation";
 import { FERN_STREAM_ATOM } from "../../atoms/stream";
@@ -18,12 +19,29 @@ export declare namespace Endpoint {
     }
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, breadcrumbs, isLastInApi, types }) => {
-    const isStream = useAtomValue(FERN_STREAM_ATOM);
+const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
+    api,
+    showErrors,
+    endpoint,
+    breadcrumbs,
+    isLastInApi,
+    types,
+}) => {
+    const [isStream, setStream] = useAtom(FERN_STREAM_ATOM);
     const resolvedPath = useResolvedPath();
     const { isApiScrollingDisabled } = useFeatureFlags();
 
     const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;
+
+    useEffect(() => {
+        if (endpoint.stream != null) {
+            if (endpoint.slug === resolvedPath.fullSlug) {
+                setStream(false);
+            } else if (endpoint.stream.slug === resolvedPath.fullSlug) {
+                setStream(true);
+            }
+        }
+    }, [endpoint.slug, endpoint.stream, resolvedPath.fullSlug, setStream]);
 
     const { setTargetRef } = useApiPageCenterElement({ slug: endpointSlug });
 
@@ -42,8 +60,9 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, 
             breadcrumbs={breadcrumbs}
             containerRef={setTargetRef}
             hideBottomSeparator={isLastInApi || isApiScrollingDisabled}
-            isInViewport={resolvedPath.fullSlug === endpoint.slug}
             types={types}
         />
     );
 };
+
+export const Endpoint = memo(UnmemoizedEndpoint);

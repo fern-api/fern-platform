@@ -17,10 +17,7 @@ import { NavigationContext } from "./NavigationContext";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
-        // resolvedPath: ResolvedPath;
-        domain: string;
         basePath: string | undefined;
-        // title: string | undefined;
     }>;
 }
 
@@ -93,11 +90,7 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     }
 }
 
-export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
-    children,
-    domain,
-    basePath,
-}) => {
+export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({ children, basePath }) => {
     const { versions, currentVersionId } = useDocsContext();
     const nodes = useNavigationNodes();
     const { isApiScrollingDisabled } = useFeatureFlags();
@@ -227,19 +220,16 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         <NavigationContext.Provider
             value={useMemo(
                 () => ({
-                    domain,
-                    basePath: basePath != null && basePath.replace("/", "").trim().length > 0 ? basePath : undefined,
                     activeNavigatable,
                     onScrollToPath,
                     activeVersion: versions.find((version) => version.id === currentVersionId),
-                    selectedSlug,
                     unversionedSlug: FernNavigation.utils.getUnversionedSlug(
                         selectedSlug,
                         versions.find((version) => version.id === currentVersionId)?.slug,
                         basePath,
                     ),
                 }),
-                [activeNavigatable, basePath, currentVersionId, domain, onScrollToPath, selectedSlug, versions],
+                [activeNavigatable, basePath, currentVersionId, onScrollToPath, selectedSlug, versions],
             )}
         >
             <NextSeo {...seo} />

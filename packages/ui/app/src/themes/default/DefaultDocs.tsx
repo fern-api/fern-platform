@@ -2,9 +2,8 @@ import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import { useTheme } from "next-themes";
 import { CSSProperties, ReactElement, memo } from "react";
-import { CONTENT_HEIGHT_ATOM, HEADER_OFFSET_ATOM } from "../../atoms/layout";
+import { CONTENT_HEIGHT_ATOM, HEADER_OFFSET_ATOM, SHOW_HEADER_ATOM } from "../../atoms/layout";
 import { SIDEBAR_DISABLED_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
-import { useLayoutBreakpoint } from "../../atoms/viewport";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
@@ -12,8 +11,7 @@ import { HeaderContainer } from "./HeaderContainer";
 
 function UnmemoizedDefaultDocs(): ReactElement {
     const { layout, colors } = useDocsContext();
-    const breakpoint = useLayoutBreakpoint();
-    const showHeader = layout?.disableHeader !== true || breakpoint.max("lg");
+    const showHeader = useAtomValue(SHOW_HEADER_ATOM);
     const { resolvedTheme: theme = "light" } = useTheme();
     const isSidebarFixed = layout?.disableHeader || colors[theme as "light" | "dark"]?.sidebarBackground != null;
 
@@ -29,7 +27,7 @@ function UnmemoizedDefaultDocs(): ReactElement {
             style={
                 {
                     "--content-height": `${contentHeight}px`,
-                    "--header-offset": showHeader ? `${headerOffset}px` : "0px",
+                    "--header-offset": `${headerOffset}px`,
                 } as CSSProperties
             }
         >

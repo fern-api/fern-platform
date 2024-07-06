@@ -46,7 +46,16 @@ export const HEADER_TABS_HEIGHT_ATOM = atom(
     },
 );
 
+export const SHOW_HEADER_ATOM = atom((get) => {
+    const layout = get(DOCS_LAYOUT_ATOM);
+    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
+    return layout?.disableHeader !== true || isMobileSidebarEnabled;
+});
+
 export const HEADER_OFFSET_ATOM = atom<number>((get) => {
+    if (!get(SHOW_HEADER_ATOM)) {
+        return 0;
+    }
     const headerHeight = get(HEADER_HEIGHT_ATOM);
     const tabsHeight = get(HEADER_TABS_HEIGHT_ATOM);
     return headerHeight + tabsHeight;

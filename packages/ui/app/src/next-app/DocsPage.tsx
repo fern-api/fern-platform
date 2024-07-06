@@ -80,7 +80,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     return (
         <DocsContextProvider {...pageProps}>
             <BgImageGradient />
-            <NavigationContextProvider domain={baseUrl.domain} basePath={baseUrl.basePath}>
+            <NavigationContextProvider basePath={baseUrl.basePath}>
                 <SearchDialog fromHeader={layout?.searchbarPlacement === "HEADER"} />
                 <PlaygroundContextProvider>
                     <ThemedDocs theme={pageProps.theme} />

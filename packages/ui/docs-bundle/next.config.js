@@ -89,6 +89,7 @@ const nextConfig = {
         connectSrc.push("https://vercel.live");
         connectSrc.push("wss://*.pusher.com");
         styleSrc.push("https://vercel.live");
+        styleSrc.push("https://fonts.googleapis.com");
 
         const ContentSecurityPolicy = [
             `default-src ${defaultSrc.join(" ")}`,

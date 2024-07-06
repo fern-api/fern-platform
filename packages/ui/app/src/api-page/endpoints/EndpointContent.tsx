@@ -3,9 +3,11 @@ import cn from "clsx";
 import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { FERN_LANGUAGE_ATOM } from "../../atoms/lang";
+import { CURRENT_NODE_ID_ATOM } from "../../atoms/navigation";
+import { store } from "../../atoms/store";
 import { FERN_STREAM_ATOM } from "../../atoms/stream";
 import { useLayoutBreakpoint } from "../../atoms/viewport";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
@@ -34,7 +36,6 @@ export declare namespace EndpointContent {
         breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
         containerRef: React.Ref<HTMLDivElement | null>;
-        isInViewport: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -66,14 +67,13 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
     return undefined;
 }
 
-export const EndpointContent: React.FC<EndpointContent.Props> = ({
+const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
     api,
     showErrors,
     endpoint: endpointProp,
     breadcrumbs,
     hideBottomSeparator = false,
     containerRef,
-    isInViewport: initiallyInViewport,
     types,
 }) => {
     const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
@@ -87,7 +87,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     const { layout } = useDocsContext();
     const layoutBreakpoint = useLayoutBreakpoint();
     const viewportSize = useViewportSize();
-    const [isInViewport, setIsInViewport] = useState(initiallyInViewport);
+    const [isInViewport, setIsInViewport] = useState(() => store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId);
     const { ref: viewportRef } = useInView({
         onChange: setIsInViewport,
         rootMargin: "100%",
@@ -335,3 +335,5 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         </div>
     );
 };
+
+export const EndpointContent = memo(UnmemoizedEndpointContent);
