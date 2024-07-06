@@ -145,14 +145,15 @@ function transformUnversionedNavigationConfigForDb(
         untabbed: (config) => {
             return {
                 items: config.items.map(transformNavigationItemForDb),
-                landingPage: transformPageNavigationItemForDb(config.landingPage),
+                // landing page's slug should be "" because it's the root
+                landingPage: transformPageNavigationItemForDb(config.landingPage, ""),
             };
         },
         tabbed: (config) => {
             return {
                 tabs: config.tabs?.map(transformNavigationTabForDb),
                 tabsV2: config.tabsV2?.map(transformNavigationTabV2ForDb),
-                landingPage: transformPageNavigationItemForDb(config.landingPage),
+                landingPage: transformPageNavigationItemForDb(config.landingPage, ""),
             };
         },
     });
@@ -463,12 +464,15 @@ function transformColorsV3ForDb({
 
 function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata,
+    defaultSlug?: string,
 ): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page>;
 function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata | undefined,
+    defaultSlug?: string,
 ): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined;
 function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata | undefined,
+    defaultSlug?: string,
 ): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined {
     if (writeShape == null) {
         return undefined;
@@ -478,7 +482,7 @@ function transformPageNavigationItemForDb(
         id: writeShape.id,
         title: writeShape.title,
         icon: writeShape.icon,
-        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+        urlSlug: writeShape.urlSlugOverride ?? defaultSlug ?? kebabCase(writeShape.title),
         fullSlug: writeShape.fullSlug,
         hidden: writeShape.hidden ?? false,
     };
