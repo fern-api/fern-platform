@@ -41,8 +41,10 @@ function UnmemoizedCohereDocs(): ReactElement {
     });
 
     useEffect(() => {
-        const handleRouteChange = () => {
-            mainRef.current?.scrollTo(0, 0);
+        const handleRouteChange = (_route: string, { shallow }: { shallow: boolean }) => {
+            if (!shallow) {
+                mainRef.current?.scrollTo(0, 0);
+            }
         };
         Router.events.on("routeChangeComplete", handleRouteChange);
         return () => Router.events.off("routeChangeComplete", handleRouteChange);
