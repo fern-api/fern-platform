@@ -1,5 +1,5 @@
 import { FernScrollArea } from "@fern-ui/components";
-import { ElementContent } from "hast";
+import type { ElementContent } from "hast";
 import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { ReactElement, ReactNode } from "react";
 import { EditThisPageButton } from "../components/EditThisPage";

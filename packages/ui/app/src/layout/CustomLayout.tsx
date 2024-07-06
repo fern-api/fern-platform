@@ -1,4 +1,4 @@
-import { ElementContent } from "hast";
+import type { ElementContent } from "hast";
 import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { ReactElement, ReactNode } from "react";
 
