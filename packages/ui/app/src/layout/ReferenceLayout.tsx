@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { ElementContent } from "hast";
 import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, isValidElement } from "react";
 import { EditThisPageButton } from "../components/EditThisPage";
 import { PageHeader } from "../components/PageHeader";
 import { useApiPageContext } from "../contexts/useApiPageContext";
@@ -46,11 +46,11 @@ export function ReferenceLayout({
                     <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
                     <section
                         className={clsx("max-w-full prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0", {
-                            "md:grid md:grid-cols-2 md:gap-8 lg:gap-12 max-md:space-y-12": aside != null,
+                            "md:grid md:grid-cols-2 md:gap-8 lg:gap-12 max-md:space-y-12": isValidElement(aside),
                         })}
                     >
                         <div className="fern-prose">{children}</div>
-                        {aside != null && (
+                        {isValidElement(aside) && (
                             <aside className="relative">
                                 <div className="md:top-header-offset md:sticky md:py-8 md:-my-8 fern-prose">
                                     {aside}
