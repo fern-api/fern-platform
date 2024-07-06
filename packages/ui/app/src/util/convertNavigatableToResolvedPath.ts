@@ -13,6 +13,7 @@ import {
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
+import { ResolvedRootPackage } from "../resolver/types";
 import { slugToHref } from "./slugToHref";
 
 function getFrontmatter(content: string): FernDocsFrontmatter {
@@ -159,7 +160,7 @@ export async function convertNavigatableToResolvedPath({
             showErrors: apiReference.showErrors ?? false,
             neighbors,
         };
-    } else if (node.type === "page") {
+    } else if (node.type === "page" || node.type === "landingPage") {
         const pageContent = pages[node.pageId];
         if (pageContent == null) {
             return;
@@ -184,7 +185,7 @@ export async function convertNavigatableToResolvedPath({
         }
         const resolvedApis = Object.fromEntries(
             await Promise.all(
-                apiNodes.map(async (apiNode) => {
+                apiNodes.map(async (apiNode): Promise<[string, ResolvedRootPackage]> => {
                     const holder = FernNavigation.ApiDefinitionHolder.create(apis[apiNode.apiDefinitionId]);
                     const typeResolver = new ApiTypeResolver(apis[apiNode.apiDefinitionId].types);
                     return [
