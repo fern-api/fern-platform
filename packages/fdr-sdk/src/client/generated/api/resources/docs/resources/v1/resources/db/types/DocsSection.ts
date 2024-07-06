@@ -13,4 +13,5 @@ export interface DocsSection {
     collapsed: boolean;
     hidden?: boolean;
     fullSlug?: string[];
+    overviewPageId?: FernRegistry.docs.v1.commons.PageId;
 }

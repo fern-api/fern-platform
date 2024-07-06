@@ -4,4 +4,5 @@
 import * as FernRegistry from "../../../../../../..";
 export interface UnversionedTabbedNavigationConfig {
     tabs: FernRegistry.docs.v1.read.NavigationTab[];
+    landingPage?: FernRegistry.docs.v1.read.PageMetadata;
 }

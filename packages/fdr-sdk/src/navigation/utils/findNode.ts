@@ -144,6 +144,7 @@ function createBreadcrumb(nodes: NavigationNode[]): string[] {
             endpoint: noop,
             webSocket: noop,
             webhook: noop,
+            landingPage: noop,
         });
     });
 

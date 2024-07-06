@@ -4,4 +4,4 @@
 
 import * as FernNavigation from "../index";
 
-export type RootChild = FernNavigation.VersionedNode | FernNavigation.TabbedNode | FernNavigation.SidebarRootNode;
+export type RootChild = FernNavigation.VersionedNode | FernNavigation.UnversionedNode;

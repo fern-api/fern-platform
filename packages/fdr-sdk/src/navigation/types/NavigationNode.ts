@@ -10,9 +10,11 @@ export type NavigationNode =
     | FernNavigation.SidebarRootNode
     | FernNavigation.SidebarGroupNode
     | FernNavigation.VersionNode
+    | FernNavigation.UnversionedNode
     | FernNavigation.TabNode
     | FernNavigation.LinkNode
     | FernNavigation.PageNode
+    | FernNavigation.LandingPageNode
     | FernNavigation.SectionNode
     | FernNavigation.ApiReferenceNode
     | FernNavigation.ChangelogNode
