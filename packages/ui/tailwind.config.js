@@ -195,6 +195,7 @@ module.exports = {
                         "--tw-prose-pre-bg": "initial",
                         "--tw-prose-th-borders": "var(--border)",
                         "--tw-prose-td-borders": "var(--border)",
+                        "--tw-prose-bullets": "var(--grayscale-a8)",
                         "tbody td[rowspan]:first-child, tfoot td[rowspan]:first-child": {
                             paddingRight: em(8, 14),
                         },

@@ -1,12 +1,10 @@
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import { useAtomValue } from "jotai";
 import { forwardRef, useCallback, useMemo, useState } from "react";
 import { Check, ThumbsDown, ThumbsUp } from "react-feather";
 import * as Selection from "selection-popover";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { PORTAL_CONTAINER } from "../atoms/portal";
 import { useSelection } from "../hooks/useSelection";
 import { FeedbackForm } from "./FeedbackForm";
 
@@ -161,12 +159,10 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
             [handleThumbsDown, handleThumbsUp, isHelpful],
         );
 
-        const portalContainer = useAtomValue(PORTAL_CONTAINER);
-
         return (
             <Selection.Root whileSelect onOpenChange={handleOpenChange}>
                 <Selection.Trigger ref={forwardedRef}>{children}</Selection.Trigger>
-                <Selection.Portal container={portalContainer}>
+                <Selection.Portal>
                     <MotionSelectionContent
                         layout
                         transition={{ type: "spring", duration: 0.4, bounce: 0 }}

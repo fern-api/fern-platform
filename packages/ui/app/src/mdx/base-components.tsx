@@ -62,7 +62,7 @@ export const Ul: FC<ComponentProps<"ul">> = ({ className, ...rest }) => {
 };
 
 export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
-    return <li {...rest} className={cn(className, "marker:text-inherit")} />;
+    return <li {...rest} className={cn(className)} />;
 };
 
 export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {

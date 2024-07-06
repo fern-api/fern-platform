@@ -7,7 +7,7 @@ import { ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
 import { POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM } from "../../atoms/layout";
 import { useSidebarNodes } from "../../atoms/navigation";
-import { PORTAL_CONTAINER } from "../../atoms/portal";
+
 import { SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "../../atoms/sidebar";
 import { IS_MOBILE_SCREEN_ATOM } from "../../atoms/viewport";
 import { useNavigationContext } from "../../contexts/navigation-context";
@@ -24,14 +24,13 @@ export function AlgoliaSearchDialog(): ReactElement | null {
     const isSearchDialogOpen = useIsSearchDialogOpen();
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     const algoliaSearchClient = useAlgoliaSearchClient();
-    const container = useAtomValue(PORTAL_CONTAINER);
     if (algoliaSearchClient == null || isMobileScreen) {
         return null;
     }
     const [searchClient, index] = algoliaSearchClient;
     return (
         <Dialog.Root open={isSearchDialogOpen} onOpenChange={setSearchDialogState}>
-            <Dialog.Portal container={container}>
+            <Dialog.Portal>
                 <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm max-sm:hidden" />
                 <Dialog.Content
                     className={clsx(

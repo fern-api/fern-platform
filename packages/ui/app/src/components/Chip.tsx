@@ -1,10 +1,8 @@
 import { FernTooltip } from "@fern-ui/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { useAtomValue } from "jotai";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { ReactElement } from "react";
-import { PORTAL_CONTAINER } from "../atoms/portal";
 import { Markdown } from "../mdx/Markdown";
 
 type ChipProps = {
@@ -15,7 +13,6 @@ type ChipProps = {
 
 export const Chip = ({ name, description = undefined, small }: ChipProps): ReactElement => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(name);
-    const portalContainer = useAtomValue(PORTAL_CONTAINER);
     return (
         <FernTooltip
             open={wasJustCopied ? true : description == null ? false : undefined}
@@ -26,7 +23,6 @@ export const Chip = ({ name, description = undefined, small }: ChipProps): React
                     <Markdown mdx={description} className="text-xs" />
                 ) : undefined
             }
-            container={portalContainer}
         >
             <span
                 className={cn(

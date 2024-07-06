@@ -124,6 +124,10 @@
         }
     }
 
+    .fern-endpoint-code-snippets {
+        @apply gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] w-full;
+    }
+
     .fern-layout-toc {
         @apply top-header-offset h-content w-sidebar-width sticky max-xl:hidden shrink-0;
     }

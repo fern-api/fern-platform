@@ -19,7 +19,6 @@ import {
     useSetPlaygroundHeight,
     useTogglePlayground,
 } from "../atoms/playground";
-import { PORTAL_CONTAINER } from "../atoms/portal";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, useWindowHeight } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
@@ -70,7 +69,6 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     const hasPlayground = useHasPlayground();
     const selectionState = usePlaygroundNode();
     const apis = useFlattenedApis();
-    const portalContainer = useAtomValue(PORTAL_CONTAINER);
 
     const sidebar = useSidebarNodes();
     const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
@@ -304,7 +302,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
         >
             {isPlaygroundOpen && <div style={{ height }} />}
             <Dialog.Root open={isPlaygroundOpen} onOpenChange={togglePlayground} modal={false}>
-                <Dialog.Portal container={portalContainer}>
+                <Dialog.Portal>
                     <Dialog.Content
                         className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
                         onInteractOutside={(e) => {

@@ -1,8 +1,6 @@
 import * as Popover from "@radix-ui/react-popover";
 import clsx from "clsx";
-import { useAtomValue } from "jotai";
 import { FC } from "react";
-import { PORTAL_CONTAINER } from "../atoms/portal";
 
 export interface FeedbackFormDialogProps extends Popover.PopoverProps {
     trigger: React.ReactNode;
@@ -11,11 +9,10 @@ export interface FeedbackFormDialogProps extends Popover.PopoverProps {
 }
 
 export const FeedbackFormDialog: FC<FeedbackFormDialogProps> = ({ trigger, content, className, ...props }) => {
-    const portalContainer = useAtomValue(PORTAL_CONTAINER);
     return (
         <Popover.Root {...props}>
             <Popover.Trigger asChild>{trigger}</Popover.Trigger>
-            <Popover.Portal container={portalContainer}>
+            <Popover.Portal>
                 <Popover.Content
                     side="bottom"
                     sideOffset={8}

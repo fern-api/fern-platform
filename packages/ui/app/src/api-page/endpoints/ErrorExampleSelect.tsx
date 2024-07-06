@@ -2,9 +2,7 @@ import { FernButton, Intent } from "@fern-ui/components";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
-import { useAtomValue } from "jotai";
 import { FC, Fragment, PropsWithChildren, forwardRef } from "react";
-import { PORTAL_CONTAINER } from "../../atoms/portal";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { ResolvedError, ResolvedExampleError } from "../../resolver/types";
 import { getMessageForStatus } from "../utils/getMessageForStatus";
@@ -28,7 +26,6 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
     setSelectedErrorAndExample,
     children,
 }) => {
-    const portalContainer = useAtomValue(PORTAL_CONTAINER);
     const handleValueChange = (value: string) => {
         const [errorIndex, exampleIndex] = value.split(":").map((v) => parseInt(v, 10));
         setSelectedErrorAndExample(errors[errorIndex], errors[errorIndex]?.examples[exampleIndex]);
@@ -81,9 +78,9 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                     <Select.Value>{renderValue()}</Select.Value>
                 </FernButton>
             </Select.Trigger>
-            <Select.Portal container={portalContainer}>
+            <Select.Portal>
                 <Select.Content className="overflow-hidden rounded-md bg-card backdrop-blur shadow-2xl ring-default ring-inset ring-1 z-50">
-                    <Select.ScrollUpButton className="text-violet11 flex h-8 cursor-default items-center justify-center bg-white">
+                    <Select.ScrollUpButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
                         <ChevronUpIcon />
                     </Select.ScrollUpButton>
                     <Select.Viewport className="p-[5px]">
@@ -125,7 +122,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                             </Fragment>
                         ))}
                     </Select.Viewport>
-                    <Select.ScrollDownButton className="text-violet11 flex h-8 cursor-default items-center justify-center bg-white">
+                    <Select.ScrollDownButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
                         <ChevronDownIcon />
                     </Select.ScrollDownButton>
                 </Select.Content>
