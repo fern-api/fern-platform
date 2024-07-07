@@ -1,0 +1,752 @@
+![Cohere-Logo-Color-RGB.png](data:image/png;base64,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)
+
+# Notebook Overview
+
+## Motivation
+Asking questions over documents continues to be an important retrieval augmented generation (RAG) task. However, the document complexity can significantly influence overall RAG performance, particularly when the documents are PDFs that contain a mix of text and tables. Finding an optimal strategy to parse this information, chunk, embed and retrieve it is thus quite critical to obtaining accurate results. Furthermore, if the questions being asked over the retrieved documents require mathematical reasoning, then having a model that can validate those operations is quite useful.
+
+## Objective
+In this notebook we will guide you through the best practices of setting up a RAG pipeline to process documents that contain both tables and text. In addition, we will show you how to create a Cohere ReAct agent with access to a RAG pipeline tool to improve accuracy. The general structure of the nb is as follows:
+
+1. individual components around parsing, retrieval and generation are covered for documents with mixed tabular and textual data
+2. a class object is created that can be used to instantiate the pipeline with parametric input
+3. the RAG pipeline is then used as a tool for a cohere react agent
+
+# Reference Documents
+we recommend the following as a guide on doing [semi-structured RAG](https://github.com/langchain-ai/langchain/blob/master/cookbook/Semi_Structured_RAG.ipynb)
+
+we recommend this notebook to explore various parsing techniques for [PDFs](https://github.com/cohere-ai/notebooks/blob/main/notebooks/guides/Document_Parsing_For_Enterprises.ipynb)
+
+various langchain supported [parsers](https://python.langchain.com/docs/modules/data_connection/document_loaders/pdf/)
+
+## Table of Contents
+- Section 1
+    - [Parsing](#sec_step1)
+    - [Vector Store Setup](#sec_step2)
+    - [RAG Pipeline](#sec_step3)
+- Section 2
+    - [RAG Pipeline Class](#sec_step4)
+- Section 3
+    - [ReAct Agent with RAG Tool](#sec_step5)
+
+## Install Dependencies
+
+
+```python
+# there may be other dependencies that will need installation
+# ! pip install --quiet langchain langchain_cohere langchain_experimental
+# !pip --quiet install faiss-cpu tiktoken
+# !pip install pypdf
+# !pip install pytesseract
+# !pip install opencv-python --upgrade
+# !pip install "unstructured[all-docs]"
+# !pip install chromadb
+```
+
+
+```python
+# LLM
+import os
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import WebBaseLoader
+from langchain_community.vectorstores import FAISS
+from langchain_cohere import CohereEmbeddings
+from pydantic import BaseModel
+from unstructured.partition.pdf import partition_pdf
+from langchain_community.document_loaders import PyPDFLoader
+import os
+from typing import Any
+import uuid
+from langchain.retrievers.multi_vector import MultiVectorRetriever
+from langchain.storage import InMemoryStore
+from langchain_community.vectorstores import Chroma
+from langchain_core.documents import Document
+import cohere, json
+import pandas as pd
+from datasets import load_dataset
+from joblib import Parallel, delayed
+
+
+os.environ['COHERE_API_KEY'] = ""
+```
+
+<a id="sec_step1"></a>
+# Parsing
+
+To improve RAG performance on PDFs with mixed types (text and tables), we investigated a number of parsing and chunking strategies from various libraries:
+- PyPDFLoader (LC)
+- LlamaParse (Llama-Index)
+- Unstructured IO
+
+
+We have found that the best option for parsing is unstructured.io since the parser can:
+- separate tables from text
+- automatically chunk the tables and text by title during the parsing step so that similar elements are grouped
+
+
+
+```python
+# UNSTRUCTURED pdf loader
+# Get elements
+raw_pdf_elements = partition_pdf(
+    filename="city_ny_popular_fin_report.pdf",
+    # Unstructured first finds embedded image blocks
+    extract_images_in_pdf=False,
+    # Use layout model (YOLOX) to get bounding boxes (for tables) and find titles
+    # Titles are any sub-section of the document
+    infer_table_structure=True,
+    # Post processing to aggregate text once we have the title
+    chunking_strategy="by_title",
+    # Chunking params to aggregate text blocks
+    # Attempt to create a new chunk 3800 chars
+    # Attempt to keep chunks > 2000 chars
+    max_characters=4000,
+    new_after_n_chars=3800,
+    combine_text_under_n_chars=2000,
+    image_output_dir_path='.',
+)
+
+```
+
+    This function will be deprecated in a future release and `unstructured` will simply use the DEFAULT_MODEL from `unstructured_inference.model.base` to set default model name
+    Some weights of the model checkpoint at microsoft/table-transformer-structure-recognition were not used when initializing TableTransformerForObjectDetection: ['model.backbone.conv_encoder.model.layer4.0.downsample.1.num_batches_tracked', 'model.backbone.conv_encoder.model.layer3.0.downsample.1.num_batches_tracked', 'model.backbone.conv_encoder.model.layer2.0.downsample.1.num_batches_tracked']
+    - This IS expected if you are initializing TableTransformerForObjectDetection from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+    - This IS NOT expected if you are initializing TableTransformerForObjectDetection from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+
+
+
+```python
+# extract table and textual objects from parser
+class Element(BaseModel):
+    type: str
+    text: Any
+
+# Categorize by type
+categorized_elements = []
+for element in raw_pdf_elements:
+    if "unstructured.documents.elements.Table" in str(type(element)):
+        categorized_elements.append(Element(type="table", text=str(element)))
+    elif "unstructured.documents.elements.CompositeElement" in str(type(element)):
+        categorized_elements.append(Element(type="text", text=str(element)))
+
+# Tables
+table_elements = [e for e in categorized_elements if e.type == "table"]
+print(len(table_elements))
+
+# Text
+text_elements = [e for e in categorized_elements if e.type == "text"]
+print(len(text_elements))
+```
+
+    14
+    24
+
+
+<a id="sec_step2"></a>
+# Vector Store Setup
+
+There are many options to setup a vector store. Here we show how to set one up using Chroma and Langchains Multi-vector retrieval.
+We use multi-vector retrieval because oftentimes a summary may be able to distill more accurately what a chunk is about, leading to better retrieval.
+
+You can read more about this here: https://python.langchain.com/docs/modules/data_connection/retrievers/multi_vector/
+
+The process is as follows:
+- summaries of each chunk are embedded
+- during inference, the multi-vector retrieval returns the full context document related to the summary
+
+
+```python
+
+co = cohere.Client()
+
+def get_chat_output(message, preamble, chat_history, model, temp, documents=None):
+    return co.chat(
+    message=message,
+    preamble=preamble,
+    chat_history=chat_history,
+    documents=documents,
+    model=model,
+    temperature=temp
+    ).text
+
+def parallel_proc_chat(prompts,preamble,chat_history=None,model='command-r-plus',temp=0.1,n_jobs=10):
+    """Parallel processing of chat endpoint calls."""
+    responses = Parallel(n_jobs=n_jobs, prefer="threads")(delayed(get_chat_output)(prompt,preamble,chat_history,model,temp) for prompt in prompts)
+    return responses
+
+def rerank_cohere(query, returned_documents,model:str="rerank-multilingual-v3.0",top_n:int=3):
+    response = co.rerank(
+        query=query,
+        documents=returned_documents,
+        top_n=top_n,
+        model=model,
+        return_documents=True
+    )
+    top_chunks_after_rerank = [results.document.text for results in response.results]
+    return top_chunks_after_rerank
+
+```
+
+
+```python
+# generate table and text summaries
+
+prompt_text = """You are an assistant tasked with summarizing tables and text. \ 
+Give a concise summary of the table or text. Table or text chunk: {element}. Only provide the summary and no other text."""
+
+table_prompts = [prompt_text.format(element=i.text) for i in table_elements]
+table_summaries = parallel_proc_chat(table_prompts,None)
+text_prompts = [prompt_text.format(element=i.text) for i in text_elements]
+text_summaries = parallel_proc_chat(text_prompts,None)
+tables = [i.text for i in table_elements]
+texts = [i.text for i in text_elements]
+```
+
+
+```python
+# The vectorstore to use to index the child chunks
+vectorstore = Chroma(collection_name="summaries", embedding_function=CohereEmbeddings())
+# The storage layer for the parent documents
+store = InMemoryStore()
+id_key = "doc_id"
+# The retriever (empty to start)
+retriever = MultiVectorRetriever(
+    vectorstore=vectorstore,
+    docstore=store,
+    id_key=id_key,
+)
+# Add texts
+doc_ids = [str(uuid.uuid4()) for _ in texts]
+summary_texts = [
+    Document(page_content=s, metadata={id_key: doc_ids[i]})
+    for i, s in enumerate(text_summaries)
+]
+retriever.vectorstore.add_documents(summary_texts)
+retriever.docstore.mset(list(zip(doc_ids, texts)))
+# Add tables
+table_ids = [str(uuid.uuid4()) for _ in tables]
+summary_tables = [
+    Document(page_content=s, metadata={id_key: table_ids[i]})
+    for i, s in enumerate(table_summaries)
+]
+retriever.vectorstore.add_documents(summary_tables)
+retriever.docstore.mset(list(zip(table_ids, tables)))
+```
+
+<a id="sec_step3"></a>
+# RAG Pipeline
+
+the query process can be broken down into the following steps:
+
+1. augment the query, this really helps retrieve all the relevant information
+2. use each augmented query to retrieve the top k docs and then rerank them
+3. concatenate all the shortlisted/reranked docs and pass them to the generation model
+
+
+```python
+def process_query(query, retriever):
+    """Runs query augmentation, retrieval, rerank and final generation in one call."""
+    augmented_queries=co.chat(message=query,model='command-r-plus',temperature=0.2, search_queries_only=True)
+        #augment queries
+    if augmented_queries.search_queries:
+        reranked_docs=[]
+        for itm in augmented_queries.search_queries:
+            docs=retriever.invoke(itm.text)
+            temp_rerank = rerank_cohere(itm.text,docs)
+            reranked_docs.extend(temp_rerank)
+        documents = [{"title": f"chunk {i}", "snippet": reranked_docs[i]} for i in range(len(reranked_docs))]
+    else:
+        #no queries will be run through RAG
+        documents = None
+    
+    preamble = """
+## Task & Context
+You help people answer their questions and other requests interactively. You will be asked a very wide array of requests on all kinds of topics. You will be equipped with a wide range of search engines or similar tools to help you, which you use to research your answer. You should focus on serving the user's needs as best you can, which will be wide-ranging.
+
+## Style Guide
+Unless the user asks for a different style of answer, you should answer in full sentences, using proper grammar and spelling.
+"""
+    model = 'command-r-plus'
+    temp = 0.2
+
+    
+    
+    response = co.chat(
+      message=query,
+      documents=documents,
+      preamble=preamble,
+      model=model,
+      temperature=temp
+    )
+
+    final_answer_docs="""The final answer is from the documents below:
+    
+    {docs}""".format(docs=str(response.documents))
+
+    final_answer = response.text
+    return final_answer, final_answer_docs
+```
+
+## Example 
+
+
+```python
+query = "what are the charges for services in 2022"
+final_answer, final_answer_docs = process_query(query, retriever)
+print(final_answer)
+print(final_answer_docs)
+
+
+chat_history=[{'role':"USER", 'message':query},{'role':"CHATBOT", 'message':f'The final answer is: {final_answer}.' + final_answer_docs}]
+    
+```
+
+    The charges for services in 2022 were $5,266 million.
+    The final answer is from the documents below:
+        
+        [{'id': 'doc_0', 'snippet': 'Program and General Revenues FY 2023 FY 2022 FY 2021 Category (in millions) Charges for Services (CS) $5,769 $5,266 $5,669 Operating Grants and Contributions (OGC) 27,935 31,757 28,109 Capital Grants and Contributions (CGC) 657 656 675 Real Estate Taxes (RET) 31,502 29,507 31,421 Sales and Use Taxes (SUT) 10,577 10,106 7,614 Personal Income Taxes (PIT) 15,313 15,520 15,795 Income Taxes, Other (ITO) 13,181 9,521 9,499 Other Taxes* (OT) 3,680 3,777 2,755 Investment Income* (II) 694 151 226 Unrestricted Federal and State Aid (UFSA) 234 549 108 Other* (O) Total Program and General Revenues - Primary Government 2,305 $110,250 $107,535 $104,176 708 725', 'title': 'chunk 0'}]
+
+
+the final answer is correct based on page 12 in the PDF and we can see that the information retrieved is linked to that table :) 
+
+### chat history management
+
+an example of asking a follow up question that relies on the chat history but does not require a re-run of RAG.
+
+The search_queries_only flag can be used to determine whether RAG needs to be rerun or not i.e. it can help easily identify if the query passed needs retrieval.
+
+In the example below, the else statement is invoked based on query2. In the else we pass in history without documents as the new query does not need to call the RAG pipeline 
+
+
+```python
+query2='divide this by two'
+augmented_queries=co.chat(message=query2,model='command-r-plus',temperature=0.2, search_queries_only=True)
+if augmented_queries.search_queries:
+    print('RAG is needed')
+    final_answer, final_answer_docs = process_query(query, retriever)
+    print(final_answer)
+else:
+    print('RAG is not needed')
+    response = co.chat(
+      message=query2,
+      model='command-r-plus',
+      chat_history=chat_history,
+      temperature=0.3
+    )
+    
+    print("Final answer:")
+    print(response.text)
+```
+
+    RAG is not needed
+    Final answer:
+    The result of dividing the charges for services in 2022 by two is $2,633.
+
+
+## ------------------------------------------------------- ##
+
+<a id="sec_step4"></a>
+# RAG Pipeline Class
+
+Here we connect all the pieces discussed above into one class object that is then used as a tool for a cohere react agent. This class is to help consolidate and clarify the key parameters used to define the RAG pipeline.
+
+
+```python
+co = cohere.Client()
+```
+
+
+```python
+class Element(BaseModel):
+    type: str
+    text: Any
+    
+class RAG_pipeline():
+    def __init__(self,paths):
+        self.embedding_model="embed-english-v3.0"
+        self.generation_model="command-r-plus"
+        self.summary_model="command-r-plus"
+        self.rerank_model="rerank-multilingual-v3.0"
+        self.num_docs_to_retrieve = 10
+        self.top_k_rerank=3
+        self.temperature=0.2
+        self.preamble="""
+## Task & Context
+You help people answer their questions and other requests interactively. You will be asked a very wide array of requests on all kinds of topics. You will be equipped with a wide range of search engines or similar tools to help you, which you use to research your answer. You should focus on serving the user's needs as best you can, which will be wide-ranging.
+
+## Style Guide
+Unless the user asks for a different style of answer, you should answer in full sentences, using proper grammar and spelling.
+"""     
+        self.n_jobs=10 #number of parallel processes to run summarization of chunks
+        self.extract_images_in_pdf=False
+        self.infer_table_structure=True
+        self.chunking_strategy="by_title"
+        self.max_characters=4000
+        self.new_after_n_chars=3800
+        self.combine_text_under_n_chars=2000
+        self.image_output_dir_path='.'
+        self.paths = paths
+        self.parse_and_build_retriever()
+        
+    def parse_and_build_retriever(self,):
+        #step1, parse pdfs
+        # if condition just for debugging since perf_audit.pdf is parsed in the prev step, no need to rerun
+        parsed_pdf_list=self.parse_pdfs(self.paths)
+        #separate tables and text
+        extracted_tables, extracted_text = self.extract_text_and_tables(parsed_pdf_list)
+        #generate summaries for everything
+        tables, table_summaries, texts, text_summaries=self.generate_summaries(extracted_tables,extracted_text)
+        self.tables = tables
+        self.table_summaries = table_summaries
+        self.texts = texts
+        self.text_summaries=text_summaries
+        #setup the multivector retriever
+        self.make_retriever(tables, table_summaries, texts, text_summaries)
+        
+    def extract_text_and_tables(self,parsed_pdf_list):
+        # extract table and textual objects from parser
+        # Categorize by type
+        all_table_elements = []
+        all_text_elements = []
+        for raw_pdf_elements in parsed_pdf_list:
+            categorized_elements = []
+            for element in raw_pdf_elements:
+                if "unstructured.documents.elements.Table" in str(type(element)):
+                    categorized_elements.append(Element(type="table", text=str(element)))
+                elif "unstructured.documents.elements.CompositeElement" in str(type(element)):
+                    categorized_elements.append(Element(type="text", text=str(element)))
+            
+            # Tables
+            table_elements = [e for e in categorized_elements if e.type == "table"]
+            print(len(table_elements))
+            
+            # Text
+            text_elements = [e for e in categorized_elements if e.type == "text"]
+            print(len(text_elements))
+            all_table_elements.extend(table_elements)
+            all_text_elements.extend(text_elements)
+
+        return all_table_elements, all_text_elements
+            
+    def parse_pdfs(self, paths):
+
+        path_raw_elements = []
+        for path in paths:
+            raw_pdf_elements = partition_pdf(
+            filename=path,
+            # Unstructured first finds embedded image blocks
+            extract_images_in_pdf=self.extract_images_in_pdf,
+            # Use layout model (YOLOX) to get bounding boxes (for tables) and find titles
+            # Titles are any sub-section of the document
+            infer_table_structure=self.infer_table_structure,
+            # Post processing to aggregate text once we have the title
+            chunking_strategy=self.chunking_strategy,
+            # Chunking params to aggregate text blocks
+            # Attempt to create a new chunk 3800 chars
+            # Attempt to keep chunks > 2000 chars
+            max_characters=self.max_characters,
+            new_after_n_chars=self.new_after_n_chars,
+            combine_text_under_n_chars=self.combine_text_under_n_chars,
+            image_output_dir_path=self.image_output_dir_path,
+            )
+            path_raw_elements.append(raw_pdf_elements)
+        print('PDFs parsed')
+        return path_raw_elements
+        
+
+    def get_chat_output(self,message, preamble, model, temp):
+        # print("**message")
+        # print(message)
+        
+        response=co.chat(
+            message=message,
+            preamble=preamble,
+            model=model,
+            temperature=temp
+            ).text
+        # print("**output")
+        # print(response)
+        return response
+
+    def parallel_proc_chat(self,prompts,preamble,model,temp,n_jobs):
+        """Parallel processing of chat endpoint calls."""
+        responses = Parallel(n_jobs=n_jobs, prefer="threads")(delayed(self.get_chat_output)(prompt,preamble,model,temp) for prompt in prompts)
+        return responses
+    
+    def rerank_cohere(self,query, returned_documents,model, top_n):
+        response = co.rerank(
+            query=query,
+            documents=returned_documents,
+            top_n=top_n,
+            model=model,
+            return_documents=True
+        )
+        top_chunks_after_rerank = [results.document.text for results in response.results]
+        return top_chunks_after_rerank
+
+    def generate_summaries(self,table_elements,text_elements):
+        # generate table and text summaries
+
+        summarize_prompt = """You are an assistant tasked with summarizing tables and text. \ 
+        Give a concise summary of the table or text. Table or text chunk: {element}. Only provide the summary and no other text."""
+        
+        table_prompts = [summarize_prompt.format(element=i.text) for i in table_elements]
+        table_summaries = self.parallel_proc_chat(table_prompts,self.preamble,self.summary_model,self.temperature,self.n_jobs)
+        text_prompts = [summarize_prompt.format(element=i.text) for i in text_elements]
+        text_summaries = self.parallel_proc_chat(text_prompts,self.preamble,self.summary_model,self.temperature,self.n_jobs)
+        tables = [i.text for i in table_elements]
+        texts = [i.text for i in text_elements]
+        print('summaries generated')
+        return tables, table_summaries, texts, text_summaries
+
+    def make_retriever(self,tables, table_summaries, texts, text_summaries):
+        # The vectorstore to use to index the child chunks
+        vectorstore = Chroma(collection_name="summaries", embedding_function=CohereEmbeddings())
+        # The storage layer for the parent documents
+        store = InMemoryStore()
+        id_key = "doc_id"
+        # The retriever (empty to start)
+        retriever = MultiVectorRetriever(
+            vectorstore=vectorstore,
+            docstore=store,
+            id_key=id_key,
+            search_kwargs={"k": self.num_docs_to_retrieve}
+        )
+        # Add texts
+        doc_ids = [f'text_{i}' for i in range(len(texts))]#[str(uuid.uuid4()) for _ in texts]
+        summary_texts = [
+            Document(page_content=s, metadata={id_key: doc_ids[i]})
+            for i, s in enumerate(text_summaries)
+        ]
+        retriever.vectorstore.add_documents(summary_texts,ids=doc_ids)
+        retriever.docstore.mset(list(zip(doc_ids, texts)))
+        # Add tables
+        table_ids = [f'table_{i}' for i in range(len(texts))]#[str(uuid.uuid4()) for _ in tables]
+        summary_tables = [
+            Document(page_content=s, metadata={id_key: table_ids[i]})
+            for i, s in enumerate(table_summaries)
+        ]
+        retriever.vectorstore.add_documents(summary_tables,ids=table_ids)
+        retriever.docstore.mset(list(zip(table_ids, tables)))
+        self.retriever = retriever
+        print('retriever built')
+        
+    def process_query(self,query):
+        """Runs query augmentation, retrieval, rerank and generation in one call."""
+        augmented_queries=co.chat(message=query,model=self.generation_model,temperature=self.temperature, search_queries_only=True)
+        #augment queries
+        if augmented_queries.search_queries:
+            reranked_docs=[]
+            for itm in augmented_queries.search_queries:
+                docs=self.retriever.invoke(itm.text)
+                temp_rerank = self.rerank_cohere(itm.text,docs,model=self.rerank_model,top_n=self.top_k_rerank)
+                reranked_docs.extend(temp_rerank)
+            documents = [{"title": f"chunk {i}", "snippet": reranked_docs[i]} for i in range(len(reranked_docs))]
+        else:
+            documents = None
+            
+        response = co.chat(
+          message=query,
+          documents=documents,
+          preamble=self.preamble,
+          model=self.generation_model,
+          temperature=self.temperature
+        )
+    
+        final_answer_docs="""The final answer is from the documents below:
+        
+        {docs}""".format(docs=str(response.documents))
+    
+        final_answer = response.text
+        return final_answer, final_answer_docs
+
+```
+
+
+```python
+rag_object=RAG_pipeline(paths=["city_ny_popular_fin_report.pdf"])
+```
+
+    This function will be deprecated in a future release and `unstructured` will simply use the DEFAULT_MODEL from `unstructured_inference.model.base` to set default model name
+
+
+    PDFs parsed
+    14
+    24
+    summaries generated
+    retriever built
+
+
+<a id="sec_step5"></a>
+# Cohere REACT Agent with RAG Tool
+
+we build a simple agent using the RAG pipeline previously defined. The e2e rag pipeline is provided as a tool in addition to a python tool. The premise in coupling these tools is so that the mathematical steps can be done using a python tool to improve accuracy.
+
+
+```python
+from langchain.agents import Tool
+from langchain_experimental.utilities import PythonREPL
+from langchain.agents import AgentExecutor
+from langchain_cohere.react_multi_hop.agent import create_cohere_react_agent
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_cohere.chat_models import ChatCohere
+from langchain.tools.retriever import create_retriever_tool
+from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_core.tools import tool
+
+class react_agent():
+    def __init__(self,rag_retriever,model="command-r-plus",temperature=0.2):
+        self.llm = ChatCohere(model=model, temperature=temperature)
+        self.preamble="""
+## Task & Context
+You help people answer their questions and other requests interactively. You will be asked a very wide array of requests on all kinds of topics. You will be equipped with a wide range of search engines or similar tools to help you, which you use to research your answer. You should focus on serving the user's needs as best you can, which will be wide-ranging.
+
+## Style Guide
+Unless the user asks for a different style of answer, you should answer in full sentences, using proper grammar and spelling.
+
+## Guidelines
+You are an expert who answers the user's question. 
+You have access to a vectorsearch tool that will use your query to search through documents and find the relevant answer.
+You also have access to a python interpreter tool which you can use to run code for mathematical operations.
+"""
+        self.get_tools(rag_retriever)
+        self.build_agent()
+        
+    def get_tools(self,rag_retriever):
+        @tool
+        def vectorsearch(query: str):
+            """Uses the query to search through a list of documents and return the most relevant documents as well as the answer."""
+            final_answer, final_answer_docs=rag_retriever.process_query(query)
+            return final_answer + final_answer_docs
+        vectorsearch.name = "vectorsearch" # use python case
+        vectorsearch.description = "Uses the query to search through a list of documents and return the most relevant documents as well as the answer."
+        class vectorsearch_inputs(BaseModel):
+            query: str = Field(description="the users query")
+        vectorsearch.args_schema = vectorsearch_inputs
+
+        
+        python_repl = PythonREPL()
+        python_tool = Tool(
+            name="python_repl",
+            description="Executes python code and returns the result. The code runs in a static sandbox without interactive mode, so print output or save output to a file.",
+            func=python_repl.run,
+        )
+        python_tool.name = "python_interpreter"
+        class ToolInput(BaseModel):
+            code: str = Field(description="Python code to execute.")
+        python_tool.args_schema = ToolInput
+
+        self.alltools = [vectorsearch,python_tool]
+
+    def build_agent(self):
+        # Prompt template
+        prompt = ChatPromptTemplate.from_template("{input}")
+        # Create the ReAct agent
+        agent = create_cohere_react_agent(
+            llm=self.llm,
+            tools=self.alltools,
+            prompt=prompt,
+        )
+        self.agent_executor = AgentExecutor(agent=agent, tools=self.alltools, verbose=True,return_intermediate_steps=True)
+
+
+    def run_agent(self,query,history=None):
+        if history:
+            response=self.agent_executor.invoke({
+            "input": query,
+            "preamble": self.preamble,
+            "chat_history": history
+        })
+        else:
+            response=self.agent_executor.invoke({
+            "input": query,
+            "preamble": self.preamble,
+        })
+        return response
+         
+```
+
+
+```python
+agent_object=react_agent(rag_retriever=rag_object)
+```
+
+
+```python
+step1_response=agent_object.run_agent("what are the charges for services in 2022 and 2023")
+```
+
+    
+    
+    [1m> Entering new AgentExecutor chain...[0m
+    [32;1m[1;3m
+    I will search for the charges for services in 2022 and 2023.
+    {'tool_name': 'vectorsearch', 'parameters': {'query': 'charges for services in 2022 and 2023'}}
+    [0m[36;1m[1;3mThe charges for services in 2022 were $5,266 million and in 2023 were $5,769 million.The final answer is from the documents below:
+            
+            [{'id': 'doc_0', 'snippet': 'Program and General Revenues FY 2023 FY 2022 FY 2021 Category (in millions) Charges for Services (CS) $5,769 $5,266 $5,669 Operating Grants and Contributions (OGC) 27,935 31,757 28,109 Capital Grants and Contributions (CGC) 657 656 675 Real Estate Taxes (RET) 31,502 29,507 31,421 Sales and Use Taxes (SUT) 10,577 10,106 7,614 Personal Income Taxes (PIT) 15,313 15,520 15,795 Income Taxes, Other (ITO) 13,181 9,521 9,499 Other Taxes* (OT) 3,680 3,777 2,755 Investment Income* (II) 694 151 226 Unrestricted Federal and State Aid (UFSA) 234 549 108 Other* (O) Total Program and General Revenues - Primary Government 2,305 $110,250 $107,535 $104,176 708 725', 'title': 'chunk 0'}][0m[32;1m[1;3mRelevant Documents: 0
+    Cited Documents: 0
+    Answer: The charges for services in 2022 were $5,266 million and in 2023 were $5,769 million.
+    Grounded answer: The charges for services in <co: 0>2022</co: 0> were <co: 0>$5,266 million</co: 0> and in <co: 0>2023</co: 0> were <co: 0>$5,769 million</co: 0>.[0m
+    
+    [1m> Finished chain.[0m
+
+
+Example of how to handle history with the langchain agent
+
+
+```python
+from langchain_core.messages import HumanMessage, AIMessage
+```
+
+
+```python
+chat_history=[
+HumanMessage(content=step1_response['input']),
+AIMessage(content=step1_response['output'])
+]
+```
+
+
+```python
+agent_object.run_agent("what is the mean of the two values",history=chat_history)
+```
+
+    
+    
+    [1m> Entering new AgentExecutor chain...[0m
+
+
+    Python REPL can execute arbitrary code. Use with caution.
+
+
+    [32;1m[1;3m
+    I will use the Python Interpreter tool to calculate the mean of the two values.
+    {'tool_name': 'python_interpreter', 'parameters': {'code': 'import numpy as np\n\n# Data\nvalues = [5266, 5769]\n\n# Calculate the mean\nmean_value = np.mean(values)\n\nprint(f"The mean of the two values is: {mean_value:.0f} million")'}}
+    [0m[33;1m[1;3mThe mean of the two values is: 5518 million
+    [0m[32;1m[1;3mRelevant Documents: 0
+    Cited Documents: 0
+    Answer: The mean of the two values is 5518 million.
+    Grounded answer: The mean of the two values is <co: 0>5518 million</co: 0>.[0m
+    
+    [1m> Finished chain.[0m
+
+
+
+
+
+    {'input': 'what is the mean of the two values',
+     'preamble': "\n## Task & Context\nYou help people answer their questions and other requests interactively. You will be asked a very wide array of requests on all kinds of topics. You will be equipped with a wide range of search engines or similar tools to help you, which you use to research your answer. You should focus on serving the user's needs as best you can, which will be wide-ranging.\n\n## Style Guide\nUnless the user asks for a different style of answer, you should answer in full sentences, using proper grammar and spelling.\n\n## Guidelines\nYou are an expert who answers the user's question. \nYou have access to a vectorsearch tool that will use your query to search through documents and find the relevant answer.\nYou also have access to a python interpreter tool which you can use to run code for mathematical operations.\n",
+     'chat_history': [HumanMessage(content='what are the charges for services in 2022 and 2023'),
+      AIMessage(content='The charges for services in 2022 were $5,266 million and in 2023 were $5,769 million.')],
+     'output': 'The mean of the two values is 5518 million.',
+     'citations': [CohereCitation(start=30, end=42, text='5518 million', documents=[{'output': 'The mean of the two values is: 5518 million\n'}])],
+     'intermediate_steps': [(AgentActionMessageLog(tool='python_interpreter', tool_input={'code': 'import numpy as np\n\n# Data\nvalues = [5266, 5769]\n\n# Calculate the mean\nmean_value = np.mean(values)\n\nprint(f"The mean of the two values is: {mean_value:.0f} million")'}, log='\nI will use the Python Interpreter tool to calculate the mean of the two values.\n{\'tool_name\': \'python_interpreter\', \'parameters\': {\'code\': \'import numpy as np\\n\\n# Data\\nvalues = [5266, 5769]\\n\\n# Calculate the mean\\nmean_value = np.mean(values)\\n\\nprint(f"The mean of the two values is: {mean_value:.0f} million")\'}}\n', message_log=[AIMessage(content='\nPlan: I will use the Python Interpreter tool to calculate the mean of the two values.\nAction: ```json\n[\n    {\n        "tool_name": "python_interpreter",\n        "parameters": {\n            "code": "import numpy as np\\n\\n# Data\\nvalues = [5266, 5769]\\n\\n# Calculate the mean\\nmean_value = np.mean(values)\\n\\nprint(f\\"The mean of the two values is: {mean_value:.0f} million\\")"\n        }\n    }\n]\n```')]),
+       'The mean of the two values is: 5518 million\n')]}
+
+
+
+
+```python
+
+```

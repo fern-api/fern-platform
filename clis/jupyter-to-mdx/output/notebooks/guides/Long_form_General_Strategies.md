@@ -1,0 +1,1264 @@
+![Cohere-Logo-Color-RGB.png](data:image/png;base64,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)
+
+Large Language Models (LLMs) are becoming increasingly capable of comprehending text, among others excelling in document analysis. The new Cohere model, [Command-R](https://huggingface.co/CohereForAI/c4ai-command-r-v01), boasts a context length of 128k, which makes it particularly effective for such tasks. Nevertheless, even with the extended context window, some documents might be too lengthy to accommodate in full.
+
+In this cookbook, we'll explore techniques to address cases when relevant information doesn't fit in the model context window.
+
+We'll show you three potential mitigation strategies: truncating the document, query-based retrieval, and a "text rank" approach we use internally at Cohere.
+
+### Table of content:
+1. [Getting started](#getting-started)
+2. [Approach 1: Truncate](#truncate)
+3. [Approach 2: Query Based Retrieval](#query-based-retrieval)
+4. [Approach 3: Text Rank](#text-rank)
+
+### Summary
+
+| Approach     | Description               | Pros                                      | Cons                       | When to use?                       |
+|-----------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------|
+| Truncation            | Truncate the document to fit the context window.                    | - Simplicity of implementation<br>(does not rely on extrenal infrastructure)| - Loses information at the end of the document | Utilize when all relevant information is contained<br> at the beginning of the document. |
+| Query Based Retrieval| Utilize semantic similarity to retrieve text chunks<br> that are most relevant to the query. | - Focuses on sections directly relevant to<br> the query | - Relies on a semantic similarity algorithm.<br>- Might lose broader context | Employ when seeking specific<br> information within the text. |
+| Text Rank             | Apply graph theory to generate a cohesive set<br> of chunks that effectively represent the document. | - Preserves the broader picture.          | - Might lose detailed information. | Utilize in summaries and when the question<br> requires broader context. |
+
+
+
+
+
+
+
+<a id="getting-started"></a>
+<a name="getting-started"></a>
+# Getting Started
+
+
+```python
+####################################################################################################
+#
+# Uncomment if you need to install the following packages
+#
+####################################################################################################
+# %%capture
+# !pip install cohere
+# !pip install python-dotenv
+# !pip install tokenizers
+# !pip install langchain
+# !pip install nltk
+# !pip install networkx
+# !pip install pypdf2
+```
+
+    Collecting cohere
+      Downloading cohere-4.54-py3-none-any.whl (52 kB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m52.8/52.8 kB[0m [31m1.7 MB/s[0m eta [36m0:00:00[0m
+    [?25hRequirement already satisfied: aiohttp<4.0,>=3.0 in /usr/local/lib/python3.10/dist-packages (from cohere) (3.9.3)
+    Collecting backoff<3.0,>=2.0 (from cohere)
+      Downloading backoff-2.2.1-py3-none-any.whl (15 kB)
+    Collecting fastavro<2.0,>=1.8 (from cohere)
+      Downloading fastavro-1.9.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.1 MB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m3.1/3.1 MB[0m [31m33.1 MB/s[0m eta [36m0:00:00[0m
+    [?25hCollecting importlib_metadata<7.0,>=6.0 (from cohere)
+      Downloading importlib_metadata-6.11.0-py3-none-any.whl (23 kB)
+    Requirement already satisfied: requests<3.0.0,>=2.25.0 in /usr/local/lib/python3.10/dist-packages (from cohere) (2.31.0)
+    Requirement already satisfied: urllib3<3,>=1.26 in /usr/local/lib/python3.10/dist-packages (from cohere) (2.0.7)
+    Requirement already satisfied: aiosignal>=1.1.2 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0,>=3.0->cohere) (1.3.1)
+    Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0,>=3.0->cohere) (23.2.0)
+    Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0,>=3.0->cohere) (1.4.1)
+    Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0,>=3.0->cohere) (6.0.5)
+    Requirement already satisfied: yarl<2.0,>=1.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0,>=3.0->cohere) (1.9.4)
+    Requirement already satisfied: async-timeout<5.0,>=4.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0,>=3.0->cohere) (4.0.3)
+    Requirement already satisfied: zipp>=0.5 in /usr/local/lib/python3.10/dist-packages (from importlib_metadata<7.0,>=6.0->cohere) (3.17.0)
+    Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests<3.0.0,>=2.25.0->cohere) (3.3.2)
+    Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests<3.0.0,>=2.25.0->cohere) (3.6)
+    Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests<3.0.0,>=2.25.0->cohere) (2024.2.2)
+    [31mERROR: Operation cancelled by user[0m[31m
+    [0mTraceback (most recent call last):
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/cli/base_command.py", line 169, in exc_logging_wrapper
+        status = run_func(*args)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/cli/req_command.py", line 242, in wrapper
+        return func(self, options, args)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/commands/install.py", line 324, in run
+        session = self.get_default_session(options)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/cli/req_command.py", line 98, in get_default_session
+        self._session = self.enter_context(self._build_session(options))
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/cli/req_command.py", line 125, in _build_session
+        session = PipSession(
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/network/session.py", line 342, in __init__
+        self.headers["User-Agent"] = user_agent()
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/network/session.py", line 175, in user_agent
+        setuptools_dist = get_default_environment().get_distribution("setuptools")
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/metadata/__init__.py", line 75, in get_default_environment
+        return select_backend().Environment.default()
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/metadata/__init__.py", line 63, in select_backend
+        from . import pkg_resources
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/metadata/pkg_resources.py", line 8, in <module>
+        from pip._vendor import pkg_resources
+      File "/usr/local/lib/python3.10/dist-packages/pip/_vendor/pkg_resources/__init__.py", line 3327, in <module>
+        def _initialize_master_working_set():
+      File "/usr/local/lib/python3.10/dist-packages/pip/_vendor/pkg_resources/__init__.py", line 3301, in _call_aside
+        f(*args, **kwargs)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_vendor/pkg_resources/__init__.py", line 3339, in _initialize_master_working_set
+        working_set = WorkingSet._build_master()
+      File "/usr/local/lib/python3.10/dist-packages/pip/_vendor/pkg_resources/__init__.py", line 620, in _build_master
+        ws = cls()
+      File "/usr/local/lib/python3.10/dist-packages/pip/_vendor/pkg_resources/__init__.py", line 613, in __init__
+        self.add_entry(entry)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_vendor/pkg_resources/__init__.py", line 669, in add_entry
+        for dist in find_distributions(entry, True):
+      File "/usr/local/lib/python3.10/dist-packages/pip/_vendor/pkg_resources/__init__.py", line 2130, in find_on_path
+        for entry in sorted(entries):
+      File "/usr/local/lib/python3.10/dist-packages/pip/_vendor/pkg_resources/__init__.py", line 2127, in <genexpr>
+        entries = (os.path.join(path_item, child) for child in safe_listdir(path_item))
+      File "/usr/lib/python3.10/posixpath.py", line 71, in join
+        def join(a, *p):
+    KeyboardInterrupt
+    
+    During handling of the above exception, another exception occurred:
+    
+    Traceback (most recent call last):
+      File "/usr/local/bin/pip3", line 8, in <module>
+        sys.exit(main())
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/cli/main.py", line 79, in main
+        return command.main(cmd_args)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/cli/base_command.py", line 101, in main
+        return self._main(args)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/cli/base_command.py", line 223, in _main
+        return run(options, args)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/cli/base_command.py", line 206, in exc_logging_wrapper
+        logger.critical("Operation cancelled by user")
+      File "/usr/lib/python3.10/logging/__init__.py", line 1524, in critical
+        self._log(CRITICAL, msg, args, **kwargs)
+      File "/usr/lib/python3.10/logging/__init__.py", line 1624, in _log
+        self.handle(record)
+      File "/usr/lib/python3.10/logging/__init__.py", line 1634, in handle
+        self.callHandlers(record)
+      File "/usr/lib/python3.10/logging/__init__.py", line 1696, in callHandlers
+        hdlr.handle(record)
+      File "/usr/lib/python3.10/logging/__init__.py", line 968, in handle
+        self.emit(record)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/utils/logging.py", line 168, in emit
+        message = self.format(record)
+      File "/usr/lib/python3.10/logging/__init__.py", line 943, in format
+        return fmt.format(record)
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/utils/logging.py", line 119, in format
+        prefix += " " * get_indentation()
+      File "/usr/local/lib/python3.10/dist-packages/pip/_internal/utils/logging.py", line 69, in get_indentation
+        def get_indentation() -> int:
+    KeyboardInterrupt
+    ^C
+    Requirement already satisfied: tokenizers in /usr/local/lib/python3.10/dist-packages (0.15.2)
+    Requirement already satisfied: huggingface_hub<1.0,>=0.16.4 in /usr/local/lib/python3.10/dist-packages (from tokenizers) (0.20.3)
+    Requirement already satisfied: filelock in /usr/local/lib/python3.10/dist-packages (from huggingface_hub<1.0,>=0.16.4->tokenizers) (3.13.1)
+    Requirement already satisfied: fsspec>=2023.5.0 in /usr/local/lib/python3.10/dist-packages (from huggingface_hub<1.0,>=0.16.4->tokenizers) (2023.6.0)
+    Requirement already satisfied: requests in /usr/local/lib/python3.10/dist-packages (from huggingface_hub<1.0,>=0.16.4->tokenizers) (2.31.0)
+    Requirement already satisfied: tqdm>=4.42.1 in /usr/local/lib/python3.10/dist-packages (from huggingface_hub<1.0,>=0.16.4->tokenizers) (4.66.2)
+    Requirement already satisfied: pyyaml>=5.1 in /usr/local/lib/python3.10/dist-packages (from huggingface_hub<1.0,>=0.16.4->tokenizers) (6.0.1)
+    Requirement already satisfied: typing-extensions>=3.7.4.3 in /usr/local/lib/python3.10/dist-packages (from huggingface_hub<1.0,>=0.16.4->tokenizers) (4.10.0)
+    Requirement already satisfied: packaging>=20.9 in /usr/local/lib/python3.10/dist-packages (from huggingface_hub<1.0,>=0.16.4->tokenizers) (23.2)
+    Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests->huggingface_hub<1.0,>=0.16.4->tokenizers) (3.3.2)
+    Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests->huggingface_hub<1.0,>=0.16.4->tokenizers) (3.6)
+    Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.10/dist-packages (from requests->huggingface_hub<1.0,>=0.16.4->tokenizers) (2.0.7)
+    Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests->huggingface_hub<1.0,>=0.16.4->tokenizers) (2024.2.2)
+    [31mERROR: Operation cancelled by user[0m[31m
+    [0mCollecting langchain
+      Downloading langchain-0.1.11-py3-none-any.whl (807 kB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m807.5/807.5 kB[0m [31m5.4 MB/s[0m eta [36m0:00:00[0m
+    [?25hRequirement already satisfied: PyYAML>=5.3 in /usr/local/lib/python3.10/dist-packages (from langchain) (6.0.1)
+    Requirement already satisfied: SQLAlchemy<3,>=1.4 in /usr/local/lib/python3.10/dist-packages (from langchain) (2.0.28)
+    Requirement already satisfied: aiohttp<4.0.0,>=3.8.3 in /usr/local/lib/python3.10/dist-packages (from langchain) (3.9.3)
+    Requirement already satisfied: async-timeout<5.0.0,>=4.0.0 in /usr/local/lib/python3.10/dist-packages (from langchain) (4.0.3)
+    Collecting dataclasses-json<0.7,>=0.5.7 (from langchain)
+      Downloading dataclasses_json-0.6.4-py3-none-any.whl (28 kB)
+    Collecting jsonpatch<2.0,>=1.33 (from langchain)
+      Downloading jsonpatch-1.33-py2.py3-none-any.whl (12 kB)
+    Collecting langchain-community<0.1,>=0.0.25 (from langchain)
+      Downloading langchain_community-0.0.27-py3-none-any.whl (1.8 MB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m1.8/1.8 MB[0m [31m7.7 MB/s[0m eta [36m0:00:00[0m
+    [?25hCollecting langchain-core<0.2,>=0.1.29 (from langchain)
+      Downloading langchain_core-0.1.30-py3-none-any.whl (256 kB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m256.9/256.9 kB[0m [31m18.7 MB/s[0m eta [36m0:00:00[0m
+    [?25hCollecting langchain-text-splitters<0.1,>=0.0.1 (from langchain)
+      Downloading langchain_text_splitters-0.0.1-py3-none-any.whl (21 kB)
+    Collecting langsmith<0.2.0,>=0.1.17 (from langchain)
+      Downloading langsmith-0.1.23-py3-none-any.whl (66 kB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m66.6/66.6 kB[0m [31m7.2 MB/s[0m eta [36m0:00:00[0m
+    [?25hRequirement already satisfied: numpy<2,>=1 in /usr/local/lib/python3.10/dist-packages (from langchain) (1.25.2)
+    Requirement already satisfied: pydantic<3,>=1 in /usr/local/lib/python3.10/dist-packages (from langchain) (2.6.3)
+    Requirement already satisfied: requests<3,>=2 in /usr/local/lib/python3.10/dist-packages (from langchain) (2.31.0)
+    Requirement already satisfied: tenacity<9.0.0,>=8.1.0 in /usr/local/lib/python3.10/dist-packages (from langchain) (8.2.3)
+    Requirement already satisfied: aiosignal>=1.1.2 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain) (1.3.1)
+    Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain) (23.2.0)
+    Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain) (1.4.1)
+    Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain) (6.0.5)
+    Requirement already satisfied: yarl<2.0,>=1.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp<4.0.0,>=3.8.3->langchain) (1.9.4)
+    Collecting marshmallow<4.0.0,>=3.18.0 (from dataclasses-json<0.7,>=0.5.7->langchain)
+      Downloading marshmallow-3.21.1-py3-none-any.whl (49 kB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m49.4/49.4 kB[0m [31m5.2 MB/s[0m eta [36m0:00:00[0m
+    [?25hCollecting typing-inspect<1,>=0.4.0 (from dataclasses-json<0.7,>=0.5.7->langchain)
+      Downloading typing_inspect-0.9.0-py3-none-any.whl (8.8 kB)
+    Collecting jsonpointer>=1.9 (from jsonpatch<2.0,>=1.33->langchain)
+      Downloading jsonpointer-2.4-py2.py3-none-any.whl (7.8 kB)
+    Requirement already satisfied: anyio<5,>=3 in /usr/local/lib/python3.10/dist-packages (from langchain-core<0.2,>=0.1.29->langchain) (3.7.1)
+    Requirement already satisfied: packaging<24.0,>=23.2 in /usr/local/lib/python3.10/dist-packages (from langchain-core<0.2,>=0.1.29->langchain) (23.2)
+    Collecting orjson<4.0.0,>=3.9.14 (from langsmith<0.2.0,>=0.1.17->langchain)
+      Downloading orjson-3.9.15-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (138 kB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m138.5/138.5 kB[0m [31m15.4 MB/s[0m eta [36m0:00:00[0m
+    [?25hRequirement already satisfied: annotated-types>=0.4.0 in /usr/local/lib/python3.10/dist-packages (from pydantic<3,>=1->langchain) (0.6.0)
+    Requirement already satisfied: pydantic-core==2.16.3 in /usr/local/lib/python3.10/dist-packages (from pydantic<3,>=1->langchain) (2.16.3)
+    Requirement already satisfied: typing-extensions>=4.6.1 in /usr/local/lib/python3.10/dist-packages (from pydantic<3,>=1->langchain) (4.10.0)
+    Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests<3,>=2->langchain) (3.3.2)
+    Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests<3,>=2->langchain) (3.6)
+    Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.10/dist-packages (from requests<3,>=2->langchain) (2.0.7)
+    Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests<3,>=2->langchain) (2024.2.2)
+    Requirement already satisfied: greenlet!=0.4.17 in /usr/local/lib/python3.10/dist-packages (from SQLAlchemy<3,>=1.4->langchain) (3.0.3)
+    Requirement already satisfied: sniffio>=1.1 in /usr/local/lib/python3.10/dist-packages (from anyio<5,>=3->langchain-core<0.2,>=0.1.29->langchain) (1.3.1)
+    Requirement already satisfied: exceptiongroup in /usr/local/lib/python3.10/dist-packages (from anyio<5,>=3->langchain-core<0.2,>=0.1.29->langchain) (1.2.0)
+    Collecting mypy-extensions>=0.3.0 (from typing-inspect<1,>=0.4.0->dataclasses-json<0.7,>=0.5.7->langchain)
+      Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
+    Installing collected packages: orjson, mypy-extensions, marshmallow, jsonpointer, typing-inspect, jsonpatch, langsmith, dataclasses-json, langchain-core, langchain-text-splitters, langchain-community, langchain
+    Successfully installed dataclasses-json-0.6.4 jsonpatch-1.33 jsonpointer-2.4 langchain-0.1.11 langchain-community-0.0.27 langchain-core-0.1.30 langchain-text-splitters-0.0.1 langsmith-0.1.23 marshmallow-3.21.1 mypy-extensions-1.0.0 orjson-3.9.15 typing-inspect-0.9.0
+    Requirement already satisfied: nltk in /usr/local/lib/python3.10/dist-packages (3.8.1)
+    Requirement already satisfied: click in /usr/local/lib/python3.10/dist-packages (from nltk) (8.1.7)
+    Requirement already satisfied: joblib in /usr/local/lib/python3.10/dist-packages (from nltk) (1.3.2)
+    Requirement already satisfied: regex>=2021.8.3 in /usr/local/lib/python3.10/dist-packages (from nltk) (2023.12.25)
+    Requirement already satisfied: tqdm in /usr/local/lib/python3.10/dist-packages (from nltk) (4.66.2)
+    Requirement already satisfied: networkx in /usr/local/lib/python3.10/dist-packages (3.2.1)
+    Collecting pypdf2
+      Downloading pypdf2-3.0.1-py3-none-any.whl (232 kB)
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m232.6/232.6 kB[0m [31m4.1 MB/s[0m eta [36m0:00:00[0m
+    [?25hInstalling collected packages: pypdf2
+    Successfully installed pypdf2-3.0.1
+
+
+
+```python
+import os
+import requests
+from collections import deque
+from typing import List, Tuple
+
+import cohere
+
+import numpy as np
+
+import PyPDF2
+from dotenv import load_dotenv
+
+from tokenizers import Tokenizer
+
+import nltk
+nltk.download('punkt')  # Download the necessary data for sentence tokenization
+from nltk.tokenize import sent_tokenize
+
+import networkx as nx
+from getpass import getpass
+from IPython.display import HTML, display
+```
+
+    [nltk_data] Downloading package punkt to /root/nltk_data...
+    [nltk_data]   Package punkt is already up-to-date!
+
+
+
+
+
+    False
+
+
+
+
+```python
+def set_css():
+  display(HTML('''
+  <style>
+    pre {
+        white-space: pre-wrap;
+    }
+  </style>
+  '''))
+get_ipython().events.register('pre_run_cell', set_css)
+
+set_css()
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+```python
+# Set up Cohere client
+co_model = 'command-r'
+co_api_key = getpass("Enter your Cohere API key: ")
+co = cohere.Client(api_key=co_api_key)
+```
+
+    Enter your Cohere API key: ··········
+
+
+
+```python
+def load_long_pdf(file_path):
+    """
+    Load a long PDF file and extract its text content.
+
+    Args:
+        file_path (str): The path to the PDF file.
+
+    Returns:
+        str: The extracted text content of the PDF file.
+    """
+    with open(file_path, 'rb') as file:
+        pdf_reader = PyPDF2.PdfReader(file)
+        num_pages = len(pdf_reader.pages)
+        full_text = ''
+        for page_num in range(num_pages):
+            page = pdf_reader.pages[page_num]
+            full_text += page.extract_text()
+    return full_text
+
+def save_pdf_from_url(pdf_url, save_path):
+    try:
+        # Send a GET request to the PDF URL
+        response = requests.get(pdf_url, stream=True)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+
+        # Open the local file for writing in binary mode
+        with open(save_path, 'wb') as file:
+            # Write the content of the response to the local file
+            for chunk in response.iter_content(chunk_size=8192):
+                file.write(chunk)
+
+        print(f"PDF saved successfully to '{save_path}'")
+    except requests.exceptions.RequestException as e:
+        print(f"Error downloading PDF: {e}")
+```
+
+In this example we use the Proposal for a Regulation of the European Parliament and of the Council defining rules on Artificial Intelligence from 26 January 2024, [link](https://data.consilium.europa.eu/doc/document/ST-5662-2024-INIT/en/pdf).
+
+
+```python
+# Download the PDF file from the URL
+pdf_url = 'https://data.consilium.europa.eu/doc/document/ST-5662-2024-INIT/en/pdf'
+save_path = 'example.pdf'
+save_pdf_from_url(pdf_url, save_path)
+
+# Load the PDF file and extract its text content
+long_text = load_long_pdf(save_path)
+long_text = long_text.replace('\n', ' ')
+
+# Print the length of the document
+print("Document length - #tokens:", len(co.tokenize(long_text)))
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+    PDF saved successfully to 'example.pdf'
+    Document length - #tokens: 128618
+
+
+## Summarizing the text
+
+
+```python
+def generate_response(message, max_tokens=300, temperature=0.2, k=0):
+  """
+  A wrapper around the Cohere API to generate a response based on a given prompt.
+
+  Args:
+    messsage (str): The input message for generating the response.
+    max_tokens (int, optional): The maximum number of tokens in the generated response. Defaults to 300.
+    temperature (float, optional): Controls the randomness of the generated response. Higher values (e.g., 1.0) make the output more random, while lower values (e.g., 0.2) make it more deterministic. Defaults to 0.2.
+    k (int, optional): Controls the diversity of the generated response. Higher values (e.g., 5) make the output more diverse, while lower values (e.g., 0) make it more focused. Defaults to 0.
+
+  Returns:
+    str: The generated response.
+
+  """
+  response = co.chat(
+    model = co_model,
+    message=message,
+    max_tokens=max_tokens,
+    temperature=temperature,
+    return_prompt=True
+    )
+  return response.text
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+```python
+# Example summary prompt.
+prompt_template = """
+## Instruction
+Summarize the following Document in 3-5 sentences. Only answer based on the information provided in the document.
+
+## Document
+{document}
+
+## Summary
+""".strip()
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+If you run the cell below, an error will occur. Therefore, in the following sections, we will explore some techniques to address this limitation.
+
+Error: :`CohereAPIError: too many tokens:`
+
+
+
+
+```python
+prompt = prompt_template.format(document=long_text)
+# print(generate_response(message=prompt))
+```
+
+Therefore, in the following sections, we will explore some techniques to address this limitation.
+
+<a name="truncate"></a>
+# Approach 1 - Truncate
+
+First we try to truncate the document so that it meets the length constraints. This approach is simple to implement and understand. However, it drops potentially important information contained towards the end of the document.
+
+
+```python
+# The new Cohere model has a context limit of 128k tokens. However, for the purpose of this exercise, we will assume a smaller context window.
+# Employing a smaller context window also has the additional benefit of reducing the cost per request, especially if billed by the number of tokens.
+
+MAX_TOKENS = 40000
+
+def truncate(long: str, max_tokens: int) -> str:
+    """
+    Shortens `long` by brutally truncating it to the first `max_tokens` tokens.
+    This can break up sentences, passages, etc.
+    """
+
+    tokenized = co.tokenize(long).token_strings
+    truncated = tokenized[:max_tokens]
+    short = "".join(truncated)
+    return short
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+```python
+short_text = truncate(long_text, MAX_TOKENS)
+
+prompt = prompt_template.format(document=short_text)
+print(generate_response(message=prompt))
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+    The document outlines the European Union's proposed Regulation on Artificial Intelligence, aiming to establish harmonised rules for AI development and use while ensuring fundamental rights protection. It defines the scope, purposes, and risks addressed, excluding national security and military purposes. Prohibited AI practices, such as real-time biometric identification in public spaces, are detailed. The regulation proposes a risk-based approach, classifying high-risk AI systems and setting requirements for providers and deployers. It establishes governance structures and obligations for general-purpose AI models, including transparency and copyright compliance. The document also covers issues like conformity assessment, responsibilities along the AI value chain, and standardisation. The regulation aims to foster trustworthy AI while protecting public interests and fundamental rights.
+
+
+<a name="query-based-retrieval"></a>
+# Approach 2: Query Based Retrieval
+
+In this section we present how we can leverage a query retriereval based approach to generate an answer to the following question: `Based on the document, are there any risks related to Elon Musk?`.
+
+The solution is outlined below and can be broken down into four functional steps.
+
+1. Chunk the text into units
+    - Here we employ a simple chunking algorithm. More information about different chunking strategies can be found [here](TODO: link to chunking post).
+
+2. Use a ranking algorithm to rank chunks against the query
+    - We leverage another Cohere endpoint, `co.rerank` ([docs link](https://docs.cohere.com/reference/rerank-1)), to rank each chunk against the query.
+
+3. Keep the most-relevant chunks until context limit is reached
+    - `co.rerank` returns a relevance score, facilitating the selection of the most pertinent chunks. We can choose the most relevant chunks based on this score.
+
+4. Put condensed text back in original order
+    - Finally, we arrange the chosen chunks in their original sequence as they appear in the document.
+
+See `query_based_retrieval` function for the starting point.
+
+
+### Query based retrieval implementation
+
+
+```python
+############################################################
+#
+# Utility functions for chunking
+#
+############################################################
+def split_text_into_sentences(text) -> List[str]:
+    """
+    Split the input text into a list of sentences.
+    """
+    sentences = sent_tokenize(text)
+
+    return sentences
+
+def group_sentences_into_passages(sentence_list, n_sentences_per_passage=5):
+    """
+    Group sentences into passages of n_sentences sentences.
+    """
+    passages = []
+    passage = ""
+    for i, sentence in enumerate(sentence_list):
+        passage += sentence + " "
+        if (i + 1) % n_sentences_per_passage == 0:
+            passages.append(passage)
+            passage = ""
+    return passages
+
+def build_simple_chunks(text, n_sentences=5):
+    """
+    Build chunks of text from the input text.
+    """
+    sentences = split_text_into_sentences(text)
+    chunks = group_sentences_into_passages(sentences, n_sentences_per_passage=n_sentences)
+    return chunks
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+```python
+sentences = split_text_into_sentences(long_text)
+passages = group_sentences_into_passages(sentences, n_sentences_per_passage=5)
+print('Example sentence:', np.random.choice(np.asarray(sentences), size=1, replace=False))
+print()
+print('Example passage:', np.random.choice(np.asarray(passages), size=1, replace=False))
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+    Example sentence: ['This is to ensure that the deployer is aware and takes them into acc ount when using the  high - risk AI system.']
+    
+    Example passage: ['Notified bodies shall have procedures for the performance of activities which take due  account of the size of an undertaking, th e sector in which it operates, its structure, the  degree of complexity of the AI system in question. 8. Notified bodies shall take out appropriate liability insurance for their conformity  assessment activities, unless liability is assumed by the Member Sta te in which they are  established in accordance with national law or that Member State is itself directly  responsible for the conformity assessment. 9. Notified bodies shall be capable of carrying out all the tasks falling to them under this  Regulation with   the highest degree of professional integrity and the requisite competence  in the specific field, whether those tasks are carried out by notified bodies themselves or on  their behalf and under their responsibility. ']
+
+
+
+```python
+def _add_chunks_by_priority(
+    chunks: List[str],
+    idcs_sorted_by_priority: List[int],
+    max_tokens: int,
+) -> List[Tuple[int, str]]:
+    """
+    Given chunks of text and their indices sorted by priority (highest priority first), this function
+    fills the model context window with as many highest-priority chunks as possible.
+
+    The output is a list of (index, chunk) pairs, ordered by priority. To stitch back the chunks into
+    a cohesive text that preserves chronological order, sort the output on its index.
+    """
+
+    selected = []
+    num_tokens = 0
+    idcs_queue = deque(idcs_sorted_by_priority)
+
+    while num_tokens < max_tokens and len(idcs_queue) > 0:
+        next_idx = idcs_queue.popleft()
+        num_tokens += co.tokenize(chunks[next_idx]).length
+        # keep index and chunk, to reorder chronologically
+        selected.append((next_idx, chunks[next_idx]))
+    if num_tokens > max_tokens:
+        selected.pop()
+
+    return selected
+
+def query_based_retrieval(
+    long: str,
+    max_tokens: int,
+    query: str,
+    n_setences_per_passage: int = 5,
+) -> str:
+    """
+    Performs query-based retrieval on a long text document.
+    """
+    # 1. Chunk text into units
+    chunks = build_simple_chunks(long, n_setences_per_passage)
+
+    # 2. Use co.rerank to rank chunks vs. query
+    chunks_reranked = co.rerank(query=query, documents=chunks, model="rerank-english-v3.0")
+    idcs_sorted_by_relevance = [
+        chunk.index for chunk in sorted(chunks_reranked, key=lambda c: c.relevance_score, reverse=True)
+    ]
+
+    # 3. Add chunks back in order of relevance
+    selected = _add_chunks_by_priority(chunks, idcs_sorted_by_relevance, max_tokens)
+
+    # 4. Put condensed text back in original order
+    separator = " "
+    short = separator.join([chunk for index, chunk in sorted(selected, key=lambda item: item[0], reverse=False)])
+    return short
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+```python
+# Example prompt
+prompt_template = """
+## Instruction
+{query}
+
+## Document
+{document}
+
+## Answer
+""".strip()
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+```python
+query = "What does the report say about biometric identification? Answer only based on the document."
+short_text = query_based_retrieval(long_text, MAX_TOKENS, query)
+prompt = prompt_template.format(query=query, document=short_text)
+print(generate_response(message=prompt, max_tokens=300))
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+    The report discusses the regulation of biometric identification, specifically the use of real-time systems in publicly accessible spaces for law enforcement purposes. The use of these systems is generally prohibited except in certain circumstances, such as searching for missing people or identifying perpetrators of serious criminal offences.
+    
+    The report outlines a number of exceptions and additional prohibitions related to biometric identification. For instance, biometric categorisation based on specific beliefs or characteristics is generally prohibited, along with untargeted scraping of facial images for creating facial recognition databases.
+    
+    Additionally, the document mentions post-remote biometric identification, which is subject to additional safeguards. These include authorisation requirements and restrictions on their use for law enforcement purposes.
+    
+    The regulation also addresses the accuracy, robustness and cybersecurity of AI systems, including high-risk systems that involve biometric identification. Providers of such systems are responsible for ensuring compliance with these requirements.
+    
+    National competent authorities and market surveillance authorities are designated to oversee the implementation of these regulations. They have the power to enforce compliance, including the imposition of penalties for non-compliance.
+    
+    Overall, the report aims to establish a uniform legal framework for AI systems, especially those involving biometric identification, while ensuring the protection of fundamental rights and individual freedoms.
+
+
+<a name="text-rank"></a>
+# Approach 3: Text rank
+
+In the final section we will show how we leverage graph theory to select chunks based on their centrality. Centrality is a graph-theoretic measure of how connected a node is; the higher the centrality, the more connected the node is to surrounding nodes (with fewer connections among those neighbors).
+
+The solution presented in this document can be broken down into five functional steps:
+
+1. Break the document into chunks.
+    - This mirrors the first step in [Approach 2](#query-based-retrieval).
+
+2. Embed each chunk using an embedding model and construct a similarity matrix.
+    - We utilize `co.embed` [documentation link](https://docs.cohere.com/reference/embed).
+
+3. Compute the centrality of each chunk.
+    - We employ a package called [`NetworkX`](https://networkx.org/documentation/networkx-1.10/overview.html). It constructs a graph where the chunks are nodes, and the similarity score between them serves as the weight of the edges. Then, we calculate the centrality of each chunk as the sum of the edge weights adjacent to the node representing that chunk.
+
+4. Retain the highest-centrality chunks until the context limit is reached.
+    - This step follows a similar approach to [Approach 2](#query-based-retrieval).
+
+5. Reassemble the shortened text by reordering chunks in their original order.
+    - This step mirrors the last step in [Approach 2](#query-based-retrieval).
+
+See `text_rank` as the starting point.
+
+
+### Text rank implementation
+
+
+```python
+def text_rank(text: str, max_tokens: int, n_setences_per_passage: int) -> str:
+    """
+    Shortens text by extracting key units of text from it based on their centrality.
+    The output is the concatenation of those key units, in their original order.
+    """
+
+    # 1. Chunk text into units
+    chunks = build_simple_chunks(text, n_setences_per_passage)
+
+    # 2. Embed and construct similarity matrix
+    embeddings = np.array(
+        co.embed(
+            texts=chunks,
+            model="embed-english-v3.0",
+            input_type="clustering",
+        ).embeddings
+    )
+    similarities = np.dot(embeddings, embeddings.T)
+
+    # 3. Compute centrality and sort sentences by centrality
+    # Easiest to use networkx's `degree` function with similarity as weight
+    g = nx.from_numpy_array(similarities, edge_attr="weight")
+    centralities = g.degree(weight="weight")
+    idcs_sorted_by_centrality = [node for node, degree in sorted(centralities, key=lambda item: item[1], reverse=True)]
+
+    # 4. Add chunks back in order of centrality
+    selected = _add_chunks_by_priority(chunks, idcs_sorted_by_centrality, max_tokens)
+
+    # 5. Put condensed text back in original order
+    short = " ".join([chunk for index, chunk in sorted(selected, key=lambda item: item[0], reverse=False)])
+
+    return short
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+```python
+# Example summary prompt.
+prompt_template = """
+## Instruction
+Summarize the following Document in 3-5 sentences. Only answer based on the information provided in the document.
+
+## Document
+{document}
+
+## Summary
+""".strip()
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+```python
+short_text = text_rank(long_text, MAX_TOKENS, 5)
+prompt = prompt_template.format(document=short_text)
+print(generate_response(message=prompt, max_tokens=600))
+```
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+
+
+<style>
+  pre {
+      white-space: pre-wrap;
+  }
+</style>
+
+
+
+    The document outlines the European Union's Artificial Intelligence Act, which aims to regulate AI systems and models while promoting innovation. It establishes rules for developing, using, and monitoring AI, especially high-risk systems, to protect public interests and fundamental rights. The Act mandates risk management systems, data governance requirements, and transparency measures for high-risk AI. It also sets obligations for providers and deployers, including registration, and empowers competent authorities to enforce compliance. Additionally, it encourages codes of conduct and provides for AI regulatory sandboxes to support innovation. The EU will establish a database for high-risk AI systems, and the Commission will coordinate enforcement and promote best practices. Fines and penalties are proposed for non-compliance. The Act seeks to balance AI development and oversight, ensuring trustworthy and responsible use while fostering the EU's AI ecosystem.
+
+
+## Summary
+
+In this notebook we present three useful methods to over come the limitations of context window size. In the following [blog post](TODO:add link), we talk more about how these methods can be evaluated.
+
+
+```python
+
+```

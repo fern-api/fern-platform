@@ -1,0 +1,223 @@
+# Text Classification Using Embeddings
+This notebook shows how to build a classifiers using Cohere's embeddings.
+<img src="https://github.com/cohere-ai/notebooks/raw/main/notebooks/images/simple-classifier-embeddings.png"
+style="width:100%; max-width:600px"
+alt="first we embed the text in the dataset, then we use that to train a classifier"/>
+
+The example classification task here will be sentiment analysis of film reviews. We'll train a simple classifier to detect whether a film review is negative (class 0) or positive (class 1).
+
+We'll go through the following steps:
+
+1. Get the dataset
+2. Get the embeddings of the reviews (for both the training set and the test set).
+3. Train a classifier using the training set
+4. Evaluate the performance of the classifier on the testing set
+
+
+```python
+# Let's first install Cohere's python SDK
+# TODO: upgrade to "cohere>5"!pip install "cohere<5" scikit-learn
+```
+
+If you're running an older version of the SDK you'll want to upgrade it, like this:
+
+
+```python
+#!pip install --upgrade cohere
+```
+
+## 1. Get the dataset
+
+
+```python
+import cohere
+from sklearn.model_selection import train_test_split
+
+import pandas as pd
+pd.set_option('display.max_colwidth', None)
+
+# Get the SST2 training and test sets
+df = pd.read_csv('https://github.com/clairett/pytorch-sentiment-classification/raw/master/data/SST2/train.tsv', delimiter='\t', header=None)
+```
+
+
+```python
+# Let's glance at the dataset
+df.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>a stirring , funny and finally transporting re imagining of beauty and the beast and 1930s horror films</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>apparently reassembled from the cutting room floor of any given daytime soap</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>they presume their audience wo n't sit still for a sociology lesson , however entertainingly presented , so they trot out the conventional science fiction elements of bug eyed monsters and futuristic women in skimpy clothes</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>this is a visually stunning rumination on love , memory , history and the war between art and commerce</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>jonathan parker 's bartleby should have been the be all end all of the modern office anomie films</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+We'll only use a subset of the training and testing datasets in this example. We'll only use 500 examples since this is a toy example. You'll want to increase the number to get better performance and evaluation.
+
+The `train_test_split` method splits arrays or matrices into random train and test subsets.
+
+
+```python
+# Set the number of examples from the dataset
+num_examples = 500
+# Create a dataframe that
+df_sample = df.sample(num_examples)
+
+# Split into training and testing sets
+sentences_train, sentences_test, labels_train, labels_test = train_test_split(
+            list(df_sample[0]), list(df_sample[1]), test_size=0.25, random_state=0)
+
+# The embeddings endpoint can take up to 96 texts, so we'll have to truncate 
+# sentences_train, sentences_test, labels_train, and labels_test. 
+
+sentences_train = sentences_train[:95]
+sentences_test = sentences_test[:95]
+
+labels_train = labels_train[:95]
+labels_test = labels_test[:95]
+```
+
+## 2. Set up the Cohere client and get the embeddings of the reviews
+We're now ready to retrieve the embeddings from the API. You'll need your API key for this next cell. [Sign up to Cohere](https://os.cohere.ai/) and get one if you haven't yet.
+
+
+```python
+# Add the model name, API key, URL, etc.
+model_name = "embed-english-v3.0"
+api_key = ""
+
+# Here, we're setting up the data objects we'll pass to the embeds endpoint.
+input_type = "classification"
+
+# Create and retrieve a Cohere API key from dashboard.cohere.ai
+co = cohere.Client(api_key)
+```
+
+
+```python
+# Embed the training set
+embeddings_train = co.embed(texts=sentences_train,
+                            model=model_name,
+                            input_type=input_type
+                            ).embeddings
+
+# Embed the testing set
+embeddings_test = co.embed(texts=sentences_test,
+                           model=model_name,
+                           input_type=input_type
+                            ).embeddings
+
+# Here we are using the endpoint co.embed() 
+```
+
+Note that the ordering of the arguments is important. If you put `input_type` in before `model_name`, you'll get an error.
+
+We now have two sets of embeddings, `embeddings_train` contains the embeddings of the training  sentences while `embeddings_test` contains the embeddings of the testing sentences.
+
+Curious what an embedding looks like? we can print it:
+
+
+```python
+print(f"Review text: {sentences_train[0]}")
+print(f"Embedding vector: {embeddings_train[0][:10]}")
+```
+
+    Review text: the script was reportedly rewritten a dozen times either 11 times too many or else too few
+    Embedding vector: [1.1531117, -0.8543223, -1.2496399, -0.28317127, -0.75870246, 0.5373464, 0.63233083, 0.5766576, 1.8336298, 0.44203663]
+
+
+## 3. Train a classifier using the training set
+Now that we have the embedding we can train our classifier. We'll use an SVM from sklearn.
+
+
+```python
+# import SVM classifier code
+from sklearn.svm import SVC
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+
+# Initialize a support vector machine, with class_weight='balanced' because 
+# our training set has roughly an equal amount of positive and negative 
+# sentiment sentences
+svm_classifier = make_pipeline(StandardScaler(), SVC(class_weight='balanced')) 
+
+# fit the support vector machine
+svm_classifier.fit(embeddings_train, labels_train)
+
+```
+
+
+
+
+    Pipeline(steps=[('standardscaler', StandardScaler()),
+                    ('svc', SVC(class_weight='balanced'))])
+
+
+
+## 4. Evaluate the performance of the classifier on the testing set
+
+
+```python
+# get the score from the test set, and print it out to screen!
+score = svm_classifier.score(embeddings_test, labels_test)
+print(f"Validation accuracy on is {100*score}%!")
+```
+
+    Validation accuracy on Large is 91.2%!
+
+
+You may get a slightly different number when you run this code.
+
+This was a small scale example, meant as a proof of concept and designed to illustrate how you can build a custom classifier quickly using a small amount of labelled data and Cohere's embeddings. Increase the number of training examples to achieve better performance on this task.

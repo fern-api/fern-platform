@@ -1,0 +1,505 @@
+![Cohere-Logo-Color-RGB.png](data:image/png;base64,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)
+
+# Notebook Overview
+
+## Motivation
+Enterprise customers often store and handle information in relational databases but querying such databases effectively requires bespoke knowledge of the underlying database structure as well as strong SQL coding skills. One way to address these challenges is to build an LLM agent capable of generating and executing SQL queries based on natural language. For example If a user asks: ``what are the top 4 rows in table X``, the agent should be able to generate ``SELECT * FROM X LIMIT 4``, execute this query and return the output to the user. 
+
+## Objective
+In this notebook we explore how to setup a [Cohere ReAct Agent](https://github.com/langchain-ai/langchain-cohere/blob/main/libs/cohere/langchain_cohere/cohere_agent.py) to answer questions over SQL Databases. We show how this can be done seamlessly with langchain's existing SQLDBToolkit.
+
+## Table of Contents
+
+- [Toolkit Setup](#sec_step0)
+- [SQL Agent](#sec_step1)
+- [SQL Agent with context](#sec_step2)
+
+<a id="sec_step0"></a>
+# Toolkit Setup
+
+
+
+
+```python
+from langchain.agents import AgentExecutor
+from langchain_cohere.react_multi_hop.agent import create_cohere_react_agent
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_cohere.chat_models import ChatCohere
+from langchain_community.utilities.sql_database import SQLDatabase
+from langchain_community.agent_toolkits import SQLDatabaseToolkit
+import os
+```
+
+
+```python
+####################################################################################################
+#
+# Uncomment if you need to install the following packages
+#
+####################################################################################################
+
+#!pip install --quiet langchain langchain_cohere langchain_experimental --upgrade
+```
+
+Langchain already has a SQLDBToolkit that consists of 4 tools to handle SQL query generation, execution and validation. To use this, you simply need to define your LLM and DB and pass these into the Toolkit.
+
+These are the following tools:
+- 'sql_db_query': executes SQL code on the database
+- 'sql_db_schema': returns the schema of tables given the list of tables
+- 'sql_db_list_tables': lists the tables in the database
+- 'sql_db_query_checker': validates the SQL query
+
+
+
+
+
+```python
+# load the cohere api key
+os.environ["COHERE_API_KEY"] = ""
+```
+
+
+```python
+
+DB_NAME='Chinook.db'
+MODEL="command-r-plus"
+
+llm = ChatCohere(model=MODEL, temperature=0.1,verbose=True)
+db = SQLDatabase.from_uri(f"sqlite:///{DB_NAME}")
+
+
+toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+context = toolkit.get_context()
+tools = toolkit.get_tools()
+
+print('**List of pre-defined Langchain Tools**')
+print([tool.name for tool in tools])
+print('')
+print('**Context to pass to LLM on tables**')
+print(context)
+```
+
+    **List of pre-defined Langchain Tools**
+    ['sql_db_query', 'sql_db_schema', 'sql_db_list_tables', 'sql_db_query_checker']
+    
+    **Context to pass to LLM on tables**
+    {'table_info': '\nCREATE TABLE "Album" (\n\t"AlbumId" INTEGER NOT NULL, \n\t"Title" NVARCHAR(160) NOT NULL, \n\t"ArtistId" INTEGER NOT NULL, \n\tPRIMARY KEY ("AlbumId"), \n\tFOREIGN KEY("ArtistId") REFERENCES "Artist" ("ArtistId")\n)\n\n/*\n3 rows from Album table:\nAlbumId\tTitle\tArtistId\n1\tFor Those About To Rock We Salute You\t1\n2\tBalls to the Wall\t2\n3\tRestless and Wild\t2\n*/\n\n\nCREATE TABLE "Artist" (\n\t"ArtistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("ArtistId")\n)\n\n/*\n3 rows from Artist table:\nArtistId\tName\n1\tAC/DC\n2\tAccept\n3\tAerosmith\n*/\n\n\nCREATE TABLE "Customer" (\n\t"CustomerId" INTEGER NOT NULL, \n\t"FirstName" NVARCHAR(40) NOT NULL, \n\t"LastName" NVARCHAR(20) NOT NULL, \n\t"Company" NVARCHAR(80), \n\t"Address" NVARCHAR(70), \n\t"City" NVARCHAR(40), \n\t"State" NVARCHAR(40), \n\t"Country" NVARCHAR(40), \n\t"PostalCode" NVARCHAR(10), \n\t"Phone" NVARCHAR(24), \n\t"Fax" NVARCHAR(24), \n\t"Email" NVARCHAR(60) NOT NULL, \n\t"SupportRepId" INTEGER, \n\tPRIMARY KEY ("CustomerId"), \n\tFOREIGN KEY("SupportRepId") REFERENCES "Employee" ("EmployeeId")\n)\n\n/*\n3 rows from Customer table:\nCustomerId\tFirstName\tLastName\tCompany\tAddress\tCity\tState\tCountry\tPostalCode\tPhone\tFax\tEmail\tSupportRepId\n1\tLuís\tGonçalves\tEmbraer - Empresa Brasileira de Aeronáutica S.A.\tAv. Brigadeiro Faria Lima, 2170\tSão José dos Campos\tSP\tBrazil\t12227-000\t+55 (12) 3923-5555\t+55 (12) 3923-5566\tluisg@embraer.com.br\t3\n2\tLeonie\tKöhler\tNone\tTheodor-Heuss-Straße 34\tStuttgart\tNone\tGermany\t70174\t+49 0711 2842222\tNone\tleonekohler@surfeu.de\t5\n3\tFrançois\tTremblay\tNone\t1498 rue Bélanger\tMontréal\tQC\tCanada\tH2G 1A7\t+1 (514) 721-4711\tNone\tftremblay@gmail.com\t3\n*/\n\n\nCREATE TABLE "Employee" (\n\t"EmployeeId" INTEGER NOT NULL, \n\t"LastName" NVARCHAR(20) NOT NULL, \n\t"FirstName" NVARCHAR(20) NOT NULL, \n\t"Title" NVARCHAR(30), \n\t"ReportsTo" INTEGER, \n\t"BirthDate" DATETIME, \n\t"HireDate" DATETIME, \n\t"Address" NVARCHAR(70), \n\t"City" NVARCHAR(40), \n\t"State" NVARCHAR(40), \n\t"Country" NVARCHAR(40), \n\t"PostalCode" NVARCHAR(10), \n\t"Phone" NVARCHAR(24), \n\t"Fax" NVARCHAR(24), \n\t"Email" NVARCHAR(60), \n\tPRIMARY KEY ("EmployeeId"), \n\tFOREIGN KEY("ReportsTo") REFERENCES "Employee" ("EmployeeId")\n)\n\n/*\n3 rows from Employee table:\nEmployeeId\tLastName\tFirstName\tTitle\tReportsTo\tBirthDate\tHireDate\tAddress\tCity\tState\tCountry\tPostalCode\tPhone\tFax\tEmail\n1\tAdams\tAndrew\tGeneral Manager\tNone\t1962-02-18 00:00:00\t2002-08-14 00:00:00\t11120 Jasper Ave NW\tEdmonton\tAB\tCanada\tT5K 2N1\t+1 (780) 428-9482\t+1 (780) 428-3457\tandrew@chinookcorp.com\n2\tEdwards\tNancy\tSales Manager\t1\t1958-12-08 00:00:00\t2002-05-01 00:00:00\t825 8 Ave SW\tCalgary\tAB\tCanada\tT2P 2T3\t+1 (403) 262-3443\t+1 (403) 262-3322\tnancy@chinookcorp.com\n3\tPeacock\tJane\tSales Support Agent\t2\t1973-08-29 00:00:00\t2002-04-01 00:00:00\t1111 6 Ave SW\tCalgary\tAB\tCanada\tT2P 5M5\t+1 (403) 262-3443\t+1 (403) 262-6712\tjane@chinookcorp.com\n*/\n\n\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Invoice" (\n\t"InvoiceId" INTEGER NOT NULL, \n\t"CustomerId" INTEGER NOT NULL, \n\t"InvoiceDate" DATETIME NOT NULL, \n\t"BillingAddress" NVARCHAR(70), \n\t"BillingCity" NVARCHAR(40), \n\t"BillingState" NVARCHAR(40), \n\t"BillingCountry" NVARCHAR(40), \n\t"BillingPostalCode" NVARCHAR(10), \n\t"Total" NUMERIC(10, 2) NOT NULL, \n\tPRIMARY KEY ("InvoiceId"), \n\tFOREIGN KEY("CustomerId") REFERENCES "Customer" ("CustomerId")\n)\n\n/*\n3 rows from Invoice table:\nInvoiceId\tCustomerId\tInvoiceDate\tBillingAddress\tBillingCity\tBillingState\tBillingCountry\tBillingPostalCode\tTotal\n1\t2\t2021-01-01 00:00:00\tTheodor-Heuss-Straße 34\tStuttgart\tNone\tGermany\t70174\t1.98\n2\t4\t2021-01-02 00:00:00\tUllevålsveien 14\tOslo\tNone\tNorway\t0171\t3.96\n3\t8\t2021-01-03 00:00:00\tGrétrystraat 63\tBrussels\tNone\tBelgium\t1000\t5.94\n*/\n\n\nCREATE TABLE "InvoiceLine" (\n\t"InvoiceLineId" INTEGER NOT NULL, \n\t"InvoiceId" INTEGER NOT NULL, \n\t"TrackId" INTEGER NOT NULL, \n\t"UnitPrice" NUMERIC(10, 2) NOT NULL, \n\t"Quantity" INTEGER NOT NULL, \n\tPRIMARY KEY ("InvoiceLineId"), \n\tFOREIGN KEY("TrackId") REFERENCES "Track" ("TrackId"), \n\tFOREIGN KEY("InvoiceId") REFERENCES "Invoice" ("InvoiceId")\n)\n\n/*\n3 rows from InvoiceLine table:\nInvoiceLineId\tInvoiceId\tTrackId\tUnitPrice\tQuantity\n1\t1\t2\t0.99\t1\n2\t1\t4\t0.99\t1\n3\t2\t6\t0.99\t1\n*/\n\n\nCREATE TABLE "MediaType" (\n\t"MediaTypeId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("MediaTypeId")\n)\n\n/*\n3 rows from MediaType table:\nMediaTypeId\tName\n1\tMPEG audio file\n2\tProtected AAC audio file\n3\tProtected MPEG-4 video file\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/\n\n\nCREATE TABLE "PlaylistTrack" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"TrackId" INTEGER NOT NULL, \n\tPRIMARY KEY ("PlaylistId", "TrackId"), \n\tFOREIGN KEY("TrackId") REFERENCES "Track" ("TrackId"), \n\tFOREIGN KEY("PlaylistId") REFERENCES "Playlist" ("PlaylistId")\n)\n\n/*\n3 rows from PlaylistTrack table:\nPlaylistId\tTrackId\n1\t3402\n1\t3389\n1\t3390\n*/\n\n\nCREATE TABLE "Track" (\n\t"TrackId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(200) NOT NULL, \n\t"AlbumId" INTEGER, \n\t"MediaTypeId" INTEGER NOT NULL, \n\t"GenreId" INTEGER, \n\t"Composer" NVARCHAR(220), \n\t"Milliseconds" INTEGER NOT NULL, \n\t"Bytes" INTEGER, \n\t"UnitPrice" NUMERIC(10, 2) NOT NULL, \n\tPRIMARY KEY ("TrackId"), \n\tFOREIGN KEY("MediaTypeId") REFERENCES "MediaType" ("MediaTypeId"), \n\tFOREIGN KEY("GenreId") REFERENCES "Genre" ("GenreId"), \n\tFOREIGN KEY("AlbumId") REFERENCES "Album" ("AlbumId")\n)\n\n/*\n3 rows from Track table:\nTrackId\tName\tAlbumId\tMediaTypeId\tGenreId\tComposer\tMilliseconds\tBytes\tUnitPrice\n1\tFor Those About To Rock (We Salute You)\t1\t1\t1\tAngus Young, Malcolm Young, Brian Johnson\t343719\t11170334\t0.99\n2\tBalls to the Wall\t2\t2\t1\tU. Dirkschneider, W. Hoffmann, H. Frank, P. Baltes, S. Kaufmann, G. Hoffmann\t342562\t5510424\t0.99\n3\tFast As a Shark\t3\t2\t1\tF. Baltes, S. Kaufman, U. Dirkscneider & W. Hoffman\t230619\t3990994\t0.99\n*/', 'table_names': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}
+
+
+<a id="sec_step1"></a>
+# SQL Agent
+
+we follow the general cohere react agent setup in Langchain to build our SQL agent.
+
+
+```python
+
+# define the prompt template
+prompt = ChatPromptTemplate.from_template("{input}")
+
+# instantiate the ReAct agent
+agent = create_cohere_react_agent(
+   llm=llm,
+   tools=tools,
+   prompt=prompt,
+)
+agent_executor = AgentExecutor(agent=agent,
+                               tools=tools,
+                               verbose=True,
+                               return_intermediate_steps=True
+                    )
+
+
+```
+
+
+```python
+agent_executor.invoke({
+   "input": 'what tables are available?',
+})
+```
+
+    
+    
+    [1m> Entering new AgentExecutor chain...[0m
+    [32;1m[1;3m
+    I will use the sql_db_list_tables tool to find out what tables are available.
+    {'tool_name': 'sql_db_list_tables', 'parameters': {'tool_input': ''}}
+    [0m[38;5;200m[1;3mAlbum, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track[0m[32;1m[1;3mRelevant Documents: 0
+    Cited Documents: 0
+    Answer: The following tables are available: Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track.
+    Grounded answer: The following tables are available: <co: 0>Album</co: 0>, <co: 0>Artist</co: 0>, <co: 0>Customer</co: 0>, <co: 0>Employee</co: 0>, <co: 0>Genre</co: 0>, <co: 0>Invoice</co: 0>, <co: 0>InvoiceLine</co: 0>, <co: 0>MediaType</co: 0>, <co: 0>Playlist</co: 0>, <co: 0>PlaylistTrack</co: 0>, <co: 0>Track</co: 0>.[0m
+    
+    [1m> Finished chain.[0m
+
+
+
+
+
+    {'input': 'what tables are available?',
+     'output': 'The following tables are available: Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track.',
+     'citations': [CohereCitation(start=36, end=41, text='Album', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=43, end=49, text='Artist', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=51, end=59, text='Customer', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=61, end=69, text='Employee', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=71, end=76, text='Genre', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=78, end=85, text='Invoice', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=87, end=98, text='InvoiceLine', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=100, end=109, text='MediaType', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=111, end=119, text='Playlist', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=121, end=134, text='PlaylistTrack', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}]),
+      CohereCitation(start=136, end=141, text='Track', documents=[{'output': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}])],
+     'intermediate_steps': [(AgentActionMessageLog(tool='sql_db_list_tables', tool_input={'tool_input': ''}, log="\nI will use the sql_db_list_tables tool to find out what tables are available.\n{'tool_name': 'sql_db_list_tables', 'parameters': {'tool_input': ''}}\n", message_log=[AIMessage(content='\nPlan: I will use the sql_db_list_tables tool to find out what tables are available.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_list_tables",\n        "parameters": {\n            "tool_input": ""\n        }\n    }\n]\n```')]),
+       'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track')]}
+
+
+
+The agent uses the list_tables tool to effectively highlight all the tables in the DB
+
+
+```python
+agent_executor.invoke({
+   "input": 'show the first row of the Playlist and Genre tables?',
+})
+```
+
+    
+    
+    [1m> Entering new AgentExecutor chain...[0m
+    [32;1m[1;3m
+    I will use the sql_db_schema tool to find the first row of the Playlist and Genre tables.
+    {'tool_name': 'sql_db_schema', 'parameters': {'table_names': 'Playlist, Genre'}}
+    [0m[33;1m[1;3m
+    CREATE TABLE "Genre" (
+    	"GenreId" INTEGER NOT NULL, 
+    	"Name" NVARCHAR(120), 
+    	PRIMARY KEY ("GenreId")
+    )
+    
+    /*
+    3 rows from Genre table:
+    GenreId	Name
+    1	Rock
+    2	Jazz
+    3	Metal
+    */
+    
+    
+    CREATE TABLE "Playlist" (
+    	"PlaylistId" INTEGER NOT NULL, 
+    	"Name" NVARCHAR(120), 
+    	PRIMARY KEY ("PlaylistId")
+    )
+    
+    /*
+    3 rows from Playlist table:
+    PlaylistId	Name
+    1	Music
+    2	Movies
+    3	TV Shows
+    */[0m[32;1m[1;3mRelevant Documents: 0
+    Cited Documents: 0
+    Answer: Here is the first row of the Genre table:
+    
+    | GenreId | Name |
+    | --- | --- |
+    | 1 | Rock |
+    
+    Here is the first row of the Playlist table:
+    
+    | PlaylistId | Name |
+    | --- | --- |
+    | 1 | Music |
+    Grounded answer: Here is the first row of the Genre table:
+    
+    | <co: 0>GenreId</co: 0> | <co: 0>Name</co: 0> |
+    | --- | --- |
+    | <co: 0>1</co: 0> | <co: 0>Rock</co: 0> |
+    
+    Here is the first row of the Playlist table:
+    
+    | <co: 0>PlaylistId</co: 0> | <co: 0>Name</co: 0> |
+    | --- | --- |
+    | <co: 0>1</co: 0> | <co: 0>Music</co: 0> |[0m
+    
+    [1m> Finished chain.[0m
+
+
+
+
+
+    {'input': 'show the first row of the Playlist and Genre tables?',
+     'output': 'Here is the first row of the Genre table:\n\n| GenreId | Name |\n| --- | --- |\n| 1 | Rock |\n\nHere is the first row of the Playlist table:\n\n| PlaylistId | Name |\n| --- | --- |\n| 1 | Music |',
+     'citations': [CohereCitation(start=45, end=52, text='GenreId', documents=[{'output': '\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/'}]),
+      CohereCitation(start=55, end=59, text='Name', documents=[{'output': '\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/'}]),
+      CohereCitation(start=78, end=79, text='1', documents=[{'output': '\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/'}]),
+      CohereCitation(start=82, end=86, text='Rock', documents=[{'output': '\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/'}]),
+      CohereCitation(start=138, end=148, text='PlaylistId', documents=[{'output': '\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/'}]),
+      CohereCitation(start=151, end=155, text='Name', documents=[{'output': '\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/'}]),
+      CohereCitation(start=174, end=175, text='1', documents=[{'output': '\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/'}]),
+      CohereCitation(start=178, end=183, text='Music', documents=[{'output': '\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/'}])],
+     'intermediate_steps': [(AgentActionMessageLog(tool='sql_db_schema', tool_input={'table_names': 'Playlist, Genre'}, log="\nI will use the sql_db_schema tool to find the first row of the Playlist and Genre tables.\n{'tool_name': 'sql_db_schema', 'parameters': {'table_names': 'Playlist, Genre'}}\n", message_log=[AIMessage(content='\nPlan: I will use the sql_db_schema tool to find the first row of the Playlist and Genre tables.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_schema",\n        "parameters": {\n            "table_names": "Playlist, Genre"\n        }\n    }\n]\n```')]),
+       '\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/')]}
+
+
+
+Here we see that the tool takes a list of tables to query the sql_db_schema tool to retrieve the various schemas
+
+
+```python
+agent_executor.invoke({
+   "input": 'which countries have the most invoices?',
+})
+```
+
+    
+    
+    [1m> Entering new AgentExecutor chain...[0m
+    [32;1m[1;3m
+    I will search for the number of invoices per country and then write an answer based on the results.
+    {'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT country, COUNT(*) AS invoice_count FROM invoices GROUP BY country ORDER BY invoice_count DESC'}}
+    [0m[36;1m[1;3mError: (sqlite3.OperationalError) no such table: invoices
+    [SQL: SELECT country, COUNT(*) AS invoice_count FROM invoices GROUP BY country ORDER BY invoice_count DESC]
+    (Background on this error at: https://sqlalche.me/e/20/e3q8)[0m[32;1m[1;3m
+    I received an error message. I will now use the sql_db_list_tables tool to find out the name of the table containing the invoices data.
+    {'tool_name': 'sql_db_list_tables', 'parameters': {'tool_input': ''}}
+    [0m[38;5;200m[1;3mAlbum, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track[0m[32;1m[1;3m
+    I found out that the table name is 'Invoice'. I will now rewrite my query and run it again.
+    {'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC'}}
+    [0m[36;1m[1;3mError: (sqlite3.OperationalError) no such column: country
+    [SQL: SELECT country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC]
+    (Background on this error at: https://sqlalche.me/e/20/e3q8)[0m[32;1m[1;3m
+    I received another error message. I will now use the sql_db_schema tool to find out the column names in the 'Invoice' table.
+    {'tool_name': 'sql_db_schema', 'parameters': {'table_names': 'Invoice'}}
+    [0m[33;1m[1;3m
+    CREATE TABLE "Invoice" (
+    	"InvoiceId" INTEGER NOT NULL, 
+    	"CustomerId" INTEGER NOT NULL, 
+    	"InvoiceDate" DATETIME NOT NULL, 
+    	"BillingAddress" NVARCHAR(70), 
+    	"BillingCity" NVARCHAR(40), 
+    	"BillingState" NVARCHAR(40), 
+    	"BillingCountry" NVARCHAR(40), 
+    	"BillingPostalCode" NVARCHAR(10), 
+    	"Total" NUMERIC(10, 2) NOT NULL, 
+    	PRIMARY KEY ("InvoiceId"), 
+    	FOREIGN KEY("CustomerId") REFERENCES "Customer" ("CustomerId")
+    )
+    
+    /*
+    3 rows from Invoice table:
+    InvoiceId	CustomerId	InvoiceDate	BillingAddress	BillingCity	BillingState	BillingCountry	BillingPostalCode	Total
+    1	2	2021-01-01 00:00:00	Theodor-Heuss-Straße 34	Stuttgart	None	Germany	70174	1.98
+    2	4	2021-01-02 00:00:00	Ullevålsveien 14	Oslo	None	Norway	0171	3.96
+    3	8	2021-01-03 00:00:00	Grétrystraat 63	Brussels	None	Belgium	1000	5.94
+    */[0m[32;1m[1;3m
+    I found out that the column name for country is 'BillingCountry'. I will now rewrite my query and run it again.
+    {'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT BillingCountry AS country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC'}}
+    [0m[36;1m[1;3m[('USA', 91), ('Canada', 56), ('France', 35), ('Brazil', 35), ('Germany', 28), ('United Kingdom', 21), ('Portugal', 14), ('Czech Republic', 14), ('India', 13), ('Sweden', 7), ('Spain', 7), ('Poland', 7), ('Norway', 7), ('Netherlands', 7), ('Italy', 7), ('Ireland', 7), ('Hungary', 7), ('Finland', 7), ('Denmark', 7), ('Chile', 7), ('Belgium', 7), ('Austria', 7), ('Australia', 7), ('Argentina', 7)][0m[32;1m[1;3mRelevant Documents: 1,3,4
+    Cited Documents: 4
+    Answer: The countries with the most invoices are the USA (91), Canada (56), and France (35).
+    Grounded answer: The countries with the most invoices are the <co: 4>USA (91</co: 4>), <co: 4>Canada (56</co: 4>), and <co: 4>France (35</co: 4>).[0m
+    
+    [1m> Finished chain.[0m
+
+
+
+
+
+    {'input': 'which countries have the most invoices?',
+     'output': 'The countries with the most invoices are the USA (91), Canada (56), and France (35).',
+     'citations': [CohereCitation(start=45, end=52, text='USA (91', documents=[{'output': "[('USA', 91), ('Canada', 56), ('France', 35), ('Brazil', 35), ('Germany', 28), ('United Kingdom', 21), ('Portugal', 14), ('Czech Republic', 14), ('India', 13), ('Sweden', 7), ('Spain', 7), ('Poland', 7), ('Norway', 7), ('Netherlands', 7), ('Italy', 7), ('Ireland', 7), ('Hungary', 7), ('Finland', 7), ('Denmark', 7), ('Chile', 7), ('Belgium', 7), ('Austria', 7), ('Australia', 7), ('Argentina', 7)]"}]),
+      CohereCitation(start=55, end=65, text='Canada (56', documents=[{'output': "[('USA', 91), ('Canada', 56), ('France', 35), ('Brazil', 35), ('Germany', 28), ('United Kingdom', 21), ('Portugal', 14), ('Czech Republic', 14), ('India', 13), ('Sweden', 7), ('Spain', 7), ('Poland', 7), ('Norway', 7), ('Netherlands', 7), ('Italy', 7), ('Ireland', 7), ('Hungary', 7), ('Finland', 7), ('Denmark', 7), ('Chile', 7), ('Belgium', 7), ('Austria', 7), ('Australia', 7), ('Argentina', 7)]"}]),
+      CohereCitation(start=72, end=82, text='France (35', documents=[{'output': "[('USA', 91), ('Canada', 56), ('France', 35), ('Brazil', 35), ('Germany', 28), ('United Kingdom', 21), ('Portugal', 14), ('Czech Republic', 14), ('India', 13), ('Sweden', 7), ('Spain', 7), ('Poland', 7), ('Norway', 7), ('Netherlands', 7), ('Italy', 7), ('Ireland', 7), ('Hungary', 7), ('Finland', 7), ('Denmark', 7), ('Chile', 7), ('Belgium', 7), ('Austria', 7), ('Australia', 7), ('Argentina', 7)]"}])],
+     'intermediate_steps': [(AgentActionMessageLog(tool='sql_db_query', tool_input={'query': 'SELECT country, COUNT(*) AS invoice_count FROM invoices GROUP BY country ORDER BY invoice_count DESC'}, log="\nI will search for the number of invoices per country and then write an answer based on the results.\n{'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT country, COUNT(*) AS invoice_count FROM invoices GROUP BY country ORDER BY invoice_count DESC'}}\n", message_log=[AIMessage(content='\nPlan: I will search for the number of invoices per country and then write an answer based on the results.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_query",\n        "parameters": {\n            "query": "SELECT country, COUNT(*) AS invoice_count FROM invoices GROUP BY country ORDER BY invoice_count DESC"\n        }\n    }\n]\n```')]),
+       'Error: (sqlite3.OperationalError) no such table: invoices\n[SQL: SELECT country, COUNT(*) AS invoice_count FROM invoices GROUP BY country ORDER BY invoice_count DESC]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)'),
+      (AgentActionMessageLog(tool='sql_db_list_tables', tool_input={'tool_input': ''}, log="\nI received an error message. I will now use the sql_db_list_tables tool to find out the name of the table containing the invoices data.\n{'tool_name': 'sql_db_list_tables', 'parameters': {'tool_input': ''}}\n", message_log=[AIMessage(content='\nReflection: I received an error message. I will now use the sql_db_list_tables tool to find out the name of the table containing the invoices data.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_list_tables",\n        "parameters": {\n            "tool_input": ""\n        }\n    }\n]\n```')]),
+       'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'),
+      (AgentActionMessageLog(tool='sql_db_query', tool_input={'query': 'SELECT country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC'}, log="\nI found out that the table name is 'Invoice'. I will now rewrite my query and run it again.\n{'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC'}}\n", message_log=[AIMessage(content='\nReflection: I found out that the table name is \'Invoice\'. I will now rewrite my query and run it again.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_query",\n        "parameters": {\n            "query": "SELECT country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC"\n        }\n    }\n]\n```')]),
+       'Error: (sqlite3.OperationalError) no such column: country\n[SQL: SELECT country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)'),
+      (AgentActionMessageLog(tool='sql_db_schema', tool_input={'table_names': 'Invoice'}, log="\nI received another error message. I will now use the sql_db_schema tool to find out the column names in the 'Invoice' table.\n{'tool_name': 'sql_db_schema', 'parameters': {'table_names': 'Invoice'}}\n", message_log=[AIMessage(content='\nReflection: I received another error message. I will now use the sql_db_schema tool to find out the column names in the \'Invoice\' table.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_schema",\n        "parameters": {\n            "table_names": "Invoice"\n        }\n    }\n]\n```')]),
+       '\nCREATE TABLE "Invoice" (\n\t"InvoiceId" INTEGER NOT NULL, \n\t"CustomerId" INTEGER NOT NULL, \n\t"InvoiceDate" DATETIME NOT NULL, \n\t"BillingAddress" NVARCHAR(70), \n\t"BillingCity" NVARCHAR(40), \n\t"BillingState" NVARCHAR(40), \n\t"BillingCountry" NVARCHAR(40), \n\t"BillingPostalCode" NVARCHAR(10), \n\t"Total" NUMERIC(10, 2) NOT NULL, \n\tPRIMARY KEY ("InvoiceId"), \n\tFOREIGN KEY("CustomerId") REFERENCES "Customer" ("CustomerId")\n)\n\n/*\n3 rows from Invoice table:\nInvoiceId\tCustomerId\tInvoiceDate\tBillingAddress\tBillingCity\tBillingState\tBillingCountry\tBillingPostalCode\tTotal\n1\t2\t2021-01-01 00:00:00\tTheodor-Heuss-Straße 34\tStuttgart\tNone\tGermany\t70174\t1.98\n2\t4\t2021-01-02 00:00:00\tUllevålsveien 14\tOslo\tNone\tNorway\t0171\t3.96\n3\t8\t2021-01-03 00:00:00\tGrétrystraat 63\tBrussels\tNone\tBelgium\t1000\t5.94\n*/'),
+      (AgentActionMessageLog(tool='sql_db_query', tool_input={'query': 'SELECT BillingCountry AS country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC'}, log="\nI found out that the column name for country is 'BillingCountry'. I will now rewrite my query and run it again.\n{'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT BillingCountry AS country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC'}}\n", message_log=[AIMessage(content='\nReflection: I found out that the column name for country is \'BillingCountry\'. I will now rewrite my query and run it again.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_query",\n        "parameters": {\n            "query": "SELECT BillingCountry AS country, COUNT(*) AS invoice_count FROM Invoice GROUP BY country ORDER BY invoice_count DESC"\n        }\n    }\n]\n```')]),
+       "[('USA', 91), ('Canada', 56), ('France', 35), ('Brazil', 35), ('Germany', 28), ('United Kingdom', 21), ('Portugal', 14), ('Czech Republic', 14), ('India', 13), ('Sweden', 7), ('Spain', 7), ('Poland', 7), ('Norway', 7), ('Netherlands', 7), ('Italy', 7), ('Ireland', 7), ('Hungary', 7), ('Finland', 7), ('Denmark', 7), ('Chile', 7), ('Belgium', 7), ('Austria', 7), ('Australia', 7), ('Argentina', 7)]")]}
+
+
+
+The agent initially makes some errors as it jumps to answer the question using the db_query tool, but it then realizes it needs to figure out what tables it has access to and what they look like. It then fixes the sql code and is able to generate the right answer
+
+
+```python
+agent_executor.invoke({
+   "input": 'who is the best customer? The customer who has spent the most money is the best.',
+})
+```
+
+    
+    
+    [1m> Entering new AgentExecutor chain...[0m
+    [32;1m[1;3m
+    I will search for the customer who has spent the most money and write an answer based on the results.
+    {'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT customer_name, SUM(total_price) AS total_spent FROM orders GROUP BY customer_name ORDER BY total_spent DESC LIMIT 1;'}}
+    [0m[36;1m[1;3mError: (sqlite3.OperationalError) no such table: orders
+    [SQL: SELECT customer_name, SUM(total_price) AS total_spent FROM orders GROUP BY customer_name ORDER BY total_spent DESC LIMIT 1;]
+    (Background on this error at: https://sqlalche.me/e/20/e3q8)[0m[32;1m[1;3m
+    I received an error message. I will now use the sql_db_list_tables tool to find out which tables are available.
+    {'tool_name': 'sql_db_list_tables', 'parameters': {'tool_input': ''}}
+    [0m[38;5;200m[1;3mAlbum, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track[0m[32;1m[1;3m
+    I found that there is a 'Customer' table and an 'Invoice' table. I will now use the sql_db_schema tool to find out more about these tables.
+    {'tool_name': 'sql_db_schema', 'parameters': {'table_names': 'Customer,Invoice'}}
+    [0m[33;1m[1;3m
+    CREATE TABLE "Customer" (
+    	"CustomerId" INTEGER NOT NULL, 
+    	"FirstName" NVARCHAR(40) NOT NULL, 
+    	"LastName" NVARCHAR(20) NOT NULL, 
+    	"Company" NVARCHAR(80), 
+    	"Address" NVARCHAR(70), 
+    	"City" NVARCHAR(40), 
+    	"State" NVARCHAR(40), 
+    	"Country" NVARCHAR(40), 
+    	"PostalCode" NVARCHAR(10), 
+    	"Phone" NVARCHAR(24), 
+    	"Fax" NVARCHAR(24), 
+    	"Email" NVARCHAR(60) NOT NULL, 
+    	"SupportRepId" INTEGER, 
+    	PRIMARY KEY ("CustomerId"), 
+    	FOREIGN KEY("SupportRepId") REFERENCES "Employee" ("EmployeeId")
+    )
+    
+    /*
+    3 rows from Customer table:
+    CustomerId	FirstName	LastName	Company	Address	City	State	Country	PostalCode	Phone	Fax	Email	SupportRepId
+    1	Luís	Gonçalves	Embraer - Empresa Brasileira de Aeronáutica S.A.	Av. Brigadeiro Faria Lima, 2170	São José dos Campos	SP	Brazil	12227-000	+55 (12) 3923-5555	+55 (12) 3923-5566	luisg@embraer.com.br	3
+    2	Leonie	Köhler	None	Theodor-Heuss-Straße 34	Stuttgart	None	Germany	70174	+49 0711 2842222	None	leonekohler@surfeu.de	5
+    3	François	Tremblay	None	1498 rue Bélanger	Montréal	QC	Canada	H2G 1A7	+1 (514) 721-4711	None	ftremblay@gmail.com	3
+    */
+    
+    
+    CREATE TABLE "Invoice" (
+    	"InvoiceId" INTEGER NOT NULL, 
+    	"CustomerId" INTEGER NOT NULL, 
+    	"InvoiceDate" DATETIME NOT NULL, 
+    	"BillingAddress" NVARCHAR(70), 
+    	"BillingCity" NVARCHAR(40), 
+    	"BillingState" NVARCHAR(40), 
+    	"BillingCountry" NVARCHAR(40), 
+    	"BillingPostalCode" NVARCHAR(10), 
+    	"Total" NUMERIC(10, 2) NOT NULL, 
+    	PRIMARY KEY ("InvoiceId"), 
+    	FOREIGN KEY("CustomerId") REFERENCES "Customer" ("CustomerId")
+    )
+    
+    /*
+    3 rows from Invoice table:
+    InvoiceId	CustomerId	InvoiceDate	BillingAddress	BillingCity	BillingState	BillingCountry	BillingPostalCode	Total
+    1	2	2021-01-01 00:00:00	Theodor-Heuss-Straße 34	Stuttgart	None	Germany	70174	1.98
+    2	4	2021-01-02 00:00:00	Ullevålsveien 14	Oslo	None	Norway	0171	3.96
+    3	8	2021-01-03 00:00:00	Grétrystraat 63	Brussels	None	Belgium	1000	5.94
+    */[0m[32;1m[1;3m
+    I found that the 'Customer' table contains information about customers, including their names, addresses, and phone numbers. The 'Invoice' table contains information about invoices, including the customer ID, invoice date, and total amount. I will now write a new query to find the customer who has spent the most money.
+    {'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT c.FirstName, c.LastName, SUM(i.Total) AS total_spent FROM Customer c JOIN Invoice i ON c.CustomerId = i.CustomerId GROUP BY c.CustomerId ORDER BY total_spent DESC LIMIT 1;'}}
+    [0m[36;1m[1;3m[('Helena', 'Holý', 49.62)][0m[32;1m[1;3mRelevant Documents: 1,2,3
+    Cited Documents: 3
+    Answer: The best customer is Helena Holý, who has spent a total of 49.62.
+    Grounded answer: The best customer is <co: 3>Helena Holý</co: 3>, who has spent a total of <co: 3>49.62</co: 3>.[0m
+    
+    [1m> Finished chain.[0m
+
+
+
+
+
+    {'input': 'who is the best customer? The customer who has spent the most money is the best.',
+     'output': 'The best customer is Helena Holý, who has spent a total of 49.62.',
+     'citations': [CohereCitation(start=21, end=32, text='Helena Holý', documents=[{'output': "[('Helena', 'Holý', 49.62)]"}]),
+      CohereCitation(start=59, end=64, text='49.62', documents=[{'output': "[('Helena', 'Holý', 49.62)]"}])],
+     'intermediate_steps': [(AgentActionMessageLog(tool='sql_db_query', tool_input={'query': 'SELECT customer_name, SUM(total_price) AS total_spent FROM orders GROUP BY customer_name ORDER BY total_spent DESC LIMIT 1;'}, log="\nI will search for the customer who has spent the most money and write an answer based on the results.\n{'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT customer_name, SUM(total_price) AS total_spent FROM orders GROUP BY customer_name ORDER BY total_spent DESC LIMIT 1;'}}\n", message_log=[AIMessage(content='\nPlan: I will search for the customer who has spent the most money and write an answer based on the results.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_query",\n        "parameters": {\n            "query": "SELECT customer_name, SUM(total_price) AS total_spent FROM orders GROUP BY customer_name ORDER BY total_spent DESC LIMIT 1;"\n        }\n    }\n]\n```')]),
+       'Error: (sqlite3.OperationalError) no such table: orders\n[SQL: SELECT customer_name, SUM(total_price) AS total_spent FROM orders GROUP BY customer_name ORDER BY total_spent DESC LIMIT 1;]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)'),
+      (AgentActionMessageLog(tool='sql_db_list_tables', tool_input={'tool_input': ''}, log="\nI received an error message. I will now use the sql_db_list_tables tool to find out which tables are available.\n{'tool_name': 'sql_db_list_tables', 'parameters': {'tool_input': ''}}\n", message_log=[AIMessage(content='\nReflection: I received an error message. I will now use the sql_db_list_tables tool to find out which tables are available.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_list_tables",\n        "parameters": {\n            "tool_input": ""\n        }\n    }\n]\n```')]),
+       'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'),
+      (AgentActionMessageLog(tool='sql_db_schema', tool_input={'table_names': 'Customer,Invoice'}, log="\nI found that there is a 'Customer' table and an 'Invoice' table. I will now use the sql_db_schema tool to find out more about these tables.\n{'tool_name': 'sql_db_schema', 'parameters': {'table_names': 'Customer,Invoice'}}\n", message_log=[AIMessage(content='\nReflection: I found that there is a \'Customer\' table and an \'Invoice\' table. I will now use the sql_db_schema tool to find out more about these tables.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_schema",\n        "parameters": {\n            "table_names": "Customer,Invoice"\n        }\n    }\n]\n```')]),
+       '\nCREATE TABLE "Customer" (\n\t"CustomerId" INTEGER NOT NULL, \n\t"FirstName" NVARCHAR(40) NOT NULL, \n\t"LastName" NVARCHAR(20) NOT NULL, \n\t"Company" NVARCHAR(80), \n\t"Address" NVARCHAR(70), \n\t"City" NVARCHAR(40), \n\t"State" NVARCHAR(40), \n\t"Country" NVARCHAR(40), \n\t"PostalCode" NVARCHAR(10), \n\t"Phone" NVARCHAR(24), \n\t"Fax" NVARCHAR(24), \n\t"Email" NVARCHAR(60) NOT NULL, \n\t"SupportRepId" INTEGER, \n\tPRIMARY KEY ("CustomerId"), \n\tFOREIGN KEY("SupportRepId") REFERENCES "Employee" ("EmployeeId")\n)\n\n/*\n3 rows from Customer table:\nCustomerId\tFirstName\tLastName\tCompany\tAddress\tCity\tState\tCountry\tPostalCode\tPhone\tFax\tEmail\tSupportRepId\n1\tLuís\tGonçalves\tEmbraer - Empresa Brasileira de Aeronáutica S.A.\tAv. Brigadeiro Faria Lima, 2170\tSão José dos Campos\tSP\tBrazil\t12227-000\t+55 (12) 3923-5555\t+55 (12) 3923-5566\tluisg@embraer.com.br\t3\n2\tLeonie\tKöhler\tNone\tTheodor-Heuss-Straße 34\tStuttgart\tNone\tGermany\t70174\t+49 0711 2842222\tNone\tleonekohler@surfeu.de\t5\n3\tFrançois\tTremblay\tNone\t1498 rue Bélanger\tMontréal\tQC\tCanada\tH2G 1A7\t+1 (514) 721-4711\tNone\tftremblay@gmail.com\t3\n*/\n\n\nCREATE TABLE "Invoice" (\n\t"InvoiceId" INTEGER NOT NULL, \n\t"CustomerId" INTEGER NOT NULL, \n\t"InvoiceDate" DATETIME NOT NULL, \n\t"BillingAddress" NVARCHAR(70), \n\t"BillingCity" NVARCHAR(40), \n\t"BillingState" NVARCHAR(40), \n\t"BillingCountry" NVARCHAR(40), \n\t"BillingPostalCode" NVARCHAR(10), \n\t"Total" NUMERIC(10, 2) NOT NULL, \n\tPRIMARY KEY ("InvoiceId"), \n\tFOREIGN KEY("CustomerId") REFERENCES "Customer" ("CustomerId")\n)\n\n/*\n3 rows from Invoice table:\nInvoiceId\tCustomerId\tInvoiceDate\tBillingAddress\tBillingCity\tBillingState\tBillingCountry\tBillingPostalCode\tTotal\n1\t2\t2021-01-01 00:00:00\tTheodor-Heuss-Straße 34\tStuttgart\tNone\tGermany\t70174\t1.98\n2\t4\t2021-01-02 00:00:00\tUllevålsveien 14\tOslo\tNone\tNorway\t0171\t3.96\n3\t8\t2021-01-03 00:00:00\tGrétrystraat 63\tBrussels\tNone\tBelgium\t1000\t5.94\n*/'),
+      (AgentActionMessageLog(tool='sql_db_query', tool_input={'query': 'SELECT c.FirstName, c.LastName, SUM(i.Total) AS total_spent FROM Customer c JOIN Invoice i ON c.CustomerId = i.CustomerId GROUP BY c.CustomerId ORDER BY total_spent DESC LIMIT 1;'}, log="\nI found that the 'Customer' table contains information about customers, including their names, addresses, and phone numbers. The 'Invoice' table contains information about invoices, including the customer ID, invoice date, and total amount. I will now write a new query to find the customer who has spent the most money.\n{'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT c.FirstName, c.LastName, SUM(i.Total) AS total_spent FROM Customer c JOIN Invoice i ON c.CustomerId = i.CustomerId GROUP BY c.CustomerId ORDER BY total_spent DESC LIMIT 1;'}}\n", message_log=[AIMessage(content='\nReflection: I found that the \'Customer\' table contains information about customers, including their names, addresses, and phone numbers. The \'Invoice\' table contains information about invoices, including the customer ID, invoice date, and total amount. I will now write a new query to find the customer who has spent the most money.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_query",\n        "parameters": {\n            "query": "SELECT c.FirstName, c.LastName, SUM(i.Total) AS total_spent FROM Customer c JOIN Invoice i ON c.CustomerId = i.CustomerId GROUP BY c.CustomerId ORDER BY total_spent DESC LIMIT 1;"\n        }\n    }\n]\n```')]),
+       "[('Helena', 'Holý', 49.62)]")]}
+
+
+
+As you can see, the agent makes an error, but is able to rectify itself. It also manages to generate SQL query over two tables in the database
+
+<a id="sec_step2"></a>
+# SQL Agent with context
+
+From our experiments, we have found that passing in additional context to the preamble can help reduce the initial failures. This context is provided by the SQLDBToolkit and contains the first 3 rows of the tables in the Database
+
+
+```python
+context
+```
+
+
+
+
+    {'table_info': '\nCREATE TABLE "Album" (\n\t"AlbumId" INTEGER NOT NULL, \n\t"Title" NVARCHAR(160) NOT NULL, \n\t"ArtistId" INTEGER NOT NULL, \n\tPRIMARY KEY ("AlbumId"), \n\tFOREIGN KEY("ArtistId") REFERENCES "Artist" ("ArtistId")\n)\n\n/*\n3 rows from Album table:\nAlbumId\tTitle\tArtistId\n1\tFor Those About To Rock We Salute You\t1\n2\tBalls to the Wall\t2\n3\tRestless and Wild\t2\n*/\n\n\nCREATE TABLE "Artist" (\n\t"ArtistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("ArtistId")\n)\n\n/*\n3 rows from Artist table:\nArtistId\tName\n1\tAC/DC\n2\tAccept\n3\tAerosmith\n*/\n\n\nCREATE TABLE "Customer" (\n\t"CustomerId" INTEGER NOT NULL, \n\t"FirstName" NVARCHAR(40) NOT NULL, \n\t"LastName" NVARCHAR(20) NOT NULL, \n\t"Company" NVARCHAR(80), \n\t"Address" NVARCHAR(70), \n\t"City" NVARCHAR(40), \n\t"State" NVARCHAR(40), \n\t"Country" NVARCHAR(40), \n\t"PostalCode" NVARCHAR(10), \n\t"Phone" NVARCHAR(24), \n\t"Fax" NVARCHAR(24), \n\t"Email" NVARCHAR(60) NOT NULL, \n\t"SupportRepId" INTEGER, \n\tPRIMARY KEY ("CustomerId"), \n\tFOREIGN KEY("SupportRepId") REFERENCES "Employee" ("EmployeeId")\n)\n\n/*\n3 rows from Customer table:\nCustomerId\tFirstName\tLastName\tCompany\tAddress\tCity\tState\tCountry\tPostalCode\tPhone\tFax\tEmail\tSupportRepId\n1\tLuís\tGonçalves\tEmbraer - Empresa Brasileira de Aeronáutica S.A.\tAv. Brigadeiro Faria Lima, 2170\tSão José dos Campos\tSP\tBrazil\t12227-000\t+55 (12) 3923-5555\t+55 (12) 3923-5566\tluisg@embraer.com.br\t3\n2\tLeonie\tKöhler\tNone\tTheodor-Heuss-Straße 34\tStuttgart\tNone\tGermany\t70174\t+49 0711 2842222\tNone\tleonekohler@surfeu.de\t5\n3\tFrançois\tTremblay\tNone\t1498 rue Bélanger\tMontréal\tQC\tCanada\tH2G 1A7\t+1 (514) 721-4711\tNone\tftremblay@gmail.com\t3\n*/\n\n\nCREATE TABLE "Employee" (\n\t"EmployeeId" INTEGER NOT NULL, \n\t"LastName" NVARCHAR(20) NOT NULL, \n\t"FirstName" NVARCHAR(20) NOT NULL, \n\t"Title" NVARCHAR(30), \n\t"ReportsTo" INTEGER, \n\t"BirthDate" DATETIME, \n\t"HireDate" DATETIME, \n\t"Address" NVARCHAR(70), \n\t"City" NVARCHAR(40), \n\t"State" NVARCHAR(40), \n\t"Country" NVARCHAR(40), \n\t"PostalCode" NVARCHAR(10), \n\t"Phone" NVARCHAR(24), \n\t"Fax" NVARCHAR(24), \n\t"Email" NVARCHAR(60), \n\tPRIMARY KEY ("EmployeeId"), \n\tFOREIGN KEY("ReportsTo") REFERENCES "Employee" ("EmployeeId")\n)\n\n/*\n3 rows from Employee table:\nEmployeeId\tLastName\tFirstName\tTitle\tReportsTo\tBirthDate\tHireDate\tAddress\tCity\tState\tCountry\tPostalCode\tPhone\tFax\tEmail\n1\tAdams\tAndrew\tGeneral Manager\tNone\t1962-02-18 00:00:00\t2002-08-14 00:00:00\t11120 Jasper Ave NW\tEdmonton\tAB\tCanada\tT5K 2N1\t+1 (780) 428-9482\t+1 (780) 428-3457\tandrew@chinookcorp.com\n2\tEdwards\tNancy\tSales Manager\t1\t1958-12-08 00:00:00\t2002-05-01 00:00:00\t825 8 Ave SW\tCalgary\tAB\tCanada\tT2P 2T3\t+1 (403) 262-3443\t+1 (403) 262-3322\tnancy@chinookcorp.com\n3\tPeacock\tJane\tSales Support Agent\t2\t1973-08-29 00:00:00\t2002-04-01 00:00:00\t1111 6 Ave SW\tCalgary\tAB\tCanada\tT2P 5M5\t+1 (403) 262-3443\t+1 (403) 262-6712\tjane@chinookcorp.com\n*/\n\n\nCREATE TABLE "Genre" (\n\t"GenreId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("GenreId")\n)\n\n/*\n3 rows from Genre table:\nGenreId\tName\n1\tRock\n2\tJazz\n3\tMetal\n*/\n\n\nCREATE TABLE "Invoice" (\n\t"InvoiceId" INTEGER NOT NULL, \n\t"CustomerId" INTEGER NOT NULL, \n\t"InvoiceDate" DATETIME NOT NULL, \n\t"BillingAddress" NVARCHAR(70), \n\t"BillingCity" NVARCHAR(40), \n\t"BillingState" NVARCHAR(40), \n\t"BillingCountry" NVARCHAR(40), \n\t"BillingPostalCode" NVARCHAR(10), \n\t"Total" NUMERIC(10, 2) NOT NULL, \n\tPRIMARY KEY ("InvoiceId"), \n\tFOREIGN KEY("CustomerId") REFERENCES "Customer" ("CustomerId")\n)\n\n/*\n3 rows from Invoice table:\nInvoiceId\tCustomerId\tInvoiceDate\tBillingAddress\tBillingCity\tBillingState\tBillingCountry\tBillingPostalCode\tTotal\n1\t2\t2021-01-01 00:00:00\tTheodor-Heuss-Straße 34\tStuttgart\tNone\tGermany\t70174\t1.98\n2\t4\t2021-01-02 00:00:00\tUllevålsveien 14\tOslo\tNone\tNorway\t0171\t3.96\n3\t8\t2021-01-03 00:00:00\tGrétrystraat 63\tBrussels\tNone\tBelgium\t1000\t5.94\n*/\n\n\nCREATE TABLE "InvoiceLine" (\n\t"InvoiceLineId" INTEGER NOT NULL, \n\t"InvoiceId" INTEGER NOT NULL, \n\t"TrackId" INTEGER NOT NULL, \n\t"UnitPrice" NUMERIC(10, 2) NOT NULL, \n\t"Quantity" INTEGER NOT NULL, \n\tPRIMARY KEY ("InvoiceLineId"), \n\tFOREIGN KEY("TrackId") REFERENCES "Track" ("TrackId"), \n\tFOREIGN KEY("InvoiceId") REFERENCES "Invoice" ("InvoiceId")\n)\n\n/*\n3 rows from InvoiceLine table:\nInvoiceLineId\tInvoiceId\tTrackId\tUnitPrice\tQuantity\n1\t1\t2\t0.99\t1\n2\t1\t4\t0.99\t1\n3\t2\t6\t0.99\t1\n*/\n\n\nCREATE TABLE "MediaType" (\n\t"MediaTypeId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("MediaTypeId")\n)\n\n/*\n3 rows from MediaType table:\nMediaTypeId\tName\n1\tMPEG audio file\n2\tProtected AAC audio file\n3\tProtected MPEG-4 video file\n*/\n\n\nCREATE TABLE "Playlist" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(120), \n\tPRIMARY KEY ("PlaylistId")\n)\n\n/*\n3 rows from Playlist table:\nPlaylistId\tName\n1\tMusic\n2\tMovies\n3\tTV Shows\n*/\n\n\nCREATE TABLE "PlaylistTrack" (\n\t"PlaylistId" INTEGER NOT NULL, \n\t"TrackId" INTEGER NOT NULL, \n\tPRIMARY KEY ("PlaylistId", "TrackId"), \n\tFOREIGN KEY("TrackId") REFERENCES "Track" ("TrackId"), \n\tFOREIGN KEY("PlaylistId") REFERENCES "Playlist" ("PlaylistId")\n)\n\n/*\n3 rows from PlaylistTrack table:\nPlaylistId\tTrackId\n1\t3402\n1\t3389\n1\t3390\n*/\n\n\nCREATE TABLE "Track" (\n\t"TrackId" INTEGER NOT NULL, \n\t"Name" NVARCHAR(200) NOT NULL, \n\t"AlbumId" INTEGER, \n\t"MediaTypeId" INTEGER NOT NULL, \n\t"GenreId" INTEGER, \n\t"Composer" NVARCHAR(220), \n\t"Milliseconds" INTEGER NOT NULL, \n\t"Bytes" INTEGER, \n\t"UnitPrice" NUMERIC(10, 2) NOT NULL, \n\tPRIMARY KEY ("TrackId"), \n\tFOREIGN KEY("MediaTypeId") REFERENCES "MediaType" ("MediaTypeId"), \n\tFOREIGN KEY("GenreId") REFERENCES "Genre" ("GenreId"), \n\tFOREIGN KEY("AlbumId") REFERENCES "Album" ("AlbumId")\n)\n\n/*\n3 rows from Track table:\nTrackId\tName\tAlbumId\tMediaTypeId\tGenreId\tComposer\tMilliseconds\tBytes\tUnitPrice\n1\tFor Those About To Rock (We Salute You)\t1\t1\t1\tAngus Young, Malcolm Young, Brian Johnson\t343719\t11170334\t0.99\n2\tBalls to the Wall\t2\t2\t1\tU. Dirkschneider, W. Hoffmann, H. Frank, P. Baltes, S. Kaufmann, G. Hoffmann\t342562\t5510424\t0.99\n3\tFast As a Shark\t3\t2\t1\tF. Baltes, S. Kaufman, U. Dirkscneider & W. Hoffman\t230619\t3990994\t0.99\n*/',
+     'table_names': 'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track'}
+
+
+
+We can pass this context into the preamble and re-run a query to see how it performs.
+
+
+```python
+preamble="""## Task And Context
+You use your advanced complex reasoning capabilities to help people by answering their questions and other requests interactively. You will be asked a very wide array of requests on all kinds of topics. You will be equipped with a wide range of search engines or similar tools to help you, which you use to research your answer. You may need to use multiple tools in parallel or sequentially to complete your task. You should focus on serving the user's needs as best you can, which will be wide-ranging.
+
+## Style Guide
+Unless the user asks for a different style of answer, you should answer in full sentences, using proper grammar and spelling.
+
+## Additional Information
+You are an expert who answers the user's question by creating SQL queries and executing them.
+You are equipped with a number of relevant SQL tools.
+
+Here is information about the database:
+{schema_info}
+""".format(schema_info=context)
+```
+
+
+```python
+agent_executor.invoke({
+   "input": 'provide the name of the best customer? The customer who has spent the most money is the best.',
+   "preamble": preamble
+})
+```
+
+    
+    
+    [1m> Entering new AgentExecutor chain...[0m
+    [32;1m[1;3m
+    I will write a SQL query to find the customer who has spent the most money.
+    {'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT c.CustomerId, c.FirstName, c.LastName, SUM(i.Total) AS TotalSpent\nFROM Customer c\nJOIN Invoice i ON c.CustomerId = i.CustomerId\nGROUP BY c.CustomerId\nORDER BY TotalSpent DESC\nLIMIT 1;'}}
+    [0m[36;1m[1;3m[(6, 'Helena', 'Holý', 49.62)][0m[32;1m[1;3mRelevant Documents: 0
+    Cited Documents: 0
+    Answer: The customer who has spent the most money is Helena Holý.
+    Grounded answer: The customer who has spent the most money is <co: 0>Helena Holý</co: 0>.[0m
+    
+    [1m> Finished chain.[0m
+
+
+
+
+
+    {'input': 'provide the name of the best customer? The customer who has spent the most money is the best.',
+     'preamble': '## Task And Context\nYou use your advanced complex reasoning capabilities to help people by answering their questions and other requests interactively. You will be asked a very wide array of requests on all kinds of topics. You will be equipped with a wide range of search engines or similar tools to help you, which you use to research your answer. You may need to use multiple tools in parallel or sequentially to complete your task. You should focus on serving the user\'s needs as best you can, which will be wide-ranging.\n\n## Style Guide\nUnless the user asks for a different style of answer, you should answer in full sentences, using proper grammar and spelling.\n\n## Additional Information\nYou are an expert who answers the user\'s question by creating SQL queries and executing them.\nYou are equipped with a number of relevant SQL tools.\n\nHere is information about the database:\n{\'table_info\': \'\\nCREATE TABLE "Album" (\\n\\t"AlbumId" INTEGER NOT NULL, \\n\\t"Title" NVARCHAR(160) NOT NULL, \\n\\t"ArtistId" INTEGER NOT NULL, \\n\\tPRIMARY KEY ("AlbumId"), \\n\\tFOREIGN KEY("ArtistId") REFERENCES "Artist" ("ArtistId")\\n)\\n\\n/*\\n3 rows from Album table:\\nAlbumId\\tTitle\\tArtistId\\n1\\tFor Those About To Rock We Salute You\\t1\\n2\\tBalls to the Wall\\t2\\n3\\tRestless and Wild\\t2\\n*/\\n\\n\\nCREATE TABLE "Artist" (\\n\\t"ArtistId" INTEGER NOT NULL, \\n\\t"Name" NVARCHAR(120), \\n\\tPRIMARY KEY ("ArtistId")\\n)\\n\\n/*\\n3 rows from Artist table:\\nArtistId\\tName\\n1\\tAC/DC\\n2\\tAccept\\n3\\tAerosmith\\n*/\\n\\n\\nCREATE TABLE "Customer" (\\n\\t"CustomerId" INTEGER NOT NULL, \\n\\t"FirstName" NVARCHAR(40) NOT NULL, \\n\\t"LastName" NVARCHAR(20) NOT NULL, \\n\\t"Company" NVARCHAR(80), \\n\\t"Address" NVARCHAR(70), \\n\\t"City" NVARCHAR(40), \\n\\t"State" NVARCHAR(40), \\n\\t"Country" NVARCHAR(40), \\n\\t"PostalCode" NVARCHAR(10), \\n\\t"Phone" NVARCHAR(24), \\n\\t"Fax" NVARCHAR(24), \\n\\t"Email" NVARCHAR(60) NOT NULL, \\n\\t"SupportRepId" INTEGER, \\n\\tPRIMARY KEY ("CustomerId"), \\n\\tFOREIGN KEY("SupportRepId") REFERENCES "Employee" ("EmployeeId")\\n)\\n\\n/*\\n3 rows from Customer table:\\nCustomerId\\tFirstName\\tLastName\\tCompany\\tAddress\\tCity\\tState\\tCountry\\tPostalCode\\tPhone\\tFax\\tEmail\\tSupportRepId\\n1\\tLuís\\tGonçalves\\tEmbraer - Empresa Brasileira de Aeronáutica S.A.\\tAv. Brigadeiro Faria Lima, 2170\\tSão José dos Campos\\tSP\\tBrazil\\t12227-000\\t+55 (12) 3923-5555\\t+55 (12) 3923-5566\\tluisg@embraer.com.br\\t3\\n2\\tLeonie\\tKöhler\\tNone\\tTheodor-Heuss-Straße 34\\tStuttgart\\tNone\\tGermany\\t70174\\t+49 0711 2842222\\tNone\\tleonekohler@surfeu.de\\t5\\n3\\tFrançois\\tTremblay\\tNone\\t1498 rue Bélanger\\tMontréal\\tQC\\tCanada\\tH2G 1A7\\t+1 (514) 721-4711\\tNone\\tftremblay@gmail.com\\t3\\n*/\\n\\n\\nCREATE TABLE "Employee" (\\n\\t"EmployeeId" INTEGER NOT NULL, \\n\\t"LastName" NVARCHAR(20) NOT NULL, \\n\\t"FirstName" NVARCHAR(20) NOT NULL, \\n\\t"Title" NVARCHAR(30), \\n\\t"ReportsTo" INTEGER, \\n\\t"BirthDate" DATETIME, \\n\\t"HireDate" DATETIME, \\n\\t"Address" NVARCHAR(70), \\n\\t"City" NVARCHAR(40), \\n\\t"State" NVARCHAR(40), \\n\\t"Country" NVARCHAR(40), \\n\\t"PostalCode" NVARCHAR(10), \\n\\t"Phone" NVARCHAR(24), \\n\\t"Fax" NVARCHAR(24), \\n\\t"Email" NVARCHAR(60), \\n\\tPRIMARY KEY ("EmployeeId"), \\n\\tFOREIGN KEY("ReportsTo") REFERENCES "Employee" ("EmployeeId")\\n)\\n\\n/*\\n3 rows from Employee table:\\nEmployeeId\\tLastName\\tFirstName\\tTitle\\tReportsTo\\tBirthDate\\tHireDate\\tAddress\\tCity\\tState\\tCountry\\tPostalCode\\tPhone\\tFax\\tEmail\\n1\\tAdams\\tAndrew\\tGeneral Manager\\tNone\\t1962-02-18 00:00:00\\t2002-08-14 00:00:00\\t11120 Jasper Ave NW\\tEdmonton\\tAB\\tCanada\\tT5K 2N1\\t+1 (780) 428-9482\\t+1 (780) 428-3457\\tandrew@chinookcorp.com\\n2\\tEdwards\\tNancy\\tSales Manager\\t1\\t1958-12-08 00:00:00\\t2002-05-01 00:00:00\\t825 8 Ave SW\\tCalgary\\tAB\\tCanada\\tT2P 2T3\\t+1 (403) 262-3443\\t+1 (403) 262-3322\\tnancy@chinookcorp.com\\n3\\tPeacock\\tJane\\tSales Support Agent\\t2\\t1973-08-29 00:00:00\\t2002-04-01 00:00:00\\t1111 6 Ave SW\\tCalgary\\tAB\\tCanada\\tT2P 5M5\\t+1 (403) 262-3443\\t+1 (403) 262-6712\\tjane@chinookcorp.com\\n*/\\n\\n\\nCREATE TABLE "Genre" (\\n\\t"GenreId" INTEGER NOT NULL, \\n\\t"Name" NVARCHAR(120), \\n\\tPRIMARY KEY ("GenreId")\\n)\\n\\n/*\\n3 rows from Genre table:\\nGenreId\\tName\\n1\\tRock\\n2\\tJazz\\n3\\tMetal\\n*/\\n\\n\\nCREATE TABLE "Invoice" (\\n\\t"InvoiceId" INTEGER NOT NULL, \\n\\t"CustomerId" INTEGER NOT NULL, \\n\\t"InvoiceDate" DATETIME NOT NULL, \\n\\t"BillingAddress" NVARCHAR(70), \\n\\t"BillingCity" NVARCHAR(40), \\n\\t"BillingState" NVARCHAR(40), \\n\\t"BillingCountry" NVARCHAR(40), \\n\\t"BillingPostalCode" NVARCHAR(10), \\n\\t"Total" NUMERIC(10, 2) NOT NULL, \\n\\tPRIMARY KEY ("InvoiceId"), \\n\\tFOREIGN KEY("CustomerId") REFERENCES "Customer" ("CustomerId")\\n)\\n\\n/*\\n3 rows from Invoice table:\\nInvoiceId\\tCustomerId\\tInvoiceDate\\tBillingAddress\\tBillingCity\\tBillingState\\tBillingCountry\\tBillingPostalCode\\tTotal\\n1\\t2\\t2021-01-01 00:00:00\\tTheodor-Heuss-Straße 34\\tStuttgart\\tNone\\tGermany\\t70174\\t1.98\\n2\\t4\\t2021-01-02 00:00:00\\tUllevålsveien 14\\tOslo\\tNone\\tNorway\\t0171\\t3.96\\n3\\t8\\t2021-01-03 00:00:00\\tGrétrystraat 63\\tBrussels\\tNone\\tBelgium\\t1000\\t5.94\\n*/\\n\\n\\nCREATE TABLE "InvoiceLine" (\\n\\t"InvoiceLineId" INTEGER NOT NULL, \\n\\t"InvoiceId" INTEGER NOT NULL, \\n\\t"TrackId" INTEGER NOT NULL, \\n\\t"UnitPrice" NUMERIC(10, 2) NOT NULL, \\n\\t"Quantity" INTEGER NOT NULL, \\n\\tPRIMARY KEY ("InvoiceLineId"), \\n\\tFOREIGN KEY("TrackId") REFERENCES "Track" ("TrackId"), \\n\\tFOREIGN KEY("InvoiceId") REFERENCES "Invoice" ("InvoiceId")\\n)\\n\\n/*\\n3 rows from InvoiceLine table:\\nInvoiceLineId\\tInvoiceId\\tTrackId\\tUnitPrice\\tQuantity\\n1\\t1\\t2\\t0.99\\t1\\n2\\t1\\t4\\t0.99\\t1\\n3\\t2\\t6\\t0.99\\t1\\n*/\\n\\n\\nCREATE TABLE "MediaType" (\\n\\t"MediaTypeId" INTEGER NOT NULL, \\n\\t"Name" NVARCHAR(120), \\n\\tPRIMARY KEY ("MediaTypeId")\\n)\\n\\n/*\\n3 rows from MediaType table:\\nMediaTypeId\\tName\\n1\\tMPEG audio file\\n2\\tProtected AAC audio file\\n3\\tProtected MPEG-4 video file\\n*/\\n\\n\\nCREATE TABLE "Playlist" (\\n\\t"PlaylistId" INTEGER NOT NULL, \\n\\t"Name" NVARCHAR(120), \\n\\tPRIMARY KEY ("PlaylistId")\\n)\\n\\n/*\\n3 rows from Playlist table:\\nPlaylistId\\tName\\n1\\tMusic\\n2\\tMovies\\n3\\tTV Shows\\n*/\\n\\n\\nCREATE TABLE "PlaylistTrack" (\\n\\t"PlaylistId" INTEGER NOT NULL, \\n\\t"TrackId" INTEGER NOT NULL, \\n\\tPRIMARY KEY ("PlaylistId", "TrackId"), \\n\\tFOREIGN KEY("TrackId") REFERENCES "Track" ("TrackId"), \\n\\tFOREIGN KEY("PlaylistId") REFERENCES "Playlist" ("PlaylistId")\\n)\\n\\n/*\\n3 rows from PlaylistTrack table:\\nPlaylistId\\tTrackId\\n1\\t3402\\n1\\t3389\\n1\\t3390\\n*/\\n\\n\\nCREATE TABLE "Track" (\\n\\t"TrackId" INTEGER NOT NULL, \\n\\t"Name" NVARCHAR(200) NOT NULL, \\n\\t"AlbumId" INTEGER, \\n\\t"MediaTypeId" INTEGER NOT NULL, \\n\\t"GenreId" INTEGER, \\n\\t"Composer" NVARCHAR(220), \\n\\t"Milliseconds" INTEGER NOT NULL, \\n\\t"Bytes" INTEGER, \\n\\t"UnitPrice" NUMERIC(10, 2) NOT NULL, \\n\\tPRIMARY KEY ("TrackId"), \\n\\tFOREIGN KEY("MediaTypeId") REFERENCES "MediaType" ("MediaTypeId"), \\n\\tFOREIGN KEY("GenreId") REFERENCES "Genre" ("GenreId"), \\n\\tFOREIGN KEY("AlbumId") REFERENCES "Album" ("AlbumId")\\n)\\n\\n/*\\n3 rows from Track table:\\nTrackId\\tName\\tAlbumId\\tMediaTypeId\\tGenreId\\tComposer\\tMilliseconds\\tBytes\\tUnitPrice\\n1\\tFor Those About To Rock (We Salute You)\\t1\\t1\\t1\\tAngus Young, Malcolm Young, Brian Johnson\\t343719\\t11170334\\t0.99\\n2\\tBalls to the Wall\\t2\\t2\\t1\\tU. Dirkschneider, W. Hoffmann, H. Frank, P. Baltes, S. Kaufmann, G. Hoffmann\\t342562\\t5510424\\t0.99\\n3\\tFast As a Shark\\t3\\t2\\t1\\tF. Baltes, S. Kaufman, U. Dirkscneider & W. Hoffman\\t230619\\t3990994\\t0.99\\n*/\', \'table_names\': \'Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track\'}\n',
+     'output': 'The customer who has spent the most money is Helena Holý.',
+     'citations': [CohereCitation(start=45, end=56, text='Helena Holý', documents=[{'output': "[(6, 'Helena', 'Holý', 49.62)]"}])],
+     'intermediate_steps': [(AgentActionMessageLog(tool='sql_db_query', tool_input={'query': 'SELECT c.CustomerId, c.FirstName, c.LastName, SUM(i.Total) AS TotalSpent\nFROM Customer c\nJOIN Invoice i ON c.CustomerId = i.CustomerId\nGROUP BY c.CustomerId\nORDER BY TotalSpent DESC\nLIMIT 1;'}, log="\nI will write a SQL query to find the customer who has spent the most money.\n{'tool_name': 'sql_db_query', 'parameters': {'query': 'SELECT c.CustomerId, c.FirstName, c.LastName, SUM(i.Total) AS TotalSpent\\nFROM Customer c\\nJOIN Invoice i ON c.CustomerId = i.CustomerId\\nGROUP BY c.CustomerId\\nORDER BY TotalSpent DESC\\nLIMIT 1;'}}\n", message_log=[AIMessage(content='\nPlan: I will write a SQL query to find the customer who has spent the most money.\nAction: ```json\n[\n    {\n        "tool_name": "sql_db_query",\n        "parameters": {\n            "query": "SELECT c.CustomerId, c.FirstName, c.LastName, SUM(i.Total) AS TotalSpent\\nFROM Customer c\\nJOIN Invoice i ON c.CustomerId = i.CustomerId\\nGROUP BY c.CustomerId\\nORDER BY TotalSpent DESC\\nLIMIT 1;"\n        }\n    }\n]\n```')]),
+       "[(6, 'Helena', 'Holý', 49.62)]")]}
+
+
+
+Great, we can see that passing that additional context actually avoids the error seen in the previous section and gets to the answer in one tool call. Of course this works as long as you have a few tables and a few columns per table. We will follow up with more techniques to improve stability and scalability in another notebook.
+
+
+```python
+
+```
