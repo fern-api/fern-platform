@@ -155,16 +155,6 @@ const nextConfig = {
         ];
     },
     rewrites: async () => {
-        const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
-        // const HAS_X_FORWARDED_HOST = { type: "header", key: "x-forwarded-host", value: "(?<host>.*)" };
-        const HAS_X_FERN_HOST = { type: "header", key: "x-fern-host", value: "(?<host>.*)" };
-        const HAS_HOST = { type: "host", value: "(?<host>.*)" };
-
-        // The order of the following array is important. The first match will be used.
-        const WITH_MATCHED_HOST = [HAS_FERN_DOCS_PREVIEW, HAS_X_FERN_HOST, HAS_HOST];
-
-        const HAS_FERN_TOKEN = { type: "cookie", key: "fern_token" };
-        const THREW_ERROR = { type: "query", key: "error", value: "true" };
         return {
             beforeFiles: [
                 /**
@@ -187,7 +177,7 @@ const nextConfig = {
                  */
                 {
                     source: "/_next/data/:hash/static/:host/:path*",
-                    has: [HAS_FERN_TOKEN],
+                    has: [{ type: "cookie", key: "fern_token" }],
                     destination: "/_next/data/:hash/dynamic/:host/:path*",
                 },
                 /**
@@ -196,7 +186,7 @@ const nextConfig = {
                  */
                 {
                     source: "/_next/data/:hash/:subpath/:oldhost/:path*",
-                    has: [HAS_FERN_DOCS_PREVIEW],
+                    has: [{ type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" }],
                     destination: "/_next/data/:hash/:subpath/:host/:path*",
                 },
             ],

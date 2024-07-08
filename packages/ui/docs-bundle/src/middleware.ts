@@ -4,6 +4,12 @@ import urlJoin from "url-join";
 export function middleware(request: NextRequest): NextResponse {
     const url = request.nextUrl.clone();
 
+    const host =
+        process.env.NEXT_PUBLIC_DOCS_DOMAIN ??
+        request.cookies.get("_fern_docs_preview")?.value ??
+        request.headers.get("x-fern-host") ??
+        request.nextUrl.hostname;
+
     if (url.pathname.endsWith(".rss") || url.pathname.endsWith(".atom")) {
         url.searchParams.set("format", url.pathname.endsWith(".rss") ? "rss" : "atom");
         url.searchParams.set("path", url.pathname.replace(/\.rss|\.atom$/, ""));
@@ -12,9 +18,9 @@ export function middleware(request: NextRequest): NextResponse {
     }
 
     if (
-        url.pathname.startsWith(urlJoin("/dynamic", url.hostname)) ||
-        url.pathname.startsWith(urlJoin("/static", url.hostname)) ||
-        url.pathname.startsWith(urlJoin("/mobile", url.hostname))
+        url.pathname.startsWith(urlJoin("/dynamic", host)) ||
+        url.pathname.startsWith(urlJoin("/static", host)) ||
+        url.pathname.startsWith(urlJoin("/mobile", host))
     ) {
         return NextResponse.next();
     }
@@ -24,16 +30,16 @@ export function middleware(request: NextRequest): NextResponse {
     const hasError = request.nextUrl.searchParams.get("error") === "true";
 
     if (!ua.isBot && (hasToken || hasError)) {
-        url.pathname = urlJoin("/dynamic", url.hostname, url.pathname);
+        url.pathname = urlJoin("/dynamic", host, url.pathname);
         return NextResponse.rewrite(url);
     }
 
     if (ua.device.type === "mobile") {
-        url.pathname = urlJoin("/mobile", url.hostname, url.pathname);
+        url.pathname = urlJoin("/mobile", host, url.pathname);
         return NextResponse.rewrite(url);
     }
 
-    url.pathname = urlJoin("/static", url.hostname, url.pathname);
+    url.pathname = urlJoin("/static", host, url.pathname);
     return NextResponse.rewrite(url);
 }
 
