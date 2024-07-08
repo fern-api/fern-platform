@@ -13,7 +13,7 @@ env:
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
 
 jobs:
-  publish_sdk:
+  publish-cli:
     if: github.ref_type == 'tag' && github.event_name == 'push'  && startsWith(github.ref, 'refs/tags/generator-cli@')
     runs-on: ubuntu-latest
     steps:
@@ -39,3 +39,21 @@ jobs:
           rm -rf package.json.tmp
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           npm publish --access public
+
+  publish-sdks:
+    if: github.ref_type == 'tag' && github.event_name == 'push'  && startsWith(github.ref, 'refs/tags/generator-cli@')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📥 Install Fern
+        run: npm install -g fern-api
+
+      - name: Publish generator-cli
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          git_version="$(scripts/generator-cli-version.sh)"
+          fern generate --api generator-cli --version "${git_version}" --group sdk
