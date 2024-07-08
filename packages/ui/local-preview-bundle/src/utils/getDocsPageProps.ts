@@ -144,6 +144,7 @@ export async function getDocsPageProps(
         fallback: {},
         analytics: undefined,
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
+        isMobile: false,
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
