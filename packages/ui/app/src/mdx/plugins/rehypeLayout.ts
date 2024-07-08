@@ -12,26 +12,9 @@ import { FernDocsFrontmatter } from "../frontmatter";
 import { makeToc } from "./makeToc";
 import { wrapChildren } from "./to-estree";
 
-export interface PageHeaderProps {
-    breadcrumbs: string[];
-
-    // the following are defaults, can be overridden by frontmatter
-    title: string;
-    subtitle?: string;
-    editThisPageUrl?: string;
-
-    // the following are overrides that "forces" a config regardless of frontmatter
-    layout?: FernDocsFrontmatter["layout"]; // sometimes we need to force a layout, e.g. reference layout for endpoints
-    hideNavLinks?: boolean;
-
-    // feature flags
-    isTocDefaultEnabled: boolean;
-}
-
 export function rehypeFernLayout(matter: FernDocsFrontmatter): (tree: Root, vfile: VFile) => void {
     return async (tree, vfile) => {
-        // let matter = vfile.data.matter as FernDocsFrontmatter | undefined;
-        // matter = mergePropsWithMatter(props, matter);
+        matter = mergeMatter(vfile.data.matter as FernDocsFrontmatter | undefined, matter);
         vfile.data.matter = matter;
 
         const asideContents = collectAsideContent(tree);
@@ -47,7 +30,7 @@ export function rehypeFernLayout(matter: FernDocsFrontmatter): (tree: Root, vfil
 
         const children = tree.children as ElementContent[];
         const subtitle = matter.subtitle != null ? wrapChildren(parseMarkdown(matter.subtitle)) : undefined;
-        const tableOfContents = makeToc(tree, matter["force-toc"]);
+        const tableOfContents = matter["hide-toc"] ? undefined : makeToc(tree, matter["force-toc"]);
         const aside = wrapChildren(asideContents);
         switch (matter.layout) {
             case "custom":
@@ -60,7 +43,7 @@ export function rehypeFernLayout(matter: FernDocsFrontmatter): (tree: Root, vfil
                     tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: false,
+                    hideFeedback: matter["hide-feedback"],
                 });
             case "page":
                 return toPageLayoutHastNode({
@@ -70,8 +53,8 @@ export function rehypeFernLayout(matter: FernDocsFrontmatter): (tree: Root, vfil
                     tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: false,
-                    hideNavLinks: false,
+                    hideFeedback: matter["hide-feedback"],
+                    hideNavLinks: matter["hide-nav-links"],
                 });
             case "reference":
                 return toReferenceLayoutHastNode({
@@ -81,7 +64,7 @@ export function rehypeFernLayout(matter: FernDocsFrontmatter): (tree: Root, vfil
                     children,
                     aside,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: false,
+                    hideFeedback: matter["hide-feedback"],
                 });
             default:
                 return toGuideLayoutHastNode({
@@ -91,10 +74,33 @@ export function rehypeFernLayout(matter: FernDocsFrontmatter): (tree: Root, vfil
                     tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: false,
-                    hideNavLinks: false,
+                    hideFeedback: matter["hide-feedback"],
+                    hideNavLinks: matter["hide-nav-links"],
                 });
         }
+    };
+}
+
+function mergeMatter(
+    props: FernDocsFrontmatter | undefined,
+    matter: FernDocsFrontmatter | undefined,
+): FernDocsFrontmatter {
+    if (matter == null || props == null) {
+        return {
+            layout: "guide",
+        };
+    }
+
+    return {
+        ...matter,
+        ...props,
+        title: matter.title ?? props.title,
+        subtitle: matter.subtitle ?? matter.excerpt ?? props.subtitle,
+        "edit-this-page-url": matter["edit-this-page-url"] ?? matter.editThisPageUrl ?? props.editThisPageUrl,
+        layout: props.layout ?? matter.layout ?? "guide",
+        "hide-nav-links": props["hide-nav-links"] ?? matter["hide-nav-links"],
+        breadcrumbs: matter.breadcrumbs ?? props.breadcrumbs,
+        "force-toc": matter["force-toc"] ?? props["force-toc"],
     };
 }
 

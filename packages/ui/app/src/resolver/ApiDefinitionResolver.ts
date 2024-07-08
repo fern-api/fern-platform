@@ -107,7 +107,7 @@ export class ApiDefinitionResolver {
                             title: page.title,
                             markdown: await serializeMdx(pageContent.markdown, {
                                 ...mdxOptions,
-                                defaultFrontmatter: {
+                                frontmatterOverrides: {
                                     title: page.title,
                                     breadcrumbs: [], // TODO: implement breadcrumbs
                                     "edit-this-page-url": pageContent.editThisPageUrl,
@@ -133,7 +133,7 @@ export class ApiDefinitionResolver {
                 title: node.title,
                 markdown: await serializeMdx(pageContent.markdown, {
                     ...mdxOptions,
-                    defaultFrontmatter: {
+                    frontmatterOverrides: {
                         title: node.title,
                         breadcrumbs: [], // TODO: implement breadcrumbs
                         "edit-this-page-url": pageContent.editThisPageUrl,

@@ -227,7 +227,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
     const initialExampleHeight =
         requestHeight + responseHeight + (responseHeight > 0 && requestHeight > 0 ? GAP_6 : 0) + padding;
 
-    const [exampleHeight, setExampleHeight] = useState(initialExampleHeight);
+    const [exampleHeightWithoutPadding, setExampleHeight] = useState(initialExampleHeight);
+    const exampleHeight = exampleHeightWithoutPadding + 8 * 2 * 4;
     const minHeight = useAtomValue(
         useMemo(
             () =>
@@ -236,7 +237,7 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                     if (breakpoint === "sm" || breakpoint === "mobile") {
                         return 0;
                     } else {
-                        return exampleHeight + 8 * 2 * 4;
+                        return exampleHeight;
                     }
                 }),
             [exampleHeight],
@@ -321,7 +322,12 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                         />
                     </div>
 
-                    <aside className="fern-endpoint-content-right">
+                    <aside
+                        className="fern-endpoint-content-right"
+                        style={{
+                            height: isInViewport ? undefined : `${exampleHeight}px`,
+                        }}
+                    >
                         {isInViewport && (
                             <EndpointContentCodeSnippets
                                 api={api}

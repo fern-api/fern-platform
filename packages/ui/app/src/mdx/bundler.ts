@@ -24,7 +24,7 @@ interface BundledMDXResult {
 export type BundledMDX = BundledMDXResult | string;
 
 export type FernSerializeMdxOptions = {
-    defaultFrontmatter?: FernDocsFrontmatter;
+    frontmatterOverrides?: FernDocsFrontmatter;
     showError?: boolean;
     options?: Options;
 };
@@ -36,7 +36,7 @@ export async function serializeMdx(
 ): Promise<BundledMDX | undefined>;
 export async function serializeMdx(
     content: string | undefined,
-    { defaultFrontmatter, showError, options = {} }: FernSerializeMdxOptions = {},
+    { frontmatterOverrides, showError, options = {} }: FernSerializeMdxOptions = {},
 ): Promise<BundledMDX | undefined> {
     if (content == null) {
         return undefined;
@@ -50,15 +50,11 @@ export async function serializeMdx(
         process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), "node_modules", "esbuild", "bin", "esbuild");
     }
 
-    let fm: FernDocsFrontmatter = {};
-
     try {
         const bundled = await bundleMDX<FernDocsFrontmatter>({
             source: content,
 
-            mdxOptions: (o: Options, frontmatter: FernDocsFrontmatter) => {
-                fm = { ...defaultFrontmatter, ...frontmatter };
-
+            mdxOptions: (o: Options) => {
                 o.remarkRehypeOptions = {
                     ...o.remarkRehypeOptions,
                     ...options,
@@ -83,8 +79,8 @@ export async function serializeMdx(
                     rehypePlugins.push(...options.rehypePlugins);
                 }
 
-                if (defaultFrontmatter != null) {
-                    rehypePlugins.push([rehypeFernLayout, fm]);
+                if (frontmatterOverrides != null) {
+                    rehypePlugins.push([rehypeFernLayout, frontmatterOverrides]);
                 }
 
                 // Always sanitize JSX at the end.
@@ -109,7 +105,7 @@ export async function serializeMdx(
 
         return {
             code: bundled.code,
-            frontmatter: fm,
+            frontmatter: bundled.frontmatter,
             errors: bundled.errors,
         };
     } catch (e) {

@@ -151,7 +151,7 @@ export async function convertNavigatableToResolvedPath({
         }
         const mdx = await serializeMdx(pageContent.markdown, {
             ...mdxOptions,
-            defaultFrontmatter: {
+            frontmatterOverrides: {
                 title: node.title,
                 breadcrumbs: found.breadcrumb,
                 "edit-this-page-url": pageContent.editThisPageUrl,
