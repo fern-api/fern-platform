@@ -35,6 +35,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const apis = useDeepCompareMemoize(pageProps.apis);
     const analytics = useDeepCompareMemoize(pageProps.analytics);
+    const partnerLogin = useDeepCompareMemoize(pageProps.partnerLogin);
     const { resolvedTheme: theme } = useTheme();
 
     useHydrateAtoms(
@@ -88,6 +89,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             searchInfo,
             navbarLinks,
             apis,
+            partnerLogin,
         }),
         [
             logoHeight,
@@ -108,6 +110,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             searchInfo,
             navbarLinks,
             apis,
+            partnerLogin,
         ],
     );
 

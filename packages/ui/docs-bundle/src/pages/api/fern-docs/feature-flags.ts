@@ -16,6 +16,7 @@ const FEATURE_FLAGS = [
     "inline-feedback-enabled" as const,
     "dark-code-enabled" as const,
     "proxy-uses-app-buildwithfern" as const,
+    "api-key-injection" as const,
     "image-zoom-disabled" as const,
     "use-javascript-as-typescript" as const,
     "always-enable-javascript-fetch" as const,
@@ -23,8 +24,8 @@ const FEATURE_FLAGS = [
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
-
-type EdgeConfigResponse = Record<FeatureFlag, string[]>;
+type CompanyList = string[];
+type EdgeConfigResponse = Record<FeatureFlag, CompanyList | CustomerFeatureConfigs>;
 
 export default async function handler(req: NextRequest): Promise<NextResponse<FeatureFlags>> {
     const domain = getXFernHostEdge(req);
@@ -35,18 +36,39 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
     try {
         const config = await getAll<EdgeConfigResponse>(FEATURE_FLAGS);
 
-        const isApiPlaygroundEnabled = checkDomainMatchesCustomers(domain, config["api-playground-enabled"]);
-        const isApiScrollingDisabled = checkDomainMatchesCustomers(domain, config["api-scrolling-disabled"]);
-        const isWhitelabeled = checkDomainMatchesCustomers(domain, config.whitelabeled);
-        const isSeoDisabled = checkDomainMatchesCustomers(domain, config["seo-disabled"]);
-        const isTocDefaultEnabled = checkDomainMatchesCustomers(domain, config["toc-default-enabled"]);
-        const isSnippetTemplatesEnabled = checkDomainMatchesCustomers(domain, config["snippet-template-enabled"]);
-        const isHttpSnippetsEnabled = checkDomainMatchesCustomers(domain, config["http-snippets-enabled"]);
-        const isInlineFeedbackEnabled = checkDomainMatchesCustomers(domain, config["inline-feedback-enabled"]);
-        const isDarkCodeEnabled = checkDomainMatchesCustomers(domain, config["dark-code-enabled"]);
+        const isApiPlaygroundEnabled = checkDomainMatchesCustomers(
+            domain,
+            config["api-playground-enabled"] as CompanyList,
+        );
+        const isApiScrollingDisabled = checkDomainMatchesCustomers(
+            domain,
+            config["api-scrolling-disabled"] as CompanyList,
+        );
+        const isWhitelabeled = checkDomainMatchesCustomers(domain, config.whitelabeled as CompanyList);
+        const isSeoDisabled = checkDomainMatchesCustomers(domain, config["seo-disabled"] as CompanyList);
+        const isTocDefaultEnabled = checkDomainMatchesCustomers(domain, config["toc-default-enabled"] as CompanyList);
+        const isSnippetTemplatesEnabled = checkDomainMatchesCustomers(
+            domain,
+            config["snippet-template-enabled"] as CompanyList,
+        );
+        const isHttpSnippetsEnabled = checkDomainMatchesCustomers(
+            domain,
+            config["http-snippets-enabled"] as CompanyList,
+        );
+        const isInlineFeedbackEnabled = checkDomainMatchesCustomers(
+            domain,
+            config["inline-feedback-enabled"] as CompanyList,
+        );
+        const isDarkCodeEnabled = checkDomainMatchesCustomers(domain, config["dark-code-enabled"] as CompanyList);
+
+        const apiInjectionConfig = getFeatureConfigForCustomer(
+            domain,
+            config["api-key-injection"] as CustomerFeatureConfigs,
+        );
+
         const proxyShouldUseAppBuildwithfernCom = checkDomainMatchesCustomers(
             domain,
-            config["proxy-uses-app-buildwithfern"],
+            config["proxy-uses-app-buildwithfern"] as CompanyList,
         );
         const isImageZoomDisabled = checkDomainMatchesCustomers(domain, config["image-zoom-disabled"]);
         const useJavaScriptAsTypeScript = checkDomainMatchesCustomers(domain, config["use-javascript-as-typescript"]);
@@ -71,6 +93,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             useJavaScriptAsTypeScript,
             alwaysEnableJavaScriptFetch,
             scrollInContainerEnabled,
+            apiInjectionConfig,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -90,12 +113,29 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             useJavaScriptAsTypeScript: false,
             alwaysEnableJavaScriptFetch: false,
             scrollInContainerEnabled: false,
+            apiInjectionConfig: undefined,
         };
     }
 }
 
 function checkDomainMatchesCustomers(domain: string, customers: readonly string[]): boolean {
     return customers.some((customer) => domain.toLowerCase().includes(customer.toLowerCase()));
+}
+
+type CustomerFeatureConfig = Record<string, string> | undefined;
+
+type CustomerFeatureConfigs = {
+    [key: string]: CustomerFeatureConfig;
+};
+
+function getFeatureConfigForCustomer(domain: string, customers: CustomerFeatureConfigs): CustomerFeatureConfig {
+    for (const customer in customers) {
+        if (domain.toLowerCase().includes(customer.toLowerCase())) {
+            return customers[customer];
+        }
+    }
+
+    return undefined;
 }
 
 function isApiPlaygroundEnabledOverrides(domain: string): boolean {

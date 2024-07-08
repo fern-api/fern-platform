@@ -58,6 +58,7 @@ export declare namespace DocsPage {
         seo: DefaultSeoProps;
         breadcrumb: JsonLd.BreadcrumbListSchema | undefined;
         analytics: CustomerAnalytics | undefined;
+        partnerLogin: PartnerLogin | undefined;
 
         fallback: Record<string, any>;
         theme: FernTheme;
@@ -94,3 +95,11 @@ export type DocsPageResult<Props> =
     | { type: "props"; props: Props; revalidate?: number | boolean }
     | { type: "redirect"; redirect: Redirect; revalidate?: number | boolean }
     | { type: "notFound"; notFound: true; revalidate?: number | boolean };
+
+export interface PartnerLogin {
+    name: string;
+    apiKey: string;
+    expiresAt: number;
+    refreshToken: string;
+    loggedInAt: number;
+}

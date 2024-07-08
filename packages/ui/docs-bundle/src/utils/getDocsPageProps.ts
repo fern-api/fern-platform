@@ -13,7 +13,7 @@ import {
 } from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
-import type { IncomingMessage, ServerResponse } from "node:http";
+import { type IncomingMessage, type ServerResponse } from "node:http";
 import urljoin from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getCustomerAnalytics } from "./analytics";
@@ -92,6 +92,7 @@ export async function getPrivateDocsPageProps(
     res: ServerResponse<IncomingMessage>,
 ): Promise<DocsPageResult<DocsPage.Props>> {
     const user: User = await getUser(token);
+    const partnerLogin = await getPartnerLogin(token);
 
     if (!user.isAuthenticated) {
         // Clear the token if it's invalid, then redirect to `/` to reset the login flow
@@ -131,7 +132,7 @@ export async function getPrivateDocsPageProps(
         throw new Error("Failed to fetch private docs");
     }
 
-    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost, partnerLogin });
 }
 
 async function getUser(token: string | undefined): Promise<User> {
@@ -153,16 +154,38 @@ async function getUser(token: string | undefined): Promise<User> {
     }
 }
 
+export interface PartnerLogin {
+    name: string;
+    apiKey: string;
+    expiresAt: number;
+    refreshToken: string;
+    loggedInAt: number;
+}
+
+async function getPartnerLogin(token: string): Promise<PartnerLogin | undefined> {
+    if (token == null) {
+        return undefined;
+    }
+    try {
+        const verifiedToken = await jwtVerify(token, getJwtTokenSecret());
+        return verifiedToken.payload.partnerLogin as PartnerLogin;
+    } catch {
+        return undefined;
+    }
+}
+
 async function convertDocsToDocsPageProps({
     docs,
     slug,
     url,
     xFernHost,
+    partnerLogin,
 }: {
     docs: DocsV2Read.LoadDocsForUrlResponse;
     slug: string[];
     url: string;
     xFernHost: string;
+    partnerLogin?: PartnerLogin;
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
@@ -306,6 +329,7 @@ async function convertDocsToDocsPageProps({
             node.node,
         ),
         breadcrumb: getBreadcrumbList(docs.baseUrl.domain, docs.definition.pages, node.parents, node.node),
+        partnerLogin,
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",

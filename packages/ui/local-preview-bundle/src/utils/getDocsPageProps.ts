@@ -141,6 +141,7 @@ export async function getDocsPageProps(
             node.node,
         ),
         breadcrumb: undefined,
+        partnerLogin: undefined,
         fallback: {},
         analytics: undefined,
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",

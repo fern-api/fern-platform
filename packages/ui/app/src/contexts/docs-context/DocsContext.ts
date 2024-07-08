@@ -1,7 +1,7 @@
 import { Algolia, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import React from "react";
-import { DocsPage } from "../../next-app/DocsPage";
+import { DocsPage, PartnerLogin } from "../../next-app/DocsPage";
 
 export const DocsContext = React.createContext<DocsContextValue>({
     domain: "app.buildwithfern.com",
@@ -24,6 +24,7 @@ export const DocsContext = React.createContext<DocsContextValue>({
     searchInfo: undefined,
     navbarLinks: [],
     apis: [],
+    partnerLogin: undefined,
 });
 
 export interface DocsContextValue extends Omit<DocsPage.Navigation, "sidebar"> {
@@ -39,6 +40,7 @@ export interface DocsContextValue extends Omit<DocsPage.Navigation, "sidebar"> {
     searchInfo: Algolia.SearchInfo | undefined;
     navbarLinks: DocsV1Read.NavbarLink[];
     apis: FdrAPI.ApiDefinitionId[];
+    partnerLogin: PartnerLogin | undefined;
 
     resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.File_ | undefined;
 }

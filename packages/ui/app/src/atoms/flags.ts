@@ -12,6 +12,7 @@ export interface FeatureFlags {
     isInlineFeedbackEnabled: boolean;
     isDarkCodeEnabled: boolean;
     proxyShouldUseAppBuildwithfernCom: boolean;
+    apiInjectionConfig: Record<string, string> | undefined;
     isImageZoomDisabled: boolean;
     useJavaScriptAsTypeScript: boolean;
     alwaysEnableJavaScriptFetch: boolean;
@@ -29,6 +30,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isInlineFeedbackEnabled: false,
     isDarkCodeEnabled: false,
     proxyShouldUseAppBuildwithfernCom: false,
+    apiInjectionConfig: undefined,
     isImageZoomDisabled: false,
     useJavaScriptAsTypeScript: false,
     alwaysEnableJavaScriptFetch: false,
