@@ -11,6 +11,7 @@ import { FeatureFlags } from "../atoms/flags";
 import { SLUG_ATOM } from "../atoms/location";
 import { RESOLVED_PATH_ATOM } from "../atoms/navigation";
 import { useMessageHandler } from "../atoms/sidebar";
+import { BREAKPOINT_ATOM } from "../atoms/viewport";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
@@ -61,6 +62,7 @@ export declare namespace DocsPage {
 
         fallback: Record<string, any>;
         theme: FernTheme;
+        isMobile: boolean;
     }
 }
 
@@ -69,6 +71,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
 
     useConsoleMessage();
     useMessageHandler();
+    useHydrateAtoms([[BREAKPOINT_ATOM, pageProps.isMobile ? "mobile" : "lg"]]);
     useHydrateAtoms(
         [
             [RESOLVED_PATH_ATOM, resolvedPath],

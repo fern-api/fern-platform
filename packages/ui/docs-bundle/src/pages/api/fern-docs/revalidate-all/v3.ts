@@ -77,7 +77,7 @@ const handler: NextApiHandler = async (
 
         const results: RevalidatePathResult[] = [];
 
-        const batchSize = 250;
+        const batchSize = 100;
         for (let i = 0; i < urls.length; i += batchSize) {
             const batch = urls.slice(i, i + batchSize);
             results.push(
@@ -87,6 +87,7 @@ const handler: NextApiHandler = async (
                         console.log(`Revalidating ${url}`);
                         try {
                             await res.revalidate(`/static/${encodeURI(url)}`);
+                            await res.revalidate(`/mobile/${encodeURI(url)}`);
                             return { success: true, url };
                         } catch (e) {
                             // eslint-disable-next-line no-console

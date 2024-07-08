@@ -25,7 +25,7 @@ export function useIsReady(): boolean {
 }
 
 let clear = noop;
-const VIEWPORT_SIZE_ATOM = atom<[width: number, height: number]>([0, 0]);
+const VIEWPORT_SIZE_ATOM = atom<[width: number, height: number]>([1024, 0]);
 VIEWPORT_SIZE_ATOM.onMount = (set) => {
     if (typeof window === "undefined") {
         return;
@@ -71,27 +71,48 @@ const lg = window.matchMedia("(min-width: 1024px)");
 const xl = window.matchMedia("(min-width: 1280px)");
 const xxl = window.matchMedia("(min-width: 1536px)");
 */
-export const BREAKPOINT_ATOM = atom<Breakpoint>((get) => {
-    const windowWidth = get(VIEWPORT_SIZE_ATOM)[0];
+export const BREAKPOINT_ATOM = atom(
+    (get): Breakpoint => {
+        const windowWidth = get(VIEWPORT_SIZE_ATOM)[0];
 
-    if (windowWidth === 0) {
-        return "lg"; // default to lg on server
-    }
-
-    if (windowWidth >= 1536) {
-        return "2xl";
-    } else if (windowWidth >= 1280) {
-        return "xl";
-    } else if (windowWidth >= 1024) {
-        return "lg";
-    } else if (windowWidth >= 768) {
-        return "md";
-    } else if (windowWidth >= 640) {
-        return "sm";
-    } else {
-        return "mobile";
-    }
-});
+        if (windowWidth >= 1536) {
+            return "2xl";
+        } else if (windowWidth >= 1280) {
+            return "xl";
+        } else if (windowWidth >= 1024) {
+            return "lg";
+        } else if (windowWidth >= 768) {
+            return "md";
+        } else if (windowWidth >= 640) {
+            return "sm";
+        } else {
+            return "mobile";
+        }
+    },
+    (get, set, breakpoint: Breakpoint) => {
+        const windowWidth = get(VIEWPORT_SIZE_ATOM)[0];
+        switch (breakpoint) {
+            case "mobile":
+                set(VIEWPORT_SIZE_ATOM, [639, windowWidth]);
+                break;
+            case "sm":
+                set(VIEWPORT_SIZE_ATOM, [640, windowWidth]);
+                break;
+            case "md":
+                set(VIEWPORT_SIZE_ATOM, [768, windowWidth]);
+                break;
+            case "lg":
+                set(VIEWPORT_SIZE_ATOM, [1024, windowWidth]);
+                break;
+            case "xl":
+                set(VIEWPORT_SIZE_ATOM, [1280, windowWidth]);
+                break;
+            case "2xl":
+                set(VIEWPORT_SIZE_ATOM, [1536, windowWidth]);
+                break;
+        }
+    },
+);
 
 export interface LayoutBreakpointValue {
     value: Breakpoint;

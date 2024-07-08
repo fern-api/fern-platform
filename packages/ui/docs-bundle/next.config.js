@@ -205,47 +205,9 @@ const nextConfig = {
                 { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
                 { source: "/robots.txt", destination: "/api/fern-docs/robots.txt" },
                 { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
-                { source: "/:path*.rss", destination: "/api/fern-docs/changelog?format=rss&path=:path*" },
-                { source: "/:path*.atom", destination: "/api/fern-docs/changelog?format=atom&path=:path*" },
 
                 // backwards compatibility with currently deployed FDR
                 { source: "/api/revalidate-all", destination: "/api/fern-docs/revalidate-all" },
-            ],
-            fallback: [
-                /**
-                 * The following rewrite rules are used to determine if the path should be rewritten to /static or /dynamic
-                 * On the presence of fern_token, or if the query contains error=true, the path will be rewritten to /dynamic
-                 */
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, HAS_FERN_TOKEN],
-                    source: "/:path*",
-                    destination: "/dynamic/:host/:path*",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, THREW_ERROR],
-                    source: "/:path*",
-                    destination: "/dynamic/:host/:path*",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE],
-                    source: "/:path*",
-                    destination: "/static/:host/:path*",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, HAS_FERN_TOKEN],
-                    source: "/",
-                    destination: "/dynamic/:host/",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, THREW_ERROR],
-                    source: "/",
-                    destination: "/dynamic/:host/",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE],
-                    source: "/",
-                    destination: "/static/:host/",
-                })),
             ],
         };
     },

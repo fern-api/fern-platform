@@ -47,6 +47,7 @@ export interface User {
 export async function getDocsPageProps(
     xFernHost: string | undefined,
     slug: string[],
+    isMobile?: boolean,
 ): Promise<DocsPageResult<DocsPage.Props>> {
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return { type: "notFound", notFound: true };
@@ -77,7 +78,7 @@ export async function getDocsPageProps(
     }
 
     const start2 = Date.now();
-    const toRet = convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+    const toRet = convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost, isMobile });
     const end2 = Date.now();
 
     // eslint-disable-next-line no-console
@@ -158,11 +159,13 @@ async function convertDocsToDocsPageProps({
     slug,
     url,
     xFernHost,
+    isMobile = false,
 }: {
     docs: DocsV2Read.LoadDocsForUrlResponse;
     slug: string[];
     url: string;
     xFernHost: string;
+    isMobile?: boolean;
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
@@ -309,6 +312,7 @@ async function convertDocsToDocsPageProps({
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
+        isMobile,
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
