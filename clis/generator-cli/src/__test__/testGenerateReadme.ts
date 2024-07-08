@@ -1,30 +1,34 @@
 import execa from "execa";
+import { writeFile } from "fs/promises";
 import path from "path";
+import tmp from "tmp-promise";
+import { FernGeneratorCli } from "../configuration/generated";
+import * as serializers from "../configuration/generated/serialization";
 
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
 export function testGenerateReadme({
     fixtureName,
-    readmeConfigFilename,
+    config,
     originalReadme,
 }: {
     fixtureName: string;
-    readmeConfigFilename: string;
+    config: FernGeneratorCli.ReadmeConfig;
     originalReadme?: string;
 }): void {
     // eslint-disable-next-line vitest/valid-title
     describe(fixtureName, () => {
         it("generate readme", async () => {
-            const absolutePathToReadmeConfig = getAbsolutePathToFixtureFile({
-                fixtureName,
-                filepath: readmeConfigFilename,
-            });
+            const file = await tmp.file();
+            const json = JSON.stringify(await serializers.ReadmeConfig.jsonOrThrow(config), undefined, 2);
+            await writeFile(file.path, json);
+
             const args = [
                 path.join(__dirname, "../../dist/cli.cjs"),
                 "generate",
                 "readme",
                 "--config",
-                absolutePathToReadmeConfig,
+                file.path,
             ];
             if (originalReadme != null) {
                 args.push(

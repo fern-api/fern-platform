@@ -12,6 +12,7 @@ export const ReadmeFeature: core.serialization.ObjectSchema<
     FernGeneratorCli.ReadmeFeature
 > = core.serialization.object({
     id: FeatureId,
+    advanced: core.serialization.boolean().optional(),
     description: core.serialization.string().optional(),
     addendum: core.serialization.string().optional(),
     snippets: core.serialization.list(core.serialization.string()).optional(),
@@ -21,6 +22,7 @@ export const ReadmeFeature: core.serialization.ObjectSchema<
 export declare namespace ReadmeFeature {
     interface Raw {
         id: FeatureId.Raw;
+        advanced?: boolean | null;
         description?: string | null;
         addendum?: string | null;
         snippets?: string[] | null;
