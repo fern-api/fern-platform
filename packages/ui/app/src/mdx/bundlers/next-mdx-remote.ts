@@ -90,6 +90,7 @@ export async function serializeMdx(
             parseFrontmatter: true,
         });
         return {
+            engine: "next-mdx-remote",
             code: result.compiledSource,
             frontmatter: result.frontmatter,
             errors: [],

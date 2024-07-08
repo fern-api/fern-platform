@@ -95,6 +95,7 @@ export async function serializeMdx(
         }
 
         return {
+            engine: "mdx-bundler",
             code: bundled.code,
             frontmatter: bundled.frontmatter,
             errors: bundled.errors,

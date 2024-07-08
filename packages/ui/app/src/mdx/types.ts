@@ -2,6 +2,7 @@ import type { Options } from "@mdx-js/esbuild";
 import type { FernDocsFrontmatter } from "./frontmatter";
 
 interface BundledMDXResult {
+    engine: MdxEngine;
     code: string;
     frontmatter: FernDocsFrontmatter;
     errors: any[];
