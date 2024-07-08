@@ -107,13 +107,13 @@ export class ApiDefinitionResolver {
                             title: page.title,
                             markdown: await serializeMdxWithFrontmatter(pageContent.markdown, {
                                 ...mdxOptions,
-                                pageHeader: {
+                                frontmatterOverrides: {
                                     title: page.title,
                                     breadcrumbs: [], // TODO: implement breadcrumbs
-                                    editThisPageUrl: pageContent.editThisPageUrl,
-                                    hideNavLinks: true,
+                                    "edit-this-page-url": pageContent.editThisPageUrl,
+                                    "hide-nav-links": true,
                                     layout: "reference",
-                                    isTocDefaultEnabled: this.featureFlags.isTocDefaultEnabled,
+                                    "force-toc": this.featureFlags.isTocDefaultEnabled,
                                 },
                             }),
                         };
@@ -133,13 +133,13 @@ export class ApiDefinitionResolver {
                 title: node.title,
                 markdown: await serializeMdxWithFrontmatter(pageContent.markdown, {
                     ...mdxOptions,
-                    pageHeader: {
+                    frontmatterOverrides: {
                         title: node.title,
                         breadcrumbs: [], // TODO: implement breadcrumbs
-                        editThisPageUrl: pageContent.editThisPageUrl,
-                        hideNavLinks: true,
+                        "edit-this-page-url": pageContent.editThisPageUrl,
+                        "hide-nav-links": true,
                         layout: "reference",
-                        isTocDefaultEnabled: this.featureFlags.isTocDefaultEnabled,
+                        "force-toc": this.featureFlags.isTocDefaultEnabled,
                     },
                 }),
             });

@@ -40,7 +40,7 @@ export function OverviewLayout({
 }: OverviewLayoutProps): ReactElement {
     return (
         <main className="fern-overview-layout">
-            {tableOfContents != null && (
+            {tableOfContents != null && tableOfContents.length > 0 && (
                 <aside className="fern-layout-toc">
                     <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8">
                         <TableOfContents tableOfContents={tableOfContents} />

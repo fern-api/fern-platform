@@ -13,7 +13,7 @@ import { stringHasMarkdown } from "./common/util";
 import { FernDocsFrontmatter } from "./frontmatter";
 import { rehypeFernCode } from "./plugins/rehypeFernCode";
 import { rehypeFernComponents } from "./plugins/rehypeFernComponents";
-import { PageHeaderProps, rehypeFernLayout } from "./plugins/rehypeLayout";
+import { rehypeFernLayout } from "./plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "./plugins/rehypeSanitizeJSX";
 import { customHeadingHandler } from "./plugins/remarkRehypeHandlers";
 
@@ -24,12 +24,12 @@ type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 type SerializeMdxOptions = SerializeOptions["mdxOptions"];
 
 export type FernSerializeMdxOptions = SerializeMdxOptions & {
-    pageHeader?: PageHeaderProps;
+    frontmatterOverrides?: FernDocsFrontmatter;
     showError?: boolean;
 };
 
 function withDefaultMdxOptions({
-    pageHeader,
+    frontmatterOverrides,
     showError = process.env.NODE_ENV === "development",
     ...options
 }: FernSerializeMdxOptions = {}): SerializeMdxOptions {
@@ -53,8 +53,9 @@ function withDefaultMdxOptions({
         rehypePlugins.push(...options.rehypePlugins);
     }
 
-    if (pageHeader != null) {
-        rehypePlugins.push([rehypeFernLayout, pageHeader]);
+    // right now, only pages use frontmatterOverrides, so when null, it is implicit that we're serializing a description.
+    if (frontmatterOverrides != null) {
+        rehypePlugins.push([rehypeFernLayout, frontmatterOverrides]);
     }
 
     // Always sanitize JSX at the end.

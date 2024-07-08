@@ -152,11 +152,11 @@ export async function convertNavigatableToResolvedPath({
         }
         const serializedMdxContent = await serializeMdxWithFrontmatter(pageContent.markdown, {
             ...mdxOptions,
-            pageHeader: {
+            frontmatterOverrides: {
                 title: node.title,
                 breadcrumbs: found.breadcrumb,
-                editThisPageUrl: pageContent.editThisPageUrl,
-                isTocDefaultEnabled: featureFlags.isTocDefaultEnabled,
+                "edit-this-page-url": pageContent.editThisPageUrl,
+                "force-toc": featureFlags.isTocDefaultEnabled,
             },
         });
         const frontmatter = typeof serializedMdxContent === "string" ? {} : serializedMdxContent.frontmatter;
