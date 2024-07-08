@@ -1,6 +1,6 @@
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { MdxContent } from "../mdx/MdxContent";
-import { type BundledMDX } from "../mdx/bundler";
+import { type BundledMDX } from "../mdx/types";
 import { type ResolvedPath } from "../resolver/ResolvedPath";
 
 export declare namespace CustomDocsPage {

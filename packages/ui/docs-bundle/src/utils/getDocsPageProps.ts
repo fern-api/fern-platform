@@ -10,6 +10,7 @@ import {
     getDefaultSeoProps,
     getGitHubInfo,
     getGitHubRepo,
+    setMdxBundler,
 } from "@fern-ui/ui";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
@@ -210,6 +211,8 @@ async function convertDocsToDocsPageProps({
     }
 
     const featureFlags = await getFeatureFlags(xFernHost);
+
+    await setMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         found: node,

@@ -1,7 +1,7 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import { ReactElement, ReactNode } from "react";
 import { MdxContent } from "../mdx/MdxContent";
-import type { BundledMDX } from "../mdx/bundler";
+import type { BundledMDX } from "../mdx/types";
 import { Breadcrumbs } from "./Breadcrumbs";
 
 interface PageHeaderProps {

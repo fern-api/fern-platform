@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import renderer from "react-test-renderer";
 import { MdxContent } from "../MdxContent";
-import { replaceBrokenBrTags, serializeMdx } from "../bundler";
+import { replaceBrokenBrTags, serializeMdx } from "../bundlers/mdx-bundler";
 
 async function renderMdxContent(content: string): Promise<renderer.ReactTestRendererJSON> {
     const serializedContent = await serializeMdx(content, { options: { development: false } });

@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import type { BundledMDX } from "../../mdx/bundler";
+import type { BundledMDX } from "../../mdx/types";
 import { getAnchorId } from "../../util/anchor";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {

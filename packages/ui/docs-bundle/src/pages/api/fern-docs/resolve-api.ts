@@ -1,6 +1,12 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
-import { ApiDefinitionResolver, ApiTypeResolver, REGISTRY_SERVICE, type ResolvedRootPackage } from "@fern-ui/ui";
+import {
+    ApiDefinitionResolver,
+    ApiTypeResolver,
+    REGISTRY_SERVICE,
+    setMdxBundler,
+    type ResolvedRootPackage,
+} from "@fern-ui/ui";
 import { NextApiHandler, NextApiResponse } from "next";
 import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
 import { getXFernHostNode } from "../../../utils/xFernHost";
@@ -37,6 +43,7 @@ const resolveApiHandler: NextApiHandler = async (
         const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docsResponse.body);
 
         const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
+        await setMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
 
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
         FernNavigation.utils.collectApiReferences(root).forEach((apiReference) => {

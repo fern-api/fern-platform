@@ -1,7 +1,7 @@
 import cn from "clsx";
 import React from "react";
 import { MdxContent } from "./MdxContent";
-import type { BundledMDX } from "./bundler";
+import type { BundledMDX } from "./types";
 
 export declare namespace Markdown {
     export interface Props {

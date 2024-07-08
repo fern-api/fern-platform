@@ -4,7 +4,8 @@ import { compact, mapValues } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
 import { FeatureFlags } from "../atoms/flags";
-import { FernSerializeMdxOptions, serializeMdx } from "../mdx/bundler";
+import { serializeMdx } from "../mdx/bundler";
+import { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiTypeResolver } from "./ApiTypeResolver";
 import { resolveCodeSnippets } from "./resolveCodeSnippets";
 import {

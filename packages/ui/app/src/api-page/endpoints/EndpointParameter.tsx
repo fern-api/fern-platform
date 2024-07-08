@@ -3,7 +3,7 @@ import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useRouteListener } from "../../contexts/useRouteListener";
-import type { BundledMDX } from "../../mdx/bundler";
+import type { BundledMDX } from "../../mdx/types";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
 import { ApiPageDescription } from "../ApiPageDescription";

@@ -1,5 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import type { BundledMDX } from "../mdx/bundler";
+import type { BundledMDX } from "../mdx/types";
 import { ResolvedRootPackage } from "./types";
 
 export declare namespace ResolvedPath {

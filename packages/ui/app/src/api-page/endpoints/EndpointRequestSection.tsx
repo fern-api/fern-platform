@@ -2,7 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
-import type { BundledMDX } from "../../mdx/bundler";
+import type { BundledMDX } from "../../mdx/types";
 import {
     ResolvedFormDataRequestProperty,
     ResolvedRequestBody,

@@ -1,6 +1,6 @@
 import cn from "clsx";
 import dynamic from "next/dynamic";
-import type { BundledMDX } from "../mdx/bundler";
+import type { BundledMDX } from "../mdx/types";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,

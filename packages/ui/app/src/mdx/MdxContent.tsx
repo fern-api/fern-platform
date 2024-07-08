@@ -1,9 +1,9 @@
-import { getMDXComponent } from "mdx-bundler/client";
-import React, { useMemo } from "react";
+import dynamic from "next/dynamic";
+import React from "react";
+import { useFeatureFlags } from "../atoms/flags";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import type { BundledMDX } from "./bundler";
 import { FrontmatterContextProvider } from "./frontmatter-context";
-import { HTML_COMPONENTS, JSX_COMPONENTS } from "./mdx-components";
+import type { BundledMDX } from "./types";
 
 export declare namespace MdxContent {
     export interface Props {
@@ -11,23 +11,30 @@ export declare namespace MdxContent {
     }
 }
 
+const MdxBundlerComponent = dynamic(
+    () => import("./bundlers/mdx-bundler-component").then((mod) => mod.MdxBundlerComponent),
+    { ssr: true },
+);
+
+const NextMdxRemoteComponent = dynamic(
+    () => import("./bundlers/next-mdx-remote-component").then((mod) => mod.NextMdxRemoteComponent),
+    { ssr: true },
+);
+
 export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
+    const { useMdxBundler } = useFeatureFlags();
+
     if (typeof mdx === "string") {
         return <span className="whitespace-pre-wrap">{mdx}</span>;
     }
 
+    const MdxComponent = useMdxBundler ? MdxBundlerComponent : NextMdxRemoteComponent;
+
     return (
         <FernErrorBoundary component="MdxContent">
             <FrontmatterContextProvider value={mdx.frontmatter}>
-                <MdxComponent code={mdx.code} />
+                <MdxComponent {...mdx} />
             </FrontmatterContextProvider>
         </FernErrorBoundary>
     );
 });
-
-const MdxComponent = ({ code }: { code: string }) => {
-    const COMPONENTS = { ...HTML_COMPONENTS, ...JSX_COMPONENTS };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const Component = useMemo(() => getMDXComponent(code), [code]);
-    return <Component components={COMPONENTS} />;
-};

@@ -3,7 +3,7 @@ import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { ReactElement } from "react";
 import { Markdown } from "../mdx/Markdown";
-import type { BundledMDX } from "../mdx/bundler";
+import type { BundledMDX } from "../mdx/types";
 
 type ChipProps = {
     name: string;

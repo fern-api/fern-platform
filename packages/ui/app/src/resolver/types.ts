@@ -1,7 +1,7 @@
 import type { APIV1Read, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
-import type { BundledMDX } from "../mdx/bundler";
+import type { BundledMDX } from "../mdx/types";
 
 type WithoutQuestionMarks<T> = {
     [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
