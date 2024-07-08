@@ -1,17 +1,14 @@
-import { BUNDLERS } from "./bundlers";
-import type { BundledMDX, FernSerializeMdxOptions, MdxEngine, SerializeMdxFunc } from "./types";
+import { serializeMdx as defaultSerializeMdx } from "./bundlers/next-mdx-remote";
+import type { BundledMDX, FernSerializeMdxOptions, SerializeMdxFunc } from "./types";
 
-let currentEngine: MdxEngine = "next-mdx-remote";
+let currentEngine: SerializeMdxFunc = defaultSerializeMdx;
 
 export async function getMdxBundler(): Promise<SerializeMdxFunc> {
-    return await BUNDLERS[currentEngine]();
+    return currentEngine;
 }
 
-export async function setMdxBundler(engine: MdxEngine): Promise<void> {
-    if (currentEngine !== engine) {
-        currentEngine = engine;
-    }
-    await getMdxBundler();
+export function setMdxBundler(engine: SerializeMdxFunc): void {
+    currentEngine = engine;
 }
 
 export async function serializeMdx(content: string, options?: FernSerializeMdxOptions): Promise<BundledMDX>;

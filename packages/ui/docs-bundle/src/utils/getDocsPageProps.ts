@@ -12,6 +12,8 @@ import {
     getGitHubRepo,
     setMdxBundler,
 } from "@fern-ui/ui";
+// eslint-disable-next-line import/no-internal-modules
+import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import type { IncomingMessage, ServerResponse } from "node:http";
@@ -212,7 +214,7 @@ async function convertDocsToDocsPageProps({
 
     const featureFlags = await getFeatureFlags(xFernHost);
 
-    await setMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
+    setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
     const resolvedPath = await convertNavigatableToResolvedPath({
         found: node,

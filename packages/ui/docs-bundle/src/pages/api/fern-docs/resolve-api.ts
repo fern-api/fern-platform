@@ -11,6 +11,8 @@ import { NextApiHandler, NextApiResponse } from "next";
 import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
 import { getXFernHostNode } from "../../../utils/xFernHost";
 import { getFeatureFlags } from "./feature-flags";
+// eslint-disable-next-line import/no-internal-modules
+import { getMdxBundler } from "@fern-ui/ui/bundlers";
 
 export const dynamic = "force-dynamic";
 
@@ -43,7 +45,7 @@ const resolveApiHandler: NextApiHandler = async (
         const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docsResponse.body);
 
         const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
-        await setMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
+        setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
         FernNavigation.utils.collectApiReferences(root).forEach((apiReference) => {
