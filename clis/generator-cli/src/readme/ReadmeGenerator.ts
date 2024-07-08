@@ -2,6 +2,7 @@ import { cloneRepository } from "@fern-api/github";
 import fs from "fs";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernGeneratorCli } from "../configuration/generated";
+import { ReadmeFeature } from "../configuration/generated/api";
 import { StreamWriter, StringWriter, Writer } from "../utils/Writer";
 import { Block } from "./Block";
 import { BlockMerger } from "./BlockMerger";
@@ -64,9 +65,8 @@ export class ReadmeGenerator {
             blocks.push(this.generateInstallation({ language: this.readmeConfig.language }));
         }
 
-        const coreFeatures = this.readmeConfig.features?.filter((feat) => !this.ADVANCED_FEATURES.has(feat.id)) ?? [];
-        const advancedFeatures =
-            this.readmeConfig.features?.filter((feat) => this.ADVANCED_FEATURES.has(feat.id)) ?? [];
+        const coreFeatures = this.readmeConfig.features?.filter((feat) => !this.isAdvanced(feat)) ?? [];
+        const advancedFeatures = this.readmeConfig.features?.filter((feat) => this.isAdvanced(feat)) ?? [];
 
         for (const feature of coreFeatures) {
             if (this.shouldSkipFeature({ feature })) {
@@ -90,6 +90,13 @@ export class ReadmeGenerator {
         blocks.push(this.generateContributing());
 
         return blocks;
+    }
+
+    private isAdvanced(feat: ReadmeFeature): boolean {
+        if (this.ADVANCED_FEATURES.has(feat.id)) {
+            return true;
+        }
+        return feat.advanced ?? false;
     }
 
     private generateNestedFeatureBlock({
