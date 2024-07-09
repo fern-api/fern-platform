@@ -7,6 +7,7 @@ import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
 import { captureSentryError } from "../../analytics/sentry";
+import { stringHasMarkdown } from "../common/util";
 import { FernDocsFrontmatter } from "../frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
@@ -62,6 +63,7 @@ function withDefaultMdxOptions({
         remarkPlugins,
         rehypePlugins,
         format: "mdx",
+        useDynamicImport: true,
     };
 }
 
@@ -79,6 +81,10 @@ export async function serializeMdx(
 ): Promise<BundledMDX | undefined> {
     if (content == null) {
         return undefined;
+    }
+
+    if (options?.frontmatterDefaults == null && !stringHasMarkdown(content)) {
+        return content;
     }
 
     content = replaceBrokenBrTags(content);

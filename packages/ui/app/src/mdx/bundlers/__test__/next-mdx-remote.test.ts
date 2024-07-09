@@ -1,20 +1,26 @@
 import { createElement } from "react";
 import renderer from "react-test-renderer";
-import { MdxContent } from "../../MdxContent";
 import { serializeMdx } from "../next-mdx-remote";
+import { NextMdxRemoteComponent } from "../next-mdx-remote-component";
 
 async function renderMdxContent(content: string): Promise<renderer.ReactTestRendererJSON> {
     const serializedContent = await serializeMdx(content, { options: { development: false } });
-    // eslint-disable-next-line deprecation/deprecation
-    const result = renderer.create(createElement(MdxContent, { mdx: serializedContent })).toJSON();
+    const result = renderer
+        // eslint-disable-next-line deprecation/deprecation
+        .create(
+            typeof serializedContent === "string"
+                ? createElement("span", {}, serializedContent)
+                : createElement(NextMdxRemoteComponent, serializedContent),
+        )
+        .toJSON();
 
-    assert(result != null);
-    assert(!Array.isArray(result));
+    assert(result != null, "result is null");
+    assert(!Array.isArray(result), "result is an array");
 
     return result;
 }
 
-describe("maybeSerializeMdxContent", () => {
+describe("serializeMdx", () => {
     describe("custom html", () => {
         it("should render custom html", async () => {
             const result = await renderMdxContent("<div>Hello world!</div>");

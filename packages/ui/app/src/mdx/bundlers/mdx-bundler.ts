@@ -27,7 +27,7 @@ export async function serializeMdx(
 ): Promise<BundledMDX | undefined>;
 export async function serializeMdx(
     content: string | undefined,
-    { frontmatterDefaults, showError, options = {} }: FernSerializeMdxOptions = {},
+    { frontmatterDefaults, showError, options = {}, disableMinify }: FernSerializeMdxOptions = {},
 ): Promise<BundledMDX | undefined> {
     if (content == null) {
         return undefined;
@@ -91,6 +91,13 @@ export async function serializeMdx(
 
                 o.development = options.development ?? o.development;
 
+                return o;
+            },
+
+            esbuildOptions: (o) => {
+                if (disableMinify) {
+                    o.minify = false;
+                }
                 return o;
             },
         });

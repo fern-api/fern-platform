@@ -14,6 +14,10 @@ export type FernSerializeMdxOptions = {
     frontmatterDefaults?: FernDocsFrontmatter;
     showError?: boolean;
     options?: Options;
+
+    // for testing purposes
+    // next-mdx-remote doesn't support minification, while mdx-bundler does by default
+    disableMinify?: boolean;
 };
 
 export type SerializeMdxFunc = (
