@@ -14,7 +14,8 @@
     "cssnano",
     "node-fetch",
     "@types/node-fetch",
-    "sharp"
+    "sharp",
+    "esbuild"
   ],
   "ignore-patterns": ["dist"]
 }
