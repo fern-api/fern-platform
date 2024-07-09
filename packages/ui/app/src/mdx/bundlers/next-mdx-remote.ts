@@ -19,7 +19,7 @@ import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
 function withDefaultMdxOptions({
-    frontmatterOverrides,
+    frontmatterDefaults,
     showError = process.env.NODE_ENV === "development",
     options = {},
 }: FernSerializeMdxOptions = {}): SerializeOptions["mdxOptions"] {
@@ -43,9 +43,9 @@ function withDefaultMdxOptions({
         rehypePlugins.push(...options.rehypePlugins);
     }
 
-    // right now, only pages use frontmatterOverrides, so when null, it is implicit that we're serializing a description.
-    if (frontmatterOverrides != null) {
-        rehypePlugins.push([rehypeFernLayout, frontmatterOverrides]);
+    // right now, only pages use frontmatterDefaults, so when null, it is implicit that we're serializing a description.
+    if (frontmatterDefaults != null) {
+        rehypePlugins.push([rehypeFernLayout, { matter: frontmatterDefaults }]);
     }
 
     // Always sanitize JSX at the end.

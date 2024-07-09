@@ -11,7 +11,7 @@ interface BundledMDXResult {
 export type BundledMDX = BundledMDXResult | string;
 
 export type FernSerializeMdxOptions = {
-    frontmatterOverrides?: FernDocsFrontmatter;
+    frontmatterDefaults?: FernDocsFrontmatter;
     showError?: boolean;
     options?: Options;
 };

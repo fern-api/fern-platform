@@ -11,7 +11,7 @@ import { PluggableList } from "unified";
 import { FernDocsFrontmatter } from "../frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
-import { rehypeFernLayout } from "../plugins/rehypeLayout";
+import { mergeMatter, rehypeFernLayout } from "../plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "../plugins/rehypeSanitizeJSX";
 import { customHeadingHandler } from "../plugins/remarkRehypeHandlers";
 import type { BundledMDX, FernSerializeMdxOptions } from "../types";
@@ -27,7 +27,7 @@ export async function serializeMdx(
 ): Promise<BundledMDX | undefined>;
 export async function serializeMdx(
     content: string | undefined,
-    { frontmatterOverrides, showError, options = {} }: FernSerializeMdxOptions = {},
+    { frontmatterDefaults, showError, options = {} }: FernSerializeMdxOptions = {},
 ): Promise<BundledMDX | undefined> {
     if (content == null) {
         return undefined;
@@ -41,11 +41,13 @@ export async function serializeMdx(
         process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), "node_modules", "esbuild", "bin", "esbuild");
     }
 
+    let frontmatter: FernDocsFrontmatter = { ...frontmatterDefaults };
+
     try {
         const bundled = await bundleMDX<FernDocsFrontmatter>({
             source: content,
 
-            mdxOptions: (o: Options) => {
+            mdxOptions: (o: Options, matter) => {
                 o.remarkRehypeOptions = {
                     ...o.remarkRehypeOptions,
                     ...options,
@@ -70,8 +72,14 @@ export async function serializeMdx(
                     rehypePlugins.push(...options.rehypePlugins);
                 }
 
-                if (frontmatterOverrides != null) {
-                    rehypePlugins.push([rehypeFernLayout, frontmatterOverrides]);
+                if (frontmatterDefaults != null) {
+                    const opts = {
+                        matter: mergeMatter(matter, frontmatterDefaults),
+                    };
+                    rehypePlugins.push([rehypeFernLayout, opts]);
+                    frontmatter = opts.matter;
+                } else {
+                    frontmatter = mergeMatter(matter, frontmatter);
                 }
 
                 // Always sanitize JSX at the end.
@@ -97,7 +105,7 @@ export async function serializeMdx(
         return {
             engine: "mdx-bundler",
             code: bundled.code,
-            frontmatter: bundled.frontmatter,
+            frontmatter,
             errors: bundled.errors,
         };
     } catch (e) {
