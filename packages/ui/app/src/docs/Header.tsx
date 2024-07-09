@@ -118,7 +118,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                             variant="minimal"
                             rounded={true}
                             size="large"
-                            className="hidden sm:inline"
+                            className="max-sm:hidden"
                         />
                     )}
 

@@ -54,7 +54,8 @@ export const SHOW_HEADER_ATOM = atom((get) => {
 export const POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM = atom<boolean>((get) => {
     const showHeader = get(SHOW_HEADER_ATOM);
     const layout = get(DOCS_LAYOUT_ATOM);
-    return showHeader && layout?.searchbarPlacement === "HEADER";
+    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
+    return showHeader && layout?.searchbarPlacement === "HEADER" && !isMobileSidebarEnabled;
 });
 
 export const HEADER_OFFSET_ATOM = atom<number>((get) => {
