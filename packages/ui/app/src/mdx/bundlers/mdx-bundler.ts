@@ -1,6 +1,6 @@
 import type { Options } from "@mdx-js/esbuild";
 import { bundleMDX } from "mdx-bundler";
-import path from "path";
+import path, { dirname } from "path";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkGemoji from "remark-gemoji";
@@ -26,7 +26,7 @@ export async function serializeMdx(
 ): Promise<BundledMDX | undefined>;
 export async function serializeMdx(
     content: string | undefined,
-    { frontmatterDefaults, options = {}, disableMinify, files }: FernSerializeMdxOptions = {},
+    { frontmatterDefaults, options = {}, disableMinify, files, filename }: FernSerializeMdxOptions = {},
 ): Promise<BundledMDX | undefined> {
     if (content == null) {
         return undefined;
@@ -42,10 +42,20 @@ export async function serializeMdx(
 
     let frontmatter: FernDocsFrontmatter = { ...frontmatterDefaults };
 
+    let cwd: string | undefined;
+    if (filename != null) {
+        try {
+            cwd = dirname(filename);
+        } catch {
+            // eslint-disable-next-line no-console
+            console.error("Failed to get cwd from filename", filename);
+        }
+    }
+
     try {
         const bundled = await bundleMDX<FernDocsFrontmatter>({
             source: content,
-
+            cwd,
             files,
 
             mdxOptions: (o: Options, matter) => {
@@ -96,9 +106,7 @@ export async function serializeMdx(
             },
 
             esbuildOptions: (o) => {
-                if (disableMinify) {
-                    o.minify = false;
-                }
+                o.minify = disableMinify ? false : true;
                 return o;
             },
         });
