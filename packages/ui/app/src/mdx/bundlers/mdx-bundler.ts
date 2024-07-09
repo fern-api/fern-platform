@@ -1,4 +1,5 @@
 import type { Options } from "@mdx-js/esbuild";
+import { mapKeys } from "lodash-es";
 import { bundleMDX } from "mdx-bundler";
 import path, { dirname } from "path";
 import rehypeKatex from "rehype-katex";
@@ -55,8 +56,12 @@ export async function serializeMdx(
     try {
         const bundled = await bundleMDX<FernDocsFrontmatter>({
             source: content,
-            cwd,
-            files,
+            files: mapKeys(files ?? {}, (_file, filename) => {
+                if (cwd != null) {
+                    return path.relative(cwd, filename);
+                }
+                return filename;
+            }),
 
             mdxOptions: (o: Options, matter) => {
                 o.remarkRehypeOptions = {
