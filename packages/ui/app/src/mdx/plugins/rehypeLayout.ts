@@ -35,7 +35,7 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
 
         const children = tree.children as ElementContent[];
         const subtitle = matter.subtitle != null ? wrapChildren(parseMarkdown(matter.subtitle)) : undefined;
-        const tableOfContents = matter["hide-toc"] ? undefined : makeToc(tree, matter["force-toc"]);
+        const tableOfContents = matter["hide-toc"] ?? false ? undefined : makeToc(tree, matter["force-toc"] ?? false);
         const aside = wrapChildren(asideContents);
         switch (matter.layout) {
             case "custom":
@@ -48,7 +48,7 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
                     tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: matter["hide-feedback"],
+                    hideFeedback: matter["hide-feedback"] ?? false,
                 });
             case "page":
                 return toPageLayoutHastNode({
@@ -58,8 +58,8 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
                     tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: matter["hide-feedback"],
-                    hideNavLinks: matter["hide-nav-links"],
+                    hideFeedback: matter["hide-feedback"] ?? false,
+                    hideNavLinks: matter["hide-nav-links"] ?? false,
                 });
             case "reference":
                 return toReferenceLayoutHastNode({
@@ -69,7 +69,7 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
                     children,
                     aside,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: matter["hide-feedback"],
+                    hideFeedback: matter["hide-feedback"] ?? false,
                 });
             default:
                 return toGuideLayoutHastNode({
@@ -79,8 +79,8 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
                     tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: matter["hide-feedback"],
-                    hideNavLinks: matter["hide-nav-links"],
+                    hideFeedback: matter["hide-feedback"] ?? false,
+                    hideNavLinks: matter["hide-nav-links"] ?? false,
                 });
         }
     };
