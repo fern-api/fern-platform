@@ -256,6 +256,13 @@ const nextConfig = {
     env: {
         VERSION: process.env.VERSION,
     },
+    webpack: (config, { isServer }) => {
+        if (isServer) {
+            config.externals = config.externals || [];
+            config.externals.push("esbuild");
+        }
+        return config;
+    },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
