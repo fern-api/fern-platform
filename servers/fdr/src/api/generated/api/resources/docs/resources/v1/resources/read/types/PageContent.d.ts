@@ -4,6 +4,5 @@
 import * as FernRegistry from "../../../../../../..";
 export interface PageContent {
     markdown: string;
-    files?: Record<FernRegistry.docs.v1.commons.FileId, string>;
     editThisPageUrl?: FernRegistry.docs.v1.commons.Url;
 }

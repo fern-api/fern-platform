@@ -86,7 +86,7 @@ export async function convertNavigatableToResolvedPath({
                         pageId,
                         markdown: await serializeMdx(pageContent.markdown, {
                             ...mdxOptions,
-                            files: pageContent.files,
+                            filename: pageId,
                         }),
                     };
                 }),
@@ -128,7 +128,7 @@ export async function convertNavigatableToResolvedPath({
             return;
         }
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
-        const typeResolver = new ApiTypeResolver(api.types);
+        const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
         // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
         const apiDefinition = await ApiDefinitionResolver.resolve(
             apiReference,
@@ -155,7 +155,7 @@ export async function convertNavigatableToResolvedPath({
         }
         const mdx = await serializeMdx(pageContent.markdown, {
             ...mdxOptions,
-            files: pageContent.files,
+            filename: node.pageId,
             frontmatterDefaults: {
                 title: node.title,
                 breadcrumbs: found.breadcrumb,
@@ -176,7 +176,7 @@ export async function convertNavigatableToResolvedPath({
             await Promise.all(
                 apiNodes.map(async (apiNode): Promise<[string, ResolvedRootPackage]> => {
                     const holder = FernNavigation.ApiDefinitionHolder.create(apis[apiNode.apiDefinitionId]);
-                    const typeResolver = new ApiTypeResolver(apis[apiNode.apiDefinitionId].types);
+                    const typeResolver = new ApiTypeResolver(apis[apiNode.apiDefinitionId].types, mdxOptions);
                     return [
                         apiNode.title,
                         await ApiDefinitionResolver.resolve(

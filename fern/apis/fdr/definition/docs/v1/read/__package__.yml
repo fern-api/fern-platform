@@ -68,6 +68,11 @@ types:
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
       files: map<commons.FileId, commons.Url>
       filesV2: map<commons.FileId, File>
+      jsFiles:
+        type: optional<map<string, string>>
+        docs: |
+          A map of file names to their contents. 
+          The key is the absolute path file name and the value is the file contents.
       id: optional<rootCommons.DocsConfigId>
       config: DocsConfig
       search: algolia.SearchInfo
@@ -75,7 +80,6 @@ types:
   PageContent:
     properties:
       markdown: string # eventually PageContent should just be a commons.FileId ?
-      files: optional<map<commons.FileId, string>>
       editThisPageUrl: optional<commons.Url>
 
   DocsConfig:

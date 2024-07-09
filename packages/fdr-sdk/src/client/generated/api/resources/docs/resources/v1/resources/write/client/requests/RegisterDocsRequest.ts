@@ -11,7 +11,10 @@ import * as FernRegistry from "../../../../../../../../index";
  *             pages: {
  *                 "string": {}
  *             },
- *             config: {}
+ *             config: {},
+ *             jsFiles: {
+ *                 "string": "string"
+ *             }
  *         }
  *     }
  */

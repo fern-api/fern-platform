@@ -23,7 +23,8 @@
     "@storybook/addon-onboarding",
     "@storybook/blocks",
     "@storybook/test",
-    "@emotion/is-prop-valid"
+    "@emotion/is-prop-valid",
+    "mdx"
   ],
   "ignore-patterns": ["dist"]
 }

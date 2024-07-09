@@ -222,6 +222,9 @@ async function convertDocsToDocsPageProps({
         pages: docs.definition.pages,
         domain: docs.baseUrl.domain,
         featureFlags,
+        mdxOptions: {
+            files: docs.definition.jsFiles,
+        },
     });
 
     if (resolvedPath == null) {
