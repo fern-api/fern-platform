@@ -95,7 +95,7 @@
         @apply max-sm:w-full max-sm:inset-x-0;
     }
 
-    .fern-sidebar-container.desktop {
+    .fern-sidebar-container:not(.dismissable) {
         @apply max-lg:hidden;
     }
 
