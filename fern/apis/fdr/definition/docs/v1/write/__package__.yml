@@ -68,6 +68,11 @@ types:
     properties:
       pages: map<commons.PageId, PageContent>
       config: DocsConfig
+      jsFiles:
+        type: optional<map<string, string>>
+        docs: |
+          A map of file names to their contents. 
+          The key is the absolute path file name and the value is the file contents.
 
   PageContent:
     properties:

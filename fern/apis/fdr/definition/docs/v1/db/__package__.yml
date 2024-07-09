@@ -39,6 +39,11 @@ types:
       referencedApis: set<rootCommons.ApiDefinitionId>
       files: map<commons.FileId, DbFileInfoV2>
       config: DocsDbConfig
+      jsFiles:
+        type: optional<map<string, string>>
+        docs: |
+          A map of file names to their contents. 
+          The key is the absolute path file name and the value is the file contents.
 
   DocsDbConfig:
     properties:

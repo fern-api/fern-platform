@@ -32,7 +32,7 @@
     "@types/yargs": "^17.0.32",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.15",
     "depcheck": "^1.4.3",
-    "esbuild": "^0.15.7",
+    "esbuild": "0.20.2",
     "eslint": "^8.56.0",
     "execa": "^5.1.1",
     "lodash-es": "^4.17.12",

@@ -1,9 +1,10 @@
 import { DocsV1Db } from "../../../client";
 import { isPlainObject } from "../../../utils";
+import { WithoutQuestionMarks } from "../../utils/WithoutQuestionMarks";
 import { upgradeV1ToV2 } from "./upgradeV1ToV2";
 import { upgradeV2ToV3 } from "./upgradeV2ToV3";
 
-export function migrateDocsDbDefinition(buffer: unknown): DocsV1Db.DocsDefinitionDb.V3 {
+export function migrateDocsDbDefinition(buffer: unknown): WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3> {
     if (!isPlainObject(buffer)) {
         throw new Error("Invalid buffer");
     }
@@ -20,5 +21,5 @@ export function migrateDocsDbDefinition(buffer: unknown): DocsV1Db.DocsDefinitio
         return upgradeV2ToV3(dbValue);
     }
 
-    return dbValue as DocsV1Db.DocsDefinitionDb.V3;
+    return dbValue as WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3>;
 }

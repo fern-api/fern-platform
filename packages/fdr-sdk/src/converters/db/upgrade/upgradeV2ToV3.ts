@@ -1,7 +1,8 @@
 import { DocsV1Db } from "../../../client";
 import { mapValues } from "../../../utils";
+import { WithoutQuestionMarks } from "../../utils/WithoutQuestionMarks";
 
-export function upgradeV2ToV3(v2: DocsV1Db.DocsDefinitionDb.V2): DocsV1Db.DocsDefinitionDb.V3 {
+export function upgradeV2ToV3(v2: DocsV1Db.DocsDefinitionDb.V2): WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3> {
     return {
         type: "v3",
         pages: v2.pages,
@@ -14,5 +15,6 @@ export function upgradeV2ToV3(v2: DocsV1Db.DocsDefinitionDb.V2): DocsV1Db.DocsDe
             }),
         ),
         config: v2.config,
+        jsFiles: undefined,
     };
 }

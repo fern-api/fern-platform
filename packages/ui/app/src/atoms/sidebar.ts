@@ -75,8 +75,8 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
     }
 
     const resolvedPath = get(RESOLVED_PATH_ATOM);
-    if (resolvedPath.type === "custom-markdown-page" && typeof resolvedPath.serializedMdxContent !== "string") {
-        const layout = resolvedPath.serializedMdxContent.frontmatter.layout;
+    if (resolvedPath.type === "custom-markdown-page" && typeof resolvedPath.mdx !== "string") {
+        const layout = resolvedPath.mdx.frontmatter.layout;
 
         if (layout === "page" || layout === "custom") {
             return true;

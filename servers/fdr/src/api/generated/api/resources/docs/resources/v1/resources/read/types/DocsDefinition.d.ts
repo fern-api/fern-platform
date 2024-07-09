@@ -8,6 +8,11 @@ export interface DocsDefinition {
     apis: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.v1.read.ApiDefinition>;
     files: Record<FernRegistry.docs.v1.commons.FileId, FernRegistry.docs.v1.commons.Url>;
     filesV2: Record<FernRegistry.docs.v1.commons.FileId, FernRegistry.docs.v1.read.File_>;
+    /**
+     * A map of file names to their contents.
+     * The key is the absolute path file name and the value is the file contents.
+     */
+    jsFiles?: Record<string, string>;
     id?: FernRegistry.DocsConfigId;
     config: FernRegistry.docs.v1.read.DocsConfig;
     search: FernRegistry.SearchInfo;
