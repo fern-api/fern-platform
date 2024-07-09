@@ -54,13 +54,15 @@ const resolveApiHandler: NextApiHandler = async (
                 return;
             }
             const holder = ApiDefinitionHolder.create(api);
-            const typeResolver = new ApiTypeResolver(api.types);
+            const typeResolver = new ApiTypeResolver(api.types, {
+                files: docs.definition.jsFiles,
+            });
             const resolved = ApiDefinitionResolver.resolve(
                 apiReference,
                 holder,
                 typeResolver,
                 docs.definition.pages,
-                undefined,
+                { files: docs.definition.jsFiles },
                 featureFlags,
                 docs.baseUrl.domain,
             );
