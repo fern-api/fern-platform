@@ -43,13 +43,8 @@ types:
   ReadmeFeature:
     docs: |
       A single feature supported by a generator (e.g. PAGINATION).
+    extends: feature.FeatureSpec
     properties:
-      id: feature.FeatureId
-      advanced:
-        type: optional<boolean>
-        docs: Defaults to false
-      description: optional<string>
-      addendum: optional<string>
       snippets: optional<list<string>>
       snippetsAreOptional:
         docs: |
