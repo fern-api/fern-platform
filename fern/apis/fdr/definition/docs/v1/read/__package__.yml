@@ -75,6 +75,7 @@ types:
   PageContent:
     properties:
       markdown: string # eventually PageContent should just be a commons.FileId ?
+      files: optional<map<commons.FileId, string>>
       editThisPageUrl: optional<commons.Url>
 
   DocsConfig:

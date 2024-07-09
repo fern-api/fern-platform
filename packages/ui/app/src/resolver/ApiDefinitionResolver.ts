@@ -108,6 +108,7 @@ export class ApiDefinitionResolver {
                             title: page.title,
                             markdown: await serializeMdx(pageContent.markdown, {
                                 ...mdxOptions,
+                                files: pageContent.files,
                                 frontmatterDefaults: {
                                     title: page.title,
                                     breadcrumbs: [], // TODO: implement breadcrumbs
@@ -134,6 +135,7 @@ export class ApiDefinitionResolver {
                 title: node.title,
                 markdown: await serializeMdx(pageContent.markdown, {
                     ...mdxOptions,
+                    files: pageContent.files,
                     frontmatterDefaults: {
                         title: node.title,
                         breadcrumbs: [], // TODO: implement breadcrumbs

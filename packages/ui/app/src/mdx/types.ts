@@ -18,6 +18,8 @@ export type FernSerializeMdxOptions = {
     // for testing purposes
     // next-mdx-remote doesn't support minification, while mdx-bundler does by default
     disableMinify?: boolean;
+
+    files?: Record<string, string>;
 };
 
 export type SerializeMdxFunc = (

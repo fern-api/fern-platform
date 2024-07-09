@@ -78,13 +78,16 @@ export async function convertNavigatableToResolvedPath({
         const pageRecords = (
             await Promise.all(
                 [...pageIds].map(async (pageId) => {
-                    const markdown = pages[pageId]?.markdown;
-                    if (markdown == null) {
+                    const pageContent = pages[pageId];
+                    if (pageContent == null) {
                         return;
                     }
                     return {
                         pageId,
-                        markdown: await serializeMdx(markdown, mdxOptions),
+                        markdown: await serializeMdx(pageContent.markdown, {
+                            ...mdxOptions,
+                            files: pageContent.files,
+                        }),
                     };
                 }),
             )
@@ -152,6 +155,7 @@ export async function convertNavigatableToResolvedPath({
         }
         const mdx = await serializeMdx(pageContent.markdown, {
             ...mdxOptions,
+            files: pageContent.files,
             frontmatterDefaults: {
                 title: node.title,
                 breadcrumbs: found.breadcrumb,

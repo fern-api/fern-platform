@@ -12,7 +12,6 @@ import { FernDocsFrontmatter } from "../frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { mergeMatter, rehypeFernLayout } from "../plugins/rehypeLayout";
-import { rehypeSanitizeJSX } from "../plugins/rehypeSanitizeJSX";
 import { customHeadingHandler } from "../plugins/remarkRehypeHandlers";
 import type { BundledMDX, FernSerializeMdxOptions } from "../types";
 import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
@@ -27,7 +26,7 @@ export async function serializeMdx(
 ): Promise<BundledMDX | undefined>;
 export async function serializeMdx(
     content: string | undefined,
-    { frontmatterDefaults, showError, options = {}, disableMinify }: FernSerializeMdxOptions = {},
+    { frontmatterDefaults, options = {}, disableMinify, files }: FernSerializeMdxOptions = {},
 ): Promise<BundledMDX | undefined> {
     if (content == null) {
         return undefined;
@@ -46,6 +45,8 @@ export async function serializeMdx(
     try {
         const bundled = await bundleMDX<FernDocsFrontmatter>({
             source: content,
+
+            files,
 
             mdxOptions: (o: Options, matter) => {
                 o.remarkRehypeOptions = {
@@ -83,7 +84,7 @@ export async function serializeMdx(
                 }
 
                 // Always sanitize JSX at the end.
-                rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
+                // rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
 
                 o.rehypePlugins = [...(o.rehypePlugins ?? []), ...rehypePlugins, ...(options?.rehypePlugins ?? [])];
 
