@@ -9,10 +9,9 @@ import { Router, useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { useFeatureFlags } from "../../atoms/flags";
 import { SLUG_ATOM } from "../../atoms/location";
-import { useNavigationNodes, useResolvedPath } from "../../atoms/navigation";
+import { CURRENT_VERSION_ATOM, useNavigationNodes, useResolvedPath } from "../../atoms/navigation";
 import { getNextSeoProps } from "../../next-app/utils/getSeoProp";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
 
 export declare namespace NavigationContextProvider {
@@ -91,7 +90,7 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
 }
 
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({ children, basePath }) => {
-    const { versions, currentVersionId } = useDocsContext();
+    const activeVersion = useAtomValue(CURRENT_VERSION_ATOM);
     const nodes = useNavigationNodes();
     const { isApiScrollingDisabled } = useFeatureFlags();
     const slug = useAtomValue(SLUG_ATOM);
@@ -222,14 +221,14 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 () => ({
                     activeNavigatable,
                     onScrollToPath,
-                    activeVersion: versions.find((version) => version.id === currentVersionId),
+                    activeVersion,
                     unversionedSlug: FernNavigation.utils.getUnversionedSlug(
                         selectedSlug,
-                        versions.find((version) => version.id === currentVersionId)?.slug,
+                        activeVersion?.slug,
                         basePath,
                     ),
                 }),
-                [activeNavigatable, basePath, currentVersionId, onScrollToPath, selectedSlug, versions],
+                [activeNavigatable, activeVersion, basePath, onScrollToPath, selectedSlug],
             )}
         >
             <NextSeo {...seo} />

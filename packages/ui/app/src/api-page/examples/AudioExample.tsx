@@ -1,7 +1,7 @@
 import { FernAudioPlayer } from "@fern-ui/components";
 import { FC } from "react";
+import { useDomain } from "../../atoms/navigation";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { TitledExample } from "./TitledExample";
 
 export declare namespace AudioExample {
@@ -9,7 +9,7 @@ export declare namespace AudioExample {
 }
 
 const AudioExampleInternal: FC<AudioExample.Props> = ({ ...props }) => {
-    const { domain } = useDocsContext();
+    const domain = useDomain();
     if (!domain.includes("elevenlabs")) {
         return null;
     }

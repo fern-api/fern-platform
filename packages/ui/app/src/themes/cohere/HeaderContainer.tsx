@@ -1,5 +1,6 @@
+import { useAtomValue } from "jotai";
 import { ReactElement, memo } from "react";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
+import { HAS_HORIZONTAL_TABS } from "../../atoms/layout";
 import { Header } from "../../docs/Header";
 import { HeaderTabs } from "../../docs/HeaderTabs";
 
@@ -8,18 +9,13 @@ interface HeaderContainerProps {
 }
 
 export const HeaderContainer = memo(function HeaderContainer({ className }: HeaderContainerProps): ReactElement {
-    const { layout, tabs } = useDocsContext();
-
-    const showHeaderTabs = tabs.length > 0 && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true;
+    const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
 
     return (
         <header id="fern-header" className={className}>
             <div className="fern-header-container width-before-scroll-bar">
                 <div className="fern-header">
-                    <Header
-                        className="mx-auto max-w-page-width"
-                        showSearchBar={layout?.searchbarPlacement === "HEADER"}
-                    />
+                    <Header className="mx-auto max-w-page-width" />
                 </div>
                 {showHeaderTabs && (
                     <nav aria-label="tabs" className="fern-header-tabs">

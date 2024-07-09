@@ -1,15 +1,8 @@
-import { createContext, useContext } from "react";
+import { useHydrateAtoms } from "jotai/utils";
+import { Fragment, PropsWithChildren, ReactElement, createElement } from "react";
+import { IS_LOCAL_PREVIEW_ATOM } from "../atoms/preview";
 
-interface LocalPreviewContextValue {
-    isLocalPreview: boolean;
-}
-
-const LocalPreviewContext = createContext<LocalPreviewContextValue>({
-    isLocalPreview: false,
-});
-
-export const LocalPreviewContextProvider = LocalPreviewContext.Provider;
-
-export function useLocalPreviewContext(): LocalPreviewContextValue {
-    return useContext(LocalPreviewContext);
-}
+export const LocalPreviewContextProvider = ({ children }: PropsWithChildren): ReactElement => {
+    useHydrateAtoms([[IS_LOCAL_PREVIEW_ATOM, true]]);
+    return createElement(Fragment, null, children);
+};

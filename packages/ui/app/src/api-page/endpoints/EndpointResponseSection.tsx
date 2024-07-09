@@ -1,5 +1,5 @@
+import { useDomain } from "../../atoms/navigation";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -25,7 +25,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     defaultExpandAll = false,
     types,
 }) => {
-    const { domain } = useDocsContext();
+    const domain = useDomain();
     return (
         <div>
             <ApiPageDescription className="mt-3 text-sm" description={responseBody.description} isMarkdown={true} />

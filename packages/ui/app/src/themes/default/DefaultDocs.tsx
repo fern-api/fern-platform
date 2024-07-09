@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import { useTheme } from "next-themes";
 import { ReactElement, memo } from "react";
-import { CONTENT_HEIGHT_ATOM, HEADER_OFFSET_ATOM, SHOW_HEADER_ATOM } from "../../atoms/layout";
+import { CONTENT_HEIGHT_ATOM, DOCS_LAYOUT_ATOM, HEADER_OFFSET_ATOM, SHOW_HEADER_ATOM } from "../../atoms/layout";
 import { SIDEBAR_DISABLED_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { DocsMainContent } from "../../docs/DocsMainContent";
@@ -26,7 +26,8 @@ const DefaultDocsStyle = () => {
 };
 
 function UnmemoizedDefaultDocs(): ReactElement {
-    const { layout, colors } = useDocsContext();
+    const { colors } = useDocsContext();
+    const layout = useAtomValue(DOCS_LAYOUT_ATOM);
     const showHeader = useAtomValue(SHOW_HEADER_ATOM);
     const { resolvedTheme: theme = "light" } = useTheme();
     const isSidebarFixed = layout?.disableHeader || colors[theme as "light" | "dark"]?.sidebarBackground != null;
