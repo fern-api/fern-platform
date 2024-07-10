@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { atom } from "jotai/vanilla";
+import { TABS_ATOM } from "./navigation";
 import { MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "./viewport";
 
 export const DOCS_LAYOUT_ATOM = atom<DocsV1Read.DocsLayoutConfig | undefined>(undefined);
@@ -20,17 +21,15 @@ export const HEADER_HEIGHT_ATOM = atom<number>((get) => {
 const SETTABLE_HEADER_TABS_HEIGHT_ATOM = atom<number>(44);
 const SETTABLE_CONTENT_HEIGHT_ATOM = atom<number>(0);
 
-const HAS_HORIZONTAL_TABS = atom<boolean>((get) => {
+export const HAS_HORIZONTAL_TABS = atom<boolean>((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
+    const tabs = get(TABS_ATOM);
 
-    // todo: check if tabs.length > 0
-    if (layout?.tabsPlacement !== "HEADER") {
+    if (layout?.tabsPlacement !== "HEADER" || layout?.disableHeader || tabs.length === 0) {
         return false;
     }
 
-    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
-
-    return !isMobileSidebarEnabled;
+    return !get(MOBILE_SIDEBAR_ENABLED_ATOM);
 });
 
 export const HEADER_TABS_HEIGHT_ATOM = atom(
@@ -55,7 +54,8 @@ export const SHOW_HEADER_ATOM = atom((get) => {
 export const POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM = atom<boolean>((get) => {
     const showHeader = get(SHOW_HEADER_ATOM);
     const layout = get(DOCS_LAYOUT_ATOM);
-    return showHeader && layout?.searchbarPlacement === "HEADER";
+    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
+    return showHeader && layout?.searchbarPlacement === "HEADER" && !isMobileSidebarEnabled;
 });
 
 export const HEADER_OFFSET_ATOM = atom<number>((get) => {

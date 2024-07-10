@@ -95,7 +95,7 @@
         @apply max-sm:w-full max-sm:inset-x-0;
     }
 
-    .fern-sidebar-container.desktop {
+    .fern-sidebar-container:not(.dismissable) {
         @apply max-lg:hidden;
     }
 
@@ -155,7 +155,7 @@
         @apply gap-8;
 
         .fern-layout-content {
-            @apply pt-8 mx-auto w-full xl:mx-auto pb-20;
+            @apply pt-8 mx-auto w-full xl:mx-auto pb-20 min-w-0;
         }
 
         &:has(.fern-layout-toc) {

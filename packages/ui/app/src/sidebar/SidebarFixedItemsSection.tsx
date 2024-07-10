@@ -1,7 +1,7 @@
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
-import { SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
+import { DOCS_LAYOUT_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { HeaderLogoSection } from "../docs/HeaderLogoSection";
 import { ThemeButton } from "../docs/ThemeButton";
@@ -17,7 +17,8 @@ export declare namespace SidebarFixedItemsSection {
 
 export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, showBorder }) => {
     const showSearchBar = useAtomValue(SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM);
-    const { layout, colors } = useDocsContext();
+    const { colors } = useDocsContext();
+    const layout = useAtomValue(DOCS_LAYOUT_ATOM);
 
     const searchBar = useMemo(() => {
         return showSearchBar ? (

@@ -36,6 +36,10 @@
         }
     }
 
+    .fern-sidebar-container:not(.dismissable) {
+        @apply max-lg:hidden;
+    }
+
     .fern-main {
         @apply bg-sidebar flex-1 min-w-0;
     }

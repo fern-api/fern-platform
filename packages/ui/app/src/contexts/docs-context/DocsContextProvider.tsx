@@ -1,16 +1,12 @@
-import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { JsonLd } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
-import { useHydrateAtoms } from "jotai/utils";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import Script from "next/script";
 import { PropsWithChildren, useCallback, useMemo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
 import { renderSegmentSnippet } from "../../analytics/segment";
-import { FEATURE_FLAGS_ATOM } from "../../atoms/flags";
-import { DOCS_LAYOUT_ATOM } from "../../atoms/layout";
-import { SIDEBAR_ROOT_NODE_ATOM } from "../../atoms/navigation";
 import { DocsPage } from "../../next-app/DocsPage";
 import { getThemeColor } from "../../next-app/utils/getColorVariables";
 import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet";
@@ -21,38 +17,24 @@ export declare namespace DocsContextProvider {
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ children, ...pageProps }) => {
-    const featureFlags = useDeepCompareMemoize(pageProps.featureFlags);
     const files = useDeepCompareMemoize(pageProps.files);
-    const layout = useDeepCompareMemoize(pageProps.layout);
     const colors = useDeepCompareMemoize(pageProps.colors);
     const typography = useDeepCompareMemoize(pageProps.typography);
     const css = useDeepCompareMemoize(pageProps.css);
     const js = useDeepCompareMemoize(pageProps.js);
-    const sidebar = useDeepCompareMemoize(pageProps.navigation.sidebar);
-    const tabs = useDeepCompareMemoize(pageProps.navigation.tabs);
-    const versions = useDeepCompareMemoize(pageProps.navigation.versions);
     const searchInfo = useDeepCompareMemoize(pageProps.search);
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const apis = useDeepCompareMemoize(pageProps.apis);
     const analytics = useDeepCompareMemoize(pageProps.analytics);
     const { resolvedTheme: theme } = useTheme();
 
-    useHydrateAtoms(
-        [
-            [DOCS_LAYOUT_ATOM, layout],
-            [SIDEBAR_ROOT_NODE_ATOM, sidebar],
-            [FEATURE_FLAGS_ATOM, featureFlags],
-        ],
-        { dangerouslyForceHydrate: true },
-    );
-
     const { logoHeight, logoHref } = pageProps;
     const { domain, basePath } = pageProps.baseUrl;
-    const { currentTabIndex, currentVersionId } = pageProps.navigation;
 
+    const layout = useDeepCompareMemoize(pageProps.layout);
     const stylesheet = useMemo(
-        () => renderThemeStylesheet(colors, typography, layout, css, files, tabs.length > 0),
-        [colors, css, files, layout, tabs.length, typography],
+        () => renderThemeStylesheet(colors, typography, layout, css, files, pageProps.navigation.tabs.length > 0),
+        [colors, css, files, layout, pageProps.navigation.tabs.length, typography],
     );
 
     const resolveFile = useCallback(
@@ -73,18 +55,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             logoHref,
             domain,
             basePath,
-            layout,
             colors,
             typography,
             css,
             files,
             resolveFile,
-            currentTabIndex,
-            tabs,
-            currentVersionId,
-            versions,
-            sidebar,
-            nodes: FernNavigation.NodeCollector.collect(sidebar),
             searchInfo,
             navbarLinks,
             apis,
@@ -94,17 +69,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             logoHref,
             domain,
             basePath,
-            layout,
             colors,
             typography,
             css,
             files,
             resolveFile,
-            currentTabIndex,
-            tabs,
-            currentVersionId,
-            versions,
-            sidebar,
             searchInfo,
             navbarLinks,
             apis,

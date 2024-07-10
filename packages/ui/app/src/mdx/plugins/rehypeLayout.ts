@@ -55,7 +55,6 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
                     breadcrumbs: matter.breadcrumbs ?? [],
                     title: matter.title ?? "",
                     subtitle,
-                    tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
                     hideFeedback: matter["hide-feedback"] ?? false,

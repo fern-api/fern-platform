@@ -3,11 +3,16 @@ import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
 import { DOCS_LAYOUT_ATOM } from "./layout";
 import { CURRENT_NODE_ATOM, RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
-import { MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
+import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
 export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);
+export const DESKTOP_SIDEBAR_OPEN_ATOM = atom(false);
 export const SIDEBAR_SCROLL_CONTAINER_ATOM = atom<HTMLElement | null>(null);
+
+export const DISMISSABLE_SIDEBAR_OPEN_ATOM = atom((get) => {
+    return get(MOBILE_SIDEBAR_OPEN_ATOM) || (get(DESKTOP_SIDEBAR_OPEN_ATOM) && !get(IS_MOBILE_SCREEN_ATOM));
+});
 
 // in certain cases, the sidebar should be completely removed from the DOM.
 export const SIDEBAR_DISABLED_ATOM = atom((get) => {

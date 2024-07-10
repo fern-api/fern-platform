@@ -1,11 +1,13 @@
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
+import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
+import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM } from "../atoms/navigation";
 import { FernLink } from "../components/FernLink";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { getSidebarTabHref } from "../util/getSidebarTabHref";
 
 export function HeaderTabs(): ReactElement {
-    const { tabs, currentTabIndex } = useDocsContext();
+    const tabs = useAtomValue(TABS_ATOM);
+    const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
     return (
         <ul className="fern-header-tabs-list">
             {tabs.map((tab) => (

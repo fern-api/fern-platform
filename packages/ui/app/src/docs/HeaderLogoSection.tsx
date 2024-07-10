@@ -2,6 +2,7 @@ import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
 import { LOGO_TEXT_ATOM } from "../atoms/logo";
+import { VERSIONS_ATOM } from "../atoms/navigation";
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
@@ -9,7 +10,8 @@ import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { VersionDropdown } from "./VersionDropdown";
 
 export function HeaderLogoSection(): ReactElement {
-    const { versions, logoHref } = useDocsContext();
+    const { logoHref } = useDocsContext();
+    const versions = useAtomValue(VERSIONS_ATOM);
     const logoText = useAtomValue(LOGO_TEXT_ATOM);
 
     return (

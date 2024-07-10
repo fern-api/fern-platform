@@ -2,10 +2,10 @@ import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
 import clsx from "clsx";
 import { useAtom, useAtomValue } from "jotai";
 import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
-import { useSidebarNodes } from "../atoms/navigation";
+import { DOCS_LAYOUT_ATOM } from "../atoms/layout";
+import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM, useSidebarNodes } from "../atoms/navigation";
 import { SIDEBAR_SCROLL_CONTAINER_ATOM, useIsMobileSidebarOpen } from "../atoms/sidebar";
 import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../atoms/viewport";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";
@@ -19,7 +19,9 @@ interface SidebarContainerProps extends ComponentPropsWithoutRef<"nav"> {
 }
 
 const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps>(function DesktopSidebar(props, ref) {
-    const { layout, tabs, currentTabIndex } = useDocsContext();
+    const layout = useAtomValue(DOCS_LAYOUT_ATOM);
+    const tabs = useAtomValue(TABS_ATOM);
+    const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
     const sidebar = useSidebarNodes();
     const [scrollRef, setScrollRef] = useAtom(SIDEBAR_SCROLL_CONTAINER_ATOM);
     const isScrolled = useIsScrolled({ current: scrollRef });

@@ -9,13 +9,13 @@ import urljoin from "url-join";
 import { useCallbackOne as useStableCallback } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { APIS, FLATTENED_APIS_ATOM } from "../atoms/apis";
+import { useBasePath } from "../atoms/navigation";
 import {
     HAS_PLAYGROUND_ATOM,
     PLAYGROUND_FORM_STATE_ATOM,
     useInitPlaygroundRouter,
     useOpenPlayground,
 } from "../atoms/playground";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useAtomEffect } from "../hooks/useAtomEffect";
 import { ResolvedApiDefinition, ResolvedRootPackage, isEndpoint, isWebSocket } from "../resolver/types";
 import { getInitialEndpointRequestFormStateWithExample } from "./PlaygroundDrawer";
@@ -32,7 +32,7 @@ const fetcher = async (url: string) => {
 };
 
 export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
-    const { basePath } = useDocsContext();
+    const basePath = useBasePath();
     const key = urljoin(basePath ?? "/", "/api/fern-docs/resolve-api");
 
     const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {

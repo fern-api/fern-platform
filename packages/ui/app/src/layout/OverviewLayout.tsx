@@ -40,13 +40,13 @@ export function OverviewLayout({
 }: OverviewLayoutProps): ReactElement {
     return (
         <main className="fern-overview-layout">
-            {tableOfContents != null && tableOfContents.length > 0 && (
-                <aside className="fern-layout-toc">
+            <aside className="fern-layout-toc">
+                {tableOfContents != null && tableOfContents.length > 0 && (
                     <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8">
                         <TableOfContents tableOfContents={tableOfContents} />
                     </FernScrollArea>
-                </aside>
-            )}
+                )}
+            </aside>
             <article className="fern-layout-content max-w-content-wide-width">
                 <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
                 <section className="max-w-full fern-prose">{children}</section>
