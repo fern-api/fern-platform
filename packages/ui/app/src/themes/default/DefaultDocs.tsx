@@ -3,7 +3,7 @@ import { useAtomValue } from "jotai";
 import { useTheme } from "next-themes";
 import { ReactElement, memo } from "react";
 import { CONTENT_HEIGHT_ATOM, DOCS_LAYOUT_ATOM, HEADER_OFFSET_ATOM, SHOW_HEADER_ATOM } from "../../atoms/layout";
-import { SIDEBAR_DISABLED_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
+import { SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
@@ -32,7 +32,6 @@ function UnmemoizedDefaultDocs(): ReactElement {
     const { resolvedTheme: theme = "light" } = useTheme();
     const isSidebarFixed = layout?.disableHeader || colors[theme as "light" | "dark"]?.sidebarBackground != null;
 
-    const isSidebarDisabled = useAtomValue(SIDEBAR_DISABLED_ATOM);
     const isSidebarDismissable = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
 
     return (
@@ -58,7 +57,7 @@ function UnmemoizedDefaultDocs(): ReactElement {
                 <Sidebar className={isSidebarFixed ? "fern-sidebar-fixed" : undefined} />
                 <div
                     className={clsx("fern-main", {
-                        "fern-sidebar-disabled": isSidebarDisabled || isSidebarDismissable,
+                        "fern-sidebar-disabled": isSidebarDismissable,
                     })}
                 >
                     <DocsMainContent />
