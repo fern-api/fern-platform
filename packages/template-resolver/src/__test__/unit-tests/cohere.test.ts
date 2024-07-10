@@ -1,5 +1,5 @@
 import { SnippetTemplateResolver } from "../../SnippetTemplateResolver";
-import { CHAT_COMPLETION_SNIPPET, CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION } from "../cohere";
+import { CHAT_COMPLETION_SNIPPET } from "../cohere";
 
 describe("Snippet Template Resolver", () => {
     it("Test Chat Completion snippet", async () => {
@@ -43,7 +43,7 @@ describe("Snippet Template Resolver", () => {
     it("Test empty payload", async () => {
         const resolver = new SnippetTemplateResolver({
             payload: {},
-            endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION,
+            endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
         });
         const customSnippet = await resolver.resolveWithFormatting();
 
