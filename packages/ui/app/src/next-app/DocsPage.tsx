@@ -123,9 +123,7 @@ export type DocsPageResult<Props> =
     | { type: "notFound"; notFound: true; revalidate?: number | boolean };
 
 export interface PartnerLogin {
-    name: string;
-    apiKey: string;
-    expiresAt: number;
-    refreshToken: string;
+    accessToken: string;
     loggedInAt: number;
+    name: string;
 }
