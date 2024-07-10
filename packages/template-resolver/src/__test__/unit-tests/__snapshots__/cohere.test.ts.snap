@@ -22,7 +22,7 @@ await cohere.chatStream({
 `;
 
 exports[`Snippet Template Resolver > Test empty payload 1`] = `
-"undefined;
+"const cohere = new CohereClient({ token: "YOUR_TOKEN" });
 await cohere.chatStream();
 "
 `;

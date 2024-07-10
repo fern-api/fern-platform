@@ -63,8 +63,7 @@ export class SnippetTemplateResolver {
         if (authPayload != null) {
             return this.accessByPath(authPayload, locationPath);
         }
-        // return `YOUR_${(locationPath ?? "variable").toUpperCase()}`;
-        return undefined;
+        return `YOUR_${(locationPath ?? "variable").toUpperCase()}`;
     }
 
     private getPayloadValue(location: PayloadInput, payloadOverride?: unknown): unknown | undefined {
