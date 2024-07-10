@@ -45,36 +45,6 @@ response, err := client.Chat(
 
 This is a custom section that should ideally stay between the usage and timeout section.
 
-## Timeouts
-
-Setting a timeout for each individual request is as simple as
-using the standard `context` library. Setting a one second timeout
-for an individual API call looks like the following:
-
-```go
-ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-defer cancel()
-
-response, err := client.Chat(
-	ctx,
-	&fern.ChatRequest{
-		Message: "Can you give me a global market overview of solar panels?",
-	},
-)
-```
-
-```go
-ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-defer cancel()
-
-response, err := client.Generate(
-	ctx,
-	&fern.GenerateRequest{
-		Prompt: "Please explain to me how LLMs work",
-	},
-)
-```
-
 ## One
 
 This is another custom section that should ideally stay between the usage and timeout section.
@@ -107,6 +77,38 @@ if err != nil {
 ### Remove
 
 This section is an h3, so it will be removed from the final output.
+
+## Advanced
+
+### Timeouts
+
+Setting a timeout for each individual request is as simple as
+using the standard `context` library. Setting a one second timeout
+for an individual API call looks like the following:
+
+```go
+ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+defer cancel()
+
+response, err := client.Chat(
+	ctx,
+	&fern.ChatRequest{
+		Message: "Can you give me a global market overview of solar panels?",
+	},
+)
+```
+
+```go
+ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+defer cancel()
+
+response, err := client.Generate(
+	ctx,
+	&fern.GenerateRequest{
+		Prompt: "Please explain to me how LLMs work",
+	},
+)
+```
 
 ## Contributing
 

@@ -54,6 +54,9 @@ export async function getDocsPageProps(
         pages: docs.definition.pages,
         domain: docs.baseUrl.domain,
         featureFlags,
+        mdxOptions: {
+            files: docs.definition.jsFiles,
+        },
     });
 
     if (resolvedPath == null) {
@@ -143,6 +146,7 @@ export async function getDocsPageProps(
         breadcrumb: undefined,
         fallback: {},
         analytics: undefined,
+        theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

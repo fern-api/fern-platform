@@ -116,6 +116,7 @@ export async function getDocsDefinition({
             }),
         ),
         files: mapValues(filesV2, (fileV2) => fileV2.url),
+        jsFiles: docsDbDefinition.type === "v3" ? docsDbDefinition.jsFiles : undefined,
         filesV2,
         pages: docsDbDefinition.pages,
         search: searchInfo,

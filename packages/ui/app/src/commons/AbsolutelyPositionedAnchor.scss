@@ -11,7 +11,7 @@
         }
 
         .fern-anchor-icon:not(.copied) {
-            @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-default;
+            @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-card-border;
 
             // @apply dark:ring-transparent dark:hover:ring-white/20;
         }
@@ -22,6 +22,10 @@
             > svg {
                 @apply t-accent size-4;
             }
+        }
+
+        > a {
+            @apply -ml-8;
         }
     }
 }

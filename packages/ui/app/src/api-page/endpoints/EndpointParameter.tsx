@@ -1,9 +1,9 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useRouteListener } from "../../contexts/useRouteListener";
+import type { BundledMDX } from "../../mdx/types";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -14,7 +14,7 @@ import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 export declare namespace EndpointParameter {
     export interface Props {
         name: string;
-        description: MDXRemoteSerializeResult | string | undefined;
+        description: BundledMDX | undefined;
         shape: ResolvedTypeShape;
         anchorIdParts: readonly string[];
         route: string;
@@ -24,7 +24,7 @@ export declare namespace EndpointParameter {
 
     export interface ContentProps {
         name: string;
-        description: MDXRemoteSerializeResult | string | undefined;
+        description: BundledMDX | undefined;
         typeShorthand: ReactNode;
         anchorIdParts: readonly string[];
         route: string;
@@ -93,7 +93,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
         <div
             ref={ref}
             data-route={anchorRoute.toLowerCase()}
-            className={cn("scroll-mt-header-height-padded relative flex flex-col gap-2 py-3", {
+            className={cn("scroll-mt-content-padded relative flex flex-col gap-2 py-3", {
                 "before:outline-border-accent-muted before:outline-1 before:outline before:outline-offset-0 before:content-[''] before:inset-y-0 before:-inset-x-2 before:rounded-sm":
                     isActive,
             })}

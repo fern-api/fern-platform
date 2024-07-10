@@ -24,6 +24,7 @@ export declare namespace Node {
         next: NavigationNodeNeighbor | undefined;
         prev: NavigationNodeNeighbor | undefined;
         collector: NodeCollector;
+        landingPage: FernNavigation.LandingPageNode | undefined;
     }
 
     interface Redirect {
@@ -56,13 +57,14 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
 
     const sidebar = found.parents.find((node): node is FernNavigation.SidebarRootNode => node.type === "sidebarRoot");
     const currentVersion = found.parents.find((node): node is FernNavigation.VersionNode => node.type === "version");
+    const tabbedNode = found.parents.find((node): node is FernNavigation.TabbedNode => node.type === "tabbed");
+    const unversionedNode = found.parents.find(
+        (node): node is FernNavigation.UnversionedNode => node.type === "unversioned",
+    );
+    const landingPage = (currentVersion ?? unversionedNode)?.landingPage;
     if (isPage(found.node)) {
-        const rootChild = (currentVersion ?? root).child;
         const parentsAndNode = [...found.parents, found.node];
-        const tabs = rootChild.type === "tabbed" ? rootChild.children : [];
-        const tabbedNodeIndex = parentsAndNode.findIndex(
-            (node): node is FernNavigation.TabbedNode => node.type === "tabbed",
-        );
+        const tabbedNodeIndex = parentsAndNode.findIndex((node) => node === tabbedNode);
         const currentTab = tabbedNodeIndex !== -1 ? parentsAndNode[tabbedNodeIndex + 1] : undefined;
         return {
             type: "found",
@@ -82,13 +84,14 @@ export function findNode(root: FernNavigation.RootNode, slug: string[]): Node {
                 }
                 return node;
             }),
-            tabs,
+            tabs: tabbedNode?.children ?? [],
             currentVersion,
             currentTab: currentTab?.type === "tab" || currentTab?.type === "changelog" ? currentTab : undefined,
             sidebar,
             apiReference:
                 found.parents.find((node): node is FernNavigation.ApiReferenceNode => node.type === "apiReference") ??
                 (found.node.type === "apiReference" ? found.node : undefined),
+            landingPage,
             next: found.next,
             prev: found.prev,
             collector,
@@ -144,6 +147,7 @@ function createBreadcrumb(nodes: NavigationNode[]): string[] {
             endpoint: noop,
             webSocket: noop,
             webhook: noop,
+            landingPage: noop,
         });
     });
 

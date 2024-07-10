@@ -19,6 +19,8 @@ const FEATURE_FLAGS = [
     "image-zoom-disabled" as const,
     "use-javascript-as-typescript" as const,
     "always-enable-javascript-fetch" as const,
+    "scroll-in-container-enabled" as const,
+    "use-mdx-bundler" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -53,6 +55,8 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             domain,
             config["always-enable-javascript-fetch"],
         );
+        const scrollInContainerEnabled = checkDomainMatchesCustomers(domain, config["scroll-in-container-enabled"]);
+        const useMdxBundler = checkDomainMatchesCustomers(domain, config["use-mdx-bundler"]);
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -68,6 +72,8 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isImageZoomDisabled,
             useJavaScriptAsTypeScript,
             alwaysEnableJavaScriptFetch,
+            scrollInContainerEnabled,
+            useMdxBundler,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -86,6 +92,8 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isImageZoomDisabled: false,
             useJavaScriptAsTypeScript: false,
             alwaysEnableJavaScriptFetch: false,
+            scrollInContainerEnabled: false,
+            useMdxBundler: false,
         };
     }
 }

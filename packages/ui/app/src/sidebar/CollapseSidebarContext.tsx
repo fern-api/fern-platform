@@ -1,8 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import fastdom from "fastdom";
+import { useAtomValue } from "jotai";
 import { noop } from "lodash-es";
-import { useRouter } from "next/router";
 import {
     FC,
     PropsWithChildren,
@@ -12,17 +10,16 @@ import {
     useContext,
     useEffect,
     useMemo,
-    useRef,
     useState,
 } from "react";
-import urljoin from "url-join";
-import { useSidebarNodes } from "../atoms/navigation";
+import { useCallbackOne } from "use-memo-one";
+import { CURRENT_NODE_ATOM, CURRENT_NODE_ID_ATOM, useSidebarNodes } from "../atoms/navigation";
 import { useActiveValueListeners } from "../hooks/useActiveValueListeners";
+import { useAtomEffect } from "../hooks/useAtomEffect";
 
 interface CollapseSidebarContextValue {
     expanded: FernNavigation.NodeId[];
     toggleExpanded: (id: FernNavigation.NodeId) => void;
-    selectedNodeId: FernNavigation.NodeId | undefined;
     checkExpanded: (id: FernNavigation.NodeId) => boolean;
     checkChildSelected: (id: FernNavigation.NodeId) => boolean;
     registerScrolledToPathListener: (nodeId: FernNavigation.NodeId, ref: RefObject<HTMLDivElement>) => () => void;
@@ -31,7 +28,6 @@ interface CollapseSidebarContextValue {
 const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
     expanded: [],
     toggleExpanded: noop,
-    selectedNodeId: undefined,
     checkExpanded: () => false,
     checkChildSelected: () => false,
     registerScrolledToPathListener: () => noop,
@@ -39,77 +35,56 @@ const CollapseSidebarContext = createContext<CollapseSidebarContextValue>({
 
 export const useCollapseSidebar = (): CollapseSidebarContextValue => useContext(CollapseSidebarContext);
 
-function toSlug(route: string): FernNavigation.Slug {
-    let parts = route.slice(1).split("#")[0].split("/") ?? [];
-    if (typeof window === "undefined") {
-        parts = parts.slice(2);
-    }
-    return FernNavigation.Slug(urljoin(parts));
-}
-
 export const CollapseSidebarProvider: FC<
     PropsWithChildren<{
-        scrollRef: RefObject<HTMLDivElement>;
+        // scrollRef: RefObject<HTMLDivElement>;
     }>
-> = ({ children, scrollRef: scrollContainerRef }) => {
-    const router = useRouter();
+> = ({ children }) => {
     const sidebar = useSidebarNodes();
-    const nodeCollector = useMemo(() => new NodeCollector(sidebar), [sidebar]);
-    const [selectedNodeId, setSelectedNodeId] = useState(() => nodeCollector.slugMap.get(toSlug(router.asPath))?.id);
+    const selectedNodeId = useAtomValue(CURRENT_NODE_ID_ATOM);
 
-    const { invokeListeners, registerListener } = useActiveValueListeners(selectedNodeId);
+    const { invokeListeners, registerListener: _registerListener } = useActiveValueListeners(selectedNodeId);
 
-    useEffect(() => {
-        const handleRouteChange = (route: string) => {
-            const nextSelectedNodeId = nodeCollector.slugMap.get(toSlug(route))?.id;
-            setSelectedNodeId(nextSelectedNodeId);
-            if (nextSelectedNodeId != null) {
-                invokeListeners(nextSelectedNodeId);
-            }
-        };
-        const handleRouteChangeError = (_err: Error, route: string) => {
-            handleRouteChange(route);
-        };
-        router.events.on("routeChangeComplete", handleRouteChange);
-        router.events.on("hashChangeStart", handleRouteChange);
-        router.events.on("hashChangeComplete", handleRouteChange);
-        router.events.on("routeChangeError", handleRouteChangeError);
-        return () => {
-            router.events.off("routeChangeComplete", handleRouteChange);
-            router.events.off("hashChangeStart", handleRouteChange);
-            router.events.off("hashChangeComplete", handleRouteChange);
-            router.events.off("routeChangeError", handleRouteChangeError);
-        };
-    }, [invokeListeners, nodeCollector.slugMap, router.events]);
-
-    const stopMeasuring = useRef<() => void>(noop);
-
-    const registerScrolledToPathListener = useCallback(
-        (nodeId: FernNavigation.NodeId, targetRef: RefObject<HTMLDivElement>) =>
-            registerListener(nodeId, () => {
-                stopMeasuring.current();
-                stopMeasuring.current = fastdom.measure(() => {
-                    if (scrollContainerRef.current == null || targetRef.current == null) {
-                        return;
-                    }
-                    // if the target is already in view, don't scroll
-                    if (
-                        targetRef.current.offsetTop >= scrollContainerRef.current.scrollTop &&
-                        targetRef.current.offsetTop + targetRef.current.clientHeight <=
-                            scrollContainerRef.current.scrollTop + scrollContainerRef.current.clientHeight
-                    ) {
-                        return;
-                    }
-
-                    // if the target is outside of the scroll container, scroll to it (centered)
-                    scrollContainerRef.current.scrollTo({
-                        top: targetRef.current.offsetTop - scrollContainerRef.current.clientHeight / 2,
-                        behavior: "smooth",
-                    });
-                });
-            }),
-        [registerListener, scrollContainerRef],
+    useAtomEffect(
+        useCallbackOne(
+            (get) => {
+                const node = get(CURRENT_NODE_ATOM);
+                if (node != null) {
+                    invokeListeners(node.id);
+                }
+            },
+            [invokeListeners],
+        ),
     );
+
+    // const stopMeasuring = useRef<() => void>(noop);
+
+    // const registerScrolledToPathListener = useCallback(
+    //     (nodeId: FernNavigation.NodeId, targetRef: RefObject<HTMLDivElement>) =>
+    //         registerListener(nodeId, () => {
+    //             fastdom.clear(stopMeasuring.current);
+    //             stopMeasuring.current = fastdom.measure(() => {
+    //                 if (scrollContainerRef.current == null || targetRef.current == null) {
+    //                     return;
+    //                 }
+    //                 // if the target is already in view, don't scroll
+    //                 if (
+    //                     targetRef.current.offsetTop >= scrollContainerRef.current.scrollTop &&
+    //                     targetRef.current.offsetTop + targetRef.current.clientHeight <=
+    //                         scrollContainerRef.current.scrollTop + scrollContainerRef.current.clientHeight
+    //                 ) {
+    //                     return;
+    //                 }
+
+    //                 // if the target is outside of the scroll container, scroll to it (centered)
+    //                 scrollContainerRef.current.scrollTo({
+    //                     top: targetRef.current.offsetTop - scrollContainerRef.current.clientHeight / 3,
+    //                     behavior: "smooth",
+    //                 });
+    //             });
+    //         }),
+    //     [registerListener, scrollContainerRef],
+    // );
 
     const { parentIdMap, parentToChildrenMap } = useMemo(() => {
         const parentIdMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
@@ -176,25 +151,12 @@ export const CollapseSidebarProvider: FC<
         () => ({
             expanded,
             toggleExpanded,
-            selectedNodeId,
             checkExpanded,
             checkChildSelected,
-            registerScrolledToPathListener,
+            registerScrolledToPathListener: () => noop,
         }),
-        [expanded, toggleExpanded, selectedNodeId, checkExpanded, checkChildSelected, registerScrolledToPathListener],
+        [expanded, toggleExpanded, checkExpanded, checkChildSelected],
     );
-
-    // If there is only one pageGroup with only one page, hide the sidebar content
-    // this is useful for tabs that only have one page
-    if (
-        sidebar == null ||
-        (sidebar.children.length === 1 &&
-            sidebar.children[0].type === "sidebarGroup" &&
-            sidebar.children[0].children.length === 1 &&
-            sidebar.children[0].children[0].type === "page")
-    ) {
-        return null;
-    }
 
     return <CollapseSidebarContext.Provider value={value}>{children}</CollapseSidebarContext.Provider>;
 };

@@ -2,6 +2,7 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import clsx from "clsx";
 import { ReactElement } from "react";
+import { useCurrentNodeId } from "../../atoms/navigation";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 
@@ -11,7 +12,8 @@ interface SidebarRootHeadingProps {
 }
 
 export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps): ReactElement {
-    const { registerScrolledToPathListener, selectedNodeId } = useCollapseSidebar();
+    const { registerScrolledToPathListener } = useCollapseSidebar();
+    const selectedNodeId = useCurrentNodeId();
 
     if (node.overviewPageId == null) {
         return (

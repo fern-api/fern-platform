@@ -1,13 +1,13 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { useEventCallback } from "@fern-ui/react-commons";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { useCallbackOne as useStableCallback } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { PlaygroundRequestFormState } from "../api-playground/types";
 import { useAtomEffect } from "../hooks/useAtomEffect";
 import { APIS } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
-import { CONTENT_HEIGHT_ATOM } from "./layout";
+import { BELOW_HEADER_HEIGHT_ATOM } from "./layout";
 import { LOCATION_ATOM } from "./location";
 import { NAVIGATION_NODES_ATOM } from "./navigation";
 
@@ -20,7 +20,7 @@ const PLAYGROUND_HEIGHT_VALUE_ATOM = atom<number>(0);
 export const PLAYGROUND_HEIGHT_ATOM = atom(
     (get) => {
         const playgroundHeight = Math.max(get(PLAYGROUND_HEIGHT_VALUE_ATOM), 0);
-        const maxPlaygroundHeight = get(CONTENT_HEIGHT_ATOM);
+        const maxPlaygroundHeight = get(BELOW_HEADER_HEIGHT_ATOM);
         return Math.min(maxPlaygroundHeight, playgroundHeight);
     },
     (_get, set, update: number) => {
@@ -48,7 +48,7 @@ export const PLAYGROUND_NODE_ID = atom(
             newLocation.searchParams.set("playground", update);
 
             // set playground height to be the window height - header height
-            const contentHeight = get(CONTENT_HEIGHT_ATOM);
+            const contentHeight = get(BELOW_HEADER_HEIGHT_ATOM);
             set(PLAYGROUND_HEIGHT_ATOM, contentHeight);
 
             const node = get(NAVIGATION_NODES_ATOM).get(update);
@@ -108,48 +108,45 @@ export function usePlaygroundNode(): FernNavigation.NavigationNodeApiLeaf | unde
 export function useClosePlayground(): () => void {
     const [nodeId, setNodeId] = useAtom(PLAYGROUND_NODE_ID);
     const setPrevNodeId = useSetAtom(PREV_PLAYGROUND_NODE_ID);
-    return useStableCallback(() => {
+    return useEventCallback(() => {
         if (nodeId != null) {
             setPrevNodeId(nodeId);
         }
         setNodeId(undefined);
-    }, [nodeId, setNodeId, setPrevNodeId]);
+    });
 }
 
 export function useOpenPlayground(): (nodeId?: FernNavigation.NodeId) => void {
     const setNodeId = useSetAtom(PLAYGROUND_NODE_ID);
     const prevNodeId = useAtomValue(PREV_PLAYGROUND_NODE_ID);
-    return useStableCallback(
-        (nodeId?: FernNavigation.NodeId) => {
-            // TODO: "" implicitly means open + empty state. This is a hack and we should rethink the UX.
-            setNodeId(nodeId ?? prevNodeId ?? FernNavigation.NodeId(""));
-        },
-        [setNodeId, prevNodeId],
-    );
+    return useEventCallback((nodeId?: FernNavigation.NodeId) => {
+        // TODO: "" implicitly means open + empty state. This is a hack and we should rethink the UX.
+        setNodeId(nodeId ?? prevNodeId ?? FernNavigation.NodeId(""));
+    });
 }
 
 export function useTogglePlayground(): () => void {
     const isPlaygroundOpen = useIsPlaygroundOpen();
     const openPlayground = useOpenPlayground();
     const closePlayground = useClosePlayground();
-    return useStableCallback(() => {
+    return useEventCallback(() => {
         if (isPlaygroundOpen) {
             closePlayground();
         } else {
             openPlayground();
         }
-    }, [isPlaygroundOpen, openPlayground, closePlayground]);
+    });
 }
 
 // this should only be invoked once
 export function useInitPlaygroundRouter(): void {
     useAtomEffect(
-        useStableCallback((get, set) => {
+        useEventCallback((get, set) => {
             const nodeId = get(PLAYGROUND_NODE_ID);
             if (nodeId != null) {
                 set(PLAYGROUND_IS_OPEN_ATOM, true);
                 set(PREV_PLAYGROUND_NODE_ID, nodeId);
             }
-        }, []),
+        }),
     );
 }

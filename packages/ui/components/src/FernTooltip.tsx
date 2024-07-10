@@ -4,6 +4,7 @@ import { FC, ReactNode } from "react";
 
 interface FernTooltipProps extends Tooltip.TooltipProps, Omit<Tooltip.TooltipContentProps, "content"> {
     content: ReactNode | undefined;
+    container?: HTMLElement | null;
 }
 
 export const FernTooltip: FC<FernTooltipProps> = ({
@@ -14,6 +15,7 @@ export const FernTooltip: FC<FernTooltipProps> = ({
     onOpenChange,
     delayDuration,
     disableHoverableContent,
+    container,
     ...props
 }) => {
     if (content == null || content === "") {
@@ -28,7 +30,7 @@ export const FernTooltip: FC<FernTooltipProps> = ({
             disableHoverableContent={disableHoverableContent}
         >
             <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
-            <Tooltip.Portal>
+            <Tooltip.Portal container={container}>
                 <Tooltip.Content
                     sideOffset={6}
                     collisionPadding={6}

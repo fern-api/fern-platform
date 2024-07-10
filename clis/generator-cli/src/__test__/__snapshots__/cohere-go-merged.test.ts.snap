@@ -48,6 +48,14 @@ response, err := client.Chat(
 
 This is a custom section that should ideally stay between the usage and timeout section.
 
+## One
+
+This is another custom section that should ideally stay between the usage and timeout section.
+
+## Two
+
+This is another custom section that should ideally stay between the usage and timeout section.
+
 ## Errors
 
 Structured error types are returned from API calls that return non-success status codes.
@@ -88,14 +96,6 @@ response, err := client.Chat(
 	},
 )
 \`\`\`
-
-## One
-
-This is another custom section that should ideally stay between the usage and timeout section.
-
-## Two
-
-This is another custom section that should ideally stay between the usage and timeout section.
 
 ## Contributing
 

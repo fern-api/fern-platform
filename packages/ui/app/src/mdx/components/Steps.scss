@@ -3,6 +3,10 @@
         @apply ml-2 mb-12 mt-4 border-l border-default pl-7;
 
         counter-reset: step;
+
+        .fern-steps > a {
+            @apply -ml-10;
+        }
     }
 
     .fern-steps h3 {
@@ -10,7 +14,7 @@
 
         &::before {
             @apply absolute size-[24px];
-            @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-default;
+            @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-card-border;
             @apply rounded-md text-base font-normal text-center -indent-px;
             @apply ml-[-40px];
 

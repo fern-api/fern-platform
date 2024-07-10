@@ -80,7 +80,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
             </Select.Trigger>
             <Select.Portal>
                 <Select.Content className="overflow-hidden rounded-md bg-card backdrop-blur shadow-2xl ring-default ring-inset ring-1 z-50">
-                    <Select.ScrollUpButton className="text-violet11 flex h-8 cursor-default items-center justify-center bg-white">
+                    <Select.ScrollUpButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
                         <ChevronUpIcon />
                     </Select.ScrollUpButton>
                     <Select.Viewport className="p-[5px]">
@@ -122,7 +122,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                             </Fragment>
                         ))}
                     </Select.Viewport>
-                    <Select.ScrollDownButton className="text-violet11 flex h-8 cursor-default items-center justify-center bg-white">
+                    <Select.ScrollDownButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
                         <ChevronDownIcon />
                     </Select.ScrollDownButton>
                 </Select.Content>

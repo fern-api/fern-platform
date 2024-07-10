@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { last } from "lodash-es";
-import { Fragment } from "react";
+import { Fragment, memo } from "react";
 import { SidebarApiGroupNode } from "./SidebarApiGroupNode";
 import { SidebarGroupNode } from "./SidebarGroupNode";
 import { SidebarRootApiPackageNode } from "./SidebarRootApiPackageNode";
@@ -15,7 +15,7 @@ type ApiGroupOrSection =
     | { type: "apiGroup"; children: (FernNavigation.ApiPackageChild | FernNavigation.ChangelogNode)[] }
     | FernNavigation.ApiPackageNode;
 
-export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElement {
+export const SidebarRootNode = memo(function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElement {
     return (
         <ul className="fern-sidebar-group">
             {node?.children.map((child) =>
@@ -77,4 +77,4 @@ export function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElem
             )}
         </ul>
     );
-}
+});

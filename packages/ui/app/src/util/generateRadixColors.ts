@@ -215,7 +215,7 @@ export function getClosestGrayScale(source: string): (typeof grayScaleNames)[num
 
         Object.entries(scales).forEach(([name, scale]) => {
             for (const color of scale) {
-                const distance = sourceColor.deltaEOK(color);
+                const distance = sourceColor.deltaE76(color);
                 allColors.push({ scale: name, distance, color });
             }
         });

@@ -3,23 +3,21 @@ import { noop } from "@fern-ui/core-utils";
 import { NextSeo } from "@fern-ui/next-seo";
 import { useEventCallback } from "@fern-ui/react-commons";
 import fastdom from "fastdom";
+import { useAtomValue } from "jotai";
 import { debounce } from "lodash-es";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { useFeatureFlags } from "../../atoms/flags";
-import { useNavigationNodes } from "../../atoms/navigation";
+import { SLUG_ATOM } from "../../atoms/location";
+import { useNavigationNodes, useResolvedPath } from "../../atoms/navigation";
 import { getNextSeoProps } from "../../next-app/utils/getSeoProp";
-import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { NavigationContext } from "./NavigationContext";
 
 export declare namespace NavigationContextProvider {
     export type Props = PropsWithChildren<{
-        resolvedPath: ResolvedPath;
-        domain: string;
         basePath: string | undefined;
-        // title: string | undefined;
     }>;
 }
 
@@ -46,7 +44,7 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     }
     userHasScrolled = scrolledHere;
     let lastActiveNavigatableOffsetTop: number | undefined;
-    lastScrollY = window.scrollY;
+    lastScrollY = window.scrollTop;
     let lastNode: HTMLElement | undefined;
     function handleObservation() {
         fastdom.clear(cancelMeasure);
@@ -92,18 +90,14 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     }
 }
 
-export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({
-    resolvedPath,
-    children,
-    domain,
-    basePath,
-}) => {
+export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({ children, basePath }) => {
     const { versions, currentVersionId } = useDocsContext();
     const nodes = useNavigationNodes();
     const { isApiScrollingDisabled } = useFeatureFlags();
+    const slug = useAtomValue(SLUG_ATOM);
     const router = useRouter();
 
-    const [activeNavigatable, setActiveNavigatable] = useState(() => nodes.slugMap.get(resolvedPath.fullSlug));
+    const [activeNavigatable, setActiveNavigatable] = useState(() => nodes.slugMap.get(slug));
 
     const [, anchor] = router.asPath.split("#");
     const selectedSlug = activeNavigatable?.slug ?? "";
@@ -157,7 +151,7 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
                 setActiveNavigatable(nodes.slugMap.get(fullSlug));
                 startScrollTracking(`/${fullSlug}`, true);
             },
-            300,
+            100,
             { trailing: true },
         ),
     );
@@ -199,17 +193,17 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
             handleRouteChange(route, options);
         };
-        router.events.on("routeChangeComplete", handleRouteChange);
-        router.events.on("hashChangeStart", handleRouteChange);
-        router.events.on("hashChangeComplete", handleRouteChange);
-        router.events.on("routeChangeError", handleRouteChangeError);
+        Router.events.on("routeChangeComplete", handleRouteChange);
+        Router.events.on("hashChangeStart", handleRouteChange);
+        Router.events.on("hashChangeComplete", handleRouteChange);
+        Router.events.on("routeChangeError", handleRouteChangeError);
         return () => {
-            router.events.off("routeChangeComplete", handleRouteChange);
-            router.events.off("hashChangeStart", handleRouteChange);
-            router.events.off("hashChangeComplete", handleRouteChange);
-            router.events.off("routeChangeError", handleRouteChangeError);
+            Router.events.off("routeChangeComplete", handleRouteChange);
+            Router.events.off("hashChangeStart", handleRouteChange);
+            Router.events.off("hashChangeComplete", handleRouteChange);
+            Router.events.off("routeChangeError", handleRouteChangeError);
         };
-    }, [navigateToPath, router.events]);
+    }, [navigateToPath]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
@@ -219,35 +213,23 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         });
     }, [router, navigateToPath]);
 
+    const resolvedPath = useResolvedPath();
     const seo = useMemo(() => getNextSeoProps(resolvedPath, activeNavigatable), [activeNavigatable, resolvedPath]);
 
     return (
         <NavigationContext.Provider
             value={useMemo(
                 () => ({
-                    domain,
-                    basePath: basePath != null && basePath.replace("/", "").trim().length > 0 ? basePath : undefined,
                     activeNavigatable,
                     onScrollToPath,
-                    resolvedPath,
                     activeVersion: versions.find((version) => version.id === currentVersionId),
-                    selectedSlug,
                     unversionedSlug: FernNavigation.utils.getUnversionedSlug(
                         selectedSlug,
                         versions.find((version) => version.id === currentVersionId)?.slug,
                         basePath,
                     ),
                 }),
-                [
-                    activeNavigatable,
-                    basePath,
-                    currentVersionId,
-                    domain,
-                    onScrollToPath,
-                    resolvedPath,
-                    selectedSlug,
-                    versions,
-                ],
+                [activeNavigatable, basePath, currentVersionId, onScrollToPath, selectedSlug, versions],
             )}
         >
             <NextSeo {...seo} />

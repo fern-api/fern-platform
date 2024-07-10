@@ -30,7 +30,7 @@ const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    transpilePackages: ["@fern-ui/ui"],
+    transpilePackages: ["next-mdx-remote", "esbuild"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,
@@ -89,6 +89,7 @@ const nextConfig = {
         connectSrc.push("https://vercel.live");
         connectSrc.push("wss://*.pusher.com");
         styleSrc.push("https://vercel.live");
+        styleSrc.push("https://fonts.googleapis.com");
 
         const ContentSecurityPolicy = [
             `default-src ${defaultSrc.join(" ")}`,
@@ -254,6 +255,13 @@ const nextConfig = {
     },
     env: {
         VERSION: process.env.VERSION,
+    },
+    webpack: (config, { isServer }) => {
+        if (isServer) {
+            config.externals = config.externals || [];
+            config.externals.push("esbuild");
+        }
+        return config;
     },
 };
 

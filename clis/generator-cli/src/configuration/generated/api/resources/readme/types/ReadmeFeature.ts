@@ -9,6 +9,8 @@ import * as FernGeneratorCli from "../../../index";
  */
 export interface ReadmeFeature {
     id: FernGeneratorCli.FeatureId;
+    /** Defaults to false */
+    advanced?: boolean;
     description?: string;
     addendum?: string;
     snippets?: string[];

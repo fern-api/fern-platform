@@ -1,5 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
+import { useAtomValue } from "jotai";
 import {
     AnchorHTMLAttributes,
     Children,
@@ -13,11 +14,12 @@ import {
 } from "react";
 import Zoom from "react-medium-image-zoom";
 import { useFeatureFlags } from "../atoms/flags";
+import { SLUG_ATOM } from "../atoms/location";
 import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useNavigationContext } from "../contexts/navigation-context";
+import { useFrontmatter } from "./frontmatter-context";
 
 /**
  * By default, next will use /host/current/slug in SSG.
@@ -25,8 +27,8 @@ import { useNavigationContext } from "../contexts/navigation-context";
  * @returns /basepath/current/slug
  */
 export function useCurrentPathname(): string {
-    const { resolvedPath } = useNavigationContext();
-    return `/${resolvedPath.fullSlug}`;
+    const currentSlug = useAtomValue(SLUG_ATOM);
+    return `/${currentSlug}`;
 }
 
 export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): ReactElement => {
@@ -60,7 +62,7 @@ export const Ul: FC<ComponentProps<"ul">> = ({ className, ...rest }) => {
 };
 
 export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
-    return <li {...rest} className={cn(className, "marker:text-inherit")} />;
+    return <li {...rest} className={cn(className)} />;
 };
 
 export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
@@ -93,6 +95,7 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
 
 export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, enableZoom, style, ...rest }) => {
     const { files } = useDocsContext();
+    const { "no-image-zoom": noImageZoom } = useFrontmatter();
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
         if (src == null) {
@@ -127,7 +130,7 @@ export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoo
 
     const { isImageZoomDisabled } = useFeatureFlags();
 
-    if (isImageZoomDisabled ? !enableZoom : noZoom) {
+    if (isImageZoomDisabled || noImageZoom ? !enableZoom : noZoom) {
         return fernImage;
     }
 

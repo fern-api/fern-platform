@@ -14,7 +14,6 @@ import {
     PLAYGROUND_FORM_STATE_ATOM,
     useInitPlaygroundRouter,
     useOpenPlayground,
-    usePlaygroundHeight,
 } from "../atoms/playground";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { useAtomEffect } from "../hooks/useAtomEffect";
@@ -52,7 +51,6 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
 
     const flattenedApis = useAtomValue(FLATTENED_APIS_ATOM);
 
-    const playgroundHeight = usePlaygroundHeight();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
 
     useInitPlaygroundRouter();
@@ -115,7 +113,6 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
         <PlaygroundContext.Provider value={setSelectionStateAndOpen}>
             {children}
             {hasPlayground && <PlaygroundDrawer />}
-            {hasPlayground && <div style={{ height: playgroundHeight }} />}
         </PlaygroundContext.Provider>
     );
 };

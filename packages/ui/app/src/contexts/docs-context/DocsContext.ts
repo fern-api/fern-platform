@@ -5,6 +5,8 @@ import { DocsPage } from "../../next-app/DocsPage";
 
 export const DocsContext = React.createContext<DocsContextValue>({
     domain: "app.buildwithfern.com",
+    logoHeight: undefined,
+    logoHref: undefined,
     basePath: undefined,
     layout: undefined,
     colors: {
@@ -26,6 +28,8 @@ export const DocsContext = React.createContext<DocsContextValue>({
 
 export interface DocsContextValue extends Omit<DocsPage.Navigation, "sidebar"> {
     domain: string;
+    logoHeight: DocsV1Read.Height | undefined;
+    logoHref: DocsV1Read.Url | undefined;
     basePath: string | undefined;
     layout: DocsV1Read.DocsLayoutConfig | undefined;
     colors: ColorsConfig;

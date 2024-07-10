@@ -8,3 +8,4 @@ packages:
   - "!servers/**/lib"
   - "!servers/**/dist"
   - "!servers/**/generated"
+  - "!**/__test__/**"

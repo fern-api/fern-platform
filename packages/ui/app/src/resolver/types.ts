@@ -1,18 +1,17 @@
 import type { APIV1Read, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { SerializedMdxContent } from "../mdx/mdx";
+import type { BundledMDX } from "../mdx/types";
 
 type WithoutQuestionMarks<T> = {
     [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
 };
 
-export type WithDescription = { description: MDXRemoteSerializeResult | string | undefined };
+export type WithDescription = { description: BundledMDX | undefined };
 export type WithAvailability = { availability: APIV1Read.Availability | undefined };
 
 export interface WithMetadata {
-    description: MDXRemoteSerializeResult | string | undefined;
+    description: BundledMDX | undefined;
     availability: APIV1Read.Availability | undefined;
 }
 
@@ -75,7 +74,7 @@ export interface ResolvedPageMetadata {
     id: DocsV1Read.PageId;
     slug: FernNavigation.Slug;
     title: string;
-    markdown: SerializedMdxContent;
+    markdown: BundledMDX;
 }
 
 export interface ResolvedNavigationItemApiSection
@@ -702,7 +701,7 @@ export function unwrapOptional(
 export function unwrapDescription(
     valueShape: ResolvedTypeShape,
     types: Record<string, ResolvedTypeDefinition>,
-): string | MDXRemoteSerializeResult | undefined {
+): BundledMDX | undefined {
     while (valueShape.type === "alias" || valueShape.type === "reference" || valueShape.type === "optional") {
         if (valueShape.type === "reference") {
             const nestedShape = types[valueShape.typeId];
@@ -736,7 +735,7 @@ export function unwrapDescription(
 export function getParameterDescription(
     parameter: ResolvedObjectProperty,
     types: Record<string, ResolvedTypeDefinition>,
-): string | MDXRemoteSerializeResult | undefined {
+): BundledMDX | undefined {
     if (parameter.description != null) {
         return parameter.description;
     }

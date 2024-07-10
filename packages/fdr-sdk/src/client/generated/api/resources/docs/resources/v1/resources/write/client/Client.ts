@@ -85,7 +85,10 @@ export class Write {
      *             pages: {
      *                 "string": {}
      *             },
-     *             config: {}
+     *             config: {},
+     *             jsFiles: {
+     *                 "string": "string"
+     *             }
      *         }
      *     })
      */

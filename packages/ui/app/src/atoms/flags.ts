@@ -15,6 +15,8 @@ export interface FeatureFlags {
     isImageZoomDisabled: boolean;
     useJavaScriptAsTypeScript: boolean;
     alwaysEnableJavaScriptFetch: boolean;
+    scrollInContainerEnabled: boolean;
+    useMdxBundler: boolean;
 }
 
 export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
@@ -31,6 +33,8 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isImageZoomDisabled: false,
     useJavaScriptAsTypeScript: false,
     alwaysEnableJavaScriptFetch: false,
+    scrollInContainerEnabled: false,
+    useMdxBundler: false,
 };
 
 export const FEATURE_FLAGS_ATOM = atom(DEFAULT_FEATURE_FLAGS);

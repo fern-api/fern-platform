@@ -1,6 +1,6 @@
 @layer components {
     .fern-card {
-        @apply border-default t-default hover:t-default border bg-card;
+        @apply border-card-border t-default hover:t-default border bg-card;
 
         &.interactive {
             @apply cursor-pointer shadow-card;

@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup, toast } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
-import { useRouter } from "next/router";
+import { Router } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "react-feather";
 import { capturePosthogEvent, registerPosthogProperties } from "../analytics/posthog";
@@ -13,7 +13,6 @@ export interface FeedbackProps {
 }
 
 export const Feedback: FC<FeedbackProps> = ({ className }) => {
-    const router = useRouter();
     const [sent, setSent] = useState(false);
     const [isHelpful, setIsHelpful] = useState<boolean>();
     const [showFeedbackInput, setShowFeedbackInput] = useState(false);
@@ -27,11 +26,11 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
             setIsHelpful(undefined);
             setShowFeedbackInput(false);
         };
-        router.events.on("routeChangeComplete", resetForm);
+        Router.events.on("routeChangeComplete", resetForm);
         return () => {
-            router.events.off("routeChangeComplete", resetForm);
+            Router.events.off("routeChangeComplete", resetForm);
         };
-    }, [router.events]);
+    }, []);
 
     const handleYes = () => {
         setIsHelpful(true);

@@ -1,36 +1,44 @@
-import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
-import React from "react";
+import { isEqual } from "lodash-es";
+import dynamic from "next/dynamic";
+import { memo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import type { SerializedMdxContent } from "./mdx";
-import { HTML_COMPONENTS, JSX_COMPONENTS } from "./mdx-components";
+import { FrontmatterContextProvider } from "./frontmatter-context";
+import type { BundledMDX } from "./types";
 
 export declare namespace MdxContent {
     export interface Props {
-        mdx: MDXRemoteSerializeResult | SerializedMdxContent | string;
+        mdx: BundledMDX;
     }
 }
 
-export const MdxContent = React.memo<MdxContent.Props>(function MdxContent({ mdx }) {
-    const COMPONENTS = { ...HTML_COMPONENTS, ...JSX_COMPONENTS };
+const MdxBundlerComponent = dynamic(
+    () => import("./bundlers/mdx-bundler-component").then((mod) => mod.MdxBundlerComponent),
+    { ssr: true },
+);
 
-    if (typeof mdx === "string") {
-        return <span className="whitespace-pre-wrap">{mdx}</span>;
-    }
+const NextMdxRemoteComponent = dynamic(
+    () => import("./bundlers/next-mdx-remote-component").then((mod) => mod.NextMdxRemoteComponent),
+    { ssr: true },
+);
 
-    if (mdx.compiledSource.trim() === "") {
-        // eslint-disable-next-line no-console
-        console.error("Unexpected empty compiledSource", mdx);
-        return null;
-    }
+export const MdxContent = memo<MdxContent.Props>(
+    function MdxContent({ mdx }) {
+        if (typeof mdx === "string") {
+            return <span className="whitespace-pre-wrap">{mdx}</span>;
+        }
 
-    return (
-        <FernErrorBoundary component="MdxContent">
-            <MDXRemote
-                scope={mdx.scope}
-                frontmatter={mdx.frontmatter}
-                compiledSource={mdx.compiledSource}
-                components={COMPONENTS}
-            />
-        </FernErrorBoundary>
-    );
-});
+        const MdxComponent = mdx.engine === "mdx-bundler" ? MdxBundlerComponent : NextMdxRemoteComponent;
+
+        return (
+            <FernErrorBoundary component="MdxContent">
+                <FrontmatterContextProvider value={mdx.frontmatter}>
+                    <MdxComponent {...mdx} />
+                </FrontmatterContextProvider>
+            </FernErrorBoundary>
+        );
+    },
+    (prev, next) =>
+        typeof next.mdx !== "string" && typeof prev.mdx !== "string"
+            ? next.mdx.code === prev.mdx.code && isEqual(next.mdx.frontmatter, prev.mdx.frontmatter)
+            : next === prev,
+);

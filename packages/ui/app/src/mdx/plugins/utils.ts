@@ -1,3 +1,4 @@
+import { isPlainObject } from "@fern-ui/core-utils";
 import type { Element, ElementContent, Node, Root, RootContent, Text } from "hast";
 import type {
     MdxJsxAttribute,
@@ -16,6 +17,14 @@ export function isMdxJsxAttribute(
     attribute: MdxJsxAttribute | MdxJsxExpressionAttribute,
 ): attribute is MdxJsxAttribute {
     return attribute.type === "mdxJsxAttribute";
+}
+
+export function isElementContent(value: unknown): value is ElementContent {
+    return (
+        isPlainObject(value) &&
+        "type" in value &&
+        (value.type === "element" || value.type === "text" || value.type === "comment")
+    );
 }
 
 export function isElement(value: ElementContent | Element | Root | RootContent | null | undefined): value is Element {

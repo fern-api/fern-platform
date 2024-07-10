@@ -26,7 +26,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiA
 
     return (
         <ApiPageMargins>
-            <div ref={setTargetRef} data-route={`/${slug}`.toLowerCase()} className="scroll-mt-header-height-padded">
+            <div ref={setTargetRef} data-route={`/${slug}`.toLowerCase()} className="scroll-mt-content">
                 <h1 className="pt-20">{API_ARTIFACTS_TITLE}</h1>
                 <div className="t-muted mt-5 text-lg">
                     Official open-source client libraries for your favorite platforms.
