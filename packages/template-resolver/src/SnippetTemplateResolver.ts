@@ -63,7 +63,9 @@ export class SnippetTemplateResolver {
         if (authPayload != null) {
             return this.accessByPath(authPayload, locationPath);
         }
-        return `YOUR_${(locationPath ?? "variable").toUpperCase()}`;
+        const maybePayloadName = locationPath?.replace(/\[.*?\]/g, "")?.split(".")[0];
+
+        return `YOUR_${(maybePayloadName ?? "variable").toUpperCase()}`;
     }
 
     private getPayloadValue(location: PayloadInput, payloadOverride?: unknown): unknown | undefined {
