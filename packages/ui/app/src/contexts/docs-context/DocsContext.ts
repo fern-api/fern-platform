@@ -1,13 +1,7 @@
 import { Algolia, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import React from "react";
-import { DocsPage, PartnerLogin } from "../../next-app/DocsPage";
-
-const MOCK_SIDEBAR_NODE: FernNavigation.SidebarRootNode = {
-    id: FernNavigation.NodeId("root"),
-    type: "sidebarRoot",
-    children: [],
-};
+import { PartnerLogin } from "../../next-app/DocsPage";
 
 export const DocsContext = React.createContext<DocsContextValue>({
     logoHeight: undefined,
@@ -36,7 +30,6 @@ export interface DocsContextValue {
     searchInfo: Algolia.SearchInfo | undefined;
     navbarLinks: DocsV1Read.NavbarLink[];
     apis: FdrAPI.ApiDefinitionId[];
-    nodes: NodeCollector;
     partnerLogin: PartnerLogin | undefined;
 
     resolveFile: (fileId: DocsV1Read.FileId) => DocsV1Read.File_ | undefined;

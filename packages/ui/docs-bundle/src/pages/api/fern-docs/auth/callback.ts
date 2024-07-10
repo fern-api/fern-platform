@@ -1,8 +1,9 @@
+import { PartnerLogin } from "@fern-ui/ui";
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 import { getJwtTokenSecret, getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
 import { notFoundResponse, redirectResponse } from "../../../../utils/serverResponse";
-import { getFeatureFlags } from "../feature-flags";
+import { getPartnerLoginConfig } from "../partner-login";
 // export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 //     // The authorization code returned by AuthKit
 //     const code = req.query.code as string;
@@ -81,18 +82,21 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             throw new Error("NEXT_PUBLIC_DOCS_DOMAIN is not set");
         }
 
-        const { apiInjectionConfig } = await getFeatureFlags(xFernHost);
-        if (apiInjectionConfig == null) {
+        const partnerLoginConfig = await getPartnerLoginConfig(xFernHost);
+        if (!partnerLoginConfig) {
             throw new Error("API injection config is not set");
         }
 
         try {
-            const response = await fetch(apiInjectionConfig["auth-endpoint"], {
+            const form = new FormData();
+            form.append("code", code);
+            form.append("client_secret", partnerLoginConfig.secret);
+            form.append("grant_type", "authorization_code");
+            form.append("client_id", partnerLoginConfig.clientId);
+
+            const response = await fetch(partnerLoginConfig.authEndpoint, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ code, secret: apiInjectionConfig.secret }),
+                body: form,
             });
 
             if (!response.ok) {
@@ -101,18 +105,17 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
             const data = await response.json();
 
-            if (data.apiKey == null || data.expiresAt == null) {
+            const accessToken = data.access_token;
+            if (!accessToken) {
                 return redirectWithLoginError(state, "Couldn't login, please try again");
             }
-
+            const partnerLogin: PartnerLogin = {
+                accessToken,
+                loggedInAt: Date.now(),
+                name: "rightbrain",
+            };
             token = await new SignJWT({
-                partnerLogin: {
-                    name: data.name,
-                    apiKey: data.apiKey,
-                    expiresAt: data.expires,
-                    refreshToken: data.refreshToken,
-                    loggedInAt: Date.now(),
-                },
+                partnerLogin,
             })
                 .setProtectedHeader({ alg: "HS256", typ: "JWT" })
                 .setIssuedAt()

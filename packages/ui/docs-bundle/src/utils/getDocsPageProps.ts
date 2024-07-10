@@ -5,6 +5,7 @@ import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
 import {
     DocsPage,
     DocsPageResult,
+    PartnerLogin,
     convertNavigatableToResolvedPath,
     getBreadcrumbList,
     getDefaultSeoProps,
@@ -155,14 +156,6 @@ async function getUser(token: string | undefined): Promise<User> {
     } catch {
         return { isAuthenticated: false };
     }
-}
-
-export interface PartnerLogin {
-    name: string;
-    apiKey: string;
-    expiresAt: number;
-    refreshToken: string;
-    loggedInAt: number;
 }
 
 async function getPartnerLogin(token: string): Promise<PartnerLogin | undefined> {
