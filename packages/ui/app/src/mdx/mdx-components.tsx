@@ -34,6 +34,7 @@ import { Column, ColumnGroup } from "./components/ColumnGroup";
 import { Frame } from "./components/Frame";
 import { HTML_TABLE_COMPONENTS } from "./components/HTMLTable";
 import { IFrame } from "./components/IFrame";
+import { InstallSdk } from "./components/InstallSdk";
 import { ParamField } from "./components/ParamField";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./components/RequestSnippet";
 import { Steps } from "./components/Steps";
@@ -66,6 +67,7 @@ export const JSX_COMPONENTS = {
     Steps,
     TabGroup,
     Tooltip,
+    InstallSdk,
 
     // deprecated, aliased for backwards compatibility
     Cards: CardGroup,

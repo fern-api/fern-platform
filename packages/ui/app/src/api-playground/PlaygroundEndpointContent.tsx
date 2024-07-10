@@ -1,4 +1,5 @@
 import {
+    CopyToClipboardButton,
     FernAudioPlayer,
     FernButton,
     FernButtonGroup,
@@ -19,7 +20,6 @@ import { useDomain } from "../atoms/navigation";
 import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
-import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormButtons } from "./PlaygroundEndpointFormButtons";

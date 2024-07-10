@@ -1,5 +1,5 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { FernScrollArea } from "@fern-ui/components";
+import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
@@ -19,7 +19,6 @@ import {
     stringifyResolvedEndpointPathParts,
     unwrapReference,
 } from "../../resolver/types";
-import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
