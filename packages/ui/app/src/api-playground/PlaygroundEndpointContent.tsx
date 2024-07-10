@@ -65,7 +65,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
     const { partnerLogin } = useDocsContext();
-    const apiKey = partnerLogin?.apiKey;
+    const apiKey = partnerLogin?.accessToken;
 
     if (apiKey && formState.auth == null) {
         formState.auth = {

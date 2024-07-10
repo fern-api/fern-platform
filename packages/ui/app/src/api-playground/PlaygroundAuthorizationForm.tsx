@@ -7,8 +7,8 @@ import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Key } from "react-feather";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { usePartnerLoginService } from "../services/usePartnerLoginService";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";
@@ -263,24 +263,24 @@ export function PlaygroundAuthorizationFormCard({
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const isOpen = useBooleanState(false);
-    const { apiInjectionConfig } = useFeatureFlags();
+    const [partnerLoginEndpoint] = usePartnerLoginService();
     const { partnerLogin } = useDocsContext();
     const router = useRouter();
-    const apiKey = partnerLogin?.apiKey;
+    const apiKey = partnerLogin?.accessToken;
     const [loginError, setLoginError] = useState<string | null>(null);
 
     const redirectOrOpenAuthForm = () => {
-        if (apiInjectionConfig) {
+        if (partnerLoginEndpoint.enabled) {
             const redirect = encodeURIComponent(window.location.origin + "/api/fern-docs/auth/callback");
             const state = encodeURIComponent(window.location.href);
 
-            const loginUrl = `${apiInjectionConfig["login-endpoint"]}?redirect=${redirect}&state=${state}`;
+            const loginUrl = `${partnerLoginEndpoint.loginEndpoint}?redirect=${redirect}&state=${state}`;
             window.location.href = loginUrl;
         } else {
             isOpen.toggleValue();
         }
     };
-    const hasApiInjectionConfig = apiInjectionConfig !== undefined;
+    const hasApiInjectionConfig = partnerLoginEndpoint !== undefined;
     const authButtonCopy = hasApiInjectionConfig
         ? "Login to send a real request"
         : "Authenticate with your API key to send a real request";
