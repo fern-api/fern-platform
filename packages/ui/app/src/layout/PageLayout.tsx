@@ -3,7 +3,6 @@ import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { ReactElement, ReactNode } from "react";
 import { EditThisPageButton } from "../components/EditThisPage";
 import { PageHeader } from "../components/PageHeader";
-import { TableOfContentsItem } from "../components/TableOfContents";
 import { Feedback } from "../custom-docs-page/Feedback";
 import { toAttribute } from "../mdx/plugins/utils";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
@@ -12,7 +11,6 @@ interface PageLayoutProps {
     breadcrumbs: string[];
     title: string;
     subtitle: ReactNode | undefined;
-    tableOfContents: TableOfContentsItem[] | undefined;
     children: ReactNode;
     editThisPageUrl: string | undefined;
     hideFeedback: boolean | undefined;
@@ -23,7 +21,6 @@ interface PageLayoutOpts {
     breadcrumbs: string[];
     title: string;
     subtitle: ElementContent | undefined;
-    tableOfContents: TableOfContentsItem[] | undefined;
     children: ElementContent[];
     editThisPageUrl: string | undefined;
     hideFeedback: boolean | undefined;

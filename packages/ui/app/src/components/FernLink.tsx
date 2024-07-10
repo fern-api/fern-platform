@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ReactElement, forwardRef, useEffect, useState, type ComponentProps } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
 import { SLUG_ATOM } from "../atoms/location";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useDomain } from "../atoms/navigation";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;
@@ -47,7 +47,7 @@ interface FernExternalLinkProps extends Omit<ComponentProps<"a">, "href"> {
 
 const FernExternalLink = forwardRef<HTMLAnchorElement, FernExternalLinkProps>(
     ({ showExternalLinkIcon, url, ...props }, ref) => {
-        const { domain } = useDocsContext();
+        const domain = useDomain();
         const [host, setHost] = useState<string>(domain);
         useEffect(() => {
             if (typeof window !== "undefined") {

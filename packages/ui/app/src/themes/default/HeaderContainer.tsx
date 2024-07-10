@@ -1,6 +1,7 @@
 import cn, { clsx } from "clsx";
 import { useAtomValue } from "jotai";
 import { ReactElement, useCallback } from "react";
+import { HAS_HORIZONTAL_TABS } from "../../atoms/layout";
 import { useIsMobileSidebarOpen } from "../../atoms/sidebar";
 import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../../atoms/viewport";
 import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
@@ -14,7 +15,8 @@ interface HeaderContainerProps {
 }
 
 export function HeaderContainer({ className }: HeaderContainerProps): ReactElement {
-    const { colors, layout, tabs } = useDocsContext();
+    const { colors } = useDocsContext();
+    const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
     const isScrolled = useIsScrolled();
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
@@ -52,12 +54,9 @@ export function HeaderContainer({ className }: HeaderContainerProps): ReactEleme
             >
                 <div className="fern-header">
                     {renderBackground()}
-                    <Header
-                        className="mx-auto max-w-page-width"
-                        showSearchBar={layout?.searchbarPlacement === "HEADER"}
-                    />
+                    <Header className="mx-auto max-w-page-width" />
                 </div>
-                {tabs.length > 0 && layout?.tabsPlacement === "HEADER" && layout?.disableHeader !== true && (
+                {showHeaderTabs && (
                     <nav aria-label="tabs" className="fern-header-tabs">
                         {renderBackground()}
                         <HeaderTabs />

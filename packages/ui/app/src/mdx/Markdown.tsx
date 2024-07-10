@@ -1,11 +1,11 @@
 import cn from "clsx";
 import React from "react";
 import { MdxContent } from "./MdxContent";
-import { SerializedMdxContent } from "./mdx";
+import type { BundledMDX } from "./types";
 
 export declare namespace Markdown {
     export interface Props {
-        mdx: SerializedMdxContent | undefined;
+        mdx: BundledMDX | undefined;
         className?: string;
         notProse?: boolean;
     }

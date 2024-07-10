@@ -4,6 +4,7 @@ import cn from "clsx";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement } from "react";
+import { DOCS_LAYOUT_ATOM } from "../atoms/layout";
 import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../atoms/viewport";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
@@ -36,7 +37,8 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
 };
 
 export function MobileSidebarHeaderLinks(): ReactElement | null {
-    const { layout, navbarLinks } = useDocsContext();
+    const layout = useAtomValue(DOCS_LAYOUT_ATOM);
+    const { navbarLinks } = useDocsContext();
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     if (navbarLinks == null || navbarLinks.length === 0) {
         return null;

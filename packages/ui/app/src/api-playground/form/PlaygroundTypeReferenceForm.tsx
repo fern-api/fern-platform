@@ -1,7 +1,7 @@
 import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement, memo, useCallback } from "react";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
+import { useDomain } from "../../atoms/navigation";
 import {
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
@@ -36,7 +36,7 @@ interface PlaygroundTypeReferenceFormProps {
 }
 
 export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps>((props) => {
-    const { domain } = useDocsContext();
+    const domain = useDomain();
     const { id, property, shape, onChange, value, types, disabled } = props;
     const onRemove = useCallback(() => {
         onChange(undefined);

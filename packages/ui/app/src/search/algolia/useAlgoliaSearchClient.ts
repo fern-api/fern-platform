@@ -1,11 +1,12 @@
 import { assertNonNullish } from "@fern-ui/core-utils";
 import algolia, { SearchClient } from "algoliasearch";
+import { useAtomValue } from "jotai";
 import { useMemo } from "react";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
+import { CURRENT_VERSION_ID_ATOM } from "../../atoms/navigation";
 import { useSearchConfig } from "../../services/useSearchService";
 
 export function useAlgoliaSearchClient(): [SearchClient, index: string] | undefined {
-    const { currentVersionId } = useDocsContext();
+    const currentVersionId = useAtomValue(CURRENT_VERSION_ID_ATOM);
     const [searchConfig] = useSearchConfig();
 
     return useMemo(() => {

@@ -12,26 +12,14 @@ import { FernDocsFrontmatter } from "../frontmatter";
 import { makeToc } from "./makeToc";
 import { wrapChildren } from "./to-estree";
 
-export interface PageHeaderProps {
-    breadcrumbs: string[];
-
-    // the following are defaults, can be overridden by frontmatter
-    title: string;
-    subtitle?: string;
-    editThisPageUrl?: string;
-
-    // the following are overrides that "forces" a config regardless of frontmatter
-    layout?: FernDocsFrontmatter["layout"]; // sometimes we need to force a layout, e.g. reference layout for endpoints
-    hideNavLinks?: boolean;
-
-    // feature flags
-    isTocDefaultEnabled: boolean;
+interface Options {
+    matter: FernDocsFrontmatter;
 }
 
-export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: VFile) => void {
+export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => void {
     return async (tree, vfile) => {
-        let matter = vfile.data.matter as FernDocsFrontmatter | undefined;
-        matter = mergePropsWithMatter(props, matter);
+        const matter = mergeMatter(vfile.data.matter as FernDocsFrontmatter | undefined, opt.matter);
+        opt.matter = matter;
         vfile.data.matter = matter;
 
         const asideContents = collectAsideContent(tree);
@@ -47,7 +35,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
 
         const children = tree.children as ElementContent[];
         const subtitle = matter.subtitle != null ? wrapChildren(parseMarkdown(matter.subtitle)) : undefined;
-        const tableOfContents = makeToc(tree, matter["force-toc"]);
+        const tableOfContents = matter["hide-toc"] ?? false ? undefined : makeToc(tree, matter["force-toc"] ?? false);
         const aside = wrapChildren(asideContents);
         switch (matter.layout) {
             case "custom":
@@ -60,18 +48,17 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                     tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: false,
+                    hideFeedback: matter["hide-feedback"] ?? false,
                 });
             case "page":
                 return toPageLayoutHastNode({
                     breadcrumbs: matter.breadcrumbs ?? [],
                     title: matter.title ?? "",
                     subtitle,
-                    tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: false,
-                    hideNavLinks: false,
+                    hideFeedback: matter["hide-feedback"] ?? false,
+                    hideNavLinks: matter["hide-nav-links"] ?? false,
                 });
             case "reference":
                 return toReferenceLayoutHastNode({
@@ -81,7 +68,7 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                     children,
                     aside,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: false,
+                    hideFeedback: matter["hide-feedback"] ?? false,
                 });
             default:
                 return toGuideLayoutHastNode({
@@ -91,31 +78,34 @@ export function rehypeFernLayout(props?: PageHeaderProps): (tree: Root, vfile: V
                     tableOfContents,
                     children,
                     editThisPageUrl: matter["edit-this-page-url"],
-                    hideFeedback: false,
-                    hideNavLinks: false,
+                    hideFeedback: matter["hide-feedback"] ?? false,
+                    hideNavLinks: matter["hide-nav-links"] ?? false,
                 });
         }
     };
 }
 
-function mergePropsWithMatter(
-    props: PageHeaderProps | undefined,
+export function mergeMatter(
     matter: FernDocsFrontmatter | undefined,
+    defaults: FernDocsFrontmatter,
 ): FernDocsFrontmatter {
-    if (matter == null || props == null) {
+    if (matter == null) {
         return {
             layout: "guide",
+            ...defaults,
         };
     }
 
     return {
-        title: matter.title ?? props.title,
-        subtitle: matter.subtitle ?? matter.excerpt ?? props.subtitle,
-        "edit-this-page-url": matter["edit-this-page-url"] ?? matter.editThisPageUrl ?? props.editThisPageUrl,
-        layout: props.layout ?? matter.layout ?? "guide",
-        "hide-nav-links": props.hideNavLinks ?? matter["hide-nav-links"],
-        breadcrumbs: matter.breadcrumbs ?? props.breadcrumbs,
-        "force-toc": matter["force-toc"] ?? props.isTocDefaultEnabled,
+        ...defaults,
+        ...matter,
+        title: matter.title ?? defaults.title,
+        subtitle: matter.subtitle ?? matter.excerpt ?? defaults.subtitle,
+        "edit-this-page-url": matter["edit-this-page-url"] ?? matter.editThisPageUrl ?? defaults.editThisPageUrl,
+        layout: defaults.layout ?? matter.layout ?? "guide",
+        "hide-nav-links": defaults["hide-nav-links"] ?? matter["hide-nav-links"],
+        breadcrumbs: matter.breadcrumbs ?? defaults.breadcrumbs,
+        "force-toc": matter["force-toc"] ?? defaults["force-toc"],
     };
 }
 

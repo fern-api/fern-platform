@@ -13,7 +13,7 @@ describe("resolveApiDefinition", () => {
 
         const fixture = JSON.parse(content) as APIV1Read.ApiDefinition;
         const holder = FernNavigation.ApiDefinitionHolder.create(fixture);
-        const typeResolver = new ApiTypeResolver(fixture.types);
+        const typeResolver = new ApiTypeResolver(fixture.types, undefined);
 
         // mocked node
         const node = FernNavigation.ApiReferenceNavigationConverter.convert(
@@ -46,7 +46,7 @@ describe("resolveApiDefinition", () => {
 
         const fixture = JSON.parse(content) as APIV1Read.ApiDefinition;
         const holder = FernNavigation.ApiDefinitionHolder.create(fixture);
-        const typeResolver = new ApiTypeResolver(fixture.types);
+        const typeResolver = new ApiTypeResolver(fixture.types, undefined);
 
         // mocked node
         const node = FernNavigation.ApiReferenceNavigationConverter.convert(

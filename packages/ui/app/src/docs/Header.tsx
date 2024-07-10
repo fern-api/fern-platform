@@ -5,6 +5,7 @@ import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
+import { SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
 import { useOpenSearchDialog } from "../atoms/sidebar";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
@@ -21,12 +22,11 @@ export declare namespace Header {
     export interface Props {
         className?: string;
         style?: CSSProperties;
-        showSearchBar?: boolean;
     }
 }
 
 const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
-    { className, style, showSearchBar = true },
+    { className, style },
     ref,
 ) {
     const { navbarLinks } = useDocsContext();
@@ -34,6 +34,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const [searchService] = useSearchConfig();
+    const showSearchBar = !useAtomValue(SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM);
 
     const navbarLinksSection = (
         <div className="lg-menu">
@@ -117,7 +118,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                             variant="minimal"
                             rounded={true}
                             size="large"
-                            className="hidden sm:inline"
+                            className="max-sm:hidden"
                         />
                     )}
 
@@ -130,10 +131,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
 
 export const Header = memo(
     UnmemoizedHeader,
-    (prev, next) =>
-        prev.className === next.className &&
-        isEqual(prev.style, next.style) &&
-        prev.showSearchBar === next.showSearchBar,
+    (prev, next) => prev.className === next.className && isEqual(prev.style, next.style),
 );
 
 export declare namespace HeaderPrimaryLink {

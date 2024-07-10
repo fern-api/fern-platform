@@ -1,3 +1,4 @@
+export * from "./CopyToClipboardButton";
 export * from "./Empty";
 export * from "./FernAudioPlayer";
 export * from "./FernButton";
@@ -11,6 +12,7 @@ export * from "./FernModal";
 export * from "./FernNumericInput";
 export * from "./FernRadioGroup";
 export * from "./FernScrollArea";
+export * from "./FernSdk";
 export * from "./FernSegmentedControl";
 export * from "./FernSelect";
 export * from "./FernSwitch";

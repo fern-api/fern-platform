@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    transpilePackages: ["@fern-ui/ui", "next-mdx-remote"],
+    transpilePackages: ["next-mdx-remote"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     reactProductionProfiling: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,
+        optimizePackageImports: ["@fern-ui/ui"],
     },
     reactStrictMode: true,
     images: {

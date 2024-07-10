@@ -2,8 +2,8 @@ import { FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { useFeatureFlags } from "../atoms/flags";
+import { useDomain } from "../atoms/navigation";
 import { FernLink } from "../components/FernLink";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { FernLogo } from "./FernLogo";
 
 const BUILT_WITH_FERN_TOOLTIP_CONTENT = "Handcrafted SDKs and Docs for your API";
@@ -15,7 +15,7 @@ export declare namespace BuiltWithFern {
 }
 
 export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
-    const { domain } = useDocsContext();
+    const domain = useDomain();
     const { isWhitelabeled } = useFeatureFlags();
     const { isHovering, ...containerCallbacks } = useIsHovering();
 

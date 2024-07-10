@@ -95,7 +95,7 @@
         @apply max-sm:w-full max-sm:inset-x-0;
     }
 
-    .fern-sidebar-container.desktop {
+    .fern-sidebar-container:not(.dismissable) {
         @apply max-lg:hidden;
     }
 
@@ -117,10 +117,9 @@
         .fern-endpoint-content-right {
             @apply max-w-content-width;
             @apply md:flex-1 md:sticky md:self-start md:top-header-offset;
-            @apply max-md:mt-12;
 
             // the 4rem is the same as the h-10 as the Header
-            @apply max-h-content py-8 flex max-md:pt-0;
+            @apply max-h-content py-8 flex;
         }
     }
 
@@ -156,7 +155,7 @@
         @apply gap-8;
 
         .fern-layout-content {
-            @apply pt-8 mx-auto w-full xl:mx-auto pb-20;
+            @apply pt-8 mx-auto w-full xl:mx-auto pb-20 min-w-0;
         }
 
         &:has(.fern-layout-toc) {

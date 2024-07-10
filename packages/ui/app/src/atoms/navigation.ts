@@ -1,9 +1,32 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { atom, useAtomValue } from "jotai";
 import { atomWithReducer } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import { ResolvedPath } from "../resolver/ResolvedPath";
 import { SLUG_ATOM } from "./location";
+
+export const DOMAIN_ATOM = atom<string>("app.buildwithfern.com");
+export const BASEPATH_ATOM = atom<string | undefined>(undefined);
+export const TABS_ATOM = atom<SidebarTab[]>([]);
+export const VERSIONS_ATOM = atom<SidebarVersionInfo[]>([]);
+export const CURRENT_TAB_INDEX_ATOM = atom<number | undefined>(undefined);
+export const CURRENT_VERSION_ID_ATOM = atom<FernNavigation.VersionId | undefined>(undefined);
+
+export const CURRENT_VERSION_ATOM = atom((get) => {
+    const versionId = get(CURRENT_VERSION_ID_ATOM);
+    const versions = get(VERSIONS_ATOM);
+    return versions.find((v) => v.id === versionId);
+});
+
+export const CURRENT_TAB_ATOM = atom((get) => {
+    const tabIndex = get(CURRENT_TAB_INDEX_ATOM);
+    if (tabIndex == null) {
+        return undefined;
+    }
+    const tabs = get(TABS_ATOM);
+    return tabs[tabIndex];
+});
 
 export const SIDEBAR_ROOT_NODE_ATOM = atom<FernNavigation.SidebarRootNode | undefined>(undefined);
 
@@ -13,7 +36,7 @@ export const RESOLVED_PATH_ATOM = atomWithReducer<ResolvedPath, ResolvedPath>(
         type: "custom-markdown-page",
         fullSlug: "",
         title: "",
-        serializedMdxContent: "",
+        mdx: "",
         neighbors: { prev: null, next: null },
         apis: {},
     },
@@ -50,4 +73,12 @@ export function useCurrentNodeId(): FernNavigation.NodeId | undefined {
 
 export function useResolvedPath(): ResolvedPath {
     return useAtomValue(RESOLVED_PATH_ATOM);
+}
+
+export function useDomain(): string {
+    return useAtomValue(DOMAIN_ATOM);
+}
+
+export function useBasePath(): string | undefined {
+    return useAtomValue(BASEPATH_ATOM);
 }

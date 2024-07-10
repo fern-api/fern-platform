@@ -1,4 +1,5 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { compile, match } from "path-to-regexp";
 import urljoin from "url-join";
 
 const HUME_REDIRECTS: DocsV1Read.RedirectConfig[] = [
@@ -29,9 +30,19 @@ export function getRedirectForPath(
     baseUrl: DocsV2Read.BaseUrl,
     redirects: DocsV1Read.RedirectConfig[] = [],
 ): DocsV1Read.RedirectConfig | undefined {
-    return [...getRedirects(baseUrl.domain), ...withBasepath(redirects, baseUrl.basePath)].find(
-        (redirect) => redirect.source === path,
-    );
+    for (const redirect of [...getRedirects(baseUrl.domain), ...withBasepath(redirects, baseUrl.basePath)]) {
+        if (redirect.source === path) {
+            return redirect;
+        }
+        const sourceFn = match(redirect.source, { decode: false });
+        const result = sourceFn(path);
+        if (result) {
+            const destFn = compile(redirect.destination, { encode: false });
+            const destination = destFn(result.params);
+            return { source: path, destination };
+        }
+    }
+    return undefined;
 }
 
 function withBasepath(
@@ -42,7 +53,6 @@ function withBasepath(
         return redirects;
     }
     return redirects.map((redirect) => ({
-        ...redirect,
         source: redirect.source.startsWith(basePath) ? redirect.source : urljoin(basePath, redirect.source),
         destination: redirect.destination,
     }));

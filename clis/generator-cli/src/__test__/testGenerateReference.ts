@@ -1,35 +1,27 @@
 import execa from "execa";
+import { writeFile } from "fs/promises";
 import path from "path";
-
-const FIXTURES_PATH = path.join(__dirname, "fixtures");
+import tmp from "tmp-promise";
+import { FernGeneratorCli } from "../configuration/generated";
+import * as serializers from "../configuration/generated/serialization";
 
 export function testGenerateReference({
     fixtureName,
-    referenceConfigFilename,
+    config,
 }: {
     fixtureName: string;
-    referenceConfigFilename: string;
+    config: FernGeneratorCli.ReferenceConfig;
 }): void {
     // eslint-disable-next-line vitest/valid-title
     describe(fixtureName, () => {
-        it("generate reference file", async () => {
-            const absolutePathToReferenceConfig = getAbsolutePathToFixtureFile({
-                fixtureName,
-                filepath: referenceConfigFilename,
-            });
-            const args = [
-                path.join(__dirname, "../../dist/cli.cjs"),
-                "generate-reference",
-                "--config",
-                absolutePathToReferenceConfig,
-            ];
+        it("generate readme", async () => {
+            const file = await tmp.file();
+            const json = JSON.stringify(await serializers.ReferenceConfig.jsonOrThrow(config), undefined, 2);
+            await writeFile(file.path, json);
 
+            const args = [path.join(__dirname, "../../dist/cli.cjs"), "generate-reference", "--config", file.path];
             const { stdout } = await execa("node", args);
             expect(stdout).toMatchSnapshot();
         });
     });
-}
-
-function getAbsolutePathToFixtureFile({ fixtureName, filepath }: { fixtureName: string; filepath: string }): string {
-    return path.join(FIXTURES_PATH, fixtureName, filepath);
 }

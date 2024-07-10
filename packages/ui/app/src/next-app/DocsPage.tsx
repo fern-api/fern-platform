@@ -1,15 +1,27 @@
 import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import type { DefaultSeoProps, JsonLd } from "@fern-ui/next-seo";
+import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useHydrateAtoms } from "jotai/utils";
 import { Redirect } from "next";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { CustomerAnalytics } from "../analytics/types";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
-import { FeatureFlags } from "../atoms/flags";
+import { FEATURE_FLAGS_ATOM, FeatureFlags } from "../atoms/flags";
+import { DOCS_LAYOUT_ATOM } from "../atoms/layout";
 import { SLUG_ATOM } from "../atoms/location";
-import { RESOLVED_PATH_ATOM } from "../atoms/navigation";
+import { LOGO_TEXT_ATOM } from "../atoms/logo";
+import {
+    BASEPATH_ATOM,
+    CURRENT_TAB_INDEX_ATOM,
+    CURRENT_VERSION_ID_ATOM,
+    DOMAIN_ATOM,
+    RESOLVED_PATH_ATOM,
+    SIDEBAR_ROOT_NODE_ATOM,
+    TABS_ATOM,
+    VERSIONS_ATOM,
+} from "../atoms/navigation";
 import { useMessageHandler } from "../atoms/sidebar";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
@@ -70,10 +82,24 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
 
     useConsoleMessage();
     useMessageHandler();
+
+    // Note: only hydrate atoms here.
     useHydrateAtoms(
         [
+            [DOMAIN_ATOM, baseUrl.domain],
+            [BASEPATH_ATOM, baseUrl.basePath],
             [RESOLVED_PATH_ATOM, resolvedPath],
             [SLUG_ATOM, FernNavigation.Slug(resolvedPath.fullSlug)],
+            [DOCS_LAYOUT_ATOM, useDeepCompareMemoize(pageProps.layout)],
+            [SIDEBAR_ROOT_NODE_ATOM, useDeepCompareMemoize(pageProps.navigation.sidebar)],
+            [FEATURE_FLAGS_ATOM, useDeepCompareMemoize(pageProps.featureFlags)],
+            [TABS_ATOM, useDeepCompareMemoize(pageProps.navigation.tabs)],
+            [VERSIONS_ATOM, useDeepCompareMemoize(pageProps.navigation.versions)],
+            [CURRENT_TAB_INDEX_ATOM, pageProps.navigation.currentTabIndex],
+            [CURRENT_VERSION_ID_ATOM, pageProps.navigation.currentVersionId],
+
+            // TODO: remove this once we have a better way to hydrate the logo text
+            [LOGO_TEXT_ATOM, baseUrl.domain.includes("cohere") ? "docs" : undefined],
         ],
         { dangerouslyForceHydrate: true },
     );

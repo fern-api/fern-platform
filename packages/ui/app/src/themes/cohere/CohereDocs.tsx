@@ -2,11 +2,9 @@ import { FernScrollArea } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
-import { useHydrateAtoms } from "jotai/utils";
 import { Router } from "next/router";
 import { ReactElement, memo, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { CONTENT_HEIGHT_ATOM, SHOW_HEADER_ATOM } from "../../atoms/layout";
-import { LOGO_TEXT_ATOM } from "../../atoms/logo";
 import { SIDEBAR_DISABLED_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
 import { SCROLL_BODY_ATOM } from "../../atoms/viewport";
 import { DocsMainContent } from "../../docs/DocsMainContent";
@@ -35,10 +33,6 @@ function UnmemoizedCohereDocs(): ReactElement {
 
     const isSidebarDisabled = useAtomValue(SIDEBAR_DISABLED_ATOM);
     const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
-
-    useHydrateAtoms([[LOGO_TEXT_ATOM, "docs"]], {
-        dangerouslyForceHydrate: true,
-    });
 
     const mainRef = useRef<HTMLDivElement>(null);
     useImperativeHandle(useSetAtom(SCROLL_BODY_ATOM), () => mainRef.current ?? undefined);

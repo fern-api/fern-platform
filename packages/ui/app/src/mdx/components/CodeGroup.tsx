@@ -1,9 +1,9 @@
+import { CopyToClipboardButton } from "@fern-ui/components";
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useState } from "react";
 import { useFeatureFlags } from "../../atoms/flags";
 import { HorizontalOverflowMask } from "../../commons/HorizontalOverflowMask";
-import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 
 export declare namespace CodeGroup {

@@ -1,4 +1,5 @@
 import {
+    CopyToClipboardButton,
     FernAudioPlayer,
     FernButton,
     FernButtonGroup,
@@ -15,11 +16,10 @@ import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { useFeatureFlags } from "../atoms/flags";
+import { useDomain } from "../atoms/navigation";
 import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
 import { FernErrorTag } from "../components/FernErrorBoundary";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
-import { CopyToClipboardButton } from "../syntax-highlighting/CopyToClipboardButton";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormButtons } from "./PlaygroundEndpointFormButtons";
@@ -54,8 +54,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     sendRequest,
     types,
 }) => {
-    const { domain } = useDocsContext();
-
+    const domain = useDomain();
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 

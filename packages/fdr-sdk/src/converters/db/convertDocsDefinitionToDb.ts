@@ -109,6 +109,7 @@ export function convertDocsDefinitionToDb({
             integrations: writeShape.config.integrations,
         },
         pages: writeShape.pages,
+        jsFiles: writeShape.jsFiles,
     };
 }
 
