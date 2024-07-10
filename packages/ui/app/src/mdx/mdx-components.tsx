@@ -1,6 +1,6 @@
 import { FernScrollArea, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import type { MDXComponents } from "mdx/types";
-import { HTMLAttributes, PropsWithChildren, ReactElement } from "react";
+import { ComponentProps, PropsWithChildren, ReactElement } from "react";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { FernErrorBoundaryProps, FernErrorTag } from "../components/FernErrorBoundary";
 import { Feedback } from "../custom-docs-page/Feedback";
@@ -9,7 +9,7 @@ import { GuideLayout } from "../layout/GuideLayout";
 import { OverviewLayout } from "../layout/OverviewLayout";
 import { PageLayout } from "../layout/PageLayout";
 import { ReferenceLayout } from "../layout/ReferenceLayout";
-import { A, HeadingRenderer, Image, Li, Ol, P, Strong, Ul } from "./base-components";
+import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./base-components";
 import { AccordionGroup } from "./components/AccordionGroup";
 import { Availability } from "./components/Availability";
 import { Badge } from "./components/Badge";
@@ -100,6 +100,17 @@ export const JSX_COMPONENTS = {
 
     Image,
     IFrame,
+    H1: (props: ComponentProps<"h1">): ReactElement => HeadingRenderer(1, props),
+    H2: (props: ComponentProps<"h2">): ReactElement => HeadingRenderer(2, props),
+    H3: (props: ComponentProps<"h3">): ReactElement => HeadingRenderer(3, props),
+    H4: (props: ComponentProps<"h4">): ReactElement => HeadingRenderer(4, props),
+    H5: (props: ComponentProps<"h5">): ReactElement => HeadingRenderer(5, props),
+    H6: (props: ComponentProps<"h6">): ReactElement => HeadingRenderer(6, props),
+    Ol,
+    Ul,
+    Li,
+    A,
+    Strong,
 };
 
 export const HTML_COMPONENTS: MDXComponents = {
@@ -110,8 +121,6 @@ export const HTML_COMPONENTS: MDXComponents = {
     h4: (props) => HeadingRenderer(4, props),
     h5: (props) => HeadingRenderer(5, props),
     h6: (props) => HeadingRenderer(6, props),
-    p: (props: HTMLAttributes<HTMLParagraphElement>) => <P variant="markdown" {...props} />,
-    P,
     ol: Ol,
     ul: Ul,
     li: Li,

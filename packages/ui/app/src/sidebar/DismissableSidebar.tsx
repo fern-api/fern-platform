@@ -1,4 +1,3 @@
-import * as Portal from "@radix-ui/react-portal";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -39,34 +38,29 @@ export function DismissableSidebar({ className }: { className?: string }): React
         }, []),
     );
 
-    const container = typeof document !== "undefined" ? document.getElementById("fern-docs") : null;
     return (
-        <Portal.Root>
-            <Portal.Portal container={container}>
-                <AnimatePresence>
-                    {showSidebar && (
-                        <motion.div
-                            className="inset-0 fixed bg-background/50 z-20"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: isMobileScreen ? 0 : 0.15, curve: [0.16, 1, 0.3, 1] }}
-                            onClickCapture={() => setIsMobileSidebarOpen(false)}
-                        />
-                    )}
-                    {showSidebar && (
-                        <SidebarContainerMotion
-                            key="sidebar"
-                            ref={sidebarRef}
-                            className={clsx("dismissable z-50", className)}
-                            initial={{ x: "-100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "-100%" }}
-                            transition={{ duration: isMobileScreen ? 0 : 0.15, curve: [0.16, 1, 0.3, 1] }}
-                        />
-                    )}
-                </AnimatePresence>
-            </Portal.Portal>
-        </Portal.Root>
+        <AnimatePresence>
+            {showSidebar && (
+                <motion.div
+                    className="inset-0 fixed bg-background/50 z-20"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: isMobileScreen ? 0 : 0.15, curve: [0.16, 1, 0.3, 1] }}
+                    onClickCapture={() => setIsMobileSidebarOpen(false)}
+                />
+            )}
+            {showSidebar && (
+                <SidebarContainerMotion
+                    key="sidebar"
+                    ref={sidebarRef}
+                    className={clsx("dismissable z-50", className)}
+                    initial={{ x: "-100%" }}
+                    animate={{ x: 0 }}
+                    exit={{ x: "-100%" }}
+                    transition={{ duration: isMobileScreen ? 0 : 0.15, curve: [0.16, 1, 0.3, 1] }}
+                />
+            )}
+        </AnimatePresence>
     );
 }

@@ -8,6 +8,10 @@
 
         .lg-menu {
             @apply hidden lg:block;
+
+            .fern-theme-button {
+                @apply hidden lg:flex;
+            }
         }
 
         .max-lg-menu {

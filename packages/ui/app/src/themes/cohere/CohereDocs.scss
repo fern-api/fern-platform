@@ -1,6 +1,4 @@
 .fern-theme-cohere.fern-container {
-    --card-border: #d8cfc1;
-
     @apply fixed inset-0 p-3;
     @apply flex flex-col gap-3;
 
@@ -89,12 +87,13 @@
             }
 
             &:hover {
-                @apply bg-[#F5F5F5];
+                background-color: var(--bg-color-header-tab-inactive-hover);
             }
         }
 
         .fern-header-tab-button[data-state="active"] {
-            @apply border-[#D8CFC1] bg-[#E8E6DE];
+            border-color: var(--border-color-header-tab-active);
+            background-color: var(--bg-color-header-tab-active);
 
             .fa-icon {
                 @apply bg-text-default;

@@ -33,7 +33,12 @@ export const FernScrollArea = forwardRef<HTMLDivElement, FernScrollArea.Props>((
             dir={dir}
             scrollHideDelay={scrollHideDelay}
         >
-            <ScrollArea.Viewport ref={ref} className={cn("fern-scroll-area-viewport", className)} {...viewportProps}>
+            <ScrollArea.Viewport
+                ref={ref}
+                className={cn("fern-scroll-area-viewport", className)}
+                data-scrollbars={scrollbars}
+                {...viewportProps}
+            >
                 {children}
             </ScrollArea.Viewport>
             {scrollbars !== "horizontal" && (

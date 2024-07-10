@@ -5,6 +5,7 @@ import { useCurrentNodeId } from "../../atoms/navigation";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
+import { SidebarPageNode } from "./SidebarPageNode";
 
 interface SidebarSectionNodeProps {
     node: FernNavigation.SectionNode;
@@ -14,33 +15,24 @@ interface SidebarSectionNodeProps {
 
 export function SidebarSectionNode({ node, className, depth }: SidebarSectionNodeProps): React.ReactElement | null {
     const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
-    const selectedNodeId = useCurrentNodeId();
     const handleToggleExpand = useCallback(() => toggleExpanded(node.id), [node.id, toggleExpanded]);
+    const selectedNodeId = useCurrentNodeId();
 
     if (node.children.length === 0) {
-        if (node.overviewPageId == null) {
-            return null;
+        if (node.overviewPageId != null) {
+            return (
+                <SidebarPageNode
+                    node={{
+                        ...node,
+                        type: "page",
+                        pageId: node.overviewPageId,
+                    }}
+                    depth={depth}
+                    className={className}
+                />
+            );
         }
-
-        if (node.hidden && selectedNodeId !== node.id) {
-            return null;
-        }
-
-        return (
-            <SidebarSlugLink
-                nodeId={node.id}
-                className={className}
-                slug={node.slug}
-                depth={Math.max(depth - 1, 0)}
-                registerScrolledToPathListener={registerScrolledToPathListener}
-                title={node.title}
-                selected={node.id === selectedNodeId}
-                icon={node.icon}
-                hidden={node.hidden}
-                shallow={selectedNodeId === node.id}
-                scrollOnShallow={false}
-            />
-        );
+        return null;
     }
 
     const childSelected = checkChildSelected(node.id);
@@ -49,7 +41,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
         return null;
     }
 
-    const expanded = checkExpanded(node.id);
+    const expanded = childSelected || selectedNodeId === node.id || checkExpanded(node.id);
     const showIndicator = childSelected && !expanded;
     return (
         <SidebarSlugLink
@@ -64,6 +56,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
             showIndicator={showIndicator}
             hidden={node.hidden}
             slug={node.overviewPageId != null ? node.slug : undefined}
+            selected={selectedNodeId === node.id}
         >
             <ul
                 className={clsx("fern-sidebar-group", {

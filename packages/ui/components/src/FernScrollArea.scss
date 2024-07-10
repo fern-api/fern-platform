@@ -4,12 +4,23 @@
     }
 
     .fern-scroll-area-viewport {
-        @apply h-full w-full shrink flex min-h-0;
+        @apply h-full w-full shrink flex flex-col min-h-0;
 
         border-radius: inherit;
 
+        /* Stop Chrome back/forward two-finger swipe when there is a horizontal scrollbar */
+        &:where(:has(.fern-scroll-area-scrollbar[data-orientation="horizontal"])) {
+            overscroll-behavior-x: contain;
+        }
+
         > div {
-            @apply h-full;
+            display: block !important;
+            width: fit-content;
+            flex-grow: 1;
+        }
+
+        &[data-scrollbars="vertical"] > div {
+            max-width: 100%;
         }
     }
 
