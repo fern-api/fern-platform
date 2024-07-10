@@ -92,7 +92,38 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveV1Template(template: Template, payloadOverride?: unknown): V1Snippet | undefined {
+    private defaultTemplate(template: Template): V1Snippet {
+        let invocation;
+        switch (template.type) {
+            case "generic":
+            case "discriminatedUnion":
+            case "union":
+            case "enum":
+                invocation = template.templateString?.replace(TemplateSentinel, "") ?? "";
+                break;
+            case "dict":
+                invocation = "{}";
+                break;
+            case "iterable":
+                invocation = template.containerTemplateString.replace(TemplateSentinel, "");
+                break;
+        }
+
+        return {
+            imports: template.imports ?? [],
+            invocation,
+        };
+    }
+
+    private resolveV1Template({
+        template,
+        payloadOverride,
+        isRequired,
+    }: {
+        template: Template;
+        payloadOverride?: unknown;
+        isRequired?: boolean;
+    }): V1Snippet | undefined {
         const imports: string[] = template.imports ?? [];
         switch (template.type) {
             case "generic": {
@@ -122,7 +153,7 @@ export class SnippetTemplateResolver {
                             continue;
                         }
 
-                        const evaluatedInput = this.resolveV1Template(input.value, payloadOverride);
+                        const evaluatedInput = this.resolveV1Template({ template: input.value, payloadOverride });
                         if (evaluatedInput != null) {
                             evaluatedInputs.push(evaluatedInput);
                         }
@@ -137,20 +168,26 @@ export class SnippetTemplateResolver {
                               evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
                           ),
                       }
-                    : undefined;
+                    : // We should do this for all required properties, ideally with defaults, but for now let's just do this on top level templates
+                      isRequired
+                      ? this.defaultTemplate(template)
+                      : undefined;
             }
             case "iterable": {
                 if (template.templateInput == null) {
-                    return undefined;
+                    return isRequired ? this.defaultTemplate(template) : undefined;
                 }
                 const payloadValue = this.getPayloadValue(template.templateInput);
                 if (!Array.isArray(payloadValue)) {
-                    return undefined;
+                    return isRequired ? this.defaultTemplate(template) : undefined;
                 }
 
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const value of payloadValue) {
-                    const evaluatedInput = this.resolveV1Template(template.innerTemplate, value);
+                    const evaluatedInput = this.resolveV1Template({
+                        template: template.innerTemplate,
+                        payloadOverride: value,
+                    });
                     if (evaluatedInput != null) {
                         evaluatedInputs.push(evaluatedInput);
                     }
@@ -165,19 +202,22 @@ export class SnippetTemplateResolver {
             }
             case "dict": {
                 if (template.templateInput == null) {
-                    return undefined;
+                    return isRequired ? this.defaultTemplate(template) : undefined;
                 }
                 const payloadValue = this.getPayloadValue(template.templateInput, payloadOverride);
                 if (payloadValue == null || Array.isArray(payloadValue) || typeof payloadValue !== "object") {
-                    return undefined;
+                    return isRequired ? this.defaultTemplate(template) : undefined;
                 }
 
                 // const payloadMap = payloadValue as Map<string, unknown>;
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const key in payloadValue) {
                     const value = payloadValue[key as keyof typeof payloadValue];
-                    const keySnippet = this.resolveV1Template(template.keyTemplate, key);
-                    const valueSnippet = this.resolveV1Template(template.valueTemplate, value);
+                    const keySnippet = this.resolveV1Template({ template: template.keyTemplate, payloadOverride: key });
+                    const valueSnippet = this.resolveV1Template({
+                        template: template.valueTemplate,
+                        payloadOverride: value,
+                    });
                     if (keySnippet != null && valueSnippet != null) {
                         evaluatedInputs.push({
                             imports: keySnippet.imports.concat(valueSnippet.imports),
@@ -198,7 +238,7 @@ export class SnippetTemplateResolver {
                 const enumSdkValues = Object.values(template.values);
                 const defaultEnumValue = enumSdkValues[0];
                 if (template.templateInput == null || defaultEnumValue == null) {
-                    return undefined;
+                    return isRequired ? this.defaultTemplate(template) : undefined;
                 }
                 const maybeEnumWireValue = this.getPayloadValue(template.templateInput, payloadOverride);
                 const enumSdkValue =
@@ -219,35 +259,37 @@ export class SnippetTemplateResolver {
                     payloadOverride,
                 );
                 if (maybeUnionValue == null || !isPlainObject(maybeUnionValue) || !(discriminator in maybeUnionValue)) {
-                    return undefined;
+                    return isRequired ? this.defaultTemplate(template) : undefined;
                 }
 
                 const discriminatorValue = maybeUnionValue[discriminator];
                 if (typeof discriminatorValue !== "string") {
-                    return undefined;
+                    return isRequired ? this.defaultTemplate(template) : undefined;
                 }
 
                 const selectedMemberTemplate = unionMembers[discriminatorValue];
 
                 if (!selectedMemberTemplate) {
-                    return undefined;
+                    return isRequired ? this.defaultTemplate(template) : undefined;
                 }
 
-                const evaluatedMember: V1Snippet | undefined = this.resolveV1Template(
-                    selectedMemberTemplate,
+                const evaluatedMember: V1Snippet | undefined = this.resolveV1Template({
+                    template: selectedMemberTemplate,
                     payloadOverride,
-                );
+                });
                 return evaluatedMember != null
                     ? {
                           imports: imports.concat(evaluatedMember.imports),
                           invocation: template.templateString.replace(TemplateSentinel, evaluatedMember.invocation),
                       }
-                    : undefined;
+                    : isRequired
+                      ? this.defaultTemplate(template)
+                      : undefined;
             }
             case "union":
                 // TODO: evaluate the shape of the object, compared against the union members to select
                 // the closest fit, evaluate and return that. This is what the ApiDefinition is for.
-                return undefined;
+                return isRequired ? this.defaultTemplate(template) : undefined;
         }
     }
 
@@ -264,7 +306,7 @@ export class SnippetTemplateResolver {
         const clientSnippet =
             typeof template.clientInstantiation === "string"
                 ? template.clientInstantiation
-                : this.resolveV1Template(template.clientInstantiation);
+                : this.resolveV1Template({ template: template.clientInstantiation, isRequired: true });
         let endpointSnippet: V1Snippet | undefined;
         if (this.isPayloadEmpty()) {
             let invocation: string;
@@ -290,7 +332,7 @@ export class SnippetTemplateResolver {
                 invocation,
             };
         } else {
-            endpointSnippet = this.resolveV1Template(template.functionInvocation);
+            endpointSnippet = this.resolveV1Template({ template: template.functionInvocation, isRequired: true });
         }
 
         // TODO: We should split the Snippet data model to return these independently
