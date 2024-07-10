@@ -51,8 +51,8 @@ export const CSS_VARIABLES = {
     BACKGROUND: "--background",
     // contrast colors are useful for rendering text on top of where accent is the background color
     ACCENT_PRIMARY_CONTRAST: "--accent-contrast",
-    CARD_BACKGROUND: "--card-background",
-    CARD_BACKGROUND_SOLID: "--card-background-solid",
+    CARD_BACKGROUND: "--bg-color-card",
+    CARD_BACKGROUND_SOLID: "--bg-color-card-solid",
     SIDEBAR_BACKGROUND: "--sidebar-background",
     HEADER_BACKGROUND: "--header-background",
     BORDER: "--border",

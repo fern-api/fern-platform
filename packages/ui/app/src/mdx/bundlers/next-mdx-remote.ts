@@ -13,7 +13,9 @@ import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { rehypeFernLayout } from "../plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "../plugins/rehypeSanitizeJSX";
+import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
 import { customHeadingHandler } from "../plugins/remarkRehypeHandlers";
+import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
 import type { BundledMDX, FernSerializeMdxOptions } from "../types";
 import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
 
@@ -32,13 +34,25 @@ function withDefaultMdxOptions({
         },
     };
 
-    const remarkPlugins: PluggableList = [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji];
+    const remarkPlugins: PluggableList = [
+        remarkSqueezeParagraphs,
+        remarkGfm,
+        remarkSmartypants,
+        remarkMath,
+        remarkGemoji,
+    ];
 
     if (options.remarkPlugins != null) {
         remarkPlugins.push(...options.remarkPlugins);
     }
 
-    const rehypePlugins: PluggableList = [rehypeSlug, rehypeKatex, rehypeFernCode, rehypeFernComponents];
+    const rehypePlugins: PluggableList = [
+        rehypeSqueezeParagraphs,
+        rehypeSlug,
+        rehypeKatex,
+        rehypeFernCode,
+        rehypeFernComponents,
+    ];
 
     if (options.rehypePlugins != null) {
         rehypePlugins.push(...options.rehypePlugins);

@@ -241,6 +241,7 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
                 ref={ref}
                 href={slug != null ? slugToHref(slug) : undefined}
                 onClick={handleClick}
+                shallow={innerProps.shallow ?? innerProps.selected}
             />
         );
     },

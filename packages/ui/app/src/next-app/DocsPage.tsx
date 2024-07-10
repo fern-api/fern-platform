@@ -85,10 +85,10 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     // Note: only hydrate atoms here.
     useHydrateAtoms(
         [
-            [DOMAIN_ATOM, baseUrl.domain],
-            [BASEPATH_ATOM, baseUrl.basePath],
+            [DOMAIN_ATOM, baseUrl?.domain],
+            [BASEPATH_ATOM, baseUrl?.basePath],
             [RESOLVED_PATH_ATOM, resolvedPath],
-            [SLUG_ATOM, FernNavigation.Slug(resolvedPath.fullSlug)],
+            [SLUG_ATOM, FernNavigation.Slug(resolvedPath?.fullSlug)],
             [DOCS_LAYOUT_ATOM, useDeepCompareMemoize(pageProps.layout)],
             [SIDEBAR_ROOT_NODE_ATOM, useDeepCompareMemoize(pageProps.navigation.sidebar)],
             [FEATURE_FLAGS_ATOM, useDeepCompareMemoize(pageProps.featureFlags)],

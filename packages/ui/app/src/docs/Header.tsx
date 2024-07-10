@@ -73,7 +73,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     );
                 })}
 
-                {colors.dark && colors.light && <ThemeButton className="hidden lg:flex" />}
+                {colors.dark && colors.light && <ThemeButton />}
             </FernButtonGroup>
         </div>
     );

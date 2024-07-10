@@ -19,14 +19,14 @@ export const ThemeButton: React.FC<ThemeButton.Props> = ({ className, ...props }
     return (
         <FernButton
             {...props}
-            className={cn("group !ml-3", className)}
+            className={cn("fern-theme-button", className)}
             onClick={() => {
                 setTheme(resolvedTheme === "dark" ? "light" : "dark");
             }}
             rounded={true}
             variant="minimal"
             intent="primary"
-            icon={<IconToUse className="size-4 text-intent-default transition-colors group-hover:t-accent" />}
+            icon={<IconToUse className="fern-theme-button-icon" />}
         />
     );
 };
