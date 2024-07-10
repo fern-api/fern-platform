@@ -8,7 +8,7 @@ import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, use
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { ResolvedApiDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { usePlaygroundContext } from "./PlaygroundContext";
+import { useSetAndOpenPlayground } from "./PlaygroundContext";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
@@ -99,7 +99,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(ref, () => scrollRef.current!);
 
-        const { setSelectionStateAndOpen } = usePlaygroundContext();
+        const setSelectionStateAndOpen = useSetAndOpenPlayground();
 
         const [filterValue, setFilterValue] = useState<string>("");
 

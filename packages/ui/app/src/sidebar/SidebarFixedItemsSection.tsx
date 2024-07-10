@@ -1,6 +1,7 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
+import { useAtomValue } from "jotai";
 import { useMemo } from "react";
+import { DOCS_LAYOUT_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { HeaderLogoSection } from "../docs/HeaderLogoSection";
 import { ThemeButton } from "../docs/ThemeButton";
@@ -9,26 +10,19 @@ import { SidebarSearchBar } from "./SidebarSearchBar";
 export declare namespace SidebarFixedItemsSection {
     export interface Props {
         className?: string;
-        logoHeight: DocsV1Read.Height | undefined;
-        logoHref: DocsV1Read.Url | undefined;
         showBorder?: boolean;
-        showSearchBar?: boolean;
         currentTabIndex?: number | undefined;
     }
 }
 
-export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({
-    className,
-    showBorder,
-    showSearchBar,
-    logoHeight,
-    logoHref,
-}) => {
-    const { layout, colors } = useDocsContext();
+export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, showBorder }) => {
+    const showSearchBar = useAtomValue(SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM);
+    const { colors } = useDocsContext();
+    const layout = useAtomValue(DOCS_LAYOUT_ATOM);
 
     const searchBar = useMemo(() => {
         return showSearchBar ? (
-            <div className="mb-3 hidden last:mb-0 lg:block">
+            <div className="fern-sidebar-searchbar-container">
                 <SidebarSearchBar className="w-full" />
             </div>
         ) : null;
@@ -39,21 +33,15 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     }
 
     const header = layout?.disableHeader && (
-        <div className="mx-3 hidden h-header-height-real border-b border-transparent lg:flex lg:items-center lg:justify-between">
-            <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
+        <div className="fern-sidebar-header">
+            <HeaderLogoSection />
             <div className="-mr-3">{colors.dark && colors.light && <ThemeButton size="large" />}</div>
         </div>
     );
 
     return (
         <div
-            className={cn(
-                "flex flex-col px-4",
-                {
-                    "lg:pt-4": !header,
-                },
-                className,
-            )}
+            className={cn("flex flex-col px-4", { "lg:pt-4": !header }, className)}
             data-border={showBorder ? "show" : "hide"}
         >
             {header}

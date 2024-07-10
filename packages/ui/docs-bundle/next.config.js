@@ -30,7 +30,7 @@ const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    transpilePackages: ["@fern-ui/ui"],
+    transpilePackages: ["next-mdx-remote", "esbuild"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,
@@ -63,6 +63,7 @@ const nextConfig = {
             "https://api.segment.io",
             "https://browser-intake-datadoghq.com",
             "wss://api.getkoala.com",
+            "https://www.google-analytics.com",
         ];
 
         const scriptSrc = [
@@ -71,6 +72,7 @@ const nextConfig = {
             "'unsafe-inline'",
             "https://*.posthog.com",
             "https://cdn.segment.com",
+            "https://www.googletagmanager.com",
             ...DOCS_FILES_URLS,
         ];
 
@@ -87,6 +89,7 @@ const nextConfig = {
         connectSrc.push("https://vercel.live");
         connectSrc.push("wss://*.pusher.com");
         styleSrc.push("https://vercel.live");
+        styleSrc.push("https://fonts.googleapis.com");
 
         const ContentSecurityPolicy = [
             `default-src ${defaultSrc.join(" ")}`,
@@ -202,6 +205,8 @@ const nextConfig = {
                 { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
                 { source: "/robots.txt", destination: "/api/fern-docs/robots.txt" },
                 { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
+                { source: "/:path*.rss", destination: "/api/fern-docs/changelog?format=rss&path=:path*" },
+                { source: "/:path*.atom", destination: "/api/fern-docs/changelog?format=atom&path=:path*" },
 
                 // backwards compatibility with currently deployed FDR
                 { source: "/api/revalidate-all", destination: "/api/fern-docs/revalidate-all" },
@@ -250,6 +255,13 @@ const nextConfig = {
     },
     env: {
         VERSION: process.env.VERSION,
+    },
+    webpack: (config, { isServer }) => {
+        if (isServer) {
+            config.externals = config.externals || [];
+            config.externals.push("esbuild");
+        }
+        return config;
     },
 };
 

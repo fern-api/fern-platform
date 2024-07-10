@@ -1,13 +1,13 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { FernScrollArea } from "@fern-ui/components";
+import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
+import { useFeatureFlags } from "../../atoms/flags";
+import { useNavigationNodes } from "../../atoms/navigation";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { useFeatureFlags } from "../../contexts/FeatureFlagContext";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
 import {
     ResolvedTypeDefinition,
@@ -19,7 +19,6 @@ import {
     stringifyResolvedEndpointPathParts,
     unwrapReference,
 } from "../../resolver/types";
-import { CopyToClipboardButton } from "../../syntax-highlighting/CopyToClipboardButton";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -48,7 +47,7 @@ export const WebSocket: FC<WebSocket.Props> = (props) => {
 };
 
 const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) => {
-    const { nodes } = useDocsContext();
+    const nodes = useNavigationNodes();
     const maybeNode = nodes.get(websocket.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
 
@@ -105,13 +104,9 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const headers = websocket.headers.filter((header) => !header.hidden);
 
     return (
-        <div
-            className={"mx-4 scroll-mt-header-height-padded md:mx-6 lg:mx-8"}
-            ref={setTargetRef}
-            data-route={route.toLowerCase()}
-        >
+        <div className={"fern-endpoint-content"} ref={setTargetRef} data-route={route.toLowerCase()}>
             <article
-                className={cn("scroll-mt-header-height max-w-content-width md:max-w-endpoint-width mx-auto", {
+                className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi && !isApiScrollingDisabled,
                 })}
             >
@@ -310,7 +305,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                     </section>
                     <aside className="max-w-content-width">
                         {
-                            <div className="sticky top-header-height flex max-h-vh-minus-header scroll-mt-header-height flex-col gap-6 py-8">
+                            <div className="sticky top-header-offset flex max-h-content scroll-mt-content flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
                                     actions={node != null ? <PlaygroundButton state={node} /> : undefined}

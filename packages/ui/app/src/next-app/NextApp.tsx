@@ -1,6 +1,7 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
+import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { DefaultSeo } from "@fern-ui/next-seo";
-import { Provider as JotaiProvider, createStore } from "jotai";
+import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import type { Router } from "next/router";
@@ -8,16 +9,13 @@ import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
+import { store } from "../atoms/store";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { LayoutBreakpointProvider } from "../contexts/layout-breakpoint/LayoutBreakpointProvider";
-import { IsReadyProvider } from "../contexts/useIsReady";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
-
-const store = createStore();
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props | undefined>): ReactElement {
     useEffect(() => {
@@ -35,22 +33,15 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     return (
         <FernTooltipProvider>
             <DefaultSeo {...pageProps?.seo} />
-            <SWRConfig value={{ fallback: pageProps?.fallback }}>
+            <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                 <JotaiProvider store={store}>
                     <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
                         <ThemeProvider colors={pageProps?.colors}>
-                            <IsReadyProvider>
-                                <RouteListenerContextProvider>
-                                    <DatadogInit />
-                                    <LayoutBreakpointProvider>
-                                        <NextNProgress
-                                            options={{ showSpinner: false, speed: 400 }}
-                                            showOnShallow={false}
-                                        />
-                                        <Component {...pageProps} />
-                                    </LayoutBreakpointProvider>
-                                </RouteListenerContextProvider>
-                            </IsReadyProvider>
+                            <RouteListenerContextProvider>
+                                <DatadogInit />
+                                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                                <Component {...pageProps} />
+                            </RouteListenerContextProvider>
                             <Toaster />
                         </ThemeProvider>
                     </FernErrorBoundary>

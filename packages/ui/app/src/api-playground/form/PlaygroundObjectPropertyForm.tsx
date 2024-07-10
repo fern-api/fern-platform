@@ -90,10 +90,15 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
         (key: string, newValue: unknown) => {
             onChange((oldValue: unknown) => {
                 const oldObject = castToRecord(oldValue);
-                return {
-                    ...oldObject,
-                    [key]: typeof newValue === "function" ? newValue(oldObject[key]) : newValue,
-                };
+                if (newValue === undefined) {
+                    const { [key]: _, ...restOfFields } = oldObject;
+                    return restOfFields;
+                } else {
+                    return {
+                        ...oldObject,
+                        [key]: typeof newValue === "function" ? newValue(oldObject[key]) : newValue,
+                    };
+                }
             });
         },
         [onChange],

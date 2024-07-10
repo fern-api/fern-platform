@@ -4,162 +4,166 @@
   "version": "v1",
   "child": {
     "id": "root.uv",
-    "type": "tabbed",
-    "children": [
-      {
-        "id": "root.uv.tab-1",
-        "type": "tab",
-        "title": "Tab 1",
-        "slug": "docs/api/tab-1",
-        "icon": "icon-1",
-        "hidden": false,
-        "child": {
-          "id": "root.uv.tab-1.tab-1",
-          "type": "sidebarRoot",
-          "children": [
-            {
-              "id": "root.uv.tab-1.tab-1.section-1",
-              "type": "section",
-              "collapsed": false,
-              "title": "Section 1",
-              "slug": "docs/api/tab-1/section-1",
-              "children": [
-                {
-                  "id": "root.uv.tab-1.tab-1.section-1.page-1",
-                  "type": "page",
-                  "pageId": "page-1.md",
-                  "title": "Page 1",
-                  "slug": "docs/api/tab-1/section-1/page-1"
-                },
-                {
-                  "id": "root.uv.tab-1.tab-1.section-1.page-2",
-                  "type": "page",
-                  "pageId": "page-2.md",
-                  "title": "Page 2",
-                  "slug": "docs/api/page-2"
-                }
-              ],
-              "pointsTo": "docs/api/tab-1/section-1/page-1"
-            },
-            {
-              "id": "root.uv.tab-1.tab-1.section-2",
-              "type": "section",
-              "collapsed": false,
-              "title": "Introduction",
-              "slug": "docs/api/tab-1/section-2",
-              "children": [
-                {
-                  "id": "root.uv.tab-1.tab-1.section-2.page-3",
-                  "type": "page",
-                  "pageId": "page-3.md",
-                  "title": "Page 3",
-                  "slug": "docs/api/section-2"
-                },
-                {
-                  "id": "root.uv.tab-1.tab-1.section-2.page-4",
-                  "type": "page",
-                  "pageId": "page-4.md",
-                  "title": "Page 4",
-                  "slug": "docs/api/tab-1/section-2/page-4"
-                }
-              ],
-              "pointsTo": "docs/api/section-2"
-            },
-            {
-              "id": "root.uv.tab-1.tab-1.section-3",
-              "type": "section",
-              "collapsed": false,
-              "title": "Section 3",
-              "slug": "docs/api/tab-1",
-              "children": [
-                {
-                  "id": "root.uv.tab-1.tab-1.section-3.page-5",
-                  "type": "page",
-                  "pageId": "page-5.md",
-                  "title": "Page 5",
-                  "slug": "docs/api/tab-1/page-5"
-                },
-                {
-                  "id": "root.uv.tab-1.tab-1.section-3.page-6",
-                  "type": "page",
-                  "pageId": "page-6.md",
-                  "title": "Page 6",
-                  "slug": "docs/api/tab-1"
-                }
-              ],
-              "pointsTo": "docs/api/tab-1/page-5"
-            }
-          ]
+    "type": "unversioned",
+    "child": {
+      "id": "root.uv",
+      "type": "tabbed",
+      "children": [
+        {
+          "id": "root.uv.tab-1",
+          "type": "tab",
+          "title": "Tab 1",
+          "slug": "docs/api/tab-1",
+          "icon": "icon-1",
+          "hidden": false,
+          "child": {
+            "id": "root.uv.tab-1.tab-1",
+            "type": "sidebarRoot",
+            "children": [
+              {
+                "id": "root.uv.tab-1.tab-1.section-1",
+                "type": "section",
+                "collapsed": false,
+                "title": "Section 1",
+                "slug": "docs/api/tab-1/section-1",
+                "children": [
+                  {
+                    "id": "root.uv.tab-1.tab-1.section-1.page-1",
+                    "type": "page",
+                    "pageId": "page-1.md",
+                    "title": "Page 1",
+                    "slug": "docs/api/tab-1/section-1/page-1"
+                  },
+                  {
+                    "id": "root.uv.tab-1.tab-1.section-1.page-2",
+                    "type": "page",
+                    "pageId": "page-2.md",
+                    "title": "Page 2",
+                    "slug": "docs/api/page-2"
+                  }
+                ],
+                "pointsTo": "docs/api/tab-1/section-1/page-1"
+              },
+              {
+                "id": "root.uv.tab-1.tab-1.section-2",
+                "type": "section",
+                "collapsed": false,
+                "title": "Introduction",
+                "slug": "docs/api/tab-1/section-2",
+                "children": [
+                  {
+                    "id": "root.uv.tab-1.tab-1.section-2.page-3",
+                    "type": "page",
+                    "pageId": "page-3.md",
+                    "title": "Page 3",
+                    "slug": "docs/api/section-2"
+                  },
+                  {
+                    "id": "root.uv.tab-1.tab-1.section-2.page-4",
+                    "type": "page",
+                    "pageId": "page-4.md",
+                    "title": "Page 4",
+                    "slug": "docs/api/tab-1/section-2/page-4"
+                  }
+                ],
+                "pointsTo": "docs/api/section-2"
+              },
+              {
+                "id": "root.uv.tab-1.tab-1.section-3",
+                "type": "section",
+                "collapsed": false,
+                "title": "Section 3",
+                "slug": "docs/api/tab-1",
+                "children": [
+                  {
+                    "id": "root.uv.tab-1.tab-1.section-3.page-5",
+                    "type": "page",
+                    "pageId": "page-5.md",
+                    "title": "Page 5",
+                    "slug": "docs/api/tab-1/page-5"
+                  },
+                  {
+                    "id": "root.uv.tab-1.tab-1.section-3.page-6",
+                    "type": "page",
+                    "pageId": "page-6.md",
+                    "title": "Page 6",
+                    "slug": "docs/api/tab-1"
+                  }
+                ],
+                "pointsTo": "docs/api/tab-1/page-5"
+              }
+            ]
+          },
+          "pointsTo": "docs/api/tab-1/section-1/page-1"
         },
-        "pointsTo": "docs/api/tab-1/section-1/page-1"
-      },
-      {
-        "id": "root.uv.tab-2",
-        "type": "tab",
-        "title": "Tab 2",
-        "slug": "docs/api/tab-2",
-        "icon": "icon-2",
-        "hidden": false,
-        "child": {
-          "id": "root.uv.tab-2.tab-2",
-          "type": "sidebarRoot",
-          "children": [
-            {
-              "id": "root.uv.tab-2.tab-2.section-4",
-              "type": "section",
-              "collapsed": false,
-              "title": "Section 4",
-              "slug": "docs/api/tab-2",
-              "children": [
-                {
-                  "id": "root.uv.tab-2.tab-2.section-4.page-7",
-                  "type": "page",
-                  "pageId": "page-7.md",
-                  "title": "Page 7",
-                  "slug": "docs/api/tab-2/page-7"
-                },
-                {
-                  "id": "root.uv.tab-2.tab-2.section-4.page-8",
-                  "type": "page",
-                  "pageId": "page-8.md",
-                  "title": "Page 8",
-                  "slug": "docs/api/tab-2/page-8"
-                }
-              ],
-              "pointsTo": "docs/api/tab-2/page-7"
-            },
-            {
-              "id": "root.uv.tab-2.tab-2.section-5",
-              "type": "section",
-              "collapsed": false,
-              "title": "Section 5",
-              "slug": "docs/api/tab-2/section-5",
-              "children": [
-                {
-                  "id": "root.uv.tab-2.tab-2.section-5.page-9",
-                  "type": "page",
-                  "pageId": "page-9.md",
-                  "title": "Page 9",
-                  "slug": "docs/api/tab-1"
-                },
-                {
-                  "id": "root.uv.tab-2.tab-2.section-5.page-10",
-                  "type": "page",
-                  "pageId": "page-10.md",
-                  "title": "Page 10",
-                  "slug": "docs/api/tab-2"
-                }
-              ],
-              "pointsTo": "docs/api/tab-1"
-            }
-          ]
-        },
-        "pointsTo": "docs/api/tab-2/page-7"
-      }
-    ]
+        {
+          "id": "root.uv.tab-2",
+          "type": "tab",
+          "title": "Tab 2",
+          "slug": "docs/api/tab-2",
+          "icon": "icon-2",
+          "hidden": false,
+          "child": {
+            "id": "root.uv.tab-2.tab-2",
+            "type": "sidebarRoot",
+            "children": [
+              {
+                "id": "root.uv.tab-2.tab-2.section-4",
+                "type": "section",
+                "collapsed": false,
+                "title": "Section 4",
+                "slug": "docs/api/tab-2",
+                "children": [
+                  {
+                    "id": "root.uv.tab-2.tab-2.section-4.page-7",
+                    "type": "page",
+                    "pageId": "page-7.md",
+                    "title": "Page 7",
+                    "slug": "docs/api/tab-2/page-7"
+                  },
+                  {
+                    "id": "root.uv.tab-2.tab-2.section-4.page-8",
+                    "type": "page",
+                    "pageId": "page-8.md",
+                    "title": "Page 8",
+                    "slug": "docs/api/tab-2/page-8"
+                  }
+                ],
+                "pointsTo": "docs/api/tab-2/page-7"
+              },
+              {
+                "id": "root.uv.tab-2.tab-2.section-5",
+                "type": "section",
+                "collapsed": false,
+                "title": "Section 5",
+                "slug": "docs/api/tab-2/section-5",
+                "children": [
+                  {
+                    "id": "root.uv.tab-2.tab-2.section-5.page-9",
+                    "type": "page",
+                    "pageId": "page-9.md",
+                    "title": "Page 9",
+                    "slug": "docs/api/tab-1"
+                  },
+                  {
+                    "id": "root.uv.tab-2.tab-2.section-5.page-10",
+                    "type": "page",
+                    "pageId": "page-10.md",
+                    "title": "Page 10",
+                    "slug": "docs/api/tab-2"
+                  }
+                ],
+                "pointsTo": "docs/api/tab-1"
+              }
+            ]
+          },
+          "pointsTo": "docs/api/tab-2/page-7"
+        }
+      ]
+    }
   },
   "slug": "docs/api",
-  "title": "Fern Docs",
+  "title": "Documentation",
   "hidden": false,
   "pointsTo": "docs/api/tab-1/section-1/page-1"
 }

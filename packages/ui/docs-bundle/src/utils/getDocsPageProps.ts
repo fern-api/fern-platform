@@ -6,15 +6,20 @@ import {
     DocsPage,
     DocsPageResult,
     convertNavigatableToResolvedPath,
+    getBreadcrumbList,
     getDefaultSeoProps,
     getGitHubInfo,
     getGitHubRepo,
+    setMdxBundler,
 } from "@fern-ui/ui";
+// eslint-disable-next-line import/no-internal-modules
+import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { jwtVerify } from "jose";
 import type { Redirect } from "next";
 import { type IncomingMessage, type ServerResponse } from "node:http";
 import urljoin from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
+import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
 import { getRedirectForPath } from "./hackRedirects";
 
@@ -232,12 +237,17 @@ async function convertDocsToDocsPageProps({
 
     const featureFlags = await getFeatureFlags(xFernHost);
 
+    setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
+
     const resolvedPath = await convertNavigatableToResolvedPath({
         found: node,
         apis: docs.definition.apis,
         pages: docs.definition.pages,
         domain: docs.baseUrl.domain,
         featureFlags,
+        mdxOptions: {
+            files: docs.definition.jsFiles,
+        },
     });
 
     if (resolvedPath == null) {
@@ -270,7 +280,9 @@ async function convertDocsToDocsPageProps({
         js: docs.definition.config.js,
         navbarLinks: docs.definition.config.navbarLinks ?? [],
         logoHeight: docs.definition.config.logoHeight,
-        logoHref: docs.definition.config.logoHref,
+        logoHref:
+            docs.definition.config.logoHref ??
+            (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined),
         search: docs.definition.search,
         files: docs.definition.filesV2,
         resolvedPath,
@@ -324,8 +336,11 @@ async function convertDocsToDocsPageProps({
             docs.definition.apis,
             node.node,
         ),
+        breadcrumb: getBreadcrumbList(docs.baseUrl.domain, docs.definition.pages, node.parents, node.node),
         partnerLogin,
         fallback: {},
+        analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
+        theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

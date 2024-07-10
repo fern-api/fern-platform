@@ -4,241 +4,245 @@
   "version": "v1",
   "child": {
     "id": "root.uv",
-    "type": "sidebarRoot",
-    "children": [
-      {
-        "id": "root.uv.api-reference",
-        "type": "apiReference",
-        "title": "API Reference",
-        "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-        "slug": "docs/api-reference",
-        "hidden": false,
-        "hideTitle": false,
-        "showErrors": false,
-        "children": [
-          {
-            "id": "root.uv.api-reference.overview",
-            "type": "page",
-            "title": "Overview",
-            "pageId": "pages/overview.mdx",
-            "slug": "docs/api-reference/overview",
-            "hidden": false
-          },
-          {
-            "id": "root.uv.api-reference.subpackage_files",
-            "type": "apiPackage",
-            "children": [
-              {
-                "id": "root.uv.api-reference.subpackage_files.endpoint_files.upload",
-                "type": "endpoint",
-                "title": "Upload a media file",
-                "endpointId": "endpoint_files.upload",
-                "slug": "docs/api-reference/files/upload",
-                "method": "POST",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              }
-            ],
-            "title": "Files",
-            "slug": "docs/api-reference/files",
-            "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-            "pointsTo": "docs/api-reference/files/upload"
-          },
-          {
-            "id": "root.uv.api-reference.subpackage_transcripts",
-            "type": "apiPackage",
-            "children": [
-              {
-                "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.submit",
-                "type": "endpoint",
-                "title": "Transcribe audio",
-                "endpointId": "endpoint_transcripts.submit",
-                "slug": "docs/api-reference/transcripts/submit",
-                "method": "POST",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.get",
-                "type": "endpoint",
-                "title": "Get transcript",
-                "endpointId": "endpoint_transcripts.get",
-                "slug": "docs/api-reference/transcripts/get",
-                "method": "GET",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getSentences",
-                "type": "endpoint",
-                "title": "Get sentences in transcript",
-                "endpointId": "endpoint_transcripts.getSentences",
-                "slug": "docs/api-reference/transcripts/get-sentences",
-                "method": "GET",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getParagraphs",
-                "type": "endpoint",
-                "title": "Get paragraphs in transcript",
-                "endpointId": "endpoint_transcripts.getParagraphs",
-                "slug": "docs/api-reference/transcripts/get-paragraphs",
-                "method": "GET",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getSubtitles",
-                "type": "endpoint",
-                "title": "Get subtitles for transcript",
-                "endpointId": "endpoint_transcripts.getSubtitles",
-                "slug": "docs/api-reference/transcripts/get-subtitles",
-                "method": "GET",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getRedactedAudio",
-                "type": "endpoint",
-                "title": "Get redacted audio",
-                "endpointId": "endpoint_transcripts.getRedactedAudio",
-                "slug": "docs/api-reference/transcripts/get-redacted-audio",
-                "method": "GET",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.wordSearch",
-                "type": "endpoint",
-                "title": "Search words in transcript",
-                "endpointId": "endpoint_transcripts.wordSearch",
-                "slug": "docs/api-reference/transcripts/word-search",
-                "method": "GET",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.list",
-                "type": "endpoint",
-                "title": "List transcripts",
-                "endpointId": "endpoint_transcripts.list",
-                "slug": "docs/api-reference/transcripts/list",
-                "method": "GET",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.delete",
-                "type": "endpoint",
-                "title": "Delete transcript",
-                "endpointId": "endpoint_transcripts.delete",
-                "slug": "docs/api-reference/transcripts/delete",
-                "method": "DELETE",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              }
-            ],
-            "title": "Transcripts",
-            "slug": "docs/api-reference/transcripts",
-            "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-            "pointsTo": "docs/api-reference/transcripts/submit"
-          },
-          {
-            "id": "root.uv.api-reference.subpackage_lemur",
-            "type": "apiPackage",
-            "children": [
-              {
-                "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.task",
-                "type": "endpoint",
-                "title": "Run a task using LeMUR",
-                "endpointId": "endpoint_lemur.task",
-                "slug": "docs/api-reference/lemur/task",
-                "method": "POST",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.summary",
-                "type": "endpoint",
-                "title": "Summarize a transcript using LeMUR",
-                "endpointId": "endpoint_lemur.summary",
-                "slug": "docs/api-reference/lemur/summary",
-                "method": "POST",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.questionAnswer",
-                "type": "endpoint",
-                "title": "Ask questions using LeMUR",
-                "endpointId": "endpoint_lemur.questionAnswer",
-                "slug": "docs/api-reference/lemur/question-answer",
-                "method": "POST",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.actionItems",
-                "type": "endpoint",
-                "title": "Extract action items",
-                "endpointId": "endpoint_lemur.actionItems",
-                "slug": "docs/api-reference/lemur/action-items",
-                "method": "POST",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.purgeRequestData",
-                "type": "endpoint",
-                "title": "Purge LeMUR request data",
-                "endpointId": "endpoint_lemur.purgeRequestData",
-                "slug": "docs/api-reference/lemur/purge-request-data",
-                "method": "DELETE",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              }
-            ],
-            "title": "LeMUR",
-            "slug": "docs/api-reference/lemur",
-            "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-            "pointsTo": "docs/api-reference/lemur/task"
-          },
-          {
-            "id": "root.uv.api-reference.subpackage_streaming",
-            "type": "apiPackage",
-            "children": [
-              {
-                "id": "root.uv.api-reference.subpackage_streaming.endpoint_realtime.createTemporaryToken",
-                "type": "endpoint",
-                "title": "Create temporary authentication token for Streaming STT",
-                "endpointId": "endpoint_realtime.createTemporaryToken",
-                "slug": "docs/api-reference/streaming/create-temporary-token",
-                "method": "POST",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-                "isResponseStream": false
-              },
-              {
-                "id": "root.uv.api-reference.subpackage_streaming.subpackage_streaming.streaming",
-                "type": "webSocket",
-                "title": "Streaming",
-                "webSocketId": "subpackage_streaming.streaming",
-                "slug": "docs/api-reference/streaming/streaming",
-                "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de"
-              }
-            ],
-            "title": "Streaming",
-            "slug": "docs/api-reference/streaming",
-            "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
-            "pointsTo": "docs/api-reference/streaming/create-temporary-token"
-          }
-        ],
-        "pointsTo": "docs/api-reference/overview"
-      }
-    ]
+    "type": "unversioned",
+    "child": {
+      "id": "root.uv",
+      "type": "sidebarRoot",
+      "children": [
+        {
+          "id": "root.uv.api-reference",
+          "type": "apiReference",
+          "title": "API Reference",
+          "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+          "slug": "docs/api-reference",
+          "hidden": false,
+          "hideTitle": false,
+          "showErrors": false,
+          "children": [
+            {
+              "id": "root.uv.api-reference.overview",
+              "type": "page",
+              "title": "Overview",
+              "pageId": "pages/overview.mdx",
+              "slug": "docs/api-reference/overview",
+              "hidden": false
+            },
+            {
+              "id": "root.uv.api-reference.subpackage_files",
+              "type": "apiPackage",
+              "children": [
+                {
+                  "id": "root.uv.api-reference.subpackage_files.endpoint_files.upload",
+                  "type": "endpoint",
+                  "title": "Upload a media file",
+                  "endpointId": "endpoint_files.upload",
+                  "slug": "docs/api-reference/files/upload",
+                  "method": "POST",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Files",
+              "slug": "docs/api-reference/files",
+              "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+              "pointsTo": "docs/api-reference/files/upload"
+            },
+            {
+              "id": "root.uv.api-reference.subpackage_transcripts",
+              "type": "apiPackage",
+              "children": [
+                {
+                  "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.submit",
+                  "type": "endpoint",
+                  "title": "Transcribe audio",
+                  "endpointId": "endpoint_transcripts.submit",
+                  "slug": "docs/api-reference/transcripts/submit",
+                  "method": "POST",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.get",
+                  "type": "endpoint",
+                  "title": "Get transcript",
+                  "endpointId": "endpoint_transcripts.get",
+                  "slug": "docs/api-reference/transcripts/get",
+                  "method": "GET",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getSentences",
+                  "type": "endpoint",
+                  "title": "Get sentences in transcript",
+                  "endpointId": "endpoint_transcripts.getSentences",
+                  "slug": "docs/api-reference/transcripts/get-sentences",
+                  "method": "GET",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getParagraphs",
+                  "type": "endpoint",
+                  "title": "Get paragraphs in transcript",
+                  "endpointId": "endpoint_transcripts.getParagraphs",
+                  "slug": "docs/api-reference/transcripts/get-paragraphs",
+                  "method": "GET",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getSubtitles",
+                  "type": "endpoint",
+                  "title": "Get subtitles for transcript",
+                  "endpointId": "endpoint_transcripts.getSubtitles",
+                  "slug": "docs/api-reference/transcripts/get-subtitles",
+                  "method": "GET",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.getRedactedAudio",
+                  "type": "endpoint",
+                  "title": "Get redacted audio",
+                  "endpointId": "endpoint_transcripts.getRedactedAudio",
+                  "slug": "docs/api-reference/transcripts/get-redacted-audio",
+                  "method": "GET",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.wordSearch",
+                  "type": "endpoint",
+                  "title": "Search words in transcript",
+                  "endpointId": "endpoint_transcripts.wordSearch",
+                  "slug": "docs/api-reference/transcripts/word-search",
+                  "method": "GET",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.list",
+                  "type": "endpoint",
+                  "title": "List transcripts",
+                  "endpointId": "endpoint_transcripts.list",
+                  "slug": "docs/api-reference/transcripts/list",
+                  "method": "GET",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_transcripts.endpoint_transcripts.delete",
+                  "type": "endpoint",
+                  "title": "Delete transcript",
+                  "endpointId": "endpoint_transcripts.delete",
+                  "slug": "docs/api-reference/transcripts/delete",
+                  "method": "DELETE",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "Transcripts",
+              "slug": "docs/api-reference/transcripts",
+              "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+              "pointsTo": "docs/api-reference/transcripts/submit"
+            },
+            {
+              "id": "root.uv.api-reference.subpackage_lemur",
+              "type": "apiPackage",
+              "children": [
+                {
+                  "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.task",
+                  "type": "endpoint",
+                  "title": "Run a task using LeMUR",
+                  "endpointId": "endpoint_lemur.task",
+                  "slug": "docs/api-reference/lemur/task",
+                  "method": "POST",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.summary",
+                  "type": "endpoint",
+                  "title": "Summarize a transcript using LeMUR",
+                  "endpointId": "endpoint_lemur.summary",
+                  "slug": "docs/api-reference/lemur/summary",
+                  "method": "POST",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.questionAnswer",
+                  "type": "endpoint",
+                  "title": "Ask questions using LeMUR",
+                  "endpointId": "endpoint_lemur.questionAnswer",
+                  "slug": "docs/api-reference/lemur/question-answer",
+                  "method": "POST",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.actionItems",
+                  "type": "endpoint",
+                  "title": "Extract action items",
+                  "endpointId": "endpoint_lemur.actionItems",
+                  "slug": "docs/api-reference/lemur/action-items",
+                  "method": "POST",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_lemur.endpoint_lemur.purgeRequestData",
+                  "type": "endpoint",
+                  "title": "Purge LeMUR request data",
+                  "endpointId": "endpoint_lemur.purgeRequestData",
+                  "slug": "docs/api-reference/lemur/purge-request-data",
+                  "method": "DELETE",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                }
+              ],
+              "title": "LeMUR",
+              "slug": "docs/api-reference/lemur",
+              "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+              "pointsTo": "docs/api-reference/lemur/task"
+            },
+            {
+              "id": "root.uv.api-reference.subpackage_streaming",
+              "type": "apiPackage",
+              "children": [
+                {
+                  "id": "root.uv.api-reference.subpackage_streaming.endpoint_realtime.createTemporaryToken",
+                  "type": "endpoint",
+                  "title": "Create temporary authentication token for Streaming STT",
+                  "endpointId": "endpoint_realtime.createTemporaryToken",
+                  "slug": "docs/api-reference/streaming/create-temporary-token",
+                  "method": "POST",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+                  "isResponseStream": false
+                },
+                {
+                  "id": "root.uv.api-reference.subpackage_streaming.subpackage_streaming.streaming",
+                  "type": "webSocket",
+                  "title": "Streaming",
+                  "webSocketId": "subpackage_streaming.streaming",
+                  "slug": "docs/api-reference/streaming/streaming",
+                  "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de"
+                }
+              ],
+              "title": "Streaming",
+              "slug": "docs/api-reference/streaming",
+              "apiDefinitionId": "72c824a6-ca97-4592-a585-266e983022de",
+              "pointsTo": "docs/api-reference/streaming/create-temporary-token"
+            }
+          ],
+          "pointsTo": "docs/api-reference/overview"
+        }
+      ]
+    }
   },
   "slug": "docs",
-  "title": "Fern Docs",
+  "title": "AssemblyAI | Reference",
   "hidden": false,
   "pointsTo": "docs/api-reference/overview"
 }

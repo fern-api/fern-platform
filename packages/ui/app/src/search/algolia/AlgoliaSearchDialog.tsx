@@ -1,55 +1,47 @@
-import { Dialog, Transition } from "@headlessui/react";
+// import { Dialog, Transition } from "@headlessui/react";
+import * as Dialog from "@radix-ui/react-dialog";
 import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
-import { Fragment, ReactElement, useMemo, useRef } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpointValue } from "../../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM } from "../../atoms/layout";
+import { useSidebarNodes } from "../../atoms/navigation";
+
+import { SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "../../atoms/sidebar";
+import { IS_MOBILE_SCREEN_ATOM } from "../../atoms/viewport";
 import { useNavigationContext } from "../../contexts/navigation-context";
-import { useCloseSearchDialog, useIsSearchDialogOpen } from "../../sidebar/atom";
 import { SearchHits } from "../SearchHits";
 import { createSearchPlaceholderWithVersion } from "../util";
 import { SearchBox } from "./SearchBox";
 import { useAlgoliaSearchClient } from "./useAlgoliaSearchClient";
 
-export function AlgoliaSearchDialog({ fromHeader }: { fromHeader?: boolean }): ReactElement | null {
+export function AlgoliaSearchDialog(): ReactElement | null {
     const inputRef = useRef<HTMLInputElement>(null);
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
+    const fromHeader = useAtomValue(POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM);
 
     const isSearchDialogOpen = useIsSearchDialogOpen();
-    const closeSearchDialog = useCloseSearchDialog();
+    const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     const algoliaSearchClient = useAlgoliaSearchClient();
-    if (algoliaSearchClient == null || layoutBreakpoint === "mobile") {
+    if (algoliaSearchClient == null || isMobileScreen) {
         return null;
     }
     const [searchClient, index] = algoliaSearchClient;
     return (
-        <Transition show={isSearchDialogOpen} as={Fragment} appear={true}>
-            <Dialog
-                as="div"
-                className="fixed inset-0 z-30 hidden sm:block"
-                onClose={closeSearchDialog}
-                initialFocus={inputRef}
-            >
-                <Transition.Child
-                    as="div"
-                    className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm"
-                    enter="transition-opacity ease-linear duration-200"
-                    enterFrom="opacity-0 backdrop-blur-none"
-                    enterTo="opacity-100 backdrop-blur-sm"
-                />
-                <Dialog.Panel
+        <Dialog.Root open={isSearchDialogOpen} onOpenChange={setSearchDialogState}>
+            <Dialog.Portal>
+                <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm max-sm:hidden" />
+                <Dialog.Content
                     className={clsx(
-                        "md:max-w-content-width my-header-height-padded relative z-10 mx-6 max-h-[calc(100vh-var(--spacing-header-height)-var(--spacing-header-height)-2rem)] md:mx-auto flex flex-col",
-                        {
-                            "mt-4": fromHeader,
-                        },
+                        "fixed md:max-w-content-width my-[10vh] top-0 inset-x-0 z-10 mx-6 max-h-[80vh] md:mx-auto flex flex-col",
+                        { "mt-4": fromHeader },
                     )}
                 >
                     <FernInstantSearch searchClient={searchClient} indexName={index} inputRef={inputRef} />
-                </Dialog.Panel>
-            </Dialog>
-        </Transition>
+                </Dialog.Content>
+            </Dialog.Portal>
+        </Dialog.Root>
     );
 }
 
@@ -60,7 +52,7 @@ interface FernInstantSearchProps {
 }
 
 function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSearchProps) {
-    const { sidebar } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const { activeVersion } = useNavigationContext();
     const placeholder = useMemo(
         () => createSearchPlaceholderWithVersion(activeVersion, sidebar),
@@ -68,7 +60,7 @@ function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSea
     );
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
-            <div className="bg-background-translucent border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
+            <div className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}
                     placeholder={placeholder}

@@ -1,4 +1,5 @@
-import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { JsonLd } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useTheme } from "next-themes";
 import Head from "next/head";
@@ -17,26 +18,24 @@ export declare namespace DocsContextProvider {
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ children, ...pageProps }) => {
     const files = useDeepCompareMemoize(pageProps.files);
-    const layout = useDeepCompareMemoize(pageProps.layout);
     const colors = useDeepCompareMemoize(pageProps.colors);
     const typography = useDeepCompareMemoize(pageProps.typography);
     const css = useDeepCompareMemoize(pageProps.css);
     const js = useDeepCompareMemoize(pageProps.js);
-    const sidebar = useDeepCompareMemoize(pageProps.navigation.sidebar);
-    const tabs = useDeepCompareMemoize(pageProps.navigation.tabs);
-    const versions = useDeepCompareMemoize(pageProps.navigation.versions);
     const searchInfo = useDeepCompareMemoize(pageProps.search);
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const apis = useDeepCompareMemoize(pageProps.apis);
     const partnerLogin = useDeepCompareMemoize(pageProps.partnerLogin);
+    const analytics = useDeepCompareMemoize(pageProps.analytics);
     const { resolvedTheme: theme } = useTheme();
 
+    const { logoHeight, logoHref } = pageProps;
     const { domain, basePath } = pageProps.baseUrl;
-    const { currentTabIndex, currentVersionId } = pageProps.navigation;
 
+    const layout = useDeepCompareMemoize(pageProps.layout);
     const stylesheet = useMemo(
-        () => renderThemeStylesheet(colors, typography, layout, css, files, tabs.length > 0),
-        [colors, css, files, layout, tabs.length, typography],
+        () => renderThemeStylesheet(colors, typography, layout, css, files, pageProps.navigation.tabs.length > 0),
+        [colors, css, files, layout, pageProps.navigation.tabs.length, typography],
     );
 
     const resolveFile = useCallback(
@@ -53,39 +52,30 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
 
     const value = useMemo(
         () => ({
+            logoHeight,
+            logoHref,
             domain,
             basePath,
-            layout,
             colors,
             typography,
             css,
             files,
             resolveFile,
-            currentTabIndex,
-            tabs,
-            currentVersionId,
-            versions,
-            sidebar,
-            nodes: FernNavigation.NodeCollector.collect(sidebar),
             searchInfo,
             navbarLinks,
             apis,
             partnerLogin,
         }),
         [
+            logoHeight,
+            logoHref,
             domain,
             basePath,
-            layout,
             colors,
             typography,
             css,
             files,
             resolveFile,
-            currentTabIndex,
-            tabs,
-            currentVersionId,
-            versions,
-            sidebar,
             searchInfo,
             navbarLinks,
             apis,
@@ -137,7 +127,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
             <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(domain) }} />
-            <CustomerAnalytics domain={domain} />
+            <CustomerAnalytics {...analytics} />
+            {pageProps.breadcrumb != null && pageProps.breadcrumb.itemListElement.length > 0 && (
+                <JsonLd.Breadcrumb breadcrumbList={pageProps.breadcrumb} />
+            )}
         </DocsContext.Provider>
     );
 };

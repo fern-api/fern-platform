@@ -1,5 +1,7 @@
-import { useRef } from "react";
+import { useEventCallback } from "@fern-ui/react-commons";
+import { useAtomValue } from "jotai";
 import { useInView } from "react-intersection-observer";
+import { SLUG_ATOM } from "../atoms/location";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 
 export declare namespace useApiPageCenterElement {
@@ -13,9 +15,10 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { selectedSlug, onScrollToPath } = useNavigationContext();
+    const { onScrollToPath } = useNavigationContext();
+    const selectedSlug = useAtomValue(SLUG_ATOM);
 
-    const onChangeIsInVerticalCenter = useRef((newIsInVerticalCenter: boolean) => {
+    const onChangeIsInVerticalCenter = useEventCallback((newIsInVerticalCenter: boolean) => {
         if (newIsInVerticalCenter) {
             onScrollToPath(slug);
         }
@@ -28,7 +31,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
         rootMargin: "-50% 0px",
         threshold: 0,
         initialInView: isSelected,
-        onChange: onChangeIsInVerticalCenter.current,
+        onChange: onChangeIsInVerticalCenter,
     });
 
     return {

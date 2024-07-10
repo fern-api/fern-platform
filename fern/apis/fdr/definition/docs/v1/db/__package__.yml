@@ -39,6 +39,11 @@ types:
       referencedApis: set<rootCommons.ApiDefinitionId>
       files: map<commons.FileId, DbFileInfoV2>
       config: DocsDbConfig
+      jsFiles:
+        type: optional<map<string, string>>
+        docs: |
+          A map of file names to their contents. 
+          The key is the absolute path file name and the value is the file contents.
 
   DocsDbConfig:
     properties:
@@ -121,6 +126,7 @@ types:
     properties:
       tabs: optional<list<NavigationTab>>
       tabsV2: optional<list<NavigationTabV2>>
+      landingPage: optional<docsReadV1.PageMetadata>
 
   NavigationTab:
     availability: deprecated
@@ -147,6 +153,7 @@ types:
   UnversionedUntabbedNavigationConfig:
     properties:
       items: list<NavigationItem>
+      landingPage: optional<docsReadV1.PageMetadata>
 
   VersionedNavigationConfig:
     properties:
@@ -196,3 +203,4 @@ types:
       collapsed: boolean
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
+      overviewPageId: optional<commons.PageId>

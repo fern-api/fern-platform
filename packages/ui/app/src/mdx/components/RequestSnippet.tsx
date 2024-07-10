@@ -6,10 +6,10 @@ import { CodeExampleClientDropdown } from "../../api-page/endpoints/CodeExampleC
 import { EndpointUrlWithOverflow } from "../../api-page/endpoints/EndpointUrlWithOverflow";
 import { CodeSnippetExample } from "../../api-page/examples/CodeSnippetExample";
 import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
+import { FERN_LANGUAGE_ATOM } from "../../atoms/lang";
+import { useResolvedPath } from "../../atoms/navigation";
 import { ApiReferenceButton } from "../../components/ApiReferenceButton";
-import { useNavigationContext } from "../../contexts/navigation-context";
 import { ResolvedEndpointDefinition } from "../../resolver/types";
-import { FERN_LANGUAGE_ATOM } from "../../sidebar/atom";
 import { findEndpoint } from "../../util/processRequestSnippetComponents";
 
 export declare namespace RequestSnippet {
@@ -78,7 +78,7 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
     path,
     example,
 }) => {
-    const { resolvedPath } = useNavigationContext();
+    const resolvedPath = useResolvedPath();
 
     const endpoint = useMemo(() => {
         if (resolvedPath.type !== "custom-markdown-page") {
@@ -154,7 +154,7 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
     method,
     example,
 }) => {
-    const { resolvedPath } = useNavigationContext();
+    const resolvedPath = useResolvedPath();
 
     const endpoint = useMemo(() => {
         if (resolvedPath.type !== "custom-markdown-page") {

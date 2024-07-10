@@ -8,4 +8,5 @@ export interface VersionNode extends FernRegistry.navigation.WithNodeMetadata, F
     versionId: FernRegistry.navigation.VersionId;
     child: FernRegistry.navigation.VersionChild;
     availability?: FernRegistry.navigation.Availability;
+    landingPage?: FernRegistry.navigation.LandingPageNode;
 }

@@ -37,10 +37,19 @@ export function traverseNavigation(
             sidebarRoot: (sidebar) => internalChildrenTraverser(sidebar.children, [...parents, sidebar]),
             sidebarGroup: (sidebarGroup) =>
                 internalChildrenTraverser(sidebarGroup.children, [...parents, sidebarGroup]),
-            version: (version) => internalTraverser(version.child, undefined, [...parents, version]),
+            version: (version) => {
+                if (version.landingPage != null) {
+                    const result = internalTraverser(version.landingPage, undefined, [...parents, version]);
+                    if (result === STOP) {
+                        return STOP;
+                    }
+                }
+                return internalTraverser(version.child, undefined, [...parents, version]);
+            },
             tab: (tab) => internalTraverser(tab.child, undefined, [...parents, tab]),
             link: noop,
             page: noop,
+            landingPage: noop,
             section: (section) => internalChildrenTraverser(section.children, [...parents, section]),
             apiReference: (apiReference) => {
                 const result = internalChildrenTraverser(apiReference.children, [...parents, apiReference]);
@@ -67,6 +76,16 @@ export function traverseNavigation(
                     return STOP;
                 }
                 return internalTraverser(endpointPair.stream, undefined, [...parents, endpointPair]);
+            },
+            unversioned: (unversioned) => {
+                if (unversioned.landingPage != null) {
+                    const result = internalTraverser(unversioned.landingPage, undefined, [...parents, unversioned]);
+                    if (result === STOP) {
+                        return STOP;
+                    }
+                }
+
+                return internalTraverser(unversioned.child, undefined, [...parents, unversioned]);
             },
         });
     }

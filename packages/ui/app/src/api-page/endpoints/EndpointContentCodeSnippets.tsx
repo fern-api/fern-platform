@@ -4,9 +4,9 @@ import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
+import { useNavigationNodes } from "../../atoms/navigation";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import {
     ResolvedEndpointDefinition,
@@ -62,7 +62,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     setSelectedError,
     measureHeight,
 }) => {
-    const { nodes } = useDocsContext();
+    const nodes = useNavigationNodes();
     const maybeNode = nodes.get(endpoint.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
 
@@ -125,10 +125,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     );
 
     return (
-        <div
-            className="gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] grid-rows w-full max-h-fit"
-            ref={ref}
-        >
+        <div className="fern-endpoint-code-snippets" ref={ref}>
             {/* TODO: Replace this with a proper segmented control component */}
             {selectedClientGroup != null && selectedClientGroup.examples.length > 1 && (
                 <FernButtonGroup className="min-w-0 shrink">

@@ -1,7 +1,7 @@
+import { CopyToClipboardButton } from "@fern-ui/components";
 import cn, { clsx } from "clsx";
 import React, { PropsWithChildren } from "react";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { CopyToClipboardButton } from "./CopyToClipboardButton";
+import { useFeatureFlags } from "../atoms/flags";
 
 type CodeBlockWithClipboardButtonProps = {
     code: string;
@@ -15,7 +15,7 @@ export const CodeBlockWithClipboardButton: React.FC<PropsWithChildren<CodeBlockW
     return (
         <div
             className={clsx(
-                "not-prose group/cb-container bg-card relative mb-6 mt-4 flex w-full rounded-lg shadow-sm  after:ring-default after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-1 after:ring-inset after:content-['']",
+                "not-prose group/cb-container bg-card relative mb-6 mt-4 flex w-full rounded-lg shadow-sm ring-card-border ring-1 ring-inset",
                 {
                     "dark bg-card-solid": isDarkCodeEnabled,
                 },

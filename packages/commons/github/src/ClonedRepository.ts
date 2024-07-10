@@ -1,16 +1,13 @@
 import { lstat, readFile } from "fs/promises";
 import path from "path";
-import { SimpleGit } from "simple-git";
 import { README_FILEPATH } from "./constants";
 
 // ClonedRepository is a repository that has been successfully cloned to the local file system
 // and is ready to be used.
 export class ClonedRepository {
-    private git: SimpleGit;
     private clonePath: string;
 
-    constructor({ git, clonePath }: { git: SimpleGit; clonePath: string }) {
-        this.git = git;
+    constructor({ clonePath }: { clonePath: string }) {
         this.clonePath = clonePath;
     }
 

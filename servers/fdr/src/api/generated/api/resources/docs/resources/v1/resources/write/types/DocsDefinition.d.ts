@@ -5,4 +5,9 @@ import * as FernRegistry from "../../../../../../..";
 export interface DocsDefinition {
     pages: Record<FernRegistry.docs.v1.commons.PageId, FernRegistry.docs.v1.write.PageContent>;
     config: FernRegistry.docs.v1.write.DocsConfig;
+    /**
+     * A map of file names to their contents.
+     * The key is the absolute path file name and the value is the file contents.
+     */
+    jsFiles?: Record<string, string>;
 }

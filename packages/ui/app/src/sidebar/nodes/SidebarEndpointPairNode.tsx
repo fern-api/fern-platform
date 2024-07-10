@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useAtomValue } from "jotai";
-import { FERN_STREAM_ATOM } from "../atom";
+import { FERN_STREAM_ATOM } from "../../atoms/stream";
 import { SidebarApiLeafNode } from "./SidebarApiLeafNode";
 
 interface SidebarEndpointPairNodeProps {

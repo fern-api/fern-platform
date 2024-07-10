@@ -1,5 +1,4 @@
-import { Algolia, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import { Algolia, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import React from "react";
 import { DocsPage, PartnerLogin } from "../../next-app/DocsPage";
@@ -11,9 +10,8 @@ const MOCK_SIDEBAR_NODE: FernNavigation.SidebarRootNode = {
 };
 
 export const DocsContext = React.createContext<DocsContextValue>({
-    domain: "app.buildwithfern.com",
-    basePath: undefined,
-    layout: undefined,
+    logoHeight: undefined,
+    logoHref: undefined,
     colors: {
         dark: undefined,
         light: undefined,
@@ -22,22 +20,15 @@ export const DocsContext = React.createContext<DocsContextValue>({
     css: undefined,
     files: {},
     resolveFile: () => undefined,
-    currentTabIndex: undefined,
-    tabs: [],
-    currentVersionId: undefined,
-    versions: [],
-    sidebar: MOCK_SIDEBAR_NODE,
-    nodes: NodeCollector.collect(MOCK_SIDEBAR_NODE),
     searchInfo: undefined,
     navbarLinks: [],
     apis: [],
     partnerLogin: undefined,
 });
 
-export interface DocsContextValue extends DocsPage.Navigation {
-    domain: string;
-    basePath: string | undefined;
-    layout: DocsV1Read.DocsLayoutConfig | undefined;
+export interface DocsContextValue {
+    logoHeight: DocsV1Read.Height | undefined;
+    logoHref: DocsV1Read.Url | undefined;
     colors: ColorsConfig;
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
     css: DocsV1Read.CssConfig | undefined;

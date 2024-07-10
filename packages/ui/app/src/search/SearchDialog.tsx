@@ -1,12 +1,12 @@
-import { useSetAtom } from "jotai";
-import { PropsWithChildren, useMemo, useRef } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { useSidebarNodes } from "../atoms/navigation";
+import { SEARCH_DIALOG_OPEN_ATOM } from "../atoms/sidebar";
+import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
 import { useNavigationContext } from "../contexts/navigation-context";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
-import { SEARCH_DIALOG_OPEN_ATOM } from "../sidebar/atom";
 import { SearchMobileHits } from "./SearchHits";
 import { AlgoliaSearchDialog } from "./algolia/AlgoliaSearchDialog";
 import { SearchMobileBox } from "./algolia/SearchBox";
@@ -16,13 +16,7 @@ import { InkeepCustomTrigger } from "./inkeep/InkeepCustomTrigger";
 import { useSearchTrigger } from "./useSearchTrigger";
 import { createSearchPlaceholderWithVersion } from "./util";
 
-export declare namespace SearchDialog {
-    export interface Props {
-        fromHeader?: boolean;
-    }
-}
-
-export const SearchDialog: React.FC<SearchDialog.Props> = ({ fromHeader }) => {
+export const SearchDialog = (): ReactElement | null => {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     useSearchTrigger(setSearchDialogState);
 
@@ -32,20 +26,16 @@ export const SearchDialog: React.FC<SearchDialog.Props> = ({ fromHeader }) => {
         return null;
     }
 
-    if (config.type === "algolia") {
-        return <AlgoliaSearchDialog fromHeader={fromHeader} />;
-    }
-
-    if (config.type === "inkeep") {
+    if (config.inkeep == null) {
+        return <AlgoliaSearchDialog />;
+    } else {
         return (
             <>
-                <InkeepCustomTrigger />
+                {config.inkeep.replaceSearch ? <InkeepCustomTrigger /> : <AlgoliaSearchDialog />}
                 <InkeepChatButton />
             </>
         );
     }
-
-    return null;
 };
 
 export declare namespace SearchSidebar {
@@ -53,7 +43,7 @@ export declare namespace SearchSidebar {
 }
 
 export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = ({ children }) => {
-    const { sidebar } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const { activeVersion } = useNavigationContext();
     const placeholder = useMemo(
         () => createSearchPlaceholderWithVersion(activeVersion, sidebar),
@@ -63,13 +53,13 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
     const [searchConfig] = useSearchConfig();
     const algoliaSearchClient = useAlgoliaSearchClient();
     const inputRef = useRef<HTMLInputElement>(null);
-    const layoutBreakpoint = useLayoutBreakpointValue();
+    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
-    if (!searchConfig.isAvailable || layoutBreakpoint !== "mobile") {
+    if (!searchConfig.isAvailable || !isMobileScreen) {
         return <>{children}</>;
     }
 
-    if (searchConfig.type === "algolia" && algoliaSearchClient != null) {
+    if (searchConfig.inkeep?.replaceSearch !== true && algoliaSearchClient != null) {
         const [searchClient, indexName] = algoliaSearchClient;
 
         return (
@@ -80,7 +70,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
         );
     }
 
-    if (searchConfig.type === "inkeep") {
+    if (searchConfig.inkeep != null) {
         return (
             <>
                 <div className="p-4 pb-0">

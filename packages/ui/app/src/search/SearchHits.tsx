@@ -4,8 +4,8 @@ import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useCloseSearchDialog } from "../sidebar/atom";
+import { useBasePath } from "../atoms/navigation";
+import { useCloseSearchDialog } from "../atoms/sidebar";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";
@@ -15,7 +15,7 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const SearchHits: React.FC = () => {
-    const { basePath } = useDocsContext();
+    const basePath = useBasePath();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);

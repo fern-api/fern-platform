@@ -1,18 +1,27 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-// import { Portal, Transition } from "@headlessui/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { motion, useAnimate, useMotionValue } from "framer-motion";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { mapValues } from "lodash-es";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect, useMemo } from "react";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useLayoutBreakpointValue } from "../contexts/layout-breakpoint/useLayoutBreakpoint";
+import { Dispatch, ReactElement, SetStateAction, memo, useCallback, useEffect, useMemo } from "react";
+import { useFlattenedApis } from "../atoms/apis";
+import { useSidebarNodes } from "../atoms/navigation";
 import {
-    FlattenedRootPackage,
+    PLAYGROUND_FORM_STATE_ATOM,
+    useClosePlayground,
+    useHasPlayground,
+    useIsPlaygroundOpen,
+    usePlaygroundHeight,
+    usePlaygroundNode,
+    useSetPlaygroundHeight,
+    useTogglePlayground,
+} from "../atoms/playground";
+import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, useWindowHeight } from "../atoms/viewport";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import {
     ResolvedApiDefinition,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointCall,
@@ -21,25 +30,17 @@ import {
     isEndpoint,
     isWebSocket,
 } from "../resolver/types";
-import { usePlaygroundContext } from "./PlaygroundContext";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
-import {
-    PLAYGROUND_FORM_STATE_ATOM,
-    useClosePlayground,
-    useIsPlaygroundOpen,
-    usePlaygroundHeight,
-    useTogglePlayground,
-} from "./hooks/usePlaygroundNodeId";
 import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundRequestFormAuth,
     PlaygroundWebSocketRequestFormState,
 } from "./types";
-import { useVerticalSplitPane, useWindowHeight } from "./useSplitPlane";
+import { useVerticalSplitPane } from "./useSplitPlane";
 import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils";
 
 const EMPTY_ENDPOINT_FORM_STATE: PlaygroundEndpointRequestFormState = {
@@ -62,16 +63,14 @@ const EMPTY_WEBSOCKET_FORM_STATE: PlaygroundWebSocketRequestFormState = {
     messages: {},
 };
 
-interface PlaygroundDrawerProps {
-    apis: Record<string, FlattenedRootPackage>;
-}
-
-export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
-    const { selectionState, hasPlayground } = usePlaygroundContext();
+export const PlaygroundDrawer = memo((): ReactElement | null => {
     const windowHeight = useWindowHeight();
     const collapsePlayground = useClosePlayground();
+    const hasPlayground = useHasPlayground();
+    const selectionState = usePlaygroundNode();
+    const apis = useFlattenedApis();
 
-    const { sidebar } = useDocsContext();
+    const sidebar = useSidebarNodes();
     const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
 
     const matchedSection = selectionState != null ? apis[selectionState.apiDefinitionId] : undefined;
@@ -88,10 +87,12 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
 
     const types = matchedSection?.types ?? EMPTY_OBJECT;
 
-    const layoutBreakpoint = useLayoutBreakpointValue();
-    const [height, setHeight] = usePlaygroundHeight();
+    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
+    const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
+    const height = usePlaygroundHeight();
+    const setHeight = useSetPlaygroundHeight();
 
-    const x = useMotionValue(layoutBreakpoint !== "mobile" ? height : windowHeight);
+    const x = useMotionValue(isMobileScreen ? height : windowHeight);
     const [scope, animate] = useAnimate();
 
     const setOffset = useCallback(
@@ -105,16 +106,16 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
 
     useEffect(() => {
         if (isResizing) {
-            x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+            x.jump(!isMobileScreen ? height : windowHeight, true);
         } else {
             if (scope.current != null) {
                 // x.setWithVelocity(layoutBreakpoint !== "mobile" ? height : windowHeight, 0);
-                void animate(scope.current, { height: layoutBreakpoint !== "mobile" ? height : windowHeight });
+                void animate(scope.current, { height: !isMobileScreen ? height : windowHeight });
             } else {
-                x.jump(layoutBreakpoint !== "mobile" ? height : windowHeight, true);
+                x.jump(!isMobileScreen ? height : windowHeight, true);
             }
         }
-    }, [animate, height, isResizing, layoutBreakpoint, scope, windowHeight, x]);
+    }, [animate, height, isMobileScreen, isResizing, scope, windowHeight, x]);
 
     const isPlaygroundOpen = useIsPlaygroundOpen();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
@@ -299,6 +300,7 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             showError={true}
             reset={resetWithoutExample}
         >
+            {isPlaygroundOpen && <div style={{ height }} />}
             <Dialog.Root open={isPlaygroundOpen} onOpenChange={togglePlayground} modal={false}>
                 <Dialog.Portal>
                     <Dialog.Content
@@ -309,10 +311,10 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                         asChild
                     >
                         <motion.div style={{ height: x }} ref={scope}>
-                            {layoutBreakpoint !== "mobile" ? (
+                            {!isMobileScreen ? (
                                 <>
                                     <div
-                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-3 after:h-4 after:content-['']"
+                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-2 after:z-50 after:h-4 after:content-['']"
                                         onMouseDown={handleVerticalResize}
                                     >
                                         <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
@@ -320,14 +322,11 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
                                             <div className="bg-accent h-1 w-10 rounded-full" />
                                         </div>
                                     </div>
-                                    <Dialog.Close asChild className="absolute -translate-y-full -top-2 right-2">
-                                        <FernButton icon={<Cross1Icon />} size="large" rounded variant="minimal" />
-                                    </Dialog.Close>
                                 </>
                             ) : (
                                 renderMobileHeader()
                             )}
-                            {layoutBreakpoint === "mobile" || layoutBreakpoint === "sm" || layoutBreakpoint === "md" ? (
+                            {isMobileSidebarEnabled ? (
                                 renderContent()
                             ) : (
                                 <HorizontalSplitPane
@@ -351,7 +350,9 @@ export const PlaygroundDrawer: FC<PlaygroundDrawerProps> = ({ apis }) => {
             </Dialog.Root>
         </FernErrorBoundary>
     );
-};
+});
+
+PlaygroundDrawer.displayName = "PlaygroundDrawer";
 
 function getInitialEndpointRequestFormState(
     auth: APIV1Read.ApiAuth | null | undefined,

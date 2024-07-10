@@ -1,7 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { ResolvedApiDefinitionPackage, ResolvedTypeDefinition } from "../../resolver/types";
 import { ApiPackageContents } from "../ApiPackageContents";
-import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 
 export declare namespace ApiSubpackage {
@@ -28,9 +27,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     const { setTargetRef } = useApiPageCenterElement({ slug: apiDefinition.slug });
     return (
         <>
-            <ApiPageMargins>
-                <div ref={setTargetRef} data-route={`/${apiDefinition.slug}`} className="scroll-mt-header-height" />
-            </ApiPageMargins>
+            <div ref={setTargetRef} className="scroll-mt-content" data-route={`/${apiDefinition.slug}`} />
             <ApiPackageContents
                 api={api}
                 types={types}

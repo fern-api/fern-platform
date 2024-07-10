@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { useCurrentNodeId, useResolvedPath } from "../../atoms/navigation";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
-import { useNavigationContext } from "../../contexts/navigation-context";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 
@@ -10,8 +10,9 @@ interface SidebarApiLeafNodeProps {
 }
 
 export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): React.ReactElement | null {
-    const { registerScrolledToPathListener, selectedNodeId } = useCollapseSidebar();
-    const { resolvedPath } = useNavigationContext();
+    const { registerScrolledToPathListener } = useCollapseSidebar();
+    const selectedNodeId = useCurrentNodeId();
+    const resolvedPath = useResolvedPath();
     const selected = node.id === selectedNodeId;
 
     if (node.hidden && !selected) {

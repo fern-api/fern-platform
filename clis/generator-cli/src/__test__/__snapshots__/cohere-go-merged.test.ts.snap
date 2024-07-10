@@ -48,23 +48,13 @@ response, err := client.Chat(
 
 This is a custom section that should ideally stay between the usage and timeout section.
 
-## Timeouts
+## One
 
-Setting a timeout for each individual request is as simple as
-using the standard \`context\` library. Setting a one second timeout
-for an individual API call looks like the following:
+This is another custom section that should ideally stay between the usage and timeout section.
 
-\`\`\`go
-ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-defer cancel()
+## Two
 
-response, err := client.Chat(
-	ctx,
-	&fern.ChatRequest{
-		Message: "Can you give me a global market overview of solar panels?",
-	},
-)
-\`\`\`
+This is another custom section that should ideally stay between the usage and timeout section.
 
 ## Errors
 
@@ -87,13 +77,25 @@ if err != nil {
 }
 \`\`\`
 
-## One
+## Advanced
 
-This is another custom section that should ideally stay between the usage and timeout section.
+### Timeouts
 
-## Two
+Setting a timeout for each individual request is as simple as
+using the standard \`context\` library. Setting a one second timeout
+for an individual API call looks like the following:
 
-This is another custom section that should ideally stay between the usage and timeout section.
+\`\`\`go
+ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+defer cancel()
+
+response, err := client.Chat(
+	ctx,
+	&fern.ChatRequest{
+		Message: "Can you give me a global market overview of solar panels?",
+	},
+)
+\`\`\`
 
 ## Contributing
 

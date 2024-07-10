@@ -1,25 +1,21 @@
 import { useEventCallback } from "@fern-ui/react-commons";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
-import { useSearchTrigger } from "../useSearchTrigger";
+import { SEARCH_DIALOG_OPEN_ATOM } from "../../atoms/sidebar";
 import useInkeepSettings from "./useInkeepSettings";
 
 const CustomTrigger = dynamic(() => import("@inkeep/widgets").then((mod) => mod.InkeepCustomTrigger), {
     ssr: false,
 });
 
-export const INKEEP_TRIGGER = atom(false);
-
 export function InkeepCustomTrigger(): ReactElement | null {
     const settings = useInkeepSettings();
-    const [isOpen, setIsOpen] = useAtom(INKEEP_TRIGGER);
+    const [isOpen, setIsOpen] = useAtom(SEARCH_DIALOG_OPEN_ATOM);
 
     const handleClose = useEventCallback(() => {
         setIsOpen(false);
     });
-
-    useSearchTrigger(setIsOpen);
 
     if (settings == null) {
         return null;

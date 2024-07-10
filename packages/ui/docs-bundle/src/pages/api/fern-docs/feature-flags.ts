@@ -17,6 +17,11 @@ const FEATURE_FLAGS = [
     "dark-code-enabled" as const,
     "proxy-uses-app-buildwithfern" as const,
     "api-key-injection" as const,
+    "image-zoom-disabled" as const,
+    "use-javascript-as-typescript" as const,
+    "always-enable-javascript-fetch" as const,
+    "scroll-in-container-enabled" as const,
+    "use-mdx-bundler" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -66,6 +71,14 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             domain,
             config["proxy-uses-app-buildwithfern"] as CompanyList,
         );
+        const isImageZoomDisabled = checkDomainMatchesCustomers(domain, config["image-zoom-disabled"]);
+        const useJavaScriptAsTypeScript = checkDomainMatchesCustomers(domain, config["use-javascript-as-typescript"]);
+        const alwaysEnableJavaScriptFetch = checkDomainMatchesCustomers(
+            domain,
+            config["always-enable-javascript-fetch"],
+        );
+        const scrollInContainerEnabled = checkDomainMatchesCustomers(domain, config["scroll-in-container-enabled"]);
+        const useMdxBundler = checkDomainMatchesCustomers(domain, config["use-mdx-bundler"]);
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -78,6 +91,11 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isInlineFeedbackEnabled,
             isDarkCodeEnabled,
             proxyShouldUseAppBuildwithfernCom,
+            isImageZoomDisabled,
+            useJavaScriptAsTypeScript,
+            alwaysEnableJavaScriptFetch,
+            scrollInContainerEnabled,
+            useMdxBundler,
             apiInjectionConfig,
         };
     } catch (e) {
@@ -94,6 +112,11 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isInlineFeedbackEnabled: isFern(domain),
             isDarkCodeEnabled: false,
             proxyShouldUseAppBuildwithfernCom: false,
+            isImageZoomDisabled: false,
+            useJavaScriptAsTypeScript: false,
+            alwaysEnableJavaScriptFetch: false,
+            scrollInContainerEnabled: false,
+            useMdxBundler: false,
             apiInjectionConfig: undefined,
         };
     }

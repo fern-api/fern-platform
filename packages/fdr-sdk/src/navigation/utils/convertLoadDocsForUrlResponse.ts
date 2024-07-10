@@ -4,6 +4,7 @@ import { NavigationConfigConverter } from "../converters/NavigationConfigConvert
 
 export function convertLoadDocsForUrlResponse(response: DocsV2Read.LoadDocsForUrlResponse) {
     return NavigationConfigConverter.convert(
+        response.definition.config.title,
         response.definition.config.navigation,
         hackReorderApis(response.definition.apis, response.baseUrl.domain),
         response.baseUrl.basePath,

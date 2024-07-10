@@ -1,55 +1,43 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { ArrowRightIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
+import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
+import { SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
+import { useOpenSearchDialog } from "../atoms/sidebar";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
-import { useOpenSearchDialog } from "../sidebar/atom";
 import { getGitHubRepo } from "../util/github";
 import { GitHubWidget } from "./GitHubWidget";
 import { HeaderLogoSection } from "./HeaderLogoSection";
+import { MobileMenuButton } from "./MobileMenuButton";
 import { ThemeButton } from "./ThemeButton";
 
 export declare namespace Header {
     export interface Props {
         className?: string;
         style?: CSSProperties;
-        navbarLinks: DocsV1Read.NavbarLink[];
-        logoHeight: DocsV1Read.Height | undefined;
-        logoHref: DocsV1Read.Url | undefined;
-        isMobileSidebarOpen: boolean;
-        openMobileSidebar: () => void;
-        closeMobileSidebar: () => void;
-        showSearchBar?: boolean;
     }
 }
 
 const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Props>>(function Header(
-    {
-        className,
-        style,
-        navbarLinks,
-        isMobileSidebarOpen,
-        openMobileSidebar,
-        closeMobileSidebar,
-        showSearchBar = true,
-        logoHeight,
-        logoHref,
-    },
+    { className, style },
     ref,
 ) {
+    const { navbarLinks } = useDocsContext();
     const { colors } = useDocsContext();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const [searchService] = useSearchConfig();
+    const showSearchBar = !useAtomValue(SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM);
 
     const navbarLinksSection = (
-        <div className="hidden lg:block">
+        <div className="lg-menu">
             <FernButtonGroup>
                 {navbarLinks.map((navbarLink, idx) => {
                     if (navbarLink.type === "github") {
@@ -94,17 +82,12 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const githubRepo = githubLink && getGitHubRepo(githubLink.url);
 
     return (
-        <nav
-            aria-label="primary"
-            className={cn("flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full", className)}
-            ref={ref}
-            style={style}
-        >
-            <HeaderLogoSection logoHeight={logoHeight} logoHref={logoHref} />
+        <nav aria-label="primary" className={cn("fern-header-content", className)} ref={ref} style={style}>
+            <HeaderLogoSection />
 
             {showSearchBar && (
                 <div
-                    className={cn("max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2", {
+                    className={cn("fern-header-searchbar", {
                         invisible: isSearchBoxMounted,
                     })}
                 >
@@ -113,13 +96,13 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             )}
 
             <div
-                className={cn("-mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4", {
+                className={cn("fern-header-right-menu", {
                     "flex-1": showSearchBar,
                 })}
             >
                 {navbarLinksSection}
 
-                <div className="flex items-center lg:hidden">
+                <div className="max-lg-menu">
                     {githubRepo && <GitHubWidget repo={githubRepo} />}
 
                     {colors.dark && colors.light && <ThemeButton size="large" />}
@@ -135,39 +118,21 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                             variant="minimal"
                             rounded={true}
                             size="large"
-                            className="hidden sm:inline"
+                            className="max-sm:hidden"
                         />
                     )}
 
-                    <FernButton
-                        onClickCapture={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            if (isMobileSidebarOpen) {
-                                closeMobileSidebar();
-                            } else {
-                                openMobileSidebar();
-                            }
-                        }}
-                        icon={
-                            isMobileSidebarOpen ? (
-                                <Cross1Icon className="!size-5" />
-                            ) : (
-                                <HamburgerMenuIcon className="!size-5" />
-                            )
-                        }
-                        intent={isMobileSidebarOpen ? "primary" : "none"}
-                        variant={isMobileSidebarOpen ? "filled" : "minimal"}
-                        rounded={true}
-                        size="large"
-                    />
+                    <MobileMenuButton />
                 </div>
             </div>
         </nav>
     );
 });
 
-export const Header = memo(UnmemoizedHeader);
+export const Header = memo(
+    UnmemoizedHeader,
+    (prev, next) => prev.className === next.className && isEqual(prev.style, next.style),
+);
 
 export declare namespace HeaderPrimaryLink {
     export interface Props {

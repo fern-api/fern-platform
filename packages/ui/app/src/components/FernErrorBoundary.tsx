@@ -1,12 +1,13 @@
 import { FernButton } from "@fern-ui/components";
 import { ExclamationTriangleIcon, ReloadIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
+import { useAtomValue } from "jotai";
 import { memoize } from "lodash-es";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
-import { useLocalPreviewContext } from "../contexts/LocalPreviewContext";
+import { IS_LOCAL_PREVIEW_ATOM } from "../atoms/preview";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred
@@ -35,7 +36,7 @@ export function FernErrorTag({
     reset?: () => void;
     resetErrorBoundary?: () => void;
 }): ReactElement | null {
-    const { isLocalPreview } = useLocalPreviewContext();
+    const isLocalPreview = useAtomValue(IS_LOCAL_PREVIEW_ATOM);
     useEffect(() => {
         // eslint-disable-next-line no-console
         console.error(error);
@@ -111,11 +112,11 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
                 resetErrorBoundary?.();
             }
         };
-        router.events.on("routeChangeComplete", handleRouteChange);
+        Router.events.on("routeChangeComplete", handleRouteChange);
         return () => {
-            router.events.off("routeChangeComplete", handleRouteChange);
+            Router.events.off("routeChangeComplete", handleRouteChange);
         };
-    }, [resetErrorBoundary, router.events]);
+    }, [resetErrorBoundary]);
 
     return (
         <FernErrorTag

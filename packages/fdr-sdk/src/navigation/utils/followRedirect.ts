@@ -18,6 +18,7 @@ export function followRedirect(nodeToFollow: NavigationNode | undefined): FernNa
         endpoint: (node) => node.slug,
         webSocket: (node) => node.slug,
         webhook: (node) => node.slug,
+        landingPage: (node) => node.slug,
 
         // nodes with overview
         apiPackage: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
@@ -26,6 +27,7 @@ export function followRedirect(nodeToFollow: NavigationNode | undefined): FernNa
 
         // version is a special case where it should only consider it's first child (the first version)
         versioned: (node) => followRedirect(node.children[0]),
+        unversioned: (node) => followRedirect(node.landingPage ?? node.child),
         tabbed: (node) => followRedirects(node.children),
         sidebarRoot: (node) => followRedirects(node.children),
         endpointPair: (node) => followRedirect(node.nonStream),

@@ -3,11 +3,12 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { EnterFullScreenIcon } from "@radix-ui/react-icons";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
-import { MDXRemoteProps } from "next-mdx-remote";
+import type { MDXComponents } from "mdx/types";
 import { ComponentProps, FC, useState } from "react";
 
 const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
     const [isFullScreen, setIsFullScreen] = useState(false);
+
     return (
         <>
             <Tooltip.TooltipProvider delayDuration={300}>
@@ -74,7 +75,7 @@ const Td: FC<ComponentProps<"td">> = ({ className, children, ...rest }) => {
     );
 };
 
-export const HTML_TABLE_COMPONENTS: MDXRemoteProps["components"] = {
+export const HTML_TABLE_COMPONENTS: MDXComponents = {
     table: Table,
     thead: Thead,
     tbody: Tbody,

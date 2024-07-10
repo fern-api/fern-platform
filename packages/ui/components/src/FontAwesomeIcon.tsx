@@ -54,11 +54,10 @@ function getIconUrl(icon: string | undefined): string {
 }
 
 function getCdnHost() {
-    const CDN_HOST = process?.env?.NEXT_PUBLIC_FONTAWESOME_CDN_HOST;
-    if (CDN_HOST == null) {
-        return "https://icons.ferndocs.com";
-    }
-    return CDN_HOST;
+    return (
+        (typeof process !== "undefined" ? process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST : undefined) ??
+        "https://icons.ferndocs.com"
+    );
 }
 
 function parseFontAwesomeIcon(icon: string): [string, string] | undefined {

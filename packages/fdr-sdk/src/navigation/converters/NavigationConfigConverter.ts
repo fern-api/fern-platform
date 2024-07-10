@@ -11,6 +11,7 @@ import { SlugGenerator } from "./SlugGenerator";
 
 export class NavigationConfigConverter {
     private constructor(
+        private title: string | undefined,
         private config: DocsV1Read.NavigationConfig,
         private apis: Record<string, APIV1Read.ApiDefinition>,
         private basePath: string | undefined,
@@ -18,12 +19,13 @@ export class NavigationConfigConverter {
     ) {}
 
     public static convert(
+        title: string | undefined,
         config: DocsV1Read.NavigationConfig,
         apis: Record<string, APIV1Read.ApiDefinition>,
         basePath: string | undefined,
         lexicographic?: boolean,
     ): FernNavigation.RootNode {
-        return new NavigationConfigConverter(config, apis, basePath, lexicographic).convert();
+        return new NavigationConfigConverter(title, config, apis, basePath, lexicographic).convert();
     }
 
     #idgen = new NodeIdGenerator();
@@ -48,8 +50,7 @@ export class NavigationConfigConverter {
                 child,
                 slug: baseSlug.get(),
 
-                // the following don't matter:
-                title: "Fern Docs",
+                title: this.title ?? "Documentation",
                 hidden: false,
                 icon: undefined,
                 pointsTo,
@@ -64,7 +65,7 @@ export class NavigationConfigConverter {
         return this.#idgen.with("", (id) => {
             const children = versioned.versions.map((version, idx): FernNavigation.VersionNode => {
                 const slug = parentSlug.setVersionSlug(version.urlSlug);
-                return this.#idgen.with(version.urlSlug, (id) => {
+                return this.#idgen.with(version.urlSlug, (id): FernNavigation.VersionNode => {
                     const child = this.convertUnversionedNavigationConfig(version.config, slug);
                     const pointsTo = followRedirect(child);
                     return {
@@ -77,9 +78,10 @@ export class NavigationConfigConverter {
                         slug: slug.get(),
                         icon: undefined,
                         hidden: false,
-                        child,
+                        child: child.child,
                         availability: convertAvailability(version.availability),
                         pointsTo,
+                        landingPage: child.landingPage,
                     };
                 });
             });
@@ -90,9 +92,9 @@ export class NavigationConfigConverter {
     private convertUnversionedNavigationConfig(
         unversioned: DocsV1Read.UnversionedNavigationConfig,
         parentSlug: SlugGenerator,
-    ): FernNavigation.VersionChild {
+    ): FernNavigation.UnversionedNode {
         return this.#idgen.with("uv", (id) => {
-            return visitUnversionedReadNavigationConfig<FernNavigation.VersionChild>(unversioned, {
+            const child = visitUnversionedReadNavigationConfig<FernNavigation.VersionChild>(unversioned, {
                 tabbed: (tabbed) => ({
                     id,
                     type: "tabbed",
@@ -145,6 +147,24 @@ export class NavigationConfigConverter {
                     ),
                 }),
             });
+            return {
+                id,
+                type: "unversioned",
+                child,
+                landingPage: this.#idgen.with("landing-page", (id) =>
+                    unversioned.landingPage != null
+                        ? {
+                              id,
+                              type: "landingPage",
+                              pageId: FernNavigation.PageId(unversioned.landingPage.id),
+                              title: unversioned.landingPage.title,
+                              slug: parentSlug.apply(unversioned.landingPage).get(),
+                              icon: unversioned.landingPage.icon,
+                              hidden: unversioned.landingPage.hidden,
+                          }
+                        : undefined,
+                ),
+            };
         });
     }
 

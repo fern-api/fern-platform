@@ -2,8 +2,8 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { ReactElement, useMemo } from "react";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useCloseMobileSidebar, useCloseSearchDialog } from "../sidebar/atom";
+import { useBasePath } from "../atoms/navigation";
+import { useCloseMobileSidebar, useCloseSearchDialog } from "../atoms/sidebar";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { EndpointRecordV3 } from "./content/EndpointRecordV3";
@@ -30,7 +30,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
     onMouseEnter,
     onMouseLeave,
 }) => {
-    const { basePath } = useDocsContext();
+    const basePath = useBasePath();
     const closeMobileSidebar = useCloseMobileSidebar();
     const closeSearchDialog = useCloseSearchDialog();
 

@@ -4,827 +4,831 @@
   "version": "v1",
   "child": {
     "id": "root.uv",
-    "type": "tabbed",
-    "children": [
-      {
-        "id": "root.uv.docs",
-        "type": "tab",
-        "title": "Guides",
-        "slug": "docs",
-        "icon": "puzzle",
-        "hidden": false,
-        "child": {
-          "id": "root.uv.docs.docs",
-          "type": "sidebarRoot",
-          "children": [
-            {
-              "id": "root.uv.docs.docs.introduction",
-              "type": "section",
-              "collapsed": false,
-              "title": "Introduction",
-              "slug": "docs/introduction",
-              "children": [
-                {
-                  "id": "root.uv.docs.docs.introduction.intro",
-                  "type": "page",
-                  "pageId": "pages/index.mdx",
-                  "title": "Overview",
-                  "slug": "docs/introduction/intro"
-                },
-                {
-                  "id": "root.uv.docs.docs.introduction.start/quickstart",
-                  "type": "page",
-                  "pageId": "pages/start/quickstart.mdx",
-                  "title": "Quick start",
-                  "slug": "docs/introduction/start/quickstart"
-                },
-                {
-                  "id": "root.uv.docs.docs.introduction.security",
-                  "type": "page",
-                  "pageId": "pages/security/index.mdx",
-                  "title": "Security",
-                  "slug": "docs/introduction/security"
-                },
-                {
-                  "id": "root.uv.docs.docs.introduction.billing",
-                  "type": "page",
-                  "pageId": "pages/billing.mdx",
-                  "title": "Billing",
-                  "slug": "docs/introduction/billing"
-                }
-              ],
-              "pointsTo": "docs/introduction/intro"
-            },
-            {
-              "id": "root.uv.docs.docs.uploading",
-              "type": "section",
-              "collapsed": false,
-              "title": "Uploading",
-              "slug": "docs/uploading",
-              "children": [
-                {
-                  "id": "root.uv.docs.docs.uploading.uploads",
-                  "type": "page",
-                  "pageId": "pages/uploads/index.mdx",
-                  "title": "Overview",
-                  "slug": "docs/uploading/uploads"
-                },
-                {
-                  "id": "root.uv.docs.docs.uploading.uploading-files",
-                  "type": "page",
-                  "pageId": "pages/uploading-files/index.mdx",
-                  "title": "Uploading files",
-                  "slug": "docs/uploading/uploading-files"
-                },
-                {
-                  "id": "root.uv.docs.docs.uploading.file-uploader",
-                  "type": "section",
-                  "collapsed": false,
-                  "title": "File Uploader",
-                  "slug": "docs/uploading/file-uploader",
-                  "children": [
-                    {
-                      "id": "root.uv.docs.docs.uploading.file-uploader.file-uploader",
-                      "type": "page",
-                      "pageId": "pages/file-uploader/index.mdx",
-                      "title": "Overview",
-                      "slug": "docs/uploading/file-uploader/file-uploader"
-                    }
-                  ],
-                  "pointsTo": "docs/uploading/file-uploader/file-uploader"
-                }
-              ],
-              "pointsTo": "docs/uploading/uploads"
-            },
-            {
-              "id": "root.uv.docs.docs.optimization",
-              "type": "section",
-              "collapsed": false,
-              "title": "Optimization",
-              "slug": "docs/optimization",
-              "children": [
-                {
-                  "id": "root.uv.docs.docs.optimization.image-optimization",
-                  "type": "page",
-                  "pageId": "pages/transformations/image/compression.mdx",
-                  "title": "Image optimization",
-                  "slug": "docs/optimization/image-optimization"
-                }
-              ],
-              "pointsTo": "docs/optimization/image-optimization"
-            },
-            {
-              "id": "root.uv.docs.docs.image-transformations",
-              "type": "section",
-              "collapsed": false,
-              "title": "Image transformations",
-              "slug": "docs/image-transformations",
-              "children": [
-                {
-                  "id": "root.uv.docs.docs.image-transformations.overview",
-                  "type": "page",
-                  "pageId": "pages/transformations/image/index.mdx",
-                  "title": "Overview",
-                  "slug": "docs/image-transformations/overview"
-                }
-              ],
-              "pointsTo": "docs/image-transformations/overview"
-            },
-            {
-              "id": "root.uv.docs.docs.delivery",
-              "type": "section",
-              "collapsed": false,
-              "title": "Delivery",
-              "slug": "docs/delivery",
-              "children": [
-                {
-                  "id": "root.uv.docs.docs.delivery.overview",
-                  "type": "page",
-                  "pageId": "pages/delivery/index.mdx",
-                  "title": "Overview",
-                  "slug": "docs/delivery/overview"
-                }
-              ],
-              "pointsTo": "docs/delivery/overview"
-            },
-            {
-              "id": "root.uv.docs.docs.file-management",
-              "type": "section",
-              "collapsed": false,
-              "title": "File management",
-              "slug": "docs/file-management",
-              "children": [
-                {
-                  "id": "root.uv.docs.docs.file-management.overview",
-                  "type": "page",
-                  "pageId": "pages/start/file-management.mdx",
-                  "title": "Overview",
-                  "slug": "docs/file-management/overview"
-                }
-              ],
-              "pointsTo": "docs/file-management/overview"
-            }
-          ]
+    "type": "unversioned",
+    "child": {
+      "id": "root.uv",
+      "type": "tabbed",
+      "children": [
+        {
+          "id": "root.uv.docs",
+          "type": "tab",
+          "title": "Guides",
+          "slug": "docs",
+          "icon": "puzzle",
+          "hidden": false,
+          "child": {
+            "id": "root.uv.docs.docs",
+            "type": "sidebarRoot",
+            "children": [
+              {
+                "id": "root.uv.docs.docs.introduction",
+                "type": "section",
+                "collapsed": false,
+                "title": "Introduction",
+                "slug": "docs/introduction",
+                "children": [
+                  {
+                    "id": "root.uv.docs.docs.introduction.intro",
+                    "type": "page",
+                    "pageId": "pages/index.mdx",
+                    "title": "Overview",
+                    "slug": "docs/introduction/intro"
+                  },
+                  {
+                    "id": "root.uv.docs.docs.introduction.start/quickstart",
+                    "type": "page",
+                    "pageId": "pages/start/quickstart.mdx",
+                    "title": "Quick start",
+                    "slug": "docs/introduction/start/quickstart"
+                  },
+                  {
+                    "id": "root.uv.docs.docs.introduction.security",
+                    "type": "page",
+                    "pageId": "pages/security/index.mdx",
+                    "title": "Security",
+                    "slug": "docs/introduction/security"
+                  },
+                  {
+                    "id": "root.uv.docs.docs.introduction.billing",
+                    "type": "page",
+                    "pageId": "pages/billing.mdx",
+                    "title": "Billing",
+                    "slug": "docs/introduction/billing"
+                  }
+                ],
+                "pointsTo": "docs/introduction/intro"
+              },
+              {
+                "id": "root.uv.docs.docs.uploading",
+                "type": "section",
+                "collapsed": false,
+                "title": "Uploading",
+                "slug": "docs/uploading",
+                "children": [
+                  {
+                    "id": "root.uv.docs.docs.uploading.uploads",
+                    "type": "page",
+                    "pageId": "pages/uploads/index.mdx",
+                    "title": "Overview",
+                    "slug": "docs/uploading/uploads"
+                  },
+                  {
+                    "id": "root.uv.docs.docs.uploading.uploading-files",
+                    "type": "page",
+                    "pageId": "pages/uploading-files/index.mdx",
+                    "title": "Uploading files",
+                    "slug": "docs/uploading/uploading-files"
+                  },
+                  {
+                    "id": "root.uv.docs.docs.uploading.file-uploader",
+                    "type": "section",
+                    "collapsed": false,
+                    "title": "File Uploader",
+                    "slug": "docs/uploading/file-uploader",
+                    "children": [
+                      {
+                        "id": "root.uv.docs.docs.uploading.file-uploader.file-uploader",
+                        "type": "page",
+                        "pageId": "pages/file-uploader/index.mdx",
+                        "title": "Overview",
+                        "slug": "docs/uploading/file-uploader/file-uploader"
+                      }
+                    ],
+                    "pointsTo": "docs/uploading/file-uploader/file-uploader"
+                  }
+                ],
+                "pointsTo": "docs/uploading/uploads"
+              },
+              {
+                "id": "root.uv.docs.docs.optimization",
+                "type": "section",
+                "collapsed": false,
+                "title": "Optimization",
+                "slug": "docs/optimization",
+                "children": [
+                  {
+                    "id": "root.uv.docs.docs.optimization.image-optimization",
+                    "type": "page",
+                    "pageId": "pages/transformations/image/compression.mdx",
+                    "title": "Image optimization",
+                    "slug": "docs/optimization/image-optimization"
+                  }
+                ],
+                "pointsTo": "docs/optimization/image-optimization"
+              },
+              {
+                "id": "root.uv.docs.docs.image-transformations",
+                "type": "section",
+                "collapsed": false,
+                "title": "Image transformations",
+                "slug": "docs/image-transformations",
+                "children": [
+                  {
+                    "id": "root.uv.docs.docs.image-transformations.overview",
+                    "type": "page",
+                    "pageId": "pages/transformations/image/index.mdx",
+                    "title": "Overview",
+                    "slug": "docs/image-transformations/overview"
+                  }
+                ],
+                "pointsTo": "docs/image-transformations/overview"
+              },
+              {
+                "id": "root.uv.docs.docs.delivery",
+                "type": "section",
+                "collapsed": false,
+                "title": "Delivery",
+                "slug": "docs/delivery",
+                "children": [
+                  {
+                    "id": "root.uv.docs.docs.delivery.overview",
+                    "type": "page",
+                    "pageId": "pages/delivery/index.mdx",
+                    "title": "Overview",
+                    "slug": "docs/delivery/overview"
+                  }
+                ],
+                "pointsTo": "docs/delivery/overview"
+              },
+              {
+                "id": "root.uv.docs.docs.file-management",
+                "type": "section",
+                "collapsed": false,
+                "title": "File management",
+                "slug": "docs/file-management",
+                "children": [
+                  {
+                    "id": "root.uv.docs.docs.file-management.overview",
+                    "type": "page",
+                    "pageId": "pages/start/file-management.mdx",
+                    "title": "Overview",
+                    "slug": "docs/file-management/overview"
+                  }
+                ],
+                "pointsTo": "docs/file-management/overview"
+              }
+            ]
+          },
+          "pointsTo": "docs/introduction/intro"
         },
-        "pointsTo": "docs/introduction/intro"
-      },
-      {
-        "id": "root.uv.docs/integrations",
-        "type": "tab",
-        "title": "Integrations",
-        "slug": "docs/integrations",
-        "icon": "puzzle",
-        "hidden": false,
-        "child": {
-          "id": "root.uv.docs/integrations.docs/integrations",
-          "type": "sidebarRoot",
-          "children": [
-            {
-              "id": "root.uv.docs/integrations.docs/integrations.group",
-              "type": "sidebarGroup",
-              "children": [
-                {
-                  "id": "root.uv.docs/integrations.docs/integrations.all-integrations",
-                  "type": "page",
-                  "pageId": "pages/integrations/index.mdx",
-                  "title": "All integrations",
-                  "slug": "docs/integrations/all-integrations"
-                }
-              ]
-            },
-            {
-              "id": "root.uv.docs/integrations.docs/integrations.api-clients",
-              "type": "section",
-              "collapsed": false,
-              "title": "API clients",
-              "slug": "docs/integrations/api-clients",
-              "children": [
-                {
-                  "id": "root.uv.docs/integrations.docs/integrations.api-clients.python",
-                  "type": "page",
-                  "pageId": "pages/integrations/python.mdx",
-                  "title": "Python",
-                  "slug": "docs/integrations/api-clients/python"
-                }
-              ],
-              "pointsTo": "docs/integrations/api-clients/python"
-            }
-          ]
+        {
+          "id": "root.uv.docs/integrations",
+          "type": "tab",
+          "title": "Integrations",
+          "slug": "docs/integrations",
+          "icon": "puzzle",
+          "hidden": false,
+          "child": {
+            "id": "root.uv.docs/integrations.docs/integrations",
+            "type": "sidebarRoot",
+            "children": [
+              {
+                "id": "root.uv.docs/integrations.docs/integrations.group",
+                "type": "sidebarGroup",
+                "children": [
+                  {
+                    "id": "root.uv.docs/integrations.docs/integrations.all-integrations",
+                    "type": "page",
+                    "pageId": "pages/integrations/index.mdx",
+                    "title": "All integrations",
+                    "slug": "docs/integrations/all-integrations"
+                  }
+                ]
+              },
+              {
+                "id": "root.uv.docs/integrations.docs/integrations.api-clients",
+                "type": "section",
+                "collapsed": false,
+                "title": "API clients",
+                "slug": "docs/integrations/api-clients",
+                "children": [
+                  {
+                    "id": "root.uv.docs/integrations.docs/integrations.api-clients.python",
+                    "type": "page",
+                    "pageId": "pages/integrations/python.mdx",
+                    "title": "Python",
+                    "slug": "docs/integrations/api-clients/python"
+                  }
+                ],
+                "pointsTo": "docs/integrations/api-clients/python"
+              }
+            ]
+          },
+          "pointsTo": "docs/integrations/all-integrations"
         },
-        "pointsTo": "docs/integrations/all-integrations"
-      },
-      {
-        "id": "root.uv.api",
-        "type": "tab",
-        "title": "API References",
-        "slug": "api",
-        "icon": "puzzle",
-        "hidden": false,
-        "child": {
-          "id": "root.uv.api.api",
-          "type": "sidebarRoot",
-          "children": [
-            {
-              "id": "root.uv.api.api.upload-api",
-              "type": "apiReference",
-              "title": "Upload API",
-              "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-              "slug": "api/upload-api",
-              "showErrors": true,
-              "children": [
-                {
-                  "id": "root.uv.api.api.upload-api.subpackage_upload",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.baseUpload",
-                      "type": "endpoint",
-                      "title": "Direct uploads",
-                      "endpointId": "subpackage_upload.baseUpload",
-                      "slug": "api/upload-api/upload/base-upload",
-                      "method": "POST",
-                      "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.multipartFileUploadStart",
-                      "type": "endpoint",
-                      "title": "Start multipart upload",
-                      "endpointId": "subpackage_upload.multipartFileUploadStart",
-                      "slug": "api/upload-api/upload/multipart-file-upload-start",
-                      "method": "POST",
-                      "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.multipartFileUploadPart",
-                      "type": "endpoint",
-                      "title": "Upload individual file parts",
-                      "endpointId": "subpackage_upload.multipartFileUploadPart",
-                      "slug": "api/upload-api/upload/multipart-file-upload-part",
-                      "method": "PUT",
-                      "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.multipartFileUploadComplete",
-                      "type": "endpoint",
-                      "title": "Complete multipart upload",
-                      "endpointId": "subpackage_upload.multipartFileUploadComplete",
-                      "slug": "api/upload-api/upload/multipart-file-upload-complete",
-                      "method": "POST",
-                      "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.fromURLUpload",
-                      "type": "endpoint",
-                      "title": "Upload files from URLs",
-                      "endpointId": "subpackage_upload.fromURLUpload",
-                      "slug": "api/upload-api/upload/from-url-upload",
-                      "method": "POST",
-                      "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.fromURLUploadStatus",
-                      "type": "endpoint",
-                      "title": "Check the status of a task to fetch/upload a file from a URL",
-                      "endpointId": "subpackage_upload.fromURLUploadStatus",
-                      "slug": "api/upload-api/upload/from-url-upload-status",
-                      "method": "GET",
-                      "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.fileUploadInfo",
-                      "type": "endpoint",
-                      "title": "Get information about an uploaded file",
-                      "endpointId": "subpackage_upload.fileUploadInfo",
-                      "slug": "api/upload-api/upload/file-upload-info",
-                      "method": "GET",
-                      "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "Upload",
-                  "slug": "api/upload-api/upload",
-                  "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                  "pointsTo": "api/upload-api/upload/base-upload"
-                },
-                {
-                  "id": "root.uv.api.api.upload-api.subpackage_groups",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.upload-api.subpackage_groups.subpackage_groups.createFilesGroup",
-                      "type": "endpoint",
-                      "title": "Create a file group",
-                      "endpointId": "subpackage_groups.createFilesGroup",
-                      "slug": "api/upload-api/groups/create-files-group",
-                      "method": "POST",
-                      "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.upload-api.subpackage_groups.subpackage_groups.filesGroupInfo",
-                      "type": "endpoint",
-                      "title": "Get information about a file group",
-                      "endpointId": "subpackage_groups.filesGroupInfo",
-                      "slug": "api/upload-api/groups/files-group-info",
-                      "method": "GET",
-                      "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "Groups",
-                  "slug": "api/upload-api/groups",
-                  "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
-                  "pointsTo": "api/upload-api/groups/create-files-group"
-                }
-              ],
-              "pointsTo": "api/upload-api/upload/base-upload"
-            },
-            {
-              "id": "root.uv.api.api.rest-api-v-0-7",
-              "type": "apiReference",
-              "title": "REST API v0.7",
-              "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-              "slug": "api/rest-api-v-0-7",
-              "showErrors": true,
-              "children": [
-                {
-                  "id": "root.uv.api.api.rest-api-v-0-7.root.File metadata",
-                  "type": "endpoint",
-                  "title": "Get file's metadata",
-                  "endpointId": "root.File metadata",
-                  "slug": "api/rest-api-v-0-7/file-metadata",
-                  "method": "GET",
-                  "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                  "isResponseStream": false
-                },
-                {
-                  "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesList",
-                      "type": "endpoint",
-                      "title": "List of files",
-                      "endpointId": "subpackage_file.filesList",
-                      "slug": "api/rest-api-v-0-7/file/files-list",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.storeFile",
-                      "type": "endpoint",
-                      "title": "Store file",
-                      "endpointId": "subpackage_file.storeFile",
-                      "slug": "api/rest-api-v-0-7/file/store-file",
-                      "method": "PUT",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.deleteFileStorage",
-                      "type": "endpoint",
-                      "title": "Delete file",
-                      "endpointId": "subpackage_file.deleteFileStorage",
-                      "slug": "api/rest-api-v-0-7/file/delete-file-storage",
-                      "method": "DELETE",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.info",
-                      "type": "endpoint",
-                      "title": "File info",
-                      "endpointId": "subpackage_file.info",
-                      "slug": "api/rest-api-v-0-7/file/info",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesStoring",
-                      "type": "endpoint",
-                      "title": "Batch file storing",
-                      "endpointId": "subpackage_file.filesStoring",
-                      "slug": "api/rest-api-v-0-7/file/files-storing",
-                      "method": "PUT",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesDelete",
-                      "type": "endpoint",
-                      "title": "Batch file delete",
-                      "endpointId": "subpackage_file.filesDelete",
-                      "slug": "api/rest-api-v-0-7/file/files-delete",
-                      "method": "DELETE",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.createLocalCopy",
-                      "type": "endpoint",
-                      "title": "Copy file to local storage",
-                      "endpointId": "subpackage_file.createLocalCopy",
-                      "slug": "api/rest-api-v-0-7/file/create-local-copy",
-                      "method": "POST",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.createRemoteCopy",
-                      "type": "endpoint",
-                      "title": "Copy file to remote storage",
-                      "endpointId": "subpackage_file.createRemoteCopy",
-                      "slug": "api/rest-api-v-0-7/file/create-remote-copy",
-                      "method": "POST",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "File",
-                  "slug": "api/rest-api-v-0-7/file",
-                  "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                  "pointsTo": "api/rest-api-v-0-7/file/files-list"
-                },
-                {
-                  "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionExecute",
-                      "type": "endpoint",
-                      "title": "Execute AWS Rekognition",
-                      "endpointId": "subpackage_addOns.awsRekognitionExecute",
-                      "slug": "api/rest-api-v-0-7/add-ons/aws-rekognition-execute",
-                      "method": "POST",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionExecutionStatus",
-                      "type": "endpoint",
-                      "title": "Check AWS Rekognition execution status",
-                      "endpointId": "subpackage_addOns.awsRekognitionExecutionStatus",
-                      "slug": "api/rest-api-v-0-7/add-ons/aws-rekognition-execution-status",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionDetectModerationLabelsExecute",
-                      "type": "endpoint",
-                      "title": "Execute AWS Rekognition Moderation",
-                      "endpointId": "subpackage_addOns.awsRekognitionDetectModerationLabelsExecute",
-                      "slug": "api/rest-api-v-0-7/add-ons/aws-rekognition-detect-moderation-labels-execute",
-                      "method": "POST",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
-                      "type": "endpoint",
-                      "title": "Check AWS Rekognition Moderation execution status",
-                      "endpointId": "subpackage_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
-                      "slug": "api/rest-api-v-0-7/add-ons/aws-rekognition-detect-moderation-labels-execution-status",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.ucClamavVirusScanExecute",
-                      "type": "endpoint",
-                      "title": "Execute ClamAV",
-                      "endpointId": "subpackage_addOns.ucClamavVirusScanExecute",
-                      "slug": "api/rest-api-v-0-7/add-ons/uc-clamav-virus-scan-execute",
-                      "method": "POST",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.ucClamavVirusScanExecutionStatus",
-                      "type": "endpoint",
-                      "title": "Check ClamAV execution status",
-                      "endpointId": "subpackage_addOns.ucClamavVirusScanExecutionStatus",
-                      "slug": "api/rest-api-v-0-7/add-ons/uc-clamav-virus-scan-execution-status",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.removeBgExecute",
-                      "type": "endpoint",
-                      "title": "Execute Remove.bg",
-                      "endpointId": "subpackage_addOns.removeBgExecute",
-                      "slug": "api/rest-api-v-0-7/add-ons/remove-bg-execute",
-                      "method": "POST",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.removeBgExecutionStatus",
-                      "type": "endpoint",
-                      "title": "Check Remove.bg execution status",
-                      "endpointId": "subpackage_addOns.removeBgExecutionStatus",
-                      "slug": "api/rest-api-v-0-7/add-ons/remove-bg-execution-status",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "Add Ons",
-                  "slug": "api/rest-api-v-0-7/add-ons",
-                  "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                  "pointsTo": "api/rest-api-v-0-7/add-ons/aws-rekognition-execute"
-                },
-                {
-                  "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.key",
-                      "type": "endpoint",
-                      "title": "Get metadata key's value",
-                      "endpointId": "subpackage_fileMetadata.key",
-                      "slug": "api/rest-api-v-0-7/file-metadata/key",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.updateFileMetadataKey",
-                      "type": "endpoint",
-                      "title": "Update metadata key's value",
-                      "endpointId": "subpackage_fileMetadata.updateFileMetadataKey",
-                      "slug": "api/rest-api-v-0-7/file-metadata/update-file-metadata-key",
-                      "method": "PUT",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.deleteFileMetadataKey",
-                      "type": "endpoint",
-                      "title": "Delete metadata key",
-                      "endpointId": "subpackage_fileMetadata.deleteFileMetadataKey",
-                      "slug": "api/rest-api-v-0-7/file-metadata/delete-file-metadata-key",
-                      "method": "DELETE",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "File Metadata",
-                  "slug": "api/rest-api-v-0-7/file-metadata",
-                  "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                  "pointsTo": "api/rest-api-v-0-7/file-metadata/key"
-                },
-                {
-                  "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.groupsList",
-                      "type": "endpoint",
-                      "title": "List of groups",
-                      "endpointId": "subpackage_group.groupsList",
-                      "slug": "api/rest-api-v-0-7/group/groups-list",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.info",
-                      "type": "endpoint",
-                      "title": "Group info",
-                      "endpointId": "subpackage_group.info",
-                      "slug": "api/rest-api-v-0-7/group/info",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.deleteGroup",
-                      "type": "endpoint",
-                      "title": "Delete group",
-                      "endpointId": "subpackage_group.deleteGroup",
-                      "slug": "api/rest-api-v-0-7/group/delete-group",
-                      "method": "DELETE",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "Group",
-                  "slug": "api/rest-api-v-0-7/group",
-                  "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                  "pointsTo": "api/rest-api-v-0-7/group/groups-list"
-                },
-                {
-                  "id": "root.uv.api.api.rest-api-v-0-7.subpackage_project",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_project.subpackage_project.info",
-                      "type": "endpoint",
-                      "title": "Project info",
-                      "endpointId": "subpackage_project.info",
-                      "slug": "api/rest-api-v-0-7/project/info",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "Project",
-                  "slug": "api/rest-api-v-0-7/project",
-                  "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                  "pointsTo": "api/rest-api-v-0-7/project/info"
-                },
-                {
-                  "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.webhooksList",
-                      "type": "endpoint",
-                      "title": "List of webhooks",
-                      "endpointId": "subpackage_webhook.webhooksList",
-                      "slug": "api/rest-api-v-0-7/webhook/webhooks-list",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.create",
-                      "type": "endpoint",
-                      "title": "Create webhook",
-                      "endpointId": "subpackage_webhook.create",
-                      "slug": "api/rest-api-v-0-7/webhook/create",
-                      "method": "POST",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.updateWebhook",
-                      "type": "endpoint",
-                      "title": "Update webhook",
-                      "endpointId": "subpackage_webhook.updateWebhook",
-                      "slug": "api/rest-api-v-0-7/webhook/update-webhook",
-                      "method": "PUT",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.unsubscribe",
-                      "type": "endpoint",
-                      "title": "Delete webhook",
-                      "endpointId": "subpackage_webhook.unsubscribe",
-                      "slug": "api/rest-api-v-0-7/webhook/unsubscribe",
-                      "method": "DELETE",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "Webhook",
-                  "slug": "api/rest-api-v-0-7/webhook",
-                  "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                  "pointsTo": "api/rest-api-v-0-7/webhook/webhooks-list"
-                },
-                {
-                  "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvertInfo",
-                      "type": "endpoint",
-                      "title": "Document info",
-                      "endpointId": "subpackage_conversion.documentConvertInfo",
-                      "slug": "api/rest-api-v-0-7/conversion/document-convert-info",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvert",
-                      "type": "endpoint",
-                      "title": "Convert document",
-                      "endpointId": "subpackage_conversion.documentConvert",
-                      "slug": "api/rest-api-v-0-7/conversion/document-convert",
-                      "method": "POST",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvertStatus",
-                      "type": "endpoint",
-                      "title": "Document conversion job status",
-                      "endpointId": "subpackage_conversion.documentConvertStatus",
-                      "slug": "api/rest-api-v-0-7/conversion/document-convert-status",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.videoConvert",
-                      "type": "endpoint",
-                      "title": "Convert video",
-                      "endpointId": "subpackage_conversion.videoConvert",
-                      "slug": "api/rest-api-v-0-7/conversion/video-convert",
-                      "method": "POST",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.videoConvertStatus",
-                      "type": "endpoint",
-                      "title": "Video conversion job status",
-                      "endpointId": "subpackage_conversion.videoConvertStatus",
-                      "slug": "api/rest-api-v-0-7/conversion/video-convert-status",
-                      "method": "GET",
-                      "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "Conversion",
-                  "slug": "api/rest-api-v-0-7/conversion",
-                  "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
-                  "pointsTo": "api/rest-api-v-0-7/conversion/document-convert-info"
-                }
-              ],
-              "pointsTo": "api/rest-api-v-0-7/file-metadata"
-            },
-            {
-              "id": "root.uv.api.api.url-api",
-              "type": "apiReference",
-              "title": "URL API",
-              "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
-              "slug": "api/url-api",
-              "showErrors": true,
-              "children": [
-                {
-                  "id": "root.uv.api.api.url-api.subpackage_fileInformation",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.url-api.subpackage_fileInformation.subpackage_fileInformation.fileInfoJson",
-                      "type": "endpoint",
-                      "title": "File info as JSON",
-                      "endpointId": "subpackage_fileInformation.fileInfoJson",
-                      "slug": "api/url-api/file-information/file-info-json",
-                      "method": "GET",
-                      "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
-                      "isResponseStream": false
-                    },
-                    {
-                      "id": "root.uv.api.api.url-api.subpackage_fileInformation.subpackage_fileInformation.fileInfoJsonp",
-                      "type": "endpoint",
-                      "title": "File info as application/javascript",
-                      "endpointId": "subpackage_fileInformation.fileInfoJsonp",
-                      "slug": "api/url-api/file-information/file-info-jsonp",
-                      "method": "GET",
-                      "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "File Information",
-                  "slug": "api/url-api/file-information",
-                  "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
-                  "pointsTo": "api/url-api/file-information/file-info-json"
-                },
-                {
-                  "id": "root.uv.api.api.url-api.subpackage_fileNames",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "root.uv.api.api.url-api.subpackage_fileNames.subpackage_fileNames.fileWithName",
-                      "type": "endpoint",
-                      "title": "File with a custom name",
-                      "endpointId": "subpackage_fileNames.fileWithName",
-                      "slug": "api/url-api/file-names/file-with-name",
-                      "method": "GET",
-                      "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
-                      "isResponseStream": false
-                    }
-                  ],
-                  "title": "File Names",
-                  "slug": "api/url-api/file-names",
-                  "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
-                  "pointsTo": "api/url-api/file-names/file-with-name"
-                }
-              ],
-              "pointsTo": "api/url-api/file-information/file-info-json"
-            }
-          ]
-        },
-        "pointsTo": "api/upload-api/upload/base-upload"
-      }
-    ]
+        {
+          "id": "root.uv.api",
+          "type": "tab",
+          "title": "API References",
+          "slug": "api",
+          "icon": "puzzle",
+          "hidden": false,
+          "child": {
+            "id": "root.uv.api.api",
+            "type": "sidebarRoot",
+            "children": [
+              {
+                "id": "root.uv.api.api.upload-api",
+                "type": "apiReference",
+                "title": "Upload API",
+                "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                "slug": "api/upload-api",
+                "showErrors": true,
+                "children": [
+                  {
+                    "id": "root.uv.api.api.upload-api.subpackage_upload",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.baseUpload",
+                        "type": "endpoint",
+                        "title": "Direct uploads",
+                        "endpointId": "subpackage_upload.baseUpload",
+                        "slug": "api/upload-api/upload/base-upload",
+                        "method": "POST",
+                        "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.multipartFileUploadStart",
+                        "type": "endpoint",
+                        "title": "Start multipart upload",
+                        "endpointId": "subpackage_upload.multipartFileUploadStart",
+                        "slug": "api/upload-api/upload/multipart-file-upload-start",
+                        "method": "POST",
+                        "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.multipartFileUploadPart",
+                        "type": "endpoint",
+                        "title": "Upload individual file parts",
+                        "endpointId": "subpackage_upload.multipartFileUploadPart",
+                        "slug": "api/upload-api/upload/multipart-file-upload-part",
+                        "method": "PUT",
+                        "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.multipartFileUploadComplete",
+                        "type": "endpoint",
+                        "title": "Complete multipart upload",
+                        "endpointId": "subpackage_upload.multipartFileUploadComplete",
+                        "slug": "api/upload-api/upload/multipart-file-upload-complete",
+                        "method": "POST",
+                        "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.fromURLUpload",
+                        "type": "endpoint",
+                        "title": "Upload files from URLs",
+                        "endpointId": "subpackage_upload.fromURLUpload",
+                        "slug": "api/upload-api/upload/from-url-upload",
+                        "method": "POST",
+                        "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.fromURLUploadStatus",
+                        "type": "endpoint",
+                        "title": "Check the status of a task to fetch/upload a file from a URL",
+                        "endpointId": "subpackage_upload.fromURLUploadStatus",
+                        "slug": "api/upload-api/upload/from-url-upload-status",
+                        "method": "GET",
+                        "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.upload-api.subpackage_upload.subpackage_upload.fileUploadInfo",
+                        "type": "endpoint",
+                        "title": "Get information about an uploaded file",
+                        "endpointId": "subpackage_upload.fileUploadInfo",
+                        "slug": "api/upload-api/upload/file-upload-info",
+                        "method": "GET",
+                        "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Upload",
+                    "slug": "api/upload-api/upload",
+                    "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                    "pointsTo": "api/upload-api/upload/base-upload"
+                  },
+                  {
+                    "id": "root.uv.api.api.upload-api.subpackage_groups",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.upload-api.subpackage_groups.subpackage_groups.createFilesGroup",
+                        "type": "endpoint",
+                        "title": "Create a file group",
+                        "endpointId": "subpackage_groups.createFilesGroup",
+                        "slug": "api/upload-api/groups/create-files-group",
+                        "method": "POST",
+                        "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.upload-api.subpackage_groups.subpackage_groups.filesGroupInfo",
+                        "type": "endpoint",
+                        "title": "Get information about a file group",
+                        "endpointId": "subpackage_groups.filesGroupInfo",
+                        "slug": "api/upload-api/groups/files-group-info",
+                        "method": "GET",
+                        "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Groups",
+                    "slug": "api/upload-api/groups",
+                    "apiDefinitionId": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
+                    "pointsTo": "api/upload-api/groups/create-files-group"
+                  }
+                ],
+                "pointsTo": "api/upload-api/upload/base-upload"
+              },
+              {
+                "id": "root.uv.api.api.rest-api-v-0-7",
+                "type": "apiReference",
+                "title": "REST API v0.7",
+                "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                "slug": "api/rest-api-v-0-7",
+                "showErrors": true,
+                "children": [
+                  {
+                    "id": "root.uv.api.api.rest-api-v-0-7.root.File metadata",
+                    "type": "endpoint",
+                    "title": "Get file's metadata",
+                    "endpointId": "root.File metadata",
+                    "slug": "api/rest-api-v-0-7/file-metadata",
+                    "method": "GET",
+                    "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                    "isResponseStream": false
+                  },
+                  {
+                    "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesList",
+                        "type": "endpoint",
+                        "title": "List of files",
+                        "endpointId": "subpackage_file.filesList",
+                        "slug": "api/rest-api-v-0-7/file/files-list",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.storeFile",
+                        "type": "endpoint",
+                        "title": "Store file",
+                        "endpointId": "subpackage_file.storeFile",
+                        "slug": "api/rest-api-v-0-7/file/store-file",
+                        "method": "PUT",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.deleteFileStorage",
+                        "type": "endpoint",
+                        "title": "Delete file",
+                        "endpointId": "subpackage_file.deleteFileStorage",
+                        "slug": "api/rest-api-v-0-7/file/delete-file-storage",
+                        "method": "DELETE",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.info",
+                        "type": "endpoint",
+                        "title": "File info",
+                        "endpointId": "subpackage_file.info",
+                        "slug": "api/rest-api-v-0-7/file/info",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesStoring",
+                        "type": "endpoint",
+                        "title": "Batch file storing",
+                        "endpointId": "subpackage_file.filesStoring",
+                        "slug": "api/rest-api-v-0-7/file/files-storing",
+                        "method": "PUT",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.filesDelete",
+                        "type": "endpoint",
+                        "title": "Batch file delete",
+                        "endpointId": "subpackage_file.filesDelete",
+                        "slug": "api/rest-api-v-0-7/file/files-delete",
+                        "method": "DELETE",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.createLocalCopy",
+                        "type": "endpoint",
+                        "title": "Copy file to local storage",
+                        "endpointId": "subpackage_file.createLocalCopy",
+                        "slug": "api/rest-api-v-0-7/file/create-local-copy",
+                        "method": "POST",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_file.subpackage_file.createRemoteCopy",
+                        "type": "endpoint",
+                        "title": "Copy file to remote storage",
+                        "endpointId": "subpackage_file.createRemoteCopy",
+                        "slug": "api/rest-api-v-0-7/file/create-remote-copy",
+                        "method": "POST",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "File",
+                    "slug": "api/rest-api-v-0-7/file",
+                    "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                    "pointsTo": "api/rest-api-v-0-7/file/files-list"
+                  },
+                  {
+                    "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionExecute",
+                        "type": "endpoint",
+                        "title": "Execute AWS Rekognition",
+                        "endpointId": "subpackage_addOns.awsRekognitionExecute",
+                        "slug": "api/rest-api-v-0-7/add-ons/aws-rekognition-execute",
+                        "method": "POST",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionExecutionStatus",
+                        "type": "endpoint",
+                        "title": "Check AWS Rekognition execution status",
+                        "endpointId": "subpackage_addOns.awsRekognitionExecutionStatus",
+                        "slug": "api/rest-api-v-0-7/add-ons/aws-rekognition-execution-status",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionDetectModerationLabelsExecute",
+                        "type": "endpoint",
+                        "title": "Execute AWS Rekognition Moderation",
+                        "endpointId": "subpackage_addOns.awsRekognitionDetectModerationLabelsExecute",
+                        "slug": "api/rest-api-v-0-7/add-ons/aws-rekognition-detect-moderation-labels-execute",
+                        "method": "POST",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
+                        "type": "endpoint",
+                        "title": "Check AWS Rekognition Moderation execution status",
+                        "endpointId": "subpackage_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
+                        "slug": "api/rest-api-v-0-7/add-ons/aws-rekognition-detect-moderation-labels-execution-status",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.ucClamavVirusScanExecute",
+                        "type": "endpoint",
+                        "title": "Execute ClamAV",
+                        "endpointId": "subpackage_addOns.ucClamavVirusScanExecute",
+                        "slug": "api/rest-api-v-0-7/add-ons/uc-clamav-virus-scan-execute",
+                        "method": "POST",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.ucClamavVirusScanExecutionStatus",
+                        "type": "endpoint",
+                        "title": "Check ClamAV execution status",
+                        "endpointId": "subpackage_addOns.ucClamavVirusScanExecutionStatus",
+                        "slug": "api/rest-api-v-0-7/add-ons/uc-clamav-virus-scan-execution-status",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.removeBgExecute",
+                        "type": "endpoint",
+                        "title": "Execute Remove.bg",
+                        "endpointId": "subpackage_addOns.removeBgExecute",
+                        "slug": "api/rest-api-v-0-7/add-ons/remove-bg-execute",
+                        "method": "POST",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_addOns.subpackage_addOns.removeBgExecutionStatus",
+                        "type": "endpoint",
+                        "title": "Check Remove.bg execution status",
+                        "endpointId": "subpackage_addOns.removeBgExecutionStatus",
+                        "slug": "api/rest-api-v-0-7/add-ons/remove-bg-execution-status",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Add Ons",
+                    "slug": "api/rest-api-v-0-7/add-ons",
+                    "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                    "pointsTo": "api/rest-api-v-0-7/add-ons/aws-rekognition-execute"
+                  },
+                  {
+                    "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.key",
+                        "type": "endpoint",
+                        "title": "Get metadata key's value",
+                        "endpointId": "subpackage_fileMetadata.key",
+                        "slug": "api/rest-api-v-0-7/file-metadata/key",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.updateFileMetadataKey",
+                        "type": "endpoint",
+                        "title": "Update metadata key's value",
+                        "endpointId": "subpackage_fileMetadata.updateFileMetadataKey",
+                        "slug": "api/rest-api-v-0-7/file-metadata/update-file-metadata-key",
+                        "method": "PUT",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata.subpackage_fileMetadata.deleteFileMetadataKey",
+                        "type": "endpoint",
+                        "title": "Delete metadata key",
+                        "endpointId": "subpackage_fileMetadata.deleteFileMetadataKey",
+                        "slug": "api/rest-api-v-0-7/file-metadata/delete-file-metadata-key",
+                        "method": "DELETE",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "File Metadata",
+                    "slug": "api/rest-api-v-0-7/file-metadata",
+                    "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                    "pointsTo": "api/rest-api-v-0-7/file-metadata/key"
+                  },
+                  {
+                    "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.groupsList",
+                        "type": "endpoint",
+                        "title": "List of groups",
+                        "endpointId": "subpackage_group.groupsList",
+                        "slug": "api/rest-api-v-0-7/group/groups-list",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.info",
+                        "type": "endpoint",
+                        "title": "Group info",
+                        "endpointId": "subpackage_group.info",
+                        "slug": "api/rest-api-v-0-7/group/info",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_group.subpackage_group.deleteGroup",
+                        "type": "endpoint",
+                        "title": "Delete group",
+                        "endpointId": "subpackage_group.deleteGroup",
+                        "slug": "api/rest-api-v-0-7/group/delete-group",
+                        "method": "DELETE",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Group",
+                    "slug": "api/rest-api-v-0-7/group",
+                    "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                    "pointsTo": "api/rest-api-v-0-7/group/groups-list"
+                  },
+                  {
+                    "id": "root.uv.api.api.rest-api-v-0-7.subpackage_project",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_project.subpackage_project.info",
+                        "type": "endpoint",
+                        "title": "Project info",
+                        "endpointId": "subpackage_project.info",
+                        "slug": "api/rest-api-v-0-7/project/info",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Project",
+                    "slug": "api/rest-api-v-0-7/project",
+                    "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                    "pointsTo": "api/rest-api-v-0-7/project/info"
+                  },
+                  {
+                    "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.webhooksList",
+                        "type": "endpoint",
+                        "title": "List of webhooks",
+                        "endpointId": "subpackage_webhook.webhooksList",
+                        "slug": "api/rest-api-v-0-7/webhook/webhooks-list",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.create",
+                        "type": "endpoint",
+                        "title": "Create webhook",
+                        "endpointId": "subpackage_webhook.create",
+                        "slug": "api/rest-api-v-0-7/webhook/create",
+                        "method": "POST",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.updateWebhook",
+                        "type": "endpoint",
+                        "title": "Update webhook",
+                        "endpointId": "subpackage_webhook.updateWebhook",
+                        "slug": "api/rest-api-v-0-7/webhook/update-webhook",
+                        "method": "PUT",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_webhook.subpackage_webhook.unsubscribe",
+                        "type": "endpoint",
+                        "title": "Delete webhook",
+                        "endpointId": "subpackage_webhook.unsubscribe",
+                        "slug": "api/rest-api-v-0-7/webhook/unsubscribe",
+                        "method": "DELETE",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Webhook",
+                    "slug": "api/rest-api-v-0-7/webhook",
+                    "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                    "pointsTo": "api/rest-api-v-0-7/webhook/webhooks-list"
+                  },
+                  {
+                    "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvertInfo",
+                        "type": "endpoint",
+                        "title": "Document info",
+                        "endpointId": "subpackage_conversion.documentConvertInfo",
+                        "slug": "api/rest-api-v-0-7/conversion/document-convert-info",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvert",
+                        "type": "endpoint",
+                        "title": "Convert document",
+                        "endpointId": "subpackage_conversion.documentConvert",
+                        "slug": "api/rest-api-v-0-7/conversion/document-convert",
+                        "method": "POST",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.documentConvertStatus",
+                        "type": "endpoint",
+                        "title": "Document conversion job status",
+                        "endpointId": "subpackage_conversion.documentConvertStatus",
+                        "slug": "api/rest-api-v-0-7/conversion/document-convert-status",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.videoConvert",
+                        "type": "endpoint",
+                        "title": "Convert video",
+                        "endpointId": "subpackage_conversion.videoConvert",
+                        "slug": "api/rest-api-v-0-7/conversion/video-convert",
+                        "method": "POST",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.rest-api-v-0-7.subpackage_conversion.subpackage_conversion.videoConvertStatus",
+                        "type": "endpoint",
+                        "title": "Video conversion job status",
+                        "endpointId": "subpackage_conversion.videoConvertStatus",
+                        "slug": "api/rest-api-v-0-7/conversion/video-convert-status",
+                        "method": "GET",
+                        "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "Conversion",
+                    "slug": "api/rest-api-v-0-7/conversion",
+                    "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
+                    "pointsTo": "api/rest-api-v-0-7/conversion/document-convert-info"
+                  }
+                ],
+                "pointsTo": "api/rest-api-v-0-7/file-metadata"
+              },
+              {
+                "id": "root.uv.api.api.url-api",
+                "type": "apiReference",
+                "title": "URL API",
+                "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
+                "slug": "api/url-api",
+                "showErrors": true,
+                "children": [
+                  {
+                    "id": "root.uv.api.api.url-api.subpackage_fileInformation",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.url-api.subpackage_fileInformation.subpackage_fileInformation.fileInfoJson",
+                        "type": "endpoint",
+                        "title": "File info as JSON",
+                        "endpointId": "subpackage_fileInformation.fileInfoJson",
+                        "slug": "api/url-api/file-information/file-info-json",
+                        "method": "GET",
+                        "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
+                        "isResponseStream": false
+                      },
+                      {
+                        "id": "root.uv.api.api.url-api.subpackage_fileInformation.subpackage_fileInformation.fileInfoJsonp",
+                        "type": "endpoint",
+                        "title": "File info as application/javascript",
+                        "endpointId": "subpackage_fileInformation.fileInfoJsonp",
+                        "slug": "api/url-api/file-information/file-info-jsonp",
+                        "method": "GET",
+                        "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "File Information",
+                    "slug": "api/url-api/file-information",
+                    "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
+                    "pointsTo": "api/url-api/file-information/file-info-json"
+                  },
+                  {
+                    "id": "root.uv.api.api.url-api.subpackage_fileNames",
+                    "type": "apiPackage",
+                    "children": [
+                      {
+                        "id": "root.uv.api.api.url-api.subpackage_fileNames.subpackage_fileNames.fileWithName",
+                        "type": "endpoint",
+                        "title": "File with a custom name",
+                        "endpointId": "subpackage_fileNames.fileWithName",
+                        "slug": "api/url-api/file-names/file-with-name",
+                        "method": "GET",
+                        "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
+                        "isResponseStream": false
+                      }
+                    ],
+                    "title": "File Names",
+                    "slug": "api/url-api/file-names",
+                    "apiDefinitionId": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
+                    "pointsTo": "api/url-api/file-names/file-with-name"
+                  }
+                ],
+                "pointsTo": "api/url-api/file-information/file-info-json"
+              }
+            ]
+          },
+          "pointsTo": "api/upload-api/upload/base-upload"
+        }
+      ]
+    }
   },
   "slug": "",
-  "title": "Fern Docs",
+  "title": "Uploadcare | Documentation",
   "hidden": false,
   "pointsTo": "docs/introduction/intro"
 }

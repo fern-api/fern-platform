@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { noop } from "@fern-ui/core-utils";
 import type { SearchConfig } from "@fern-ui/search-utils";
+import { useAtomValue } from "jotai";
 import { useCallback } from "react";
 import useSWR, { mutate } from "swr";
 import urljoin from "url-join";
-import { useLocalPreviewContext } from "../contexts/LocalPreviewContext";
+import { useBasePath } from "../atoms/navigation";
+import { IS_LOCAL_PREVIEW_ATOM } from "../atoms/preview";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 
 export type SearchCredentials = {
@@ -27,8 +29,9 @@ export declare namespace SearchService {
 export type SearchService = SearchService.Available | SearchService.Unavailable;
 
 export function useSearchConfig(): [SearchConfig, refresh: () => void] {
-    const { searchInfo, basePath } = useDocsContext();
-    const { isLocalPreview } = useLocalPreviewContext();
+    const { searchInfo } = useDocsContext();
+    const basePath = useBasePath();
+    const isLocalPreview = useAtomValue(IS_LOCAL_PREVIEW_ATOM);
 
     if (isLocalPreview) {
         return [{ isAvailable: false }, noop];

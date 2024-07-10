@@ -7,8 +7,8 @@ import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } fro
 import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useFeatureFlags } from "../atoms/flags";
+import { useBasePath, useDomain } from "../atoms/navigation";
 import {
     ResolvedEndpointDefinition,
     ResolvedFormDataRequestProperty,
@@ -64,7 +64,8 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
     resetWithoutExample,
     types,
 }): ReactElement => {
-    const { basePath, domain } = useDocsContext();
+    const domain = useDomain();
+    const basePath = useBasePath();
     const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 

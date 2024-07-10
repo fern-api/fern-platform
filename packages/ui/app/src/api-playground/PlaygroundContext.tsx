@@ -1,46 +1,30 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import * as Sentry from "@sentry/nextjs";
-import { useAtom } from "jotai";
-import { mapValues, noop } from "lodash-es";
+import { useAtom, useAtomValue } from "jotai";
+import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
-import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo } from "react";
+import { FC, PropsWithChildren, createContext, useCallback, useContext } from "react";
 import useSWR from "swr";
 import urljoin from "url-join";
+import { useCallbackOne as useStableCallback } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { useFeatureFlags } from "../contexts/FeatureFlagContext";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { APIS, FLATTENED_APIS_ATOM } from "../atoms/apis";
+import { useBasePath } from "../atoms/navigation";
 import {
-    ResolvedApiDefinition,
-    ResolvedRootPackage,
-    flattenRootPackage,
-    isEndpoint,
-    isWebSocket,
-} from "../resolver/types";
-import { APIS } from "../sidebar/atom";
-import { getInitialEndpointRequestFormStateWithExample } from "./PlaygroundDrawer";
-import {
+    HAS_PLAYGROUND_ATOM,
     PLAYGROUND_FORM_STATE_ATOM,
     useInitPlaygroundRouter,
     useOpenPlayground,
-    usePlaygroundHeight,
-    usePlaygroundNode,
-} from "./hooks/usePlaygroundNodeId";
+} from "../atoms/playground";
+import { useAtomEffect } from "../hooks/useAtomEffect";
+import { ResolvedApiDefinition, ResolvedRootPackage, isEndpoint, isWebSocket } from "../resolver/types";
+import { getInitialEndpointRequestFormStateWithExample } from "./PlaygroundDrawer";
 
 const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => m.PlaygroundDrawer), {
     ssr: false,
 });
 
-interface PlaygroundContextValue {
-    hasPlayground: boolean;
-    selectionState: FernNavigation.NavigationNodeApiLeaf | undefined;
-    setSelectionStateAndOpen: (state: FernNavigation.NavigationNodeApiLeaf) => void;
-}
-
-const PlaygroundContext = createContext<PlaygroundContextValue>({
-    hasPlayground: false,
-    selectionState: undefined,
-    setSelectionStateAndOpen: noop,
-});
+const PlaygroundContext = createContext<(state: FernNavigation.NavigationNodeApiLeaf) => void>(noop);
 
 const fetcher = async (url: string) => {
     const res = await fetch(url);
@@ -48,28 +32,29 @@ const fetcher = async (url: string) => {
 };
 
 export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) => {
-    const { isApiPlaygroundEnabled } = useFeatureFlags();
-    const [apis, setApis] = useAtom(APIS);
-    const { basePath } = useDocsContext();
+    const basePath = useBasePath();
     const key = urljoin(basePath ?? "/", "/api/fern-docs/resolve-api");
 
     const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {
         revalidateOnFocus: false,
     });
-    useEffect(() => {
-        if (data != null) {
-            setApis(data);
-        }
-    }, [data, setApis]);
+    useAtomEffect(
+        useStableCallback(
+            (_get, set) => {
+                if (data != null) {
+                    set(APIS, data);
+                }
+            },
+            [data],
+        ),
+    );
 
-    const flattenedApis = useMemo(() => mapValues(apis, flattenRootPackage), [apis]);
+    const flattenedApis = useAtomValue(FLATTENED_APIS_ATOM);
 
-    const [playgroundHeight] = usePlaygroundHeight();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
 
     useInitPlaygroundRouter();
 
-    const selectionState = usePlaygroundNode();
     const openPlayground = useOpenPlayground();
 
     const setSelectionStateAndOpen = useCallback(
@@ -122,29 +107,16 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
         [flattenedApis, globalFormState, openPlayground, setGlobalFormState],
     );
 
-    const hasPlayground = Object.keys(apis).length > 0;
-    const value = useMemo(
-        () => ({
-            hasPlayground,
-            selectionState,
-            setSelectionStateAndOpen,
-        }),
-        [hasPlayground, selectionState, setSelectionStateAndOpen],
-    );
-
-    if (!isApiPlaygroundEnabled) {
-        return <>{children}</>;
-    }
+    const hasPlayground = useAtomValue(HAS_PLAYGROUND_ATOM);
 
     return (
-        <PlaygroundContext.Provider value={value}>
+        <PlaygroundContext.Provider value={setSelectionStateAndOpen}>
             {children}
-            <PlaygroundDrawer apis={flattenedApis} />
-            {true && hasPlayground && <div style={{ height: playgroundHeight }} />}
+            {hasPlayground && <PlaygroundDrawer />}
         </PlaygroundContext.Provider>
     );
 };
 
-export function usePlaygroundContext(): PlaygroundContextValue {
+export function useSetAndOpenPlayground(): (state: FernNavigation.NavigationNodeApiLeaf) => void {
     return useContext(PlaygroundContext);
 }

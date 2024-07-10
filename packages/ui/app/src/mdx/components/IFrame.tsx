@@ -104,6 +104,7 @@ const ExperimentalIFrameWithFullscreen = ({
             void iframe.requestFullscreen();
         }
     };
+
     return (
         <Tooltip.TooltipProvider delayDuration={300}>
             <Tooltip.Root>

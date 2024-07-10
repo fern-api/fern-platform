@@ -10,4 +10,5 @@ export interface VersionNode extends FernNavigation.WithNodeMetadata, FernNaviga
     versionId: FernNavigation.VersionId;
     child: FernNavigation.VersionChild;
     availability: FernNavigation.Availability | undefined;
+    landingPage: FernNavigation.LandingPageNode | undefined;
 }

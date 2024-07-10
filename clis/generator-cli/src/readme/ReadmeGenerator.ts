@@ -2,12 +2,20 @@ import { cloneRepository } from "@fern-api/github";
 import fs from "fs";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernGeneratorCli } from "../configuration/generated";
+import { ReadmeFeature } from "../configuration/generated/api";
 import { StreamWriter, StringWriter, Writer } from "../utils/Writer";
 import { Block } from "./Block";
 import { BlockMerger } from "./BlockMerger";
 import { ReadmeParser } from "./ReadmeParser";
 
 export class ReadmeGenerator {
+    private ADVANCED_FEATURE_ID = "ADVANCED";
+    private ADVANCED_FEATURES: Set<FernGeneratorCli.FeatureId> = new Set([
+        FernGeneratorCli.StructuredFeatureId.Retries,
+        FernGeneratorCli.StructuredFeatureId.Timeouts,
+        FernGeneratorCli.StructuredFeatureId.CustomClient,
+    ]);
+
     private readmeParser: ReadmeParser;
     private readmeConfig: FernGeneratorCli.ReadmeConfig;
     private originalReadme: string | undefined;
@@ -56,7 +64,11 @@ export class ReadmeGenerator {
         if (this.readmeConfig.language != null && this.readmeConfig.language.publishInfo != null) {
             blocks.push(this.generateInstallation({ language: this.readmeConfig.language }));
         }
-        for (const feature of this.readmeConfig.features ?? []) {
+
+        const coreFeatures = this.readmeConfig.features?.filter((feat) => !this.isAdvanced(feat)) ?? [];
+        const advancedFeatures = this.readmeConfig.features?.filter((feat) => this.isAdvanced(feat)) ?? [];
+
+        for (const feature of coreFeatures) {
             if (this.shouldSkipFeature({ feature })) {
                 continue;
             }
@@ -66,14 +78,69 @@ export class ReadmeGenerator {
                 }),
             );
         }
+
+        const advancedFeatureBlock = this.generateNestedFeatureBlock({
+            featureId: this.ADVANCED_FEATURE_ID,
+            features: advancedFeatures,
+        });
+        if (advancedFeatureBlock != null) {
+            blocks.push(advancedFeatureBlock);
+        }
+
         blocks.push(this.generateContributing());
 
         return blocks;
     }
 
-    private generateFeatureBlock({ feature }: { feature: FernGeneratorCli.ReadmeFeature }): Block {
+    private isAdvanced(feat: ReadmeFeature): boolean {
+        if (this.ADVANCED_FEATURES.has(feat.id)) {
+            return true;
+        }
+        return feat.advanced ?? false;
+    }
+
+    private generateNestedFeatureBlock({
+        featureId,
+        features,
+    }: {
+        featureId: string;
+        features: FernGeneratorCli.ReadmeFeature[];
+    }): Block | undefined {
+        if (!this.shouldGenerateFeatures({ features })) {
+            return undefined;
+        }
+
         const writer = new StringWriter();
-        writer.writeLine(`## ${featureIDToTitle(feature.id)}`);
+        writer.writeLine(`## ${featureIDToTitle(featureId)}`);
+        writer.writeLine();
+
+        for (const feature of features) {
+            if (this.shouldSkipFeature({ feature })) {
+                continue;
+            }
+            this.generateFeatureBlock({
+                feature,
+                heading: "###",
+                maybeWriter: writer,
+            });
+        }
+        return new Block({
+            id: featureId,
+            content: writer.toString(),
+        });
+    }
+
+    private generateFeatureBlock({
+        feature,
+        heading = "##",
+        maybeWriter,
+    }: {
+        feature: FernGeneratorCli.ReadmeFeature;
+        heading?: "##" | "###";
+        maybeWriter?: StringWriter;
+    }): Block {
+        const writer = maybeWriter ?? new StringWriter();
+        writer.writeLine(`${heading} ${featureIDToTitle(feature.id)}`);
         writer.writeLine();
         if (feature.description != null) {
             writer.writeLine(feature.description);
@@ -473,6 +540,10 @@ On the other hand, contributions to the README are always very welcome!
 
     private shouldSkipFeature({ feature }: { feature: FernGeneratorCli.ReadmeFeature }): boolean {
         return !feature.snippetsAreOptional && (feature.snippets == null || feature.snippets.length === 0);
+    }
+
+    private shouldGenerateFeatures({ features }: { features: FernGeneratorCli.ReadmeFeature[] }): boolean {
+        return features.some((feature) => !this.shouldSkipFeature({ feature }));
     }
 }
 

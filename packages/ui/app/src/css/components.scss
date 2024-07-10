@@ -1,6 +1,6 @@
 @layer components {
-    .fern-main {
-        @apply relative w-full min-w-0 flex-1 mt-header-height;
+    .fern-prose {
+        @apply prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 break-words;
     }
 
     .fern-search-bar {
@@ -20,12 +20,12 @@
         }
 
         .keyboard-shortcut-hint {
-            @apply t-muted ring-default shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
+            @apply t-muted ring-card-border shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
             @apply dark:shadow-card-dark bg-card;
         }
 
         &:hover .keyboard-shortcut-hint {
-            @apply ring-default;
+            @apply ring-card-border;
         }
 
         &:disabled {
@@ -130,11 +130,29 @@
         }
     }
 
+    .fern-api-property {
+        @apply py-3 space-y-2;
+    }
+
+    .fern-api-property-header {
+        @apply flex items-baseline gap-2;
+    }
+
     .fern-api-property-key {
         @apply font-mono t-default font-semibold text-sm;
     }
 
+    .fern-api-property-meta {
+        @apply text-inherit inline-flex items-baseline gap-2 text-xs;
+    }
+
     .custom-backdrop [data-rmiz-modal-overlay="visible"] {
         @apply bg-text-default/20;
+    }
+
+    .fern-page-heading {
+        @apply my-0 inline-block leading-tight;
+
+        text-wrap: balance;
     }
 }

@@ -1,10 +1,10 @@
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
+import type { BundledMDX } from "../../mdx/types";
 import { getAnchorId } from "../../util/anchor";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
@@ -15,7 +15,7 @@ export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{
         headerType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
         title: ReactNode;
-        description?: MDXRemoteSerializeResult | string | undefined;
+        description?: BundledMDX | undefined;
         anchorIdParts: readonly string[];
         route: string;
         expandAll?: () => void;
@@ -40,7 +40,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     const anchorRoute = `${route}#${anchorId}`;
     return (
         <FernErrorBoundary component="EndpointSection">
-            <div ref={ref} data-route={anchorRoute.toLowerCase()} className="scroll-mt-header-height-padded">
+            <div ref={ref} data-route={anchorRoute.toLowerCase()} className="scroll-mt-content">
                 <div className="group/anchor-container relative flex items-baseline justify-between gap-4 pb-3">
                     {createElement(
                         headerType,

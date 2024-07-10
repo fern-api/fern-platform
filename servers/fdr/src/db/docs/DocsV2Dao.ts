@@ -20,7 +20,7 @@ export interface LoadDocsDefinitionByUrlResponse {
     domain: string;
     path: string;
     algoliaIndex: string | undefined;
-    docsDefinition: DocsV1Db.DocsDefinitionDb.V3;
+    docsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3>;
     indexSegmentIds: string[];
     docsConfigInstanceId: string | null;
     updatedTime: Date;

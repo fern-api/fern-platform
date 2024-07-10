@@ -19,7 +19,7 @@ const useInkeepSettings = ():
     const { resolvedTheme: theme } = useTheme();
     const [searchConfig] = useSearchConfig();
 
-    if (!searchConfig.isAvailable || searchConfig.type !== "inkeep") {
+    if (!searchConfig.isAvailable || searchConfig.inkeep == null) {
         return;
     }
 
@@ -37,15 +37,15 @@ const useInkeepSettings = ():
                 },
             },
         },
-        ...searchConfig.baseSettings,
+        ...searchConfig.inkeep.baseSettings,
     };
 
     return {
         // cast readonly -> mutable types, since inkeep widget expects mutable types
         baseSettings: baseSettings as InkeepWidgetBaseSettings,
-        aiChatSettings: searchConfig.aiChatSettings as InkeepAIChatSettings | undefined,
-        searchSettings: searchConfig.searchSettings as InkeepSearchSettings | undefined,
-        modalSettings: searchConfig.modalSettings as InkeepModalSettings | undefined,
+        aiChatSettings: searchConfig.inkeep.aiChatSettings as InkeepAIChatSettings | undefined,
+        searchSettings: searchConfig.inkeep.searchSettings as InkeepSearchSettings | undefined,
+        modalSettings: searchConfig.inkeep.modalSettings as InkeepModalSettings | undefined,
     };
 };
 

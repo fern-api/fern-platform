@@ -2,7 +2,7 @@ import { FernNavigation } from "../generated";
 import { NavigationNode } from "./NavigationNode";
 import { NavigationNodeSection, isSection } from "./NavigationNodeSection";
 
-type WithRequiredOverviewPage<T extends { overviewPageId: FernNavigation.PageId | undefined }> = T & {
+type WithRequiredOverviewPage<T extends FernNavigation.WithOverviewPage> = T & {
     overviewPageId: FernNavigation.PageId;
 };
 

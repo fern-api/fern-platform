@@ -2,15 +2,19 @@ import {
     DocsV1Read,
     FernNavigation,
     convertDbAPIDefinitionToRead,
+    titleCase,
     visitDbNavigationTab,
     visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
+import grayMatter from "gray-matter";
+import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
 import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
+import { ReferencedTypes, getAllReferencedTypes } from "./getAllReferencedTypes";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
 class NavigationContext {
@@ -323,12 +327,114 @@ export class AlgoliaSearchRecordGenerator {
                             LOGGER.error("Failed to find endpoint for API reference node.", node);
                             return;
                         }
+
+                        // this is a hack to include the endpoint request/response json in the search index
+                        // and potentially use it for conversational AI in the future.
+                        // this needs to be rewritten as a template, with proper markdown formatting + snapshot testing.
+                        // also, the content is potentially trimmed to 10kb.
+                        const contents = [endpoint.description ?? ""];
+
+                        const typeReferences: APIV1Read.TypeReference[] = [];
+
+                        if (endpoint.headers != null && endpoint.headers.length > 0) {
+                            contents.push("## Headers\n");
+                            endpoint.headers.forEach((header) => {
+                                typeReferences.push(header.type);
+                                contents.push(
+                                    `- ${header.key}=${this.stringifyTypeRef(header.type)} ${header.description ?? ""}`,
+                                );
+                            });
+                        }
+
+                        if (endpoint.path.pathParameters.length > 0) {
+                            contents.push("## Path Parameters\n");
+                            endpoint.path.pathParameters.forEach((param) => {
+                                typeReferences.push(param.type);
+                                contents.push(
+                                    `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
+                                );
+                            });
+                        }
+
+                        if (endpoint.queryParameters.length > 0) {
+                            contents.push("## Query Parameters\n");
+                            endpoint.queryParameters.forEach((param) => {
+                                typeReferences.push(param.type);
+                                contents.push(
+                                    `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
+                                );
+                            });
+                        }
+
+                        if (endpoint.request != null) {
+                            contents.push("## Request\n");
+                            if (endpoint.request.description != null) {
+                                contents.push(`${endpoint.request.description}\n`);
+                            }
+
+                            contents.push("### Body\n");
+
+                            if (endpoint.request.type.type === "reference") {
+                                typeReferences.push(endpoint.request.type.value);
+                                contents.push(
+                                    `${this.stringifyTypeRef(endpoint.request.type.value)}: ${endpoint.request.description ?? ""}`,
+                                );
+                            } else if (endpoint.request.type.type === "formData") {
+                                endpoint.request.type.properties.forEach((property) => {
+                                    if (property.type === "bodyProperty") {
+                                        typeReferences.push(property.valueType);
+                                        contents.push(
+                                            `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
+                                        );
+                                    }
+                                });
+                            } else if (endpoint.request.type.type === "object") {
+                                endpoint.request.type.extends.forEach((extend) => {
+                                    contents.push(`- ${extend}`);
+                                });
+                                endpoint.request.type.properties.forEach((property) => {
+                                    typeReferences.push(property.valueType);
+                                    contents.push(
+                                        `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
+                                    );
+                                });
+                            }
+                        }
+
+                        if (endpoint.response != null) {
+                            contents.push("## Response\n");
+                            if (endpoint.response.description != null) {
+                                contents.push(`${endpoint.response.description}\n`);
+                            }
+
+                            contents.push("### Body\n");
+
+                            if (endpoint.response.type.type === "reference") {
+                                typeReferences.push(endpoint.response.type.value);
+                                contents.push(
+                                    `${this.stringifyTypeRef(endpoint.response.type.value)}: ${endpoint.response.description ?? ""}`,
+                                );
+                            } else if (endpoint.response.type.type === "object") {
+                                endpoint.response.type.extends.forEach((extend) => {
+                                    contents.push(`- ${extend}`);
+                                });
+                                endpoint.response.type.properties.forEach((property) => {
+                                    typeReferences.push(property.valueType);
+                                    contents.push(
+                                        `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
+                                    );
+                                });
+                            }
+                        }
+
+                        contents.push(this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}));
+
                         records.push(
                             compact({
                                 type: "endpoint-v3",
                                 objectID: uuid(),
                                 title: node.title,
-                                content: endpoint.description,
+                                content: truncateToBytes(contents.join("\n"), 10_000 - 1),
                                 breadcrumbs: toBreadcrumbs(parents),
                                 slug: node.slug,
                                 version,
@@ -345,12 +451,76 @@ export class AlgoliaSearchRecordGenerator {
                             LOGGER.error("Failed to find websocket for API reference node.", node);
                             return;
                         }
+
+                        const contents = [ws.description ?? ""];
+                        const typeReferences: APIV1Read.TypeReference[] = [];
+
+                        if (ws.headers.length > 0) {
+                            contents.push("## Headers\n");
+                            ws.headers.forEach((param) => {
+                                typeReferences.push(param.type);
+                                contents.push(
+                                    `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
+                                );
+                            });
+                        }
+
+                        if (ws.path.pathParameters.length > 0) {
+                            contents.push("## Path Parameters\n");
+                            ws.path.pathParameters.forEach((param) => {
+                                typeReferences.push(param.type);
+                                contents.push(
+                                    `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
+                                );
+                            });
+                        }
+
+                        if (ws.queryParameters.length > 0) {
+                            contents.push("## Query Parameters\n");
+                            ws.queryParameters.forEach((param) => {
+                                typeReferences.push(param.type);
+                                contents.push(
+                                    `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
+                                );
+                            });
+                        }
+
+                        if (ws.messages.length > 0) {
+                            contents.push("## Messages\n");
+                            ws.messages.forEach((message) => {
+                                contents.push(
+                                    `### ${message.displayName ?? ""} (${message.type}) - ${message.origin}\n`,
+                                );
+                                if (message.description != null) {
+                                    contents.push(message.description);
+                                }
+                                if (message.body.type === "reference") {
+                                    typeReferences.push(message.body.value);
+                                    contents.push(`- ${this.stringifyTypeRef(message.body.value)}`);
+                                } else if (message.body.type === "object") {
+                                    message.body.extends.forEach((extend) => {
+                                        contents.push(`- ${extend}`);
+                                    });
+                                    message.body.properties.forEach((property) => {
+                                        typeReferences.push(property.valueType);
+                                        contents.push(
+                                            `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
+                                        );
+                                    });
+                                } else {
+                                    assertNever(message.body);
+                                }
+                            });
+                        }
+
+                        contents.push(this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}));
+
                         records.push(
                             compact({
                                 type: "websocket-v3",
                                 objectID: uuid(),
                                 title: node.title,
-                                content: ws.description,
+                                content: truncateToBytes(contents.join("\n"), 10_000 - 1),
                                 breadcrumbs: toBreadcrumbs(parents),
                                 slug: node.slug,
                                 version,
@@ -365,12 +535,53 @@ export class AlgoliaSearchRecordGenerator {
                             LOGGER.error("Failed to find webhook for API reference node.", node);
                             return;
                         }
+
+                        const contents = [webhook.description ?? ""];
+                        const typeReferences: APIV1Read.TypeReference[] = [];
+
+                        if (webhook.headers.length > 0) {
+                            contents.push("## Headers\n");
+                            webhook.headers.forEach((header) => {
+                                typeReferences.push(header.type);
+                                contents.push(
+                                    `- ${header.key}=${this.stringifyTypeRef(header.type)} ${header.description ?? ""}`,
+                                );
+                            });
+                        }
+
+                        contents.push("## Payload\n");
+
+                        if (webhook.payload.description != null) {
+                            contents.push(webhook.payload.description);
+                        }
+
+                        if (webhook.payload.type.type === "reference") {
+                            typeReferences.push(webhook.payload.type.value);
+                            contents.push(
+                                `${this.stringifyTypeRef(webhook.payload.type.value)}: ${webhook.payload.description ?? ""}`,
+                            );
+                        } else if (webhook.payload.type.type === "object") {
+                            webhook.payload.type.extends.forEach((extend) => {
+                                contents.push(`- ${extend}`);
+                            });
+                            webhook.payload.type.properties.forEach((property) => {
+                                typeReferences.push(property.valueType);
+                                contents.push(
+                                    `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
+                                );
+                            });
+                        } else {
+                            assertNever(webhook.payload.type);
+                        }
+
+                        contents.push(this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}));
+
                         records.push(
                             compact({
                                 type: "webhook-v3",
                                 objectID: uuid(),
                                 title: node.title,
-                                content: webhook.description,
+                                content: truncateToBytes(contents.join("\n"), 10_000 - 1),
                                 breadcrumbs: toBreadcrumbs(parents),
                                 slug: node.slug,
                                 version,
@@ -393,12 +604,14 @@ export class AlgoliaSearchRecordGenerator {
                     return;
                 }
 
+                const frontmatter = getFrontmatter(md);
+
                 records.push(
                     compact({
                         type: "page-v3",
                         objectID: uuid(),
-                        title: node.title,
-                        content: md,
+                        title: frontmatter.title ?? node.title,
+                        content: truncateToBytes(md, 10_000 - 1),
                         breadcrumbs: toBreadcrumbs(parents),
                         slug: node.slug,
                         version,
@@ -410,6 +623,97 @@ export class AlgoliaSearchRecordGenerator {
         });
 
         return records;
+    }
+
+    private stringifyTypeRef(typeRef: APIV1Read.TypeReference): string {
+        return visitDiscriminatedUnion(typeRef)._visit({
+            literal: (value) => value.value.value.toString(),
+            id: (value) => value.value,
+            primitive: (value) => value.value.type,
+            optional: (value) => `${this.stringifyTypeRef(value.itemType)}?`,
+            list: (value) => `${this.stringifyTypeRef(value.itemType)}[]`,
+            set: (value) => `Set<${this.stringifyTypeRef(value.itemType)}>`,
+            map: (value) => `Map<${this.stringifyTypeRef(value.keyType)}, ${this.stringifyTypeRef(value.valueType)}>`,
+            unknown: () => "unknown",
+        });
+    }
+
+    private collectReferencedTypesToContent(
+        typeReferences: APIV1Read.TypeReference[],
+        types: Record<string, APIV1Read.TypeDefinition>,
+    ): string {
+        let referencedTypes: ReferencedTypes = {};
+
+        typeReferences.forEach((typeReference) => {
+            referencedTypes = {
+                ...referencedTypes,
+                ...getAllReferencedTypes({
+                    reference: typeReference,
+                    types,
+                }),
+            };
+        });
+
+        const contents = [];
+        if (Object.keys(referencedTypes).length > 0) {
+            contents.push("## Referenced Types\n");
+            Object.entries(referencedTypes).forEach(([key, value]) => {
+                contents.push(`### ${key}\n`);
+
+                if (value.description != null) {
+                    contents.push(value.description);
+                }
+
+                visitDiscriminatedUnion(value.shape)._visit({
+                    object: (object) => {
+                        object.extends.forEach((extend) => {
+                            contents.push(`- ${extend}`);
+                        });
+                        object.properties.forEach((property) => {
+                            contents.push(
+                                `- ${property.key}: ${this.stringifyTypeRef(property.valueType)} - ${property.description ?? ""}`,
+                            );
+                        });
+                    },
+                    alias: noop,
+                    enum: (enum_) => {
+                        enum_.values.forEach((value) => {
+                            contents.push(`- ${value}`);
+                        });
+                    },
+                    undiscriminatedUnion: (value) => {
+                        value.variants.forEach((variant) => {
+                            if (variant.displayName != null) {
+                                contents.push(`#### ${variant.displayName}\n`);
+                            } else if (variant.type.type === "id") {
+                                contents.push(`#### ${variant.type.value}\n`);
+                            }
+                            contents.push(
+                                `Type: ${this.stringifyTypeRef(variant.type)} - ${variant.description ?? ""}`,
+                            );
+                        });
+                    },
+                    discriminatedUnion: (value) => {
+                        value.variants.forEach((variant) => {
+                            contents.push(`#### ${titleCase(variant.discriminantValue)}\n`);
+                            if (variant.description != null) {
+                                contents.push(variant.description);
+                            }
+                            variant.additionalProperties.extends.forEach((extend) => {
+                                contents.push(`- ${extend}`);
+                            });
+                            variant.additionalProperties.properties.forEach((property) => {
+                                contents.push(
+                                    `- ${property.key}: ${this.stringifyTypeRef(property.valueType)} - ${property.description ?? ""}`,
+                                );
+                            });
+                        });
+                    },
+                });
+            });
+        }
+
+        return contents.join("\n");
     }
 
     private generateAlgoliaSearchRecordsForChangelogNode(
@@ -728,4 +1032,17 @@ function getSubpackagesMap({
             return [id, subpackage];
         }),
     );
+}
+
+interface Frontmatter {
+    title?: string; // overrides sidebar title
+}
+
+export function getFrontmatter(content: string): Frontmatter {
+    try {
+        const gm = grayMatter(content);
+        return gm.data;
+    } catch (e) {
+        return {};
+    }
 }

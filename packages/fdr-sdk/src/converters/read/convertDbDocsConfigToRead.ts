@@ -126,11 +126,13 @@ function transformUnversionedNavigationConfigForDb(
                     config.tabsV2?.map(transformNavigationTabV2ForDb) ??
                     config.tabs?.map(transformNavigationTabForDb) ??
                     [],
+                landingPage: config.landingPage,
             };
         },
         untabbed: (config) => {
             return {
                 items: config.items.map(transformNavigationItemForDb),
+                landingPage: config.landingPage,
             };
         },
     });

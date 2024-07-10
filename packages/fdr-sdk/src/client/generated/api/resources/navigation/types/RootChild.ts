@@ -4,7 +4,4 @@
 
 import * as FernRegistry from "../../../index";
 
-export type RootChild =
-    | FernRegistry.navigation.VersionedNode
-    | FernRegistry.navigation.TabbedNode
-    | FernRegistry.navigation.SidebarRootNode;
+export type RootChild = FernRegistry.navigation.VersionedNode | FernRegistry.navigation.UnversionedNode;

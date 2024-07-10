@@ -223,7 +223,11 @@ export function valueToEstree(value?: unknown, options: Options = {}): Expressio
 
 const MDX_CHILDREN = "MDX_CHILDREN";
 
-export function wrapChildren(children: ElementContent[]): ElementContent {
+export function wrapChildren(children: ElementContent[]): ElementContent | undefined {
+    if (children.length === 0) {
+        return undefined;
+    }
+
     const tree: ElementContent = {
         type: "mdxJsxFlowElement" as const,
         attributes: [],
