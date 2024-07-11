@@ -1,9 +1,11 @@
-import { PartnerLogin } from "@fern-ui/ui";
-import { SignJWT } from "jose";
+// eslint-disable-next-line import/no-internal-modules
+import { FernUser, OryAccessTokenSchema, getOAuthEdgeConfig, getOAuthToken, signFernJWT } from "@fern-ui/ui/auth";
+import { decodeJwt } from "jose";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { getJwtTokenSecret, getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
-import { notFoundResponse, redirectResponse } from "../../../../utils/serverResponse";
-import { getPartnerLoginConfig } from "../partner-login";
+import urlJoin from "url-join";
+import { getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
+import { getXFernHostEdge } from "../../../../utils/xFernHost";
 // export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 //     // The authorization code returned by AuthKit
 //     const code = req.query.code as string;
@@ -31,110 +33,82 @@ import { getPartnerLoginConfig } from "../partner-login";
 
 export const runtime = "edge";
 
-function redirectWithLoginError(originalURL: string | null, errorMessage: string): NextResponse {
-    if (originalURL == null) {
-        return redirectResponse("/?loginError=" + errorMessage);
-    }
-
-    const url = new URL(originalURL);
+function redirectWithLoginError(location: string, errorMessage: string): NextResponse {
+    const url = new URL(location);
     url.searchParams.append("loginError", errorMessage);
-    return redirectResponse(url.toString());
+    return NextResponse.redirect(url.toString());
 }
+
+const COOKIE_OPTS = {
+    secure: true,
+    httpOnly: true,
+    sameSite: true,
+};
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
     const state = req.nextUrl.searchParams.get("state");
+    const redirectLocation = state ?? req.nextUrl.origin;
 
     if (typeof code !== "string") {
-        return notFoundResponse();
+        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
-    let token;
 
-    if (req.nextUrl.origin.includes("workos.com")) {
-        const startTime = Date.now();
+    const domain = getXFernHostEdge(req);
+    const config = await getOAuthEdgeConfig(domain);
+
+    const cookieJar = cookies();
+
+    if (config != null && config.partner === "ory") {
+        try {
+            const { access_token, refresh_token } = await getOAuthToken(
+                config,
+                code,
+                urlJoin(`https://${domain}`, req.nextUrl.pathname),
+            );
+
+            const token = OryAccessTokenSchema.parse(decodeJwt(access_token));
+            const fernUser: FernUser = {
+                type: "user",
+                partner: "ory",
+                name: token.ext.name,
+                email: token.ext.email,
+            };
+            cookieJar.set("fern_token", await signFernJWT(fernUser), COOKIE_OPTS);
+            cookieJar.set("access_token", access_token, COOKIE_OPTS);
+            cookieJar.set("refresh_token", refresh_token, COOKIE_OPTS);
+            return NextResponse.redirect(redirectLocation);
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(error);
+            return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        }
+    }
+
+    try {
         const { user } = await getWorkOS().userManagement.authenticateWithCode({
             code,
             clientId: getWorkOSClientId(),
         });
 
-        const beforeSigningTime = Date.now();
+        const fernUser: FernUser = {
+            type: "user",
+            partner: "workos",
+            name:
+                user.firstName != null && user.lastName != null
+                    ? `${user.firstName} ${user.lastName}`
+                    : user.firstName ?? user.email.split("@")[0],
+            email: user.email,
+        };
 
+        const token = await signFernJWT(fernUser);
+        cookieJar.set("fern_token", token, COOKIE_OPTS);
+
+        return NextResponse.redirect(redirectLocation);
+    } catch (error) {
         // eslint-disable-next-line no-console
-        console.debug(`Time to authenticate with WorkOS: ${beforeSigningTime - startTime}ms`);
-
-        token = await new SignJWT({
-            user,
-        })
-            .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-            .setIssuedAt()
-            .setExpirationTime("30d")
-            .setIssuer("https://buildwithfern.com")
-            .sign(getJwtTokenSecret());
-
-        const afterSigningTime = Date.now();
-
-        // eslint-disable-next-line no-console
-        console.debug(`Time to sign JWT: ${afterSigningTime - beforeSigningTime}ms`);
-    } else {
-        const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
-        if (!xFernHost) {
-            throw new Error("NEXT_PUBLIC_DOCS_DOMAIN is not set");
-        }
-
-        const partnerLoginConfig = await getPartnerLoginConfig(xFernHost);
-        if (!partnerLoginConfig) {
-            throw new Error("API injection config is not set");
-        }
-
-        try {
-            const form = new FormData();
-            form.append("code", code);
-            form.append("client_secret", partnerLoginConfig.secret);
-            form.append("grant_type", "authorization_code");
-            form.append("client_id", partnerLoginConfig.clientId);
-
-            const response = await fetch(partnerLoginConfig.authEndpoint, {
-                method: "POST",
-                body: form,
-            });
-
-            if (!response.ok) {
-                return redirectWithLoginError(state, "Couldn't login, please try again");
-            }
-
-            const data = await response.json();
-
-            const accessToken = data.access_token;
-            if (!accessToken) {
-                return redirectWithLoginError(state, "Couldn't login, please try again");
-            }
-            const partnerLogin: PartnerLogin = {
-                accessToken,
-                loggedInAt: Date.now(),
-                name: "rightbrain",
-            };
-            token = await new SignJWT({
-                partnerLogin,
-            })
-                .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-                .setIssuedAt()
-                .setExpirationTime("30d")
-                .setIssuer("https://buildwithfern.com")
-                .sign(getJwtTokenSecret());
-        } catch (error) {
-            return redirectWithLoginError(state, "Couldn't login, please try again");
-        }
+        console.error(error);
+        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
-
-    const res = redirectResponse(state ?? req.nextUrl.origin);
-    res.cookies.set("fern_token", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-        path: "/",
-        maxAge: 2592000,
-    });
-
-    return res;
 }

@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { CustomerAnalytics } from "../analytics/types";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
+import { API_KEY_ATOM, FERN_USER_ATOM } from "../atoms/auth";
 import { FEATURE_FLAGS_ATOM, FeatureFlags } from "../atoms/flags";
 import { DOCS_LAYOUT_ATOM } from "../atoms/layout";
 import { SLUG_ATOM } from "../atoms/location";
@@ -23,6 +24,7 @@ import {
     VERSIONS_ATOM,
 } from "../atoms/navigation";
 import { useMessageHandler } from "../atoms/sidebar";
+import { FernUser } from "../auth";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
@@ -68,12 +70,14 @@ export declare namespace DocsPage {
         apis: FdrAPI.ApiDefinitionId[];
 
         seo: DefaultSeoProps;
-        partnerLogin: PartnerLogin | undefined;
         breadcrumb: JsonLd.BreadcrumbListSchema | undefined;
         analytics: CustomerAnalytics | undefined;
 
         fallback: Record<string, any>;
         theme: FernTheme;
+
+        user: FernUser | undefined;
+        apiKey: string | undefined;
     }
 }
 
@@ -100,6 +104,10 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
 
             // TODO: remove this once we have a better way to hydrate the logo text
             [LOGO_TEXT_ATOM, baseUrl.domain.includes("cohere") ? "docs" : undefined],
+
+            // auth
+            [FERN_USER_ATOM, pageProps.user],
+            [API_KEY_ATOM, pageProps.apiKey],
         ],
         { dangerouslyForceHydrate: true },
     );
@@ -121,9 +129,3 @@ export type DocsPageResult<Props> =
     | { type: "props"; props: Props; revalidate?: number | boolean }
     | { type: "redirect"; redirect: Redirect; revalidate?: number | boolean }
     | { type: "notFound"; notFound: true; revalidate?: number | boolean };
-
-export interface PartnerLogin {
-    accessToken: string;
-    loggedInAt: number;
-    name: string;
-}

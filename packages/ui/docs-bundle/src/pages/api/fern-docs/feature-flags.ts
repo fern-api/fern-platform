@@ -24,6 +24,7 @@ const FEATURE_FLAGS = [
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
+
 type EdgeConfigResponse = Record<FeatureFlag, string[]>;
 
 export default async function handler(req: NextRequest): Promise<NextResponse<FeatureFlags>> {

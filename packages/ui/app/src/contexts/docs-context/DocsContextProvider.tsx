@@ -25,7 +25,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const searchInfo = useDeepCompareMemoize(pageProps.search);
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const apis = useDeepCompareMemoize(pageProps.apis);
-    const partnerLogin = useDeepCompareMemoize(pageProps.partnerLogin);
     const analytics = useDeepCompareMemoize(pageProps.analytics);
     const { resolvedTheme: theme } = useTheme();
 
@@ -64,7 +63,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             searchInfo,
             navbarLinks,
             apis,
-            partnerLogin,
         }),
         [
             logoHeight,
@@ -79,7 +77,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             searchInfo,
             navbarLinks,
             apis,
-            partnerLogin,
         ],
     );
 

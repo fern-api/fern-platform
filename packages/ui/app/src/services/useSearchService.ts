@@ -37,7 +37,7 @@ export function useSearchConfig(): [SearchConfig, refresh: () => void] {
         return [{ isAvailable: false }, noop];
     }
 
-    const key = urljoin(basePath ?? "/", "/api/fern-docs/search");
+    const key = urljoin(basePath ?? "", "/api/fern-docs/search");
 
     const { data } = useSWR<SearchConfig>(
         key,

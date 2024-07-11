@@ -1,7 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { DocsPage } from "@fern-ui/ui";
 import { GetServerSideProps } from "next";
-import { getDocsPageProps, getPrivateDocsPageProps } from "../../../utils/getDocsPageProps";
+import { getDocsPageProps, getDynamicDocsPageProps } from "../../../utils/getDocsPageProps";
 
 export default DocsPage;
 
@@ -31,7 +31,7 @@ const getDocsServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ para
             _other: () => Promise.resolve({ notFound: true }),
         });
     } else {
-        const result = await getPrivateDocsPageProps(xFernHost, slugArray, token, res);
+        const result = await getDynamicDocsPageProps(xFernHost, slugArray, req.cookies, res);
 
         return visitDiscriminatedUnion(result, "type")._visit<ReturnType<GetServerSideProps<DocsPage.Props>>>({
             notFound: () => Promise.resolve({ notFound: true }),

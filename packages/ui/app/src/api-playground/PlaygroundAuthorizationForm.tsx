@@ -7,8 +7,8 @@ import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Key } from "react-feather";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { usePartnerLoginService } from "../services/usePartnerLoginService";
+import { useApiKey } from "../atoms/auth";
+import { useApiKeyInjectionEnabled } from "../services/useApiKeyInjectionEnabled";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";
@@ -263,24 +263,24 @@ export function PlaygroundAuthorizationFormCard({
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const isOpen = useBooleanState(false);
-    const [partnerLoginEndpoint] = usePartnerLoginService();
-    const { partnerLogin } = useDocsContext();
+    const apiKeyInjectionUrl = useApiKeyInjectionEnabled();
     const router = useRouter();
-    const apiKey = partnerLogin?.accessToken;
+    const apiKey = useApiKey();
     const [loginError, setLoginError] = useState<string | null>(null);
 
     const redirectOrOpenAuthForm = () => {
-        if (partnerLoginEndpoint.enabled) {
-            const redirect = encodeURIComponent(window.location.origin + "/api/fern-docs/auth/callback");
-            const state = encodeURIComponent(window.location.href);
-
-            const loginUrl = `${partnerLoginEndpoint.loginEndpoint}?redirect=${redirect}&state=${state}`;
-            window.location.href = loginUrl;
+        if (apiKeyInjectionUrl != null) {
+            // const redirect_uri = encodeURIComponent(
+            //     urlJoin(window.location.origin, basePath ?? "", "/api/fern-docs/auth/login"),
+            // );
+            const url = new URL(apiKeyInjectionUrl);
+            url.searchParams.set("state", encodeURIComponent(window.location.href));
+            window.location.replace(url);
         } else {
             isOpen.toggleValue();
         }
     };
-    const hasApiInjectionConfig = partnerLoginEndpoint !== undefined;
+    const hasApiInjectionConfig = apiKeyInjectionUrl !== undefined;
     const authButtonCopy = hasApiInjectionConfig
         ? "Login to send a real request"
         : "Authenticate with your API key to send a real request";

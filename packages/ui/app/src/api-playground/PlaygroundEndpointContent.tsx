@@ -15,11 +15,11 @@ import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { useApiKey } from "../atoms/auth";
 import { useFeatureFlags } from "../atoms/flags";
 import { useDomain } from "../atoms/navigation";
 import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
 import { FernErrorTag } from "../components/FernErrorBoundary";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
@@ -64,8 +64,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
 
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
-    const { partnerLogin } = useDocsContext();
-    const apiKey = partnerLogin?.accessToken;
+    const apiKey = useApiKey();
 
     if (apiKey && formState.auth == null) {
         formState.auth = {
