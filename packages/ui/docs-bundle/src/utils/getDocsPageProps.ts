@@ -13,7 +13,7 @@ import {
     setMdxBundler,
 } from "@fern-ui/ui";
 // eslint-disable-next-line import/no-internal-modules
-import { FernUser, getOAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
+import { FernUser, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
 // eslint-disable-next-line import/no-internal-modules
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import type { Redirect } from "next";
@@ -58,6 +58,22 @@ export async function getDocsPageProps(
 ): Promise<DocsPageResult<DocsPage.Props>> {
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return { type: "notFound", notFound: true };
+    }
+
+    const config = await getAuthEdgeConfig(xFernHost);
+    if (config != null && config.type === "basic_token_verification") {
+        const destination = new URL(config.redirect);
+        destination.searchParams.set(
+            "state",
+            encodeURIComponent(urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`)),
+        );
+        return {
+            type: "redirect",
+            redirect: {
+                destination: destination.toString(),
+                permanent: false,
+            },
+        };
     }
 
     const pathname = decodeURI(slug != null ? slug.join("/") : "");
@@ -105,7 +121,18 @@ export async function getDynamicDocsPageProps(
     }
 
     try {
-        const user = await verifyFernJWT(cookies.fern_token);
+        const config = await getAuthEdgeConfig(xFernHost);
+        let user: FernUser | undefined = undefined;
+
+        if (config?.type === "basic_token_verification") {
+            user = await verifyFernJWT(
+                cookies.fern_token,
+                new Uint8Array(Buffer.from(config.secret, "base64")),
+                config.issuer,
+            );
+        } else {
+            user = await verifyFernJWT(cookies.fern_token);
+        }
 
         if (user.partner === "workos") {
             const registryService = getRegistryServiceWithToken(`workos_${cookies.fern_token}`);
@@ -134,14 +161,12 @@ export async function getDynamicDocsPageProps(
             }
 
             return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
-        } else if (user.partner === "ory") {
+        } else if (user.partner === "ory" || user.partner === "custom") {
             const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
 
             if (!docs.ok) {
                 throw new Error("Failed to fetch docs");
             }
-
-            const config = await getOAuthEdgeConfig(xFernHost);
 
             if (config == null) {
                 throw new Error("Failed to fetch OAuth config");
@@ -153,7 +178,8 @@ export async function getDynamicDocsPageProps(
                 url,
                 xFernHost,
                 user,
-                apiKey: config["api-key-injection-enabled"] ? cookies.access_token : undefined,
+                apiKey:
+                    config.type === "oauth2" && config["api-key-injection-enabled"] ? cookies.access_token : undefined,
             });
         }
     } catch (error) {
