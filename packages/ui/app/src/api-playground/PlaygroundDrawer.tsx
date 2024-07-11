@@ -19,7 +19,12 @@ import {
     useSetPlaygroundHeight,
     useTogglePlayground,
 } from "../atoms/playground";
-import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, useWindowHeight } from "../atoms/viewport";
+import {
+    IS_MOBILE_SCREEN_ATOM,
+    JUST_NAVIGATED_ATOM,
+    MOBILE_SIDEBAR_ENABLED_ATOM,
+    useWindowHeight,
+} from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
     ResolvedApiDefinition,
@@ -103,9 +108,10 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     );
 
     const { handleVerticalResize, isResizing } = useVerticalSplitPane(setOffset);
+    const justNavigated = useAtomValue(JUST_NAVIGATED_ATOM);
 
     useEffect(() => {
-        if (isResizing) {
+        if (isResizing || justNavigated) {
             x.jump(!isMobileScreen ? height : windowHeight, true);
         } else {
             if (scope.current != null) {
@@ -115,7 +121,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                 x.jump(!isMobileScreen ? height : windowHeight, true);
             }
         }
-    }, [animate, height, isMobileScreen, isResizing, scope, windowHeight, x]);
+    }, [animate, height, isMobileScreen, isResizing, justNavigated, scope, windowHeight, x]);
 
     const isPlaygroundOpen = useIsPlaygroundOpen();
     const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);

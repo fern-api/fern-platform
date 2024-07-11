@@ -19,15 +19,18 @@ import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import type { Redirect } from "next";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
 import { type IncomingMessage, type ServerResponse } from "node:http";
-import urljoin from "url-join";
+import { default as urlJoin, default as urljoin } from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
 import { getRedirectForPath } from "./hackRedirects";
 
-async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {
+async function getUnauthenticatedRedirect(xFernHost: string, path: string): Promise<Redirect> {
     const authorizationUrl = getAuthorizationUrl(
-        { organization: await maybeGetWorkosOrganization(xFernHost) },
+        {
+            organization: await maybeGetWorkosOrganization(xFernHost),
+            state: encodeURIComponent(urlJoin(`https://${xFernHost}`, path)),
+        },
         xFernHost,
     );
     return { destination: authorizationUrl, permanent: false };
@@ -70,7 +73,7 @@ export async function getDocsPageProps(
         if ((docs.error as any).content.statusCode === 401) {
             return {
                 type: "redirect",
-                redirect: await getUnauthenticatedRedirect(xFernHost),
+                redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`),
             };
         } else if ((docs.error as any).content.statusCode === 404) {
             return { type: "notFound", notFound: true };
@@ -121,7 +124,7 @@ export async function getDynamicDocsPageProps(
                 if (docs.error.error === "UnauthorizedError") {
                     return {
                         type: "redirect",
-                        redirect: await getUnauthenticatedRedirect(xFernHost),
+                        redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`),
                     };
                 }
 
