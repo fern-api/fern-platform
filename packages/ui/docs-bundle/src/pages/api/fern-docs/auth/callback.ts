@@ -76,7 +76,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             email: user.email,
         };
 
-        const token = await signFernJWT(fernUser);
+        const token = await signFernJWT(fernUser, user);
 
         const res = NextResponse.redirect(redirectLocation);
         res.cookies.set("fern_token", token, COOKIE_OPTS);
