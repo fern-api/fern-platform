@@ -1,8 +1,8 @@
 import urlJoin from "url-join";
-import { AuthEdgeConfig, OAuthTokenResponse, OAuthTokenResponseSchema } from "./types";
+import { AuthEdgeConfigOAuth2, OAuthTokenResponse, OAuthTokenResponseSchema } from "./types";
 
 export async function getOAuthToken(
-    config: AuthEdgeConfig,
+    config: AuthEdgeConfigOAuth2,
     code: string,
     redirect_uri: string,
 ): Promise<OAuthTokenResponse> {

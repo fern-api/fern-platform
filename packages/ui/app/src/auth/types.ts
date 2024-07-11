@@ -28,6 +28,8 @@ export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
 export const AuthEdgeConfigSchema = z.union([AuthEdgeConfigOAuth2Schema, AuthEdgeConfigBasicTokenVerificationSchema]);
 
 export type AuthEdgeConfig = z.infer<typeof AuthEdgeConfigSchema>;
+export type AuthEdgeConfigOAuth2 = z.infer<typeof AuthEdgeConfigOAuth2Schema>;
+export type AuthEdgeConfigBasicTokenVerification = z.infer<typeof AuthEdgeConfigBasicTokenVerificationSchema>;
 
 export const OAuthTokenResponseSchema = z.object({
     access_token: z.string(),
