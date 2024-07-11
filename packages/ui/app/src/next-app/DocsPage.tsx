@@ -24,7 +24,7 @@ import {
     VERSIONS_ATOM,
 } from "../atoms/navigation";
 import { useMessageHandler } from "../atoms/sidebar";
-import { COLORS_ATOM } from "../atoms/theme";
+import { COLORS_ATOM, useInitializeTheme } from "../atoms/theme";
 import { FernUser } from "../auth";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
@@ -85,9 +85,6 @@ export declare namespace DocsPage {
 export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
     const { baseUrl, resolvedPath } = pageProps;
 
-    useConsoleMessage();
-    useMessageHandler();
-
     // Note: only hydrate atoms here.
     useHydrateAtoms(
         [
@@ -113,6 +110,10 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
         ],
         { dangerouslyForceHydrate: true },
     );
+
+    useConsoleMessage();
+    useMessageHandler();
+    useInitializeTheme();
 
     return (
         <DocsContextProvider {...pageProps}>

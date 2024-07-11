@@ -3,9 +3,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useRef } from "react";
 import { useCallbackOne } from "use-memo-one";
+import { useAtomEffect } from "../atoms";
 import { DESKTOP_SIDEBAR_OPEN_ATOM, DISMISSABLE_SIDEBAR_OPEN_ATOM, MOBILE_SIDEBAR_OPEN_ATOM } from "../atoms/sidebar";
 import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
-import { useAtomEffect } from "../hooks/useAtomEffect";
 import { SidebarContainer } from "./SidebarContainer";
 
 const SidebarContainerMotion = motion(SidebarContainer);

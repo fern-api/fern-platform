@@ -16,7 +16,7 @@ const useInkeepSettings = ():
           modalSettings?: InkeepModalSettings;
       }
     | undefined => {
-    const [theme] = useTheme();
+    const theme = useTheme();
     const [searchConfig] = useSearchConfig();
 
     if (!searchConfig.isAvailable || searchConfig.inkeep == null) {

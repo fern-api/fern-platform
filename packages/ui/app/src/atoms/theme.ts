@@ -1,8 +1,76 @@
 import { noop } from "@fern-ui/core-utils";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import { atom, useAtom, useAtomValue } from "jotai";
-import { atomWithRefresh, atomWithStorage } from "jotai/utils";
+import { atomWithRefresh } from "jotai/utils";
+import { createElement, memo } from "react";
+import { useCallbackOne } from "use-memo-one";
+import { z } from "zod";
 import { getThemeColor } from "../next-app/utils/getColorVariables";
+import { useAtomEffect } from "./hooks/useAtomEffect";
+import { atomWithStorageString } from "./utils/atomWithStorageString";
+
+const STORAGE_KEY = "theme";
+const SYSTEM = "system" as const;
+const SYSTEM_THEMES = ["light" as const, "dark" as const];
+const MEDIA = "(prefers-color-scheme: dark)";
+
+type Theme = (typeof SYSTEM_THEMES)[number];
+
+const SETTABLE_THEME_ATOM = atomWithStorageString<Theme | typeof SYSTEM>(STORAGE_KEY, SYSTEM, {
+    validate: z.union([z.literal("system"), z.literal("light"), z.literal("dark")]),
+    getOnInit: true,
+});
+
+const IS_SYSTEM_THEME_ATOM = atom((get) => get(SETTABLE_THEME_ATOM) === SYSTEM);
+
+export const COLORS_ATOM = atom<ColorsConfig>({ dark: undefined, light: undefined });
+export const AVAILABLE_THEMES_ATOM = atom((get) => getAvailableThemes(get(COLORS_ATOM)));
+
+export function useColors(): ColorsConfig {
+    return useAtomValue(COLORS_ATOM);
+}
+
+export const THEME_SWITCH_ENABLED_ATOM = atom((get) => {
+    const availableThemes = get(AVAILABLE_THEMES_ATOM);
+    return availableThemes.length > 1;
+});
+
+export const THEME_ATOM = atomWithRefresh((get): Theme => {
+    const storedTheme = get(SETTABLE_THEME_ATOM);
+    const availableThemes = get(AVAILABLE_THEMES_ATOM);
+    if (storedTheme === SYSTEM) {
+        if (typeof window !== "undefined") {
+            return getSystemTheme();
+        }
+    } else if (availableThemes.includes(storedTheme)) {
+        return storedTheme;
+    }
+    return availableThemes[0];
+});
+
+export function useTheme(): Theme {
+    return useAtomValue(THEME_ATOM);
+}
+
+export function useSetTheme(): (theme: Theme | typeof SYSTEM) => void {
+    return useAtom(SETTABLE_THEME_ATOM)[1];
+}
+
+export function useToggleTheme(): () => void {
+    const setTheme = useSetTheme();
+    const theme = useTheme();
+    return () => setTheme(theme === "dark" ? "light" : "dark");
+}
+
+export const THEME_BG_COLOR = atom((get) => {
+    const theme = get(THEME_ATOM);
+    const colors = get(COLORS_ATOM);
+    const config = colors[theme];
+    if (config == null) {
+        return undefined;
+    }
+    return getThemeColor(config);
+});
 
 const disableAnimation = () => {
     if (typeof document === "undefined") {
@@ -28,53 +96,99 @@ const disableAnimation = () => {
     };
 };
 
-const SETTABLE_THEME_ATOM = atomWithStorage<"dark" | "light" | "system">("theme", "system");
+export type AvailableThemes = [Theme] | [Theme, Theme];
+const getAvailableThemes = (colors: Partial<ColorsConfig> = {}): AvailableThemes => {
+    if ((colors.dark != null && colors.light != null) || (colors.dark == null && colors.light == null)) {
+        return ["light", "dark"];
+    }
+    return colors.dark != null ? ["dark"] : ["light"];
+};
 
-export const COLORS_ATOM = atom<ColorsConfig>({
-    dark: undefined,
-    light: undefined,
-});
+const getSystemTheme = (e?: MediaQueryList | MediaQueryListEvent) => {
+    if (!e) {
+        e = window.matchMedia(MEDIA);
+    }
+    const isDark = e.matches;
+    const systemTheme = isDark ? "dark" : "light";
+    return systemTheme;
+};
 
-export function useColors(): ColorsConfig {
-    return useAtomValue(COLORS_ATOM);
+export function useInitializeTheme(): void {
+    useAtomEffect(
+        useCallbackOne((get) => {
+            const enableAnimation = disableAnimation();
+            const theme = get(THEME_ATOM);
+            const d = document.documentElement;
+            d.classList.remove(...SYSTEM_THEMES);
+            d.classList.add(theme);
+            d.style.colorScheme = theme;
+            enableAnimation();
+        }, []),
+    );
+
+    useAtomEffect(
+        useCallbackOne((get, set) => {
+            const handleMediaQuery = () => {
+                if (get(IS_SYSTEM_THEME_ATOM)) {
+                    set(THEME_ATOM);
+                }
+            };
+
+            const media = window.matchMedia(MEDIA);
+
+            // Intentionally use deprecated listener methods to support iOS & old browsers
+            // eslint-disable-next-line deprecation/deprecation
+            media.addListener(handleMediaQuery);
+            handleMediaQuery();
+
+            // eslint-disable-next-line deprecation/deprecation
+            return () => media.removeListener(handleMediaQuery);
+        }, []),
+    );
 }
 
-export const THEME_SWITCH_ENABLED_ATOM = atom((get) => {
-    const colors = get(COLORS_ATOM);
-    return colors.dark != null && colors.light != null;
-});
+// this script cannot reference any other code since it will be stringified to be executed in the browser
+export const script = (themes: AvailableThemes): void => {
+    const el = document.documentElement;
 
-export const THEME_ATOM = atomWithRefresh(
-    (get): "dark" | "light" => {
-        const storedTheme = get(SETTABLE_THEME_ATOM);
-        const colors = get(COLORS_ATOM);
-        let theme: "dark" | "light" = colors.light != null ? "light" : colors.dark != null ? "dark" : "light";
-        if (storedTheme === "system") {
-            if (typeof window !== "undefined") {
-                return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-            }
-        } else if (colors[storedTheme] != null) {
-            theme = storedTheme;
+    function updateDOM(theme: string) {
+        el.classList.remove("light", "dark");
+        el.classList.add(theme);
+        el.style.colorScheme = theme;
+    }
+
+    function getSystemTheme() {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+
+    if (themes.length === 1) {
+        updateDOM(themes[0]);
+    } else {
+        try {
+            const themeName = localStorage.getItem("theme") ?? themes[0];
+            const isSystem = themes.length > 0 && themeName === "system";
+            const theme = isSystem ? getSystemTheme() : themeName;
+            updateDOM(theme);
+        } catch {
+            //
         }
-        return theme;
+    }
+};
+
+// including the ThemeScript component will prevent a flash of unstyled content (FOUC) when the page loads
+// by setting the theme from local storage before the page is rendered
+export const ThemeScript = memo(
+    ({ nonce, colors }: { nonce?: string; colors?: ColorsConfig }) => {
+        const scriptArgs = JSON.stringify(getAvailableThemes(colors));
+
+        return createElement("script", {
+            suppressHydrationWarning: true,
+            nonce: typeof window === "undefined" ? nonce : "",
+            dangerouslySetInnerHTML: { __html: `(${script.toString()})(${scriptArgs})` },
+        });
     },
-    (_get, set, theme: "dark" | "light" | "system") => {
-        const enable = disableAnimation();
-        set(SETTABLE_THEME_ATOM, theme);
-        enable();
-    },
+    (prev, next) =>
+        prev.nonce === next.nonce && getAvailableThemes(prev.colors).length === getAvailableThemes(next.colors).length,
 );
 
-export function useTheme(): ["dark" | "light", setTheme: (theme: "dark" | "light" | "system") => void] {
-    return useAtom(THEME_ATOM);
-}
-
-export const THEME_BG_COLOR = atom((get) => {
-    const theme = get(THEME_ATOM);
-    const colors = get(COLORS_ATOM);
-    const config = colors[theme];
-    if (config == null) {
-        return undefined;
-    }
-    return getThemeColor(config);
-});
+ThemeScript.displayName = "ThemeScript";

@@ -28,8 +28,8 @@ function UnmemoizedDefaultDocs(): ReactElement {
     const colors = useColors();
     const layout = useAtomValue(DOCS_LAYOUT_ATOM);
     const showHeader = useAtomValue(SHOW_HEADER_ATOM);
-    const [theme] = useTheme();
-    const isSidebarFixed = layout?.disableHeader || colors[theme as "light" | "dark"]?.sidebarBackground != null;
+    const theme = useTheme();
+    const isSidebarFixed = layout?.disableHeader || colors[theme]?.sidebarBackground != null;
 
     const isSidebarDismissable = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
 

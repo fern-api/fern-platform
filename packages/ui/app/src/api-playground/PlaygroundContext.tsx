@@ -8,6 +8,7 @@ import useSWR from "swr";
 import urljoin from "url-join";
 import { useCallbackOne as useStableCallback } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
+import { useAtomEffect } from "../atoms";
 import { APIS, FLATTENED_APIS_ATOM } from "../atoms/apis";
 import { useBasePath } from "../atoms/navigation";
 import {
@@ -16,7 +17,6 @@ import {
     useInitPlaygroundRouter,
     useOpenPlayground,
 } from "../atoms/playground";
-import { useAtomEffect } from "../hooks/useAtomEffect";
 import { ResolvedApiDefinition, ResolvedRootPackage, isEndpoint, isWebSocket } from "../resolver/types";
 import { getInitialEndpointRequestFormStateWithExample } from "./PlaygroundDrawer";
 

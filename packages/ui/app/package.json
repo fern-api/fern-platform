@@ -183,8 +183,7 @@
     "ts-essentials": "^10.0.1",
     "typescript": "5.4.3",
     "vite": "^5.2.6",
-    "vitest": "^1.5.0",
-    "next-themes": "^0.3.0"
+    "vitest": "^1.5.0"
   },
   "eslintConfig": {
     "extends": [
