@@ -1,10 +1,9 @@
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
-import { useTheme } from "next-themes";
 import { ReactElement, memo } from "react";
 import { CONTENT_HEIGHT_ATOM, DOCS_LAYOUT_ATOM, HEADER_OFFSET_ATOM, SHOW_HEADER_ATOM } from "../../atoms/layout";
 import { SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
+import { useColors, useTheme } from "../../atoms/theme";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
@@ -26,10 +25,10 @@ const DefaultDocsStyle = () => {
 };
 
 function UnmemoizedDefaultDocs(): ReactElement {
-    const { colors } = useDocsContext();
+    const colors = useColors();
     const layout = useAtomValue(DOCS_LAYOUT_ATOM);
     const showHeader = useAtomValue(SHOW_HEADER_ATOM);
-    const { resolvedTheme: theme = "light" } = useTheme();
+    const [theme] = useTheme();
     const isSidebarFixed = layout?.disableHeader || colors[theme as "light" | "dark"]?.sidebarBackground != null;
 
     const isSidebarDismissable = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);

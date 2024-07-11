@@ -7,6 +7,7 @@ import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
 import { SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
 import { useOpenSearchDialog } from "../atoms/sidebar";
+import { useColors } from "../atoms/theme";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
@@ -30,7 +31,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     ref,
 ) {
     const { navbarLinks } = useDocsContext();
-    const { colors } = useDocsContext();
+    const colors = useColors();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const [searchService] = useSearchConfig();

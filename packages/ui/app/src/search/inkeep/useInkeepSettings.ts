@@ -4,8 +4,8 @@ import type {
     InkeepSearchSettings,
     InkeepWidgetBaseSettings,
 } from "@inkeep/widgets";
-import { useTheme } from "next-themes";
 import type { DeepReadonly } from "ts-essentials";
+import { useTheme } from "../../atoms/theme";
 import { useSearchConfig } from "../../services/useSearchService";
 
 const useInkeepSettings = ():
@@ -16,7 +16,7 @@ const useInkeepSettings = ():
           modalSettings?: InkeepModalSettings;
       }
     | undefined => {
-    const { resolvedTheme: theme } = useTheme();
+    const [theme] = useTheme();
     const [searchConfig] = useSearchConfig();
 
     if (!searchConfig.isAvailable || searchConfig.inkeep == null) {
@@ -25,7 +25,6 @@ const useInkeepSettings = ():
 
     const baseSettings: DeepReadonly<InkeepWidgetBaseSettings> = {
         colorMode: {
-            enableSystem: theme == null,
             forcedColorMode: theme,
         },
         theme: {

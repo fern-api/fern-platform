@@ -1,72 +1,32 @@
 import { ColorsConfig } from "@fern-ui/fdr-utils";
-import { noop } from "lodash-es";
-import { ThemeProvider as NextThemeProvider, useTheme } from "next-themes";
-import {
-    PropsWithChildren,
-    ReactElement,
-    createContext,
-    memo,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
+import { PropsWithChildren, ReactElement, memo } from "react";
+import { useCallbackOne } from "use-memo-one";
+import { THEME_ATOM } from "../atoms/theme";
+import { useAtomEffect } from "../hooks/useAtomEffect";
 
 interface ThemeProviderProps {
     colors?: ColorsConfig | undefined;
 }
 
-function getThemeFromColors(colors: ColorsConfig | undefined): "dark" | "light" | "darkAndLight" {
-    return colors == null || (colors.dark != null && colors.light != null)
-        ? "darkAndLight"
-        : colors.dark != null
-          ? "dark"
-          : "light";
-}
-
-const ThemeMetaContext = createContext<(colors: ColorsConfig | undefined) => void>(noop);
-
-// this should only be invoked in the local-preview-bundle:
-export const useSetThemeColors = (): ((colors: ColorsConfig | undefined) => void) => useContext(ThemeMetaContext);
-
-export const ThemeProvider = memo(({ colors, children }: PropsWithChildren<ThemeProviderProps>): ReactElement => {
+export const ThemeProvider = memo(({ children }: PropsWithChildren<ThemeProviderProps>): ReactElement => {
     // NextThemeProvider is not stable, and needs to be included in `_app.tsx` to work properly.
     // docs-bundle uses static props to pass in the colors, whereas local-preview-bundle uses a hook.
-    const [theme, setTheme] = useState(getThemeFromColors(colors));
-    const updateColors = useCallback((colors: ColorsConfig | undefined) => {
-        setTheme(getThemeFromColors(colors));
-    }, []);
 
-    const themes = useMemo(() => (theme === "darkAndLight" || theme == null ? ["dark", "light"] : [theme]), [theme]);
-
-    return (
-        <ThemeMetaContext.Provider value={updateColors}>
-            <NextThemeProvider
-                enableSystem={theme === "darkAndLight"}
-                forcedTheme={theme !== "darkAndLight" ? theme : undefined}
-                themes={themes}
-                enableColorScheme={true}
-                attribute="class"
-                disableTransitionOnChange={true}
-            >
-                <CorruptedThemeHack />
-                {children}
-            </NextThemeProvider>
-        </ThemeMetaContext.Provider>
+    useAtomEffect(
+        useCallbackOne((get) => {
+            const theme = get(THEME_ATOM);
+            const d = document.documentElement;
+            if (theme === "dark") {
+                d.classList.add("dark");
+                d.classList.remove("light");
+            } else {
+                d.classList.remove("dark");
+                d.classList.add("light");
+            }
+        }, []),
     );
+
+    return <>{children}</>;
 });
 
 ThemeProvider.displayName = "ThemeProvider";
-
-function CorruptedThemeHack() {
-    const { resolvedTheme: theme, themes, setTheme } = useTheme();
-    useEffect(() => {
-        // this is a hack to ensure that the theme is always set to a valid value, even if localStorage is corrupted
-        if (theme == null || !themes.includes(theme)) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            setTheme(themes.length === 1 ? themes[0]! : "system");
-        }
-    }, [setTheme, theme, themes]);
-    return null;
-}

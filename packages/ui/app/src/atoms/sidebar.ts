@@ -1,8 +1,8 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
 import { DOCS_LAYOUT_ATOM } from "./layout";
 import { CURRENT_NODE_ATOM, RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
+import { useTheme } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
@@ -77,7 +77,7 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
 export function useMessageHandler(): void {
     const openSearchDialog = useOpenSearchDialog();
     const openMobileSidebar = useOpenMobileSidebar();
-    const { resolvedTheme, setTheme } = useTheme();
+    const [resolvedTheme, setTheme] = useTheme();
     useEffect(() => {
         if (typeof window === "undefined") {
             return;
