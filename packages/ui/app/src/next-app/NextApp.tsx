@@ -10,11 +10,11 @@ import { SWRConfig } from "swr";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { store } from "../atoms/store";
+import { ThemeScript } from "../atoms/theme";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
-import { ThemeProvider } from "../docs/ThemeProvider";
 import { DocsPage } from "./DocsPage";
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props | undefined>): ReactElement {
@@ -32,18 +32,17 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
 
     return (
         <FernTooltipProvider>
+            <ThemeScript colors={pageProps?.colors} />
             <DefaultSeo {...pageProps?.seo} />
             <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                 <JotaiProvider store={store}>
                     <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                        <ThemeProvider colors={pageProps?.colors}>
-                            <RouteListenerContextProvider>
-                                <DatadogInit />
-                                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-                                <Component {...pageProps} />
-                            </RouteListenerContextProvider>
-                            <Toaster />
-                        </ThemeProvider>
+                        <RouteListenerContextProvider>
+                            <DatadogInit />
+                            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                            <Component {...pageProps} />
+                        </RouteListenerContextProvider>
+                        <Toaster />
                     </FernErrorBoundary>
                 </JotaiProvider>
             </SWRConfig>

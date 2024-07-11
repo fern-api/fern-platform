@@ -1,14 +1,9 @@
 import { Algolia, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
-import { ColorsConfig } from "@fern-ui/fdr-utils";
 import React from "react";
 
 export const DocsContext = React.createContext<DocsContextValue>({
     logoHeight: undefined,
     logoHref: undefined,
-    colors: {
-        dark: undefined,
-        light: undefined,
-    },
     typography: undefined,
     css: undefined,
     files: {},
@@ -21,7 +16,6 @@ export const DocsContext = React.createContext<DocsContextValue>({
 export interface DocsContextValue {
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
-    colors: ColorsConfig;
     typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
     css: DocsV1Read.CssConfig | undefined;
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;

@@ -1,7 +1,6 @@
 import type { DocsV2Read } from "@fern-api/fdr-sdk";
 import { toast } from "@fern-ui/components";
-import { useDeepCompareEffect } from "@fern-ui/react-commons";
-import { DocsPage, useSetThemeColors } from "@fern-ui/ui";
+import { DocsPage } from "@fern-ui/ui";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import ReconnectingWebSocket from "../utils/ReconnectingWebsocket";
@@ -130,11 +129,6 @@ export default function LocalPreviewDocs(): ReactElement {
             isCanceled = true;
         };
     }, [docs, router]);
-
-    const setThemeColors = useSetThemeColors();
-    useDeepCompareEffect(() => {
-        setThemeColors(docsProps?.colors);
-    }, [docsProps?.colors]);
 
     if (docsProps == null) {
         return <></>;

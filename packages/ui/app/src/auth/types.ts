@@ -2,14 +2,14 @@ import { z } from "zod";
 
 export const FernUserSchema = z.object({
     type: z.literal("user"),
-    partner: z.union([z.literal("workos"), z.literal("ory")]),
+    partner: z.union([z.literal("workos"), z.literal("ory"), z.literal("custom")]),
     name: z.string(),
     email: z.string(),
 });
 
 export type FernUser = z.infer<typeof FernUserSchema>;
 
-export const OAuthEdgeConfigSchema = z.object({
+export const AuthEdgeConfigOAuth2Schema = z.object({
     type: z.literal("oauth2"),
     partner: z.literal("ory"),
     environment: z.string(),
@@ -19,7 +19,18 @@ export const OAuthEdgeConfigSchema = z.object({
     "api-key-injection-enabled": z.optional(z.boolean()),
 });
 
-export type OAuthEdgeConfig = z.infer<typeof OAuthEdgeConfigSchema>;
+export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
+    type: z.literal("basic_token_verification"),
+    secret: z.string(),
+    issuer: z.string(),
+    redirect: z.string(),
+});
+
+export const AuthEdgeConfigSchema = z.union([AuthEdgeConfigOAuth2Schema, AuthEdgeConfigBasicTokenVerificationSchema]);
+
+export type AuthEdgeConfig = z.infer<typeof AuthEdgeConfigSchema>;
+export type AuthEdgeConfigOAuth2 = z.infer<typeof AuthEdgeConfigOAuth2Schema>;
+export type AuthEdgeConfigBasicTokenVerification = z.infer<typeof AuthEdgeConfigBasicTokenVerificationSchema>;
 
 export const OAuthTokenResponseSchema = z.object({
     access_token: z.string(),

@@ -1,14 +1,14 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { JsonLd } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
-import { useTheme } from "next-themes";
+import { useAtomValue } from "jotai";
 import Head from "next/head";
 import Script from "next/script";
 import { PropsWithChildren, useCallback, useMemo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
 import { renderSegmentSnippet } from "../../analytics/segment";
+import { THEME_BG_COLOR } from "../../atoms/theme";
 import { DocsPage } from "../../next-app/DocsPage";
-import { getThemeColor } from "../../next-app/utils/getColorVariables";
 import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet";
 import { DocsContext } from "./DocsContext";
 
@@ -26,7 +26,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const apis = useDeepCompareMemoize(pageProps.apis);
     const analytics = useDeepCompareMemoize(pageProps.analytics);
-    const { resolvedTheme: theme } = useTheme();
+    const themeBackgroundColor = useAtomValue(THEME_BG_COLOR);
 
     const { logoHeight, logoHref } = pageProps;
     const { domain, basePath } = pageProps.baseUrl;
@@ -87,12 +87,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
                     name="viewport"
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
                 />
-                {theme === "light" && colors.light != null && (
-                    <meta name="theme-color" content={getThemeColor(colors.light)} />
-                )}
-                {theme === "dark" && colors.dark != null && (
-                    <meta name="theme-color" content={getThemeColor(colors.dark)} />
-                )}
+                {themeBackgroundColor != null && <meta name="theme-color" content={themeBackgroundColor} />}
             </Head>
             {/* 
                 We concatenate all global styles into a single instance,

@@ -3,7 +3,7 @@ import {
     FernUser,
     OryAccessTokenSchema,
     decodeAccessToken,
-    getOAuthEdgeConfig,
+    getAuthEdgeConfig,
     getOAuthToken,
     signFernJWT,
 } from "@fern-ui/ui/auth";
@@ -37,9 +37,9 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     const domain = getXFernHostEdge(req);
-    const config = await getOAuthEdgeConfig(domain);
+    const config = await getAuthEdgeConfig(domain);
 
-    if (config != null && config.partner === "ory") {
+    if (config != null && config.type === "oauth2" && config.partner === "ory") {
         try {
             const { access_token, refresh_token } = await getOAuthToken(
                 config,
