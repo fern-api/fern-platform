@@ -128,12 +128,7 @@
     }
 
     // guide and overview layouts are centered using .fern-layout-toc
-    .fern-sidebar-disabled:has(.fern-guide-layout):has(.fern-layout-toc),
-    .fern-sidebar-fixed + .fern-main {
-        @apply lg:pl-sidebar-width;
-    }
-
-    .fern-sidebar-disabled:has(.fern-overview-layout):has(.fern-layout-toc) {
+    .fern-sidebar-disabled:has(.fern-overview-layout, .fern-guide-layout):has(.fern-layout-toc) {
         @apply xl:pl-sidebar-width;
     }
 
