@@ -7,6 +7,7 @@ import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Key } from "react-feather";
+import { Callout } from "../mdx/components/Callout";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
@@ -273,7 +274,11 @@ export function PlaygroundAuthorizationFormCard({
             //     urlJoin(window.location.origin, basePath ?? "", "/api/fern-docs/auth/login"),
             // );
             const url = new URL(apiKeyInjection.url);
-            url.searchParams.set("state", encodeURIComponent(window.location.href));
+            const state = new URL(window.location.href);
+            if (state.searchParams.has("loginError")) {
+                state.searchParams.delete("loginError");
+            }
+            url.searchParams.set("state", encodeURIComponent(state.toString()));
             window.location.replace(url);
         } else {
             isOpen.toggleValue();
@@ -295,26 +300,21 @@ export function PlaygroundAuthorizationFormCard({
     }, [router.query, router.isReady]);
 
     // TODO change this login
-    if (apiKey && authState && authState.type === "bearerAuth") {
-        if (authState.token === "") {
-            setAuthorization({ type: "bearerAuth", token: apiKey });
+    useEffect(() => {
+        if (apiKey && authState && authState.type === "bearerAuth") {
+            if (authState.token === "") {
+                setAuthorization({ type: "bearerAuth", token: apiKey });
+            }
         }
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [apiKey]);
+
     return (
         <div>
             {apiKeyInjection.enabled && !apiKey && (
                 <>
                     <FernCard className="rounded-xl p-4 shadow-sm mb-2">
-                        {loginError && (
-                            <FernButton
-                                className="w-full text-left pointer-events-none mb-2"
-                                size="large"
-                                intent="danger"
-                                variant="outlined"
-                                text={loginError}
-                                active={true}
-                            />
-                        )}
+                        {loginError && <Callout intent="error">{loginError}</Callout>}
 
                         <h5 className="t-muted m-0">Login to send a real request</h5>
                         <div className="flex justify-center my-5 gap-2">

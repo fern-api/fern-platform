@@ -74,14 +74,14 @@ export class OAuth2Client {
         const url = new URL(urlJoin(this.environment, "/auth"));
         url.searchParams.set("response_type", "code");
         url.searchParams.set("client_id", this.clientId);
-        if (this.redirect_uri != null) {
-            url.searchParams.set("redirect_uri", this.redirect_uri);
-        }
+        // if (this.redirect_uri != null) {
+        //     url.searchParams.set("redirect_uri", encodeURIComponent(this.redirect_uri));
+        // }
         if (state != null) {
             url.searchParams.set("state", state);
         }
         if (this.scope != null) {
-            url.searchParams.set("scope", this.scope);
+            url.searchParams.set("scope", encodeURIComponent(this.scope).replaceAll(/%20/g, "+"));
         }
         return url.toString();
     }

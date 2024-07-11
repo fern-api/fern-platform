@@ -16,7 +16,7 @@ export const runtime = "edge";
 
 function redirectWithLoginError(location: string, errorMessage: string): NextResponse {
     const url = new URL(location);
-    url.searchParams.append("loginError", errorMessage);
+    url.searchParams.set("loginError", errorMessage);
     return NextResponse.redirect(url.toString());
 }
 
@@ -24,7 +24,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
     const state = req.nextUrl.searchParams.get("state");
+    const error = req.nextUrl.searchParams.get("error");
+    const error_description = req.nextUrl.searchParams.get("error_description");
     const redirectLocation = (state != null ? decodeURIComponent(state) : undefined) ?? req.nextUrl.origin;
+
+    if (error != null) {
+        return redirectWithLoginError(redirectLocation, error_description ?? error);
+    }
 
     if (typeof code !== "string") {
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
