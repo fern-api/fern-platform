@@ -153,18 +153,3 @@ export const IS_MOBILE_SCREEN_ATOM = atom((get) => {
     const breakpoint = get(BREAKPOINT_ATOM);
     return breakpoint === "mobile";
 });
-
-// export const VIEWPORT_WIDTH_ATOM = atom(0);
-// VIEWPORT_WIDTH_ATOM.onMount = (setWidth) => {
-//     if (typeof window === "undefined") {
-//         return;
-//     }
-//     setWidth(window.innerWidth);
-//     const handleResize = () => {
-//         setWidth(window.innerWidth);
-//     };
-//     window.addEventListener("resize", handleResize);
-//     return () => {
-//         window.removeEventListener("resize", handleResize);
-//     };
-// };

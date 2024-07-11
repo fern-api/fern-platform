@@ -1,4 +1,5 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomCallback } from "jotai/utils";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
 import { DOCS_LAYOUT_ATOM } from "./layout";
@@ -10,9 +11,30 @@ export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);
 export const DESKTOP_SIDEBAR_OPEN_ATOM = atom(false);
 export const SIDEBAR_SCROLL_CONTAINER_ATOM = atom<HTMLElement | null>(null);
 
-export const DISMISSABLE_SIDEBAR_OPEN_ATOM = atom((get) => {
-    return get(MOBILE_SIDEBAR_OPEN_ATOM) || (get(DESKTOP_SIDEBAR_OPEN_ATOM) && !get(IS_MOBILE_SCREEN_ATOM));
-});
+export const DISMISSABLE_SIDEBAR_OPEN_ATOM = atom(
+    (get) => {
+        const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
+        const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM); // smallest screen size
+        const isDesktopSidebarOpen = get(DESKTOP_SIDEBAR_OPEN_ATOM);
+        const isMobileSidebarOpen = get(MOBILE_SIDEBAR_OPEN_ATOM);
+
+        if (isMobileSidebarEnabled) {
+            return isMobileSidebarOpen || (isDesktopSidebarOpen && !isMobileScreen);
+        } else {
+            return isDesktopSidebarOpen;
+        }
+    },
+    (_get, set, update: boolean) => {
+        set(DESKTOP_SIDEBAR_OPEN_ATOM, update);
+        set(MOBILE_SIDEBAR_OPEN_ATOM, update);
+    },
+);
+
+export const useDismissSidebar = (): (() => void) => {
+    return useAtomCallback((_get, set) => {
+        set(DISMISSABLE_SIDEBAR_OPEN_ATOM, false);
+    });
+};
 
 // in certain cases, the sidebar should be completely removed from the DOM.
 export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {

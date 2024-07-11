@@ -1,27 +1,28 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { ReactElement, useRef } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { DESKTOP_SIDEBAR_OPEN_ATOM, DISMISSABLE_SIDEBAR_OPEN_ATOM, MOBILE_SIDEBAR_OPEN_ATOM } from "../atoms/sidebar";
+import { DESKTOP_SIDEBAR_OPEN_ATOM, DISMISSABLE_SIDEBAR_OPEN_ATOM, useDismissSidebar } from "../atoms/sidebar";
 import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
 import { useAtomEffect } from "../hooks/useAtomEffect";
 import { SidebarContainer } from "./SidebarContainer";
 
 const SidebarContainerMotion = motion(SidebarContainer);
 
-export function DismissableSidebar({ className }: { className?: string }): ReactElement {
-    const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
-    const setIsMobileSidebarOpen = useSetAtom(MOBILE_SIDEBAR_OPEN_ATOM);
-    const showSidebar = useAtomValue(DISMISSABLE_SIDEBAR_OPEN_ATOM);
+const BEZIER_CURVE = [0.16, 1, 0.3, 1];
 
+export function DismissableSidebar({ className }: { className?: string }): ReactElement {
+    const handleDismissSidebar = useDismissSidebar();
+    const showSidebar = useAtomValue(DISMISSABLE_SIDEBAR_OPEN_ATOM);
     const sidebarRef = useRef<HTMLElement>(null);
+    const duration = useAtomValue(IS_MOBILE_SCREEN_ATOM) ? 0 : 0.15;
 
     useAtomEffect(
         useCallbackOne((_get, set) => {
             const handleMouseMove = (event: MouseEvent) => {
                 set(DESKTOP_SIDEBAR_OPEN_ATOM, (prev) => {
-                    if (event.screenX < 20) {
+                    if (event.clientX < 20) {
                         return true;
                     } else if (prev && event.target instanceof HTMLElement) {
                         return sidebarRef.current?.contains(event.target) ?? false;
@@ -42,12 +43,12 @@ export function DismissableSidebar({ className }: { className?: string }): React
         <AnimatePresence>
             {showSidebar && (
                 <motion.div
-                    className="inset-0 fixed bg-background/50 z-20"
+                    className="inset-0 fixed bg-background/50 z-20 lg:hidden"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: isMobileScreen ? 0 : 0.15, curve: [0.16, 1, 0.3, 1] }}
-                    onClickCapture={() => setIsMobileSidebarOpen(false)}
+                    transition={{ duration, curve: BEZIER_CURVE }}
+                    onClickCapture={handleDismissSidebar}
                 />
             )}
             {showSidebar && (
@@ -58,7 +59,7 @@ export function DismissableSidebar({ className }: { className?: string }): React
                     initial={{ x: "-100%" }}
                     animate={{ x: 0 }}
                     exit={{ x: "-100%" }}
-                    transition={{ duration: isMobileScreen ? 0 : 0.15, curve: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration, curve: BEZIER_CURVE }}
                 />
             )}
         </AnimatePresence>
