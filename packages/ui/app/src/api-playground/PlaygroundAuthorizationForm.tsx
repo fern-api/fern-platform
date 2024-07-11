@@ -1,11 +1,14 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { FernButton, FernCollapse, FernInput } from "@fern-ui/components";
+import { FernButton, FernCard, FernCollapse, FernInput } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
 import { isEmpty } from "lodash-es";
-import { Dispatch, FC, ReactElement, SetStateAction, useCallback } from "react";
+import { useRouter } from "next/router";
+import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Key } from "react-feather";
+import { useApiKey } from "../atoms/auth";
+import { useApiKeyInjectionEnabled } from "../services/useApiKeyInjectionEnabled";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";
@@ -260,10 +263,122 @@ export function PlaygroundAuthorizationFormCard({
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const isOpen = useBooleanState(false);
+    const apiKeyInjectionUrl = useApiKeyInjectionEnabled();
+    const router = useRouter();
+    const apiKey = useApiKey();
+    const [loginError, setLoginError] = useState<string | null>(null);
 
+    const redirectOrOpenAuthForm = () => {
+        if (apiKeyInjectionUrl != null) {
+            // const redirect_uri = encodeURIComponent(
+            //     urlJoin(window.location.origin, basePath ?? "", "/api/fern-docs/auth/login"),
+            // );
+            const url = new URL(apiKeyInjectionUrl);
+            url.searchParams.set("state", encodeURIComponent(window.location.href));
+            window.location.replace(url);
+        } else {
+            isOpen.toggleValue();
+        }
+    };
+    const hasApiInjectionConfig = apiKeyInjectionUrl !== undefined;
+    const authButtonCopy = hasApiInjectionConfig
+        ? "Login to send a real request"
+        : "Authenticate with your API key to send a real request";
+
+    useEffect(() => {
+        if (!router.isReady) {
+            return;
+        }
+
+        const { loginError } = router.query;
+        if (loginError) {
+            setLoginError(loginError as string);
+        }
+    }, [router.query, router.isReady]);
+
+    // TODO change this login
+    if (apiKey && authState && authState.type === "bearerAuth") {
+        if (authState.token === "") {
+            setAuthorization({ type: "bearerAuth", token: apiKey });
+        }
+    }
     return (
         <div>
-            {isAuthed(auth, authState) ? (
+            {hasApiInjectionConfig && !apiKey && (
+                <>
+                    <FernCard className="rounded-xl p-4 shadow-sm mb-2">
+                        {loginError && (
+                            <FernButton
+                                className="w-full text-left pointer-events-none mb-2"
+                                size="large"
+                                intent="danger"
+                                variant="outlined"
+                                text={loginError}
+                                active={true}
+                            />
+                        )}
+
+                        <h5 className="t-muted m-0">Login to send a real request</h5>
+                        <div className="flex justify-center my-5 gap-2">
+                            <FernButton
+                                size="normal"
+                                intent="primary"
+                                text="Login"
+                                icon={<PersonIcon />}
+                                onClick={redirectOrOpenAuthForm}
+                            />
+                            <FernButton
+                                size="normal"
+                                intent="none"
+                                variant="outlined"
+                                icon={<Key />}
+                                text="Provide token manually"
+                                onClick={() => isOpen.toggleValue()}
+                            />
+                        </div>
+                    </FernCard>
+                </>
+            )}
+
+            {hasApiInjectionConfig && apiKey && (
+                <>
+                    <FernCard className="rounded-xl p-4 shadow-sm mb-3" title="Login to send a real request">
+                        <FernButton
+                            className="w-full text-left pointer-events-none"
+                            size="large"
+                            intent="success"
+                            variant="outlined"
+                            text="Successfully logged in"
+                            icon={<Key />}
+                            active={true}
+                        />
+                        <div className="-mx-4">
+                            <PlaygroundAuthorizationForm
+                                auth={auth}
+                                value={authState}
+                                onChange={setAuthorization}
+                                disabled={disabled}
+                            />
+                        </div>
+                        {authState?.type === "bearerAuth" && apiKey !== authState.token && (
+                            <div className="flex justify-end  gap-2">
+                                {apiKey && (
+                                    <FernButton
+                                        text="Reset token to default"
+                                        intent="none"
+                                        icon={<Key />}
+                                        onClick={() => setAuthorization({ type: "bearerAuth", token: apiKey })}
+                                        size="normal"
+                                        variant="outlined"
+                                    />
+                                )}
+                            </div>
+                        )}
+                    </FernCard>
+                </>
+            )}
+
+            {!hasApiInjectionConfig && (isAuthed(auth, authState) || apiKey) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"
@@ -279,20 +394,21 @@ export function PlaygroundAuthorizationFormCard({
                     onClick={isOpen.toggleValue}
                     active={isOpen.value}
                 />
-            ) : (
+            )}
+            {!hasApiInjectionConfig && !(isAuthed(auth, authState) || apiKey) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"
                     intent="danger"
                     variant="outlined"
-                    text="Authenticate with your API key to send a real request"
+                    text={authButtonCopy}
                     icon={<Key />}
                     rightIcon={
                         <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
                             Connect
                         </span>
                     }
-                    onClick={isOpen.toggleValue}
+                    onClick={redirectOrOpenAuthForm}
                     active={isOpen.value}
                 />
             )}
@@ -305,8 +421,18 @@ export function PlaygroundAuthorizationFormCard({
                             onChange={setAuthorization}
                             disabled={disabled}
                         />
-                        <div className="flex justify-end p-4 pt-2">
+
+                        <div className="flex justify-end p-4 pt-2 gap-2">
                             <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
+                            {apiKey && (
+                                <FernButton
+                                    text="Reset token to default"
+                                    intent="none"
+                                    onClick={() => setAuthorization({ type: "bearerAuth", token: apiKey })}
+                                    size="normal"
+                                    variant="outlined"
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

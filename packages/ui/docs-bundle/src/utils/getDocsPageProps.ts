@@ -13,19 +13,24 @@ import {
     setMdxBundler,
 } from "@fern-ui/ui";
 // eslint-disable-next-line import/no-internal-modules
+import { FernUser, getOAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
+// eslint-disable-next-line import/no-internal-modules
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
-import { jwtVerify } from "jose";
 import type { Redirect } from "next";
-import type { IncomingMessage, ServerResponse } from "node:http";
-import urljoin from "url-join";
+import { NextApiRequestCookies } from "next/dist/server/api-utils";
+import { type IncomingMessage, type ServerResponse } from "node:http";
+import { default as urlJoin, default as urljoin } from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getCustomerAnalytics } from "./analytics";
-import { getAuthorizationUrl, getJwtTokenSecret } from "./auth";
+import { getAuthorizationUrl } from "./auth";
 import { getRedirectForPath } from "./hackRedirects";
 
-async function getUnauthenticatedRedirect(xFernHost: string): Promise<Redirect> {
+async function getUnauthenticatedRedirect(xFernHost: string, path: string): Promise<Redirect> {
     const authorizationUrl = getAuthorizationUrl(
-        { organization: await maybeGetWorkosOrganization(xFernHost) },
+        {
+            organization: await maybeGetWorkosOrganization(xFernHost),
+            state: encodeURIComponent(urlJoin(`https://${xFernHost}`, path)),
+        },
         xFernHost,
     );
     return { destination: authorizationUrl, permanent: false };
@@ -44,7 +49,7 @@ function getRegistryServiceWithToken(token: string): FdrClient {
 
 export interface User {
     isAuthenticated: boolean;
-    user?: unknown;
+    user?: FernUser;
 }
 
 export async function getDocsPageProps(
@@ -68,7 +73,7 @@ export async function getDocsPageProps(
         if ((docs.error as any).content.statusCode === 401) {
             return {
                 type: "redirect",
-                redirect: await getUnauthenticatedRedirect(xFernHost),
+                redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`),
             };
         } else if ((docs.error as any).content.statusCode === 404) {
             return { type: "notFound", notFound: true };
@@ -88,72 +93,83 @@ export async function getDocsPageProps(
     return toRet;
 }
 
-export async function getPrivateDocsPageProps(
+export async function getDynamicDocsPageProps(
     xFernHost: string,
     slug: string[],
-    token: string,
+    cookies: NextApiRequestCookies,
     res: ServerResponse<IncomingMessage>,
 ): Promise<DocsPageResult<DocsPage.Props>> {
-    const user: User = await getUser(token);
-
-    if (!user.isAuthenticated) {
-        // Clear the token if it's invalid, then redirect to `/` to reset the login flow
-        res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
-        return {
-            type: "redirect",
-            redirect: {
-                destination: `/${slug.join("/")}`,
-                permanent: false,
-            },
-        };
-    }
-
-    const registryService = getRegistryServiceWithToken(`workos_${token}`);
-
     const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
-    // eslint-disable-next-line no-console
-    console.log("[getPrivateDocsPageProps] Loading docs for", url);
-    const start = Date.now();
-    const docs = await registryService.docs.v2.read.getPrivateDocsForUrl({ url });
-    const end = Date.now();
-    // eslint-disable-next-line no-console
-    console.log(`[getPrivateDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
-
-    if (!docs.ok) {
-        res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
-
-        if (docs.error.error === "UnauthorizedError") {
-            return {
-                type: "redirect",
-                redirect: await getUnauthenticatedRedirect(xFernHost),
-            };
-        }
-
-        // eslint-disable-next-line no-console
-        console.error(`[getPrivateDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
-        throw new Error("Failed to fetch private docs");
+    if (cookies.fern_token == null) {
+        return getDocsPageProps(xFernHost, slug);
     }
 
-    return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
-}
-
-async function getUser(token: string | undefined): Promise<User> {
-    if (token == null) {
-        return { isAuthenticated: false };
-    }
-
-    // Verify the JWT signature
     try {
-        const verifiedToken = await jwtVerify(token, getJwtTokenSecret());
+        const user = await verifyFernJWT(cookies.fern_token);
 
-        // Return the User object if the token is valid
-        return {
-            isAuthenticated: true,
-            user: verifiedToken.payload.user,
-        };
-    } catch {
-        return { isAuthenticated: false };
+        if (user.partner === "workos") {
+            const registryService = getRegistryServiceWithToken(`workos_${cookies.fern_token}`);
+
+            // eslint-disable-next-line no-console
+            console.log("[getDynamicDocsPageProps] Loading docs for", url);
+            const start = Date.now();
+            const docs = await registryService.docs.v2.read.getPrivateDocsForUrl({ url });
+            const end = Date.now();
+            // eslint-disable-next-line no-console
+            console.log(`[getDynamicDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
+
+            if (!docs.ok) {
+                res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
+
+                if (docs.error.error === "UnauthorizedError") {
+                    return {
+                        type: "redirect",
+                        redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`),
+                    };
+                }
+
+                // eslint-disable-next-line no-console
+                console.error(`[getDynamicDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
+                throw new Error("Failed to fetch private docs");
+            }
+
+            return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+        } else if (user.partner === "ory") {
+            const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
+
+            if (!docs.ok) {
+                throw new Error("Failed to fetch docs");
+            }
+
+            const config = await getOAuthEdgeConfig(xFernHost);
+
+            if (config == null) {
+                throw new Error("Failed to fetch OAuth config");
+            }
+
+            return convertDocsToDocsPageProps({
+                docs: docs.body,
+                slug,
+                url,
+                xFernHost,
+                user,
+                apiKey: config["api-key-injection-enabled"] ? cookies.access_token : undefined,
+            });
+        }
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
     }
+
+    // Clear the token if it's invalid, then redirect to `/` to reset the login flow
+    res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
+    return {
+        type: "redirect",
+        redirect: {
+            destination: `/${slug.join("/")}`,
+            permanent: false,
+        },
+    };
 }
 
 async function convertDocsToDocsPageProps({
@@ -161,11 +177,15 @@ async function convertDocsToDocsPageProps({
     slug,
     url,
     xFernHost,
+    user,
+    apiKey,
 }: {
     docs: DocsV2Read.LoadDocsForUrlResponse;
     slug: string[];
     url: string;
     xFernHost: string;
+    user?: FernUser;
+    apiKey?: string;
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
@@ -314,6 +334,8 @@ async function convertDocsToDocsPageProps({
             node.node,
         ),
         breadcrumb: getBreadcrumbList(docs.baseUrl.domain, docs.definition.pages, node.parents, node.node),
+        user,
+        apiKey,
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",

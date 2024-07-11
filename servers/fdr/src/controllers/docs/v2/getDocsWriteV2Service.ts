@@ -93,7 +93,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             const fernUrl = ParsedBaseUrl.parse(
                 urlJoin(
                     `${req.body.orgId}-preview-${docsRegistrationId}.${app.config.domainSuffix}`,
-                    req.body.basePath ?? "/",
+                    req.body.basePath ?? "",
                 ),
             );
             const s3FileInfos = await app.services.s3.getPresignedUploadUrls({

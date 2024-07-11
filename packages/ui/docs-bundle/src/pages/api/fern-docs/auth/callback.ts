@@ -1,77 +1,89 @@
-import { SignJWT } from "jose";
+// eslint-disable-next-line import/no-internal-modules
+import { FernUser, OryAccessTokenSchema, getOAuthEdgeConfig, getOAuthToken, signFernJWT } from "@fern-ui/ui/auth";
+import { decodeJwt } from "jose";
 import { NextRequest, NextResponse } from "next/server";
-import { getJwtTokenSecret, getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
-import { notFoundResponse, redirectResponse } from "../../../../utils/serverResponse";
-
-// export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-//     // The authorization code returned by AuthKit
-//     const code = req.query.code as string;
-
-//     const { user } = await getWorkOS().userManagement.authenticateWithCode({
-//         code,
-//         clientId: getWorkOSClientId(),
-//     });
-
-//     // Create a JWT token with the user's information
-//     const token = await new SignJWT({
-//         // Here you might lookup and retrieve user details from your database
-//         user,
-//     })
-//         .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-//         .setIssuedAt()
-//         .setExpirationTime("30d")
-//         .setIssuer("https://buildwithfern.com")
-//         .sign(getJwtTokenSecret());
-
-//     res.setHeader("Set-Cookie", `fern_token=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`);
-
-//     res.redirect("/");
-// };
+import urlJoin from "url-join";
+import { getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
+import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
+
+function redirectWithLoginError(location: string, errorMessage: string): NextResponse {
+    const url = new URL(location);
+    url.searchParams.append("loginError", errorMessage);
+    return NextResponse.redirect(url.toString());
+}
+
+const COOKIE_OPTS = {
+    secure: true,
+    httpOnly: true,
+    sameSite: true,
+};
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
+    const state = req.nextUrl.searchParams.get("state");
+    const redirectLocation = (state != null ? decodeURIComponent(state) : undefined) ?? req.nextUrl.origin;
 
     if (typeof code !== "string") {
-        return notFoundResponse();
+        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
 
-    const startTime = Date.now();
-    const { user } = await getWorkOS().userManagement.authenticateWithCode({
-        code,
-        clientId: getWorkOSClientId(),
-    });
+    const domain = getXFernHostEdge(req);
+    const config = await getOAuthEdgeConfig(domain);
 
-    const beforeSigningTime = Date.now();
+    if (config != null && config.partner === "ory") {
+        try {
+            const { access_token, refresh_token } = await getOAuthToken(
+                config,
+                code,
+                urlJoin(`https://${domain}`, req.nextUrl.pathname),
+            );
 
-    // eslint-disable-next-line no-console
-    console.debug(`Time to authenticate with WorkOS: ${beforeSigningTime - startTime}ms`);
+            const token = OryAccessTokenSchema.parse(decodeJwt(access_token));
+            const fernUser: FernUser = {
+                type: "user",
+                partner: "ory",
+                name: token.ext.name,
+                email: token.ext.email,
+            };
+            const res = NextResponse.redirect(redirectLocation);
+            res.cookies.set("fern_token", await signFernJWT(fernUser), COOKIE_OPTS);
+            res.cookies.set("access_token", access_token, COOKIE_OPTS);
+            res.cookies.set("refresh_token", refresh_token, COOKIE_OPTS);
+            return res;
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(error);
+            return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        }
+    }
 
-    // Create a JWT token with the user's information
-    const token = await new SignJWT({
-        // Here you might lookup and retrieve user details from your database
-        user,
-    })
-        .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-        .setIssuedAt()
-        .setExpirationTime("30d")
-        .setIssuer("https://buildwithfern.com")
-        .sign(getJwtTokenSecret());
+    try {
+        const { user } = await getWorkOS().userManagement.authenticateWithCode({
+            code,
+            clientId: getWorkOSClientId(),
+        });
 
-    const afterSigningTime = Date.now();
+        const fernUser: FernUser = {
+            type: "user",
+            partner: "workos",
+            name:
+                user.firstName != null && user.lastName != null
+                    ? `${user.firstName} ${user.lastName}`
+                    : user.firstName ?? user.email.split("@")[0],
+            email: user.email,
+        };
 
-    // eslint-disable-next-line no-console
-    console.debug(`Time to sign JWT: ${afterSigningTime - beforeSigningTime}ms`);
+        const token = await signFernJWT(fernUser);
 
-    const res = redirectResponse(req.nextUrl.origin);
-    res.cookies.set("fern_token", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-        path: "/",
-        maxAge: 2592000,
-    });
-    return res;
+        const res = NextResponse.redirect(redirectLocation);
+        res.cookies.set("fern_token", token, COOKIE_OPTS);
+        return res;
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+    }
 }

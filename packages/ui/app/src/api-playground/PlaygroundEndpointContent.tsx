@@ -15,6 +15,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { useApiKey } from "../atoms/auth";
 import { useFeatureFlags } from "../atoms/flags";
 import { useDomain } from "../atoms/navigation";
 import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
@@ -62,6 +63,15 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
 
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
+
+    const apiKey = useApiKey();
+
+    if (apiKey && formState.auth == null) {
+        formState.auth = {
+            type: "bearerAuth",
+            token: apiKey,
+        };
+    }
 
     useEffect(() => {
         if (typeof window === "undefined" || scrollAreaRef.current == null) {
