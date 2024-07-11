@@ -1,4 +1,4 @@
 export * from "./FernJWT";
-export { getOAuthEdgeConfig } from "./getOAuthEdgeConfig";
+export { getAuthEdgeConfig } from "./getAuthEdgeConfig";
 export { getOAuthToken } from "./getOAuthToken";
 export * from "./types";

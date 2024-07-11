@@ -13,9 +13,9 @@ export function signFernJWT(fern: FernUser, user?: any): Promise<string> {
         .sign(getJwtTokenSecret());
 }
 
-export async function verifyFernJWT(token: string): Promise<FernUser> {
-    const verified = await jwtVerify(token, getJwtTokenSecret(), {
-        issuer: "https://buildwithfern.com",
+export async function verifyFernJWT(token: string, secret?: Uint8Array, issuer?: string): Promise<FernUser> {
+    const verified = await jwtVerify(token, secret ?? getJwtTokenSecret(), {
+        issuer: issuer ?? "https://buildwithfern.com",
     });
     return FernUserSchema.parse(verified.payload.fern);
 }
