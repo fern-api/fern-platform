@@ -1,8 +1,7 @@
+import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { NextRequest } from "next/server";
-import { getOAuthEdgeConfig } from "./getOAuthEdgeConfig";
-import { getOAuthRedirect } from "./getOAuthRedirect";
-import { decodeAccessToken } from "./verifyAccessToken";
-import { getOAuthToken } from "./getOAuthToken";
+import { OAuth2Client } from "./OAuth2Client";
+import { getAuthEdgeConfig } from "./getAuthEdgeConfig";
 
 interface APIKeyInjectionConfigDisabled {
     enabled: false;
@@ -15,8 +14,9 @@ interface APIKeyInjectionConfigEnabledUnauthorized {
 interface APIKeyInjectionConfigEnabledAuthorized {
     enabled: true;
     authenticated: true;
-    apiKey: string;
-    refreshToken?: string;
+    access_token: string;
+    refresh_token?: string;
+    exp?: number;
 }
 
 export type APIKeyInjectionConfig =
@@ -24,63 +24,60 @@ export type APIKeyInjectionConfig =
     | APIKeyInjectionConfigEnabledUnauthorized
     | APIKeyInjectionConfigEnabledAuthorized;
 
-async function getOrRefreshAccessToken(cookies: NextRequest["cookies"]) {
-    const accessToken = cookies.get("access_token")?.value;
-    const refreshToken = cookies.get("refresh_token")?.value;
-
-    if (accessToken != null) {
-        try {
-            await decodeAccessToken(accessToken);
-            return {
-                apiKey: accessToken,
-                refreshToken,
-            };
-        } catch (e) {
-            if (refreshToken != null) {
-                getOAuthToken();
-            }
-        }
-    }
-
-    if (refreshToken != null) {
-        // try {
-        //     const token = await decodeAccessToken(accessToken, config.jwks);
-        //     return {
-        //         enabled: true,
-        //         authenticated: true,
-        //         apiKey: accessToken,
-        //     };
-        // } catch (e) {
-        //     const
-        // }
-    }
-}
-
 export async function getAPIKeyInjectionConfig(
     domain: string,
     cookies?: NextRequest["cookies"],
+    state?: string,
 ): Promise<APIKeyInjectionConfig> {
-    const config = await getOAuthEdgeConfig(domain);
-    if (config?.["api-key-injection-enabled"]) {
-        if (cookies != null) {
-            const accessToken = cookies.get("access_token")?.value;
-            const refreshToken = cookies.get("refresh_token")?.value;
+    const config = await getAuthEdgeConfig(domain);
+    if (config?.type === "oauth2" && config["api-key-injection-enabled"]) {
+        const client = new OAuth2Client(config, `https://${domain}/api/auth/callback`);
+        const tokens = cookies != null ? await client.getOrRefreshAccessTokenEdge(cookies) : undefined;
 
-            // try {
-            //     if (accessToken != null) {
-            //         const token = await decodeAccessToken(accessToken, config.jwks);
-            //         return {
-            //             enabled: true,
-            //             authenticated: true,
-            //             apiKey: accessToken,
-            //         };
-            //     }
-            // } catch (e) {
-            //     const
-            // }
+        if (tokens != null) {
+            return {
+                enabled: true,
+                authenticated: true,
+                access_token: tokens.access_token,
+                refresh_token: tokens.refresh_token,
+                exp: tokens.exp,
+            };
         }
 
-        const url = getOAuthRedirect(config);
+        const url = client.getRedirectUrl(state);
+        if (url != null) {
+            return {
+                enabled: true,
+                authenticated: false,
+                url,
+            };
+        }
+    }
+    return {
+        enabled: false,
+    };
+}
+export async function getAPIKeyInjectionConfigNode(
+    domain: string,
+    cookies?: NextApiRequestCookies,
+    state?: string,
+): Promise<APIKeyInjectionConfig> {
+    const config = await getAuthEdgeConfig(domain);
+    if (config?.type === "oauth2" && config["api-key-injection-enabled"]) {
+        const client = new OAuth2Client(config, `https://${domain}/api/auth/callback`);
+        const tokens = cookies != null ? await client.getOrRefreshAccessTokenNode(cookies) : undefined;
+
+        if (tokens != null) {
+            return {
+                enabled: true,
+                authenticated: true,
+                access_token: tokens.access_token,
+                refresh_token: tokens.refresh_token,
+                exp: tokens.exp,
+            };
+        }
+
+        const url = client.getRedirectUrl(state);
         if (url != null) {
             return {
                 enabled: true,

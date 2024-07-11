@@ -1,18 +1,25 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import useSWR from "swr";
 import urljoin from "url-join";
 import { useBasePath } from "../atoms/navigation";
+import { APIKeyInjectionConfig } from "../auth";
 
-export function useApiKeyInjectionEnabled(): string | undefined {
+export const API_KEY_INJECTION_ROUTE = "/api/fern-docs/auth/api-key-injection";
+
+const DEFAULT = { enabled: false as const };
+
+export function useApiKeyInjectionEnabled(): APIKeyInjectionConfig {
     const basePath = useBasePath();
-    const key = urljoin(basePath ?? "", "/api/fern-docs/auth/api-key-injection");
+    const key = urljoin(basePath ?? "", API_KEY_INJECTION_ROUTE);
 
-    const { data } = useSWR<false | string>(key, async (url: string) => {
-        const res = await fetch(url);
-        return res.json();
-    });
-    if (data === false) {
-        return undefined;
-    }
-    return data;
+    const { data } = useSWR<APIKeyInjectionConfig>(
+        key,
+        async (url: string) => {
+            const res = await fetch(url);
+            return res.json();
+        },
+        {
+            refreshInterval: (latestData) => (latestData?.enabled ? 1000 * 60 * 5 : 0), // refresh every 5 minutes
+        },
+    );
+    return data ?? DEFAULT;
 }

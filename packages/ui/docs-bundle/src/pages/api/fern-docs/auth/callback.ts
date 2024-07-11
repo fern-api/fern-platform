@@ -1,11 +1,11 @@
 /* eslint-disable import/no-internal-modules */
 import {
     FernUser,
+    OAuth2Client,
     OryAccessTokenSchema,
-    decodeAccessToken,
     getAuthEdgeConfig,
-    getOAuthToken,
     signFernJWT,
+    withSecureCookie,
 } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
@@ -19,12 +19,6 @@ function redirectWithLoginError(location: string, errorMessage: string): NextRes
     url.searchParams.append("loginError", errorMessage);
     return NextResponse.redirect(url.toString());
 }
-
-const COOKIE_OPTS = {
-    secure: true,
-    httpOnly: true,
-    sameSite: true,
-};
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
@@ -40,23 +34,25 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const config = await getAuthEdgeConfig(domain);
 
     if (config != null && config.type === "oauth2" && config.partner === "ory") {
+        const oauthClient = new OAuth2Client(config, urlJoin(`https://${domain}`, req.nextUrl.pathname));
         try {
-            const { access_token, refresh_token } = await getOAuthToken(
-                config,
-                code,
-                urlJoin(`https://${domain}`, req.nextUrl.pathname),
-            );
-            const token = OryAccessTokenSchema.parse(decodeAccessToken(access_token));
+            const { access_token, refresh_token } = await oauthClient.getToken(code);
+            const token = OryAccessTokenSchema.parse(oauthClient.decode(access_token));
             const fernUser: FernUser = {
                 type: "user",
                 partner: "ory",
                 name: token.ext.name,
                 email: token.ext.email,
             };
+            const expires = token.exp == null ? undefined : new Date(token.exp * 1000);
             const res = NextResponse.redirect(redirectLocation);
-            res.cookies.set("fern_token", await signFernJWT(fernUser), COOKIE_OPTS);
-            res.cookies.set("access_token", access_token, COOKIE_OPTS);
-            res.cookies.set("refresh_token", refresh_token, COOKIE_OPTS);
+            res.cookies.set("fern_token", await signFernJWT(fernUser), withSecureCookie({ expires }));
+            res.cookies.set("access_token", access_token, withSecureCookie({ expires }));
+            if (refresh_token != null) {
+                res.cookies.set("refresh_token", refresh_token, withSecureCookie({ expires }));
+            } else {
+                res.cookies.delete("refresh_token");
+            }
             return res;
         } catch (error) {
             // eslint-disable-next-line no-console
@@ -84,7 +80,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         const token = await signFernJWT(fernUser, user);
 
         const res = NextResponse.redirect(redirectLocation);
-        res.cookies.set("fern_token", token, COOKIE_OPTS);
+        res.cookies.set("fern_token", token, withSecureCookie());
         return res;
     } catch (error) {
         // eslint-disable-next-line no-console

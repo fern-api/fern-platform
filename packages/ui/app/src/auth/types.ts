@@ -14,6 +14,7 @@ export const AuthEdgeConfigOAuth2Schema = z.object({
     partner: z.literal("ory"),
     environment: z.string(),
     jwks: z.optional(z.string()),
+    scope: z.optional(z.string()),
     clientId: z.string(),
     clientSecret: z.string(),
     "api-key-injection-enabled": z.optional(z.boolean()),
@@ -35,7 +36,7 @@ export type AuthEdgeConfigBasicTokenVerification = z.infer<typeof AuthEdgeConfig
 export const OAuthTokenResponseSchema = z.object({
     access_token: z.string(),
     expires_in: z.number(),
-    refresh_token: z.string(),
+    refresh_token: z.string().optional(),
     scope: z.string(),
     token_type: z.string(),
 });
@@ -45,7 +46,7 @@ export type OAuthTokenResponse = z.infer<typeof OAuthTokenResponseSchema>;
 export const OryAccessTokenSchema = z.object({
     aud: z.array(z.string()),
     client_id: z.string(),
-    exp: z.number(),
+    exp: z.number().optional(),
     ext: z.object({
         avatar_url: z.string(),
         email: z.string(),
