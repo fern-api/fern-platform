@@ -175,7 +175,7 @@ export class SnippetTemplateResolver {
                         }
                     }
                 }
-                if (evaluatedInputs.length == 0) {
+                if (evaluatedInputs.length === 0) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
                 return new DefaultedV1Snippet({
