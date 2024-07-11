@@ -1,6 +1,12 @@
-// eslint-disable-next-line import/no-internal-modules
-import { FernUser, OryAccessTokenSchema, getOAuthEdgeConfig, getOAuthToken, signFernJWT } from "@fern-ui/ui/auth";
-import { decodeJwt } from "jose";
+/* eslint-disable import/no-internal-modules */
+import {
+    FernUser,
+    OryAccessTokenSchema,
+    decodeAccessToken,
+    getOAuthEdgeConfig,
+    getOAuthToken,
+    signFernJWT,
+} from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
 import { getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
@@ -40,8 +46,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
                 code,
                 urlJoin(`https://${domain}`, req.nextUrl.pathname),
             );
-
-            const token = OryAccessTokenSchema.parse(decodeJwt(access_token));
+            const token = OryAccessTokenSchema.parse(decodeAccessToken(access_token));
             const fernUser: FernUser = {
                 type: "user",
                 partner: "ory",

@@ -23,3 +23,5 @@ export async function getOAuthToken(
     }
     throw new Error(`Failed to get OAuth token: ${response.status} ${await response.text()}`);
 }
+
+export async function refreshOAuthToken(config: OAuthEdgeConfig, refreshToken: string);

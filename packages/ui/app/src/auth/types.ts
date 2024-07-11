@@ -13,6 +13,7 @@ export const OAuthEdgeConfigSchema = z.object({
     type: z.literal("oauth2"),
     partner: z.literal("ory"),
     environment: z.string(),
+    jwks: z.optional(z.string()),
     clientId: z.string(),
     clientSecret: z.string(),
     "api-key-injection-enabled": z.optional(z.boolean()),
@@ -51,3 +52,23 @@ export const OryAccessTokenSchema = z.object({
 });
 
 export type OryAccessToken = z.infer<typeof OryAccessTokenSchema>;
+
+export const JwkSchema = z.object({
+    kty: z.string(), // Key Type (required)
+    use: z.string().optional(), // Public Key Use (optional)
+    key_ops: z.array(z.string()).optional(), // Key Operations (optional)
+    alg: z.string().optional(), // Algorithm (optional)
+    kid: z.string().optional(), // Key ID (optional)
+    x5u: z.string().optional(), // X.509 URL (optional)
+    x5c: z.array(z.string()).optional(), // X.509 Certificate Chain (optional)
+    x5t: z.string().optional(), // X.509 Certificate SHA-1 Thumbprint (optional)
+    "x5t#S256": z.string().optional(), // X.509 Certificate SHA-256 Thumbprint (optional)
+});
+
+// Define the schema for JWKS
+export const JwksSchema = z.object({
+    keys: z.array(JwkSchema), // Array of JWKs (required)
+});
+
+export type Jwk = z.infer<typeof JwkSchema>;
+export type Jwks = z.infer<typeof JwksSchema>;
