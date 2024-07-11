@@ -172,25 +172,6 @@ export async function getDynamicDocsPageProps(
     };
 }
 
-// async function getUser(token: string | undefined): Promise<User> {
-//     if (token == null) {
-//         return { isAuthenticated: false };
-//     }
-
-//     // Verify the JWT signature
-//     try {
-//         const user = await verifyFernJWT(token);
-
-//         // Return the User object if the token is valid
-//         return {
-//             isAuthenticated: true,
-//             user,
-//         };
-//     } catch {
-//         return { isAuthenticated: false };
-//     }
-// }
-
 async function convertDocsToDocsPageProps({
     docs,
     slug,
