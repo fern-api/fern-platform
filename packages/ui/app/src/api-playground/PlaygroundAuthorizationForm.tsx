@@ -7,7 +7,7 @@ import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Key } from "react-feather";
-import { useApiKeyInjectionEnabled } from "../services/useApiKeyInjectionEnabled";
+import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";
@@ -262,7 +262,7 @@ export function PlaygroundAuthorizationFormCard({
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const isOpen = useBooleanState(false);
-    const apiKeyInjection = useApiKeyInjectionEnabled();
+    const apiKeyInjection = useApiKeyInjectionConfig();
     const router = useRouter();
     const apiKey = apiKeyInjection.enabled && apiKeyInjection.authenticated ? apiKeyInjection.access_token : null;
     const [loginError, setLoginError] = useState<string | null>(null);

@@ -7,7 +7,7 @@ export const API_KEY_INJECTION_ROUTE = "/api/fern-docs/auth/api-key-injection";
 
 const DEFAULT = { enabled: false as const };
 
-export function useApiKeyInjectionEnabled(): APIKeyInjectionConfig {
+export function useApiKeyInjectionConfig(): APIKeyInjectionConfig {
     const basePath = useBasePath();
     const key = urljoin(basePath ?? "", API_KEY_INJECTION_ROUTE);
 
