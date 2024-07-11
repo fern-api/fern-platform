@@ -1,5 +1,4 @@
 import type { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-// import { FlattenedApiDefinition } from "./flattenApiDefinition";
 
 export interface ColorsConfig {
     light: DocsV1Read.ThemeConfig | undefined;
