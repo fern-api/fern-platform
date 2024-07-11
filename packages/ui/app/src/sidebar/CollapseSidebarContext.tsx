@@ -13,9 +13,9 @@ import {
     useState,
 } from "react";
 import { useCallbackOne } from "use-memo-one";
+import { useAtomEffect } from "../atoms";
 import { CURRENT_NODE_ATOM, CURRENT_NODE_ID_ATOM, useSidebarNodes } from "../atoms/navigation";
 import { useActiveValueListeners } from "../hooks/useActiveValueListeners";
-import { useAtomEffect } from "../hooks/useAtomEffect";
 
 interface CollapseSidebarContextValue {
     expanded: FernNavigation.NodeId[];

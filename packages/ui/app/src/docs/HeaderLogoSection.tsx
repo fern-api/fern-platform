@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
 import { LOGO_TEXT_ATOM } from "../atoms/logo";
 import { VERSIONS_ATOM } from "../atoms/navigation";
+import { useColors } from "../atoms/theme";
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { DEFAULT_LOGO_HEIGHT } from "../config";
@@ -36,11 +37,8 @@ export function HeaderLogoSection(): ReactElement {
 }
 
 function FernLogoImage(): ReactElement | null {
-    const { colors, resolveFile, logoHeight } = useDocsContext();
-    if (colors == null) {
-        return null;
-    }
-
+    const colors = useColors();
+    const { resolveFile, logoHeight } = useDocsContext();
     const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
     const imageClassName = "max-h-full object-contain";
     if (colors.dark != null && colors.light != null) {

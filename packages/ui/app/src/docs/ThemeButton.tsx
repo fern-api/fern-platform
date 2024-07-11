@@ -1,8 +1,10 @@
 import { FernButton, FernButtonProps } from "@fern-ui/components";
 import { useMounted } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { useTheme } from "next-themes";
+
+import { memo } from "react";
 import { Moon as MoonIcon, Sun as SunIcon } from "react-feather";
+import { useTheme, useToggleTheme } from "../atoms/theme";
 
 export declare namespace ThemeButton {
     export interface Props extends FernButtonProps {
@@ -10,8 +12,9 @@ export declare namespace ThemeButton {
     }
 }
 
-export const ThemeButton: React.FC<ThemeButton.Props> = ({ className, ...props }) => {
-    const { resolvedTheme, setTheme } = useTheme();
+export const ThemeButton = memo(({ className, ...props }: ThemeButton.Props) => {
+    const resolvedTheme = useTheme();
+    const toggleTheme = useToggleTheme();
     const mounted = useMounted();
 
     const IconToUse = mounted && resolvedTheme === "dark" ? MoonIcon : SunIcon;
@@ -20,13 +23,13 @@ export const ThemeButton: React.FC<ThemeButton.Props> = ({ className, ...props }
         <FernButton
             {...props}
             className={cn("fern-theme-button", className)}
-            onClick={() => {
-                setTheme(resolvedTheme === "dark" ? "light" : "dark");
-            }}
+            onClick={toggleTheme}
             rounded={true}
             variant="minimal"
             intent="primary"
             icon={<IconToUse className="fern-theme-button-icon" />}
         />
     );
-};
+});
+
+ThemeButton.displayName = "ThemeButton";
