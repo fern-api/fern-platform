@@ -17,11 +17,19 @@ export const HAS_PLAYGROUND_ATOM = atom(
 );
 
 const PLAYGROUND_HEIGHT_VALUE_ATOM = atom<number>(0);
+
+PLAYGROUND_HEIGHT_VALUE_ATOM.onMount = (set) => {
+    if (typeof window === "undefined") {
+        return;
+    }
+    set(window.innerHeight);
+};
+
 export const PLAYGROUND_HEIGHT_ATOM = atom(
     (get) => {
         const playgroundHeight = Math.max(get(PLAYGROUND_HEIGHT_VALUE_ATOM), 0);
         const maxPlaygroundHeight = get(BELOW_HEADER_HEIGHT_ATOM);
-        return Math.min(maxPlaygroundHeight, playgroundHeight);
+        return Math.max(Math.min(maxPlaygroundHeight, playgroundHeight), 64);
     },
     (_get, set, update: number) => {
         set(PLAYGROUND_HEIGHT_VALUE_ATOM, update);
@@ -54,6 +62,7 @@ export const PLAYGROUND_NODE_ID = atom(
             const node = get(NAVIGATION_NODES_ATOM).get(update);
             const apiNode = node != null && FernNavigation.isApiLeaf(node) ? node : undefined;
             capturePosthogEvent("api_playground_opened", { apiNode });
+            set(PLAYGROUND_HEIGHT_ATOM, get(BELOW_HEADER_HEIGHT_ATOM));
         } else {
             newLocation.searchParams.delete("playground");
             set(PLAYGROUND_IS_OPEN_ATOM, false);

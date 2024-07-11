@@ -1,35 +1,10 @@
 // eslint-disable-next-line import/no-internal-modules
 import { FernUser, OryAccessTokenSchema, getOAuthEdgeConfig, getOAuthToken, signFernJWT } from "@fern-ui/ui/auth";
 import { decodeJwt } from "jose";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
 import { getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
 import { getXFernHostEdge } from "../../../../utils/xFernHost";
-// export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-//     // The authorization code returned by AuthKit
-//     const code = req.query.code as string;
-
-//     const { user } = await getWorkOS().userManagement.authenticateWithCode({
-//         code,
-//         clientId: getWorkOSClientId(),
-//     });
-
-//     // Create a JWT token with the user's information
-//     const token = await new SignJWT({
-//         // Here you might lookup and retrieve user details from your database
-//         user,
-//     })
-//         .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-//         .setIssuedAt()
-//         .setExpirationTime("30d")
-//         .setIssuer("https://buildwithfern.com")
-//         .sign(getJwtTokenSecret());
-
-//     res.setHeader("Set-Cookie", `fern_token=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`);
-
-//     res.redirect("/");
-// };
 
 export const runtime = "edge";
 
@@ -49,7 +24,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
     const state = req.nextUrl.searchParams.get("state");
-    const redirectLocation = state ?? req.nextUrl.origin;
+    const redirectLocation = (state != null ? decodeURIComponent(state) : undefined) ?? req.nextUrl.origin;
 
     if (typeof code !== "string") {
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
@@ -57,8 +32,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const domain = getXFernHostEdge(req);
     const config = await getOAuthEdgeConfig(domain);
-
-    const cookieJar = cookies();
 
     if (config != null && config.partner === "ory") {
         try {
@@ -75,10 +48,11 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
                 name: token.ext.name,
                 email: token.ext.email,
             };
-            cookieJar.set("fern_token", await signFernJWT(fernUser), COOKIE_OPTS);
-            cookieJar.set("access_token", access_token, COOKIE_OPTS);
-            cookieJar.set("refresh_token", refresh_token, COOKIE_OPTS);
-            return NextResponse.redirect(redirectLocation);
+            const res = NextResponse.redirect(redirectLocation);
+            res.cookies.set("fern_token", await signFernJWT(fernUser), COOKIE_OPTS);
+            res.cookies.set("access_token", access_token, COOKIE_OPTS);
+            res.cookies.set("refresh_token", refresh_token, COOKIE_OPTS);
+            return res;
         } catch (error) {
             // eslint-disable-next-line no-console
             console.error(error);
@@ -103,9 +77,10 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         };
 
         const token = await signFernJWT(fernUser);
-        cookieJar.set("fern_token", token, COOKIE_OPTS);
 
-        return NextResponse.redirect(redirectLocation);
+        const res = NextResponse.redirect(redirectLocation);
+        res.cookies.set("fern_token", token, COOKIE_OPTS);
+        return res;
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
