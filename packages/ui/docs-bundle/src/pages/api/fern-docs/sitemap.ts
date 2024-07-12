@@ -1,5 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+// eslint-disable-next-line import/no-internal-modules
+import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 import urljoin from "url-join";
 import { buildUrlFromApiEdge } from "../../../utils/buildUrlFromApi";
@@ -15,6 +17,12 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     const xFernHost = getXFernHostEdge(req);
+
+    const status = await checkViewerAllowedEdge(xFernHost, req);
+    if (status >= 400) {
+        return NextResponse.next({ status });
+    }
+
     const headers = new Headers();
     headers.set("x-fern-host", xFernHost);
 

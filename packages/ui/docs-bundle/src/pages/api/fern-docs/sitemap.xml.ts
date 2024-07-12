@@ -5,6 +5,8 @@ import urljoin from "url-join";
 import { buildUrlFromApiEdge } from "../../../utils/buildUrlFromApi";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { getXFernHostEdge } from "../../../utils/xFernHost";
+// eslint-disable-next-line import/no-internal-modules
+import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
 
 export const runtime = "edge";
 export const revalidate = 60 * 60 * 24;
@@ -13,8 +15,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
-
     const xFernHost = getXFernHostEdge(req);
+
+    const status = await checkViewerAllowedEdge(xFernHost, req);
+    if (status >= 400) {
+        return NextResponse.next({ status });
+    }
+
     const headers = new Headers();
     headers.set("x-fern-host", xFernHost);
 

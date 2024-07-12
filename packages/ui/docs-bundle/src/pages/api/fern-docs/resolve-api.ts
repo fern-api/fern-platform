@@ -12,6 +12,8 @@ import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
 import { getXFernHostNode } from "../../../utils/xFernHost";
 import { getFeatureFlags } from "./feature-flags";
 // eslint-disable-next-line import/no-internal-modules
+import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
+// eslint-disable-next-line import/no-internal-modules
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 
 export const dynamic = "force-dynamic";
@@ -27,6 +29,13 @@ const resolveApiHandler: NextApiHandler = async (
         }
 
         const xFernHost = getXFernHostNode(req);
+
+        const status = await checkViewerAllowedNode(xFernHost, req);
+        if (status >= 400) {
+            res.status(status).json(null);
+            return;
+        }
+
         res.setHeader("host", xFernHost);
 
         const url = buildUrlFromApiNode(xFernHost, req);
