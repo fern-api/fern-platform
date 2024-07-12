@@ -23,10 +23,10 @@ const SETTABLE_THEME_ATOM = atomWithStorageString<Theme | typeof SYSTEM>(STORAGE
 
 const IS_SYSTEM_THEME_ATOM = atom((get) => get(SETTABLE_THEME_ATOM) === SYSTEM);
 
-export const COLORS_ATOM = atom<ColorsConfig>({ dark: undefined, light: undefined });
+export const COLORS_ATOM = atom<Partial<ColorsConfig>>({});
 export const AVAILABLE_THEMES_ATOM = atom((get) => getAvailableThemes(get(COLORS_ATOM)));
 
-export function useColors(): ColorsConfig {
+export function useColors(): Partial<ColorsConfig> {
     return useAtomValue(COLORS_ATOM);
 }
 
@@ -38,11 +38,13 @@ export const THEME_SWITCH_ENABLED_ATOM = atom((get) => {
 export const THEME_ATOM = atomWithRefresh((get): Theme => {
     const storedTheme = get(SETTABLE_THEME_ATOM);
     const availableThemes = get(AVAILABLE_THEMES_ATOM);
-    if (storedTheme === SYSTEM) {
+    if (availableThemes.length === 1) {
+        return availableThemes[0];
+    } else if (storedTheme === SYSTEM) {
         if (typeof window !== "undefined") {
             return getSystemTheme();
         }
-    } else if (availableThemes.includes(storedTheme)) {
+    } else {
         return storedTheme;
     }
     return availableThemes[0];
@@ -60,6 +62,11 @@ export function useToggleTheme(): () => void {
     const setTheme = useSetTheme();
     const theme = useTheme();
     return () => setTheme(theme === "dark" ? "light" : "dark");
+}
+
+export function useSetSystemTheme(): () => void {
+    const setTheme = useSetTheme();
+    return () => setTheme(SYSTEM);
 }
 
 export const THEME_BG_COLOR = atom((get) => {

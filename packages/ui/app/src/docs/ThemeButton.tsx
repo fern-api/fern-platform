@@ -1,10 +1,11 @@
 import { FernButton, FernButtonProps } from "@fern-ui/components";
 import { useMounted } from "@fern-ui/react-commons";
+import * as Popover from "@radix-ui/react-popover";
 import cn from "clsx";
-
-import { memo } from "react";
+import { AppleImac2021 } from "iconoir-react";
+import { memo, useState } from "react";
 import { Moon as MoonIcon, Sun as SunIcon } from "react-feather";
-import { useTheme, useToggleTheme } from "../atoms/theme";
+import { useSetSystemTheme, useTheme, useToggleTheme } from "../atoms/theme";
 
 export declare namespace ThemeButton {
     export interface Props extends FernButtonProps {
@@ -15,20 +16,53 @@ export declare namespace ThemeButton {
 export const ThemeButton = memo(({ className, ...props }: ThemeButton.Props) => {
     const resolvedTheme = useTheme();
     const toggleTheme = useToggleTheme();
+    const setSystemTheme = useSetSystemTheme();
     const mounted = useMounted();
+    const [isOpen, setOpen] = useState(false);
 
     const IconToUse = mounted && resolvedTheme === "dark" ? MoonIcon : SunIcon;
 
     return (
-        <FernButton
-            {...props}
-            className={cn("fern-theme-button", className)}
-            onClick={toggleTheme}
-            rounded={true}
-            variant="minimal"
-            intent="primary"
-            icon={<IconToUse className="fern-theme-button-icon" />}
-        />
+        <Popover.Root
+            open={isOpen}
+            onOpenChange={(open) => {
+                if (!open) {
+                    setOpen(false);
+                }
+            }}
+        >
+            <Popover.Trigger asChild>
+                <FernButton
+                    {...props}
+                    className={cn("fern-theme-button", className)}
+                    onClick={toggleTheme}
+                    onContextMenu={(e) => {
+                        e.preventDefault();
+                        setOpen(true);
+                    }}
+                    rounded={true}
+                    variant="minimal"
+                    intent="primary"
+                    icon={<IconToUse className="fern-theme-button-icon" />}
+                    title="toggle theme"
+                />
+            </Popover.Trigger>
+            <Popover.Portal>
+                <Popover.Content sideOffset={5} side="bottom" align="center">
+                    <FernButton
+                        onClick={() => {
+                            setSystemTheme();
+                            setOpen(false);
+                        }}
+                        variant="outlined"
+                        intent="none"
+                        icon={<AppleImac2021 className="fern-theme-button-icon" />}
+                        text="Auto"
+                        title="set system theme"
+                    />
+                </Popover.Content>
+            </Popover.Portal>
+        </Popover.Root>
     );
 });
 
