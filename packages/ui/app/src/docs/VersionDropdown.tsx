@@ -3,9 +3,8 @@ import { FernButton } from "@fern-ui/components";
 import { getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { useAtomValue } from "jotai";
-import { CURRENT_VERSION_ID_ATOM, VERSIONS_ATOM } from "../atoms/navigation";
+import { CURRENT_VERSION_ID_ATOM, UNVERSIONED_SLUG_ATOM, VERSIONS_ATOM } from "../atoms/navigation";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
-import { useNavigationContext } from "../contexts/navigation-context";
 import { slugToHref } from "../util/slugToHref";
 
 export declare namespace VersionDropdown {
@@ -15,7 +14,7 @@ export declare namespace VersionDropdown {
 export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
     const versions = useAtomValue(VERSIONS_ATOM);
     const currentVersionId = useAtomValue(CURRENT_VERSION_ID_ATOM);
-    const { unversionedSlug } = useNavigationContext();
+    const unversionedSlug = useAtomValue(UNVERSIONED_SLUG_ATOM);
 
     const currentVersion = versions.find(({ id }) => id === currentVersionId);
 

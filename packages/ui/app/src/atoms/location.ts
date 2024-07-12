@@ -1,7 +1,8 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { atom } from "jotai";
+import { atom, useAtomValue } from "jotai";
 import { atomWithLocation } from "jotai-location";
 import { Router } from "next/router";
+import { useMemo } from "react";
 
 export const LOCATION_ATOM = atomWithLocation({
     subscribe: (callback) => {
@@ -32,3 +33,7 @@ export const SLUG_ATOM = atom(
         set(SETTABLE_LOCATION_ATOM, slug);
     },
 );
+
+export function useIsSelectedSlug(slug: FernNavigation.Slug): boolean {
+    return useAtomValue(useMemo(() => atom((get) => get(SLUG_ATOM) === slug), [slug]));
+}

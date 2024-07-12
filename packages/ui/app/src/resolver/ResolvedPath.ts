@@ -4,7 +4,7 @@ import { ResolvedRootPackage } from "./types";
 
 export declare namespace ResolvedPath {
     export interface Neighbor {
-        fullSlug: string;
+        slug: string;
         title: string;
         excerpt: BundledMDX | undefined;
     }
@@ -14,34 +14,29 @@ export declare namespace ResolvedPath {
         next: Neighbor | null;
     }
 
-    interface RedirectPage {
-        type: "redirect";
-        fullSlug: string;
-    }
-
     interface ChangelogPage {
         type: "changelog";
+        title: string;
         pages: Record<FernNavigation.PageId, BundledMDX>;
         node: FernNavigation.ChangelogNode;
         sectionTitleBreadcrumbs: string[];
-        fullSlug: string;
+        slug: FernNavigation.Slug;
         // neighbors: Neighbors;
     }
 
     interface ChangelogEntryPage {
         type: "changelog-entry";
-        changelogTitle: string;
-        changelogSlug: string;
+        title: string;
         pages: Record<FernNavigation.PageId, BundledMDX>;
         node: FernNavigation.ChangelogEntryNode;
         sectionTitleBreadcrumbs: string[];
         neighbors: Neighbors;
-        fullSlug: string;
+        slug: FernNavigation.Slug;
     }
 
     interface CustomMarkdownPage {
         type: "custom-markdown-page";
-        fullSlug: string;
+        slug: FernNavigation.Slug;
         title: string;
         mdx: BundledMDX;
         neighbors: Neighbors;
@@ -51,7 +46,8 @@ export declare namespace ResolvedPath {
 
     interface ApiPage {
         type: "api-page";
-        fullSlug: string;
+        title: string;
+        slug: FernNavigation.Slug;
         api: string;
         apiDefinition: ResolvedRootPackage;
         showErrors: boolean;

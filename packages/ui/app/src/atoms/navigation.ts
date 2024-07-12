@@ -19,6 +19,13 @@ export const CURRENT_VERSION_ATOM = atom((get) => {
     return versions.find((v) => v.id === versionId);
 });
 
+export const UNVERSIONED_SLUG_ATOM = atom<string>((get) => {
+    const slug = get(SLUG_ATOM);
+    const currentVersion = get(CURRENT_VERSION_ATOM);
+    const basePath = get(BASEPATH_ATOM);
+    return FernNavigation.utils.getUnversionedSlug(slug, currentVersion?.slug, basePath);
+});
+
 export const CURRENT_TAB_ATOM = atom((get) => {
     const tabIndex = get(CURRENT_TAB_INDEX_ATOM);
     if (tabIndex == null) {
@@ -34,7 +41,7 @@ export const SIDEBAR_ROOT_NODE_ATOM = atom<FernNavigation.SidebarRootNode | unde
 export const RESOLVED_PATH_ATOM = atomWithReducer<ResolvedPath, ResolvedPath>(
     {
         type: "custom-markdown-page",
-        fullSlug: "",
+        slug: "",
         title: "",
         mdx: "",
         neighbors: { prev: null, next: null },

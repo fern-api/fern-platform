@@ -1,5 +1,5 @@
 import { useFeatureFlags } from "../../atoms/flags";
-import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
+import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookContent } from "./WebhookContent";
@@ -20,7 +20,7 @@ export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastI
     const route = `/${webhook.slug}`;
 
     // TODO: merge this with the Endpoint component
-    if (useShouldHideFromSsg(webhook.slug)) {
+    if (useShouldLazyRender(webhook.slug)) {
         return null;
     }
 

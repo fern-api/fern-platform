@@ -1,9 +1,11 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
+import { useCallbackOne } from "use-memo-one";
+import { useAtomEffect } from "./hooks";
 import { DOCS_LAYOUT_ATOM } from "./layout";
 import { CURRENT_NODE_ATOM, RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
-import { useSetTheme, useTheme } from "./theme";
+import { THEME_ATOM } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
@@ -97,34 +99,32 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
 });
 
 export function useMessageHandler(): void {
-    const openSearchDialog = useOpenSearchDialog();
-    const openMobileSidebar = useOpenMobileSidebar();
-    const resolvedTheme = useTheme();
-    const setTheme = useSetTheme();
-    useEffect(() => {
-        if (typeof window === "undefined") {
-            return;
-        }
-        const handleMessage = (event: MessageEvent) => {
-            if (event.data === "openSearchDialog") {
-                openSearchDialog();
-                event.source?.postMessage("searchDialogOpened", { targetOrigin: event.origin });
-            } else if (event.data === "openMobileSidebar") {
-                openMobileSidebar();
-                event.source?.postMessage("mobileSidebarOpened", { targetOrigin: event.origin });
-            } else if (event.data === "toggleTheme") {
-                setTheme(resolvedTheme === "dark" ? "light" : "dark");
-                event.source?.postMessage("themeToggled", { targetOrigin: event.origin });
-            } else if (event.data === "setSystemTheme") {
-                setTheme("system");
-                event.source?.postMessage("themeSetToSystem", { targetOrigin: event.origin });
+    useAtomEffect(
+        useCallbackOne((get, set) => {
+            if (typeof window === "undefined") {
+                return;
             }
-        };
-        window.addEventListener("message", handleMessage);
-        return () => {
-            window.removeEventListener("message", handleMessage);
-        };
-    }, [openMobileSidebar, openSearchDialog, resolvedTheme, setTheme]);
+            const handleMessage = (event: MessageEvent) => {
+                if (event.data === "openSearchDialog") {
+                    set(SEARCH_DIALOG_OPEN_ATOM, true);
+                    event.source?.postMessage("searchDialogOpened", { targetOrigin: event.origin });
+                } else if (event.data === "openMobileSidebar") {
+                    set(MOBILE_SIDEBAR_OPEN_ATOM, true);
+                    event.source?.postMessage("mobileSidebarOpened", { targetOrigin: event.origin });
+                } else if (event.data === "toggleTheme") {
+                    set(THEME_ATOM, get.peek(THEME_ATOM) === "dark" ? "light" : "dark");
+                    event.source?.postMessage("themeToggled", { targetOrigin: event.origin });
+                } else if (event.data === "setSystemTheme") {
+                    set(THEME_ATOM, "system");
+                    event.source?.postMessage("themeSetToSystem", { targetOrigin: event.origin });
+                }
+            };
+            window.addEventListener("message", handleMessage);
+            return () => {
+                window.removeEventListener("message", handleMessage);
+            };
+        }, []),
+    );
 }
 
 export function useIsSearchDialogOpen(): boolean {

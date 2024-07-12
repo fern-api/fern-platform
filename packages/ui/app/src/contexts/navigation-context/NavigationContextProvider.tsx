@@ -1,16 +1,12 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import { noop } from "@fern-ui/core-utils";
-import { NextSeo } from "@fern-ui/next-seo";
 import { useEventCallback } from "@fern-ui/react-commons";
 import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
 import { debounce } from "lodash-es";
 import { Router, useRouter } from "next/router";
-import { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import { PropsWithChildren, useEffect, useMemo } from "react";
 import { useFeatureFlags } from "../../atoms/flags";
-import { SLUG_ATOM } from "../../atoms/location";
-import { CURRENT_VERSION_ATOM, useNavigationNodes, useResolvedPath } from "../../atoms/navigation";
-import { getNextSeoProps } from "../../next-app/utils/getSeoProp";
+import { CURRENT_NODE_ATOM } from "../../atoms/navigation";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { NavigationContext } from "./NavigationContext";
 
@@ -89,14 +85,10 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
     }
 }
 
-export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({ children, basePath }) => {
-    const activeVersion = useAtomValue(CURRENT_VERSION_ATOM);
-    const nodes = useNavigationNodes();
+export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({ children }) => {
     const { isApiScrollingDisabled } = useFeatureFlags();
-    const slug = useAtomValue(SLUG_ATOM);
     const router = useRouter();
-
-    const [activeNavigatable, setActiveNavigatable] = useState(() => nodes.slugMap.get(slug));
+    const activeNavigatable = useAtomValue(CURRENT_NODE_ATOM);
 
     const [, anchor] = router.asPath.split("#");
     const selectedSlug = activeNavigatable?.slug ?? "";
@@ -141,14 +133,13 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
 
     const onScrollToPath = useEventCallback(
         debounce(
-            (fullSlug: string) => {
-                if (fullSlug === selectedSlug || justNavigatedTo != null || isApiScrollingDisabled) {
+            (slug: string) => {
+                if (slug === selectedSlug || justNavigatedTo != null || isApiScrollingDisabled) {
                     return;
                 }
-                justScrolledTo = `/${fullSlug}`;
-                void router.replace(`/${fullSlug}`, undefined, { shallow: true, scroll: false });
-                setActiveNavigatable(nodes.slugMap.get(fullSlug));
-                startScrollTracking(`/${fullSlug}`, true);
+                justScrolledTo = `/${slug}`;
+                void router.replace(`/${slug}`, undefined, { shallow: true, scroll: false });
+                startScrollTracking(`/${slug}`, true);
             },
             100,
             { trailing: true },
@@ -160,9 +151,6 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
             return;
         }
         justScrolledTo = undefined;
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const fullSlug = route.substring(1).split("#")[0]!;
-        setActiveNavigatable(nodes.slugMap.get(fullSlug));
         startScrollTracking(route);
     });
 
@@ -212,26 +200,8 @@ export const NavigationContextProvider: React.FC<NavigationContextProvider.Props
         });
     }, [router, navigateToPath]);
 
-    const resolvedPath = useResolvedPath();
-    const seo = useMemo(() => getNextSeoProps(resolvedPath, activeNavigatable), [activeNavigatable, resolvedPath]);
-
     return (
-        <NavigationContext.Provider
-            value={useMemo(
-                () => ({
-                    activeNavigatable,
-                    onScrollToPath,
-                    activeVersion,
-                    unversionedSlug: FernNavigation.utils.getUnversionedSlug(
-                        selectedSlug,
-                        activeVersion?.slug,
-                        basePath,
-                    ),
-                }),
-                [activeNavigatable, activeVersion, basePath, onScrollToPath, selectedSlug],
-            )}
-        >
-            <NextSeo {...seo} />
+        <NavigationContext.Provider value={useMemo(() => ({ onScrollToPath }), [onScrollToPath])}>
             {children}
         </NavigationContext.Provider>
     );

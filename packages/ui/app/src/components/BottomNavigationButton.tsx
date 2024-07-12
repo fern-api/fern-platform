@@ -12,7 +12,7 @@ export declare namespace BottomNavigationButton {
 
 export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ neighbor, dir }) => {
     return (
-        <FernLinkCard className="my-12 flex flex-1 items-center rounded-xl p-6" href={`/${neighbor.fullSlug}`}>
+        <FernLinkCard className="my-12 flex flex-1 items-center rounded-xl p-6" href={`/${neighbor.slug}`}>
             {dir === "prev" && (
                 <span className="sm-4 t-muted inline-flex items-center gap-2 py-2.5 text-sm sm:border-default sm:mr-6 sm:border-r sm:pr-6">
                     <ChevronLeftIcon />

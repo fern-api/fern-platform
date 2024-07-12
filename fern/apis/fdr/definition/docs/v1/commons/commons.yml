@@ -41,6 +41,8 @@ types:
       "twitter:site": optional<string>
       "twitter:url": optional<string>
       "twitter:card": optional<TwitterCardSetting>
+      "noindex": optional<boolean>
+      "nofollow": optional<boolean>
 
   RedirectConfig:
     properties:
