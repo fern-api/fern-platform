@@ -8,6 +8,8 @@ import { NextResponse } from "next/server";
 import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { getXFernHostNode } from "../../../utils/xFernHost";
+// eslint-disable-next-line import/no-internal-modules
+import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 
 export const revalidate = 60 * 60 * 24;
 
@@ -30,6 +32,13 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
     path = decodeURIComponent(path);
 
     const xFernHost = getXFernHostNode(req);
+
+    const status = await checkViewerAllowedNode(xFernHost, req);
+    if (status >= 400) {
+        res.status(status).json(null);
+        return;
+    }
+
     const headers = new Headers();
     headers.set("x-fern-host", xFernHost);
 

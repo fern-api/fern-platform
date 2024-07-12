@@ -66,8 +66,20 @@ export interface SearchRequest {
     searchInfo: Algolia.SearchInfo | undefined;
 }
 
-async function getAlgoliaSearchConfig({ searchInfo }: SearchRequest): Promise<SearchConfig.Algolia | undefined> {
-    if (typeof searchInfo !== "object" || searchInfo.type === "legacyMultiAlgoliaIndex") {
+async function getAlgoliaSearchConfig(
+    url: string,
+    searchInfo?: Algolia.SearchInfo,
+): Promise<SearchConfig.Algolia | undefined> {
+    if (searchInfo == null) {
+        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
+        if (!docs.ok) {
+            return undefined;
+        }
+
+        searchInfo = docs.body.definition.search;
+    }
+
+    if (searchInfo.type === "legacyMultiAlgoliaIndex") {
         return undefined;
     }
 
@@ -126,8 +138,11 @@ async function getAlgoliaSearchConfig({ searchInfo }: SearchRequest): Promise<Se
     return undefined;
 }
 
-export async function getSearchConfig(domain: string, searchRequest: SearchRequest): Promise<SearchConfig> {
-    const algolia = await getAlgoliaSearchConfig(searchRequest);
+export async function getSearchConfig(
+    domain: string,
+    searchInfo?: Algolia.SearchInfo | undefined,
+): Promise<SearchConfig> {
+    const algolia = await getAlgoliaSearchConfig(domain, searchInfo);
     if (algolia == null) {
         return { isAvailable: false };
     }

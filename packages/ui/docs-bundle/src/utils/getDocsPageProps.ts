@@ -1,7 +1,9 @@
+/* eslint-disable import/no-internal-modules */
 import { FdrClient, FernNavigation, type DocsV2Read } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
+import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
     DocsPageResult,
@@ -12,9 +14,7 @@ import {
     getGitHubRepo,
     setMdxBundler,
 } from "@fern-ui/ui";
-// eslint-disable-next-line import/no-internal-modules
 import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
-// eslint-disable-next-line import/no-internal-modules
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import type { Redirect } from "next";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
@@ -125,11 +125,7 @@ export async function getDynamicDocsPageProps(
         let user: FernUser | undefined = undefined;
 
         if (config?.type === "basic_token_verification") {
-            user = await verifyFernJWT(
-                cookies.fern_token,
-                new Uint8Array(Buffer.from(config.secret, "base64")),
-                config.issuer,
-            );
+            user = await verifyFernJWT(cookies.fern_token, config.secret, config.issuer);
         } else {
             user = await verifyFernJWT(cookies.fern_token);
         }
@@ -365,6 +361,11 @@ async function convertDocsToDocsPageProps({
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
     };
 
+    props.fallback[urljoin(docs.baseUrl.basePath ?? "", "/api/fern-docs/search")] = await getSearchConfig(
+        xFernHost,
+        docs.definition.search,
+    );
+
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
     const githubNavbarLink = docsConfig.navbarLinks?.find((link) => link.type === "github");
     if (githubNavbarLink) {
@@ -378,8 +379,7 @@ async function convertDocsToDocsPageProps({
     }
 
     const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, cookies);
-
-    props.fallback[urljoin(docs.baseUrl.basePath ?? "/", "/api/fern-docs/auth/api-key-injection")] =
+    props.fallback[urljoin(docs.baseUrl.basePath ?? "", "/api/fern-docs/auth/api-key-injection")] =
         apiKeyInjectionConfig;
 
     return {
