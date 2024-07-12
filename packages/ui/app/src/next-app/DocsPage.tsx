@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { CustomerAnalytics } from "../analytics/types";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
-import { API_KEY_ATOM, FERN_USER_ATOM } from "../atoms/auth";
+import { FERN_USER_ATOM } from "../atoms/auth";
 import { FEATURE_FLAGS_ATOM, FeatureFlags } from "../atoms/flags";
 import { DOCS_LAYOUT_ATOM } from "../atoms/layout";
 import { SLUG_ATOM } from "../atoms/location";
@@ -78,7 +78,6 @@ export declare namespace DocsPage {
         theme: FernTheme;
 
         user: FernUser | undefined;
-        apiKey: string | undefined;
     }
 }
 
@@ -106,7 +105,6 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
 
             // auth
             [FERN_USER_ATOM, pageProps.user],
-            [API_KEY_ATOM, pageProps.apiKey],
         ],
         { dangerouslyForceHydrate: true },
     );

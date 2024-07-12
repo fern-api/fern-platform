@@ -1,4 +1,11 @@
 export * from "./FernJWT";
+export { OAuth2Client } from "./OAuth2Client";
+export {
+    getAPIKeyInjectionConfig,
+    getAPIKeyInjectionConfigNode,
+    type APIKeyInjectionConfig,
+} from "./getApiKeyInjectionConfig";
 export { getAuthEdgeConfig } from "./getAuthEdgeConfig";
-export { getOAuthToken } from "./getOAuthToken";
 export * from "./types";
+export { decodeAccessToken } from "./verifyAccessToken";
+export { withSecureCookie } from "./withSecure";

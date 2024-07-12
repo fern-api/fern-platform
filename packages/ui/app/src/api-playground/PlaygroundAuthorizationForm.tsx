@@ -7,8 +7,8 @@ import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Key } from "react-feather";
-import { useApiKey } from "../atoms/auth";
-import { useApiKeyInjectionEnabled } from "../services/useApiKeyInjectionEnabled";
+import { Callout } from "../mdx/components/Callout";
+import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundRequestFormAuth } from "./types";
@@ -263,25 +263,28 @@ export function PlaygroundAuthorizationFormCard({
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const isOpen = useBooleanState(false);
-    const apiKeyInjectionUrl = useApiKeyInjectionEnabled();
+    const apiKeyInjection = useApiKeyInjectionConfig();
     const router = useRouter();
-    const apiKey = useApiKey();
+    const apiKey = apiKeyInjection.enabled && apiKeyInjection.authenticated ? apiKeyInjection.access_token : null;
     const [loginError, setLoginError] = useState<string | null>(null);
 
     const redirectOrOpenAuthForm = () => {
-        if (apiKeyInjectionUrl != null) {
+        if (apiKeyInjection.enabled && !apiKeyInjection.authenticated) {
             // const redirect_uri = encodeURIComponent(
             //     urlJoin(window.location.origin, basePath ?? "", "/api/fern-docs/auth/login"),
             // );
-            const url = new URL(apiKeyInjectionUrl);
-            url.searchParams.set("state", encodeURIComponent(window.location.href));
+            const url = new URL(apiKeyInjection.url);
+            const state = new URL(window.location.href);
+            if (state.searchParams.has("loginError")) {
+                state.searchParams.delete("loginError");
+            }
+            url.searchParams.set("state", encodeURIComponent(state.toString()));
             window.location.replace(url);
         } else {
             isOpen.toggleValue();
         }
     };
-    const hasApiInjectionConfig = apiKeyInjectionUrl !== undefined;
-    const authButtonCopy = hasApiInjectionConfig
+    const authButtonCopy = apiKeyInjection.enabled
         ? "Login to send a real request"
         : "Authenticate with your API key to send a real request";
 
@@ -297,26 +300,21 @@ export function PlaygroundAuthorizationFormCard({
     }, [router.query, router.isReady]);
 
     // TODO change this login
-    if (apiKey && authState && authState.type === "bearerAuth") {
-        if (authState.token === "") {
-            setAuthorization({ type: "bearerAuth", token: apiKey });
+    useEffect(() => {
+        if (apiKey && authState && authState.type === "bearerAuth") {
+            if (authState.token === "") {
+                setAuthorization({ type: "bearerAuth", token: apiKey });
+            }
         }
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [apiKey]);
+
     return (
         <div>
-            {hasApiInjectionConfig && !apiKey && (
+            {apiKeyInjection.enabled && !apiKey && (
                 <>
                     <FernCard className="rounded-xl p-4 shadow-sm mb-2">
-                        {loginError && (
-                            <FernButton
-                                className="w-full text-left pointer-events-none mb-2"
-                                size="large"
-                                intent="danger"
-                                variant="outlined"
-                                text={loginError}
-                                active={true}
-                            />
-                        )}
+                        {loginError && <Callout intent="error">{loginError}</Callout>}
 
                         <h5 className="t-muted m-0">Login to send a real request</h5>
                         <div className="flex justify-center my-5 gap-2">
@@ -340,7 +338,7 @@ export function PlaygroundAuthorizationFormCard({
                 </>
             )}
 
-            {hasApiInjectionConfig && apiKey && (
+            {apiKeyInjection.enabled && apiKey && (
                 <>
                     <FernCard className="rounded-xl p-4 shadow-sm mb-3" title="Login to send a real request">
                         <FernButton
@@ -378,7 +376,7 @@ export function PlaygroundAuthorizationFormCard({
                 </>
             )}
 
-            {!hasApiInjectionConfig && (isAuthed(auth, authState) || apiKey) && (
+            {!apiKeyInjection.enabled && (isAuthed(auth, authState) || apiKey) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"
@@ -395,7 +393,7 @@ export function PlaygroundAuthorizationFormCard({
                     active={isOpen.value}
                 />
             )}
-            {!hasApiInjectionConfig && !(isAuthed(auth, authState) || apiKey) && (
+            {!apiKeyInjection.enabled && !(isAuthed(auth, authState) || apiKey) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"

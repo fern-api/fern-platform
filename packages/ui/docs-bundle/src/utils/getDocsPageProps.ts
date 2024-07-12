@@ -13,7 +13,7 @@ import {
     setMdxBundler,
 } from "@fern-ui/ui";
 // eslint-disable-next-line import/no-internal-modules
-import { FernUser, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
+import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
 // eslint-disable-next-line import/no-internal-modules
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import type { Redirect } from "next";
@@ -178,8 +178,7 @@ export async function getDynamicDocsPageProps(
                 url,
                 xFernHost,
                 user,
-                apiKey:
-                    config.type === "oauth2" && config["api-key-injection-enabled"] ? cookies.access_token : undefined,
+                cookies,
             });
         }
     } catch (error) {
@@ -204,14 +203,14 @@ async function convertDocsToDocsPageProps({
     url,
     xFernHost,
     user,
-    apiKey,
+    cookies,
 }: {
     docs: DocsV2Read.LoadDocsForUrlResponse;
     slug: string[];
     url: string;
     xFernHost: string;
     user?: FernUser;
-    apiKey?: string;
+    cookies?: NextApiRequestCookies;
 }): Promise<DocsPageResult<DocsPage.Props>> {
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
@@ -361,7 +360,6 @@ async function convertDocsToDocsPageProps({
         ),
         breadcrumb: getBreadcrumbList(docs.baseUrl.domain, docs.definition.pages, node.parents, node.node),
         user,
-        apiKey,
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
@@ -378,6 +376,11 @@ async function convertDocsToDocsPageProps({
             }
         }
     }
+
+    const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, cookies);
+
+    props.fallback[urljoin(docs.baseUrl.basePath ?? "/", "/api/fern-docs/auth/api-key-injection")] =
+        apiKeyInjectionConfig;
 
     return {
         type: "props",

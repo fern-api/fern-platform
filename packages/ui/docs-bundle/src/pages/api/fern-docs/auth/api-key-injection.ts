@@ -1,27 +1,26 @@
 // eslint-disable-next-line import/no-internal-modules
-import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
+import { APIKeyInjectionConfig, getAPIKeyInjectionConfig, withSecureCookie } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
-import urlJoin from "url-join";
 import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
 
-export default async function handler(req: NextRequest): Promise<NextResponse<string | false>> {
+export default async function handler(req: NextRequest): Promise<NextResponse<APIKeyInjectionConfig>> {
     const domain = getXFernHostEdge(req);
-    const config = await getAuthEdgeConfig(domain);
+    const fern_token = req.cookies.get("fern_token")?.value;
 
-    if (config == null || config.type !== "oauth2") {
-        return NextResponse.json(false);
+    const config = await getAPIKeyInjectionConfig(domain, req.cookies);
+    const response = NextResponse.json(config);
+
+    if (config.enabled && config.authenticated) {
+        const expires = config.exp != null ? new Date(config.exp * 1000) : undefined;
+        if (fern_token != null) {
+            response.cookies.set("fern_token", fern_token, withSecureCookie({ expires }));
+        }
+        response.cookies.set("access_token", config.access_token, withSecureCookie({ expires }));
+        if (config.refresh_token != null) {
+            response.cookies.set("refresh_token", config.refresh_token, withSecureCookie({ expires }));
+        }
     }
-
-    // ory is the only partner enabled for api-key-injection (with RightBrain)
-    if (config?.["api-key-injection-enabled"] && config.partner === "ory") {
-        const url = new URL(urlJoin(config.environment, "/auth"));
-        url.searchParams.set("response_type", "code");
-        url.searchParams.set("client_id", config.clientId);
-        url.searchParams.set("scope", "offline_access");
-        return NextResponse.json(url.toString());
-    }
-
-    return NextResponse.json(false);
+    return response;
 }
