@@ -164,7 +164,7 @@ const nextConfig = {
         const WITH_MATCHED_HOST = [HAS_FERN_DOCS_PREVIEW, HAS_X_FERN_HOST, HAS_HOST];
 
         const HAS_FERN_TOKEN = { type: "cookie", key: "fern_token" };
-        const THREW_ERROR = { type: "query", key: "error", value: "true" };
+        const LAZY_ENABLED = { type: "query", key: "lazy", value: "true" };
         return {
             beforeFiles: [
                 /**
@@ -214,7 +214,7 @@ const nextConfig = {
             fallback: [
                 /**
                  * The following rewrite rules are used to determine if the path should be rewritten to /static or /dynamic
-                 * On the presence of fern_token, or if the query contains error=true, the path will be rewritten to /dynamic
+                 * On the presence of fern_token, or if the query contains lazy=true, the path will be rewritten to /dynamic
                  */
                 ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
                     has: [HOST_RULE, HAS_FERN_TOKEN],
@@ -222,7 +222,7 @@ const nextConfig = {
                     destination: "/dynamic/:host/:path*",
                 })),
                 ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, THREW_ERROR],
+                    has: [HOST_RULE, LAZY_ENABLED],
                     source: "/:path*",
                     destination: "/dynamic/:host/:path*",
                 })),
@@ -237,7 +237,7 @@ const nextConfig = {
                     destination: "/dynamic/:host/",
                 })),
                 ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, THREW_ERROR],
+                    has: [HOST_RULE, LAZY_ENABLED],
                     source: "/",
                     destination: "/dynamic/:host/",
                 })),

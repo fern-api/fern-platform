@@ -29,7 +29,7 @@ function DocsMainContentInternal(): ReactElement | null {
     const hydrated = useIsReady();
 
     const router = useRouter();
-    if (router.query.error === "true") {
+    if (router.query.lazy === "true") {
         if (!hydrated) {
             return null;
         }

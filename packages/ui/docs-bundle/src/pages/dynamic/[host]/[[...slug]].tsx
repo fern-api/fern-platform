@@ -6,10 +6,6 @@ import { getDocsPageProps, getDynamicDocsPageProps } from "../../../utils/getDoc
 export default DocsPage;
 
 export const getServerSideProps: GetServerSideProps = (context) => {
-    if (context.query.error === "true") {
-        context.res.statusCode = 500;
-    }
-
     return getDocsServerSideProps(context);
 };
 
