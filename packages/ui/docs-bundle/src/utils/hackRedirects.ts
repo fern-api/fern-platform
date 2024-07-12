@@ -34,12 +34,17 @@ export function getRedirectForPath(
         if (redirect.source === path) {
             return redirect;
         }
-        const sourceFn = match(redirect.source, { decode: false });
-        const result = sourceFn(path);
-        if (result) {
-            const destFn = compile(redirect.destination, { encode: false });
-            const destination = destFn(result.params);
-            return { source: path, destination };
+        try {
+            const sourceFn = match(redirect.source, { decode: false });
+            const result = sourceFn(path);
+            if (result) {
+                const destFn = compile(redirect.destination, { encode: false });
+                const destination = destFn(result.params);
+                return { source: path, destination };
+            }
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
         }
     }
     return undefined;
