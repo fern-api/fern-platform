@@ -132,6 +132,10 @@
         @apply xl:pl-sidebar-width;
     }
 
+    .fern-sidebar-fixed + .fern-main {
+        @apply lg:pl-sidebar-width;
+    }
+
     .fern-guide-layout,
     .fern-overview-layout,
     .fern-page-layout,
