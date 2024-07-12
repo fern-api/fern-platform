@@ -14,11 +14,15 @@
 
         &::before {
             @apply absolute size-[24px];
-            @apply bg-card t-muted ring-1 ring-concealed backdrop-blur hover:ring-card-border;
+            @apply bg-card t-muted ring-1 ring-default backdrop-blur hover:ring-card-border;
             @apply rounded-md text-base font-normal text-center -indent-px;
             @apply ml-[-40px];
 
             content: counter(step);
+        }
+
+        .fern-anchor > a {
+            @apply -ml-10;
         }
     }
 }
