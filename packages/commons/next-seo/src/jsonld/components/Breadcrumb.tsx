@@ -1,8 +1,8 @@
 import Head from "next/head";
-import { ReactElement } from "react";
+import { ReactElement, memo } from "react";
 import { BreadcrumbListSchema } from "../types/breadcrumbs";
 
-export function Breadcrumb({ breadcrumbList }: { breadcrumbList: BreadcrumbListSchema }): ReactElement {
+export const Breadcrumb = memo(({ breadcrumbList }: { breadcrumbList: BreadcrumbListSchema }): ReactElement => {
     return (
         <Head>
             <script
@@ -14,4 +14,6 @@ export function Breadcrumb({ breadcrumbList }: { breadcrumbList: BreadcrumbListS
             />
         </Head>
     );
-}
+});
+
+Breadcrumb.displayName = "JsonLdBreadcrumb";
