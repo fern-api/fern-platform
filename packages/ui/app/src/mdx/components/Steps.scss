@@ -20,5 +20,9 @@
 
             content: counter(step);
         }
+
+        .fern-anchor > a {
+            @apply -ml-10;
+        }
     }
 }
