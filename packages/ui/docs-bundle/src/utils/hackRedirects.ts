@@ -1,7 +1,7 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import * as Sentry from "@sentry/nextjs";
 import { compile, match } from "path-to-regexp";
 import urljoin from "url-join";
-import { captureSentryError } from "../../../app/src/analytics/sentry";
 
 const HUME_REDIRECTS: DocsV1Read.RedirectConfig[] = [
     {
@@ -44,11 +44,14 @@ export function getRedirectForPath(
                 return { source: path, destination };
             }
         } catch (e) {
-            captureSentryError(e, {
-                context: "DocsBundle.utils",
-                errorSource: "getRedirectForPath",
-                errorDescription: "Failed to match redirect path",
-                data: { baseUrl, path, redirect },
+            Sentry.captureException(e, {
+                level: "warning",
+                extra: {
+                    context: "DocsBundle.utils",
+                    errorSource: "getRedirectForPath",
+                    errorDescription: "Failed to match redirect path",
+                    data: { baseUrl, path, redirect },
+                },
             });
         }
     }
