@@ -81,7 +81,7 @@ export class OAuth2Client {
             url.searchParams.set("state", state);
         }
         if (this.scope != null) {
-            url.searchParams.set("scope", encodeURIComponent(this.scope).replaceAll(/%20/g, "+"));
+            url.searchParams.set("scope", this.scope);
         }
         return url.toString();
     }
