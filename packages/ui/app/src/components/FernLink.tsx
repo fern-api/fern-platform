@@ -23,7 +23,9 @@ export const FernLink = forwardRef<HTMLAnchorElement, FernLinkProps>(
         }
 
         if (isExternalUrl) {
-            return <FernExternalLink ref={ref} {...props} showExternalLinkIcon={showExternalLinkIcon} url={url} />;
+            // strip out the next.js specific props
+            const { href, replace, scroll, shallow, passHref, prefetch, locale, legacyBehavior, ...rest } = props;
+            return <FernExternalLink ref={ref} {...rest} showExternalLinkIcon={showExternalLinkIcon} url={url} />;
         }
 
         return <Link ref={ref} {...props} />;

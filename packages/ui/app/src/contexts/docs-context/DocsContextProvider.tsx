@@ -27,6 +27,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const apis = useDeepCompareMemoize(pageProps.apis);
     const analytics = useDeepCompareMemoize(pageProps.analytics);
     const themeBackgroundColor = useAtomValue(THEME_BG_COLOR);
+    const breadcrumbList = useDeepCompareMemoize(pageProps.breadcrumb);
 
     const { logoHeight, logoHref } = pageProps;
     const { domain, basePath } = pageProps.baseUrl;
@@ -120,8 +121,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
             <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(domain) }} />
             <CustomerAnalytics {...analytics} />
-            {pageProps.breadcrumb != null && pageProps.breadcrumb.itemListElement.length > 0 && (
-                <JsonLd.Breadcrumb breadcrumbList={pageProps.breadcrumb} />
+            {breadcrumbList != null && breadcrumbList.itemListElement.length > 0 && (
+                <JsonLd.Breadcrumb breadcrumbList={breadcrumbList} />
             )}
         </DocsContext.Provider>
     );
