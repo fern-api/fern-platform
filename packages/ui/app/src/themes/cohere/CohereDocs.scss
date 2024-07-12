@@ -146,7 +146,7 @@
 
     .fern-layout-content,
     .fern-page-layout {
-        @apply pt-8 px-10 w-full pb-20 shrink min-w-0;
+        @apply pt-8 px-4 sm:px-6 lg:px-10 w-full pb-20 shrink min-w-0;
     }
 
     .fern-sidebar-hidden:has(.fern-layout-toc) {
