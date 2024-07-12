@@ -2,9 +2,8 @@ import { FernButton, FernButtonProps } from "@fern-ui/components";
 import { useMounted } from "@fern-ui/react-commons";
 import * as Popover from "@radix-ui/react-popover";
 import cn from "clsx";
-import { AppleImac2021 } from "iconoir-react";
 import { memo, useState } from "react";
-import { Moon as MoonIcon, Sun as SunIcon } from "react-feather";
+import { Monitor, Moon as MoonIcon, Sun as SunIcon } from "react-feather";
 import { useSetSystemTheme, useTheme, useToggleTheme } from "../atoms/theme";
 
 export declare namespace ThemeButton {
@@ -56,7 +55,7 @@ export const ThemeButton = memo(({ className, ...props }: ThemeButton.Props) => 
                         }}
                         variant="outlined"
                         intent="none"
-                        icon={<AppleImac2021 className="fern-theme-button-icon" />}
+                        icon={<Monitor className="fern-theme-button-icon" />}
                         text="Auto"
                         title="set system theme"
                     />
