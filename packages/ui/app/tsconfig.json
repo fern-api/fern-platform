@@ -5,9 +5,8 @@
     "noEmit": false,
     "outDir": "./dist",
     "rootDir": ".",
-    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["./src/**/*"],

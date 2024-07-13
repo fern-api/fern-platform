@@ -1,7 +1,7 @@
+import { darkGrayColors, generateRadixColors, getClosestGrayScale, lightGrayColors } from "@/util/generateRadixColors";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import tinycolor from "tinycolor2";
-import { darkGrayColors, generateRadixColors, getClosestGrayScale, lightGrayColors } from "../util/generateRadixColors";
 
 interface ColorConfig {
     dark: DocsV1Read.RgbaColor;
