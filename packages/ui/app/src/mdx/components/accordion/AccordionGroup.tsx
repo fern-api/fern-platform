@@ -48,29 +48,21 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
     return (
         <RadixAccordion.Root
             type="multiple"
-            className="fern-card divide-default mb-6 mt-4 divide-y rounded-lg first:mt-0"
+            className="fern-accordion"
             value={activeTabs}
             onValueChange={handleValueChange}
         >
             {items.map(({ title, toc = parentToc, children }, idx) => {
                 const id = slug(title);
                 return (
-                    <RadixAccordion.Item
-                        key={idx}
-                        value={idx.toString()}
-                        className="scroll-mt-content-padded first:rounded-t-[inherit] last:rounded-b-[inherit]"
-                        id={id}
-                    >
-                        <RadixAccordion.Trigger className="group flex w-full items-center gap-3 rounded-[inherit] p-4 transition-colors hover:bg-tag-default data-[state=open]:rounded-b-none cursor-pointer">
-                            <ChevronRightIcon className="duration-400 t-muted size-4 transition-transform ease-shift group-data-[state=open]:rotate-90" />
-                            <h6
-                                className="t-default m-0 -mb-px flex max-w-max text-base leading-6 text-left"
-                                data-anchor={toc ? id : undefined}
-                            >
+                    <RadixAccordion.Item key={idx} value={idx.toString()} className="fern-accordion-item" id={id}>
+                        <RadixAccordion.Trigger className="fern-accrdion-trigger">
+                            <ChevronRightIcon className="fern-accordion-trigger-arrow" />
+                            <h6 className="fern-accordion-trigger-title" data-anchor={toc ? id : undefined}>
                                 {title}
                             </h6>
                         </RadixAccordion.Trigger>
-                        <RadixAccordion.Content className="overflow-hidden data-[state=closed]:animate-slide-up data-[state=open]:animate-slide-down">
+                        <RadixAccordion.Content className="fern-accordion-content">
                             <div className="m-5">{children}</div>
                         </RadixAccordion.Content>
                     </RadixAccordion.Item>

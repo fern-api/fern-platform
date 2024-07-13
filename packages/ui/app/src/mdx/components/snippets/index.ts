@@ -1,1 +1,2 @@
-export * from "./RequestSnippet";
+export * from "./EndpointRequestSnippet";
+export * from "./EndpointResponseSnippet";
