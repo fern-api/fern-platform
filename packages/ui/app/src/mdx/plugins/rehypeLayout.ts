@@ -103,7 +103,11 @@ export function mergeMatter(
         ...matter,
         title: matter.title ?? defaults.title,
         subtitle: matter.subtitle ?? matter.excerpt ?? defaults.subtitle,
-        "edit-this-page-url": matter["edit-this-page-url"] ?? matter.editThisPageUrl ?? defaults.editThisPageUrl,
+        "edit-this-page-url":
+            matter["edit-this-page-url"] ??
+            matter.editThisPageUrl ??
+            defaults["edit-this-page-url"] ??
+            defaults.editThisPageUrl,
         layout: defaults.layout ?? matter.layout ?? "guide",
         "hide-nav-links": defaults["hide-nav-links"] ?? matter["hide-nav-links"],
         breadcrumbs: matter.breadcrumbs ?? defaults.breadcrumbs,
