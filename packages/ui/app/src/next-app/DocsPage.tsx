@@ -1,3 +1,14 @@
+import {
+    COLORS_ATOM,
+    DOCS_LAYOUT_ATOM,
+    FEATURE_FLAGS_ATOM,
+    FERN_USER_ATOM,
+    FeatureFlags,
+    LOGO_TEXT_ATOM,
+    SETTABLE_NEXT_SEO_ATOM,
+    SLUG_ATOM,
+    useMessageHandler,
+} from "@/atoms";
 import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { type NextSeoProps } from "@fern-ui/next-seo";
@@ -8,11 +19,6 @@ import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { CustomerAnalytics } from "../analytics/types";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
-import { FERN_USER_ATOM } from "../atoms/auth";
-import { FEATURE_FLAGS_ATOM, FeatureFlags } from "../atoms/flags";
-import { DOCS_LAYOUT_ATOM } from "../atoms/layout";
-import { SLUG_ATOM } from "../atoms/location";
-import { LOGO_TEXT_ATOM } from "../atoms/logo";
 import {
     BASEPATH_ATOM,
     CURRENT_TAB_INDEX_ATOM,
@@ -23,9 +29,6 @@ import {
     TABS_ATOM,
     VERSIONS_ATOM,
 } from "../atoms/navigation";
-import { SETTABLE_NEXT_SEO_ATOM } from "../atoms/seo";
-import { useMessageHandler } from "../atoms/sidebar";
-import { COLORS_ATOM } from "../atoms/theme";
 import { FernUser } from "../auth";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";

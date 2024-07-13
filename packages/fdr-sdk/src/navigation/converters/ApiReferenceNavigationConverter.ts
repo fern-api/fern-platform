@@ -1,6 +1,7 @@
+import { noop } from "ts-essentials";
 import urljoin from "url-join";
 import { APIV1Read, DocsV1Read } from "../../client";
-import { noop, titleCase, visitDiscriminatedUnion } from "../../utils";
+import { titleCase, visitDiscriminatedUnion } from "../../utils";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { FernNavigation } from "../generated";
 import { followRedirects } from "../utils";

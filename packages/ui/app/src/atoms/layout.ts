@@ -1,5 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { atom } from "jotai/vanilla";
+import { atom } from "jotai";
 import { TABS_ATOM } from "./navigation";
 import { MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "./viewport";
 

@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { noop } from "@fern-ui/core-utils";
+import { IS_LOCAL_PREVIEW_ATOM, useBasePath } from "@/atoms";
 import type { SearchConfig } from "@fern-ui/search-utils";
 import { useAtomValue } from "jotai";
 import { useCallback } from "react";
 import useSWR, { mutate } from "swr";
+import { noop } from "ts-essentials";
 import urljoin from "url-join";
-import { useBasePath } from "../atoms/navigation";
-import { IS_LOCAL_PREVIEW_ATOM } from "../atoms/preview";
 
 export type SearchCredentials = {
     appId: string;

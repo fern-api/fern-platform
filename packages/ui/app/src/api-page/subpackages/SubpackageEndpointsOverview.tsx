@@ -1,5 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { noop } from "lodash-es";
+import { noop } from "ts-essentials";
 import { EndpointDescriptor } from "./EndpointDescriptor";
 
 export declare namespace SubpackageEndpointsOverview {

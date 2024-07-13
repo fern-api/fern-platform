@@ -1,5 +1,5 @@
+import { useCurrentNodeId } from "@/atoms";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { useCurrentNodeId } from "../../atoms/navigation";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 

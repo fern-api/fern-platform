@@ -1,6 +1,5 @@
+import { useDomain, useFeatureFlags } from "@/atoms";
 import { FC, useMemo } from "react";
-import { useFeatureFlags } from "../atoms/flags";
-import { useDomain } from "../atoms/navigation";
 import { ResolvedEndpointDefinition } from "../resolver/types";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundEndpointRequestFormState } from "./types";

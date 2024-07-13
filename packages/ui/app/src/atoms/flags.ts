@@ -1,5 +1,4 @@
-import { useAtomValue } from "jotai";
-import { atom } from "jotai/vanilla";
+import { atom, useAtomValue } from "jotai";
 
 export interface FeatureFlags {
     isApiPlaygroundEnabled: boolean;

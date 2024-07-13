@@ -1,11 +1,10 @@
+import { DOCS_LAYOUT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "@/atoms";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement } from "react";
-import { DOCS_LAYOUT_ATOM } from "../atoms/layout";
-import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../atoms/viewport";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 

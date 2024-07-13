@@ -1,9 +1,7 @@
+import { LOGO_TEXT_ATOM, VERSIONS_ATOM, useColors } from "@/atoms";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
-import { LOGO_TEXT_ATOM } from "../atoms/logo";
-import { VERSIONS_ATOM } from "../atoms/navigation";
-import { useColors } from "../atoms/theme";
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { DEFAULT_LOGO_HEIGHT } from "../config";

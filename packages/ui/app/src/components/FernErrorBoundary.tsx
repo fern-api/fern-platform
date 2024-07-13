@@ -1,3 +1,4 @@
+import { IS_LOCAL_PREVIEW_ATOM } from "@/atoms";
 import { FernButton } from "@fern-ui/components";
 import { ExclamationTriangleIcon, ReloadIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
@@ -7,7 +8,6 @@ import { Router, useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
-import { IS_LOCAL_PREVIEW_ATOM } from "../atoms/preview";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred

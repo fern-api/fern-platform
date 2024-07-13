@@ -1,7 +1,7 @@
+import { useColors } from "@/atoms";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
-import { useColors } from "../../atoms/theme";
 import { DEFAULT_COLORS } from "../../next-app/utils/getColorVariables";
 import useInkeepSettings from "./useInkeepSettings";
 

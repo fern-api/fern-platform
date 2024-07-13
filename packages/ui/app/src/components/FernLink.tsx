@@ -1,10 +1,9 @@
+import { SLUG_ATOM, useDomain } from "@/atoms";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement, forwardRef, useEffect, useState, type ComponentProps } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
-import { SLUG_ATOM } from "../atoms/location";
-import { useDomain } from "../atoms/navigation";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;

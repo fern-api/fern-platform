@@ -1,5 +1,5 @@
-import { noop, visitDiscriminatedUnion } from "../../utils";
-
+import { noop } from "ts-essentials";
+import { visitDiscriminatedUnion } from "../../utils";
 import { NavigationNode } from "../types/NavigationNode";
 
 const SKIP = "skip" as const;

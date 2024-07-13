@@ -1,7 +1,7 @@
+import { useDomain } from "@/atoms";
 import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement, memo, useCallback } from "react";
-import { useDomain } from "../../atoms/navigation";
 import {
     ResolvedObjectProperty,
     ResolvedTypeDefinition,

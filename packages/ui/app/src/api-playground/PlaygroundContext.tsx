@@ -1,16 +1,15 @@
+import { APIS, FLATTENED_APIS_ATOM, useBasePath } from "@/atoms";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import * as Sentry from "@sentry/nextjs";
 import { useAtom, useAtomValue } from "jotai";
-import { noop } from "lodash-es";
 import dynamic from "next/dynamic";
 import { FC, PropsWithChildren, createContext, useCallback, useContext } from "react";
 import useSWR from "swr";
+import { noop } from "ts-essentials";
 import urljoin from "url-join";
 import { useCallbackOne as useStableCallback } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useAtomEffect } from "../atoms";
-import { APIS, FLATTENED_APIS_ATOM } from "../atoms/apis";
-import { useBasePath } from "../atoms/navigation";
 import {
     HAS_PLAYGROUND_ATOM,
     PLAYGROUND_FORM_STATE_ATOM,

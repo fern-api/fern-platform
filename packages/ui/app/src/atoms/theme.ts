@@ -1,8 +1,8 @@
-import { noop } from "@fern-ui/core-utils";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { atomWithRefresh } from "jotai/utils";
 import { createElement, memo } from "react";
+import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
 import { z } from "zod";
 import { getThemeColor } from "../next-app/utils/getColorVariables";

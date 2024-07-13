@@ -1,5 +1,6 @@
-import { noop, visitDiscriminatedUnion } from "../../utils";
+import { visitDiscriminatedUnion } from "../../utils";
 
+import { noop } from "ts-essentials";
 import urljoin from "url-join";
 import { NodeCollector } from "../NodeCollector";
 import { FernNavigation } from "../generated";

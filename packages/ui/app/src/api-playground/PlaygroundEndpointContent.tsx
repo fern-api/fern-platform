@@ -1,3 +1,4 @@
+import { IS_MOBILE_SCREEN_ATOM, useDomain, useFeatureFlags } from "@/atoms";
 import {
     CopyToClipboardButton,
     FernAudioPlayer,
@@ -15,9 +16,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import { useFeatureFlags } from "../atoms/flags";
-import { useDomain } from "../atoms/navigation";
-import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";

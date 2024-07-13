@@ -1,6 +1,5 @@
 import fastdom from "fastdom";
-import { useAtomValue } from "jotai/react";
-import { atom } from "jotai/vanilla";
+import { atom, useAtomValue } from "jotai";
 import { useMemo } from "react";
 import { noop } from "ts-essentials";
 

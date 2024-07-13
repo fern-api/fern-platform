@@ -1,6 +1,6 @@
+import { useCurrentNodeId } from "@/atoms";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
-import { useCurrentNodeId } from "../../atoms/navigation";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";

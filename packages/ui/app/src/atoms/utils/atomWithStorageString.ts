@@ -1,5 +1,5 @@
-import { noop } from "@fern-ui/core-utils";
 import { atomWithStorage } from "jotai/utils";
+import { noop } from "ts-essentials";
 import { z } from "zod";
 
 export function atomWithStorageString<VALUE extends string>(

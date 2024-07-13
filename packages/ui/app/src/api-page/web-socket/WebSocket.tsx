@@ -1,3 +1,4 @@
+import { useFeatureFlags, useNavigationNodes } from "@/atoms";
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
@@ -5,8 +6,6 @@ import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { useFeatureFlags } from "../../atoms/flags";
-import { useNavigationNodes } from "../../atoms/navigation";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import {

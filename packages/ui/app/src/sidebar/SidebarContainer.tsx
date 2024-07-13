@@ -1,11 +1,16 @@
+import {
+    CURRENT_TAB_INDEX_ATOM,
+    DOCS_LAYOUT_ATOM,
+    MOBILE_SIDEBAR_ENABLED_ATOM,
+    SIDEBAR_SCROLL_CONTAINER_ATOM,
+    TABS_ATOM,
+    useIsMobileSidebarOpen,
+    useSidebarNodes,
+} from "@/atoms";
 import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
 import clsx from "clsx";
 import { useAtom, useAtomValue } from "jotai";
 import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
-import { DOCS_LAYOUT_ATOM } from "../atoms/layout";
-import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM, useSidebarNodes } from "../atoms/navigation";
-import { SIDEBAR_SCROLL_CONTAINER_ATOM, useIsMobileSidebarOpen } from "../atoms/sidebar";
-import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../atoms/viewport";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";

@@ -1,8 +1,7 @@
+import { useDomain, useFeatureFlags } from "@/atoms";
 import { FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { useFeatureFlags } from "../atoms/flags";
-import { useDomain } from "../atoms/navigation";
 import { FernLink } from "../components/FernLink";
 import { FernLogo } from "./FernLogo";
 

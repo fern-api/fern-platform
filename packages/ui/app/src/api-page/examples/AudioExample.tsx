@@ -1,6 +1,6 @@
+import { useDomain } from "@/atoms";
 import { FernAudioPlayer } from "@fern-ui/components";
 import { FC } from "react";
-import { useDomain } from "../../atoms/navigation";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { TitledExample } from "./TitledExample";
 

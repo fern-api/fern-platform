@@ -1,3 +1,4 @@
+import { SIDEBAR_SCROLL_CONTAINER_ATOM, useCloseMobileSidebar } from "@/atoms";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import cn, { clsx } from "clsx";
@@ -21,7 +22,6 @@ import {
 } from "react";
 import { ChevronDown } from "react-feather";
 import { useAtomEffect } from "../atoms";
-import { SIDEBAR_SCROLL_CONTAINER_ATOM, useCloseMobileSidebar } from "../atoms/sidebar";
 import { FernLink } from "../components/FernLink";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { slugToHref } from "../util/slugToHref";

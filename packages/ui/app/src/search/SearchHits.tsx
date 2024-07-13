@@ -1,11 +1,10 @@
+import { useBasePath, useCloseSearchDialog } from "@/atoms";
 import { FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
-import { useBasePath } from "../atoms/navigation";
-import { useCloseSearchDialog } from "../atoms/sidebar";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";

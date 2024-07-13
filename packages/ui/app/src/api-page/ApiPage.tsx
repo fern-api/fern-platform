@@ -1,8 +1,7 @@
+import { APIS, useIsReady } from "@/atoms";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { APIS } from "../atoms/apis";
-import { useIsReady } from "../atoms/viewport";
 import { ApiPageContext } from "../contexts/useApiPageContext";
 import { ResolvedRootPackage } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";

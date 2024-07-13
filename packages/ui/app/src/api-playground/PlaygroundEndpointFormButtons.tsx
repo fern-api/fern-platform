@@ -1,10 +1,9 @@
+import { CURRENT_NODE_ATOM, useClosePlayground } from "@/atoms";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
-import { CURRENT_NODE_ATOM } from "../atoms/navigation";
-import { useClosePlayground } from "../atoms/playground";
 import { FernLink } from "../components/FernLink";
 import { ResolvedEndpointDefinition } from "../resolver/types";
 

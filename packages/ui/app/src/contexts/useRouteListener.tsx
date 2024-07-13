@@ -1,5 +1,4 @@
 import { useEventCallback } from "@fern-ui/react-commons";
-import { noop } from "instantsearch.js/es/lib/utils";
 import { useRouter } from "next/router";
 import {
     PropsWithChildren,
@@ -11,6 +10,7 @@ import {
     useRef,
     useTransition,
 } from "react";
+import { noop } from "ts-essentials";
 
 type ListenerFn = (anchor?: string) => void;
 
