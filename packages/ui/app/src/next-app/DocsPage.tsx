@@ -1,6 +1,6 @@
 import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
-import type { DefaultSeoProps, JsonLd } from "@fern-ui/next-seo";
+import { type NextSeoProps } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { useHydrateAtoms } from "jotai/utils";
 import { Redirect } from "next";
@@ -23,14 +23,17 @@ import {
     TABS_ATOM,
     VERSIONS_ATOM,
 } from "../atoms/navigation";
+import { SETTABLE_NEXT_SEO_ATOM } from "../atoms/seo";
 import { useMessageHandler } from "../atoms/sidebar";
-import { COLORS_ATOM, useInitializeTheme } from "../atoms/theme";
+import { COLORS_ATOM } from "../atoms/theme";
 import { FernUser } from "../auth";
 import { DocsContextProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { type ResolvedPath } from "../resolver/ResolvedPath";
+import { NextSeo } from "../seo/NextSeo";
+import { InitializeTheme } from "../themes/InitializeTheme";
 import { ThemedDocs, type FernTheme } from "../themes/ThemedDocs";
 
 const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
@@ -70,8 +73,7 @@ export declare namespace DocsPage {
         featureFlags: FeatureFlags;
         apis: FdrAPI.ApiDefinitionId[];
 
-        seo: DefaultSeoProps;
-        breadcrumb: JsonLd.BreadcrumbListSchema | undefined;
+        seo: NextSeoProps;
         analytics: CustomerAnalytics | undefined;
 
         fallback: Record<string, any>;
@@ -90,7 +92,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
             [DOMAIN_ATOM, baseUrl?.domain],
             [BASEPATH_ATOM, baseUrl?.basePath],
             [RESOLVED_PATH_ATOM, resolvedPath],
-            [SLUG_ATOM, FernNavigation.Slug(resolvedPath?.fullSlug)],
+            [SLUG_ATOM, FernNavigation.Slug(resolvedPath?.slug)],
             [COLORS_ATOM, useDeepCompareMemoize(pageProps.colors)],
             [DOCS_LAYOUT_ATOM, useDeepCompareMemoize(pageProps.layout)],
             [SIDEBAR_ROOT_NODE_ATOM, useDeepCompareMemoize(pageProps.navigation.sidebar)],
@@ -99,6 +101,7 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
             [VERSIONS_ATOM, useDeepCompareMemoize(pageProps.navigation.versions)],
             [CURRENT_TAB_INDEX_ATOM, pageProps.navigation.currentTabIndex],
             [CURRENT_VERSION_ID_ATOM, pageProps.navigation.currentVersionId],
+            [SETTABLE_NEXT_SEO_ATOM, useDeepCompareMemoize(pageProps.seo)],
 
             // TODO: remove this once we have a better way to hydrate the logo text
             [LOGO_TEXT_ATOM, baseUrl.domain.includes("cohere") ? "docs" : undefined],
@@ -111,13 +114,14 @@ export function DocsPage(pageProps: DocsPage.Props): ReactElement | null {
 
     useConsoleMessage();
     useMessageHandler();
-    useInitializeTheme();
 
     return (
         <DocsContextProvider {...pageProps}>
+            <NextSeo />
             <BgImageGradient />
+            <InitializeTheme />
+            <SearchDialog />
             <NavigationContextProvider basePath={baseUrl.basePath}>
-                <SearchDialog />
                 <PlaygroundContextProvider>
                     <ThemedDocs theme={pageProps.theme} />
                 </PlaygroundContextProvider>

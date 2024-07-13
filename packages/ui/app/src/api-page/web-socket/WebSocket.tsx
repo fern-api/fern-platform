@@ -8,7 +8,7 @@ import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useFeatureFlags } from "../../atoms/flags";
 import { useNavigationNodes } from "../../atoms/navigation";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
+import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import {
     ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,
@@ -39,7 +39,7 @@ export declare namespace WebSocket {
     }
 }
 export const WebSocket: FC<WebSocket.Props> = (props) => {
-    if (useShouldHideFromSsg(props.websocket.slug)) {
+    if (useShouldLazyRender(props.websocket.slug)) {
         return null;
     }
 

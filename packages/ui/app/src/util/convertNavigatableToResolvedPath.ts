@@ -93,14 +93,25 @@ export async function convertNavigatableToResolvedPath({
             )
         ).filter(isNonNullish);
 
+        const markdown = node.overviewPageId != null ? pages[node.overviewPageId]?.markdown : undefined;
+
+        const page =
+            markdown != null
+                ? await serializeMdx(markdown, {
+                      ...mdxOptions,
+                      filename: node.overviewPageId,
+                  })
+                : undefined;
+
         return {
             type: "changelog",
             sectionTitleBreadcrumbs: found.breadcrumb,
+            title: (page != null && typeof page !== "string" ? page.frontmatter.title : undefined) ?? found.node.title,
             node,
             pages: Object.fromEntries(pageRecords.map((record) => [record.pageId, record.markdown])),
             // items: await Promise.all(itemsPromise),
             // neighbors,
-            fullSlug: found.node.slug,
+            slug: found.node.slug,
         };
     } else if (node.type === "changelogEntry") {
         const markdown = pages[node.pageId]?.markdown;
@@ -123,13 +134,13 @@ export async function convertNavigatableToResolvedPath({
 
         return {
             type: "changelog-entry",
-            changelogTitle: changelogNode.title,
-            changelogSlug: changelogNode.slug,
+            title: (typeof page !== "string" ? page.frontmatter.title : undefined) ?? changelogNode.title,
+            slug: changelogNode.slug,
+            changelogSlug: node.slug,
             sectionTitleBreadcrumbs: found.breadcrumb,
             node,
             pages: { [node.pageId]: page },
             neighbors,
-            fullSlug: found.node.slug,
         };
     } else if (apiReference != null) {
         const api = apis[apiReference.apiDefinitionId];
@@ -140,7 +151,7 @@ export async function convertNavigatableToResolvedPath({
         }
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
         const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
-        // const [prunedApiDefinition] = findAndPruneApiSection(fullSlug, flattenedApiDefinition);
+        // const [prunedApiDefinition] = findAndPruneApiSection(slug, flattenedApiDefinition);
         const apiDefinition = await ApiDefinitionResolver.resolve(
             apiReference,
             holder,
@@ -152,7 +163,8 @@ export async function convertNavigatableToResolvedPath({
         );
         return {
             type: "api-page",
-            fullSlug: found.node.slug,
+            slug: found.node.slug,
+            title: node.title,
             api: apiReference.apiDefinitionId,
             apiDefinition,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
@@ -211,7 +223,7 @@ export async function convertNavigatableToResolvedPath({
         );
         return {
             type: "custom-markdown-page",
-            fullSlug: node.slug,
+            slug: node.slug,
             title: frontmatter.title ?? node.title,
             mdx,
             neighbors,
@@ -229,7 +241,7 @@ async function getNeighbor(
     }
     const excerpt = await getSubtitle(node, pages);
     return {
-        fullSlug: node.slug,
+        slug: node.slug,
         title: node.title,
         excerpt,
     };

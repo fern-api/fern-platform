@@ -1,6 +1,5 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
-import { DefaultSeo } from "@fern-ui/next-seo";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
@@ -33,7 +32,6 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     return (
         <FernTooltipProvider>
             <ThemeScript colors={pageProps?.colors} />
-            <DefaultSeo {...pageProps?.seo} />
             <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                 <JotaiProvider store={store}>
                     <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>

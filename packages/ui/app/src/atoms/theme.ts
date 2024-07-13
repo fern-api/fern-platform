@@ -35,20 +35,25 @@ export const THEME_SWITCH_ENABLED_ATOM = atom((get) => {
     return availableThemes.length > 1;
 });
 
-export const THEME_ATOM = atomWithRefresh((get): Theme => {
-    const storedTheme = get(SETTABLE_THEME_ATOM);
-    const availableThemes = get(AVAILABLE_THEMES_ATOM);
-    if (availableThemes.length === 1) {
-        return availableThemes[0];
-    } else if (storedTheme === SYSTEM) {
-        if (typeof window !== "undefined") {
-            return getSystemTheme();
+export const THEME_ATOM = atomWithRefresh(
+    (get): Theme => {
+        const storedTheme = get(SETTABLE_THEME_ATOM);
+        const availableThemes = get(AVAILABLE_THEMES_ATOM);
+        if (availableThemes.length === 1) {
+            return availableThemes[0];
+        } else if (storedTheme === SYSTEM) {
+            if (typeof window !== "undefined") {
+                return getSystemTheme();
+            }
+        } else {
+            return storedTheme;
         }
-    } else {
-        return storedTheme;
-    }
-    return availableThemes[0];
-});
+        return availableThemes[0];
+    },
+    (_get, set, theme: Theme | typeof SYSTEM) => {
+        set(SETTABLE_THEME_ATOM, theme);
+    },
+);
 
 export function useTheme(): Theme {
     return useAtomValue(THEME_ATOM);
@@ -136,7 +141,7 @@ export function useInitializeTheme(): void {
     useAtomEffect(
         useCallbackOne((get, set) => {
             const handleMediaQuery = () => {
-                if (get(IS_SYSTEM_THEME_ATOM)) {
+                if (get.peek(IS_SYSTEM_THEME_ATOM)) {
                     set(THEME_ATOM);
                 }
             };

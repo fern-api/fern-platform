@@ -1,13 +1,9 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { JsonLd } from "@fern-ui/next-seo";
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
-import { useAtomValue } from "jotai";
-import Head from "next/head";
 import Script from "next/script";
 import { PropsWithChildren, useCallback, useMemo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
 import { renderSegmentSnippet } from "../../analytics/segment";
-import { THEME_BG_COLOR } from "../../atoms/theme";
 import { DocsPage } from "../../next-app/DocsPage";
 import { renderThemeStylesheet } from "../../next-app/utils/renderThemeStylesheet";
 import { DocsContext } from "./DocsContext";
@@ -26,8 +22,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
     const navbarLinks = useDeepCompareMemoize(pageProps.navbarLinks);
     const apis = useDeepCompareMemoize(pageProps.apis);
     const analytics = useDeepCompareMemoize(pageProps.analytics);
-    const themeBackgroundColor = useAtomValue(THEME_BG_COLOR);
-    const breadcrumbList = useDeepCompareMemoize(pageProps.breadcrumb);
 
     const { logoHeight, logoHref } = pageProps;
     const { domain, basePath } = pageProps.baseUrl;
@@ -83,13 +77,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
 
     return (
         <DocsContext.Provider value={value}>
-            <Head>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-                />
-                {themeBackgroundColor != null && <meta name="theme-color" content={themeBackgroundColor} />}
-            </Head>
             {/* 
                 We concatenate all global styles into a single instance,
                 as styled JSX will only create one instance of global styles
@@ -121,9 +108,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ child
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
             <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(domain) }} />
             <CustomerAnalytics {...analytics} />
-            {breadcrumbList != null && breadcrumbList.itemListElement.length > 0 && (
-                <JsonLd.Breadcrumb breadcrumbList={breadcrumbList} />
-            )}
         </DocsContext.Provider>
     );
 };
