@@ -3,7 +3,7 @@ import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 import { HeaderLogoSection } from "../docs/HeaderLogoSection";
-import { ThemeButton } from "../docs/ThemeButton";
+import { ThemeButton } from "../themes";
 import { SidebarSearchBar } from "./SidebarSearchBar";
 
 export declare namespace SidebarFixedItemsSection {

@@ -1,4 +1,4 @@
-import { SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM, useColors, useOpenSearchDialog } from "@/atoms";
+import { NAVBAR_LINKS_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM, useColors, useOpenSearchDialog } from "@/atoms";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowRightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
@@ -7,15 +7,14 @@ import { useAtomValue } from "jotai";
 import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
 import { FernLinkButton } from "../components/FernLinkButton";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
+import { ThemeButton } from "../themes";
 import { getGitHubRepo } from "../util/github";
 import { GitHubWidget } from "./GitHubWidget";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { MobileMenuButton } from "./MobileMenuButton";
-import { ThemeButton } from "./ThemeButton";
 
 export declare namespace Header {
     export interface Props {
@@ -28,7 +27,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     { className, style },
     ref,
 ) {
-    const { navbarLinks } = useDocsContext();
+    const navbarLinks = useAtomValue(NAVBAR_LINKS_ATOM);
     const colors = useColors();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);

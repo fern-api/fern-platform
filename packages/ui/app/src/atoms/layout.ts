@@ -1,9 +1,16 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { atom } from "jotai";
+import { selectAtom } from "jotai/utils";
+import { isEqual } from "lodash-es";
+import { DOCS_ATOM } from "./docs";
 import { TABS_ATOM } from "./navigation";
 import { MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "./viewport";
 
-export const DOCS_LAYOUT_ATOM = atom<DocsV1Read.DocsLayoutConfig | undefined>(undefined);
+export const DOCS_LAYOUT_ATOM = selectAtom(
+    DOCS_ATOM,
+    (docs): DocsV1Read.DocsLayoutConfig | undefined => docs.layout,
+    isEqual,
+);
 export const HEADER_HEIGHT_ATOM = atom<number>((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
     const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);

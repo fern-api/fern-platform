@@ -1,4 +1,4 @@
-import { DOCS_LAYOUT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "@/atoms";
+import { DOCS_LAYOUT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, NAVBAR_LINKS_ATOM } from "@/atoms";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
@@ -6,7 +6,6 @@ import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement } from "react";
 import { FernLinkButton } from "../components/FernLinkButton";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 
 interface HeaderSidebarSlugLinkProps {
     navbarLink: DocsV1Read.NavbarLink;
@@ -37,7 +36,7 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
 
 export function MobileSidebarHeaderLinks(): ReactElement | null {
     const layout = useAtomValue(DOCS_LAYOUT_ATOM);
-    const { navbarLinks } = useDocsContext();
+    const navbarLinks = useAtomValue(NAVBAR_LINKS_ATOM);
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     if (navbarLinks == null || navbarLinks.length === 0) {
         return null;

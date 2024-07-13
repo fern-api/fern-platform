@@ -1,15 +1,13 @@
-import { LOGO_TEXT_ATOM, VERSIONS_ATOM, useColors } from "@/atoms";
+import { LOGO_HREF_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM, useColors, useFile, useLogoHeight } from "@/atoms";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
-import { DEFAULT_LOGO_HEIGHT } from "../config";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { VersionDropdown } from "./VersionDropdown";
 
 export function HeaderLogoSection(): ReactElement {
-    const { logoHref } = useDocsContext();
+    const logoHref = useAtomValue(LOGO_HREF_ATOM);
     const versions = useAtomValue(VERSIONS_ATOM);
     const logoText = useAtomValue(LOGO_TEXT_ATOM);
 
@@ -34,17 +32,20 @@ export function HeaderLogoSection(): ReactElement {
     );
 }
 
+function FernFileImage({ fileId, ...props }: Omit<FernImage.Props, "src"> & { fileId: string }): ReactElement {
+    return <FernImage src={useFile(fileId)} {...props} />;
+}
+
 function FernLogoImage(): ReactElement | null {
     const colors = useColors();
-    const { resolveFile, logoHeight } = useDocsContext();
-    const logoImageHeight = logoHeight ?? DEFAULT_LOGO_HEIGHT;
+    const logoImageHeight = useLogoHeight();
     const imageClassName = "max-h-full object-contain";
     if (colors.dark != null && colors.light != null) {
         return (
             <>
                 {colors.light.logo != null && (
-                    <FernImage
-                        src={resolveFile(colors.light.logo)}
+                    <FernFileImage
+                        fileId={colors.light.logo}
                         className={cn(imageClassName, "block dark:hidden")}
                         height={logoImageHeight}
                         style={{ height: logoImageHeight }}
@@ -54,8 +55,8 @@ function FernLogoImage(): ReactElement | null {
                     />
                 )}
                 {colors.dark.logo != null && (
-                    <FernImage
-                        src={resolveFile(colors.dark.logo)}
+                    <FernFileImage
+                        fileId={colors.dark.logo}
                         className={cn(imageClassName, "hidden dark:block")}
                         height={logoImageHeight}
                         style={{ height: logoImageHeight }}
@@ -74,8 +75,8 @@ function FernLogoImage(): ReactElement | null {
         }
 
         return (
-            <FernImage
-                src={resolveFile(logoFile)}
+            <FernFileImage
+                fileId={logoFile}
                 className={cn(imageClassName, "block")}
                 height={logoImageHeight}
                 style={{ height: logoImageHeight }}

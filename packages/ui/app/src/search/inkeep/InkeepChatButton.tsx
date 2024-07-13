@@ -1,8 +1,8 @@
 import { useColors } from "@/atoms";
+import { DEFAULT_COLORS } from "@/themes/stylesheet/getColorVariables";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
-import { DEFAULT_COLORS } from "../../next-app/utils/getColorVariables";
 import useInkeepSettings from "./useInkeepSettings";
 
 const ChatButton = dynamic(() => import("@inkeep/widgets").then((mod) => mod.InkeepChatButton), {

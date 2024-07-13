@@ -1,13 +1,19 @@
+import { DOCS_ATOM } from "@/atoms";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { ReactElement } from "react";
+import { useAtomValue } from "jotai";
+import { selectAtom } from "jotai/utils";
+import { isEqual } from "lodash-es";
+import { ReactElement, memo } from "react";
 import { GoogleTagManager } from "./GoogleTagManager";
-import { type CustomerAnalytics } from "./types";
 
-export function CustomerAnalytics({ ga4, gtm }: CustomerAnalytics): ReactElement | null {
+const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
+
+export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
+    const { ga4, gtm } = useAtomValue(ANALYTICS_ATOM);
     return (
         <>
             {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}
             {gtm != null && <GoogleTagManager {...gtm} />}
         </>
     );
-}
+});
