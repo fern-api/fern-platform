@@ -2,7 +2,7 @@ import { FernCard, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import cn from "clsx";
 import { isValidElement } from "react";
 import { FernLinkCard } from "../../../components/FernLinkCard";
-import { Badge } from "../Badge/Badge";
+import { Badge } from "../badge";
 
 export declare namespace Card {
     export interface Props {
