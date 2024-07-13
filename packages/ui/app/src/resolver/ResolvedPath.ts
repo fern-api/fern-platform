@@ -32,6 +32,7 @@ export declare namespace ResolvedPath {
         sectionTitleBreadcrumbs: string[];
         neighbors: Neighbors;
         slug: FernNavigation.Slug;
+        changelogSlug: FernNavigation.Slug;
     }
 
     interface CustomMarkdownPage {

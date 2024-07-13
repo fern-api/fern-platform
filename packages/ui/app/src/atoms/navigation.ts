@@ -41,7 +41,7 @@ export const SIDEBAR_ROOT_NODE_ATOM = atom<FernNavigation.SidebarRootNode | unde
 export const RESOLVED_PATH_ATOM = atomWithReducer<ResolvedPath, ResolvedPath>(
     {
         type: "custom-markdown-page",
-        slug: "",
+        slug: FernNavigation.Slug(""),
         title: "",
         mdx: "",
         neighbors: { prev: null, next: null },

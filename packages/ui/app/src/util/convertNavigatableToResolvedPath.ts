@@ -93,9 +93,20 @@ export async function convertNavigatableToResolvedPath({
             )
         ).filter(isNonNullish);
 
+        const markdown = node.overviewPageId != null ? pages[node.overviewPageId]?.markdown : undefined;
+
+        const page =
+            markdown != null
+                ? await serializeMdx(markdown, {
+                      ...mdxOptions,
+                      filename: node.overviewPageId,
+                  })
+                : undefined;
+
         return {
             type: "changelog",
             sectionTitleBreadcrumbs: found.breadcrumb,
+            title: (page != null && typeof page !== "string" ? page.frontmatter.title : undefined) ?? found.node.title,
             node,
             pages: Object.fromEntries(pageRecords.map((record) => [record.pageId, record.markdown])),
             // items: await Promise.all(itemsPromise),
@@ -123,13 +134,13 @@ export async function convertNavigatableToResolvedPath({
 
         return {
             type: "changelog-entry",
-            title: changelogNode.title,
+            title: (typeof page !== "string" ? page.frontmatter.title : undefined) ?? changelogNode.title,
             slug: changelogNode.slug,
+            changelogSlug: node.slug,
             sectionTitleBreadcrumbs: found.breadcrumb,
             node,
             pages: { [node.pageId]: page },
             neighbors,
-            slug: found.node.slug,
         };
     } else if (apiReference != null) {
         const api = apis[apiReference.apiDefinitionId];
@@ -153,6 +164,7 @@ export async function convertNavigatableToResolvedPath({
         return {
             type: "api-page",
             slug: found.node.slug,
+            title: node.title,
             api: apiReference.apiDefinitionId,
             apiDefinition,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
