@@ -3,10 +3,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { EnterFullScreenIcon } from "@radix-ui/react-icons";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
-import type { MDXComponents } from "mdx/types";
 import { ComponentProps, FC, useState } from "react";
 
-const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
+export const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
     const [isFullScreen, setIsFullScreen] = useState(false);
 
     return (
@@ -48,38 +47,4 @@ const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
             </Dialog.Root>
         </>
     );
-};
-
-const Thead: FC<ComponentProps<"thead">> = ({ className, ...rest }) => {
-    return <thead {...rest} className={clsx(className)} />;
-};
-
-const Tbody: FC<ComponentProps<"tbody">> = ({ className, ...rest }) => {
-    return <tbody {...rest} className={clsx(className)} />;
-};
-
-const Tr: FC<ComponentProps<"tr">> = ({ className, ...rest }) => {
-    return <tr {...rest} className={clsx("fern-table-row", className)} />;
-};
-
-const Th: FC<ComponentProps<"th">> = ({ className, ...rest }) => {
-    return <th {...rest} className={clsx("fern-table-cell", className)} />;
-};
-
-const Td: FC<ComponentProps<"td">> = ({ className, children, ...rest }) => {
-    // const childrenAsString = onlyText(children);
-    return (
-        <td {...rest} className={clsx("fern-table-cell", className)}>
-            {children}
-        </td>
-    );
-};
-
-export const HTML_TABLE_COMPONENTS: MDXComponents = {
-    table: Table,
-    thead: Thead,
-    tbody: Tbody,
-    tr: Tr,
-    th: Th,
-    td: Td,
 };
