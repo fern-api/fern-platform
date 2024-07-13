@@ -11,6 +11,8 @@ export const DOCS_LAYOUT_ATOM = selectAtom(
     (docs): DocsV1Read.DocsLayoutConfig | undefined => docs.layout,
     isEqual,
 );
+DOCS_LAYOUT_ATOM.debugLabel = "DOCS_LAYOUT_ATOM";
+
 export const HEADER_HEIGHT_ATOM = atom<number>((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
     const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
@@ -24,9 +26,13 @@ export const HEADER_HEIGHT_ATOM = atom<number>((get) => {
                 : 64;
     return isMobileSidebarEnabled || layout?.disableHeader !== true ? headerHeight : 0;
 });
+HEADER_HEIGHT_ATOM.debugLabel = "HEADER_HEIGHT_ATOM";
 
 const SETTABLE_HEADER_TABS_HEIGHT_ATOM = atom<number>(44);
+SETTABLE_HEADER_TABS_HEIGHT_ATOM.debugLabel = "SETTABLE_HEADER_TABS_HEIGHT_ATOM";
+
 const SETTABLE_CONTENT_HEIGHT_ATOM = atom<number>(0);
+SETTABLE_CONTENT_HEIGHT_ATOM.debugLabel = "SETTABLE_CONTENT_HEIGHT_ATOM";
 
 export const HAS_HORIZONTAL_TABS = atom<boolean>((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
@@ -38,6 +44,7 @@ export const HAS_HORIZONTAL_TABS = atom<boolean>((get) => {
 
     return !get(MOBILE_SIDEBAR_ENABLED_ATOM);
 });
+HAS_HORIZONTAL_TABS.debugLabel = "HAS_HORIZONTAL_TABS";
 
 export const HEADER_TABS_HEIGHT_ATOM = atom(
     (get) => {
@@ -51,12 +58,14 @@ export const HEADER_TABS_HEIGHT_ATOM = atom(
         set(SETTABLE_HEADER_TABS_HEIGHT_ATOM, height);
     },
 );
+HEADER_TABS_HEIGHT_ATOM.debugLabel = "HEADER_TABS_HEIGHT_ATOM";
 
 export const SHOW_HEADER_ATOM = atom((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
     const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
     return layout?.disableHeader !== true || isMobileSidebarEnabled;
 });
+SHOW_HEADER_ATOM.debugLabel = "SHOW_HEADER_ATOM";
 
 export const POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM = atom<boolean>((get) => {
     const showHeader = get(SHOW_HEADER_ATOM);
@@ -64,6 +73,7 @@ export const POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM = atom<boolean>((get) => {
     const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
     return showHeader && layout?.searchbarPlacement === "HEADER" && !isMobileSidebarEnabled;
 });
+POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM.debugLabel = "POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM";
 
 export const HEADER_OFFSET_ATOM = atom<number>((get) => {
     if (!get(SHOW_HEADER_ATOM)) {
@@ -73,12 +83,14 @@ export const HEADER_OFFSET_ATOM = atom<number>((get) => {
     const tabsHeight = get(HEADER_TABS_HEIGHT_ATOM);
     return headerHeight + tabsHeight;
 });
+HEADER_OFFSET_ATOM.debugLabel = "HEADER_OFFSET_ATOM";
 
 export const BELOW_HEADER_HEIGHT_ATOM = atom<number>((get) => {
     const headerHeight = get(HEADER_HEIGHT_ATOM);
     const windowHeight = get(VIEWPORT_HEIGHT_ATOM);
     return Math.max(windowHeight - headerHeight, 0);
 });
+BELOW_HEADER_HEIGHT_ATOM.debugLabel = "BELOW_HEADER_HEIGHT_ATOM";
 
 export const CONTENT_HEIGHT_ATOM = atom(
     (get) => {
@@ -96,8 +108,10 @@ export const CONTENT_HEIGHT_ATOM = atom(
         set(SETTABLE_CONTENT_HEIGHT_ATOM, height);
     },
 );
+CONTENT_HEIGHT_ATOM.debugLabel = "CONTENT_HEIGHT_ATOM";
 
 export const SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM = atom<boolean>((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
     return layout?.disableHeader || layout?.searchbarPlacement !== "HEADER";
 });
+SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM.debugLabel = "SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM";

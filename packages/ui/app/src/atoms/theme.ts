@@ -22,11 +22,16 @@ const SETTABLE_THEME_ATOM = atomWithStorageString<Theme | typeof SYSTEM>(STORAGE
     validate: z.union([z.literal("system"), z.literal("light"), z.literal("dark")]),
     getOnInit: true,
 });
+SETTABLE_THEME_ATOM.debugLabel = "SETTABLE_THEME_ATOM";
 
 const IS_SYSTEM_THEME_ATOM = atom((get) => get(SETTABLE_THEME_ATOM) === SYSTEM);
+IS_SYSTEM_THEME_ATOM.debugLabel = "IS_SYSTEM_THEME_ATOM";
 
 export const COLORS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.colors, isEqual);
+COLORS_ATOM.debugLabel = "COLORS_ATOM";
+
 export const AVAILABLE_THEMES_ATOM = atom((get) => getAvailableThemes(get(COLORS_ATOM)));
+AVAILABLE_THEMES_ATOM.debugLabel = "AVAILABLE_THEMES_ATOM";
 
 export function useColors(): Partial<ColorsConfig> {
     return useAtomValue(COLORS_ATOM);
@@ -36,6 +41,7 @@ export const THEME_SWITCH_ENABLED_ATOM = atom((get) => {
     const availableThemes = get(AVAILABLE_THEMES_ATOM);
     return availableThemes.length > 1;
 });
+THEME_SWITCH_ENABLED_ATOM.debugLabel = "THEME_SWITCH_ENABLED_ATOM";
 
 export const THEME_ATOM = atomWithRefresh(
     (get): Theme => {
@@ -85,6 +91,7 @@ export const THEME_BG_COLOR = atom((get) => {
     }
     return getThemeColor(config);
 });
+THEME_BG_COLOR.debugLabel = "THEME_BG_COLOR";
 
 const disableAnimation = () => {
     if (typeof document === "undefined") {

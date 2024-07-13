@@ -93,6 +93,7 @@
     "instantsearch.js": "^4.63.0",
     "jose": "^5.2.3",
     "jotai": "^2.8.1",
+    "jotai-devtools": "^0.10.0",
     "jotai-effect": "^1.0.0",
     "jotai-location": "^0.5.5",
     "jsonpath": "^1.1.1",

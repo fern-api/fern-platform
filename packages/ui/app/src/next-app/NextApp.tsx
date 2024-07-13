@@ -1,6 +1,8 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { Provider as JotaiProvider } from "jotai";
+import { DevTools } from "jotai-devtools";
+import "jotai-devtools/styles.css";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import type { Router } from "next/router";
@@ -32,14 +34,15 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
             <ThemeScript colors={pageProps?.colors} />
             <DatadogInit />
             <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+            <Toaster />
             <JotaiProvider store={store}>
+                <DevTools store={store} />
                 <FernTooltipProvider>
                     <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
                             <RouteListenerContextProvider>
                                 <Component {...pageProps} />
                             </RouteListenerContextProvider>
-                            <Toaster />
                         </FernErrorBoundary>
                     </SWRConfig>
                 </FernTooltipProvider>

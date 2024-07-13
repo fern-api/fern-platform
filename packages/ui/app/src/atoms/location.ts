@@ -17,8 +17,10 @@ export const LOCATION_ATOM = atomWithLocation({
         };
     },
 });
+LOCATION_ATOM.debugLabel = "LOCATION_ATOM";
 
 export const HASH_ATOM = atom((get) => get(LOCATION_ATOM).hash);
+HASH_ATOM.debugLabel = "HASH_ATOM";
 
 export const SLUG_ATOM = atom((get) => {
     const location = get(LOCATION_ATOM);
@@ -27,7 +29,10 @@ export const SLUG_ATOM = atom((get) => {
     }
     return FernNavigation.Slug(location.pathname?.slice(1) ?? "");
 });
+SLUG_ATOM.debugLabel = "SLUG_ATOM";
 
 export function useIsSelectedSlug(slug: FernNavigation.Slug): boolean {
     return useAtomValue(useMemo(() => atom((get) => get(SLUG_ATOM) === slug), [slug]));
 }
+
+// atomWithObservable

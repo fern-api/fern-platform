@@ -72,3 +72,4 @@ export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(EMPTY_DOCS_STATE,
     }
     return next;
 });
+DOCS_ATOM.debugLabel = "DOCS_ATOM";
