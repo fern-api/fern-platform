@@ -1,8 +1,11 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { useEventCallback } from "@fern-ui/react-commons";
 import { atom, useAtomValue } from "jotai";
 import { atomWithLocation } from "jotai-location";
+import { isEmpty } from "lodash-es";
 import { Router } from "next/router";
-import { useMemo } from "react";
+import { useCallbackOne, useMemoOne } from "use-memo-one";
+import { useAtomEffect } from "./hooks";
 import { RESOLVED_PATH_ATOM } from "./navigation";
 
 export const LOCATION_ATOM = atomWithLocation({
@@ -32,7 +35,21 @@ export const SLUG_ATOM = atom((get) => {
 SLUG_ATOM.debugLabel = "SLUG_ATOM";
 
 export function useIsSelectedSlug(slug: FernNavigation.Slug): boolean {
-    return useAtomValue(useMemo(() => atom((get) => get(SLUG_ATOM) === slug), [slug]));
+    return useAtomValue(useMemoOne(() => atom((get) => get(SLUG_ATOM) === slug), [slug]));
 }
 
-// atomWithObservable
+export function useRouteListener(route: string, callback: (hash: string | undefined) => void): void {
+    const callbackRef = useEventCallback(callback);
+
+    return useAtomEffect(
+        useCallbackOne(
+            (get) => {
+                const location = get(LOCATION_ATOM);
+                if (location.pathname?.toLowerCase() === route.toLowerCase()) {
+                    setTimeout(() => callbackRef(isEmpty(location.hash) ? undefined : location.hash), 0);
+                }
+            },
+            [route],
+        ),
+    );
+}

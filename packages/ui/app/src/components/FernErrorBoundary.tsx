@@ -1,13 +1,12 @@
 import { FernButton } from "@fern-ui/components";
 import { ExclamationTriangleIcon, ReloadIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
-import { useAtomValue } from "jotai";
 import { memoize } from "lodash-es";
 import { Router, useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
-import { IS_LOCAL_PREVIEW_ATOM } from "../atoms";
+import { useIsLocalPreview } from "../contexts/local-preview";
 
 export declare interface FernErrorBoundaryProps {
     component?: string; // component displayName where the error occurred
@@ -36,7 +35,7 @@ export function FernErrorTag({
     reset?: () => void;
     resetErrorBoundary?: () => void;
 }): ReactElement | null {
-    const isLocalPreview = useAtomValue(IS_LOCAL_PREVIEW_ATOM);
+    const isLocalPreview = useIsLocalPreview();
     useEffect(() => {
         // eslint-disable-next-line no-console
         console.error(error);

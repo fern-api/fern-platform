@@ -2,13 +2,12 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import * as Sentry from "@sentry/nextjs";
 import { useAtom, useAtomValue } from "jotai";
 import dynamic from "next/dynamic";
-import { FC, PropsWithChildren, createContext, useCallback, useContext } from "react";
+import { FC, PropsWithChildren, createContext, useCallback, useContext, useEffect } from "react";
 import useSWR from "swr";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
-import { useCallbackOne as useStableCallback } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { APIS, FLATTENED_APIS_ATOM, useAtomEffect, useBasePath } from "../atoms";
+import { APIS_ATOM, FLATTENED_APIS_ATOM, store, useBasePath } from "../atoms";
 import {
     HAS_PLAYGROUND_ATOM,
     PLAYGROUND_FORM_STATE_ATOM,
@@ -36,16 +35,11 @@ export const PlaygroundContextProvider: FC<PropsWithChildren> = ({ children }) =
     const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {
         revalidateOnFocus: false,
     });
-    useAtomEffect(
-        useStableCallback(
-            (_get, set) => {
-                if (data != null) {
-                    set(APIS, data);
-                }
-            },
-            [data],
-        ),
-    );
+    useEffect(() => {
+        if (data != null) {
+            store.set(APIS_ATOM, data);
+        }
+    }, [data]);
 
     const flattenedApis = useAtomValue(FLATTENED_APIS_ATOM);
 

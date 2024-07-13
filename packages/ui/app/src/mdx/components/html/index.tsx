@@ -17,7 +17,7 @@ import { FILES_ATOM, SLUG_ATOM, useFeatureFlags } from "../../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { FernImage } from "../../../components/FernImage";
 import { FernLink } from "../../../components/FernLink";
-import { useFrontmatter } from "../../frontmatter-context";
+import { useFrontmatter } from "../../../contexts/frontmatter";
 
 /**
  * By default, next will use /host/current/slug in SSG.

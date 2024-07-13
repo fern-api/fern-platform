@@ -3,7 +3,7 @@ export { Stream } from "./api-playground/Stream";
 export type { ProxyRequest, ProxyResponse } from "./api-playground/types";
 export { DEFAULT_FEATURE_FLAGS } from "./atoms";
 export type { DocsProps, FeatureFlags } from "./atoms";
-export { LocalPreviewContextProvider } from "./contexts/LocalPreviewContext";
+export { LocalPreviewContextProvider } from "./contexts/local-preview";
 export { setMdxBundler } from "./mdx/bundler";
 export { getFrontmatter } from "./mdx/frontmatter";
 export * from "./next-app/DocsPage";

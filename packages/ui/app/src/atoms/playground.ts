@@ -4,7 +4,7 @@ import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { PlaygroundRequestFormState } from "../api-playground/types";
-import { APIS } from "./apis";
+import { APIS_ATOM } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { BELOW_HEADER_HEIGHT_ATOM } from "./layout";
@@ -15,7 +15,7 @@ const PLAYGROUND_IS_OPEN_ATOM = atom(false);
 PLAYGROUND_IS_OPEN_ATOM.debugLabel = "PLAYGROUND_IS_OPEN_ATOM";
 
 export const HAS_PLAYGROUND_ATOM = atom(
-    (get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled && Object.keys(get(APIS)).length > 0,
+    (get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled && Object.keys(get(APIS_ATOM)).length > 0,
 );
 HAS_PLAYGROUND_ATOM.debugLabel = "HAS_PLAYGROUND_ATOM";
 

@@ -12,7 +12,6 @@ import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
 import { DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
 
@@ -40,9 +39,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
                 <FernTooltipProvider>
                     <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                            <RouteListenerContextProvider>
-                                <Component {...pageProps} />
-                            </RouteListenerContextProvider>
+                            <Component {...pageProps} />
                         </FernErrorBoundary>
                     </SWRConfig>
                 </FernTooltipProvider>

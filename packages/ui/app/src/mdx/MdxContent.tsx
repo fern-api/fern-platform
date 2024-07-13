@@ -2,7 +2,7 @@ import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
 import { memo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { FrontmatterContextProvider } from "./frontmatter-context";
+import { FrontmatterContextProvider } from "../contexts/frontmatter";
 import type { BundledMDX } from "./types";
 
 export declare namespace MdxContent {
