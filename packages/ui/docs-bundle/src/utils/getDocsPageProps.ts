@@ -18,6 +18,7 @@ import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import type { Redirect } from "next";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
 import { type IncomingMessage, type ServerResponse } from "node:http";
+import { ComponentProps } from "react";
 import { default as urlJoin, default as urljoin } from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getCustomerAnalytics } from "./analytics";
@@ -54,7 +55,7 @@ export interface User {
 export async function getDocsPageProps(
     xFernHost: string | undefined,
     slug: string[],
-): Promise<DocsPageResult<DocsPage.Props>> {
+): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return { type: "notFound", notFound: true };
     }
@@ -113,7 +114,7 @@ export async function getDynamicDocsPageProps(
     slug: string[],
     cookies: NextApiRequestCookies,
     res: ServerResponse<IncomingMessage>,
-): Promise<DocsPageResult<DocsPage.Props>> {
+): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
     const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
     if (cookies.fern_token == null) {
         return getDocsPageProps(xFernHost, slug);
@@ -206,7 +207,7 @@ async function convertDocsToDocsPageProps({
     xFernHost: string;
     user?: FernUser;
     cookies?: NextApiRequestCookies;
-}): Promise<DocsPageResult<DocsPage.Props>> {
+}): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
 
@@ -273,7 +274,7 @@ async function convertDocsToDocsPageProps({
         return { type: "notFound", notFound: true };
     }
 
-    const props: DocsPage.Props = {
+    const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
         title: docs.definition.config.title,

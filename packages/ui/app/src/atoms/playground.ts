@@ -5,7 +5,7 @@ import { atomWithStorage } from "jotai/utils";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { PlaygroundRequestFormState } from "../api-playground/types";
 import { APIS } from "./apis";
-import { FEATURE_FLAGS_ATOM } from "./docs";
+import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { BELOW_HEADER_HEIGHT_ATOM } from "./layout";
 import { LOCATION_ATOM } from "./location";

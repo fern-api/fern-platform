@@ -2,7 +2,7 @@ import type { DocsV2Read } from "@fern-api/fdr-sdk";
 import { toast } from "@fern-ui/components";
 import { DocsPage } from "@fern-ui/ui";
 import { useRouter } from "next/router";
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ComponentProps, ReactElement, useEffect, useRef, useState } from "react";
 import ReconnectingWebSocket from "../utils/ReconnectingWebsocket";
 import { getDocsPageProps } from "../utils/getDocsPageProps";
 
@@ -15,7 +15,7 @@ export default function LocalPreviewDocs(): ReactElement {
     const router = useRouter();
 
     const [docs, setDocs] = useState<DocsV2Read.LoadDocsForUrlResponse>();
-    const [docsProps, setDocsProps] = useState<DocsPage.Props>();
+    const [docsProps, setDocsProps] = useState<ComponentProps<typeof DocsPage>>();
     const toastInstance = useRef<string | number>();
 
     /**

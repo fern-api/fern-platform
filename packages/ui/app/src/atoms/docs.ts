@@ -1,11 +1,26 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { atom, useAtomValue } from "jotai";
-import { selectAtom } from "jotai/utils";
-import { isEqual } from "lodash-es";
-import { DocsPage } from "../next-app/DocsPage";
-import { DEFAULT_FEATURE_FLAGS, FeatureFlags } from "./flags";
+import { atomWithReducer } from "jotai/utils";
+import { DocsProps, FeatureFlags } from "./types";
 
-export const DOCS_ATOM = atom<DocsPage.Props>({
+export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
+    isApiPlaygroundEnabled: false,
+    isApiScrollingDisabled: false,
+    isWhitelabeled: false,
+    isSeoDisabled: false,
+    isTocDefaultEnabled: false,
+    isSnippetTemplatesEnabled: false,
+    isHttpSnippetsEnabled: false,
+    isInlineFeedbackEnabled: false,
+    isDarkCodeEnabled: false,
+    proxyShouldUseAppBuildwithfernCom: false,
+    isImageZoomDisabled: false,
+    useJavaScriptAsTypeScript: false,
+    alwaysEnableJavaScriptFetch: false,
+    scrollInContainerEnabled: false,
+    useMdxBundler: false,
+};
+
+const EMPTY_DOCS_STATE: DocsProps = {
     baseUrl: {
         domain: "app.buildwithfern.com",
         basePath: undefined,
@@ -49,10 +64,11 @@ export const DOCS_ATOM = atom<DocsPage.Props>({
     fallback: {},
     theme: "default",
     user: undefined,
-} satisfies DocsPage.Props);
+};
 
-export const FEATURE_FLAGS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.featureFlags, isEqual);
-
-export function useFeatureFlags(): FeatureFlags {
-    return useAtomValue(FEATURE_FLAGS_ATOM);
-}
+export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(EMPTY_DOCS_STATE, (_, next) => {
+    if (next == null || next.baseUrl == null) {
+        return EMPTY_DOCS_STATE;
+    }
+    return next;
+});
