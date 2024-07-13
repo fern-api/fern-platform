@@ -361,31 +361,17 @@
     .fern-button-group {
         @apply inline-flex items-center;
 
-        > .fern-button {
-            + .fern-button.outlined,
-            + .fern-button.filled {
-                @apply ml-2;
-            }
-        }
+        > .fern-button:has(+ .fern-button.outlined, + .fern-button.filled),
+        > .fern-button.outlined:has(+ .fern-button.minimal),
+        > .fern-button.filled:has(+ .fern-button.minimal) {
+            @apply mr-2;
 
-        > .fern-button.small {
-            + .fern-button.small.outlined,
-            + .fern-button.small.filled {
-                @apply ml-1;
+            &.small {
+                @apply mr-1;
             }
-        }
 
-        > .fern-button.large {
-            + .fern-button.large.outlined,
-            + .fern-button.large.filled {
-                @apply ml-3;
-            }
-        }
-
-        > .fern-button.outlined,
-        > .fern-button.filled {
-            + .fern-button.minimal {
-                @apply ml-2;
+            &.large {
+                @apply mr-3;
             }
         }
     }

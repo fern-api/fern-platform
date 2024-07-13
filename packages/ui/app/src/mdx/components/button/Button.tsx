@@ -1,6 +1,6 @@
-import { FernButton, FernButtonGroup } from "@fern-ui/components";
+import { FernButton } from "@fern-ui/components";
 import clsx from "clsx";
-import { ComponentProps, ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { FernLinkButton } from "../../../components/FernLinkButton";
 
 export declare namespace Button {
@@ -38,12 +38,4 @@ export function Button({ minimal, outlined, large, href, className, ...props }: 
     }
 
     return <FernButton {...props} variant={variant} size={size} className={clsx(className, "not-prose")} />;
-}
-
-export function ButtonGroup({ className, ...props }: ComponentProps<typeof FernButtonGroup>): ReactElement {
-    return (
-        <div className={clsx(className, "mb-6 mt-4")}>
-            <FernButtonGroup {...props} />
-        </div>
-    );
 }
