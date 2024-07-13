@@ -1,7 +1,10 @@
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
+import { CONTENT_WIDTH_PX_ATOM } from "../atoms/layout";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernLink } from "../components/FernLink";
+import { ContentWidthProvider } from "../layout/ContentWidthContext";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
 
@@ -9,6 +12,7 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
     const page = resolvedPath.pages[resolvedPath.node.pageId];
     const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
     const excerpt = typeof page !== "string" ? page?.frontmatter.subtitle ?? page.frontmatter.excerpt : undefined;
+    const contentWidth = useAtomValue(CONTENT_WIDTH_PX_ATOM);
     return (
         <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
             <div className="w-full min-w-0 pt-8">
@@ -39,7 +43,9 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
                                 )}
                             </header>
                             <div className="prose dark:prose-invert">
-                                <MdxContent mdx={page} />
+                                <ContentWidthProvider width={contentWidth}>
+                                    <MdxContent mdx={page} />
+                                </ContentWidthProvider>
                             </div>
 
                             <BottomNavigationButtons />
