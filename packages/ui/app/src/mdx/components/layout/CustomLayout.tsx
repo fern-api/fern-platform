@@ -1,7 +1,7 @@
 import type { ElementContent } from "hast";
 import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { ReactElement, ReactNode } from "react";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
+import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 
 interface CustomLayoutProps {
     children: ReactNode;

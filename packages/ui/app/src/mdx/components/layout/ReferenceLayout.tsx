@@ -2,12 +2,12 @@ import clsx from "clsx";
 import type { ElementContent } from "hast";
 import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { ReactElement, ReactNode, isValidElement } from "react";
-import { EditThisPageButton } from "../components/EditThisPage";
-import { PageHeader } from "../components/PageHeader";
-import { useApiPageContext } from "../contexts/useApiPageContext";
-import { Feedback } from "../custom-docs-page/Feedback";
-import { toAttribute } from "../mdx/plugins/utils";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
+import { EditThisPageButton } from "../../../components/EditThisPage";
+import { PageHeader } from "../../../components/PageHeader";
+import { useApiPageContext } from "../../../contexts/useApiPageContext";
+import { Feedback } from "../../../custom-docs-page/Feedback";
+import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
+import { toAttribute } from "../../plugins/utils";
 
 interface ReferenceLayoutProps {
     breadcrumbs: string[];

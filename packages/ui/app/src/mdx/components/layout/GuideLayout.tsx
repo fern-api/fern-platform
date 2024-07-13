@@ -2,13 +2,13 @@ import { FernScrollArea } from "@fern-ui/components";
 import type { ElementContent } from "hast";
 import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { ReactNode, type ReactElement } from "react";
-import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
-import { EditThisPageButton } from "../components/EditThisPage";
-import { PageHeader } from "../components/PageHeader";
-import { TableOfContents, TableOfContentsItem } from "../components/TableOfContents";
-import { Feedback } from "../custom-docs-page/Feedback";
-import { toAttribute } from "../mdx/plugins/utils";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
+import { BottomNavigationButtons } from "../../../components/BottomNavigationButtons";
+import { EditThisPageButton } from "../../../components/EditThisPage";
+import { PageHeader } from "../../../components/PageHeader";
+import { TableOfContents, TableOfContentsItem } from "../../../components/TableOfContents";
+import { Feedback } from "../../../custom-docs-page/Feedback";
+import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
+import { toAttribute } from "../../plugins/utils";
 
 interface GuideLayoutProps {
     breadcrumbs: string[];
