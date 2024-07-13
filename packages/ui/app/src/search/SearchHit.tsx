@@ -1,8 +1,8 @@
-import { useBasePath, useCloseMobileSidebar, useCloseSearchDialog } from "@/atoms";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { ReactElement, useMemo } from "react";
+import { useBasePath, useCloseMobileSidebar, useCloseSearchDialog } from "../atoms";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { EndpointRecordV3 } from "./content/EndpointRecordV3";

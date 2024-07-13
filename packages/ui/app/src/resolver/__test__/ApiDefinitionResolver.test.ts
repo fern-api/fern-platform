@@ -1,7 +1,7 @@
-import { DEFAULT_FEATURE_FLAGS } from "@/atoms";
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import fs from "fs";
 import path from "path";
+import { DEFAULT_FEATURE_FLAGS } from "../../atoms";
 import { ApiDefinitionResolver } from "../ApiDefinitionResolver";
 import { ApiTypeResolver } from "../ApiTypeResolver";
 import { ResolvedEndpointDefinition } from "../types";

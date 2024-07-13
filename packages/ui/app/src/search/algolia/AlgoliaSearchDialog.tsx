@@ -1,13 +1,13 @@
 // import { Dialog, Transition } from "@headlessui/react";
-import { CURRENT_VERSION_ATOM, POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM, useSidebarNodes } from "@/atoms";
 import * as Dialog from "@radix-ui/react-dialog";
 import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
+import { CURRENT_VERSION_ATOM, POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM, useSidebarNodes } from "../../atoms";
 
-import { IS_MOBILE_SCREEN_ATOM, SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "@/atoms";
+import { IS_MOBILE_SCREEN_ATOM, SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "../../atoms";
 import { SearchHits } from "../SearchHits";
 import { createSearchPlaceholderWithVersion } from "../util";
 import { SearchBox } from "./SearchBox";

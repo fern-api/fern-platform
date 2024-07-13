@@ -1,7 +1,7 @@
-import { LOGO_HREF_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM, useColors, useFile, useLogoHeight } from "@/atoms";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
+import { LOGO_HREF_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM, useColors, useFile, useLogoHeight } from "../atoms";
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { VersionDropdown } from "./VersionDropdown";

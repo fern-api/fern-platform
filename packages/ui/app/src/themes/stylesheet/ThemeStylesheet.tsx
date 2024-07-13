@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unknown-property */
-import { COLORS_ATOM, DOCS_ATOM, DOCS_LAYOUT_ATOM, FILES_ATOM, TABS_ATOM } from "@/atoms";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import { ReactElement } from "react";
+import { COLORS_ATOM, DOCS_ATOM, DOCS_LAYOUT_ATOM, FILES_ATOM, TABS_ATOM } from "../../atoms";
 import { renderThemeStylesheet } from "./renderThemeStylesheet";
 
 const TYPOGRAPHY_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.typography, isEqual);

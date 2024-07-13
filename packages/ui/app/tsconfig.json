@@ -4,10 +4,7 @@
     "composite": true,
     "noEmit": false,
     "outDir": "./dist",
-    "rootDir": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "rootDir": "."
   },
   "include": ["./src/**/*"],
   "references": [

@@ -1,8 +1,8 @@
-import { HAS_PLAYGROUND_ATOM } from "@/atoms";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { useAtomValue } from "jotai";
 import { FC } from "react";
+import { HAS_PLAYGROUND_ATOM } from "../atoms";
 import { useSetAndOpenPlayground } from "./PlaygroundContext";
 
 export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf }> = ({ state }) => {

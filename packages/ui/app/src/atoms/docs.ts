@@ -1,7 +1,9 @@
-import { DocsPage } from "@/next-app/DocsPage";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { atom } from "jotai";
-import { DEFAULT_FEATURE_FLAGS } from "./flags";
+import { atom, useAtomValue } from "jotai";
+import { selectAtom } from "jotai/utils";
+import { isEqual } from "lodash-es";
+import { DocsPage } from "../next-app/DocsPage";
+import { DEFAULT_FEATURE_FLAGS, FeatureFlags } from "./flags";
 
 export const DOCS_ATOM = atom<DocsPage.Props>({
     baseUrl: {
@@ -48,3 +50,9 @@ export const DOCS_ATOM = atom<DocsPage.Props>({
     theme: "default",
     user: undefined,
 } satisfies DocsPage.Props);
+
+export const FEATURE_FLAGS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.featureFlags, isEqual);
+
+export function useFeatureFlags(): FeatureFlags {
+    return useAtomValue(FEATURE_FLAGS_ATOM);
+}

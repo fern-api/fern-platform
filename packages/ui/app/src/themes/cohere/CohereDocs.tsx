@@ -1,10 +1,10 @@
-import { CONTENT_HEIGHT_ATOM, SCROLL_BODY_ATOM, SHOW_HEADER_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "@/atoms";
 import { FernScrollArea } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Router } from "next/router";
 import { ReactElement, memo, useEffect, useImperativeHandle, useRef } from "react";
+import { CONTENT_HEIGHT_ATOM, SCROLL_BODY_ATOM, SHOW_HEADER_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";

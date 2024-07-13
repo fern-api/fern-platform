@@ -1,6 +1,6 @@
-import { useCurrentNodeId } from "@/atoms";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
+import { useCurrentNodeId } from "../../atoms";
 import { Changelog } from "../../util/dateUtils";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";

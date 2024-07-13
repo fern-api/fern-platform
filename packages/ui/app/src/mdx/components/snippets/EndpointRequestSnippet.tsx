@@ -1,10 +1,10 @@
-import { useResolvedPath } from "@/atoms";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { useMemo } from "react";
 import { CodeExampleClientDropdown } from "../../../api-page/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../../api-page/endpoints/EndpointUrlWithOverflow";
 import { CodeSnippetExample } from "../../../api-page/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-page/examples/code-example";
+import { useResolvedPath } from "../../../atoms";
 import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
 import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";

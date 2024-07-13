@@ -1,8 +1,8 @@
-import { CURRENT_VERSION_ID_ATOM } from "@/atoms";
 import { assertNonNullish } from "@fern-ui/core-utils";
 import algolia, { SearchClient } from "algoliasearch";
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
+import { CURRENT_VERSION_ID_ATOM } from "../../atoms";
 import { useSearchConfig } from "../../services/useSearchService";
 
 export function useAlgoliaSearchClient(): [SearchClient, index: string] | undefined {

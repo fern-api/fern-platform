@@ -1,10 +1,10 @@
-import { DOCS_LAYOUT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, NAVBAR_LINKS_ATOM } from "@/atoms";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement } from "react";
+import { DOCS_LAYOUT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, NAVBAR_LINKS_ATOM } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
 
 interface HeaderSidebarSlugLinkProps {

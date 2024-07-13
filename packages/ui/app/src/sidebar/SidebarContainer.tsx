@@ -1,3 +1,7 @@
+import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
+import clsx from "clsx";
+import { useAtom, useAtomValue } from "jotai";
+import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
 import {
     CURRENT_TAB_INDEX_ATOM,
     DOCS_LAYOUT_ATOM,
@@ -6,11 +10,7 @@ import {
     TABS_ATOM,
     useIsMobileSidebarOpen,
     useSidebarNodes,
-} from "@/atoms";
-import { FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
-import clsx from "clsx";
-import { useAtom, useAtomValue } from "jotai";
-import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
+} from "../atoms";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { CollapseSidebarProvider } from "./CollapseSidebarContext";

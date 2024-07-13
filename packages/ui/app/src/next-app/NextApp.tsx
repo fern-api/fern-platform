@@ -1,4 +1,3 @@
-import { ThemeScript, store } from "@/atoms";
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { Provider as JotaiProvider } from "jotai";
@@ -9,6 +8,7 @@ import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
+import { ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import "../css/globals.scss";

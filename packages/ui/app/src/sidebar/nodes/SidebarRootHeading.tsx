@@ -1,8 +1,8 @@
-import { useCurrentNodeId } from "@/atoms";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import clsx from "clsx";
 import { ReactElement } from "react";
+import { useCurrentNodeId } from "../../atoms";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 

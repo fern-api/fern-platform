@@ -1,4 +1,3 @@
-import { NAVBAR_LINKS_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM, useColors, useOpenSearchDialog } from "@/atoms";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowRightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
@@ -6,6 +5,7 @@ import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
+import { NAVBAR_LINKS_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM, useColors, useOpenSearchDialog } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
 import { useSearchConfig } from "../services/useSearchService";

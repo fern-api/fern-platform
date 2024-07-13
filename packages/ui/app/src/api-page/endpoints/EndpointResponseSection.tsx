@@ -1,4 +1,4 @@
-import { useDomain } from "@/atoms";
+import { useDomain } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";

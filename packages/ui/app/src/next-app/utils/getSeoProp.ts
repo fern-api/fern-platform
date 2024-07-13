@@ -1,4 +1,3 @@
-import { getFontExtension } from "@/themes/stylesheet/getFontVariables";
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
@@ -9,6 +8,7 @@ import { visit } from "unist-util-visit";
 import { stringHasMarkdown } from "../../mdx/common/util";
 import { getFrontmatter } from "../../mdx/frontmatter";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
+import { getFontExtension } from "../../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
 
 function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1Read.File_>): DocsV1Read.File_ {

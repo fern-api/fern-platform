@@ -1,3 +1,11 @@
+import cn from "clsx";
+import { atom, useAtom, useAtomValue } from "jotai";
+import { selectAtom } from "jotai/utils";
+import { isEqual } from "lodash-es";
+import dynamic from "next/dynamic";
+import { memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { useCallbackOne } from "use-memo-one";
 import {
     BREAKPOINT_ATOM,
     CONTENT_HEIGHT_ATOM,
@@ -7,16 +15,8 @@ import {
     HASH_ATOM,
     MOBILE_SIDEBAR_ENABLED_ATOM,
     store,
-} from "@/atoms";
-import cn from "clsx";
-import { atom, useAtom, useAtomValue } from "jotai";
-import { selectAtom } from "jotai/utils";
-import { isEqual } from "lodash-es";
-import dynamic from "next/dynamic";
-import { memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import { useCallbackOne } from "use-memo-one";
-import { useAtomEffect } from "../../atoms";
+    useAtomEffect,
+} from "../../atoms";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";

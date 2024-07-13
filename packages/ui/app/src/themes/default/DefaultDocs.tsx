@@ -1,3 +1,6 @@
+import clsx from "clsx";
+import { useAtomValue } from "jotai";
+import { ReactElement, memo } from "react";
 import {
     CONTENT_HEIGHT_ATOM,
     DOCS_LAYOUT_ATOM,
@@ -6,10 +9,7 @@ import {
     SIDEBAR_DISMISSABLE_ATOM,
     useColors,
     useTheme,
-} from "@/atoms";
-import clsx from "clsx";
-import { useAtomValue } from "jotai";
-import { ReactElement, memo } from "react";
+} from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";

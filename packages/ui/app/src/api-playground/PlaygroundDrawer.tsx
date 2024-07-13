@@ -1,4 +1,3 @@
-import { useFlattenedApis, useSidebarNodes } from "@/atoms";
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -8,6 +7,7 @@ import { motion, useAnimate, useMotionValue } from "framer-motion";
 import { useAtom, useAtomValue } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, ReactElement, SetStateAction, memo, useCallback, useEffect, useMemo } from "react";
+import { useFlattenedApis, useSidebarNodes } from "../atoms";
 import {
     PLAYGROUND_FORM_STATE_ATOM,
     useClosePlayground,

@@ -1,7 +1,7 @@
-import { SLUG_ATOM } from "@/atoms";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { useAtomValue } from "jotai";
 import { useInView } from "react-intersection-observer";
+import { SLUG_ATOM } from "../atoms";
 import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 
 export declare namespace useApiPageCenterElement {

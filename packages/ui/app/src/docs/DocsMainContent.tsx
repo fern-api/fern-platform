@@ -1,8 +1,8 @@
-import { useFeatureFlags, useIsReady, useResolvedPath } from "@/atoms";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { Fragment, ReactElement, memo } from "react";
+import { useFeatureFlags, useIsReady, useResolvedPath } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
 import { ChangelogEntryPage } from "./ChangelogEntryPage";

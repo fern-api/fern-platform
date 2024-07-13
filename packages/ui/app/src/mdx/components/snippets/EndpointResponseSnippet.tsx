@@ -1,7 +1,7 @@
-import { useResolvedPath } from "@/atoms";
 import { useMemo } from "react";
 import { CodeSnippetExample } from "../../../api-page/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-page/examples/code-example";
+import { useResolvedPath } from "../../../atoms";
 import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";
 import { RequestSnippet } from "./types";

@@ -1,6 +1,3 @@
-import { CustomerAnalytics } from "@/analytics/types";
-import { DOCS_ATOM, FeatureFlags, useMessageHandler } from "@/atoms";
-import { JavascriptProvider } from "@/contexts/docs-context/DocsContextProvider";
 import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { type NextSeoProps } from "@fern-ui/next-seo";
@@ -8,8 +5,11 @@ import { useHydrateAtoms } from "jotai/utils";
 import { Redirect } from "next";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
+import { CustomerAnalytics } from "../analytics/types";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
+import { DOCS_ATOM, FeatureFlags, useMessageHandler } from "../atoms";
 import { FernUser } from "../auth";
+import { JavascriptProvider } from "../contexts/docs-context/DocsContextProvider";
 import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";

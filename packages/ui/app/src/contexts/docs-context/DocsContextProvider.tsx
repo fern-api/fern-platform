@@ -1,9 +1,9 @@
-import { CustomerAnalytics } from "@/analytics/CustomerAnalytics";
-import { DOCS_ATOM, DOMAIN_ATOM, FILES_ATOM } from "@/atoms";
 import { atom, useAtomValue } from "jotai";
 import Script from "next/script";
 import { memo } from "react";
+import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
 import { renderSegmentSnippet } from "../../analytics/segment";
+import { DOCS_ATOM, DOMAIN_ATOM, FILES_ATOM } from "../../atoms";
 
 const JS_ATOM = atom((get) => get(DOCS_ATOM).js);
 

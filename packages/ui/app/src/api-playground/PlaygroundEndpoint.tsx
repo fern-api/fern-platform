@@ -1,4 +1,3 @@
-import { useBasePath, useDomain, useFeatureFlags } from "@/atoms";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
@@ -8,6 +7,7 @@ import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } fro
 import urljoin from "url-join";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
+import { useBasePath, useDomain, useFeatureFlags } from "../atoms";
 import {
     ResolvedEndpointDefinition,
     ResolvedFormDataRequestProperty,

@@ -1,5 +1,5 @@
-import { useFeatureFlags, useIsReady, useIsSelectedSlug } from "@/atoms";
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { useFeatureFlags, useIsReady, useIsSelectedSlug } from "../atoms";
 
 export function useShouldLazyRender(slug: FernNavigation.Slug): boolean {
     const { isApiScrollingDisabled } = useFeatureFlags();

@@ -1,6 +1,6 @@
-import { FERN_STREAM_ATOM, useFeatureFlags, useResolvedPath } from "@/atoms";
 import { useAtom } from "jotai";
 import { memo, useEffect } from "react";
+import { FERN_STREAM_ATOM, useFeatureFlags, useResolvedPath } from "../../atoms";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";

@@ -1,9 +1,9 @@
-import { DOCS_ATOM } from "@/atoms";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import { ReactElement, memo } from "react";
+import { DOCS_ATOM } from "../atoms";
 import { GoogleTagManager } from "./GoogleTagManager";
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);

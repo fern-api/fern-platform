@@ -1,4 +1,3 @@
-import { FILES_ATOM, SLUG_ATOM, useFeatureFlags } from "@/atoms";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
@@ -14,6 +13,7 @@ import {
     useMemo,
 } from "react";
 import Zoom from "react-medium-image-zoom";
+import { FILES_ATOM, SLUG_ATOM, useFeatureFlags } from "../../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { FernImage } from "../../../components/FernImage";
 import { FernLink } from "../../../components/FernLink";
