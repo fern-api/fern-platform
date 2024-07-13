@@ -4,11 +4,11 @@ import type { ElementContent, Root } from "hast";
 import { SKIP, visit } from "unist-util-visit";
 import { parseStringStyle } from "../../util/parseStringStyle";
 import { INTRINSIC_JSX_TAGS } from "../common/intrinsict-elements";
-import { JSX_COMPONENTS } from "../mdx-components";
+import { MDX_COMPONENTS } from "../components";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
 export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean } = {}): (tree: Root) => void {
-    const SUPPORTED_JSX_TAGS = [...Object.keys(JSX_COMPONENTS), ...INTRINSIC_JSX_TAGS];
+    const SUPPORTED_JSX_TAGS = [...Object.keys(MDX_COMPONENTS), ...INTRINSIC_JSX_TAGS];
     return function (tree: Root): void {
         visit(tree, (node, index, parent) => {
             if (index == null) {

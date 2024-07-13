@@ -3,12 +3,14 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
 import type { VFile } from "vfile";
-import { toCustomLayoutHastNode } from "../../layout/CustomLayout";
-import { toGuideLayoutHastNode } from "../../layout/GuideLayout";
-import { toOverviewLayoutHastNode } from "../../layout/OverviewLayout";
-import { toPageLayoutHastNode } from "../../layout/PageLayout";
-import { toReferenceLayoutHastNode } from "../../layout/ReferenceLayout";
-import { FernDocsFrontmatter } from "../frontmatter";
+import {
+    toCustomLayoutHastNode,
+    toGuideLayoutHastNode,
+    toOverviewLayoutHastNode,
+    toPageLayoutHastNode,
+    toReferenceLayoutHastNode,
+} from "../components/layout";
+import type { FernDocsFrontmatter } from "../frontmatter";
 import { makeToc } from "./makeToc";
 import { wrapChildren } from "./to-estree";
 
