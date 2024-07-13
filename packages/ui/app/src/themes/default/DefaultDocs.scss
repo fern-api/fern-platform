@@ -100,7 +100,11 @@
     }
 
     .fern-body {
-        @apply relative mx-auto flex min-h-0 w-full min-w-0 max-w-page-width flex-1;
+        @apply relative flex min-h-0 w-full min-w-0 flex-1;
+    }
+
+    .fern-body:not(:has(.fern-custom-layout)) {
+        @apply max-w-page-width mx-auto;
     }
 
     .fern-main {

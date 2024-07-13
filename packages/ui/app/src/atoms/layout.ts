@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import { atom } from "jotai/vanilla";
 import { TABS_ATOM } from "./navigation";
 import { MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "./viewport";
@@ -93,4 +93,27 @@ export const CONTENT_HEIGHT_ATOM = atom(
 export const SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM = atom<boolean>((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
     return layout?.disableHeader || layout?.searchbarPlacement !== "HEADER";
+});
+
+export const PAGE_WIDTH_PX_ATOM = atom<number | undefined>((get) => {
+    const layout = get(DOCS_LAYOUT_ATOM);
+    return layout?.pageWidth == null
+        ? 88 * 16
+        : visitDiscriminatedUnion(layout.pageWidth)._visit({
+              px: (px) => px.value,
+              rem: (rem) => rem.value * 16,
+              full: () => undefined,
+              _other: () => 88 * 16,
+          });
+});
+
+export const CONTENT_WIDTH_PX_ATOM = atom<number>((get) => {
+    const layout = get(DOCS_LAYOUT_ATOM);
+    return layout?.contentWidth == null
+        ? 44 * 16
+        : visitDiscriminatedUnion(layout.contentWidth)._visit({
+              px: (px) => px.value,
+              rem: (rem) => rem.value * 16,
+              _other: () => 44 * 16,
+          });
 });

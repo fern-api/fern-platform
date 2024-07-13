@@ -9,7 +9,7 @@ interface CustomLayoutProps {
 
 export function CustomLayout({ children }: CustomLayoutProps): ReactElement {
     return (
-        <main>
+        <main className="fern-custom-layout">
             {children}
 
             <BuiltWithFern className="w-fit mx-auto my-8" />

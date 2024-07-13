@@ -19,6 +19,7 @@ import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAncho
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useContentWidth } from "../layout/ContentWidthContext";
 import { useFrontmatter } from "./frontmatter-context";
 
 /**
@@ -95,6 +96,7 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
 
 export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, enableZoom, style, ...rest }) => {
     const { files } = useDocsContext();
+    const contentWidth = useContentWidth();
     const { "no-image-zoom": noImageZoom } = useFrontmatter();
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
@@ -111,13 +113,21 @@ export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoo
         return { type: "url", url: src };
     }, [files, src]);
 
-    const width = stripUnits(w);
-    const height = stripUnits(h);
+    let width = stripUnits(w);
+    let height = stripUnits(h);
+
+    if (contentWidth != null && width != null && height != null) {
+        const newWidth = Math.min(width, contentWidth);
+        if (width !== newWidth) {
+            width = newWidth;
+            height = (newWidth / width) * height;
+        }
+    }
 
     const fernImage = (
         <FernImage
             src={fernImageSrc}
-            width={width}
+            width={width ?? contentWidth}
             height={height}
             style={{
                 width: w,
@@ -142,15 +152,15 @@ export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoo
 };
 
 // preserves pixel widths and heights, but strips units from other values
-function stripUnits(str: string | number | undefined): number | `${number}` | undefined {
+function stripUnits(str: string | number | undefined): number | undefined {
     if (str == null || typeof str === "number") {
         return str;
     } else if (/^\d+$/.test(str)) {
         // if str is a number, return it as a string
-        return str as `${number}`;
+        return str.includes(".") ? parseFloat(str) : parseInt(str);
     } else if (/^\d+(\.\d+)?(px)$/.test(str)) {
         // if str is a number followed by "px", return the number as a string
-        return str.slice(0, -2) as `${number}`;
+        return str.includes(".") ? parseFloat(str.slice(0, -2)) : parseInt(str.slice(0, -2));
     }
 
     // TODO: handle rem
