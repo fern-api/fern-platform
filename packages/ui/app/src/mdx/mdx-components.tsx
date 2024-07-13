@@ -32,7 +32,7 @@ import { CodeBlock } from "./components/CodeBlock";
 import { CodeGroup } from "./components/CodeGroup";
 import { Column, ColumnGroup } from "./components/ColumnGroup";
 import { Frame } from "./components/Frame";
-import { HTML_TABLE_COMPONENTS } from "./components/HTMLTable";
+import { Table } from "./components/HTMLTable";
 import { IFrame } from "./components/IFrame";
 import { InstallSdk } from "./components/InstallSdk";
 import { ParamField } from "./components/ParamField";
@@ -111,10 +111,11 @@ export const JSX_COMPONENTS = {
     Li,
     A,
     Strong,
+    Table,
 };
 
 export const HTML_COMPONENTS: MDXComponents = {
-    ...HTML_TABLE_COMPONENTS,
+    table: Table,
     h1: (props) => HeadingRenderer(1, props),
     h2: (props) => HeadingRenderer(2, props),
     h3: (props) => HeadingRenderer(3, props),
