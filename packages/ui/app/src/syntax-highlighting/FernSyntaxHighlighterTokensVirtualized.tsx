@@ -20,7 +20,7 @@ interface CodeBlockContext {
     lang: string;
 }
 
-const CodeBlockTable = forwardRef<HTMLTableElement, FernScrollArea.Props & { context?: CodeBlockContext }>(
+const CodeBlockTable = forwardRef<TableElement, FernScrollArea.Props & { context?: CodeBlockContext }>(
     ({ children, context, ...props }, ref) => {
         const fontSize = context?.fontSize ?? "base";
         const highlightStyle = context?.highlightStyle;
@@ -60,7 +60,7 @@ const CodeBlockTable = forwardRef<HTMLTableElement, FernScrollArea.Props & { con
 
 CodeBlockTable.displayName = "CodeBlockTable";
 
-const CodeBlockTableRow = forwardRef<HTMLTableRowElement, ItemProps<Element> & { context?: CodeBlockContext }>(
+const CodeBlockTableRow = forwardRef<TableRowElement, ItemProps<Element> & { context?: CodeBlockContext }>(
     ({ context, ...props }, ref) => (
         <tr
             {...props}

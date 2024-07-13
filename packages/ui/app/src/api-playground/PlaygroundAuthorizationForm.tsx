@@ -7,7 +7,7 @@ import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
 import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Key } from "react-feather";
-import { Callout } from "../mdx/components/Callout";
+import { Callout } from "../mdx/components/Callout/Callout";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";

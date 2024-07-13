@@ -1,5 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { EndpointAvailabilityTag } from "../../api-page/endpoints/EndpointAvailabilityTag";
+import { EndpointAvailabilityTag } from "../../../api-page/endpoints/EndpointAvailabilityTag";
 
 export declare namespace Availability {
     export interface Props {

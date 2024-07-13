@@ -13,13 +13,13 @@ import {
     useMemo,
 } from "react";
 import Zoom from "react-medium-image-zoom";
-import { useFeatureFlags } from "../atoms/flags";
-import { SLUG_ATOM } from "../atoms/location";
-import { AbsolutelyPositionedAnchor } from "../commons/AbsolutelyPositionedAnchor";
-import { FernImage } from "../components/FernImage";
-import { FernLink } from "../components/FernLink";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
-import { useFrontmatter } from "./frontmatter-context";
+import { useFeatureFlags } from "../../../atoms/flags";
+import { SLUG_ATOM } from "../../../atoms/location";
+import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
+import { FernImage } from "../../../components/FernImage";
+import { FernLink } from "../../../components/FernLink";
+import { useDocsContext } from "../../../contexts/docs-context/useDocsContext";
+import { useFrontmatter } from "../../frontmatter-context";
 
 /**
  * By default, next will use /host/current/slug in SSG.

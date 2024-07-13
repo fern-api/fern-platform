@@ -2,15 +2,15 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { useAtom } from "jotai";
 import { useCallback, useMemo } from "react";
-import { CodeExampleClientDropdown } from "../../api-page/endpoints/CodeExampleClientDropdown";
-import { EndpointUrlWithOverflow } from "../../api-page/endpoints/EndpointUrlWithOverflow";
-import { CodeSnippetExample } from "../../api-page/examples/CodeSnippetExample";
-import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../api-page/examples/code-example";
-import { FERN_LANGUAGE_ATOM } from "../../atoms/lang";
-import { useResolvedPath } from "../../atoms/navigation";
-import { ApiReferenceButton } from "../../components/ApiReferenceButton";
-import { ResolvedEndpointDefinition } from "../../resolver/types";
-import { findEndpoint } from "../../util/processRequestSnippetComponents";
+import { CodeExampleClientDropdown } from "../../../api-page/endpoints/CodeExampleClientDropdown";
+import { EndpointUrlWithOverflow } from "../../../api-page/endpoints/EndpointUrlWithOverflow";
+import { CodeSnippetExample } from "../../../api-page/examples/CodeSnippetExample";
+import { CodeExample, CodeExampleGroup, generateCodeExamples } from "../../../api-page/examples/code-example";
+import { FERN_LANGUAGE_ATOM } from "../../../atoms/lang";
+import { useResolvedPath } from "../../../atoms/navigation";
+import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
+import { ResolvedEndpointDefinition } from "../../../resolver/types";
+import { findEndpoint } from "../../../util/processRequestSnippetComponents";
 
 export declare namespace RequestSnippet {
     export interface Props {
