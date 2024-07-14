@@ -1,10 +1,19 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
+import { captureMessage } from "@sentry/nextjs";
+import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { useCallbackOne } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
-import { PlaygroundRequestFormState } from "../api-playground/types";
-import { APIS_ATOM } from "./apis";
+import type {
+    PlaygroundEndpointRequestFormState,
+    PlaygroundRequestFormState,
+    PlaygroundWebSocketRequestFormState,
+} from "../api-playground/types";
+import { getInitialEndpointRequestFormStateWithExample } from "../api-playground/utils";
+import { isEndpoint, type ResolvedEndpointDefinition, type ResolvedWebSocketChannel } from "../resolver/types";
+import { APIS_ATOM, FLATTENED_APIS_ATOM } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { BELOW_HEADER_HEIGHT_ATOM } from "./layout";
@@ -93,12 +102,6 @@ PLAYGROUND_NODE.debugLabel = "PLAYGROUND_NODE";
 export const PREV_PLAYGROUND_NODE_ID = atom<FernNavigation.NodeId | undefined>(undefined);
 PREV_PLAYGROUND_NODE_ID.debugLabel = "PREV_PLAYGROUND_NODE_ID";
 
-export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, PlaygroundRequestFormState | undefined>>(
-    "api-playground-selection-state-alpha",
-    {},
-);
-PLAYGROUND_FORM_STATE_ATOM.debugLabel = "PLAYGROUND_FORM_STATE_ATOM";
-
 export function useHasPlayground(): boolean {
     return useAtomValue(HAS_PLAYGROUND_ATOM);
 }
@@ -167,4 +170,151 @@ export function useInitPlaygroundRouter(): void {
             }
         }),
     );
+}
+
+const playgroundFormStateFamily = atomFamily((nodeId: FernNavigation.NodeId) => {
+    const formStateAtom = atomWithStorage<PlaygroundRequestFormState | undefined>(nodeId, undefined);
+    formStateAtom.debugLabel = `playgroundFormStateAtom-${nodeId}`;
+    return formStateAtom;
+});
+
+export const usePlaygroundFormStateAtom = (
+    nodeId: FernNavigation.NodeId,
+): WritableAtom<
+    PlaygroundRequestFormState | undefined,
+    [SetStateAction<PlaygroundRequestFormState | undefined>],
+    void
+> => {
+    const formStateAtom = playgroundFormStateFamily(nodeId);
+
+    useEffect(() => {
+        return () => {
+            playgroundFormStateFamily.remove(nodeId);
+        };
+    }, [formStateAtom, nodeId]);
+
+    return formStateAtom;
+};
+
+export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeApiLeaf) => void {
+    return useAtomCallback(
+        useCallbackOne((get, set, node: FernNavigation.NavigationNodeApiLeaf) => {
+            const formStateAtom = playgroundFormStateFamily(node.id);
+            set(PLAYGROUND_NODE_ID, node.id);
+            const apiPackage = get(FLATTENED_APIS_ATOM)[node.apiDefinitionId];
+            const formState = get(formStateAtom);
+            if (formState != null) {
+                playgroundFormStateFamily.remove(node.id);
+                return;
+            }
+
+            if (apiPackage == null) {
+                captureMessage("Could not find package for API playground selection state", "fatal");
+                playgroundFormStateFamily.remove(node.id);
+                return;
+            }
+            if (node.type === "endpoint") {
+                const endpoint = apiPackage.apiDefinitions
+                    .filter(isEndpoint)
+                    .find((definition) => definition.id === node.endpointId);
+                if (endpoint == null) {
+                    captureMessage("Could not find endpoint for API playground selection state", "fatal");
+                    return;
+                }
+                set(
+                    formStateAtom,
+                    getInitialEndpointRequestFormStateWithExample(
+                        endpoint.auth,
+                        endpoint,
+                        endpoint.examples[0],
+                        apiPackage.types,
+                    ),
+                );
+            } else if (node.type === "webSocket") {
+                const webSocket = apiPackage.apiDefinitions.find(
+                    (definition) => !isEndpoint(definition) && definition.id === node.webSocketId,
+                );
+                if (webSocket == null) {
+                    captureMessage("Could not find websocket for API playground selection state", "fatal");
+                    playgroundFormStateFamily.remove(node.id);
+                    return;
+                }
+            }
+            playgroundFormStateFamily.remove(node.id);
+        }, []),
+    );
+}
+
+const EMPTY_ENDPOINT_REQUEST_FORM_STATE: PlaygroundEndpointRequestFormState = {
+    type: "endpoint",
+    auth: undefined,
+    headers: {},
+    pathParameters: {},
+    queryParameters: {},
+    body: undefined,
+};
+
+export function usePlaygroundEndpointFormState(
+    endpoint: ResolvedEndpointDefinition,
+): [PlaygroundEndpointRequestFormState, Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>] {
+    const formStateAtom = playgroundFormStateFamily(endpoint.nodeId);
+    const formState = useAtomValue(playgroundFormStateFamily(endpoint.nodeId));
+
+    return [
+        formState?.type === "endpoint" ? formState : EMPTY_ENDPOINT_REQUEST_FORM_STATE,
+        useAtomCallback(
+            useCallbackOne(
+                (get, set, update: SetStateAction<PlaygroundEndpointRequestFormState>) => {
+                    const currentFormState = get(formStateAtom);
+                    const newFormState =
+                        typeof update === "function"
+                            ? update(
+                                  currentFormState?.type === "endpoint"
+                                      ? currentFormState
+                                      : EMPTY_ENDPOINT_REQUEST_FORM_STATE,
+                              )
+                            : update;
+                    set(formStateAtom, newFormState);
+                },
+                [formStateAtom, endpoint.nodeId],
+            ),
+        ),
+    ];
+}
+
+const EMPTY_WEBSOCKET_REQUEST_FORM_STATE: PlaygroundWebSocketRequestFormState = {
+    type: "websocket",
+    auth: undefined,
+    headers: {},
+    pathParameters: {},
+    queryParameters: {},
+    messages: {},
+};
+
+export function usePlaygroundWebsocketFormState(
+    channel: ResolvedWebSocketChannel,
+): [PlaygroundWebSocketRequestFormState, Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>] {
+    const formStateAtom = playgroundFormStateFamily(channel.nodeId);
+    const formState = useAtomValue(playgroundFormStateFamily(channel.nodeId));
+
+    return [
+        formState?.type === "websocket" ? formState : EMPTY_WEBSOCKET_REQUEST_FORM_STATE,
+        useAtomCallback(
+            useCallbackOne(
+                (get, set, update: SetStateAction<PlaygroundWebSocketRequestFormState>) => {
+                    const currentFormState = get(formStateAtom);
+                    const newFormState =
+                        typeof update === "function"
+                            ? update(
+                                  currentFormState?.type === "websocket"
+                                      ? currentFormState
+                                      : EMPTY_WEBSOCKET_REQUEST_FORM_STATE,
+                              )
+                            : update;
+                    set(formStateAtom, newFormState);
+                },
+                [formStateAtom, channel.nodeId],
+            ),
+        ),
+    ];
 }

@@ -29,10 +29,9 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
             <SearchDialog />
             <BgImageGradient />
             <NavigationContextProvider basePath={baseUrl.basePath}>
-                <PlaygroundContextProvider>
-                    <ThemedDocs theme={pageProps.theme} />
-                </PlaygroundContextProvider>
+                <ThemedDocs theme={pageProps.theme} />
             </NavigationContextProvider>
+            <PlaygroundContextProvider />
             <JavascriptProvider />
         </>
     );

@@ -1,13 +1,13 @@
 import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { merge } from "lodash-es";
-import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
+import { usePlaygroundWebsocketFormState } from "../atoms";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
-import { PlaygroundWebSocketRequestFormState } from "./types";
 import { buildRequestUrl, buildUnredactedHeadersWebsocket, getDefaultValueForType } from "./utils";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
@@ -15,17 +15,12 @@ const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
 
 interface PlaygroundWebSocketProps {
     websocket: ResolvedWebSocketChannel;
-    formState: PlaygroundWebSocketRequestFormState;
-    setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
     types: Record<string, ResolvedTypeDefinition>;
 }
 
-export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
-    websocket,
-    formState,
-    setFormState,
-    types,
-}): ReactElement => {
+export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, types }): ReactElement => {
+    const [formState, setFormState] = usePlaygroundWebsocketFormState(websocket);
+
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
     const { messages, pushMessage, clearMessages } = useWebsocketMessages(websocket.id);
     const [error, setError] = useState<string | null>(null);

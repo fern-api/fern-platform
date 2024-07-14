@@ -5,10 +5,10 @@ import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icon
 import cn, { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { useSetAndOpenPlayground } from "../atoms";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
 import { ResolvedApiDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { useSetAndOpenPlayground } from "./PlaygroundContext";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
