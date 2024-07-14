@@ -2,7 +2,6 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { atom, useAtomValue } from "jotai";
 import { atomWithLocation } from "jotai-location";
-import { isEmpty } from "lodash-es";
 import { Router } from "next/router";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
 import { useAtomEffect } from "./hooks";
@@ -22,7 +21,7 @@ export const LOCATION_ATOM = atomWithLocation({
 });
 LOCATION_ATOM.debugLabel = "LOCATION_ATOM";
 
-export const HASH_ATOM = atom((get) => get(LOCATION_ATOM).hash);
+export const HASH_ATOM = atom((get) => get(LOCATION_ATOM).hash?.slice(1));
 HASH_ATOM.debugLabel = "HASH_ATOM";
 
 export const SLUG_ATOM = atom((get) => {
@@ -46,10 +45,10 @@ export function useRouteListener(route: string, callback: (hash: string | undefi
             (get) => {
                 const location = get(LOCATION_ATOM);
                 if (location.pathname?.toLowerCase() === route.toLowerCase()) {
-                    setTimeout(() => callbackRef(isEmpty(location.hash) ? undefined : location.hash), 0);
+                    setTimeout(() => callbackRef(get(HASH_ATOM)), 0);
                 }
             },
-            [route],
+            [route, callbackRef],
         ),
     );
 }
