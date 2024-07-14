@@ -1,4 +1,4 @@
-import { Snippets } from "@fern-api/fdr-sdk";
+import { APIV1Read, Snippets } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues } from "lodash-es";
@@ -7,6 +7,7 @@ import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringif
 import {
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
+    ResolvedExampleEndpointCall,
     ResolvedExampleEndpointRequest,
     ResolvedFormValue,
     ResolvedHttpRequestBodyShape,
@@ -24,7 +25,9 @@ import {
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundFormStateBody,
+    PlaygroundRequestFormAuth,
     PlaygroundRequestFormState,
+    PlaygroundWebSocketRequestFormState,
     convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
 } from "./types";
 
@@ -815,3 +818,87 @@ export function shouldRenderInline(
     });
 }
 export { unknownToString };
+
+export function getInitialEndpointRequestFormState(
+    auth: APIV1Read.ApiAuth | null | undefined,
+    endpoint: ResolvedEndpointDefinition | undefined,
+    types: Record<string, ResolvedTypeDefinition>,
+): PlaygroundEndpointRequestFormState {
+    return {
+        type: "endpoint",
+        auth: getInitialAuthState(auth),
+        headers: getDefaultValueForObjectProperties(endpoint?.headers, types),
+        pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters, types),
+        queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters, types),
+        body: getDefaultValuesForBody(endpoint?.requestBody?.shape, types),
+    };
+}
+
+export function getInitialWebSocketRequestFormState(
+    auth: APIV1Read.ApiAuth | null | undefined,
+    webSocket: ResolvedWebSocketChannel | undefined,
+    types: Record<string, ResolvedTypeDefinition>,
+): PlaygroundWebSocketRequestFormState {
+    return {
+        type: "websocket",
+
+        auth: getInitialAuthState(auth),
+        headers: getDefaultValueForObjectProperties(webSocket?.headers, types),
+        pathParameters: getDefaultValueForObjectProperties(webSocket?.pathParameters, types),
+        queryParameters: getDefaultValueForObjectProperties(webSocket?.queryParameters, types),
+
+        messages: Object.fromEntries(
+            webSocket?.messages.map((message) => [message.type, getDefaultValueForType(message.body, types)]) ?? [],
+        ),
+    };
+}
+
+function getInitialAuthState(auth: APIV1Read.ApiAuth | null | undefined): PlaygroundRequestFormAuth | undefined {
+    if (auth == null) {
+        return undefined;
+    }
+    return visitDiscriminatedUnion(auth, "type")._visit<PlaygroundRequestFormAuth | undefined>({
+        header: (header) => ({ type: "header", headers: { [header.headerWireValue]: "" } }),
+        bearerAuth: () => ({ type: "bearerAuth", token: "" }),
+        basicAuth: () => ({ type: "basicAuth", username: "", password: "" }),
+        _other: () => undefined,
+    });
+}
+
+export function getInitialEndpointRequestFormStateWithExample(
+    auth: APIV1Read.ApiAuth | null | undefined,
+    endpoint: ResolvedEndpointDefinition | undefined,
+    exampleCall: ResolvedExampleEndpointCall | undefined,
+    types: Record<string, ResolvedTypeDefinition>,
+): PlaygroundEndpointRequestFormState {
+    if (exampleCall == null) {
+        return getInitialEndpointRequestFormState(auth, endpoint, types);
+    }
+    return {
+        type: "endpoint",
+        auth: getInitialAuthState(auth),
+        headers: exampleCall.headers,
+        pathParameters: exampleCall.pathParameters,
+        queryParameters: exampleCall.queryParameters,
+        body:
+            exampleCall.requestBody?.type === "form"
+                ? {
+                      type: "form-data",
+                      value: mapValues(
+                          exampleCall.requestBody.value,
+                          (exampleValue): PlaygroundFormDataEntryValue =>
+                              exampleValue.type === "file"
+                                  ? { type: "file", value: undefined }
+                                  : exampleValue.type === "fileArray"
+                                    ? { type: "fileArray", value: [] }
+                                    : { type: "json", value: exampleValue.value },
+                      ),
+                  }
+                : exampleCall.requestBody?.type === "bytes"
+                  ? {
+                        type: "octet-stream",
+                        value: undefined,
+                    }
+                  : { type: "json", value: exampleCall.requestBody?.value },
+    };
+}
