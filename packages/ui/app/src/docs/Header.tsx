@@ -5,18 +5,16 @@ import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
-import { SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
-import { useOpenSearchDialog } from "../atoms/sidebar";
+import { NAVBAR_LINKS_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM, useColors, useOpenSearchDialog } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
 import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
+import { ThemeButton } from "../themes";
 import { getGitHubRepo } from "../util/github";
 import { GitHubWidget } from "./GitHubWidget";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { MobileMenuButton } from "./MobileMenuButton";
-import { ThemeButton } from "./ThemeButton";
 
 export declare namespace Header {
     export interface Props {
@@ -29,8 +27,8 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     { className, style },
     ref,
 ) {
-    const { navbarLinks } = useDocsContext();
-    const { colors } = useDocsContext();
+    const navbarLinks = useAtomValue(NAVBAR_LINKS_ATOM);
+    const colors = useColors();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const [searchService] = useSearchConfig();
@@ -73,7 +71,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                     );
                 })}
 
-                {colors.dark && colors.light && <ThemeButton className="hidden lg:flex" />}
+                {colors.dark && colors.light && <ThemeButton />}
             </FernButtonGroup>
         </div>
     );

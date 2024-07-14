@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Fragment, ReactElement } from "react";
-import { useSidebarNodes } from "../atoms/navigation";
+import { useSidebarNodes } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
 import { MdxContent } from "../mdx/MdxContent";

@@ -1,8 +1,8 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "./rmiz";
 @import "./base";
-@import "../mdx/base-components";
 @import "@fern-ui/components/src/index";
 @import "./components";
 @import "../syntax-highlighting/FernSyntaxHighlighter";
@@ -10,11 +10,11 @@
 @import "../api-playground/PlaygroundEndpoint";
 @import "../commons/AbsolutelyPositionedAnchor";
 @import "../docs/BgImageGradient";
-@import "../mdx/components/components";
+@import "../mdx/components";
 @import "./utilities";
 @import "../commons/HorizontalOverflowMask";
 @import "../docs/NProgress";
 @import "../docs/HeaderLogoSection";
-@import "../themes/ThemedDocs";
+@import "../themes";
 @import "../docs/Header";
 @import "../sidebar/Sidebar";

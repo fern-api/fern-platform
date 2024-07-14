@@ -138,15 +138,15 @@ module.exports = {
                     dark: "rgba(151, 90, 90, 0.05)",
                 },
 
-                "card-background": "var(--card-background)",
-                "card-solid": "var(--card-background-solid)",
+                "card-background": "var(--bg-color-card)",
+                "card-solid": "var(--bg-color-card-solid)",
                 "sidebar-background": "var(--sidebar-background)",
                 "header-background": "var(--header-background)",
 
                 // "border-default": "var(--grayscale-a5)",
                 "border-default": "var(--border)",
                 "border-concealed": "var(--border-concealed)",
-                "card-border": "var(--card-border, var(--border))",
+                "card-border": "var(--border-color-card, var(--border))",
                 "border-accent-muted": "rgba(var(--accent), 0.50)",
                 "border-warning": "var(--amber-a8)",
                 "border-success": "var(--green-a8)",

@@ -1,7 +1,7 @@
 import { FernButton } from "@fern-ui/components";
 import { Cross1Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
-import { useCloseMobileSidebar, useIsMobileSidebarOpen, useOpenMobileSidebar } from "../atoms/sidebar";
+import { useCloseMobileSidebar, useIsMobileSidebarOpen, useOpenMobileSidebar } from "../atoms";
 
 export function MobileMenuButton(): ReactElement {
     const isMobileSidebarOpen = useIsMobileSidebarOpen();

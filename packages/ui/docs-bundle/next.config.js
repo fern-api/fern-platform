@@ -30,7 +30,7 @@ const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    transpilePackages: ["next-mdx-remote", "esbuild"],
+    transpilePackages: ["next-mdx-remote", "esbuild", "jotai-devtools"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,

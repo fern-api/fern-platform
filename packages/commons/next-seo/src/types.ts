@@ -1,3 +1,5 @@
+import { BreadcrumbListSchema } from "./jsonld";
+
 export type OpeningHoursSpecification = {
     opens: string;
     closes: string;
@@ -236,6 +238,8 @@ export interface OpenGraph {
     audio?: ReadonlyArray<OpenGraphMedia>;
     defaultImageHeight?: number;
     defaultImageWidth?: number;
+    defaultVideoHeight?: number;
+    defaultVideoWidth?: number;
     locale?: string;
     siteName?: string;
     profile?: OpenGraphProfile;
@@ -461,34 +465,9 @@ export interface AdditionalRobotsProps {
 export interface NextSeoProps {
     title?: string;
     titleTemplate?: string;
-    defaultTitle?: string;
     themeColor?: string;
     noindex?: boolean;
     nofollow?: boolean;
-    robotsProps?: AdditionalRobotsProps;
-    description?: string;
-    canonical?: string;
-    mobileAlternate?: MobileAlternate;
-    languageAlternates?: ReadonlyArray<LanguageAlternate>;
-    openGraph?: OpenGraph;
-    facebook?: { appId: string };
-    twitter?: Twitter;
-    additionalMetaTags?: ReadonlyArray<MetaTag>;
-    additionalLinkTags?: ReadonlyArray<LinkTag>;
-    children?: never;
-}
-
-export interface DefaultSeoProps {
-    dangerouslySetAllPagesToNoIndex?: boolean;
-    dangerouslySetAllPagesToNoFollow?: boolean;
-    defaultOpenGraphImageWidth?: number;
-    defaultOpenGraphImageHeight?: number;
-    defaultOpenGraphVideoWidth?: number;
-    defaultOpenGraphVideoHeight?: number;
-    title?: string;
-    titleTemplate?: string;
-    themeColor?: string;
-    defaultTitle?: string;
     norobots?: boolean;
     robotsProps?: AdditionalRobotsProps;
     description?: string;
@@ -501,5 +480,6 @@ export interface DefaultSeoProps {
     additionalMetaTags?: ReadonlyArray<MetaTag>;
     additionalLinkTags?: ReadonlyArray<LinkTag>;
     children?: never;
+    breadcrumbList?: BreadcrumbListSchema;
+    viewport?: string;
 }
-export interface BuildTagsParams extends DefaultSeoProps, NextSeoProps {}

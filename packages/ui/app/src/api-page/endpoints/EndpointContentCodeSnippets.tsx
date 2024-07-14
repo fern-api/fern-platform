@@ -4,7 +4,7 @@ import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { useNavigationNodes } from "../../atoms/navigation";
+import { useNavigationNodes } from "../../atoms";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";

@@ -1,4 +1,5 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import * as Sentry from "@sentry/nextjs";
 import { compile, match } from "path-to-regexp";
 import urljoin from "url-join";
 
@@ -34,12 +35,24 @@ export function getRedirectForPath(
         if (redirect.source === path) {
             return redirect;
         }
-        const sourceFn = match(redirect.source, { decode: false });
-        const result = sourceFn(path);
-        if (result) {
-            const destFn = compile(redirect.destination, { encode: false });
-            const destination = destFn(result.params);
-            return { source: path, destination };
+        try {
+            const sourceFn = match(redirect.source, { decode: false });
+            const result = sourceFn(path);
+            if (result) {
+                const destFn = compile(redirect.destination, { encode: false });
+                const destination = destFn(result.params);
+                return { source: path, destination };
+            }
+        } catch (e) {
+            Sentry.captureException(e, {
+                level: "warning",
+                extra: {
+                    context: "DocsBundle.utils",
+                    errorSource: "getRedirectForPath",
+                    errorDescription: "Failed to match redirect path",
+                    data: { baseUrl, path, redirect },
+                },
+            });
         }
     }
     return undefined;

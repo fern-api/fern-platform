@@ -3,12 +3,12 @@ import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { compact, once } from "lodash-es";
-import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useState } from "react";
+import { FC, ReactElement, useCallback, useState } from "react";
 import urljoin from "url-join";
+import { useCallbackOne } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
-import { useFeatureFlags } from "../atoms/flags";
-import { useBasePath, useDomain } from "../atoms/navigation";
+import { useBasePath, useDomain, useFeatureFlags, usePlaygroundEndpointFormState } from "../atoms";
 import {
     ResolvedEndpointDefinition,
     ResolvedFormDataRequestProperty,
@@ -21,22 +21,17 @@ import { blobToDataURL } from "./fetch-utils/blobToDataURL";
 import { executeProxyFile } from "./fetch-utils/executeProxyFile";
 import { executeProxyRest } from "./fetch-utils/executeProxyRest";
 import { executeProxyStream } from "./fetch-utils/executeProxyStream";
-import type {
-    PlaygroundEndpointRequestFormState,
-    PlaygroundFormStateBody,
-    ProxyRequest,
-    SerializableFile,
-    SerializableFormDataEntryValue,
-} from "./types";
+import type { PlaygroundFormStateBody, ProxyRequest, SerializableFile, SerializableFormDataEntryValue } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
-import { buildEndpointUrl, buildUnredactedHeaders } from "./utils";
+import {
+    buildEndpointUrl,
+    buildUnredactedHeaders,
+    getInitialEndpointRequestFormState,
+    getInitialEndpointRequestFormStateWithExample,
+} from "./utils";
 
 interface PlaygroundEndpointProps {
     endpoint: ResolvedEndpointDefinition;
-    formState: PlaygroundEndpointRequestFormState;
-    setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
-    resetWithExample: () => void;
-    resetWithoutExample: () => void;
     types: Record<string, ResolvedTypeDefinition>;
 }
 
@@ -56,14 +51,19 @@ const getAppBuildwithfernCom = once((): string => {
     return `https://${APP_BUILDWITHFERN_COM}`;
 });
 
-export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({
-    endpoint,
-    formState,
-    setFormState,
-    resetWithExample,
-    resetWithoutExample,
-    types,
-}): ReactElement => {
+export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, types }): ReactElement => {
+    const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);
+
+    const resetWithExample = useCallbackOne(() => {
+        setFormState(
+            getInitialEndpointRequestFormStateWithExample(endpoint.auth, endpoint, endpoint.examples[0], types),
+        );
+    }, [endpoint, types]);
+
+    const resetWithoutExample = useCallbackOne(() => {
+        setFormState(getInitialEndpointRequestFormState(endpoint.auth, endpoint, types));
+    }, []);
+
     const domain = useDomain();
     const basePath = useBasePath();
     const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();

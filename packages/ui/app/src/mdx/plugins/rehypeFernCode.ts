@@ -4,7 +4,7 @@ import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
 import { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { unknownToString } from "../../util/unknownToString";
-import type { CodeGroup } from "../components/CodeGroup";
+import type { CodeGroup } from "../components/code";
 import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
 
 declare module "hast" {

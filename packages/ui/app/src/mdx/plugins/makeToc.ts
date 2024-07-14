@@ -3,8 +3,8 @@ import type { Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { toString } from "hast-util-to-string";
 import { SKIP, visit } from "unist-util-visit";
-import { TableOfContentsItem } from "../../components/TableOfContents";
-import { AccordionItemProps } from "../components/AccordionGroup";
+import type { TableOfContentsItem } from "../../components/TableOfContents";
+import type { AccordionItemProps } from "../components/accordion";
 import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement } from "./utils";
 
 interface FoundHeading {

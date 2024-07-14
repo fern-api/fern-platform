@@ -1,7 +1,7 @@
 import cn from "clsx";
 import fastdom from "fastdom";
-import { noop } from "lodash-es";
 import React, { PropsWithChildren, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { noop } from "ts-essentials";
 
 export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWithChildren<{ className?: string }>>(
     function HorizontalOverflowMask({ children, className }, parentRef) {

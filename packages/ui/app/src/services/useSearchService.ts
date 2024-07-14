@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { noop } from "@fern-ui/core-utils";
 import type { SearchConfig } from "@fern-ui/search-utils";
-import { useAtomValue } from "jotai";
 import { useCallback } from "react";
 import useSWR, { mutate } from "swr";
+import { noop } from "ts-essentials";
 import urljoin from "url-join";
-import { useBasePath } from "../atoms/navigation";
-import { IS_LOCAL_PREVIEW_ATOM } from "../atoms/preview";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useBasePath } from "../atoms";
+import { useIsLocalPreview } from "../contexts/local-preview";
 
 export type SearchCredentials = {
     appId: string;
@@ -29,35 +27,19 @@ export declare namespace SearchService {
 export type SearchService = SearchService.Available | SearchService.Unavailable;
 
 export function useSearchConfig(): [SearchConfig, refresh: () => void] {
-    const { searchInfo } = useDocsContext();
     const basePath = useBasePath();
-    const isLocalPreview = useAtomValue(IS_LOCAL_PREVIEW_ATOM);
+    const isLocalPreview = useIsLocalPreview();
 
     if (isLocalPreview) {
         return [{ isAvailable: false }, noop];
     }
 
-    const key = urljoin(basePath ?? "/", "/api/fern-docs/search");
+    const key = urljoin(basePath ?? "", "/api/fern-docs/search");
 
-    const { data } = useSWR<SearchConfig>(
-        key,
-        async (url: string) => {
-            const res = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    searchInfo,
-                }),
-            });
-            return res.json();
-        },
-        {
-            refreshInterval: 1000 * 60 * 60 * 2, // 2 hours
-            revalidateOnFocus: false,
-        },
-    );
+    const { data } = useSWR<SearchConfig>(key, (url: string) => fetch(url).then((res) => res.json()), {
+        refreshInterval: 1000 * 60 * 60 * 2, // 2 hours
+        revalidateOnFocus: false,
+    });
 
     const refresh = useCallback(() => {
         void mutate(key);

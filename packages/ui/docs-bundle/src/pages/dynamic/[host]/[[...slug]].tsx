@@ -1,7 +1,8 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { DocsPage } from "@fern-ui/ui";
 import { GetServerSideProps } from "next";
-import { getDocsPageProps, getPrivateDocsPageProps } from "../../../utils/getDocsPageProps";
+import { ComponentProps } from "react";
+import { getDocsPageProps, getDynamicDocsPageProps } from "../../../utils/getDocsPageProps";
 
 export default DocsPage;
 
@@ -13,7 +14,11 @@ export const getServerSideProps: GetServerSideProps = (context) => {
     return getDocsServerSideProps(context);
 };
 
-const getDocsServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ params = {}, req, res }) => {
+const getDocsServerSideProps: GetServerSideProps<ComponentProps<typeof DocsPage>> = async ({
+    params = {},
+    req,
+    res,
+}) => {
     const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? (params.host as string);
     // eslint-disable-next-line no-console
     console.log(`[getDocsServerSideProps] host=${xFernHost}`);
@@ -24,16 +29,20 @@ const getDocsServerSideProps: GetServerSideProps<DocsPage.Props> = async ({ para
     if (token == null) {
         const result = await getDocsPageProps(xFernHost, slugArray);
 
-        return visitDiscriminatedUnion(result, "type")._visit<ReturnType<GetServerSideProps<DocsPage.Props>>>({
+        return visitDiscriminatedUnion(result, "type")._visit<
+            ReturnType<GetServerSideProps<ComponentProps<typeof DocsPage>>>
+        >({
             notFound: () => Promise.resolve({ notFound: true }),
             redirect: (redirect) => Promise.resolve({ redirect: redirect.redirect }),
             props: (props) => Promise.resolve({ props: props.props }),
             _other: () => Promise.resolve({ notFound: true }),
         });
     } else {
-        const result = await getPrivateDocsPageProps(xFernHost, slugArray, token, res);
+        const result = await getDynamicDocsPageProps(xFernHost, slugArray, req.cookies, res);
 
-        return visitDiscriminatedUnion(result, "type")._visit<ReturnType<GetServerSideProps<DocsPage.Props>>>({
+        return visitDiscriminatedUnion(result, "type")._visit<
+            ReturnType<GetServerSideProps<ComponentProps<typeof DocsPage>>>
+        >({
             notFound: () => Promise.resolve({ notFound: true }),
             redirect: (redirect) => Promise.resolve({ redirect: redirect.redirect }),
             props: (props) => Promise.resolve({ props: props.props }),

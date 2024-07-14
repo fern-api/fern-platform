@@ -1,21 +1,59 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { useTheme } from "next-themes";
-import { useCallback, useEffect } from "react";
+import { useAtomCallback } from "jotai/utils";
+import { useCallback } from "react";
+import { useCallbackOne } from "use-memo-one";
+import { useAtomEffect } from "./hooks";
 import { DOCS_LAYOUT_ATOM } from "./layout";
 import { CURRENT_NODE_ATOM, RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
+import { THEME_ATOM } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
-export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);
-export const DESKTOP_SIDEBAR_OPEN_ATOM = atom(false);
-export const SIDEBAR_SCROLL_CONTAINER_ATOM = atom<HTMLElement | null>(null);
+SEARCH_DIALOG_OPEN_ATOM.debugLabel = "SEARCH_DIALOG_OPEN_ATOM";
 
-export const DISMISSABLE_SIDEBAR_OPEN_ATOM = atom((get) => {
-    return get(MOBILE_SIDEBAR_OPEN_ATOM) || (get(DESKTOP_SIDEBAR_OPEN_ATOM) && !get(IS_MOBILE_SCREEN_ATOM));
-});
+export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);
+MOBILE_SIDEBAR_OPEN_ATOM.debugLabel = "MOBILE_SIDEBAR_OPEN_ATOM";
+
+export const DESKTOP_SIDEBAR_OPEN_ATOM = atom(false);
+DESKTOP_SIDEBAR_OPEN_ATOM.debugLabel = "DESKTOP_SIDEBAR_OPEN_ATOM";
+
+export const SIDEBAR_SCROLL_CONTAINER_ATOM = atom<HTMLElement | null>(null);
+SIDEBAR_SCROLL_CONTAINER_ATOM.debugLabel = "SIDEBAR_SCROLL_CONTAINER_ATOM";
+
+export const DISMISSABLE_SIDEBAR_OPEN_ATOM = atom(
+    (get) => {
+        const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
+        const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM); // smallest screen size
+        const isDesktopSidebarOpen = get(DESKTOP_SIDEBAR_OPEN_ATOM);
+        const isMobileSidebarOpen = get(MOBILE_SIDEBAR_OPEN_ATOM);
+
+        if (isMobileSidebarEnabled) {
+            return isMobileSidebarOpen || (isDesktopSidebarOpen && !isMobileScreen);
+        } else {
+            return isDesktopSidebarOpen;
+        }
+    },
+    (_get, set, update: boolean) => {
+        set(DESKTOP_SIDEBAR_OPEN_ATOM, update);
+        set(MOBILE_SIDEBAR_OPEN_ATOM, update);
+    },
+);
+DISMISSABLE_SIDEBAR_OPEN_ATOM.debugLabel = "DISMISSABLE_SIDEBAR_OPEN_ATOM";
+
+export const useDismissSidebar = (): (() => void) => {
+    return useAtomCallback((_get, set) => {
+        set(DISMISSABLE_SIDEBAR_OPEN_ATOM, false);
+    });
+};
 
 // in certain cases, the sidebar should be completely removed from the DOM.
-export const SIDEBAR_DISABLED_ATOM = atom((get) => {
+export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
+    // sidebar is always enabled on mobile, because of search + tabs
+    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
+    if (isMobileSidebarEnabled) {
+        return true;
+    }
+
     // sidebar is always enabled if the header is disabled
     const layout = get(DOCS_LAYOUT_ATOM);
     if (layout?.disableHeader) {
@@ -24,12 +62,6 @@ export const SIDEBAR_DISABLED_ATOM = atom((get) => {
 
     // sidebar is always enabled if vertical tabs are enabled
     if (layout?.tabsPlacement !== "HEADER") {
-        return false;
-    }
-
-    // sidebar is always enabled on mobile, because of search + tabs
-    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
-    if (isMobileSidebarEnabled) {
         return false;
     }
 
@@ -56,30 +88,7 @@ export const SIDEBAR_DISABLED_ATOM = atom((get) => {
     if (resolvedPath.type === "changelog-entry") {
         return true;
     }
-    return false;
-});
 
-export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
-    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
-
-    if (isMobileSidebarEnabled) {
-        return true;
-    }
-
-    const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
-
-    if (sidebar == null) {
-        // this is superceded by SIDEBAR_DISABLED_ATOM
-        return true;
-    }
-
-    const node = get(CURRENT_NODE_ATOM);
-
-    if (node?.hidden) {
-        return true;
-    }
-
-    const resolvedPath = get(RESOLVED_PATH_ATOM);
     if (resolvedPath.type === "custom-markdown-page" && typeof resolvedPath.mdx !== "string") {
         const layout = resolvedPath.mdx.frontmatter.layout;
 
@@ -88,37 +97,43 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
         }
     }
 
+    const node = get(CURRENT_NODE_ATOM);
+
+    if (node?.hidden) {
+        return true;
+    }
+
     return false;
 });
+SIDEBAR_DISMISSABLE_ATOM.debugLabel = "SIDEBAR_DISMISSABLE_ATOM";
 
 export function useMessageHandler(): void {
-    const openSearchDialog = useOpenSearchDialog();
-    const openMobileSidebar = useOpenMobileSidebar();
-    const { resolvedTheme, setTheme } = useTheme();
-    useEffect(() => {
-        if (typeof window === "undefined") {
-            return;
-        }
-        const handleMessage = (event: MessageEvent) => {
-            if (event.data === "openSearchDialog") {
-                openSearchDialog();
-                event.source?.postMessage("searchDialogOpened", { targetOrigin: event.origin });
-            } else if (event.data === "openMobileSidebar") {
-                openMobileSidebar();
-                event.source?.postMessage("mobileSidebarOpened", { targetOrigin: event.origin });
-            } else if (event.data === "toggleTheme") {
-                setTheme(resolvedTheme === "dark" ? "light" : "dark");
-                event.source?.postMessage("themeToggled", { targetOrigin: event.origin });
-            } else if (event.data === "setSystemTheme") {
-                setTheme("system");
-                event.source?.postMessage("themeSetToSystem", { targetOrigin: event.origin });
+    useAtomEffect(
+        useCallbackOne((get, set) => {
+            if (typeof window === "undefined") {
+                return;
             }
-        };
-        window.addEventListener("message", handleMessage);
-        return () => {
-            window.removeEventListener("message", handleMessage);
-        };
-    }, [openMobileSidebar, openSearchDialog, resolvedTheme, setTheme]);
+            const handleMessage = (event: MessageEvent) => {
+                if (event.data === "openSearchDialog") {
+                    set(SEARCH_DIALOG_OPEN_ATOM, true);
+                    event.source?.postMessage("searchDialogOpened", { targetOrigin: event.origin });
+                } else if (event.data === "openMobileSidebar") {
+                    set(MOBILE_SIDEBAR_OPEN_ATOM, true);
+                    event.source?.postMessage("mobileSidebarOpened", { targetOrigin: event.origin });
+                } else if (event.data === "toggleTheme") {
+                    set(THEME_ATOM, get.peek(THEME_ATOM) === "dark" ? "light" : "dark");
+                    event.source?.postMessage("themeToggled", { targetOrigin: event.origin });
+                } else if (event.data === "setSystemTheme") {
+                    set(THEME_ATOM, "system");
+                    event.source?.postMessage("themeSetToSystem", { targetOrigin: event.origin });
+                }
+            };
+            window.addEventListener("message", handleMessage);
+            return () => {
+                window.removeEventListener("message", handleMessage);
+            };
+        }, []),
+    );
 }
 
 export function useIsSearchDialogOpen(): boolean {

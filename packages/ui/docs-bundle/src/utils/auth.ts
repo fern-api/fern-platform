@@ -7,16 +7,6 @@ export function getWorkOS(): WorkOS {
     return workos;
 }
 
-export function getJwtTokenSecret(): Uint8Array {
-    const secret = process.env.JWT_SECRET_KEY;
-
-    if (secret != null) {
-        return new Uint8Array(Buffer.from(secret, "base64"));
-    }
-
-    throw new Error("JWT_SECRET_KEY is not set");
-}
-
 export function getWorkOSApiKey(): string {
     const apiKey = process.env.WORKOS_API_KEY;
 

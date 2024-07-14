@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { BuildTagsParams, OpenGraphMedia } from "../types";
+import { NextSeoProps, OpenGraphMedia } from "../types";
 
 const buildOpenGraphMediaTags = (
     mediaType: "image" | "video" | "audio",
@@ -75,45 +75,26 @@ const buildOpenGraphMediaTags = (
     }, [] as ReactNode[]);
 };
 
-const buildTags = (config: BuildTagsParams): ReactNode[] => {
-    const defaults = {
-        templateTitle: "",
-        noindex: false,
-        nofollow: false,
-        norobots: false,
-        defaultOpenGraphImageWidth: 0,
-        defaultOpenGraphImageHeight: 0,
-        defaultOpenGraphVideoWidth: 0,
-        defaultOpenGraphVideoHeight: 0,
-    };
-
+export const buildTags = (config: NextSeoProps): ReactNode[] => {
     const tagsToRender: ReactNode[] = [];
 
-    if (config.titleTemplate) {
-        defaults.templateTitle = config.titleTemplate;
+    if (config.viewport != null) {
+        tagsToRender.push(<meta key="viewport" name="viewport" content={config.viewport} />);
     }
 
     let updatedTitle = "";
     if (config.title) {
         updatedTitle = config.title;
-        if (defaults.templateTitle) {
-            updatedTitle = defaults.templateTitle.replace(/%s/g, () => updatedTitle);
+        if (config.titleTemplate) {
+            updatedTitle = config.titleTemplate.replace(/%s/g, () => updatedTitle);
         }
-    } else if (config.defaultTitle) {
-        updatedTitle = config.defaultTitle;
     }
 
-    if (updatedTitle) {
-        tagsToRender.push(<title key="title">{updatedTitle}</title>);
-    }
+    tagsToRender.push(<title key="title">{updatedTitle}</title>);
 
-    const noindex =
-        config.noindex === undefined ? defaults.noindex || config.dangerouslySetAllPagesToNoIndex : config.noindex;
-
-    const nofollow =
-        config.nofollow === undefined ? defaults.nofollow || config.dangerouslySetAllPagesToNoFollow : config.nofollow;
-
-    const norobots = config.norobots || defaults.norobots;
+    const noindex = config.noindex ?? false;
+    const nofollow = config.nofollow ?? false;
+    const norobots = config.norobots ?? false;
 
     let robotsParams = "";
 
@@ -138,18 +119,7 @@ const buildTags = (config: BuildTagsParams): ReactNode[] => {
         }${maxVideoPreview ? `,max-video-preview:${maxVideoPreview}` : ""}${notranslate ? ",notranslate" : ""}`;
     }
 
-    if (config.norobots) {
-        defaults.norobots = true;
-    }
-
     if (noindex || nofollow) {
-        if (config.dangerouslySetAllPagesToNoIndex) {
-            defaults.noindex = true;
-        }
-        if (config.dangerouslySetAllPagesToNoFollow) {
-            defaults.nofollow = true;
-        }
-
         tagsToRender.push(
             <meta
                 key="robots"
@@ -442,38 +412,22 @@ const buildTags = (config: BuildTagsParams): ReactNode[] => {
             }
         }
 
-        // images
-        if (config.defaultOpenGraphImageWidth) {
-            defaults.defaultOpenGraphImageWidth = config.defaultOpenGraphImageWidth;
-        }
-
-        if (config.defaultOpenGraphImageHeight) {
-            defaults.defaultOpenGraphImageHeight = config.defaultOpenGraphImageHeight;
-        }
-
         if (config.openGraph.images && config.openGraph.images.length) {
             tagsToRender.push(
                 ...buildOpenGraphMediaTags("image", config.openGraph.images, {
-                    defaultWidth: defaults.defaultOpenGraphImageWidth,
-                    defaultHeight: defaults.defaultOpenGraphImageHeight,
+                    defaultWidth: config.openGraph.defaultImageWidth,
+                    defaultHeight: config.openGraph.defaultImageHeight,
                 }),
             );
         }
 
         // videos
-        if (config.defaultOpenGraphVideoWidth) {
-            defaults.defaultOpenGraphVideoWidth = config.defaultOpenGraphVideoWidth;
-        }
-
-        if (config.defaultOpenGraphVideoHeight) {
-            defaults.defaultOpenGraphVideoHeight = config.defaultOpenGraphVideoHeight;
-        }
 
         if (config.openGraph.videos && config.openGraph.videos.length) {
             tagsToRender.push(
                 ...buildOpenGraphMediaTags("video", config.openGraph.videos, {
-                    defaultWidth: defaults.defaultOpenGraphVideoWidth,
-                    defaultHeight: defaults.defaultOpenGraphVideoHeight,
+                    defaultWidth: config.openGraph.defaultVideoWidth,
+                    defaultHeight: config.openGraph.defaultVideoHeight,
                 }),
             );
         }
@@ -518,7 +472,18 @@ const buildTags = (config: BuildTagsParams): ReactNode[] => {
         });
     }
 
+    if (config.breadcrumbList != null && config.breadcrumbList.itemListElement.length > 0) {
+        tagsToRender.push(
+            <script
+                key="jsonld-breadcrumb"
+                type="application/ld+json"
+                id="jsonld-breadcrumb"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(config.breadcrumbList),
+                }}
+            />,
+        );
+    }
+
     return tagsToRender;
 };
-
-export default buildTags;

@@ -1,67 +1,35 @@
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton } from "@fern-ui/components";
-import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowLeftIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { motion, useAnimate, useMotionValue } from "framer-motion";
-import { useAtom, useAtomValue } from "jotai";
-import { mapValues } from "lodash-es";
-import { Dispatch, ReactElement, SetStateAction, memo, useCallback, useEffect, useMemo } from "react";
-import { useFlattenedApis } from "../atoms/apis";
-import { useSidebarNodes } from "../atoms/navigation";
+import { useAtomValue, useSetAtom } from "jotai";
+import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
+import { useFlattenedApis, useSidebarNodes } from "../atoms";
 import {
-    PLAYGROUND_FORM_STATE_ATOM,
     useClosePlayground,
     useHasPlayground,
     useIsPlaygroundOpen,
+    usePlaygroundFormStateAtom,
     usePlaygroundHeight,
     usePlaygroundNode,
     useSetPlaygroundHeight,
     useTogglePlayground,
 } from "../atoms/playground";
-import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, useWindowHeight } from "../atoms/viewport";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
-    ResolvedApiDefinition,
-    ResolvedEndpointDefinition,
-    ResolvedExampleEndpointCall,
-    ResolvedTypeDefinition,
-    ResolvedWebSocketChannel,
-    isEndpoint,
-    isWebSocket,
-} from "../resolver/types";
+    IS_MOBILE_SCREEN_ATOM,
+    JUST_NAVIGATED_ATOM,
+    MOBILE_SIDEBAR_ENABLED_ATOM,
+    useWindowHeight,
+} from "../atoms/viewport";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { ResolvedApiDefinition, isEndpoint, isWebSocket } from "../resolver/types";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
-import {
-    PlaygroundEndpointRequestFormState,
-    PlaygroundFormDataEntryValue,
-    PlaygroundRequestFormAuth,
-    PlaygroundWebSocketRequestFormState,
-} from "./types";
 import { useVerticalSplitPane } from "./useSplitPlane";
-import { getDefaultValueForObjectProperties, getDefaultValueForType, getDefaultValuesForBody } from "./utils";
-
-const EMPTY_ENDPOINT_FORM_STATE: PlaygroundEndpointRequestFormState = {
-    type: "endpoint",
-    auth: undefined,
-    headers: {},
-    pathParameters: {},
-    queryParameters: {},
-    body: undefined,
-};
-
-const EMPTY_WEBSOCKET_FORM_STATE: PlaygroundWebSocketRequestFormState = {
-    type: "websocket",
-
-    auth: undefined,
-    headers: {},
-    pathParameters: {},
-    queryParameters: {},
-
-    messages: {},
-};
 
 export const PlaygroundDrawer = memo((): ReactElement | null => {
     const windowHeight = useWindowHeight();
@@ -103,9 +71,10 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     );
 
     const { handleVerticalResize, isResizing } = useVerticalSplitPane(setOffset);
+    const justNavigated = useAtomValue(JUST_NAVIGATED_ATOM);
 
     useEffect(() => {
-        if (isResizing) {
+        if (isResizing || justNavigated) {
             x.jump(!isMobileScreen ? height : windowHeight, true);
         } else {
             if (scope.current != null) {
@@ -115,55 +84,9 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                 x.jump(!isMobileScreen ? height : windowHeight, true);
             }
         }
-    }, [animate, height, isMobileScreen, isResizing, scope, windowHeight, x]);
+    }, [animate, height, isMobileScreen, isResizing, justNavigated, scope, windowHeight, x]);
 
     const isPlaygroundOpen = useIsPlaygroundOpen();
-    const [globalFormState, setGlobalFormState] = useAtom(PLAYGROUND_FORM_STATE_ATOM);
-
-    const setPlaygroundEndpointFormState = useCallback<Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>>(
-        (newFormState) => {
-            if (selectionState == null) {
-                return;
-            }
-            setGlobalFormState((currentGlobalFormState) => {
-                let currentFormState = currentGlobalFormState[selectionState.id];
-                if (currentFormState == null || currentFormState.type !== "endpoint") {
-                    currentFormState = EMPTY_ENDPOINT_FORM_STATE;
-                }
-                const mutatedFormState =
-                    typeof newFormState === "function" ? newFormState(currentFormState) : newFormState;
-                return {
-                    ...currentGlobalFormState,
-                    [selectionState.id]: mutatedFormState,
-                };
-            });
-        },
-        [selectionState, setGlobalFormState],
-    );
-
-    const setPlaygroundWebSocketFormState = useCallback<Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>>(
-        (newFormState) => {
-            if (selectionState == null) {
-                return;
-            }
-            setGlobalFormState((currentGlobalFormState) => {
-                let currentFormState = currentGlobalFormState[selectionState.id];
-                if (currentFormState == null || currentFormState.type !== "websocket") {
-                    currentFormState = EMPTY_WEBSOCKET_FORM_STATE;
-                }
-                const mutatedFormState =
-                    typeof newFormState === "function" ? newFormState(currentFormState) : newFormState;
-                return {
-                    ...currentGlobalFormState,
-                    [selectionState.id]: mutatedFormState,
-                };
-            });
-        },
-        [selectionState, setGlobalFormState],
-    );
-
-    const playgroundFormState = selectionState != null ? globalFormState[selectionState.id] : undefined;
-
     const togglePlayground = useTogglePlayground();
 
     const matchedEndpoint =
@@ -179,51 +102,6 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                   (definition) => isWebSocket(definition) && definition.id === selectionState.webSocketId,
               ) as ResolvedApiDefinition.WebSocket | undefined)
             : undefined;
-
-    const resetWithExample = useCallback(() => {
-        if (selectionState?.type === "endpoint") {
-            setPlaygroundEndpointFormState(
-                getInitialEndpointRequestFormStateWithExample(
-                    matchedSection?.auth,
-                    matchedEndpoint,
-                    matchedEndpoint?.examples[0],
-                    types,
-                ),
-            );
-        } else if (selectionState?.type === "webSocket") {
-            setPlaygroundWebSocketFormState(
-                getInitialWebSocketRequestFormState(matchedSection?.auth, matchedWebSocket, types),
-            );
-        }
-    }, [
-        matchedEndpoint,
-        matchedSection?.auth,
-        matchedWebSocket,
-        selectionState?.type,
-        setPlaygroundEndpointFormState,
-        setPlaygroundWebSocketFormState,
-        types,
-    ]);
-
-    const resetWithoutExample = useCallback(() => {
-        if (selectionState?.type === "endpoint") {
-            setPlaygroundEndpointFormState(
-                getInitialEndpointRequestFormState(matchedSection?.auth, matchedEndpoint, types),
-            );
-        } else if (selectionState?.type === "webSocket") {
-            setPlaygroundWebSocketFormState(
-                getInitialWebSocketRequestFormState(matchedSection?.auth, matchedWebSocket, types),
-            );
-        }
-    }, [
-        matchedEndpoint,
-        matchedSection?.auth,
-        matchedWebSocket,
-        selectionState?.type,
-        setPlaygroundEndpointFormState,
-        setPlaygroundWebSocketFormState,
-        types,
-    ]);
 
     useEffect(() => {
         // if keyboard press "ctrl + `", open playground
@@ -245,27 +123,17 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
         group: undefined,
     };
 
+    const setFormState = useSetAtom(usePlaygroundFormStateAtom(selectionState?.id ?? FernNavigation.NodeId("")));
+
     if (!hasPlayground || apiGroups.length === 0) {
         return null;
     }
 
     const renderContent = () =>
         selectionState?.type === "endpoint" && matchedEndpoint != null ? (
-            <PlaygroundEndpoint
-                endpoint={matchedEndpoint}
-                formState={playgroundFormState?.type === "endpoint" ? playgroundFormState : EMPTY_ENDPOINT_FORM_STATE}
-                setFormState={setPlaygroundEndpointFormState}
-                resetWithExample={resetWithExample}
-                resetWithoutExample={resetWithoutExample}
-                types={types}
-            />
+            <PlaygroundEndpoint endpoint={matchedEndpoint} types={types} />
         ) : selectionState?.type === "webSocket" && matchedWebSocket != null ? (
-            <PlaygroundWebSocket
-                websocket={matchedWebSocket}
-                formState={playgroundFormState?.type === "websocket" ? playgroundFormState : EMPTY_WEBSOCKET_FORM_STATE}
-                setFormState={setPlaygroundWebSocketFormState}
-                types={types}
-            />
+            <PlaygroundWebSocket websocket={matchedWebSocket} types={types} />
         ) : (
             <div className="size-full flex flex-col items-center justify-center">
                 <ArrowLeftIcon className="size-8 mb-2 t-muted" />
@@ -298,7 +166,9 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
             component="PlaygroundDrawer"
             className="flex h-full items-center justify-center"
             showError={true}
-            reset={resetWithoutExample}
+            reset={() => {
+                setFormState(undefined);
+            }}
         >
             {isPlaygroundOpen && <div style={{ height }} />}
             <Dialog.Root open={isPlaygroundOpen} onOpenChange={togglePlayground} modal={false}>
@@ -353,87 +223,3 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
 });
 
 PlaygroundDrawer.displayName = "PlaygroundDrawer";
-
-function getInitialEndpointRequestFormState(
-    auth: APIV1Read.ApiAuth | null | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
-): PlaygroundEndpointRequestFormState {
-    return {
-        type: "endpoint",
-        auth: getInitialAuthState(auth),
-        headers: getDefaultValueForObjectProperties(endpoint?.headers, types),
-        pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters, types),
-        queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters, types),
-        body: getDefaultValuesForBody(endpoint?.requestBody?.shape, types),
-    };
-}
-
-function getInitialWebSocketRequestFormState(
-    auth: APIV1Read.ApiAuth | null | undefined,
-    webSocket: ResolvedWebSocketChannel | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
-): PlaygroundWebSocketRequestFormState {
-    return {
-        type: "websocket",
-
-        auth: getInitialAuthState(auth),
-        headers: getDefaultValueForObjectProperties(webSocket?.headers, types),
-        pathParameters: getDefaultValueForObjectProperties(webSocket?.pathParameters, types),
-        queryParameters: getDefaultValueForObjectProperties(webSocket?.queryParameters, types),
-
-        messages: Object.fromEntries(
-            webSocket?.messages.map((message) => [message.type, getDefaultValueForType(message.body, types)]) ?? [],
-        ),
-    };
-}
-
-function getInitialAuthState(auth: APIV1Read.ApiAuth | null | undefined): PlaygroundRequestFormAuth | undefined {
-    if (auth == null) {
-        return undefined;
-    }
-    return visitDiscriminatedUnion(auth, "type")._visit<PlaygroundRequestFormAuth | undefined>({
-        header: (header) => ({ type: "header", headers: { [header.headerWireValue]: "" } }),
-        bearerAuth: () => ({ type: "bearerAuth", token: "" }),
-        basicAuth: () => ({ type: "basicAuth", username: "", password: "" }),
-        _other: () => undefined,
-    });
-}
-
-export function getInitialEndpointRequestFormStateWithExample(
-    auth: APIV1Read.ApiAuth | null | undefined,
-    endpoint: ResolvedEndpointDefinition | undefined,
-    exampleCall: ResolvedExampleEndpointCall | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
-): PlaygroundEndpointRequestFormState {
-    if (exampleCall == null) {
-        return getInitialEndpointRequestFormState(auth, endpoint, types);
-    }
-    return {
-        type: "endpoint",
-        auth: getInitialAuthState(auth),
-        headers: exampleCall.headers,
-        pathParameters: exampleCall.pathParameters,
-        queryParameters: exampleCall.queryParameters,
-        body:
-            exampleCall.requestBody?.type === "form"
-                ? {
-                      type: "form-data",
-                      value: mapValues(
-                          exampleCall.requestBody.value,
-                          (exampleValue): PlaygroundFormDataEntryValue =>
-                              exampleValue.type === "file"
-                                  ? { type: "file", value: undefined }
-                                  : exampleValue.type === "fileArray"
-                                    ? { type: "fileArray", value: [] }
-                                    : { type: "json", value: exampleValue.value },
-                      ),
-                  }
-                : exampleCall.requestBody?.type === "bytes"
-                  ? {
-                        type: "octet-stream",
-                        value: undefined,
-                    }
-                  : { type: "json", value: exampleCall.requestBody?.value },
-    };
-}

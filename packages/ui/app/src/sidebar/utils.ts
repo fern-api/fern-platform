@@ -1,5 +1,5 @@
 import fastdom from "fastdom";
-import { noop } from "lodash-es";
+import { noop } from "ts-essentials";
 
 let stopMeasuring = noop;
 export function scrollToCenter(scrollContainer: HTMLElement | null, target: HTMLElement | null): void {

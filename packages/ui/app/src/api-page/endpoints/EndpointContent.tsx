@@ -6,15 +6,18 @@ import dynamic from "next/dynamic";
 import { memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useCallbackOne } from "use-memo-one";
-import { FERN_LANGUAGE_ATOM } from "../../atoms/lang";
-import { CONTENT_HEIGHT_ATOM } from "../../atoms/layout";
-import { HASH_ATOM } from "../../atoms/location";
-import { CURRENT_NODE_ID_ATOM } from "../../atoms/navigation";
-import { store } from "../../atoms/store";
-import { FERN_STREAM_ATOM } from "../../atoms/stream";
-import { BREAKPOINT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "../../atoms/viewport";
+import {
+    BREAKPOINT_ATOM,
+    CONTENT_HEIGHT_ATOM,
+    CURRENT_NODE_ID_ATOM,
+    FERN_LANGUAGE_ATOM,
+    FERN_STREAM_ATOM,
+    HASH_ATOM,
+    MOBILE_SIDEBAR_ENABLED_ATOM,
+    store,
+    useAtomEffect,
+} from "../../atoms";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
-import { useAtomEffect } from "../../hooks/useAtomEffect";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";

@@ -1,9 +1,7 @@
 import { useAtom } from "jotai";
 import { memo, useEffect } from "react";
-import { useFeatureFlags } from "../../atoms/flags";
-import { useResolvedPath } from "../../atoms/navigation";
-import { FERN_STREAM_ATOM } from "../../atoms/stream";
-import { useShouldHideFromSsg } from "../../contexts/navigation-context/useNavigationContext";
+import { FERN_STREAM_ATOM, useFeatureFlags, useResolvedPath } from "../../atoms";
+import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
@@ -35,20 +33,20 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
 
     useEffect(() => {
         if (endpoint.stream != null) {
-            if (endpoint.slug === resolvedPath.fullSlug) {
+            if (endpoint.slug === resolvedPath.slug) {
                 setStream(false);
-            } else if (endpoint.stream.slug === resolvedPath.fullSlug) {
+            } else if (endpoint.stream.slug === resolvedPath.slug) {
                 setStream(true);
             }
         }
-    }, [endpoint.slug, endpoint.stream, resolvedPath.fullSlug, setStream]);
+    }, [endpoint.slug, endpoint.stream, resolvedPath.slug, setStream]);
 
     const { setTargetRef } = useApiPageCenterElement({ slug: endpointSlug });
 
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
     // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)
     // - this allows us to render the static page before hydrating, preventing layout-shift caused by the navigation context.
-    if (useShouldHideFromSsg(endpointSlug)) {
+    if (useShouldLazyRender(endpointSlug)) {
         return null;
     }
 

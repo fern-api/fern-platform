@@ -1,10 +1,9 @@
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
-import { DOCS_LAYOUT_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { DOCS_LAYOUT_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM, THEME_SWITCH_ENABLED_ATOM } from "../atoms";
 import { HeaderLogoSection } from "../docs/HeaderLogoSection";
-import { ThemeButton } from "../docs/ThemeButton";
+import { ThemeButton } from "../themes";
 import { SidebarSearchBar } from "./SidebarSearchBar";
 
 export declare namespace SidebarFixedItemsSection {
@@ -17,7 +16,7 @@ export declare namespace SidebarFixedItemsSection {
 
 export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> = ({ className, showBorder }) => {
     const showSearchBar = useAtomValue(SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM);
-    const { colors } = useDocsContext();
+    const themeSwitchEnabled = useAtomValue(THEME_SWITCH_ENABLED_ATOM);
     const layout = useAtomValue(DOCS_LAYOUT_ATOM);
 
     const searchBar = useMemo(() => {
@@ -35,7 +34,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
     const header = layout?.disableHeader && (
         <div className="fern-sidebar-header">
             <HeaderLogoSection />
-            <div className="-mr-3">{colors.dark && colors.light && <ThemeButton size="large" />}</div>
+            <div className="-mr-3">{themeSwitchEnabled && <ThemeButton size="large" />}</div>
         </div>
     );
 

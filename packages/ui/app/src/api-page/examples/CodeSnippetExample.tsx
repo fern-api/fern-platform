@@ -1,7 +1,7 @@
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { createRef, FC, useCallback, useEffect, useMemo } from "react";
-import { useFeatureFlags } from "../../atoms/flags";
+import { useFeatureFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { ScrollToHandle } from "../../syntax-highlighting/FernSyntaxHighlighterTokens";

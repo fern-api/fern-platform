@@ -2,11 +2,10 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { useAtomValue } from "jotai";
 import { FC } from "react";
-import { HAS_PLAYGROUND_ATOM } from "../atoms/playground";
-import { useSetAndOpenPlayground } from "./PlaygroundContext";
+import { HAS_PLAYGROUND_ATOM, useSetAndOpenPlayground } from "../atoms";
 
 export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf }> = ({ state }) => {
-    const setSelectionStateAndOpen = useSetAndOpenPlayground();
+    const openPlayground = useSetAndOpenPlayground();
     const hasPlayground = useAtomValue(HAS_PLAYGROUND_ATOM);
 
     if (!hasPlayground) {
@@ -23,9 +22,7 @@ export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf 
                 }
             >
                 <FernButton
-                    onClick={() => {
-                        setSelectionStateAndOpen(state);
-                    }}
+                    onClick={() => openPlayground(state)}
                     rightIcon="play"
                     variant="outlined"
                     intent="primary"

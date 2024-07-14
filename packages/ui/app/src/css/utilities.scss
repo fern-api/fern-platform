@@ -120,6 +120,10 @@
     }
 
     .bg-search-dialog {
-        background-color: var(--bg-search-dialog, var(--bg-translucent));
+        background-color: var(--bg-color-search-dialog, var(--bg-translucent));
+    }
+
+    .m-mdx {
+        @apply mt-4 mb-6 first:mt-0;
     }
 }

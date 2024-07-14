@@ -38,7 +38,6 @@
     "@fern-ui/components": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
-    "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "cssnano": "^6.0.3",
     "jsonpath": "^1.1.1",

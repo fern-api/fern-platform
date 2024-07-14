@@ -1,6 +1,6 @@
 import { useAtomValue } from "jotai";
 import { ReactElement, memo } from "react";
-import { HAS_HORIZONTAL_TABS } from "../../atoms/layout";
+import { HAS_HORIZONTAL_TABS } from "../../atoms";
 import { Header } from "../../docs/Header";
 import { HeaderTabs } from "../../docs/HeaderTabs";
 

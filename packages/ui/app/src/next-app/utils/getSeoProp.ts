@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import type { DefaultSeoProps, LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
+import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
 import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
@@ -8,7 +8,8 @@ import { visit } from "unist-util-visit";
 import { stringHasMarkdown } from "../../mdx/common/util";
 import { getFrontmatter } from "../../mdx/frontmatter";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
-import { getFontExtension } from "./getFontVariables";
+import { getFontExtension } from "../../themes/stylesheet/getFontVariables";
+import { getBreadcrumbList } from "./getBreadcrumbList";
 
 function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1Read.File_>): DocsV1Read.File_ {
     return visitDiscriminatedUnion(fileOrUrl)._visit({
@@ -23,17 +24,18 @@ export function getDefaultSeoProps(
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
     apis: Record<string, APIV1Read.ApiDefinition>,
-    node: FernNavigation.NavigationNodePage,
-): DefaultSeoProps {
+    { node, parents }: FernNavigation.utils.Node.Found,
+): NextSeoProps {
     const additionalMetaTags: MetaTag[] = [];
     const additionalLinkTags: LinkTag[] = [];
-    const openGraph: DefaultSeoProps["openGraph"] = {};
-    const twitter: DefaultSeoProps["twitter"] = {};
-    const seo: DefaultSeoProps = {
+    const openGraph: NextSeoProps["openGraph"] = {};
+    const twitter: NextSeoProps["twitter"] = {};
+    const seo: NextSeoProps = {
         openGraph,
         twitter,
         additionalMetaTags,
         additionalLinkTags,
+        breadcrumbList: getBreadcrumbList(domain, pages, parents, node),
     };
 
     const pageId = FernNavigation.utils.getPageId(node);
@@ -149,9 +151,8 @@ export function getDefaultSeoProps(
     // defaults
     seo.title ??= node.title;
     openGraph.siteName ??= title;
-    seo.defaultTitle ??= title;
     if (title != null) {
-        seo.titleTemplate = `%s — ${title}`;
+        seo.titleTemplate ??= `%s — ${title}`;
     }
 
     if (favicon != null && files[favicon] != null) {
@@ -183,16 +184,15 @@ export function getDefaultSeoProps(
         }
     });
 
-    // noindex, nofollow
+    seo.noindex = ogMetadata.noindex;
+    seo.nofollow = ogMetadata.nofollow;
     if (
         domain.endsWith(".docs.dev.buildwithfern.com") ||
         domain.endsWith(".docs.staging.buildwithfern.com") ||
-        domain.endsWith(".docs.buildwithfern.com") ||
-        process.env.NODE_ENV !== "production"
+        domain.endsWith(".docs.buildwithfern.com")
     ) {
-        seo.dangerouslySetAllPagesToNoIndex = true;
-        seo.dangerouslySetAllPagesToNoFollow = true;
-        seo.norobots = true;
+        seo.noindex = true;
+        seo.nofollow = true;
     }
 
     return seo;
@@ -206,7 +206,7 @@ export function getNextSeoProps(
 
     // HACKHACK: sets title on shallow navigation
     // TODO: find a better way to handle this
-    if (node != null && resolvedPath.fullSlug !== node.slug) {
+    if (node != null && resolvedPath.slug !== node.slug) {
         seo.title ??= node.title;
     }
     return seo;

@@ -1,18 +1,10 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { noop } from "@fern-ui/core-utils";
-import { SidebarVersionInfo } from "@fern-ui/fdr-utils";
-import React from "react";
+import { createContext } from "react";
+import { noop } from "ts-essentials";
 
-export const NavigationContext = React.createContext<NavigationContextValue>({
-    activeVersion: undefined,
-    activeNavigatable: undefined,
+export const NavigationContext = createContext<NavigationContextValue>({
     onScrollToPath: noop,
-    unversionedSlug: "",
 });
 
 export interface NavigationContextValue {
-    activeVersion: SidebarVersionInfo | undefined;
-    activeNavigatable: FernNavigation.NavigationNodeWithMetadata | undefined;
     onScrollToPath: (slug: string) => void;
-    unversionedSlug: string;
 }

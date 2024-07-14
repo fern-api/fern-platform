@@ -235,7 +235,8 @@ export class NavigationConfigConverter {
                         title: section.title,
                         icon: section.icon,
                         hidden: section.hidden,
-                        overviewPageId: undefined,
+                        overviewPageId:
+                            section.overviewPageId != null ? FernNavigation.PageId(section.overviewPageId) : undefined,
                         slug: slug.get(),
                         children,
                         pointsTo,

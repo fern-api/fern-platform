@@ -1,6 +1,6 @@
 import cn from "clsx";
 import { FC } from "react";
-import { useDocsContext } from "../contexts/docs-context/useDocsContext";
+import { useColors } from "../atoms";
 
 export declare namespace BgImageGradient {
     export interface Props {
@@ -9,7 +9,7 @@ export declare namespace BgImageGradient {
 }
 
 export const BgImageGradient: FC<BgImageGradient.Props> = ({ className }) => {
-    const { colors } = useDocsContext();
+    const colors = useColors();
     const darkBackground = colors.dark?.background;
     const lightBackground = colors.light?.background;
     const darkBackgroundImage = colors.dark?.backgroundImage;

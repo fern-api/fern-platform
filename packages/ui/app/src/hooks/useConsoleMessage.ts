@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useFeatureFlags } from "../atoms/flags";
+import { useFeatureFlags } from "../atoms";
 
 let hasBeenCalled = false;
 

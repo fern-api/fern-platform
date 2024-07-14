@@ -19,4 +19,6 @@ export interface MetadataConfig {
     "twitter:site"?: string;
     "twitter:url"?: string;
     "twitter:card"?: FernRegistry.docs.v1.commons.TwitterCardSetting;
+    noindex?: boolean;
+    nofollow?: boolean;
 }

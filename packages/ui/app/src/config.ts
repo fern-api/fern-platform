@@ -1,5 +1,3 @@
-export const DEFAULT_LOGO_HEIGHT = 20;
-
 export const DEFAULT_CODE_BLOCK_TAB_TITLE = " ";
 export const DEFAULT_CODE_BLOCK_CONTENT = "";
 export const BADLY_FORMATTED_CODE_BLOCK_LANGUAGE = "";

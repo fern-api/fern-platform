@@ -1,5 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { noop, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { noop } from "ts-essentials";
 import {
     ResolvedCodeSnippet,
     ResolvedEndpointDefinition,

@@ -1,18 +1,33 @@
 import fastdom from "fastdom";
-import { useAtomValue } from "jotai/react";
-import { atom } from "jotai/vanilla";
+import { atom, useAtomValue } from "jotai";
 import { useMemo } from "react";
 import { noop } from "ts-essentials";
 
 export const IS_READY_ATOM = atom(false);
-
+IS_READY_ATOM.debugLabel = "IS_READY_ATOM";
 IS_READY_ATOM.onMount = (setIsReady) => {
     if (typeof window !== "undefined") {
         setIsReady(true);
     }
 };
 
+export const JUST_NAVIGATED_ATOM = atom(true);
+JUST_NAVIGATED_ATOM.debugLabel = "JUST_NAVIGATED_ATOM";
+JUST_NAVIGATED_ATOM.onMount = (setJustNavigated) => {
+    if (typeof window !== "undefined") {
+        const timeout = setTimeout(() => {
+            setJustNavigated(false);
+        }, 1000);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }
+    return;
+};
+
 export const SCROLL_BODY_ATOM = atom<HTMLElement | undefined>(undefined);
+SCROLL_BODY_ATOM.debugLabel = "SCROLL_BODY_ATOM";
 SCROLL_BODY_ATOM.onMount = (set) => {
     if (typeof window === "undefined") {
         return;
@@ -26,6 +41,7 @@ export function useIsReady(): boolean {
 
 let clear = noop;
 const VIEWPORT_SIZE_ATOM = atom<[width: number, height: number]>([0, 0]);
+VIEWPORT_SIZE_ATOM.debugLabel = "VIEWPORT_SIZE_ATOM";
 VIEWPORT_SIZE_ATOM.onMount = (set) => {
     if (typeof window === "undefined") {
         return;
@@ -46,7 +62,10 @@ VIEWPORT_SIZE_ATOM.onMount = (set) => {
 };
 
 export const VIEWPORT_WIDTH_ATOM = atom((get) => get(VIEWPORT_SIZE_ATOM)[0]);
+VIEWPORT_WIDTH_ATOM.debugLabel = "VIEWPORT_WIDTH_ATOM";
+
 export const VIEWPORT_HEIGHT_ATOM = atom((get) => get(VIEWPORT_SIZE_ATOM)[1]);
+VIEWPORT_HEIGHT_ATOM.debugLabel = "VIEWPORT_HEIGHT_ATOM";
 
 export function useWindowHeight(): number {
     return useAtomValue(VIEWPORT_HEIGHT_ATOM);
@@ -92,6 +111,7 @@ export const BREAKPOINT_ATOM = atom<Breakpoint>((get) => {
         return "mobile";
     }
 });
+BREAKPOINT_ATOM.debugLabel = "BREAKPOINT_ATOM";
 
 export interface LayoutBreakpointValue {
     value: Breakpoint;
@@ -133,23 +153,10 @@ export const MOBILE_SIDEBAR_ENABLED_ATOM = atom((get) => {
             return false;
     }
 });
+MOBILE_SIDEBAR_ENABLED_ATOM.debugLabel = "MOBILE_SIDEBAR_ENABLED_ATOM";
 
 export const IS_MOBILE_SCREEN_ATOM = atom((get) => {
     const breakpoint = get(BREAKPOINT_ATOM);
     return breakpoint === "mobile";
 });
-
-// export const VIEWPORT_WIDTH_ATOM = atom(0);
-// VIEWPORT_WIDTH_ATOM.onMount = (setWidth) => {
-//     if (typeof window === "undefined") {
-//         return;
-//     }
-//     setWidth(window.innerWidth);
-//     const handleResize = () => {
-//         setWidth(window.innerWidth);
-//     };
-//     window.addEventListener("resize", handleResize);
-//     return () => {
-//         window.removeEventListener("resize", handleResize);
-//     };
-// };
+IS_MOBILE_SCREEN_ATOM.debugLabel = "IS_MOBILE_SCREEN_ATOM";

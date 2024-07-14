@@ -1,10 +1,7 @@
 import cn, { clsx } from "clsx";
 import { useAtomValue } from "jotai";
 import { ReactElement, useCallback } from "react";
-import { HAS_HORIZONTAL_TABS } from "../../atoms/layout";
-import { useIsMobileSidebarOpen } from "../../atoms/sidebar";
-import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../../atoms/viewport";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
+import { HAS_HORIZONTAL_TABS, MOBILE_SIDEBAR_ENABLED_ATOM, useColors, useIsMobileSidebarOpen } from "../../atoms";
 import { BgImageGradient } from "../../docs/BgImageGradient";
 import { Header } from "../../docs/Header";
 import { HeaderTabs } from "../../docs/HeaderTabs";
@@ -15,7 +12,7 @@ interface HeaderContainerProps {
 }
 
 export function HeaderContainer({ className }: HeaderContainerProps): ReactElement {
-    const { colors } = useDocsContext();
+    const colors = useColors();
     const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
     const isScrolled = useIsScrolled();
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);

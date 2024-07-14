@@ -1,10 +1,10 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
-import { useClosePlayground } from "../atoms/playground";
+import { CURRENT_NODE_ATOM, useClosePlayground } from "../atoms";
 import { FernLink } from "../components/FernLink";
-import { useNavigationContext } from "../contexts/navigation-context";
 import { ResolvedEndpointDefinition } from "../resolver/types";
 
 interface PlaygroundEndpointFormButtonsProps {
@@ -18,7 +18,7 @@ export function PlaygroundEndpointFormButtons({
     resetWithExample,
     resetWithoutExample,
 }: PlaygroundEndpointFormButtonsProps): ReactElement {
-    const { activeNavigatable } = useNavigationContext();
+    const activeNavigatable = useAtomValue(CURRENT_NODE_ATOM);
     const apiReferenceId = FernNavigation.utils.getApiReferenceId(activeNavigatable);
     const closePlayground = useClosePlayground();
     return (

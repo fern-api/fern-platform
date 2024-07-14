@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { noop } from "@fern-ui/core-utils";
 import fastdom from "fastdom";
 import { RefObject, useEffect, useMemo, useRef } from "react";
+import { noop } from "ts-essentials";
 import { useEventCallback } from "./useEventCallback";
 
 export function useResizeObserver(

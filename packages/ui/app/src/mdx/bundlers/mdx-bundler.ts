@@ -13,7 +13,9 @@ import { FernDocsFrontmatter } from "../frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { mergeMatter, rehypeFernLayout } from "../plugins/rehypeLayout";
+import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
 import { customHeadingHandler } from "../plugins/remarkRehypeHandlers";
+import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
 import type { BundledMDX, FernSerializeMdxOptions } from "../types";
 import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
 
@@ -74,7 +76,13 @@ export async function serializeMdx(
                     },
                 };
 
-                const remarkPlugins: PluggableList = [remarkGfm, remarkSmartypants, remarkMath, remarkGemoji];
+                const remarkPlugins: PluggableList = [
+                    remarkSqueezeParagraphs,
+                    remarkGfm,
+                    remarkSmartypants,
+                    remarkMath,
+                    remarkGemoji,
+                ];
 
                 if (options?.remarkPlugins != null) {
                     remarkPlugins.push(...options.remarkPlugins);
@@ -82,7 +90,13 @@ export async function serializeMdx(
 
                 o.remarkPlugins = [...(o.remarkPlugins ?? []), ...remarkPlugins, ...(options?.remarkPlugins ?? [])];
 
-                const rehypePlugins: PluggableList = [rehypeSlug, rehypeKatex, rehypeFernCode, rehypeFernComponents];
+                const rehypePlugins: PluggableList = [
+                    rehypeSqueezeParagraphs,
+                    rehypeSlug,
+                    rehypeKatex,
+                    rehypeFernCode,
+                    rehypeFernComponents,
+                ];
 
                 if (options?.rehypePlugins != null) {
                     rehypePlugins.push(...options.rehypePlugins);

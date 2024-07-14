@@ -1,5 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { useCurrentNodeId, useResolvedPath } from "../../atoms/navigation";
+import { useCurrentNodeId, useResolvedPath } from "../../atoms";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";

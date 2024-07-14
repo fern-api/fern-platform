@@ -4,8 +4,7 @@ import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
-import { useBasePath } from "../atoms/navigation";
-import { useCloseSearchDialog } from "../atoms/sidebar";
+import { useBasePath, useCloseSearchDialog } from "../atoms";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
 import { getFullPathForSearchRecord } from "./util";
@@ -112,7 +111,11 @@ export const SearchHits: React.FC = () => {
     }
 
     return (
-        <FernScrollArea rootClassName="border-default min-h-0 flex-1 shrink border-t" className="p-2">
+        <FernScrollArea
+            rootClassName="border-default min-h-0 flex-1 shrink border-t"
+            className="p-2"
+            scrollbars="vertical"
+        >
             {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {

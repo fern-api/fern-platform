@@ -5,12 +5,9 @@ import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
-import { POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM } from "../../atoms/layout";
-import { useSidebarNodes } from "../../atoms/navigation";
+import { CURRENT_VERSION_ATOM, POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM, useSidebarNodes } from "../../atoms";
 
-import { SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "../../atoms/sidebar";
-import { IS_MOBILE_SCREEN_ATOM } from "../../atoms/viewport";
-import { useNavigationContext } from "../../contexts/navigation-context";
+import { IS_MOBILE_SCREEN_ATOM, SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "../../atoms";
 import { SearchHits } from "../SearchHits";
 import { createSearchPlaceholderWithVersion } from "../util";
 import { SearchBox } from "./SearchBox";
@@ -53,7 +50,7 @@ interface FernInstantSearchProps {
 
 function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSearchProps) {
     const sidebar = useSidebarNodes();
-    const { activeVersion } = useNavigationContext();
+    const activeVersion = useAtomValue(CURRENT_VERSION_ATOM);
     const placeholder = useMemo(
         () => createSearchPlaceholderWithVersion(activeVersion, sidebar),
         [activeVersion, sidebar],

@@ -1,8 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
-import { useDocsContext } from "../../contexts/docs-context/useDocsContext";
-import { DEFAULT_COLORS } from "../../next-app/utils/getColorVariables";
+import { useColors } from "../../atoms";
+import { DEFAULT_COLORS } from "../../themes/stylesheet/getColorVariables";
 import useInkeepSettings from "./useInkeepSettings";
 
 const ChatButton = dynamic(() => import("@inkeep/widgets").then((mod) => mod.InkeepChatButton), {
@@ -19,7 +19,7 @@ function toString(rgba: DocsV1Read.RgbaColor): string {
 
 export function InkeepChatButton(): ReactElement | null {
     const settings = useInkeepSettings();
-    const { colors } = useDocsContext();
+    const colors = useColors();
 
     if (settings == null) {
         return null;

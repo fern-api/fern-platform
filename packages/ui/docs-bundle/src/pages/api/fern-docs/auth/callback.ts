@@ -1,77 +1,96 @@
-import { SignJWT } from "jose";
+/* eslint-disable import/no-internal-modules */
+import {
+    FernUser,
+    OAuth2Client,
+    OryAccessTokenSchema,
+    getAuthEdgeConfig,
+    signFernJWT,
+    withSecureCookie,
+} from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { getJwtTokenSecret, getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
-import { notFoundResponse, redirectResponse } from "../../../../utils/serverResponse";
-
-// export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-//     // The authorization code returned by AuthKit
-//     const code = req.query.code as string;
-
-//     const { user } = await getWorkOS().userManagement.authenticateWithCode({
-//         code,
-//         clientId: getWorkOSClientId(),
-//     });
-
-//     // Create a JWT token with the user's information
-//     const token = await new SignJWT({
-//         // Here you might lookup and retrieve user details from your database
-//         user,
-//     })
-//         .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-//         .setIssuedAt()
-//         .setExpirationTime("30d")
-//         .setIssuer("https://buildwithfern.com")
-//         .sign(getJwtTokenSecret());
-
-//     res.setHeader("Set-Cookie", `fern_token=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`);
-
-//     res.redirect("/");
-// };
+import urlJoin from "url-join";
+import { getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
+import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
+
+function redirectWithLoginError(location: string, errorMessage: string): NextResponse {
+    const url = new URL(location);
+    url.searchParams.set("loginError", errorMessage);
+    return NextResponse.redirect(url.toString());
+}
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
+    const state = req.nextUrl.searchParams.get("state");
+    const error = req.nextUrl.searchParams.get("error");
+    const error_description = req.nextUrl.searchParams.get("error_description");
+    const redirectLocation = (state != null ? decodeURIComponent(state) : undefined) ?? req.nextUrl.origin;
 
-    if (typeof code !== "string") {
-        return notFoundResponse();
+    if (error != null) {
+        return redirectWithLoginError(redirectLocation, error_description ?? error);
     }
 
-    const startTime = Date.now();
-    const { user } = await getWorkOS().userManagement.authenticateWithCode({
-        code,
-        clientId: getWorkOSClientId(),
-    });
+    if (typeof code !== "string") {
+        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+    }
 
-    const beforeSigningTime = Date.now();
+    const domain = getXFernHostEdge(req);
+    const config = await getAuthEdgeConfig(domain);
 
-    // eslint-disable-next-line no-console
-    console.debug(`Time to authenticate with WorkOS: ${beforeSigningTime - startTime}ms`);
+    if (config != null && config.type === "oauth2" && config.partner === "ory") {
+        const oauthClient = new OAuth2Client(config, urlJoin(`https://${domain}`, req.nextUrl.pathname));
+        try {
+            const { access_token, refresh_token } = await oauthClient.getToken(code);
+            const token = OryAccessTokenSchema.parse(oauthClient.decode(access_token));
+            const fernUser: FernUser = {
+                type: "user",
+                partner: "ory",
+                name: token.ext.name,
+                email: token.ext.email,
+            };
+            const expires = token.exp == null ? undefined : new Date(token.exp * 1000);
+            const res = NextResponse.redirect(redirectLocation);
+            res.cookies.set("fern_token", await signFernJWT(fernUser), withSecureCookie({ expires }));
+            res.cookies.set("access_token", access_token, withSecureCookie({ expires }));
+            if (refresh_token != null) {
+                res.cookies.set("refresh_token", refresh_token, withSecureCookie({ expires }));
+            } else {
+                res.cookies.delete("refresh_token");
+            }
+            return res;
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(error);
+            return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        }
+    }
 
-    // Create a JWT token with the user's information
-    const token = await new SignJWT({
-        // Here you might lookup and retrieve user details from your database
-        user,
-    })
-        .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-        .setIssuedAt()
-        .setExpirationTime("30d")
-        .setIssuer("https://buildwithfern.com")
-        .sign(getJwtTokenSecret());
+    try {
+        const { user } = await getWorkOS().userManagement.authenticateWithCode({
+            code,
+            clientId: getWorkOSClientId(),
+        });
 
-    const afterSigningTime = Date.now();
+        const fernUser: FernUser = {
+            type: "user",
+            partner: "workos",
+            name:
+                user.firstName != null && user.lastName != null
+                    ? `${user.firstName} ${user.lastName}`
+                    : user.firstName ?? user.email.split("@")[0],
+            email: user.email,
+        };
 
-    // eslint-disable-next-line no-console
-    console.debug(`Time to sign JWT: ${afterSigningTime - beforeSigningTime}ms`);
+        const token = await signFernJWT(fernUser, user);
 
-    const res = redirectResponse(req.nextUrl.origin);
-    res.cookies.set("fern_token", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-        path: "/",
-        maxAge: 2592000,
-    });
-    return res;
+        const res = NextResponse.redirect(redirectLocation);
+        res.cookies.set("fern_token", token, withSecureCookie());
+        return res;
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+    }
 }

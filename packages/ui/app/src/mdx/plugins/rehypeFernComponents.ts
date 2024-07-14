@@ -13,6 +13,8 @@ export function rehypeFernComponents(): (tree: Root) => void {
                     node.name = "Image";
                 } else if (node.name === "iframe") {
                     node.name = "IFrame";
+                } else if (node.name === "table") {
+                    node.name = "Table";
                 }
             }
         });
