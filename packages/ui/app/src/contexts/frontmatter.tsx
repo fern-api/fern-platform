@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { FernDocsFrontmatter } from "./frontmatter";
+import { FernDocsFrontmatter } from "../mdx/frontmatter";
 
 const FrontmatterContext = createContext<FernDocsFrontmatter>({});
 

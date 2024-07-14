@@ -1,8 +1,8 @@
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
+import { useRouteListener } from "../../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { useRouteListener } from "../../../contexts/useRouteListener";
 import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";

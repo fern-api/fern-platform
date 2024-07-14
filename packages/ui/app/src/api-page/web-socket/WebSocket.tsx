@@ -5,8 +5,7 @@ import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { useFeatureFlags } from "../../atoms/flags";
-import { useNavigationNodes } from "../../atoms/navigation";
+import { useFeatureFlags, useNavigationNodes } from "../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import {

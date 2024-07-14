@@ -7,7 +7,6 @@ export { withMinimumTime } from "./delay/withMinimumTime";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
 export { identity } from "./identity";
 export { assertNonNullish, isNonNullish } from "./isNonNullish";
-export { noop } from "./noop";
 export { entries, type Entries } from "./objects/entries";
 export { isPlainObject } from "./objects/isPlainObject";
 export { keys } from "./objects/keys";

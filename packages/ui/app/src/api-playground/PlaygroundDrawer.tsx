@@ -7,8 +7,7 @@ import { motion, useAnimate, useMotionValue } from "framer-motion";
 import { useAtom, useAtomValue } from "jotai";
 import { mapValues } from "lodash-es";
 import { Dispatch, ReactElement, SetStateAction, memo, useCallback, useEffect, useMemo } from "react";
-import { useFlattenedApis } from "../atoms/apis";
-import { useSidebarNodes } from "../atoms/navigation";
+import { useFlattenedApis, useSidebarNodes } from "../atoms";
 import {
     PLAYGROUND_FORM_STATE_ATOM,
     useClosePlayground,

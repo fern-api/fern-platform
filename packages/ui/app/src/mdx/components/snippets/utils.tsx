@@ -2,7 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { useAtom } from "jotai";
 import { useCallback } from "react";
 import { CodeExample, CodeExampleGroup } from "../../../api-page/examples/code-example";
-import { FERN_LANGUAGE_ATOM } from "../../../atoms/lang";
+import { FERN_LANGUAGE_ATOM } from "../../../atoms";
 
 export function useSelectedClient(
     clients: CodeExampleGroup[],

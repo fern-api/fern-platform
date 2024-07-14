@@ -1,9 +1,15 @@
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import { ReactElement, memo } from "react";
-import { CONTENT_HEIGHT_ATOM, DOCS_LAYOUT_ATOM, HEADER_OFFSET_ATOM, SHOW_HEADER_ATOM } from "../../atoms/layout";
-import { SIDEBAR_DISMISSABLE_ATOM } from "../../atoms/sidebar";
-import { useColors, useTheme } from "../../atoms/theme";
+import {
+    CONTENT_HEIGHT_ATOM,
+    DOCS_LAYOUT_ATOM,
+    HEADER_OFFSET_ATOM,
+    SHOW_HEADER_ATOM,
+    SIDEBAR_DISMISSABLE_ATOM,
+    useColors,
+    useTheme,
+} from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";

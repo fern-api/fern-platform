@@ -1,12 +1,11 @@
-import { noop } from "@fern-ui/core-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
 import { debounce } from "lodash-es";
 import { Router, useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo } from "react";
-import { useFeatureFlags } from "../../atoms/flags";
-import { CURRENT_NODE_ATOM } from "../../atoms/navigation";
+import { noop } from "ts-essentials";
+import { CURRENT_NODE_ATOM, useFeatureFlags } from "../../atoms";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { NavigationContext } from "./NavigationContext";
 

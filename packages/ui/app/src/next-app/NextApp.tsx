@@ -1,6 +1,8 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { Provider as JotaiProvider } from "jotai";
+import { DevTools } from "jotai-devtools";
+import "jotai-devtools/styles.css";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import type { Router } from "next/router";
@@ -8,15 +10,12 @@ import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
-import { store } from "../atoms/store";
-import { ThemeScript } from "../atoms/theme";
+import { DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { RouteListenerContextProvider } from "../contexts/useRouteListener";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
-import { DocsPage } from "./DocsPage";
 
-export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Props | undefined>): ReactElement {
+export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     useEffect(() => {
         initializePosthog();
     }, []);
@@ -30,21 +29,22 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsPage.Prop
     });
 
     return (
-        <FernTooltipProvider>
+        <>
             <ThemeScript colors={pageProps?.colors} />
-            <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
-                <JotaiProvider store={store}>
-                    <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                        <RouteListenerContextProvider>
-                            <DatadogInit />
-                            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+            <DatadogInit />
+            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+            <Toaster />
+            <JotaiProvider store={store}>
+                <DevTools store={store} />
+                <FernTooltipProvider>
+                    <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
+                        <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
                             <Component {...pageProps} />
-                        </RouteListenerContextProvider>
-                        <Toaster />
-                    </FernErrorBoundary>
-                </JotaiProvider>
-            </SWRConfig>
-        </FernTooltipProvider>
+                        </FernErrorBoundary>
+                    </SWRConfig>
+                </FernTooltipProvider>
+            </JotaiProvider>
+        </>
     );
 }
 

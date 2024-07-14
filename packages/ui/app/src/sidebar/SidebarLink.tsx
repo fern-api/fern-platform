@@ -20,8 +20,7 @@ import {
     useRef,
 } from "react";
 import { ChevronDown } from "react-feather";
-import { useAtomEffect } from "../atoms";
-import { SIDEBAR_SCROLL_CONTAINER_ATOM, useCloseMobileSidebar } from "../atoms/sidebar";
+import { SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMobileSidebar } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { getRouteNodeWithAnchor } from "../util/anchor";
 import { slugToHref } from "../util/slugToHref";

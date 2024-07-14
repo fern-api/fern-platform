@@ -1,10 +1,9 @@
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
-import { DOCS_LAYOUT_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM } from "../atoms/layout";
-import { THEME_SWITCH_ENABLED_ATOM } from "../atoms/theme";
+import { DOCS_LAYOUT_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM, THEME_SWITCH_ENABLED_ATOM } from "../atoms";
 import { HeaderLogoSection } from "../docs/HeaderLogoSection";
-import { ThemeButton } from "../docs/ThemeButton";
+import { ThemeButton } from "../themes";
 import { SidebarSearchBar } from "./SidebarSearchBar";
 
 export declare namespace SidebarFixedItemsSection {

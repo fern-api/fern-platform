@@ -4,7 +4,7 @@ import * as Popover from "@radix-ui/react-popover";
 import cn from "clsx";
 import { memo, useState } from "react";
 import { Monitor, Moon as MoonIcon, Sun as SunIcon } from "react-feather";
-import { useSetSystemTheme, useTheme, useToggleTheme } from "../atoms/theme";
+import { useSetSystemTheme, useTheme, useToggleTheme } from "../../atoms";
 
 export declare namespace ThemeButton {
     export interface Props extends FernButtonProps {

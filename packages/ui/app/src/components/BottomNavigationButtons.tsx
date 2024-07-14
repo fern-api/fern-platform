@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useResolvedPath } from "../atoms/navigation";
+import { useResolvedPath } from "../atoms";
 import { BottomNavigationButton } from "./BottomNavigationButton";
 
 export const BottomNavigationButtons: FC<{ showPrev?: boolean }> = ({ showPrev = false }) => {

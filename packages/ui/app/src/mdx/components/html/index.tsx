@@ -4,22 +4,20 @@ import { useAtomValue } from "jotai";
 import {
     AnchorHTMLAttributes,
     Children,
-    cloneElement,
     ComponentProps,
-    createElement,
     FC,
-    isValidElement,
     ReactElement,
+    cloneElement,
+    createElement,
+    isValidElement,
     useMemo,
 } from "react";
 import Zoom from "react-medium-image-zoom";
-import { useFeatureFlags } from "../../../atoms/flags";
-import { SLUG_ATOM } from "../../../atoms/location";
+import { FILES_ATOM, SLUG_ATOM, useFeatureFlags } from "../../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { FernImage } from "../../../components/FernImage";
 import { FernLink } from "../../../components/FernLink";
-import { useDocsContext } from "../../../contexts/docs-context/useDocsContext";
-import { useFrontmatter } from "../../frontmatter-context";
+import { useFrontmatter } from "../../../contexts/frontmatter";
 
 /**
  * By default, next will use /host/current/slug in SSG.
@@ -94,7 +92,7 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
 }
 
 export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, enableZoom, style, ...rest }) => {
-    const { files } = useDocsContext();
+    const files = useAtomValue(FILES_ATOM);
     const { "no-image-zoom": noImageZoom } = useFrontmatter();
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {

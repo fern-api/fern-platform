@@ -9,9 +9,16 @@ import { THEME_ATOM } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
+SEARCH_DIALOG_OPEN_ATOM.debugLabel = "SEARCH_DIALOG_OPEN_ATOM";
+
 export const MOBILE_SIDEBAR_OPEN_ATOM = atom(false);
+MOBILE_SIDEBAR_OPEN_ATOM.debugLabel = "MOBILE_SIDEBAR_OPEN_ATOM";
+
 export const DESKTOP_SIDEBAR_OPEN_ATOM = atom(false);
+DESKTOP_SIDEBAR_OPEN_ATOM.debugLabel = "DESKTOP_SIDEBAR_OPEN_ATOM";
+
 export const SIDEBAR_SCROLL_CONTAINER_ATOM = atom<HTMLElement | null>(null);
+SIDEBAR_SCROLL_CONTAINER_ATOM.debugLabel = "SIDEBAR_SCROLL_CONTAINER_ATOM";
 
 export const DISMISSABLE_SIDEBAR_OPEN_ATOM = atom(
     (get) => {
@@ -31,6 +38,7 @@ export const DISMISSABLE_SIDEBAR_OPEN_ATOM = atom(
         set(MOBILE_SIDEBAR_OPEN_ATOM, update);
     },
 );
+DISMISSABLE_SIDEBAR_OPEN_ATOM.debugLabel = "DISMISSABLE_SIDEBAR_OPEN_ATOM";
 
 export const useDismissSidebar = (): (() => void) => {
     return useAtomCallback((_get, set) => {
@@ -97,6 +105,7 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
 
     return false;
 });
+SIDEBAR_DISMISSABLE_ATOM.debugLabel = "SIDEBAR_DISMISSABLE_ATOM";
 
 export function useMessageHandler(): void {
     useAtomEffect(

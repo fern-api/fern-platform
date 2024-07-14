@@ -1,7 +1,7 @@
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
-import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM } from "../atoms/navigation";
+import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { getSidebarTabHref } from "../util/getSidebarTabHref";
 

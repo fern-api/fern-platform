@@ -1,4 +1,4 @@
-import { useFeatureFlags } from "../../atoms/flags";
+import { useFeatureFlags } from "../../atoms";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";

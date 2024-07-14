@@ -4,7 +4,7 @@ import { CodeExampleClientDropdown } from "../../../api-page/endpoints/CodeExamp
 import { EndpointUrlWithOverflow } from "../../../api-page/endpoints/EndpointUrlWithOverflow";
 import { CodeSnippetExample } from "../../../api-page/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-page/examples/code-example";
-import { useResolvedPath } from "../../../atoms/navigation";
+import { useResolvedPath } from "../../../atoms";
 import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
 import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";

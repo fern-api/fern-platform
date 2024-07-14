@@ -2,7 +2,7 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
-import { SEARCH_DIALOG_OPEN_ATOM } from "../../atoms/sidebar";
+import { SEARCH_DIALOG_OPEN_ATOM } from "../../atoms";
 import useInkeepSettings from "./useInkeepSettings";
 
 const CustomTrigger = dynamic(() => import("@inkeep/widgets").then((mod) => mod.InkeepCustomTrigger), {

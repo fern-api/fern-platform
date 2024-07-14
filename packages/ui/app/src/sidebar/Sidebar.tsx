@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import { ReactElement, memo } from "react";
-import { SIDEBAR_DISMISSABLE_ATOM } from "../atoms/sidebar";
+import { SIDEBAR_DISMISSABLE_ATOM } from "../atoms";
 import { DismissableSidebar } from "./DismissableSidebar";
 import { SidebarContainer } from "./SidebarContainer";
 

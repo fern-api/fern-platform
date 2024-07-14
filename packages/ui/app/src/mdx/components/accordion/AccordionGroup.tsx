@@ -56,7 +56,7 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
                 const id = slug(title);
                 return (
                     <RadixAccordion.Item key={idx} value={idx.toString()} className="fern-accordion-item" id={id}>
-                        <RadixAccordion.Trigger className="fern-accrdion-trigger">
+                        <RadixAccordion.Trigger className="fern-accordion-trigger">
                             <ChevronRightIcon className="fern-accordion-trigger-arrow" />
                             <h6 className="fern-accordion-trigger-title" data-anchor={toc ? id : undefined}>
                                 {title}

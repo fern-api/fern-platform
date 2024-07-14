@@ -3,7 +3,7 @@ import { FernButton } from "@fern-ui/components";
 import { getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { useAtomValue } from "jotai";
-import { CURRENT_VERSION_ID_ATOM, UNVERSIONED_SLUG_ATOM, VERSIONS_ATOM } from "../atoms/navigation";
+import { CURRENT_VERSION_ID_ATOM, UNVERSIONED_SLUG_ATOM, VERSIONS_ATOM } from "../atoms";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
 import { slugToHref } from "../util/slugToHref";
 

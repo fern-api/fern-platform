@@ -8,8 +8,8 @@ import { visit } from "unist-util-visit";
 import { stringHasMarkdown } from "../../mdx/common/util";
 import { getFrontmatter } from "../../mdx/frontmatter";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
+import { getFontExtension } from "../../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
-import { getFontExtension } from "./getFontVariables";
 
 function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1Read.File_>): DocsV1Read.File_ {
     return visitDiscriminatedUnion(fileOrUrl)._visit({

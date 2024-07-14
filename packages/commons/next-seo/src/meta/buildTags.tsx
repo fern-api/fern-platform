@@ -475,6 +475,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
     if (config.breadcrumbList != null && config.breadcrumbList.itemListElement.length > 0) {
         tagsToRender.push(
             <script
+                key="jsonld-breadcrumb"
                 type="application/ld+json"
                 id="jsonld-breadcrumb"
                 dangerouslySetInnerHTML={{

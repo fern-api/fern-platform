@@ -1,8 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
+import { useRouteListener } from "../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { useRouteListener } from "../../contexts/useRouteListener";
 import type { BundledMDX } from "../../mdx/types";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
@@ -75,7 +75,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
     children,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
-    const anchorRoute = `${route}#${anchorId}`;
+    const routeWithHash = `${route}#${anchorId}`;
     const ref = useRef<HTMLDivElement>(null);
 
     const [isActive, setIsActive] = useState(false);
@@ -92,14 +92,14 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
     return (
         <div
             ref={ref}
-            data-route={anchorRoute.toLowerCase()}
+            data-route={routeWithHash.toLowerCase()}
             className={cn("scroll-mt-content-padded relative flex flex-col gap-2 py-3", {
                 "before:outline-border-accent-muted before:outline-1 before:outline before:outline-offset-0 before:content-[''] before:inset-y-0 before:-inset-x-2 before:rounded-sm":
                     isActive,
             })}
         >
             <div className="group/anchor-container flex items-center">
-                <AbsolutelyPositionedAnchor href={anchorRoute} />
+                <AbsolutelyPositionedAnchor href={routeWithHash} />
                 <span className="inline-flex items-baseline gap-2">
                     <span className="fern-api-property-key">{name}</span>
                     {typeShorthand}

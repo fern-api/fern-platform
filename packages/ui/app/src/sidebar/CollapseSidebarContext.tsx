@@ -1,6 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useAtomValue } from "jotai";
-import { noop } from "lodash-es";
 import {
     FC,
     PropsWithChildren,
@@ -12,9 +11,9 @@ import {
     useMemo,
     useState,
 } from "react";
+import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
-import { useAtomEffect } from "../atoms";
-import { CURRENT_NODE_ATOM, CURRENT_NODE_ID_ATOM, useSidebarNodes } from "../atoms/navigation";
+import { CURRENT_NODE_ATOM, CURRENT_NODE_ID_ATOM, useAtomEffect, useSidebarNodes } from "../atoms";
 import { useActiveValueListeners } from "../hooks/useActiveValueListeners";
 
 interface CollapseSidebarContextValue {

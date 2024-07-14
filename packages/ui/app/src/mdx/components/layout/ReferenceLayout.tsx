@@ -4,7 +4,7 @@ import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { ReactElement, ReactNode, isValidElement } from "react";
 import { EditThisPageButton } from "../../../components/EditThisPage";
 import { PageHeader } from "../../../components/PageHeader";
-import { useApiPageContext } from "../../../contexts/useApiPageContext";
+import { useApiPageContext } from "../../../contexts/api-page";
 import { Feedback } from "../../../custom-docs-page/Feedback";
 import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";

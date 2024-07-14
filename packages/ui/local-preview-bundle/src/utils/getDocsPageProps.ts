@@ -11,12 +11,13 @@ import {
     getGitHubInfo,
     getGitHubRepo,
 } from "@fern-ui/ui";
+import { ComponentProps } from "react";
 import urljoin from "url-join";
 
 export async function getDocsPageProps(
     docs: DocsV2Read.LoadDocsForUrlResponse,
     slug: string[],
-): Promise<DocsPageResult<DocsPage.Props>> {
+): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
     const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
     const node = FernNavigation.utils.findNode(root, slug);
 
@@ -65,7 +66,7 @@ export async function getDocsPageProps(
         return { type: "notFound", notFound: true };
     }
 
-    const props: DocsPage.Props = {
+    const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
         title: docs.definition.config.title,

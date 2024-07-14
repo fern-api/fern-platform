@@ -1,8 +1,11 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { useEventCallback } from "@fern-ui/react-commons";
 import { atom, useAtomValue } from "jotai";
 import { atomWithLocation } from "jotai-location";
 import { Router } from "next/router";
-import { useMemo } from "react";
+import { useCallbackOne, useMemoOne } from "use-memo-one";
+import { useAtomEffect } from "./hooks";
+import { RESOLVED_PATH_ATOM } from "./navigation";
 
 export const LOCATION_ATOM = atomWithLocation({
     subscribe: (callback) => {
@@ -16,24 +19,36 @@ export const LOCATION_ATOM = atomWithLocation({
         };
     },
 });
+LOCATION_ATOM.debugLabel = "LOCATION_ATOM";
 
-export const HASH_ATOM = atom((get) => get(LOCATION_ATOM).hash);
+export const HASH_ATOM = atom((get) => get(LOCATION_ATOM).hash?.slice(1));
+HASH_ATOM.debugLabel = "HASH_ATOM";
 
-const SETTABLE_LOCATION_ATOM = atom(FernNavigation.Slug(""));
-
-export const SLUG_ATOM = atom(
-    (get) => {
-        const location = get(LOCATION_ATOM);
-        if (location.pathname == null) {
-            return get(SETTABLE_LOCATION_ATOM);
-        }
-        return FernNavigation.Slug(location.pathname?.slice(1) ?? "");
-    },
-    (_get, set, slug: FernNavigation.Slug) => {
-        set(SETTABLE_LOCATION_ATOM, slug);
-    },
-);
+export const SLUG_ATOM = atom((get) => {
+    const location = get(LOCATION_ATOM);
+    if (location.pathname == null) {
+        return get(RESOLVED_PATH_ATOM).slug;
+    }
+    return FernNavigation.Slug(location.pathname?.slice(1) ?? "");
+});
+SLUG_ATOM.debugLabel = "SLUG_ATOM";
 
 export function useIsSelectedSlug(slug: FernNavigation.Slug): boolean {
-    return useAtomValue(useMemo(() => atom((get) => get(SLUG_ATOM) === slug), [slug]));
+    return useAtomValue(useMemoOne(() => atom((get) => get(SLUG_ATOM) === slug), [slug]));
+}
+
+export function useRouteListener(route: string, callback: (hash: string | undefined) => void): void {
+    const callbackRef = useEventCallback(callback);
+
+    return useAtomEffect(
+        useCallbackOne(
+            (get) => {
+                const location = get(LOCATION_ATOM);
+                if (location.pathname?.toLowerCase() === route.toLowerCase()) {
+                    setTimeout(() => callbackRef(get(HASH_ATOM)), 0);
+                }
+            },
+            [route, callbackRef],
+        ),
+    );
 }

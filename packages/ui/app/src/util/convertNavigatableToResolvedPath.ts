@@ -1,7 +1,7 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-ui/core-utils";
 import { captureSentryError } from "../analytics/sentry";
-import { FeatureFlags } from "../atoms/flags";
+import { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
 import { getFrontmatter } from "../mdx/frontmatter";
 import { FernSerializeMdxOptions, type BundledMDX } from "../mdx/types";

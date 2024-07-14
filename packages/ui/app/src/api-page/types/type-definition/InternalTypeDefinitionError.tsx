@@ -1,7 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
-import { useRouteListener } from "../../../contexts/useRouteListener";
+import { useRouteListener } from "../../../atoms";
 import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import {

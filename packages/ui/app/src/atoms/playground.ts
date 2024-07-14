@@ -4,7 +4,7 @@ import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { PlaygroundRequestFormState } from "../api-playground/types";
-import { APIS } from "./apis";
+import { APIS_ATOM } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { BELOW_HEADER_HEIGHT_ATOM } from "./layout";
@@ -12,11 +12,15 @@ import { LOCATION_ATOM } from "./location";
 import { NAVIGATION_NODES_ATOM } from "./navigation";
 
 const PLAYGROUND_IS_OPEN_ATOM = atom(false);
+PLAYGROUND_IS_OPEN_ATOM.debugLabel = "PLAYGROUND_IS_OPEN_ATOM";
+
 export const HAS_PLAYGROUND_ATOM = atom(
-    (get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled && Object.keys(get(APIS)).length > 0,
+    (get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled && Object.keys(get(APIS_ATOM)).length > 0,
 );
+HAS_PLAYGROUND_ATOM.debugLabel = "HAS_PLAYGROUND_ATOM";
 
 const PLAYGROUND_HEIGHT_VALUE_ATOM = atom<number>(0);
+PLAYGROUND_HEIGHT_VALUE_ATOM.debugLabel = "PLAYGROUND_HEIGHT_VALUE_ATOM";
 
 PLAYGROUND_HEIGHT_VALUE_ATOM.onMount = (set) => {
     if (typeof window === "undefined") {
@@ -35,6 +39,7 @@ export const PLAYGROUND_HEIGHT_ATOM = atom(
         set(PLAYGROUND_HEIGHT_VALUE_ATOM, update);
     },
 );
+PLAYGROUND_HEIGHT_ATOM.debugLabel = "PLAYGROUND_HEIGHT_ATOM";
 
 export const PLAYGROUND_NODE_ID = atom(
     (get) => {
@@ -70,6 +75,7 @@ export const PLAYGROUND_NODE_ID = atom(
         set(LOCATION_ATOM, newLocation);
     },
 );
+PLAYGROUND_NODE_ID.debugLabel = "PLAYGROUND_NODE_ID";
 
 export const PLAYGROUND_NODE = atom((get) => {
     const nodeId = get(PLAYGROUND_NODE_ID);
@@ -82,13 +88,16 @@ export const PLAYGROUND_NODE = atom((get) => {
     }
     return node;
 });
+PLAYGROUND_NODE.debugLabel = "PLAYGROUND_NODE";
 
 export const PREV_PLAYGROUND_NODE_ID = atom<FernNavigation.NodeId | undefined>(undefined);
+PREV_PLAYGROUND_NODE_ID.debugLabel = "PREV_PLAYGROUND_NODE_ID";
 
 export const PLAYGROUND_FORM_STATE_ATOM = atomWithStorage<Record<string, PlaygroundRequestFormState | undefined>>(
     "api-playground-selection-state-alpha",
     {},
 );
+PLAYGROUND_FORM_STATE_ATOM.debugLabel = "PLAYGROUND_FORM_STATE_ATOM";
 
 export function useHasPlayground(): boolean {
     return useAtomValue(HAS_PLAYGROUND_ATOM);

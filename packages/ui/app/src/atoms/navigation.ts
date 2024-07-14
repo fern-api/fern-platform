@@ -1,23 +1,49 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { atom, useAtomValue } from "jotai";
-import { atomWithReducer } from "jotai/utils";
+import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import { ResolvedPath } from "../resolver/ResolvedPath";
+import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 
-export const DOMAIN_ATOM = atom<string>("app.buildwithfern.com");
-export const BASEPATH_ATOM = atom<string | undefined>(undefined);
-export const TABS_ATOM = atom<SidebarTab[]>([]);
-export const VERSIONS_ATOM = atom<SidebarVersionInfo[]>([]);
-export const CURRENT_TAB_INDEX_ATOM = atom<number | undefined>(undefined);
-export const CURRENT_VERSION_ID_ATOM = atom<FernNavigation.VersionId | undefined>(undefined);
+export const DOMAIN_ATOM = atom<string>((get) => get(DOCS_ATOM).baseUrl.domain);
+DOMAIN_ATOM.debugLabel = "DOMAIN_ATOM";
+
+export const BASEPATH_ATOM = atom<string | undefined>((get) => get(DOCS_ATOM).baseUrl.basePath);
+BASEPATH_ATOM.debugLabel = "BASEPATH_ATOM";
+
+export const TABS_ATOM = selectAtom(DOCS_ATOM, (docs): ReadonlyArray<SidebarTab> => docs.navigation.tabs, isEqual);
+TABS_ATOM.debugLabel = "TABS_ATOM";
+
+export const VERSIONS_ATOM = selectAtom(
+    DOCS_ATOM,
+    (docs): ReadonlyArray<SidebarVersionInfo> => docs.navigation.versions,
+    isEqual,
+);
+VERSIONS_ATOM.debugLabel = "VERSIONS_ATOM";
+
+export const CURRENT_TAB_INDEX_ATOM = atom<number | undefined>((get) => get(DOCS_ATOM).navigation.currentTabIndex);
+CURRENT_TAB_INDEX_ATOM.debugLabel = "CURRENT_TAB_INDEX_ATOM";
+
+export const CURRENT_VERSION_ID_ATOM = atom<FernNavigation.VersionId | undefined>(
+    (get) => get(DOCS_ATOM).navigation.currentVersionId,
+);
+CURRENT_VERSION_ID_ATOM.debugLabel = "CURRENT_VERSION_ID_ATOM";
+
+export const NAVBAR_LINKS_ATOM = selectAtom(
+    DOCS_ATOM,
+    (docs): ReadonlyArray<DocsV1Read.NavbarLink> => docs.navbarLinks,
+    isEqual,
+);
+NAVBAR_LINKS_ATOM.debugLabel = "NAVBAR_LINKS_ATOM";
 
 export const CURRENT_VERSION_ATOM = atom((get) => {
     const versionId = get(CURRENT_VERSION_ID_ATOM);
     const versions = get(VERSIONS_ATOM);
     return versions.find((v) => v.id === versionId);
 });
+CURRENT_VERSION_ATOM.debugLabel = "CURRENT_VERSION_ATOM";
 
 export const UNVERSIONED_SLUG_ATOM = atom<string>((get) => {
     const slug = get(SLUG_ATOM);
@@ -25,6 +51,7 @@ export const UNVERSIONED_SLUG_ATOM = atom<string>((get) => {
     const basePath = get(BASEPATH_ATOM);
     return FernNavigation.utils.getUnversionedSlug(slug, currentVersion?.slug, basePath);
 });
+UNVERSIONED_SLUG_ATOM.debugLabel = "UNVERSIONED_SLUG_ATOM";
 
 export const CURRENT_TAB_ATOM = atom((get) => {
     const tabIndex = get(CURRENT_TAB_INDEX_ATOM);
@@ -34,26 +61,24 @@ export const CURRENT_TAB_ATOM = atom((get) => {
     const tabs = get(TABS_ATOM);
     return tabs[tabIndex];
 });
+CURRENT_TAB_ATOM.debugLabel = "CURRENT_TAB_ATOM";
 
-export const SIDEBAR_ROOT_NODE_ATOM = atom<FernNavigation.SidebarRootNode | undefined>(undefined);
+export const SIDEBAR_ROOT_NODE_ATOM = selectAtom(
+    DOCS_ATOM,
+    (docs): FernNavigation.SidebarRootNode | undefined => docs.navigation.sidebar,
+    isEqual,
+);
+SIDEBAR_ROOT_NODE_ATOM.debugLabel = "SIDEBAR_ROOT_NODE_ATOM";
 
 // the initial path that was hard-navigated to
-export const RESOLVED_PATH_ATOM = atomWithReducer<ResolvedPath, ResolvedPath>(
-    {
-        type: "custom-markdown-page",
-        slug: FernNavigation.Slug(""),
-        title: "",
-        mdx: "",
-        neighbors: { prev: null, next: null },
-        apis: {},
-    },
-    (prev: ResolvedPath, next: ResolvedPath) => (isEqual(prev, next) ? prev : next),
-);
+export const RESOLVED_PATH_ATOM = atom<ResolvedPath>((get) => get(DOCS_ATOM).resolvedPath);
+RESOLVED_PATH_ATOM.debugLabel = "RESOLVED_PATH_ATOM";
 
 export const NAVIGATION_NODES_ATOM = atom<FernNavigation.NodeCollector>((get) => {
     const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
     return FernNavigation.NodeCollector.collect(sidebar);
 });
+NAVIGATION_NODES_ATOM.debugLabel = "NAVIGATION_NODES_ATOM";
 
 export function useSidebarNodes(): FernNavigation.SidebarRootNode | undefined {
     return useAtomValue(SIDEBAR_ROOT_NODE_ATOM);
@@ -68,11 +93,13 @@ export const CURRENT_NODE_ATOM = atom((get) => {
     const nodeCollector = get(NAVIGATION_NODES_ATOM);
     return nodeCollector.slugMap.get(slug);
 });
+CURRENT_NODE_ATOM.debugLabel = "CURRENT_NODE_ATOM";
 
 export const CURRENT_NODE_ID_ATOM = atom((get) => {
     const node = get(CURRENT_NODE_ATOM);
     return node?.id;
 });
+CURRENT_NODE_ID_ATOM.debugLabel = "CURRENT_NODE_ID_ATOM";
 
 export function useCurrentNodeId(): FernNavigation.NodeId | undefined {
     return useAtomValue(CURRENT_NODE_ID_ATOM);

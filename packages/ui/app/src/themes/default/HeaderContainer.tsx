@@ -1,10 +1,7 @@
 import cn, { clsx } from "clsx";
 import { useAtomValue } from "jotai";
 import { ReactElement, useCallback } from "react";
-import { HAS_HORIZONTAL_TABS } from "../../atoms/layout";
-import { useIsMobileSidebarOpen } from "../../atoms/sidebar";
-import { useColors } from "../../atoms/theme";
-import { MOBILE_SIDEBAR_ENABLED_ATOM } from "../../atoms/viewport";
+import { HAS_HORIZONTAL_TABS, MOBILE_SIDEBAR_ENABLED_ATOM, useColors, useIsMobileSidebarOpen } from "../../atoms";
 import { BgImageGradient } from "../../docs/BgImageGradient";
 import { Header } from "../../docs/Header";
 import { HeaderTabs } from "../../docs/HeaderTabs";

@@ -5,7 +5,7 @@ import type {
     InkeepWidgetBaseSettings,
 } from "@inkeep/widgets";
 import type { DeepReadonly } from "ts-essentials";
-import { useTheme } from "../../atoms/theme";
+import { useTheme } from "../../atoms";
 import { useSearchConfig } from "../../services/useSearchService";
 
 const useInkeepSettings = ():

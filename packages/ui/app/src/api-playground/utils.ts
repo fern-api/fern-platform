@@ -1,7 +1,8 @@
 import { Snippets } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { isEmpty, mapValues, noop } from "lodash-es";
+import { isEmpty, mapValues } from "lodash-es";
+import { noop } from "ts-essentials";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
 import {
     ResolvedEndpointDefinition,

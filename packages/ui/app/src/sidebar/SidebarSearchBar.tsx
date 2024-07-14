@@ -1,7 +1,7 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { memo } from "react";
-import { useOpenSearchDialog } from "../atoms/sidebar";
+import { useOpenSearchDialog } from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
 
 export declare namespace SidebarSearchBar {

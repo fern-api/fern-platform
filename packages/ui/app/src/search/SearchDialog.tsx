@@ -1,9 +1,7 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
-import { CURRENT_VERSION_ATOM, useSidebarNodes } from "../atoms/navigation";
-import { SEARCH_DIALOG_OPEN_ATOM } from "../atoms/sidebar";
-import { IS_MOBILE_SCREEN_ATOM } from "../atoms/viewport";
+import { CURRENT_VERSION_ATOM, IS_MOBILE_SCREEN_ATOM, SEARCH_DIALOG_OPEN_ATOM, useSidebarNodes } from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { SearchMobileHits } from "./SearchHits";

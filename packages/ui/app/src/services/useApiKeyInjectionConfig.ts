@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import urljoin from "url-join";
-import { useBasePath } from "../atoms/navigation";
+import { useBasePath } from "../atoms";
 import { APIKeyInjectionConfig } from "../auth";
 
 export const API_KEY_INJECTION_ROUTE = "/api/fern-docs/auth/api-key-injection";

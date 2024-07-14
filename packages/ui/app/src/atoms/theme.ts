@@ -1,11 +1,13 @@
-import { noop } from "@fern-ui/core-utils";
 import { ColorsConfig } from "@fern-ui/fdr-utils";
 import { atom, useAtom, useAtomValue } from "jotai";
-import { atomWithRefresh } from "jotai/utils";
+import { atomWithRefresh, selectAtom } from "jotai/utils";
+import { isEqual } from "lodash-es";
 import { createElement, memo } from "react";
+import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
 import { z } from "zod";
-import { getThemeColor } from "../next-app/utils/getColorVariables";
+import { getThemeColor } from "../themes/stylesheet/getColorVariables";
+import { DOCS_ATOM } from "./docs";
 import { useAtomEffect } from "./hooks/useAtomEffect";
 import { atomWithStorageString } from "./utils/atomWithStorageString";
 
@@ -20,11 +22,16 @@ const SETTABLE_THEME_ATOM = atomWithStorageString<Theme | typeof SYSTEM>(STORAGE
     validate: z.union([z.literal("system"), z.literal("light"), z.literal("dark")]),
     getOnInit: true,
 });
+SETTABLE_THEME_ATOM.debugLabel = "SETTABLE_THEME_ATOM";
 
 const IS_SYSTEM_THEME_ATOM = atom((get) => get(SETTABLE_THEME_ATOM) === SYSTEM);
+IS_SYSTEM_THEME_ATOM.debugLabel = "IS_SYSTEM_THEME_ATOM";
 
-export const COLORS_ATOM = atom<Partial<ColorsConfig>>({});
+export const COLORS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.colors, isEqual);
+COLORS_ATOM.debugLabel = "COLORS_ATOM";
+
 export const AVAILABLE_THEMES_ATOM = atom((get) => getAvailableThemes(get(COLORS_ATOM)));
+AVAILABLE_THEMES_ATOM.debugLabel = "AVAILABLE_THEMES_ATOM";
 
 export function useColors(): Partial<ColorsConfig> {
     return useAtomValue(COLORS_ATOM);
@@ -34,6 +41,7 @@ export const THEME_SWITCH_ENABLED_ATOM = atom((get) => {
     const availableThemes = get(AVAILABLE_THEMES_ATOM);
     return availableThemes.length > 1;
 });
+THEME_SWITCH_ENABLED_ATOM.debugLabel = "THEME_SWITCH_ENABLED_ATOM";
 
 export const THEME_ATOM = atomWithRefresh(
     (get): Theme => {
@@ -83,6 +91,7 @@ export const THEME_BG_COLOR = atom((get) => {
     }
     return getThemeColor(config);
 });
+THEME_BG_COLOR.debugLabel = "THEME_BG_COLOR";
 
 const disableAnimation = () => {
     if (typeof document === "undefined") {
