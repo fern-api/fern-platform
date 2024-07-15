@@ -15,7 +15,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import { IS_MOBILE_SCREEN_ATOM, PLAYGROUND_AUTH_STATE_ATOM, useDomain, useFeatureFlags } from "../atoms";
+import { IS_MOBILE_SCREEN_ATOM, PLAYGROUND_AUTH_STATE_ATOM, store, useDomain, useFeatureFlags } from "../atoms";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
@@ -60,7 +60,6 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
 
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
-    const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
 
     useEffect(() => {
         if (typeof window === "undefined" || scrollAreaRef.current == null) {
@@ -132,8 +131,9 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 </FernButtonGroup>
 
                 <CopyToClipboardButton
-                    content={() =>
-                        requestType === "curl"
+                    content={() => {
+                        const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
+                        return requestType === "curl"
                             ? stringifyCurl({
                                   endpoint,
                                   formState,
@@ -157,8 +157,8 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                       redacted: false,
                                       isSnippetTemplatesEnabled,
                                   })
-                                : ""
-                    }
+                                : "";
+                    }}
                     className="-mr-2"
                 />
             </div>

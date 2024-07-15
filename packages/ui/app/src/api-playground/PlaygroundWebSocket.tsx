@@ -1,10 +1,9 @@
 import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
-import { useAtomValue } from "jotai";
 import { merge } from "lodash-es";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
-import { PLAYGROUND_AUTH_STATE_ATOM, usePlaygroundWebsocketFormState } from "../atoms";
+import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
@@ -21,7 +20,6 @@ interface PlaygroundWebSocketProps {
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, types }): ReactElement => {
     const [formState, setFormState] = usePlaygroundWebsocketFormState(websocket);
-    const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
 
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
     const { messages, pushMessage, clearMessages } = useWebsocketMessages(websocket.id);
@@ -62,6 +60,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
             socket.current = new WebSocket(WEBSOCKET_PROXY_URI);
 
             socket.current.onopen = () => {
+                const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
                 const authHeaders = buildAuthHeaders(websocket.auth, authState, { redacted: false });
                 const headers = {
                     ...authHeaders,
@@ -101,7 +100,6 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
             };
         });
     }, [
-        authState,
         formState.headers,
         formState.pathParameters,
         formState.queryParameters,
