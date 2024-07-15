@@ -75,7 +75,7 @@ export class OAuth2Client {
         url.searchParams.set("response_type", "code");
         url.searchParams.set("client_id", this.clientId);
         // if (this.redirect_uri != null) {
-        //     url.searchParams.set("redirect_uri", encodeURIComponent(this.redirect_uri));
+        //     url.searchParams.set("redirect_uri", this.redirect_uri);
         // }
         if (state != null) {
             url.searchParams.set("state", state);
