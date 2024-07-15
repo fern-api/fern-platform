@@ -1,7 +1,6 @@
 import { assertNever } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { ResolvedFormDataRequestProperty, ResolvedFormValue } from "../../resolver/types";
-import { PlaygroundRequestFormAuth } from "./auth";
 import { PlaygroundFormDataEntryValue } from "./formDataEntryValue";
 import { JsonVariant } from "./jsonVariant";
 
@@ -67,7 +66,6 @@ export type PlaygroundFormStateBody =
 
 export interface PlaygroundEndpointRequestFormState {
     type: "endpoint";
-    auth: PlaygroundRequestFormAuth | undefined;
     headers: Record<string, unknown>;
     pathParameters: Record<string, unknown>;
     queryParameters: Record<string, unknown>;
@@ -76,7 +74,6 @@ export interface PlaygroundEndpointRequestFormState {
 
 export interface PlaygroundWebSocketRequestFormState {
     type: "websocket";
-    auth: PlaygroundRequestFormAuth | undefined;
     headers: Record<string, unknown>;
     pathParameters: Record<string, unknown>;
     queryParameters: Record<string, unknown>;

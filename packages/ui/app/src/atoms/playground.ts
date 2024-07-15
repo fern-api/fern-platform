@@ -6,10 +6,18 @@ import { atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
-import type {
-    PlaygroundEndpointRequestFormState,
-    PlaygroundRequestFormState,
-    PlaygroundWebSocketRequestFormState,
+import {
+    PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
+    PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
+    PLAYGROUND_AUTH_STATE_HEADER_INITIAL,
+    PlaygroundAuthStateBasicAuth,
+    PlaygroundAuthStateBearerToken,
+    PlaygroundAuthStateHeader,
+    PlaygroundAuthStateSchema,
+    type PlaygroundAuthState,
+    type PlaygroundEndpointRequestFormState,
+    type PlaygroundRequestFormState,
+    type PlaygroundWebSocketRequestFormState,
 } from "../api-playground/types";
 import { getInitialEndpointRequestFormStateWithExample } from "../api-playground/utils";
 import { isEndpoint, type ResolvedEndpointDefinition, type ResolvedWebSocketChannel } from "../resolver/types";
@@ -19,6 +27,7 @@ import { useAtomEffect } from "./hooks";
 import { BELOW_HEADER_HEIGHT_ATOM } from "./layout";
 import { LOCATION_ATOM } from "./location";
 import { NAVIGATION_NODES_ATOM } from "./navigation";
+import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 
 const PLAYGROUND_IS_OPEN_ATOM = atom(false);
 PLAYGROUND_IS_OPEN_ATOM.debugLabel = "PLAYGROUND_IS_OPEN_ATOM";
@@ -172,6 +181,49 @@ export function useInitPlaygroundRouter(): void {
     );
 }
 
+// TODO: should this be stored in session storage instead of local storage?
+export const PLAYGROUND_AUTH_STATE_ATOM = atomWithStorageValidation<PlaygroundAuthState>(
+    "auth",
+    {},
+    { validate: PlaygroundAuthStateSchema },
+);
+
+export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM = atom(
+    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).bearerAuth ?? PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
+    (_get, set, update: SetStateAction<PlaygroundAuthStateBearerToken>) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
+            ...prev,
+            bearerAuth:
+                typeof update === "function"
+                    ? update(prev.bearerAuth ?? PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL)
+                    : update,
+        }));
+    },
+);
+
+export const PLAYGROUND_AUTH_STATE_HEADER_ATOM = atom(
+    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).header ?? PLAYGROUND_AUTH_STATE_HEADER_INITIAL,
+    (_get, set, update: SetStateAction<PlaygroundAuthStateHeader>) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
+            ...prev,
+            header: typeof update === "function" ? update(prev.header ?? PLAYGROUND_AUTH_STATE_HEADER_INITIAL) : update,
+        }));
+    },
+);
+
+export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM = atom(
+    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth ?? PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
+    (_get, set, update: SetStateAction<PlaygroundAuthStateBasicAuth>) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
+            ...prev,
+            basicAuth:
+                typeof update === "function"
+                    ? update(prev.basicAuth ?? PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL)
+                    : update,
+        }));
+    },
+);
+
 const playgroundFormStateFamily = atomFamily((nodeId: FernNavigation.NodeId) => {
     const formStateAtom = atomWithStorage<PlaygroundRequestFormState | undefined>(nodeId, undefined);
     formStateAtom.debugLabel = `playgroundFormStateAtom-${nodeId}`;
@@ -223,12 +275,7 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                 }
                 set(
                     formStateAtom,
-                    getInitialEndpointRequestFormStateWithExample(
-                        endpoint.auth,
-                        endpoint,
-                        endpoint.examples[0],
-                        apiPackage.types,
-                    ),
+                    getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], apiPackage.types),
                 );
             } else if (node.type === "webSocket") {
                 const webSocket = apiPackage.apiDefinitions.find(
@@ -247,7 +294,6 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
 
 const EMPTY_ENDPOINT_REQUEST_FORM_STATE: PlaygroundEndpointRequestFormState = {
     type: "endpoint",
-    auth: undefined,
     headers: {},
     pathParameters: {},
     queryParameters: {},
@@ -284,7 +330,6 @@ export function usePlaygroundEndpointFormState(
 
 const EMPTY_WEBSOCKET_REQUEST_FORM_STATE: PlaygroundWebSocketRequestFormState = {
     type: "websocket",
-    auth: undefined,
     headers: {},
     pathParameters: {},
     queryParameters: {},
