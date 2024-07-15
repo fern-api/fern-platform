@@ -63,10 +63,7 @@ export async function getDocsPageProps(
     const config = await getAuthEdgeConfig(xFernHost);
     if (config != null && config.type === "basic_token_verification") {
         const destination = new URL(config.redirect);
-        destination.searchParams.set(
-            "state",
-            encodeURIComponent(urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`)),
-        );
+        destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
         return {
             type: "redirect",
             redirect: {
@@ -125,7 +122,21 @@ export async function getDynamicDocsPageProps(
         let user: FernUser | undefined = undefined;
 
         if (config?.type === "basic_token_verification") {
-            user = await verifyFernJWT(cookies.fern_token, config.secret, config.issuer);
+            try {
+                user = await verifyFernJWT(cookies.fern_token, config.secret, config.issuer);
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error(error);
+                const destination = new URL(config.redirect);
+                destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
+                return {
+                    type: "redirect",
+                    redirect: {
+                        destination: destination.toString(),
+                        permanent: false,
+                    },
+                };
+            }
         } else {
             user = await verifyFernJWT(cookies.fern_token);
         }
