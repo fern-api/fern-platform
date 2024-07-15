@@ -29,7 +29,7 @@ async function getUnauthenticatedRedirect(xFernHost: string, path: string): Prom
     const authorizationUrl = getAuthorizationUrl(
         {
             organization: await maybeGetWorkosOrganization(xFernHost),
-            state: encodeURIComponent(urlJoin(`https://${xFernHost}`, path)),
+            state: urlJoin(`https://${xFernHost}`, path),
         },
         xFernHost,
     );
