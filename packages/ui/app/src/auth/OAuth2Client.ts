@@ -83,7 +83,7 @@ export class OAuth2Client {
         if (this.scope != null) {
             url.searchParams.set("scope", this.scope);
         }
-        url.search = url.search.replace(/%2[0B]/g, "+");
+        url.search = url.search.replace(/%2B/g, "+");
         return url.toString();
     }
 
