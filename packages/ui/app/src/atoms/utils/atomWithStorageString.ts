@@ -7,15 +7,11 @@ export function atomWithStorageString<VALUE extends string>(
     value: VALUE,
     {
         validate,
+        getOnInit,
     }: {
         validate?: z.ZodType<VALUE>;
+        getOnInit?: boolean;
     } = {},
-    { getOnInit }: { getOnInit?: boolean } = {},
 ): ReturnType<typeof atomWithStorageValidation<VALUE>> {
-    return atomWithStorageValidation<VALUE>(
-        key,
-        value,
-        { validate, serialize: identity, parse: identity },
-        { getOnInit },
-    );
+    return atomWithStorageValidation<VALUE>(key, value, { validate, serialize: identity, parse: identity, getOnInit });
 }

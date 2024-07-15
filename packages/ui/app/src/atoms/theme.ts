@@ -18,12 +18,10 @@ const MEDIA = "(prefers-color-scheme: dark)";
 
 type Theme = (typeof SYSTEM_THEMES)[number];
 
-const SETTABLE_THEME_ATOM = atomWithStorageString<Theme | typeof SYSTEM>(
-    STORAGE_KEY,
-    SYSTEM,
-    { validate: z.union([z.literal("system"), z.literal("light"), z.literal("dark")]) },
-    { getOnInit: true },
-);
+const SETTABLE_THEME_ATOM = atomWithStorageString<Theme | typeof SYSTEM>(STORAGE_KEY, SYSTEM, {
+    validate: z.union([z.literal("system"), z.literal("light"), z.literal("dark")]),
+    getOnInit: true,
+});
 SETTABLE_THEME_ATOM.debugLabel = "SETTABLE_THEME_ATOM";
 
 const IS_SYSTEM_THEME_ATOM = atom((get) => get(SETTABLE_THEME_ATOM) === SYSTEM);

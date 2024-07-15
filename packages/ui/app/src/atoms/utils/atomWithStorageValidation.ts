@@ -9,12 +9,15 @@ export function atomWithStorageValidation<VALUE>(
         validate,
         serialize = JSON.stringify,
         parse = JSON.parse,
+        getOnInit,
+        isSession = false,
     }: {
         validate?: z.ZodType<VALUE>;
         serialize?: (value: VALUE) => string;
         parse?: (value: string) => VALUE;
+        getOnInit?: boolean;
+        isSession?: boolean;
     } = {},
-    { getOnInit }: { getOnInit?: boolean } = {},
 ): ReturnType<typeof atomWithStorage<VALUE>> {
     return atomWithStorage<VALUE>(
         key,
@@ -26,7 +29,9 @@ export function atomWithStorageValidation<VALUE>(
                 }
 
                 try {
-                    const stored: string | null = window.localStorage.getItem(key);
+                    const stored: string | null = (isSession ? window.sessionStorage : window.localStorage).getItem(
+                        key,
+                    );
                     if (stored == null) {
                         return initialValue;
                     }
@@ -46,7 +51,7 @@ export function atomWithStorageValidation<VALUE>(
                 }
 
                 try {
-                    window.localStorage.setItem(key, serialize(newValue));
+                    (isSession ? window.sessionStorage : window.localStorage).setItem(key, serialize(newValue));
                 } catch {
                     // ignore
                 }
@@ -57,7 +62,7 @@ export function atomWithStorageValidation<VALUE>(
                 }
 
                 try {
-                    window.localStorage.removeItem(key);
+                    (isSession ? window.sessionStorage : window.localStorage).removeItem(key);
                 } catch {
                     // ignore
                 }
@@ -68,6 +73,10 @@ export function atomWithStorageValidation<VALUE>(
                 }
 
                 const listener = (e: StorageEvent) => {
+                    if (e.storageArea !== (isSession ? window.sessionStorage : window.localStorage)) {
+                        return;
+                    }
+
                     if (e.key === key && e.newValue !== e.oldValue) {
                         callback(
                             (validate != null ? validate.safeParse(e.newValue)?.data : (e.newValue as VALUE)) ??

@@ -185,7 +185,7 @@ export function useInitPlaygroundRouter(): void {
 export const PLAYGROUND_AUTH_STATE_ATOM = atomWithStorageValidation<PlaygroundAuthState>(
     "auth",
     {},
-    { validate: PlaygroundAuthStateSchema },
+    { validate: PlaygroundAuthStateSchema, isSession: true, getOnInit: true },
 );
 
 export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM = atom(
