@@ -181,9 +181,8 @@ export function useInitPlaygroundRouter(): void {
     );
 }
 
-// TODO: should this be stored in session storage instead of local storage?
 export const PLAYGROUND_AUTH_STATE_ATOM = atomWithStorageValidation<PlaygroundAuthState>(
-    "auth",
+    "playground-auth-state",
     {},
     { validate: PlaygroundAuthStateSchema, isSession: true, getOnInit: true },
 );
@@ -226,7 +225,7 @@ export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM = atom(
 
 const playgroundFormStateFamily = atomFamily((nodeId: FernNavigation.NodeId) => {
     const formStateAtom = atomWithStorage<PlaygroundRequestFormState | undefined>(nodeId, undefined);
-    formStateAtom.debugLabel = `playgroundFormStateAtom-${nodeId}`;
+    formStateAtom.debugLabel = `playground-form-state:${nodeId}`;
     return formStateAtom;
 });
 
