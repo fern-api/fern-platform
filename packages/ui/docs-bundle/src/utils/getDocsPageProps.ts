@@ -63,10 +63,7 @@ export async function getDocsPageProps(
     const config = await getAuthEdgeConfig(xFernHost);
     if (config != null && config.type === "basic_token_verification") {
         const destination = new URL(config.redirect);
-        destination.searchParams.set(
-            "state",
-            encodeURIComponent(urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`)),
-        );
+        destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
         return {
             type: "redirect",
             redirect: {

@@ -270,15 +270,13 @@ export function PlaygroundAuthorizationFormCard({
 
     const redirectOrOpenAuthForm = () => {
         if (apiKeyInjection.enabled && !apiKeyInjection.authenticated) {
-            // const redirect_uri = encodeURIComponent(
-            //     urlJoin(window.location.origin, basePath ?? "", "/api/fern-docs/auth/login"),
-            // );
+            // const redirect_uri =  urlJoin(window.location.origin, basePath ?? "", "/api/fern-docs/auth/login"),
             const url = new URL(apiKeyInjection.url);
             const state = new URL(window.location.href);
             if (state.searchParams.has("loginError")) {
                 state.searchParams.delete("loginError");
             }
-            url.searchParams.set("state", encodeURIComponent(state.toString()));
+            url.searchParams.set("state", state.toString());
             window.location.replace(url);
         } else {
             isOpen.toggleValue();
