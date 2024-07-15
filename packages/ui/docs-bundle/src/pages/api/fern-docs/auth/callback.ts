@@ -47,8 +47,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             const fernUser: FernUser = {
                 type: "user",
                 partner: "ory",
-                name: token.ext.name,
-                email: token.ext.email,
+                name: token.ext?.name,
+                email: token.ext?.email,
             };
             const expires = token.exp == null ? undefined : new Date(token.exp * 1000);
             const res = NextResponse.redirect(redirectLocation);

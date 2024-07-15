@@ -3,8 +3,8 @@ import { z } from "zod";
 export const FernUserSchema = z.object({
     type: z.literal("user"),
     partner: z.union([z.literal("workos"), z.literal("ory"), z.literal("custom")]),
-    name: z.string(),
-    email: z.string(),
+    name: z.string().optional(),
+    email: z.string().optional(),
 });
 
 export type FernUser = z.infer<typeof FernUserSchema>;
@@ -43,24 +43,26 @@ export const OAuthTokenResponseSchema = z.object({
 
 export type OAuthTokenResponse = z.infer<typeof OAuthTokenResponseSchema>;
 
+export const RightbrainUserSchema = z.object({
+    avatar_url: z.string().optional(),
+    email: z.string().optional(),
+    name: z.string().optional(),
+    org_id: z.string().optional(),
+    project_id: z.string().optional(),
+    sso_email_verified: z.boolean().optional(),
+});
+
 export const OryAccessTokenSchema = z.object({
     aud: z.array(z.string()),
-    client_id: z.string(),
+    client_id: z.string().optional(),
     exp: z.number().optional(),
-    ext: z.object({
-        avatar_url: z.string(),
-        email: z.string(),
-        name: z.string(),
-        org_id: z.string(),
-        project_id: z.string(),
-        sso_email_verified: z.boolean(),
-    }),
-    iat: z.number(),
-    iss: z.string(),
-    jti: z.string(),
-    nbf: z.number(),
+    ext: RightbrainUserSchema.optional(),
+    iat: z.number().optional(),
+    iss: z.string().optional(),
+    jti: z.string().optional(),
+    nbf: z.number().optional(),
     scp: z.array(z.string()),
-    sub: z.string(),
+    sub: z.string().optional(),
 });
 
 export type OryAccessToken = z.infer<typeof OryAccessTokenSchema>;
