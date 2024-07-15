@@ -15,10 +15,9 @@ import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import { IS_MOBILE_SCREEN_ATOM, useDomain, useFeatureFlags } from "../atoms";
+import { IS_MOBILE_SCREEN_ATOM, PLAYGROUND_AUTH_STATE_ATOM, store, useDomain, useFeatureFlags } from "../atoms";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
-import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormButtons } from "./PlaygroundEndpointFormButtons";
@@ -62,16 +61,6 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
 
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
-    const config = useApiKeyInjectionConfig();
-    const apiKey = config.enabled && config.authenticated ? config.access_token : null;
-
-    if (apiKey && formState.auth == null) {
-        formState.auth = {
-            type: "bearerAuth",
-            token: apiKey,
-        };
-    }
-
     useEffect(() => {
         if (typeof window === "undefined" || scrollAreaRef.current == null) {
             return;
@@ -89,19 +78,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
 
     const form = (
         <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
-            {endpoint.auth != null && (
-                <PlaygroundAuthorizationFormCard
-                    auth={endpoint.auth}
-                    authState={formState?.auth}
-                    setAuthorization={(newState) =>
-                        setFormState((oldState) => ({
-                            ...oldState,
-                            auth: typeof newState === "function" ? newState(oldState.auth) : newState,
-                        }))
-                    }
-                    disabled={false}
-                />
-            )}
+            {endpoint.auth != null && <PlaygroundAuthorizationFormCard auth={endpoint.auth} disabled={false} />}
 
             <PlaygroundEndpointForm
                 endpoint={endpoint}
@@ -154,11 +131,13 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 </FernButtonGroup>
 
                 <CopyToClipboardButton
-                    content={() =>
-                        requestType === "curl"
+                    content={() => {
+                        const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
+                        return requestType === "curl"
                             ? stringifyCurl({
                                   endpoint,
                                   formState,
+                                  authState,
                                   redacted: false,
                                   domain,
                               })
@@ -166,6 +145,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                               ? stringifyFetch({
                                     endpoint,
                                     formState,
+                                    authState,
                                     redacted: false,
                                     isSnippetTemplatesEnabled,
                                 })
@@ -173,11 +153,12 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                 ? stringifyPythonRequests({
                                       endpoint,
                                       formState,
+                                      authState,
                                       redacted: false,
                                       isSnippetTemplatesEnabled,
                                   })
-                                : ""
-                    }
+                                : "";
+                    }}
                     className="-mr-2"
                 />
             </div>

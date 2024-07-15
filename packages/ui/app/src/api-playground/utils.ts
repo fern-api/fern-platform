@@ -2,7 +2,6 @@ import { APIV1Read, Snippets } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues } from "lodash-es";
-import { noop } from "ts-essentials";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
 import {
     ResolvedEndpointDefinition,
@@ -22,10 +21,10 @@ import {
 } from "../resolver/types";
 import { unknownToString } from "../util/unknownToString";
 import {
+    PlaygroundAuthState,
     PlaygroundEndpointRequestFormState,
     PlaygroundFormDataEntryValue,
     PlaygroundFormStateBody,
-    PlaygroundRequestFormAuth,
     PlaygroundRequestFormState,
     PlaygroundWebSocketRequestFormState,
     convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest,
@@ -97,18 +96,29 @@ export function indentAfter(str: string, indent: number, afterLine?: number): st
 export function stringifyFetch({
     endpoint,
     formState,
+    authState,
     redacted,
     isSnippetTemplatesEnabled,
 }: {
     endpoint: ResolvedEndpointDefinition | undefined;
     formState: PlaygroundEndpointRequestFormState;
+    authState: PlaygroundAuthState;
     redacted: boolean;
     isSnippetTemplatesEnabled: boolean;
 }): string {
     if (endpoint == null) {
         return "";
     }
-    const headers = redacted ? buildRedactedHeaders(endpoint, formState) : buildUnredactedHeaders(endpoint, formState);
+    const authHeaders = buildAuthHeaders(endpoint.auth, authState, { redacted });
+
+    const headers = {
+        ...authHeaders,
+        ...formState.headers,
+    };
+
+    if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
+        headers["Content-Type"] = endpoint.requestBody.contentType;
+    }
 
     // TODO: ensure case insensitivity
     if (headers["Content-Type"] === "multipart/form-data") {
@@ -206,11 +216,13 @@ ${buildFetch("formData")}`;
 export function stringifyPythonRequests({
     endpoint,
     formState,
+    authState,
     redacted,
     isSnippetTemplatesEnabled,
 }: {
     endpoint: ResolvedEndpointDefinition | undefined;
     formState: PlaygroundEndpointRequestFormState;
+    authState: PlaygroundAuthState;
     redacted: boolean;
     isSnippetTemplatesEnabled: boolean;
 }): string {
@@ -218,7 +230,16 @@ export function stringifyPythonRequests({
         return "";
     }
 
-    const headers = redacted ? buildRedactedHeaders(endpoint, formState) : buildUnredactedHeaders(endpoint, formState);
+    const authHeaders = buildAuthHeaders(endpoint.auth, authState, { redacted });
+
+    const headers = {
+        ...authHeaders,
+        ...formState.headers,
+    };
+
+    if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
+        headers["Content-Type"] = endpoint.requestBody.contentType;
+    }
 
     const imports = ["requests"];
 
@@ -361,118 +382,38 @@ export function obfuscateSecret(secret: string): string {
     return secret.slice(0, 12) + "...." + secret.slice(-12);
 }
 
-function buildRedactedHeaders(
-    endpoint: ResolvedEndpointDefinition,
-    formState: PlaygroundRequestFormState,
+export function buildAuthHeaders(
+    auth: APIV1Read.ApiAuth | undefined,
+    authState: PlaygroundAuthState,
+    { redacted }: { redacted: boolean },
 ): Record<string, string> {
-    const headers: Record<string, string> = { ...mapValues(formState.headers, unknownToString) };
+    const headers: Record<string, string> = {};
 
-    if (endpoint.auth != null && formState.auth != null) {
-        const { auth } = endpoint;
-        visitDiscriminatedUnion(formState.auth, "type")._visit({
-            bearerAuth: (bearerAuth) => {
-                if (auth.type === "bearerAuth") {
-                    headers["Authorization"] = `Bearer ${obfuscateSecret(bearerAuth.token)}`;
+    if (auth != null) {
+        visitDiscriminatedUnion(auth)._visit({
+            bearerAuth: () => {
+                let token = authState.bearerAuth?.token ?? "";
+                if (redacted) {
+                    token = obfuscateSecret(token);
                 }
+                headers["Authorization"] = `Bearer ${token}`;
             },
             header: (header) => {
-                if (auth.type === "header") {
-                    const value = header.headers[auth.headerWireValue];
-                    if (value != null) {
-                        headers[auth.headerWireValue] = obfuscateSecret(
-                            auth.prefix != null ? `${auth.prefix} ${value}` : value,
-                        );
-                    }
+                let value = authState.header?.headers[header.headerWireValue] ?? "";
+                if (redacted) {
+                    value = obfuscateSecret(value);
                 }
+                headers[header.headerWireValue] = header.prefix != null ? `${header.prefix} ${value}` : value;
             },
-            basicAuth: (basicAuth) => {
-                // is this right?
-                if (auth.type === "basicAuth") {
-                    headers["Authorization"] = `Basic ${btoa(
-                        `${basicAuth.username}:${obfuscateSecret(basicAuth.password)}`,
-                    )}`;
+            basicAuth: () => {
+                const username = authState.basicAuth?.username ?? "";
+                let password = authState.basicAuth?.password ?? "";
+                if (redacted) {
+                    password = obfuscateSecret(password);
                 }
+                headers["Authorization"] = `Basic ${btoa(`${username}:${obfuscateSecret(password)}`)}`;
             },
-            _other: noop,
         });
-    }
-
-    const requestBody = endpoint.requestBody;
-    if (endpoint.method !== "GET" && requestBody?.contentType != null) {
-        headers["Content-Type"] = requestBody.contentType;
-    }
-
-    return headers;
-}
-
-export function buildUnredactedHeadersWebsocket(
-    websocket: ResolvedWebSocketChannel,
-    formState: PlaygroundRequestFormState,
-): Record<string, string> {
-    const headers: Record<string, string> = { ...mapValues(formState.headers, unknownToString) };
-
-    if (websocket.auth != null && formState.auth != null) {
-        const { auth } = websocket;
-        visitDiscriminatedUnion(formState.auth, "type")._visit({
-            bearerAuth: (bearerAuth) => {
-                if (auth.type === "bearerAuth") {
-                    headers["Authorization"] = `Bearer ${bearerAuth.token}`;
-                }
-            },
-            header: (header) => {
-                if (auth.type === "header") {
-                    const value = header.headers[auth.headerWireValue];
-                    if (value != null) {
-                        headers[auth.headerWireValue] = value;
-                    }
-                }
-            },
-            basicAuth: (basicAuth) => {
-                if (auth.type === "basicAuth") {
-                    headers["Authorization"] = `Basic ${btoa(`${basicAuth.username}:${basicAuth.password}`)}`;
-                }
-            },
-            _other: noop,
-        });
-    }
-
-    return headers;
-}
-
-export function buildUnredactedHeaders(
-    endpoint: ResolvedEndpointDefinition,
-    formState: PlaygroundRequestFormState,
-): Record<string, string> {
-    const headers: Record<string, string> = { ...mapValues(formState.headers, unknownToString) };
-
-    if (endpoint.auth != null && formState?.auth != null) {
-        const { auth } = endpoint;
-        visitDiscriminatedUnion(formState?.auth, "type")._visit({
-            bearerAuth: (bearerAuth) => {
-                if (auth.type === "bearerAuth") {
-                    headers["Authorization"] = `Bearer ${bearerAuth.token}`;
-                }
-            },
-            header: (header) => {
-                if (auth.type === "header") {
-                    const value = header.headers[auth.headerWireValue];
-                    if (value != null) {
-                        headers[auth.headerWireValue] = auth.prefix != null ? `${auth.prefix} ${value}` : value;
-                    }
-                }
-            },
-            basicAuth: (basicAuth) => {
-                if (auth.type === "basicAuth") {
-                    headers["Authorization"] = `Basic ${btoa(`${basicAuth.username}:${basicAuth.password}`)}`;
-                }
-            },
-            _other: noop,
-        });
-    }
-
-    const requestBody = endpoint.requestBody;
-    if (endpoint.method !== "GET" && requestBody?.contentType != null) {
-        headers["Content-Type"] = requestBody.contentType;
     }
 
     return headers;
@@ -481,18 +422,29 @@ export function buildUnredactedHeaders(
 export function stringifyCurl({
     endpoint,
     formState,
+    authState,
     redacted,
     domain,
 }: {
     endpoint: ResolvedEndpointDefinition | undefined;
     formState: PlaygroundEndpointRequestFormState;
+    authState: PlaygroundAuthState;
     redacted: boolean;
     domain: string;
 }): string {
     if (endpoint == null) {
         return "";
     }
-    const headers = redacted ? buildRedactedHeaders(endpoint, formState) : buildUnredactedHeaders(endpoint, formState);
+    const authHeaders = buildAuthHeaders(endpoint.auth, authState, { redacted });
+
+    const headers = {
+        ...authHeaders,
+        ...formState.headers,
+    };
+
+    if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
+        headers["Content-Type"] = endpoint.requestBody.contentType;
+    }
 
     return stringifyHttpRequestExampleToCurl({
         method: endpoint.method,
@@ -820,13 +772,11 @@ export function shouldRenderInline(
 export { unknownToString };
 
 export function getInitialEndpointRequestFormState(
-    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     types: Record<string, ResolvedTypeDefinition>,
 ): PlaygroundEndpointRequestFormState {
     return {
         type: "endpoint",
-        auth: getInitialAuthState(auth),
         headers: getDefaultValueForObjectProperties(endpoint?.headers, types),
         pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters, types),
         queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters, types),
@@ -841,8 +791,6 @@ export function getInitialWebSocketRequestFormState(
 ): PlaygroundWebSocketRequestFormState {
     return {
         type: "websocket",
-
-        auth: getInitialAuthState(auth),
         headers: getDefaultValueForObjectProperties(webSocket?.headers, types),
         pathParameters: getDefaultValueForObjectProperties(webSocket?.pathParameters, types),
         queryParameters: getDefaultValueForObjectProperties(webSocket?.queryParameters, types),
@@ -853,30 +801,16 @@ export function getInitialWebSocketRequestFormState(
     };
 }
 
-function getInitialAuthState(auth: APIV1Read.ApiAuth | null | undefined): PlaygroundRequestFormAuth | undefined {
-    if (auth == null) {
-        return undefined;
-    }
-    return visitDiscriminatedUnion(auth, "type")._visit<PlaygroundRequestFormAuth | undefined>({
-        header: (header) => ({ type: "header", headers: { [header.headerWireValue]: "" } }),
-        bearerAuth: () => ({ type: "bearerAuth", token: "" }),
-        basicAuth: () => ({ type: "basicAuth", username: "", password: "" }),
-        _other: () => undefined,
-    });
-}
-
 export function getInitialEndpointRequestFormStateWithExample(
-    auth: APIV1Read.ApiAuth | null | undefined,
     endpoint: ResolvedEndpointDefinition | undefined,
     exampleCall: ResolvedExampleEndpointCall | undefined,
     types: Record<string, ResolvedTypeDefinition>,
 ): PlaygroundEndpointRequestFormState {
     if (exampleCall == null) {
-        return getInitialEndpointRequestFormState(auth, endpoint, types);
+        return getInitialEndpointRequestFormState(endpoint, types);
     }
     return {
         type: "endpoint",
-        auth: getInitialAuthState(auth),
         headers: exampleCall.headers,
         pathParameters: exampleCall.pathParameters,
         queryParameters: exampleCall.queryParameters,

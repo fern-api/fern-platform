@@ -1,5 +1,6 @@
+import { useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
-import { useDomain, useFeatureFlags } from "../atoms";
+import { PLAYGROUND_AUTH_STATE_ATOM, useDomain, useFeatureFlags } from "../atoms";
 import { ResolvedEndpointDefinition } from "../resolver/types";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundEndpointRequestFormState } from "./types";
@@ -13,6 +14,7 @@ interface PlaygroundRequestPreviewProps {
 
 export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ endpoint, formState, requestType }) => {
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
+    const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
     const domain = useDomain();
     const code = useMemo(
         () =>
@@ -20,6 +22,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
                 ? stringifyCurl({
                       endpoint,
                       formState,
+                      authState,
                       redacted: true,
                       domain,
                   })
@@ -27,6 +30,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
                   ? stringifyFetch({
                         endpoint,
                         formState,
+                        authState,
                         redacted: true,
                         isSnippetTemplatesEnabled,
                     })
@@ -34,11 +38,12 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
                     ? stringifyPythonRequests({
                           endpoint,
                           formState,
+                          authState,
                           redacted: true,
                           isSnippetTemplatesEnabled,
                       })
                     : "",
-        [domain, endpoint, formState, isSnippetTemplatesEnabled, requestType],
+        [authState, domain, endpoint, formState, isSnippetTemplatesEnabled, requestType],
     );
     return (
         <FernSyntaxHighlighter

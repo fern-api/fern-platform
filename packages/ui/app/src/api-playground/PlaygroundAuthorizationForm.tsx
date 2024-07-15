@@ -3,37 +3,33 @@ import { FernButton, FernCard, FernCollapse, FernInput } from "@fern-ui/componen
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
-import { Dispatch, FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
+import { FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Key } from "react-feather";
+import { useMemoOne } from "use-memo-one";
+import {
+    PLAYGROUND_AUTH_STATE_ATOM,
+    PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM,
+    PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
+    PLAYGROUND_AUTH_STATE_HEADER_ATOM,
+} from "../atoms";
 import { Callout } from "../mdx/components/callout";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
-import { PlaygroundRequestFormAuth } from "./types";
+import { PlaygroundAuthState } from "./types";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
-    value: PlaygroundRequestFormAuth | undefined;
-    onChange: (newAuthValue: PlaygroundRequestFormAuth) => void;
     disabled: boolean;
 }
 
-function BearerAuthForm({
-    bearerAuth,
-    value,
-    onChange,
-    disabled,
-}: { bearerAuth: APIV1Read.BearerAuth } & Omit<PlaygroundAuthorizationFormProps, "auth">) {
-    const handleChange = useCallback(
-        (newValue: string) =>
-            onChange({
-                type: "bearerAuth",
-                token: newValue,
-            }),
-        [onChange],
-    );
+function BearerAuthForm({ bearerAuth, disabled }: { bearerAuth: APIV1Read.BearerAuth; disabled?: boolean }) {
+    const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM);
+    const handleChange = useCallback((newValue: string) => setValue({ token: newValue }), [setValue]);
+
     const {
         value: isSecretsModalOpen,
         setTrue: openSecretsModal,
@@ -55,22 +51,20 @@ function BearerAuthForm({
             </label>
 
             <div>
-                {value?.type === "bearerAuth" && (
-                    <PasswordInputGroup
-                        onValueChange={handleChange}
-                        value={value?.type === "bearerAuth" ? value.token : ""}
-                        autoComplete="off"
-                        data-1p-ignore="true"
-                        rightElement={
-                            <FernButton
-                                onClick={openSecretsModal}
-                                icon={<GlobeIcon className="size-4" />}
-                                variant="minimal"
-                            />
-                        }
-                        disabled={disabled}
-                    />
-                )}
+                <PasswordInputGroup
+                    onValueChange={handleChange}
+                    value={value.token}
+                    autoComplete="off"
+                    data-1p-ignore="true"
+                    rightElement={
+                        <FernButton
+                            onClick={openSecretsModal}
+                            icon={<GlobeIcon className="size-4" />}
+                            variant="minimal"
+                        />
+                    }
+                    disabled={disabled}
+                />
             </div>
 
             <PlaygroundSecretsModal
@@ -82,29 +76,15 @@ function BearerAuthForm({
     );
 }
 
-function BasicAuthForm({
-    basicAuth,
-    value,
-    onChange,
-    disabled,
-}: { basicAuth: APIV1Read.BasicAuth } & Omit<PlaygroundAuthorizationFormProps, "auth">) {
+function BasicAuthForm({ basicAuth, disabled }: { basicAuth: APIV1Read.BasicAuth; disabled?: boolean }) {
+    const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM);
     const handleChangeUsername = useCallback(
-        (newValue: string) =>
-            onChange({
-                type: "basicAuth",
-                username: newValue,
-                password: value?.type === "basicAuth" ? value.password : "",
-            }),
-        [onChange, value],
+        (newValue: string) => setValue((prev) => ({ ...prev, username: newValue })),
+        [setValue],
     );
     const handleChangePassword = useCallback(
-        (newValue: string) =>
-            onChange({
-                type: "basicAuth",
-                username: value?.type === "basicAuth" ? value.username : "",
-                password: newValue,
-            }),
-        [onChange, value],
+        (newValue: string) => setValue((prev) => ({ ...prev, password: newValue })),
+        [setValue],
     );
     const {
         value: isSecretsModalOpen,
@@ -128,7 +108,7 @@ function BasicAuthForm({
                 <div>
                     <FernInput
                         onValueChange={handleChangeUsername}
-                        value={value?.type === "basicAuth" ? value.username : ""}
+                        value={value.username}
                         leftIcon={<PersonIcon className="size-4" />}
                         rightElement={<span className="t-muted text-xs">{"string"}</span>}
                         disabled={disabled}
@@ -144,7 +124,7 @@ function BasicAuthForm({
                 <div>
                     <PasswordInputGroup
                         onValueChange={handleChangePassword}
-                        value={value?.type === "basicAuth" ? value.password : ""}
+                        value={value.password}
                         rightElement={
                             <FernButton
                                 onClick={openSecretsModal}
@@ -166,19 +146,24 @@ function BasicAuthForm({
     );
 }
 
-function HeaderAuthForm({
-    header,
-    value,
-    onChange,
-    disabled,
-}: { header: APIV1Read.HeaderAuth } & Omit<PlaygroundAuthorizationFormProps, "auth">) {
-    const handleChange = useCallback(
-        (newValue: string) =>
-            onChange({
-                type: "header",
-                headers: { [header.headerWireValue]: newValue },
-            }),
-        [header.headerWireValue, onChange],
+function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; disabled?: boolean }) {
+    const [value, setValue] = useAtom(
+        useMemoOne(
+            () =>
+                atom(
+                    (get) => get(PLAYGROUND_AUTH_STATE_HEADER_ATOM).headers[header.headerWireValue],
+                    (_get, set, change: SetStateAction<string>) => {
+                        set(PLAYGROUND_AUTH_STATE_HEADER_ATOM, ({ headers }) => ({
+                            headers: {
+                                ...headers,
+                                [header.headerWireValue]:
+                                    typeof change === "function" ? change(headers[header.headerWireValue]) : change,
+                            },
+                        }));
+                    },
+                ),
+            [header.headerWireValue],
+        ),
     );
     const {
         value: isSecretsModalOpen,
@@ -189,9 +174,9 @@ function HeaderAuthForm({
     const handleSelectSecret = useCallback(
         (secret: SecretBearer) => {
             closeSecretsModal();
-            handleChange(secret.token);
+            setValue(secret.token);
         },
-        [closeSecretsModal, handleChange],
+        [closeSecretsModal, setValue],
     );
 
     return (
@@ -201,8 +186,8 @@ function HeaderAuthForm({
             </label>
             <div>
                 <PasswordInputGroup
-                    onValueChange={handleChange}
-                    value={value?.type === "header" ? value.headers[header.headerWireValue] : ""}
+                    onValueChange={setValue}
+                    value={value}
                     autoComplete="off"
                     data-1p-ignore="true"
                     rightElement={
@@ -225,24 +210,13 @@ function HeaderAuthForm({
     );
 }
 
-export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> = ({
-    auth,
-    value,
-    onChange,
-    disabled,
-}) => {
+export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> = ({ auth, disabled }) => {
     return (
         <ul className="list-none px-4">
             {visitDiscriminatedUnion(auth, "type")._visit({
-                bearerAuth: (bearerAuth) => (
-                    <BearerAuthForm bearerAuth={bearerAuth} value={value} onChange={onChange} disabled={disabled} />
-                ),
-                basicAuth: (basicAuth) => (
-                    <BasicAuthForm basicAuth={basicAuth} value={value} onChange={onChange} disabled={disabled} />
-                ),
-                header: (header) => (
-                    <HeaderAuthForm header={header} value={value} onChange={onChange} disabled={disabled} />
-                ),
+                bearerAuth: (bearerAuth) => <BearerAuthForm bearerAuth={bearerAuth} disabled={disabled} />,
+                basicAuth: (basicAuth) => <BasicAuthForm basicAuth={basicAuth} disabled={disabled} />,
+                header: (header) => <HeaderAuthForm header={header} disabled={disabled} />,
                 _other: () => null,
             })}
         </ul>
@@ -251,22 +225,24 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
 
 interface PlaygroundAuthorizationFormCardProps {
     auth: APIV1Read.ApiAuth;
-    authState: PlaygroundRequestFormAuth | undefined;
-    setAuthorization: Dispatch<SetStateAction<PlaygroundRequestFormAuth | undefined>>;
     disabled: boolean;
 }
 
 export function PlaygroundAuthorizationFormCard({
     auth,
-    authState,
-    setAuthorization,
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
+    const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
+    const setBearerAuth = useSetAtom(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM);
     const isOpen = useBooleanState(false);
     const apiKeyInjection = useApiKeyInjectionConfig();
     const router = useRouter();
     const apiKey = apiKeyInjection.enabled && apiKeyInjection.authenticated ? apiKeyInjection.access_token : null;
     const [loginError, setLoginError] = useState<string | null>(null);
+
+    const handleResetBearerAuth = useCallback(() => {
+        setBearerAuth({ token: apiKey ?? "" });
+    }, [apiKey, setBearerAuth]);
 
     const redirectOrOpenAuthForm = () => {
         if (apiKeyInjection.enabled && !apiKeyInjection.authenticated) {
@@ -297,19 +273,16 @@ export function PlaygroundAuthorizationFormCard({
         }
     }, [router.query, router.isReady]);
 
-    // TODO change this login
+    // TODO change this to on-login
     useEffect(() => {
-        if (apiKey && authState && authState.type === "bearerAuth") {
-            if (authState.token === "") {
-                setAuthorization({ type: "bearerAuth", token: apiKey });
-            }
+        if (apiKey != null) {
+            setBearerAuth({ token: apiKey });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [apiKey]);
+    }, [apiKey, setBearerAuth]);
 
     return (
         <div>
-            {apiKeyInjection.enabled && !apiKey && (
+            {apiKeyInjection.enabled && apiKey == null && (
                 <>
                     <FernCard className="rounded-xl p-4 shadow-sm mb-2">
                         {loginError && <Callout intent="error">{loginError}</Callout>}
@@ -336,7 +309,7 @@ export function PlaygroundAuthorizationFormCard({
                 </>
             )}
 
-            {apiKeyInjection.enabled && apiKey && (
+            {apiKeyInjection.enabled && apiKey != null && (
                 <>
                     <FernCard className="rounded-xl p-4 shadow-sm mb-3" title="Login to send a real request">
                         <FernButton
@@ -349,21 +322,16 @@ export function PlaygroundAuthorizationFormCard({
                             active={true}
                         />
                         <div className="-mx-4">
-                            <PlaygroundAuthorizationForm
-                                auth={auth}
-                                value={authState}
-                                onChange={setAuthorization}
-                                disabled={disabled}
-                            />
+                            <PlaygroundAuthorizationForm auth={auth} disabled={disabled} />
                         </div>
-                        {authState?.type === "bearerAuth" && apiKey !== authState.token && (
+                        {apiKey !== authState?.bearerAuth?.token && (
                             <div className="flex justify-end  gap-2">
                                 {apiKey && (
                                     <FernButton
                                         text="Reset token to default"
                                         intent="none"
                                         icon={<Key />}
-                                        onClick={() => setAuthorization({ type: "bearerAuth", token: apiKey })}
+                                        onClick={handleResetBearerAuth}
                                         size="normal"
                                         variant="outlined"
                                     />
@@ -374,7 +342,7 @@ export function PlaygroundAuthorizationFormCard({
                 </>
             )}
 
-            {!apiKeyInjection.enabled && (isAuthed(auth, authState) || apiKey) && (
+            {!apiKeyInjection.enabled && (isAuthed(auth, authState) || apiKey != null) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"
@@ -391,7 +359,7 @@ export function PlaygroundAuthorizationFormCard({
                     active={isOpen.value}
                 />
             )}
-            {!apiKeyInjection.enabled && !(isAuthed(auth, authState) || apiKey) && (
+            {!apiKeyInjection.enabled && !(isAuthed(auth, authState) || apiKey != null) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"
@@ -411,20 +379,15 @@ export function PlaygroundAuthorizationFormCard({
             <FernCollapse isOpen={isOpen.value}>
                 <div className="pt-4">
                     <div className="fern-dropdown">
-                        <PlaygroundAuthorizationForm
-                            auth={auth}
-                            value={authState}
-                            onChange={setAuthorization}
-                            disabled={disabled}
-                        />
+                        <PlaygroundAuthorizationForm auth={auth} disabled={disabled} />
 
                         <div className="flex justify-end p-4 pt-2 gap-2">
                             <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
-                            {apiKey && (
+                            {apiKey != null && (
                                 <FernButton
                                     text="Reset token to default"
                                     intent="none"
-                                    onClick={() => setAuthorization({ type: "bearerAuth", token: apiKey })}
+                                    onClick={handleResetBearerAuth}
                                     size="normal"
                                     variant="outlined"
                                 />
@@ -437,18 +400,12 @@ export function PlaygroundAuthorizationFormCard({
     );
 }
 
-function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundRequestFormAuth | undefined): boolean {
-    if (authState == null) {
-        return false;
-    }
-
-    return visitDiscriminatedUnion(auth, "type")._visit({
-        bearerAuth: () => authState.type === "bearerAuth" && !isEmpty(authState.token.trim()),
+function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState): boolean {
+    return visitDiscriminatedUnion(auth)._visit({
+        bearerAuth: () => !isEmpty(authState.bearerAuth?.token.trim()),
         basicAuth: () =>
-            authState.type === "basicAuth" &&
-            !isEmpty(authState.username.trim()) &&
-            !isEmpty(authState.password.trim()),
-        header: (header) => authState.type === "header" && !isEmpty(authState.headers[header.headerWireValue]?.trim()),
+            !isEmpty(authState.basicAuth?.username.trim()) && !isEmpty(authState.basicAuth?.password.trim()),
+        header: (header) => !isEmpty(authState.header?.headers[header.headerWireValue].trim()),
         _other: () => false,
     });
 }
