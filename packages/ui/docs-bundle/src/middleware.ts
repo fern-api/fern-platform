@@ -93,5 +93,5 @@ async function getCanonicalHost(request: NextRequest): Promise<string | undefine
 }
 
 export const config: MiddlewareConfig = {
-    matcher: ["/((?!_next|[^/]+/_next|_vercel).*)"],
+    matcher: ["/((?!_next|[^/]+/_next|_vercel|favicon.ico).*)"],
 };
