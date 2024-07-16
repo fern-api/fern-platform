@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         requestHeaders.set("x-fern-dynamic", "1");
     }
 
-    if (request.nextUrl.pathname.indexOf("/_next/data/") > 0) {
+    if (request.nextUrl.pathname.includes("/_next/data/")) {
         const url = request.nextUrl.clone();
         url.pathname = urlJoin(
             isDynamic ? "dynamic" : "static",
