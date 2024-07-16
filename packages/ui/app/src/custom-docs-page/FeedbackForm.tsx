@@ -19,13 +19,8 @@ interface FeedbackFormProps {
     layoutDensity?: "condensed" | "verbose";
 }
 
-const SHOW_EMAIL_INPUT_ATOM = atomWithStorage<boolean | "indeterminate">(
-    "feedback-show-email-input",
-    false,
-    undefined,
-    { getOnInit: true },
-);
-const EMAIL_ATOM = atomWithStorage<string>("feedback-email", "", undefined, { getOnInit: true });
+const SHOW_EMAIL_INPUT_ATOM = atomWithStorage<boolean | "indeterminate">("feedback-show-email-input", false);
+const EMAIL_ATOM = atomWithStorage<string>("feedback-email", "");
 
 export const FeedbackForm: FC<FeedbackFormProps> = ({ isHelpful, onSubmit, layoutDensity = "verbose" }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
