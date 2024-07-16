@@ -2,7 +2,7 @@ import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
-import { ReactNode, memo, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, memo, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
@@ -72,7 +72,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         measureHeight(entry.contentRect.height);
     });
 
-    const [selectedErrorExample, setSelectedErrorExample] = useState<ResolvedExampleError | undefined>(undefined);
+    const [internalSelectedErrorExample, setSelectedErrorExample] = useState<ResolvedExampleError | undefined>(
+        undefined,
+    );
 
     const handleSelectErrorAndExample = (
         error: ResolvedError | undefined,
@@ -82,20 +84,15 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         setSelectedErrorExample(example);
     };
 
-    // if the selected error is not in the list of errors, reset the selected error
-    useEffect(() => {
-        setSelectedErrorExample((prevSelectedErrorExample) => {
-            if (selectedError == null) {
-                return undefined;
-            } else if (
-                prevSelectedErrorExample != null &&
-                selectedError.examples.findIndex((e) => e === prevSelectedErrorExample) === -1
-            ) {
-                return selectedError.examples[0];
-            }
-            return prevSelectedErrorExample;
-        });
-    }, [selectedError]);
+    // if the selected error is not in the list of errors, select the first error
+    const selectedErrorExample = useMemo(() => {
+        if (selectedError == null || selectedError.examples.length === 0) {
+            return undefined;
+        } else if (selectedError.examples.findIndex((e) => e === internalSelectedErrorExample) === -1) {
+            return selectedError.examples[0];
+        }
+        return internalSelectedErrorExample;
+    }, [internalSelectedErrorExample, selectedError]);
 
     const exampleWithSchema = useMemo(() => mergeEndpointSchemaWithExample(endpoint, example), [endpoint, example]);
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
