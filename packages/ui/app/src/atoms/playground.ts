@@ -224,7 +224,9 @@ export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM = atom(
 );
 
 const playgroundFormStateFamily = atomFamily((nodeId: FernNavigation.NodeId) => {
-    const formStateAtom = atomWithStorage<PlaygroundRequestFormState | undefined>(nodeId, undefined);
+    const formStateAtom = atomWithStorage<PlaygroundRequestFormState | undefined>(nodeId, undefined, undefined, {
+        getOnInit: true,
+    });
     formStateAtom.debugLabel = `playground-form-state:${nodeId}`;
     return formStateAtom;
 });
