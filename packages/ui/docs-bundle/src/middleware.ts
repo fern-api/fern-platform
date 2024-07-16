@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
     }
 
-    if (request.nextUrl.pathname.includes("/_next/data/")) {
+    if (request.nextUrl.href.includes("/_next/data/")) {
         /**
          * while /_next/static routes are handled by the assetPrefix config, we need to handle the /_next/data routes separately
          * when the user is hovering over a link, Next.js will prefetch the data route using `/_next/data` routes. We intercept
@@ -43,9 +43,11 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         const path = request.nextUrl.pathname.substring(
             request.nextUrl.pathname.indexOf("/_next/data/") + "/_next/data/".length,
         );
-        const [buildId, ...page] = path.split("/");
-        url.pathname = urlJoin("/_next/data", buildId, isDynamic ? "dynamic" : "static", host, ...page);
-        return NextResponse.rewrite(url);
+        const [buildId, ...slug] = path.split("/");
+        const url = new URL(request.url);
+        url.pathname = urlJoin("/_next/data", buildId, isDynamic ? "dynamic" : "static", host, ...slug);
+        requestHeaders.set("x-nextjs-data", "1");
+        return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
     }
 
     if (request.nextUrl.pathname.endsWith("/robots.txt")) {

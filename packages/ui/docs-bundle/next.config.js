@@ -154,14 +154,6 @@ const nextConfig = {
             },
         ];
     },
-    rewrites: async () => ({
-        beforeFiles: [
-            {
-                source: "/:prefix*/_next/data/:path*",
-                destination: "/_next/data/:path*",
-            },
-        ],
-    }),
     images: {
         remotePatterns: DOCS_FILES_ALLOWLIST,
         path: cdnUri != null ? `${cdnUri.href}_next/image` : undefined,
