@@ -1,6 +1,7 @@
 import { get } from "@vercel/edge-config";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import urlJoin from "url-join";
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
     const requestHeaders = new Headers(request.headers);
@@ -25,6 +26,20 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         requestHeaders.set("x-fern-dynamic", "1");
     }
 
+    if (request.nextUrl.pathname.indexOf("/_next/data/") > 0) {
+        const url = request.nextUrl.clone();
+        url.pathname = urlJoin(
+            isDynamic ? "dynamic" : "static",
+            host,
+            url.pathname
+                .substring(url.pathname.indexOf("/_next/data/") + 12, url.pathname.indexOf(".json"))
+                .split("/")
+                .slice(1)
+                .join("/"),
+        );
+        url.searchParams.set("__nextDataReq", "1");
+        return NextResponse.rewrite(url, { headers: requestHeaders });
+    }
     return NextResponse.next({ request: { headers: requestHeaders } });
 }
 

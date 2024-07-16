@@ -32,6 +32,7 @@ const nextConfig = {
     reactStrictMode: true,
     transpilePackages: ["next-mdx-remote", "esbuild", "jotai-devtools"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
+    skipMiddlewareUrlNormalize: true,
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
