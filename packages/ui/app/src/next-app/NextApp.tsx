@@ -6,7 +6,7 @@ import "jotai-devtools/styles.css";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import type { Router } from "next/router";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import { SWRConfig } from "swr";
 import DatadogInit from "../analytics/datadog";
 import { initializePosthog } from "../analytics/posthog";
@@ -58,22 +58,23 @@ const useInterceptNextDataHref = ({
     basePath: string | undefined;
     host: string | undefined;
 }) => {
-    useEffect(() => {
-        try {
-            if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
-                const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
+    const getDataHrefRef = useRef(router.pageLoader?.getDataHref);
+    if (getDataHrefRef.current == null) {
+        return;
+    }
+    try {
+        if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
+            const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
 
-                const originalGetDataHref = router.pageLoader.getDataHref;
-                router.pageLoader.getDataHref = function (...args: Parameters<PageLoader["getDataHref"]>) {
-                    const r = originalGetDataHref.call(router.pageLoader, ...args);
-                    return r && r.startsWith("/_next/data") ? fixHost(`${prefixedBasePath}${r}`, host) : r;
-                };
-            }
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error("Failed to intercept next data href", e);
+            router.pageLoader.getDataHref = function (...args: Parameters<PageLoader["getDataHref"]>) {
+                const r = getDataHrefRef.current.call(router.pageLoader, ...args);
+                return r && r.startsWith("/_next/data") ? fixHost(`${prefixedBasePath}${r}`, host) : r;
+            };
         }
-    }, [router, basePath, host]);
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to intercept next data href", e);
+    }
 };
 
 function fixHost(path: string, host: string | undefined) {

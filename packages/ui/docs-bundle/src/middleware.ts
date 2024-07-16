@@ -22,10 +22,18 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         request.cookies.has("_fern_docs_preview") ||
         request.nextUrl.searchParams.get("error") === "true";
 
+    if (isDynamic) {
+        requestHeaders.set("x-fern-dynamic", "1");
+    }
+
     const url = request.nextUrl.clone();
 
     if (request.nextUrl.pathname.includes("/api/fern-docs/")) {
         url.pathname = url.pathname.substring(url.pathname.indexOf("/api/fern-docs/"));
+        if (request.nextUrl.pathname === url.pathname) {
+            // If the pathname is the same, just add the host header
+            return NextResponse.next({ request: { headers: requestHeaders } });
+        }
         return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
     }
 
@@ -85,5 +93,5 @@ async function getCanonicalHost(request: NextRequest): Promise<string | undefine
 }
 
 export const config: MiddlewareConfig = {
-    matcher: ["/((?!_next/static|_next/image|_vercel|api/fern-docs).*)"],
+    matcher: ["/((?!_next|[^/]+/_next|_vercel).*)"],
 };

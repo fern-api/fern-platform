@@ -156,7 +156,10 @@ const nextConfig = {
         ];
     },
     rewrites: async () => ({
-        beforeFiles: [{ source: "/:prefix*/_next/:path*", destination: "/_next/:path*" }],
+        beforeFiles: [
+            { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
+            { source: "/_next/:path*", destination: "/_next/:path*" },
+        ],
     }),
     images: {
         remotePatterns: DOCS_FILES_ALLOWLIST,
