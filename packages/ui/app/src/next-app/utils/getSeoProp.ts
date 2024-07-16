@@ -5,7 +5,6 @@ import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
-import urlJoin from "url-join";
 import { stringHasMarkdown } from "../../mdx/common/util";
 import { getFrontmatter } from "../../mdx/frontmatter";
 import { ResolvedPath } from "../../resolver/ResolvedPath";
@@ -20,7 +19,7 @@ function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1
 }
 
 export function getDefaultSeoProps(
-    host: string,
+    domain: string,
     { metadata, title, favicon, typographyV2: typography }: DocsV1Read.DocsConfig,
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
@@ -32,12 +31,11 @@ export function getDefaultSeoProps(
     const openGraph: NextSeoProps["openGraph"] = {};
     const twitter: NextSeoProps["twitter"] = {};
     const seo: NextSeoProps = {
-        canonical: urlJoin(`https://${host}`, node.slug),
         openGraph,
         twitter,
         additionalMetaTags,
         additionalLinkTags,
-        breadcrumbList: getBreadcrumbList(host, pages, parents, node),
+        breadcrumbList: getBreadcrumbList(domain, pages, parents, node),
     };
 
     const pageId = FernNavigation.utils.getPageId(node);
@@ -189,9 +187,9 @@ export function getDefaultSeoProps(
     seo.noindex = ogMetadata.noindex;
     seo.nofollow = ogMetadata.nofollow;
     if (
-        host.endsWith(".docs.dev.buildwithfern.com") ||
-        host.endsWith(".docs.staging.buildwithfern.com") ||
-        host.endsWith(".docs.buildwithfern.com")
+        domain.endsWith(".docs.dev.buildwithfern.com") ||
+        domain.endsWith(".docs.staging.buildwithfern.com") ||
+        domain.endsWith(".docs.buildwithfern.com")
     ) {
         seo.noindex = true;
         seo.nofollow = true;

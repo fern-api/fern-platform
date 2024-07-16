@@ -1,11 +1,12 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import { isPlainObject } from "@fern-ui/core-utils";
 import { buildUrl } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
-import { getXFernHostNode } from "../../../../utils/xFernHost";
+import { cleanHost, getXFernHostNode } from "../../../../utils/xFernHost";
 
 export const config = {
     maxDuration: 300,
@@ -47,7 +48,7 @@ const handler: NextApiHandler = async (
     try {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = getXFernHostNode(req);
+        const xFernHost = getHostFromBody(req) ?? getXFernHostNode(req);
 
         const url = buildUrl({
             host: xFernHost,
@@ -107,3 +108,15 @@ const handler: NextApiHandler = async (
 };
 
 export default handler;
+
+function getHostFromBody(body: unknown): string | undefined {
+    if (body == null || !isPlainObject(body)) {
+        return undefined;
+    }
+
+    if (typeof body.host === "string") {
+        return cleanHost(body.host);
+    }
+
+    return undefined;
+}
