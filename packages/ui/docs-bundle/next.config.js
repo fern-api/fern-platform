@@ -156,15 +156,8 @@ const nextConfig = {
     },
     rewrites: async () => {
         const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
-        // const HAS_X_FORWARDED_HOST = { type: "header", key: "x-forwarded-host", value: "(?<host>.*)" };
         const HAS_X_FERN_HOST = { type: "header", key: "x-fern-host", value: "(?<host>.*)" };
-        const HAS_HOST = { type: "host", value: "(?<host>.*)" };
-
-        // The order of the following array is important. The first match will be used.
-        const WITH_MATCHED_HOST = [HAS_FERN_DOCS_PREVIEW, HAS_X_FERN_HOST, HAS_HOST];
-
-        const HAS_FERN_TOKEN = { type: "cookie", key: "fern_token" };
-        const THREW_ERROR = { type: "query", key: "error", value: "true" };
+        const IS_FERN_DYNAMIC = { type: "header", key: "x-fern-dynamic", value: "1" };
         return {
             beforeFiles: [
                 /**
@@ -187,7 +180,7 @@ const nextConfig = {
                  */
                 {
                     source: "/_next/data/:hash/static/:host/:path*",
-                    has: [HAS_FERN_TOKEN],
+                    has: [IS_FERN_DYNAMIC],
                     destination: "/_next/data/:hash/dynamic/:host/:path*",
                 },
                 /**
@@ -207,45 +200,22 @@ const nextConfig = {
                 { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
                 { source: "/:path*.rss", destination: "/api/fern-docs/changelog?format=rss&path=:path*" },
                 { source: "/:path*.atom", destination: "/api/fern-docs/changelog?format=atom&path=:path*" },
-
-                // backwards compatibility with currently deployed FDR
-                { source: "/api/revalidate-all", destination: "/api/fern-docs/revalidate-all" },
             ],
             fallback: [
                 /**
                  * The following rewrite rules are used to determine if the path should be rewritten to /static or /dynamic
                  * On the presence of fern_token, or if the query contains error=true, the path will be rewritten to /dynamic
                  */
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, HAS_FERN_TOKEN],
+                {
+                    has: [HAS_X_FERN_HOST, IS_FERN_DYNAMIC],
                     source: "/:path*",
                     destination: "/dynamic/:host/:path*",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, THREW_ERROR],
-                    source: "/:path*",
-                    destination: "/dynamic/:host/:path*",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE],
+                },
+                {
+                    has: [HAS_X_FERN_HOST],
                     source: "/:path*",
                     destination: "/static/:host/:path*",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, HAS_FERN_TOKEN],
-                    source: "/",
-                    destination: "/dynamic/:host/",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, THREW_ERROR],
-                    source: "/",
-                    destination: "/dynamic/:host/",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE],
-                    source: "/",
-                    destination: "/static/:host/",
-                })),
+                },
             ],
         };
     },
