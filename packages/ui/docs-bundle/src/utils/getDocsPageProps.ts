@@ -76,12 +76,12 @@ export async function getDocsPageProps(
     const pathname = decodeURI(slug != null ? slug.join("/") : "");
     const url = buildUrl({ host: xFernHost, pathname });
     // eslint-disable-next-line no-console
-    // console.log("[getDocsPageProps] Loading docs for", url);
-    // const start = Date.now();
+    console.log("[getDocsPageProps] Loading docs for", url);
+    const start = Date.now();
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
-    // const end = Date.now();
+    const end = Date.now();
     // eslint-disable-next-line no-console
-    // console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
+    console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
     if (!docs.ok) {
         if ((docs.error as any).content.statusCode === 401) {
             return {
@@ -93,16 +93,16 @@ export async function getDocsPageProps(
         }
 
         // eslint-disable-next-line no-console
-        // console.error(`[getDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
+        console.error(`[getDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
         throw new Error("Failed to fetch docs");
     }
 
-    // const start2 = Date.now();
+    const start2 = Date.now();
     const toRet = convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
-    // const end2 = Date.now();
+    const end2 = Date.now();
 
     // eslint-disable-next-line no-console
-    // console.log(`[getDocsPageProps] serializeMdx completed in ${end2 - start2}ms for ${url}`);
+    console.log(`[getDocsPageProps] serializeMdx completed in ${end2 - start2}ms for ${url}`);
     return toRet;
 }
 

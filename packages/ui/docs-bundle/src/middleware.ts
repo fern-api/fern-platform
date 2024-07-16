@@ -5,7 +5,6 @@ import urlJoin from "url-join";
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
     const requestHeaders = new Headers(request.headers);
-
     const host =
         requestHeaders.get("x-fern-host") ??
         process.env.NEXT_PUBLIC_DOCS_DOMAIN ??
@@ -18,6 +17,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
      * Check if the request is dynamic by checking if the request has a token cookie, or if the request is an error page.
      */
     const isDynamic =
+        true ||
         request.cookies.has("fern_token") ||
         request.cookies.has("_fern_docs_preview") ||
         request.nextUrl.searchParams.get("error") === "true";
@@ -40,12 +40,13 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
          * This rewrite rule will ensure that /base/path/_next/data/* is rewritten to /_next/data/* on the server,
          * and also ensure that `/_next/data/buildId/path:` is rewritten to `/_next/data/buildId/{static|dynamic}/tenent.com/path:`
          */
-        const path = request.nextUrl.pathname.substring(
-            request.nextUrl.pathname.indexOf("/_next/data/") + "/_next/data/".length,
-        );
-        const [buildId, ...slug] = path.split("/");
+
         const url = new URL(request.url);
-        url.pathname = urlJoin("/_next/data", buildId, isDynamic ? "dynamic" : "static", host, ...slug);
+        url.pathname = request.nextUrl.pathname
+            .substring(request.nextUrl.pathname.indexOf("/_next/data/"))
+            .replace(/^\/_next\/data\/([^/]+)(\/.*)$/, (_match, buildId, slug) =>
+                urlJoin("/_next/data", buildId, isDynamic ? "dynamic" : "static", host, slug),
+            );
         requestHeaders.set("x-nextjs-data", "1");
         return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
     }
