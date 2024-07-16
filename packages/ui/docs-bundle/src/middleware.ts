@@ -1,5 +1,5 @@
 import { get } from "@vercel/edge-config";
-import type { NextRequest } from "next/server";
+import type { MiddlewareConfig, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import urlJoin from "url-join";
 
@@ -29,13 +29,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
     }
 
-    if (request.nextUrl.pathname.includes("/_next/")) {
-        url.pathname = url.pathname.substring(url.pathname.indexOf("/_next/"));
-
-        if (url.pathname.includes("/_next/image/")) {
-            return NextResponse.rewrite(url);
-        }
-
+    if (request.nextUrl.pathname.includes("/_next/data/")) {
         /**
          * while /_next/static routes are handled by the assetPrefix config, we need to handle the /_next/data routes separately
          * when the user is hovering over a link, Next.js will prefetch the data route using `/_next/data` routes. We intercept
@@ -46,14 +40,12 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
          * This rewrite rule will ensure that /base/path/_next/data/* is rewritten to /_next/data/* on the server,
          * and also ensure that `/_next/data/buildId/path:` is rewritten to `/_next/data/buildId/{static|dynamic}/tenent.com/path:`
          */
-        if (url.pathname.includes("/_next/data/")) {
-            const path = url.pathname.substring(url.pathname.indexOf("/_next/data/") + "/_next/data/".length);
-            const [buildId, ...page] = path.split("/");
-            url.pathname = urlJoin("/_next/data", buildId, isDynamic ? "dynamic" : "static", host, ...page);
-            return NextResponse.rewrite(url);
-        }
-
-        return NextResponse.next();
+        const path = request.nextUrl.pathname.substring(
+            request.nextUrl.pathname.indexOf("/_next/data/") + "/_next/data/".length,
+        );
+        const [buildId, ...page] = path.split("/");
+        url.pathname = urlJoin("/_next/data", buildId, isDynamic ? "dynamic" : "static", host, ...page);
+        return NextResponse.rewrite(url);
     }
 
     if (request.nextUrl.pathname.endsWith("/robots.txt")) {
@@ -89,14 +81,6 @@ async function getCanonicalHost(request: NextRequest): Promise<string | undefine
     return canonicalUrls?.[request.nextUrl.host];
 }
 
-export const config = {
-    matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico (favicon file)
-         */
-        "/((?!_next/static|_next/image|_vercel|api/fern-docs).*)",
-    ],
+export const config: MiddlewareConfig = {
+    matcher: ["/((?!_next/static|_next/image|_vercel|api/fern-docs).*)"],
 };
