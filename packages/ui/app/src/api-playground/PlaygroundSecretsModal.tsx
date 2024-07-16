@@ -44,7 +44,9 @@ export const SecretSpan: FC<{ secret: string } & React.HTMLAttributes<HTMLSpanEl
     );
 };
 
-const playgroundFormSecretsAtom = atomWithStorage<SecretBearer[]>("api-playground-secrets-alpha", []);
+const playgroundFormSecretsAtom = atomWithStorage<SecretBearer[]>("api-playground-secrets-alpha", [], undefined, {
+    getOnInit: true,
+});
 export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({ onClose, selectSecret, isOpen }) => {
     const [secrets, setSecrets] = useAtom(playgroundFormSecretsAtom);
 

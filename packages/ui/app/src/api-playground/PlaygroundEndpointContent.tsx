@@ -40,7 +40,12 @@ interface PlaygroundEndpointContentProps {
     types: Record<string, ResolvedTypeDefinition>;
 }
 
-const requestTypeAtom = atomWithStorage<"curl" | "typescript" | "python">("api-playground-atom-alpha", "curl");
+const requestTypeAtom = atomWithStorage<"curl" | "typescript" | "python">(
+    "api-playground-atom-alpha",
+    "curl",
+    undefined,
+    { getOnInit: true },
+);
 
 export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     endpoint,
