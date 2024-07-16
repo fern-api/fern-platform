@@ -17,7 +17,10 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     /**
      * Check if the request is dynamic by checking if the request has a token cookie, or if the request is an error page.
      */
-    const isDynamic = request.cookies.has("fern_token") || request.nextUrl.searchParams.get("error") === "true";
+    const isDynamic =
+        request.cookies.has("fern_token") ||
+        request.cookies.has("_fern_docs_preview") ||
+        request.nextUrl.searchParams.get("error") === "true";
 
     const url = request.nextUrl.clone();
 
@@ -47,7 +50,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
             const path = url.pathname.substring(url.pathname.indexOf("/_next/data/") + "/_next/data/".length);
             const [buildId, ...page] = path.split("/");
             url.pathname = urlJoin("/_next/data", buildId, isDynamic ? "dynamic" : "static", host, ...page);
-            return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
+            return NextResponse.rewrite(url);
         }
 
         return NextResponse.next();
