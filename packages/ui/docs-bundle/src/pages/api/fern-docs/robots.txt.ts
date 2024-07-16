@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSeoDisabled } from "../../../utils/disabledSeo";
 import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
@@ -6,11 +7,7 @@ export const runtime = "edge";
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     const xFernHost = getXFernHostEdge(req);
 
-    if (
-        xFernHost.includes(".docs.buildwithfern.com") ||
-        xFernHost.includes(".docs.dev.buildwithfern.com") ||
-        xFernHost.includes(".docs.staging.buildwithfern.com")
-    ) {
+    if (await getSeoDisabled(xFernHost)) {
         return new NextResponse("User-Agent: *\nDisallow: /", { status: 200 });
     }
 
