@@ -8,7 +8,7 @@ export default DocsPage;
 
 export const getStaticProps: GetStaticProps<ComponentProps<typeof DocsPage>> = async (context) => {
     const { params = {} } = context;
-    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? (params.host as string);
+    const xFernHost = params.host as string;
     const slugArray = params.slug == null ? [] : Array.isArray(params.slug) ? params.slug : [params.slug];
 
     const result = await getDocsPageProps(xFernHost, slugArray);

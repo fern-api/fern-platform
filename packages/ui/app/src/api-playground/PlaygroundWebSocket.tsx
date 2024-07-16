@@ -3,12 +3,12 @@ import { usePrevious } from "@fern-ui/react-commons";
 import { merge } from "lodash-es";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
-import { usePlaygroundWebsocketFormState } from "../atoms";
+import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
-import { buildRequestUrl, buildUnredactedHeadersWebsocket, getDefaultValueForType } from "./utils";
+import { buildAuthHeaders, buildRequestUrl, getDefaultValueForType } from "./utils";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
@@ -60,13 +60,14 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
             socket.current = new WebSocket(WEBSOCKET_PROXY_URI);
 
             socket.current.onopen = () => {
-                socket.current?.send(
-                    JSON.stringify({
-                        type: "handshake",
-                        url,
-                        headers: buildUnredactedHeadersWebsocket(websocket, formState),
-                    }),
-                );
+                const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
+                const authHeaders = buildAuthHeaders(websocket.auth, authState, { redacted: false });
+                const headers = {
+                    ...authHeaders,
+                    ...formState.headers,
+                };
+
+                socket.current?.send(JSON.stringify({ type: "handshake", url, headers }));
             };
 
             socket.current.onmessage = (event) => {
@@ -98,7 +99,15 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
                 console.error(event);
             };
         });
-    }, [formState, pushMessage, websocket]);
+    }, [
+        formState.headers,
+        formState.pathParameters,
+        formState.queryParameters,
+        pushMessage,
+        websocket.auth,
+        websocket.defaultEnvironment?.baseUrl,
+        websocket.path,
+    ]);
 
     const handleSendMessage = useCallback(
         async (message: ResolvedWebSocketMessage, data: unknown) => {

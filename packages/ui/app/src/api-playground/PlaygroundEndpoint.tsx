@@ -2,13 +2,20 @@ import { FernTooltipProvider } from "@fern-ui/components";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
-import { compact, once } from "lodash-es";
+import { compact, mapValues, once } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
 import urljoin from "url-join";
 import { useCallbackOne } from "use-memo-one";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
-import { useBasePath, useDomain, useFeatureFlags, usePlaygroundEndpointFormState } from "../atoms";
+import {
+    PLAYGROUND_AUTH_STATE_ATOM,
+    store,
+    useBasePath,
+    useDomain,
+    useFeatureFlags,
+    usePlaygroundEndpointFormState,
+} from "../atoms";
 import {
     ResolvedEndpointDefinition,
     ResolvedFormDataRequestProperty,
@@ -24,10 +31,11 @@ import { executeProxyStream } from "./fetch-utils/executeProxyStream";
 import type { PlaygroundFormStateBody, ProxyRequest, SerializableFile, SerializableFormDataEntryValue } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import {
+    buildAuthHeaders,
     buildEndpointUrl,
-    buildUnredactedHeaders,
     getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
+    unknownToString,
 } from "./utils";
 
 interface PlaygroundEndpointProps {
@@ -55,13 +63,11 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);
 
     const resetWithExample = useCallbackOne(() => {
-        setFormState(
-            getInitialEndpointRequestFormStateWithExample(endpoint.auth, endpoint, endpoint.examples[0], types),
-        );
+        setFormState(getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], types));
     }, [endpoint, types]);
 
     const resetWithoutExample = useCallbackOne(() => {
-        setFormState(getInitialEndpointRequestFormState(endpoint.auth, endpoint, types));
+        setFormState(getInitialEndpointRequestFormState(endpoint, types));
     }, []);
 
     const domain = useDomain();
@@ -90,10 +96,22 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 method: endpoint.method,
                 docsRoute: `/${endpoint.slug}`,
             });
-            const req = {
+            const authHeaders = buildAuthHeaders(endpoint.auth, store.get(PLAYGROUND_AUTH_STATE_ATOM), {
+                redacted: false,
+            });
+            const headers = {
+                ...authHeaders,
+                ...mapValues(formState.headers ?? {}, unknownToString),
+            };
+
+            if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
+                headers["Content-Type"] = endpoint.requestBody.contentType;
+            }
+
+            const req: ProxyRequest = {
                 url: buildEndpointUrl(endpoint, formState),
                 method: endpoint.method,
-                headers: buildUnredactedHeaders(endpoint, formState),
+                headers,
                 body: await serializeFormStateBody(
                     uploadEnvironment,
                     endpoint.requestBody?.shape,

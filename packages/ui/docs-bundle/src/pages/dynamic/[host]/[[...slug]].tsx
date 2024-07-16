@@ -19,7 +19,7 @@ const getDocsServerSideProps: GetServerSideProps<ComponentProps<typeof DocsPage>
     req,
     res,
 }) => {
-    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? (params.host as string);
+    const xFernHost = params.host as string;
     // eslint-disable-next-line no-console
     console.log(`[getDocsServerSideProps] host=${xFernHost}`);
     const slugArray = params.slug == null ? [] : Array.isArray(params.slug) ? params.slug : [params.slug];
