@@ -17,7 +17,6 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
      * Check if the request is dynamic by checking if the request has a token cookie, or if the request is an error page.
      */
     const isDynamic =
-        true ||
         request.cookies.has("fern_token") ||
         request.cookies.has("_fern_docs_preview") ||
         request.nextUrl.searchParams.get("error") === "true";
@@ -93,5 +92,5 @@ async function getCanonicalHost(request: NextRequest): Promise<string | undefine
 }
 
 export const config: MiddlewareConfig = {
-    matcher: ["/((?!_next|[^/]+/_next|_vercel|favicon.ico).*)"],
+    matcher: ["/((?!_next|_vercel|favicon.ico).*)"],
 };
