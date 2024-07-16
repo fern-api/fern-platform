@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 }
 
 async function getCanonicalHost(request: NextRequest): Promise<string | undefined> {
-    const canonicalUrls = await get<Record<string, string>>("cannonical-url");
+    const canonicalUrls = await get<Record<string, string>>("cannonical-host");
     return canonicalUrls?.[request.nextUrl.host];
 }
 
