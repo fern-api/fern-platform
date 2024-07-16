@@ -25,7 +25,8 @@ export function getDefaultSeoProps(
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
     apis: Record<string, APIV1Read.ApiDefinition>,
-    { node, parents }: FernNavigation.utils.Node.Found,
+    { node, parents }: Pick<FernNavigation.utils.Node.Found, "node" | "parents">,
+    isSeoDisabled: boolean,
 ): NextSeoProps {
     const additionalMetaTags: MetaTag[] = [];
     const additionalLinkTags: LinkTag[] = [];
@@ -188,11 +189,8 @@ export function getDefaultSeoProps(
 
     seo.noindex = ogMetadata.noindex;
     seo.nofollow = ogMetadata.nofollow;
-    if (
-        host.endsWith(".docs.dev.buildwithfern.com") ||
-        host.endsWith(".docs.staging.buildwithfern.com") ||
-        host.endsWith(".docs.buildwithfern.com")
-    ) {
+
+    if (isSeoDisabled) {
         seo.noindex = true;
         seo.nofollow = true;
     }
