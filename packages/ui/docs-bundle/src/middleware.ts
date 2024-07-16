@@ -14,10 +14,10 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         request.nextUrl.host;
     requestHeaders.set("x-fern-host", host);
 
-    const isDynamic =
-        request.cookies.has("fern_token") ||
-        request.cookies.has("_fern_docs_preview") ||
-        request.nextUrl.searchParams.get("error") === "true";
+    /**
+     * Check if the request is dynamic by checking if the request has a token cookie, or if the request is an error page.
+     */
+    const isDynamic = request.cookies.has("fern_token") || request.nextUrl.searchParams.get("error") === "true";
 
     const url = request.nextUrl.clone();
 
@@ -33,6 +33,16 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
             return NextResponse.rewrite(url);
         }
 
+        /**
+         * while /_next/static routes are handled by the assetPrefix config, we need to handle the /_next/data routes separately
+         * when the user is hovering over a link, Next.js will prefetch the data route using `/_next/data` routes. We intercept
+         * the prefetch request at packages/ui/app/src/next-app/NextApp.tsx and append the customer-defined basepath:
+         *
+         * i.e. /base/path/_next/data/*
+         *
+         * This rewrite rule will ensure that /base/path/_next/data/* is rewritten to /_next/data/* on the server,
+         * and also ensure that `/_next/data/buildId/path:` is rewritten to `/_next/data/buildId/{static|dynamic}/tenent.com/path:`
+         */
         if (url.pathname.includes("/_next/data/")) {
             const path = url.pathname.substring(url.pathname.indexOf("/_next/data/") + "/_next/data/".length);
             const [buildId, ...page] = path.split("/");
