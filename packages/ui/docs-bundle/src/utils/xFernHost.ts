@@ -12,35 +12,12 @@ import type { NextRequest } from "next/server";
  * _fern_docs_preview is used for previewing the docs.
  */
 
-export function getXFernHostEdge(req: NextRequest, useSearchParams = false): string {
-    const hosts = [
-        useSearchParams ? req.nextUrl.searchParams.get("host") : undefined,
-        process.env.NEXT_PUBLIC_DOCS_DOMAIN,
-        req.cookies.get("_fern_docs_preview")?.value,
-        // req.headers.get("x-forwarded-host"),
-        req.headers.get("x-fern-host"),
-        req.nextUrl.host,
-    ];
-
-    for (let host of hosts) {
-        host = cleanHost(host);
-        if (host != null) {
-            return host;
-        }
-    }
-
-    throw new Error("Could not determine xFernHost from request.");
+export function getXFernHostEdge(req: NextRequest): string {
+    return req.headers.get("x-fern-host") ?? req.nextUrl.host;
 }
 
 export function getXFernHostNode(req: NextApiRequest, useSearchParams = false): string {
-    const hosts = [
-        useSearchParams ? req.query["host"] : undefined,
-        process.env.NEXT_PUBLIC_DOCS_DOMAIN,
-        req.cookies["_fern_docs_preview"],
-        // req.headers["x-forwarded-host"],
-        req.headers["x-fern-host"],
-        req.headers.host,
-    ];
+    const hosts = [useSearchParams ? req.query["host"] : undefined, req.headers["x-fern-host"], req.headers.host];
 
     for (let host of hosts) {
         if (Array.isArray(host)) {

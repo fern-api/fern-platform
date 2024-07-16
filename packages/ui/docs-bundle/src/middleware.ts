@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     const host =
         requestHeaders.get("x-fern-host") ??
         process.env.NEXT_PUBLIC_DOCS_DOMAIN ??
-        request.cookies.get("_fern_docs_preview")?.value ??
+        (process.env.VERCEL_ENV !== "production" ? request.cookies.get("_fern_docs_preview")?.value : undefined) ??
         (await getCanonicalHost(request)) ??
         request.nextUrl.host;
     requestHeaders.set("x-fern-host", host);
@@ -18,15 +18,22 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
      * Check if the request is dynamic by checking if the request has a token cookie, or if the request is an error page.
      */
     const isDynamic =
+        // true ||
         request.cookies.has("fern_token") ||
-        request.cookies.has("_fern_docs_preview") ||
+        (process.env.VERCEL_ENV !== "production" && request.cookies.has("_fern_docs_preview")) ||
         request.nextUrl.searchParams.get("error") === "true";
 
     if (isDynamic) {
         requestHeaders.set("x-fern-dynamic", "1");
     }
 
+    const isPrefetch = request.headers.get("x-middleware-prefetch") === "1";
+
     if (request.nextUrl.pathname.includes("/_next/data/")) {
+        if (isPrefetch) {
+            return NextResponse.next({ request: { headers: requestHeaders } });
+        }
+
         const url = request.nextUrl.clone();
         url.pathname = urlJoin(
             isDynamic ? "dynamic" : "static",
@@ -40,6 +47,16 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         url.searchParams.set("__nextDataReq", "1");
         return NextResponse.rewrite(url, { headers: requestHeaders });
     }
+
+    if (!request.nextUrl.pathname.includes("/_next/")) {
+        const url = request.nextUrl.clone();
+        url.pathname = urlJoin("/", isDynamic ? "dynamic" : "static", host, url.pathname.substring(1));
+        if (isPrefetch) {
+            url.searchParams.set("__nextDataReq", "1");
+        }
+        return NextResponse.rewrite(url, { headers: requestHeaders });
+    }
+
     return NextResponse.next({ request: { headers: requestHeaders } });
 }
 

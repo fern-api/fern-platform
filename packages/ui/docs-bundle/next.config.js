@@ -32,7 +32,6 @@ const nextConfig = {
     reactStrictMode: true,
     transpilePackages: ["next-mdx-remote", "esbuild", "jotai-devtools"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
-    skipMiddlewareUrlNormalize: true,
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
@@ -156,9 +155,6 @@ const nextConfig = {
         ];
     },
     rewrites: async () => {
-        const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
-        const HAS_X_FERN_HOST = { type: "header", key: "x-fern-host", value: "(?<host>.*)" };
-        const IS_FERN_DYNAMIC = { type: "header", key: "x-fern-dynamic", value: "1" };
         return {
             beforeFiles: [
                 /**
@@ -174,47 +170,25 @@ const nextConfig = {
                 { source: "/:prefix*/api/fern-docs/:path*", destination: "/api/fern-docs/:path*" },
                 { source: "/:prefix*/robots.txt", destination: "/api/fern-docs/robots.txt" },
                 { source: "/:prefix*/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
-                /**
-                 * Since we use cookie rewrites to determine if the path should be rewritten to /static or /dynamic, prefetch requests
-                 * do not have access to these cookies, and will always be matched to /static. This rewrite rule will ensure that
-                 * when the fern_token cookie is present, the /static route will be rewritten to /dynamic
-                 */
-                {
-                    source: "/_next/data/:hash/static/:host/:path*",
-                    has: [IS_FERN_DYNAMIC],
-                    destination: "/_next/data/:hash/dynamic/:host/:path*",
-                },
-                /**
-                 * This rewrite rule will ensure that when the `_fern_docs_preview` cookie is present, the /_next/data route will be
-                 * rewritten to the host specified in the cookie. This is necessary for the PR Preview feature to work.
-                 */
-                {
-                    source: "/_next/data/:hash/:subpath/:oldhost/:path*",
-                    has: [HAS_FERN_DOCS_PREVIEW],
-                    destination: "/_next/data/:hash/:subpath/:host/:path*",
-                },
             ],
             afterFiles: [
-                { source: "/_next/:path*", destination: "/_next/:path*" },
-                { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
                 { source: "/robots.txt", destination: "/api/fern-docs/robots.txt" },
                 { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
                 { source: "/:path*.rss", destination: "/api/fern-docs/changelog?format=rss&path=:path*" },
                 { source: "/:path*.atom", destination: "/api/fern-docs/changelog?format=atom&path=:path*" },
             ],
             fallback: [
-                /**
-                 * The following rewrite rules are used to determine if the path should be rewritten to /static or /dynamic
-                 * On the presence of fern_token, or if the query contains error=true, the path will be rewritten to /dynamic
-                 */
                 {
-                    has: [HAS_X_FERN_HOST, IS_FERN_DYNAMIC],
                     source: "/:path*",
+                    has: [
+                        { type: "header", key: "x-fern-host", value: "(?<host>.*)" },
+                        { type: "header", key: "x-fern-dynamic", value: "1" },
+                    ],
                     destination: "/dynamic/:host/:path*",
                 },
                 {
-                    has: [HAS_X_FERN_HOST],
                     source: "/:path*",
+                    has: [{ type: "header", key: "x-fern-host", value: "(?<host>.*)" }],
                     destination: "/static/:host/:path*",
                 },
             ],
