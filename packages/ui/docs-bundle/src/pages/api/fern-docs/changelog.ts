@@ -4,7 +4,6 @@ import { assertNever } from "@fern-ui/core-utils";
 import { getFrontmatter } from "@fern-ui/ui";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
 import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { getXFernHostNode } from "../../../utils/xFernHost";
@@ -15,14 +14,14 @@ export const revalidate = 60 * 60 * 24;
 
 export default async function responseApiHandler(req: NextApiRequest, res: NextApiResponse): Promise<unknown> {
     if (req.method !== "GET") {
-        return res.status(400).end();
+        return res.status(400).send(null);
     }
 
     let path = req.query["path"];
     const format = req.query["format"] ?? "rss";
 
     if (typeof path !== "string" || typeof format !== "string") {
-        return res.status(400).end();
+        return res.status(400).send(null);
     }
 
     if (path.startsWith("/")) {
@@ -35,8 +34,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
 
     const status = await checkViewerAllowedNode(xFernHost, req);
     if (status >= 400) {
-        res.status(status).json(null);
-        return;
+        return res.status(status).send(null);
     }
 
     const headers = new Headers();
@@ -46,7 +44,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
     const docs = await loadWithUrl(url);
 
     if (docs == null) {
-        return res.status(404).end();
+        return res.status(404).send(null);
     }
 
     const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
@@ -55,7 +53,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
     const node = collector.slugMap.get(path);
 
     if (node?.type !== "changelog") {
-        return new NextResponse(null, { status: 404 });
+        return res.status(404).send(null);
     }
 
     const link = `https://${xFernHost}/${node.slug}`;
@@ -106,7 +104,6 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
     });
 
     if (format === "json") {
-        headers.set("Content-Type", "application/json");
         return res.json(feed.json1());
     } else if (format === "atom") {
         headers.set("Content-Type", "application/atom+xml");
