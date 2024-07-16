@@ -47,7 +47,7 @@ const handler: NextApiHandler = async (
     try {
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
-        const xFernHost = getXFernHostNode(req, true);
+        const xFernHost = getXFernHostNode(req);
 
         const url = buildUrl({
             host: xFernHost,
