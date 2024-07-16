@@ -82,8 +82,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
     }
 
-    url.pathname = urlJoin(isDynamic ? "dynamic" : "static", host, request.nextUrl.pathname);
-    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
+    return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
 async function getCanonicalHost(request: NextRequest): Promise<string | undefined> {
@@ -92,5 +91,5 @@ async function getCanonicalHost(request: NextRequest): Promise<string | undefine
 }
 
 export const config: MiddlewareConfig = {
-    matcher: ["/((?!_next|_vercel|favicon.ico).*)"],
+    matcher: ["/((?!_next/static|_next/image|_vercel|favicon.ico).*)"],
 };

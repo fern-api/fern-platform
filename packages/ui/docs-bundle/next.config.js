@@ -160,6 +160,34 @@ const nextConfig = {
             { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
             { source: "/_next/:path*", destination: "/_next/:path*" },
         ],
+        fallback: [
+            {
+                source: "/",
+                has: [
+                    { type: "header", key: "x-fern-host", value: "(?<host>.*)" },
+                    { type: "header", key: "x-fern-dynamic", value: "1" },
+                ],
+                destination: "/static/:host",
+            },
+            {
+                source: "/",
+                has: [{ type: "header", key: "x-fern-host", value: "(?<host>.*)" }],
+                destination: "/static/:host",
+            },
+            {
+                source: "/:path*",
+                has: [
+                    { type: "header", key: "x-fern-host", value: "(?<host>.*)" },
+                    { type: "header", key: "x-fern-dynamic", value: "1" },
+                ],
+                destination: "/static/:host/:path*",
+            },
+            {
+                source: "/:path*",
+                has: [{ type: "header", key: "x-fern-host", value: "(?<host>.*)" }],
+                destination: "/static/:host/:path*",
+            },
+        ],
     }),
     images: {
         remotePatterns: DOCS_FILES_ALLOWLIST,
