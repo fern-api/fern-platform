@@ -23,6 +23,7 @@ import { default as urlJoin, default as urljoin } from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
+import { getSeoDisabled } from "./disabledSeo";
 import { getRedirectForPath } from "./hackRedirects";
 
 async function getUnauthenticatedRedirect(xFernHost: string, path: string): Promise<Redirect> {
@@ -364,6 +365,7 @@ async function convertDocsToDocsPageProps({
             docs.definition.filesV2,
             docs.definition.apis,
             node,
+            await getSeoDisabled(xFernHost),
         ),
         user,
         fallback: {},

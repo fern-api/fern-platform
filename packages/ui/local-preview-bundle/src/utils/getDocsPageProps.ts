@@ -143,6 +143,7 @@ export async function getDocsPageProps(
             docs.definition.filesV2,
             docs.definition.apis,
             node,
+            true,
         ),
         fallback: {},
         analytics: undefined,
