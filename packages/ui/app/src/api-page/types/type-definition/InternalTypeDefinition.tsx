@@ -164,6 +164,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
     }
 
     if (!isCollapsible) {
+        // TODO: (rohin) Refactor this
         if (collapsableContent.elementNameSingular === "literal") {
             return (
                 <div className="t-muted flex items-baseline gap-2">
