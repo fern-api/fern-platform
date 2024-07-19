@@ -118,14 +118,7 @@ export function renderTypeShorthand(
             )} to ${renderTypeShorthand(map.valueShape, { plural: true }, types)}`,
 
         // literals
-        // TODO: (rohin) revisit
-        literal: (literal) =>
-            visitDiscriminatedUnion(literal.value, "type")._visit({
-                stringLiteral: (value) => `"${value.value}"`,
-                booleanLiteral: (value) => `${value.value}`,
-                _other: () => "<unknown>",
-            }),
-
+        literal: (_literal) => "literal",
         // other
         unknown: () => "any",
         _other: () => "<unknown>",
