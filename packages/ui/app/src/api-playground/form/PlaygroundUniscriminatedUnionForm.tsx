@@ -55,10 +55,10 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                         labelFallback = variant.shape.type;
                         break;
                 }
-
+                const capitalizedFallbacklabel = labelFallback.charAt(0).toUpperCase() + labelFallback.slice(1);
                 return {
                     type: "value",
-                    label: variant.displayName ?? labelFallback,
+                    label: variant.displayName ?? capitalizedFallbacklabel,
                     value: idx.toString(),
                     // todo: handle availability
                     tooltip:
