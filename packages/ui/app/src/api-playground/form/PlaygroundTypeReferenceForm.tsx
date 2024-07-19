@@ -239,14 +239,44 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
         literal: (literal) =>
             visitDiscriminatedUnion(literal.value, "type")._visit({
                 stringLiteral: (stringLiteral) => (
-                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                        <code>{stringLiteral.value}</code>
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
+                        <PlaygroundEnumForm
+                            enumValues={[
+                                {
+                                    value: stringLiteral.value,
+                                    availability: undefined,
+                                    description: undefined,
+                                },
+                            ]}
+                            onChange={onChange}
+                            value={value}
+                            id={id}
+                            disabled={disabled}
+                        />
                     </WithLabel>
+                    // <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                    //     <code>{stringLiteral.value}</code>
+                    // </WithLabel>
                 ),
                 booleanLiteral: (stringLiteral) => (
-                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                        <code>{stringLiteral.value ? "true" : "false"}</code>
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
+                        <PlaygroundEnumForm
+                            enumValues={[
+                                {
+                                    value: stringLiteral.value ? "true" : "false",
+                                    availability: undefined,
+                                    description: undefined,
+                                },
+                            ]}
+                            onChange={onChange}
+                            value={value}
+                            id={id}
+                            disabled={disabled}
+                        />
                     </WithLabel>
+                    // <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                    //     <code>{stringLiteral.value ? "true" : "false"}</code>
+                    // </WithLabel>
                 ),
                 _other: () => null,
             }),
