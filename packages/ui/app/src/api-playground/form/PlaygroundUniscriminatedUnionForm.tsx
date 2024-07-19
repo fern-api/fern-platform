@@ -40,18 +40,33 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
 
     const options = useMemo(
         () =>
-            undiscriminatedUnion.variants.map(
-                (variant, idx): FernDropdown.Option => ({
+            undiscriminatedUnion.variants.map((variant, idx): FernDropdown.Option => {
+                let labelFallback: string;
+                switch (variant.shape.type) {
+                    // We should also likely handle literals here to make it not just say
+                    // "literal" but the actual value of the literal, but not positive the best UX
+                    case "primitive":
+                        labelFallback = variant.shape.value.type;
+                        break;
+                    case "optional":
+                        labelFallback = variant.shape.shape.type;
+                        break;
+                    default:
+                        labelFallback = variant.shape.type;
+                        break;
+                }
+                const capitalizedFallbacklabel = labelFallback.charAt(0).toUpperCase() + labelFallback.slice(1);
+                return {
                     type: "value",
-                    label: variant.displayName ?? variant.shape.type,
+                    label: variant.displayName ?? capitalizedFallbacklabel,
                     value: idx.toString(),
                     // todo: handle availability
                     tooltip:
                         variant.description != null ? (
                             <Markdown className="text-xs" mdx={variant.description} />
                         ) : undefined,
-                }),
-            ),
+                };
+            }),
         [undiscriminatedUnion.variants],
     );
 
