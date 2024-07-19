@@ -17,6 +17,49 @@ interface V1Snippet {
     imports: string[];
     invocation: string;
 }
+class DefaultedV1Snippet {
+    public snippet: V1Snippet | undefined;
+
+    constructor({
+        template,
+        isRequired,
+        imports,
+        invocation,
+    }: {
+        template: Template;
+        imports?: string[];
+        isRequired?: boolean;
+        invocation?: string;
+    }) {
+        if (invocation != null) {
+            this.snippet = { imports: imports ?? [], invocation };
+            return;
+        }
+
+        let defaulted_invocation;
+        switch (template.type) {
+            case "generic":
+            case "discriminatedUnion":
+            case "union":
+            case "enum":
+                defaulted_invocation = template.templateString?.replace(TemplateSentinel, "") ?? "";
+                break;
+            case "dict":
+                defaulted_invocation = "{}";
+                break;
+            case "iterable":
+                defaulted_invocation = template.containerTemplateString.replace(TemplateSentinel, "");
+                break;
+        }
+
+        this.snippet = isRequired
+            ? {
+                  imports: imports ?? template.imports ?? [],
+                  invocation: defaulted_invocation,
+              }
+            : undefined;
+    }
+}
 
 const TemplateSentinel = "$FERN_INPUT";
 
@@ -92,20 +135,21 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveV1Template(template: Template, payloadOverride?: unknown): V1Snippet | undefined {
+    private resolveV1Template({
+        template,
+        payloadOverride,
+        isRequired,
+    }: {
+        template: Template;
+        payloadOverride?: unknown;
+        isRequired?: boolean;
+    }): DefaultedV1Snippet {
         const imports: string[] = template.imports ?? [];
         switch (template.type) {
             case "generic": {
                 if (template.templateInputs == null || template.templateInputs.length === 0) {
                     // TODO: If the field is required return SOMETHING, ideally from the default example
-                    return {
-                        imports: [],
-                        invocation: template.templateString.replace(
-                            // TODO: fix the typescript generator to create literals not as types
-                            TemplateSentinel,
-                            "",
-                        ),
-                    };
+                    return new DefaultedV1Snippet({ template, isRequired });
                 }
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const input of template.templateInputs) {
@@ -122,62 +166,79 @@ export class SnippetTemplateResolver {
                             continue;
                         }
 
-                        const evaluatedInput = this.resolveV1Template(input.value, payloadOverride);
+                        const evaluatedInput = this.resolveV1Template({
+                            template: input.value,
+                            payloadOverride,
+                        }).snippet;
                         if (evaluatedInput != null) {
                             evaluatedInputs.push(evaluatedInput);
                         }
                     }
                 }
-                return evaluatedInputs.length > 0
-                    ? {
-                          imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
-                          invocation: template.templateString.replace(
-                              // TODO: fix the typescript generator to create literals not as types
-                              TemplateSentinel,
-                              evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
-                          ),
-                      }
-                    : undefined;
+                if (evaluatedInputs.length === 0) {
+                    return new DefaultedV1Snippet({ template, isRequired });
+                }
+                return new DefaultedV1Snippet({
+                    template,
+                    isRequired,
+                    imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
+                    invocation: template.templateString.replace(
+                        // TODO: fix the typescript generator to create literals not as types
+                        TemplateSentinel,
+                        evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
+                    ),
+                });
             }
             case "iterable": {
                 if (template.templateInput == null) {
-                    return undefined;
+                    return new DefaultedV1Snippet({ template, isRequired });
                 }
                 const payloadValue = this.getPayloadValue(template.templateInput);
                 if (!Array.isArray(payloadValue)) {
-                    return undefined;
+                    return new DefaultedV1Snippet({ template, isRequired });
                 }
 
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const value of payloadValue) {
-                    const evaluatedInput = this.resolveV1Template(template.innerTemplate, value);
+                    const evaluatedInput = this.resolveV1Template({
+                        template: template.innerTemplate,
+                        payloadOverride: value,
+                    }).snippet;
                     if (evaluatedInput != null) {
                         evaluatedInputs.push(evaluatedInput);
                     }
                 }
-                return {
+                return new DefaultedV1Snippet({
+                    template,
+                    isRequired,
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
                         evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
                     ),
-                };
+                });
             }
             case "dict": {
                 if (template.templateInput == null) {
-                    return undefined;
+                    return new DefaultedV1Snippet({ template, isRequired });
                 }
                 const payloadValue = this.getPayloadValue(template.templateInput, payloadOverride);
                 if (payloadValue == null || Array.isArray(payloadValue) || typeof payloadValue !== "object") {
-                    return undefined;
+                    return new DefaultedV1Snippet({ template, isRequired });
                 }
 
                 // const payloadMap = payloadValue as Map<string, unknown>;
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const key in payloadValue) {
                     const value = payloadValue[key as keyof typeof payloadValue];
-                    const keySnippet = this.resolveV1Template(template.keyTemplate, key);
-                    const valueSnippet = this.resolveV1Template(template.valueTemplate, value);
+                    const keySnippet = this.resolveV1Template({
+                        template: template.keyTemplate,
+                        payloadOverride: key,
+                    }).snippet;
+                    const valueSnippet = this.resolveV1Template({
+                        template: template.valueTemplate,
+                        payloadOverride: value,
+                    }).snippet;
                     if (keySnippet != null && valueSnippet != null) {
                         evaluatedInputs.push({
                             imports: keySnippet.imports.concat(valueSnippet.imports),
@@ -185,29 +246,33 @@ export class SnippetTemplateResolver {
                         });
                     }
                 }
-                return {
+                return new DefaultedV1Snippet({
+                    template,
+                    isRequired,
                     imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
                         evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
                     ),
-                };
+                });
             }
             case "enum": {
                 const enumValues = template.values;
                 const enumSdkValues = Object.values(template.values);
                 const defaultEnumValue = enumSdkValues[0];
                 if (template.templateInput == null || defaultEnumValue == null) {
-                    return undefined;
+                    return new DefaultedV1Snippet({ template, isRequired });
                 }
                 const maybeEnumWireValue = this.getPayloadValue(template.templateInput, payloadOverride);
                 const enumSdkValue =
                     (typeof maybeEnumWireValue === "string" ? enumValues[maybeEnumWireValue] : undefined) ??
                     defaultEnumValue;
-                return {
+                return new DefaultedV1Snippet({
+                    template,
+                    isRequired,
                     imports,
                     invocation: template.templateString?.replace(TemplateSentinel, enumSdkValue) ?? enumSdkValue,
-                };
+                });
             }
             case "discriminatedUnion": {
                 const unionMembers = template.members;
@@ -219,79 +284,52 @@ export class SnippetTemplateResolver {
                     payloadOverride,
                 );
                 if (maybeUnionValue == null || !isPlainObject(maybeUnionValue) || !(discriminator in maybeUnionValue)) {
-                    return undefined;
+                    return new DefaultedV1Snippet({ template, isRequired });
                 }
 
                 const discriminatorValue = maybeUnionValue[discriminator];
                 if (typeof discriminatorValue !== "string") {
-                    return undefined;
+                    return new DefaultedV1Snippet({ template, isRequired });
                 }
 
                 const selectedMemberTemplate = unionMembers[discriminatorValue];
 
                 if (!selectedMemberTemplate) {
-                    return undefined;
+                    return new DefaultedV1Snippet({ template, isRequired });
                 }
 
-                const evaluatedMember: V1Snippet | undefined = this.resolveV1Template(
-                    selectedMemberTemplate,
+                const evaluatedMember: V1Snippet | undefined = this.resolveV1Template({
+                    template: selectedMemberTemplate,
                     payloadOverride,
-                );
-                return evaluatedMember != null
-                    ? {
-                          imports: imports.concat(evaluatedMember.imports),
-                          invocation: template.templateString.replace(TemplateSentinel, evaluatedMember.invocation),
-                      }
-                    : undefined;
+                }).snippet;
+                if (evaluatedMember == null) {
+                    return new DefaultedV1Snippet({ template, isRequired });
+                }
+
+                return new DefaultedV1Snippet({
+                    template,
+                    isRequired,
+                    imports: imports.concat(evaluatedMember.imports),
+                    invocation: template.templateString.replace(TemplateSentinel, evaluatedMember.invocation),
+                });
             }
             case "union":
                 // TODO: evaluate the shape of the object, compared against the union members to select
                 // the closest fit, evaluate and return that. This is what the ApiDefinition is for.
-                return undefined;
+                return new DefaultedV1Snippet({ template, isRequired });
         }
-    }
-
-    private isPayloadEmpty(): boolean {
-        return (
-            this.payload.requestBody == null &&
-            this.payload.queryParameters == null &&
-            this.payload.pathParameters == null &&
-            this.payload.headers == null
-        );
     }
 
     private resolveSnippetV1TemplateString(template: SnippetTemplate): string {
         const clientSnippet =
             typeof template.clientInstantiation === "string"
                 ? template.clientInstantiation
-                : this.resolveV1Template(template.clientInstantiation);
-        let endpointSnippet: V1Snippet | undefined;
-        if (this.isPayloadEmpty()) {
-            let invocation: string;
+                : this.resolveV1Template({ template: template.clientInstantiation, isRequired: true }).snippet;
 
-            // The top level template should really be generic, but we're not enforcing that right now.
-            switch (template.functionInvocation.type) {
-                case "generic":
-                case "discriminatedUnion":
-                case "union":
-                case "enum":
-                    invocation = template.functionInvocation.templateString?.replace(TemplateSentinel, "") ?? "";
-                    break;
-                case "dict":
-                    invocation = "{}";
-                    break;
-                case "iterable":
-                    invocation = template.functionInvocation.containerTemplateString.replace(TemplateSentinel, "");
-                    break;
-            }
-
-            endpointSnippet = {
-                imports: template.functionInvocation.imports ?? [],
-                invocation,
-            };
-        } else {
-            endpointSnippet = this.resolveV1Template(template.functionInvocation);
-        }
+        const endpointSnippet = this.resolveV1Template({
+            template: template.functionInvocation,
+            isRequired: true,
+        }).snippet;
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
