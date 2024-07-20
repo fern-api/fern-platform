@@ -97,6 +97,24 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                     elementNameSingular: "enum value",
                     elementNamePlural: "enum values",
                 }),
+                literal: (literal) => ({
+                    elements: [
+                        <EnumValue
+                            key={literal.value.value.toString()}
+                            enumValue={{
+                                value: visitDiscriminatedUnion(literal.value, "type")._visit({
+                                    stringLiteral: (value) => `${value.value}`,
+                                    booleanLiteral: (value) => `${value.value ? "true" : "false"}`,
+                                    _other: () => "<unknown>",
+                                }),
+                                description: undefined,
+                                availability: undefined,
+                            }}
+                        />,
+                    ],
+                    elementNameSingular: "literal",
+                    elementNamePlural: "literals",
+                }),
                 _other: () => undefined,
                 alias: () => undefined,
                 unknown: () => undefined,

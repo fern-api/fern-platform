@@ -105,6 +105,19 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                     elementNameSingular: "enum value",
                     elementNamePlural: "enum values",
                 }),
+                literal: (literal) => ({
+                    elements: [
+                        visitDiscriminatedUnion(literal.value, "type")._visit({
+                            stringLiteral: (value) => <Chip key={value.value} name={value.value} />,
+                            booleanLiteral: (value) => (
+                                <Chip key={value.value.toString()} name={value.value.toString()} />
+                            ),
+                            _other: () => <span>{"<unknown>"}</span>,
+                        }),
+                    ],
+                    elementNameSingular: "literal",
+                    elementNamePlural: "literals",
+                }),
                 alias: () => undefined,
                 unknown: () => undefined,
                 _other: () => undefined,
@@ -151,6 +164,17 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
     }
 
     if (!isCollapsible) {
+        // TODO: (rohin) Refactor this
+        if (collapsableContent.elementNameSingular === "literal") {
+            return (
+                <div className="t-muted flex items-baseline gap-2">
+                    <span className="shrink-0 text-sm"> Allowed value: </span>
+                    <FernTooltipProvider>
+                        <span className="inline-flex flex-wrap gap-2">{collapsableContent.elements}</span>
+                    </FernTooltipProvider>
+                </div>
+            );
+        }
         return (
             <FernErrorBoundary component="InternalTypeDefinition">
                 <FernTooltipProvider>
