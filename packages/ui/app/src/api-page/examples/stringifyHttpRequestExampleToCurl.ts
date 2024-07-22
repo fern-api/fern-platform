@@ -83,7 +83,7 @@ function unsafeStringifyHttpRequestExampleToCurl({
 
                                       const stringValue = JSON.stringify(value, null, 2);
 
-                                      return ` \\\n     -F ${key}='${stringValue.replace(/'/g, "\\'")}${contentType != null ? `;type=${contentType}` : ""}'`;
+                                      return ` \\\n     -F ${key}='${stringValue.replace(/'/g, "'\\''")}${contentType != null ? `;type=${contentType}` : ""}'`;
                                   },
                                   file: ({ fileName, contentType }) => {
                                       if (fileName == null) {
