@@ -1,5 +1,6 @@
 export { type CustomerAnalytics } from "./analytics/types";
 export { Stream } from "./api-playground/Stream";
+export { ProxyRequestSchema } from "./api-playground/types";
 export type { ProxyRequest, ProxyResponse } from "./api-playground/types";
 export { DEFAULT_FEATURE_FLAGS } from "./atoms";
 export type { DocsProps, FeatureFlags } from "./atoms";

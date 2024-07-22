@@ -1,27 +1,39 @@
-import { JsonVariant } from "./jsonVariant";
-import { SerializableFile, SerializableFormDataEntryValue } from "./serializable";
+import { z } from "zod";
+import { SerializableFileSchema, SerializableFormDataEntryValueSchema, SerializableJsonSchema } from "./serializable";
+
+export const SerializableFormDataSchema = z.object({
+    type: z.literal("form-data"),
+    value: z.record(SerializableFormDataEntryValueSchema),
+});
+
+export type SerializableFormData = z.infer<typeof SerializableFormDataSchema>;
+
+export const SerializableOctetStreamSchema = z.object({
+    type: z.literal("octet-stream"),
+    value: SerializableFileSchema.optional(),
+});
+
+export const SerializableBodySchema = z.union([
+    SerializableJsonSchema,
+    SerializableFormDataSchema,
+    SerializableOctetStreamSchema,
+]);
+
+export const ProxyRequestSchema = z.object({
+    url: z.string(),
+    method: z.string(),
+    headers: z.record(z.string()),
+    body: SerializableBodySchema.optional(),
+    stream: z.boolean().optional(),
+    streamTerminator: z.string().optional(),
+});
+
+export type ProxyRequest = z.infer<typeof ProxyRequestSchema>;
 
 export declare namespace ProxyRequest {
-    export interface SerializableFormData {
-        type: "form-data";
-        value: Record<string, SerializableFormDataEntryValue>;
-    }
-
-    export interface SerializableOctetStream {
-        type: "octet-stream";
-        value: SerializableFile | undefined;
-    }
-
-    export type SerializableBody = JsonVariant | SerializableFormData | SerializableOctetStream;
-}
-
-export interface ProxyRequest {
-    url: string;
-    method: string;
-    headers: Record<string, string>;
-    body: ProxyRequest.SerializableBody | undefined;
-    stream?: boolean;
-    streamTerminator?: string;
+    export type SerializableOctetStream = z.infer<typeof SerializableOctetStreamSchema>;
+    export type SerializableBody = z.infer<typeof SerializableBodySchema>;
+    export type ProxyRequest = z.infer<typeof ProxyRequestSchema>;
 }
 
 export declare namespace ProxyResponse {
