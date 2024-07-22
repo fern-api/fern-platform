@@ -16,14 +16,15 @@ import urljoin from "url-join";
 
 export async function getDocsPageProps(
     docs: DocsV2Read.LoadDocsForUrlResponse,
-    slug: string[],
+    slugArray: string[],
 ): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
     const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const slug = FernNavigation.utils.slugjoin(...slugArray);
     const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {
         // eslint-disable-next-line no-console
-        console.error(`Failed to resolve navigation for ${slug.join("")}`);
+        console.error(`Failed to resolve navigation for ${slug}`);
         if (node.redirect != null) {
             return {
                 type: "redirect",
@@ -62,7 +63,7 @@ export async function getDocsPageProps(
 
     if (resolvedPath == null) {
         // eslint-disable-next-line no-console
-        console.error(`Failed to resolve path for ${slug.join("/")}`);
+        console.error(`Failed to resolve path for ${slug}`);
         return { type: "notFound", notFound: true };
     }
 
