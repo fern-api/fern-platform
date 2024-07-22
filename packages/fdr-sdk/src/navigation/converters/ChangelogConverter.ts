@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { DocsV1Read } from "../../client";
 import { FernNavigation } from "../generated";
+import { getNoIndexFromFrontmatter } from "../utils/getNoIndexFromFrontmatter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { SlugGenerator } from "./SlugGenerator";
 
@@ -12,23 +13,29 @@ export class ChangelogNavigationConverter {
         changelog: DocsV1Read.ChangelogSection,
         slug: SlugGenerator,
         idgen: NodeIdGenerator,
+        pages: Record<string, DocsV1Read.PageContent>,
     ): FernNavigation.ChangelogNode {
-        return new ChangelogNavigationConverter(idgen).convert(changelog, slug);
+        return new ChangelogNavigationConverter(idgen, pages).convert(changelog, slug);
     }
 
     #idgen: NodeIdGenerator;
-    private constructor(idgen: NodeIdGenerator) {
+    #pages: Record<string, DocsV1Read.PageContent>;
+    private constructor(idgen: NodeIdGenerator, pages: Record<string, DocsV1Read.PageContent>) {
         this.#idgen = idgen;
+        this.#pages = pages;
     }
 
     private convert(changelog: DocsV1Read.ChangelogSection, parentSlug: SlugGenerator): FernNavigation.ChangelogNode {
         return this.#idgen.with("log", (id) => {
             const slug = parentSlug.apply(changelog);
+            const overviewPageId = changelog.pageId != null ? FernNavigation.PageId(changelog.pageId) : undefined;
+            const noindex = getNoIndexFromFrontmatter(this.#pages, overviewPageId);
             return {
                 id,
                 type: "changelog",
                 title: changelog.title ?? "Changelog",
-                overviewPageId: changelog.pageId != null ? FernNavigation.PageId(changelog.pageId) : undefined,
+                overviewPageId,
+                noindex,
                 slug: slug.get(),
                 icon: changelog.icon,
                 hidden: changelog.hidden,
@@ -112,12 +119,15 @@ export class ChangelogNavigationConverter {
     ): FernNavigation.ChangelogEntryNode {
         const date = dayjs.utc(item.date);
         return this.#idgen.with(date.format("YYYY-M-D"), (id) => {
+            const pageId = FernNavigation.PageId(item.pageId);
+            const noindex = getNoIndexFromFrontmatter(this.#pages, pageId);
             return {
                 id,
                 type: "changelogEntry",
                 title: date.format("MMMM D, YYYY"),
                 date: item.date,
-                pageId: FernNavigation.PageId(item.pageId),
+                pageId,
+                noindex,
                 slug: parentSlug.append(date.format("YYYY/M/D")).get(),
                 icon: undefined,
                 hidden: undefined,

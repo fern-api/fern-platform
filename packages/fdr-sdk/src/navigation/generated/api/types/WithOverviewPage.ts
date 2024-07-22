@@ -6,4 +6,5 @@ import * as FernNavigation from "../index";
 
 export interface WithOverviewPage {
     overviewPageId: FernNavigation.PageId | undefined;
+    noindex: boolean | undefined;
 }

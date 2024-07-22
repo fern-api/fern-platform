@@ -5,6 +5,7 @@ import {
     NavigationNode,
     NavigationNodeNeighbor,
     NavigationNodeWithMetadata,
+    hasMarkdown,
     hasMetadata,
     isNeighbor,
     isPage,
@@ -140,9 +141,24 @@ export class NodeCollector {
         return Object.keys(this.slugToNode);
     });
 
+    /**
+     * Returns a list of slugs for all pages in the navigation tree. This includes hidden pages.
+     */
     public getPageSlugs = once((): string[] => {
         return Object.values(this.slugToNode)
             .filter(({ node }) => isPage(node))
+            .map(({ node }) => urljoin(node.slug));
+    });
+
+    /**
+     * Returns a list of slugs for pages that should be indexed by search engines, and by algolia.
+     *
+     * This excludes hidden pages and noindex pages.
+     */
+    public getIndexablePageSlugs = once((): string[] => {
+        return Object.values(this.slugToNode)
+            .filter(({ node }) => isPage(node) && node.hidden !== true)
+            .filter(({ node }) => (hasMarkdown(node) ? node.noindex !== true : true))
             .map(({ node }) => urljoin(node.slug));
     });
 

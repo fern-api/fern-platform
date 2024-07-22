@@ -6,6 +6,7 @@ export function convertLoadDocsForUrlResponse(response: DocsV2Read.LoadDocsForUr
     return NavigationConfigConverter.convert(
         response.definition.config.title,
         response.definition.config.navigation,
+        response.definition.pages,
         hackReorderApis(response.definition.apis, response.baseUrl.domain),
         response.baseUrl.basePath,
         isLexicographicSortEnabled(response.baseUrl.domain),

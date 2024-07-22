@@ -6,6 +6,7 @@ import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { FernNavigation } from "../generated";
 import { followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
+import { getNoIndexFromFrontmatter } from "../utils/getNoIndexFromFrontmatter";
 import { isSubpackage } from "../utils/isSubpackage";
 import { stringifyEndpointPathParts } from "../utils/stringifyEndpointPathParts";
 import { ChangelogNavigationConverter } from "./ChangelogConverter";
@@ -16,6 +17,7 @@ export class ApiReferenceNavigationConverter {
     public static convert(
         apiSection: DocsV1Read.ApiSection,
         api: APIV1Read.ApiDefinition,
+        pages: Record<string, DocsV1Read.PageContent>,
         parentSlug: SlugGenerator,
         idgen?: NodeIdGenerator,
         lexicographic?: boolean,
@@ -23,6 +25,7 @@ export class ApiReferenceNavigationConverter {
         return new ApiReferenceNavigationConverter(
             apiSection,
             api,
+            pages,
             parentSlug,
             idgen ?? new NodeIdGenerator(),
             lexicographic,
@@ -39,6 +42,7 @@ export class ApiReferenceNavigationConverter {
     private constructor(
         private apiSection: DocsV1Read.ApiSection,
         private api: APIV1Read.ApiDefinition,
+        private pages: Record<string, DocsV1Read.PageContent>,
         private parentSlug: SlugGenerator,
         idgen: NodeIdGenerator,
         private lexicographic: boolean = false,
@@ -54,12 +58,13 @@ export class ApiReferenceNavigationConverter {
                 this.apiSection.navigation?.summaryPageId != null
                     ? FernNavigation.PageId(this.apiSection.navigation.summaryPageId)
                     : undefined;
+            const noindex = getNoIndexFromFrontmatter(this.pages, overviewPageId);
 
             const slug = this.parentSlug.apply(this.apiSection);
             const children = this.convertChildren(slug);
             const changelog =
                 this.apiSection.changelog != null
-                    ? ChangelogNavigationConverter.convert(this.apiSection.changelog, slug, this.#idgen)
+                    ? ChangelogNavigationConverter.convert(this.apiSection.changelog, slug, this.#idgen, this.pages)
                     : undefined;
             const pointsTo = followRedirects(children) ?? changelog?.slug;
             return {
@@ -68,6 +73,7 @@ export class ApiReferenceNavigationConverter {
                 title: this.apiSection.title,
                 apiDefinitionId: FernNavigation.ApiDefinitionId(this.apiSection.api),
                 overviewPageId,
+                noindex,
                 disableLongScrolling: this.apiSection.longScrolling === false ? true : undefined,
                 slug: slug.get(),
                 icon: this.apiSection.icon,
@@ -218,6 +224,7 @@ export class ApiReferenceNavigationConverter {
                     icon: undefined,
                     hidden: undefined,
                     overviewPageId: undefined,
+                    noindex: undefined,
                     availability: undefined,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo,
@@ -273,15 +280,19 @@ export class ApiReferenceNavigationConverter {
             visitDiscriminatedUnion(item, "type")._visit({
                 page: (page) => {
                     children.push(
-                        this.#idgen.with(page.urlSlug, (id) => ({
-                            id,
-                            type: "page",
-                            title: page.title,
-                            pageId: FernNavigation.PageId(page.id),
-                            slug: parentSlug.apply(page).get(),
-                            icon: page.icon,
-                            hidden: page.hidden,
-                        })),
+                        this.#idgen.with(page.urlSlug, (id) => {
+                            const pageId = FernNavigation.PageId(page.id);
+                            return {
+                                id,
+                                type: "page",
+                                title: page.title,
+                                pageId,
+                                noindex: getNoIndexFromFrontmatter(this.pages, pageId),
+                                slug: parentSlug.apply(page).get(),
+                                icon: page.icon,
+                                hidden: page.hidden,
+                            };
+                        }),
                     );
                 },
                 endpointId: (oldEndpointId) => {
@@ -327,6 +338,8 @@ export class ApiReferenceNavigationConverter {
                     const slug = parentSlug.apply(subpackage);
                     this.#idgen.with(subpackageId, (id) => {
                         const convertedItems = this.convertApiNavigationItems(items, slug, subpackageId);
+                        const overviewPageId = summaryPageId != null ? FernNavigation.PageId(summaryPageId) : undefined;
+                        const noindex = getNoIndexFromFrontmatter(this.pages, overviewPageId);
                         children.push({
                             id,
                             type: "apiPackage",
@@ -335,7 +348,8 @@ export class ApiReferenceNavigationConverter {
                             slug: slug.get(),
                             icon: undefined,
                             hidden: undefined,
-                            overviewPageId: summaryPageId != null ? FernNavigation.PageId(summaryPageId) : undefined,
+                            overviewPageId,
+                            noindex,
                             availability: undefined,
                             apiDefinitionId: this.apiDefinitionId,
                             pointsTo: followRedirects(convertedItems),

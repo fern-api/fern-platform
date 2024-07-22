@@ -22,7 +22,7 @@ export class SearchSlugsCorrectRule implements Rule {
 
         const node = FernNavigation.utils.convertLoadDocsForUrlResponse(getDocsForUrlResponse.body);
         const slugCollector = FernNavigation.NodeCollector.collect(node);
-        const slugs = new Set(slugCollector.getPageSlugs());
+        const slugs = new Set(slugCollector.getIndexablePageSlugs());
 
         const searchInfo = getDocsForUrlResponse.body.definition.search;
 

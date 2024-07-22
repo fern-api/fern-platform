@@ -820,6 +820,9 @@ importers:
       formdata-node:
         specifier: ^6.0.3
         version: 6.0.3
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
       js-base64:
         specifier: 3.7.7
         version: 3.7.7
@@ -20840,6 +20843,7 @@ packages:
       chalk: 3.0.0
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
