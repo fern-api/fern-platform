@@ -6,7 +6,6 @@ import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { FernNavigation } from "../generated";
 import { followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
-import { getNoIndexFromFrontmatter } from "../utils/getNoIndexFromFrontmatter";
 import { isSubpackage } from "../utils/isSubpackage";
 import { stringifyEndpointPathParts } from "../utils/stringifyEndpointPathParts";
 import { ChangelogNavigationConverter } from "./ChangelogConverter";
@@ -17,7 +16,7 @@ export class ApiReferenceNavigationConverter {
     public static convert(
         apiSection: DocsV1Read.ApiSection,
         api: APIV1Read.ApiDefinition,
-        pages: Record<string, DocsV1Read.PageContent>,
+        noindexMap: Record<FernNavigation.PageId, boolean>,
         parentSlug: SlugGenerator,
         idgen?: NodeIdGenerator,
         lexicographic?: boolean,
@@ -25,7 +24,7 @@ export class ApiReferenceNavigationConverter {
         return new ApiReferenceNavigationConverter(
             apiSection,
             api,
-            pages,
+            noindexMap,
             parentSlug,
             idgen ?? new NodeIdGenerator(),
             lexicographic,
@@ -42,7 +41,7 @@ export class ApiReferenceNavigationConverter {
     private constructor(
         private apiSection: DocsV1Read.ApiSection,
         private api: APIV1Read.ApiDefinition,
-        private pages: Record<string, DocsV1Read.PageContent>,
+        private noindexMap: Record<FernNavigation.PageId, boolean>,
         private parentSlug: SlugGenerator,
         idgen: NodeIdGenerator,
         private lexicographic: boolean = false,
@@ -58,13 +57,18 @@ export class ApiReferenceNavigationConverter {
                 this.apiSection.navigation?.summaryPageId != null
                     ? FernNavigation.PageId(this.apiSection.navigation.summaryPageId)
                     : undefined;
-            const noindex = getNoIndexFromFrontmatter(this.pages, overviewPageId);
+            const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
 
             const slug = this.parentSlug.apply(this.apiSection);
             const children = this.convertChildren(slug);
             const changelog =
                 this.apiSection.changelog != null
-                    ? ChangelogNavigationConverter.convert(this.apiSection.changelog, slug, this.#idgen, this.pages)
+                    ? ChangelogNavigationConverter.convert(
+                          this.apiSection.changelog,
+                          this.noindexMap,
+                          slug,
+                          this.#idgen,
+                      )
                     : undefined;
             const pointsTo = followRedirects(children) ?? changelog?.slug;
             return {
@@ -282,12 +286,13 @@ export class ApiReferenceNavigationConverter {
                     children.push(
                         this.#idgen.with(page.urlSlug, (id) => {
                             const pageId = FernNavigation.PageId(page.id);
+                            const noindex = this.noindexMap[pageId];
                             return {
                                 id,
                                 type: "page",
                                 title: page.title,
                                 pageId,
-                                noindex: getNoIndexFromFrontmatter(this.pages, pageId),
+                                noindex,
                                 slug: parentSlug.apply(page).get(),
                                 icon: page.icon,
                                 hidden: page.hidden,
@@ -339,7 +344,7 @@ export class ApiReferenceNavigationConverter {
                     this.#idgen.with(subpackageId, (id) => {
                         const convertedItems = this.convertApiNavigationItems(items, slug, subpackageId);
                         const overviewPageId = summaryPageId != null ? FernNavigation.PageId(summaryPageId) : undefined;
-                        const noindex = getNoIndexFromFrontmatter(this.pages, overviewPageId);
+                        const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
                         children.push({
                             id,
                             type: "apiPackage",

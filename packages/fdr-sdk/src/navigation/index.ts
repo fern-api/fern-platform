@@ -6,10 +6,6 @@ import { NavigationConfigConverter } from "./converters/NavigationConfigConverte
 import { NodeIdGenerator } from "./converters/NodeIdGenerator";
 import { SlugGenerator } from "./converters/SlugGenerator";
 
-const convert = NavigationConfigConverter.convert;
-const collectSlugs = NodeCollector.collect;
-const createApiHolder = ApiDefinitionHolder.create;
-
 export * from "./ApiDefinitionHolder";
 export * from "./generated/api";
 export * from "./types";
@@ -22,7 +18,4 @@ export {
     NodeCollector,
     NodeIdGenerator,
     SlugGenerator,
-    collectSlugs,
-    convert,
-    createApiHolder,
 };

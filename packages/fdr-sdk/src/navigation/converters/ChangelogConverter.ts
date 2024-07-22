@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { DocsV1Read } from "../../client";
 import { FernNavigation } from "../generated";
-import { getNoIndexFromFrontmatter } from "../utils/getNoIndexFromFrontmatter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { SlugGenerator } from "./SlugGenerator";
 
@@ -11,25 +10,26 @@ dayjs.extend(utc);
 export class ChangelogNavigationConverter {
     public static convert(
         changelog: DocsV1Read.ChangelogSection,
+        noindexMap: Record<FernNavigation.PageId, boolean>,
         slug: SlugGenerator,
         idgen: NodeIdGenerator,
-        pages: Record<string, DocsV1Read.PageContent>,
     ): FernNavigation.ChangelogNode {
-        return new ChangelogNavigationConverter(idgen, pages).convert(changelog, slug);
+        return new ChangelogNavigationConverter(idgen, noindexMap).convert(changelog, slug);
     }
 
     #idgen: NodeIdGenerator;
-    #pages: Record<string, DocsV1Read.PageContent>;
-    private constructor(idgen: NodeIdGenerator, pages: Record<string, DocsV1Read.PageContent>) {
+    private constructor(
+        idgen: NodeIdGenerator,
+        private noindexMap: Record<FernNavigation.PageId, boolean>,
+    ) {
         this.#idgen = idgen;
-        this.#pages = pages;
     }
 
     private convert(changelog: DocsV1Read.ChangelogSection, parentSlug: SlugGenerator): FernNavigation.ChangelogNode {
         return this.#idgen.with("log", (id) => {
             const slug = parentSlug.apply(changelog);
             const overviewPageId = changelog.pageId != null ? FernNavigation.PageId(changelog.pageId) : undefined;
-            const noindex = getNoIndexFromFrontmatter(this.#pages, overviewPageId);
+            const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
             return {
                 id,
                 type: "changelog",
@@ -120,7 +120,7 @@ export class ChangelogNavigationConverter {
         const date = dayjs.utc(item.date);
         return this.#idgen.with(date.format("YYYY-M-D"), (id) => {
             const pageId = FernNavigation.PageId(item.pageId);
-            const noindex = getNoIndexFromFrontmatter(this.#pages, pageId);
+            const noindex = this.noindexMap[pageId];
             return {
                 id,
                 type: "changelogEntry",
