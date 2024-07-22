@@ -1,8 +1,9 @@
 import { useAtomValue } from "jotai";
 import { ReactElement, memo } from "react";
-import { HAS_HORIZONTAL_TABS } from "../../atoms";
+import { HAS_HORIZONTAL_TABS, SEARCHBAR_PLACEMENT_ATOM } from "../../atoms";
 import { Header } from "../../docs/Header";
 import { HeaderTabs } from "../../docs/HeaderTabs";
+import { SidebarSearchBar } from "../../sidebar/SidebarSearchBar";
 
 interface HeaderContainerProps {
     className?: string;
@@ -10,6 +11,7 @@ interface HeaderContainerProps {
 
 export const HeaderContainer = memo(function HeaderContainer({ className }: HeaderContainerProps): ReactElement {
     const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
+    const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER_TABS";
 
     return (
         <header id="fern-header" className={className}>
@@ -20,6 +22,8 @@ export const HeaderContainer = memo(function HeaderContainer({ className }: Head
                 {showHeaderTabs && (
                     <nav aria-label="tabs" className="fern-header-tabs">
                         <HeaderTabs />
+
+                        {showSearchBar && <SidebarSearchBar className="w-96 shrink" />}
                     </nav>
                 )}
             </div>
