@@ -34,6 +34,7 @@ service:
       errors:
         - InvalidDomainError
         - InvalidCustomDomainError
+        - FernTokenForbiddenError
         - rootCommons.DomainBelongsToAnotherOrgError
 
     startDocsPreviewRegister:
@@ -53,6 +54,7 @@ service:
       response: StartDocsPreviewRegisterResponse
       errors:
         - InvalidDomainError
+        - FernTokenForbiddenError
 
     finishDocsRegister:
       auth: true
@@ -137,3 +139,6 @@ errors:
   ReindexNotAllowedError:
     status-code: 403
     docs: Reindexing is not allowed for this domain.
+
+  FernTokenForbiddenError:
+    status-code: 403
