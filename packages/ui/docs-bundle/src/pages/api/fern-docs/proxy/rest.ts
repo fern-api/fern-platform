@@ -156,7 +156,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         const responseHeaders = response.headers;
 
-        res.status(200).json({
+        return res.status(200).json({
             response: {
                 headers: Object.fromEntries(responseHeaders.entries()),
                 ok: response.ok,
