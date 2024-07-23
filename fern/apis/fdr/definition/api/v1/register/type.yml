@@ -24,7 +24,7 @@ types:
 
   TypeReference:
     union:
-      id: TypeId
+      id: TypeReferenceId
       primitive: PrimitiveType
       optional: OptionalType
       list: ListType
@@ -32,6 +32,15 @@ types:
       map: MapType
       literal: LiteralType
       unknown: {}
+
+  TypeReferenceId:
+    properties:
+      value: TypeId
+      default: optional<TypeReferenceIdDefault>
+
+  TypeReferenceIdDefault:
+    union:
+      enum: string
 
   ObjectType:
     properties:
