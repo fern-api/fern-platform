@@ -1,7 +1,10 @@
 import { assertNever } from "@fern-ui/core-utils";
 import type { ProxyRequest } from "@fern-ui/ui";
-import { ProxyRequestSchema, unknownToString } from "@fern-ui/ui";
+import { ProxyRequestSchema } from "@fern-ui/ui";
 import type { NextApiRequest, NextApiResponse } from "next/types";
+import fetch, { Headers, type BodyInit } from "node-fetch";
+import { buildFormData } from "../../../../utils/buildFormData";
+import { resolveSerializableFile } from "../../../../utils/resolveSerializableFile";
 
 /**
  * Note: this API route must be deployed as an node.js serverless function because
@@ -16,101 +19,25 @@ export const config = {
     maxDuration: 60 * 5, // 5 minutes
 };
 
-async function dataURLtoBlob(dataUrl: string): Promise<Blob> {
-    if (dataUrl.startsWith("http:") || dataUrl.startsWith("https:")) {
-        const response = await fetch(dataUrl);
-        return await response.blob();
-    }
-
-    const [header, base64String] = dataUrl.split(",");
-    if (header == null || base64String == null) {
-        throw new Error("Invalid data URL");
-    }
-
-    const mime = header.match(/:(.*?);/)?.[1];
-    const bstr = atob(base64String);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new Blob([u8arr], { type: mime });
-}
-
-export async function buildRequestBody(body: ProxyRequest.SerializableBody | undefined): Promise<BodyInit | undefined> {
+export async function buildRequestBody(
+    body: ProxyRequest.SerializableBody | undefined,
+): Promise<[mime: string | undefined, BodyInit | undefined]> {
     if (body == null) {
-        return undefined;
+        return [undefined, undefined];
     }
 
     switch (body.type) {
         case "json":
-            return JSON.stringify(body.value);
+            return ["application/json", JSON.stringify(body.value)];
         case "form-data": {
-            const formEntries = await Promise.all(
-                Object.entries(body.value).map(async ([key, value]) => {
-                    switch (value.type) {
-                        case "file":
-                            if (value.value != null) {
-                                const base64 = value.value.dataUrl;
-                                const blob = await dataURLtoBlob(base64);
-                                const file = new File([blob], value.value.name, { type: value.value.type });
-                                return [key, file] as const;
-                            }
-                            return [key, null] as const;
-                        case "fileArray": {
-                            const files = await Promise.all(
-                                value.value.map(async (serializedFile) => {
-                                    const base64 = serializedFile.dataUrl;
-                                    const blob = await dataURLtoBlob(base64);
-                                    return new File([blob], serializedFile.name, { type: serializedFile.type });
-                                }),
-                            );
-                            return [key, files] as const;
-                        }
-                        case "json": {
-                            if (value.contentType != null) {
-                                return [
-                                    key,
-                                    new Blob(
-                                        [
-                                            value.contentType.includes("application/json")
-                                                ? JSON.stringify(value.value)
-                                                : unknownToString(value.value),
-                                        ],
-                                        { type: value.contentType },
-                                    ),
-                                ] as const;
-                            }
-                            return [key, JSON.stringify(value.value)] as const;
-                        }
-                        default:
-                            assertNever(value);
-                    }
-                }),
-            );
-
-            const formData = new FormData();
-            formEntries.forEach(([key, value]) => {
-                if (value == null) {
-                    return;
-                }
-                if (Array.isArray(value)) {
-                    value.forEach((file) => formData.append(key, file, file.name));
-                } else {
-                    formData.append(key, value);
-                }
-            });
-            return formData;
+            const form = await buildFormData(body.value);
+            return [undefined, form];
         }
         case "octet-stream": {
             if (body.value == null) {
-                return undefined;
+                return [undefined, undefined];
             }
-            const base64 = body.value.dataUrl;
-            const blob = await dataURLtoBlob(base64);
-            return new File([blob], body.value.name, { type: body.value.type });
+            return resolveSerializableFile(body.value);
         }
         default:
             assertNever(body);
@@ -140,13 +67,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
         const proxyRequest = ProxyRequestSchema.parse(req.body);
-        const requestBody = await buildRequestBody(proxyRequest.body);
+        const [mime, requestBody] = await buildRequestBody(proxyRequest.body);
         const headers = new Headers(proxyRequest.headers);
 
         // omit content-type for multipart/form-data so that fetch can set it automatically with the boundary
         const contentType = headers.get("Content-Type");
         if (contentType != null && contentType.toLowerCase().includes("multipart/form-data")) {
             headers.delete("Content-Type");
+        } else if (mime != null) {
+            headers.set("Content-Type", mime);
         }
 
         const startTime = Date.now();
@@ -164,7 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const endTime = Date.now();
 
         // eslint-disable-next-line no-console
-        console.log("Proxy request to", req.url, "recieved response body after", endTime - startTime, "milliseconds");
+        console.log("Proxy request to", req.url, "received response body after", endTime - startTime, "milliseconds");
 
         try {
             body = JSON.parse(body);
@@ -176,7 +105,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         const responseHeaders = response.headers;
 
-        res.status(200).json({
+        return res.status(200).json({
             response: {
                 headers: Object.fromEntries(responseHeaders.entries()),
                 ok: response.ok,
