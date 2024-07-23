@@ -1,6 +1,7 @@
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 // eslint-disable-next-line import/no-internal-modules
 import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
+import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 import { getXFernHostEdge } from "../../../utils/xFernHost";
 
@@ -22,6 +23,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
         const config = await getSearchConfig(domain);
         return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
     } catch (e) {
+        Sentry.captureException(e);
         return NextResponse.json({ isAvailable: false }, { status: 500 });
     }
 }
