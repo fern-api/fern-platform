@@ -1,11 +1,20 @@
 import { assertNever } from "@fern-ui/core-utils";
-import type { ProxyRequest, ProxyResponse } from "@fern-ui/ui";
-import { unknownToString } from "@fern-ui/ui";
-import { NextResponse, type NextRequest } from "next/server";
+import type { ProxyRequest } from "@fern-ui/ui";
+import { ProxyRequestSchema, unknownToString } from "@fern-ui/ui";
+import type { NextApiRequest, NextApiResponse } from "next/types";
 
-export const runtime = "edge";
-export const dynamic = "force-dynamic";
-export const maxDuration = 60 * 5; // 5 minutes
+/**
+ * Note: this API route must be deployed as an node.js serverless function because
+ * edge functions must return a response within 25 seconds.
+ *
+ * NodeJS serverless functions can have a maximum execution time of 5 minutes.
+ *
+ * TODO: this is kind of expensive to run as a serverless function in vercel. We should consider moving this to cloudflare workers.
+ */
+
+export const config = {
+    maxDuration: 60 * 5, // 5 minutes
+};
 
 async function dataURLtoBlob(dataUrl: string): Promise<Blob> {
     if (dataUrl.startsWith("http:") || dataUrl.startsWith("https:")) {
@@ -108,31 +117,29 @@ export async function buildRequestBody(body: ProxyRequest.SerializableBody | und
     }
 }
 
-export default async function POST(req: NextRequest): Promise<NextResponse<null | ProxyResponse>> {
+export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     if (req.method !== "POST" && req.method !== "OPTIONS") {
-        return new NextResponse(null, { status: 405 });
+        return res.status(405).send(null);
     }
 
-    const origin = req.headers.get("Origin");
+    const origin = req.headers.origin;
     if (origin == null) {
-        return new NextResponse(null, { status: 400 });
+        return res.status(400).send(null);
     }
 
-    const corsHeaders = {
-        "Access-Control-Allow-Origin": origin,
-        "Access-Control-Allow-Methods": "POST",
-        "Access-Control-Allow-Headers": "Content-Type",
-    };
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Methods", "POST");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
     if (req.method === "OPTIONS") {
-        return new NextResponse(null, { status: 204, headers: corsHeaders });
+        return res.status(204).send(null);
     }
 
     // eslint-disable-next-line no-console
     console.log("Starting proxy request to", req.url);
 
     try {
-        const proxyRequest = (await req.json()) as ProxyRequest;
+        const proxyRequest = ProxyRequestSchema.parse(req.body);
         const requestBody = await buildRequestBody(proxyRequest.body);
         const headers = new Headers(proxyRequest.headers);
 
@@ -169,26 +176,23 @@ export default async function POST(req: NextRequest): Promise<NextResponse<null 
         }
         const responseHeaders = response.headers;
 
-        return NextResponse.json<ProxyResponse>(
-            {
-                response: {
-                    headers: Object.fromEntries(responseHeaders.entries()),
-                    ok: response.ok,
-                    redirected: response.redirected,
-                    status: response.status,
-                    statusText: response.statusText,
-                    type: response.type,
-                    url: response.url,
-                    body,
-                },
-                time: endTime - startTime,
-                size: responseHeaders.get("Content-Length"),
+        res.status(200).json({
+            response: {
+                headers: Object.fromEntries(responseHeaders.entries()),
+                ok: response.ok,
+                redirected: response.redirected,
+                status: response.status,
+                statusText: response.statusText,
+                type: response.type,
+                url: response.url,
+                body,
             },
-            { status: 200, headers: corsHeaders },
-        );
+            time: endTime - startTime,
+            size: responseHeaders.get("Content-Length"),
+        });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        return new NextResponse(null, { status: 500, headers: corsHeaders });
+        return res.status(500).send(null);
     }
 }

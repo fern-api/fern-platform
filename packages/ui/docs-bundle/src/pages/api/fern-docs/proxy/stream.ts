@@ -1,9 +1,12 @@
-import { ProxyRequest } from "@fern-ui/ui";
+import { ProxyRequestSchema } from "@fern-ui/ui";
 import { NextRequest, NextResponse } from "next/server";
+
+/**
+ * Note: edge functions must return a response within 25 seconds.
+ */
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
-export const maxDuration = 60 * 5; // 5 minutes
 export const supportsResponseStreaming = true;
 
 export default async function POST(req: NextRequest): Promise<NextResponse<null | Uint8Array>> {
@@ -26,7 +29,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse<null 
         return new NextResponse(null, { status: 204, headers: corsHeaders });
     }
     try {
-        const proxyRequest = (await req.json()) as ProxyRequest;
+        const proxyRequest = ProxyRequestSchema.parse(await req.json());
         const startTime = Date.now();
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
