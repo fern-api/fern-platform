@@ -9,13 +9,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 405 });
     }
 
-    const origin = req.headers.get("Origin");
-    if (origin == null) {
-        return new NextResponse(null, { status: 400 });
-    }
-
     const corsHeaders = new Headers({
-        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET",
         "Access-Control-Allow-Headers": "Content-Type",
     });
