@@ -6,23 +6,35 @@ import * as FernRegistry from "../../../../../../../index";
 import * as core from "../../../../../../../../core";
 
 export type Error =
+    | FernRegistry.docs.v2.write.startDocsRegister.Error.UnauthorizedError
+    | FernRegistry.docs.v2.write.startDocsRegister.Error.UnavailableError
+    | FernRegistry.docs.v2.write.startDocsRegister.Error.UserNotInOrgError
     | FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidDomainError
     | FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidCustomDomainError
-    | FernRegistry.docs.v2.write.startDocsRegister.Error.FernTokenForbiddenError
     | FernRegistry.docs.v2.write.startDocsRegister.Error.DomainBelongsToAnotherOrgError
     | FernRegistry.docs.v2.write.startDocsRegister.Error._Unknown;
 
 export declare namespace Error {
+    interface UnauthorizedError {
+        error: "UnauthorizedError";
+        content: string;
+    }
+
+    interface UnavailableError {
+        error: "UnavailableError";
+        content: string;
+    }
+
+    interface UserNotInOrgError {
+        error: "UserNotInOrgError";
+    }
+
     interface InvalidDomainError {
         error: "InvalidDomainError";
     }
 
     interface InvalidCustomDomainError {
         error: "InvalidCustomDomainError";
-    }
-
-    interface FernTokenForbiddenError {
-        error: "FernTokenForbiddenError";
     }
 
     interface DomainBelongsToAnotherOrgError {
@@ -35,15 +47,37 @@ export declare namespace Error {
     }
 
     interface _Visitor<_Result> {
+        unauthorizedError: (value: string) => _Result;
+        unavailableError: (value: string) => _Result;
+        userNotInOrgError: () => _Result;
         invalidDomainError: () => _Result;
         invalidCustomDomainError: () => _Result;
-        fernTokenForbiddenError: () => _Result;
         domainBelongsToAnotherOrgError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
 
 export const Error = {
+    unauthorizedError: (value: string): FernRegistry.docs.v2.write.startDocsRegister.Error.UnauthorizedError => {
+        return {
+            content: value,
+            error: "UnauthorizedError",
+        };
+    },
+
+    unavailableError: (value: string): FernRegistry.docs.v2.write.startDocsRegister.Error.UnavailableError => {
+        return {
+            content: value,
+            error: "UnavailableError",
+        };
+    },
+
+    userNotInOrgError: (): FernRegistry.docs.v2.write.startDocsRegister.Error.UserNotInOrgError => {
+        return {
+            error: "UserNotInOrgError",
+        };
+    },
+
     invalidDomainError: (): FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidDomainError => {
         return {
             error: "InvalidDomainError",
@@ -53,12 +87,6 @@ export const Error = {
     invalidCustomDomainError: (): FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidCustomDomainError => {
         return {
             error: "InvalidCustomDomainError",
-        };
-    },
-
-    fernTokenForbiddenError: (): FernRegistry.docs.v2.write.startDocsRegister.Error.FernTokenForbiddenError => {
-        return {
-            error: "FernTokenForbiddenError",
         };
     },
 
@@ -81,12 +109,16 @@ export const Error = {
         visitor: FernRegistry.docs.v2.write.startDocsRegister.Error._Visitor<_Result>
     ): _Result => {
         switch (value.error) {
+            case "UnauthorizedError":
+                return visitor.unauthorizedError(value.content);
+            case "UnavailableError":
+                return visitor.unavailableError(value.content);
+            case "UserNotInOrgError":
+                return visitor.userNotInOrgError();
             case "InvalidDomainError":
                 return visitor.invalidDomainError();
             case "InvalidCustomDomainError":
                 return visitor.invalidCustomDomainError();
-            case "FernTokenForbiddenError":
-                return visitor.fernTokenForbiddenError();
             case "DomainBelongsToAnotherOrgError":
                 return visitor.domainBelongsToAnotherOrgError();
             default:

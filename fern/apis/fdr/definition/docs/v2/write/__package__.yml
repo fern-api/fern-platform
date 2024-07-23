@@ -32,9 +32,11 @@ service:
             images: optional<list<ImageFilePath>>
       response: v1DocsWrite.StartDocsRegisterResponse
       errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UnavailableError
+        - rootCommons.UserNotInOrgError
         - InvalidDomainError
         - InvalidCustomDomainError
-        - FernTokenForbiddenError
         - rootCommons.DomainBelongsToAnotherOrgError
 
     startDocsPreviewRegister:
@@ -53,8 +55,10 @@ service:
             images: optional<list<ImageFilePath>>
       response: StartDocsPreviewRegisterResponse
       errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UnavailableError
+        - rootCommons.UserNotInOrgError
         - InvalidDomainError
-        - FernTokenForbiddenError
 
     finishDocsRegister:
       auth: true
