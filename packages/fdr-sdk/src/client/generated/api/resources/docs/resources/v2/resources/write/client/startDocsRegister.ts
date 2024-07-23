@@ -8,6 +8,7 @@ import * as core from "../../../../../../../../core";
 export type Error =
     | FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidDomainError
     | FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidCustomDomainError
+    | FernRegistry.docs.v2.write.startDocsRegister.Error.FernTokenForbiddenError
     | FernRegistry.docs.v2.write.startDocsRegister.Error.DomainBelongsToAnotherOrgError
     | FernRegistry.docs.v2.write.startDocsRegister.Error._Unknown;
 
@@ -18,6 +19,10 @@ export declare namespace Error {
 
     interface InvalidCustomDomainError {
         error: "InvalidCustomDomainError";
+    }
+
+    interface FernTokenForbiddenError {
+        error: "FernTokenForbiddenError";
     }
 
     interface DomainBelongsToAnotherOrgError {
@@ -32,6 +37,7 @@ export declare namespace Error {
     interface _Visitor<_Result> {
         invalidDomainError: () => _Result;
         invalidCustomDomainError: () => _Result;
+        fernTokenForbiddenError: () => _Result;
         domainBelongsToAnotherOrgError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -47,6 +53,12 @@ export const Error = {
     invalidCustomDomainError: (): FernRegistry.docs.v2.write.startDocsRegister.Error.InvalidCustomDomainError => {
         return {
             error: "InvalidCustomDomainError",
+        };
+    },
+
+    fernTokenForbiddenError: (): FernRegistry.docs.v2.write.startDocsRegister.Error.FernTokenForbiddenError => {
+        return {
+            error: "FernTokenForbiddenError",
         };
     },
 
@@ -73,6 +85,8 @@ export const Error = {
                 return visitor.invalidDomainError();
             case "InvalidCustomDomainError":
                 return visitor.invalidCustomDomainError();
+            case "FernTokenForbiddenError":
+                return visitor.fernTokenForbiddenError();
             case "DomainBelongsToAnotherOrgError":
                 return visitor.domainBelongsToAnotherOrgError();
             default:

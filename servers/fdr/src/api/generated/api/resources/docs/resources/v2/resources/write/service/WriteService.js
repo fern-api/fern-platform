@@ -41,6 +41,7 @@ export class WriteService {
                     switch (error.errorName) {
                         case "InvalidDomainError":
                         case "InvalidCustomDomainError":
+                        case "FernTokenForbiddenError":
                         case "DomainBelongsToAnotherOrgError":
                             break;
                         default:
@@ -72,6 +73,7 @@ export class WriteService {
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "InvalidDomainError":
+                        case "FernTokenForbiddenError":
                             break;
                         default:
                             console.warn(`Endpoint 'startDocsPreviewRegister' unexpectedly threw ${error.constructor.name}.` +

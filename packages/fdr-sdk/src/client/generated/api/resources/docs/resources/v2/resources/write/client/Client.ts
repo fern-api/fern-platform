@@ -84,6 +84,7 @@ export class Write {
             switch ((_response.error.body as FernRegistry.docs.v2.write.startDocsRegister.Error)?.error) {
                 case "InvalidDomainError":
                 case "InvalidCustomDomainError":
+                case "FernTokenForbiddenError":
                 case "DomainBelongsToAnotherOrgError":
                     return {
                         ok: false,
@@ -156,6 +157,7 @@ export class Write {
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as FernRegistry.docs.v2.write.startDocsPreviewRegister.Error)?.error) {
                 case "InvalidDomainError":
+                case "FernTokenForbiddenError":
                     return {
                         ok: false,
                         error: _response.error.body as FernRegistry.docs.v2.write.startDocsPreviewRegister.Error,

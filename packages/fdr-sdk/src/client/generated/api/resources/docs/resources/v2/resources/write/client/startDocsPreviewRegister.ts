@@ -7,11 +7,16 @@ import * as core from "../../../../../../../../core";
 
 export type Error =
     | FernRegistry.docs.v2.write.startDocsPreviewRegister.Error.InvalidDomainError
+    | FernRegistry.docs.v2.write.startDocsPreviewRegister.Error.FernTokenForbiddenError
     | FernRegistry.docs.v2.write.startDocsPreviewRegister.Error._Unknown;
 
 export declare namespace Error {
     interface InvalidDomainError {
         error: "InvalidDomainError";
+    }
+
+    interface FernTokenForbiddenError {
+        error: "FernTokenForbiddenError";
     }
 
     interface _Unknown {
@@ -21,6 +26,7 @@ export declare namespace Error {
 
     interface _Visitor<_Result> {
         invalidDomainError: () => _Result;
+        fernTokenForbiddenError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -29,6 +35,12 @@ export const Error = {
     invalidDomainError: (): FernRegistry.docs.v2.write.startDocsPreviewRegister.Error.InvalidDomainError => {
         return {
             error: "InvalidDomainError",
+        };
+    },
+
+    fernTokenForbiddenError: (): FernRegistry.docs.v2.write.startDocsPreviewRegister.Error.FernTokenForbiddenError => {
+        return {
+            error: "FernTokenForbiddenError",
         };
     },
 
@@ -48,6 +60,8 @@ export const Error = {
         switch (value.error) {
             case "InvalidDomainError":
                 return visitor.invalidDomainError();
+            case "FernTokenForbiddenError":
+                return visitor.fernTokenForbiddenError();
             default:
                 return visitor._other(value as any);
         }
