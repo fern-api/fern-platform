@@ -33,7 +33,9 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
         const config = await getSearchConfig(domain, searchInfo);
         return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
     } catch (e) {
-        Sentry.captureException(e);
+        const id = Sentry.captureException(e, { level: "fatal" });
+        // eslint-disable-next-line no-console
+        console.error(`Error fetching search config for domain ${domain}. Sentry event ID: ${id}`, e);
         return NextResponse.json({ isAvailable: false }, { status: 500 });
     }
 }
