@@ -2,7 +2,7 @@ import { FernButton } from "@fern-ui/components";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { memo, useCallback, useEffect, useState } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
+import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapOptional } from "../../resolver/types";
 import { getDefaultValueForType, unknownToString } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
@@ -66,6 +66,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
     const handleRemoveItem = useCallback((idx: number) => {
         setInternalState((oldArray) => [...oldArray.slice(0, idx), ...oldArray.slice(idx + 1)]);
     }, []);
+
     return (
         <>
             {internalState.length > 0 && (
@@ -94,7 +95,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
                                 <span className="t-muted text-xs">{"value"}</span>
                                 <PlaygroundTypeReferenceForm
                                     id={`${id}[${idx}].value`}
-                                    shape={valueShape}
+                                    shape={unwrapOptional(valueShape, types)}
                                     value={item.value}
                                     onChange={(newValue) => handleChangeValue(idx, newValue)}
                                     types={types}
