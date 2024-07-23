@@ -1,10 +1,17 @@
-import { ProxyRequest } from "@fern-ui/ui";
+import { ProxyRequestSchema } from "@fern-ui/ui";
 import { NextRequest, NextResponse } from "next/server";
 import { buildRequestBody } from "./rest";
 
+/**
+ * Note: edge functions must return a response within 25 seconds.
+ *
+ * This function is used to return the response directly from the proxied request, and is useful for file downloads.
+ *
+ * TODO: this should be rewritten as a node.js serverless function to avoid the 25 second limit, since file downloads can take a much longer time.
+ */
+
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
-export const maxDuration = 60 * 5; // 5 minutes
 
 export default async function POST(req: NextRequest): Promise<NextResponse<null | Uint8Array>> {
     if (req.method !== "POST" && req.method !== "OPTIONS") {
@@ -27,7 +34,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse<null 
     }
 
     try {
-        const proxyRequest = (await req.json()) as ProxyRequest;
+        const proxyRequest = ProxyRequestSchema.parse(await req.json());
         const requestBody = await buildRequestBody(proxyRequest.body);
         const headers = new Headers(proxyRequest.headers);
 

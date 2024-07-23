@@ -1,32 +1,42 @@
-export interface SerializableFile {
-    readonly name: string;
-    readonly lastModified: number;
-    readonly size: number;
-    readonly type: string;
-    readonly dataUrl: string; // base64-encoded
-}
+import { z } from "zod";
 
-export declare namespace SerializableFormDataEntryValue {
-    interface SingleFile {
-        type: "file";
-        value: SerializableFile | undefined;
-    }
+export const SerializableFileSchema = z
+    .object({
+        name: z.string(),
+        lastModified: z.number(),
+        size: z.number(),
+        type: z.string(),
+        dataUrl: z.string({ description: "base64-encoded" }),
+    })
+    .readonly();
 
-    interface MultipleFiles {
-        type: "fileArray";
-        value: SerializableFile[];
-    }
+export type SerializableFile = z.infer<typeof SerializableFileSchema>;
 
-    interface Json {
-        type: "json";
-        value: unknown;
+export const SerializableSingleFileSchema = z.object({
+    type: z.literal("file"),
+    value: SerializableFileSchema.optional(),
+});
 
-        // if contentType is not provided, assume stringified JSON. Otherwise, use the provided contentType as a Blob type
-        contentType: string | undefined;
-    }
-}
+export const SerializableMultipleFilesSchema = z.object({
+    type: z.literal("fileArray"),
+    value: z.array(SerializableFileSchema),
+});
 
-export type SerializableFormDataEntryValue =
-    | SerializableFormDataEntryValue.Json
-    | SerializableFormDataEntryValue.SingleFile
-    | SerializableFormDataEntryValue.MultipleFiles;
+export const SerializableJsonSchema = z.object({
+    type: z.literal("json"),
+    value: z.unknown(),
+    contentType: z
+        .string({
+            description:
+                "if contentType is not provided, assume stringified JSON. Otherwise, use the provided contentType as a Blob type",
+        })
+        .optional(),
+});
+
+export const SerializableFormDataEntryValueSchema = z.union([
+    SerializableSingleFileSchema,
+    SerializableMultipleFilesSchema,
+    SerializableJsonSchema,
+]);
+
+export type SerializableFormDataEntryValue = z.infer<typeof SerializableFormDataEntryValueSchema>;
