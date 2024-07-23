@@ -24,7 +24,6 @@
               "title": "Docs",
               "slug": "v4/docs",
               "icon": "light book-open",
-              "hidden": false,
               "child": {
                 "id": "root..v4.uv.docs.docs",
                 "type": "sidebarRoot",
@@ -552,7 +551,6 @@
               "title": "API Reference",
               "slug": "v4/docs/api-reference",
               "icon": "light code",
-              "hidden": false,
               "child": {
                 "id": "root..v4.uv.docs/api-reference.docs/api-reference",
                 "type": "sidebarRoot",

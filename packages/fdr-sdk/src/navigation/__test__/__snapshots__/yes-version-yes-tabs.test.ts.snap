@@ -72,6 +72,7 @@ exports[`getNavigationRoot > yes-version-yes-tabs > gets navigation root for /do
   "hidden": undefined,
   "icon": undefined,
   "id": "root..version-1.uv.tab-1.tab-1.section-2.page-3",
+  "noindex": undefined,
   "pageId": "page-3.md",
   "slug": "docs/api/version-1/section-2",
   "title": "Page 3",

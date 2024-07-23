@@ -14,7 +14,6 @@
           "type": "tab",
           "title": "Documentation",
           "slug": "docs/documentation",
-          "hidden": false,
           "child": {
             "id": "root.uv.documentation.documentation",
             "type": "sidebarRoot",
@@ -698,7 +697,6 @@
           "type": "tab",
           "title": "API Reference",
           "slug": "docs/api-reference",
-          "hidden": false,
           "child": {
             "id": "root.uv.api-reference.api-reference",
             "type": "sidebarRoot",
@@ -1376,7 +1374,6 @@
           "type": "tab",
           "title": "Integrations",
           "slug": "docs/integrations",
-          "hidden": false,
           "child": {
             "id": "root.uv.integrations.integrations",
             "type": "sidebarRoot",
@@ -1449,7 +1446,6 @@
           "type": "tab",
           "title": "Release Notes",
           "slug": "docs/release-notes",
-          "hidden": false,
           "child": {
             "id": "root.uv.release-notes.release-notes",
             "type": "sidebarRoot",

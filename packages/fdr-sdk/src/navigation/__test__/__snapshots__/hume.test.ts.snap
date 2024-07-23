@@ -120,6 +120,7 @@ exports[`getNavigationRoot > hume > gets navigation root for /support 1`] = `
   "hidden": false,
   "icon": undefined,
   "id": "root.uv.docs.docs.introduction.support",
+  "noindex": undefined,
   "pageId": "docs/pages/documentation/introduction/support.mdx",
   "slug": "support",
   "title": "Support",
