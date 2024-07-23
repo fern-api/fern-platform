@@ -22,6 +22,7 @@ export interface FeatureFlags {
     alwaysEnableJavaScriptFetch: boolean;
     scrollInContainerEnabled: boolean;
     useMdxBundler: boolean;
+    isBatchStreamToggleDisabled: boolean;
 }
 
 export interface NavigationProps {

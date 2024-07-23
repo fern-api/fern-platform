@@ -18,7 +18,8 @@ export async function getDocsPageProps(
     docs: DocsV2Read.LoadDocsForUrlResponse,
     slugArray: string[],
 ): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    // HACKHACK: temporarily disable endpoint pairs for cohere in local preview
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs, docs.baseUrl.domain.includes("cohere"));
     const slug = FernNavigation.utils.slugjoin(...slugArray);
     const node = FernNavigation.utils.findNode(root, slug);
 

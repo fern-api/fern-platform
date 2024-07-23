@@ -18,6 +18,7 @@ export class NavigationConfigConverter {
         private apis: Record<string, APIV1Read.ApiDefinition>,
         private basePath: string | undefined,
         private lexicographic?: boolean,
+        private disableEndpointPairs?: boolean,
     ) {}
 
     public static convert(
@@ -27,8 +28,17 @@ export class NavigationConfigConverter {
         apis: Record<string, APIV1Read.ApiDefinition>,
         basePath: string | undefined,
         lexicographic?: boolean,
+        disableEndpointPairs?: boolean,
     ): FernNavigation.RootNode {
-        return new NavigationConfigConverter(title, config, noindexMap, apis, basePath, lexicographic).convert();
+        return new NavigationConfigConverter(
+            title,
+            config,
+            noindexMap,
+            apis,
+            basePath,
+            lexicographic,
+            disableEndpointPairs,
+        ).convert();
     }
 
     #idgen = new NodeIdGenerator();
@@ -278,6 +288,7 @@ export class NavigationConfigConverter {
                     parentSlug,
                     this.#idgen,
                     this.lexicographic,
+                    this.disableEndpointPairs,
                 );
             },
             changelog: (changelog) =>

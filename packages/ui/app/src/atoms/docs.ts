@@ -18,6 +18,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     alwaysEnableJavaScriptFetch: false,
     scrollInContainerEnabled: false,
     useMdxBundler: false,
+    isBatchStreamToggleDisabled: false,
 };
 
 const EMPTY_DOCS_STATE: DocsProps = {

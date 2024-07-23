@@ -20,6 +20,7 @@ export class ApiReferenceNavigationConverter {
         parentSlug: SlugGenerator,
         idgen?: NodeIdGenerator,
         lexicographic?: boolean,
+        disableEndpointPairs?: boolean,
     ) {
         return new ApiReferenceNavigationConverter(
             apiSection,
@@ -28,6 +29,7 @@ export class ApiReferenceNavigationConverter {
             parentSlug,
             idgen ?? new NodeIdGenerator(),
             lexicographic,
+            disableEndpointPairs,
         ).convert();
     }
 
@@ -45,6 +47,7 @@ export class ApiReferenceNavigationConverter {
         private parentSlug: SlugGenerator,
         idgen: NodeIdGenerator,
         private lexicographic: boolean = false,
+        private disableEndpointPairs: boolean = false,
     ) {
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api);
@@ -370,6 +373,11 @@ export class ApiReferenceNavigationConverter {
     }
 
     private mergeEndpointPairs(children: FernNavigation.ApiPackageChild[]): FernNavigation.ApiPackageChild[] {
+        // if batch stream toggle is disabled, return children as is and skip merging
+        if (this.disableEndpointPairs) {
+            return children;
+        }
+
         const toRet: FernNavigation.ApiPackageChild[] = [];
 
         const methodAndPathToEndpointNode = new Map<string, FernNavigation.EndpointNode>();

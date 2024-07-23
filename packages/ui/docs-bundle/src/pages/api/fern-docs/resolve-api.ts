@@ -51,9 +51,13 @@ const resolveApiHandler: NextApiHandler = async (
         }
 
         const docs = docsResponse.body;
-        const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docsResponse.body);
-
         const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
+
+        const root = FernNavigation.utils.convertLoadDocsForUrlResponse(
+            docsResponse.body,
+            featureFlags.isBatchStreamToggleDisabled,
+        );
+
         setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
