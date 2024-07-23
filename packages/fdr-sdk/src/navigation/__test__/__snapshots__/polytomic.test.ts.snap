@@ -864,6 +864,7 @@ exports[`getNavigationRoot > polytomic > gets navigation root for /2024-02-08/gu
   "hidden": false,
   "icon": undefined,
   "id": "root..2024-02-08.uv.guides.guides.getting-started.introduction",
+  "noindex": undefined,
   "pageId": "docs/2024-02-08/pages/getting-started/introduction.mdx",
   "slug": "2024-02-08/guides/introduction",
   "title": "Introduction",

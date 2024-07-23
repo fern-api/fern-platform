@@ -142,16 +142,18 @@ types:
       child: SidebarRootNode
 
   PageNode:
-    extends: WithNodeMetadata
+    extends:
+      - WithNodeMetadata
+      - WithPage
     properties:
       type: literal<"page">
-      pageId: PageId
 
   LandingPageNode:
-    extends: WithNodeMetadata
+    extends:
+      - WithNodeMetadata
+      - WithPage
     properties:
       type: literal<"landingPage">
-      pageId: PageId
 
   SectionNode:
     extends:
@@ -186,10 +188,11 @@ types:
       children: list<ChangelogEntryNode>
 
   ChangelogEntryNode:
-    extends: WithNodeMetadata
+    extends:
+      - WithNodeMetadata
+      - WithPage
     properties:
       type: literal<"changelogEntry">
-      pageId: PageId
       date: date
 
   ApiReferenceNode:
@@ -259,9 +262,15 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
 
+  WithPage:
+    properties:
+      pageId: PageId
+      noindex: optional<boolean>
+
   WithOverviewPage:
     properties:
       overviewPageId: optional<PageId>
+      noindex: optional<boolean>
 
   WithApiDefinitionId:
     properties:

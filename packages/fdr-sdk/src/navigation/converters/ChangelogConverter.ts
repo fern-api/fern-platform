@@ -10,25 +10,32 @@ dayjs.extend(utc);
 export class ChangelogNavigationConverter {
     public static convert(
         changelog: DocsV1Read.ChangelogSection,
+        noindexMap: Record<FernNavigation.PageId, boolean>,
         slug: SlugGenerator,
         idgen: NodeIdGenerator,
     ): FernNavigation.ChangelogNode {
-        return new ChangelogNavigationConverter(idgen).convert(changelog, slug);
+        return new ChangelogNavigationConverter(idgen, noindexMap).convert(changelog, slug);
     }
 
     #idgen: NodeIdGenerator;
-    private constructor(idgen: NodeIdGenerator) {
+    private constructor(
+        idgen: NodeIdGenerator,
+        private noindexMap: Record<FernNavigation.PageId, boolean>,
+    ) {
         this.#idgen = idgen;
     }
 
     private convert(changelog: DocsV1Read.ChangelogSection, parentSlug: SlugGenerator): FernNavigation.ChangelogNode {
         return this.#idgen.with("log", (id) => {
             const slug = parentSlug.apply(changelog);
+            const overviewPageId = changelog.pageId != null ? FernNavigation.PageId(changelog.pageId) : undefined;
+            const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
             return {
                 id,
                 type: "changelog",
                 title: changelog.title ?? "Changelog",
-                overviewPageId: changelog.pageId != null ? FernNavigation.PageId(changelog.pageId) : undefined,
+                overviewPageId,
+                noindex,
                 slug: slug.get(),
                 icon: changelog.icon,
                 hidden: changelog.hidden,
@@ -112,12 +119,15 @@ export class ChangelogNavigationConverter {
     ): FernNavigation.ChangelogEntryNode {
         const date = dayjs.utc(item.date);
         return this.#idgen.with(date.format("YYYY-M-D"), (id) => {
+            const pageId = FernNavigation.PageId(item.pageId);
+            const noindex = this.noindexMap[pageId];
             return {
                 id,
                 type: "changelogEntry",
                 title: date.format("MMMM D, YYYY"),
                 date: item.date,
-                pageId: FernNavigation.PageId(item.pageId),
+                pageId,
+                noindex,
                 slug: parentSlug.append(date.format("YYYY/M/D")).get(),
                 icon: undefined,
                 hidden: undefined,

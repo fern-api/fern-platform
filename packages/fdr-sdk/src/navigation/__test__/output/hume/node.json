@@ -15,7 +15,6 @@
           "title": "Documentation",
           "slug": "docs",
           "icon": "fa-solid fa-home",
-          "hidden": false,
           "child": {
             "id": "root.uv.docs.docs",
             "type": "sidebarRoot",
@@ -291,7 +290,6 @@
           "title": "API Reference",
           "slug": "reference",
           "icon": "fa-solid fa-file-contract",
-          "hidden": false,
           "child": {
             "id": "root.uv.reference.reference",
             "type": "sidebarRoot",
@@ -1091,7 +1089,6 @@
           "title": "Changelog",
           "slug": "changelog",
           "icon": "fa-regular fa-clock",
-          "hidden": false,
           "child": {
             "id": "root.uv.changelog.changelog",
             "type": "sidebarRoot",

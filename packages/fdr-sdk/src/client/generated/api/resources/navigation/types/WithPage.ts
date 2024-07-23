@@ -4,7 +4,7 @@
 
 import * as FernRegistry from "../../../index";
 
-export interface WithOverviewPage {
-    overviewPageId?: FernRegistry.navigation.PageId;
+export interface WithPage {
+    pageId: FernRegistry.navigation.PageId;
     noindex?: boolean;
 }

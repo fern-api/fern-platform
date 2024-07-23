@@ -18,6 +18,7 @@ describe("getDefaultSeoProps", () => {
                     slug: FernNavigation.Slug("slug"),
                     icon: undefined,
                     hidden: false,
+                    noindex: undefined,
                 },
                 parents: [],
             },

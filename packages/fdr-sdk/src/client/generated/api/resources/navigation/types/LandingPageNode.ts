@@ -4,7 +4,6 @@
 
 import * as FernRegistry from "../../../index";
 
-export interface LandingPageNode extends FernRegistry.navigation.WithNodeMetadata {
+export interface LandingPageNode extends FernRegistry.navigation.WithNodeMetadata, FernRegistry.navigation.WithPage {
     type: "landingPage";
-    pageId: FernRegistry.navigation.PageId;
 }

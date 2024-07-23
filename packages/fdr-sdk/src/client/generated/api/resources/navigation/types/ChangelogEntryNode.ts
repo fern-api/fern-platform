@@ -4,8 +4,7 @@
 
 import * as FernRegistry from "../../../index";
 
-export interface ChangelogEntryNode extends FernRegistry.navigation.WithNodeMetadata {
+export interface ChangelogEntryNode extends FernRegistry.navigation.WithNodeMetadata, FernRegistry.navigation.WithPage {
     type: "changelogEntry";
-    pageId: FernRegistry.navigation.PageId;
     date: string;
 }

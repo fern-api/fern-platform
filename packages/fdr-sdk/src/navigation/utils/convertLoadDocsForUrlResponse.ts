@@ -1,11 +1,21 @@
 import { APIV1Read, DocsV2Read } from "../../client";
 import { mapValues } from "../../utils";
 import { NavigationConfigConverter } from "../converters/NavigationConfigConverter";
+import { FernNavigation } from "../generated";
+import { getNoIndexFromFrontmatter } from "./getNoIndexFromFrontmatter";
 
 export function convertLoadDocsForUrlResponse(response: DocsV2Read.LoadDocsForUrlResponse) {
+    const noindexMap: Record<FernNavigation.PageId, boolean> = {};
+    Object.entries(response.definition.pages).forEach(([pageId, page]) => {
+        const noindex = getNoIndexFromFrontmatter(page.markdown);
+        if (noindex != null) {
+            noindexMap[FernNavigation.PageId(pageId)] = noindex;
+        }
+    });
     return NavigationConfigConverter.convert(
         response.definition.config.title,
         response.definition.config.navigation,
+        noindexMap,
         hackReorderApis(response.definition.apis, response.baseUrl.domain),
         response.baseUrl.basePath,
         isLexicographicSortEnabled(response.baseUrl.domain),

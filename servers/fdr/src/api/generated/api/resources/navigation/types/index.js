@@ -38,6 +38,7 @@ export * from "./WebhookNode";
 export * from "./ApiPackageNode";
 export * from "./WithNodeId";
 export * from "./WithNodeMetadata";
+export * from "./WithPage";
 export * from "./WithOverviewPage";
 export * from "./WithApiDefinitionId";
 export * from "./WithRedirect";

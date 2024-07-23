@@ -4,8 +4,7 @@
 
 import * as FernNavigation from "../index";
 
-export interface ChangelogEntryNode extends FernNavigation.WithNodeMetadata {
+export interface ChangelogEntryNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithPage {
     type: "changelogEntry";
-    pageId: FernNavigation.PageId;
     date: string;
 }
