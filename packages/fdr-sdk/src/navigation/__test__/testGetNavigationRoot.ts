@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { DocsV2Read } from "../../client";
-import { convertLoadDocsForUrlResponse, findNode } from "../utils";
+import { convertLoadDocsForUrlResponse, findNode, slugjoin } from "../utils";
 
 export function testGetNavigationRoot(fixtureName: string, slug: string): void {
     // eslint-disable-next-line vitest/valid-title
@@ -13,7 +13,7 @@ export function testGetNavigationRoot(fixtureName: string, slug: string): void {
 
             const fixture = JSON.parse(content) as DocsV2Read.LoadDocsForUrlResponse;
             const node = convertLoadDocsForUrlResponse(fixture);
-            const found = findNode(node, slug.split("/"));
+            const found = findNode(node, slugjoin(slug));
 
             if (found.type === "found") {
                 expect(found.node).toMatchSnapshot();

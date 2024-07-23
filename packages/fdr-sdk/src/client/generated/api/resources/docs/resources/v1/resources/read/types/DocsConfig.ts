@@ -15,7 +15,7 @@ export interface DocsConfig {
     metadata?: FernRegistry.docs.v1.commons.MetadataConfig;
     redirects?: FernRegistry.docs.v1.commons.RedirectConfig[];
     colorsV3?: FernRegistry.docs.v1.read.ColorsConfigV3;
-    layout?: FernRegistry.docs.v1.read.DocsLayoutConfig;
+    layout?: FernRegistry.docs.v1.commons.DocsLayoutConfig;
     typographyV2?: FernRegistry.docs.v1.commons.DocsTypographyConfigV2;
     integrations?: FernRegistry.docs.v1.commons.IntegrationsConfig;
     css?: FernRegistry.docs.v1.commons.CssConfig;

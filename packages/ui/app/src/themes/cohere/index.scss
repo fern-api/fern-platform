@@ -65,7 +65,7 @@
     }
 
     .fern-header-tabs {
-        @apply max-lg:hidden p-3;
+        @apply max-lg:hidden p-3 flex gap-3 justify-between;
 
         .fern-header-tabs-list {
             @apply flex gap-3;

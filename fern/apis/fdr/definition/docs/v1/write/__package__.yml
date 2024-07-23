@@ -100,7 +100,7 @@ types:
 
       # styles
       colorsV3: optional<ColorsConfigV3>
-      layout: optional<DocsLayoutConfig>
+      layout: optional<commons.DocsLayoutConfig>
       typographyV2: optional<commons.DocsTypographyConfigV2>
 
       # integrations
@@ -218,44 +218,6 @@ types:
       - GenerallyAvailable
       - Deprecated
       - Beta
-
-  DocsLayoutConfig:
-    properties:
-      pageWidth: optional<PageWidthSizeConfig>
-      contentWidth: optional<SizeConfig>
-      sidebarWidth: optional<SizeConfig>
-      headerHeight: optional<SizeConfig>
-      searchbarPlacement: optional<SidebarOrHeaderPlacement>
-      tabsPlacement: optional<SidebarOrHeaderPlacement>
-      contentAlignment: optional<ContentAlignment>
-      headerPosition: optional<HeaderPosition>
-      disableHeader: optional<boolean>
-
-  SidebarOrHeaderPlacement:
-    enum:
-      - HEADER
-      - SIDEBAR
-
-  ContentAlignment:
-    enum:
-      - CENTER
-      - LEFT
-
-  HeaderPosition:
-    enum:
-      - FIXED
-      - ABSOLUTE
-
-  PageWidthSizeConfig:
-    union:
-      px: double
-      rem: double
-      full: {}
-
-  SizeConfig:
-    union:
-      px: double
-      rem: double
 
   NavigationItem:
     union:

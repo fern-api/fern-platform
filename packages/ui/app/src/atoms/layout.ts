@@ -110,8 +110,22 @@ export const CONTENT_HEIGHT_ATOM = atom(
 );
 CONTENT_HEIGHT_ATOM.debugLabel = "CONTENT_HEIGHT_ATOM";
 
-export const SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM = atom<boolean>((get) => {
+export const SEARCHBAR_PLACEMENT_ATOM = atom<DocsV1Read.SearchbarPlacement>((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
-    return layout?.disableHeader || layout?.searchbarPlacement !== "HEADER";
+    if (layout?.disableHeader) {
+        return "SIDEBAR";
+    }
+
+    // default to sidebar if searchbarPlacement is not set
+    if (layout?.searchbarPlacement == null) {
+        return "SIDEBAR";
+    }
+
+    // if searchbarPlacement is set to HEADER_TABS and there are no horizontal tabs, default to HEADER
+    if (layout.searchbarPlacement === "HEADER_TABS" && !get(HAS_HORIZONTAL_TABS)) {
+        return "HEADER";
+    }
+
+    return layout.searchbarPlacement;
 });
-SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM.debugLabel = "SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM";
+SEARCHBAR_PLACEMENT_ATOM.debugLabel = "SEARCHBAR_PLACEMENT_ATOM";
