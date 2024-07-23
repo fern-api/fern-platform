@@ -497,7 +497,8 @@ export type ResolvedTypeDefinition =
     | ResolvedDiscriminatedUnionShape
     | ResolvedEnumShape
     | ResolvedAliasShape
-    | (APIV1Read.TypeReference.Unknown & WithMetadata);
+    | (APIV1Read.TypeReference.Unknown & WithMetadata)
+    | (APIV1Read.TypeReference.Literal & WithMetadata);
 
 interface ResolvedEnumShape extends WithMetadata {
     name: string | undefined;

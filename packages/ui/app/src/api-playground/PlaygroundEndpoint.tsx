@@ -248,6 +248,12 @@ async function serializeFormStateBody(
                         const property = shape.properties.find((p) => p.key === key && p.type === "bodyProperty") as
                             | ResolvedFormDataRequestProperty.BodyProperty
                             | undefined;
+
+                        // check if the json value is a string and performa a safe parse operation to check if the json is stringified
+                        if (typeof value.value === "string") {
+                            value.value = safeParse(value.value);
+                        }
+
                         formDataValue[key] = {
                             ...value,
                             // this is a hack to allow the API Playground to send JSON blobs in form data
@@ -286,4 +292,12 @@ async function serializeFile(environment: string, file: File | undefined): Promi
 
 function isFile(value: any): value is File {
     return value instanceof File;
+}
+
+function safeParse(value: string): unknown {
+    try {
+        return JSON.parse(value);
+    } catch {
+        return value;
+    }
 }

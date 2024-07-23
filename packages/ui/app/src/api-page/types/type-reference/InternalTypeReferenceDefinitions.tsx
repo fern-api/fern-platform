@@ -34,7 +34,7 @@ export function hasInternalTypeReference(
         optional: (optional) => hasInternalTypeReference(optional.shape, types),
         map: (map) => hasInternalTypeReference(map.keyShape, types) || hasInternalTypeReference(map.valueShape, types),
         primitive: () => false,
-        literal: () => false,
+        literal: () => true,
         unknown: () => false,
         _other: () => false,
         reference: (reference) =>
@@ -168,7 +168,16 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
             </MapTypeContextProvider>
         ),
         primitive: () => null,
-        literal: () => null,
+        literal: (literal) => (
+            <InternalShapeRenderer
+                typeShape={literal}
+                isCollapsible={false}
+                anchorIdParts={anchorIdParts}
+                route={route}
+                defaultExpandAll={defaultExpandAll}
+                types={types}
+            />
+        ),
         unknown: () => null,
         _other: () => null,
         alias: (alias) => (
