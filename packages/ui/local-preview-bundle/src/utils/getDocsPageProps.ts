@@ -92,7 +92,6 @@ export async function getDocsPageProps(
         navbarLinks: docs.definition.config.navbarLinks ?? [],
         logoHeight: docs.definition.config.logoHeight,
         logoHref: docs.definition.config.logoHref,
-        search: docs.definition.search,
         files: docs.definition.filesV2,
         resolvedPath,
         navigation: {
