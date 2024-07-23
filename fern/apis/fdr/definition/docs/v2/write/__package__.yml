@@ -32,6 +32,9 @@ service:
             images: optional<list<ImageFilePath>>
       response: v1DocsWrite.StartDocsRegisterResponse
       errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UnavailableError
+        - rootCommons.UserNotInOrgError
         - InvalidDomainError
         - InvalidCustomDomainError
         - rootCommons.DomainBelongsToAnotherOrgError
@@ -52,6 +55,9 @@ service:
             images: optional<list<ImageFilePath>>
       response: StartDocsPreviewRegisterResponse
       errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UnavailableError
+        - rootCommons.UserNotInOrgError
         - InvalidDomainError
 
     finishDocsRegister:

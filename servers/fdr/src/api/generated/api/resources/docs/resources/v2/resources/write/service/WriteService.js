@@ -39,6 +39,9 @@ export class WriteService {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
+                        case "UnauthorizedError":
+                        case "UnavailableError":
+                        case "UserNotInOrgError":
                         case "InvalidDomainError":
                         case "InvalidCustomDomainError":
                         case "DomainBelongsToAnotherOrgError":
@@ -71,6 +74,9 @@ export class WriteService {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
+                        case "UnauthorizedError":
+                        case "UnavailableError":
+                        case "UserNotInOrgError":
                         case "InvalidDomainError":
                             break;
                         default:

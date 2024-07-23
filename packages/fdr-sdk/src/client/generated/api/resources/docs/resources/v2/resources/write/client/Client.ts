@@ -82,6 +82,9 @@ export class Write {
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as FernRegistry.docs.v2.write.startDocsRegister.Error)?.error) {
+                case "UnauthorizedError":
+                case "UnavailableError":
+                case "UserNotInOrgError":
                 case "InvalidDomainError":
                 case "InvalidCustomDomainError":
                 case "DomainBelongsToAnotherOrgError":
@@ -155,6 +158,9 @@ export class Write {
 
         if (_response.error.reason === "status-code") {
             switch ((_response.error.body as FernRegistry.docs.v2.write.startDocsPreviewRegister.Error)?.error) {
+                case "UnauthorizedError":
+                case "UnavailableError":
+                case "UserNotInOrgError":
                 case "InvalidDomainError":
                     return {
                         ok: false,
