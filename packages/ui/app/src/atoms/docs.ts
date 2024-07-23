@@ -46,9 +46,6 @@ const EMPTY_DOCS_STATE: DocsProps = {
     navbarLinks: [],
     logoHeight: undefined,
     logoHref: undefined,
-    search: {
-        type: "legacyMultiAlgoliaIndex",
-    },
     files: {},
     resolvedPath: {
         type: "custom-markdown-page",

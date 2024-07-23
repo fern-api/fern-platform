@@ -66,19 +66,7 @@ export interface SearchRequest {
     searchInfo: Algolia.SearchInfo | undefined;
 }
 
-async function getAlgoliaSearchConfig(
-    url: string,
-    searchInfo?: Algolia.SearchInfo,
-): Promise<SearchConfig.Algolia | undefined> {
-    if (searchInfo == null) {
-        const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
-        if (!docs.ok) {
-            return undefined;
-        }
-
-        searchInfo = docs.body.definition.search;
-    }
-
+async function getAlgoliaSearchConfig(searchInfo: Algolia.SearchInfo): Promise<SearchConfig.Algolia | undefined> {
     if (searchInfo.type === "legacyMultiAlgoliaIndex") {
         return undefined;
     }
@@ -138,11 +126,10 @@ async function getAlgoliaSearchConfig(
     return undefined;
 }
 
-export async function getSearchConfig(
-    domain: string,
-    searchInfo?: Algolia.SearchInfo | undefined,
-): Promise<SearchConfig> {
-    const algolia = await getAlgoliaSearchConfig(domain, searchInfo);
+export async function getSearchConfig(domain: string, searchInfo: Algolia.SearchInfo): Promise<SearchConfig> {
+    const algolia = await getAlgoliaSearchConfig(searchInfo);
+
+    // TODO: there shouldn't be a dependency on algolia being available, if inkeep is enabled.
     if (algolia == null) {
         return { isAvailable: false };
     }
