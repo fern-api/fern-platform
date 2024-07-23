@@ -193,7 +193,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                         }
                         onChangeObjectProperty(
                             property.key,
-                            getDefaultValueForType(unwrapOptional(property.valueShape, types), types),
+                            getDefaultValueForType(unwrapOptional(property.valueShape, types), types) || "",
                         );
                     }}
                 >
