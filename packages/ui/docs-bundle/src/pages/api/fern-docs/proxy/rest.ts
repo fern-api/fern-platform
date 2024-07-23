@@ -1,9 +1,10 @@
 import { assertNever } from "@fern-ui/core-utils";
 import type { ProxyRequest } from "@fern-ui/ui";
-import { ProxyRequestSchema, unknownToString } from "@fern-ui/ui";
-import FormData from "form-data";
+import { ProxyRequestSchema } from "@fern-ui/ui";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import fetch, { Headers, type BodyInit } from "node-fetch";
+import { buildFormData } from "../../../../utils/buildFormData";
+import { resolveSerializableFile } from "../../../../utils/resolveSerializableFile";
 
 /**
  * Note: this API route must be deployed as an node.js serverless function because
@@ -18,23 +19,6 @@ export const config = {
     maxDuration: 60 * 5, // 5 minutes
 };
 
-async function parseDataUrl(dataUrl: string): Promise<[mime: string | undefined, ArrayBuffer]> {
-    if (dataUrl.startsWith("http:") || dataUrl.startsWith("https:")) {
-        const response = await fetch(dataUrl);
-        const blob = await response.arrayBuffer();
-        return [response.headers.get("Content-Type") ?? undefined, blob];
-    }
-
-    const [header, base64String] = dataUrl.split(",");
-    if (header == null || base64String == null) {
-        throw new Error("Invalid data URL");
-    }
-
-    const mime = header.match(/:(.*?);/)?.[1];
-    const bstr = Buffer.from(base64String, "base64");
-    return [mime, bstr];
-}
-
 export async function buildRequestBody(
     body: ProxyRequest.SerializableBody | undefined,
 ): Promise<[mime: string | undefined, BodyInit | undefined]> {
@@ -46,49 +30,14 @@ export async function buildRequestBody(
         case "json":
             return ["application/json", JSON.stringify(body.value)];
         case "form-data": {
-            const form = new FormData();
-            for (const [key, value] of Object.entries(body.value)) {
-                switch (value.type) {
-                    case "file":
-                        if (value.value != null) {
-                            const base64 = value.value.dataUrl;
-                            const [contentType, buffer] = await parseDataUrl(base64);
-                            form.append(key, buffer, {
-                                filename: value.value.name,
-                                contentType,
-                            });
-                        }
-                        break;
-                    case "fileArray": {
-                        for (const serializedFile of value.value) {
-                            const base64 = serializedFile.dataUrl;
-                            const [contentType, buffer] = await parseDataUrl(base64);
-                            form.append(key, buffer, {
-                                filename: serializedFile.name,
-                                contentType,
-                            });
-                        }
-                        break;
-                    }
-                    case "json": {
-                        const content = value.contentType?.includes("application/json")
-                            ? JSON.stringify(value.value)
-                            : unknownToString(value.value);
-                        form.append(key, content, { contentType: value.contentType });
-                        break;
-                    }
-                    default:
-                        assertNever(value);
-                }
-            }
+            const form = await buildFormData(body.value);
             return [undefined, form];
         }
         case "octet-stream": {
             if (body.value == null) {
                 return [undefined, undefined];
             }
-            const base64 = body.value.dataUrl;
-            return parseDataUrl(base64);
+            return resolveSerializableFile(body.value);
         }
         default:
             assertNever(body);
