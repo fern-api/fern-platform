@@ -143,6 +143,3 @@ errors:
   ReindexNotAllowedError:
     status-code: 403
     docs: Reindexing is not allowed for this domain.
-
-  FernTokenForbiddenError:
-    status-code: 403
