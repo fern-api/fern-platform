@@ -24,7 +24,6 @@
               "title": "Tab 1",
               "slug": "docs/api/version-1/tab-1",
               "icon": "icon-1",
-              "hidden": false,
               "child": {
                 "id": "root..version-1.uv.tab-1.tab-1",
                 "type": "sidebarRoot",
@@ -111,7 +110,6 @@
               "title": "Tab 2",
               "slug": "docs/api/version-1/tab-2",
               "icon": "icon-2",
-              "hidden": false,
               "child": {
                 "id": "root..version-1.uv.tab-2.tab-2",
                 "type": "sidebarRoot",
@@ -190,7 +188,6 @@
               "title": "Tab 1",
               "slug": "docs/api/version-2/tab-1",
               "icon": "icon-1",
-              "hidden": false,
               "child": {
                 "id": "root..version-2.uv.tab-1.tab-1",
                 "type": "sidebarRoot",
@@ -277,7 +274,6 @@
               "title": "Tab 2",
               "slug": "docs/api/version-2/tab-2",
               "icon": "icon-2",
-              "hidden": false,
               "child": {
                 "id": "root..version-2.uv.tab-2.tab-2",
                 "type": "sidebarRoot",

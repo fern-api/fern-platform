@@ -5,7 +5,7 @@ import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
-import { NAVBAR_LINKS_ATOM, SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM, useColors, useOpenSearchDialog } from "../atoms";
+import { NAVBAR_LINKS_ATOM, SEARCHBAR_PLACEMENT_ATOM, useColors, useOpenSearchDialog } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
 import { useSearchConfig } from "../services/useSearchService";
@@ -32,7 +32,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
     const [searchService] = useSearchConfig();
-    const showSearchBar = !useAtomValue(SHOW_SEARCH_BAR_IN_SIDEBAR_ATOM);
+    const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER";
 
     const navbarLinksSection = (
         <div className="lg-menu">

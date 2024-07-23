@@ -34,7 +34,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
     const slugCollector = NodeCollector.collect(node);
-    const urls = slugCollector.getPageSlugs().map((slug) => urljoin(xFernHost, slug));
+    const urls = slugCollector.getIndexablePageSlugs().map((slug) => urljoin(xFernHost, slug));
 
     const sitemap = getSitemapXml(urls.map((url) => `https://${url}`));
 

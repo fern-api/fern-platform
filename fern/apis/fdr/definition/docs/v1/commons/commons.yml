@@ -21,6 +21,52 @@ types:
       b: integer
       a: optional<double>
 
+  # Docs layout config
+
+  DocsLayoutConfig:
+    properties:
+      pageWidth: optional<PageWidthSizeConfig>
+      contentWidth: optional<SizeConfig>
+      sidebarWidth: optional<SizeConfig>
+      headerHeight: optional<SizeConfig>
+      searchbarPlacement: optional<SearchbarPlacement>
+      tabsPlacement: optional<TabsPlacement>
+      contentAlignment: optional<ContentAlignment>
+      headerPosition: optional<HeaderPosition>
+      disableHeader: optional<boolean>
+
+  SearchbarPlacement:
+    enum:
+      - HEADER
+      - HEADER_TABS
+      - SIDEBAR
+
+  TabsPlacement:
+    enum:
+      - HEADER
+      - SIDEBAR
+
+  ContentAlignment:
+    enum:
+      - CENTER
+      - LEFT
+
+  HeaderPosition:
+    enum:
+      - FIXED
+      - ABSOLUTE
+
+  PageWidthSizeConfig:
+    union:
+      px: double
+      rem: double
+      full: {}
+
+  SizeConfig:
+    union:
+      px: double
+      rem: double
+
   # SEO Config
 
   MetadataConfig:

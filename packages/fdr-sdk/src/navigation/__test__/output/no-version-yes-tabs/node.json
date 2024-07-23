@@ -15,7 +15,6 @@
           "title": "Tab 1",
           "slug": "docs/api/tab-1",
           "icon": "icon-1",
-          "hidden": false,
           "child": {
             "id": "root.uv.tab-1.tab-1",
             "type": "sidebarRoot",
@@ -102,7 +101,6 @@
           "title": "Tab 2",
           "slug": "docs/api/tab-2",
           "icon": "icon-2",
-          "hidden": false,
           "child": {
             "id": "root.uv.tab-2.tab-2",
             "type": "sidebarRoot",

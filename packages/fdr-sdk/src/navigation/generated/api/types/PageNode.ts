@@ -4,7 +4,6 @@
 
 import * as FernNavigation from "../index";
 
-export interface PageNode extends FernNavigation.WithNodeMetadata {
+export interface PageNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithPage {
     type: "page";
-    pageId: FernNavigation.PageId;
 }

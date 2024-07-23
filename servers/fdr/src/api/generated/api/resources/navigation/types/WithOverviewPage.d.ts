@@ -4,4 +4,5 @@
 import * as FernRegistry from "../../..";
 export interface WithOverviewPage {
     overviewPageId?: FernRegistry.navigation.PageId;
+    noindex?: boolean;
 }

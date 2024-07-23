@@ -5,6 +5,7 @@ export * from "./convertLoadDocsForUrlResponse";
 export * from "./findNode";
 export * from "./followRedirect";
 export * from "./getApiReferenceId";
+export * from "./getNoIndexFromFrontmatter";
 export * from "./getPageId";
 export * from "./getUnversionedSlug";
 export * from "./slugjoin";

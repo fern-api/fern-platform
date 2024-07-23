@@ -15,7 +15,6 @@
           "title": "Guides",
           "slug": "docs",
           "icon": "puzzle",
-          "hidden": false,
           "child": {
             "id": "root.uv.docs.docs",
             "type": "sidebarRoot",
@@ -177,7 +176,6 @@
           "title": "Integrations",
           "slug": "docs/integrations",
           "icon": "puzzle",
-          "hidden": false,
           "child": {
             "id": "root.uv.docs/integrations.docs/integrations",
             "type": "sidebarRoot",
@@ -222,7 +220,6 @@
           "title": "API References",
           "slug": "api",
           "icon": "puzzle",
-          "hidden": false,
           "child": {
             "id": "root.uv.api.api",
             "type": "sidebarRoot",

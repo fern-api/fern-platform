@@ -207,7 +207,7 @@ export async function getDynamicDocsPageProps(
 
 async function convertDocsToDocsPageProps({
     docs,
-    slug,
+    slug: slugArray,
     url,
     xFernHost,
     user,
@@ -223,7 +223,8 @@ async function convertDocsToDocsPageProps({
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
 
-    const currentPath = urljoin("/", slug.join("/"));
+    const slug = FernNavigation.utils.slugjoin(...slugArray);
+    const currentPath = urljoin("/", slug);
 
     const redirect = getRedirectForPath(currentPath, docs.baseUrl, docsConfig.redirects);
 

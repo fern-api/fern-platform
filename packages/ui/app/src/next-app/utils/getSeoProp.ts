@@ -57,7 +57,7 @@ export function getDefaultSeoProps(
     }
 
     if (FernNavigation.isApiLeaf(node) && apis[node.apiDefinitionId] != null) {
-        const api = FernNavigation.createApiHolder(apis[node.apiDefinitionId]);
+        const api = FernNavigation.ApiDefinitionHolder.create(apis[node.apiDefinitionId]);
 
         visitDiscriminatedUnion(node)._visit({
             endpoint: ({ endpointId }) => {

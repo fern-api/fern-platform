@@ -16,7 +16,6 @@
           "type": "tab",
           "title": "Guides",
           "slug": "2024-02-08/guides",
-          "hidden": false,
           "child": {
             "id": "root..2024-02-08.uv.guides.guides",
             "type": "sidebarRoot",
@@ -930,7 +929,6 @@
           "type": "tab",
           "title": "API Reference",
           "slug": "2024-02-08/api-reference",
-          "hidden": false,
           "child": {
             "id": "root..2024-02-08.uv.api-reference.api-reference",
             "type": "sidebarRoot",
