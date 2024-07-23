@@ -99,6 +99,7 @@ types:
 
   EnumType:
     properties:
+      default: optional<EnumValue>
       values: list<EnumValue>
 
   EnumValue:
