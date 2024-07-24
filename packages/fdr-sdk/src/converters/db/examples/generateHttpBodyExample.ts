@@ -330,6 +330,10 @@ function generateExamplePrimitive(reference: APIV1Write.PrimitiveType): string |
             return "string";
         case "integer":
             return 0;
+        case "uint":
+            return 0;
+        case "uint64":
+            return 0;
         case "double":
             return 1.0;
         case "boolean":
@@ -344,6 +348,8 @@ function generateExamplePrimitive(reference: APIV1Write.PrimitiveType): string |
             return "SGVsbG8gV29ybGQ=";
         case "date":
             return "2023-01-01";
+        case "bigInteger":
+            return "123456789123456789";
     }
 }
 

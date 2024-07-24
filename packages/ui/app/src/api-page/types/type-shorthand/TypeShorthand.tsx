@@ -52,12 +52,15 @@ function renderDefaultTo(shape: APIV1Read.PrimitiveType): string | undefined {
             return numeral(integer.default).format("0,0");
         },
         double: (double) => double.default?.toString(),
+        uint: () => undefined,
+        uint64: () => undefined,
         boolean: () => undefined,
         long: () => undefined,
         datetime: () => undefined,
         uuid: () => undefined,
         base64: () => undefined,
         date: () => undefined,
+        bigInteger: () => undefined,
         _other: () => undefined,
     });
 }
@@ -79,6 +82,8 @@ export function renderTypeShorthand(
             visitDiscriminatedUnion(primitive.value, "type")._visit({
                 string: () => (plural ? "strings" : maybeWithArticle("a", "string")),
                 integer: () => (plural ? "integers" : maybeWithArticle("an", "integer")),
+                uint: () => (plural ? "uints" : maybeWithArticle("a", "uint")),
+                uint64: () => (plural ? "uint64s" : maybeWithArticle("a", "uint64")),
                 double: () => (plural ? "doubles" : maybeWithArticle("a", "double")),
                 long: () => (plural ? "longs" : maybeWithArticle("a", "long")),
                 boolean: () => (plural ? "booleans" : maybeWithArticle("a", "boolean")),
@@ -86,6 +91,7 @@ export function renderTypeShorthand(
                 uuid: () => (plural ? "UUIDs" : maybeWithArticle("a", "UUID")),
                 base64: () => (plural ? "Base64 strings" : maybeWithArticle("a", "Base64 string")),
                 date: () => (plural ? "dates" : maybeWithArticle("a", "date")),
+                bigInteger: () => (plural ? "big integers" : maybeWithArticle("a", "big integer")),
                 _other: () => "<unknown>",
             }),
 

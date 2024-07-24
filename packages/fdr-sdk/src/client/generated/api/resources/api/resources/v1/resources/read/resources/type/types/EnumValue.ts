@@ -4,6 +4,6 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface EnumValue extends FernRegistry.api.v1.read.WithDescription {
+export interface EnumValue extends FernRegistry.api.v1.read.WithDescription, FernRegistry.api.v1.read.WithAvailability {
     value: string;
 }

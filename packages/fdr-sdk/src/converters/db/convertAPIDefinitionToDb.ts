@@ -585,6 +585,7 @@ function transformShape({
         case "enum":
             return {
                 type: "enum",
+                default: writeShape.default,
                 values: writeShape.values.map((enumValue) => transformEnumValue({ writeShape: enumValue })),
             };
         case "discriminatedUnion":
@@ -628,6 +629,7 @@ function transformEnumValue({
 }): WithoutQuestionMarks<FdrAPI.api.v1.read.EnumValue> {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
+        availability: writeShape.availability,
         description: writeShape.description,
         // htmlDescription,
         value: writeShape.value,
