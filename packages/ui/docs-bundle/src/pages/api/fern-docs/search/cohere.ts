@@ -32,14 +32,3 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
         headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
 }
-
-export function toReadableStream<T>(iterable: AsyncIterable<T>): ReadableStream<T> {
-    return new ReadableStream({
-        async start(controller) {
-            for await (const chunk of iterable) {
-                controller.enqueue(chunk);
-            }
-            controller.close();
-        },
-    });
-}
