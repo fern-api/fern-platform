@@ -51,9 +51,9 @@ async function main() {
                         desiredTaskCount: 12,
                         maxTaskCount: 24,
                         redis: true,
-                        memory: 2048,
+                        memory: 4096,
                         redisClusteringModeEnabled: false,
-                        cpu: 1024,
+                        cpu: 2048,
                         cacheName: "FernDocsCacheTwo",
                     },
                     {
