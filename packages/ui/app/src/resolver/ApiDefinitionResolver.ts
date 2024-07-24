@@ -1,7 +1,7 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
-import { captureSentryError } from "../analytics/sentry";
+import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
 import { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
@@ -85,6 +85,11 @@ export class ApiDefinitionResolver {
                 visitDiscriminatedUnion(item)._visit<Promise<ResolvedPackageItem | undefined>>({
                     endpoint: (endpoint) => this.resolveEndpointDefinition(endpoint),
                     endpointPair: async (endpointPair) => {
+                        if (this.featureFlags.isBatchStreamToggleDisabled) {
+                            captureSentryErrorMessage(
+                                "Batch stream toggle is disabled, but an endpoint pair was found",
+                            );
+                        }
                         const [nonStream, stream] = await Promise.all([
                             this.resolveEndpointDefinition(endpointPair.nonStream),
                             this.resolveEndpointDefinition(endpointPair.stream),

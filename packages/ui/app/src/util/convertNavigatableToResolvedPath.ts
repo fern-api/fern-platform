@@ -151,7 +151,6 @@ export async function convertNavigatableToResolvedPath({
         }
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
         const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
-        // const [prunedApiDefinition] = findAndPruneApiSection(slug, flattenedApiDefinition);
         const apiDefinition = await ApiDefinitionResolver.resolve(
             apiReference,
             holder,

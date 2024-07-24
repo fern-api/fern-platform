@@ -1,4 +1,4 @@
-import { Algolia, DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { NextSeoProps } from "@fern-ui/next-seo";
 import { CustomerAnalytics } from "../analytics/types";
@@ -22,6 +22,7 @@ export interface FeatureFlags {
     alwaysEnableJavaScriptFetch: boolean;
     scrollInContainerEnabled: boolean;
     useMdxBundler: boolean;
+    isBatchStreamToggleDisabled: boolean;
 }
 
 export interface NavigationProps {
@@ -45,7 +46,6 @@ export interface DocsProps {
     navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
-    search: Algolia.SearchInfo;
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
     resolvedPath: ResolvedPath;
     featureFlags: FeatureFlags;

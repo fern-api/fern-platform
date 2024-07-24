@@ -18,6 +18,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     alwaysEnableJavaScriptFetch: false,
     scrollInContainerEnabled: false,
     useMdxBundler: false,
+    isBatchStreamToggleDisabled: false,
 };
 
 const EMPTY_DOCS_STATE: DocsProps = {
@@ -45,9 +46,6 @@ const EMPTY_DOCS_STATE: DocsProps = {
     navbarLinks: [],
     logoHeight: undefined,
     logoHref: undefined,
-    search: {
-        type: "legacyMultiAlgoliaIndex",
-    },
     files: {},
     resolvedPath: {
         type: "custom-markdown-page",

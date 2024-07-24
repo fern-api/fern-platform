@@ -77,7 +77,7 @@ const handler: NextApiHandler = async (
 
         const results: RevalidatePathResult[] = [];
 
-        const batchSize = 250;
+        const batchSize = 100; // reduce concurrency per domain
         for (let i = 0; i < urls.length; i += batchSize) {
             const batch = urls.slice(i, i + batchSize);
             results.push(

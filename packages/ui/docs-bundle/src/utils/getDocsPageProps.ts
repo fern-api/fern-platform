@@ -238,7 +238,8 @@ async function convertDocsToDocsPageProps({
         };
     }
 
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const featureFlags = await getFeatureFlags(xFernHost);
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs, featureFlags.isBatchStreamToggleDisabled);
     const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {
@@ -265,8 +266,6 @@ async function convertDocsToDocsPageProps({
             },
         };
     }
-
-    const featureFlags = await getFeatureFlags(xFernHost);
 
     setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
@@ -314,7 +313,6 @@ async function convertDocsToDocsPageProps({
         logoHref:
             docs.definition.config.logoHref ??
             (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined),
-        search: docs.definition.search,
         files: docs.definition.filesV2,
         resolvedPath,
         navigation: {

@@ -18,7 +18,8 @@ export async function getDocsPageProps(
     docs: DocsV2Read.LoadDocsForUrlResponse,
     slugArray: string[],
 ): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    // HACKHACK: temporarily disable endpoint pairs for cohere in local preview
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs, docs.baseUrl.domain.includes("cohere"));
     const slug = FernNavigation.utils.slugjoin(...slugArray);
     const node = FernNavigation.utils.findNode(root, slug);
 
@@ -92,7 +93,6 @@ export async function getDocsPageProps(
         navbarLinks: docs.definition.config.navbarLinks ?? [],
         logoHeight: docs.definition.config.logoHeight,
         logoHref: docs.definition.config.logoHref,
-        search: docs.definition.search,
         files: docs.definition.filesV2,
         resolvedPath,
         navigation: {

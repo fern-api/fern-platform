@@ -4,7 +4,10 @@ import { NavigationConfigConverter } from "../converters/NavigationConfigConvert
 import { FernNavigation } from "../generated";
 import { getNoIndexFromFrontmatter } from "./getNoIndexFromFrontmatter";
 
-export function convertLoadDocsForUrlResponse(response: DocsV2Read.LoadDocsForUrlResponse) {
+export function convertLoadDocsForUrlResponse(
+    response: DocsV2Read.LoadDocsForUrlResponse,
+    disableEndpointPairs: boolean = false,
+): FernNavigation.RootNode {
     const noindexMap: Record<FernNavigation.PageId, boolean> = {};
     Object.entries(response.definition.pages).forEach(([pageId, page]) => {
         const noindex = getNoIndexFromFrontmatter(page.markdown);
@@ -19,6 +22,7 @@ export function convertLoadDocsForUrlResponse(response: DocsV2Read.LoadDocsForUr
         hackReorderApis(response.definition.apis, response.baseUrl.domain),
         response.baseUrl.basePath,
         isLexicographicSortEnabled(response.baseUrl.domain),
+        disableEndpointPairs,
     );
 }
 
