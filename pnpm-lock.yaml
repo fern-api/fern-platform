@@ -1669,6 +1669,9 @@ importers:
       '@workos-inc/node':
         specifier: ^6.1.0
         version: 6.8.0
+      cohere-ai:
+        specifier: ^7.9.5
+        version: 7.9.5
       cssnano:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.4.31)

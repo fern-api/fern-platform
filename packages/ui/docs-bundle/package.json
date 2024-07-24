@@ -51,6 +51,7 @@
     "@sentry/nextjs": "^7.112.2",
     "@vercel/edge-config": "^1.1.0",
     "@workos-inc/node": "^6.1.0",
+    "cohere-ai": "^7.9.5",
     "cssnano": "^6.0.3",
     "esbuild": "0.20.2",
     "feed": "^4.2.2",
