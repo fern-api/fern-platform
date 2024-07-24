@@ -20,7 +20,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
             });
             for await (const chunk of response) {
                 if (chunk.eventType === "text-generation") {
-                    controller.enqueue(encoder.encode(chunk.text + "\n"));
+                    controller.enqueue(encoder.encode(chunk.text));
                 }
             }
             controller.close();
