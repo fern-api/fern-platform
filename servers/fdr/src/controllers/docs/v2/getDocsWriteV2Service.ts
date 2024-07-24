@@ -52,7 +52,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 req.body.orgId,
             );
             if (!hasOwnership) {
-                throw new FdrAPI.DomainBelongsToAnotherOrgError();
+                throw new FdrAPI.DomainBelongsToAnotherOrgError("Domain belongs to another org");
             }
 
             const docsRegistrationId = uuidv4();

@@ -50,9 +50,11 @@ errors:
 
   UserNotInOrgError:
     status-code: 403
+    type: string
 
   DomainBelongsToAnotherOrgError:
     status-code: 403
+    type: string
 
   InternalError:
     status-code: 500

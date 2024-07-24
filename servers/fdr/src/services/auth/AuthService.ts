@@ -96,7 +96,7 @@ export class AuthServiceImpl implements AuthService {
         }
         const belongsToOrg = response.body;
         if (!belongsToOrg) {
-            throw new FdrAPI.UserNotInOrgError();
+            throw new FdrAPI.UserNotInOrgError("User does not belong to organization");
         }
     }
 

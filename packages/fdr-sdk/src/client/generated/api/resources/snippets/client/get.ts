@@ -25,6 +25,7 @@ export declare namespace Error {
 
     interface UserNotInOrgError {
         error: "UserNotInOrgError";
+        content: string;
     }
 
     interface UnavailableError {
@@ -69,7 +70,7 @@ export declare namespace Error {
 
     interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
-        userNotInOrgError: () => _Result;
+        userNotInOrgError: (value: string) => _Result;
         unavailableError: (value: string) => _Result;
         apiIdRequiredError: (value: string) => _Result;
         orgIdRequiredError: (value: string) => _Result;
@@ -89,8 +90,9 @@ export const Error = {
         };
     },
 
-    userNotInOrgError: (): FernRegistry.snippets.get.Error.UserNotInOrgError => {
+    userNotInOrgError: (value: string): FernRegistry.snippets.get.Error.UserNotInOrgError => {
         return {
+            content: value,
             error: "UserNotInOrgError",
         };
     },
@@ -159,7 +161,7 @@ export const Error = {
             case "UnauthorizedError":
                 return visitor.unauthorizedError(value.content);
             case "UserNotInOrgError":
-                return visitor.userNotInOrgError();
+                return visitor.userNotInOrgError(value.content);
             case "UnavailableError":
                 return visitor.unavailableError(value.content);
             case "ApiIdRequiredError":

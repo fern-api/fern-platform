@@ -18,6 +18,7 @@ export declare namespace Error {
 
     interface UserNotInOrgError {
         error: "UserNotInOrgError";
+        content: string;
     }
 
     interface _Unknown {
@@ -27,7 +28,7 @@ export declare namespace Error {
 
     interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
-        userNotInOrgError: () => _Result;
+        userNotInOrgError: (value: string) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -40,8 +41,9 @@ export const Error = {
         };
     },
 
-    userNotInOrgError: (): FernRegistry.api.v1.register.registerApiDefinition.Error.UserNotInOrgError => {
+    userNotInOrgError: (value: string): FernRegistry.api.v1.register.registerApiDefinition.Error.UserNotInOrgError => {
         return {
+            content: value,
             error: "UserNotInOrgError",
         };
     },
@@ -61,7 +63,7 @@ export const Error = {
             case "UnauthorizedError":
                 return visitor.unauthorizedError(value.content);
             case "UserNotInOrgError":
-                return visitor.userNotInOrgError();
+                return visitor.userNotInOrgError(value.content);
             default:
                 return visitor._other(value as any);
         }

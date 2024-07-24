@@ -27,6 +27,7 @@ export declare namespace Error {
 
     interface UserNotInOrgError {
         error: "UserNotInOrgError";
+        content: string;
     }
 
     interface InvalidDomainError {
@@ -39,6 +40,7 @@ export declare namespace Error {
 
     interface DomainBelongsToAnotherOrgError {
         error: "DomainBelongsToAnotherOrgError";
+        content: string;
     }
 
     interface _Unknown {
@@ -49,10 +51,10 @@ export declare namespace Error {
     interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
         unavailableError: (value: string) => _Result;
-        userNotInOrgError: () => _Result;
+        userNotInOrgError: (value: string) => _Result;
         invalidDomainError: () => _Result;
         invalidCustomDomainError: () => _Result;
-        domainBelongsToAnotherOrgError: () => _Result;
+        domainBelongsToAnotherOrgError: (value: string) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -72,8 +74,9 @@ export const Error = {
         };
     },
 
-    userNotInOrgError: (): FernRegistry.docs.v2.write.startDocsRegister.Error.UserNotInOrgError => {
+    userNotInOrgError: (value: string): FernRegistry.docs.v2.write.startDocsRegister.Error.UserNotInOrgError => {
         return {
+            content: value,
             error: "UserNotInOrgError",
         };
     },
@@ -90,12 +93,14 @@ export const Error = {
         };
     },
 
-    domainBelongsToAnotherOrgError:
-        (): FernRegistry.docs.v2.write.startDocsRegister.Error.DomainBelongsToAnotherOrgError => {
-            return {
-                error: "DomainBelongsToAnotherOrgError",
-            };
-        },
+    domainBelongsToAnotherOrgError: (
+        value: string
+    ): FernRegistry.docs.v2.write.startDocsRegister.Error.DomainBelongsToAnotherOrgError => {
+        return {
+            content: value,
+            error: "DomainBelongsToAnotherOrgError",
+        };
+    },
 
     _unknown: (fetcherError: core.Fetcher.Error): FernRegistry.docs.v2.write.startDocsRegister.Error._Unknown => {
         return {
@@ -114,13 +119,13 @@ export const Error = {
             case "UnavailableError":
                 return visitor.unavailableError(value.content);
             case "UserNotInOrgError":
-                return visitor.userNotInOrgError();
+                return visitor.userNotInOrgError(value.content);
             case "InvalidDomainError":
                 return visitor.invalidDomainError();
             case "InvalidCustomDomainError":
                 return visitor.invalidCustomDomainError();
             case "DomainBelongsToAnotherOrgError":
-                return visitor.domainBelongsToAnotherOrgError();
+                return visitor.domainBelongsToAnotherOrgError(value.content);
             default:
                 return visitor._other(value as any);
         }
