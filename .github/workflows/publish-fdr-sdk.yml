@@ -3,11 +3,6 @@ name: Publish FDR SDKs
 on:
   workflow_call:
   workflow_dispatch:
-    inputs:
-      branch:
-        description: "The branch to release from"
-        required: true
-        default: "main"
 
 env:
   PACKAGE_NAME: "@fern-platform/fdr"
