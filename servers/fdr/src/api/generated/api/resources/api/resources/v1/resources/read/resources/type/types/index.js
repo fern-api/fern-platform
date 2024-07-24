@@ -2,6 +2,8 @@ export * from "./TypeId";
 export * from "./TypeDefinition";
 export * from "./TypeShape";
 export * from "./TypeReference";
+export * from "./TypeReferenceId";
+export * from "./TypeReferenceIdDefault";
 export * from "./ObjectType";
 export * from "./PropertyKey";
 export * from "./ObjectProperty";
