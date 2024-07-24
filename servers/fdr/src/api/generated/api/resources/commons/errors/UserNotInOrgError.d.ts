@@ -4,6 +4,7 @@
 import * as errors from "../../../../errors";
 import express from "express";
 export declare class UserNotInOrgError extends errors.FernRegistryError {
-    constructor();
+    private readonly body;
+    constructor(body: string);
     send(res: express.Response): Promise<void>;
 }

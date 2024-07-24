@@ -20,6 +20,7 @@ export declare namespace Error {
 
     interface UserNotInOrgError {
         error: "UserNotInOrgError";
+        content: string;
     }
 
     interface OrgIdNotFound {
@@ -39,7 +40,7 @@ export declare namespace Error {
 
     interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
-        userNotInOrgError: () => _Result;
+        userNotInOrgError: (value: string) => _Result;
         orgIdNotFound: (value: string) => _Result;
         sdkNotFound: (value: string) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
@@ -54,8 +55,9 @@ export const Error = {
         };
     },
 
-    userNotInOrgError: (): FernRegistry.snippetsFactory.createSnippetsForSdk.Error.UserNotInOrgError => {
+    userNotInOrgError: (value: string): FernRegistry.snippetsFactory.createSnippetsForSdk.Error.UserNotInOrgError => {
         return {
+            content: value,
             error: "UserNotInOrgError",
         };
     },
@@ -89,7 +91,7 @@ export const Error = {
             case "UnauthorizedError":
                 return visitor.unauthorizedError(value.content);
             case "UserNotInOrgError":
-                return visitor.userNotInOrgError();
+                return visitor.userNotInOrgError(value.content);
             case "OrgIdNotFound":
                 return visitor.orgIdNotFound(value.content);
             case "SDKNotFound":

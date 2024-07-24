@@ -25,6 +25,7 @@ export declare namespace Error {
 
     interface UserNotInOrgError {
         error: "UserNotInOrgError";
+        content: string;
     }
 
     interface InvalidDomainError {
@@ -39,7 +40,7 @@ export declare namespace Error {
     interface _Visitor<_Result> {
         unauthorizedError: (value: string) => _Result;
         unavailableError: (value: string) => _Result;
-        userNotInOrgError: () => _Result;
+        userNotInOrgError: (value: string) => _Result;
         invalidDomainError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -60,8 +61,9 @@ export const Error = {
         };
     },
 
-    userNotInOrgError: (): FernRegistry.docs.v2.write.startDocsPreviewRegister.Error.UserNotInOrgError => {
+    userNotInOrgError: (value: string): FernRegistry.docs.v2.write.startDocsPreviewRegister.Error.UserNotInOrgError => {
         return {
+            content: value,
             error: "UserNotInOrgError",
         };
     },
@@ -91,7 +93,7 @@ export const Error = {
             case "UnavailableError":
                 return visitor.unavailableError(value.content);
             case "UserNotInOrgError":
-                return visitor.userNotInOrgError();
+                return visitor.userNotInOrgError(value.content);
             case "InvalidDomainError":
                 return visitor.invalidDomainError();
             default:

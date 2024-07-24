@@ -12,13 +12,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import * as errors from "../../../../errors";
 export class DomainBelongsToAnotherOrgError extends errors.FernRegistryError {
-    constructor() {
+    constructor(body) {
         super("DomainBelongsToAnotherOrgError");
+        this.body = body;
         Object.setPrototypeOf(this, DomainBelongsToAnotherOrgError.prototype);
     }
     send(res) {
         return __awaiter(this, void 0, void 0, function* () {
-            res.sendStatus(403);
+            res.status(403).json(this.body);
         });
     }
 }
