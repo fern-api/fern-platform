@@ -238,10 +238,9 @@ async function convertDocsToDocsPageProps({
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve navigation for ${url}`);
         if (node.redirect != null) {
-            const redirect = node.redirect === "" ? "/" : node.redirect;
             return {
                 redirect: {
-                    destination: encodeURI(urljoin("/", redirect)),
+                    destination: encodeURI(urljoin("/", node.redirect || "/")),
                     permanent: false,
                 },
             };
