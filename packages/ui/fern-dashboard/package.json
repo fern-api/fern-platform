@@ -67,6 +67,5 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
-  },
-  "packageManager": "pnpm@9.4.0"
+  }
 }
