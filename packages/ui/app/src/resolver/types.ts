@@ -750,7 +750,7 @@ export const resolveEnvironment = (
     endpoint: ResolvedWebSocketChannel | ResolvedEndpointDefinition,
     selectedEnvironmentId?: string,
 ): APIV1Read.Environment => {
-    if (!selectedEnvironmentId) {
+    if (!selectedEnvironmentId && typeof window !== "undefined") {
         // TODO: replace this, this is a workaround for now, for functions that need to resolve in the playground,
         // but do not have access to hooks
         selectedEnvironmentId = store.get(SELECTED_ENVIRONMENT_ATOM);
@@ -760,6 +760,17 @@ export const resolveEnvironment = (
         endpoint.defaultEnvironment ??
         endpoint.environments[0]
     );
+};
+
+export const resolveEnvironmentUrlInCodeSnippet = (
+    endpoint: ResolvedEndpointDefinition,
+    requestCodeSnippet: string,
+    selectedEnvironmentId?: string,
+): string => {
+    const urlToReplace = endpoint.environments.find((env) => requestCodeSnippet.includes(env.baseUrl))?.baseUrl;
+    return urlToReplace
+        ? requestCodeSnippet.replace(urlToReplace, resolveEnvironment(endpoint, selectedEnvironmentId).baseUrl)
+        : requestCodeSnippet;
 };
 
 // This hack is no longer needed since it was introduced for Hume's demo only.

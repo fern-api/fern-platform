@@ -21,8 +21,12 @@ export const ALL_ENVIRONMENTS_ATOM = atom((get) => {
 });
 
 // Get or select an environment
-export const SELECTED_ENVIRONMENT_ATOM = atomWithStorage<string | undefined>("selected-environment-atom", undefined);
+export const SELECTED_ENVIRONMENT_ATOM = atomWithStorage<string | undefined>("selected-environment", undefined);
 
 export const useSelectedEnvironmentId = (): string | undefined => {
     return useAtomValue(SELECTED_ENVIRONMENT_ATOM);
+};
+
+export const useAllEnvironmentIds = (): string[] => {
+    return useAtomValue(ALL_ENVIRONMENTS_ATOM);
 };

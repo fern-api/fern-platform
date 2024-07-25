@@ -10,7 +10,7 @@ import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
 declare module "hast" {
     interface ElementData {
         visited?: boolean;
-        meta?: string;
+        meta?: string | null;
         metastring?: string;
     }
 }

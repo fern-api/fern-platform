@@ -15,6 +15,7 @@ import {
     ResolvedExampleEndpointCall,
     ResolvedExampleError,
     resolveEnvironment,
+    resolveEnvironmentUrlInCodeSnippet,
 } from "../../resolver/types";
 import { AudioExample } from "../examples/AudioExample";
 import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
@@ -177,14 +178,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                code={
-                    endpoint.defaultEnvironment
-                        ? requestCodeSnippet.replace(
-                              endpoint.defaultEnvironment?.baseUrl,
-                              resolveEnvironment(endpoint).baseUrl,
-                          )
-                        : requestCodeSnippet
-                }
+                code={resolveEnvironmentUrlInCodeSnippet(endpoint, requestCodeSnippet)}
                 language={selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}

@@ -1,13 +1,12 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { CopyToClipboardButton, FernButton, FernDropdown } from "@fern-ui/components";
+import { CopyToClipboardButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
-import { useAtom } from "jotai";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef } from "react";
 import { parse } from "url";
 import { buildRequestUrl } from "../../api-playground/utils";
-import { ALL_ENVIRONMENTS_ATOM, SELECTED_ENVIRONMENT_ATOM } from "../../atoms/environment";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { ResolvedEndpointPathParts } from "../../resolver/types";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 
@@ -40,10 +39,13 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
             const url = parse(selectedEnvironment.baseUrl);
             if (showEnvironment) {
                 elements.push(
-                    <span key="protocol" className="whitespace-nowrap max-sm:hidden">
-                        <span className="text-faded">{`${url.protocol}//`}</span>
-                        <span className="t-muted">{url.host}</span>
-                    </span>,
+                    showEnvironment && (
+                        <MaybeEnvironmentDropdown
+                            selectedEnvironment={selectedEnvironment}
+                            urlTextStyle="t-muted"
+                            protocolTextStyle="text-faded"
+                        />
+                    ),
                 );
             }
             url.pathname?.split("/").forEach((part, i) => {
@@ -85,8 +87,6 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         return elements;
     };
 
-    const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
-    const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
     return (
         <div ref={ref} className={cn("flex h-8 items-center gap-1 pr-2", className)}>
             <HttpMethodTag method={method} />
@@ -111,21 +111,6 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     )}
                 </CopyToClipboardButton>
             </div>
-            {showEnvironment && (
-                <FernDropdown
-                    key="selectedEnvironment-selector"
-                    options={allEnvironmentIds.map((env) => ({
-                        value: env,
-                        label: env,
-                        type: "value",
-                    }))}
-                    onValueChange={(value) => {
-                        setSelectedEnvironmentId(value);
-                    }}
-                >
-                    <FernButton text={selectedEnvironmentId} size="small" variant="outlined" mono={true} />
-                </FernDropdown>
-            )}
         </div>
     );
 });

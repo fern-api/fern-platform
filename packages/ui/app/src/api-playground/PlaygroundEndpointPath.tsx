@@ -6,7 +6,9 @@ import { Cross1Icon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
+import { useAllEnvironmentIds } from "../atoms/environment";
 import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { MaybeEnvironmentDropdown } from "../components/MaybeEnvironmentDropdown";
 import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../resolver/types";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "./types";
@@ -33,12 +35,29 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
     sendRequestButtonLabel,
     sendRequestIcon,
 }) => {
+    const environmentIds = useAllEnvironmentIds();
+
     return (
         <div className="playground-endpoint">
             <div className="flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg bg-tag-default px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
                 {method != null && <HttpMethodTag method={method} className="playground-endpoint-method" />}
-                <span className="playground-endpoint-url">
-                    <span className="playground-endpoint-baseurl max-sm:hidden">{environment?.baseUrl}</span>
+                <span
+                    className={
+                        environment != null && environmentIds.length > 1
+                            ? "playground-endpoint-url-with-switcher"
+                            : "playground-endpoint-url"
+                    }
+                >
+                    <span className="playground-endpoint-baseurl max-sm:hidden">
+                        {environment != null && (
+                            <MaybeEnvironmentDropdown
+                                selectedEnvironment={environment}
+                                small
+                                urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
+                                protocolTextStyle="playground-endpoint-baseurl max-sm:hidden"
+                            />
+                        )}
+                    </span>
                     {path.map((part, idx) => {
                         return visitDiscriminatedUnion(part, "type")._visit({
                             literal: (literal) => <span key={idx}>{literal.value}</span>,
