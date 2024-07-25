@@ -1,9 +1,9 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { getDefaultSeoProps } from "../getSeoProp";
+import { getSeoProps } from "../getSeoProp";
 
-describe("getDefaultSeoProps", () => {
+describe("getSeoProps", () => {
     it("seo disabled", () => {
-        const props = getDefaultSeoProps(
+        const props = getSeoProps(
             "host",
             { navigation: { items: [] } },
             {},

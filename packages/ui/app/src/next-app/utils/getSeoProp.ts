@@ -7,7 +7,6 @@ import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
 import { stringHasMarkdown } from "../../mdx/common/util";
 import { getFrontmatter } from "../../mdx/frontmatter";
-import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { getFontExtension } from "../../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
 
@@ -18,7 +17,7 @@ function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1
     });
 }
 
-export function getDefaultSeoProps(
+export function getSeoProps(
     domain: string,
     { metadata, title, favicon, typographyV2: typography }: DocsV1Read.DocsConfig,
     pages: Record<string, DocsV1Read.PageContent>,
@@ -193,20 +192,6 @@ export function getDefaultSeoProps(
         seo.nofollow = true;
     }
 
-    return seo;
-}
-
-export function getNextSeoProps(
-    resolvedPath: ResolvedPath,
-    node: FernNavigation.NavigationNodeWithMetadata | undefined,
-): NextSeoProps {
-    const seo: NextSeoProps = {};
-
-    // HACKHACK: sets title on shallow navigation
-    // TODO: find a better way to handle this
-    if (node != null && resolvedPath.slug !== node.slug) {
-        seo.title ??= node.title;
-    }
     return seo;
 }
 

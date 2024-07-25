@@ -7,7 +7,7 @@ import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
     convertNavigatableToResolvedPath,
-    getDefaultSeoProps,
+    getSeoProps,
     getGitHubInfo,
     getGitHubRepo,
     setMdxBundler,
@@ -355,7 +355,7 @@ async function convertDocsToDocsPageProps({
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),
-        seo: getDefaultSeoProps(
+        seo: getSeoProps(
             docs.baseUrl.domain,
             docs.definition.config,
             docs.definition.pages,

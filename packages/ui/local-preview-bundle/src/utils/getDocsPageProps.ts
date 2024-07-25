@@ -6,7 +6,7 @@ import {
     DocsPage,
     FeatureFlags,
     convertNavigatableToResolvedPath,
-    getDefaultSeoProps,
+    getSeoProps,
     getGitHubInfo,
     getGitHubRepo,
 } from "@fern-ui/ui";
@@ -135,7 +135,7 @@ export async function getDocsPageProps(
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),
-        seo: getDefaultSeoProps(
+        seo: getSeoProps(
             docs.baseUrl.domain,
             docs.definition.config,
             docs.definition.pages,
