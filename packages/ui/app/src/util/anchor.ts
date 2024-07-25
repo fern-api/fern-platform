@@ -16,7 +16,7 @@ export function getRouteAndAnchorNode(route: string): HTMLElement | undefined {
         return (
             getRouteNode(route) ??
             getRouteNode(routeWithoutAnchor) ??
-            (anchor != null ? (document.getElementById(anchor) ?? undefined) : undefined)
+            (anchor != null ? document.getElementById(anchor) ?? undefined : undefined)
         );
     }
     return undefined;

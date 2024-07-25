@@ -78,11 +78,11 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
     const proxyEnvironment = urljoin(
-        proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : (basePath ?? ""),
+        proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath ?? "",
         "/api/fern-docs/proxy",
     );
     const uploadEnvironment = urljoin(
-        proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : (basePath ?? ""),
+        proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath ?? "",
         "/api/fern-docs/upload",
     );
 

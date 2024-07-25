@@ -8,7 +8,7 @@ import { ResolvedPath } from "../resolver/ResolvedPath";
 export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogEntryPage }): ReactElement {
     const page = resolvedPath.pages[resolvedPath.node.pageId];
     const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
-    const excerpt = typeof page !== "string" ? (page?.frontmatter.subtitle ?? page.frontmatter.excerpt) : undefined;
+    const excerpt = typeof page !== "string" ? page?.frontmatter.subtitle ?? page.frontmatter.excerpt : undefined;
     return (
         <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
             <div className="w-full min-w-0 pt-8">
