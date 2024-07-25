@@ -1,6 +1,7 @@
 import { DocsPage } from "@fern-ui/ui";
 import { GetServerSideProps } from "next";
 import { ComponentProps } from "react";
+import { convertStaticToServerSidePropsResult } from "../../../utils/convertStaticToServerSidePropsResult";
 import { getDocsPageProps, getDynamicDocsPageProps } from "../../../utils/getDocsPageProps";
 
 export default DocsPage;
@@ -26,7 +27,7 @@ const getDocsServerSideProps: GetServerSideProps<ComponentProps<typeof DocsPage>
     const token = req.cookies.fern_token;
 
     if (token == null) {
-        return getDocsPageProps(xFernHost, slugArray);
+        return convertStaticToServerSidePropsResult(await getDocsPageProps(xFernHost, slugArray));
     } else {
         return getDynamicDocsPageProps(xFernHost, slugArray, req.cookies, res);
     }

@@ -16,7 +16,7 @@ import { resolveSerializableFile } from "../../../../utils/resolveSerializableFi
  */
 
 export const config = {
-    maxDuration: 60 * 5, // 5 minutes
+    maxDuration: 300, // 5 minutes
 };
 
 export async function buildRequestBody(
