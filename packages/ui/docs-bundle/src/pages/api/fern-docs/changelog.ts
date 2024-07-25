@@ -71,8 +71,6 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
                 } catch (e) {
                     // eslint-disable-next-line no-console
                     console.error(e);
-
-                    // this error is logged to Sentry because a changelog entry will be missing from the feed
                     Sentry.captureException(e, { level: "error" });
                 }
             });
@@ -137,9 +135,9 @@ function toFeedItem(
                 item.image = { url: image };
             }
         } catch (e) {
-            // this is not a critical issue—— just log it
             // eslint-disable-next-line no-console
             console.error(e);
+            Sentry.captureException(e, { level: "warning" });
         }
     }
     return item;
