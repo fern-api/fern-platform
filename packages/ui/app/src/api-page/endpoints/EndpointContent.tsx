@@ -301,7 +301,6 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                         path={endpoint.path}
                         method={endpoint.method}
                         selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
-                        environments={endpoint.environments}
                         showEnvironment
                         large
                     />

@@ -15,7 +15,6 @@ export declare namespace EndpointUrl {
         path: ResolvedEndpointPathParts[];
         method: APIV1Read.HttpMethod;
         selectedEnvironment?: APIV1Read.Environment;
-        environments: APIV1Read.Environment[];
         showEnvironment?: boolean;
         large?: boolean;
         className?: string;

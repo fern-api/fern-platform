@@ -155,7 +155,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         path={endpoint.path}
                         method={endpoint.method}
                         selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
-                        environments={endpoint.environments}
                     />
                 }
                 onClick={(e) => {

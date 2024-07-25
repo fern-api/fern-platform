@@ -66,7 +66,6 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
                         path={endpoint.path}
                         method={method}
                         selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
-                        environments={endpoint.environments}
                     />
                 }
                 actions={
