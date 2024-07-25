@@ -4,9 +4,8 @@
 import * as FernRegistry from "../../../../../../../../..";
 export declare type TypeReference = FernRegistry.api.v1.read.TypeReference.Id | FernRegistry.api.v1.read.TypeReference.Primitive | FernRegistry.api.v1.read.TypeReference.Optional | FernRegistry.api.v1.read.TypeReference.List | FernRegistry.api.v1.read.TypeReference.Set | FernRegistry.api.v1.read.TypeReference.Map | FernRegistry.api.v1.read.TypeReference.Literal | FernRegistry.api.v1.read.TypeReference.Unknown;
 export declare namespace TypeReference {
-    interface Id {
+    interface Id extends FernRegistry.api.v1.read.TypeReferenceId {
         type: "id";
-        value: FernRegistry.api.v1.read.TypeId;
     }
     interface Primitive {
         type: "primitive";

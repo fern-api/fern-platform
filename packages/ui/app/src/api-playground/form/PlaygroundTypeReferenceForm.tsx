@@ -162,6 +162,30 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                         />
                     </WithLabel>
                 ),
+                uint: () => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernNumericInput
+                            id={id}
+                            className="w-full"
+                            value={typeof value === "number" ? value : undefined}
+                            onValueChange={onChange}
+                            disallowFloat={true}
+                            disabled={disabled}
+                        />
+                    </WithLabel>
+                ),
+                uint64: () => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernNumericInput
+                            id={id}
+                            className="w-full"
+                            value={typeof value === "number" ? value : undefined}
+                            onValueChange={onChange}
+                            disallowFloat={true}
+                            disabled={disabled}
+                        />
+                    </WithLabel>
+                ),
                 datetime: () => (
                     <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                         <FernInput
@@ -206,6 +230,17 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             className="w-full"
                             placeholder="MM/DD/YYYY"
                             value={typeof value === "string" ? value : undefined}
+                            onValueChange={onChange}
+                            disabled={disabled}
+                        />
+                    </WithLabel>
+                ),
+                bigInteger: () => (
+                    <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
+                        <FernTextarea
+                            id={id}
+                            className="w-full"
+                            value={typeof value === "string" ? value : ""}
                             onValueChange={onChange}
                             disabled={disabled}
                         />

@@ -5,5 +5,6 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface EnumType {
+    default?: string;
     values: FernRegistry.api.v1.register.EnumValue[];
 }

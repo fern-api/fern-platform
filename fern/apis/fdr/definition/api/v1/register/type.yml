@@ -24,7 +24,7 @@ types:
 
   TypeReference:
     union:
-      id: TypeId
+      id: TypeReferenceId
       primitive: PrimitiveType
       optional: OptionalType
       list: ListType
@@ -32,6 +32,15 @@ types:
       map: MapType
       literal: LiteralType
       unknown: {}
+
+  TypeReferenceId:
+    properties:
+      value: TypeId
+      default: optional<TypeReferenceIdDefault>
+
+  TypeReferenceIdDefault:
+    union:
+      enum: string
 
   ObjectType:
     properties:
@@ -52,13 +61,16 @@ types:
     union:
       integer: IntegerType
       double: DoubleType
-      long: {}
       string: StringType
-      boolean: {}
-      datetime: {}
-      uuid: {}
-      base64: {}
-      date: {}
+      long: LongType
+      boolean: BooleanType
+      datetime: DatetimeType
+      uuid: UuidType
+      base64: Base64Type
+      date: DateType
+      bigInteger: BigIntegerType
+      uint: {}
+      uint64: {}
 
   IntegerType:
     properties:
@@ -78,6 +90,36 @@ types:
       minLength: optional<integer>
       maxLength: optional<integer>
       default: optional<string>
+
+  LongType:
+    properties:
+      minimum: optional<long>
+      maximum: optional<long>
+      default: optional<long>
+
+  BooleanType:
+    properties:
+      default: optional<boolean>
+
+  DatetimeType:
+    properties:
+      default: optional<datetime>
+
+  UuidType:
+    properties:
+      default: optional<uuid>
+
+  Base64Type:
+    properties:
+      default: optional<base64>
+
+  DateType:
+    properties:
+      default: optional<date>
+
+  BigIntegerType:
+    properties:
+      default: optional<bigint>
 
   OptionalType:
     properties:
@@ -99,6 +141,7 @@ types:
 
   EnumType:
     properties:
+      default: optional<string>
       values: list<EnumValue>
 
   EnumValue:

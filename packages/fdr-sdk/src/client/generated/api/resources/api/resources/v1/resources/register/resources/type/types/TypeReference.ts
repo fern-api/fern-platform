@@ -15,9 +15,8 @@ export type TypeReference =
     | FernRegistry.api.v1.register.TypeReference.Unknown;
 
 export declare namespace TypeReference {
-    interface Id {
+    interface Id extends FernRegistry.api.v1.register.TypeReferenceId {
         type: "id";
-        value: FernRegistry.api.v1.register.TypeId;
     }
 
     interface Primitive {
