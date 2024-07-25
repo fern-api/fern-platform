@@ -112,17 +112,14 @@ function toFeedItem(
         try {
             let image: string | undefined;
             if (frontmatter.image != null) {
-                // item.image = { url: frontmatter.image };
                 image = frontmatter.image;
             } else if (frontmatter["og:image"] != null) {
                 if (frontmatter["og:image"].type === "url") {
-                    // item.image = { url: frontmatter["og:image"].value };
                     image = frontmatter["og:image"].value;
                 } else if (frontmatter["og:image"].type === "fileId") {
                     const fileId = frontmatter["og:image"].value;
                     const file = files[fileId];
                     if (file != null) {
-                        // item.image = { url: file };
                         image = file;
                     }
                 } else {
