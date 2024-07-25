@@ -46,6 +46,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
     useEffect(() => () => socket.current?.close(), []);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
+    const baseUrl = resolveEnvironment(websocket, selectedEnvironmentId).baseUrl;
 
     const startSession = useCallback(async () => {
         return new Promise<boolean>((resolve) => {
@@ -56,12 +57,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
 
             setError(null);
 
-            const url = buildRequestUrl(
-                resolveEnvironment(websocket, selectedEnvironmentId).baseUrl,
-                websocket.path,
-                formState.pathParameters,
-                formState.queryParameters,
-            );
+            const url = buildRequestUrl(baseUrl, websocket.path, formState.pathParameters, formState.queryParameters);
 
             setConnectedState("opening");
 
@@ -113,7 +109,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
         formState.queryParameters,
         pushMessage,
         websocket.auth,
-        resolveEnvironment(websocket, selectedEnvironmentId).baseUrl,
+        baseUrl,
         websocket.path,
     ]);
 
