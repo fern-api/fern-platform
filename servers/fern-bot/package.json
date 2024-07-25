@@ -17,11 +17,12 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "@fern-api/github": "workspace:*",
     "@aws-sdk/client-s3": "^3.335.0",
     "@fern-api/core-utils": "0.15.0-rc63",
     "@fern-api/fs-utils": "0.15.0-rc63",
+    "@fern-api/github": "workspace:*",
     "@octokit/openapi-types": "^22.1.0",
+    "aws-cli": "^0.0.2",
     "cohere-ai": "^7.9.5",
     "fern-api": "^0.21.0",
     "find-up": "^7.0.0",

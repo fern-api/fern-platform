@@ -2374,6 +2374,9 @@ importers:
       '@octokit/openapi-types':
         specifier: ^22.1.0
         version: 22.2.0
+      aws-cli:
+        specifier: ^0.0.2
+        version: 0.0.2
       cohere-ai:
         specifier: ^7.9.5
         version: 7.11.0(@aws-sdk/client-sso-oidc@3.616.0)
@@ -14457,6 +14460,23 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /aws-cli@0.0.2:
+    resolution: {integrity: sha512-340A6bn3I5p/yc8MGQiWRofW3oUpmZ/k6LIZticzDOKWT4/F+TP54hki9SWmSS6XnvNIVAw4k9oPocq6ya4L1g==}
+    deprecated: Recommend using the official aws cli tools for python
+    hasBin: true
+    dependencies:
+      aws-sdk: 2.0.31
+      operetta: 0.0.5
+    dev: false
+
+  /aws-sdk@2.0.31:
+    resolution: {integrity: sha512-rgmExM3/LjhI95PfjwDs1hks/RYrQ/V3qLybFCzBqr8Y3Hz9Qq3jp+WR1BaWhUckgoVJs/ZE4VSvMKZeNwuFoA==}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      xml2js: 0.2.6
+      xmlbuilder: 0.4.2
+    dev: false
+
   /aws-sdk@2.1663.0:
     resolution: {integrity: sha512-zgXHOw0sBhYcw/yC2YKPLEMNTLnglYLB5UzhAYYShFgOng2NvxkrkuqGFFQ9+haMx2zx6t6CgeqQ7nT0TFUf/g==}
     engines: {node: '>= 10.0.0'}
@@ -20698,6 +20718,7 @@ packages:
       chalk: 3.0.0
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
@@ -22896,6 +22917,11 @@ packages:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
     hasBin: true
     dev: true
+
+  /operetta@0.0.5:
+    resolution: {integrity: sha512-b9E0Z5nvkHf9IQ0q7VaWpDfj/nX/pRAcMBoGh4SLrGhC2gE3BD6GwLc2qp64AsZgEwBe2gqIgBc5fqu/WDL9uQ==}
+    engines: {'0': node >= 0.4.6}
+    dev: false
 
   /optimism@0.18.0:
     resolution: {integrity: sha512-tGn8+REwLRNFnb9WmcY5IfpOqeX2kpaYJ1s6Ae3mn12AeydLkR3j+jSCmVQFoXqU8D41PAJ1RG1rCRNWmNZVmQ==}
@@ -25453,6 +25479,10 @@ packages:
       chokidar: 3.6.0
       immutable: 4.3.7
       source-map-js: 1.2.0
+
+  /sax@0.4.2:
+    resolution: {integrity: sha512-6Zsl4gnHjiTQfrOzsWdc0bHJepF5KJAVuM5fcyEJrqGyszkx2c55IclWP4D692rJrl1w0tExhbvYKjKNZl5wHg==}
+    dev: false
 
   /sax@1.2.1:
     resolution: {integrity: sha512-8I2a3LovHTOpm7NV5yOyO8IHqgVsfK4+UuySrXU8YXkSRX7k6hCV9b3HrkKCr3nMpgj+0bmocaJJWpvp1oc7ZA==}
@@ -28786,12 +28816,23 @@ packages:
     resolution: {integrity: sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg==}
     engines: {node: '>=18'}
 
+  /xml2js@0.2.6:
+    resolution: {integrity: sha512-h+Nzgo0eLwideldZGqSquNtrsuX5zcDREImBa1GSNw9QljlXiFcM3E1kWjLprRjJe2jRuvnVk0j3WgQo9Deoog==}
+    dependencies:
+      sax: 0.4.2
+    dev: false
+
   /xml2js@0.6.2:
     resolution: {integrity: sha512-T4rieHaC1EXcES0Kxxj4JWgaUQHDk+qwHcYOCFHfiwKz7tOVPLq7Hjq9dM1WCMhylqMEfP7hMcOIChvotiZegA==}
     engines: {node: '>=4.0.0'}
     dependencies:
       sax: 1.2.1
       xmlbuilder: 11.0.1
+
+  /xmlbuilder@0.4.2:
+    resolution: {integrity: sha512-h/+ncQQSU/iYycmI2wTN25t7RYN7O2oq9uvI+2+UObi4KcmQh/jUS4N31g5vJttQt7MODsnmBtbcll3YbNyvfw==}
+    engines: {node: '>=0.2.0'}
+    dev: false
 
   /xmlbuilder@11.0.1:
     resolution: {integrity: sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==}
