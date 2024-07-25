@@ -13,10 +13,14 @@ export function getBreadcrumbList(
     parents: FernNavigation.NavigationNode[],
     node: FernNavigation.NavigationNodePage,
 ): JsonLd.BreadcrumbListSchema {
+    let title = node.title;
+
     if (FernNavigation.isPage(node)) {
         const pageId = FernNavigation.utils.getPageId(node);
         if (pageId != null && pages[pageId] != null) {
             const { data: frontmatter } = getFrontmatter(pages[pageId].markdown);
+
+            // if the frontmatter has a jsonld:breadcrumb, use that
             if (frontmatter["jsonld:breadcrumb"] != null) {
                 const breadcrumb = JsonLd.BreadcrumbListSchema.safeParse(frontmatter["jsonld:breadcrumb"]);
                 if (breadcrumb.success) {
@@ -25,6 +29,12 @@ export function getBreadcrumbList(
                     // eslint-disable-next-line no-console
                     console.error("Invalid jsonld:breadcrumb", breadcrumb.error.toString());
                 }
+            }
+
+            // override the title used in the breadcrumb's last item.
+            // for example, if the sidebar's title is "Overview" but the page title is "This API Overview"
+            if (frontmatter.title != null) {
+                title = frontmatter.title;
             }
         }
     }
@@ -48,7 +58,8 @@ export function getBreadcrumbList(
         }
     });
 
-    elements.push(JsonLd.listItem(elements.length + 1, node.title));
+    // the current page is the last item in the breadcrumb
+    elements.push(JsonLd.listItem(elements.length + 1, title, toUrl(domain, node.slug)));
 
     return JsonLd.breadcrumbList(elements);
 }
