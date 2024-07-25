@@ -36,7 +36,7 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
                 >
                     <FernButton
                         text={
-                            <span>
+                            <span key="protocol" className="whitespace-nowrap max-sm:hidden">
                                 <span className={protocolTextStyle}>{`${url && url.protocol}//`}</span>
                                 <span className={urlTextStyle}>{(url && url.host) ?? selectedEnvironmentId}</span>
                             </span>
@@ -47,7 +47,10 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
                     />
                 </FernDropdown>
             ) : (
-                <span className={urlTextStyle}>{(url && url.host) ?? selectedEnvironmentId}</span>
+                <span key="protocol" className="whitespace-nowrap max-sm:hidden">
+                    <span className={protocolTextStyle}>{`${url && url.protocol}//`}</span>
+                    <span className={urlTextStyle}>{(url && url.host) ?? selectedEnvironmentId}</span>
+                </span>
             )}
         </span>
     );
