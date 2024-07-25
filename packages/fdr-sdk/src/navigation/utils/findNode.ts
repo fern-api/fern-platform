@@ -117,7 +117,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         return { type: "redirect", redirect: root.pointsTo };
     }
 
-    const redirect = hasRedirect(found.node) ? found.node.pointsTo : currentVersion?.pointsTo ?? root.pointsTo;
+    const redirect = hasRedirect(found.node) ? found.node.pointsTo : (currentVersion?.pointsTo ?? root.pointsTo);
 
     if (redirect == null || redirect === slug) {
         return { type: "notFound", redirect: undefined };

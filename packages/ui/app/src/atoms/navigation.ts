@@ -7,14 +7,10 @@ import { ResolvedPath } from "../resolver/ResolvedPath";
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 
-export const DOMAIN_ATOM = atom<string>(
-    (get) => get(DOCS_ATOM).baseUrl.domain
-);
+export const DOMAIN_ATOM = atom<string>((get) => get(DOCS_ATOM).baseUrl.domain);
 DOMAIN_ATOM.debugLabel = "DOMAIN_ATOM";
 
-export const BASEPATH_ATOM = atom<string | undefined>(
-    (get) => get(DOCS_ATOM).baseUrl.basePath
-);
+export const BASEPATH_ATOM = atom<string | undefined>((get) => get(DOCS_ATOM).baseUrl.basePath);
 BASEPATH_ATOM.debugLabel = "BASEPATH_ATOM";
 
 export const TABS_ATOM = selectAtom(DOCS_ATOM, (docs): ReadonlyArray<SidebarTab> => docs.navigation.tabs, isEqual);
