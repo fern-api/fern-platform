@@ -1,5 +1,4 @@
 import { useHydrateAtoms } from "jotai/utils";
-import { Redirect } from "next";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
@@ -36,8 +35,3 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
         </>
     );
 }
-
-export type DocsPageResult<Props> =
-    | { type: "props"; props: Props; revalidate?: number | boolean }
-    | { type: "redirect"; redirect: Redirect; revalidate?: number | boolean }
-    | { type: "notFound"; notFound: true; revalidate?: number | boolean };

@@ -103,16 +103,17 @@ export default function LocalPreviewDocs(): ReactElement {
         let isCanceled = false;
         const slug = router.query.slug == null ? [] : (router.query.slug as string[]);
         void getDocsPageProps(docs, slug)
-            .then((result) => {
+            .then(async (result) => {
                 if (isCanceled) {
                     return;
                 }
-                if (result.type === "props") {
-                    setDocsProps(result.props);
-                } else if (result.type === "notFound") {
-                    void router.replace("/");
-                } else if (result.type === "redirect") {
+
+                if ("props" in result) {
+                    setDocsProps(await result.props);
+                } else if ("redirect" in result) {
                     void router.replace(result.redirect.destination);
+                } else if ("notFound" in result) {
+                    void router.replace("/");
                 }
             })
             .catch((error) => {

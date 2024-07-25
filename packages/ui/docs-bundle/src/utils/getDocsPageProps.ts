@@ -6,7 +6,6 @@ import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
-    DocsPageResult,
     convertNavigatableToResolvedPath,
     getDefaultSeoProps,
     getGitHubInfo,
@@ -15,7 +14,7 @@ import {
 } from "@fern-ui/ui";
 import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
-import type { Redirect } from "next";
+import type { GetServerSidePropsResult, GetStaticPropsResult, Redirect } from "next";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
 import { type IncomingMessage, type ServerResponse } from "node:http";
 import { ComponentProps } from "react";
@@ -56,9 +55,9 @@ export interface User {
 export async function getDocsPageProps(
     xFernHost: string | undefined,
     slug: string[],
-): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
+): Promise<GetStaticPropsResult<ComponentProps<typeof DocsPage>>> {
     if (xFernHost == null || Array.isArray(xFernHost)) {
-        return { type: "notFound", notFound: true };
+        return { notFound: true };
     }
 
     const config = await getAuthEdgeConfig(xFernHost);
@@ -66,9 +65,9 @@ export async function getDocsPageProps(
         const destination = new URL(config.redirect);
         destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
         return {
-            type: "redirect",
             redirect: {
-                destination: destination.toString(),
+                // TODO: this will break if the docs tenant uses basepaths
+                destination: `/api/fern-docs/redirect?destination=${encodeURIComponent(destination.toString())}`,
                 permanent: false,
             },
         };
@@ -85,12 +84,9 @@ export async function getDocsPageProps(
     console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
     if (!docs.ok) {
         if ((docs.error as any).content.statusCode === 401) {
-            return {
-                type: "redirect",
-                redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`),
-            };
+            return { redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`) };
         } else if ((docs.error as any).content.statusCode === 404) {
-            return { type: "notFound", notFound: true };
+            return { notFound: true };
         }
 
         // eslint-disable-next-line no-console
@@ -112,7 +108,7 @@ export async function getDynamicDocsPageProps(
     slug: string[],
     cookies: NextApiRequestCookies,
     res: ServerResponse<IncomingMessage>,
-): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
+): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
     if (cookies.fern_token == null) {
         return getDocsPageProps(xFernHost, slug);
@@ -131,9 +127,8 @@ export async function getDynamicDocsPageProps(
                 const destination = new URL(config.redirect);
                 destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
                 return {
-                    type: "redirect",
                     redirect: {
-                        destination: destination.toString(),
+                        destination: `/api/fern-docs/redirect?destination=${encodeURIComponent(destination.toString())}`,
                         permanent: false,
                     },
                 };
@@ -158,7 +153,6 @@ export async function getDynamicDocsPageProps(
 
                 if (docs.error.error === "UnauthorizedError") {
                     return {
-                        type: "redirect",
                         redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`),
                     };
                 }
@@ -197,7 +191,6 @@ export async function getDynamicDocsPageProps(
     // Clear the token if it's invalid, then redirect to `/` to reset the login flow
     res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
     return {
-        type: "redirect",
         redirect: {
             destination: `/${slug.join("/")}`,
             permanent: false,
@@ -219,7 +212,7 @@ async function convertDocsToDocsPageProps({
     xFernHost: string;
     user?: FernUser;
     cookies?: NextApiRequestCookies;
-}): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
+}): Promise<GetStaticPropsResult<ComponentProps<typeof DocsPage>>> {
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
 
@@ -230,7 +223,6 @@ async function convertDocsToDocsPageProps({
 
     if (redirect != null) {
         return {
-            type: "redirect",
             redirect: {
                 destination: redirect.destination,
                 permanent: false,
@@ -247,19 +239,17 @@ async function convertDocsToDocsPageProps({
         console.error(`Failed to resolve navigation for ${url}`);
         if (node.redirect != null) {
             return {
-                type: "redirect",
                 redirect: {
                     destination: encodeURI(urljoin("/", node.redirect)),
                     permanent: false,
                 },
             };
         }
-        return { type: "notFound", notFound: true };
+        return { notFound: true };
     }
 
     if (node.type === "redirect") {
         return {
-            type: "redirect",
             redirect: {
                 destination: encodeURI(urljoin("/", node.redirect)),
                 permanent: false,
@@ -283,7 +273,7 @@ async function convertDocsToDocsPageProps({
     if (resolvedPath == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${url}`);
-        return { type: "notFound", notFound: true };
+        return { notFound: true };
     }
 
     const props: ComponentProps<typeof DocsPage> = {
@@ -394,7 +384,6 @@ async function convertDocsToDocsPageProps({
         apiKeyInjectionConfig;
 
     return {
-        type: "props",
         props: JSON.parse(JSON.stringify(props)), // remove all undefineds
         revalidate: 60 * 60 * 24 * 6, // 6 days
     };
