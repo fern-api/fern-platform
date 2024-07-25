@@ -17,7 +17,14 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 405 });
     }
 
-    const url = req.nextUrl.clone();
-    url.pathname = url.pathname.replace("/api/fern-docs/redirect", "/api/fern-docs/redirect2");
-    return NextResponse.redirect(url.toString(), { status: 307 });
+    const destination = req.nextUrl.searchParams.get("destination");
+    if (destination == null) {
+        return new NextResponse(null, { status: 400 });
+    } else if (destination.startsWith("http://") || destination.startsWith("https://")) {
+        return NextResponse.redirect(destination, { status: 308 });
+    } else if (destination.startsWith("/")) {
+        return NextResponse.redirect(new URL(destination, req.nextUrl.origin).toString(), { status: 308 });
+    } else {
+        return new NextResponse(null, { status: 400 });
+    }
 }
