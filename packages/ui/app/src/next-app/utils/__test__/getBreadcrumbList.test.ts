@@ -3,45 +3,47 @@ import { getBreadcrumbList } from "../getBreadcrumbList";
 
 describe("getBreadcrumbList", () => {
     it("should override the title used in the breadcrumb's last item", () => {
-        expect(
-            getBreadcrumbList(
-                "buildwithfern.com",
-                {
-                    [FernNavigation.PageId("pageId")]: {
-                        markdown: `
+        const markdown = `
 ---
 title: Overriden Title
 ---
 
 ## This is a markdown file
-`,
-                    },
-                },
-                [
-                    {
-                        id: FernNavigation.NodeId("id"),
-                        type: "section",
-                        title: "File Uploader",
-                        slug: FernNavigation.Slug("slug"),
-                        icon: undefined,
-                        hidden: false,
-                        noindex: undefined,
-                        collapsed: false,
-                        children: [],
-                        overviewPageId: undefined,
-                        pointsTo: undefined,
-                    },
-                ],
+`;
+
+        const node: FernNavigation.PageNode = {
+            id: FernNavigation.NodeId("id"),
+            type: "page",
+            pageId: FernNavigation.PageId("pageId"),
+            title: "Overview",
+            slug: FernNavigation.Slug("slug/page"),
+            icon: undefined,
+            hidden: false,
+            noindex: undefined,
+        };
+        const parents: FernNavigation.NavigationNode[] = [
+            {
+                id: FernNavigation.NodeId("parentsId"),
+                type: "section",
+                title: "File Uploader",
+                slug: FernNavigation.Slug("slug"),
+                icon: undefined,
+                hidden: false,
+                noindex: undefined,
+                collapsed: false,
+                children: [node],
+                overviewPageId: undefined,
+                pointsTo: undefined,
+            },
+        ];
+        expect(
+            getBreadcrumbList(
+                "buildwithfern.com",
                 {
-                    id: FernNavigation.NodeId("id"),
-                    type: "page",
-                    pageId: FernNavigation.PageId("pageId"),
-                    title: "Overview",
-                    slug: FernNavigation.Slug("slug/page"),
-                    icon: undefined,
-                    hidden: false,
-                    noindex: undefined,
+                    [node.pageId]: { markdown },
                 },
+                parents,
+                node,
             ),
         ).toEqual({
             "@context": "https://schema.org",
