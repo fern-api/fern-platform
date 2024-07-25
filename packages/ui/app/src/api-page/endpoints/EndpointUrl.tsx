@@ -111,19 +111,21 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     )}
                 </CopyToClipboardButton>
             </div>
-            <FernDropdown
-                key="selectedEnvironment-selector"
-                options={allEnvironmentIds.map((env) => ({
-                    value: env,
-                    label: env,
-                    type: "value",
-                }))}
-                onValueChange={(value) => {
-                    setSelectedEnvironmentId(value);
-                }}
-            >
-                <FernButton text={selectedEnvironmentId} size="small" variant="outlined" mono={true} />
-            </FernDropdown>
+            {showEnvironment && (
+                <FernDropdown
+                    key="selectedEnvironment-selector"
+                    options={allEnvironmentIds.map((env) => ({
+                        value: env,
+                        label: env,
+                        type: "value",
+                    }))}
+                    onValueChange={(value) => {
+                        setSelectedEnvironmentId(value);
+                    }}
+                >
+                    <FernButton text={selectedEnvironmentId} size="small" variant="outlined" mono={true} />
+                </FernDropdown>
+            )}
         </div>
     );
 });
