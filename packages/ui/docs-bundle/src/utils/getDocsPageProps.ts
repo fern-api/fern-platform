@@ -242,7 +242,7 @@ async function convertDocsToDocsPageProps({
                 // urljoin is bizarre: urljoin("/", "") === "", urljoin("/", "/") === "/", urljoin("/", "/a") === "/a"
                 // "" || "/" === "/"
                 redirect: {
-                    destination: encodeURI(urljoin("/", node.redirect || "/")),
+                    destination: encodeURI(urljoin("/", node.redirect) || "/"),
                     permanent: false,
                 },
             };
