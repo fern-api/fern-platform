@@ -3,6 +3,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import {
+    MouseEventHandler,
     PropsWithChildren,
     ReactElement,
     ReactNode,
@@ -47,6 +48,7 @@ export declare namespace FernDropdown {
         defaultOpen?: boolean;
         dropdownMenuElement?: ReactElement;
         container?: HTMLElement; // portal container
+        onClick?: MouseEventHandler<HTMLDivElement> | undefined;
     }
 }
 
@@ -64,6 +66,7 @@ export const FernDropdown = forwardRef<HTMLButtonElement, PropsWithChildren<Fern
             defaultOpen = false,
             dropdownMenuElement,
             container,
+            onClick,
         },
         ref,
     ): ReactElement => {
@@ -81,7 +84,7 @@ export const FernDropdown = forwardRef<HTMLButtonElement, PropsWithChildren<Fern
             <DropdownMenu.Content className="fern-dropdown" sideOffset={4} side={side} align={align}>
                 <FernTooltipProvider>
                     <FernScrollArea rootClassName="min-h-0 shrink" className="p-1" scrollbars="vertical">
-                        <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
+                        <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange} onClick={onClick}>
                             {options.map((option, idx) =>
                                 option.type === "value" ? (
                                     <FernDropdownItemValue

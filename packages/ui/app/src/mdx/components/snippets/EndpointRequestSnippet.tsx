@@ -5,8 +5,9 @@ import { EndpointUrlWithOverflow } from "../../../api-page/endpoints/EndpointUrl
 import { CodeSnippetExample } from "../../../api-page/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-page/examples/code-example";
 import { useResolvedPath } from "../../../atoms";
+import { useSelectedEnvironmentId } from "../../../atoms/environment";
 import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
-import { ResolvedEndpointDefinition } from "../../../resolver/types";
+import { ResolvedEndpointDefinition, resolveEnvironment } from "../../../resolver/types";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";
 import { RequestSnippet } from "./types";
 import { extractEndpointPathAndMethod, useSelectedClient } from "./utils";
@@ -30,6 +31,7 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
     example,
 }) => {
     const resolvedPath = useResolvedPath();
+    const selectedEnvironmentId = useSelectedEnvironmentId();
 
     const endpoint = useMemo(() => {
         if (resolvedPath.type !== "custom-markdown-page") {
@@ -63,7 +65,7 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
                     <EndpointUrlWithOverflow
                         path={endpoint.path}
                         method={method}
-                        environment={endpoint.defaultEnvironment?.baseUrl}
+                        selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
                     />
                 }
                 actions={

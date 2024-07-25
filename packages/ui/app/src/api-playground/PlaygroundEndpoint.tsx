@@ -16,11 +16,13 @@ import {
     useFeatureFlags,
     usePlaygroundEndpointFormState,
 } from "../atoms";
+import { useSelectedEnvironmentId } from "../atoms/environment";
 import {
     ResolvedEndpointDefinition,
     ResolvedFormDataRequestProperty,
     ResolvedHttpRequestBodyShape,
     ResolvedTypeDefinition,
+    resolveEnvironment,
 } from "../resolver/types";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
@@ -177,6 +179,8 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
         }
     }, [domain, endpoint, formState, proxyEnvironment, uploadEnvironment]);
 
+    const selectedEnvironmentId = useSelectedEnvironmentId();
+
     return (
         <FernTooltipProvider>
             <div className="flex min-h-0 flex-1 shrink flex-col size-full">
@@ -185,7 +189,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                         method={endpoint.method}
                         formState={formState}
                         sendRequest={sendRequest}
-                        environment={endpoint.defaultEnvironment ?? endpoint.environments[0]}
+                        environment={resolveEnvironment(endpoint, selectedEnvironmentId)}
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}
                         sendRequestIcon={

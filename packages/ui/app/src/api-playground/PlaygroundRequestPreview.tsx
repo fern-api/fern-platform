@@ -1,7 +1,8 @@
 import { useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
 import { PLAYGROUND_AUTH_STATE_ATOM, useDomain, useFeatureFlags } from "../atoms";
-import { ResolvedEndpointDefinition } from "../resolver/types";
+import { useSelectedEnvironmentId } from "../atoms/environment";
+import { ResolvedEndpointDefinition, resolveEnvironmentUrlInCodeSnippet } from "../resolver/types";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundEndpointRequestFormState } from "./types";
 import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
@@ -16,6 +17,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
     const domain = useDomain();
+    const selectedEnvironmentId = useSelectedEnvironmentId();
     const code = useMemo(
         () =>
             requestType === "curl"
@@ -49,7 +51,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
         <FernSyntaxHighlighter
             className="relative min-h-0 flex-1 shrink"
             language={requestType === "curl" ? "bash" : requestType}
-            code={code}
+            code={resolveEnvironmentUrlInCodeSnippet(endpoint, code, selectedEnvironmentId)}
             fontSize="sm"
             id={endpoint.id}
         />

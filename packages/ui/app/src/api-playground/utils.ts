@@ -15,6 +15,7 @@ import {
     ResolvedTypeShape,
     ResolvedWebSocketChannel,
     dereferenceObjectProperties,
+    resolveEnvironment,
     stringifyResolvedEndpointPathPartsTemplate,
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
@@ -74,7 +75,7 @@ export function buildEndpointUrl(
     formState: PlaygroundRequestFormState | undefined,
 ): string {
     return buildRequestUrl(
-        endpoint?.defaultEnvironment?.baseUrl,
+        endpoint && resolveEnvironment(endpoint).baseUrl,
         endpoint?.path,
         formState?.pathParameters,
         formState?.queryParameters,
@@ -448,7 +449,8 @@ export function stringifyCurl({
 
     return stringifyHttpRequestExampleToCurl({
         method: endpoint.method,
-        url: buildRequestUrl(endpoint?.defaultEnvironment?.baseUrl, endpoint?.path, formState?.pathParameters),
+        // TODO: wire through the hook based environment
+        url: buildRequestUrl(resolveEnvironment(endpoint).baseUrl, endpoint?.path, formState?.pathParameters),
         urlQueries: formState.queryParameters,
         headers,
         body:
