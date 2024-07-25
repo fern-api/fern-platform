@@ -235,10 +235,10 @@ async function convertDocsToDocsPageProps({
     const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {
-        const redirect = node.redirect === "" ? "/" : node.redirect;
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve navigation for ${url}`);
         if (node.redirect != null) {
+            const redirect = node.redirect === "" ? "/" : node.redirect;
             return {
                 redirect: {
                     destination: encodeURI(urljoin("/", redirect)),
