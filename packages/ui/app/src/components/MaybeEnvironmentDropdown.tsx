@@ -20,7 +20,6 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
 
     return (
         <span>
-            <span className={protocolTextStyle}>{`${url && url.protocol}//`}</span>
             {allEnvironmentIds.length > 1 ? (
                 <FernDropdown
                     key="selectedEnvironment-selector"
@@ -28,23 +27,23 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
                         value: env,
                         label: env,
                         type: "value",
+                        // tooltip: "Select environment",
                     }))}
                     onValueChange={(value) => {
                         setSelectedEnvironmentId(value);
                     }}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                    }}
                     value={selectedEnvironmentId ?? selectedEnvironment?.id}
                 >
                     <FernButton
-                        text={<span className={urlTextStyle}>{(url && url.host) ?? selectedEnvironmentId}</span>}
+                        text={
+                            <span>
+                                <span className={protocolTextStyle}>{`${url && url.protocol}//`}</span>
+                                <span className={urlTextStyle}>{(url && url.host) ?? selectedEnvironmentId}</span>
+                            </span>
+                        }
                         size={small ? "small" : "normal"}
                         variant="outlined"
                         mono={true}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                        }}
                     />
                 </FernDropdown>
             ) : (

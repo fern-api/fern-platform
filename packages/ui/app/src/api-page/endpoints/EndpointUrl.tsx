@@ -2,7 +2,7 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import { CopyToClipboardButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
-import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef } from "react";
+import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { parse } from "url";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
@@ -32,22 +32,12 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     const ref = useRef<HTMLDivElement>(null);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     useImperativeHandle(parentRef, () => ref.current!);
+    const [isHovered, setIsHovered] = useState(false);
 
     const renderPathParts = (parts: EndpointPathPart[]) => {
         const elements: (ReactElement | null)[] = [];
         if (selectedEnvironment != null) {
             const url = parse(selectedEnvironment.baseUrl);
-            if (showEnvironment) {
-                elements.push(
-                    showEnvironment && (
-                        <MaybeEnvironmentDropdown
-                            selectedEnvironment={selectedEnvironment}
-                            urlTextStyle="t-muted"
-                            protocolTextStyle="text-faded"
-                        />
-                    ),
-                );
-            }
             url.pathname?.split("/").forEach((part, i) => {
                 if (part.trim().length === 0) {
                     return;
@@ -90,26 +80,37 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     return (
         <div ref={ref} className={cn("flex h-8 items-center gap-1 pr-2", className)}>
             <HttpMethodTag method={method} />
+
             <div className={cn("flex items-center")}>
-                <CopyToClipboardButton content={buildRequestUrl(selectedEnvironment?.baseUrl, path)}>
-                    {(onClick) => (
-                        <button
-                            className={cn(
-                                "inline-flex shrink items-baseline hover:bg-tag-default py-0.5 px-1 rounded-md cursor-default",
-                            )}
-                            onClick={onClick}
-                        >
-                            <span
-                                className={cn("font-mono", {
-                                    "text-xs": !large,
-                                    "text-sm": large,
-                                })}
-                            >
-                                {renderPathParts(endpointPathParts)}
-                            </span>
-                        </button>
+                <span
+                    className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} py-0.5 px-1 rounded-md cursor-default`}
+                >
+                    {showEnvironment && (
+                        <MaybeEnvironmentDropdown
+                            selectedEnvironment={selectedEnvironment}
+                            urlTextStyle="t-muted"
+                            protocolTextStyle="text-faded"
+                        />
                     )}
-                </CopyToClipboardButton>
+                    <CopyToClipboardButton content={buildRequestUrl(selectedEnvironment?.baseUrl, path)}>
+                        {(onClick) => (
+                            <button
+                                onClick={onClick}
+                                onMouseEnter={() => setIsHovered(true)}
+                                onMouseLeave={() => setIsHovered(false)}
+                            >
+                                <span
+                                    className={cn("font-mono", {
+                                        "text-xs": !large,
+                                        "text-sm": large,
+                                    })}
+                                >
+                                    {renderPathParts(endpointPathParts)}
+                                </span>
+                            </button>
+                        )}
+                    </CopyToClipboardButton>
+                </span>
             </div>
         </div>
     );
