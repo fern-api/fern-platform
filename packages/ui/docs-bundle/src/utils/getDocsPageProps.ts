@@ -22,8 +22,12 @@ import { default as urlJoin, default as urljoin } from "url-join";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
+import { convertStaticToServerSidePropsResult } from "./convertStaticToServerSidePropsResult";
 import { getSeoDisabled } from "./disabledSeo";
 import { getRedirectForPath } from "./hackRedirects";
+
+type GetStaticDocsPagePropsResult = GetStaticPropsResult<ComponentProps<typeof DocsPage>>;
+type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;
 
 async function getUnauthenticatedRedirect(xFernHost: string, path: string): Promise<Redirect> {
     const authorizationUrl = getAuthorizationUrl(
@@ -55,7 +59,7 @@ export interface User {
 export async function getDocsPageProps(
     xFernHost: string | undefined,
     slug: string[],
-): Promise<GetStaticPropsResult<ComponentProps<typeof DocsPage>>> {
+): Promise<GetStaticDocsPagePropsResult> {
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return { notFound: true };
     }
@@ -108,10 +112,10 @@ export async function getDynamicDocsPageProps(
     slug: string[],
     cookies: NextApiRequestCookies,
     res: ServerResponse<IncomingMessage>,
-): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
+): Promise<GetServerSideDocsPagePropsResult> {
     const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
     if (cookies.fern_token == null) {
-        return getDocsPageProps(xFernHost, slug);
+        return convertStaticToServerSidePropsResult(await getDocsPageProps(xFernHost, slug));
     }
 
     try {
@@ -174,14 +178,16 @@ export async function getDynamicDocsPageProps(
                 throw new Error("Failed to fetch OAuth config");
             }
 
-            return convertDocsToDocsPageProps({
-                docs: docs.body,
-                slug,
-                url,
-                xFernHost,
-                user,
-                cookies,
-            });
+            return convertStaticToServerSidePropsResult(
+                await convertDocsToDocsPageProps({
+                    docs: docs.body,
+                    slug,
+                    url,
+                    xFernHost,
+                    user,
+                    cookies,
+                }),
+            );
         }
     } catch (error) {
         // eslint-disable-next-line no-console
