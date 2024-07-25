@@ -32,6 +32,9 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
                     onValueChange={(value) => {
                         setSelectedEnvironmentId(value);
                     }}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
                     value={selectedEnvironmentId ?? selectedEnvironment?.id}
                 >
                     <FernButton
@@ -42,28 +45,6 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
                         onClick={(e) => {
                             e.stopPropagation();
                         }}
-                        onChange={(e) => {
-                            e.stopPropagation();
-                        }}
-                        onFocus={(e) => {
-                            e.stopPropagation();
-                        }}
-                        onSubmit={(e) => {
-                            e.stopPropagation();
-                        }}
-                        onClickCapture={(e) => {
-                            e.stopPropagation();
-                        }}
-                        onMouseEnter={(e) => {
-                            e.stopPropagation();
-                        }}
-                        onTouchMove={(e) => {
-                            e.stopPropagation();
-                        }}
-                        onMouseOver={(e) => {
-                            e.stopPropagation();
-                        }}
-                        full={false}
                     />
                 </FernDropdown>
             ) : (
