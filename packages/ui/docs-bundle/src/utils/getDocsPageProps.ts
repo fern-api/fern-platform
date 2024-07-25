@@ -239,6 +239,7 @@ async function convertDocsToDocsPageProps({
         console.error(`Failed to resolve navigation for ${url}`);
         if (node.redirect != null) {
             return {
+                // urljoin is bizarre: urljoin("/", "") === "", urljoin("/", "/") === "/", urljoin("/", "/a") === "/a"
                 redirect: {
                     destination: encodeURI(urljoin("/", node.redirect || "/")),
                     permanent: false,
