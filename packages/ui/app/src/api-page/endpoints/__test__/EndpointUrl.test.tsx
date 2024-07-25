@@ -25,7 +25,16 @@ describe("EndpointUrl", () => {
     it("works with lit and path", async () => {
         render(
             <EndpointUrl
-                environment="https://api.buildwithfern.com"
+                selectedEnvironment={{
+                    id: "Production",
+                    baseUrl: "https://api.buildwithfern.com",
+                }}
+                environments={[
+                    {
+                        id: "Production",
+                        baseUrl: "https://api.buildwithfern.com",
+                    },
+                ]}
                 path={[lit("/testing/"), path("id")]}
                 method={"GET"}
                 showEnvironment={true}
@@ -38,7 +47,16 @@ describe("EndpointUrl", () => {
     it("renders full environment with basepath", async () => {
         render(
             <EndpointUrl
-                environment="https://api.buildwithfern.com/with/basepath"
+                selectedEnvironment={{
+                    id: "Production",
+                    baseUrl: "https://api.buildwithfern.com/with/basepath",
+                }}
+                environments={[
+                    {
+                        id: "Production",
+                        baseUrl: "https://api.buildwithfern.com/with/basepath",
+                    },
+                ]}
                 path={[lit("/testing/"), path("id")]}
                 method={"GET"}
                 showEnvironment={true}

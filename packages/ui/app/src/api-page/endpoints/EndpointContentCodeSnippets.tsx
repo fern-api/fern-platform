@@ -5,6 +5,7 @@ import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
+import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
@@ -13,6 +14,7 @@ import {
     ResolvedError,
     ResolvedExampleEndpointCall,
     ResolvedExampleError,
+    resolveEnvironment,
 } from "../../resolver/types";
 import { AudioExample } from "../examples/AudioExample";
 import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
@@ -121,6 +123,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         <span className="text-sm t-muted">{successTitle}</span>
     );
 
+    const selectedEnvironmentId = useSelectedEnvironmentId();
+
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>
             {/* TODO: Replace this with a proper segmented control component */}
@@ -149,7 +153,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     <EndpointUrlWithOverflow
                         path={endpoint.path}
                         method={endpoint.method}
-                        environment={endpoint.defaultEnvironment?.baseUrl}
+                        selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
+                        environments={endpoint.environments}
                     />
                 }
                 onClick={(e) => {
@@ -172,7 +177,14 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                code={requestCodeSnippet}
+                code={
+                    endpoint.defaultEnvironment
+                        ? requestCodeSnippet.replace(
+                              endpoint.defaultEnvironment?.baseUrl,
+                              resolveEnvironment(endpoint).baseUrl,
+                          )
+                        : requestCodeSnippet
+                }
                 language={selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}

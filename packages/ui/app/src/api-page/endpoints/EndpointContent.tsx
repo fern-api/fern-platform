@@ -17,8 +17,14 @@ import {
     store,
     useAtomEffect,
 } from "../../atoms";
+import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
-import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedError,
+    ResolvedTypeDefinition,
+    resolveEnvironment,
+} from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
@@ -255,6 +261,7 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialExampleHeight]);
 
+    const selectedEnvironmentId = useSelectedEnvironmentId();
     return (
         <div
             className={"fern-endpoint-content"}
@@ -293,7 +300,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                     <EndpointUrlWithOverflow
                         path={endpoint.path}
                         method={endpoint.method}
-                        environment={endpoint.defaultEnvironment?.baseUrl}
+                        selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
+                        environments={endpoint.environments}
                         showEnvironment
                         large
                     />
