@@ -29,12 +29,6 @@ describe("EndpointUrl", () => {
                     id: "Production",
                     baseUrl: "https://api.buildwithfern.com",
                 }}
-                environments={[
-                    {
-                        id: "Production",
-                        baseUrl: "https://api.buildwithfern.com",
-                    },
-                ]}
                 path={[lit("/testing/"), path("id")]}
                 method={"GET"}
                 showEnvironment={true}
@@ -51,12 +45,6 @@ describe("EndpointUrl", () => {
                     id: "Production",
                     baseUrl: "https://api.buildwithfern.com/with/basepath",
                 }}
-                environments={[
-                    {
-                        id: "Production",
-                        baseUrl: "https://api.buildwithfern.com/with/basepath",
-                    },
-                ]}
                 path={[lit("/testing/"), path("id")]}
                 method={"GET"}
                 showEnvironment={true}

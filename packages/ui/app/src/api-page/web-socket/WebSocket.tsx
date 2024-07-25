@@ -149,7 +149,6 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                             path={websocket.path}
                                             method="GET"
                                             selectedEnvironment={resolveEnvironment(websocket, selectedEnvironmentId)}
-                                            environments={websocket.environments}
                                             showEnvironment={true}
                                             className="flex-1"
                                         />
