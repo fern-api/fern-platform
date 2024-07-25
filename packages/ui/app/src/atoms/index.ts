@@ -1,5 +1,6 @@
 export * from "./apis";
 export * from "./auth";
+export * from "./cohere";
 export * from "./docs";
 export * from "./files";
 export * from "./flags";
