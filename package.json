@@ -94,9 +94,9 @@
   },
   "engines": {
     "node": ">=18.18.2",
-    "pnpm": "9.6.0"
+    "pnpm": "9.4.0"
   },
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@9.4.0",
   "dependenciesMeta": {
     "jsonc-parser@2.2.1": {
       "unplugged": true
