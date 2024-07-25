@@ -100,5 +100,6 @@
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",
     "fern-api": "^0.21.0"
-  }
+  },
+  "packageManager": "pnpm@9.4.0"
 }
