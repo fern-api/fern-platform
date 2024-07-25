@@ -92,8 +92,8 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
 function toFeedItem(
     entry: FernNavigation.ChangelogEntryNode,
     xFernHost: string,
-    pages: Record<string, DocsV1Read.PageContent>,
-    files: Record<string, DocsV1Read.FileId>,
+    pages: Record<DocsV1Read.PageId, DocsV1Read.PageContent>,
+    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
 ): Item {
     const item: Item = {
         title: entry.title,
@@ -111,20 +111,11 @@ function toFeedItem(
 
         try {
             let image: string | undefined;
+
             if (frontmatter.image != null) {
                 image = frontmatter.image;
             } else if (frontmatter["og:image"] != null) {
-                if (frontmatter["og:image"].type === "url") {
-                    image = frontmatter["og:image"].value;
-                } else if (frontmatter["og:image"].type === "fileId") {
-                    const fileId = frontmatter["og:image"].value;
-                    const file = files[fileId];
-                    if (file != null) {
-                        image = file;
-                    }
-                } else {
-                    assertNever(frontmatter["og:image"]);
-                }
+                image = toUrl(frontmatter["og:image"], files);
             }
 
             if (image != null) {
@@ -138,6 +129,22 @@ function toFeedItem(
         }
     }
     return item;
+}
+
+function toUrl(
+    idOrUrl: DocsV1Read.FileIdOrUrl | undefined,
+    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
+): string | undefined {
+    if (idOrUrl == null) {
+        return undefined;
+    }
+    if (idOrUrl.type === "url") {
+        return idOrUrl.value;
+    } else if (idOrUrl.type === "fileId") {
+        return files[idOrUrl.value];
+    } else {
+        assertNever(idOrUrl);
+    }
 }
 
 function validateExternalUrl(url: string): void {
