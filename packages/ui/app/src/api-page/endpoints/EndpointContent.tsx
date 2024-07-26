@@ -28,7 +28,6 @@ import {
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
-import { AnimatedTitle } from "./AnimatedTitle";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
@@ -279,7 +278,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                     <div className="flex items-center justify-between">
                         <span>
                             <h1 className="fern-page-heading">
-                                <AnimatedTitle>{endpoint.title}</AnimatedTitle>
+                                {/* <AnimatedTitle>{endpoint.title}</AnimatedTitle> */}
+                                {endpoint.title}
                             </h1>
                             {endpoint.availability != null && (
                                 <span className="inline-block ml-2 align-text-bottom">
