@@ -15,7 +15,7 @@ import {
 } from "../context/TypeDefinitionContext";
 import {
     InternalTypeReferenceDefinitions,
-    hasEnum,
+    hasInlineEnum,
     hasInternalTypeReference,
 } from "../type-reference/InternalTypeReferenceDefinitions";
 import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
@@ -131,7 +131,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
             </div>
-            {hasEnum(property.valueShape, types) && (
+            {hasInlineEnum(property.valueShape, types) && (
                 <FernErrorBoundary component="ObjectProperty">
                     <TypeDefinitionContext.Provider value={newContextValue}>
                         <InternalTypeReferenceDefinitions
@@ -147,7 +147,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                 </FernErrorBoundary>
             )}
             <ApiPageDescription isMarkdown={true} description={description} className="text-sm" />
-            {hasInternalTypeReference(property.valueShape, types) && (
+            {hasInternalTypeReference(property.valueShape, types) && !hasInlineEnum(property.valueShape, types) && (
                 <FernErrorBoundary component="ObjectProperty">
                     <TypeDefinitionContext.Provider value={newContextValue}>
                         <InternalTypeReferenceDefinitions

@@ -21,22 +21,22 @@ export declare namespace InternalTypeReferenceDefinitions {
 }
 
 // HACHACK: this is a hack to render inlined enums above the description
-export function hasEnum(shape: ResolvedTypeShape, types: Record<string, ResolvedTypeDefinition>): boolean {
+export function hasInlineEnum(shape: ResolvedTypeShape, types: Record<string, ResolvedTypeDefinition>): boolean {
     return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
         object: () => false,
         enum: (value) => value.values.length < 6,
         undiscriminatedUnion: () => false,
         discriminatedUnion: () => false,
-        list: (value) => hasEnum(value.shape, types),
-        set: (value) => hasEnum(value.shape, types),
-        optional: (optional) => hasEnum(optional.shape, types),
-        map: (map) => hasEnum(map.keyShape, types) || hasEnum(map.valueShape, types),
+        list: (value) => hasInlineEnum(value.shape, types),
+        set: (value) => hasInlineEnum(value.shape, types),
+        optional: (optional) => hasInlineEnum(optional.shape, types),
+        map: (map) => hasInlineEnum(map.keyShape, types) || hasInlineEnum(map.valueShape, types),
         primitive: () => false,
-        literal: () => false,
+        literal: () => true,
         unknown: () => false,
         _other: () => false,
         reference: (reference) =>
-            hasEnum(
+            hasInlineEnum(
                 types[reference.typeId] ?? {
                     type: "unknown",
                     description: undefined,
@@ -44,7 +44,7 @@ export function hasEnum(shape: ResolvedTypeShape, types: Record<string, Resolved
                 },
                 types,
             ),
-        alias: (alias) => hasEnum(alias.shape, types),
+        alias: (alias) => hasInlineEnum(alias.shape, types),
     });
 }
 
@@ -54,11 +54,11 @@ export function hasInternalTypeReference(
 ): boolean {
     return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
         object: () => true,
-        enum: (value) => value.values.length >= 6,
+        enum: () => true,
         undiscriminatedUnion: () => true,
         discriminatedUnion: () => true,
-        list: (value) => hasInternalTypeReference(value.shape, types),
-        set: (value) => hasInternalTypeReference(value.shape, types),
+        list: () => true,
+        set: () => true,
         optional: (optional) => hasInternalTypeReference(optional.shape, types),
         map: (map) => hasInternalTypeReference(map.keyShape, types) || hasInternalTypeReference(map.valueShape, types),
         primitive: () => false,
