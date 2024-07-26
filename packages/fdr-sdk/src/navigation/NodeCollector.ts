@@ -121,7 +121,7 @@ export class NodeCollector {
     });
 
     private getSlugMap = once((): Map<string, NavigationNodeWithMetadata> => {
-        return new Map(Object.entries(this.slugToNode).map(([slug, { node }]) => [slug, node]));
+        return new Map([...this.slugToNode.entries()].map(([slug, { node }]) => [slug, node]));
     });
 
     get slugMap(): Map<string, NavigationNodeWithMetadata> {
@@ -140,21 +140,19 @@ export class NodeCollector {
         return this.idToNodeParents.get(id) ?? [];
     }
 
-    public getSlugMapWithParents = once((): Map<string, NavigationNodeWithMetadataAndParents> => {
-        return new Map(Object.entries(this.slugToNode));
-    });
+    public getSlugMapWithParents = (): ReadonlyMap<FernNavigation.Slug, NavigationNodeWithMetadataAndParents> => {
+        return this.slugToNode;
+    };
 
     public getSlugs = once((): string[] => {
-        return Object.keys(this.slugToNode);
+        return [...this.slugToNode.keys()];
     });
 
     /**
      * Returns a list of slugs for all pages in the navigation tree. This includes hidden pages.
      */
     public getPageSlugs = once((): string[] => {
-        return Object.values(this.slugToNode)
-            .filter(({ node }) => isPage(node))
-            .map(({ node }) => urljoin(node.slug));
+        return [...this.slugToNode.values()].filter(({ node }) => isPage(node)).map(({ node }) => urljoin(node.slug));
     });
 
     /**
@@ -163,7 +161,7 @@ export class NodeCollector {
      * This excludes hidden pages and noindex pages.
      */
     public getIndexablePageSlugs = once((): string[] => {
-        return Object.values(this.slugToNode)
+        return [...this.slugToNode.values()]
             .filter(({ node }) => isPage(node) && node.hidden !== true)
             .filter(({ node }) => (hasMarkdown(node) ? node.noindex !== true : true))
             .map(({ node }) => urljoin(node.slug));
