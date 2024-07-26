@@ -7,6 +7,6 @@ export * from "./followRedirect";
 export * from "./getApiReferenceId";
 export * from "./getNoIndexFromFrontmatter";
 export * from "./getPageId";
-export * from "./getUnversionedSlug";
+export { toDefaultSlug } from "./pruneVersionNode";
 export * from "./slugjoin";
 export * from "./traverseNavigation";

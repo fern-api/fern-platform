@@ -23,7 +23,12 @@ export function getSeoProps(
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
     apis: Record<string, APIV1Read.ApiDefinition>,
-    { node, parents }: Pick<FernNavigation.utils.Node.Found, "node" | "parents">,
+    {
+        root,
+        node,
+        parents,
+        currentVersion,
+    }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
     isSeoDisabled: boolean,
 ): NextSeoProps {
     const additionalMetaTags: MetaTag[] = [];
@@ -37,6 +42,13 @@ export function getSeoProps(
         additionalLinkTags,
         breadcrumbList: getBreadcrumbList(domain, pages, parents, node),
     };
+
+    // if the current version is the default version, the page is duplicated (/v1/page and /page).
+    // the canonical link should point to `/page`.
+    if (currentVersion != null && currentVersion.default) {
+        const canonicalSlug = FernNavigation.utils.toDefaultSlug(node.slug, root.slug, currentVersion.slug);
+        seo.canonical = `https://${domain}/${canonicalSlug}`;
+    }
 
     const pageId = FernNavigation.utils.getPageId(node);
 
