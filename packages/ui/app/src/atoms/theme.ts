@@ -186,7 +186,7 @@ export const script = (themes: AvailableThemes): void => {
         updateDOM(themes[0]);
     } else {
         try {
-            const themeName = localStorage.getItem("theme") ?? themes[0];
+            const themeName = localStorage.getItem("theme") ?? "system";
             const isSystem = themes.length > 0 && themeName === "system";
             const theme = isSystem ? getSystemTheme() : themeName;
             updateDOM(theme);
