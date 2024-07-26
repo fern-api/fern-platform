@@ -144,7 +144,7 @@ export async function convertNavigatableToResolvedPath({
         };
     } else if (apiReference != null) {
         // if long scrolling is disabled, we should render a markdown page by itself
-        if (apiReference.disableLongScrolling && FernNavigation.isMarkdownLeaf(node)) {
+        if (apiReference.disableLongScrolling && FernNavigation.hasMarkdown(node)) {
             return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, domain, neighbors);
         }
 
