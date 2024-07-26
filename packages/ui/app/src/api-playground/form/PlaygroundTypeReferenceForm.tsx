@@ -9,8 +9,8 @@ import {
     dereferenceObjectProperties,
     unwrapReference,
 } from "../../resolver/types";
-import { PlaygroundDiscriminatedUnionForm } from "../PlaygroundDescriminatedUnionForm";
 import { WithLabel } from "../WithLabel";
+import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
