@@ -374,7 +374,8 @@ async function convertDocsToDocsPageProps({
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
     };
 
-    props.fallback[urljoin(docs.baseUrl.basePath ?? "", "/api/fern-docs/search")] = await getSearchConfig(
+    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
+    props.fallback[urljoin(docs.baseUrl.basePath || "/", "/api/fern-docs/search")] = await getSearchConfig(
         xFernHost,
         docs.definition.search,
     );
@@ -392,7 +393,8 @@ async function convertDocsToDocsPageProps({
     }
 
     const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, cookies);
-    props.fallback[urljoin(docs.baseUrl.basePath ?? "", "/api/fern-docs/auth/api-key-injection")] =
+    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
+    props.fallback[urljoin(docs.baseUrl.basePath || "/", "/api/fern-docs/auth/api-key-injection")] =
         apiKeyInjectionConfig;
 
     return {
