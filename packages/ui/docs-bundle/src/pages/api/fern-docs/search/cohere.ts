@@ -65,6 +65,7 @@ export default async function handler(req: Request): Promise<Response> {
         chatHistory: conversationHistory,
         conversationId: body.conversationId,
         message: body.message,
+        // don't think we need documents in chat history, but will play with this?
         documents: hits.map((hit) => ({
             JSON: JSON.stringify(hit),
         })),
