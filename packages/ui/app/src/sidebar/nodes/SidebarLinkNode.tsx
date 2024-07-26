@@ -15,9 +15,8 @@ export function SidebarLinkNode({ node, depth, className }: SidebarLinkNodeProps
             className={className}
             depth={Math.max(depth - 1, 0)}
             title={node.title}
-            rightElement={<ExternalLinkIcon />}
+            rightElement={node.url.startsWith("http") && <ExternalLinkIcon />}
             href={node.url}
-            target={"_blank"}
             hidden={false}
         />
     );
