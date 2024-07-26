@@ -39,7 +39,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     const renderPathParts = (parts: EndpointPathPart[]) => {
         const elements: (ReactElement | null)[] = [];
         if (selectedEnvironment != null) {
-            const url = parse(selectedEnvironment.baseUrl);
+            const url = parse(selectedEnvironment?.baseUrl);
             if (showEnvironment) {
                 if (allEnvironmentIds.length < 2) {
                     elements.push(

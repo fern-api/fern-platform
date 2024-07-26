@@ -185,7 +185,7 @@ function getHarRequest(
         cookies: [],
         bodySize: -1,
     };
-    request.url = buildRequestUrl(resolveEnvironment(endpoint).baseUrl, endpoint.path, example.pathParameters);
+    request.url = buildRequestUrl(resolveEnvironment(endpoint)?.baseUrl, endpoint.path, example.pathParameters);
     request.method = endpoint.method;
     request.queryString = Object.entries(example.queryParameters).map(([name, value]) => ({
         name,

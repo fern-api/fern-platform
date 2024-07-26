@@ -771,7 +771,7 @@ export function getParameterDescription(
 export const resolveEnvironment = (
     endpoint: ResolvedWebSocketChannel | ResolvedEndpointDefinition,
     selectedEnvironmentId?: string,
-): APIV1Read.Environment => {
+): APIV1Read.Environment | undefined => {
     if (!selectedEnvironmentId && typeof window !== "undefined") {
         // TODO: replace this, this is a workaround for now, for functions that need to resolve in the playground,
         // but do not have access to hooks
@@ -790,8 +790,9 @@ export const resolveEnvironmentUrlInCodeSnippet = (
     selectedEnvironmentId?: string,
 ): string => {
     const urlToReplace = endpoint.environments.find((env) => requestCodeSnippet.includes(env.baseUrl))?.baseUrl;
-    return urlToReplace
-        ? requestCodeSnippet.replace(urlToReplace, resolveEnvironment(endpoint, selectedEnvironmentId).baseUrl)
+    const resolvedEnvironment = resolveEnvironment(endpoint, selectedEnvironmentId);
+    return urlToReplace && resolvedEnvironment
+        ? requestCodeSnippet.replace(urlToReplace, resolvedEnvironment.baseUrl)
         : requestCodeSnippet;
 };
 

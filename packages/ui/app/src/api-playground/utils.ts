@@ -75,7 +75,7 @@ export function buildEndpointUrl(
     formState: PlaygroundRequestFormState | undefined,
 ): string {
     return buildRequestUrl(
-        endpoint && resolveEnvironment(endpoint).baseUrl,
+        endpoint && resolveEnvironment(endpoint)?.baseUrl,
         endpoint?.path,
         formState?.pathParameters,
         formState?.queryParameters,
@@ -450,7 +450,7 @@ export function stringifyCurl({
     return stringifyHttpRequestExampleToCurl({
         method: endpoint.method,
         // TODO: wire through the hook based environment
-        url: buildRequestUrl(resolveEnvironment(endpoint).baseUrl, endpoint?.path, formState?.pathParameters),
+        url: buildRequestUrl(resolveEnvironment(endpoint)?.baseUrl, endpoint?.path, formState?.pathParameters),
         urlQueries: formState.queryParameters,
         headers,
         body:

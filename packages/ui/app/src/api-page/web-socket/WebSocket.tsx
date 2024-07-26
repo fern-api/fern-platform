@@ -154,7 +154,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         <CopyToClipboardButton
                                             className="-mr-1"
                                             content={() =>
-                                                `${resolveEnvironment(websocket, selectedEnvironmentId).baseUrl}${websocket.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
+                                                `${resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl}${websocket.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
                                             }
                                         />
                                     </div>
@@ -319,7 +319,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                                     <tr>
                                                         <td className="text-left align-top">URL</td>
                                                         <td className="text-left align-top">
-                                                            {`${resolveEnvironment(websocket, selectedEnvironmentId).baseUrl ?? ""}${example?.path ?? stringifyResolvedEndpointPathParts(websocket.path)}`}
+                                                            {`${resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl ?? ""}${example?.path ?? stringifyResolvedEndpointPathParts(websocket.path)}`}
                                                         </td>
                                                     </tr>
                                                     <tr>
