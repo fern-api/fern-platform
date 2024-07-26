@@ -1,8 +1,9 @@
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
-import { useAtomValue } from "jotai";
+import { atom, useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement, forwardRef, useEffect, useState, type ComponentProps } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
+import { useMemoOne } from "use-memo-one";
 import { SLUG_ATOM, useDomain } from "../atoms";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
@@ -34,8 +35,12 @@ export const FernLink = forwardRef<HTMLAnchorElement, FernLinkProps>(
 FernLink.displayName = "FernLink";
 
 const FernRelativeLink = forwardRef<HTMLAnchorElement, ComponentProps<typeof Link>>((props, ref) => {
-    const selectedSlug = useAtomValue(SLUG_ATOM);
-    const href = resolveRelativeUrl(`/${selectedSlug}`, formatUrlString(props.href));
+    const href = useAtomValue(
+        useMemoOne(
+            () => atom((get) => resolveRelativeUrl(`/${get(SLUG_ATOM)}`, formatUrlString(props.href))),
+            [props.href],
+        ),
+    );
     return <Link ref={ref} {...props} href={href} />;
 });
 
