@@ -46,7 +46,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
     useEffect(() => () => socket.current?.close(), []);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
-    const baseUrl = resolveEnvironment(websocket, selectedEnvironmentId).baseUrl;
+    const baseUrl = resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl;
 
     const startSession = useCallback(async () => {
         return new Promise<boolean>((resolve) => {
