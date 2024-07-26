@@ -18,7 +18,7 @@ const fetcher = async (url: string) => {
 
 export const PlaygroundContextProvider: FC = () => {
     const basePath = useBasePath();
-    const key = urljoin(basePath ?? "", "/api/fern-docs/resolve-api");
+    const key = urljoin(basePath ?? "/", "/api/fern-docs/resolve-api");
 
     const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {
         revalidateOnFocus: false,

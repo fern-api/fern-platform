@@ -34,7 +34,7 @@ export function useSearchConfig(): [SearchConfig, refresh: () => void] {
         return [{ isAvailable: false }, noop];
     }
 
-    const key = urljoin(basePath ?? "", "/api/fern-docs/search");
+    const key = urljoin(basePath ?? "/", "/api/fern-docs/search");
 
     const { data } = useSWR<SearchConfig>(key, (url: string) => fetch(url).then((res) => res.json()), {
         refreshInterval: 1000 * 60 * 60 * 2, // 2 hours
