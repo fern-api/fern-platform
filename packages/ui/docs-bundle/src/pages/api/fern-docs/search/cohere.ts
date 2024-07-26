@@ -1,10 +1,21 @@
+import { kv } from "@vercel/kv";
+import algolia from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
+import { ChatMessage } from "cohere-ai/api";
+import { v4 } from "uuid";
 
 export const runtime = "edge";
 
 const cohere = new CohereClient({
     token: process.env.COHERE_API_KEY,
 });
+
+if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_ADMIN_API_KEY || !process.env.ALGOLIA_SEARCH_INDEX) {
+    throw new Error("Missing Algolia environment variables");
+}
+
+const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY);
+const index = algoliaClient.initIndex(process.env.ALGOLIA_SEARCH_INDEX); // this can probably be hardcoded in cohere for app hack
 
 const PREAMBLE = `
 You are an expert AI assistant called Fernie that helps developers answer questions about Cohere's APIs and SDKs.
@@ -28,13 +39,42 @@ export default async function handler(req: Request): Promise<Response> {
 
     const body = await req.json();
 
+    let conversationId = body.conversationId;
+    let conversationHistory: ChatMessage[];
+    if (!body.conversationId) {
+        conversationId = v4();
+        conversationHistory = [];
+        await kv.set(conversationId, conversationHistory);
+    } else {
+        conversationHistory = (await kv.get(conversationId)) || [];
+    }
+
+    // check pagination in future
+    const { hits } = await index.search(body.message);
+
+    // const embeddedResponse = await cohere.embed({
+    //     texts: hits.map((hit) => JSON.stringify(hit)),
+    //     model: "string",
+    //     inputType: Cohere.EmbedInputType.SearchDocument,
+    //     embeddingTypes: [Cohere.EmbeddingType.Float],
+    //     truncate: Cohere.EmbedRequestTruncate.None,
+    // });
+
     const response = await cohere.chatStream({
         preamble: PREAMBLE,
+        chatHistory: conversationHistory,
         conversationId: body.conversationId,
         message: body.message,
+        documents: hits.map((hit) => ({
+            JSON: JSON.stringify(hit),
+        })),
     });
 
-    const stream = convertAsyncIterableToStream(response).pipeThrough(getCohereStreamTransformer());
+    conversationHistory.push({ role: "USER", message: body.message });
+
+    const stream = convertAsyncIterableToStream(response).pipeThrough(
+        getCohereStreamTransformer(conversationId, conversationHistory),
+    );
 
     return new Response(stream, {
         status: 200,
@@ -53,13 +93,20 @@ function convertAsyncIterableToStream<T>(iterable: AsyncIterable<T>): ReadableSt
     });
 }
 
-function getCohereStreamTransformer() {
+function getCohereStreamTransformer(
+    conversationId: string,
+    chatHistory: ChatMessage[],
+): TransformStream<Cohere.StreamedChatResponse, Uint8Array> {
     const encoder = new TextEncoder();
     return new TransformStream<Cohere.StreamedChatResponse, Uint8Array>({
         async transform(chunk, controller) {
             if (chunk.eventType === "text-generation") {
+                chatHistory.push({ role: "CHATBOT", message: chunk.text });
                 controller.enqueue(encoder.encode(chunk.text));
             }
+        },
+        async flush(_controller) {
+            await kv.set(conversationId, chatHistory);
         },
     });
 }

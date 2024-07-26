@@ -50,7 +50,9 @@
     "@fern-ui/ui": "workspace:*",
     "@sentry/nextjs": "^7.112.2",
     "@vercel/edge-config": "^1.1.0",
+    "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^6.1.0",
+    "algoliasearch": "^4.22.1",
     "cohere-ai": "^7.9.5",
     "cssnano": "^6.0.3",
     "esbuild": "0.20.2",
@@ -64,7 +66,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sharp": "^0.33.3",
-    "url-join": "5.0.0"
+    "url-join": "5.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
@@ -75,6 +78,7 @@
     "@types/node-fetch": "2.6.9",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.2.18",
+    "@types/uuid": "^9.0.1",
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.3",
     "env-cmd": "toddbluhm/env-cmd",
