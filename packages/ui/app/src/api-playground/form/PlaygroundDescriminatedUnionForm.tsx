@@ -7,11 +7,11 @@ import {
     ResolvedDiscriminatedUnionShape,
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
-} from "../resolver/types";
-import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
-import { castToRecord, getDefaultValueForObjectProperties } from "./utils";
+} from "../../resolver/types";
+import { castToRecord, getDefaultValueForObjectProperties } from "../utils";
+import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 
-const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 

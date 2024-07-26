@@ -43,8 +43,14 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
             undiscriminatedUnion.variants.map((variant, idx): FernDropdown.Option => {
                 let labelFallback: string;
                 switch (variant.shape.type) {
-                    // We should also likely handle literals here to make it not just say
-                    // "literal" but the actual value of the literal, but not positive the best UX
+                    case "literal":
+                        labelFallback =
+                            variant.shape.value.type === "booleanLiteral"
+                                ? variant.shape.value.value
+                                    ? "true"
+                                    : "false"
+                                : variant.shape.value.value;
+                        break;
                     case "primitive":
                         labelFallback = variant.shape.value.type;
                         break;
@@ -55,10 +61,9 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                         labelFallback = variant.shape.type;
                         break;
                 }
-                const capitalizedFallbacklabel = labelFallback.charAt(0).toUpperCase() + labelFallback.slice(1);
                 return {
                     type: "value",
-                    label: variant.displayName ?? capitalizedFallbacklabel,
+                    label: variant.displayName ?? labelFallback,
                     value: idx.toString(),
                     // todo: handle availability
                     tooltip:
@@ -69,6 +74,10 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
             }),
         [undiscriminatedUnion.variants],
     );
+
+    const selectedOption = options
+        .filter((option): option is FernDropdown.ValueOption => option.type === "value")
+        .find((option) => option.value === internalSelectedVariant.toString());
 
     return (
         <div className="w-full">
@@ -88,8 +97,8 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                 >
                     <FernButton
                         text={
-                            selectedVariant != null ? (
-                                <span className="font-mono">{selectedVariant.displayName}</span>
+                            selectedOption != null ? (
+                                <span className="font-mono">{selectedOption.label ?? selectedOption.value}</span>
                             ) : (
                                 <span className="t-muted">Select a variant...</span>
                             )
