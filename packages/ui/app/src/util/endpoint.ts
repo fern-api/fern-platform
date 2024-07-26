@@ -49,7 +49,7 @@ export function divideEndpointPathToParts(path: ResolvedEndpointPathParts[]): En
 }
 
 export function getEndpointEnvironmentUrl(endpoint: ResolvedEndpointDefinition): string | undefined {
-    return resolveEnvironment(endpoint).baseUrl;
+    return resolveEnvironment(endpoint)?.baseUrl;
 }
 
 export function getEndpointTitleAsString(endpoint: APIV1Read.EndpointDefinition): string {
