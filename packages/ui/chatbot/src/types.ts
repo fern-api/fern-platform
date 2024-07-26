@@ -9,3 +9,14 @@ export interface UserMessage {
 }
 
 export type Message = ChatbotMessage | UserMessage;
+
+export interface CitationDocument {
+    title: string;
+    url: string;
+}
+
+export interface Citation {
+    start: number;
+    end: number;
+    documents: CitationDocument[];
+}

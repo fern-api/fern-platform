@@ -5,6 +5,7 @@ import { atomWithSessionStorage } from "../atoms/atomWithSessionStorage";
 import { Message } from "../types";
 import { AskInput } from "./AskInput";
 import { ChatConversation } from "./ChatConversation";
+import { ResponseMessageWithCitations } from "./ResponseMessage";
 
 const CHAT_HISTORY = atomWithSessionStorage<Message[]>("chat-history", [
     { role: "AI", message: "Hello! How can I help you?" },
@@ -34,7 +35,9 @@ export function ChatbotModal(): ReactElement {
                 </div>
             </div>
             <div className="min-h-10 overflow-y-auto overflow-x-hidden p-4">
-                <ChatConversation messages={chatHistory} />
+                <ChatConversation messages={chatHistory}>
+                    <ResponseMessageWithCitations message="" citations={[]} />
+                </ChatConversation>
             </div>
             <div className="p-4">
                 <AskInput onSend={sendMessage} />
