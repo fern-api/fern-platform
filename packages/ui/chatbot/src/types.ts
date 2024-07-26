@@ -1,6 +1,7 @@
 export interface ChatbotMessage {
     role: "AI";
     message: string;
+    citations: Citation[];
 }
 
 export interface UserMessage {
