@@ -20,17 +20,45 @@ export declare namespace InternalTypeReferenceDefinitions {
     }
 }
 
+// HACHACK: this is a hack to render inlined enums above the description
+export function hasEnum(shape: ResolvedTypeShape, types: Record<string, ResolvedTypeDefinition>): boolean {
+    return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
+        object: () => false,
+        enum: (value) => value.values.length < 6,
+        undiscriminatedUnion: () => false,
+        discriminatedUnion: () => false,
+        list: (value) => hasEnum(value.shape, types),
+        set: (value) => hasEnum(value.shape, types),
+        optional: (optional) => hasEnum(optional.shape, types),
+        map: (map) => hasEnum(map.keyShape, types) || hasEnum(map.valueShape, types),
+        primitive: () => false,
+        literal: () => false,
+        unknown: () => false,
+        _other: () => false,
+        reference: (reference) =>
+            hasEnum(
+                types[reference.typeId] ?? {
+                    type: "unknown",
+                    description: undefined,
+                    availability: undefined,
+                },
+                types,
+            ),
+        alias: (alias) => hasEnum(alias.shape, types),
+    });
+}
+
 export function hasInternalTypeReference(
     shape: ResolvedTypeShape,
     types: Record<string, ResolvedTypeDefinition>,
 ): boolean {
     return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
         object: () => true,
-        enum: () => true,
+        enum: (value) => value.values.length >= 6,
         undiscriminatedUnion: () => true,
         discriminatedUnion: () => true,
-        list: () => true,
-        set: () => true,
+        list: (value) => hasInternalTypeReference(value.shape, types),
+        set: (value) => hasInternalTypeReference(value.shape, types),
         optional: (optional) => hasInternalTypeReference(optional.shape, types),
         map: (map) => hasInternalTypeReference(map.keyShape, types) || hasInternalTypeReference(map.valueShape, types),
         primitive: () => false,
