@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { ComponentPropsWithRef, ReactElement } from "react";
-import { SendIcon } from "./SendIcon";
+import { SendIcon } from "../icons/SendIcon";
 
 export function SendButton(props: ComponentPropsWithRef<"button">): ReactElement {
     return (
