@@ -21,6 +21,8 @@ describe("getSeoProps", () => {
                     noindex: undefined,
                 },
                 parents: [],
+                currentVersion: undefined,
+                root: { slug: FernNavigation.Slug("") } as FernNavigation.RootNode,
             },
             true,
         );

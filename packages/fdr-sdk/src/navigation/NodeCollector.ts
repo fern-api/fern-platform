@@ -64,6 +64,7 @@ export class NodeCollector {
         traverseNavigation(rootNode, (node, _index, parents) => {
             this.idToNode.set(node.id, node);
 
+            // if the node is the default version, make a copy of it and "prune" the version slug from all children nodes
             const parent = parents[parents.length - 1];
             if (
                 node.type === "version" &&
