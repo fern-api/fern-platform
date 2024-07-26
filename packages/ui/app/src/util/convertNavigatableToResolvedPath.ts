@@ -143,6 +143,11 @@ export async function convertNavigatableToResolvedPath({
             neighbors,
         };
     } else if (apiReference != null) {
+        // if long scrolling is disabled, we should render a markdown page by itself
+        if (apiReference.disableLongScrolling && FernNavigation.hasMarkdown(node)) {
+            return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, domain, neighbors);
+        }
+
         const api = apis[apiReference.apiDefinitionId];
         if (api == null) {
             // eslint-disable-next-line no-console
@@ -166,69 +171,83 @@ export async function convertNavigatableToResolvedPath({
             title: node.title,
             api: apiReference.apiDefinitionId,
             apiDefinition,
+            disableLongScrolling: apiReference.disableLongScrolling ?? false,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
             showErrors: apiReference.showErrors ?? false,
             neighbors,
         };
     } else {
-        const pageId = FernNavigation.utils.getPageId(node);
-        if (pageId == null) {
-            return;
-        }
-        const pageContent = pages[pageId];
-        if (pageContent == null) {
-            // eslint-disable-next-line no-console
-            console.error("Markdown content not found", pageId);
-            return;
-        }
-        const mdx = await serializeMdx(pageContent.markdown, {
-            ...mdxOptions,
-            filename: pageId,
-            frontmatterDefaults: {
-                title: node.title,
-                breadcrumbs: found.breadcrumb,
-                "edit-this-page-url": pageContent.editThisPageUrl,
-                "force-toc": featureFlags.isTocDefaultEnabled,
-            },
-        });
-        const frontmatter = typeof mdx === "string" ? {} : mdx.frontmatter;
-
-        let apiNodes: FernNavigation.ApiReferenceNode[] = [];
-        if (
-            pageContent.markdown.includes("EndpointRequestSnippet") ||
-            pageContent.markdown.includes("EndpointResponseSnippet")
-        ) {
-            apiNodes = FernNavigation.utils.collectApiReferences(found.currentVersion ?? found.root);
-        }
-        const resolvedApis = Object.fromEntries(
-            await Promise.all(
-                apiNodes.map(async (apiNode): Promise<[string, ResolvedRootPackage]> => {
-                    const holder = FernNavigation.ApiDefinitionHolder.create(apis[apiNode.apiDefinitionId]);
-                    const typeResolver = new ApiTypeResolver(apis[apiNode.apiDefinitionId].types, mdxOptions);
-                    return [
-                        apiNode.title,
-                        await ApiDefinitionResolver.resolve(
-                            apiNode,
-                            holder,
-                            typeResolver,
-                            pages,
-                            mdxOptions,
-                            featureFlags,
-                            domain,
-                        ),
-                    ];
-                }),
-            ),
-        );
-        return {
-            type: "custom-markdown-page",
-            slug: node.slug,
-            title: frontmatter.title ?? node.title,
-            mdx,
-            neighbors,
-            apis: resolvedApis,
-        };
+        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, domain, neighbors);
     }
+}
+
+async function resolveMarkdownPage(
+    node: FernNavigation.NavigationNodePage,
+    found: FernNavigation.utils.Node.Found,
+    apis: Record<string, APIV1Read.ApiDefinition>,
+    pages: Record<string, DocsV1Read.PageContent>,
+    mdxOptions: FernSerializeMdxOptions | undefined,
+    featureFlags: FeatureFlags,
+    domain: string,
+    neighbors: ResolvedPath.Neighbors,
+): Promise<ResolvedPath.CustomMarkdownPage | undefined> {
+    const pageId = FernNavigation.utils.getPageId(node);
+    if (pageId == null) {
+        return;
+    }
+    const pageContent = pages[pageId];
+    if (pageContent == null) {
+        // eslint-disable-next-line no-console
+        console.error("Markdown content not found", pageId);
+        return;
+    }
+    const mdx = await serializeMdx(pageContent.markdown, {
+        ...mdxOptions,
+        filename: pageId,
+        frontmatterDefaults: {
+            title: node.title,
+            breadcrumbs: found.breadcrumb,
+            "edit-this-page-url": pageContent.editThisPageUrl,
+            "force-toc": featureFlags.isTocDefaultEnabled,
+        },
+    });
+    const frontmatter = typeof mdx === "string" ? {} : mdx.frontmatter;
+
+    let apiNodes: FernNavigation.ApiReferenceNode[] = [];
+    if (
+        pageContent.markdown.includes("EndpointRequestSnippet") ||
+        pageContent.markdown.includes("EndpointResponseSnippet")
+    ) {
+        apiNodes = FernNavigation.utils.collectApiReferences(found.currentVersion ?? found.root);
+    }
+    const resolvedApis = Object.fromEntries(
+        await Promise.all(
+            apiNodes.map(async (apiNode): Promise<[string, ResolvedRootPackage]> => {
+                const holder = FernNavigation.ApiDefinitionHolder.create(apis[apiNode.apiDefinitionId]);
+                const typeResolver = new ApiTypeResolver(apis[apiNode.apiDefinitionId].types, mdxOptions);
+                return [
+                    apiNode.title,
+                    await ApiDefinitionResolver.resolve(
+                        apiNode,
+                        holder,
+                        typeResolver,
+                        pages,
+                        mdxOptions,
+                        featureFlags,
+                        domain,
+                    ),
+                ];
+            }),
+        ),
+    );
+    return {
+        type: "custom-markdown-page",
+        slug: node.slug,
+        title: frontmatter.title ?? node.title,
+        mdx,
+        neighbors,
+        apis: resolvedApis,
+    };
 }
 
 async function getNeighbor(

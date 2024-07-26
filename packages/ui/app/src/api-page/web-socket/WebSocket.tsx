@@ -5,7 +5,7 @@ import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { useFeatureFlags, useNavigationNodes } from "../../atoms";
+import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
@@ -53,7 +53,6 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const maybeNode = nodes.get(websocket.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
 
-    const { isApiScrollingDisabled } = useFeatureFlags();
     const route = `/${websocket.slug}`;
 
     const { setTargetRef } = useApiPageCenterElement({ slug: websocket.slug });
@@ -109,7 +108,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
         <div className={"fern-endpoint-content"} ref={setTargetRef} data-route={route.toLowerCase()}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": !isLastInApi && !isApiScrollingDisabled,
+                    "border-default border-b mb-px pb-20": !isLastInApi,
                 })}
             >
                 <header className="space-y-2.5 pt-8">

@@ -1,6 +1,7 @@
 import type { APIV1Read, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
+import { UnreachableCaseError } from "ts-essentials";
 import { store } from "../atoms";
 import { SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
 import type { BundledMDX } from "../mdx/types";
@@ -195,6 +196,27 @@ export function isWebhook(definition: ResolvedApiDefinition): definition is Reso
 export function isWebSocket(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.WebSocket {
     return definition.type === "websocket";
 }
+
+interface ResolvedApiDefinitionVisitor<T> {
+    endpoint(definition: ResolvedApiDefinition.Endpoint): T;
+    webhook(definition: ResolvedApiDefinition.Webhook): T;
+    websocket(definition: ResolvedApiDefinition.WebSocket): T;
+}
+
+export const ResolvedApiDefinition = {
+    visit: <T>(definition: ResolvedApiDefinition, visitor: ResolvedApiDefinitionVisitor<T>): T => {
+        switch (definition.type) {
+            case "endpoint":
+                return visitor.endpoint(definition);
+            case "webhook":
+                return visitor.webhook(definition);
+            case "websocket":
+                return visitor.websocket(definition);
+            default:
+                throw new UnreachableCaseError(definition);
+        }
+    },
+};
 
 export interface ResolvedSubpackage extends WithMetadata, ResolvedWithApiDefinition {
     type: "subpackage";

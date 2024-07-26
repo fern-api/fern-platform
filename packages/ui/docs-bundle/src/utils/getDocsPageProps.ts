@@ -7,9 +7,9 @@ import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
     convertNavigatableToResolvedPath,
-    getSeoProps,
     getGitHubInfo,
     getGitHubRepo,
+    getSeoProps,
     setMdxBundler,
 } from "@fern-ui/ui";
 import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
@@ -237,7 +237,11 @@ async function convertDocsToDocsPageProps({
     }
 
     const featureFlags = await getFeatureFlags(xFernHost);
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs, featureFlags.isBatchStreamToggleDisabled);
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(
+        docs,
+        featureFlags.isBatchStreamToggleDisabled,
+        featureFlags.isApiScrollingDisabled,
+    );
     const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {

@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { memo, useEffect } from "react";
-import { FERN_STREAM_ATOM, useFeatureFlags, useResolvedPath } from "../../atoms";
+import { FERN_STREAM_ATOM, useResolvedPath } from "../../atoms";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -27,7 +27,6 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
 }) => {
     const [isStream, setStream] = useAtom(FERN_STREAM_ATOM);
     const resolvedPath = useResolvedPath();
-    const { isApiScrollingDisabled } = useFeatureFlags();
 
     const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;
 
@@ -57,7 +56,7 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
             endpoint={endpoint}
             breadcrumbs={breadcrumbs}
             containerRef={setTargetRef}
-            hideBottomSeparator={isLastInApi || isApiScrollingDisabled}
+            hideBottomSeparator={isLastInApi}
             types={types}
         />
     );

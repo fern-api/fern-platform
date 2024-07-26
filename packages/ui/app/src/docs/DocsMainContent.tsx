@@ -36,7 +36,11 @@ function DocsMainContentInternal(): ReactElement | null {
     return visitDiscriminatedUnion(resolvedPath)._visit({
         "custom-markdown-page": (resolvedPath) => <CustomDocsPage mdx={resolvedPath.mdx} resolvedPath={resolvedPath} />,
         "api-page": (resolvedPath) => (
-            <ApiPage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />
+            <ApiPage
+                initialApi={resolvedPath.apiDefinition}
+                showErrors={resolvedPath.showErrors}
+                disableLongScrolling={resolvedPath.disableLongScrolling}
+            />
         ),
         changelog: (resolvedPath) => <ChangelogPage resolvedPath={resolvedPath} />,
         "changelog-entry": (resolvedPath) => <ChangelogEntryPage resolvedPath={resolvedPath} />,
