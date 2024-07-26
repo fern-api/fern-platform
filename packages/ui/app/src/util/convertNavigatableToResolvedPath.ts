@@ -171,6 +171,7 @@ export async function convertNavigatableToResolvedPath({
             title: node.title,
             api: apiReference.apiDefinitionId,
             apiDefinition,
+            disableLongScrolling: apiReference.disableLongScrolling ?? false,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
             showErrors: apiReference.showErrors ?? false,
             neighbors,
