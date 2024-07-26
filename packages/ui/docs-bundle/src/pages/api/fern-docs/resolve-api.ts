@@ -56,6 +56,7 @@ const resolveApiHandler: NextApiHandler = async (
         const root = FernNavigation.utils.convertLoadDocsForUrlResponse(
             docsResponse.body,
             featureFlags.isBatchStreamToggleDisabled,
+            featureFlags.isApiScrollingDisabled,
         );
 
         setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));

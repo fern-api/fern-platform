@@ -19,6 +19,7 @@ export class NavigationConfigConverter {
         private basePath: string | undefined,
         private lexicographic?: boolean,
         private disableEndpointPairs?: boolean,
+        private disableLongScrolling?: boolean,
     ) {}
 
     public static convert(
@@ -29,6 +30,7 @@ export class NavigationConfigConverter {
         basePath: string | undefined,
         lexicographic?: boolean,
         disableEndpointPairs?: boolean,
+        disableLongScrolling?: boolean,
     ): FernNavigation.RootNode {
         return new NavigationConfigConverter(
             title,
@@ -38,6 +40,7 @@ export class NavigationConfigConverter {
             basePath,
             lexicographic,
             disableEndpointPairs,
+            disableLongScrolling,
         ).convert();
     }
 
@@ -289,6 +292,7 @@ export class NavigationConfigConverter {
                     this.#idgen,
                     this.lexicographic,
                     this.disableEndpointPairs,
+                    this.disableLongScrolling,
                 );
             },
             changelog: (changelog) =>

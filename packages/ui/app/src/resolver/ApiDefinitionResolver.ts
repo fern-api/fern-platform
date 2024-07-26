@@ -118,8 +118,8 @@ export class ApiDefinitionResolver {
                                     title: page.title,
                                     breadcrumbs: [], // TODO: implement breadcrumbs
                                     "edit-this-page-url": pageContent.editThisPageUrl,
-                                    layout: this.root.disableLongScrolling ? undefined : "reference",
-                                    "hide-nav-links": this.root.disableLongScrolling,
+                                    "hide-nav-links": true,
+                                    layout: "reference",
                                     "force-toc": this.featureFlags.isTocDefaultEnabled,
                                 },
                             }),
@@ -145,8 +145,8 @@ export class ApiDefinitionResolver {
                         title: node.title,
                         breadcrumbs: [], // TODO: implement breadcrumbs
                         "edit-this-page-url": pageContent.editThisPageUrl,
-                        layout: this.root.disableLongScrolling ? undefined : "reference",
-                        "hide-nav-links": this.root.disableLongScrolling,
+                        "hide-nav-links": true,
+                        layout: "reference",
                         "force-toc": this.featureFlags.isTocDefaultEnabled,
                     },
                 }),
