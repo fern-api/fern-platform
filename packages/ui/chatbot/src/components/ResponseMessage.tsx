@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
+import { memo } from "react";
 import { FernAvatar } from "./FernAvatar";
 import { MarkdownContent } from "./MarkdownContent";
 
-export function ChatbotMessage({ message }: { message: string }): ReactElement {
+export const ResponseMessage = memo(({ message }: { message: string }) => {
     return (
         <div className="flex flex-1 gap-4 text-base">
             <div className="flex-shrink-0">
@@ -13,4 +13,4 @@ export function ChatbotMessage({ message }: { message: string }): ReactElement {
             </div>
         </div>
     );
-}
+});

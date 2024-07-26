@@ -1,5 +1,5 @@
 export interface ChatbotMessage {
-    role: "CHATBOT";
+    role: "AI";
     message: string;
 }
 
