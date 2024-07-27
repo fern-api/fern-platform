@@ -1,8 +1,7 @@
-import { kv } from "@vercel/kv";
 import algolia from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
-import { ChatMessage } from "cohere-ai/api";
 import { v4 } from "uuid";
+import { FernRegistryClient } from "../../../../../../../fdr-sdk/src/client/generated";
 
 export const runtime = "edge";
 
@@ -14,8 +13,13 @@ if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_ADMIN_API_KEY || !proces
     throw new Error("Missing Algolia environment variables");
 }
 
-const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY);
-const index = algoliaClient.initIndex(process.env.ALGOLIA_SEARCH_INDEX); // this can probably be hardcoded in cohere for app hack
+if (!process.env.DOCS_URL) {
+    throw new Error("Missing DOCS_URL environment variable");
+}
+
+const docsUrl = process.env.DOCS_URL;
+
+const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY); // this can probably be hardcoded in cohere for app hack
 
 const PREAMBLE = `
 You are an expert AI assistant called Fernie that helps developers answer questions about Cohere's APIs and SDKs.
@@ -40,42 +44,44 @@ export default async function handler(req: Request): Promise<Response> {
     const body = await req.json();
 
     let conversationId = body.conversationId;
-    let conversationHistory: ChatMessage[];
+
     if (!body.conversationId) {
         conversationId = v4();
-        conversationHistory = [];
-        await kv.set(conversationId, conversationHistory);
-    } else {
-        conversationHistory = (await kv.get(conversationId)) || [];
     }
 
-    // check pagination in future
+    const frc = new FernRegistryClient({ environment: "production" });
+
+    const docsUrlResponse = await frc.docs.v2.read.getDocsForUrl({ url: docsUrl });
+    const privateDocsUrlResponse = await frc.docs.v2.read.getPrivateDocsForUrl({ url: docsUrl });
+
+    const docsSearchIndex = docsUrlResponse.ok ? docsUrlResponse.body.definition.algoliaSearchIndex : undefined;
+    const privateDocsSearchIndex = privateDocsUrlResponse.ok
+        ? privateDocsUrlResponse.body.definition.algoliaSearchIndex
+        : undefined;
+
+    if (!docsSearchIndex) {
+        throw new Error("No Algolia search index found");
+    }
+
+    const index = algoliaClient.initIndex(docsSearchIndex);
     const { hits } = await index.search(body.message);
 
-    // const embeddedResponse = await cohere.embed({
-    //     texts: hits.map((hit) => JSON.stringify(hit)),
-    //     model: "string",
-    //     inputType: Cohere.EmbedInputType.SearchDocument,
-    //     embeddingTypes: [Cohere.EmbeddingType.Float],
-    //     truncate: Cohere.EmbedRequestTruncate.None,
-    // });
+    if (privateDocsSearchIndex) {
+        const privateIndex = algoliaClient.initIndex(privateDocsSearchIndex);
+        const { hits: privateHits } = await privateIndex.search(body.message);
+        hits.push(...privateHits);
+    }
 
     const response = await cohere.chatStream({
         preamble: PREAMBLE,
-        chatHistory: conversationHistory,
-        conversationId: body.conversationId,
+        conversationId,
         message: body.message,
-        // don't think we need documents in chat history, but will play with this?
         documents: hits.map((hit) => ({
-            JSON: JSON.stringify(hit),
+            content: JSON.stringify(hit),
         })),
     });
 
-    conversationHistory.push({ role: "USER", message: body.message });
-
-    const stream = convertAsyncIterableToStream(response).pipeThrough(
-        getCohereStreamTransformer(conversationId, conversationHistory),
-    );
+    const stream = convertAsyncIterableToStream(response).pipeThrough(getCohereStreamTransformer());
 
     return new Response(stream, {
         status: 200,
@@ -94,20 +100,13 @@ function convertAsyncIterableToStream<T>(iterable: AsyncIterable<T>): ReadableSt
     });
 }
 
-function getCohereStreamTransformer(
-    conversationId: string,
-    chatHistory: ChatMessage[],
-): TransformStream<Cohere.StreamedChatResponse, Uint8Array> {
+function getCohereStreamTransformer(): TransformStream<Cohere.StreamedChatResponse, Uint8Array> {
     const encoder = new TextEncoder();
     return new TransformStream<Cohere.StreamedChatResponse, Uint8Array>({
         async transform(chunk, controller) {
             if (chunk.eventType === "text-generation") {
-                chatHistory.push({ role: "CHATBOT", message: chunk.text });
                 controller.enqueue(encoder.encode(chunk.text));
             }
-        },
-        async flush(_controller) {
-            await kv.set(conversationId, chatHistory);
         },
     });
 }
