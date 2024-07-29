@@ -4,7 +4,13 @@ import { merge } from "lodash-es";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { Wifi, WifiOff } from "react-feather";
 import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
+import { useSelectedEnvironmentId } from "../atoms/environment";
+import {
+    ResolvedTypeDefinition,
+    ResolvedWebSocketChannel,
+    ResolvedWebSocketMessage,
+    resolveEnvironment,
+} from "../resolver/types";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
@@ -39,6 +45,9 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
     // auto-destroy the socket when the component is unmounted
     useEffect(() => () => socket.current?.close(), []);
 
+    const selectedEnvironmentId = useSelectedEnvironmentId();
+    const baseUrl = resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl;
+
     const startSession = useCallback(async () => {
         return new Promise<boolean>((resolve) => {
             if (socket.current != null && socket.current.readyState !== WebSocket.CLOSED) {
@@ -48,12 +57,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
 
             setError(null);
 
-            const url = buildRequestUrl(
-                websocket.defaultEnvironment?.baseUrl,
-                websocket.path,
-                formState.pathParameters,
-                formState.queryParameters,
-            );
+            const url = buildRequestUrl(baseUrl, websocket.path, formState.pathParameters, formState.queryParameters);
 
             setConnectedState("opening");
 
@@ -105,7 +109,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
         formState.queryParameters,
         pushMessage,
         websocket.auth,
-        websocket.defaultEnvironment?.baseUrl,
+        baseUrl,
         websocket.path,
     ]);
 
@@ -127,6 +131,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
         },
         [pushMessage, startSession, types],
     );
+
     return (
         <FernTooltipProvider>
             <div className="flex min-h-0 flex-1 shrink flex-col h-full">
@@ -141,7 +146,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
                                   ? socket.current?.close()
                                   : null
                         }
-                        environment={websocket.defaultEnvironment ?? websocket.environments[0]}
+                        environment={resolveEnvironment(websocket, selectedEnvironmentId)}
                         path={websocket.path}
                         queryParameters={websocket.queryParameters}
                         sendRequestButtonLabel={

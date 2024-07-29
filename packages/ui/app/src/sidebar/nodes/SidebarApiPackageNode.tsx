@@ -65,7 +65,8 @@ export function SidebarApiPackageNode({
         );
     }
 
-    const expanded = checkExpanded(node.id);
+    const expanded =
+        selectedNodeId === node.id || checkExpanded(node.id) || (childSelected && node.overviewPageId != null);
     const showIndicator = childSelected && !expanded;
 
     return (
@@ -81,6 +82,7 @@ export function SidebarApiPackageNode({
             showIndicator={showIndicator}
             hidden={node.hidden}
             slug={node.overviewPageId != null ? node.slug : undefined}
+            selected={node.id === selectedNodeId}
         >
             <ul
                 className={clsx("fern-sidebar-group", {

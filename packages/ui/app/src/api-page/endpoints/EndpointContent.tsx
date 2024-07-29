@@ -17,12 +17,17 @@ import {
     store,
     useAtomEffect,
 } from "../../atoms";
+import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
-import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedError,
+    ResolvedTypeDefinition,
+    resolveEnvironment,
+} from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
-import { AnimatedTitle } from "./AnimatedTitle";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
@@ -255,6 +260,7 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialExampleHeight]);
 
+    const selectedEnvironmentId = useSelectedEnvironmentId();
     return (
         <div
             className={"fern-endpoint-content"}
@@ -272,7 +278,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                     <div className="flex items-center justify-between">
                         <span>
                             <h1 className="fern-page-heading">
-                                <AnimatedTitle>{endpoint.title}</AnimatedTitle>
+                                {/* <AnimatedTitle>{endpoint.title}</AnimatedTitle> */}
+                                {endpoint.title}
                             </h1>
                             {endpoint.availability != null && (
                                 <span className="inline-block ml-2 align-text-bottom">
@@ -293,7 +300,7 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                     <EndpointUrlWithOverflow
                         path={endpoint.path}
                         method={endpoint.method}
-                        environment={endpoint.defaultEnvironment?.baseUrl}
+                        selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
                         showEnvironment
                         large
                     />

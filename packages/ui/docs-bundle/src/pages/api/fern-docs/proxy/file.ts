@@ -13,7 +13,7 @@ import { buildRequestBody } from "./rest";
  */
 
 export const config = {
-    maxDuration: 60 * 5, // 5 minutes
+    maxDuration: 300, // 5 minutes
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {

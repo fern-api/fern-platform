@@ -126,7 +126,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
     return { type: "redirect", redirect };
 }
 
-function createBreadcrumb(nodes: NavigationNode[]): string[] {
+export function createBreadcrumb(nodes: NavigationNode[]): string[] {
     const breadcrumb: string[] = [];
     nodes.forEach((node) => {
         if (!hasMetadata(node)) {

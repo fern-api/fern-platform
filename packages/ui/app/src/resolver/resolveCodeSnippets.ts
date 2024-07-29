@@ -5,7 +5,12 @@ import { noop } from "ts-essentials";
 import { convertEndpointExampleToHttpRequestExample } from "../api-page/examples/HttpRequestExample";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
 import { buildRequestUrl, unknownToString } from "../api-playground/utils";
-import { ResolvedCodeSnippet, ResolvedEndpointDefinition, ResolvedExampleEndpointRequest } from "./types";
+import {
+    ResolvedCodeSnippet,
+    ResolvedEndpointDefinition,
+    ResolvedExampleEndpointRequest,
+    resolveEnvironment,
+} from "./types";
 
 interface HTTPSnippetClient {
     targetId: TargetId;
@@ -180,7 +185,7 @@ function getHarRequest(
         cookies: [],
         bodySize: -1,
     };
-    request.url = buildRequestUrl(endpoint.defaultEnvironment?.baseUrl, endpoint.path, example.pathParameters);
+    request.url = buildRequestUrl(resolveEnvironment(endpoint)?.baseUrl, endpoint.path, example.pathParameters);
     request.method = endpoint.method;
     request.queryString = Object.entries(example.queryParameters).map(([name, value]) => ({
         name,

@@ -30,7 +30,7 @@
       "name": "Debug with Chrome",
       "type": "node-terminal",
       "request": "launch",
-      "command": "pnpm docs:dev",
+      "command": "pnpm dev:fern-prod",
       "cwd": "${workspaceFolder}/packages/ui/docs-bundle",
       "serverReadyAction": {
         "pattern": "- Local:.+(https?://.+)",

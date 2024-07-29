@@ -52,15 +52,17 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
 
     const handleChangeKey = useCallback((idx: number, newKey: unknown) => {
         setInternalState((oldState) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            return [...oldState.slice(0, idx), { ...oldState[idx]!, key: newKey }, ...oldState.slice(idx + 1)];
+            const nextState = { ...oldState[idx] };
+            nextState.key = typeof newKey === "function" ? newKey(nextState.key) : newKey;
+            return [...oldState.slice(0, idx), nextState, ...oldState.slice(idx + 1)];
         });
     }, []);
 
     const handleChangeValue = useCallback((idx: number, newValue: unknown) => {
         setInternalState((oldState) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            return [...oldState.slice(0, idx), { ...oldState[idx]!, value: newValue }, ...oldState.slice(idx + 1)];
+            const nextState = { ...oldState[idx] };
+            nextState.value = typeof newValue === "function" ? newValue(nextState.value) : newValue;
+            return [...oldState.slice(0, idx), nextState, ...oldState.slice(idx + 1)];
         });
     }, []);
     const handleRemoveItem = useCallback((idx: number) => {

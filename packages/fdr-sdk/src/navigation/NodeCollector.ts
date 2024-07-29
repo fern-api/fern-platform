@@ -25,7 +25,8 @@ const NodeCollectorInstances = new WeakMap<NavigationNode, NodeCollector>();
 export class NodeCollector {
     private static readonly EMPTY = new NodeCollector(undefined);
     private idToNode = new Map<FernNavigation.NodeId, NavigationNode>();
-    private slugToNode: Record<FernNavigation.Slug, NavigationNodeWithMetadataAndParents> = {};
+    private idToNodeParents = new Map<FernNavigation.NodeId, NavigationNode[]>();
+    private slugToNode = new Map<FernNavigation.Slug, NavigationNodeWithMetadataAndParents>();
     private orphanedNodes: NavigationNodeWithMetadata[] = [];
 
     public static collect(rootNode: NavigationNode | undefined): NodeCollector {
@@ -45,7 +46,7 @@ export class NodeCollector {
     #lastNeighboringNode: NavigationNodeNeighbor | undefined;
     #setNode(slug: FernNavigation.Slug, node: NavigationNodeWithMetadata, parents: NavigationNode[]) {
         const toSet = { node, parents, prev: this.#lastNeighboringNode, next: undefined };
-        this.slugToNode[slug] = toSet;
+        this.slugToNode.set(slug, toSet);
 
         if (isNeighbor(node) && !node.hidden) {
             this.#lastNeighboringNode = node;
@@ -63,7 +64,9 @@ export class NodeCollector {
         }
         traverseNavigation(rootNode, (node, _index, parents) => {
             this.idToNode.set(node.id, node);
+            this.idToNodeParents.set(node.id, parents);
 
+            // if the node is the default version, make a copy of it and "prune" the version slug from all children nodes
             const parent = parents[parents.length - 1];
             if (
                 node.type === "version" &&
@@ -94,7 +97,7 @@ export class NodeCollector {
             return;
         }
 
-        const existing = this.slugToNode[node.slug];
+        const existing = this.slugToNode.get(node.slug);
         if (existing == null) {
             this.#setNode(node.slug, node, parents);
         } else if (!node.hidden && isPage(node) && (existing.node.hidden || !isPage(existing.node))) {
@@ -118,7 +121,7 @@ export class NodeCollector {
     });
 
     private getSlugMap = once((): Map<string, NavigationNodeWithMetadata> => {
-        return new Map(Object.entries(this.slugToNode).map(([slug, { node }]) => [slug, node]));
+        return new Map([...this.slugToNode.entries()].map(([slug, { node }]) => [slug, node]));
     });
 
     get slugMap(): Map<string, NavigationNodeWithMetadata> {
@@ -133,21 +136,23 @@ export class NodeCollector {
         return this.idToNode.get(id);
     }
 
-    public getSlugMapWithParents = once((): Map<string, NavigationNodeWithMetadataAndParents> => {
-        return new Map(Object.entries(this.slugToNode));
-    });
+    public getParents(id: FernNavigation.NodeId): NavigationNode[] {
+        return this.idToNodeParents.get(id) ?? [];
+    }
+
+    public getSlugMapWithParents = (): ReadonlyMap<FernNavigation.Slug, NavigationNodeWithMetadataAndParents> => {
+        return this.slugToNode;
+    };
 
     public getSlugs = once((): string[] => {
-        return Object.keys(this.slugToNode);
+        return [...this.slugToNode.keys()];
     });
 
     /**
      * Returns a list of slugs for all pages in the navigation tree. This includes hidden pages.
      */
     public getPageSlugs = once((): string[] => {
-        return Object.values(this.slugToNode)
-            .filter(({ node }) => isPage(node))
-            .map(({ node }) => urljoin(node.slug));
+        return [...this.slugToNode.values()].filter(({ node }) => isPage(node)).map(({ node }) => urljoin(node.slug));
     });
 
     /**
@@ -156,7 +161,7 @@ export class NodeCollector {
      * This excludes hidden pages and noindex pages.
      */
     public getIndexablePageSlugs = once((): string[] => {
-        return Object.values(this.slugToNode)
+        return [...this.slugToNode.values()]
             .filter(({ node }) => isPage(node) && node.hidden !== true)
             .filter(({ node }) => (hasMarkdown(node) ? node.noindex !== true : true))
             .map(({ node }) => urljoin(node.slug));

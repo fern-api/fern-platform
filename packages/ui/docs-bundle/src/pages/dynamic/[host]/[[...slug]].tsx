@@ -1,7 +1,7 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { DocsPage } from "@fern-ui/ui";
 import { GetServerSideProps } from "next";
 import { ComponentProps } from "react";
+import { convertStaticToServerSidePropsResult } from "../../../utils/convertStaticToServerSidePropsResult";
 import { getDocsPageProps, getDynamicDocsPageProps } from "../../../utils/getDocsPageProps";
 
 export default DocsPage;
@@ -27,26 +27,8 @@ const getDocsServerSideProps: GetServerSideProps<ComponentProps<typeof DocsPage>
     const token = req.cookies.fern_token;
 
     if (token == null) {
-        const result = await getDocsPageProps(xFernHost, slugArray);
-
-        return visitDiscriminatedUnion(result, "type")._visit<
-            ReturnType<GetServerSideProps<ComponentProps<typeof DocsPage>>>
-        >({
-            notFound: () => Promise.resolve({ notFound: true }),
-            redirect: (redirect) => Promise.resolve({ redirect: redirect.redirect }),
-            props: (props) => Promise.resolve({ props: props.props }),
-            _other: () => Promise.resolve({ notFound: true }),
-        });
+        return convertStaticToServerSidePropsResult(await getDocsPageProps(xFernHost, slugArray));
     } else {
-        const result = await getDynamicDocsPageProps(xFernHost, slugArray, req.cookies, res);
-
-        return visitDiscriminatedUnion(result, "type")._visit<
-            ReturnType<GetServerSideProps<ComponentProps<typeof DocsPage>>>
-        >({
-            notFound: () => Promise.resolve({ notFound: true }),
-            redirect: (redirect) => Promise.resolve({ redirect: redirect.redirect }),
-            props: (props) => Promise.resolve({ props: props.props }),
-            _other: () => Promise.resolve({ notFound: true }),
-        });
+        return getDynamicDocsPageProps(xFernHost, slugArray, req.cookies, res);
     }
 };
