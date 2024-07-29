@@ -1,7 +1,9 @@
 import algolia from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
+import { NextRequest } from "next/server";
 import { v4 } from "uuid";
 import { FernRegistryClient } from "../../../../../../../fdr-sdk/src/client/generated";
+import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
 
@@ -9,17 +11,12 @@ const cohere = new CohereClient({
     token: process.env.COHERE_API_KEY,
 });
 
-if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_ADMIN_API_KEY || !process.env.ALGOLIA_SEARCH_INDEX) {
+if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_API_KEY) {
     throw new Error("Missing Algolia environment variables");
 }
 
-if (!process.env.DOCS_URL) {
-    throw new Error("Missing DOCS_URL environment variable");
-}
 
-const docsUrl = process.env.DOCS_URL;
-
-const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY); // this can probably be hardcoded in cohere for app hack
+const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY); // this can probably be hardcoded in cohere for app hack
 
 const PREAMBLE = `
 You are an expert AI assistant called Fernie that helps developers answer questions about Cohere's APIs and SDKs.
@@ -40,6 +37,8 @@ export default async function handler(req: Request): Promise<Response> {
     if (req.method !== "POST") {
         return new Response(null, { status: 405 });
     }
+
+    const docsUrl = getXFernHostEdge(req as NextRequest);
 
     const body = await req.json();
 
