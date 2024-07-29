@@ -13,6 +13,7 @@ import {
 } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { EndpointAuthSection } from "./EndpointAuthSection";
 import { EndpointError } from "./EndpointError";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
@@ -39,6 +40,7 @@ export declare namespace EndpointContentLeft {
 
 const REQUEST = ["request"];
 const RESPONSE = ["response"];
+const AUTH = ["auth"];
 const REQUEST_PATH = ["request", "path"];
 const REQUEST_QUERY = ["request", "query"];
 const REQUEST_HEADER = ["request", "header"];
@@ -65,6 +67,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 
     return (
         <div className="flex max-w-full flex-1 flex-col  gap-12">
+            {endpoint.auth && (
+                <EndpointSection title="Authorization" anchorIdParts={AUTH} route={"/" + endpoint.slug}>
+                    <div>
+                        <TypeComponentSeparator />
+                        <EndpointAuthSection auth={endpoint.auth} />
+                    </div>
+                </EndpointSection>
+            )}
             {endpoint.pathParameters.length > 0 && (
                 <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} route={"/" + endpoint.slug}>
                     <div>
