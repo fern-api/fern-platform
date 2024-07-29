@@ -108,7 +108,7 @@ export const CollapseSidebarProvider: FC<
         } else {
             if (sidebar) {
                 const selectedNodes: FernNavigation.NodeId[] = [];
-                FernNavigation.utils.traverseNavigation(sidebar, (node, _index, parents) => {
+                FernNavigation.utils.traverseNavigation(sidebar, (node, _index, _parents) => {
                     if (FernNavigation.isSection(node) && node.type === "section") {
                         if (!node?.collapsed) {
                             selectedNodes.push(...[node.id, ...(parentIdMap.get(node.id) ?? [])]);
