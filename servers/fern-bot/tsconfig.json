@@ -9,6 +9,7 @@
     "sourceMap": true,
     "target": "ES2020",
     "outDir": "lib",
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*.ts", "serverless.ts"],
