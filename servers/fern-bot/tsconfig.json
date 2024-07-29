@@ -15,5 +15,6 @@
   "exclude": ["node_modules/**/*", ".serverless/**/*", ".webpack/**/*", "_warmup/**/*", ".vscode/**/*"],
   "ts-node": {
     "require": ["tsconfig-paths/register"]
-  }
+  },
+  "references": [{ "path": "../../packages/commons/github" }]
 }
