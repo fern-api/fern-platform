@@ -1,7 +1,7 @@
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
-import { LOGO_HREF_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM, useColors, useFile, useLogoHeight } from "../atoms";
+import { DOCS_ATOM, LOGO_HREF_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM, useColors, useFile, useLogoHeight } from "../atoms";
 import { FernImage } from "../components/FernImage";
 import { FernLink } from "../components/FernLink";
 import { VersionDropdown } from "./VersionDropdown";
@@ -40,11 +40,13 @@ function FernLogoImage(): ReactElement | null {
     const colors = useColors();
     const logoImageHeight = useLogoHeight();
     const imageClassName = "max-h-full object-contain";
+    const title = useAtomValue(DOCS_ATOM).title;
     if (colors.dark != null && colors.light != null) {
         return (
             <>
                 {colors.light.logo != null && (
                     <FernFileImage
+                        alt={title}
                         fileId={colors.light.logo}
                         className={cn(imageClassName, "block dark:hidden")}
                         height={logoImageHeight}
@@ -56,6 +58,7 @@ function FernLogoImage(): ReactElement | null {
                 )}
                 {colors.dark.logo != null && (
                     <FernFileImage
+                        alt={title}
                         fileId={colors.dark.logo}
                         className={cn(imageClassName, "hidden dark:block")}
                         height={logoImageHeight}
