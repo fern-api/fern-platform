@@ -1,8 +1,8 @@
+import { FdrClient } from "@fern-api/fdr-sdk";
 import algolia from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
 import { NextRequest } from "next/server";
 import { v4 } from "uuid";
-import { FernRegistryClient } from "../../../../../../../fdr-sdk/src/client/generated";
 import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
@@ -47,7 +47,7 @@ export default async function handler(req: Request): Promise<Response> {
         conversationId = v4();
     }
 
-    const frc = new FernRegistryClient({ environment: "production" });
+    const frc = new FdrClient({ environment: "production" });
 
     const docsUrlResponse = await frc.docs.v2.read.getDocsForUrl({ url: docsUrl });
     const privateDocsUrlResponse = await frc.docs.v2.read.getPrivateDocsForUrl({ url: docsUrl });
