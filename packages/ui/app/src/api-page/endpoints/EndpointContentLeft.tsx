@@ -66,7 +66,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const { isAuthEnabledInDocs } = useFeatureFlags();
 
     const headers = endpoint.headers.filter((header) => !header.hidden);
-    console.log(isAuthEnabledInDocs);
+
     return (
         <div className="flex max-w-full flex-1 flex-col  gap-12">
             {endpoint.auth && isAuthEnabledInDocs && (
