@@ -17,7 +17,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
     const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
     const handleToggleExpand = useCallback(() => toggleExpanded(node.id), [node.id, toggleExpanded]);
     const selectedNodeId = useCurrentNodeId();
-
+    console.log(node.children)
     if (node.children.length === 0) {
         if (node.overviewPageId != null) {
             return (
@@ -42,7 +42,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
     }
 
     const expanded =
-        selectedNodeId === node.id || checkExpanded(node.id) || (childSelected && node.overviewPageId != null);
+        selectedNodeId === node.id || checkExpanded(node.id) || (childSelected && node.overviewPageId != null) || !node?.collapsed;
     const showIndicator = childSelected && !expanded;
     return (
         <SidebarSlugLink
