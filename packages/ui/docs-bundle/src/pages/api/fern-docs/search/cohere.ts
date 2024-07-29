@@ -15,7 +15,6 @@ if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_API_KEY) {
     throw new Error("Missing Algolia environment variables");
 }
 
-
 const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY); // this can probably be hardcoded in cohere for app hack
 
 const PREAMBLE = `
