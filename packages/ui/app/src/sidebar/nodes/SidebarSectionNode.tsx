@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useCurrentNodeId } from "../../atoms";
 import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
@@ -14,12 +14,8 @@ interface SidebarSectionNodeProps {
 }
 
 export function SidebarSectionNode({ node, className, depth }: SidebarSectionNodeProps): React.ReactElement | null {
-    const [expanded, setExpanded] = useState<boolean>(false)
     const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
-    const handleToggleExpand = useCallback(() => {
-        toggleExpanded(node.id)
-        setExpanded(!expanded)
-    }, [node.id, toggleExpanded, expanded]);
+    const handleToggleExpand = useCallback(() => toggleExpanded(node.id), [node.id, toggleExpanded]);
     const selectedNodeId = useCurrentNodeId();
 
     if (node.children.length === 0) {
@@ -45,10 +41,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
         return null;
     }
 
-    useEffect(() => {
-        setExpanded(!!node.id || checkExpanded(node.id) || (childSelected && node.overviewPageId != null) || !node?.collapsed)
-    }, [])
-
+    const expanded = selectedNodeId === node.id || checkExpanded(node.id) || (childSelected && node.overviewPageId != null)
     const showIndicator = childSelected && !expanded;
 
     return (
