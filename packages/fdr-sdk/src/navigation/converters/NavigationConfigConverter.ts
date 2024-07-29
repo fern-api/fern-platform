@@ -19,6 +19,7 @@ export class NavigationConfigConverter {
         private basePath: string | undefined,
         private lexicographic?: boolean,
         private disableEndpointPairs?: boolean,
+        private disableLongScrolling?: boolean,
     ) {}
 
     public static convert(
@@ -29,6 +30,7 @@ export class NavigationConfigConverter {
         basePath: string | undefined,
         lexicographic?: boolean,
         disableEndpointPairs?: boolean,
+        disableLongScrolling?: boolean,
     ): FernNavigation.RootNode {
         return new NavigationConfigConverter(
             title,
@@ -38,6 +40,7 @@ export class NavigationConfigConverter {
             basePath,
             lexicographic,
             disableEndpointPairs,
+            disableLongScrolling,
         ).convert();
     }
 
@@ -289,12 +292,19 @@ export class NavigationConfigConverter {
                     this.#idgen,
                     this.lexicographic,
                     this.disableEndpointPairs,
+                    this.disableLongScrolling,
                 );
             },
             changelog: (changelog) =>
                 ChangelogNavigationConverter.convert(changelog, this.noindexMap, parentSlug, this.#idgen),
             // Note: apiSection.node is imported from `navigation`, and is guaranteed to be a FernNavigation.ApiReferenceNode
-            apiV2: (apiSection) => apiSection.node as unknown as FernNavigation.ApiReferenceNode,
+            apiV2: (apiSection) => {
+                const node = apiSection.node as unknown as FernNavigation.ApiReferenceNode;
+                if (this.disableLongScrolling) {
+                    node.disableLongScrolling = true;
+                }
+                return node;
+            },
             changelogV3: (changelog) => changelog.node as unknown as FernNavigation.ChangelogNode,
             _other: (value) => assertNever(value as never),
         });

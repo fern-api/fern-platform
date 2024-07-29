@@ -39,6 +39,11 @@ export function pruneVersionNode<T extends NavigationNode>(
     return node;
 }
 
+/**
+ * All versioned slugs are prefixed with the version slug, but the default version may be accessed without the version prefix.
+ * toDefaultSlug creates the "unversioned" slug for pages under the default version.
+ * This should be treated as the cannonical slug for that page.
+ */
 export function toDefaultSlug(
     slug: FernNavigation.Slug,
     rootSlug: FernNavigation.Slug,

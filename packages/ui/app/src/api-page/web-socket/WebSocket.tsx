@@ -5,7 +5,8 @@ import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { useFeatureFlags, useNavigationNodes } from "../../atoms";
+import { useNavigationNodes } from "../../atoms";
+import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import {
@@ -15,6 +16,7 @@ import {
     ResolvedWebSocketChannel,
     ResolvedWebSocketMessage,
     getParameterDescription,
+    resolveEnvironment,
     stringifyResolvedEndpointPathParts,
     unwrapReference,
 } from "../../resolver/types";
@@ -47,10 +49,10 @@ export const WebSocket: FC<WebSocket.Props> = (props) => {
 
 const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) => {
     const nodes = useNavigationNodes();
+    const selectedEnvironmentId = useSelectedEnvironmentId();
     const maybeNode = nodes.get(websocket.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
 
-    const { isApiScrollingDisabled } = useFeatureFlags();
     const route = `/${websocket.slug}`;
 
     const { setTargetRef } = useApiPageCenterElement({ slug: websocket.slug });
@@ -106,7 +108,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
         <div className={"fern-endpoint-content"} ref={setTargetRef} data-route={route.toLowerCase()}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": !isLastInApi && !isApiScrollingDisabled,
+                    "border-default border-b mb-px pb-20": !isLastInApi,
                 })}
             >
                 <header className="space-y-2.5 pt-8">
@@ -145,14 +147,14 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         <EndpointUrlWithOverflow
                                             path={websocket.path}
                                             method="GET"
-                                            environment={websocket.defaultEnvironment?.baseUrl}
+                                            selectedEnvironment={resolveEnvironment(websocket, selectedEnvironmentId)}
                                             showEnvironment={true}
                                             className="flex-1"
                                         />
                                         <CopyToClipboardButton
                                             className="-mr-1"
                                             content={() =>
-                                                `${websocket.defaultEnvironment?.baseUrl}${websocket.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
+                                                `${resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl}${websocket.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
                                             }
                                         />
                                     </div>
@@ -317,7 +319,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                                     <tr>
                                                         <td className="text-left align-top">URL</td>
                                                         <td className="text-left align-top">
-                                                            {`${websocket.defaultEnvironment?.baseUrl ?? ""}${example?.path ?? stringifyResolvedEndpointPathParts(websocket.path)}`}
+                                                            {`${resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl ?? ""}${example?.path ?? stringifyResolvedEndpointPathParts(websocket.path)}`}
                                                         </td>
                                                     </tr>
                                                     <tr>

@@ -20,6 +20,34 @@ export declare namespace InternalTypeReferenceDefinitions {
     }
 }
 
+// HACHACK: this is a hack to render inlined enums above the description
+export function hasInlineEnum(shape: ResolvedTypeShape, types: Record<string, ResolvedTypeDefinition>): boolean {
+    return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
+        object: () => false,
+        enum: (value) => value.values.length < 6,
+        undiscriminatedUnion: () => false,
+        discriminatedUnion: () => false,
+        list: (value) => hasInlineEnum(value.shape, types),
+        set: (value) => hasInlineEnum(value.shape, types),
+        optional: (optional) => hasInlineEnum(optional.shape, types),
+        map: (map) => hasInlineEnum(map.keyShape, types) || hasInlineEnum(map.valueShape, types),
+        primitive: () => false,
+        literal: () => true,
+        unknown: () => false,
+        _other: () => false,
+        reference: (reference) =>
+            hasInlineEnum(
+                types[reference.typeId] ?? {
+                    type: "unknown",
+                    description: undefined,
+                    availability: undefined,
+                },
+                types,
+            ),
+        alias: (alias) => hasInlineEnum(alias.shape, types),
+    });
+}
+
 export function hasInternalTypeReference(
     shape: ResolvedTypeShape,
     types: Record<string, ResolvedTypeDefinition>,

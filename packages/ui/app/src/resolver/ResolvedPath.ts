@@ -50,6 +50,7 @@ export declare namespace ResolvedPath {
         title: string;
         slug: FernNavigation.Slug;
         api: string;
+        disableLongScrolling: boolean;
         apiDefinition: ResolvedRootPackage;
         showErrors: boolean;
         neighbors: Neighbors;

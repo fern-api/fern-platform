@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ResolvedEndpointDefinition, ResolvedEndpointPathParts } from "../resolver/types";
+import { ResolvedEndpointDefinition, ResolvedEndpointPathParts, resolveEnvironment } from "../resolver/types";
 
 export type EndpointPathPart =
     | {
@@ -49,7 +49,7 @@ export function divideEndpointPathToParts(path: ResolvedEndpointPathParts[]): En
 }
 
 export function getEndpointEnvironmentUrl(endpoint: ResolvedEndpointDefinition): string | undefined {
-    return endpoint.defaultEnvironment?.baseUrl ?? endpoint.environments[0]?.baseUrl;
+    return resolveEnvironment(endpoint)?.baseUrl;
 }
 
 export function getEndpointTitleAsString(endpoint: APIV1Read.EndpointDefinition): string {

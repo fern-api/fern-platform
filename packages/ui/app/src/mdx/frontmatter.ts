@@ -118,7 +118,7 @@ export function getFrontmatter(content: string): {
     content: string;
 } {
     try {
-        const gm = grayMatter(content);
+        const gm = grayMatter(content.trimStart());
         return {
             data: gm.data,
             content: gm.content,

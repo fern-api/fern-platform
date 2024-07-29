@@ -67,7 +67,8 @@
     "react-dom": "^18.2.0",
     "sharp": "^0.33.3",
     "url-join": "5.0.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "ts-essentials": "^10.0.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

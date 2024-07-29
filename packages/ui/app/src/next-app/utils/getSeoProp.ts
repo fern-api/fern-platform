@@ -7,7 +7,6 @@ import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
 import { stringHasMarkdown } from "../../mdx/common/util";
 import { getFrontmatter } from "../../mdx/frontmatter";
-import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { getFontExtension } from "../../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
 
@@ -18,13 +17,18 @@ function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1
     });
 }
 
-export function getDefaultSeoProps(
+export function getSeoProps(
     domain: string,
     { metadata, title, favicon, typographyV2: typography }: DocsV1Read.DocsConfig,
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
     apis: Record<string, APIV1Read.ApiDefinition>,
-    { node, parents }: Pick<FernNavigation.utils.Node.Found, "node" | "parents">,
+    {
+        root,
+        node,
+        parents,
+        currentVersion,
+    }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
     isSeoDisabled: boolean,
 ): NextSeoProps {
     const additionalMetaTags: MetaTag[] = [];
@@ -38,6 +42,13 @@ export function getDefaultSeoProps(
         additionalLinkTags,
         breadcrumbList: getBreadcrumbList(domain, pages, parents, node),
     };
+
+    // if the current version is the default version, the page is duplicated (/v1/page and /page).
+    // the canonical link should point to `/page`.
+    if (currentVersion != null && currentVersion.default) {
+        const canonicalSlug = FernNavigation.utils.toDefaultSlug(node.slug, root.slug, currentVersion.slug);
+        seo.canonical = `https://${domain}/${canonicalSlug}`;
+    }
 
     const pageId = FernNavigation.utils.getPageId(node);
 
@@ -193,20 +204,6 @@ export function getDefaultSeoProps(
         seo.nofollow = true;
     }
 
-    return seo;
-}
-
-export function getNextSeoProps(
-    resolvedPath: ResolvedPath,
-    node: FernNavigation.NavigationNodeWithMetadata | undefined,
-): NextSeoProps {
-    const seo: NextSeoProps = {};
-
-    // HACKHACK: sets title on shallow navigation
-    // TODO: find a better way to handle this
-    if (node != null && resolvedPath.slug !== node.slug) {
-        seo.title ??= node.title;
-    }
     return seo;
 }
 

@@ -18,7 +18,8 @@ const fetcher = async (url: string) => {
 
 export const PlaygroundContextProvider: FC = () => {
     const basePath = useBasePath();
-    const key = urljoin(basePath ?? "", "/api/fern-docs/resolve-api");
+    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
+    const key = urljoin(basePath || "/", "/api/fern-docs/resolve-api");
 
     const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {
         revalidateOnFocus: false,

@@ -9,7 +9,8 @@ const DEFAULT = { enabled: false as const };
 
 export function useApiKeyInjectionConfig(): APIKeyInjectionConfig {
     const basePath = useBasePath();
-    const key = urljoin(basePath ?? "", API_KEY_INJECTION_ROUTE);
+    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
+    const key = urljoin(basePath || "/", API_KEY_INJECTION_ROUTE);
 
     const { data } = useSWR<APIKeyInjectionConfig>(
         key,

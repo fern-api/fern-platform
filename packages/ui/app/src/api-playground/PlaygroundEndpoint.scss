@@ -9,6 +9,10 @@
         @apply py-1;
     }
 
+    .playground-endpoint-url-with-switcher {
+        @apply truncate break-all font-mono text-xs;
+    }
+
     /* .playground-endpoint:hover .playground-endpoint-url {
         @apply whitespace-normal;
     } */

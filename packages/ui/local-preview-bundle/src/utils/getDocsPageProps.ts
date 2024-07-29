@@ -4,20 +4,20 @@ import { SidebarTab } from "@fern-ui/fdr-utils";
 import {
     DEFAULT_FEATURE_FLAGS,
     DocsPage,
-    DocsPageResult,
     FeatureFlags,
     convertNavigatableToResolvedPath,
-    getDefaultSeoProps,
+    getSeoProps,
     getGitHubInfo,
     getGitHubRepo,
 } from "@fern-ui/ui";
+import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import urljoin from "url-join";
 
 export async function getDocsPageProps(
     docs: DocsV2Read.LoadDocsForUrlResponse,
     slugArray: string[],
-): Promise<DocsPageResult<ComponentProps<typeof DocsPage>>> {
+): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     // HACKHACK: temporarily disable endpoint pairs for cohere in local preview
     const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs, docs.baseUrl.domain.includes("cohere"));
     const slug = FernNavigation.utils.slugjoin(...slugArray);
@@ -28,19 +28,17 @@ export async function getDocsPageProps(
         console.error(`Failed to resolve navigation for ${slug}`);
         if (node.redirect != null) {
             return {
-                type: "redirect",
                 redirect: {
                     destination: encodeURI(urljoin("/", node.redirect)),
                     permanent: false,
                 },
             };
         }
-        return { type: "notFound", notFound: true };
+        return { notFound: true };
     }
 
     if (node.type === "redirect") {
         return {
-            type: "redirect",
             redirect: {
                 destination: encodeURI(urljoin("/", node.redirect)),
                 permanent: false,
@@ -65,7 +63,7 @@ export async function getDocsPageProps(
     if (resolvedPath == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${slug}`);
-        return { type: "notFound", notFound: true };
+        return { notFound: true };
     }
 
     const props: ComponentProps<typeof DocsPage> = {
@@ -137,7 +135,7 @@ export async function getDocsPageProps(
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),
-        seo: getDefaultSeoProps(
+        seo: getSeoProps(
             docs.baseUrl.domain,
             docs.definition.config,
             docs.definition.pages,
@@ -164,8 +162,5 @@ export async function getDocsPageProps(
         }
     }
 
-    return {
-        type: "props",
-        props: JSON.parse(JSON.stringify(props)), // remove all undefineds
-    };
+    return { props };
 }

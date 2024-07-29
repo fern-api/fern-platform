@@ -144,9 +144,17 @@
         @apply flex flex-row-reverse max-w-fit mx-auto lg:max-xl:ml-0 gap-3;
     }
 
-    .fern-layout-content,
     .fern-page-layout {
-        @apply pt-8 px-4 sm:px-6 lg:px-10 w-full pb-20 shrink min-w-0;
+        @apply pt-8 pb-20;
+        @apply px-4 sm:px-6 lg:px-10 w-full shrink min-w-0;
+    }
+
+    .fern-layout-content {
+        @apply pt-8 pb-20 min-w-0;
+    }
+
+    .fern-guide-layout {
+        @apply px-4 sm:px-6 lg:px-10;
     }
 
     .fern-sidebar-hidden:has(.fern-layout-toc) {

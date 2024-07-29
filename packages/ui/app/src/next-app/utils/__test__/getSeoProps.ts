@@ -1,9 +1,9 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { getDefaultSeoProps } from "../getSeoProp";
+import { getSeoProps } from "../getSeoProp";
 
-describe("getDefaultSeoProps", () => {
+describe("getSeoProps", () => {
     it("seo disabled", () => {
-        const props = getDefaultSeoProps(
+        const props = getSeoProps(
             "host",
             { navigation: { items: [] } },
             {},
@@ -21,6 +21,8 @@ describe("getDefaultSeoProps", () => {
                     noindex: undefined,
                 },
                 parents: [],
+                currentVersion: undefined,
+                root: { slug: FernNavigation.Slug("") } as FernNavigation.RootNode,
             },
             true,
         );

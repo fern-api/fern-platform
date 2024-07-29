@@ -5,7 +5,7 @@ import { debounce } from "lodash-es";
 import { Router, useRouter } from "next/router";
 import { PropsWithChildren, useEffect, useMemo } from "react";
 import { noop } from "ts-essentials";
-import { CURRENT_NODE_ATOM, useFeatureFlags } from "../../atoms";
+import { CURRENT_NODE_ATOM, useResolvedPath } from "../../atoms";
 import { getRouteNodeWithAnchor } from "../../util/anchor";
 import { NavigationContext } from "./NavigationContext";
 
@@ -85,7 +85,8 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
 }
 
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({ children }) => {
-    const { isApiScrollingDisabled } = useFeatureFlags();
+    const resolvedPath = useResolvedPath();
+    const isApiScrollingDisabled = resolvedPath.type === "api-page" ? resolvedPath.disableLongScrolling : false;
     const router = useRouter();
     const activeNavigatable = useAtomValue(CURRENT_NODE_ATOM);
 
