@@ -17,7 +17,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
     const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
     const handleToggleExpand = useCallback(() => toggleExpanded(node.id), [node.id, toggleExpanded]);
     const selectedNodeId = useCurrentNodeId();
-    console.log(node.children)
+
     if (node.children.length === 0) {
         if (node.overviewPageId != null) {
             return (
