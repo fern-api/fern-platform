@@ -1,7 +1,12 @@
 {
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@functions/*": ["src/functions/*"],
+      "@libs/*": ["src/libs/*"]
+    },
     "lib": ["ESNext", "DOM"],
+    "module": "esnext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
