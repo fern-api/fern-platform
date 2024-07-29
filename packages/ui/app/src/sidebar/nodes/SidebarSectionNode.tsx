@@ -41,9 +41,9 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
         return null;
     }
 
-    const expanded = selectedNodeId === node.id || checkExpanded(node.id) || (childSelected && node.overviewPageId != null)
+    const expanded = 
+        selectedNodeId === node.id || checkExpanded(node.id) || (childSelected && node.overviewPageId != null)
     const showIndicator = childSelected && !expanded;
-
     return (
         <SidebarSlugLink
             nodeId={node.id}

@@ -1,15 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useAtomValue } from "jotai";
-import {
-    FC,
-    PropsWithChildren,
-    RefObject,
-    createContext,
-    useCallback,
-    useContext,
-    useMemo,
-    useState
-} from "react";
+import { FC, PropsWithChildren, RefObject, createContext, useCallback, useContext, useMemo, useState } from "react";
 import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
 import { CURRENT_NODE_ATOM, CURRENT_NODE_ID_ATOM, useAtomEffect, useSidebarNodes } from "../atoms";
@@ -83,7 +74,7 @@ export const CollapseSidebarProvider: FC<
     //         }),
     //     [registerListener, scrollContainerRef],
     // );
-    
+
     const { parentIdMap, parentToChildrenMap } = useMemo(() => {
         const parentIdMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
         const parentToChildrenMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
@@ -112,26 +103,26 @@ export const CollapseSidebarProvider: FC<
     }, [sidebar]);
 
     const initializeExpandedSections = (): FernNavigation.NodeId[] => {
-        if(selectedNodeId == null) {
-            return []
+        if (selectedNodeId == null) {
+            return [];
         } else {
-        if(sidebar) {
-            const selectedNodes: FernNavigation.NodeId[] = []
-            FernNavigation.utils.traverseNavigation(sidebar, (node, _index, parents) => {
-                if(FernNavigation.isSection(node) && node.type === "section") {
-                    if(!node?.collapsed) {
-                        selectedNodes.push(...[node.id, ...(parentIdMap.get(node.id) ?? [])])
+            if (sidebar) {
+                const selectedNodes: FernNavigation.NodeId[] = [];
+                FernNavigation.utils.traverseNavigation(sidebar, (node, _index, parents) => {
+                    if (FernNavigation.isSection(node) && node.type === "section") {
+                        if (!node?.collapsed) {
+                            selectedNodes.push(...[node.id, ...(parentIdMap.get(node.id) ?? [])]);
+                        }
                     }
-                }
-            })
-            return selectedNodes
-        } else {
-            return [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])]
-        }}
-    }
+                });
+                return selectedNodes;
+            } else {
+                return [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])];
+            }
+        }
+    };
 
-    const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(() => initializeExpandedSections()
-    );
+    const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(() => initializeExpandedSections());
 
     const checkExpanded = useCallback(
         (expandableId: FernNavigation.NodeId) =>
