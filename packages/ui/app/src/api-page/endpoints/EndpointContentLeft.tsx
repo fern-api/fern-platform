@@ -2,6 +2,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
+import { useFeatureFlags } from "../../atoms";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
@@ -62,12 +63,13 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const requestExpandAll = useBooleanState(false);
     const responseExpandAll = useBooleanState(false);
     const errorExpandAll = useBooleanState(false);
+    const { isAuthEnabledInDocs } = useFeatureFlags();
 
     const headers = endpoint.headers.filter((header) => !header.hidden);
-
+    console.log(isAuthEnabledInDocs);
     return (
         <div className="flex max-w-full flex-1 flex-col  gap-12">
-            {endpoint.auth && (
+            {endpoint.auth && isAuthEnabledInDocs && (
                 <EndpointSection title="Authorization" anchorIdParts={AUTH} route={"/" + endpoint.slug}>
                     <div>
                         <TypeComponentSeparator />

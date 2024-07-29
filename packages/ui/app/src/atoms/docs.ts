@@ -19,6 +19,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     scrollInContainerEnabled: false,
     useMdxBundler: false,
     isBatchStreamToggleDisabled: false,
+    isAuthEnabledInDocs: false
 };
 
 const EMPTY_DOCS_STATE: DocsProps = {
