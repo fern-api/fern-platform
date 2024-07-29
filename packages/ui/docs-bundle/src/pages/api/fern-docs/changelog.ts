@@ -115,6 +115,7 @@ function toFeedItem(
             if (frontmatter.image != null) {
                 image = frontmatter.image;
             } else if (frontmatter["og:image"] != null) {
+                // TODO: (rohin) check here
                 image = toUrl(frontmatter["og:image"], files);
             }
 
