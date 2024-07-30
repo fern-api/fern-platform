@@ -106,10 +106,11 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     },
                 });
                 if (result != null && result.endpointId.identifierOverride != null) {
-                    if (toRet[result.endpointId.identifierOverride] == null) {
-                        toRet[result.endpointId.identifierOverride] = {};
-                    }
-                    toRet[result.endpointId.identifierOverride][sdk.type] = result.snippetTemplate;
+                    const template = {
+                        [sdk.type]: result.snippetTemplate,
+                        ...(toRet[result.endpointId.identifierOverride] ?? {}),
+                    };
+                    toRet[result.endpointId.identifierOverride] = template;
                 }
             }
         }
@@ -271,6 +272,14 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         });
     }
 
+    public DEFAULT_ENDPOINT_SNIPPET_TEMPLATES: Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates> = {
+        PATCH: {},
+        POST: {},
+        PUT: {},
+        GET: {},
+        DELETE: {},
+    };
+
     public async loadSnippetTemplatesByEndpoint({
         orgId,
         apiId,
@@ -314,16 +323,15 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     },
                 });
                 if (result != null) {
-                    if (toRet[result.endpointId.path] == null) {
-                        toRet[result.endpointId.path] = {
-                            PATCH: {},
-                            POST: {},
-                            PUT: {},
-                            GET: {},
-                            DELETE: {},
-                        };
-                    }
-                    toRet[result.endpointId.path][result.endpointId.method][sdk.type] = result.snippetTemplate;
+                    const value = {
+                        ...(toRet[result.endpointId.path] ?? this.DEFAULT_ENDPOINT_SNIPPET_TEMPLATES),
+                        [result.endpointId.method]: {
+                            ...(toRet[result.endpointId.path]?.[result.endpointId.method] ?? {}),
+                            [sdk.type]: result.snippetTemplate,
+                        },
+                    };
+
+                    toRet[result.endpointId.path] = value;
                 }
             }
         }

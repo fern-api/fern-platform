@@ -12,7 +12,11 @@ export function traverseNavigation(
 ): void {
     function internalChildrenTraverser(nodes: NavigationNode[], parents: NavigationNode[]): boolean | void {
         for (let i = 0; i < nodes.length; i++) {
-            const result = internalTraverser(nodes[i], i, parents);
+            const node = nodes[i];
+            if (node == null) {
+                throw new Error(`Failed to index into nodes. Index: ${i} Length: ${nodes.length}`);
+            }
+            const result = internalTraverser(node, i, parents);
             if (result === STOP) {
                 return STOP;
             }
