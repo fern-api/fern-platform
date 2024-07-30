@@ -1,6 +1,7 @@
 import { FdrClient } from "@fern-api/fdr-sdk";
-import algolia from "algoliasearch";
+import { kv } from "@vercel/kv";
 import { Cohere, CohereClient } from "cohere-ai";
+import { ChatMessage } from "cohere-ai/api";
 import { NextRequest } from "next/server";
 import { v4 } from "uuid";
 import { getXFernHostEdge } from "../../../../utils/xFernHost";
@@ -31,12 +32,6 @@ export default async function handler(req: Request): Promise<Response> {
         token: process.env.COHERE_API_KEY,
     });
 
-    if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_API_KEY) {
-        throw new Error("Missing Algolia environment variables");
-    }
-
-    const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY);
-
     const docsUrl = getXFernHostEdge(req as NextRequest);
 
     const body = await req.json();
@@ -50,35 +45,28 @@ export default async function handler(req: Request): Promise<Response> {
     const frc = new FdrClient();
 
     const docsUrlResponse = await frc.docs.v2.read.getDocsForUrl({ url: docsUrl });
-    const privateDocsUrlResponse = await frc.docs.v2.read.getPrivateDocsForUrl({ url: docsUrl });
 
-    const docsSearchIndex = docsUrlResponse.ok ? docsUrlResponse.body.definition.algoliaSearchIndex : undefined;
-    const privateDocsSearchIndex = privateDocsUrlResponse.ok
-        ? privateDocsUrlResponse.body.definition.algoliaSearchIndex
-        : undefined;
+    const docsSearchHits = docsUrlResponse.ok ? docsUrlResponse.body.definition.pages : {};
 
-    let hits: unknown[] = [];
+    const transformedDocuments = docsSearchHits
+        ? Object.entries(docsSearchHits).map(([title, text]) => {
+              return { title, text: text.markdown };
+          })
+        : [];
 
-    if (privateDocsSearchIndex) {
-        const index = algoliaClient.initIndex(privateDocsSearchIndex);
-        hits = (await index.search(body.message)).hits;
-    }
-
-    if (docsSearchIndex) {
-        const privateIndex = algoliaClient.initIndex(docsSearchIndex);
-        hits?.push(...(await privateIndex.search(body.message)).hits);
-    }
-
+    const chatHistory = (await kv.get<ChatMessage[]>(conversationId)) ?? [];
     const response = await cohere.chatStream({
         preamble: PREAMBLE,
-        conversationId,
+        chatHistory,
         message: body.message,
-        documents: hits.map((hit) => ({
-            content: JSON.stringify(hit),
-        })),
+        documents: transformedDocuments.slice(0, 20),
     });
 
-    const stream = convertAsyncIterableToStream(response).pipeThrough(getCohereStreamTransformer());
+    chatHistory.push({ role: "USER", message: body.message });
+
+    const stream = convertAsyncIterableToStream(response).pipeThrough(
+        getCohereStreamTransformer(conversationId, chatHistory),
+    );
 
     return new Response(stream, {
         status: 200,
@@ -97,12 +85,28 @@ function convertAsyncIterableToStream<T>(iterable: AsyncIterable<T>): ReadableSt
     });
 }
 
-function getCohereStreamTransformer(): TransformStream<Cohere.StreamedChatResponse, Uint8Array> {
+function getCohereStreamTransformer(
+    conversationId: string,
+    chatHistory: ChatMessage[],
+): TransformStream<Cohere.StreamedChatResponse, Uint8Array> {
     const encoder = new TextEncoder();
+    let reply: string = "";
     return new TransformStream<Cohere.StreamedChatResponse, Uint8Array>({
         async transform(chunk, controller) {
             if (chunk.eventType === "text-generation") {
+                reply += chunk.text;
                 controller.enqueue(encoder.encode(chunk.text));
+            }
+            if (chunk.eventType === "citation-generation") {
+                console.log(chunk.citations);
+            }
+            if (chunk.eventType === "stream-end") {
+                // not sure what magic number is appropriate here
+                while (chatHistory.length >= 10) {
+                    chatHistory.shift();
+                }
+                chatHistory.push({ role: "CHATBOT", message: reply });
+                await kv.set(conversationId, chatHistory);
             }
         },
     });
