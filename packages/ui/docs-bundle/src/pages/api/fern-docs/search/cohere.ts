@@ -7,16 +7,6 @@ import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
 
-const cohere = new CohereClient({
-    token: process.env.COHERE_API_KEY,
-});
-
-if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_API_KEY) {
-    throw new Error("Missing Algolia environment variables");
-}
-
-const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY); // this can probably be hardcoded in cohere for app hack
-
 const PREAMBLE = `
 You are an expert AI assistant called Fernie that helps developers answer questions about Cohere's APIs and SDKs.
 The user asking questions is a developer, technical writer, or product manager. Your tone is friendly and helpful, and you can provide code snippets.
@@ -37,6 +27,16 @@ export default async function handler(req: Request): Promise<Response> {
         return new Response(null, { status: 405 });
     }
 
+    const cohere = new CohereClient({
+        token: process.env.COHERE_API_KEY,
+    });
+    
+    if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_API_KEY) {
+        throw new Error("Missing Algolia environment variables");
+    }
+    
+    const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY);
+
     const docsUrl = getXFernHostEdge(req as NextRequest);
 
     const body = await req.json();
@@ -47,7 +47,7 @@ export default async function handler(req: Request): Promise<Response> {
         conversationId = v4();
     }
 
-    const frc = new FdrClient({ environment: "production" });
+    const frc = new FdrClient();
 
     const docsUrlResponse = await frc.docs.v2.read.getDocsForUrl({ url: docsUrl });
     const privateDocsUrlResponse = await frc.docs.v2.read.getPrivateDocsForUrl({ url: docsUrl });
@@ -57,17 +57,16 @@ export default async function handler(req: Request): Promise<Response> {
         ? privateDocsUrlResponse.body.definition.algoliaSearchIndex
         : undefined;
 
-    if (!docsSearchIndex) {
-        throw new Error("No Algolia search index found");
-    }
+    let hits: unknown[] = [];
 
-    const index = algoliaClient.initIndex(docsSearchIndex);
-    const { hits } = await index.search(body.message);
+    if (docsSearchIndex) {
+        const index = algoliaClient.initIndex(docsSearchIndex);
+        hits = (await index.search(body.message)).hits;
+    }
 
     if (privateDocsSearchIndex) {
         const privateIndex = algoliaClient.initIndex(privateDocsSearchIndex);
-        const { hits: privateHits } = await privateIndex.search(body.message);
-        hits.push(...privateHits);
+        hits?.push(...(await privateIndex.search(body.message)).hits);
     }
 
     const response = await cohere.chatStream({
@@ -83,7 +82,7 @@ export default async function handler(req: Request): Promise<Response> {
 
     return new Response(stream, {
         status: 200,
-        headers: { "Content-Type": "text/plain; charset=utf-8" },
+        headers: { "Content-Type": "text/plain; charset=utf-8", "X-Conversation-Id": conversationId },
     });
 }
 
