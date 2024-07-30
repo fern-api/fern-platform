@@ -138,7 +138,14 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} route={"/" + endpoint.slug}>
                     <div>
                         {headers.map((parameter) => (
-                            <div key={parameter.key}>
+                            <div key={parameter.key} className="relative">
+                                {parameter.key === "Authorization" && (
+                                    <div className="absolute right-0 top-3">
+                                        <div className="px-2 bg-tag-danger rounded-xl flex items-center h-5">
+                                            <span className="text-xs t-danger">Authorization</span>
+                                        </div>
+                                    </div>
+                                )}
                                 <TypeComponentSeparator />
                                 <EndpointParameter
                                     name={parameter.key}
