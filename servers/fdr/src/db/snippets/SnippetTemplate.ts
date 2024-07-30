@@ -324,11 +324,11 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                 });
                 if (result != null) {
                     const value = {
+                        ...(toRet[result.endpointId.path] ?? this.DEFAULT_ENDPOINT_SNIPPET_TEMPLATES),
                         [result.endpointId.method]: {
                             ...(toRet[result.endpointId.path]?.[result.endpointId.method] ?? {}),
                             [sdk.type]: result.snippetTemplate,
                         },
-                        ...(toRet[result.endpointId.path] ?? this.DEFAULT_ENDPOINT_SNIPPET_TEMPLATES),
                     };
 
                     toRet[result.endpointId.path] = value;
