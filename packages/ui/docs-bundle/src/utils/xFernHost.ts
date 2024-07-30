@@ -79,7 +79,7 @@ export function cleanHost(host: string | null | undefined): string | undefined {
     }
 
     // strip trailing slash from the host, if present
-    if (host.endsWith("/")) {
+    if (host?.endsWith("/")) {
         host = host.slice(0, -1);
     }
 
