@@ -40,7 +40,8 @@ function FernLogoImage(): ReactElement | null {
     const colors = useColors();
     const logoImageHeight = useLogoHeight();
     const imageClassName = "max-h-full object-contain";
-    const title = useAtomValue(DOCS_ATOM).title;
+    const title = useAtomValue(DOCS_ATOM).title || "Logo";
+
     if (colors.dark != null && colors.light != null) {
         return (
             <>
