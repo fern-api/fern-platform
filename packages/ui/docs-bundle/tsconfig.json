@@ -2,7 +2,8 @@
   "extends": "@fern-platform/configs/tsconfig/nextjs.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "noUncheckedIndexedAccess": false
   },
   "exclude": ["node_modules"],
   "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__"],
