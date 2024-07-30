@@ -59,13 +59,13 @@ export default async function handler(req: Request): Promise<Response> {
 
     let hits: unknown[] = [];
 
-    if (docsSearchIndex) {
-        const index = algoliaClient.initIndex(docsSearchIndex);
+    if (privateDocsSearchIndex) {
+        const index = algoliaClient.initIndex(privateDocsSearchIndex);
         hits = (await index.search(body.message)).hits;
     }
 
-    if (privateDocsSearchIndex) {
-        const privateIndex = algoliaClient.initIndex(privateDocsSearchIndex);
+    if (docsSearchIndex) {
+        const privateIndex = algoliaClient.initIndex(docsSearchIndex);
         hits?.push(...(await privateIndex.search(body.message)).hits);
     }
 
