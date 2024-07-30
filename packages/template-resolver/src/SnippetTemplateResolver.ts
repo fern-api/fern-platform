@@ -44,6 +44,7 @@ class DefaultedV1Snippet {
             case "generic":
             case "discriminatedUnion":
             case "union":
+            case "union_v2":
             case "enum":
                 defaulted_invocation = template.templateString?.replace(TemplateSentinel, "") ?? "";
                 break;
