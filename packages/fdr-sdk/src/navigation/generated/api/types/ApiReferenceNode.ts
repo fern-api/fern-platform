@@ -10,7 +10,7 @@ export interface ApiReferenceNode
         FernNavigation.WithApiDefinitionId,
         FernNavigation.WithRedirect {
     type: "apiReference";
-    disableLongScrolling: boolean | undefined;
+    paginated: boolean | undefined;
     showErrors: boolean | undefined;
     hideTitle: boolean | undefined;
     children: FernNavigation.ApiPackageChild[];

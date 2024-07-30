@@ -21,7 +21,7 @@ export class ApiReferenceNavigationConverter {
         idgen?: NodeIdGenerator,
         lexicographic?: boolean,
         disableEndpointPairs?: boolean,
-        disableLongScrolling?: boolean,
+        paginated?: boolean,
     ) {
         return new ApiReferenceNavigationConverter(
             apiSection,
@@ -31,7 +31,7 @@ export class ApiReferenceNavigationConverter {
             idgen ?? new NodeIdGenerator(),
             lexicographic,
             disableEndpointPairs,
-            disableLongScrolling,
+            paginated,
         ).convert();
     }
 
@@ -50,7 +50,7 @@ export class ApiReferenceNavigationConverter {
         idgen: NodeIdGenerator,
         private lexicographic: boolean = false,
         private disableEndpointPairs: boolean = false,
-        private disableLongScrolling: boolean | undefined,
+        private paginated: boolean | undefined,
     ) {
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api);
@@ -84,8 +84,7 @@ export class ApiReferenceNavigationConverter {
                 apiDefinitionId: FernNavigation.ApiDefinitionId(this.apiSection.api),
                 overviewPageId,
                 noindex,
-                disableLongScrolling:
-                    this.disableLongScrolling ?? (this.apiSection.longScrolling === false ? true : undefined),
+                paginated: this.paginated ?? (this.apiSection.longScrolling === false ? true : undefined),
                 slug: slug.get(),
                 icon: this.apiSection.icon,
                 hidden: this.apiSection.hidden,

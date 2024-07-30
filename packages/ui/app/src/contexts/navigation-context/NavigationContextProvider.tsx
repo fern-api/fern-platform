@@ -86,7 +86,7 @@ function startScrollTracking(route: string, scrolledHere: boolean = false) {
 
 export const NavigationContextProvider: React.FC<NavigationContextProvider.Props> = ({ children }) => {
     const resolvedPath = useResolvedPath();
-    const isApiScrollingDisabled = resolvedPath.type === "api-page" ? resolvedPath.disableLongScrolling : false;
+    const isApiScrollingDisabled = resolvedPath.type === "api-page" ? resolvedPath.paginated : false;
     const router = useRouter();
     const activeNavigatable = useAtomValue(CURRENT_NODE_ATOM);
 

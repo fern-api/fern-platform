@@ -7,7 +7,7 @@ import { getNoIndexFromFrontmatter } from "./getNoIndexFromFrontmatter";
 export function convertLoadDocsForUrlResponse(
     response: DocsV2Read.LoadDocsForUrlResponse,
     disableEndpointPairs: boolean = false,
-    disableLongScrolling?: boolean,
+    paginated?: boolean,
 ): FernNavigation.RootNode {
     const noindexMap: Record<FernNavigation.PageId, boolean> = {};
     Object.entries(response.definition.pages).forEach(([pageId, page]) => {
@@ -24,7 +24,7 @@ export function convertLoadDocsForUrlResponse(
         response.baseUrl.basePath,
         isLexicographicSortEnabled(response.baseUrl.domain),
         disableEndpointPairs,
-        disableLongScrolling,
+        paginated,
     );
 }
 

@@ -8,6 +8,9 @@ types:
   TabId: string
   PageId: string
   NodeId: string
+  EnvironmentId:
+    type: string
+    docs: Identifier for an API environment (i.e. "Prod", "Staging", "Dev")
 
   ApiDefinitionId: string
   EndpointId: string
@@ -203,11 +206,30 @@ types:
       - WithRedirect
     properties:
       type: literal<"apiReference">
-      disableLongScrolling: optional<boolean>
+      paginated:
+        type: optional<boolean>
+        docs: If true, long-scrolling will be disabled.
       showErrors: optional<boolean>
       hideTitle: optional<boolean>
       children: list<ApiPackageChild>
       changelog: optional<ChangelogNode>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affects all endpoints.
+
+  PlaygroundSettings:
+    properties:
+      # enabled: optional<boolean> (this is currently controlled in feature flags)
+      allowedEnvironments:
+        type: optional<list<EnvironmentId>>
+        docs: |
+          A list of environment IDs that are allowed to be used in the playground.
+          If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
+      button: optional<PlaygroundButtonSettings>
+
+  PlaygroundButtonSettings:
+    properties:
+      href: optional<Url>
 
   EndpointNode:
     extends:
@@ -218,6 +240,9 @@ types:
       method: HttpMethod
       endpointId: EndpointId
       isResponseStream: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affect this endpoint specifically.
 
   WebSocketNode:
     extends:
@@ -226,6 +251,9 @@ types:
     properties:
       type: literal<"webSocket">
       webSocketId: WebSocketId
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affect this endpoint specifically.
 
   WebhookNode:
     extends:
@@ -235,6 +263,7 @@ types:
       type: literal<"webhook">
       method: HttpMethod
       webhookId: WebhookId
+      # note: webhooks do not have a playground
 
   ApiPackageNode:
     extends:

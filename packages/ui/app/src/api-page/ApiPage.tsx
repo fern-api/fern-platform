@@ -12,11 +12,11 @@ export declare namespace ApiPage {
     export interface Props {
         initialApi: ResolvedRootPackage;
         showErrors: boolean;
-        disableLongScrolling: boolean;
+        paginated: boolean;
     }
 }
 
-export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors, disableLongScrolling }) => {
+export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors, paginated }) => {
     const hydrated = useIsReady();
     const setDefinitions = useSetAtom(APIS_ATOM);
     useEffect(() => {
@@ -25,7 +25,7 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors, disab
 
     return (
         <ApiPageContext.Provider value={true}>
-            {disableLongScrolling ? (
+            {paginated ? (
                 <SingleApiPageContent root={initialApi} showErrors={showErrors} />
             ) : (
                 <ApiPackageContents
