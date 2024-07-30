@@ -40,7 +40,9 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     const viewportRef = createRef<ScrollToHandle>();
 
     useResizeObserver(codeBlockRef, ([entry]) => {
-        measureHeight?.(entry.contentRect.height);
+        if (entry != null) {
+            measureHeight?.(entry.contentRect.height);
+        }
     });
 
     const requestHighlightLines = useMemo(() => {

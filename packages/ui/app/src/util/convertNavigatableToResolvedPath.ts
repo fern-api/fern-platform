@@ -222,9 +222,26 @@ async function resolveMarkdownPage(
     }
     const resolvedApis = Object.fromEntries(
         await Promise.all(
-            apiNodes.map(async (apiNode): Promise<[string, ResolvedRootPackage]> => {
-                const holder = FernNavigation.ApiDefinitionHolder.create(apis[apiNode.apiDefinitionId]);
-                const typeResolver = new ApiTypeResolver(apis[apiNode.apiDefinitionId].types, mdxOptions);
+            apiNodes.map(async (apiNode): Promise<[title: string, ResolvedRootPackage]> => {
+                const definition = apis[apiNode.apiDefinitionId];
+                if (definition == null) {
+                    // eslint-disable-next-line no-console
+                    console.error("API not found", apiNode.apiDefinitionId);
+                    return [
+                        apiNode.title,
+                        {
+                            // TODO: alert if the API is not found — this is a bug
+                            type: "rootPackage",
+                            api: apiNode.apiDefinitionId,
+                            auth: undefined,
+                            types: {},
+                            items: [],
+                            slug: FernNavigation.Slug(""),
+                        },
+                    ];
+                }
+                const holder = FernNavigation.ApiDefinitionHolder.create(definition);
+                const typeResolver = new ApiTypeResolver(definition.types, mdxOptions);
                 return [
                     apiNode.title,
                     await ApiDefinitionResolver.resolve(

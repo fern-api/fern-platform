@@ -73,7 +73,8 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                                         </div>
                                                         <div className="prose dark:prose-invert">
                                                             {title != null && <h1>{title}</h1>}
-                                                            <MdxContent mdx={page} />
+                                                            {/* TODO: alert if the page is null */}
+                                                            {page != null && <MdxContent mdx={page} />}
                                                         </div>
                                                     </div>
                                                 </>
@@ -85,7 +86,8 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                                         </div>
                                                         <div className="prose dark:prose-invert">
                                                             {title != null && <h1>{title}</h1>}
-                                                            <MdxContent mdx={page} />
+                                                            {/* TODO: alert if the page is null */}
+                                                            {page != null && <MdxContent mdx={page} />}
                                                         </div>
                                                     </div>
                                                     <div className="-mt-2 w-72 pl-4 text-right max-xl:hidden">

@@ -129,13 +129,19 @@ export async function resolveCodeSnippets(
                     }
                 }
 
-                const code = await snippet.convert(targetId, clientId);
+                const convertedCode = await snippet.convert(targetId, clientId);
+                const code =
+                    typeof convertedCode === "string"
+                        ? convertedCode
+                        : convertedCode != null
+                          ? convertedCode[0]
+                          : undefined;
                 if (code != null) {
                     toRet.push({
                         name: alwaysEnableJavaScriptFetch ? "HTTP Request" : undefined,
                         language: targetId,
                         install: undefined,
-                        code: typeof code === "string" ? code : code[0],
+                        code,
                         generated: true,
                     });
                 }
