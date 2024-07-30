@@ -91,7 +91,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
                         </HorizontalOverflowMask>
                     </Tabs.List>
 
-                    <CopyToClipboardButton className="ml-2 mr-1" content={items[selectedTabIndex]?.code} />
+                    <CopyToClipboardButton className="ml-2 mr-1" content={items[parseInt(selectedTabIndex)]?.code} />
                 </div>
             </div>
             {items.map((item, idx) => (
