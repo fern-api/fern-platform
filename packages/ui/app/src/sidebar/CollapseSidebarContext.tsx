@@ -112,7 +112,7 @@ export const CollapseSidebarProvider: FC<
         return { parentIdMap, parentToChildrenMap };
     }, [sidebar]);
 
-    const initializeExpandedSections = (): FernNavigation.NodeId[] => {
+    const initializeExpandedSections = useCallback((): FernNavigation.NodeId[] => {
         if (selectedNodeId == null) {
             return [];
         } else {
@@ -130,13 +130,13 @@ export const CollapseSidebarProvider: FC<
                 return [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])];
             }
         }
-    };
+    }, [selectedNodeId, parentIdMap]);
 
     const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(() => initializeExpandedSections());
 
     useEffect(() => {
         setExpanded(initializeExpandedSections());
-    }, [selectedNodeId, parentIdMap]);
+    }, [initializeExpandedSections]);
 
     const checkExpanded = useCallback(
         (expandableId: FernNavigation.NodeId) =>
