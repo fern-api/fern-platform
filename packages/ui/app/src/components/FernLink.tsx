@@ -15,6 +15,8 @@ export const FernLink = forwardRef<HTMLAnchorElement, FernLinkProps>(
         const url = toUrlObject(props.href);
         const isExternalUrl = checkIsExternalUrl(url);
 
+        console.log(url);
+
         // if the url is relative, we will need to invoke useRouter to resolve the relative url
         // since useRouter injects the router context, it will cause a re-render any time the route changes.
         // to avoid unnecessary re-renders, we will isolate the useRouter call to a separate component.

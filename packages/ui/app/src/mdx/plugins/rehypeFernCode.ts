@@ -34,7 +34,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                 parent?.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",
                     name: "CodeBlocks",
-                    attributes: attributes,
+                    attributes,
                     children: [],
                 });
                 return "skip";
@@ -113,7 +113,6 @@ export function rehypeFernCode(): (tree: Root) => void {
 
 function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
     const codeBlockItems: CodeGroup.Item[] = [];
-    let groupId: string | undefined;
 
     visit(nodeToVisit, (node) => {
         if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {

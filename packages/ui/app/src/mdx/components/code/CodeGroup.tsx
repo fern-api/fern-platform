@@ -1,8 +1,11 @@
-import { CopyToClipboardButton } from "@fern-ui/components";
+import { CopyToClipboardButton, FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
+import { useCopyToClipboard } from "@fern-ui/react-commons";
+import { Link1Icon } from "@radix-ui/react-icons";
 import * as Tabs from "@radix-ui/react-tabs";
-import clsx from "clsx";
+import { default as clsx, default as cn } from "clsx";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
+import { Check } from "react-feather";
 import { FERN_CODE_GROUP_TAB, useCodeGroup, useFeatureFlags } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../commons/HorizontalOverflowMask";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../../syntax-highlighting/FernSyntaxHighlighter";
@@ -32,7 +35,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     );
 
     useEffect(() => {
-        if (!!selectedGroup) {
+        if (selectedGroup) {
             setSelectedTabIndex(selectedGroup.value);
         }
     }, [selectedGroup]);
@@ -65,9 +68,9 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
                 if (groupId) {
                     if (selectedGroup) {
                         const filteredGroupIds = groupIds.filter((group) => group.groupId !== selectedGroup.groupId);
-                        setSelectedTab([{ groupId: groupId, value: value }, ...filteredGroupIds]);
+                        setSelectedTab([{ groupId, value }, ...filteredGroupIds]);
                     } else {
-                        setSelectedTab([{ groupId: groupId, value: value }, ...groupIds]);
+                        setSelectedTab([{ groupId, value }, ...groupIds]);
                     }
                 }
             }}
@@ -91,7 +94,13 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
                         </HorizontalOverflowMask>
                     </Tabs.List>
 
-                    <CopyToClipboardButton className="ml-2 mr-1" content={items[parseInt(selectedTabIndex)]?.code} />
+                    <div>
+                        <CopyLinkToClipboardButton className="ml-2" />
+                        <CopyToClipboardButton
+                            className="ml-1 mr-1"
+                            content={items[parseInt(selectedTabIndex)]?.code}
+                        />
+                    </div>
                 </div>
             </div>
             {items.map((item, idx) => (
@@ -100,5 +109,31 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
                 </Tabs.Content>
             ))}
         </Tabs.Root>
+    );
+};
+
+const CopyLinkToClipboardButton = ({ className }) => {
+    const { copyToClipboard, wasJustCopied } = useCopyToClipboard("");
+
+    return (
+        <FernTooltipProvider>
+            <FernTooltip
+                content={wasJustCopied ? "Copied!" : "Copy link to clipboard"}
+                open={wasJustCopied ? true : undefined}
+            >
+                <FernButton
+                    className={cn("group fern-copy-button", className)}
+                    disabled={copyToClipboard == null}
+                    onClickCapture={(e) => {
+                        copyToClipboard?.();
+                    }}
+                    rounded={true}
+                    icon={wasJustCopied ? <Check className="size-4" /> : <Link1Icon className="size-4" />}
+                    variant="minimal"
+                    intent={wasJustCopied ? "success" : "none"}
+                    disableAutomaticTooltip={true}
+                />
+            </FernTooltip>
+        </FernTooltipProvider>
     );
 };
