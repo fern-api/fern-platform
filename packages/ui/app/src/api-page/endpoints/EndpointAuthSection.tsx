@@ -15,7 +15,7 @@ export const EndpointAuthSection: React.FC<EndpointAuthSection.Props> = ({ auth 
             <div className="scroll-mt-content-padded fern-api-property">
                 <div className="fern-api-property-header">
                     <span className="fern-api-property-key">Type</span>
-                    <span className="fern-api-property-meta">headerAuth</span>
+                    <span className="fern-api-property-meta">{auth.type}</span>
                 </div>
                 <TypeComponentSeparator />
                 {auth.type === "bearerAuth" && (
