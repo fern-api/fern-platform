@@ -145,7 +145,7 @@ export class MigrateFromMintlify {
                 const newOpenapiFilePath = path.join(openapiDir, `openapi${path.extname(firstOpenapi)}`);
                 await fs.promises.copyFile(openapiFilePath, newOpenapiFilePath);
             }
-            if (typeof mint.openapi != "string" && mint.openapi.length > 1) {
+            if (typeof mint.openapi !== "string" && mint.openapi.length > 1) {
                 console.warn("Multiple OpenAPI files are not supported yet in this migrator.");
             }
         }
