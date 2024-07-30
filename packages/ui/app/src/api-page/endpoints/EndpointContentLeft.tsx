@@ -41,7 +41,6 @@ export declare namespace EndpointContentLeft {
 
 const REQUEST = ["request"];
 const RESPONSE = ["response"];
-const AUTH = ["auth"];
 const REQUEST_PATH = ["request", "path"];
 const REQUEST_QUERY = ["request", "query"];
 const REQUEST_HEADER = ["request", "header"];
@@ -66,9 +65,9 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const { isAuthEnabledInDocs } = useFeatureFlags();
 
     let authHeaders: ResolvedObjectProperty;
-    if (endpoint.auth) {
+    if (endpoint.auth && isAuthEnabledInDocs) {
         authHeaders = visitDiscriminatedUnion(endpoint.auth, "type")._visit<ResolvedObjectProperty>({
-            basicAuth: (value) => {
+            basicAuth: () => {
                 return {
                     key: "Authorization",
                     description: "Authorization: Basic <username:password>",
@@ -80,7 +79,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     availability: undefined,
                 };
             },
-            bearerAuth: (value) => {
+            bearerAuth: () => {
                 return {
                     key: "Authorization",
                     description: "Authorization: Bearer <token>",
