@@ -549,7 +549,12 @@ export type ResolvedTypeShape =
     | ResolvedMapShape
     | (APIV1Read.TypeReference.Literal & WithMetadata)
     | APIV1Read.TypeReference.Unknown
+    | ResolvedUnknownTypeShape
     | ResolvedReferenceShape;
+
+export interface ResolvedUnknownTypeShape extends APIV1Read.TypeReference.Unknown {
+    displayName?: string;
+}
 
 export type WithoutMetadata = APIV1Read.TypeReference.Unknown | ResolvedReferenceShape;
 

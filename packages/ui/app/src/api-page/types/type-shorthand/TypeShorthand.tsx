@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import {
     ResolvedTypeDefinition,
     ResolvedTypeShape,
+    ResolvedUnknownTypeShape,
     unwrapAlias,
     unwrapOptional,
     unwrapReference,
@@ -131,7 +132,13 @@ export function renderTypeShorthand(
                 _other: () => "<unknown>",
             }),
         // other
-        unknown: () => "any",
+        unknown: (unknown: ResolvedUnknownTypeShape) => {
+            if (unknown.displayName) {
+                return unknown.displayName;
+            } else {
+                return "any";
+            }
+        },
         _other: () => "<unknown>",
         alias: (reference) => renderTypeShorthand(reference.shape, { plural, withArticle }, types),
     });

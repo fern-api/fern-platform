@@ -195,7 +195,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 />
             </MapTypeContextProvider>
         ),
-        primitive: () => null,
+        primitive: (v) => null,
         literal: (literal) => (
             <InternalShapeRenderer
                 typeShape={literal}

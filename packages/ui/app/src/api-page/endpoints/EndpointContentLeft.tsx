@@ -8,13 +8,13 @@ import {
     ResolvedError,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
+    ResolvedObjectProperty,
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
     getParameterDescription,
 } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
-import { EndpointAuthSection } from "./EndpointAuthSection";
 import { EndpointError } from "./EndpointError";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
@@ -65,15 +65,56 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const errorExpandAll = useBooleanState(false);
     const { isAuthEnabledInDocs } = useFeatureFlags();
 
-    const headers = endpoint.headers.filter((header) => !header.hidden);
+    let authHeaders: ResolvedObjectProperty;
+    if (endpoint.auth) {
+        authHeaders = visitDiscriminatedUnion(endpoint.auth, "type")._visit<ResolvedObjectProperty>({
+            basicAuth: (value) => {
+                return {
+                    key: "Authorization",
+                    description: "Authorization: Basic <username:password>",
+                    hidden: false,
+                    valueShape: {
+                        type: "unknown",
+                        displayName: "Basic",
+                    },
+                    availability: undefined,
+                };
+            },
+            bearerAuth: (value) => {
+                return {
+                    key: "Authorization",
+                    description: "Authorization: Bearer <token>",
+                    hidden: false,
+                    valueShape: {
+                        type: "unknown",
+                        displayName: "Bearer",
+                    },
+                    availability: undefined,
+                };
+            },
+            header: (value) => {
+                return {
+                    key: "Authorization",
+                    description: `Authorization: ${value.prefix} ${value.headerWireValue}`,
+                    hidden: false,
+                    valueShape: {
+                        type: "unknown",
+                        displayName: "Header",
+                    },
+                    availability: undefined,
+                };
+            },
+        });
+    }
+
+    let headers = endpoint.headers.filter((header) => !header.hidden);
+
+    if (authHeaders) {
+        headers = [authHeaders, ...headers];
+    }
 
     return (
         <div className="flex max-w-full flex-1 flex-col  gap-12">
-            {endpoint.auth && isAuthEnabledInDocs && (
-                <EndpointSection title="Authorization" anchorIdParts={AUTH} route={"/" + endpoint.slug}>
-                    <EndpointAuthSection auth={endpoint.auth} />
-                </EndpointSection>
-            )}
             {endpoint.pathParameters.length > 0 && (
                 <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} route={"/" + endpoint.slug}>
                     <div>
