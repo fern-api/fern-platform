@@ -20,6 +20,13 @@ export function accessByPath(object: unknown, path: string[] | string): unknown 
     return undefined;
 }
 
+export function accessByPathNonNull(jsonObject: unknown, path?: string | string[]): unknown {
+    if (path != null && jsonObject != null && path.length > 0) {
+        return accessByPath(jsonObject, path);
+    }
+    return jsonObject;
+}
+
 /**
  *
  * @param path a path like `a.b.c[0].d

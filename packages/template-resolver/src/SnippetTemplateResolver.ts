@@ -1,4 +1,7 @@
-import { accessByPath } from "./accessByPath";
+import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk";
+import { ObjectFlattener } from "./ResolutionUtilities";
+import { UnionMatcher } from "./UnionResolver";
+import { accessByPathNonNull } from "./accessByPath";
 import {
     AuthPayload,
     CustomSnippetPayload,
@@ -66,23 +69,31 @@ const TemplateSentinel = "$FERN_INPUT";
 export class SnippetTemplateResolver {
     private payload: CustomSnippetPayload;
     private endpointSnippetTemplate: EndpointSnippetTemplate;
+    private maybeApiDefinition: APIV1Read.ApiDefinition | undefined;
+    private maybeObjectFlattener: ObjectFlattener | undefined;
+    private maybeApiDefinitionId: string | undefined;
+    private apiDefinitionHasBeenRequested: boolean;
 
     constructor({
         payload,
         endpointSnippetTemplate,
+        maybeApiDefinition,
     }: {
         payload: CustomSnippetPayload;
         endpointSnippetTemplate: EndpointSnippetTemplate;
+        maybeApiDefinition?: APIV1Read.ApiDefinition;
     }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
-    }
 
-    private accessByPath(jsonObject: unknown, path?: string | string[]): unknown {
-        if (path != null && jsonObject != null && path.length > 0) {
-            return accessByPath(jsonObject, path);
-        }
-        return jsonObject;
+        // API Definitions needed for resolving union types
+        // maybeApiDefinition is a user-provided API definition, used to limit round trips to the API
+        this.maybeApiDefinition = maybeApiDefinition;
+        // maybeApiDefinitionId is the ID of the API definition, stored on the template itself, used as a fallback
+        this.maybeApiDefinitionId = this.endpointSnippetTemplate.apiDefinitionId;
+        // If we have already attempted to get the API definition
+        // We only do this to be able to delay requesting the definition unless we really need to (ie if there's a union template)
+        this.apiDefinitionHasBeenRequested = false;
     }
 
     private accessParameterPayloadByPath(
@@ -95,7 +106,7 @@ export class SnippetTemplateResolver {
         if (parameterName != null && parameterPayloads != null) {
             const selectedParameter = parameterPayloads.find((parameter) => parameter.name === parameterName);
             if (selectedParameter != null) {
-                return this.accessByPath(selectedParameter.value, splitPath);
+                return accessByPathNonNull(selectedParameter.value, splitPath);
             }
         }
         // Could not find the named parameter for this example.
@@ -104,7 +115,7 @@ export class SnippetTemplateResolver {
 
     private accessAuthPayloadByPath(authPayload?: AuthPayload, locationPath?: string): unknown {
         if (authPayload != null) {
-            return this.accessByPath(authPayload, locationPath);
+            return accessByPathNonNull(authPayload, locationPath);
         }
         const maybePayloadName = locationPath?.replace(/\[.*?\]/g, "")?.split(".")[0];
 
@@ -113,15 +124,15 @@ export class SnippetTemplateResolver {
 
     private getPayloadValue(location: PayloadInput, payloadOverride?: unknown): unknown | undefined {
         if (location.location === "RELATIVE" && payloadOverride != null) {
-            return this.accessByPath(payloadOverride, location.path);
+            return accessByPathNonNull(payloadOverride, location.path);
         }
 
         switch (location.location) {
             case "BODY":
-                return this.accessByPath(this.payload.requestBody, location.path);
+                return accessByPathNonNull(this.payload.requestBody, location.path);
             case "RELATIVE":
                 // We should warn if this ever happens, the relative directive should only really happen within containers
-                return this.accessByPath(this.payload.requestBody, location.path);
+                return accessByPathNonNull(this.payload.requestBody, location.path);
             case "QUERY":
                 return this.accessParameterPayloadByPath(this.payload.queryParameters, location.path);
             case "PATH":
@@ -135,7 +146,40 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveV1Template({
+    private async getApiDefinition(): Promise<APIV1Read.ApiDefinition | undefined> {
+        if (this.maybeApiDefinition != null) {
+            return this.maybeApiDefinition;
+        }
+
+        // If we were not provided an API definition, try to get it from FDR
+        if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested) {
+            this.apiDefinitionHasBeenRequested = true;
+            const fdr = new FdrClient();
+            const apiDefinitionResponse = await fdr.api.v1.read.getApi(this.maybeApiDefinitionId);
+            if (apiDefinitionResponse.ok) {
+                // Cache the result for the next request
+                this.maybeApiDefinition = apiDefinitionResponse.body;
+                return this.maybeApiDefinition;
+            }
+        }
+
+        return;
+    }
+
+    private getObjectFlattener(): ObjectFlattener | undefined {
+        if (this.maybeObjectFlattener != null) {
+            return this.maybeObjectFlattener;
+        }
+
+        if (this.maybeApiDefinition != null) {
+            this.maybeObjectFlattener = new ObjectFlattener(this.maybeApiDefinition);
+            return this.maybeObjectFlattener;
+        }
+
+        return;
+    }
+
+    private async resolveV1Template({
         template,
         payloadOverride,
         isRequired,
@@ -143,7 +187,7 @@ export class SnippetTemplateResolver {
         template: Template;
         payloadOverride?: unknown;
         isRequired?: boolean;
-    }): DefaultedV1Snippet {
+    }): Promise<DefaultedV1Snippet> {
         const imports: string[] = template.imports ?? [];
         switch (template.type) {
             case "generic": {
@@ -166,10 +210,12 @@ export class SnippetTemplateResolver {
                             continue;
                         }
 
-                        const evaluatedInput = this.resolveV1Template({
-                            template: input.value,
-                            payloadOverride,
-                        }).snippet;
+                        const evaluatedInput = (
+                            await this.resolveV1Template({
+                                template: input.value,
+                                payloadOverride,
+                            })
+                        ).snippet;
                         if (evaluatedInput != null) {
                             evaluatedInputs.push(evaluatedInput);
                         }
@@ -200,10 +246,12 @@ export class SnippetTemplateResolver {
 
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const value of payloadValue) {
-                    const evaluatedInput = this.resolveV1Template({
-                        template: template.innerTemplate,
-                        payloadOverride: value,
-                    }).snippet;
+                    const evaluatedInput = (
+                        await this.resolveV1Template({
+                            template: template.innerTemplate,
+                            payloadOverride: value,
+                        })
+                    ).snippet;
                     if (evaluatedInput != null) {
                         evaluatedInputs.push(evaluatedInput);
                     }
@@ -231,14 +279,18 @@ export class SnippetTemplateResolver {
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const key in payloadValue) {
                     const value = payloadValue[key as keyof typeof payloadValue];
-                    const keySnippet = this.resolveV1Template({
-                        template: template.keyTemplate,
-                        payloadOverride: key,
-                    }).snippet;
-                    const valueSnippet = this.resolveV1Template({
-                        template: template.valueTemplate,
-                        payloadOverride: value,
-                    }).snippet;
+                    const keySnippet = (
+                        await this.resolveV1Template({
+                            template: template.keyTemplate,
+                            payloadOverride: key,
+                        })
+                    ).snippet;
+                    const valueSnippet = (
+                        await this.resolveV1Template({
+                            template: template.valueTemplate,
+                            payloadOverride: value,
+                        })
+                    ).snippet;
                     if (keySnippet != null && valueSnippet != null) {
                         evaluatedInputs.push({
                             imports: keySnippet.imports.concat(valueSnippet.imports),
@@ -298,10 +350,12 @@ export class SnippetTemplateResolver {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
 
-                const evaluatedMember: V1Snippet | undefined = this.resolveV1Template({
-                    template: selectedMemberTemplate,
-                    payloadOverride,
-                }).snippet;
+                const evaluatedMember: V1Snippet | undefined = (
+                    await this.resolveV1Template({
+                        template: selectedMemberTemplate,
+                        payloadOverride,
+                    })
+                ).snippet;
                 if (evaluatedMember == null) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
@@ -314,22 +368,54 @@ export class SnippetTemplateResolver {
                 });
             }
             case "union":
-                // TODO: evaluate the shape of the object, compared against the union members to select
-                // the closest fit, evaluate and return that. This is what the ApiDefinition is for.
-                return new DefaultedV1Snippet({ template, isRequired });
+                const apiDefinition = await this.getApiDefinition();
+                const objectFlattener = this.getObjectFlattener();
+                if (apiDefinition == null || objectFlattener == null) {
+                    return new DefaultedV1Snippet({ template, isRequired });
+                }
+
+                const unionMatcher = new UnionMatcher(apiDefinition, objectFlattener);
+                const bestFitTemplate = unionMatcher.getBestFitTemplate({
+                    templates: template.members,
+                    payloadOverride,
+                });
+
+                if (!bestFitTemplate) {
+                    return new DefaultedV1Snippet({ template, isRequired });
+                }
+
+                const evaluatedTemplate: V1Snippet | undefined = (
+                    await this.resolveV1Template({
+                        template: bestFitTemplate,
+                        payloadOverride,
+                    })
+                ).snippet;
+
+                if (evaluatedTemplate == null) {
+                    return new DefaultedV1Snippet({ template, isRequired });
+                }
+
+                return new DefaultedV1Snippet({
+                    template,
+                    isRequired,
+                    imports: imports.concat(evaluatedTemplate.imports),
+                    invocation: template.templateString.replace(TemplateSentinel, evaluatedTemplate.invocation),
+                });
         }
     }
 
-    private resolveSnippetV1TemplateString(template: SnippetTemplate): string {
+    private async resolveSnippetV1TemplateString(template: SnippetTemplate): Promise<string> {
         const clientSnippet =
             typeof template.clientInstantiation === "string"
                 ? template.clientInstantiation
-                : this.resolveV1Template({ template: template.clientInstantiation, isRequired: true }).snippet;
+                : (await this.resolveV1Template({ template: template.clientInstantiation, isRequired: true })).snippet;
 
-        const endpointSnippet = this.resolveV1Template({
-            template: template.functionInvocation,
-            isRequired: true,
-        }).snippet;
+        const endpointSnippet = (
+            await this.resolveV1Template({
+                template: template.functionInvocation,
+                isRequired: true,
+            })
+        ).snippet;
 
         // TODO: We should split the Snippet data model to return these independently
         // so there's more flexibility on the consumer end to decide how to use them.
@@ -350,8 +436,8 @@ ${endpointSnippet?.invocation}
 `;
     }
 
-    private resolveSnippetV1TemplateToSnippet(sdk: Sdk, template: SnippetTemplate): Snippet {
-        const snippet = this.resolveSnippetV1TemplateString(template);
+    private async resolveSnippetV1TemplateToSnippet(sdk: Sdk, template: SnippetTemplate): Promise<Snippet> {
+        const snippet = await this.resolveSnippetV1TemplateString(template);
 
         switch (sdk.type) {
             case "typescript":
@@ -361,14 +447,14 @@ ${endpointSnippet?.invocation}
                     type: "python",
                     sdk,
                     sync_client: snippet,
-                    async_client: this.resolveAdditionalTemplate("async") ?? snippet,
+                    async_client: (await this.resolveAdditionalTemplate("async")) ?? snippet,
                 };
             case "java":
                 return {
                     type: "java",
                     sdk,
                     sync_client: snippet,
-                    async_client: this.resolveAdditionalTemplate("async") ?? snippet,
+                    async_client: (await this.resolveAdditionalTemplate("async")) ?? snippet,
                 };
             case "go":
                 return { type: "go", sdk, client: snippet };
@@ -379,12 +465,12 @@ ${endpointSnippet?.invocation}
         }
     }
 
-    public resolve(): Snippet {
+    public async resolve(): Promise<Snippet> {
         const sdk: Sdk = this.endpointSnippetTemplate.sdk;
         const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
             case "v1":
-                return this.resolveSnippetV1TemplateToSnippet(sdk, template);
+                return await this.resolveSnippetV1TemplateToSnippet(sdk, template);
             default:
                 throw new Error(`Unknown template version: ${template.type}`);
         }
@@ -396,13 +482,13 @@ ${endpointSnippet?.invocation}
         const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
             case "v1":
-                return await formatSnippet(this.resolveSnippetV1TemplateToSnippet(sdk, template));
+                return await formatSnippet(await this.resolveSnippetV1TemplateToSnippet(sdk, template));
             default:
                 throw new Error(`Unknown template version: ${template.type}`);
         }
     }
 
-    public resolveAdditionalTemplate(key: string): string | undefined {
+    public async resolveAdditionalTemplate(key: string): Promise<string | undefined> {
         const template: VersionedSnippetTemplate | undefined =
             this.endpointSnippetTemplate.additionalTemplates != null
                 ? this.endpointSnippetTemplate.additionalTemplates[key]
@@ -410,7 +496,7 @@ ${endpointSnippet?.invocation}
         if (template != null) {
             switch (template.type) {
                 case "v1":
-                    return this.resolveSnippetV1TemplateString(template);
+                    return await this.resolveSnippetV1TemplateString(template);
                 default:
                     throw new Error(`Unknown template version: ${template.type}`);
             }

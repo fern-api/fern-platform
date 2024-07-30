@@ -206,12 +206,12 @@ types:
       clientInstantiation: ClientInstantiation
       functionInvocation: Template
 
-  ClientInstantiation: 
+  ClientInstantiation:
     discriminated: false
-    union: 
+    union:
       - string
-      - Template 
-  
+      - Template
+
   VersionedSnippetTemplate:
     audiences:
       - templateResolver
@@ -237,6 +237,7 @@ types:
     properties:
       sdk: snippets.SDK
       endpointId: commons.EndpointIdentifier
+      apiDefinitionId: optional<commons.ApiDefinitionId>
       snippetTemplate:
         type: VersionedSnippetTemplate
         docs: The default snippet template to use
