@@ -106,10 +106,11 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     },
                 });
                 if (result != null && result.endpointId.identifierOverride != null) {
-                    if (toRet[result.endpointId.identifierOverride] == null) {
-                        toRet[result.endpointId.identifierOverride] = {};
-                    }
-                    toRet[result.endpointId.identifierOverride][sdk.type] = result.snippetTemplate;
+                    const template = {
+                        [sdk.type]: result.snippetTemplate,
+                        ...(toRet[result.endpointId.identifierOverride] ?? {}),
+                    };
+                    toRet[result.endpointId.identifierOverride] = template;
                 }
             }
         }
@@ -314,7 +315,8 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     },
                 });
                 if (result != null) {
-                    if (toRet[result.endpointId.path] == null) {
+                    const toReturnEndpoint = toRet[result.endpointId.path];
+                    if (toReturnEndpoint == null) {
                         toRet[result.endpointId.path] = {
                             PATCH: {},
                             POST: {},
@@ -322,8 +324,9 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                             GET: {},
                             DELETE: {},
                         };
+                    } else {
+                        toReturnEndpoint[result.endpointId.method][sdk.type] = result.snippetTemplate;
                     }
-                    toRet[result.endpointId.path][result.endpointId.method][sdk.type] = result.snippetTemplate;
                 }
             }
         }
