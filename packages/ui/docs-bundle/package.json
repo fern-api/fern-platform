@@ -52,7 +52,6 @@
     "@vercel/edge-config": "^1.1.0",
     "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^6.1.0",
-    "algoliasearch": "^4.22.1",
     "cohere-ai": "^7.9.5",
     "cssnano": "^6.0.3",
     "esbuild": "0.20.2",
