@@ -99,7 +99,7 @@ function getCohereStreamTransformer(
             }
             if (chunk.eventType === "citation-generation") {
                 // might want to use this somewhere?
-                console.log(chunk.citations);
+                // console.log(chunk.citations);
             }
             if (chunk.eventType === "stream-end") {
                 // not sure what magic number is appropriate here
