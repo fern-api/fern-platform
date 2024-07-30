@@ -23,7 +23,7 @@ export interface FeatureFlags {
     scrollInContainerEnabled: boolean;
     useMdxBundler: boolean;
     isBatchStreamToggleDisabled: boolean;
-    isAuthEnabledInDocs: boolean
+    isAuthEnabledInDocs: boolean;
 }
 
 export interface NavigationProps {
