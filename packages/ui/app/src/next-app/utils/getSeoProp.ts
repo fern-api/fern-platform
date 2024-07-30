@@ -60,7 +60,10 @@ export function getSeoProps(
 
         // retrofit og:image
         if (frontmatter.image != null) {
-            ogMetadata["og:image"] ??= { type: "url", value: frontmatter.image };
+            ogMetadata["og:image"] ??= {
+                type: "url",
+                value: FernNavigation.utils.convertRelativeToAbsoluteUrl(domain, node.slug, frontmatter.image),
+            };
         }
 
         seo.title ??= frontmatter.title;
