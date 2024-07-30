@@ -12,6 +12,6 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["node", "next", "vitest/globals"],
     "plugins": [{ "name": "next" }],
-    "noUncheckedIndexedAccess": false
+    "noUncheckedIndexedAccess": true
   }
 }
