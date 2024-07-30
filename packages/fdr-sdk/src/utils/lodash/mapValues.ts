@@ -29,8 +29,8 @@ function mapValue<VALUE, VALUE2, ITERATEE extends (input: VALUE, key: string, va
 
     Object.keys(object).forEach((key) => {
         const val = object[key];
-        if (val== null) {
-            return; // Should this be a hard failure? 
+        if (val == null) {
+            return; // Should this be a hard failure?
         }
         result[key] = iteratee(val, key, object);
     });
