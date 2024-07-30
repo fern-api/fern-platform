@@ -20,6 +20,7 @@ export class ObjectFlattener {
 
     public getFlattenedObjectProperties(typeId: APIV1Read.TypeId): APIV1Read.ObjectProperty[] {
         if (this.flattenedObjects.has(typeId)) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             return this.flattenedObjects.get(typeId)!;
         }
 

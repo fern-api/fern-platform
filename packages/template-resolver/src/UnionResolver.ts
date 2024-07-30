@@ -364,6 +364,7 @@ export class UnionMatcher {
                 );
 
             // Return the template with the highest score
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             return scoredTemplates.sort((a, b) => b.score - a.score)[0]!.template;
             // This is a safe assertion given templates length > 0
         }

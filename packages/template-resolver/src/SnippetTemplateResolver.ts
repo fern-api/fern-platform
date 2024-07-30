@@ -367,7 +367,7 @@ export class SnippetTemplateResolver {
                     invocation: template.templateString.replace(TemplateSentinel, evaluatedMember.invocation),
                 });
             }
-            case "union":
+            case "union": {
                 const apiDefinition = await this.getApiDefinition();
                 const objectFlattener = this.getObjectFlattener();
                 if (apiDefinition == null || objectFlattener == null) {
@@ -401,6 +401,7 @@ export class SnippetTemplateResolver {
                     imports: imports.concat(evaluatedTemplate.imports),
                     invocation: template.templateString.replace(TemplateSentinel, evaluatedTemplate.invocation),
                 });
+            }
         }
     }
 
