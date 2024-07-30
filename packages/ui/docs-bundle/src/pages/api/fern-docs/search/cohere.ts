@@ -55,6 +55,7 @@ export default async function handler(req: Request): Promise<Response> {
         : [];
 
     const chatHistory = (await kv.get<ChatMessage[]>(conversationId)) ?? [];
+    console.log(chatHistory.length);
     const response = await cohere.chatStream({
         preamble: PREAMBLE,
         chatHistory,
@@ -98,6 +99,7 @@ function getCohereStreamTransformer(
                 controller.enqueue(encoder.encode(chunk.text));
             }
             if (chunk.eventType === "citation-generation") {
+                // might want to use this somewhere?
                 console.log(chunk.citations);
             }
             if (chunk.eventType === "stream-end") {
