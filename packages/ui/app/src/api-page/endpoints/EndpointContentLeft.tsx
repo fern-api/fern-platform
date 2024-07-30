@@ -71,10 +71,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         <div className="flex max-w-full flex-1 flex-col  gap-12">
             {endpoint.auth && isAuthEnabledInDocs && (
                 <EndpointSection title="Authorization" anchorIdParts={AUTH} route={"/" + endpoint.slug}>
-                    <div>
-                        <TypeComponentSeparator />
-                        <EndpointAuthSection auth={endpoint.auth} />
-                    </div>
+                    <EndpointAuthSection auth={endpoint.auth} />
                 </EndpointSection>
             )}
             {endpoint.pathParameters.length > 0 && (
