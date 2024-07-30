@@ -30,11 +30,11 @@ export default async function handler(req: Request): Promise<Response> {
     const cohere = new CohereClient({
         token: process.env.COHERE_API_KEY,
     });
-    
+
     if (!process.env.ALGOLIA_APP_ID || !process.env.ALGOLIA_API_KEY) {
         throw new Error("Missing Algolia environment variables");
     }
-    
+
     const algoliaClient = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY);
 
     const docsUrl = getXFernHostEdge(req as NextRequest);
