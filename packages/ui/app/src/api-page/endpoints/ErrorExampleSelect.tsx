@@ -27,7 +27,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
     children,
 }) => {
     const handleValueChange = (value: string) => {
-        const [errorIndex, exampleIndex] = value.split(":").map((v) => parseInt(v, 10));
+        const [errorIndex = 0, exampleIndex = 0] = value.split(":").map((v) => parseInt(v, 10));
         setSelectedErrorAndExample(errors[errorIndex], errors[errorIndex]?.examples[exampleIndex]);
     };
     const selectedErrorIndex = selectedError != null ? errors.indexOf(selectedError) : -1;

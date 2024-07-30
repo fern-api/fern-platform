@@ -1,5 +1,5 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { assertNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
 import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
@@ -12,7 +12,11 @@ import { getBreadcrumbList } from "./getBreadcrumbList";
 
 function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1Read.File_>): DocsV1Read.File_ {
     return visitDiscriminatedUnion(fileOrUrl)._visit({
-        fileId: ({ value: fileId }) => files[fileId],
+        fileId: ({ value: fileId }) => {
+            const file = files[fileId];
+            assertNonNullish(file, `File with id ${fileId} not found`);
+            return file;
+        },
         url: ({ value: url }) => ({ type: "url", url }),
     });
 }
@@ -54,45 +58,51 @@ export function getSeoProps(
 
     let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? {};
 
-    if (pageId != null && pages[pageId]) {
-        const { data: frontmatter } = getFrontmatter(pages[pageId].markdown);
-        ogMetadata = { ...ogMetadata, ...frontmatter };
+    if (pageId != null) {
+        const page = pages[pageId];
+        if (page != null) {
+            const { data: frontmatter } = getFrontmatter(page.markdown);
+            ogMetadata = { ...ogMetadata, ...frontmatter };
 
-        // retrofit og:image
-        if (frontmatter.image != null) {
-            ogMetadata["og:image"] ??= {
-                type: "url",
-                value: FernNavigation.utils.convertRelativeToAbsoluteUrl(domain, node.slug, frontmatter.image),
-            };
+            // retrofit og:image
+            if (frontmatter.image != null) {
+                ogMetadata["og:image"] ??= {
+                    type: "url",
+                    value: FernNavigation.utils.convertRelativeToAbsoluteUrl(domain, node.slug, frontmatter.image),
+                };
+            }
+
+            seo.title ??= frontmatter.title;
+            seo.description ??= frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
         }
-
-        seo.title ??= frontmatter.title;
-        seo.description ??= frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
     }
 
     if (FernNavigation.isApiLeaf(node) && apis[node.apiDefinitionId] != null) {
-        const api = FernNavigation.ApiDefinitionHolder.create(apis[node.apiDefinitionId]);
+        const definition = apis[node.apiDefinitionId];
+        if (definition != null) {
+            const api = FernNavigation.ApiDefinitionHolder.create(definition);
 
-        visitDiscriminatedUnion(node)._visit({
-            endpoint: ({ endpointId }) => {
-                const endpoint = api.endpoints.get(endpointId);
-                if (endpoint?.description != null) {
-                    seo.description ??= endpoint.description;
-                }
-            },
-            webSocket: ({ webSocketId }) => {
-                const webSocket = api.webSockets.get(webSocketId);
-                if (webSocket?.description != null) {
-                    seo.description ??= webSocket.description;
-                }
-            },
-            webhook: ({ webhookId }) => {
-                const webhook = api.webhooks.get(webhookId);
-                if (webhook?.description != null) {
-                    seo.description ??= webhook.description;
-                }
-            },
-        });
+            visitDiscriminatedUnion(node)._visit({
+                endpoint: ({ endpointId }) => {
+                    const endpoint = api.endpoints.get(endpointId);
+                    if (endpoint?.description != null) {
+                        seo.description ??= endpoint.description;
+                    }
+                },
+                webSocket: ({ webSocketId }) => {
+                    const webSocket = api.webSockets.get(webSocketId);
+                    if (webSocket?.description != null) {
+                        seo.description ??= webSocket.description;
+                    }
+                },
+                webhook: ({ webhookId }) => {
+                    const webhook = api.webhooks.get(webhookId);
+                    if (webhook?.description != null) {
+                        seo.description ??= webhook.description;
+                    }
+                },
+            });
+        }
     }
 
     if (seo.title != null && stringHasMarkdown(seo.title)) {
@@ -171,7 +181,8 @@ export function getSeoProps(
     }
 
     if (favicon != null && files[favicon] != null) {
-        const image = files[favicon];
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const image = files[favicon]!;
         additionalLinkTags.push({
             rel: "icon",
             href: image.url,

@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
-import { isNonNullish } from "@fern-ui/core-utils";
+import { EMPTY_ARRAY, isNonNullish } from "@fern-ui/core-utils";
 import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import cn, { clsx } from "clsx";
 import dynamic from "next/dynamic";
@@ -77,7 +77,7 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
     const allBreadcrumbs = result.map((group) => group.breadcrumbs);
     const sharedBreadcrumbs = allBreadcrumbs.reduce((acc, breadcrumbs) => {
         return acc.filter((breadcrumb, idx) => breadcrumb === breadcrumbs[idx]);
-    }, allBreadcrumbs[0]);
+    }, allBreadcrumbs[0] ?? EMPTY_ARRAY);
 
     return result.map((group) => ({
         ...group,
