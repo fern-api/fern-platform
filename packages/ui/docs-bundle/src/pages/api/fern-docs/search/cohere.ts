@@ -55,7 +55,6 @@ export default async function handler(req: Request): Promise<Response> {
         : [];
 
     const chatHistory = (await kv.get<ChatMessage[]>(conversationId)) ?? [];
-    console.log(chatHistory.length);
     const response = await cohere.chatStream({
         preamble: PREAMBLE,
         chatHistory,
