@@ -1,10 +1,12 @@
+import { FdrClient } from "@fern-api/fdr-sdk";
+import { kv } from "@vercel/kv";
 import { Cohere, CohereClient } from "cohere-ai";
+import { ChatMessage } from "cohere-ai/api";
+import { NextRequest } from "next/server";
+import { v4 } from "uuid";
+import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
-
-const cohere = new CohereClient({
-    token: process.env.COHERE_API_KEY,
-});
 
 const PREAMBLE = `
 You are an expert AI assistant called Fernie that helps developers answer questions about Cohere's APIs and SDKs.
@@ -26,19 +28,49 @@ export default async function handler(req: Request): Promise<Response> {
         return new Response(null, { status: 405 });
     }
 
-    const body = await req.json();
-
-    const response = await cohere.chatStream({
-        preamble: PREAMBLE,
-        conversationId: body.conversationId,
-        message: body.message,
+    const cohere = new CohereClient({
+        token: process.env.COHERE_API_KEY,
     });
 
-    const stream = convertAsyncIterableToStream(response).pipeThrough(getCohereStreamTransformer());
+    const docsUrl = getXFernHostEdge(req as NextRequest);
+
+    const body = await req.json();
+
+    let conversationId = body.conversationId;
+
+    if (!body.conversationId) {
+        conversationId = v4();
+    }
+
+    const frc = new FdrClient();
+
+    const docsUrlResponse = await frc.docs.v2.read.getDocsForUrl({ url: docsUrl });
+
+    const docsSearchHits = docsUrlResponse.ok ? docsUrlResponse.body.definition.pages : {};
+
+    const transformedDocuments = docsSearchHits
+        ? Object.entries(docsSearchHits).map(([title, text]) => {
+              return { title, text: text.markdown };
+          })
+        : [];
+
+    const chatHistory = (await kv.get<ChatMessage[]>(conversationId)) ?? [];
+    const response = await cohere.chatStream({
+        preamble: PREAMBLE,
+        chatHistory,
+        message: body.message,
+        documents: transformedDocuments.slice(0, 20),
+    });
+
+    chatHistory.push({ role: "USER", message: body.message });
+
+    const stream = convertAsyncIterableToStream(response).pipeThrough(
+        getCohereStreamTransformer(conversationId, chatHistory),
+    );
 
     return new Response(stream, {
         status: 200,
-        headers: { "Content-Type": "text/plain; charset=utf-8" },
+        headers: { "Content-Type": "text/plain; charset=utf-8", "X-Conversation-Id": conversationId },
     });
 }
 
@@ -53,12 +85,29 @@ function convertAsyncIterableToStream<T>(iterable: AsyncIterable<T>): ReadableSt
     });
 }
 
-function getCohereStreamTransformer() {
+function getCohereStreamTransformer(
+    conversationId: string,
+    chatHistory: ChatMessage[],
+): TransformStream<Cohere.StreamedChatResponse, Uint8Array> {
     const encoder = new TextEncoder();
+    let reply: string = "";
     return new TransformStream<Cohere.StreamedChatResponse, Uint8Array>({
         async transform(chunk, controller) {
             if (chunk.eventType === "text-generation") {
+                reply += chunk.text;
                 controller.enqueue(encoder.encode(chunk.text));
+            }
+            if (chunk.eventType === "citation-generation") {
+                // might want to use this somewhere?
+                // console.log(chunk.citations);
+            }
+            if (chunk.eventType === "stream-end") {
+                // not sure what magic number is appropriate here
+                while (chatHistory.length >= 10) {
+                    chatHistory.shift();
+                }
+                chatHistory.push({ role: "CHATBOT", message: reply });
+                await kv.set(conversationId, chatHistory);
             }
         },
     });
