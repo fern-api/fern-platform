@@ -6,7 +6,7 @@
  */
 export function getNoIndexFromFrontmatter(markdown: string): boolean | undefined {
     const frontmatterMatch = /^---\s*([\s\S]*?)\s*---/.exec(markdown.trimStart());
-    if (!frontmatterMatch) {
+    if (!frontmatterMatch || frontmatterMatch[1] == null) {
         return undefined;
     }
 

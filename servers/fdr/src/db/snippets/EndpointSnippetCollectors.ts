@@ -19,7 +19,7 @@ export class EndpointSnippetCollector {
             if (this.snippetsByEndpointId[identifierOverride] == null) {
                 this.snippetsByEndpointId[identifierOverride] = [];
             }
-            this.snippetsByEndpointId[identifierOverride].push(snippet);
+            this.snippetsByEndpointId[identifierOverride]?.push(snippet);
         }
         if (this.snippetsByEndpoint[endpointPath] == null) {
             this.snippetsByEndpoint[endpointPath] = {

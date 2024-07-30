@@ -111,7 +111,7 @@ export async function getDynamicDocsPageProps(
     xFernHost: string,
     slug: string[],
     cookies: NextApiRequestCookies,
-    res: ServerResponse<IncomingMessage>,
+    _res: ServerResponse<IncomingMessage>,
 ): Promise<GetServerSideDocsPagePropsResult> {
     const url = buildUrl({ host: xFernHost, pathname: slug.join("/") });
     if (cookies.fern_token == null) {
@@ -122,6 +122,7 @@ export async function getDynamicDocsPageProps(
         const config = await getAuthEdgeConfig(xFernHost);
         let user: FernUser | undefined = undefined;
 
+        // using custom auth (e.g. qlty, propexo, etc)
         if (config?.type === "basic_token_verification") {
             try {
                 user = await verifyFernJWT(cookies.fern_token, config.secret, config.issuer);
@@ -141,6 +142,7 @@ export async function getDynamicDocsPageProps(
             user = await verifyFernJWT(cookies.fern_token);
         }
 
+        // SSO
         if (user.partner === "workos") {
             const registryService = getRegistryServiceWithToken(`workos_${cookies.fern_token}`);
 
@@ -153,8 +155,6 @@ export async function getDynamicDocsPageProps(
             console.log(`[getDynamicDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
 
             if (!docs.ok) {
-                res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
-
                 if (docs.error.error === "UnauthorizedError") {
                     return {
                         redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`),
@@ -168,6 +168,7 @@ export async function getDynamicDocsPageProps(
 
             return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
         } else if (user.partner === "ory" || user.partner === "custom") {
+            // rightbrain's api key injection
             const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
 
             if (!docs.ok) {
@@ -194,14 +195,8 @@ export async function getDynamicDocsPageProps(
         console.log(error);
     }
 
-    // Clear the token if it's invalid, then redirect to `/` to reset the login flow
-    res.setHeader("Set-Cookie", "fern_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
-    return {
-        redirect: {
-            destination: `/${slug.join("/")}`,
-            permanent: false,
-        },
-    };
+    // fallback to public docs
+    return convertStaticToServerSidePropsResult(await getDocsPageProps(xFernHost, slug));
 }
 
 async function convertDocsToDocsPageProps({
