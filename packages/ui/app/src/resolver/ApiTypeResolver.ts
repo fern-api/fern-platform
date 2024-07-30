@@ -69,6 +69,7 @@ export class ApiTypeResolver {
                     files: this.mdxOptions?.files,
                 }),
                 availability,
+                default: enum_.default,
             }),
             undiscriminatedUnion: async (undiscriminatedUnion) => ({
                 type: "undiscriminatedUnion",
