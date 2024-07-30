@@ -528,6 +528,7 @@ interface ResolvedEnumShape extends WithMetadata {
     name: string | undefined;
     type: "enum";
     values: ResolvedEnumValue[];
+    default: string | undefined;
 }
 
 export interface ResolvedEnumValue extends WithMetadata {
