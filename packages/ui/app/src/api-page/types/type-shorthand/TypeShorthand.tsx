@@ -34,7 +34,12 @@ export function renderTypeShorthandRoot(
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
             ) : null}
-            {defaultsTo != null && <span>{`Defaults to ${defaultsTo}`}</span>}
+            {defaultsTo != null && (
+                <span>
+                    {"Defaults to "}
+                    <code>{defaultsTo}</code>
+                </span>
+            )}
         </span>
     );
 }
