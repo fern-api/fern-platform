@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { accessByPathNonNull } from "./accessByPath";
-import { Template } from "./generated/api";
+import { Template, UnionTemplateMember } from "./generated/api";
 import { isPlainObject } from "./isPlainObject";
 
 export class UnionMatcher {
@@ -31,7 +31,10 @@ export class UnionMatcher {
                 return typeof payloadOverride === "string" ? 1 : -10;
             case "integer":
             case "double":
-            case "long": {
+            case "long":
+            case "uint":
+            case "uint64":
+            case "bigInteger": {
                 const coercedNumber = Number(payloadOverride);
                 if (isNaN(coercedNumber)) {
                     return -10;
@@ -80,8 +83,10 @@ export class UnionMatcher {
         }
 
         switch (typeReference.type) {
+            // This is actually a typeId, despite it's name as a "typeReferenceId"
+            // So we delegate to scoreObject
             case "id":
-                throw new Error("This shouldn't happen");
+                return this.scoreType({ typeId: typeReference.value, payloadOverride });
 
             // Evaluating an Optional:
             // Strip the optional and evaluate the score of the inner type.
@@ -212,12 +217,10 @@ export class UnionMatcher {
     // 1. If the property is not present in the payload but it's optional: 1
     // 2. If the property is present in the payload, score it with scoreTypeReference
     private scoreObject({
-        typeId,
         object,
         payloadOverride,
     }: {
-        typeId?: string;
-        object?: APIV1Read.ObjectType;
+        object: APIV1Read.ObjectType;
         payloadOverride: unknown;
     }): number {
         // If the payload is not present (e.g. you got a null), then any template works
@@ -226,14 +229,7 @@ export class UnionMatcher {
         }
 
         // Flatten properties and score each property with scoreObjectProperty
-        let properties: APIV1Read.ObjectProperty[];
-        if (typeId != null) {
-            properties = this.objectFlattener.getFlattenedObjectProperties(typeId);
-        } else if (object != null) {
-            properties = this.objectFlattener.getFlattenedObjectPropertiesFromObjectType(object);
-        } else {
-            throw new Error("Must provide either typeId or object when scoring an object in Union evaluation");
-        }
+        const properties = this.objectFlattener.getFlattenedObjectPropertiesFromObjectType(object);
 
         return properties.reduce((acc, property) => {
             // Get the payload for the property
@@ -299,11 +295,9 @@ export class UnionMatcher {
     }
 
     private scoreTypeShape({
-        typeId,
         typeShape,
         payloadOverride,
     }: {
-        typeId: string;
         typeShape: APIV1Read.TypeShape;
         payloadOverride?: unknown;
     }): number {
@@ -322,46 +316,34 @@ export class UnionMatcher {
             case "discriminatedUnion":
                 return this.scoreDiscriminatedUnion({ union: typeShape, payloadOverride });
             case "object":
-                return this.scoreObject({ typeId, payloadOverride });
+                return this.scoreObject({ object: typeShape, payloadOverride });
         }
     }
 
-    private scoreTemplateFit({
-        typeId,
-        payloadOverride,
-    }: {
-        typeId: string;
-        payloadOverride?: unknown;
-    }): number | undefined {
+    private scoreType({ typeId, payloadOverride }: { typeId: string; payloadOverride?: unknown }): number {
         const maybeType = this.apiDefinition.types[typeId];
         if (maybeType == null) {
-            return;
+            // If the type doesn't even exist, it shouldn't be an option. We only
+            // return undefined if the type could not be found in the definition.
+            return -9999;
         }
 
-        return this.scoreTypeShape({ typeId, typeShape: maybeType.shape, payloadOverride });
+        return this.scoreTypeShape({ typeShape: maybeType.shape, payloadOverride });
     }
 
     public getBestFitTemplate({
-        templates,
+        members,
         payloadOverride,
     }: {
-        templates: Record<string, Template>;
+        members: UnionTemplateMember[];
         payloadOverride?: unknown;
     }): Template | undefined {
-        const typeToTemplate = new Map(Object.entries(templates));
-        if (typeToTemplate.size > 0) {
+        if (members.length > 0) {
             // Score each template against the payload
-            const scoredTemplates = Array.from(typeToTemplate.entries())
-                .map(([typeId, template]) => ({
-                    template,
-                    score: this.scoreTemplateFit({ typeId, payloadOverride }),
-                }))
-                .filter(
-                    // If the type doesn't even exist, it shouldn't be an option. We only
-                    // return undefined if the type could not be found in the definition.
-                    (scoredTemplate): scoredTemplate is { template: Template; score: number } =>
-                        scoredTemplate.score != null,
-                );
+            const scoredTemplates = members.map((member) => ({
+                template: member.template,
+                score: this.scoreTypeReference({ typeReference: member.type, payloadOverride }),
+            }));
 
             // Return the template with the highest score
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -368,6 +368,10 @@ export class SnippetTemplateResolver {
                 });
             }
             case "union": {
+                // Effectively deprecated, but still here to not break the API, SDKs should instead create a union_v2 template.
+                return new DefaultedV1Snippet({ template, isRequired });
+            }
+            case "union_v2": {
                 const apiDefinition = await this.getApiDefinition();
                 const objectFlattener = this.getObjectFlattener();
                 if (apiDefinition == null || objectFlattener == null) {
@@ -376,7 +380,7 @@ export class SnippetTemplateResolver {
 
                 const unionMatcher = new UnionMatcher(apiDefinition, objectFlattener);
                 const bestFitTemplate = unionMatcher.getBestFitTemplate({
-                    templates: template.members,
+                    members: template.members,
                     payloadOverride,
                 });
 

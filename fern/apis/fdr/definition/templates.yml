@@ -1,4 +1,5 @@
 imports:
+  type: ./api/v1/read/type.yml
   commons: commons.yml
   snippets: snippets.yml
 
@@ -78,6 +79,24 @@ types:
   # Internal Snippet structure
   TemplateSentinel: literal<"$FERN_INPUT">
 
+  UnionTemplateMember:
+    properties:
+      type: type.TypeReference
+      template: Template
+
+  UnionTemplateV2:
+    properties:
+      imports: optional<list<string>>
+      isOptional:
+        type: boolean
+        docs: |
+          We might not need this, but the idea here is to be able to omit if it's optional and undefined,
+          or default if omitted and required.
+
+      templateString: string
+      members: list<UnionTemplateMember>
+      templateInput: optional<PayloadInput>
+
   UnionTemplate:
     properties:
       imports: optional<list<string>>
@@ -92,6 +111,7 @@ types:
         type: map<string, Template>
         docs: A map of the union member's typeID to the template.
       templateInput: optional<PayloadInput>
+
   DiscriminatedUnionTemplate:
     properties:
       imports: optional<list<string>>
@@ -175,6 +195,7 @@ types:
       enum: EnumTemplate
       discriminatedUnion: DiscriminatedUnionTemplate
       union: UnionTemplate
+      union_v2: UnionTemplateV2
       dict: DictTemplate
       iterable: IterableTemplate
 
