@@ -211,14 +211,30 @@ export class UnionMatcher {
     // 0. If the property is not present in the payload but it's required: -1
     // 1. If the property is not present in the payload but it's optional: 1
     // 2. If the property is present in the payload, score it with scoreTypeReference
-    private scoreObject({ typeId, payloadOverride }: { typeId: string; payloadOverride: unknown }): number {
+    private scoreObject({
+        typeId,
+        object,
+        payloadOverride,
+    }: {
+        typeId?: string;
+        object?: APIV1Read.ObjectType;
+        payloadOverride: unknown;
+    }): number {
         // If the payload is not present (e.g. you got a null), then any template works
         if (payloadOverride == null) {
             return 0;
         }
 
         // Flatten properties and score each property with scoreObjectProperty
-        const properties = this.objectFlattener.getFlattenedObjectProperties(typeId);
+        let properties: APIV1Read.ObjectProperty[];
+        if (typeId != null) {
+            properties = this.objectFlattener.getFlattenedObjectProperties(typeId);
+        } else if (object != null) {
+            properties = this.objectFlattener.getFlattenedObjectPropertiesFromObjectType(object);
+        } else {
+            throw new Error("Must provide either typeId or object when scoring an object in Union evaluation");
+        }
+
         return properties.reduce((acc, property) => {
             // Get the payload for the property
             const propertyPayload = accessByPathNonNull(payloadOverride, property.key);
@@ -272,7 +288,6 @@ export class UnionMatcher {
         // if the rest of the object is not valid either.
         let maxVariantScore = -10;
         for (const variant of union.variants) {
-            // TODO: need the typeID here somehow
             const variantScore = this.scoreObject({
                 object: variant.additionalProperties,
                 payloadOverride,

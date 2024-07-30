@@ -8,6 +8,16 @@ export class ObjectFlattener {
 
     constructor(private readonly apiDefinition: APIV1Read.ApiDefinition) {}
 
+    public getFlattenedObjectPropertiesFromObjectType(objectType: APIV1Read.ObjectType): APIV1Read.ObjectProperty[] {
+        const flattenedProperties: APIV1Read.ObjectProperty[] = [];
+        flattenedProperties.push(...objectType.properties);
+        objectType.extends.forEach((ext) => {
+            flattenedProperties.push(...this.getFlattenedObjectProperties(ext));
+        });
+
+        return flattenedProperties;
+    }
+
     public getFlattenedObjectProperties(typeId: APIV1Read.TypeId): APIV1Read.ObjectProperty[] {
         if (this.flattenedObjects.has(typeId)) {
             return this.flattenedObjects.get(typeId)!;
