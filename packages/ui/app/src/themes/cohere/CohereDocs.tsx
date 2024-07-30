@@ -48,7 +48,9 @@ function UnmemoizedCohereDocs(): ReactElement {
 
     const setContentHeight = useSetAtom(CONTENT_HEIGHT_ATOM);
     useResizeObserver(mainRef, ([entry]) => {
-        setContentHeight(entry.contentRect.height);
+        if (entry != null) {
+            setContentHeight(entry.contentRect.height);
+        }
     });
 
     useEffect(() => {

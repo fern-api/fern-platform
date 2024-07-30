@@ -133,24 +133,28 @@ export class ApiDefinitionResolver {
 
         if (node.overviewPageId != null && this.pages[node.overviewPageId] != null) {
             const pageContent = this.pages[node.overviewPageId];
-            items.unshift({
-                type: "page",
-                id: node.overviewPageId,
-                slug: node.slug,
-                title: node.title,
-                markdown: await serializeMdx(pageContent.markdown, {
-                    ...this.mdxOptions,
-                    filename: node.overviewPageId,
-                    frontmatterDefaults: {
-                        title: node.title,
-                        breadcrumbs: [], // TODO: implement breadcrumbs
-                        "edit-this-page-url": pageContent.editThisPageUrl,
-                        "hide-nav-links": true,
-                        layout: "reference",
-                        "force-toc": this.featureFlags.isTocDefaultEnabled,
-                    },
-                }),
-            });
+            if (pageContent != null) {
+                items.unshift({
+                    type: "page",
+                    id: node.overviewPageId,
+                    slug: node.slug,
+                    title: node.title,
+                    markdown: await serializeMdx(pageContent.markdown, {
+                        ...this.mdxOptions,
+                        filename: node.overviewPageId,
+                        frontmatterDefaults: {
+                            title: node.title,
+                            breadcrumbs: [], // TODO: implement breadcrumbs
+                            "edit-this-page-url": pageContent.editThisPageUrl,
+                            "hide-nav-links": true,
+                            layout: "reference",
+                            "force-toc": this.featureFlags.isTocDefaultEnabled,
+                        },
+                    }),
+                });
+            } else {
+                // TODO: alert if the page is null
+            }
         }
 
         return {

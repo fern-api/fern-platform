@@ -75,8 +75,10 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
     // this is useful for tabs that only have one page
     if (
         sidebar.children.length === 1 &&
+        sidebar.children[0] != null &&
         sidebar.children[0].type === "sidebarGroup" &&
         sidebar.children[0].children.length === 1 &&
+        sidebar.children[0].children[0] != null &&
         sidebar.children[0].children[0].type === "page"
     ) {
         return true;

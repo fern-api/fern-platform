@@ -28,7 +28,14 @@ export const getHighlighterInstance: (language: string) => Promise<Highlighter> 
         highlighter = await highlighterPromise;
 
         if (!highlighter.getLoadedLanguages().includes(lang)) {
-            await highlighter.loadLanguage(additionalLanguages[lang] ?? lang);
+            try {
+                await highlighter.loadLanguage(
+                    additionalLanguages[lang] ?? (lang as BundledLanguage | SpecialLanguage),
+                );
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.error(`Failed to load language: ${lang}`, e);
+            }
         }
 
         return highlighter;

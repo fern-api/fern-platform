@@ -157,7 +157,9 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
                             headers: {
                                 ...headers,
                                 [header.headerWireValue]:
-                                    typeof change === "function" ? change(headers[header.headerWireValue]) : change,
+                                    typeof change === "function"
+                                        ? change(headers[header.headerWireValue] ?? "")
+                                        : change,
                             },
                         }));
                     },
@@ -405,7 +407,7 @@ function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState): bool
         bearerAuth: () => !isEmpty(authState.bearerAuth?.token.trim()),
         basicAuth: () =>
             !isEmpty(authState.basicAuth?.username.trim()) && !isEmpty(authState.basicAuth?.password.trim()),
-        header: (header) => !isEmpty(authState.header?.headers[header.headerWireValue].trim()),
+        header: (header) => !isEmpty(authState.header?.headers[header.headerWireValue]?.trim()),
         _other: () => false,
     });
 }
