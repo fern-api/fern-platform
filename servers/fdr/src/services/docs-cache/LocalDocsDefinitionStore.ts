@@ -7,7 +7,7 @@ export default class LocalDocsDefinitionStore {
         this.localCache = {};
     }
 
-    get({ url }: { url: URL }): CachedDocsResponse {
+    get({ url }: { url: URL }): CachedDocsResponse | undefined {
         return this.localCache[url.hostname];
     }
 

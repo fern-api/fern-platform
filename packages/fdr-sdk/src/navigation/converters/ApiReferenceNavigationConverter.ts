@@ -175,10 +175,11 @@ export class ApiReferenceNavigationConverter {
         let subpackageId = isSubpackage(package_) ? package_.subpackageId : "root";
         while (package_.pointsTo != null) {
             subpackageId = package_.pointsTo;
-            package_ = this.api.subpackages[package_.pointsTo];
-            if (package_ == null) {
+            const pointsToSubpackage = this.api.subpackages[package_.pointsTo];
+            if (pointsToSubpackage == null) {
                 return [];
             }
+            package_ = pointsToSubpackage;
         }
 
         if (this.#visitedSubpackages.has(subpackageId)) {
@@ -268,6 +269,11 @@ export class ApiReferenceNavigationConverter {
     ): FernNavigation.ApiPackageChild[] {
         const children: FernNavigation.ApiPackageChild[] = [];
         let subpackage = subpackageId === "root" ? this.api.rootPackage : this.api.subpackages[subpackageId];
+        if (subpackage == null) {
+            throw new Error(
+                `${subpackageId} is not present within known subpackages: ${Object.keys(this.api.subpackages).join(", ")}`,
+            );
+        }
         while (subpackage.pointsTo != null) {
             subpackage = this.api.subpackages[subpackage.pointsTo];
             if (subpackage == null) {

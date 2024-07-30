@@ -72,7 +72,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     const ref = useRef<HTMLDivElement>(null);
 
     useResizeObserver(ref, ([entry]) => {
-        measureHeight(entry.contentRect.height);
+        if (entry != null) {
+            measureHeight(entry.contentRect.height);
+        }
     });
 
     const [internalSelectedErrorExample, setSelectedErrorExample] = useState<ResolvedExampleError | undefined>(

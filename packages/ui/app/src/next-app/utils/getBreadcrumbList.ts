@@ -17,24 +17,27 @@ export function getBreadcrumbList(
 
     if (FernNavigation.isPage(node)) {
         const pageId = FernNavigation.utils.getPageId(node);
-        if (pageId != null && pages[pageId] != null) {
-            const { data: frontmatter } = getFrontmatter(pages[pageId].markdown);
+        if (pageId != null) {
+            const page = pages[pageId];
+            if (page != null) {
+                const { data: frontmatter } = getFrontmatter(page.markdown);
 
-            // if the frontmatter has a jsonld:breadcrumb, use that
-            if (frontmatter["jsonld:breadcrumb"] != null) {
-                const breadcrumb = JsonLd.BreadcrumbListSchema.safeParse(frontmatter["jsonld:breadcrumb"]);
-                if (breadcrumb.success) {
-                    return breadcrumb.data;
-                } else {
-                    // eslint-disable-next-line no-console
-                    console.error("Invalid jsonld:breadcrumb", breadcrumb.error.toString());
+                // if the frontmatter has a jsonld:breadcrumb, use that
+                if (frontmatter["jsonld:breadcrumb"] != null) {
+                    const breadcrumb = JsonLd.BreadcrumbListSchema.safeParse(frontmatter["jsonld:breadcrumb"]);
+                    if (breadcrumb.success) {
+                        return breadcrumb.data;
+                    } else {
+                        // eslint-disable-next-line no-console
+                        console.error("Invalid jsonld:breadcrumb", breadcrumb.error.toString());
+                    }
                 }
-            }
 
-            // override the title used in the breadcrumb's last item.
-            // for example, if the sidebar's title is "Overview" but the page title is "This API Overview"
-            if (frontmatter.title != null) {
-                title = frontmatter.title;
+                // override the title used in the breadcrumb's last item.
+                // for example, if the sidebar's title is "Overview" but the page title is "This API Overview"
+                if (frontmatter.title != null) {
+                    title = frontmatter.title;
+                }
             }
         }
     }
