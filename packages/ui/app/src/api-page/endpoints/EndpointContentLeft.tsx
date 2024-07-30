@@ -64,7 +64,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const errorExpandAll = useBooleanState(false);
     const { isAuthEnabledInDocs } = useFeatureFlags();
 
-    let authHeaders: ResolvedObjectProperty;
+    let authHeaders: ResolvedObjectProperty | undefined;
     if (endpoint.auth && isAuthEnabledInDocs) {
         authHeaders = visitDiscriminatedUnion(endpoint.auth, "type")._visit<ResolvedObjectProperty>({
             basicAuth: () => {
