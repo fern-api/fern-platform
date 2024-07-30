@@ -272,6 +272,14 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         });
     }
 
+    public DEFAULT_ENDPOINT_SNIPPET_TEMPLATES: Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates> = {
+        PATCH: {},
+        POST: {},
+        PUT: {},
+        GET: {},
+        DELETE: {},
+    };
+
     public async loadSnippetTemplatesByEndpoint({
         orgId,
         apiId,
@@ -315,18 +323,15 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     },
                 });
                 if (result != null) {
-                    const toReturnEndpoint = toRet[result.endpointId.path];
-                    if (toReturnEndpoint == null) {
-                        toRet[result.endpointId.path] = {
-                            PATCH: {},
-                            POST: {},
-                            PUT: {},
-                            GET: {},
-                            DELETE: {},
-                        };
-                    } else {
-                        toReturnEndpoint[result.endpointId.method][sdk.type] = result.snippetTemplate;
-                    }
+                    const value = {
+                        [result.endpointId.method]: {
+                            ...(toRet[result.endpointId.path]?.[result.endpointId.method] ?? {}),
+                            [sdk.type]: result.snippetTemplate,
+                        },
+                        ...(toRet[result.endpointId.path] ?? this.DEFAULT_ENDPOINT_SNIPPET_TEMPLATES),
+                    };
+
+                    toRet[result.endpointId.path] = value;
                 }
             }
         }
