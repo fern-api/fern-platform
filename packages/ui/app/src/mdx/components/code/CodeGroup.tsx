@@ -1,8 +1,9 @@
 import { CopyToClipboardButton } from "@fern-ui/components";
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
-import { useState } from "react";
-import { useFeatureFlags } from "../../../atoms";
+import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
+import { FERN_CODE_GROUP_TAB, useCodeGroup, useFeatureFlags } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../commons/HorizontalOverflowMask";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -13,12 +14,15 @@ export declare namespace CodeGroup {
 
     export interface Props {
         items: Item[];
+        groupId?: string;
     }
 }
 
-export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ items }) => {
+export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ items, groupId }) => {
     const { isDarkCodeEnabled } = useFeatureFlags();
-    const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+    const [selectedTabIndex, setSelectedTabIndex] = useState("0");
+    const [_, setSelectedTab] = useAtom(FERN_CODE_GROUP_TAB);
+    const { selectedGroup, groupIds } = useCodeGroup({ groupId });
 
     const containerClass = clsx(
         "after:ring-card-border bg-card relative mt-4 first:mt-0 mb-6 flex w-full min-w-0 max-w-full flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
@@ -26,6 +30,12 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
             "dark bg-card-solid": isDarkCodeEnabled,
         },
     );
+
+    useEffect(() => {
+        if (!!selectedGroup) {
+            setSelectedTabIndex(selectedGroup.value);
+        }
+    }, [selectedGroup]);
 
     if (items.length === 1 && items[0] != null) {
         return (
@@ -50,8 +60,18 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     return (
         <Tabs.Root
             className={containerClass}
-            onValueChange={(value) => setSelectedTabIndex(parseInt(value, 10))}
-            defaultValue="0"
+            onValueChange={(value) => {
+                setSelectedTabIndex(value);
+                if (groupId) {
+                    if (selectedGroup) {
+                        const filteredGroupIds = groupIds.filter((group) => group.groupId !== selectedGroup.groupId);
+                        setSelectedTab([{ groupId: groupId, value: value }, ...filteredGroupIds]);
+                    } else {
+                        setSelectedTab([{ groupId: groupId, value: value }, ...groupIds]);
+                    }
+                }
+            }}
+            value={selectedTabIndex}
         >
             <div className="rounded-t-[inherit] bg-tag-default-soft">
                 <div className="mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">

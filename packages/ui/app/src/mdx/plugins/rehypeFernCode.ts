@@ -25,10 +25,16 @@ export function rehypeFernCode(): (tree: Root) => void {
 
             if (isMdxJsxFlowElement(node) && (node.name === "CodeBlocks" || node.name === "CodeGroup")) {
                 const codeBlockItems = visitCodeBlockNodes(node);
+                const attributes = [toAttribute("items", codeBlockItems)];
+
+                if (node.attributes.length > 0 && node.attributes[0]?.value) {
+                    attributes.push(toAttribute("groupId", node.attributes[0]?.value));
+                }
+
                 parent?.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",
                     name: "CodeBlocks",
-                    attributes: [toAttribute("items", codeBlockItems)],
+                    attributes: attributes,
                     children: [],
                 });
                 return "skip";
@@ -107,6 +113,8 @@ export function rehypeFernCode(): (tree: Root) => void {
 
 function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
     const codeBlockItems: CodeGroup.Item[] = [];
+    let groupId: string | undefined;
+
     visit(nodeToVisit, (node) => {
         if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
             const jsxAttributes = node.attributes.filter(
@@ -154,7 +162,6 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                 });
             }
         }
-        return true;
     });
     return codeBlockItems;
 }
