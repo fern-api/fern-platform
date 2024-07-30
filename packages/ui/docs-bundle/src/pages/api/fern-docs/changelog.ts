@@ -101,7 +101,7 @@ function toFeedItem(
         date: new Date(entry.date),
     };
 
-    const markdown = pages[entry.pageId].markdown;
+    const markdown = pages[entry.pageId]?.markdown;
     if (markdown != null) {
         const { data: frontmatter, content } = getFrontmatter(markdown);
         item.description = frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;

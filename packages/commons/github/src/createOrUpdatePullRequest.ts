@@ -15,6 +15,9 @@ interface RepoMetadata {
 
 function parseRepository(repository: string): RepoMetadata {
     const [owner, repo] = repository.split("/");
+    if (owner == null || repo == null) {
+        throw new Error(`Failed to parse repository into owner and repo: ${repository}`);
+    }
     return {
         owner,
         repo,
@@ -74,9 +77,15 @@ export async function createOrUpdatePullRequest(
         base: inputs.base,
     });
     console.log("Attempting update of pull request");
+
+    const pullNumber = pulls[0]?.number;
+    if (pullNumber == null) {
+        throw new Error(`Failed to retrieve pull request number: ${JSON.stringify(pulls)}`);
+    }
+
     const { data: pull } = await octokit.rest.pulls.update({
         ...parseRepository(baseRepository),
-        pull_number: pulls[0].number,
+        pull_number: pullNumber,
         title: inputs.title,
         body: inputs.body,
     });

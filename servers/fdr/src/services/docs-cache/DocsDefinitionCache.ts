@@ -249,7 +249,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         if (this.redisDocsCache) {
             return await this.redisDocsCache.get({ url });
         }
-        return this.localDocsCache.get({ url });
+        return this.localDocsCache.get({ url }) ?? null;
     }
 
     private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {

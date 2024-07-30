@@ -34,6 +34,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
     "@octokit/types": "^13.4.1",
     "@serverless/typescript": "^3.0.0",
     "@types/aws-lambda": "^8.10.71",
