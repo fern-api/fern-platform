@@ -70,7 +70,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             basicAuth: () => {
                 return {
                     key: "Authorization",
-                    description: "Authorization: Basic <username:password>",
+                    description: "Basic authentication of the form Basic <username:password>.",
                     hidden: false,
                     valueShape: {
                         type: "unknown",
@@ -82,7 +82,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             bearerAuth: () => {
                 return {
                     key: "Authorization",
-                    description: "Authorization: Bearer <token>",
+                    description: "Bearer authentication of the form Bearer <token>, where token is your auth token.",
                     hidden: false,
                     valueShape: {
                         type: "unknown",
@@ -94,7 +94,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             header: (value) => {
                 return {
                     key: "Authorization",
-                    description: `Authorization: ${value.prefix} ${value.headerWireValue}`,
+                    description: `Header authentication of the form ${value.prefix} ${value.headerWireValue}.`,
                     hidden: false,
                     valueShape: {
                         type: "unknown",
@@ -142,7 +142,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 {parameter.key === "Authorization" && (
                                     <div className="absolute right-0 top-3">
                                         <div className="px-2 bg-tag-danger rounded-xl flex items-center h-5">
-                                            <span className="text-xs t-danger">Authorization</span>
+                                            <span className="text-xs t-danger">Auth</span>
                                         </div>
                                     </div>
                                 )}
