@@ -128,7 +128,6 @@ export class MigrateFromMintlify {
         // copy all image files
         await Promise.all(
             this.imageFiles.map(async (file) => {
-                // TODO: (rohin) check here
                 const absoluteFilePath = path.join(this.dir, file);
                 const newFilePath = path.join(fernDir, file);
                 await fs.promises.mkdir(path.dirname(newFilePath), { recursive: true });
@@ -249,7 +248,6 @@ export class MigrateFromMintlify {
                 title: data.title,
                 subtitle: data.description,
                 layout: data.mode != null ? "reference" : undefined,
-                // TODO: (rohin) check here
                 image: data["og:image"],
                 slug,
             },
