@@ -18,7 +18,7 @@ export function PlaygroundEndpointDescription({ endpoint }: PlaygroundEndpointDe
     const [descriptionIsClamped, setDescriptionIsClamped] = useState(false);
 
     useResizeObserver(descriptionRef, ([entry]) => {
-        if (!showFullDescription) {
+        if (!showFullDescription && entry != null) {
             setDescriptionIsClamped(entry.target.scrollHeight > entry.target.clientHeight);
         }
     });

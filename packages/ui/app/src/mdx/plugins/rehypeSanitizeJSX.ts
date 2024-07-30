@@ -41,11 +41,11 @@ export function rehypeSanitizeJSX({ showErrors = false }: { showErrors?: boolean
                                     !SUPPORTED_JSX_TAGS.includes(esnode.openingElement.name.name)
                                 ) {
                                     const ancestor = ancestors[ancestors.length - 1];
-                                    if (ancestor.type === "ExpressionStatement") {
+                                    if (ancestor?.type === "ExpressionStatement") {
                                         ancestor.expression = jsxFragment();
                                         return ESTREE_SKIP;
                                     }
-                                    if (ancestor.type === "JSXFragment" && i != null) {
+                                    if (ancestor?.type === "JSXFragment" && i != null) {
                                         ancestor.children[i] = jsxFragment();
                                     }
                                 }
