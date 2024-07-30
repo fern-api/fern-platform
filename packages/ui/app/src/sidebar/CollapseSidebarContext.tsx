@@ -130,7 +130,7 @@ export const CollapseSidebarProvider: FC<
                 return [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])];
             }
         }
-    }, [selectedNodeId, parentIdMap]);
+    }, [selectedNodeId, parentIdMap, sidebar]);
 
     const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(() => initializeExpandedSections());
 
