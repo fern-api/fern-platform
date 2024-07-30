@@ -91,7 +91,7 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
     return element.type === Image;
 }
 
-export const Image: FC<ImgProps> = ({ className, src, width: w, height: h, noZoom, enableZoom, style, ...rest }) => {
+export const Image: FC<ImgProps> = ({ src, width: w, height: h, noZoom, enableZoom, style, ...rest }) => {
     const files = useAtomValue(FILES_ATOM);
     const { "no-image-zoom": noImageZoom } = useFrontmatter();
 
