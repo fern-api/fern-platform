@@ -136,17 +136,18 @@ export class MigrateFromMintlify {
         );
 
         // create openapi folder
-        if (mint.openapi != null && mint.openapi.length > 0) {
+        if (mint.openapi != null) {
             const openapiDir = path.join(fernDir, "openapi");
             fs.mkdirSync(openapiDir, { recursive: true });
-            if (mint.openapi.length > 1) {
+            const firstOpenapi = typeof mint.openapi === "string" ? mint.openapi : mint.openapi[0];
+            if (firstOpenapi != null) {
+                const openapiFilePath = path.join(this.dir, firstOpenapi);
+                const newOpenapiFilePath = path.join(openapiDir, `openapi${path.extname(firstOpenapi)}`);
+                await fs.promises.copyFile(openapiFilePath, newOpenapiFilePath);
+            }
+            if (typeof mint.openapi !== "string" && mint.openapi.length > 1) {
                 console.warn("Multiple OpenAPI files are not supported yet in this migrator.");
             }
-
-            const openapi = mint.openapi[0];
-            const openapiFilePath = path.join(this.dir, openapi);
-            const newOpenapiFilePath = path.join(openapiDir, `openapi${path.extname(openapi)}`);
-            await fs.promises.copyFile(openapiFilePath, newOpenapiFilePath);
         }
     }
 
