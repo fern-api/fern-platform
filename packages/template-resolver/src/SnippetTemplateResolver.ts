@@ -358,11 +358,17 @@ export class SnippetTemplateResolver {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
 
+                const maybeUnionValue = this.getPayloadValue(
+                    // Defaults to relative since the python generator didn't specify this on historical templates
+                    template.templateInput ?? { location: "RELATIVE" },
+                    payloadOverride,
+                );
+
                 const objectFlattener = this.getObjectFlattener(this.maybeApiDefinition);
                 const unionMatcher = new UnionMatcher(this.maybeApiDefinition, objectFlattener);
                 const bestFitTemplate = unionMatcher.getBestFitTemplate({
                     members: template.members,
-                    payloadOverride,
+                    payloadOverride: maybeUnionValue,
                 });
 
                 if (!bestFitTemplate) {
@@ -371,7 +377,7 @@ export class SnippetTemplateResolver {
 
                 const evaluatedTemplate: V1Snippet | undefined = this.resolveV1Template({
                     template: bestFitTemplate,
-                    payloadOverride,
+                    payloadOverride: maybeUnionValue,
                 }).snippet;
 
                 if (evaluatedTemplate == null) {
@@ -460,9 +466,9 @@ ${endpointSnippet?.invocation}
         }
     }
 
-    public async resolveWithFormatting(): Promise<Snippet> {
+    public async resolveWithFormatting(apiDefinition?: APIV1Read.ApiDefinition): Promise<Snippet> {
         const { formatSnippet } = await import("./formatSnippet");
-        const apiDefinition = await this.getApiDefinition();
+        apiDefinition = apiDefinition ?? (await this.getApiDefinition());
         return formatSnippet(this.resolve(apiDefinition));
     }
 
