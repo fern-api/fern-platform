@@ -49,7 +49,6 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
             }
         }
     };
-    console.log("HELLO");
 
     useEffect(() => {
         if (queryGroupId && queryValue && queryGroupId === groupId && items.length > parseInt(queryValue)) {
