@@ -1,0 +1,85 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Snippet Template Resolver > Test Unions Number 1`] = `
+"const cohere = new CohereClient({
+    token: "YOUR_TOKEN",
+    clientName: "YOUR_CLIENT_NAME",
+});
+await api.createMovie({
+    review: 100000,
+});
+"
+`;
+
+exports[`Snippet Template Resolver > Test Unions Object 1`] = `
+"const cohere = new CohereClient({
+    token: "YOUR_TOKEN",
+    clientName: "YOUR_CLIENT_NAME",
+});
+await api.createMovie({
+    review: {
+        yourSummary: "Jaws was a great movie!",
+        yourNotes: "I loved the shark!",
+        starRatings: 5,
+    },
+});
+"
+`;
+
+exports[`Snippet Template Resolver > Test Unions Object Missing Property 1`] = `
+"const cohere = new CohereClient({
+    token: "YOUR_TOKEN",
+    clientName: "YOUR_CLIENT_NAME",
+});
+await api.createMovie({
+    review: {
+        yourSummary: "Jaws was a great movie!",
+        yourNotes: "I loved the shark!",
+    },
+});
+"
+`;
+
+exports[`Snippet Template Resolver > Test Unions Object Total Mismatch 1`] = `
+"const cohere = new CohereClient({
+    token: "YOUR_TOKEN",
+    clientName: "YOUR_CLIENT_NAME",
+});
+await api.createMovie();
+"
+`;
+
+exports[`Snippet Template Resolver > Test Unions Object Total Mismatch 2`] = `
+"const cohere = new CohereClient({
+    token: "YOUR_TOKEN",
+    clientName: "YOUR_CLIENT_NAME",
+});
+await api.createMovie();
+"
+`;
+
+exports[`Snippet Template Resolver > Test Unions Similar Object 1`] = `
+"const cohere = new CohereClient({
+    token: "YOUR_TOKEN",
+    clientName: "YOUR_CLIENT_NAME",
+});
+await api.createMovie({
+    review: {
+        yourReallyAngrySummary: "Jaws was a great movie!",
+        yourAngryNotes: "I loved the shark!",
+        angryStarRatings: 5,
+    },
+});
+"
+`;
+
+exports[`Snippet Template Resolver > Test Unions String 1`] = `
+"const cohere = new CohereClient({
+    token: "YOUR_TOKEN",
+    clientName: "YOUR_CLIENT_NAME",
+});
+await api.createMovie({
+    review: "Jaws was a great movie!",
+});
+"
+`;
