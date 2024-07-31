@@ -146,11 +146,7 @@ export function renderTypeShorthand(
             }),
         // other
         unknown: (unknown: ResolvedUnknownTypeShape) => {
-            if (unknown.displayName) {
-                return unknown.displayName;
-            } else {
-                return "any";
-            }
+            return unknown.displayName ?? "any";
         },
         _other: () => "<unknown>",
         alias: (reference) => renderTypeShorthand(reference.shape, { plural, withArticle }, types),
