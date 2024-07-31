@@ -1,4 +1,7 @@
-import { accessByPath } from "./accessByPath";
+import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk";
+import { ObjectFlattener } from "./ResolutionUtilities";
+import { UnionMatcher } from "./UnionResolver";
+import { accessByPathNonNull } from "./accessByPath";
 import {
     AuthPayload,
     CustomSnippetPayload,
@@ -41,6 +44,7 @@ class DefaultedV1Snippet {
             case "generic":
             case "discriminatedUnion":
             case "union":
+            case "union_v2":
             case "enum":
                 defaulted_invocation = template.templateString?.replace(TemplateSentinel, "") ?? "";
                 break;
@@ -66,6 +70,10 @@ const TemplateSentinel = "$FERN_INPUT";
 export class SnippetTemplateResolver {
     private payload: CustomSnippetPayload;
     private endpointSnippetTemplate: EndpointSnippetTemplate;
+    private maybeApiDefinition: APIV1Read.ApiDefinition | undefined;
+    private maybeObjectFlattener: ObjectFlattener | undefined;
+    private maybeApiDefinitionId: string | undefined;
+    private apiDefinitionHasBeenRequested: boolean;
 
     constructor({
         payload,
@@ -76,13 +84,12 @@ export class SnippetTemplateResolver {
     }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
-    }
 
-    private accessByPath(jsonObject: unknown, path?: string | string[]): unknown {
-        if (path != null && jsonObject != null && path.length > 0) {
-            return accessByPath(jsonObject, path);
-        }
-        return jsonObject;
+        // maybeApiDefinitionId is the ID of the API definition, stored on the template itself, used as a fallback
+        this.maybeApiDefinitionId = this.endpointSnippetTemplate.apiDefinitionId;
+        // If we have already attempted to get the API definition
+        // We only do this to be able to delay requesting the definition unless we really need to (ie if there's a union template)
+        this.apiDefinitionHasBeenRequested = false;
     }
 
     private accessParameterPayloadByPath(
@@ -95,7 +102,7 @@ export class SnippetTemplateResolver {
         if (parameterName != null && parameterPayloads != null) {
             const selectedParameter = parameterPayloads.find((parameter) => parameter.name === parameterName);
             if (selectedParameter != null) {
-                return this.accessByPath(selectedParameter.value, splitPath);
+                return accessByPathNonNull(selectedParameter.value, splitPath);
             }
         }
         // Could not find the named parameter for this example.
@@ -104,7 +111,7 @@ export class SnippetTemplateResolver {
 
     private accessAuthPayloadByPath(authPayload?: AuthPayload, locationPath?: string): unknown {
         if (authPayload != null) {
-            return this.accessByPath(authPayload, locationPath);
+            return accessByPathNonNull(authPayload, locationPath);
         }
         const maybePayloadName = locationPath?.replace(/\[.*?\]/g, "")?.split(".")[0];
 
@@ -113,15 +120,15 @@ export class SnippetTemplateResolver {
 
     private getPayloadValue(location: PayloadInput, payloadOverride?: unknown): unknown | undefined {
         if (location.location === "RELATIVE" && payloadOverride != null) {
-            return this.accessByPath(payloadOverride, location.path);
+            return accessByPathNonNull(payloadOverride, location.path);
         }
 
         switch (location.location) {
             case "BODY":
-                return this.accessByPath(this.payload.requestBody, location.path);
+                return accessByPathNonNull(this.payload.requestBody, location.path);
             case "RELATIVE":
                 // We should warn if this ever happens, the relative directive should only really happen within containers
-                return this.accessByPath(this.payload.requestBody, location.path);
+                return accessByPathNonNull(this.payload.requestBody, location.path);
             case "QUERY":
                 return this.accessParameterPayloadByPath(this.payload.queryParameters, location.path);
             case "PATH":
@@ -133,6 +140,35 @@ export class SnippetTemplateResolver {
             default:
                 throw new Error(`Unknown payload input type: ${location.location}`);
         }
+    }
+
+    private async getApiDefinition(): Promise<APIV1Read.ApiDefinition | undefined> {
+        if (this.maybeApiDefinition != null) {
+            return this.maybeApiDefinition;
+        }
+
+        // If we were not provided an API definition, try to get it from FDR
+        if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested) {
+            this.apiDefinitionHasBeenRequested = true;
+            const fdr = new FdrClient();
+            const apiDefinitionResponse = await fdr.api.v1.read.getApi(this.maybeApiDefinitionId);
+            if (apiDefinitionResponse.ok) {
+                // Cache the result for the next request
+                this.maybeApiDefinition = apiDefinitionResponse.body;
+                return this.maybeApiDefinition;
+            }
+        }
+
+        return;
+    }
+
+    private getObjectFlattener(apiDefinition: APIV1Read.ApiDefinition): ObjectFlattener {
+        if (this.maybeObjectFlattener != null) {
+            return this.maybeObjectFlattener;
+        }
+
+        this.maybeObjectFlattener = new ObjectFlattener(apiDefinition);
+        return this.maybeObjectFlattener;
     }
 
     private resolveV1Template({
@@ -313,10 +349,48 @@ export class SnippetTemplateResolver {
                     invocation: template.templateString.replace(TemplateSentinel, evaluatedMember.invocation),
                 });
             }
-            case "union":
-                // TODO: evaluate the shape of the object, compared against the union members to select
-                // the closest fit, evaluate and return that. This is what the ApiDefinition is for.
+            case "union": {
+                // Effectively deprecated, but still here to not break the API, SDKs should instead create a union_v2 template.
                 return new DefaultedV1Snippet({ template, isRequired });
+            }
+            case "union_v2": {
+                if (this.maybeApiDefinition == null) {
+                    return new DefaultedV1Snippet({ template, isRequired });
+                }
+
+                const maybeUnionValue = this.getPayloadValue(
+                    // Defaults to relative since the python generator didn't specify this on historical templates
+                    template.templateInput ?? { location: "RELATIVE" },
+                    payloadOverride,
+                );
+
+                const objectFlattener = this.getObjectFlattener(this.maybeApiDefinition);
+                const unionMatcher = new UnionMatcher(this.maybeApiDefinition, objectFlattener);
+                const bestFitTemplate = unionMatcher.getBestFitTemplate({
+                    members: template.members,
+                    payloadOverride: maybeUnionValue,
+                });
+
+                if (!bestFitTemplate) {
+                    return new DefaultedV1Snippet({ template, isRequired });
+                }
+
+                const evaluatedTemplate: V1Snippet | undefined = this.resolveV1Template({
+                    template: bestFitTemplate,
+                    payloadOverride: maybeUnionValue,
+                }).snippet;
+
+                if (evaluatedTemplate == null) {
+                    return new DefaultedV1Snippet({ template, isRequired });
+                }
+
+                return new DefaultedV1Snippet({
+                    template,
+                    isRequired,
+                    imports: imports.concat(evaluatedTemplate.imports),
+                    invocation: template.templateString.replace(TemplateSentinel, evaluatedTemplate.invocation),
+                });
+            }
         }
     }
 
@@ -379,7 +453,9 @@ ${endpointSnippet?.invocation}
         }
     }
 
-    public resolve(): Snippet {
+    public resolve(apiDefinition?: APIV1Read.ApiDefinition): Snippet {
+        this.maybeApiDefinition = apiDefinition;
+
         const sdk: Sdk = this.endpointSnippetTemplate.sdk;
         const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
@@ -390,16 +466,15 @@ ${endpointSnippet?.invocation}
         }
     }
 
-    public async resolveWithFormatting(): Promise<Snippet> {
+    public async resolveWithFormatting(apiDefinition?: APIV1Read.ApiDefinition): Promise<Snippet> {
         const { formatSnippet } = await import("./formatSnippet");
-        const sdk: Sdk = this.endpointSnippetTemplate.sdk;
-        const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
-        switch (template.type) {
-            case "v1":
-                return await formatSnippet(this.resolveSnippetV1TemplateToSnippet(sdk, template));
-            default:
-                throw new Error(`Unknown template version: ${template.type}`);
-        }
+        apiDefinition = apiDefinition ?? (await this.getApiDefinition());
+        return formatSnippet(this.resolve(apiDefinition));
+    }
+
+    public async getApiDefinitionAndResolve(): Promise<Snippet> {
+        const apiDefinition = await this.getApiDefinition();
+        return this.resolve(apiDefinition);
     }
 
     public resolveAdditionalTemplate(key: string): string | undefined {
