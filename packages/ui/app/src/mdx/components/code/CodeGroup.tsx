@@ -7,7 +7,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Check } from "react-feather";
-import { DOCS_ATOM, FERN_CODE_GROUP_TAB, Group, useCodeGroup, useFeatureFlags } from "../../../atoms";
+import { DOCS_ATOM, FERN_GROUPS, Group, useFeatureFlags, useGroup } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../commons/HorizontalOverflowMask";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -29,8 +29,8 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
 
     const { isDarkCodeEnabled } = useFeatureFlags();
     const [selectedTabIndex, setSelectedTabIndex] = useState("0");
-    const [_, setSelectedTab] = useAtom(FERN_CODE_GROUP_TAB);
-    const { selectedGroup, groupIds } = useCodeGroup({ groupId });
+    const [_, setSelectedTab] = useAtom(FERN_GROUPS);
+    const { selectedGroup, groups } = useGroup({ key: groupId });
 
     const containerClass = clsx(
         "after:ring-card-border bg-card relative mt-4 first:mt-0 mb-6 flex w-full min-w-0 max-w-full flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
@@ -41,7 +41,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
 
     useEffect(() => {
         if (queryGroupId && queryValue && queryGroupId === groupId && items.length > parseInt(queryValue)) {
-            setSelectedTab([{ groupId: queryGroupId, value: queryValue }, ...groupIds]);
+            setSelectedTab([{ key: queryGroupId, value: queryValue }, ...groups]);
         }
     }, [queryGroupId, queryValue, groupId]);
 
@@ -78,10 +78,10 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
                 setSelectedTabIndex(value);
                 if (groupId) {
                     if (selectedGroup) {
-                        const filteredGroupIds = groupIds.filter((group) => group.groupId !== selectedGroup.groupId);
-                        setSelectedTab([{ groupId, value }, ...filteredGroupIds]);
+                        const filteredGroupIds = groups.filter((group) => group.key !== selectedGroup.key);
+                        setSelectedTab([{ key: groupId, value }, ...filteredGroupIds]);
                     } else {
-                        setSelectedTab([{ groupId, value }, ...groupIds]);
+                        setSelectedTab([{ key: groupId, value }, ...groups]);
                     }
                 }
             }}
@@ -124,7 +124,7 @@ const CopyLinkToClipboardButton = ({ className, selectedGroup }: { className: st
     const router = useRouter();
     const docs = useAtomValue(DOCS_ATOM);
     const domain = docs.baseUrl.domain;
-    const url = `${domain}${router.asPath}?groupId=${selectedGroup.groupId}&value=${selectedGroup.value}`;
+    const url = `${domain}${router.asPath}?groupId=${selectedGroup.key}&value=${selectedGroup.value}`;
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(url);
 
     return (
