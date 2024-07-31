@@ -3,11 +3,11 @@ import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { Link1Icon } from "@radix-ui/react-icons";
 import * as Tabs from "@radix-ui/react-tabs";
 import { default as clsx, default as cn } from "clsx";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Check } from "react-feather";
-import { DOCS_ATOM, FERN_GROUPS, Group, useFeatureFlags, useGroup } from "../../../atoms";
+import { FERN_GROUPS, Group, useFeatureFlags, useGroup } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../commons/HorizontalOverflowMask";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -39,10 +39,23 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
         },
     );
 
+    const setUniqueSelectedTab = (value: string) => {
+        if (groupId) {
+            if (selectedGroup) {
+                const filteredGroupIds = groups.filter((group) => group.key !== selectedGroup.key);
+                setSelectedTab([{ key: groupId, value }, ...filteredGroupIds]);
+            } else {
+                setSelectedTab([{ key: groupId, value }, ...groups]);
+            }
+        }
+    };
+    console.log("HELLO");
+
     useEffect(() => {
         if (queryGroupId && queryValue && queryGroupId === groupId && items.length > parseInt(queryValue)) {
-            setSelectedTab([{ key: queryGroupId, value: queryValue }, ...groups]);
+            setUniqueSelectedTab(queryValue);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryGroupId, queryValue, groupId]);
 
     useEffect(() => {
@@ -76,14 +89,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
             className={containerClass}
             onValueChange={(value) => {
                 setSelectedTabIndex(value);
-                if (groupId) {
-                    if (selectedGroup) {
-                        const filteredGroupIds = groups.filter((group) => group.key !== selectedGroup.key);
-                        setSelectedTab([{ key: groupId, value }, ...filteredGroupIds]);
-                    } else {
-                        setSelectedTab([{ key: groupId, value }, ...groups]);
-                    }
-                }
+                setUniqueSelectedTab(value);
             }}
             value={selectedTabIndex}
         >
@@ -122,9 +128,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
 
 const CopyLinkToClipboardButton = ({ className, selectedGroup }: { className: string; selectedGroup: Group }) => {
     const router = useRouter();
-    const docs = useAtomValue(DOCS_ATOM);
-    const domain = docs.baseUrl.domain;
-    const url = `${domain}${router.asPath}?groupId=${selectedGroup.key}&value=${selectedGroup.value}`;
+    const url = `${window.location.origin}${router.asPath}?groupId=${selectedGroup.key}&value=${selectedGroup.value}`;
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(url);
 
     return (
