@@ -2,7 +2,7 @@ import { CopyToClipboardButton, FernButton, FernTooltip, FernTooltipProvider } f
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { Link1Icon } from "@radix-ui/react-icons";
 import * as Tabs from "@radix-ui/react-tabs";
-import { default as clsx, default as cn } from "clsx";
+import clsx from "clsx";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -29,8 +29,8 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
 
     const { isDarkCodeEnabled } = useFeatureFlags();
     const [selectedTabIndex, setSelectedTabIndex] = useState("0");
-    const [_, setSelectedTab] = useAtom(FERN_GROUPS);
-    const { selectedGroup, groups } = useGroup({ key: groupId });
+    const [_, setGroups] = useAtom(FERN_GROUPS);
+    const { selectedGroup, group } = useGroup({ key: groupId });
 
     const containerClass = clsx(
         "after:ring-card-border bg-card relative mt-4 first:mt-0 mb-6 flex w-full min-w-0 max-w-full flex-col rounded-lg shadow-sm after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-['']",
@@ -41,12 +41,10 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
 
     const setUniqueSelectedTab = (value: string) => {
         if (groupId) {
-            if (selectedGroup) {
-                const filteredGroupIds = groups.filter((group) => group.key !== selectedGroup.key);
-                setSelectedTab([{ key: groupId, value }, ...filteredGroupIds]);
-            } else {
-                setSelectedTab([{ key: groupId, value }, ...groups]);
-            }
+            const updatedGroups = { ...group };
+            updatedGroups[groupId] = value;
+
+            setGroups({ ...updatedGroups });
         }
     };
 
@@ -59,7 +57,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
 
     useEffect(() => {
         if (selectedGroup) {
-            setSelectedTabIndex(selectedGroup.value);
+            setSelectedTabIndex(selectedGroup[groupId]);
         }
     }, [selectedGroup]);
 
@@ -111,7 +109,13 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
                     </Tabs.List>
 
                     <div>
-                        {selectedGroup && <CopyLinkToClipboardButton className="ml-2" selectedGroup={selectedGroup} />}
+                        {selectedGroup && groupId && (
+                            <CopyLinkToClipboardButton
+                                groupId={groupId}
+                                className="ml-2"
+                                selectedGroup={selectedGroup}
+                            />
+                        )}
                         <CopyToClipboardButton className="mx-1" content={items[parseInt(selectedTabIndex)]?.code} />
                     </div>
                 </div>
@@ -125,9 +129,17 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     );
 };
 
-const CopyLinkToClipboardButton = ({ className, selectedGroup }: { className: string; selectedGroup: Group }) => {
+const CopyLinkToClipboardButton = ({
+    className,
+    selectedGroup,
+    groupId,
+}: {
+    className: string;
+    selectedGroup: Group;
+    groupId: string;
+}) => {
     const router = useRouter();
-    const url = `${window.location.origin}${router.asPath}?groupId=${selectedGroup.key}&value=${selectedGroup.value}`;
+    const url = `${window.location.origin}${router.asPath}?groupId=${groupId}&value=${selectedGroup[groupId]}`;
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(url);
 
     return (
@@ -137,7 +149,7 @@ const CopyLinkToClipboardButton = ({ className, selectedGroup }: { className: st
                 open={wasJustCopied ? true : undefined}
             >
                 <FernButton
-                    className={cn("group fern-copy-button", className)}
+                    className={clsx("group fern-copy-button", className)}
                     disabled={copyToClipboard == null}
                     onClickCapture={() => {
                         copyToClipboard?.();
