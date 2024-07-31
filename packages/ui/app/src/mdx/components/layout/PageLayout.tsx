@@ -38,7 +38,7 @@ export function PageLayout({
     return (
         <main className="fern-page-layout">
             <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
-            <section className="max-w-full fern-prose">{children}</section>
+            <div className="max-w-full fern-prose">{children}</div>
             {(!hideFeedback || editThisPageUrl != null) && (
                 <footer className="mt-12">
                     <div className="flex sm:justify-between max-sm:flex-col gap-4">
