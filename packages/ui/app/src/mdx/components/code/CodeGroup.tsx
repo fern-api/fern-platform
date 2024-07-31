@@ -4,7 +4,6 @@ import { Link1Icon } from "@radix-ui/react-icons";
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useAtom } from "jotai";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Check } from "react-feather";
 import { FERN_GROUPS, FERN_QUERY_PARAMS, Group, useFeatureFlags, useGroup } from "../../../atoms";
@@ -23,7 +22,6 @@ export declare namespace CodeGroup {
 }
 
 export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ items, groupId }) => {
-    const router = useRouter();
     const [queryParams] = useAtom(FERN_QUERY_PARAMS);
     const queryGroupId = groupId && groupId in queryParams ? groupId : undefined;
     const queryValue = queryGroupId ? (queryParams[queryGroupId] as string) : undefined;
