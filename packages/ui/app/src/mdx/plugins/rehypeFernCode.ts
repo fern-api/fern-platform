@@ -113,7 +113,6 @@ export function rehypeFernCode(): (tree: Root) => void {
 
 function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
     const codeBlockItems: CodeGroup.Item[] = [];
-
     visit(nodeToVisit, (node) => {
         if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
             const jsxAttributes = node.attributes.filter(
@@ -161,6 +160,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                 });
             }
         }
+        return true;
     });
     return codeBlockItems;
 }
