@@ -30,6 +30,7 @@
   "dependencies": {
     "@fern-fern/docs-config": "^0.22.0",
     "@fern-ui/core-utils": "workspace:*",
+    "@fern-api/fdr-sdk": "workspace:*",
     "execa": "^5.1.1",
     "gray-matter": "^4.0.3",
     "lodash-es": "^4.17.21",
