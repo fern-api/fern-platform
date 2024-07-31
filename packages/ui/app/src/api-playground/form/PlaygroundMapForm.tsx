@@ -52,16 +52,22 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
 
     const handleChangeKey = useCallback((idx: number, newKey: unknown) => {
         setInternalState((oldState) => {
-            const nextState = { ...oldState[idx] };
-            nextState.key = typeof newKey === "function" ? newKey(nextState.key) : newKey;
+            const nextState = {
+                key: oldState[idx]?.key ?? "",
+                value: oldState[idx]?.value ?? "",
+            };
+            nextState.key = (typeof newKey === "function" ? newKey(nextState.key) : newKey) ?? "";
             return [...oldState.slice(0, idx), nextState, ...oldState.slice(idx + 1)];
         });
     }, []);
 
     const handleChangeValue = useCallback((idx: number, newValue: unknown) => {
         setInternalState((oldState) => {
-            const nextState = { ...oldState[idx] };
-            nextState.value = typeof newValue === "function" ? newValue(nextState.value) : newValue;
+            const nextState = {
+                key: oldState[idx]?.key ?? "",
+                value: oldState[idx]?.value ?? "",
+            };
+            nextState.value = (typeof newValue === "function" ? newValue(nextState.value) : newValue) ?? "";
             return [...oldState.slice(0, idx), nextState, ...oldState.slice(idx + 1)];
         });
     }, []);
