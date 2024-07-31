@@ -4,7 +4,7 @@ import { atomWithStorage } from "jotai/utils";
 export const FERN_CODE_GROUP_TAB = atomWithStorage<{ groupId: string; value: string }[]>("code-group-tab-id", []);
 FERN_CODE_GROUP_TAB.debugLabel = "FERN_CODE_GROUP_TAB";
 
-interface Group {
+export interface Group {
     groupId: string;
     value: string;
 }

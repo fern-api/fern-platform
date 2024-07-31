@@ -7,7 +7,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Check } from "react-feather";
-import { DOCS_ATOM, FERN_CODE_GROUP_TAB, useCodeGroup, useFeatureFlags } from "../../../atoms";
+import { DOCS_ATOM, FERN_CODE_GROUP_TAB, Group, useCodeGroup, useFeatureFlags } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../commons/HorizontalOverflowMask";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -43,7 +43,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
         if (queryGroupId && queryValue && queryGroupId === groupId && items.length > parseInt(queryValue)) {
             setSelectedTab([{ groupId: queryGroupId, value: queryValue }, ...groupIds]);
         }
-    }, [queryGroupId, queryValue]);
+    }, [queryGroupId, queryValue, groupId]);
 
     useEffect(() => {
         if (selectedGroup) {
@@ -107,10 +107,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
 
                     <div>
                         {selectedGroup && <CopyLinkToClipboardButton className="ml-2" selectedGroup={selectedGroup} />}
-                        <CopyToClipboardButton
-                            className="ml-1 mr-1"
-                            content={items[parseInt(selectedTabIndex)]?.code}
-                        />
+                        <CopyToClipboardButton className="mx-1" content={items[parseInt(selectedTabIndex)]?.code} />
                     </div>
                 </div>
             </div>
@@ -123,7 +120,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     );
 };
 
-const CopyLinkToClipboardButton = ({ className, selectedGroup }) => {
+const CopyLinkToClipboardButton = ({ className, selectedGroup }: { className: string; selectedGroup: Group }) => {
     const router = useRouter();
     const docs = useAtomValue(DOCS_ATOM);
     const domain = docs.baseUrl.domain;
@@ -139,7 +136,7 @@ const CopyLinkToClipboardButton = ({ className, selectedGroup }) => {
                 <FernButton
                     className={cn("group fern-copy-button", className)}
                     disabled={copyToClipboard == null}
-                    onClickCapture={(e) => {
+                    onClickCapture={() => {
                         copyToClipboard?.();
                     }}
                     rounded={true}
