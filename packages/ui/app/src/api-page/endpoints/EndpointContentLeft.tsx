@@ -74,7 +74,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     hidden: false,
                     valueShape: {
                         type: "unknown",
-                        displayName: "Basic",
+                        displayName: "string",
                     },
                     availability: undefined,
                 };
@@ -86,7 +86,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     hidden: false,
                     valueShape: {
                         type: "unknown",
-                        displayName: "Bearer",
+                        displayName: "string",
                     },
                     availability: undefined,
                 };
@@ -98,7 +98,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     hidden: false,
                     valueShape: {
                         type: "unknown",
-                        displayName: "",
+                        displayName: "string",
                     },
                     availability: undefined,
                 };
