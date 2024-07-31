@@ -64,28 +64,31 @@ export function getSeoProps(
             const { data: frontmatter } = getFrontmatter(page.markdown);
             ogMetadata = { ...ogMetadata, ...frontmatter };
 
-            // retrofit og:image
-            if (frontmatter.image != null) {
-                // TODO: (rohin) remove string check when fully migrated, but keeping for back compat
-                if (typeof frontmatter.image === "string") {
-                    ogMetadata["og:image"] = {
-                        type: "url",
-                        value: frontmatter.image,
-                    };
-                } else {
-                    visitDiscriminatedUnion(frontmatter.image, "type")._visit({
-                        fileId: (fileId) => {
-                            const realId = fileId.value.split(":")[1];
-                            if (realId != null) {
-                                fileId.value = realId;
-                                ogMetadata["og:image"] ??= fileId;
-                            }
-                        },
-                        url: (url) => {
-                            ogMetadata["og:image"] ??= url;
-                        },
-                        _other: undefined,
-                    });
+            // retrofit og:image, preferring og:image
+            // TODO: (rohin) Come back here and support more image transformations (twitter, logo, etc)
+            for (const frontmatterImageVar of [frontmatter.image, frontmatter["og:image"]]) {
+                if (frontmatterImageVar != null) {
+                    // TODO: (rohin) remove string check when fully migrated, but keeping for back compat
+                    if (typeof frontmatterImageVar === "string") {
+                        ogMetadata["og:image"] ??= {
+                            type: "url",
+                            value: frontmatterImageVar,
+                        };
+                    } else {
+                        visitDiscriminatedUnion(frontmatterImageVar, "type")._visit({
+                            fileId: (fileId) => {
+                                const realId = fileId.value.split(":")[1];
+                                if (realId != null) {
+                                    fileId.value = realId;
+                                    ogMetadata["og:image"] = fileId;
+                                }
+                            },
+                            url: (url) => {
+                                ogMetadata["og:image"] = url;
+                            },
+                            _other: undefined,
+                        });
+                    }
                 }
             }
 
