@@ -58,7 +58,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
         if (selectedGroup && groupId && selectedGroup[groupId]) {
             setSelectedTabIndex(selectedGroup[groupId]);
         }
-    }, [selectedGroup]);
+    }, [selectedGroup, groupId]);
 
     if (items.length === 1 && items[0] != null) {
         return (

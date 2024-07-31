@@ -31,7 +31,7 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
         if (queryGroupId && queryValue) {
             setQueryParams({ [router.query.groupId as string]: router.query.value });
         }
-    }, [router]);
+    }, [router, setQueryParams]);
 
     return (
         <>
