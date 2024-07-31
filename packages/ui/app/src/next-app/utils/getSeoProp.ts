@@ -66,10 +66,27 @@ export function getSeoProps(
 
             // retrofit og:image
             if (frontmatter.image != null) {
-                ogMetadata["og:image"] ??= {
-                    type: "url",
-                    value: FernNavigation.utils.convertRelativeToAbsoluteUrl(domain, node.slug, frontmatter.image),
-                };
+                // TODO: (rohin) remove string check when fully migrated, but keeping for back compat
+                if (typeof frontmatter.image === "string") {
+                    ogMetadata["og:image"] = {
+                        type: "url",
+                        value: frontmatter.image,
+                    };
+                } else {
+                    visitDiscriminatedUnion(frontmatter.image, "type")._visit({
+                        fileId: (fileId) => {
+                            const realId = fileId.value.split(":")[1];
+                            if (realId != null) {
+                                fileId.value = realId;
+                                ogMetadata["og:image"] = fileId;
+                            }
+                        },
+                        url: (url) => {
+                            ogMetadata["og:image"] = url;
+                        },
+                        _other: undefined,
+                    });
+                }
             }
 
             seo.title ??= frontmatter.title;

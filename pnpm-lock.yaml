@@ -175,6 +175,9 @@ importers:
 
   clis/docs-migrator:
     dependencies:
+      '@fern-api/fdr-sdk':
+        specifier: workspace:*
+        version: link:../../packages/fdr-sdk
       '@fern-fern/docs-config':
         specifier: ^0.22.0
         version: 0.22.0
