@@ -78,11 +78,11 @@ export function getSeoProps(
                             const realId = fileId.value.split(":")[1];
                             if (realId != null) {
                                 fileId.value = realId;
-                                ogMetadata["og:image"] = fileId;
+                                ogMetadata["og:image"] ??= fileId;
                             }
                         },
                         url: (url) => {
-                            ogMetadata["og:image"] = url;
+                            ogMetadata["og:image"] ??= url;
                         },
                         _other: undefined,
                     });
