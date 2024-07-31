@@ -3,10 +3,11 @@ import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { Link1Icon } from "@radix-ui/react-icons";
 import * as Tabs from "@radix-ui/react-tabs";
 import { default as clsx, default as cn } from "clsx";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Check } from "react-feather";
-import { FERN_CODE_GROUP_TAB, useCodeGroup, useFeatureFlags } from "../../../atoms";
+import { DOCS_ATOM, FERN_CODE_GROUP_TAB, useCodeGroup, useFeatureFlags } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../commons/HorizontalOverflowMask";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -22,6 +23,10 @@ export declare namespace CodeGroup {
 }
 
 export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ items, groupId }) => {
+    const router = useRouter();
+    const queryGroupId = router.query.groupId as string | undefined;
+    const queryValue = router.query.value as string | undefined;
+
     const { isDarkCodeEnabled } = useFeatureFlags();
     const [selectedTabIndex, setSelectedTabIndex] = useState("0");
     const [_, setSelectedTab] = useAtom(FERN_CODE_GROUP_TAB);
@@ -33,6 +38,12 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
             "dark bg-card-solid": isDarkCodeEnabled,
         },
     );
+
+    useEffect(() => {
+        if (queryGroupId && queryValue && queryGroupId === groupId && items.length > parseInt(queryValue)) {
+            setSelectedTab([{ groupId: queryGroupId, value: queryValue }, ...groupIds]);
+        }
+    }, [queryGroupId, queryValue]);
 
     useEffect(() => {
         if (selectedGroup) {
@@ -95,7 +106,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
                     </Tabs.List>
 
                     <div>
-                        <CopyLinkToClipboardButton className="ml-2" />
+                        {selectedGroup && <CopyLinkToClipboardButton className="ml-2" selectedGroup={selectedGroup} />}
                         <CopyToClipboardButton
                             className="ml-1 mr-1"
                             content={items[parseInt(selectedTabIndex)]?.code}
@@ -112,8 +123,12 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     );
 };
 
-const CopyLinkToClipboardButton = ({ className }) => {
-    const { copyToClipboard, wasJustCopied } = useCopyToClipboard("");
+const CopyLinkToClipboardButton = ({ className, selectedGroup }) => {
+    const router = useRouter();
+    const docs = useAtomValue(DOCS_ATOM);
+    const domain = docs.baseUrl.domain;
+    const url = `${domain}${router.asPath}?groupId=${selectedGroup.groupId}&value=${selectedGroup.value}`;
+    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(url);
 
     return (
         <FernTooltipProvider>
