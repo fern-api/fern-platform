@@ -1,9 +1,9 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import clsx from "clsx";
-import numeral from "numeral";
 import { ReactNode } from "react";
 import {
+    DereferencedTypeShape,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     unwrapAlias,
@@ -25,10 +25,7 @@ export function renderTypeShorthandRoot(
 ): ReactNode {
     const typeShorthand = renderTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
     const unaliasedShape = unwrapAlias(shape, types);
-    const defaultsTo =
-        unaliasedShape.type === "optional" && unaliasedShape.shape.type === "primitive"
-            ? renderDefaultTo(unaliasedShape.shape.value)
-            : null;
+    const defaultsTo = renderDefaultsTo(unaliasedShape);
     return (
         <span className={clsx("fern-api-property-meta", className)}>
             <span>{typeShorthand}</span>
@@ -37,30 +34,46 @@ export function renderTypeShorthandRoot(
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
             ) : null}
-            {defaultsTo != null && <span>{`Defaults to ${defaultsTo}`}</span>}
+            {defaultsTo != null && (
+                <span>
+                    {"Defaults to "}
+                    <code>{defaultsTo}</code>
+                </span>
+            )}
         </span>
     );
 }
 
-function renderDefaultTo(shape: APIV1Read.PrimitiveType): string | undefined {
+function renderDefaultsTo(shape: DereferencedTypeShape): string | undefined {
+    if (shape.type !== "optional") {
+        return undefined;
+    }
+
+    if (shape.shape.type === "primitive") {
+        return renderDefaultToPrimitive(shape.shape.value);
+    }
+
+    if (shape.shape.type === "enum") {
+        return shape.shape.default;
+    }
+
+    return undefined;
+}
+
+function renderDefaultToPrimitive(shape: APIV1Read.PrimitiveType): string | undefined {
     return visitDiscriminatedUnion(shape, "type")._visit<string | undefined>({
-        string: (string) => string.default,
-        integer: (integer) => {
-            if (integer.default == null) {
-                return undefined;
-            }
-            return numeral(integer.default).format("0,0");
-        },
-        double: (double) => double.default?.toString(),
+        string: (value) => value.default,
+        integer: (value) => value.default?.toString(),
+        double: (value) => value.default?.toString(),
         uint: () => undefined,
         uint64: () => undefined,
-        boolean: () => undefined,
-        long: () => undefined,
-        datetime: () => undefined,
-        uuid: () => undefined,
-        base64: () => undefined,
-        date: () => undefined,
-        bigInteger: () => undefined,
+        boolean: (value) => value.default?.toString(),
+        long: (value) => value.default?.toString(),
+        datetime: (datetime) => datetime.default,
+        uuid: (uuid) => uuid.default,
+        base64: (base64) => base64.default,
+        date: (value) => value.default,
+        bigInteger: (value) => value.default,
         _other: () => undefined,
     });
 }

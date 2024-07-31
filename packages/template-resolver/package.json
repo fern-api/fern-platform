@@ -27,7 +27,8 @@
     "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
-    "prettier": "^3.3.2"
+    "prettier": "^3.3.2",
+    "@fern-api/fdr-sdk": "workspace:*"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

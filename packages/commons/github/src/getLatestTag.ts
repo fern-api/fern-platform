@@ -15,5 +15,5 @@ export async function getLatestTag(githubRepository: string): Promise<string | u
         per_page: 1, // Fetch only the latest tag
     });
 
-    return response.data?.[0].name;
+    return response.data?.[0]?.name;
 }

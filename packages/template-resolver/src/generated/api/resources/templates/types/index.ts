@@ -1,3 +1,5 @@
+export * from "./UnionTemplateMember";
+export * from "./UnionTemplateV2";
 export * from "./UnionTemplate";
 export * from "./DiscriminatedUnionTemplate";
 export * from "./EnumTemplate";

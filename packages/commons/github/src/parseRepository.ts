@@ -19,10 +19,10 @@ export function parseRepository(githubRepository: string): RepositoryReference {
     }
 
     const parts = githubRepository.split("/");
-    if (parts.length === 2) {
+    if (parts.length === 2 && parts[0] != null && parts[1] != null) {
         // Format: owner/repo
         [owner, repo] = parts;
-    } else if (parts.length === 3 && parts[0] === DEFAULT_REMOTE) {
+    } else if (parts.length === 3 && parts[0] === DEFAULT_REMOTE && parts[1] != null && parts[2] != null) {
         // Format: github.com/owner/repo
         [, owner, repo] = parts;
     } else {
