@@ -44,16 +44,16 @@ export function GuideLayout({
 }: GuideLayoutProps): ReactElement {
     return (
         <main className="fern-guide-layout">
-            <aside className="fern-layout-toc">
-                {tableOfContents != null && tableOfContents.length > 0 && (
+            {tableOfContents != null && tableOfContents.length > 0 && (
+                <aside className="fern-layout-toc">
                     <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8">
                         <TableOfContents tableOfContents={tableOfContents} />
                     </FernScrollArea>
-                )}
-            </aside>
+                </aside>
+            )}
             <article className="fern-layout-content max-w-content-width">
                 <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
-                <section className="max-w-full fern-prose">{children}</section>
+                <div className="max-w-full fern-prose">{children}</div>
                 {(!hideFeedback || !hideNavLinks || editThisPageUrl != null) && (
                     <footer className="mt-12">
                         <div className="flex sm:justify-between max-sm:flex-col gap-4">
