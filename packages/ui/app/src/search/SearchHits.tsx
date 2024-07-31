@@ -1,13 +1,12 @@
 import { FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
-import { Hit } from "instantsearch.js";
 import { useRouter } from "next/router";
-import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
 import { useBasePath, useCloseSearchDialog } from "../atoms";
 import { SearchHit } from "./SearchHit";
 import type { SearchRecord } from "./types";
-import { getFullPathForSearchRecord } from "./util";
+import { getSlugForSearchRecord } from "./util";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
     return <div className="justify t-muted flex h-24 w-full flex-col items-center py-3">{children}</div>;
@@ -20,13 +19,6 @@ export const SearchHits: React.FC = () => {
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
     const closeSearchDialog = useCloseSearchDialog();
-
-    const getFullPathForHit = useCallback(
-        (hit: Hit<SearchRecord>) => {
-            return getFullPathForSearchRecord(hit, basePath);
-        },
-        [basePath],
-    );
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -96,8 +88,9 @@ export const SearchHits: React.FC = () => {
             if (hoveredSearchHit == null) {
                 return;
             }
-            const fullPath = getFullPathForHit(hoveredSearchHit.record);
-            void router.replace(`/${fullPath}`, undefined, {
+            const slug = getSlugForSearchRecord(hoveredSearchHit.record, basePath);
+            void router.push(`/${slug}`, undefined, {
+                // TODO: shallow=true if currently in long scrolling api reference and the hit is on the same page
                 shallow: false,
             });
             closeSearchDialog();
