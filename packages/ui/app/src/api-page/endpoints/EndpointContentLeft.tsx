@@ -93,12 +93,12 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             },
             header: (value) => {
                 return {
-                    key: "Authorization",
-                    description: `Header authentication of the form ${value.prefix} ${value.headerWireValue}.`,
+                    key: value.headerWireValue,
+                    description: `Header authentication of the form ${value.prefix ? value.prefix + " " : ""}${value.headerWireValue} <token>`,
                     hidden: false,
                     valueShape: {
                         type: "unknown",
-                        displayName: "Header",
+                        displayName: "",
                     },
                     availability: undefined,
                 };
@@ -137,27 +137,38 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             {headers.length > 0 && (
                 <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} route={"/" + endpoint.slug}>
                     <div>
-                        {headers.map((parameter) => (
-                            <div key={parameter.key} className="relative">
-                                {parameter.key === "Authorization" && (
-                                    <div className="absolute right-0 top-3">
-                                        <div className="px-2 bg-tag-danger rounded-xl flex items-center h-5">
-                                            <span className="text-xs t-danger">Auth</span>
+                        {headers.map((parameter) => {
+                            let isAuth = false;
+                            const auth = endpoint.auth;
+                            if (
+                                (auth?.type === "header" && parameter.key === auth?.headerWireValue) ||
+                                parameter.key === "Authorization"
+                            ) {
+                                isAuth = true;
+                            }
+
+                            return (
+                                <div key={parameter.key} className="relative">
+                                    {isAuth && (
+                                        <div className="absolute right-0 top-3">
+                                            <div className="px-2 bg-tag-danger rounded-xl flex items-center h-5">
+                                                <span className="text-xs t-danger">Auth</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                )}
-                                <TypeComponentSeparator />
-                                <EndpointParameter
-                                    name={parameter.key}
-                                    shape={parameter.valueShape}
-                                    anchorIdParts={[...REQUEST_HEADER, parameter.key]}
-                                    route={"/" + endpoint.slug}
-                                    description={getParameterDescription(parameter, types)}
-                                    availability={parameter.availability}
-                                    types={types}
-                                />
-                            </div>
-                        ))}
+                                    )}
+                                    <TypeComponentSeparator />
+                                    <EndpointParameter
+                                        name={parameter.key}
+                                        shape={parameter.valueShape}
+                                        anchorIdParts={[...REQUEST_HEADER, parameter.key]}
+                                        route={"/" + endpoint.slug}
+                                        description={getParameterDescription(parameter, types)}
+                                        availability={parameter.availability}
+                                        types={types}
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                 </EndpointSection>
             )}
