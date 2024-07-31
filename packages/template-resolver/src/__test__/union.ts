@@ -141,6 +141,68 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                 ],
                                             },
                                         },
+                                        {
+                                            type: {
+                                                type: "id",
+                                                value: "type_imdb:AgressiveMovieReview",
+                                            },
+                                            template: {
+                                                type: "generic",
+                                                imports: [],
+                                                templateString: "{ $FERN_INPUT }",
+                                                isOptional: true,
+                                                templateInputs: [
+                                                    {
+                                                        type: "template",
+                                                        value: {
+                                                            type: "generic",
+                                                            imports: [],
+                                                            templateString: "yourReallyAngrySummary: $FERN_INPUT",
+                                                            isOptional: true,
+                                                            templateInputs: [
+                                                                {
+                                                                    type: "payload",
+                                                                    location: "RELATIVE",
+                                                                    path: "reallyAngrySummary",
+                                                                },
+                                                            ],
+                                                        },
+                                                    },
+                                                    {
+                                                        type: "template",
+                                                        value: {
+                                                            type: "generic",
+                                                            imports: [],
+                                                            templateString: "yourAngryNotes: $FERN_INPUT",
+                                                            isOptional: true,
+                                                            templateInputs: [
+                                                                {
+                                                                    type: "payload",
+                                                                    location: "RELATIVE",
+                                                                    path: "notes",
+                                                                },
+                                                            ],
+                                                        },
+                                                    },
+                                                    {
+                                                        type: "template",
+                                                        value: {
+                                                            type: "generic",
+                                                            imports: [],
+                                                            templateString: "angryStarRatings: $FERN_INPUT",
+                                                            isOptional: true,
+                                                            templateInputs: [
+                                                                {
+                                                                    type: "payload",
+                                                                    location: "RELATIVE",
+                                                                    path: "stars",
+                                                                },
+                                                            ],
+                                                        },
+                                                    },
+                                                ],
+                                            },
+                                        },
                                     ],
                                 },
                             },

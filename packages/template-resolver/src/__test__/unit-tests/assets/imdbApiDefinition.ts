@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 
 export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
-    id: "123345",
+    id: "api_imdb",
     types: {
         "type_imdb:MovieId": {
             description: "The unique identifier for a Movie in the database",
@@ -87,6 +87,42 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                 ],
             },
         },
+        "type_imdb:AgressiveMovieReview": {
+            name: "AgressiveMovieReview",
+            shape: {
+                type: "object",
+                extends: [],
+                properties: [
+                    {
+                        key: "reallyAngrySummary",
+                        valueType: {
+                            type: "primitive",
+                            value: {
+                                type: "string",
+                            },
+                        },
+                    },
+                    {
+                        key: "notes",
+                        valueType: {
+                            type: "primitive",
+                            value: {
+                                type: "string",
+                            },
+                        },
+                    },
+                    {
+                        key: "stars",
+                        valueType: {
+                            type: "primitive",
+                            value: {
+                                type: "double",
+                            },
+                        },
+                    },
+                ],
+            },
+        },
         "type_imdb:MovieReview": {
             name: "MovieReview",
             shape: {
@@ -112,6 +148,12 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                         type: {
                             type: "id",
                             value: "type_imdb:DetailedMovieReview",
+                        },
+                    },
+                    {
+                        type: {
+                            type: "id",
+                            value: "type_imdb:AgressiveMovieReview",
                         },
                     },
                 ],
@@ -160,7 +202,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             endpoints: [
                 {
                     environments: [],
-                    urlSlug: "",
+                    urlSlug: "123",
                     errors: [],
                     authed: false,
                     description: "Add a movie to the database",
@@ -212,6 +254,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                 "type_imdb:MovieId",
                 "type_imdb:Movie",
                 "type_imdb:DetailedMovieReview",
+                "type_imdb:AgressiveMovieReview",
                 "type_imdb:MovieReview",
                 "type_imdb:CreateMovieRequest",
             ],

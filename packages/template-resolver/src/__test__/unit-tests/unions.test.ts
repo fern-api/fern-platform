@@ -67,6 +67,30 @@ describe("Snippet Template Resolver", () => {
         expect(customSnippet.client).toMatchSnapshot();
     });
 
+    it("Test Unions Similar Object", async () => {
+        const resolver = new SnippetTemplateResolver({
+            payload: {
+                requestBody: {
+                    title: "Jaws",
+                    rating: 5.0,
+                    review: {
+                        reallyAngrySummary: "Jaws was a great movie!",
+                        notes: "I loved the shark!",
+                        stars: 5,
+                    },
+                },
+            },
+            endpointSnippetTemplate: UNIONS_SNIPPET,
+        });
+        const customSnippet = await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
+
+        if (customSnippet.type !== "typescript") {
+            throw new Error("Expected snippet to be typescript");
+        }
+
+        expect(customSnippet.client).toMatchSnapshot();
+    });
+
     it("Test Unions Object Missing Property", async () => {
         const resolver = new SnippetTemplateResolver({
             payload: {
@@ -76,6 +100,29 @@ describe("Snippet Template Resolver", () => {
                     review: {
                         summary: "Jaws was a great movie!",
                         notes: "I loved the shark!",
+                    },
+                },
+            },
+            endpointSnippetTemplate: UNIONS_SNIPPET,
+        });
+        const customSnippet = await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
+
+        if (customSnippet.type !== "typescript") {
+            throw new Error("Expected snippet to be typescript");
+        }
+
+        expect(customSnippet.client).toMatchSnapshot();
+    });
+
+    it("Test Unions Object Total Mismatch", async () => {
+        const resolver = new SnippetTemplateResolver({
+            payload: {
+                requestBody: {
+                    title: "Jaws",
+                    rating: 5.0,
+                    review: {
+                        anotherName: "This shouldn't show up.",
+                        anotherNotherName: "This definitely shouldn't show up.",
                     },
                 },
             },
