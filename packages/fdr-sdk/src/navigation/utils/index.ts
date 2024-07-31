@@ -2,7 +2,6 @@ export * from "./collectApiReferences";
 export * from "./collectPageIds";
 export * from "./convertAvailability";
 export * from "./convertLoadDocsForUrlResponse";
-export * from "./convertRelativeToAbsoluteUrl";
 export * from "./findNode";
 export * from "./followRedirect";
 export * from "./getApiReferenceId";
