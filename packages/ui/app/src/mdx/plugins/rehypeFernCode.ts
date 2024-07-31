@@ -25,16 +25,11 @@ export function rehypeFernCode(): (tree: Root) => void {
 
             if (isMdxJsxFlowElement(node) && (node.name === "CodeBlocks" || node.name === "CodeGroup")) {
                 const codeBlockItems = visitCodeBlockNodes(node);
-                const attributes = [toAttribute("items", codeBlockItems)];
-
-                if (node.attributes.length > 0 && node.attributes[0]?.value) {
-                    attributes.push(toAttribute("groupId", node.attributes[0]?.value));
-                }
 
                 parent?.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",
                     name: "CodeBlocks",
-                    attributes,
+                    attributes: [toAttribute("items", codeBlockItems), ...node.attributes],
                     children: [],
                 });
                 return "skip";

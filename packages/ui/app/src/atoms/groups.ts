@@ -10,7 +10,7 @@ export function useGroup({ key }: { key?: string }): { selectedGroup?: Group; gr
     const group = useAtomValue(FERN_GROUPS);
 
     if (key) {
-        if (key in group) {
+        if (key in group && group[key]) {
             return { selectedGroup: { [key]: group[key] }, group };
         }
         return { selectedGroup: undefined, group };

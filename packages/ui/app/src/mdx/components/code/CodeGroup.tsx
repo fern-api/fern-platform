@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Check } from "react-feather";
-import { FERN_GROUPS, Group, useFeatureFlags, useGroup } from "../../../atoms";
+import { FERN_GROUPS, FERN_QUERY_PARAMS, Group, useFeatureFlags, useGroup } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../commons/HorizontalOverflowMask";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -24,8 +24,9 @@ export declare namespace CodeGroup {
 
 export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ items, groupId }) => {
     const router = useRouter();
-    const queryGroupId = router.query.groupId as string | undefined;
-    const queryValue = router.query.value as string | undefined;
+    const [queryParams] = useAtom(FERN_QUERY_PARAMS);
+    const queryGroupId = groupId && groupId in queryParams ? groupId : undefined;
+    const queryValue = queryGroupId ? (queryParams[queryGroupId] as string) : undefined;
 
     const { isDarkCodeEnabled } = useFeatureFlags();
     const [selectedTabIndex, setSelectedTabIndex] = useState("0");
@@ -56,7 +57,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     }, [queryGroupId, queryValue, groupId]);
 
     useEffect(() => {
-        if (selectedGroup) {
+        if (selectedGroup && groupId && selectedGroup[groupId]) {
             setSelectedTabIndex(selectedGroup[groupId]);
         }
     }, [selectedGroup]);
@@ -138,9 +139,15 @@ const CopyLinkToClipboardButton = ({
     selectedGroup: Group;
     groupId: string;
 }) => {
-    const router = useRouter();
-    const url = `${window.location.origin}${router.asPath}?groupId=${groupId}&value=${selectedGroup[groupId]}`;
+    const [url, setUrl] = useState("");
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(url);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const currentUrl = `${window.location.origin}${window.location.pathname}?groupId=${groupId}&value=${selectedGroup[groupId]}`;
+            setUrl(currentUrl);
+        }
+    }, [groupId, selectedGroup, selectedGroup[groupId]]);
 
     return (
         <FernTooltipProvider>
