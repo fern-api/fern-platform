@@ -76,18 +76,6 @@ export function buildEndpointUrl(
     );
 }
 
-export function indentAfter(str: string, indent: number, afterLine?: number): string {
-    return str
-        .split("\n")
-        .map((line, idx) => {
-            if (afterLine == null || idx > afterLine) {
-                return " ".repeat(indent) + line;
-            }
-            return line;
-        })
-        .join("\n");
-}
-
 export function convertToCustomSnippetPayload(
     formState: PlaygroundEndpointRequestFormState,
 ): Snippets.CustomSnippetPayload {
