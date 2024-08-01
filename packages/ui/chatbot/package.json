@@ -1,7 +1,12 @@
 {
-  "name": "chatbot",
+  "name": "@fern-ui/chatbot",
   "private": true,
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/ui/chatbot"
+  },
   "files": [
     "dist"
   ],

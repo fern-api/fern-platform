@@ -17,7 +17,7 @@ export default {
                     muted: "var(--border-accent-muted)",
                 },
             },
-            gray: {
+            grayscale: {
                 1: "var(--gray-1)",
                 2: "var(--gray-2)",
                 3: "var(--gray-3)",
