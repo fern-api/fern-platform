@@ -102,7 +102,7 @@ const nextConfig = {
             "base-uri 'self'",
             "form-action 'self'",
             "frame-ancestors 'none'",
-            "font-src 'self' data:"
+            "font-src 'self' data:",
             // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
         ];
 
