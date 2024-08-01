@@ -49,7 +49,7 @@ export function OverviewLayout({
             </aside>
             <article className="fern-layout-content max-w-content-wide-width">
                 <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
-                <section className="max-w-full fern-prose">{children}</section>
+                <div className="max-w-full fern-prose">{children}</div>
                 {(!hideFeedback || editThisPageUrl != null) && (
                     <footer className="mt-12">
                         <div className="flex sm:justify-between max-sm:flex-col gap-4">
