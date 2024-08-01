@@ -94,7 +94,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             header: (value) => {
                 return {
                     key: value.headerWireValue,
-                    description: value.prefix && `Header authentication of the form ${value.prefix} <token>`,
+                    description:
+                        value.prefix != null ? `Header authentication of the form ${value.prefix} <token>` : undefined,
                     hidden: false,
                     valueShape: {
                         type: "unknown",
