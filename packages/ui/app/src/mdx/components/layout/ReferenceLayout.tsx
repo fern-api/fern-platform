@@ -44,7 +44,7 @@ export function ReferenceLayout({
             <div className="z-10 w-full min-w-0 pt-8">
                 <article className="mx-auto w-full lg:ml-0 xl:mx-auto pb-20 max-w-content-width md:max-w-endpoint-width">
                     <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
-                    <section
+                    <div
                         className={clsx("max-w-full prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0", {
                             "md:grid md:grid-cols-2 md:gap-8 lg:gap-12 max-md:space-y-12": isValidElement(aside),
                         })}
@@ -57,7 +57,7 @@ export function ReferenceLayout({
                                 </div>
                             </aside>
                         )}
-                    </section>
+                    </div>
                     {(!hideFeedback || editThisPageUrl != null) && (
                         <footer className="mt-12">
                             <div className="flex sm:justify-between max-sm:flex-col gap-4">
