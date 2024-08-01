@@ -157,7 +157,7 @@ export class SnippetTemplateResolver {
         // If we were not provided an API definition, try to get it from FDR
         if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested) {
             this.apiDefinitionHasBeenRequested = true;
-            this.maybeApiDefinition = await getApiDefinition(this.maybeApiDefinitionId);
+            this.maybeApiDefinition = await getApiDefinition(this.maybeApiDefinitionId, undefined);
             return this.maybeApiDefinition;
         }
 
