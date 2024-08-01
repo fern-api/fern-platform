@@ -1,5 +1,5 @@
-import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk";
-import { ObjectFlattener } from "./ResolutionUtilities";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { ObjectFlattener, getApiDefinition } from "./ResolutionUtilities";
 import { UnionMatcher } from "./UnionResolver";
 import { accessByPathNonNull } from "./accessByPath";
 import {
@@ -78,12 +78,18 @@ export class SnippetTemplateResolver {
     constructor({
         payload,
         endpointSnippetTemplate,
+        apiDefinition,
+        objectFlattener,
     }: {
         payload: CustomSnippetPayload;
         endpointSnippetTemplate: EndpointSnippetTemplate;
+        apiDefinition?: APIV1Read.ApiDefinition;
+        objectFlattener?: ObjectFlattener;
     }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
+        this.maybeApiDefinition = apiDefinition;
+        this.maybeObjectFlattener = objectFlattener;
 
         // maybeApiDefinitionId is the ID of the API definition, stored on the template itself, used as a fallback
         this.maybeApiDefinitionId = this.endpointSnippetTemplate.apiDefinitionId;
@@ -142,6 +148,7 @@ export class SnippetTemplateResolver {
         }
     }
 
+    // Get or create and cache ApiDefinition
     private async getApiDefinition(): Promise<APIV1Read.ApiDefinition | undefined> {
         if (this.maybeApiDefinition != null) {
             return this.maybeApiDefinition;
@@ -150,18 +157,14 @@ export class SnippetTemplateResolver {
         // If we were not provided an API definition, try to get it from FDR
         if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested) {
             this.apiDefinitionHasBeenRequested = true;
-            const fdr = new FdrClient();
-            const apiDefinitionResponse = await fdr.api.v1.read.getApi(this.maybeApiDefinitionId);
-            if (apiDefinitionResponse.ok) {
-                // Cache the result for the next request
-                this.maybeApiDefinition = apiDefinitionResponse.body;
-                return this.maybeApiDefinition;
-            }
+            this.maybeApiDefinition = await getApiDefinition(this.maybeApiDefinitionId);
+            return this.maybeApiDefinition;
         }
 
         return;
     }
 
+    // Get or create and cache ObjectFlattener
     private getObjectFlattener(apiDefinition: APIV1Read.ApiDefinition): ObjectFlattener {
         if (this.maybeObjectFlattener != null) {
             return this.maybeObjectFlattener;

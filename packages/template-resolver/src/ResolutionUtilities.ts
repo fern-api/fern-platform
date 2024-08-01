@@ -1,4 +1,13 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk";
+
+export async function getApiDefinition(apiDefinitionId: string): Promise<APIV1Read.ApiDefinition | undefined> {
+    const fdr = new FdrClient();
+    const apiDefinitionResponse = await fdr.api.v1.read.getApi(apiDefinitionId);
+    if (apiDefinitionResponse.ok) {
+        return apiDefinitionResponse.body;
+    }
+    return;
+}
 
 export class ObjectFlattener {
     private flattenedObjects: Map<APIV1Read.TypeId, APIV1Read.ObjectProperty[]> = new Map<
