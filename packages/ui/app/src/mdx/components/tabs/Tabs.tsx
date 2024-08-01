@@ -30,7 +30,7 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => 
                 setUrl(currentUrl);
             }
         }
-    }, [activeTab]);
+    }, [activeTab, tabs]);
 
     useEffect(() => {
         if (anchor != null) {
@@ -43,13 +43,7 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => 
     }, [anchor, tabs]);
 
     return (
-        <RadixTabs.Root
-            value={activeTab}
-            onValueChange={(value) => {
-                console.log(value);
-                setActiveTab(value);
-            }}
-        >
+        <RadixTabs.Root value={activeTab} onValueChange={setActiveTab}>
             <div className="flex justify-between">
                 <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
                     {tabs.map(({ title, toc = parentToc }, idx) => {
