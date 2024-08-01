@@ -14,10 +14,9 @@ export interface TabProps {
 export interface TabGroupProps {
     tabs: TabProps[];
     toc?: boolean;
-    groupId?: string;
 }
 
-export const TabGroup: FC<TabGroupProps> = ({ tabs, groupId, toc: parentToc = true }) => {
+export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => {
     const [url, setUrl] = useState("");
     const [activeTab, setActiveTab] = useState("0");
     const router = useRouter();
