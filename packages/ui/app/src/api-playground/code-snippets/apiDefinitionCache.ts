@@ -1,4 +1,5 @@
 import { APIResponse, APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { useEffect, useState } from "react";
 import { REGISTRY_SERVICE } from "../../services/registry";
 
 // TODO: clear this cache when it's no longer needed. This can cause a memory leak.
@@ -16,4 +17,19 @@ export async function getApiDefinition(apiId: FdrAPI.ApiDefinitionId): Promise<A
     const api = await REGISTRY_SERVICE.api.v1.read.getApi(apiId);
     apiDefinitionCache.set(apiId, api);
     return api.ok ? api.body : undefined;
+}
+
+export function useApiDefinition(apiId: FdrAPI.ApiDefinitionId): APIV1Read.ApiDefinition | undefined {
+    const [apiDefinition, setApiDefinition] = useState<APIV1Read.ApiDefinition | undefined>(() => {
+        const cachedApi = apiDefinitionCache.get(apiId);
+        return cachedApi?.ok ? cachedApi.body : undefined;
+    });
+
+    useEffect(() => {
+        void (async () => {
+            setApiDefinition(await getApiDefinition(apiId));
+        })();
+    }, [apiId]);
+
+    return apiDefinition;
 }
