@@ -7,6 +7,8 @@ function App() {
         const abort = new AbortController();
         const stream = new ReadableStream<ChatbotMessage>({
             async start(controller) {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+
                 controller.enqueue({ role: "AI", message: "Hello! ", citations: [] });
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 if (abort.signal.aborted) {
@@ -54,7 +56,7 @@ function App() {
         return [stream, abort] as const;
     };
     return (
-        <div className="max-w-[40rem] w-screen">
+        <div className="max-w-[40rem] w-screen dark max-h-screen flex">
             <ChatbotModal chatStream={handleChatStream} />
         </div>
     );

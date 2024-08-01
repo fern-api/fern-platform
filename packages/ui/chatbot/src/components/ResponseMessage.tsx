@@ -16,8 +16,18 @@ export const ResponseMessage = memo(({ message }: { message: string }) => {
     );
 });
 
-export const ResponseMessageWithCitations = ({ message, citations }: { message: string; citations: Citation[] }) => {
-    if (message === "" && citations.length === 0) {
+interface ResponseMessageWithCitationsProps {
+    isStreaming: boolean;
+    message: string;
+    citations: Citation[];
+}
+
+export const ResponseMessageWithCitations = ({
+    isStreaming,
+    message,
+    citations,
+}: ResponseMessageWithCitationsProps) => {
+    if (message === "" && citations.length === 0 && !isStreaming) {
         return null;
     }
 
@@ -27,7 +37,7 @@ export const ResponseMessageWithCitations = ({ message, citations }: { message: 
                 <FernAvatar />
             </div>
             <div className="flex flex-col gap-4">
-                <MarkdownContent>{message}</MarkdownContent>
+                <MarkdownContent terminator={isStreaming}>{message}</MarkdownContent>
                 <div>
                     {citations.map((citation, index) => (
                         <div key={index} className="flex flex-col gap-2">
@@ -39,7 +49,7 @@ export const ResponseMessageWithCitations = ({ message, citations }: { message: 
                                             href={document.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-blue-600 hover:underline"
+                                            className="text-[var(--fern-chatbot-link)] hover:text-[var(--fern-chatbot-link-hover)] hover:underline"
                                         >
                                             {document.title}
                                         </a>

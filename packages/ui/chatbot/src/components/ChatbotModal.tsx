@@ -1,8 +1,10 @@
+import { FernScrollArea } from "@fern-ui/components";
+import { useResizeObserver } from "@fern-ui/react-commons";
 import { useAtom } from "jotai";
-import { uniqueId } from "lodash-es";
+import { debounce, uniqueId } from "lodash-es";
 import { ReactElement, useRef, useState } from "react";
 import { atomWithSessionStorage } from "../atoms/atomWithSessionStorage";
-import { ChatbotMessage, Message } from "../types";
+import { ChatbotMessage, Citation, Message } from "../types";
 import { AskInput } from "./AskInput";
 import { ChatConversation } from "./ChatConversation";
 import { ResponseMessageWithCitations } from "./ResponseMessage";
@@ -28,65 +30,104 @@ interface ChatbotModalProps {
 
 export function ChatbotModal({ chatStream }: ChatbotModalProps): ReactElement {
     const [chatHistory, setChatHistory] = useAtom(CHAT_HISTORY);
-    const [currentResponse, setCurrentResponse] = useState<ChatbotMessage>({ role: "AI", message: "", citations: [] });
+    const [isStreaming, setIsStreaming] = useState(false);
+    const [message, setMessage] = useState<string>("");
+    const [citations, setCitations] = useState<Citation[]>([]);
 
     const abortRef = useRef<AbortController>();
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const scrollContentRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = useRef(
+        debounce(
+            (smooth: boolean = false) => {
+                scrollRef.current?.scrollTo({
+                    top: scrollRef.current.scrollHeight,
+                    behavior: smooth ? "smooth" : "instant",
+                });
+            },
+            150,
+            { leading: true, trailing: false },
+        ),
+    );
 
     const sendMessage = (message: string) => {
+        if (message.trim().length === 0) {
+            return;
+        }
+
         abortRef.current?.abort();
         setChatHistory((prev) => {
             const messages = [...prev.messages];
-            if (currentResponse.message.length > 0) {
-                messages.push(currentResponse);
+            if (message.length > 0) {
+                messages.push({ role: "AI", message, citations });
             }
             messages.push({ role: "USER", message });
             return { ...prev, messages };
         });
-        void chatStream(message).then(([stream, abort]) => {
-            abortRef.current = abort;
-            const reader = stream.getReader();
-            function read() {
-                reader.read().then(({ done, value }) => {
-                    if (done) {
-                        return;
-                    }
-                    setCurrentResponse(value);
-                    read();
-                });
-            }
-            read();
-        });
+        setIsStreaming(true);
+        setMessage("");
+        setCitations([]);
+        scrollToBottom.current();
+        void chatStream(message)
+            .then(
+                ([stream, abort]) =>
+                    new Promise((resolve) => {
+                        abortRef.current = abort;
+                        const reader = stream.getReader();
+                        function read() {
+                            reader.read().then(({ done, value }) => {
+                                if (done) {
+                                    return resolve(true);
+                                }
+                                const { message, citations } = value;
+                                setMessage(message);
+                                setCitations(citations);
+                                read();
+                            });
+                        }
+                        read();
+                    }),
+            )
+            .finally(() => {
+                setIsStreaming(false);
+            });
     };
 
+    useResizeObserver(scrollContentRef, () => {
+        scrollToBottom.current(true);
+    });
+
     return (
-        <section className="bg-white dark:bg-gray-950 rounded-lg w-full">
+        <section className="bg-gray-2 rounded-lg w-full text-black dark:text-white flex flex-col">
             <div className="px-4 py-2">
                 <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">Ask AI</span>
+                    <span className="text-sm text-gray-a11">Ask AI</span>
                     <button
-                        className="text-xs text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 dark:focus-visible:ring-gray-400"
+                        className="text-xs text-gray-a11 hover:text-gray-a12"
                         onClick={() => {
                             setChatHistory({
                                 conversationId: uniqueId(),
                                 messages: [],
                             });
-                            setCurrentResponse({ role: "AI", message: "", citations: [] });
+                            setMessage("");
+                            setCitations([]);
                         }}
                     >
                         Clear Chat
                     </button>
                 </div>
             </div>
-            <div className="min-h-10 overflow-y-auto overflow-x-hidden p-4">
-                <ChatConversation messages={chatHistory.messages}>
-                    <ResponseMessageWithCitations
-                        message={currentResponse.message}
-                        citations={currentResponse.citations}
-                    />
+            <FernScrollArea scrollbars="vertical" className="px-4 py-6 mask-grad-y-6" ref={scrollRef}>
+                <ChatConversation messages={chatHistory.messages} ref={scrollContentRef}>
+                    <ResponseMessageWithCitations isStreaming={isStreaming} message={message} citations={citations} />
                 </ChatConversation>
-            </div>
-            <div className="p-4">
+            </FernScrollArea>
+            <div className="p-4 pt-0">
                 <AskInput onSend={sendMessage} />
+                <div className="mt-1 px-5 text-gray-10 text-center">
+                    <span className="text-xs font-medium">Powered by Fern and Cohere (command-r-plus)</span>
+                </div>
             </div>
         </section>
     );
