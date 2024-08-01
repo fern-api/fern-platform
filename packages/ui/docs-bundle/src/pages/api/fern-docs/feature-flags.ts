@@ -22,6 +22,7 @@ const FEATURE_FLAGS = [
     "scroll-in-container-enabled" as const,
     "use-mdx-bundler" as const,
     "batch-stream-toggle-disabled" as const,
+    "enabled-auth-in-generated-docs" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -59,7 +60,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const scrollInContainerEnabled = checkDomainMatchesCustomers(domain, config["scroll-in-container-enabled"]);
         const useMdxBundler = checkDomainMatchesCustomers(domain, config["use-mdx-bundler"]);
         const isBatchStreamToggleDisabled = checkDomainMatchesCustomers(domain, config["batch-stream-toggle-disabled"]);
-
+        const isAuthEnabledInDocs = checkDomainMatchesCustomers(domain, config["enabled-auth-in-generated-docs"]);
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
             isApiScrollingDisabled,
@@ -77,6 +78,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             scrollInContainerEnabled,
             useMdxBundler,
             isBatchStreamToggleDisabled,
+            isAuthEnabledInDocs,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -98,6 +100,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             scrollInContainerEnabled: false,
             useMdxBundler: false,
             isBatchStreamToggleDisabled: false,
+            isAuthEnabledInDocs: false,
         };
     }
 }
