@@ -243,12 +243,14 @@ export class MigrateFromMintlify {
                 content,
             };
         }
+
         return {
             path: mintlify.path,
             data: {
                 title: data.title,
                 subtitle: data.description,
                 layout: data.mode != null ? "reference" : undefined,
+                // TODO: (rohin) investigate this more; it seems like mintlify isn't reliant on fdr, so not sure if there's a transformation here.
                 image: data["og:image"],
                 slug,
             },

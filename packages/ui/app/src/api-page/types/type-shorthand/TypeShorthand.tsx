@@ -6,6 +6,7 @@ import {
     DereferencedTypeShape,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
+    ResolvedUnknownTypeShape,
     unwrapAlias,
     unwrapOptional,
     unwrapReference,
@@ -144,7 +145,9 @@ export function renderTypeShorthand(
                 _other: () => "<unknown>",
             }),
         // other
-        unknown: () => "any",
+        unknown: (unknown: ResolvedUnknownTypeShape) => {
+            return unknown.displayName ?? "any";
+        },
         _other: () => "<unknown>",
         alias: (reference) => renderTypeShorthand(reference.shape, { plural, withArticle }, types),
     });
