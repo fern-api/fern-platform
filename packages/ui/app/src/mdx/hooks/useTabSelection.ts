@@ -13,7 +13,7 @@ export const useTabSelection = ({ groupId }: { groupId?: string }) => {
         }
     }, [groupId, selectedGroup]);
 
-    const setSelected = ({ value }: { value: string }) => {
+    const setSelected = (value: string) => {
         if (groupId) {
             setGroups((prev) => {
                 return { ...prev, [groupId]: value };

@@ -49,13 +49,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     }
 
     return (
-        <Tabs.Root
-            className={containerClass}
-            onValueChange={(value) => {
-                setSelected({ value });
-            }}
-            value={selected}
-        >
+        <Tabs.Root className={containerClass} onValueChange={setSelected} value={selected}>
             <div className="rounded-t-[inherit] bg-tag-default-soft">
                 <div className="mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0] shadow-border-default">
                     <Tabs.List className="flex min-h-10" asChild>
