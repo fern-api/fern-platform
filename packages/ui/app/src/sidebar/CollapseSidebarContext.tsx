@@ -126,7 +126,7 @@ export const CollapseSidebarProvider: FC<
         }
     }, [parentIdMap, sidebar]);
 
-    const [defaultExpandedNodes, _] = useState<FernNavigation.NodeId[]>(initialExpandedSections);
+    const defaultExpandedNodes = initialExpandedSections();
 
     const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(initialExpandedSections);
 
