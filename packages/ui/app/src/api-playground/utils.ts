@@ -2,6 +2,7 @@ import { APIV1Read, Snippets } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty, mapValues } from "lodash-es";
+import { useEffect, useState } from "react";
 import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
 import {
     ResolvedEndpointDefinition,
@@ -127,6 +128,7 @@ export function stringifyFetch({
     }
 
     const snippetTemplate = endpoint.snippetTemplates?.typescript;
+    const [resolvedTemplateSnippet, setResolvedTemplateSnippet] = useState<Snippets.Snippet | null>(null);
 
     if (snippetTemplate != null && isSnippetTemplatesEnabled) {
         const resolver = new SnippetTemplateResolver({
@@ -144,10 +146,22 @@ export function stringifyFetch({
                 snippetTemplate,
             },
         });
-        const resolvedTemplate = resolver.resolve();
 
-        if (resolvedTemplate.type === "typescript") {
-            return resolvedTemplate.client;
+        // TODO: We should expose a .unresolve() method or similar on
+        // the resolved APIDefinition, so we can just pass that to
+        // .resolveWithFormatting() instead of having the resolver make a DB call
+        useEffect(() => {
+            const resolveTemplate = async () => {
+                const resolvedTemplate = await resolver.resolveWithFormatting();
+
+                setResolvedTemplateSnippet(resolvedTemplate);
+            };
+
+            resolveTemplate();
+        }, []);
+
+        if (resolvedTemplateSnippet && resolvedTemplateSnippet.type === "typescript") {
+            return resolvedTemplateSnippet.client;
         }
     }
 
@@ -251,6 +265,7 @@ export function stringifyPythonRequests({
     }
 
     const snippetTemplate = endpoint.snippetTemplates?.python;
+    const [resolvedTemplateSnippet, setResolvedTemplateSnippet] = useState<Snippets.Snippet | null>(null);
 
     if (snippetTemplate != null && isSnippetTemplatesEnabled) {
         const resolver = new SnippetTemplateResolver({
@@ -269,10 +284,21 @@ export function stringifyPythonRequests({
             },
         });
 
-        const resolvedTemplate = resolver.resolve();
+        // TODO: We should expose a .unresolve() method or similar on
+        // the resolved APIDefinition, so we can just pass that to
+        // .resolveWithFormatting() instead of having the resolver make a DB call
+        useEffect(() => {
+            const resolveTemplate = async () => {
+                const resolvedTemplate = await resolver.resolveWithFormatting();
 
-        if (resolvedTemplate.type === "python") {
-            return resolvedTemplate.sync_client;
+                setResolvedTemplateSnippet(resolvedTemplate);
+            };
+
+            resolveTemplate();
+        }, []);
+
+        if (resolvedTemplateSnippet && resolvedTemplateSnippet.type === "python") {
+            return resolvedTemplateSnippet.sync_client;
         }
     }
 
