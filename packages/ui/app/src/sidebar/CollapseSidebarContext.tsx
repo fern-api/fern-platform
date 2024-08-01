@@ -126,7 +126,7 @@ export const CollapseSidebarProvider: FC<
         }
     }, [parentIdMap, sidebar]);
 
-    const defaultExpandedNodes = initialExpandedSections();
+    const defaultExpandedNodes = useMemo(() => initialExpandedSections(), [initialExpandedSections]);
 
     const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(initialExpandedSections);
 
@@ -140,7 +140,7 @@ export const CollapseSidebarProvider: FC<
 
         setExpanded(
             selectedNodeId == null
-                ? []
+                ? updatedDefaultExpanded
                 : [selectedNodeId, ...updatedDefaultExpanded, ...(parentIdMap.get(selectedNodeId) ?? [])],
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
