@@ -1,6 +1,7 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import { CopyIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { ElementType } from "react";
 import { Check } from "react-feather";
 import { FernButton } from "./FernButton";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
@@ -12,6 +13,7 @@ export declare namespace CopyToClipboardButton {
         testId?: string;
         children?: (onClick: ((e: React.MouseEvent) => void) | undefined) => React.ReactNode;
         onClick?: (e: React.MouseEvent) => void;
+        icon?: ElementType;
     }
 }
 
@@ -21,6 +23,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
     testId,
     children,
     onClick,
+    icon: Icon = CopyIcon,
 }) => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(content);
 
@@ -47,7 +50,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
                         }}
                         data-testid={testId}
                         rounded={true}
-                        icon={wasJustCopied ? <Check className="size-4" /> : <CopyIcon className="size-4" />}
+                        icon={wasJustCopied ? <Check className="size-4" /> : <Icon className="size-4" />}
                         variant="minimal"
                         intent={wasJustCopied ? "success" : "none"}
                         disableAutomaticTooltip={true}

@@ -1,12 +1,10 @@
-import { CopyToClipboardButton, FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
-import { useCopyToClipboard } from "@fern-ui/react-commons";
+import { CopyToClipboardButton } from "@fern-ui/components";
 import { Link1Icon } from "@radix-ui/react-icons";
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { Check } from "react-feather";
-import { FERN_GROUPS, FERN_QUERY_PARAMS, Group, useFeatureFlags, useGroup } from "../../../atoms";
+import { FERN_GROUPS, FERN_QUERY_PARAMS, useFeatureFlags, useGroup } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../commons/HorizontalOverflowMask";
 import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -26,6 +24,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
     const queryGroupId = groupId && groupId in queryParams ? groupId : undefined;
     const queryValue = queryGroupId ? (queryParams[queryGroupId] as string) : undefined;
 
+    const [url, setUrl] = useState("");
     const { isDarkCodeEnabled } = useFeatureFlags();
     const [selectedTabIndex, setSelectedTabIndex] = useState("0");
     const [_, setGroups] = useAtom(FERN_GROUPS);
@@ -46,6 +45,13 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
             setGroups({ ...updatedGroups });
         }
     };
+
+    useEffect(() => {
+        if (typeof window !== "undefined" && groupId && selectedGroup && selectedGroup[groupId]) {
+            const currentUrl = `${window.location.origin}${window.location.pathname}?groupId=${groupId}&value=${selectedGroup[groupId]}`;
+            setUrl(currentUrl);
+        }
+    }, [groupId, selectedGroup]);
 
     useEffect(() => {
         if (queryGroupId && queryValue && queryGroupId === groupId && items.length > parseInt(queryValue)) {
@@ -109,11 +115,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
 
                     <div>
                         {selectedGroup && groupId && (
-                            <CopyLinkToClipboardButton
-                                groupId={groupId}
-                                className="ml-2"
-                                selectedGroup={selectedGroup}
-                            />
+                            <CopyToClipboardButton icon={Link1Icon} className="ml-1" content={url} />
                         )}
                         <CopyToClipboardButton className="mx-1" content={items[parseInt(selectedTabIndex)]?.code} />
                     </div>
@@ -125,47 +127,5 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
                 </Tabs.Content>
             ))}
         </Tabs.Root>
-    );
-};
-
-const CopyLinkToClipboardButton = ({
-    className,
-    selectedGroup,
-    groupId,
-}: {
-    className: string;
-    selectedGroup: Group;
-    groupId: string;
-}) => {
-    const [url, setUrl] = useState("");
-    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(url);
-
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const currentUrl = `${window.location.origin}${window.location.pathname}?groupId=${groupId}&value=${selectedGroup[groupId]}`;
-            setUrl(currentUrl);
-        }
-    }, [groupId, selectedGroup]);
-
-    return (
-        <FernTooltipProvider>
-            <FernTooltip
-                content={wasJustCopied ? "Copied!" : "Copy link to clipboard"}
-                open={wasJustCopied ? true : undefined}
-            >
-                <FernButton
-                    className={clsx("group fern-copy-button", className)}
-                    disabled={copyToClipboard == null}
-                    onClickCapture={() => {
-                        copyToClipboard?.();
-                    }}
-                    rounded={true}
-                    icon={wasJustCopied ? <Check className="size-4" /> : <Link1Icon className="size-4" />}
-                    variant="minimal"
-                    intent={wasJustCopied ? "success" : "none"}
-                    disableAutomaticTooltip={true}
-                />
-            </FernTooltip>
-        </FernTooltipProvider>
     );
 };
