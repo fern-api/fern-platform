@@ -34,7 +34,7 @@ export function PlaygroundEndpointFormButtons({
 
             <FernLink
                 href={`/${endpoint.slug}`}
-                shallow={apiReferenceId === endpoint.apiSectionId}
+                shallow={apiReferenceId === endpoint.apiDefinitionId}
                 className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
                 onClick={closePlayground}
             >

@@ -13,7 +13,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
       "description": undefined,
       "items": [
         {
-          "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+          "apiDefinitionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
           "auth": {
             "tokenName": "token",
             "type": "bearerAuth",
@@ -127,7 +127,7 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
   },
   "items": [
     {
-      "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+      "apiDefinitionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "auth": undefined,
       "availability": undefined,
       "defaultEnvironment": {
@@ -247,7 +247,7 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
       "type": "endpoint",
     },
     {
-      "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+      "apiDefinitionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "auth": {
         "tokenName": "token",
         "type": "bearerAuth",
@@ -305,7 +305,7 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
       "type": "endpoint",
     },
     {
-      "apiSectionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
+      "apiDefinitionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "auth": {
         "headerWireValue": "test-api-key",
         "type": "header",

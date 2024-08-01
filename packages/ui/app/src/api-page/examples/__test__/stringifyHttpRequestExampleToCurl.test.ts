@@ -17,7 +17,7 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     auth: undefined,
     availability: undefined,
     defaultEnvironment: MOCK_ENV,
-    apiSectionId: "",
+    apiDefinitionId: "",
     environments: [MOCK_ENV],
     method: "GET",
     title: "",
