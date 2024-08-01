@@ -145,7 +145,7 @@ const CopyLinkToClipboardButton = ({
             const currentUrl = `${window.location.origin}${window.location.pathname}?groupId=${groupId}&value=${selectedGroup[groupId]}`;
             setUrl(currentUrl);
         }
-    }, [groupId, selectedGroup, selectedGroup[groupId]]);
+    }, [groupId, selectedGroup]);
 
     return (
         <FernTooltipProvider>
