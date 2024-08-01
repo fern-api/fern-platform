@@ -88,6 +88,7 @@ export const CollapseSidebarProvider: FC<
     const { parentIdMap, parentToChildrenMap } = useMemo(() => {
         const parentIdMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
         const parentToChildrenMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
+
         if (sidebar == null) {
             return { parentIdMap, parentToChildrenMap };
         }
@@ -112,38 +113,12 @@ export const CollapseSidebarProvider: FC<
         return { parentIdMap, parentToChildrenMap };
     }, [sidebar]);
 
-    const initialExpandedSections = useCallback((): FernNavigation.NodeId[] => {
-        if (sidebar != null) {
-            const expandedNodes: FernNavigation.NodeId[] = [];
-            FernNavigation.utils.traverseNavigation(sidebar, (node) => {
-                if (node.type === "section" && node.collapsed === false) {
-                    expandedNodes.push(...[node.id, ...(parentIdMap.get(node.id) ?? [])]);
-                }
-            });
-            return [...expandedNodes];
-        } else {
-            return [];
-        }
-    }, [parentIdMap, sidebar]);
-
-    const defaultExpandedNodes = useMemo(() => initialExpandedSections(), [initialExpandedSections]);
-
-    const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(initialExpandedSections);
+    const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(() =>
+        selectedNodeId == null ? [] : [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])],
+    );
 
     useEffect(() => {
-        const updatedDefaultExpanded = expanded.filter((node) => {
-            if (defaultExpandedNodes.includes(node)) {
-                return node;
-            }
-            return;
-        });
-
-        setExpanded(
-            selectedNodeId == null
-                ? updatedDefaultExpanded
-                : [selectedNodeId, ...updatedDefaultExpanded, ...(parentIdMap.get(selectedNodeId) ?? [])],
-        );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        setExpanded(selectedNodeId == null ? [] : [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])]);
     }, [selectedNodeId, parentIdMap]);
 
     const checkExpanded = useCallback(
