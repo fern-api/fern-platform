@@ -203,6 +203,7 @@ const response = await fetch("${this.url}", {
 const body = await response.json();
 console.log(body);`;
         }
+        buildFetch.bind(this);
 
         if (this.formState.body == null) {
             return buildFetch(undefined);
@@ -279,6 +280,7 @@ response = requests.${endpoint.method.toLowerCase()}(
 
 print(response.json())`;
         }
+        buildRequests.bind(this);
 
         if (this.formState.body == null) {
             return `${imports.map((pkg) => `import ${pkg}`).join("\n")}
