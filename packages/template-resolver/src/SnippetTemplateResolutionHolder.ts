@@ -14,8 +14,8 @@ export class SnippetTemplateResolutionHolder {
         maybeApiDefinition,
         maybeApiDefinitionId,
     }: {
-        maybeApiDefinition: APIV1Read.ApiDefinition | undefined;
-        maybeApiDefinitionId: string | undefined;
+        maybeApiDefinition?: APIV1Read.ApiDefinition;
+        maybeApiDefinitionId?: string;
     }) {
         this.maybeApiDefinition = maybeApiDefinition;
         this.maybeApiDefinitionId = maybeApiDefinitionId;

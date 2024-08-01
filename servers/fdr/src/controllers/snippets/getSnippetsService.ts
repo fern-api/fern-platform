@@ -83,7 +83,7 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                             endpointSnippetTemplate,
                         });
 
-                        snippets.push(await templateResolver.resolve());
+                        snippets.push(templateResolver.resolve());
                     }
 
                     return res.send(snippets);
