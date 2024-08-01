@@ -8,15 +8,21 @@ export class SnippetTemplateResolutionHolder {
     private maybeObjectFlattener: ObjectFlattener | undefined;
     private maybeApiDefinitionId: string | undefined;
 
+    private fdrEnvironmentUrl: string | undefined;
+
     private apiDefinitionHasBeenRequested: boolean;
 
-    constructor({
-        maybeApiDefinition,
-        maybeApiDefinitionId,
-    }: {
-        maybeApiDefinition?: APIV1Read.ApiDefinition;
-        maybeApiDefinitionId?: string;
-    }) {
+    constructor(
+        {
+            maybeApiDefinition,
+            maybeApiDefinitionId,
+        }: {
+            maybeApiDefinition?: APIV1Read.ApiDefinition;
+            maybeApiDefinitionId?: string;
+        },
+        environment?: string,
+    ) {
+        this.fdrEnvironmentUrl = environment;
         this.maybeApiDefinition = maybeApiDefinition;
         this.maybeApiDefinitionId = maybeApiDefinitionId;
 
@@ -37,7 +43,7 @@ export class SnippetTemplateResolutionHolder {
         // If we were not provided an API definition, try to get it from FDR
         if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested) {
             this.apiDefinitionHasBeenRequested = true;
-            this.maybeApiDefinition = await getApiDefinition(this.maybeApiDefinitionId);
+            this.maybeApiDefinition = await getApiDefinition(this.maybeApiDefinitionId, this.fdrEnvironmentUrl);
             return this.maybeApiDefinition;
         }
 

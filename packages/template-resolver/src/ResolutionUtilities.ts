@@ -1,7 +1,10 @@
 import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk";
 
-export async function getApiDefinition(apiDefinitionId: string): Promise<APIV1Read.ApiDefinition | undefined> {
-    const fdr = new FdrClient();
+export async function getApiDefinition(
+    apiDefinitionId: string,
+    environment: string | undefined,
+): Promise<APIV1Read.ApiDefinition | undefined> {
+    const fdr = new FdrClient({ environment });
     const apiDefinitionResponse = await fdr.api.v1.read.getApi(apiDefinitionId);
     if (apiDefinitionResponse.ok) {
         return apiDefinitionResponse.body;
