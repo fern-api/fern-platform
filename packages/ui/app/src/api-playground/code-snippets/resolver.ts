@@ -1,3 +1,4 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty } from "lodash-es";
@@ -23,7 +24,6 @@ import {
     indentAfter,
     unknownToString,
 } from "../utils";
-import { getApiDefinition } from "./apiDefinitionCache";
 
 export class PlaygroundCodeSnippetResolverBuilder {
     constructor(
@@ -68,25 +68,13 @@ export class PlaygroundCodeSnippetResolver {
     private typescriptSdkResolver: SnippetTemplateResolver | undefined;
     private pythonRequestsResolver: SnippetTemplateResolver | undefined;
 
-    public async resolve(lang: "curl" | "python" | "typescript"): Promise<string> {
+    public resolve(lang: "curl" | "python" | "typescript", apiDefinition?: APIV1Read.ApiDefinition): string {
         if (lang === "curl") {
             return this.toCurl();
         } else if (lang === "typescript") {
-            return (await this.toTypescriptSdkSnippet()) ?? this.toTypescriptFetch();
+            return this.toTypescriptSdkSnippet(apiDefinition) ?? this.toTypescriptFetch();
         } else if (lang === "python") {
-            return (await this.toPythonSdkSnippet()) ?? this.toPythonRequests();
-        } else {
-            throw new UnreachableCaseError(lang);
-        }
-    }
-
-    public resolveSync(lang: "curl" | "python" | "typescript"): string {
-        if (lang === "curl") {
-            return this.toCurl();
-        } else if (lang === "typescript") {
-            return this.toTypescriptSdkSnippetSync() ?? this.toTypescriptFetch();
-        } else if (lang === "python") {
-            return this.toPythonSdkSnippetSync() ?? this.toPythonRequests();
+            return this.toPythonSdkSnippet(apiDefinition) ?? this.toPythonRequests();
         } else {
             throw new UnreachableCaseError(lang);
         }
@@ -361,13 +349,11 @@ ${buildRequests({})}`,
         });
     }
 
-    public async toTypescriptSdkSnippet(): Promise<string | undefined> {
-        // return this.typescriptSdkResolver?.resolve(await getApiDefinition(this.endpoint.apiDefinitionId))?.sdk ?? "";
+    public toTypescriptSdkSnippet(apiDefinition?: APIV1Read.ApiDefinition): string | undefined {
         if (this.typescriptSdkResolver == null) {
             return undefined;
         }
 
-        const apiDefinition = await getApiDefinition(this.endpoint.apiDefinitionId);
         const resolvedTemplate = this.typescriptSdkResolver.resolve(apiDefinition);
 
         if (resolvedTemplate.type === "typescript") {
@@ -376,38 +362,13 @@ ${buildRequests({})}`,
         return undefined;
     }
 
-    public async toPythonSdkSnippet(): Promise<string | undefined> {
+    public toPythonSdkSnippet(apiDefinition?: APIV1Read.ApiDefinition): string | undefined {
         if (this.pythonRequestsResolver == null) {
             return undefined;
         }
 
-        const apiDefinition = await getApiDefinition(this.endpoint.apiDefinitionId);
         const resolvedTemplate = this.pythonRequestsResolver.resolve(apiDefinition);
 
-        if (resolvedTemplate.type === "python") {
-            return resolvedTemplate.sync_client;
-        }
-        return undefined;
-    }
-
-    public toTypescriptSdkSnippetSync(): string | undefined {
-        if (this.typescriptSdkResolver == null) {
-            return undefined;
-        }
-
-        const resolvedTemplate = this.typescriptSdkResolver.resolve();
-        if (resolvedTemplate.type === "typescript") {
-            return resolvedTemplate.client;
-        }
-        return undefined;
-    }
-
-    public toPythonSdkSnippetSync(): string | undefined {
-        if (this.pythonRequestsResolver == null) {
-            return undefined;
-        }
-
-        const resolvedTemplate = this.pythonRequestsResolver.resolve();
         if (resolvedTemplate.type === "python") {
             return resolvedTemplate.sync_client;
         }
