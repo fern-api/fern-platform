@@ -143,6 +143,7 @@ export const CollapseSidebarProvider: FC<
                 ? []
                 : [selectedNodeId, ...updatedDefaultExpanded, ...(parentIdMap.get(selectedNodeId) ?? [])],
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedNodeId, parentIdMap]);
 
     const checkExpanded = useCallback(
