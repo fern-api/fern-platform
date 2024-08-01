@@ -112,7 +112,8 @@ function toFeedItem(
         try {
             let image: string | undefined;
 
-            if (frontmatter.image != null) {
+            // TODO: (rohin) Clean up after safe deploy, but include for back compat
+            if (frontmatter.image != null && typeof frontmatter.image === "string") {
                 image = frontmatter.image;
             } else if (frontmatter["og:image"] != null) {
                 image = toUrl(frontmatter["og:image"], files);
