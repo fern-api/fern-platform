@@ -112,31 +112,38 @@ export const CollapseSidebarProvider: FC<
         return { parentIdMap, parentToChildrenMap };
     }, [sidebar]);
 
-    const initializeExpandedSections = useCallback((): FernNavigation.NodeId[] => {
-        if (selectedNodeId == null) {
-            return [];
+    const initialExpandedSections = useCallback((): FernNavigation.NodeId[] => {
+        if (sidebar != null) {
+            const expandedNodes: FernNavigation.NodeId[] = [];
+            FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+                if (node.type === "section" && node.collapsed === false) {
+                    expandedNodes.push(...[node.id, ...(parentIdMap.get(node.id) ?? [])]);
+                }
+            });
+            return [...expandedNodes];
         } else {
-            if (sidebar != null) {
-                const expandedNodes: FernNavigation.NodeId[] = [];
-                FernNavigation.utils.traverseNavigation(sidebar, (node) => {
-                    if (node.type === "section") {
-                        if (node.collapsed === false) {
-                            expandedNodes.push(...[node.id, ...(parentIdMap.get(node.id) ?? [])]);
-                        }
-                    }
-                });
-                return [...expandedNodes, selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])];
-            } else {
-                return [selectedNodeId, ...(parentIdMap.get(selectedNodeId) ?? [])];
-            }
+            return [];
         }
-    }, [selectedNodeId, parentIdMap, sidebar]);
+    }, [parentIdMap, sidebar]);
 
-    const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(() => initializeExpandedSections());
+    const [defaultExpandedNodes, _] = useState<FernNavigation.NodeId[]>(initialExpandedSections);
+
+    const [expanded, setExpanded] = useState<FernNavigation.NodeId[]>(initialExpandedSections);
 
     useEffect(() => {
-        setExpanded(initializeExpandedSections());
-    }, [initializeExpandedSections]);
+        const updatedDefaultExpanded = expanded.filter((node) => {
+            if (defaultExpandedNodes.includes(node)) {
+                return node;
+            }
+            return;
+        });
+
+        setExpanded(
+            selectedNodeId == null
+                ? []
+                : [selectedNodeId, ...updatedDefaultExpanded, ...(parentIdMap.get(selectedNodeId) ?? [])],
+        );
+    }, [selectedNodeId, parentIdMap]);
 
     const checkExpanded = useCallback(
         (expandableId: FernNavigation.NodeId) =>
