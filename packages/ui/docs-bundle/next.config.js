@@ -78,6 +78,8 @@ const nextConfig = {
 
         const styleSrc = ["'self'", "'unsafe-inline'"];
 
+        const fontSrc = ["'self'", "data:", ...DOCS_FILES_URLS];
+
         if (cdnUri != null) {
             scriptSrc.push(`${cdnUri.origin}`);
             connectSrc.push(`${cdnUri.origin}`);
@@ -102,6 +104,7 @@ const nextConfig = {
             "base-uri 'self'",
             "form-action 'self'",
             "frame-ancestors 'none'",
+            `font-src ${fontSrc.join(" ")}`,
             // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
         ];
 
