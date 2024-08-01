@@ -2,7 +2,11 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { FERN_GROUPS, Group, useGroup } from "../../atoms";
 
-export const useTabSelection = ({ groupId }: { groupId?: string }) => {
+export const useTabSelection:  = ({
+    groupId,
+}: {
+    groupId?: string;
+}): { selected: string; setSelected: (val: string) => void } => {
     const { selectedGroup } = useGroup({ key: groupId });
     const [_, setGroups] = useAtom<Group>(FERN_GROUPS);
     const [selectedTabIndex, setSelectedTabIndex] = useState("0");

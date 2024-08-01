@@ -24,12 +24,11 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs, groupId, toc: parentToc = tr
     useEffect(() => {
         if (anchor != null) {
             const anchorTab = tabs.findIndex((tab) => slug(tab.title) === anchor);
-
             if (anchorTab >= 0) {
                 setSelected(anchorTab.toString());
             }
         }
-    }, [anchor, tabs]);
+    }, [anchor, tabs, setSelected]);
 
     return (
         <RadixTabs.Root value={selected} onValueChange={setSelected}>
