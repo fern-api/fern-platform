@@ -56,7 +56,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({ 
 
     useEffect(() => {
         if (selectedGroup && groupId && selectedGroup[groupId]) {
-            setSelectedTabIndex(selectedGroup[groupId]);
+            setSelectedTabIndex(selectedGroup[groupId] as string);
         }
     }, [selectedGroup, groupId]);
 

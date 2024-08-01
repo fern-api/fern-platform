@@ -11,7 +11,7 @@ export function useGroup({ key }: { key?: string }): { selectedGroup?: Group; gr
 
     if (key) {
         if (key in group && group[key]) {
-            return { selectedGroup: { [key]: group[key] }, group };
+            return { selectedGroup: { [key]: group[key] as string }, group };
         }
         return { selectedGroup: undefined, group };
     }
