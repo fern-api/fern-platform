@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { FERN_GROUPS, Group, useGroup } from "../../atoms";
 
-export const useTabSelection:  = ({
+export const useTabSelection = ({
     groupId,
 }: {
     groupId?: string;
