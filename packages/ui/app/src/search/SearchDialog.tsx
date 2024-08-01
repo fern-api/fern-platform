@@ -8,6 +8,7 @@ import { SearchMobileHits } from "./SearchHits";
 import { AlgoliaSearchDialog } from "./algolia/AlgoliaSearchDialog";
 import { SearchMobileBox } from "./algolia/SearchBox";
 import { useAlgoliaSearchClient } from "./algolia/useAlgoliaSearchClient";
+import { CohereChatButton } from "./cohere/CohereChatButton";
 import { InkeepChatButton } from "./inkeep/InkeepChatButton";
 import { InkeepCustomTrigger } from "./inkeep/InkeepCustomTrigger";
 import { useSearchTrigger } from "./useSearchTrigger";
@@ -24,7 +25,12 @@ export const SearchDialog = (): ReactElement | null => {
     }
 
     if (config.inkeep == null) {
-        return <AlgoliaSearchDialog />;
+        return (
+            <>
+                <AlgoliaSearchDialog />
+                <CohereChatButton />
+            </>
+        );
     } else {
         return (
             <>

@@ -1757,9 +1757,15 @@ importers:
       '@vercel/edge-config':
         specifier: ^1.1.0
         version: 1.1.0(typescript@5.4.3)
+      '@vercel/kv':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@workos-inc/node':
         specifier: ^6.1.0
         version: 6.8.0
+      cohere-ai:
+        specifier: ^7.9.5
+        version: 7.9.5
       cssnano:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.4.31)
@@ -1802,6 +1808,9 @@ importers:
       url-join:
         specifier: 5.0.0
         version: 5.0.0
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.1
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -1827,6 +1836,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.3.0
+      '@types/uuid':
+        specifier: ^9.0.1
+        version: 9.0.8
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.19(postcss@8.4.31)
@@ -7190,6 +7202,9 @@ packages:
   '@ungap/url-search-params@0.2.2':
     resolution: {integrity: sha512-qQsguKXZVKdCixOHX9jqnX/K/1HekPDpGKyEcXHT+zR6EjGA7S4boSuelL4uuPv6YfhN0n8c4UxW+v/Z3gM2iw==}
 
+  '@upstash/redis@1.34.0':
+    resolution: {integrity: sha512-TrXNoJLkysIl8SBc4u9bNnyoFYoILpCcFJcLyWCccb/QSUmaVKdvY0m5diZqc3btExsapcMbaw/s/wh9Sf1pJw==}
+
   '@vercel/edge-config-fs@0.1.0':
     resolution: {integrity: sha512-NRIBwfcS0bUoUbRWlNGetqjvLSwgYH/BqKqDN7vK1g32p7dN96k0712COgaz6VFizAm9b0g6IG6hR6+hc0KCPg==}
 
@@ -7201,6 +7216,10 @@ packages:
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
+
+  '@vercel/kv@2.0.0':
+    resolution: {integrity: sha512-zdVrhbzZBYo5d1Hfn4bKtqCeKf0FuzW8rSHauzQVMUgv1+1JOwof2mWcBuI+YMJy8s0G0oqAUfQ7HgUDzb8EbA==}
+    engines: {node: '>=14.6'}
 
   '@vitejs/plugin-react-swc@3.7.0':
     resolution: {integrity: sha512-yrknSb3Dci6svCd/qhHqhFPDSw0QtjumcqdKMoNNzmOl5lMXTTiqzjWtG4Qask2HdvvzaNgSunbQGet8/GrKdA==}
@@ -8927,6 +8946,9 @@ packages:
 
   crypto-browserify@3.12.0:
     resolution: {integrity: sha512-fz4spIh+znjO2VjL+IdhEpRJ3YN6sMzITSBijk6FK2UvTqruSQW+/cCZTSNsMiZNvUeq0CqurF+dAbyiGOY6Wg==}
+
+  crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
 
   crypto-random-string@2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}
@@ -23260,6 +23282,10 @@ snapshots:
 
   '@ungap/url-search-params@0.2.2': {}
 
+  '@upstash/redis@1.34.0':
+    dependencies:
+      crypto-js: 4.2.0
+
   '@vercel/edge-config-fs@0.1.0': {}
 
   '@vercel/edge-config@1.1.0(typescript@5.4.3)':
@@ -23268,6 +23294,10 @@ snapshots:
       ts-essentials: 9.4.1(typescript@5.4.3)
     transitivePeerDependencies:
       - typescript
+
+  '@vercel/kv@2.0.0':
+    dependencies:
+      '@upstash/redis': 1.34.0
 
   '@vitejs/plugin-react-swc@3.7.0(@swc/helpers@0.5.5)(vite@5.2.11(@types/node@20.12.12)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0))':
     dependencies:
@@ -25861,6 +25891,8 @@ snapshots:
       public-encrypt: 4.0.3
       randombytes: 2.1.0
       randomfill: 1.0.4
+
+  crypto-js@4.2.0: {}
 
   crypto-random-string@2.0.0: {}
 
@@ -29066,7 +29098,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 18.19.33
       merge-stream: 2.0.0
       supports-color: 8.1.1
 

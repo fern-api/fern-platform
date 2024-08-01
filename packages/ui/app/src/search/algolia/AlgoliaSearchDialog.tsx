@@ -1,4 +1,3 @@
-// import { Dialog, Transition } from "@headlessui/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
