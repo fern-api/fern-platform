@@ -4,6 +4,7 @@ import { buildPath, indentAfter } from "./common";
 import { PlaygroundCodeSnippetBuilder } from "./types";
 
 export class TypescriptFetchSnippetBuilder extends PlaygroundCodeSnippetBuilder {
+    // TODO: write more tests for this
     #buildFetch(body: string | undefined): string {
         if (this.endpoint == null) {
             return "";
@@ -11,7 +12,7 @@ export class TypescriptFetchSnippetBuilder extends PlaygroundCodeSnippetBuilder 
         return `// ${this.endpoint.title} (${this.endpoint.method} ${buildPath(this.endpoint.path)})
 const response = await fetch("${this.url}", {
   method: "${this.endpoint.method}",
-  headers: ${indentAfter(JSON.stringify(this.headers, undefined, 2), 2, 0)},${!isEmpty(body) ? `\n  body: ${body},` : ""}
+  headers: ${indentAfter(JSON.stringify(this.formState.headers, undefined, 2), 2, 0)},${!isEmpty(body) ? `\n  body: ${body},` : ""}
 });
 
 const body = await response.json();

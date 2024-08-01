@@ -18,7 +18,7 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
             method: this.endpoint.method,
             url: this.url,
             urlQueries: this.formState.queryParameters,
-            headers: this.headers,
+            headers: this.formState.headers,
             body: this.#convertFormStateToBody(),
         });
     }

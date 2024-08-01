@@ -116,7 +116,8 @@ export class PlaygroundCodeSnippetResolver {
     }
 
     public toCurl(): string {
-        return new CurlSnippetBuilder(this.endpoint, this.headers, this.formState)
+        const formState = { ...this.formState, headers: this.headers };
+        return new CurlSnippetBuilder(this.endpoint, formState)
             .setFileForgeHackEnabled(this.isFileForgeHackEnabled)
             .build();
     }
@@ -129,11 +130,13 @@ export class PlaygroundCodeSnippetResolver {
             delete headers["Content-Type"]; // fetch will set this automatically
         }
 
-        return new TypescriptFetchSnippetBuilder(this.endpoint, headers, this.formState).build();
+        const formState = { ...this.formState, headers };
+        return new TypescriptFetchSnippetBuilder(this.endpoint, formState).build();
     }
 
     public toPythonRequests(): string {
-        return new PythonRequestSnippetBuilder(this.endpoint, this.headers, this.formState).build();
+        const formState = { ...this.formState, headers: this.headers };
+        return new PythonRequestSnippetBuilder(this.endpoint, formState).build();
     }
 
     public toTypescriptSdkSnippet(apiDefinition?: APIV1Read.ApiDefinition): string | undefined {

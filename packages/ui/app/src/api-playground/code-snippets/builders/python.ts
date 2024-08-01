@@ -10,6 +10,7 @@ interface PythonRequestParams {
 }
 
 export class PythonRequestSnippetBuilder extends PlaygroundCodeSnippetBuilder {
+    // TODO: write more tests for this
     #buildRequests({ json, data, files }: PythonRequestParams) {
         if (this.endpoint == null) {
             return "";
@@ -17,7 +18,7 @@ export class PythonRequestSnippetBuilder extends PlaygroundCodeSnippetBuilder {
         return `# ${this.endpoint.title} (${this.endpoint.method} ${buildPath(this.endpoint.path)})
 response = requests.${this.endpoint.method.toLowerCase()}(
   "${this.url}",
-  headers=${indentAfter(JSON.stringify(this.headers, undefined, 2), 2, 0)},${json != null ? `\n  json=${indentAfter(json, 2, 0)},` : ""}${
+  headers=${indentAfter(JSON.stringify(this.formState.headers, undefined, 2), 2, 0)},${json != null ? `\n  json=${indentAfter(json, 2, 0)},` : ""}${
       data != null ? `\n  data=${indentAfter(data, 2, 0)},` : ""
   }${files != null ? `\n  files=${indentAfter(files, 2, 0)},` : ""}
 )

@@ -5,8 +5,8 @@ import { buildEndpointUrl } from "../../utils";
 export abstract class PlaygroundCodeSnippetBuilder {
     protected url: string;
     constructor(
+        // TODO: make this more generic and easier to test by removing dependency on "ResolvedEndpointDefinition"
         protected endpoint: ResolvedEndpointDefinition,
-        protected headers: Record<string, unknown>,
         protected formState: PlaygroundEndpointRequestFormState,
     ) {
         // TODO: wire through the environment from hook
