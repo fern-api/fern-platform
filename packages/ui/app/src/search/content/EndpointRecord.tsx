@@ -1,7 +1,7 @@
+import type { SearchRecord } from "@fern-ui/search-utils";
 import { CodeIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Snippet } from "react-instantsearch";
-import type { SearchRecord } from "../types";
 
 export declare namespace EndpointRecord {
     export interface Props {

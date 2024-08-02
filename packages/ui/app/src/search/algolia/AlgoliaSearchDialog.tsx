@@ -1,15 +1,19 @@
-// import { Dialog, Transition } from "@headlessui/react";
+import { createSearchPlaceholderWithVersion } from "@fern-ui/search-utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
-import { CURRENT_VERSION_ATOM, POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM, useSidebarNodes } from "../../atoms";
-
-import { IS_MOBILE_SCREEN_ATOM, SEARCH_DIALOG_OPEN_ATOM, useIsSearchDialogOpen } from "../../atoms";
+import {
+    CURRENT_VERSION_ATOM,
+    IS_MOBILE_SCREEN_ATOM,
+    POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM,
+    SEARCH_DIALOG_OPEN_ATOM,
+    useIsSearchDialogOpen,
+    useSidebarNodes,
+} from "../../atoms";
 import { SearchHits } from "../SearchHits";
-import { createSearchPlaceholderWithVersion } from "../util";
 import { SearchBox } from "./SearchBox";
 import { useAlgoliaSearchClient } from "./useAlgoliaSearchClient";
 
@@ -52,7 +56,7 @@ function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSea
     const sidebar = useSidebarNodes();
     const activeVersion = useAtomValue(CURRENT_VERSION_ATOM);
     const placeholder = useMemo(
-        () => createSearchPlaceholderWithVersion(activeVersion, sidebar),
+        () => createSearchPlaceholderWithVersion(activeVersion?.id, sidebar),
         [activeVersion, sidebar],
     );
     return (

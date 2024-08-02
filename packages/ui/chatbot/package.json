@@ -1,0 +1,56 @@
+{
+  "name": "@fern-ui/chatbot",
+  "private": true,
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/ui/chatbot"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "source": "src/index.ts",
+  "module": "src/index.ts",
+  "main": "src/index.ts",
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fern-ui/components": "workspace:*",
+    "@fern-ui/react-commons": "workspace:*",
+    "@radix-ui/colors": "^3.0.0",
+    "clsx": "^2.1.1",
+    "hastscript": "^9.0.0",
+    "jotai": "^2.8.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
+    "@types/hast": "^3.0.4",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "postcss": "^8.4.33",
+    "tailwind": "^4.0.0",
+    "typescript": "5.4.3",
+    "vite": "^5.3.4"
+  }
+}

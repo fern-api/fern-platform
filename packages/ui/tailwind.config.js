@@ -63,7 +63,6 @@ module.exports = {
             },
 
             colors: {
-                ...blackA,
                 "fern-green": "#49932B",
                 "fern-green-dark": "#ADFF8C",
 
