@@ -220,7 +220,7 @@ export const ResolvedApiDefinition = {
 
 export interface ResolvedSubpackage extends WithMetadata, ResolvedWithApiDefinition {
     type: "subpackage";
-    // apiSectionId: FdrAPI.ApiDefinitionId;
+    // apiDefinitionId: FdrAPI.ApiDefinitionId;
     // id: APIV1Read.SubpackageId;
     // name: string;
     title: string;
@@ -243,7 +243,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     type: "endpoint";
     nodeId: FernNavigation.NodeId;
     id: APIV1Read.EndpointId;
-    apiSectionId: FdrAPI.ApiDefinitionId;
+    apiDefinitionId: FdrAPI.ApiDefinitionId;
     // apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
     slug: FernNavigation.Slug;
     auth: APIV1Read.ApiAuth | undefined;

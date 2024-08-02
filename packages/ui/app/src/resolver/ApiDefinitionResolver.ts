@@ -331,7 +331,7 @@ export class ApiDefinitionResolver {
             description,
             auth,
             availability: endpoint.availability,
-            apiSectionId: node.apiDefinitionId,
+            apiDefinitionId: node.apiDefinitionId,
             environments: endpoint.environments,
             method: endpoint.method,
             examples: [],
