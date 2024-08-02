@@ -5,9 +5,11 @@ import { useAtom } from "jotai";
 import { ReactElement, isValidElement } from "react";
 import { createPortal } from "react-dom";
 import urlJoin from "url-join";
+import { useCallbackOne } from "use-memo-one";
 import { Stream } from "../../api-playground/Stream";
 import { COHERE_ASK_AI, useBasePath } from "../../atoms";
 import { FernLink } from "../../components/FernLink";
+import { useRouteChanged } from "../../hooks/useRouteChanged";
 import { CodeBlock } from "../../mdx/components/code";
 import { useSearchConfig } from "../../services/useSearchService";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
@@ -16,6 +18,13 @@ export function CohereChatButton(): ReactElement | null {
     const [config] = useSearchConfig();
     const [enabled, setEnabled] = useAtom(COHERE_ASK_AI);
     const basePath = useBasePath();
+
+    // Close the dialog when the route changes
+    useRouteChanged(
+        useCallbackOne(() => {
+            setEnabled(false);
+        }, [setEnabled]),
+    );
 
     const chatStream = async (message: string, conversationId: string) => {
         const abortController = new AbortController();
