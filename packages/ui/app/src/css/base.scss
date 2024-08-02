@@ -1,8 +1,6 @@
 @layer base {
     html,
     body {
-        @apply t-default;
-
         font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
     }
 
@@ -25,22 +23,5 @@
         &:first-child {
             @apply mt-0;
         }
-    }
-
-    *,
-    *::before,
-    *::after {
-        box-sizing: inherit;
-
-        @apply outline-transparent;
-        @apply focus:outline-border-accent-muted focus-visible:outline-border-accent-muted;
-    }
-
-    ::selection {
-        @apply bg-accent-highlight;
-    }
-
-    hr {
-        @apply border-default;
     }
 }
