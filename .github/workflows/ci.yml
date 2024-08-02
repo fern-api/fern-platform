@@ -122,6 +122,9 @@ jobs:
         env:
           CI: true
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Run tests against local FDR
         run: |
           cd servers/fdr
