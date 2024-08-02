@@ -2,6 +2,7 @@
     html,
     body {
         @apply t-default;
+
         font-family: var(--typography-body-font-family, var(--body-font-fallback)) !important;
     }
 
