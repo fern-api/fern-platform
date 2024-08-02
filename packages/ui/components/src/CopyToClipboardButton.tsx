@@ -8,7 +8,7 @@ import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 export declare namespace CopyToClipboardButton {
     export interface Props {
         className?: string;
-        content?: string | (() => string);
+        content?: string | (() => string | Promise<string>);
         testId?: string;
         children?: (onClick: ((e: React.MouseEvent) => void) | undefined) => React.ReactNode;
         onClick?: (e: React.MouseEvent) => void;

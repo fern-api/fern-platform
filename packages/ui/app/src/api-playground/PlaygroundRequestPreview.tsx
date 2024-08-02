@@ -1,11 +1,11 @@
 import { useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
 import { PLAYGROUND_AUTH_STATE_ATOM, useDomain, useFeatureFlags } from "../atoms";
-import { useSelectedEnvironmentId } from "../atoms/environment";
-import { ResolvedEndpointDefinition, resolveEnvironmentUrlInCodeSnippet } from "../resolver/types";
+import { ResolvedEndpointDefinition } from "../resolver/types";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
+import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
+import { useSnippet } from "./code-snippets/useSnippet";
 import { PlaygroundEndpointRequestFormState } from "./types";
-import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 
 interface PlaygroundRequestPreviewProps {
     endpoint: ResolvedEndpointDefinition;
@@ -17,41 +17,18 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
     const domain = useDomain();
-    const selectedEnvironmentId = useSelectedEnvironmentId();
-    const code = useMemo(
-        () =>
-            requestType === "curl"
-                ? stringifyCurl({
-                      endpoint,
-                      formState,
-                      authState,
-                      redacted: true,
-                      domain,
-                  })
-                : requestType === "typescript"
-                  ? stringifyFetch({
-                        endpoint,
-                        formState,
-                        authState,
-                        redacted: true,
-                        isSnippetTemplatesEnabled,
-                    })
-                  : requestType === "python"
-                    ? stringifyPythonRequests({
-                          endpoint,
-                          formState,
-                          authState,
-                          redacted: true,
-                          isSnippetTemplatesEnabled,
-                      })
-                    : "",
-        [authState, domain, endpoint, formState, isSnippetTemplatesEnabled, requestType],
+    const builder = useMemo(
+        () => new PlaygroundCodeSnippetResolverBuilder(endpoint, isSnippetTemplatesEnabled, domain),
+        [domain, endpoint, isSnippetTemplatesEnabled],
     );
+    const resolver = useMemo(() => builder.createRedacted(authState, formState), [authState, builder, formState]);
+    const code = useSnippet(resolver, requestType);
+
     return (
         <FernSyntaxHighlighter
             className="relative min-h-0 flex-1 shrink"
             language={requestType === "curl" ? "bash" : requestType}
-            code={resolveEnvironmentUrlInCodeSnippet(endpoint, code, selectedEnvironmentId)}
+            code={code}
             fontSize="sm"
             id={endpoint.id}
         />

@@ -25,9 +25,9 @@ import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
+import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { PlaygroundEndpointRequestFormState, ProxyResponse } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
-import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 
 interface PlaygroundEndpointContentProps {
     endpoint: ResolvedEndpointDefinition;
@@ -133,31 +133,12 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 <CopyToClipboardButton
                     content={() => {
                         const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
-                        return requestType === "curl"
-                            ? stringifyCurl({
-                                  endpoint,
-                                  formState,
-                                  authState,
-                                  redacted: false,
-                                  domain,
-                              })
-                            : requestType === "typescript"
-                              ? stringifyFetch({
-                                    endpoint,
-                                    formState,
-                                    authState,
-                                    redacted: false,
-                                    isSnippetTemplatesEnabled,
-                                })
-                              : requestType === "python"
-                                ? stringifyPythonRequests({
-                                      endpoint,
-                                      formState,
-                                      authState,
-                                      redacted: false,
-                                      isSnippetTemplatesEnabled,
-                                  })
-                                : "";
+                        const resolver = new PlaygroundCodeSnippetResolverBuilder(
+                            endpoint,
+                            isSnippetTemplatesEnabled,
+                            domain,
+                        ).create(authState, formState);
+                        return resolver.resolve(requestType);
                     }}
                     className="-mr-2"
                 />
