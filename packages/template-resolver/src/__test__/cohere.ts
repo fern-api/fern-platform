@@ -2854,6 +2854,69 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                     ],
                                 },
                             },
+                            {
+                                type: "template",
+                                value: {
+                                    imports: [],
+                                    isOptional: true,
+                                    containerTemplateString: "messages: [\n\t\t$FERN_INPUT\n\t]",
+                                    delimiter: ",\n\t\t",
+                                    innerTemplate: {
+                                        imports: [],
+                                        isOptional: true,
+                                        templateString: "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        templateInputs: [
+                                            {
+                                                type: "template",
+                                                value: {
+                                                    imports: [],
+                                                    isOptional: true,
+                                                    containerTemplateString:
+                                                        '"tool_calls": [\n\t\t\t\t$FERN_INPUT\n\t\t\t]',
+                                                    delimiter: ",\n\t\t\t\t",
+                                                    innerTemplate: {
+                                                        imports: [],
+                                                        isOptional: true,
+                                                        templateString: "{\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                        templateInputs: [
+                                                            {
+                                                                type: "template",
+                                                                value: {
+                                                                    imports: [],
+                                                                    isOptional: true,
+                                                                    templateString: '"id": $FERN_INPUT',
+                                                                    templateInputs: [
+                                                                        {
+                                                                            location: "RELATIVE",
+                                                                            path: "id",
+                                                                            type: "payload",
+                                                                        },
+                                                                    ],
+                                                                    type: "generic",
+                                                                },
+                                                            },
+                                                        ],
+                                                        inputDelimiter: ",\n\t\t\t\t\t",
+                                                        type: "generic",
+                                                    },
+                                                    templateInput: {
+                                                        location: "RELATIVE",
+                                                        path: "tool_calls",
+                                                    },
+                                                    type: "iterable",
+                                                },
+                                            },
+                                        ],
+                                        inputDelimiter: ",\n\t\t\t",
+                                        type: "generic",
+                                    },
+                                    templateInput: {
+                                        location: "BODY",
+                                        path: "messages",
+                                    },
+                                    type: "iterable",
+                                },
+                            },
                         ],
                     },
                 },

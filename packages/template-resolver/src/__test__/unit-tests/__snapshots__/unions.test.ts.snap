@@ -49,15 +49,6 @@ await api.createMovie();
 "
 `;
 
-exports[`Snippet Template Resolver > Test Unions Object Total Mismatch 2`] = `
-"const cohere = new CohereClient({
-    token: "YOUR_TOKEN",
-    clientName: "YOUR_CLIENT_NAME",
-});
-await api.createMovie();
-"
-`;
-
 exports[`Snippet Template Resolver > Test Unions Similar Object 1`] = `
 "const cohere = new CohereClient({
     token: "YOUR_TOKEN",

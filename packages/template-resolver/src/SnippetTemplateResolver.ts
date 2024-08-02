@@ -127,8 +127,8 @@ export class SnippetTemplateResolver {
             case "BODY":
                 return accessByPathNonNull(this.payload.requestBody, location.path);
             case "RELATIVE":
-                // We should warn if this ever happens, the relative directive should only really happen within containers
-                return accessByPathNonNull(this.payload.requestBody, location.path);
+                // If you're here you don't have a payload, so return undefined
+                return undefined;
             case "QUERY":
                 return this.accessParameterPayloadByPath(this.payload.queryParameters, location.path);
             case "PATH":
@@ -198,10 +198,6 @@ export class SnippetTemplateResolver {
                             });
                         }
                     } else {
-                        if (payloadOverride == null && input.value.isOptional && input.value.type === "enum") {
-                            continue;
-                        }
-
                         const evaluatedInput = this.resolveV1Template({
                             template: input.value,
                             payloadOverride,
@@ -229,7 +225,7 @@ export class SnippetTemplateResolver {
                 if (template.templateInput == null) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
-                const payloadValue = this.getPayloadValue(template.templateInput);
+                const payloadValue = this.getPayloadValue(template.templateInput, payloadOverride);
                 if (!Array.isArray(payloadValue)) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
@@ -263,7 +259,6 @@ export class SnippetTemplateResolver {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
 
-                // const payloadMap = payloadValue as Map<string, unknown>;
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const key in payloadValue) {
                     const value = payloadValue[key as keyof typeof payloadValue];
@@ -300,6 +295,11 @@ export class SnippetTemplateResolver {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
                 const maybeEnumWireValue = this.getPayloadValue(template.templateInput, payloadOverride);
+
+                if (maybeEnumWireValue == null) {
+                    return new DefaultedV1Snippet({ template, isRequired });
+                }
+
                 const enumSdkValue =
                     (typeof maybeEnumWireValue === "string" ? enumValues[maybeEnumWireValue] : undefined) ??
                     defaultEnumValue;
