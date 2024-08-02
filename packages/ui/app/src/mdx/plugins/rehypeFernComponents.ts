@@ -14,7 +14,8 @@ export function rehypeFernComponents(): (tree: Root) => void {
                 } else if (node.name === "iframe") {
                     node.name = "IFrame";
                 } else if (node.name === "table") {
-                    node.name = "Table";
+                    // DO NOT coerce <table> into <Table> (see: https://buildwithfern.slack.com/archives/C06QKJWD4VD/p1722602687550179)
+                    // node.name = "Table";
                 }
             }
         });
