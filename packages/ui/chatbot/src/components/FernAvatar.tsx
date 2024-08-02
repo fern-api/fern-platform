@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
-import { FernIcon } from "../icons/FernIcon";
+import { CohereIcon } from "../icons/CohereIcon";
 
 export function FernAvatar(): ReactElement {
     return (
         <div className="flex items-center justify-center h-8 w-8 rounded-full overflow-hidden outline-1 outline outline-grayscale-a6">
-            <FernIcon className="size-5 text-[#4CAF50]" />
+            <CohereIcon className="size-5" />
         </div>
     );
 }

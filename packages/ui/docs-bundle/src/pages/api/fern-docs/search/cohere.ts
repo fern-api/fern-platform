@@ -23,7 +23,29 @@ The user asking questions is a developer, technical writer, or product manager. 
 Always be respectful and professional. If you are unsure about a question, let the user know.
 `;
 
-export default async function handler(req: Request): Promise<Response> {
+class ConversationCache {
+    constructor(private conversationId: string) {}
+    async get() {
+        try {
+            return (await kv.get<ChatMessage[]>(this.conversationId)) ?? [];
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+            return [];
+        }
+    }
+
+    async set(chatHistory: ChatMessage[]) {
+        try {
+            await kv.set(this.conversationId, chatHistory);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+        }
+    }
+}
+
+export default async function handler(req: NextRequest): Promise<Response> {
     if (req.method !== "POST") {
         return new Response(null, { status: 405 });
     }
@@ -32,7 +54,7 @@ export default async function handler(req: Request): Promise<Response> {
         token: process.env.COHERE_API_KEY,
     });
 
-    const docsUrl = getXFernHostEdge(req as NextRequest);
+    const docsUrl = getXFernHostEdge(req);
 
     const body = await req.json();
 
@@ -41,6 +63,7 @@ export default async function handler(req: Request): Promise<Response> {
     if (!body.conversationId) {
         conversationId = v4();
     }
+    const cache = new ConversationCache(conversationId);
 
     const frc = new FdrClient();
 
@@ -54,7 +77,7 @@ export default async function handler(req: Request): Promise<Response> {
           })
         : [];
 
-    const chatHistory = (await kv.get<ChatMessage[]>(conversationId)) ?? [];
+    const chatHistory = await cache.get();
     const response = await cohere.chatStream({
         preamble: PREAMBLE,
         chatHistory,
@@ -64,13 +87,15 @@ export default async function handler(req: Request): Promise<Response> {
 
     chatHistory.push({ role: "USER", message: body.message });
 
-    const stream = convertAsyncIterableToStream(response).pipeThrough(
-        getCohereStreamTransformer(conversationId, chatHistory),
-    );
+    const stream = convertAsyncIterableToStream(response).pipeThrough(getCohereStreamTransformer(cache, chatHistory));
 
     return new Response(stream, {
         status: 200,
-        headers: { "Content-Type": "text/plain; charset=utf-8", "X-Conversation-Id": conversationId },
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Transfer-Encoding": "chunked",
+            "X-Conversation-Id": conversationId,
+        },
     });
 }
 
@@ -86,7 +111,7 @@ function convertAsyncIterableToStream<T>(iterable: AsyncIterable<T>): ReadableSt
 }
 
 function getCohereStreamTransformer(
-    conversationId: string,
+    cache: ConversationCache,
     chatHistory: ChatMessage[],
 ): TransformStream<Cohere.StreamedChatResponse, Uint8Array> {
     const encoder = new TextEncoder();
@@ -95,19 +120,21 @@ function getCohereStreamTransformer(
         async transform(chunk, controller) {
             if (chunk.eventType === "text-generation") {
                 reply += chunk.text;
-                controller.enqueue(encoder.encode(chunk.text));
             }
-            if (chunk.eventType === "citation-generation") {
-                // might want to use this somewhere?
-                // console.log(chunk.citations);
+
+            if (chunk.eventType === "search-results") {
+                return; // don't send search results to the client
             }
+
+            controller.enqueue(encoder.encode(JSON.stringify(chunk) + "\n"));
+
             if (chunk.eventType === "stream-end") {
                 // not sure what magic number is appropriate here
                 while (chatHistory.length >= 10) {
                     chatHistory.shift();
                 }
                 chatHistory.push({ role: "CHATBOT", message: reply });
-                await kv.set(conversationId, chatHistory);
+                await cache.set(chatHistory);
             }
         },
     });

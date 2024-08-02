@@ -169,6 +169,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "chromatic": "^11.3.0",
+    "cohere-ai": "^7.9.5",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
     "eslint-plugin-storybook": "^0.8.0",

@@ -1401,6 +1401,9 @@ importers:
       chromatic:
         specifier: ^11.3.0
         version: 11.3.2
+      cohere-ai:
+        specifier: ^7.9.5
+        version: 7.9.5
       depcheck:
         specifier: ^1.4.3
         version: 1.4.7

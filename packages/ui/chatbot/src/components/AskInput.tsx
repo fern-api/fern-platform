@@ -29,9 +29,10 @@ export function AskInput({ onSend, className }: AskInputProps): ReactElement {
                                     setValue("");
                                 }
                             }}
+                            autoFocus
                         />
                     </div>
-                    <SendButton disabled={value.trim().length === 0} />
+                    <SendButton disabled={value.trim().length === 0} onClick={() => onSend(value)} />
                 </div>
             </div>
         </div>

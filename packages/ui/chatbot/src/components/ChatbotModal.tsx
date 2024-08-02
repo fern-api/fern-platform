@@ -2,7 +2,7 @@ import { FernScrollArea } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { debounce, uniqueId } from "lodash-es";
-import { ReactElement, useRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import { ChatbotMessage, Citation, Message } from "../types";
 import { AskInput } from "./AskInput";
 import { ChatConversation } from "./ChatConversation";
@@ -14,11 +14,14 @@ interface ChatHistory {
 }
 
 interface ChatbotModalProps {
-    chatStream: (message: string) => Promise<readonly [stream: ReadableStream<ChatbotMessage>, abort: AbortController]>;
+    chatStream: (
+        message: string,
+        conversationId: string,
+    ) => Promise<readonly [stream: AsyncIterable<ChatbotMessage> | undefined, abort: AbortController]>;
     className?: string;
 }
 
-export function ChatbotModal({ chatStream, className }: ChatbotModalProps): ReactElement {
+export const ChatbotModal = forwardRef<HTMLElement, ChatbotModalProps>(({ chatStream, className }, ref) => {
     const [chatHistory, setChatHistory] = useState<ChatHistory>(() => ({
         conversationId: uniqueId(),
         messages: [],
@@ -51,7 +54,9 @@ export function ChatbotModal({ chatStream, className }: ChatbotModalProps): Reac
             return;
         }
 
-        abortRef.current?.abort();
+        if (abortRef.current?.signal.aborted === false) {
+            abortRef.current.abort();
+        }
         setChatHistory((prev) => {
             const messages = [...prev.messages];
             if (responseMessage.length > 0) {
@@ -64,29 +69,20 @@ export function ChatbotModal({ chatStream, className }: ChatbotModalProps): Reac
         setResponseMessage("");
         setCitations([]);
         scrollToBottom.current();
-        void chatStream(message)
-            .then(
-                ([stream, abort]) =>
-                    new Promise((resolve) => {
-                        abortRef.current = abort;
-                        const reader = stream.getReader();
-                        function read() {
-                            reader.read().then(({ done, value }) => {
-                                if (done) {
-                                    return resolve(true);
-                                }
-                                const { message, citations } = value;
-                                setResponseMessage(message);
-                                setCitations(citations);
-                                read();
-                            });
-                        }
-                        read();
-                    }),
-            )
-            .finally(() => {
-                setIsStreaming(false);
-            });
+        void chatStream(message, chatHistory.conversationId).then(async ([stream, abort]) => {
+            abortRef.current = abort;
+            for await (const { message, citations } of stream ?? []) {
+                if (abortRef.current.signal.aborted) {
+                    return;
+                }
+                setResponseMessage(message);
+                setCitations(citations);
+            }
+            if (abortRef.current.signal.aborted) {
+                return;
+            }
+            setIsStreaming(false);
+        });
     };
 
     const reset = () => {
@@ -94,6 +90,7 @@ export function ChatbotModal({ chatStream, className }: ChatbotModalProps): Reac
             conversationId: uniqueId(),
             messages: [],
         });
+        setIsStreaming(false);
         setResponseMessage("");
         setCitations([]);
     };
@@ -103,7 +100,7 @@ export function ChatbotModal({ chatStream, className }: ChatbotModalProps): Reac
     });
 
     return (
-        <section className={clsx("flex flex-col", className)}>
+        <section className={clsx("flex flex-col", className)} ref={ref}>
             <div className="px-4 py-2">
                 {shouldShowConversation && (
                     <div className="flex justify-between items-center">
@@ -133,4 +130,4 @@ export function ChatbotModal({ chatStream, className }: ChatbotModalProps): Reac
             </div>
         </section>
     );
-}
+});
