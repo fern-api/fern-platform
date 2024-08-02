@@ -1,6 +1,6 @@
+import type { PageSearchRecordV2 } from "@fern-ui/search-utils";
 import cn from "clsx";
 import { CornerDownLeft } from "react-feather";
-import type { PageSearchRecordV2 } from "../types";
 import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
 
 export declare namespace PageRecordV2 {

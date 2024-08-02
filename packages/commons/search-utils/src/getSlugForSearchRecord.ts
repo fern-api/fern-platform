@@ -1,9 +1,7 @@
 import { Algolia, FernNavigation } from "@fern-api/fdr-sdk";
-import { SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { UnreachableCaseError } from "ts-essentials";
-import type { SearchRecord } from "./types";
 
-export function getSlugForSearchRecord(record: SearchRecord, basePath: string | undefined): string {
+export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: string | undefined): string {
     return visitSearchRecord<string>(record)._visit({
         v3: (record) => record.slug,
         v2: (record) =>
@@ -21,6 +19,25 @@ export function getSlugForSearchRecord(record: SearchRecord, basePath: string | 
     });
 }
 
+export function getTitleForSearchRecord(record: Algolia.AlgoliaRecord): string {
+    return visitSearchRecord<string>(record)._visit({
+        v3: (record) => record.title,
+        v2: (record) =>
+            record.type === "endpoint-v2"
+                ? record.endpoint.path.parts.map((p) => (p.type === "pathParameter" ? `:${p.value}` : p.value)).join("")
+                : record.title,
+        v1: (record) => record.title,
+    });
+}
+
+export function getContentForSearchRecord(record: Algolia.AlgoliaRecord): string | undefined {
+    return visitSearchRecord<string | undefined>(record)._visit({
+        v3: (record) => record.content ?? undefined,
+        v2: (record) => (record.type === "page-v2" ? record.content : undefined),
+        v1: () => undefined,
+    });
+}
+
 function getLeadingPathForSearchRecord(record: Algolia.AlgoliaRecord): string[] {
     switch (record.type) {
         case "page":
@@ -35,10 +52,10 @@ function getLeadingPathForSearchRecord(record: Algolia.AlgoliaRecord): string[] 
 }
 
 export function createSearchPlaceholderWithVersion(
-    activeVersion: SidebarVersionInfo | undefined,
+    version: string | undefined,
     sidebar: FernNavigation.SidebarRootNode | undefined,
 ): string {
-    return `Search ${activeVersion != null ? `across ${activeVersion.id} ` : ""}for ${createSearchPlaceholder(sidebar)}...`;
+    return `Search ${version != null ? `across ${version} ` : ""}for ${createSearchPlaceholder(sidebar)}...`;
 }
 
 function createSearchPlaceholder(sidebar: FernNavigation.SidebarRootNode | undefined): string {

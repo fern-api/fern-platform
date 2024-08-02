@@ -39,36 +39,35 @@ export const ResponseMessageWithCitations = ({
         return null;
     }
 
+    let messageWithCitations = message;
+
+    if (citations.length > 0) {
+        messageWithCitations += "\n\n### References\n";
+    }
+
+    const paths: string[] = [];
+    citations.forEach(({ slugs }) => {
+        slugs.forEach((slug) => {
+            if (!paths.includes(`/${slug}`)) {
+                paths.push(`/${slug}`);
+            }
+        });
+    });
+
+    const i = 1;
+    paths.forEach((path) => {
+        messageWithCitations += `\n${i}. [${path}](${path})`;
+    });
+
     return (
         <div className="flex flex-1 gap-4 text-base">
             <div className="flex-shrink-0">
                 <FernAvatar />
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 min-w-0 shrink pr-4">
                 <MarkdownContent terminator={isStreaming} components={components}>
-                    {message}
+                    {messageWithCitations}
                 </MarkdownContent>
-                <div>
-                    {citations.map((citation, index) => (
-                        <div key={index} className="flex flex-col gap-2">
-                            <div className="text-sm font-semibold">References:</div>
-                            <ul className="list-disc pl-4">
-                                {citation.documents.map((document, index) => (
-                                    <li key={index}>
-                                        <a
-                                            href={document.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-[var(--fern-chatbot-link)] hover:text-[var(--fern-chatbot-link-hover)] hover:underline"
-                                        >
-                                            {document.title}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
             </div>
         </div>
     );

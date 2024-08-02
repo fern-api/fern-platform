@@ -17,7 +17,8 @@ export interface CitationDocument {
 }
 
 export interface Citation {
+    text: string;
     start: number;
     end: number;
-    documents: CitationDocument[];
+    slugs: string[];
 }

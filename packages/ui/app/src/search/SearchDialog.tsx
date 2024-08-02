@@ -1,3 +1,4 @@
+import { createSearchPlaceholderWithVersion } from "@fern-ui/search-utils";
 import { useAtomValue, useSetAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
@@ -18,7 +19,6 @@ import { useAlgoliaSearchClient } from "./algolia/useAlgoliaSearchClient";
 import { InkeepChatButton } from "./inkeep/InkeepChatButton";
 import { InkeepCustomTrigger } from "./inkeep/InkeepCustomTrigger";
 import { useSearchTrigger } from "./useSearchTrigger";
-import { createSearchPlaceholderWithVersion } from "./util";
 
 const CohereChatButton = dynamic(
     () => import("./cohere/CohereChatButton").then(({ CohereChatButton }) => CohereChatButton),
@@ -61,7 +61,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
     const sidebar = useSidebarNodes();
     const activeVersion = useAtomValue(CURRENT_VERSION_ATOM);
     const placeholder = useMemo(
-        () => createSearchPlaceholderWithVersion(activeVersion, sidebar),
+        () => createSearchPlaceholderWithVersion(activeVersion?.id, sidebar),
         [activeVersion, sidebar],
     );
 

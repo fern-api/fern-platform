@@ -1,4 +1,4 @@
-import { ChatbotMessage, ChatbotModal, CohereIcon } from "@fern-ui/chatbot";
+import { ChatbotMessage, ChatbotModal, Citation, CohereIcon } from "@fern-ui/chatbot";
 import * as Dialog from "@radix-ui/react-dialog";
 import type { Cohere } from "cohere-ai";
 import { useAtom } from "jotai";
@@ -7,8 +7,10 @@ import { createPortal } from "react-dom";
 import urlJoin from "url-join";
 import { Stream } from "../../api-playground/Stream";
 import { COHERE_ASK_AI, useBasePath } from "../../atoms";
+import { FernLink } from "../../components/FernLink";
 import { CodeBlock } from "../../mdx/components/code";
 import { useSearchConfig } from "../../services/useSearchService";
+import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
 
 export function CohereChatButton(): ReactElement | null {
     const [config] = useSearchConfig();
@@ -31,6 +33,7 @@ export function CohereChatButton(): ReactElement | null {
         }
 
         let text = "";
+        const citations: Citation[] = [];
 
         const stream = new Stream<ChatbotMessage>({
             stream: body,
@@ -39,7 +42,19 @@ export function CohereChatButton(): ReactElement | null {
                 if (event.eventType === "text-generation") {
                     text += event.text;
                 }
-                return { message: text, role: "AI", citations: [] };
+
+                if (event.eventType === "citation-generation") {
+                    event.citations.forEach((citation) => {
+                        citations.push({
+                            text: citation.text,
+                            start: citation.start,
+                            end: citation.end,
+                            slugs: citation.documentIds,
+                        });
+                    });
+                }
+
+                return { message: text, role: "AI", citations };
             },
             terminator: "\n",
         });
@@ -63,8 +78,8 @@ export function CohereChatButton(): ReactElement | null {
                 document.body,
             )}
             <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm max-sm:hidden" />
-                <Dialog.Content className="fixed md:max-w-content-width my-[10vh] top-0 inset-x-0 z-10 mx-6 max-h-[80vh] md:mx-auto flex flex-col">
+                <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm" />
+                <Dialog.Content className="fixed md:max-w-content-width my-[10vh] top-0 inset-x-0 mx-6 max-h-[80vh] md:mx-auto flex flex-col">
                     <ChatbotModal
                         chatStream={chatStream}
                         className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg"
@@ -79,7 +94,21 @@ export function CohereChatButton(): ReactElement | null {
                                 }
                                 return <pre {...props} />;
                             },
+                            a({ href, ...props }) {
+                                if (href == null) {
+                                    return <a {...props} />;
+                                }
+                                return <FernLink href={href} {...props} />;
+                            },
                         }}
+                        belowInput={
+                            <div className="mt-4 px-5 text-grayscale-a10 flex justify-between items-center gap-2">
+                                <FernLink href="https://cohere.com/" className="text-xs font-medium">
+                                    Powered by Cohere (command-r-plus)
+                                </FernLink>
+                                <BuiltWithFern />
+                            </div>
+                        }
                     />
                 </Dialog.Content>
             </Dialog.Portal>

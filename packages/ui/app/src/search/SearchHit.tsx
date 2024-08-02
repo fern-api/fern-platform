@@ -1,4 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { ReactElement, useMemo } from "react";
@@ -9,8 +10,6 @@ import { EndpointRecordV3 } from "./content/EndpointRecordV3";
 import { PageRecord } from "./content/PageRecord";
 import { PageRecordV2 } from "./content/PageRecordV2";
 import { PageRecordV3 } from "./content/PageRecordV3";
-import type { SearchRecord } from "./types";
-import { getSlugForSearchRecord } from "./util";
 
 export declare namespace SearchHit {
     export interface Props {

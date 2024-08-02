@@ -39,6 +39,7 @@
     "lint:fern-prod": "pnpm turbo build && pnpm env:fern-prod next lint"
   },
   "dependencies": {
+    "@algolia/requester-fetch": "^4.24.0",
     "@aws-sdk/client-s3": "^3.335.0",
     "@aws-sdk/s3-request-presigner": "^3.574.0",
     "@fern-api/fdr-sdk": "workspace:*",
@@ -53,6 +54,7 @@
     "@vercel/edge-config": "^1.1.0",
     "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^6.1.0",
+    "algoliasearch": "^4.24.0",
     "cohere-ai": "^7.9.5",
     "cssnano": "^6.0.3",
     "esbuild": "0.20.2",
