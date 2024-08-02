@@ -3,6 +3,7 @@ import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { debounce, uniqueId } from "lodash-es";
 import { forwardRef, useRef, useState } from "react";
+import type { Components } from "react-markdown";
 import { ChatbotMessage, Citation, Message } from "../types";
 import { AskInput } from "./AskInput";
 import { ChatConversation } from "./ChatConversation";
@@ -19,9 +20,10 @@ interface ChatbotModalProps {
         conversationId: string,
     ) => Promise<readonly [stream: AsyncIterable<ChatbotMessage> | undefined, abort: AbortController]>;
     className?: string;
+    components?: Components;
 }
 
-export const ChatbotModal = forwardRef<HTMLElement, ChatbotModalProps>(({ chatStream, className }, ref) => {
+export const ChatbotModal = forwardRef<HTMLElement, ChatbotModalProps>(({ chatStream, className, components }, ref) => {
     const [chatHistory, setChatHistory] = useState<ChatHistory>(() => ({
         conversationId: uniqueId(),
         messages: [],
@@ -113,11 +115,12 @@ export const ChatbotModal = forwardRef<HTMLElement, ChatbotModalProps>(({ chatSt
             </div>
             {shouldShowConversation && (
                 <FernScrollArea scrollbars="vertical" className="px-4 py-6 mask-grad-y-6" ref={scrollRef}>
-                    <ChatConversation messages={chatHistory.messages} ref={scrollContentRef}>
+                    <ChatConversation messages={chatHistory.messages} ref={scrollContentRef} components={components}>
                         <ResponseMessageWithCitations
                             isStreaming={isStreaming}
                             message={responseMessage}
                             citations={citations}
+                            components={components}
                         />
                     </ChatConversation>
                 </FernScrollArea>

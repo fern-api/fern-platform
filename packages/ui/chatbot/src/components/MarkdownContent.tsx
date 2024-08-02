@@ -3,7 +3,7 @@ import type { Root } from "hast";
 import { h } from "hastscript";
 import { last } from "lodash-es";
 import { ReactElement } from "react";
-import Markdown from "react-markdown";
+import Markdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 function rehypeTerminator({ terminator = false }: { terminator?: boolean }) {
@@ -30,13 +30,16 @@ export function MarkdownContent({
     children,
     className,
     terminator,
+    components,
 }: {
     children: string;
     className?: string;
     terminator?: boolean;
+    components?: Components;
 }): ReactElement {
     return (
         <Markdown
+            components={components}
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[[rehypeTerminator, { terminator }]]}
             className={clsx("prose dark:prose-invert", className)}

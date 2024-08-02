@@ -2,11 +2,12 @@ import { ChatbotMessage, ChatbotModal, CohereIcon } from "@fern-ui/chatbot";
 import * as Dialog from "@radix-ui/react-dialog";
 import type { Cohere } from "cohere-ai";
 import { useAtom } from "jotai";
-import { ReactElement } from "react";
+import { ReactElement, isValidElement } from "react";
 import { createPortal } from "react-dom";
 import urlJoin from "url-join";
 import { Stream } from "../../api-playground/Stream";
 import { COHERE_ASK_AI, useBasePath } from "../../atoms";
+import { CodeBlock } from "../../mdx/components/code";
 import { useSearchConfig } from "../../services/useSearchService";
 
 export function CohereChatButton(): ReactElement | null {
@@ -67,6 +68,18 @@ export function CohereChatButton(): ReactElement | null {
                     <ChatbotModal
                         chatStream={chatStream}
                         className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg"
+                        components={{
+                            pre(props) {
+                                if (isValidElement(props.children) && props.children.type === "code") {
+                                    const { children, className } = props.children.props;
+                                    if (typeof children === "string") {
+                                        const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
+                                        return <CodeBlock code={children} language={match} />;
+                                    }
+                                }
+                                return <pre {...props} />;
+                            },
+                        }}
                     />
                 </Dialog.Content>
             </Dialog.Portal>

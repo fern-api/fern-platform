@@ -1,16 +1,22 @@
 import { memo } from "react";
+import type { Components } from "react-markdown";
 import { Citation } from "../types";
 import { FernAvatar } from "./FernAvatar";
 import { MarkdownContent } from "./MarkdownContent";
 
-export const ResponseMessage = memo(({ message }: { message: string }) => {
+interface ResponseMessageProps {
+    message: string;
+    components?: Components;
+}
+
+export const ResponseMessage = memo(({ message, components }: ResponseMessageProps) => {
     return (
         <div className="flex flex-1 gap-4 text-base">
             <div className="flex-shrink-0">
                 <FernAvatar />
             </div>
             <div>
-                <MarkdownContent>{message}</MarkdownContent>
+                <MarkdownContent components={components}>{message}</MarkdownContent>
             </div>
         </div>
     );
@@ -20,12 +26,14 @@ interface ResponseMessageWithCitationsProps {
     isStreaming: boolean;
     message: string;
     citations: Citation[];
+    components?: Components;
 }
 
 export const ResponseMessageWithCitations = ({
     isStreaming,
     message,
     citations,
+    components,
 }: ResponseMessageWithCitationsProps) => {
     if (message === "" && citations.length === 0 && !isStreaming) {
         return null;
@@ -37,7 +45,9 @@ export const ResponseMessageWithCitations = ({
                 <FernAvatar />
             </div>
             <div className="flex flex-col gap-4">
-                <MarkdownContent terminator={isStreaming}>{message}</MarkdownContent>
+                <MarkdownContent terminator={isStreaming} components={components}>
+                    {message}
+                </MarkdownContent>
                 <div>
                     {citations.map((citation, index) => (
                         <div key={index} className="flex flex-col gap-2">
