@@ -1,7 +1,15 @@
+import { createSearchPlaceholderWithVersion } from "@fern-ui/search-utils";
 import { useAtomValue, useSetAtom } from "jotai";
+import dynamic from "next/dynamic";
 import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
-import { CURRENT_VERSION_ATOM, IS_MOBILE_SCREEN_ATOM, SEARCH_DIALOG_OPEN_ATOM, useSidebarNodes } from "../atoms";
+import {
+    CURRENT_VERSION_ATOM,
+    IS_MOBILE_SCREEN_ATOM,
+    SEARCH_DIALOG_OPEN_ATOM,
+    useDomain,
+    useSidebarNodes,
+} from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { SearchMobileHits } from "./SearchHits";
@@ -11,10 +19,15 @@ import { useAlgoliaSearchClient } from "./algolia/useAlgoliaSearchClient";
 import { InkeepChatButton } from "./inkeep/InkeepChatButton";
 import { InkeepCustomTrigger } from "./inkeep/InkeepCustomTrigger";
 import { useSearchTrigger } from "./useSearchTrigger";
-import { createSearchPlaceholderWithVersion } from "./util";
+
+const CohereChatButton = dynamic(
+    () => import("./cohere/CohereChatButton").then(({ CohereChatButton }) => CohereChatButton),
+    { ssr: false },
+);
 
 export const SearchDialog = (): ReactElement | null => {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
+    const domain = useDomain();
     useSearchTrigger(setSearchDialogState);
 
     const [config] = useSearchConfig();
@@ -24,7 +37,12 @@ export const SearchDialog = (): ReactElement | null => {
     }
 
     if (config.inkeep == null) {
-        return <AlgoliaSearchDialog />;
+        return (
+            <>
+                <AlgoliaSearchDialog />
+                {domain.includes("cohere") && <CohereChatButton />}
+            </>
+        );
     } else {
         return (
             <>
@@ -43,7 +61,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
     const sidebar = useSidebarNodes();
     const activeVersion = useAtomValue(CURRENT_VERSION_ATOM);
     const placeholder = useMemo(
-        () => createSearchPlaceholderWithVersion(activeVersion, sidebar),
+        () => createSearchPlaceholderWithVersion(activeVersion?.id, sidebar),
         [activeVersion, sidebar],
     );
 

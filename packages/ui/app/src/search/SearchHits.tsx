@@ -1,12 +1,11 @@
 import { FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
+import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
 import { useBasePath, useCloseSearchDialog } from "../atoms";
 import { SearchHit } from "./SearchHit";
-import type { SearchRecord } from "./types";
-import { getSlugForSearchRecord } from "./util";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
     return <div className="justify t-muted flex h-24 w-full flex-col items-center py-3">{children}</div>;

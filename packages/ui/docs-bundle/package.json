@@ -39,18 +39,23 @@
     "lint:fern-prod": "pnpm turbo build && pnpm env:fern-prod next lint"
   },
   "dependencies": {
+    "@algolia/requester-fetch": "^4.24.0",
     "@aws-sdk/client-s3": "^3.335.0",
     "@aws-sdk/s3-request-presigner": "^3.574.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.1.0",
+    "@fern-ui/chatbot": "workspace:*",
     "@fern-ui/components": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
-    "@fern-ui/search-utils": "workspace:^",
+    "@fern-ui/search-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@sentry/nextjs": "^7.112.2",
     "@vercel/edge-config": "^1.1.0",
+    "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^6.1.0",
+    "algoliasearch": "^4.24.0",
+    "cohere-ai": "^7.9.5",
     "cssnano": "^6.0.3",
     "esbuild": "0.20.2",
     "feed": "^4.2.2",
@@ -64,7 +69,8 @@
     "react-dom": "^18.2.0",
     "sharp": "^0.33.3",
     "ts-essentials": "^10.0.1",
-    "url-join": "5.0.0"
+    "url-join": "5.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
@@ -75,6 +81,7 @@
     "@types/node-fetch": "2.6.9",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.2.18",
+    "@types/uuid": "^9.0.1",
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.3",
     "env-cmd": "toddbluhm/env-cmd",
