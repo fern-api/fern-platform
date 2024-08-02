@@ -3,6 +3,7 @@ import urljoin from "url-join";
 import { APIV1Read, DocsV1Read } from "../../client";
 import { titleCase, visitDiscriminatedUnion } from "../../utils";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
+import { ROOT_PACKAGE_ID } from "../consts";
 import { FernNavigation } from "../generated";
 import { followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
@@ -172,7 +173,7 @@ export class ApiReferenceNavigationConverter {
     ): FernNavigation.ApiPackageChild[] {
         const children: FernNavigation.ApiPackageChild[] = [];
 
-        let subpackageId = isSubpackage(package_) ? package_.subpackageId : "root";
+        let subpackageId = isSubpackage(package_) ? package_.subpackageId : "__package__";
         while (package_.pointsTo != null) {
             subpackageId = package_.pointsTo;
             const pointsToSubpackage = this.api.subpackages[package_.pointsTo];
@@ -280,7 +281,7 @@ export class ApiReferenceNavigationConverter {
                 return [];
             }
         }
-        const targetSubpackageId = isSubpackage(subpackage) ? subpackage.subpackageId : "root";
+        const targetSubpackageId = isSubpackage(subpackage) ? subpackage.subpackageId : ROOT_PACKAGE_ID;
         const endpoints = new Map<string, APIV1Read.EndpointDefinition>();
         const webSockets = new Map<string, APIV1Read.WebSocketChannel>();
         const webhooks = new Map<string, APIV1Read.WebhookDefinition>();

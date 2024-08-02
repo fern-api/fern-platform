@@ -1,4 +1,5 @@
 import { APIV1Read } from "../client";
+import { ROOT_PACKAGE_ID } from "./consts";
 import { FernNavigation } from "./generated";
 import { isSubpackage } from "./utils/isSubpackage";
 
@@ -13,7 +14,7 @@ export class ApiDefinitionHolder {
 
     private constructor(public readonly api: APIV1Read.ApiDefinition) {
         [api.rootPackage, ...Object.values(api.subpackages)].forEach((package_) => {
-            const subpackageId = isSubpackage(package_) ? package_.subpackageId : "root";
+            const subpackageId = isSubpackage(package_) ? package_.subpackageId : ROOT_PACKAGE_ID;
             package_.endpoints.forEach((endpoint) => {
                 this.#endpoints.set(ApiDefinitionHolder.createEndpointId(endpoint, subpackageId), endpoint);
             });
