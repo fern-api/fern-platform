@@ -1,5 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
-import urljoin from "url-join";
+import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { API_ARTIFACTS_TITLE } from "../../config";
 import { ResolvedWithApiDefinition } from "../../resolver/types";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
@@ -20,13 +19,13 @@ export declare namespace ApiArtifacts {
 }
 
 export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiArtifacts }) => {
-    const slug = urljoin(apiDefinition?.slug ?? "", "client-libraries");
+    const slug = FernNavigation.utils.slugjoin(apiDefinition?.slug ?? "", "client-libraries");
 
     const { setTargetRef } = useApiPageCenterElement({ slug });
 
     return (
         <ApiPageMargins>
-            <div ref={setTargetRef} data-route={`/${slug}`.toLowerCase()} className="scroll-mt-content">
+            <div ref={setTargetRef} id={`/${slug}`} className="scroll-mt-content">
                 <h1 className="pt-20">{API_ARTIFACTS_TITLE}</h1>
                 <div className="t-muted mt-5 text-lg">
                     Official open-source client libraries for your favorite platforms.

@@ -11,14 +11,14 @@ export function CohereIcon({ className }: { className?: string }): ReactElement 
             className={className}
         >
             <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M5.18375 9.52649C5.6144 9.52649 6.47106 9.50284 7.65517 9.01533C9.03504 8.44723 11.7804 7.41592 13.7607 6.35661C15.1458 5.6157 15.7529 4.63579 15.7529 3.31618C15.7529 1.48471 14.2682 0 12.4368 0H4.76324C2.13257 0 0 2.13257 0 4.76324C0 7.39392 1.99672 9.52649 5.18375 9.52649Z"
                 fill="#39594D"
             />
             <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M6.48047 12.8071C6.48047 11.5176 7.25678 10.3549 8.44779 9.86059L10.8644 8.85769C13.3087 7.84323 15.9991 9.63954 15.9991 12.2861C15.9991 14.3365 14.3366 15.9985 12.2862 15.998L9.6698 15.9973C7.90823 15.9968 6.48047 14.5686 6.48047 12.8071Z"
                 fill="#D18EE2"
             />

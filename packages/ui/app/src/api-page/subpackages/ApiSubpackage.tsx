@@ -27,7 +27,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     const { setTargetRef } = useApiPageCenterElement({ slug: apiDefinition.slug });
     return (
         <>
-            <div ref={setTargetRef} className="scroll-mt-content" data-route={`/${apiDefinition.slug}`} />
+            <div ref={setTargetRef} className="scroll-mt-content" id={`/${apiDefinition.slug}`} />
             <ApiPackageContents
                 api={api}
                 types={types}

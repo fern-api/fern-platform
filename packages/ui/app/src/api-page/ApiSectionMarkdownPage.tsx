@@ -30,7 +30,7 @@ export const ApiSectionMarkdownPage = memo(
                     "border-default border-b mb-px": !hideBottomSeparator,
                 })}
                 ref={setTargetRef}
-                data-route={`/${slug}`}
+                id={`/${slug}`}
             >
                 <MdxContent mdx={page.markdown} />
             </div>

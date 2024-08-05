@@ -7,12 +7,12 @@ import { memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, use
 import { useInView } from "react-intersection-observer";
 import { useCallbackOne } from "use-memo-one";
 import {
+    ANCHOR_ATOM,
     BREAKPOINT_ATOM,
     CONTENT_HEIGHT_ATOM,
     CURRENT_NODE_ID_ATOM,
     FERN_LANGUAGE_ATOM,
     FERN_STREAM_ATOM,
-    HASH_ATOM,
     MOBILE_SIDEBAR_ENABLED_ATOM,
     store,
     useAtomEffect,
@@ -121,8 +121,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
 
     useAtomEffect(
         useCallbackOne((get) => {
-            const hash = get(HASH_ATOM);
-            const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(hash);
+            const anchor = get(ANCHOR_ATOM);
+            const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
             if (statusCodeOrName != null) {
                 const error = endpoint.errors.find((e) =>
                     typeof statusCodeOrName === "number"
@@ -266,7 +266,7 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
             className={"fern-endpoint-content"}
             onClick={() => setSelectedError(undefined)}
             ref={ref}
-            data-route={`/${endpoint.slug}`}
+            id={`/${endpoint.slug}`}
         >
             <div
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {

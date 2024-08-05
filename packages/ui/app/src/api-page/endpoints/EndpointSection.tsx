@@ -40,7 +40,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     const anchorRoute = `${route}#${anchorId}`;
     return (
         <FernErrorBoundary component="EndpointSection">
-            <div ref={ref} data-route={anchorRoute.toLowerCase()} className="scroll-mt-content">
+            <div ref={ref} id={anchorRoute} className="scroll-mt-content">
                 <div className="group/anchor-container relative flex items-baseline justify-between gap-4 pb-3">
                     {createElement(
                         headerType,

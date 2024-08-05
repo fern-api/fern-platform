@@ -22,7 +22,7 @@ import {
 import { ChevronDown } from "react-feather";
 import { SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMobileSidebar } from "../atoms";
 import { FernLink } from "../components/FernLink";
-import { getRouteNodeWithAnchor } from "../util/anchor";
+import { scrollToRoute } from "../util/anchor";
 import { slugToHref } from "../util/slugToHref";
 import { scrollToCenter } from "./utils";
 
@@ -102,7 +102,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
                     onClick?.(e);
                     toggleExpand?.();
                     if (shallow && typeof href === "string") {
-                        getRouteNodeWithAnchor(href)?.node?.scrollIntoView({ behavior: "auto" });
+                        scrollToRoute(href);
                     }
                 }}
                 shallow={shallow}

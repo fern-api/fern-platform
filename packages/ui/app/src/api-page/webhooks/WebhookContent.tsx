@@ -58,7 +58,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                     },
                 )}
                 ref={setContainerRef}
-                data-route={route.toLowerCase()}
+                id={route}
             >
                 <div className="flex min-w-0 max-w-content-width flex-1 flex-col">
                     <div className="space-y-1 py-8">
