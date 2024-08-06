@@ -24,18 +24,20 @@ types:
   # Docs layout config
   ProgrammingLanguage:
     enum:
-      - TypeScript
-      - JavaScript
-      - Python
-      - Java
-      - Go
-      - Ruby
-      - Jvm
-      - CSharp
-      - NodeTS
-      - NodeJS
-      - DotNet
-      - Curl
+      - typescript
+      - javascript
+      - python
+      - java
+      - go
+      - ruby
+      - csharp
+      - nodets
+      - nodejs
+      - dotnet
+      - curl
+      - jvm
+      - ts
+      - js
 
   DocsLayoutConfig:
     properties:

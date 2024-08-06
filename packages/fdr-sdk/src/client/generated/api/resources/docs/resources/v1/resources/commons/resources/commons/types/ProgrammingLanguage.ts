@@ -3,30 +3,34 @@
  */
 
 export type ProgrammingLanguage =
-    | "TypeScript"
-    | "JavaScript"
-    | "Python"
-    | "Java"
-    | "Go"
-    | "Ruby"
-    | "Jvm"
-    | "CSharp"
-    | "NodeTS"
-    | "NodeJS"
-    | "DotNet"
-    | "Curl";
+    | "typescript"
+    | "javascript"
+    | "python"
+    | "java"
+    | "go"
+    | "ruby"
+    | "csharp"
+    | "nodets"
+    | "nodejs"
+    | "dotnet"
+    | "curl"
+    | "jvm"
+    | "ts"
+    | "js";
 
 export const ProgrammingLanguage = {
-    TypeScript: "TypeScript",
-    JavaScript: "JavaScript",
-    Python: "Python",
-    Java: "Java",
-    Go: "Go",
-    Ruby: "Ruby",
-    Jvm: "Jvm",
-    CSharp: "CSharp",
-    NodeTs: "NodeTS",
-    NodeJs: "NodeJS",
-    DotNet: "DotNet",
-    Curl: "Curl",
+    Typescript: "typescript",
+    Javascript: "javascript",
+    Python: "python",
+    Java: "java",
+    Go: "go",
+    Ruby: "ruby",
+    Csharp: "csharp",
+    Nodets: "nodets",
+    Nodejs: "nodejs",
+    Dotnet: "dotnet",
+    Curl: "curl",
+    Jvm: "jvm",
+    Ts: "ts",
+    Js: "js",
 } as const;
