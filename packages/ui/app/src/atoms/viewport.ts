@@ -26,7 +26,7 @@ JUST_NAVIGATED_ATOM.onMount = (setJustNavigated) => {
     return;
 };
 
-export const SCROLL_BODY_ATOM = atom<HTMLElement | undefined>(undefined);
+export const SCROLL_BODY_ATOM = atom<HTMLElement | HTMLDivElement | null>(null);
 SCROLL_BODY_ATOM.debugLabel = "SCROLL_BODY_ATOM";
 SCROLL_BODY_ATOM.onMount = (set) => {
     if (typeof window === "undefined") {

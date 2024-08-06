@@ -1,6 +1,6 @@
 import cn from "clsx";
 import dynamic from "next/dynamic";
-import React, { useCallback } from "react";
+import { forwardRef, memo, useCallback } from "react";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition, getParameterDescription } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -22,20 +22,13 @@ export declare namespace WebhookContent {
         webhook: ResolvedWebhookDefinition;
         breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
-        setContainerRef: (ref: HTMLElement | null) => void;
         route: string;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
-export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookContent({
-    webhook,
-    breadcrumbs,
-    hideBottomSeparator = false,
-    setContainerRef,
-    route,
-    types,
-}) {
+const UnmemoizedWebhookContent = forwardRef<HTMLDivElement, WebhookContent.Props>((props, ref) => {
+    const { webhook, breadcrumbs, hideBottomSeparator = false, route, types } = props;
     const { setHoveredPayloadPropertyPath } = useWebhookContext();
     const onHoverPayloadProperty = useCallback(
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
@@ -57,8 +50,8 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
                         "border-default border-b mb-px pb-20": !hideBottomSeparator,
                     },
                 )}
-                ref={setContainerRef}
-                data-route={route.toLowerCase()}
+                ref={ref}
+                id={route}
             >
                 <div className="flex min-w-0 max-w-content-width flex-1 flex-col">
                     <div className="space-y-1 py-8">
@@ -137,3 +130,7 @@ export const WebhookContent = React.memo<WebhookContent.Props>(function WebhookC
         </div>
     );
 });
+
+UnmemoizedWebhookContent.displayName = "WebhookContent";
+
+export const WebhookContent = memo(UnmemoizedWebhookContent);

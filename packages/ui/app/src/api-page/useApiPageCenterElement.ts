@@ -1,40 +1,34 @@
-import { useEventCallback } from "@fern-ui/react-commons";
-import { useAtomValue } from "jotai";
-import { useInView } from "react-intersection-observer";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { useInView } from "framer-motion";
+import { useSetAtom } from "jotai";
+import { RefObject, useEffect, useRef } from "react";
 import { SLUG_ATOM } from "../atoms";
-import { useNavigationContext } from "../contexts/navigation-context/useNavigationContext";
 
 export declare namespace useApiPageCenterElement {
     export interface Args {
-        slug: string;
-    }
-
-    export interface Return {
-        setTargetRef: (element: HTMLElement | null) => void;
+        slug: FernNavigation.Slug;
+        skip?: boolean;
     }
 }
 
-export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { onScrollToPath } = useNavigationContext();
-    const selectedSlug = useAtomValue(SLUG_ATOM);
+export function useApiPageCenterElement({
+    slug,
+    skip = false,
+}: useApiPageCenterElement.Args): RefObject<HTMLDivElement> {
+    const setSelectedSlug = useSetAtom(SLUG_ATOM);
 
-    const onChangeIsInVerticalCenter = useEventCallback((newIsInVerticalCenter: boolean) => {
-        if (newIsInVerticalCenter) {
-            onScrollToPath(slug);
-        }
-    });
+    const ref = useRef<HTMLDivElement>(null);
 
-    const isSelected = selectedSlug === slug;
-
-    const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
+    const isInView = useInView(ref, {
         // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport
-        rootMargin: "-50% 0px",
-        threshold: 0,
-        initialInView: isSelected,
-        onChange: onChangeIsInVerticalCenter,
+        margin: "-50% 0px",
     });
 
-    return {
-        setTargetRef: setRefForInVerticalCenterIntersectionObserver,
-    };
+    useEffect(() => {
+        if (isInView && !skip) {
+            setSelectedSlug(slug);
+        }
+    }, [isInView, setSelectedSlug, skip, slug]);
+
+    return ref;
 }

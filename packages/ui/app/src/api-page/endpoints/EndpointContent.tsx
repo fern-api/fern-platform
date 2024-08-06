@@ -3,16 +3,16 @@ import { atom, useAtom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
-import { memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useCallbackOne } from "use-memo-one";
 import {
+    ANCHOR_ATOM,
     BREAKPOINT_ATOM,
     CONTENT_HEIGHT_ATOM,
     CURRENT_NODE_ID_ATOM,
     FERN_LANGUAGE_ATOM,
     FERN_STREAM_ATOM,
-    HASH_ATOM,
     MOBILE_SIDEBAR_ENABLED_ATOM,
     store,
     useAtomEffect,
@@ -45,7 +45,6 @@ export declare namespace EndpointContent {
         endpoint: ResolvedEndpointDefinition;
         breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
-        containerRef: React.Ref<HTMLDivElement | null>;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -79,28 +78,22 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
-const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
-    api,
-    showErrors,
-    endpoint: endpointProp,
-    breadcrumbs,
-    hideBottomSeparator = false,
-    containerRef,
-    types,
-}) => {
+const UnmemoizedEndpointContent = forwardRef<HTMLDivElement, EndpointContent.Props>((props, ref) => {
+    const { api, showErrors, endpoint: endpointProp, breadcrumbs, hideBottomSeparator = false, types } = props;
     const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
     const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
 
-    const ref = useRef<HTMLDivElement | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    useImperativeHandle(containerRef, () => ref.current);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    useImperativeHandle(ref, () => containerRef.current!);
 
     const [isInViewport, setIsInViewport] = useState(() => store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId);
     const { ref: viewportRef } = useInView({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
-    useImperativeHandle(viewportRef, () => ref.current ?? undefined);
+    useImperativeHandle(viewportRef, () => containerRef.current ?? undefined);
 
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
@@ -121,8 +114,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
 
     useAtomEffect(
         useCallbackOne((get) => {
-            const hash = get(HASH_ATOM);
-            const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(hash);
+            const anchor = get(ANCHOR_ATOM);
+            const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
             if (statusCodeOrName != null) {
                 const error = endpoint.errors.find((e) =>
                     typeof statusCodeOrName === "number"
@@ -265,8 +258,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
         <div
             className={"fern-endpoint-content"}
             onClick={() => setSelectedError(undefined)}
-            ref={ref}
-            data-route={`/${endpoint.slug}`}
+            ref={containerRef}
+            id={`/${endpoint.slug}`}
         >
             <div
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
@@ -293,7 +286,7 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                                 value={isStream}
                                 setValue={setIsStream}
                                 endpointProp={endpointProp}
-                                container={ref}
+                                container={containerRef}
                             />
                         )}
                     </div>
@@ -362,6 +355,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
             </div>
         </div>
     );
-};
+});
+
+UnmemoizedEndpointContent.displayName = "EndpointContent";
 
 export const EndpointContent = memo(UnmemoizedEndpointContent);

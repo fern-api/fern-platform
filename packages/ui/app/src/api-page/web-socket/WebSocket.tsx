@@ -55,7 +55,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
 
     const route = `/${websocket.slug}`;
 
-    const { setTargetRef } = useApiPageCenterElement({ slug: websocket.slug });
+    const ref = useApiPageCenterElement({ slug: websocket.slug });
 
     const publishMessages = useMemo(
         () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),
@@ -105,7 +105,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const headers = websocket.headers.filter((header) => !header.hidden);
 
     return (
-        <div className={"fern-endpoint-content"} ref={setTargetRef} data-route={route.toLowerCase()}>
+        <div className={"fern-endpoint-content"} ref={ref} id={route}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi,
@@ -365,13 +365,9 @@ function CardedSection({
     children: ReactNode | undefined;
     route: string;
 } & Omit<HTMLAttributes<HTMLDivElement>, "title">) {
-    const anchorRoute = `${route}#${getSlugFromChildren(title)}`.toLowerCase();
+    const anchorRoute = `${route}#${getSlugFromChildren(title)}`;
     return (
-        <section
-            {...props}
-            data-route={anchorRoute}
-            className="border-default divide-default -mx-4 divide-y rounded-xl border"
-        >
+        <section {...props} id={anchorRoute} className="border-default divide-default -mx-4 divide-y rounded-xl border">
             <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
                 <h2 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />

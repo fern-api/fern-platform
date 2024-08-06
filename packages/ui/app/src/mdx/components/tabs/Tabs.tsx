@@ -1,7 +1,8 @@
 import * as RadixTabs from "@radix-ui/react-tabs";
 import { slug } from "github-slugger";
-import { useRouter } from "next/router";
+import { useAtomValue } from "jotai";
 import { FC, ReactNode, useEffect, useState } from "react";
+import { ANCHOR_ATOM } from "../../../atoms";
 
 export interface TabProps {
     title: string;
@@ -16,8 +17,7 @@ export interface TabGroupProps {
 
 export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => {
     const [activeTab, setActiveTab] = useState("0");
-    const router = useRouter();
-    const anchor = router.asPath.split("#")[1];
+    const anchor = useAtomValue(ANCHOR_ATOM);
     useEffect(() => {
         if (anchor != null) {
             const anchorTab = tabs.findIndex((tab) => slug(tab.title) === anchor);
@@ -36,8 +36,7 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs, toc: parentToc = true }) => 
                         <RadixTabs.Trigger key={idx} value={idx.toString()} asChild>
                             <h6
                                 className="text-default -mb-px flex max-w-max cursor-pointer scroll-mt-content-padded whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6 hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent"
-                                id={id}
-                                data-anchor={toc ? id : undefined}
+                                id={toc ? id : undefined}
                             >
                                 {title}
                             </h6>

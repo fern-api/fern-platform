@@ -21,16 +21,36 @@ export const LOCATION_ATOM = atomWithLocation({
 });
 LOCATION_ATOM.debugLabel = "LOCATION_ATOM";
 
-export const HASH_ATOM = atom((get) => get(LOCATION_ATOM).hash?.slice(1));
-HASH_ATOM.debugLabel = "HASH_ATOM";
+export const ANCHOR_ATOM = atom(
+    (get) => get(LOCATION_ATOM).hash?.slice(1),
+    (get, set, anchor: string | undefined) => {
+        const location = get(LOCATION_ATOM);
+        const hash = anchor != null ? `#${anchor}` : undefined;
+        if (location.hash === hash) {
+            return;
+        }
+        set(LOCATION_ATOM, { ...get(LOCATION_ATOM), hash }, { replace: true });
+    },
+);
+ANCHOR_ATOM.debugLabel = "ANCHOR_ATOM";
 
-export const SLUG_ATOM = atom((get) => {
-    const location = get(LOCATION_ATOM);
-    if (location.pathname == null) {
-        return get(RESOLVED_PATH_ATOM).slug;
-    }
-    return FernNavigation.Slug(location.pathname?.slice(1) ?? "");
-});
+export const SLUG_ATOM = atom(
+    (get) => {
+        const location = get(LOCATION_ATOM);
+        if (location.pathname == null) {
+            return get(RESOLVED_PATH_ATOM).slug;
+        }
+        return FernNavigation.Slug(location.pathname?.slice(1) ?? "");
+    },
+    (get, set, slug: FernNavigation.Slug) => {
+        const location = get(LOCATION_ATOM);
+        const pathname = `/${slug}`;
+        if (location.pathname === pathname) {
+            return;
+        }
+        set(LOCATION_ATOM, { ...location, pathname }, { replace: true });
+    },
+);
 SLUG_ATOM.debugLabel = "SLUG_ATOM";
 
 export function useIsSelectedSlug(slug: FernNavigation.Slug): boolean {
@@ -45,7 +65,7 @@ export function useRouteListener(route: string, callback: (hash: string | undefi
             (get) => {
                 const location = get(LOCATION_ATOM);
                 if (location.pathname?.toLowerCase() === route.toLowerCase()) {
-                    setTimeout(() => callbackRef(get(HASH_ATOM)), 0);
+                    setTimeout(() => callbackRef(get(ANCHOR_ATOM)), 0);
                 }
             },
             [route, callbackRef],

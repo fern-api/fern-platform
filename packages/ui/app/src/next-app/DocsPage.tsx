@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { DOCS_ATOM, useMessageHandler, type DocsProps } from "../atoms";
-import { NavigationContextProvider } from "../contexts/navigation-context/NavigationContextProvider";
 import { BgImageGradient } from "../docs/BgImageGradient";
+import { useBeforePopState } from "../hooks/useBeforePopState";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { NextSeo } from "../seo/NextSeo";
 import { InitializeTheme } from "../themes";
@@ -16,9 +16,9 @@ const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ Sear
 });
 
 export function DocsPage(pageProps: DocsProps): ReactElement | null {
-    const { baseUrl } = pageProps;
     useConsoleMessage();
     useMessageHandler();
+    useBeforePopState();
     useHydrateAtoms([[DOCS_ATOM, pageProps]], { dangerouslyForceHydrate: true });
 
     return (
@@ -27,9 +27,7 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
             <InitializeTheme />
             <SearchDialog />
             <BgImageGradient />
-            <NavigationContextProvider basePath={baseUrl.basePath}>
-                <ThemedDocs theme={pageProps.theme} />
-            </NavigationContextProvider>
+            <ThemedDocs theme={pageProps.theme} />
             <PlaygroundContextProvider />
             <JavascriptProvider />
         </>

@@ -109,7 +109,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
     return (
         <div
             ref={ref}
-            data-route={anchorRoute.toLowerCase()}
+            id={anchorRoute}
             className={cn("scroll-mt-content-padded fern-api-property", {
                 "px-3": !contextValue.isRootTypeDefinition,
                 "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,

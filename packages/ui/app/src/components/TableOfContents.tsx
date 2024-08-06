@@ -1,6 +1,7 @@
 import cn from "clsx";
-import { useRouter } from "next/router";
+import { useAtomValue } from "jotai";
 import { CSSProperties, useEffect, useMemo, useState } from "react";
+import { ANCHOR_ATOM } from "../atoms";
 import { FernLink } from "./FernLink";
 
 export declare namespace TableOfContents {
@@ -97,9 +98,7 @@ function TableOfContentsList({
 }
 
 export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, tableOfContents, style }) => {
-    const router = useRouter();
-
-    const [, currentPathAnchor] = router.asPath.split("#");
+    const currentPathAnchor = useAtomValue(ANCHOR_ATOM);
 
     const allAnchors = useMemo(() => getAllAnchorStrings(tableOfContents), [tableOfContents]);
 
