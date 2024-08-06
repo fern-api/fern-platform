@@ -8,7 +8,7 @@ import algoliasearch from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
 import { ChatMessage } from "cohere-ai/api";
 import { NextRequest } from "next/server";
-import { v4 } from "uuid";
+import { z } from "zod";
 import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
@@ -28,6 +28,11 @@ The user asking questions may be a developer, technical writer, or product manag
 - Stay on topic about Cohere's APIs and SDKs, and be concise.
 - Always be respectful and professional. If you are unsure about a question, let the user know.
 `;
+
+const RequestSchema = z.strictObject({
+    conversationId: z.string(),
+    message: z.string(),
+});
 
 class ConversationCache {
     constructor(private conversationId: string) {}
@@ -62,6 +67,16 @@ export default async function handler(req: NextRequest): Promise<Response> {
     if (!docsUrl.includes("cohere")) {
         return new Response(null, { status: 401 });
     }
+
+    const body = RequestSchema.safeParse(await req.json());
+    if (body.success === false) {
+        // eslint-disable-next-line no-console
+        console.error(body.error);
+        return new Response(null, { status: 400 });
+    }
+    const { conversationId, message } = body.data;
+    const cache = new ConversationCache(conversationId);
+    const chatHistory = await cache.get();
 
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url: docsUrl });
     if (!docs.ok) {
@@ -102,17 +117,29 @@ export default async function handler(req: NextRequest): Promise<Response> {
         return new Response(null, { status: 500 });
     }
 
-    const body = await req.json();
+    assertNonNullish(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, "NEXT_PUBLIC_ALGOLIA_APP_ID is required");
+    assertNonNullish(process.env.NEXT_PUBLIC_ALGOLIA_API_KEY, "NEXT_PUBLIC_ALGOLIA_API_KEY is required");
+    assertNonNullish(process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX, "NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX is required");
+    assertNonNullish(process.env.COHERE_API_KEY, "COHERE_API_KEY is required");
 
-    assertNonNullish(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID);
-    assertNonNullish(process.env.NEXT_PUBLIC_ALGOLIA_API_KEY);
-    assertNonNullish(process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX);
-    const algolia = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, searchApiKey.body.searchApiKey, {
+    // create clients
+    const index = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, searchApiKey.body.searchApiKey, {
         requester: createFetchRequester(),
-    });
-    const index = algolia.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX);
-    const { hits } = await index.search<Algolia.AlgoliaRecord>(body.message, { hitsPerPage: 20 });
+    }).initIndex(process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX);
+    const cohere = new CohereClient({ token: process.env.COHERE_API_KEY });
 
+    // construct search query
+    const query = await cohere.chat({
+        preamble:
+            "Convert the user's last message into a search query, which will be used to find relevant documentation. Don't respond with anything else.",
+        chatHistory,
+        message,
+    });
+
+    // execute search
+    const { hits } = await index.search<Algolia.AlgoliaRecord>(query.text, { hitsPerPage: 10 });
+
+    // convert search results to cohere documents
     const documents: Record<string, string>[] = hits
         .map((hit) => ({
             id: getSlugForSearchRecord(hit, docs.body.baseUrl.basePath ?? ""),
@@ -122,26 +149,15 @@ export default async function handler(req: NextRequest): Promise<Response> {
         // remove undefined values
         .map((doc) => JSON.parse(JSON.stringify(doc)));
 
-    const cohere = new CohereClient({
-        token: process.env.COHERE_API_KEY,
-    });
-
-    let conversationId = body.conversationId;
-
-    if (!body.conversationId) {
-        conversationId = v4();
-    }
-    const cache = new ConversationCache(conversationId);
-
-    const chatHistory = await cache.get();
+    // re-run the user's message with the search results
     const response = await cohere.chatStream({
         preamble: PREAMBLE,
         chatHistory,
-        message: body.message,
+        message,
         documents,
     });
 
-    chatHistory.push({ role: "USER", message: body.message });
+    chatHistory.push({ role: "USER", message });
 
     const stream = convertAsyncIterableToStream(response).pipeThrough(getCohereStreamTransformer(cache, chatHistory));
 
