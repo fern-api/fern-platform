@@ -126,7 +126,7 @@ export function getSeoProps(
     }
 
     if (seo.title != null && stringHasMarkdown(seo.title)) {
-        seo.description = stripMarkdown(seo.title);
+        seo.title = stripMarkdown(seo.title);
     }
 
     if (seo.description != null && stringHasMarkdown(seo.description)) {
