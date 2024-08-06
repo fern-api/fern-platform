@@ -3,7 +3,7 @@ import { atom, useAtom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
-import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useCallbackOne } from "use-memo-one";
 import {
@@ -28,6 +28,7 @@ import {
 import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
+import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
@@ -78,22 +79,20 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
-const UnmemoizedEndpointContent = forwardRef<HTMLDivElement, EndpointContent.Props>((props, ref) => {
+export const EndpointContent = memo<EndpointContent.Props>((props) => {
     const { api, showErrors, endpoint: endpointProp, breadcrumbs, hideBottomSeparator = false, types } = props;
     const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
     const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
 
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    useImperativeHandle(ref, () => containerRef.current!);
+    const ref = useRef<HTMLDivElement>(null);
+    useApiPageCenterElement(ref, endpoint.slug);
 
     const [isInViewport, setIsInViewport] = useState(() => store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId);
     const { ref: viewportRef } = useInView({
         onChange: setIsInViewport,
         rootMargin: "100%",
     });
-    useImperativeHandle(viewportRef, () => containerRef.current ?? undefined);
+    useImperativeHandle(viewportRef, () => ref.current ?? undefined);
 
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
@@ -258,7 +257,7 @@ const UnmemoizedEndpointContent = forwardRef<HTMLDivElement, EndpointContent.Pro
         <div
             className={"fern-endpoint-content"}
             onClick={() => setSelectedError(undefined)}
-            ref={containerRef}
+            ref={ref}
             id={`/${endpoint.slug}`}
         >
             <div
@@ -286,7 +285,7 @@ const UnmemoizedEndpointContent = forwardRef<HTMLDivElement, EndpointContent.Pro
                                 value={isStream}
                                 setValue={setIsStream}
                                 endpointProp={endpointProp}
-                                container={containerRef}
+                                container={ref}
                             />
                         )}
                     </div>
@@ -357,6 +356,4 @@ const UnmemoizedEndpointContent = forwardRef<HTMLDivElement, EndpointContent.Pro
     );
 });
 
-UnmemoizedEndpointContent.displayName = "EndpointContent";
-
-export const EndpointContent = memo(UnmemoizedEndpointContent);
+EndpointContent.displayName = "EndpointContent";
