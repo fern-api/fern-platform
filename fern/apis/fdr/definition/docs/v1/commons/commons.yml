@@ -22,6 +22,20 @@ types:
       a: optional<double>
 
   # Docs layout config
+  ProgrammingLanguage:
+    enum:
+      - TypeScript
+      - JavaScript
+      - Python
+      - Java
+      - Go
+      - Ruby
+      - Jvm
+      - CSharp
+      - NodeTS
+      - NodeJS
+      - DotNet
+      - Curl
 
   DocsLayoutConfig:
     properties:

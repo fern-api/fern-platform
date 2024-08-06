@@ -78,11 +78,10 @@ types:
     properties:
       markdown: string # eventually PageContent should just be a commons.FileId ?
       editThisPageUrl: optional<commons.Url>
-
   DocsConfig:
     properties:
       title: optional<string>
-      defaultLanguage: optional<string>
+      defaultLanguage: optional<commons.ProgrammingLanguage>
 
       # navigation
       navigation: NavigationConfig
