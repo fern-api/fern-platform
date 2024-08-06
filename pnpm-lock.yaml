@@ -1488,6 +1488,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.0
         version: 4.0.0
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.1
     devDependencies:
       '@tailwindcss/typography':
         specifier: ^0.5.10
@@ -1501,6 +1504,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
+      '@types/uuid':
+        specifier: ^9.0.1
+        version: 9.0.8
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.15.0
         version: 7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0)(typescript@5.4.3)

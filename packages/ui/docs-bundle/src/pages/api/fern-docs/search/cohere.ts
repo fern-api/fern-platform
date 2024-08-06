@@ -8,6 +8,7 @@ import algoliasearch from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
 import { ChatMessage } from "cohere-ai/api";
 import { NextRequest } from "next/server";
+import { v4 } from "uuid";
 import { z } from "zod";
 import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
@@ -30,7 +31,7 @@ The user asking questions may be a developer, technical writer, or product manag
 `;
 
 const RequestSchema = z.strictObject({
-    conversationId: z.string(),
+    conversationId: z.string().optional(),
     message: z.string(),
 });
 
@@ -74,7 +75,7 @@ export default async function handler(req: NextRequest): Promise<Response> {
         console.error(body.error);
         return new Response(null, { status: 400 });
     }
-    const { conversationId, message } = body.data;
+    const { conversationId = v4(), message } = body.data;
     const cache = new ConversationCache(conversationId);
     const chatHistory = await cache.get();
 

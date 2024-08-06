@@ -1,8 +1,9 @@
 import { FernScrollArea } from "@fern-ui/components";
 import clsx from "clsx";
-import { throttle, uniqueId } from "lodash-es";
+import { throttle } from "lodash-es";
 import { forwardRef, useRef, useState } from "react";
 import type { Components } from "react-markdown";
+import { v4 } from "uuid";
 import { ChatbotMessage, Citation, Message } from "../types";
 import { AskInput } from "./AskInput";
 import { ChatConversation } from "./ChatConversation";
@@ -26,7 +27,7 @@ interface ChatbotModalProps {
 export const ChatbotModal = forwardRef<HTMLElement, ChatbotModalProps>(
     ({ chatStream, className, components, belowInput }, ref) => {
         const [chatHistory, setChatHistory] = useState<ChatHistory>(() => ({
-            conversationId: uniqueId(),
+            conversationId: v4(),
             messages: [],
         }));
         const [isStreaming, setIsStreaming] = useState(false);
@@ -86,7 +87,7 @@ export const ChatbotModal = forwardRef<HTMLElement, ChatbotModalProps>(
 
         const reset = () => {
             setChatHistory({
-                conversationId: uniqueId(),
+                conversationId: v4(),
                 messages: [],
             });
             setIsStreaming(false);
