@@ -29,7 +29,7 @@ export const ANCHOR_ATOM = atom(
         if (location.hash === hash) {
             return;
         }
-        set(LOCATION_ATOM, { ...get(LOCATION_ATOM), hash });
+        set(LOCATION_ATOM, { ...get(LOCATION_ATOM), hash }, { replace: true });
     },
 );
 ANCHOR_ATOM.debugLabel = "ANCHOR_ATOM";
