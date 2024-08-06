@@ -1,10 +1,10 @@
 import cn from "clsx";
+import { useInView } from "framer-motion";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
-import { memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { useInView } from "react-intersection-observer";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCallbackOne } from "use-memo-one";
 import {
     ANCHOR_ATOM,
@@ -87,12 +87,10 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, endpoint.slug);
 
-    const [isInViewport, setIsInViewport] = useState(() => store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId);
-    const { ref: viewportRef } = useInView({
-        onChange: setIsInViewport,
-        rootMargin: "100%",
-    });
-    useImperativeHandle(viewportRef, () => ref.current ?? undefined);
+    const isInViewport =
+        useInView(ref, {
+            margin: "100%",
+        }) || store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId;
 
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
