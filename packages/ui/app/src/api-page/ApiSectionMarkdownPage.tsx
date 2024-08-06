@@ -15,7 +15,7 @@ export const ApiSectionMarkdownPage = memo(
     }): ReactElement | null => {
         const slug = page.slug;
 
-        const { setTargetRef } = useApiPageCenterElement({ slug });
+        const ref = useApiPageCenterElement({ slug });
 
         // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
         // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)
@@ -29,7 +29,7 @@ export const ApiSectionMarkdownPage = memo(
                 className={clsx("scroll-mt-content", {
                     "border-default border-b mb-px": !hideBottomSeparator,
                 })}
-                ref={setTargetRef}
+                ref={ref}
                 id={`/${slug}`}
             >
                 <MdxContent mdx={page.markdown} />

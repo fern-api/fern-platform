@@ -40,7 +40,7 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
         }
     }, [endpoint.slug, endpoint.stream, resolvedPath.slug, setStream]);
 
-    const { setTargetRef } = useApiPageCenterElement({ slug: endpointSlug });
+    const ref = useApiPageCenterElement({ slug: endpointSlug });
 
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
     // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)
@@ -55,7 +55,7 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
             showErrors={showErrors}
             endpoint={endpoint}
             breadcrumbs={breadcrumbs}
-            containerRef={setTargetRef}
+            ref={ref}
             hideBottomSeparator={isLastInApi}
             types={types}
         />

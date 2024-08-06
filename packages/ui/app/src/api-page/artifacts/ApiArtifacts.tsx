@@ -21,11 +21,11 @@ export declare namespace ApiArtifacts {
 export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiArtifacts }) => {
     const slug = FernNavigation.utils.slugjoin(apiDefinition?.slug ?? "", "client-libraries");
 
-    const { setTargetRef } = useApiPageCenterElement({ slug });
+    const ref = useApiPageCenterElement({ slug });
 
     return (
         <ApiPageMargins>
-            <div ref={setTargetRef} id={`/${slug}`} className="scroll-mt-content">
+            <div ref={ref} id={`/${slug}`} className="scroll-mt-content">
                 <h1 className="pt-20">{API_ARTIFACTS_TITLE}</h1>
                 <div className="t-muted mt-5 text-lg">
                     Official open-source client libraries for your favorite platforms.

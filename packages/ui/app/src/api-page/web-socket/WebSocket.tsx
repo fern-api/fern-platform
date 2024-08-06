@@ -55,7 +55,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
 
     const route = `/${websocket.slug}`;
 
-    const { setTargetRef } = useApiPageCenterElement({ slug: websocket.slug });
+    const ref = useApiPageCenterElement({ slug: websocket.slug });
 
     const publishMessages = useMemo(
         () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),
@@ -105,7 +105,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const headers = websocket.headers.filter((header) => !header.hidden);
 
     return (
-        <div className={"fern-endpoint-content"} ref={setTargetRef} id={route}>
+        <div className={"fern-endpoint-content"} ref={ref} id={route}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi,

@@ -48,7 +48,7 @@ export const SLUG_ATOM = atom(
         if (location.pathname === pathname) {
             return;
         }
-        set(LOCATION_ATOM, { ...location, pathname });
+        set(LOCATION_ATOM, { ...location, pathname }, { replace: true });
     },
 );
 SLUG_ATOM.debugLabel = "SLUG_ATOM";

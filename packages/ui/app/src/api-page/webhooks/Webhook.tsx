@@ -14,7 +14,7 @@ export declare namespace Webhook {
 }
 
 export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastInApi, types }) => {
-    const { setTargetRef } = useApiPageCenterElement({ slug: webhook.slug });
+    const ref = useApiPageCenterElement({ slug: webhook.slug });
     const route = `/${webhook.slug}`;
 
     // TODO: merge this with the Endpoint component
@@ -27,7 +27,7 @@ export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastI
             <WebhookContent
                 webhook={webhook}
                 breadcrumbs={breadcrumbs}
-                setContainerRef={setTargetRef}
+                ref={ref}
                 hideBottomSeparator={isLastInApi}
                 route={route}
                 types={types}
