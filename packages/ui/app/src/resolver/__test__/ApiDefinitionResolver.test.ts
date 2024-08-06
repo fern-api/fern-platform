@@ -26,6 +26,7 @@ describe("resolveApiDefinition", () => {
             },
             fixture,
             {},
+            {},
             FernNavigation.SlugGenerator.init(""),
         );
 
@@ -59,6 +60,7 @@ describe("resolveApiDefinition", () => {
                 urlSlug: "api-reference",
             },
             fixture,
+            {},
             {},
             FernNavigation.SlugGenerator.init(""),
         );
