@@ -27,6 +27,7 @@ export function convertDbDocsConfigToRead({
         metadata: dbShape.metadata,
         redirects: dbShape.redirects,
         integrations: dbShape.integrations,
+        defaultLanguage: dbShape.defaultLanguage,
     };
 }
 

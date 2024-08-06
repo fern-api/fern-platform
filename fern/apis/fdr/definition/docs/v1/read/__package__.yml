@@ -85,6 +85,7 @@ types:
   DocsConfig:
     properties:
       title: optional<string>
+      defaultLanguage: optional<commons.ProgrammingLanguage>
 
       # navigation
       navigation: NavigationConfig
