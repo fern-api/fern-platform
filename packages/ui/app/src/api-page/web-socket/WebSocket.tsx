@@ -2,7 +2,7 @@ import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
+import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
@@ -55,7 +55,8 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
 
     const route = `/${websocket.slug}`;
 
-    const ref = useApiPageCenterElement({ slug: websocket.slug });
+    const ref = useRef<HTMLDivElement>(null);
+    useApiPageCenterElement(ref, websocket.slug);
 
     const publishMessages = useMemo(
         () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),

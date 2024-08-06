@@ -1,23 +1,15 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useInView } from "framer-motion";
 import { useSetAtom } from "jotai";
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect } from "react";
 import { SLUG_ATOM } from "../atoms";
 
-export declare namespace useApiPageCenterElement {
-    export interface Args {
-        slug: FernNavigation.Slug;
-        skip?: boolean;
-    }
-}
-
-export function useApiPageCenterElement({
-    slug,
-    skip = false,
-}: useApiPageCenterElement.Args): RefObject<HTMLDivElement> {
+export function useApiPageCenterElement(
+    ref: RefObject<HTMLDivElement>,
+    slug: FernNavigation.Slug,
+    skip: boolean = false,
+): void {
     const setSelectedSlug = useSetAtom(SLUG_ATOM);
-
-    const ref = useRef<HTMLDivElement>(null);
 
     const isInView = useInView(ref, {
         // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport
@@ -29,6 +21,4 @@ export function useApiPageCenterElement({
             setSelectedSlug(slug);
         }
     }, [isInView, setSelectedSlug, skip, slug]);
-
-    return ref;
 }

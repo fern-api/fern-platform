@@ -1,4 +1,5 @@
 import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { useRef } from "react";
 import { API_ARTIFACTS_TITLE } from "../../config";
 import { ResolvedWithApiDefinition } from "../../resolver/types";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
@@ -21,7 +22,8 @@ export declare namespace ApiArtifacts {
 export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiArtifacts }) => {
     const slug = FernNavigation.utils.slugjoin(apiDefinition?.slug ?? "", "client-libraries");
 
-    const ref = useApiPageCenterElement({ slug });
+    const ref = useRef<HTMLDivElement>(null);
+    useApiPageCenterElement(ref, slug);
 
     return (
         <ApiPageMargins>
