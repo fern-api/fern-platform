@@ -60,6 +60,8 @@ const INITIAL_EXPANDED_SIDEBAR_NODES_ATOM = atom((get) => {
             expandedNodes.add(parent);
         });
     }
+    // TODO: compute default expanded nodes
+    // the following was commented out because FDR stores `collapsed: false` by default. Another solution is needed.
     // const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
     // if (sidebar != null) {
     //     FernNavigation.utils.traverseNavigation(sidebar, (node) => {
@@ -78,6 +80,7 @@ export const EXPANDED_SIDEBAR_NODES_ATOM = atom(
         const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
         const { expandedNodes: internalExpandedNodes, sidebarRootId } = get(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM);
 
+        // when the sidebar changes, reset the expanded nodes to the initial state
         if (sidebarRootId !== sidebar?.id) {
             return new Set(get(INITIAL_EXPANDED_SIDEBAR_NODES_ATOM));
         }
@@ -103,33 +106,22 @@ export const EXPANDED_SIDEBAR_NODES_ATOM = atom(
         const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
         const internal = get(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM);
 
+        // when the sidebar changes, reset the expanded nodes to the initial state
         if (internal.sidebarRootId !== sidebar?.id) {
             const expandedNodes = get(INITIAL_EXPANDED_SIDEBAR_NODES_ATOM);
-            if (typeof update === "function") {
-                set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, {
-                    sidebarRootId: sidebar?.id ?? FernNavigation.NodeId(""),
-                    expandedNodes: update(expandedNodes),
-                });
-            } else {
-                set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, {
-                    sidebarRootId: sidebar?.id ?? FernNavigation.NodeId(""),
-                    expandedNodes: update,
-                });
-            }
-            return;
-        }
-
-        const nodes = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
-        if (typeof update === "function") {
+            set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, {
+                sidebarRootId: sidebar?.id ?? FernNavigation.NodeId(""),
+                expandedNodes: typeof update === "function" ? update(expandedNodes) : update,
+            });
+        } else {
+            // only update the expanded nodes that are still in the sidebar
+            const nodes = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
             set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, (prev) => ({
                 sidebarRootId: prev.sidebarRootId,
-                expandedNodes: update(prev.expandedNodes).filter((nodeId) => nodes.has(nodeId)),
+                expandedNodes: (typeof update === "function" ? update(prev.expandedNodes) : update).filter((nodeId) =>
+                    nodes.has(nodeId),
+                ),
             }));
-        } else {
-            set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, {
-                sidebarRootId: internal.sidebarRootId,
-                expandedNodes: update.filter((nodeId) => nodes.has(nodeId)),
-            });
         }
     },
 );
@@ -141,25 +133,6 @@ export const useIsExpandedSidebarNode = (nodeId: FernNavigation.NodeId): boolean
 
 export const useIsSelectedSidebarNode = (nodeId: FernNavigation.NodeId): boolean => {
     return useAtomValue(useMemoOne(() => atom((get) => nodeId === get(CURRENT_NODE_ID_ATOM)), [nodeId]));
-};
-
-export const useToggleExpandedSidebarNode = (nodeId: FernNavigation.NodeId): (() => void) => {
-    return useAtomCallback(
-        useCallbackOne(
-            (get, set) => {
-                const parentToChildrenMap = get(SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM);
-                set(EXPANDED_SIDEBAR_NODES_ATOM, (prev) => {
-                    // return prev.includes(nodeId) ? prev.filter((id) => id !== nodeId) : [...prev, nodeId];
-                    if (prev.includes(nodeId)) {
-                        return prev.filter((id) => id !== nodeId && !parentToChildrenMap.get(nodeId)?.includes(id));
-                    } else {
-                        return [...prev, nodeId];
-                    }
-                });
-            },
-            [nodeId],
-        ),
-    );
 };
 
 export const useIsChildSelected = (parentId: FernNavigation.NodeId): boolean => {
@@ -178,6 +151,25 @@ export const useIsChildSelected = (parentId: FernNavigation.NodeId): boolean => 
                     return parentToChildrenMap.get(parentId)?.includes(selectedNodeId) ?? false;
                 }),
             [parentId],
+        ),
+    );
+};
+
+export const useToggleExpandedSidebarNode = (nodeId: FernNavigation.NodeId): (() => void) => {
+    return useAtomCallback(
+        useCallbackOne(
+            (get, set) => {
+                const parentToChildrenMap = get(SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM);
+                set(EXPANDED_SIDEBAR_NODES_ATOM, (prev) => {
+                    if (prev.includes(nodeId)) {
+                        // remove this node and all children from the expanded set
+                        return prev.filter((id) => id !== nodeId && !parentToChildrenMap.get(nodeId)?.includes(id));
+                    } else {
+                        return [...prev, nodeId];
+                    }
+                });
+            },
+            [nodeId],
         ),
     );
 };

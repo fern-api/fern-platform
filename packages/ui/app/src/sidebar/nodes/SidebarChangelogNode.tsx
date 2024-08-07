@@ -11,9 +11,9 @@ export interface SidebarChangelogNodeProps {
 }
 
 export function SidebarChangelogNode({ node, depth, className }: SidebarChangelogNodeProps): React.ReactElement | null {
-    const isSelected = useIsSelectedSidebarNode(node.id);
+    const selected = useIsSelectedSidebarNode(node.id);
 
-    if (node.hidden && !isSelected) {
+    if (node.hidden && !selected) {
         return null;
     }
 
@@ -23,7 +23,7 @@ export function SidebarChangelogNode({ node, depth, className }: SidebarChangelo
             slug={node.slug}
             title={node.title}
             className={className}
-            selected={isSelected}
+            selected={selected}
             depth={Math.max(0, depth - 1)}
             icon={node.icon ?? <ActivityLogIcon />}
             tooltipContent={renderChangelogTooltip(node)}

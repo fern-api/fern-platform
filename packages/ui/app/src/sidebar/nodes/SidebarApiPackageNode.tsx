@@ -20,7 +20,7 @@ export function SidebarApiPackageNode({
     depth,
     className,
 }: SidebarApiPackageNodeProps): React.ReactElement | null {
-    const isSelected = useIsSelectedSidebarNode(node.id);
+    const selected = useIsSelectedSidebarNode(node.id);
     const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
     const childSelected = useIsChildSelected(node.id);
     const expanded = useIsExpandedSidebarNode(node.id);
@@ -30,7 +30,7 @@ export function SidebarApiPackageNode({
             return null;
         }
 
-        if (node.hidden && !isSelected) {
+        if (node.hidden && !selected) {
             return null;
         }
 
@@ -41,7 +41,7 @@ export function SidebarApiPackageNode({
                 slug={node.slug}
                 depth={Math.max(depth - 1, 0)}
                 title={node.title}
-                selected={isSelected}
+                selected={selected}
                 icon={node.icon}
                 hidden={node.hidden}
                 scrollOnShallow={false}
@@ -79,7 +79,7 @@ export function SidebarApiPackageNode({
             showIndicator={showIndicator}
             hidden={node.hidden}
             slug={node.overviewPageId != null ? node.slug : undefined}
-            selected={isSelected}
+            selected={selected}
         >
             <ul
                 className={clsx("fern-sidebar-group", {
