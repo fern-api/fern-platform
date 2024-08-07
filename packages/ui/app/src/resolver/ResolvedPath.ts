@@ -24,14 +24,12 @@ export declare namespace ResolvedPath {
         // neighbors: Neighbors;
     }
 
-    interface ChangelogEntryPage {
+    interface ChangelogEntryPage extends Omit<FernNavigation.ChangelogEntryNode, "type"> {
         type: "changelog-entry";
-        title: string;
-        pages: Record<FernNavigation.PageId, BundledMDX>;
-        node: FernNavigation.ChangelogEntryNode;
+        page: BundledMDX;
         sectionTitleBreadcrumbs: string[];
         neighbors: Neighbors;
-        slug: FernNavigation.Slug;
+        changelogTitle: string;
         changelogSlug: FernNavigation.Slug;
     }
 
