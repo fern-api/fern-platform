@@ -13,7 +13,7 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
         <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
             <div className="w-full min-w-0 pt-8">
                 <article className="mx-auto xl:w-fit break-words lg:ml-0 xl:mx-auto">
-                    <section id={resolvedPath.node.date} className="flex items-stretch">
+                    <section id={resolvedPath.date} className="flex items-stretch">
                         <div className="max-xl:hidden w-sidebar-width" />
                         <div className="relative mr-6 max-w-content-width flex-1 max-xl:mx-auto">
                             <header className="mb-8">
@@ -27,9 +27,7 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
                                         </FernLink>
                                     </div>
 
-                                    <h1 className="my-0 inline-block leading-tight">
-                                        {title ?? resolvedPath.node.title}
-                                    </h1>
+                                    <h1 className="my-0 inline-block leading-tight">{title ?? resolvedPath.title}</h1>
                                 </div>
 
                                 {excerpt != null && (
