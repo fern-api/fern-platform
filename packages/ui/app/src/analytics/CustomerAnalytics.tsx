@@ -2,16 +2,27 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
+import Script from "next/script";
 import { ReactElement, memo } from "react";
-import { DOCS_ATOM } from "../atoms";
+import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
 import { GoogleTagManager } from "./GoogleTagManager";
+import { renderSegmentSnippet } from "./segment";
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
+const domain = useAtomValue(DOMAIN_ATOM);
 
 export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
-    const { ga4, gtm } = useAtomValue(ANALYTICS_ATOM);
+    const { ga4, gtm, segment } = useAtomValue(ANALYTICS_ATOM);
     return (
         <>
+            {
+                <Script
+                    id="segment-script"
+                    dangerouslySetInnerHTML={{
+                        __html: renderSegmentSnippet(domain, segment ? segment.writeKey : undefined),
+                    }}
+                />
+            }
             {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}
             {gtm != null && <GoogleTagManager {...gtm} />}
         </>

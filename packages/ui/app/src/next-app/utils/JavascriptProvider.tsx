@@ -29,7 +29,6 @@ export const JavascriptProvider = memo(() => {
                 />
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
-            <Script id="segment-script" dangerouslySetInnerHTML={{ __html: renderSegmentSnippet(domain) }} />
             <CustomerAnalytics />
         </>
     );
