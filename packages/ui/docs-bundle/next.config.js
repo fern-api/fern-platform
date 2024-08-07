@@ -76,7 +76,7 @@ const nextConfig = {
             ...DOCS_FILES_URLS,
         ];
 
-        const styleSrc = ["'self'", "'unsafe-inline'"];
+        const styleSrc = ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"];
 
         const fontSrc = ["'self'", "data:", ...DOCS_FILES_URLS];
 
