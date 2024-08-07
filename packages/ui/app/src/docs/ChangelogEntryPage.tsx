@@ -6,7 +6,7 @@ import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
 
 export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogEntryPage }): ReactElement {
-    const page = resolvedPath.pages[resolvedPath.node.pageId];
+    const page = resolvedPath.page;
     const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
     const excerpt = typeof page !== "string" ? page?.frontmatter.subtitle ?? page?.frontmatter.excerpt : undefined;
     return (
@@ -22,7 +22,7 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
                                         <FernLink href={`/${resolvedPath.changelogSlug}`}>
                                             <span className="t-accent shrink truncate whitespace-nowrap text-sm font-semibold inline-flex gap-1 items-center">
                                                 <ArrowLeftIcon className="size-4" />
-                                                Back to {resolvedPath.title}
+                                                Back to {resolvedPath.changelogTitle}
                                             </span>
                                         </FernLink>
                                     </div>

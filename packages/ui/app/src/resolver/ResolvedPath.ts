@@ -26,12 +26,11 @@ export declare namespace ResolvedPath {
 
     interface ChangelogEntryPage {
         type: "changelog-entry";
-        title: string;
-        pages: Record<FernNavigation.PageId, BundledMDX>;
+        page: BundledMDX;
         node: FernNavigation.ChangelogEntryNode;
         sectionTitleBreadcrumbs: string[];
         neighbors: Neighbors;
-        slug: FernNavigation.Slug;
+        changelogTitle: string;
         changelogSlug: FernNavigation.Slug;
     }
 
