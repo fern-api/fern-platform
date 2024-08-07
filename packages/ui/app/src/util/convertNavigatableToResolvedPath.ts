@@ -138,11 +138,11 @@ export async function convertNavigatableToResolvedPath({
         });
 
         return {
+            ...node,
             type: "changelog-entry",
             changelogTitle,
             changelogSlug: changelogNode.slug,
             sectionTitleBreadcrumbs: found.breadcrumb,
-            node,
             page,
             neighbors,
         };
