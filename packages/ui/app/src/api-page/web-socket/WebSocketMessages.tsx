@@ -34,50 +34,42 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                 return (
                     <Accordion.Item value={index.toString()} key={index} className={cn("group relative")}>
                         <Accordion.Trigger
-                            className={cn(
-                                "w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default transition-background group-data-[state=closed]:rounded-[inherit] transition-[border-radius] duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)]",
-                                "sticky top-0 z-10 backdrop-blur",
-                                {
-                                    "data-[state=open]:bg-tag-success":
-                                        message.origin === APIV1Read.WebSocketMessageOrigin.Client,
-                                    "data-[state=open]:bg-tag-primary":
-                                        message.origin === APIV1Read.WebSocketMessageOrigin.Server,
-                                    "data-[state=open]:bg-tag-default": message.origin == null,
-                                },
-                            )}
+                            className={cn("fern-web-socket-trigger", {
+                                "data-[state=open]:bg-tag-success":
+                                    message.origin === APIV1Read.WebSocketMessageOrigin.Client,
+                                "data-[state=open]:bg-tag-primary":
+                                    message.origin === APIV1Read.WebSocketMessageOrigin.Server,
+                                "data-[state=open]:bg-tag-default": message.origin == null,
+                            })}
                         >
                             {message.origin === APIV1Read.WebSocketMessageOrigin.Client ? (
-                                <span className="t-success inline-block shrink-0 rounded-full bg-tag-success p-0.5">
+                                <span className="fern-web-socket-client">
                                     <ArrowUpIcon />
                                 </span>
                             ) : message.origin === APIV1Read.WebSocketMessageOrigin.Server ? (
-                                <span className="t-accent-aaa inline-block shrink-0 rounded-full bg-tag-primary p-0.5">
+                                <span className="fern-web-socket-server">
                                     <ArrowDownIcon />
                                 </span>
                             ) : null}
-                            <span className="min-w-0 shrink truncate font-mono text-xs">
-                                {JSON.stringify(message.data)}
-                            </span>
+                            <span className="fern-web-socket-trigger-data">{JSON.stringify(message.data)}</span>
                             {message.displayName != null || message.type != null ? (
-                                <span className="flex-1 inline-flex justify-end">
-                                    <span className="t-muted h-5 rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none whitespace-nowrap">
-                                        {message.displayName ?? message.type}
-                                    </span>
+                                <span className="fern-web-socket-type">
+                                    <span className="fern-web-socket-badge">{message.displayName ?? message.type}</span>
                                 </span>
                             ) : null}
 
                             <CopyToClipboardButton
-                                className="-my-2 -ml-1 -mr-2"
+                                className="fern-web-socket-copy"
                                 content={() => JSON.stringify(message.data, null, 2)}
                                 onClick={(e) => e.stopPropagation()}
                             />
 
                             <ChevronDownIcon
-                                className="t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)] group-data-[state=open]:rotate-180"
+                                className="fern-web-socket-chevron group-data-[state=open]:rotate-180"
                                 aria-hidden
                             />
                         </Accordion.Trigger>
-                        <Accordion.Content className="overflow-hidden data-[state=closed]:animate-slide-up data-[state=open]:animate-slide-down">
+                        <Accordion.Content className="fern-web-socket-content">
                             <div className="group/cb-container relative">
                                 <FernSyntaxHighlighter
                                     className="w-0 min-w-full overflow-y-auto"
