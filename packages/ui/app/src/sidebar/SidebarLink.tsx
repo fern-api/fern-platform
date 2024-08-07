@@ -10,17 +10,15 @@ import {
     PropsWithChildren,
     ReactElement,
     ReactNode,
-    RefObject,
     createElement,
     forwardRef,
     memo,
     useCallback,
-    useEffect,
     useImperativeHandle,
     useRef,
 } from "react";
 import { ChevronDown } from "react-feather";
-import { SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMobileSidebar } from "../atoms";
+import { IS_READY_ATOM, SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMobileSidebar } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { scrollToRoute } from "../util/anchor";
 import { slugToHref } from "../util/slugToHref";
@@ -41,7 +39,6 @@ interface SidebarSlugLinkProps {
     toggleExpand?: () => void;
     expanded?: boolean;
     rightElement?: ReactNode;
-    registerScrolledToPathListener: (nodeId: FernNavigation.NodeId, ref: RefObject<HTMLDivElement>) => () => void;
     tooltipContent?: ReactNode;
     hidden?: boolean;
     scrollOnShallow?: boolean;
@@ -204,20 +201,17 @@ export const SidebarLink = memo(SidebarLinkInternal);
 
 export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<SidebarSlugLinkProps>>(
     (props, parentRef) => {
-        const { slug, registerScrolledToPathListener, onClick, ...innerProps } = props;
+        const { slug, onClick, ...innerProps } = props;
         const ref = useRef<HTMLDivElement>(null);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(parentRef, () => ref.current!);
         const closeMobileSidebar = useCloseMobileSidebar();
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        useEffect(() => registerScrolledToPathListener(props.nodeId, ref), [props.nodeId]);
-
         useAtomEffect(
             useCallback(
                 (get) => {
                     if (props.selected) {
-                        scrollToCenter(get(SIDEBAR_SCROLL_CONTAINER_ATOM), ref.current);
+                        scrollToCenter(get(SIDEBAR_SCROLL_CONTAINER_ATOM), ref.current, !get(IS_READY_ATOM));
                     }
                 },
                 [props.selected],

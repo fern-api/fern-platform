@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { useCurrentNodeId, useResolvedPath } from "../../atoms";
+import { useAtomValue } from "jotai";
+import { RESOLVED_API_DEFINITION_ATOM, useIsApiReferencePaginated, useIsSelectedSidebarNode } from "../../atoms";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarApiLeafNodeProps {
@@ -10,10 +10,9 @@ interface SidebarApiLeafNodeProps {
 }
 
 export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): React.ReactElement | null {
-    const { registerScrolledToPathListener } = useCollapseSidebar();
-    const selectedNodeId = useCurrentNodeId();
-    const resolvedPath = useResolvedPath();
-    const selected = node.id === selectedNodeId;
+    const selected = useIsSelectedSidebarNode(node.id);
+    const isPaginated = useIsApiReferencePaginated();
+    const resolvedApi = useAtomValue(RESOLVED_API_DEFINITION_ATOM);
 
     if (node.hidden && !selected) {
         return null;
@@ -38,10 +37,9 @@ export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): Re
             title={node.title}
             depth={Math.max(0, depth - 1)}
             hidden={node.hidden}
-            registerScrolledToPathListener={registerScrolledToPathListener}
             icon={renderRightElement()}
             selected={selected}
-            shallow={resolvedPath.type === "api-page" && resolvedPath.api === node.apiDefinitionId}
+            shallow={!isPaginated && resolvedApi === node.apiDefinitionId}
         />
     );
 }

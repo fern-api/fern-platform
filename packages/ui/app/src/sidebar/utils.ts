@@ -2,7 +2,11 @@ import fastdom from "fastdom";
 import { noop } from "ts-essentials";
 
 let stopMeasuring = noop;
-export function scrollToCenter(scrollContainer: HTMLElement | null, target: HTMLElement | null): void {
+export function scrollToCenter(
+    scrollContainer: HTMLElement | null,
+    target: HTMLElement | null,
+    smooth: boolean = true,
+): void {
     if (scrollContainer == null || target == null) {
         return;
     }
@@ -20,7 +24,7 @@ export function scrollToCenter(scrollContainer: HTMLElement | null, target: HTML
             // if the target is outside of the scroll container, scroll to it (centered)
             scrollContainer.scrollTo({
                 top: target.offsetTop - scrollContainer.clientHeight / 3,
-                behavior: "smooth",
+                behavior: smooth ? "smooth" : "auto",
             });
         });
     }, 0);
