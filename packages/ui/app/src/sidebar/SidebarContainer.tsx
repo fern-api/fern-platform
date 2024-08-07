@@ -13,7 +13,6 @@ import {
 } from "../atoms";
 import { useIsScrolled } from "../docs/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
-import { CollapseSidebarProvider } from "./CollapseSidebarContext";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarTabButton } from "./SidebarTabButton";
@@ -56,11 +55,9 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
                             ))}
                         </ul>
                     )}
-                    <CollapseSidebarProvider>
-                        <FernTooltipProvider>
-                            <SidebarRootNode node={sidebar} />
-                        </FernTooltipProvider>
-                    </CollapseSidebarProvider>
+                    <FernTooltipProvider>
+                        <SidebarRootNode node={sidebar} />
+                    </FernTooltipProvider>
                     <MobileSidebarHeaderLinks />
                 </FernScrollArea>
             </SearchSidebar>

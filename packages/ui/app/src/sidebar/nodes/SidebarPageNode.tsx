@@ -1,5 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { useCurrentNodeId } from "../../atoms";
+import { useIsSelectedSidebarNode } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarPageNodeProps {
@@ -9,9 +9,9 @@ interface SidebarPageNodeProps {
 }
 
 export function SidebarPageNode({ node, depth, className }: SidebarPageNodeProps): React.ReactElement | null {
-    const selectedNodeId = useCurrentNodeId();
+    const selected = useIsSelectedSidebarNode(node.id);
 
-    if (node.hidden && selectedNodeId === node.id) {
+    if (node.hidden && !selected) {
         return null;
     }
 
@@ -22,10 +22,9 @@ export function SidebarPageNode({ node, depth, className }: SidebarPageNodeProps
             slug={node.slug}
             depth={Math.max(depth - 1, 0)}
             title={node.title}
-            selected={node.id === selectedNodeId}
+            selected={selected}
             icon={node.icon}
             hidden={node.hidden}
-            shallow={selectedNodeId === node.id}
             scrollOnShallow={false}
         />
     );

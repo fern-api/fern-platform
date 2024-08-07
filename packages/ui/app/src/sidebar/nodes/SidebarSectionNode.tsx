@@ -1,9 +1,9 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
 import {
-    useCurrentNodeId,
     useIsChildSelected,
     useIsExpandedSidebarNode,
+    useIsSelectedSidebarNode,
     useToggleExpandedSidebarNode,
 } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
@@ -17,7 +17,7 @@ interface SidebarSectionNodeProps {
 }
 
 export function SidebarSectionNode({ node, className, depth }: SidebarSectionNodeProps): React.ReactElement | null {
-    const selectedNodeId = useCurrentNodeId();
+    const selected = useIsSelectedSidebarNode(node.id);
     const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
     const childSelected = useIsChildSelected(node.id);
     const expanded = useIsExpandedSidebarNode(node.id);
@@ -56,7 +56,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
             showIndicator={showIndicator}
             hidden={node.hidden}
             slug={node.overviewPageId != null ? node.slug : undefined}
-            selected={selectedNodeId === node.id}
+            selected={selected}
         >
             <ul
                 className={clsx("fern-sidebar-group", {

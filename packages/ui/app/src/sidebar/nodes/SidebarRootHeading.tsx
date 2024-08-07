@@ -2,7 +2,7 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import clsx from "clsx";
 import { ReactElement } from "react";
-import { useCurrentNodeId } from "../../atoms";
+import { useIsSelectedSidebarNode } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarRootHeadingProps {
@@ -11,7 +11,7 @@ interface SidebarRootHeadingProps {
 }
 
 export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps): ReactElement {
-    const selectedNodeId = useCurrentNodeId();
+    const selected = useIsSelectedSidebarNode(node.id);
 
     if (node.overviewPageId == null) {
         return (
@@ -31,7 +31,7 @@ export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps)
             title={node.title}
             hidden={node.hidden}
             slug={node.slug}
-            selected={node.id === selectedNodeId}
+            selected={selected}
         />
     );
 }

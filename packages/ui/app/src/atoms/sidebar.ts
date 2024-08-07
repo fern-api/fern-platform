@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
 import { useAtomEffect } from "./hooks";
 import { DOCS_LAYOUT_ATOM } from "./layout";
-import { CURRENT_NODE_ATOM, RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
+import { CURRENT_NODE_ATOM, CURRENT_NODE_ID_ATOM, RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
 import { THEME_ATOM } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
@@ -52,7 +52,6 @@ const INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM = atom<{
 
 const INITIAL_EXPANDED_SIDEBAR_NODES_ATOM = atom((get) => {
     const expandedNodes = new Set<FernNavigation.NodeId>();
-    const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
     const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
     const currentNode = get(CURRENT_NODE_ATOM);
     if (currentNode != null) {
@@ -61,14 +60,15 @@ const INITIAL_EXPANDED_SIDEBAR_NODES_ATOM = atom((get) => {
             expandedNodes.add(parent);
         });
     }
-    if (sidebar != null) {
-        FernNavigation.utils.traverseNavigation(sidebar, (node) => {
-            // TODO: check for api reference, etc.
-            if (node.type === "section" && node.collapsed === false) {
-                expandedNodes.add(node.id);
-            }
-        });
-    }
+    // const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
+    // if (sidebar != null) {
+    //     FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+    //         // TODO: check for api reference, etc.
+    //         if (node.type === "section" && node.collapsed === false) {
+    //             expandedNodes.add(node.id);
+    //         }
+    //     });
+    // }
     return [...expandedNodes];
 });
 INITIAL_EXPANDED_SIDEBAR_NODES_ATOM.debugLabel = "INITIAL_EXPANDED_SIDEBAR_NODES_ATOM";
@@ -139,6 +139,10 @@ export const useIsExpandedSidebarNode = (nodeId: FernNavigation.NodeId): boolean
     return useAtomValue(useMemoOne(() => atom((get) => get(EXPANDED_SIDEBAR_NODES_ATOM).has(nodeId)), [nodeId]));
 };
 
+export const useIsSelectedSidebarNode = (nodeId: FernNavigation.NodeId): boolean => {
+    return useAtomValue(useMemoOne(() => atom((get) => nodeId === get(CURRENT_NODE_ID_ATOM)), [nodeId]));
+};
+
 export const useToggleExpandedSidebarNode = (nodeId: FernNavigation.NodeId): (() => void) => {
     return useAtomCallback(
         useCallbackOne(
@@ -163,11 +167,14 @@ export const useIsChildSelected = (parentId: FernNavigation.NodeId): boolean => 
         useMemoOne(
             () =>
                 atom((get) => {
-                    const parentToChildrenMap = get(SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM);
-                    const selectedNodeId = get(CURRENT_NODE_ATOM)?.id;
-                    if (selectedNodeId == null) {
+                    const selectedNodeId = get(CURRENT_NODE_ID_ATOM);
+                    if (selectedNodeId === parentId) {
+                        return true;
+                    } else if (selectedNodeId == null) {
                         return false;
                     }
+
+                    const parentToChildrenMap = get(SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM);
                     return parentToChildrenMap.get(parentId)?.includes(selectedNodeId) ?? false;
                 }),
             [parentId],

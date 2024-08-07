@@ -1,9 +1,9 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
 import {
-    useCurrentNodeId,
     useIsChildSelected,
     useIsExpandedSidebarNode,
+    useIsSelectedSidebarNode,
     useToggleExpandedSidebarNode,
 } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
@@ -20,7 +20,7 @@ export function SidebarApiPackageNode({
     depth,
     className,
 }: SidebarApiPackageNodeProps): React.ReactElement | null {
-    const selectedNodeId = useCurrentNodeId();
+    const isSelected = useIsSelectedSidebarNode(node.id);
     const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
     const childSelected = useIsChildSelected(node.id);
     const expanded = useIsExpandedSidebarNode(node.id);
@@ -30,7 +30,7 @@ export function SidebarApiPackageNode({
             return null;
         }
 
-        if (node.hidden && selectedNodeId !== node.id) {
+        if (node.hidden && !isSelected) {
             return null;
         }
 
@@ -41,10 +41,9 @@ export function SidebarApiPackageNode({
                 slug={node.slug}
                 depth={Math.max(depth - 1, 0)}
                 title={node.title}
-                selected={node.id === selectedNodeId}
+                selected={isSelected}
                 icon={node.icon}
                 hidden={node.hidden}
-                shallow={selectedNodeId === node.id}
                 scrollOnShallow={false}
             />
         );
@@ -80,7 +79,7 @@ export function SidebarApiPackageNode({
             showIndicator={showIndicator}
             hidden={node.hidden}
             slug={node.overviewPageId != null ? node.slug : undefined}
-            selected={node.id === selectedNodeId}
+            selected={isSelected}
         >
             <ul
                 className={clsx("fern-sidebar-group", {

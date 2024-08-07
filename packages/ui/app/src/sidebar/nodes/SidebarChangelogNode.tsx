@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
-import { useCurrentNodeId } from "../../atoms";
+import { useIsSelectedSidebarNode } from "../../atoms";
 import { Changelog } from "../../util/dateUtils";
 import { SidebarSlugLink } from "../SidebarLink";
 
@@ -11,9 +11,9 @@ export interface SidebarChangelogNodeProps {
 }
 
 export function SidebarChangelogNode({ node, depth, className }: SidebarChangelogNodeProps): React.ReactElement | null {
-    const selectedNodeId = useCurrentNodeId();
+    const isSelected = useIsSelectedSidebarNode(node.id);
 
-    if (node.hidden && selectedNodeId === node.id) {
+    if (node.hidden && !isSelected) {
         return null;
     }
 
@@ -23,7 +23,7 @@ export function SidebarChangelogNode({ node, depth, className }: SidebarChangelo
             slug={node.slug}
             title={node.title}
             className={className}
-            selected={node.id === selectedNodeId}
+            selected={isSelected}
             depth={Math.max(0, depth - 1)}
             icon={node.icon ?? <ActivityLogIcon />}
             tooltipContent={renderChangelogTooltip(node)}

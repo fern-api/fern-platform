@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
-import { useCurrentNodeId, useIsChildSelected } from "../../atoms";
+import { useIsChildSelected, useIsSelectedSidebarNode } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
 import { SidebarRootHeading } from "./SidebarRootHeading";
@@ -11,7 +11,7 @@ interface SidebarRootSectionNodeProps {
 }
 
 export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNodeProps): React.ReactElement | null {
-    const selectedNodeId = useCurrentNodeId();
+    const selected = useIsSelectedSidebarNode(node.id);
     const childSelected = useIsChildSelected(node.id);
 
     if (node.children.length === 0) {
@@ -19,7 +19,7 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
             return null;
         }
 
-        if (node.hidden && selectedNodeId !== node.id) {
+        if (node.hidden && !selected) {
             return null;
         }
 
@@ -30,10 +30,9 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
                 className={className}
                 slug={node.slug}
                 title={node.title}
-                selected={node.id === selectedNodeId}
+                selected={selected}
                 icon={node.icon}
                 hidden={node.hidden}
-                shallow={selectedNodeId === node.id}
                 scrollOnShallow={false}
             />
         );

@@ -80,6 +80,11 @@ SIDEBAR_ROOT_NODE_ATOM.debugLabel = "SIDEBAR_ROOT_NODE_ATOM";
 export const RESOLVED_PATH_ATOM = atom<ResolvedPath>((get) => get(DOCS_ATOM).resolvedPath);
 RESOLVED_PATH_ATOM.debugLabel = "RESOLVED_PATH_ATOM";
 
+export const RESOLVED_API_DEFINITION_ATOM = atom((get) => {
+    const resolvedPath = get(RESOLVED_PATH_ATOM);
+    return resolvedPath.type === "api-page" ? resolvedPath.api : undefined;
+});
+
 export const NAVIGATION_NODES_ATOM = atom<FernNavigation.NodeCollector>((get) => {
     const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
     return FernNavigation.NodeCollector.collect(sidebar);
