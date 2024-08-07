@@ -142,9 +142,15 @@ export const useIsExpandedSidebarNode = (nodeId: FernNavigation.NodeId): boolean
 export const useToggleExpandedSidebarNode = (nodeId: FernNavigation.NodeId): (() => void) => {
     return useAtomCallback(
         useCallbackOne(
-            (_get, set) => {
+            (get, set) => {
+                const parentToChildrenMap = get(SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM);
                 set(EXPANDED_SIDEBAR_NODES_ATOM, (prev) => {
-                    return prev.includes(nodeId) ? prev.filter((id) => id !== nodeId) : [...prev, nodeId];
+                    // return prev.includes(nodeId) ? prev.filter((id) => id !== nodeId) : [...prev, nodeId];
+                    if (prev.includes(nodeId)) {
+                        return prev.filter((id) => id !== nodeId && !parentToChildrenMap.get(nodeId)?.includes(id));
+                    } else {
+                        return [...prev, nodeId];
+                    }
                 });
             },
             [nodeId],

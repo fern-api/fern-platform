@@ -18,7 +18,7 @@ import {
     useRef,
 } from "react";
 import { ChevronDown } from "react-feather";
-import { SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMobileSidebar } from "../atoms";
+import { IS_READY_ATOM, SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMobileSidebar } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { scrollToRoute } from "../util/anchor";
 import { slugToHref } from "../util/slugToHref";
@@ -211,7 +211,7 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
             useCallback(
                 (get) => {
                     if (props.selected) {
-                        scrollToCenter(get(SIDEBAR_SCROLL_CONTAINER_ATOM), ref.current);
+                        scrollToCenter(get(SIDEBAR_SCROLL_CONTAINER_ATOM), ref.current, !get(IS_READY_ATOM));
                     }
                 },
                 [props.selected],
