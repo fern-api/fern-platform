@@ -63,6 +63,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
     fallback: {},
     theme: "default",
     user: undefined,
+    defaultLang: "curl",
 };
 
 export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(EMPTY_DOCS_STATE, (_, next) => {

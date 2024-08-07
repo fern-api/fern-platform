@@ -56,4 +56,5 @@ export interface DocsProps {
     fallback: Record<string, any>;
     theme: FernTheme;
     user: FernUser | undefined;
+    defaultLang: DocsV1Read.ProgrammingLanguage;
 }

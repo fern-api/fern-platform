@@ -367,6 +367,7 @@ async function convertDocsToDocsPageProps({
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
+        defaultLang: docs.definition.config.defaultLanguage ?? "curl",
     };
 
     // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
