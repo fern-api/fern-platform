@@ -6,9 +6,9 @@ import {
     DocsPage,
     FeatureFlags,
     convertNavigatableToResolvedPath,
-    getSeoProps,
     getGitHubInfo,
     getGitHubRepo,
+    getSeoProps,
 } from "@fern-ui/ui";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
@@ -148,6 +148,7 @@ export async function getDocsPageProps(
         analytics: undefined,
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
         user: undefined,
+        defaultLang: docs.definition.config.defaultLanguage ?? "curl",
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
