@@ -3,7 +3,12 @@ export function getAnchorId(anchorIdParts: readonly string[]): string {
 }
 
 export function getRouteNode(route: string): HTMLElement | undefined {
-    return document.getElementById(route) ?? undefined;
+    const toRet = document.getElementById(route) ?? undefined;
+    if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
+        console.debug(`getting route node: ${route} => ${toRet}`);
+    }
+    return toRet;
 }
 
 export function getRouteNodeWithAnchor(route: string): HTMLElement | undefined {
@@ -11,6 +16,12 @@ export function getRouteNodeWithAnchor(route: string): HTMLElement | undefined {
     return getRouteNode(route) ?? (anchor != null ? getRouteNode(anchor) : undefined);
 }
 
-export function scrollToRoute(route: string): void {
-    getRouteNodeWithAnchor(route)?.scrollIntoView({ behavior: "auto" });
+export function scrollToRoute(route: string, smooth = false): boolean {
+    if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
+        console.debug(`scrolling to route: ${route}`);
+    }
+    const node = getRouteNodeWithAnchor(route);
+    node?.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
+    return node != null;
 }
