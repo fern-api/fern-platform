@@ -1,8 +1,6 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { Provider as JotaiProvider } from "jotai";
-import { DevTools } from "jotai-devtools";
-import "jotai-devtools/styles.css";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import type { Router } from "next/router";
