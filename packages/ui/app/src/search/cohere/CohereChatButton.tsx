@@ -1,13 +1,13 @@
 import { ChatbotMessage, ChatbotModal, Citation, CohereIcon } from "@fern-ui/chatbot";
 import * as Dialog from "@radix-ui/react-dialog";
 import type { Cohere } from "cohere-ai";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { ReactElement, isValidElement } from "react";
 import { createPortal } from "react-dom";
 import urlJoin from "url-join";
 import { useCallbackOne } from "use-memo-one";
 import { Stream } from "../../api-playground/Stream";
-import { COHERE_ASK_AI, useBasePath } from "../../atoms";
+import { COHERE_ASK_AI, CURRENT_VERSION_ID_ATOM, useBasePath } from "../../atoms";
 import { FernLink } from "../../components/FernLink";
 import { useRouteChanged } from "../../hooks/useRouteChanged";
 import { CodeBlock } from "../../mdx/components/code";
@@ -18,6 +18,7 @@ export function CohereChatButton(): ReactElement | null {
     const [config] = useSearchConfig();
     const [enabled, setEnabled] = useAtom(COHERE_ASK_AI);
     const basePath = useBasePath();
+    const versionId = useAtomValue(CURRENT_VERSION_ID_ATOM);
 
     // Close the dialog when the route changes
     useRouteChanged(
@@ -34,7 +35,7 @@ export function CohereChatButton(): ReactElement | null {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ conversationId, message }),
+            body: JSON.stringify({ conversationId, message, versionId }),
         }).then((res) => res.body);
 
         if (body == null) {
