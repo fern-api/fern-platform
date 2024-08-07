@@ -36,7 +36,6 @@ export function SidebarRootApiPackageNode({
                 selected={selected}
                 icon={node.icon}
                 hidden={node.hidden}
-                scrollOnShallow={false}
             />
         );
     }

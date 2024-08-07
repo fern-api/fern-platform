@@ -25,7 +25,6 @@ export function SidebarPageNode({ node, depth, className }: SidebarPageNodeProps
             selected={selected}
             icon={node.icon}
             hidden={node.hidden}
-            scrollOnShallow={false}
         />
     );
 }

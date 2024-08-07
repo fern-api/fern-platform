@@ -44,7 +44,6 @@ export function SidebarApiPackageNode({
                 selected={selected}
                 icon={node.icon}
                 hidden={node.hidden}
-                scrollOnShallow={false}
             />
         );
     }
