@@ -32,6 +32,7 @@ The user asking questions may be a developer, technical writer, or product manag
 
 const RequestSchema = z.strictObject({
     conversationId: z.string().optional(),
+    versionId: z.string().optional(),
     message: z.string(),
 });
 
@@ -75,7 +76,7 @@ export default async function handler(req: NextRequest): Promise<Response> {
         console.error(body.error);
         return new Response(null, { status: 400 });
     }
-    const { conversationId = v4(), message } = body.data;
+    const { conversationId = v4(), message, versionId } = body.data;
     const cache = new ConversationCache(conversationId);
     const chatHistory = await cache.get();
 
@@ -102,8 +103,13 @@ export default async function handler(req: NextRequest): Promise<Response> {
     if (docs.body.definition.search.value.type === "unversioned") {
         indexSegmentId = docs.body.definition.search.value.indexSegment.id;
     } else if (docs.body.definition.search.value.type === "versioned") {
-        // TODO: handle versioned index segments
-        return new Response(null, { status: 500 });
+        if (versionId == null) {
+            return new Response(null, { status: 400 });
+        }
+        indexSegmentId = docs.body.definition.search.value.indexSegmentsByVersionId[versionId]?.id;
+        if (indexSegmentId == null) {
+            return new Response(null, { status: 404 });
+        }
     } else {
         return new Response(null, { status: 500 });
     }
