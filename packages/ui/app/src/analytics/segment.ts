@@ -2,7 +2,7 @@ import * as snippet from "@segment/snippet";
 
 const DOMAINS_TO_SKIP = ["privategpt.docs.buildwithfern.com"];
 
-export async function renderSegmentSnippet(domain: string, customSegmentWriteKey?: string): Promise<string> {
+export function renderSegmentSnippet(domain: string, customSegmentWriteKey?: string): string {
     const apiKey = process.env.NEXT_PUBLIC_SEGMENT_API_KEY?.trim();
     const opts = {
         apiKey: customSegmentWriteKey ?? apiKey,
