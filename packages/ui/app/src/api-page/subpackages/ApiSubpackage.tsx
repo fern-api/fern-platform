@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { useRef } from "react";
 import { ResolvedApiDefinitionPackage, ResolvedTypeDefinition } from "../../resolver/types";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -24,7 +25,9 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     anchorIdParts,
     breadcrumbs,
 }) => {
-    const ref = useApiPageCenterElement({ slug: apiDefinition.slug, skip: true });
+    const ref = useRef<HTMLDivElement>(null);
+    useApiPageCenterElement(ref, apiDefinition.slug, true);
+
     return (
         <>
             <div ref={ref} className="scroll-mt-content" id={`/${apiDefinition.slug}`} />
