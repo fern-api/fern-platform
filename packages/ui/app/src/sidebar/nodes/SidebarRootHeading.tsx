@@ -8,9 +8,10 @@ import { SidebarSlugLink } from "../SidebarLink";
 interface SidebarRootHeadingProps {
     node: FernNavigation.NavigationNodeSection;
     className: string | undefined;
+    shallow?: boolean;
 }
 
-export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps): ReactElement {
+export function SidebarRootHeading({ node, className, shallow }: SidebarRootHeadingProps): ReactElement {
     const selected = useIsSelectedSidebarNode(node.id);
 
     if (node.overviewPageId == null) {
@@ -32,6 +33,7 @@ export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps)
             hidden={node.hidden}
             slug={node.slug}
             selected={selected}
+            shallow={shallow}
         />
     );
 }

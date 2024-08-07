@@ -10,16 +10,17 @@ import { SidebarPageNode } from "./SidebarPageNode";
 interface SidebarApiPackageChild {
     node: FernNavigation.ApiPackageChild | FernNavigation.ChangelogNode;
     depth: number;
+    shallow: boolean;
 }
 
-export function SidebarApiPackageChild({ node, depth }: SidebarApiPackageChild): React.ReactElement {
+export function SidebarApiPackageChild({ node, depth, shallow }: SidebarApiPackageChild): React.ReactElement {
     return visitDiscriminatedUnion(node)._visit({
-        page: (node) => <SidebarPageNode node={node} depth={depth} />,
+        page: (node) => <SidebarPageNode node={node} depth={depth} shallow={shallow} />,
         link: (node) => <SidebarLinkNode node={node} depth={depth} />,
-        endpoint: (node) => <SidebarApiLeafNode node={node} depth={depth} />,
-        endpointPair: (node) => <SidebarEndpointPairNode node={node} depth={depth} />,
-        webSocket: (node) => <SidebarApiLeafNode node={node} depth={depth} />,
-        webhook: (node) => <SidebarApiLeafNode node={node} depth={depth} />,
+        endpoint: (node) => <SidebarApiLeafNode node={node} depth={depth} shallow={shallow} />,
+        endpointPair: (node) => <SidebarEndpointPairNode node={node} depth={depth} shallow={shallow} />,
+        webSocket: (node) => <SidebarApiLeafNode node={node} depth={depth} shallow={shallow} />,
+        webhook: (node) => <SidebarApiLeafNode node={node} depth={depth} shallow={shallow} />,
         apiPackage: (node) => <SidebarApiPackageNode node={node} depth={depth} />,
         changelog: (node) => <SidebarChangelogNode node={node} depth={depth} />,
     });

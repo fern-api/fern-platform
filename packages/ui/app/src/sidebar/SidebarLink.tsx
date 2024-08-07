@@ -33,6 +33,7 @@ interface SidebarSlugLinkProps {
     linkClassName?: string;
     title?: ReactNode;
     shallow?: boolean;
+    scroll?: boolean;
     selected?: boolean;
     showIndicator?: boolean;
     depth?: number;
@@ -63,6 +64,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
         title,
         onClick,
         shallow,
+        scroll,
         href,
         selected,
         showIndicator,
@@ -100,6 +102,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
                 shallow={shallow}
                 target={target}
                 rel={rel}
+                scroll={scroll}
             >
                 {child}
             </FernLink>
@@ -218,10 +221,12 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
                 onClick?.(e);
                 if (href != null) {
                     closeMobileSidebar();
-                    scrollToRoute(href);
+                    if (innerProps.shallow) {
+                        scrollToRoute(href);
+                    }
                 }
             },
-            [closeMobileSidebar, href, onClick],
+            [closeMobileSidebar, href, innerProps.shallow, onClick],
         );
 
         return (
@@ -230,7 +235,8 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
                 ref={ref}
                 href={href}
                 onClick={handleClick}
-                shallow={innerProps.shallow ?? innerProps.selected}
+                shallow={innerProps.shallow || innerProps.selected}
+                scroll={!innerProps.shallow}
             />
         );
     },
