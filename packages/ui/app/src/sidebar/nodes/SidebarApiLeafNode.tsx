@@ -1,18 +1,16 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { useAtomValue } from "jotai";
-import { RESOLVED_API_DEFINITION_ATOM, useIsApiReferencePaginated, useIsSelectedSidebarNode } from "../../atoms";
+import { useIsSelectedSidebarNode } from "../../atoms";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarApiLeafNodeProps {
     node: FernNavigation.NavigationNodeApiLeaf;
     depth: number;
+    shallow: boolean;
 }
 
-export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): React.ReactElement | null {
+export function SidebarApiLeafNode({ node, depth, shallow }: SidebarApiLeafNodeProps): React.ReactElement | null {
     const selected = useIsSelectedSidebarNode(node.id);
-    const isPaginated = useIsApiReferencePaginated();
-    const resolvedApi = useAtomValue(RESOLVED_API_DEFINITION_ATOM);
 
     if (node.hidden && !selected) {
         return null;
@@ -39,7 +37,7 @@ export function SidebarApiLeafNode({ node, depth }: SidebarApiLeafNodeProps): Re
             hidden={node.hidden}
             icon={renderRightElement()}
             selected={selected}
-            shallow={!isPaginated && resolvedApi === node.apiDefinitionId}
+            shallow={shallow}
         />
     );
 }

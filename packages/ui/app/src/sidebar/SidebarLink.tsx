@@ -33,6 +33,7 @@ interface SidebarSlugLinkProps {
     linkClassName?: string;
     title?: ReactNode;
     shallow?: boolean;
+    scroll?: boolean;
     selected?: boolean;
     showIndicator?: boolean;
     depth?: number;
@@ -41,7 +42,6 @@ interface SidebarSlugLinkProps {
     rightElement?: ReactNode;
     tooltipContent?: ReactNode;
     hidden?: boolean;
-    scrollOnShallow?: boolean;
     as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 }
 
@@ -64,6 +64,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
         title,
         onClick,
         shallow,
+        scroll,
         href,
         selected,
         showIndicator,
@@ -76,7 +77,6 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
         target,
         rel,
         hidden,
-        scrollOnShallow,
         as = "span",
     } = props;
 
@@ -98,14 +98,11 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
                 onClick={(e) => {
                     onClick?.(e);
                     toggleExpand?.();
-                    if (shallow && typeof href === "string") {
-                        scrollToRoute(href);
-                    }
                 }}
                 shallow={shallow}
-                scroll={scrollOnShallow || !shallow}
                 target={target}
                 rel={rel}
+                scroll={scroll}
             >
                 {child}
             </FernLink>
@@ -218,23 +215,28 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
             ),
         );
 
+        const href = slug != null ? slugToHref(slug) : undefined;
         const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>>(
             (e) => {
                 onClick?.(e);
-                if (slug != null) {
+                if (href != null) {
                     closeMobileSidebar();
+                    if (innerProps.shallow) {
+                        scrollToRoute(href);
+                    }
                 }
             },
-            [closeMobileSidebar, onClick, slug],
+            [closeMobileSidebar, href, innerProps.shallow, onClick],
         );
 
         return (
             <SidebarLink
                 {...innerProps}
                 ref={ref}
-                href={slug != null ? slugToHref(slug) : undefined}
+                href={href}
                 onClick={handleClick}
-                shallow={innerProps.shallow ?? innerProps.selected}
+                shallow={innerProps.shallow || innerProps.selected}
+                scroll={!innerProps.shallow}
             />
         );
     },

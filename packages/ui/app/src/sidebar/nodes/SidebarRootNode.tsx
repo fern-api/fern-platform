@@ -1,19 +1,13 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { last } from "lodash-es";
-import { Fragment, memo } from "react";
-import { SidebarApiGroupNode } from "./SidebarApiGroupNode";
+import { memo } from "react";
 import { SidebarGroupNode } from "./SidebarGroupNode";
-import { SidebarRootApiPackageNode } from "./SidebarRootApiPackageNode";
+import { SidebarRootApiReferenceNode } from "./SidebarRootApiReferenceNode";
 import { SidebarRootSectionNode } from "./SidebarRootSectionNode";
 
 interface SidebarRootNodeProps {
     node: FernNavigation.SidebarRootNode | undefined;
 }
-
-type ApiGroupOrSection =
-    | { type: "apiGroup"; children: (FernNavigation.ApiPackageChild | FernNavigation.ChangelogNode)[] }
-    | FernNavigation.ApiPackageNode;
 
 export const SidebarRootNode = memo(function SidebarRootNode({ node }: SidebarRootNodeProps): React.ReactElement {
     return (
@@ -25,48 +19,7 @@ export const SidebarRootNode = memo(function SidebarRootNode({ node }: SidebarRo
                             <SidebarGroupNode node={group} />
                         </li>
                     ),
-                    apiReference: (apiRef) => {
-                        if (!apiRef.hideTitle) {
-                            return (
-                                <li key={child.id} className="mt-6">
-                                    <SidebarRootApiPackageNode node={apiRef} />
-                                </li>
-                            );
-                        }
-
-                        const groups: ApiGroupOrSection[] = [];
-
-                        [...apiRef.children, ...(apiRef.changelog != null ? [apiRef.changelog] : [])].forEach(
-                            (child) => {
-                                if (child.type === "apiPackage") {
-                                    groups.push(child);
-                                } else {
-                                    const lastGroup = last(groups);
-                                    if (lastGroup?.type === "apiGroup") {
-                                        lastGroup.children.push(child);
-                                    } else {
-                                        groups.push({ type: "apiGroup", children: [child] });
-                                    }
-                                }
-                            },
-                        );
-
-                        return (
-                            <Fragment key={child.id}>
-                                {groups.map((child, idx) =>
-                                    child.type === "apiPackage" ? (
-                                        <li key={idx} className="mt-6">
-                                            <SidebarRootApiPackageNode node={child} />
-                                        </li>
-                                    ) : (
-                                        <li key={idx} className="mt-6">
-                                            <SidebarApiGroupNode nodeChildren={child.children} />
-                                        </li>
-                                    ),
-                                )}
-                            </Fragment>
-                        );
-                    },
+                    apiReference: (apiRef) => <SidebarRootApiReferenceNode key={child.id} node={apiRef} />,
                     section: (section) => (
                         <li key={child.id} className="mt-6">
                             <SidebarRootSectionNode node={section} />

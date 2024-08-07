@@ -1,6 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
 import {
+    useIsApiReferenceShallowLink,
     useIsChildSelected,
     useIsExpandedSidebarNode,
     useIsSelectedSidebarNode,
@@ -24,6 +25,7 @@ export function SidebarApiPackageNode({
     const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
     const childSelected = useIsChildSelected(node.id);
     const expanded = useIsExpandedSidebarNode(node.id);
+    const shallow = useIsApiReferenceShallowLink(node);
 
     if (node.children.length === 0) {
         if (node.overviewPageId == null) {
@@ -44,7 +46,7 @@ export function SidebarApiPackageNode({
                 selected={selected}
                 icon={node.icon}
                 hidden={node.hidden}
-                scrollOnShallow={false}
+                shallow={shallow}
             />
         );
     }
@@ -58,7 +60,7 @@ export function SidebarApiPackageNode({
             <ul className={clsx("fern-sidebar-group")}>
                 {node.children.map((child) => (
                     <li key={child.id}>
-                        <SidebarApiPackageChild node={child} depth={depth} />
+                        <SidebarApiPackageChild node={child} depth={depth} shallow={shallow} />
                     </li>
                 ))}
             </ul>
@@ -80,6 +82,7 @@ export function SidebarApiPackageNode({
             hidden={node.hidden}
             slug={node.overviewPageId != null ? node.slug : undefined}
             selected={selected}
+            shallow={shallow}
         >
             <ul
                 className={clsx("fern-sidebar-group", {
@@ -88,7 +91,7 @@ export function SidebarApiPackageNode({
             >
                 {node.children.map((child) => (
                     <li key={child.id}>
-                        <SidebarApiPackageChild node={child} depth={depth + 1} />
+                        <SidebarApiPackageChild node={child} depth={depth + 1} shallow={shallow} />
                     </li>
                 ))}
             </ul>
