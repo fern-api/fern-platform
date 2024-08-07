@@ -1,12 +1,173 @@
-import { atom, useAtomValue, useSetAtom } from "jotai";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { SetStateAction, atom, useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 import { useCallback } from "react";
-import { useCallbackOne } from "use-memo-one";
+import { useCallbackOne, useMemoOne } from "use-memo-one";
 import { useAtomEffect } from "./hooks";
 import { DOCS_LAYOUT_ATOM } from "./layout";
 import { CURRENT_NODE_ATOM, RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
 import { THEME_ATOM } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
+
+export const SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM = atom((get) => {
+    const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
+    const childToParentsMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
+
+    if (sidebar == null) {
+        return childToParentsMap;
+    }
+
+    FernNavigation.utils.traverseNavigation(sidebar, (node, _index, parents) => {
+        childToParentsMap.set(
+            node.id,
+            parents.map((p) => p.id),
+        );
+    });
+
+    return childToParentsMap;
+});
+SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM.debugLabel = "SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM";
+
+export const SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM = atom((get) => {
+    const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
+    const parentToChildrenMap = new Map<FernNavigation.NodeId, FernNavigation.NodeId[]>();
+    childToParentsMap.forEach((parents, child) => {
+        parents.forEach((parentId) => {
+            const children = parentToChildrenMap.get(parentId) ?? [];
+            children.push(child);
+            parentToChildrenMap.set(parentId, children);
+        });
+    });
+    return parentToChildrenMap;
+});
+SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM.debugLabel = "SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM";
+
+const INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM = atom<{
+    sidebarRootId: FernNavigation.NodeId;
+    expandedNodes: FernNavigation.NodeId[];
+}>({
+    sidebarRootId: FernNavigation.NodeId(""),
+    expandedNodes: [],
+});
+
+const INITIAL_EXPANDED_SIDEBAR_NODES_ATOM = atom((get) => {
+    const expandedNodes = new Set<FernNavigation.NodeId>();
+    const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
+    const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
+    const currentNode = get(CURRENT_NODE_ATOM);
+    if (currentNode != null) {
+        expandedNodes.add(currentNode.id);
+        childToParentsMap.get(currentNode.id)?.forEach((parent) => {
+            expandedNodes.add(parent);
+        });
+    }
+    if (sidebar != null) {
+        FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+            // TODO: check for api reference, etc.
+            if (node.type === "section" && node.collapsed === false) {
+                expandedNodes.add(node.id);
+            }
+        });
+    }
+    return [...expandedNodes];
+});
+INITIAL_EXPANDED_SIDEBAR_NODES_ATOM.debugLabel = "INITIAL_EXPANDED_SIDEBAR_NODES_ATOM";
+
+export const EXPANDED_SIDEBAR_NODES_ATOM = atom(
+    (get) => {
+        const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
+        const { expandedNodes: internalExpandedNodes, sidebarRootId } = get(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM);
+
+        if (sidebarRootId !== sidebar?.id) {
+            return new Set(get(INITIAL_EXPANDED_SIDEBAR_NODES_ATOM));
+        }
+
+        const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
+        const expandedNodes = new Set<FernNavigation.NodeId>();
+        internalExpandedNodes.forEach((nodeId) => {
+            expandedNodes.add(nodeId);
+            childToParentsMap.get(nodeId)?.forEach((parent) => {
+                expandedNodes.add(parent);
+            });
+        });
+        const current = get(CURRENT_NODE_ATOM);
+        if (current != null) {
+            expandedNodes.add(current.id);
+            childToParentsMap.get(current.id)?.forEach((parent) => {
+                expandedNodes.add(parent);
+            });
+        }
+        return expandedNodes;
+    },
+    (get, set, update: SetStateAction<FernNavigation.NodeId[]>) => {
+        const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
+        const internal = get(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM);
+
+        if (internal.sidebarRootId !== sidebar?.id) {
+            const expandedNodes = get(INITIAL_EXPANDED_SIDEBAR_NODES_ATOM);
+            if (typeof update === "function") {
+                set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, {
+                    sidebarRootId: sidebar?.id ?? FernNavigation.NodeId(""),
+                    expandedNodes: update(expandedNodes),
+                });
+            } else {
+                set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, {
+                    sidebarRootId: sidebar?.id ?? FernNavigation.NodeId(""),
+                    expandedNodes: update,
+                });
+            }
+            return;
+        }
+
+        const nodes = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
+        if (typeof update === "function") {
+            set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, (prev) => ({
+                sidebarRootId: prev.sidebarRootId,
+                expandedNodes: update(prev.expandedNodes).filter((nodeId) => nodes.has(nodeId)),
+            }));
+        } else {
+            set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, {
+                sidebarRootId: internal.sidebarRootId,
+                expandedNodes: update.filter((nodeId) => nodes.has(nodeId)),
+            });
+        }
+    },
+);
+EXPANDED_SIDEBAR_NODES_ATOM.debugLabel = "EXPANDED_SIDEBAR_NODES_ATOM";
+
+export const useIsExpandedSidebarNode = (nodeId: FernNavigation.NodeId): boolean => {
+    return useAtomValue(useMemoOne(() => atom((get) => get(EXPANDED_SIDEBAR_NODES_ATOM).has(nodeId)), [nodeId]));
+};
+
+export const useToggleExpandedSidebarNode = (nodeId: FernNavigation.NodeId): (() => void) => {
+    return useAtomCallback(
+        useCallbackOne(
+            (_get, set) => {
+                set(EXPANDED_SIDEBAR_NODES_ATOM, (prev) => {
+                    return prev.includes(nodeId) ? prev.filter((id) => id !== nodeId) : [...prev, nodeId];
+                });
+            },
+            [nodeId],
+        ),
+    );
+};
+
+export const useIsChildSelected = (parentId: FernNavigation.NodeId): boolean => {
+    return useAtomValue(
+        useMemoOne(
+            () =>
+                atom((get) => {
+                    const parentToChildrenMap = get(SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM);
+                    const selectedNodeId = get(CURRENT_NODE_ATOM)?.id;
+                    if (selectedNodeId == null) {
+                        return false;
+                    }
+                    return parentToChildrenMap.get(parentId)?.includes(selectedNodeId) ?? false;
+                }),
+            [parentId],
+        ),
+    );
+};
 
 export const SEARCH_DIALOG_OPEN_ATOM = atom(false);
 SEARCH_DIALOG_OPEN_ATOM.debugLabel = "SEARCH_DIALOG_OPEN_ATOM";

@@ -1,6 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useCurrentNodeId } from "../../atoms";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarPageNodeProps {
@@ -10,7 +9,6 @@ interface SidebarPageNodeProps {
 }
 
 export function SidebarPageNode({ node, depth, className }: SidebarPageNodeProps): React.ReactElement | null {
-    const { registerScrolledToPathListener } = useCollapseSidebar();
     const selectedNodeId = useCurrentNodeId();
 
     if (node.hidden && selectedNodeId === node.id) {
@@ -23,7 +21,6 @@ export function SidebarPageNode({ node, depth, className }: SidebarPageNodeProps
             className={className}
             slug={node.slug}
             depth={Math.max(depth - 1, 0)}
-            registerScrolledToPathListener={registerScrolledToPathListener}
             title={node.title}
             selected={node.id === selectedNodeId}
             icon={node.icon}

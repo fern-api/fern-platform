@@ -2,7 +2,6 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import { useCurrentNodeId } from "../../atoms";
 import { Changelog } from "../../util/dateUtils";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 
 export interface SidebarChangelogNodeProps {
@@ -12,7 +11,6 @@ export interface SidebarChangelogNodeProps {
 }
 
 export function SidebarChangelogNode({ node, depth, className }: SidebarChangelogNodeProps): React.ReactElement | null {
-    const { registerScrolledToPathListener } = useCollapseSidebar();
     const selectedNodeId = useCurrentNodeId();
 
     if (node.hidden && selectedNodeId === node.id) {
@@ -25,7 +23,6 @@ export function SidebarChangelogNode({ node, depth, className }: SidebarChangelo
             slug={node.slug}
             title={node.title}
             className={className}
-            registerScrolledToPathListener={registerScrolledToPathListener}
             selected={node.id === selectedNodeId}
             depth={Math.max(0, depth - 1)}
             icon={node.icon ?? <ActivityLogIcon />}

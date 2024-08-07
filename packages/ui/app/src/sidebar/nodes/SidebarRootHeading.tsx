@@ -3,7 +3,6 @@ import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import clsx from "clsx";
 import { ReactElement } from "react";
 import { useCurrentNodeId } from "../../atoms";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarRootHeadingProps {
@@ -12,7 +11,6 @@ interface SidebarRootHeadingProps {
 }
 
 export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps): ReactElement {
-    const { registerScrolledToPathListener } = useCollapseSidebar();
     const selectedNodeId = useCurrentNodeId();
 
     if (node.overviewPageId == null) {
@@ -30,7 +28,6 @@ export function SidebarRootHeading({ node, className }: SidebarRootHeadingProps)
             linkClassName="font-semibold !text-text-default"
             icon={node.icon}
             className={className}
-            registerScrolledToPathListener={registerScrolledToPathListener}
             title={node.title}
             hidden={node.hidden}
             slug={node.slug}

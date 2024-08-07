@@ -1,7 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
-import { useCurrentNodeId } from "../../atoms";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
+import { useCurrentNodeId, useIsChildSelected } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 import { SidebarRootHeading } from "./SidebarRootHeading";
@@ -15,8 +14,8 @@ export function SidebarRootApiPackageNode({
     node,
     className,
 }: SidebarRootApiPackageNodeProps): React.ReactElement | null {
-    const { checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
     const selectedNodeId = useCurrentNodeId();
+    const childSelected = useIsChildSelected(node.id);
 
     if (node.children.length === 0) {
         if (node.overviewPageId == null) {
@@ -33,7 +32,6 @@ export function SidebarRootApiPackageNode({
                 linkClassName="font-semibold !text-text-default"
                 className={className}
                 slug={node.slug}
-                registerScrolledToPathListener={registerScrolledToPathListener}
                 title={node.title}
                 selected={node.id === selectedNodeId}
                 icon={node.icon}
@@ -43,8 +41,6 @@ export function SidebarRootApiPackageNode({
             />
         );
     }
-
-    const childSelected = checkChildSelected(node.id);
 
     if (node.hidden && !childSelected) {
         return null;

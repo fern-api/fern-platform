@@ -1,8 +1,11 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
-import { useCallback } from "react";
-import { useCurrentNodeId } from "../../atoms";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
+import {
+    useCurrentNodeId,
+    useIsChildSelected,
+    useIsExpandedSidebarNode,
+    useToggleExpandedSidebarNode,
+} from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
 import { SidebarPageNode } from "./SidebarPageNode";
@@ -14,9 +17,10 @@ interface SidebarSectionNodeProps {
 }
 
 export function SidebarSectionNode({ node, className, depth }: SidebarSectionNodeProps): React.ReactElement | null {
-    const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
-    const handleToggleExpand = useCallback(() => toggleExpanded(node.id), [node.id, toggleExpanded]);
     const selectedNodeId = useCurrentNodeId();
+    const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
+    const childSelected = useIsChildSelected(node.id);
+    const expanded = useIsExpandedSidebarNode(node.id);
 
     if (node.children.length === 0) {
         if (node.overviewPageId != null) {
@@ -35,14 +39,10 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
         return null;
     }
 
-    const childSelected = checkChildSelected(node.id);
-
     if (node.hidden && !childSelected) {
         return null;
     }
 
-    const expanded =
-        selectedNodeId === node.id || checkExpanded(node.id) || (childSelected && node.overviewPageId != null);
     const showIndicator = childSelected && !expanded;
     return (
         <SidebarSlugLink
@@ -50,7 +50,6 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
             icon={node.icon}
             className={className}
             depth={Math.max(depth - 1, 0)}
-            registerScrolledToPathListener={registerScrolledToPathListener}
             title={node.title}
             expanded={expanded}
             toggleExpand={handleToggleExpand}

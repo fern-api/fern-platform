@@ -1,7 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
-import { useCurrentNodeId } from "../../atoms";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
+import { useCurrentNodeId, useIsChildSelected } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
 import { SidebarRootHeading } from "./SidebarRootHeading";
@@ -12,8 +11,8 @@ interface SidebarRootSectionNodeProps {
 }
 
 export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNodeProps): React.ReactElement | null {
-    const { checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
     const selectedNodeId = useCurrentNodeId();
+    const childSelected = useIsChildSelected(node.id);
 
     if (node.children.length === 0) {
         if (node.overviewPageId == null) {
@@ -30,7 +29,6 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
                 linkClassName="font-semibold !text-text-default"
                 className={className}
                 slug={node.slug}
-                registerScrolledToPathListener={registerScrolledToPathListener}
                 title={node.title}
                 selected={node.id === selectedNodeId}
                 icon={node.icon}
@@ -40,8 +38,6 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
             />
         );
     }
-
-    const childSelected = checkChildSelected(node.id);
 
     if (node.hidden && !childSelected) {
         return null;
