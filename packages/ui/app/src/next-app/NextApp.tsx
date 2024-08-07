@@ -33,7 +33,6 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
             <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
             <Toaster />
             <JotaiProvider store={store}>
-                <DevTools store={store} />
                 <FernTooltipProvider>
                     <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
