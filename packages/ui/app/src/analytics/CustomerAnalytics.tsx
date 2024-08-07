@@ -9,9 +9,9 @@ import { GoogleTagManager } from "./GoogleTagManager";
 import { renderSegmentSnippet } from "./segment";
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
-const domain = useAtomValue(DOMAIN_ATOM);
 
 export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
+    const domain = useAtomValue(DOMAIN_ATOM);
     const { ga4, gtm, segment } = useAtomValue(ANALYTICS_ATOM);
     return (
         <>

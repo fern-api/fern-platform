@@ -2,15 +2,13 @@ import { atom, useAtomValue } from "jotai";
 import Script from "next/script";
 import { memo } from "react";
 import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
-import { renderSegmentSnippet } from "../../analytics/segment";
-import { DOCS_ATOM, DOMAIN_ATOM, FILES_ATOM } from "../../atoms";
+import { DOCS_ATOM, FILES_ATOM } from "../../atoms";
 
 const JS_ATOM = atom((get) => get(DOCS_ATOM).js);
 
 export const JavascriptProvider = memo(() => {
     const files = useAtomValue(FILES_ATOM);
     const js = useAtomValue(JS_ATOM);
-    const domain = useAtomValue(DOMAIN_ATOM);
 
     return (
         <>
