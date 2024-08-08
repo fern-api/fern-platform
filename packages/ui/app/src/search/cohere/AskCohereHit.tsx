@@ -45,7 +45,7 @@ export const AskCohereHit: React.FC<SearchHit.Props> = ({
                 openCohere();
             }}
         >
-            <div className="flex w-full items-center gap-4">
+            <div className="flex w-full items-center gap-3">
                 <CohereIcon className="size-6" />
                 <div className="flex flex-col w-full">
                     <div className="text-sm text-left">
