@@ -6,7 +6,7 @@ import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { useNavigationNodes, useResolvedPath } from "../../atoms";
+import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
@@ -30,6 +30,7 @@ import { TitledExample } from "../examples/TitledExample";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
+import { usePlaygroundSettings } from "../utils/usePlaygroundSettings";
 import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
 export declare namespace WebSocket {
@@ -54,20 +55,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const maybeNode = nodes.get(websocket.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
 
-    let environmentFilters: EnvironmentId[] | undefined;
-    const resolvedPath = useResolvedPath();
-    const navigationNodes = useNavigationNodes();
-    const slug = resolvedPath.slug;
-    let cursor = navigationNodes.slugMap.get(slug);
-    while (cursor && cursor.slug) {
-        if (cursor && (cursor.type === "endpoint" || cursor.type === "webSocket" || cursor.type === "apiPackage")) {
-            environmentFilters = cursor.playground?.allowedEnvironments;
-            break;
-        }
-        const newSlug = slug.split("/");
-        newSlug.pop();
-        cursor = navigationNodes.slugMap.get(newSlug.join("/"));
-    }
+    const environmentFilters = usePlaygroundSettings();
 
     const route = `/${websocket.slug}`;
 

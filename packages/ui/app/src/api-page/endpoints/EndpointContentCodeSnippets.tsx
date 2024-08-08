@@ -5,7 +5,7 @@ import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useMemo, useRef, useState } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { useNavigationNodes, useResolvedPath } from "../../atoms";
+import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
@@ -25,6 +25,7 @@ import { TitledExample } from "../examples/TitledExample";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
 import { getMessageForStatus } from "../utils/getMessageForStatus";
+import { usePlaygroundSettings } from "../utils/usePlaygroundSettings";
 import { WebSocketMessages } from "../web-socket/WebSocketMessages";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
@@ -128,20 +129,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     );
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
-    let environmentFilters: EnvironmentId[] | undefined;
-    const resolvedPath = useResolvedPath();
-    const navigationNodes = useNavigationNodes();
-    const slug = resolvedPath.slug;
-    let cursor = navigationNodes.slugMap.get(slug);
-    while (cursor && cursor.slug) {
-        if (cursor && (cursor.type === "endpoint" || cursor.type === "webSocket" || cursor.type === "apiPackage")) {
-            environmentFilters = cursor.playground?.allowedEnvironments;
-            break;
-        }
-        const newSlug = slug.split("/");
-        newSlug.pop();
-        cursor = navigationNodes.slugMap.get(newSlug.join("/"));
-    }
+    const environmentFilters = usePlaygroundSettings();
 
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>

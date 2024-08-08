@@ -1,4 +1,3 @@
-import { EnvironmentId } from "@fern-api/fdr-sdk/navigation";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
@@ -15,11 +14,10 @@ import {
     useBasePath,
     useDomain,
     useFeatureFlags,
-    useNavigationNodes,
     usePlaygroundEndpointFormState,
-    useResolvedPath,
 } from "../atoms";
 import { useSelectedEnvironmentId } from "../atoms/environment";
+import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import {
     ResolvedEndpointDefinition,
     ResolvedFormDataRequestProperty,
@@ -184,20 +182,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
-    let environmentFilters: EnvironmentId[] | undefined;
-    const resolvedPath = useResolvedPath();
-    const navigationNodes = useNavigationNodes();
-    const slug = resolvedPath.slug;
-    let cursor = navigationNodes.slugMap.get(slug);
-    while (cursor && cursor.slug) {
-        if (cursor && (cursor.type === "endpoint" || cursor.type === "webSocket" || cursor.type === "apiPackage")) {
-            environmentFilters = cursor.playground?.allowedEnvironments;
-            break;
-        }
-        const newSlug = slug.split("/");
-        newSlug.pop();
-        cursor = navigationNodes.slugMap.get(newSlug.join("/"));
-    }
+    const environmentFilters = usePlaygroundSettings();
 
     return (
         <FernTooltipProvider>
