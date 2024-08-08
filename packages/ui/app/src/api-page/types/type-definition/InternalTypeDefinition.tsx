@@ -166,14 +166,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
     if (!isCollapsible) {
         // TODO: (rohin) Refactor this
         if (collapsableContent.elementNameSingular === "literal") {
-            return (
-                <div className="t-muted flex items-baseline gap-2">
-                    <span className="shrink-0 text-sm"> Allowed value: </span>
-                    <FernTooltipProvider>
-                        <span className="inline-flex flex-wrap gap-2">{collapsableContent.elements}</span>
-                    </FernTooltipProvider>
-                </div>
-            );
+            return null;
         }
         return (
             <FernErrorBoundary component="InternalTypeDefinition">
