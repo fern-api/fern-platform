@@ -1,5 +1,6 @@
 import { visitDiscriminatedUnion } from "../../utils";
 import { FernNavigation } from "../generated";
+import { hasMetadata } from "../types";
 import { NavigationNode } from "../types/NavigationNode";
 
 export function followRedirect(nodeToFollow: NavigationNode | undefined): FernNavigation.Slug | undefined {
@@ -26,7 +27,7 @@ export function followRedirect(nodeToFollow: NavigationNode | undefined): FernNa
         apiReference: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
 
         // version is a special case where it should only consider it's first child (the first version)
-        versioned: (node) => followRedirect(node.children[0]),
+        versioned: (node) => followRedirect(node.children.filter((node) => !node.hidden)[0]),
         unversioned: (node) => followRedirect(node.landingPage ?? node.child),
         tabbed: (node) => followRedirects(node.children),
         sidebarRoot: (node) => followRedirects(node.children),
@@ -40,6 +41,10 @@ export function followRedirect(nodeToFollow: NavigationNode | undefined): FernNa
 
 export function followRedirects(nodes: NavigationNode[]): FernNavigation.Slug | undefined {
     for (const node of nodes) {
+        // skip hidden nodes
+        if (hasMetadata(node) && node.hidden) {
+            continue;
+        }
         const redirect = followRedirect(node);
         if (redirect != null) {
             return redirect;
