@@ -1,7 +1,7 @@
 import { FernScrollArea } from "@fern-ui/components";
 import clsx from "clsx";
 import { throttle } from "lodash-es";
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import type { Components } from "react-markdown";
 import { v4 } from "uuid";
 import { ChatbotMessage, Citation, Message } from "../types";
@@ -24,7 +24,12 @@ interface ChatbotModalProps {
     belowInput?: React.ReactNode;
 }
 
-export const ChatbotModal = forwardRef<HTMLElement, ChatbotModalProps>(
+export type ChatbotModalRef = {
+    reset: () => void;
+    sendMessage: (message: string) => void;
+};
+
+export const ChatbotModal = forwardRef<ChatbotModalRef, ChatbotModalProps>(
     ({ chatStream, className, components, belowInput }, ref) => {
         const [chatHistory, setChatHistory] = useState<ChatHistory>(() => ({
             conversationId: v4(),
@@ -95,8 +100,10 @@ export const ChatbotModal = forwardRef<HTMLElement, ChatbotModalProps>(
             setCitations([]);
         };
 
+        useImperativeHandle(ref, () => ({ reset, sendMessage }));
+
         return (
-            <section className={clsx("flex flex-col", className)} ref={ref}>
+            <section className={clsx("flex flex-col", className)}>
                 <div className="px-4 py-2">
                     {shouldShowConversation && (
                         <div className="flex justify-between items-center">

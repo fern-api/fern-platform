@@ -53,7 +53,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
         <Link
             ref={(elem) => setRef?.(elem)}
             className={cn("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
-                "bg-accent t-accent-contrast": isHovered,
+                "bg-accent-highlight": isHovered,
             })}
             href={`/${slug}`}
             onMouseEnter={onMouseEnter}

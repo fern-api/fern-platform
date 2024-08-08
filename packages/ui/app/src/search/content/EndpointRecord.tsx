@@ -22,7 +22,7 @@ export const EndpointRecord: React.FC<EndpointRecord.Props> = ({ hit, isHovered 
                 <CodeIcon
                     className={cn("size-4", {
                         "t-muted": !isHovered,
-                        "t-accent": isHovered,
+                        "t-accent-aaa": isHovered,
                     })}
                 />
             </div>
