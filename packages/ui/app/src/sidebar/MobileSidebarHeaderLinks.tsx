@@ -1,38 +1,9 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { ArrowRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
-import Link from "next/link";
 import { ReactElement } from "react";
 import { DOCS_LAYOUT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, NAVBAR_LINKS_ATOM } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
-
-interface HeaderSidebarSlugLinkProps {
-    navbarLink: DocsV1Read.NavbarLink;
-}
-
-export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ navbarLink }) => {
-    if (navbarLink.type === "github") {
-        // TODO: Implement GitHub link
-        return null;
-    }
-    return (
-        <Link
-            className={cn(
-                "text-sm group pl-4 pr-3 py-1.5 border border-border-accent-muted hover:border-2 flex space-x-1.5 items-center t-accent hover:t-accent transition rounded-lg hover:bg-tag-primary",
-            )}
-            href={navbarLink.url}
-            target="_blank"
-        >
-            <span className="whitespace-nowrap">{navbarLink.text}</span>
-            {navbarLink.type === "primary" && (
-                <div className="flex size-5 items-center">
-                    <ArrowRight className="!size-icon" />
-                </div>
-            )}
-        </Link>
-    );
-};
 
 export function MobileSidebarHeaderLinks(): ReactElement | null {
     const layout = useAtomValue(DOCS_LAYOUT_ATOM);
