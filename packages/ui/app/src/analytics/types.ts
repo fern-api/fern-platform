@@ -40,7 +40,4 @@ export interface CustomerAnalytics {
     //     apiKey: string;
     //     apiHost?: string;
     // };
-    segment?: {
-        writeKey: string;
-    };
 }

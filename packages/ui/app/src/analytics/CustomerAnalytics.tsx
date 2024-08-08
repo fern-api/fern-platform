@@ -17,14 +17,13 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
     const { segment } = useAtomValue(ANALYTICS_CONFIG_ATOM);
     return (
         <>
-            {
-                <Script
-                    id="segment-script"
-                    dangerouslySetInnerHTML={{
-                        __html: renderSegmentSnippet(domain, segment ? segment.writeKey : undefined),
-                    }}
-                />
-            }
+            {/* renders either segment with our write key or segment with the customer's write key */}
+            <Script
+                id="segment-script"
+                dangerouslySetInnerHTML={{
+                    __html: renderSegmentSnippet(domain, segment?.writeKey),
+                }}
+            />
             {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}
             {gtm != null && <GoogleTagManager {...gtm} />}
         </>
