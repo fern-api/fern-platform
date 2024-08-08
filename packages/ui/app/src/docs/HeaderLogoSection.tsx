@@ -13,7 +13,7 @@ export function HeaderLogoSection(): ReactElement {
 
     return (
         <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
-            <div className="flex items-center gap-2 pr-4">
+            <div className="flex items-center gap-2">
                 <FernLogoContainer href={logoHref}>
                     <FernLogoImage />
                     {logoText != null && logoText.length > 0 && (
