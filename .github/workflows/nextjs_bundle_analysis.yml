@@ -56,9 +56,8 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Build next.js app
-        # change this if your site requires a custom build command
-        run: pnpm build:fern-prod
+      - name: Build Project Artifacts
+        run: VERSION="$(scripts/git-version.sh)" vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle

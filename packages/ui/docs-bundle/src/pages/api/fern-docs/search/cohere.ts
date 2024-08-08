@@ -2,7 +2,7 @@ import { createFetchRequester } from "@algolia/requester-fetch";
 import { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { assertNonNullish } from "@fern-ui/core-utils";
 import { getContentForSearchRecord, getSlugForSearchRecord, getTitleForSearchRecord } from "@fern-ui/search-utils";
-import { REGISTRY_SERVICE } from "@fern-ui/ui";
+import { provideRegistryService } from "@fern-ui/ui";
 import { kv } from "@vercel/kv";
 import algoliasearch from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
@@ -80,7 +80,7 @@ export default async function handler(req: NextRequest): Promise<Response> {
     const cache = new ConversationCache(conversationId);
     const chatHistory = await cache.get();
 
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url: docsUrl });
+    const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url: docsUrl });
     if (!docs.ok) {
         if (docs.error.error === "UnauthorizedError") {
             return new Response(null, { status: 401 });
@@ -114,7 +114,7 @@ export default async function handler(req: NextRequest): Promise<Response> {
         return new Response(null, { status: 500 });
     }
 
-    const searchApiKey = await REGISTRY_SERVICE.docs.v2.read.getSearchApiKeyForIndexSegment({
+    const searchApiKey = await provideRegistryService().docs.v2.read.getSearchApiKeyForIndexSegment({
         indexSegmentId,
     });
 

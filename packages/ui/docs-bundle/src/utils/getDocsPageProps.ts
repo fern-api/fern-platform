@@ -8,11 +8,11 @@ import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
-    REGISTRY_SERVICE,
     convertNavigatableToResolvedPath,
     getGitHubInfo,
     getGitHubRepo,
     getSeoProps,
+    provideRegistryService,
     renderThemeStylesheet,
     setMdxBundler,
 } from "@fern-ui/ui";
@@ -82,7 +82,7 @@ export async function getDocsPageProps(
     // eslint-disable-next-line no-console
     console.log("[getDocsPageProps] Loading docs for", url);
     const start = Date.now();
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
+    const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url });
     const end = Date.now();
     // eslint-disable-next-line no-console
     console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
@@ -169,7 +169,7 @@ export async function getDynamicDocsPageProps(
             return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
         } else if (user.partner === "ory" || user.partner === "custom") {
             // rightbrain's api key injection
-            const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
+            const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url });
 
             if (!docs.ok) {
                 throw new Error("Failed to fetch docs");
@@ -380,6 +380,7 @@ async function convertDocsToDocsPageProps({
 
     // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
     props.fallback[urljoin(docs.baseUrl.basePath || "/", "/api/fern-docs/search")] = await getSearchConfig(
+        provideRegistryService(),
         xFernHost,
         docs.definition.search,
     );
