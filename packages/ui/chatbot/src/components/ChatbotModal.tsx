@@ -91,6 +91,9 @@ export const ChatbotModal = forwardRef<ChatbotModalRef, ChatbotModalProps>(
         };
 
         const reset = () => {
+            if (abortRef.current?.signal.aborted === false) {
+                abortRef.current.abort();
+            }
             setChatHistory({
                 conversationId: v4(),
                 messages: [],

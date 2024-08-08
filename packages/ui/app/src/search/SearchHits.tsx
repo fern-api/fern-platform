@@ -1,10 +1,11 @@
 import { FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
+import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
-import { useBasePath, useCloseSearchDialog, useDomain } from "../atoms";
+import { COHERE_ASK_AI, COHERE_INITIAL_MESSAGE, useBasePath, useCloseSearchDialog, useDomain } from "../atoms";
 import { SearchHit } from "./SearchHit";
 import { AskCohereHit } from "./cohere/AskCohereHit";
 
@@ -96,8 +97,21 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
+    const setOpenCohere = useSetAtom(COHERE_ASK_AI);
+    const setCohereInitialMessage = useSetAtom(COHERE_INITIAL_MESSAGE);
+
+    const openCohere = () => {
+        setCohereInitialMessage(`Can you tell me about ${search.results.query}?`);
+        setOpenCohere(true);
+    };
+
     const navigateToHoveredHit = async () => {
         if (hoveredSearchHit == null) {
+            if (isCohere && hoveredSearchHitId === COHERE_AI_HIT_ID && search.results.query.length > 0) {
+                closeSearchDialog();
+                openCohere();
+            }
+
             return;
         }
         const slug = getSlugForSearchRecord(hoveredSearchHit.record, basePath);
@@ -162,6 +176,7 @@ export const SearchHits: React.FC = () => {
 };
 
 export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
+    const isCohere = useDomain().includes("cohere");
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
 
@@ -178,6 +193,17 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <FernScrollArea className="mask-grad-top-4 px-2 pt-4">
+            {isCohere && (
+                <AskCohereHit
+                    setRef={(elem) => {
+                        if (elem != null) {
+                            refs.current.set(COHERE_AI_HIT_ID, elem);
+                        }
+                    }}
+                    message={search.results.query}
+                    isHovered={true}
+                />
+            )}
             {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {
