@@ -1,8 +1,8 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { EMPTY_ARRAY, isNonNullish } from "@fern-ui/core-utils";
-import { Cross1Icon, MagnifyingGlassIcon, SlashIcon } from "@radix-ui/react-icons";
 import cn, { clsx } from "clsx";
+import { Search, Slash, Xmark } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useSetAndOpenPlayground } from "../atoms";
@@ -125,7 +125,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                         <div className="flex h-[30px] items-center px-3 py-1 truncate">
                             {apiGroup.breadcrumbs.map((breadcrumb, idx) => (
                                 <Fragment key={idx}>
-                                    {idx > 0 && <SlashIcon className="mx-0.5 size-3 text-faded" />}
+                                    {idx > 0 && <Slash className="mx-0.5 size-3 text-faded" />}
                                     <span className="t-accent shrink truncate whitespace-nowrap text-xs">
                                         {breadcrumb}
                                     </span>
@@ -210,18 +210,14 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                 <div className={clsx("flex flex-col size-full relative", className)} ref={scrollRef}>
                     <div className={cn("relative z-20 px-3 pt-3 pb-0")}>
                         <FernInput
-                            leftIcon={<MagnifyingGlassIcon />}
+                            leftIcon={<Search className="size-4" />}
                             data-1p-ignore="true"
                             autoFocus={true}
                             value={filterValue}
                             onValueChange={setFilterValue}
                             rightElement={
                                 filterValue.length > 0 && (
-                                    <FernButton
-                                        icon={<Cross1Icon />}
-                                        variant="minimal"
-                                        onClick={() => setFilterValue("")}
-                                    />
+                                    <FernButton icon={<Xmark />} variant="minimal" onClick={() => setFilterValue("")} />
                                 )
                             }
                             placeholder="Search for endpoints..."

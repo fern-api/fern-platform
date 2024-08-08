@@ -9,8 +9,8 @@ import {
     FernTooltipProvider,
 } from "@fern-ui/components";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
-import { DownloadIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Download, Send } from "iconoir-react";
 import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
@@ -182,7 +182,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                             <FernTooltipProvider>
                                 <FernTooltip content="Download file">
                                     <FernButton
-                                        icon={<DownloadIcon />}
+                                        icon={<Download />}
                                         size="small"
                                         variant="minimal"
                                         onClick={() => {
@@ -302,7 +302,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                                     setTabValue("1");
                                                 }}
                                                 sendRequestIcon={
-                                                    <PaperPlaneIcon className="size-6 transition-transform group-hover:translate-x-0.5" />
+                                                    <Send className="size-6 transition-transform group-hover:translate-x-0.5" />
                                                 }
                                             />
                                         </div>

@@ -1,5 +1,5 @@
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Search } from "iconoir-react";
 import { memo } from "react";
 import { useOpenSearchDialog } from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
@@ -25,7 +25,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
             disabled={!searchService.isAvailable}
         >
             <span className="search-placeholder">
-                <MagnifyingGlassIcon className="size-5" />
+                <Search className="size-5" />
                 <span>Search...</span>
             </span>
 

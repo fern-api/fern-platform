@@ -1,5 +1,5 @@
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
-import { CaretDownIcon } from "@radix-ui/react-icons";
+import { NavArrowDown } from "iconoir-react";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Markdown } from "../../mdx/Markdown";
 import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../resolver/types";
@@ -103,7 +103,7 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                                 <span className="t-muted">Select a variant...</span>
                             )
                         }
-                        rightIcon={<CaretDownIcon />}
+                        rightIcon={<NavArrowDown />}
                         className="w-full text-left"
                         variant="outlined"
                         mono={true}

@@ -1,8 +1,8 @@
 import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
+import { Wifi, WifiOff } from "iconoir-react";
 import { merge } from "lodash-es";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { Wifi, WifiOff } from "react-feather";
 import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
 import { useSelectedEnvironmentId } from "../atoms/environment";
 import {

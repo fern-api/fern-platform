@@ -1,6 +1,6 @@
 import { FernButton, FernTooltip } from "@fern-ui/components";
-import { Cross1Icon, QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { HelpCircle, Xmark } from "iconoir-react";
 import { FC, PropsWithChildren } from "react";
 import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
 import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
@@ -97,7 +97,7 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
                             content={<Markdown mdx={description} className="prose-sm text-xs" />}
                             delayDuration={0}
                         >
-                            <QuestionMarkCircledIcon className="t-muted size-4 self-center" />
+                            <HelpCircle className="t-muted size-4 self-center" />
                         </FernTooltip>
                     )}
 
@@ -118,7 +118,7 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
                     <span className="inline-flex min-w-0 shrink items-center gap-1">
                         {!isRequired && (
                             <FernButton
-                                icon={<Cross1Icon />}
+                                icon={<Xmark />}
                                 size="small"
                                 variant="minimal"
                                 className="-mr-3 opacity-50 transition-opacity hover:opacity-100"
@@ -140,7 +140,7 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
                     <span className="inline-flex min-w-0 shrink items-center gap-1">
                         {!isRequired && (
                             <FernButton
-                                icon={<Cross1Icon />}
+                                icon={<Xmark />}
                                 size="small"
                                 variant="minimal"
                                 className="-mr-3 ml-1 opacity-50 transition-opacity hover:opacity-100"

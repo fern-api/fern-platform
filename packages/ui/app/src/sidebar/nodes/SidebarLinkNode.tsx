@@ -1,5 +1,5 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
+import { OpenNewWindow } from "iconoir-react";
 import { SidebarLink } from "../SidebarLink";
 
 interface SidebarLinkNodeProps {
@@ -16,7 +16,7 @@ export function SidebarLinkNode({ node, depth, className }: SidebarLinkNodeProps
             className={className}
             depth={Math.max(depth - 1, 0)}
             title={node.title}
-            rightElement={node.url.startsWith("http") && <ExternalLinkIcon className="size-4 self-center text-faded" />}
+            rightElement={node.url.startsWith("http") && <OpenNewWindow className="size-4 self-center text-faded" />}
             href={node.url}
         />
     );

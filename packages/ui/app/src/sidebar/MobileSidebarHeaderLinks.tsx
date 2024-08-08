@@ -1,6 +1,6 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
-import { ArrowRightIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { ArrowRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement } from "react";
@@ -27,7 +27,7 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
             <span className="whitespace-nowrap">{navbarLink.text}</span>
             {navbarLink.type === "primary" && (
                 <div className="flex size-5 items-center">
-                    <ArrowRightIcon />
+                    <ArrowRight />
                 </div>
             )}
         </Link>
@@ -59,7 +59,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
                             navbarLink.rightIcon ??
                             (navbarLink.type === "primary" ||
                             (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
-                                <ArrowRightIcon className="!size-5" />
+                                <ArrowRight className="!size-5" />
                             ) : undefined)
                         }
                         className={cn("w-full", {

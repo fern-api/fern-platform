@@ -1,7 +1,7 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { ArrowRightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { ArrowRight, Search } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
@@ -54,7 +54,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                                 navbarLink.rightIcon ??
                                 (navbarLink.type === "primary" ||
                                 (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
-                                    <ArrowRightIcon className="transition-transform group-hover:translate-x-0.5" />
+                                    <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
                                 ) : undefined)
                             }
                             variant={
@@ -111,7 +111,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                                 e.stopPropagation();
                                 openSearchDialog();
                             }}
-                            icon={<MagnifyingGlassIcon className="!size-5" />}
+                            icon={<Search className="!size-5" />}
                             intent="none"
                             variant="minimal"
                             rounded={true}

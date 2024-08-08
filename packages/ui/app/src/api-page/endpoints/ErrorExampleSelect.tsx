@@ -1,7 +1,7 @@
 import { FernButton, Intent } from "@fern-ui/components";
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
+import { Check, NavArrowDown, NavArrowUp } from "iconoir-react";
 import { FC, Fragment, PropsWithChildren, forwardRef } from "react";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { ResolvedError, ResolvedExampleError } from "../../resolver/types";
@@ -68,7 +68,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                 <FernButton
                     rightIcon={
                         <Select.Icon>
-                            <ChevronDownIcon />
+                            <NavArrowDown className="size-4" />
                         </Select.Icon>
                     }
                     variant="minimal"
@@ -81,7 +81,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
             <Select.Portal>
                 <Select.Content className="overflow-hidden rounded-md bg-card backdrop-blur shadow-2xl ring-default ring-inset ring-1 z-50">
                     <Select.ScrollUpButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
-                        <ChevronUpIcon />
+                        <NavArrowUp className="size-4" />
                     </Select.ScrollUpButton>
                     <Select.Viewport className="p-[5px]">
                         <Select.Group>
@@ -123,7 +123,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                         ))}
                     </Select.Viewport>
                     <Select.ScrollDownButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
-                        <ChevronDownIcon />
+                        <NavArrowDown className="size-4" />
                     </Select.ScrollDownButton>
                 </Select.Content>
             </Select.Portal>
@@ -152,7 +152,7 @@ export const FernSelectItem = forwardRef<
         >
             <Select.ItemText className={textClassName}>{children}</Select.ItemText>
             <Select.ItemIndicator className="absolute left-0 inline-flex w-[25px] items-center justify-center">
-                <CheckIcon />
+                <Check />
             </Select.ItemIndicator>
         </Select.Item>
     );

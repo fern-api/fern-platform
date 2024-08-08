@@ -1,6 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import cn, { clsx } from "clsx";
+import { NavArrowDown } from "iconoir-react";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import {
@@ -17,7 +18,6 @@ import {
     useImperativeHandle,
     useRef,
 } from "react";
-import { ChevronDown } from "react-feather";
 import { IS_READY_ATOM, SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMobileSidebar } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { scrollToRoute } from "../util/anchor";
@@ -138,7 +138,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
             })}
             data-state={showIndicator ? "active" : "inactive"}
         >
-            <ChevronDown
+            <NavArrowDown
                 className={cn("size-5 lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,

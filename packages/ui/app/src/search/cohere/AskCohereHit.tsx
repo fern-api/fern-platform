@@ -1,7 +1,7 @@
 import { CohereIcon } from "@fern-ui/chatbot";
 import cn, { clsx } from "clsx";
+import { NavArrowRight } from "iconoir-react";
 import { useSetAtom } from "jotai";
-import { ChevronRight } from "react-feather";
 import { COHERE_ASK_AI, COHERE_INITIAL_MESSAGE, useCloseMobileSidebar, useCloseSearchDialog } from "../../atoms";
 
 export declare namespace SearchHit {
@@ -53,7 +53,7 @@ export const AskCohereHit: React.FC<SearchHit.Props> = ({
                     </div>
                     <div className="text-xs text-faded text-left">Ask Cohere</div>
                 </div>
-                <ChevronRight
+                <NavArrowRight
                     className={clsx("size-6", {
                         "text-accent": isHovered,
                         "text-faded": !isHovered,

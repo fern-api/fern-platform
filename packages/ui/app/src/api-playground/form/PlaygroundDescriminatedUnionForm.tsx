@@ -1,6 +1,6 @@
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
 import { titleCase } from "@fern-ui/core-utils";
-import { CaretDownIcon } from "@radix-ui/react-icons";
+import { NavArrowDown } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo } from "react";
 import {
@@ -101,7 +101,7 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
                                 <span className="t-muted">Select a variant...</span>
                             )
                         }
-                        rightIcon={<CaretDownIcon />}
+                        rightIcon={<NavArrowDown />}
                         className="w-full text-left"
                         variant="outlined"
                         mono={true}

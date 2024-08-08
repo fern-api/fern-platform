@@ -1,9 +1,9 @@
 import { FernButton, FernButtonGroup, toast } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
+import { ThumbsDown, ThumbsUp } from "iconoir-react";
 import { Router } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
-import { ThumbsDown, ThumbsUp } from "react-feather";
 import { capturePosthogEvent, registerPosthogProperties } from "../analytics/posthog";
 import { FeedbackForm } from "./FeedbackForm";
 import { FeedbackFormDialog } from "./FeedbackFormDialog";

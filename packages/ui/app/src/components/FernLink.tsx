@@ -1,4 +1,4 @@
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
+import { OpenNewWindow } from "iconoir-react";
 import { atom, useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement, forwardRef, useEffect, useState, type ComponentProps } from "react";
@@ -82,7 +82,7 @@ const FernExternalLink = forwardRef<HTMLAnchorElement, FernExternalLinkProps>(
                 href={formatUrlString(url)}
             >
                 {props.children}
-                {!isSameSite && showExternalLinkIcon && <ExternalLinkIcon className="external-link-icon" />}
+                {!isSameSite && showExternalLinkIcon && <OpenNewWindow className="external-link-icon" />}
             </a>
         );
     },

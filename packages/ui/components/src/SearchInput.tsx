@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { Search } from "iconoir-react";
 import { ReactElement } from "react";
 import { FernInput } from "./FernInput";
 
@@ -28,7 +28,7 @@ export const SearchInput = ({
             onChange={(e) => handleSearchInput(e.target.value)}
             className="w-full"
             style={{ flex: 1, backgroundColor: "transparent" }}
-            leftIcon={<MagnifyingGlassIcon className="t-muted" />}
+            leftIcon={<Search className="t-muted" />}
         />
     );
 };

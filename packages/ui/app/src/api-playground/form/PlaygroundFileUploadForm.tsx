@@ -1,6 +1,6 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-ui/components";
-import { Cross1Icon, FileIcon, FilePlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Page, PagePlusIn, Xmark } from "iconoir-react";
 import { uniqBy } from "lodash-es";
 import numeral from "numeral";
 import { ChangeEvent, DragEventHandler, memo, useEffect, useRef, useState } from "react";
@@ -129,7 +129,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                                 <div key={file.name} className="flex justify-between py-2 px-4">
                                     <div className="flex items-center gap-2 shrink min-w-0">
                                         <div>
-                                            <FileIcon />
+                                            <Page />
                                         </div>
                                         <span className="inline-flex items-baseline gap-2 shrink min-w-0">
                                             <span className="text-sm truncate">{file.name}</span>
@@ -149,7 +149,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                                             />
                                         )}
                                         <FernButton
-                                            icon={<Cross1Icon />}
+                                            icon={<Xmark />}
                                             size="small"
                                             variant="minimal"
                                             onClick={() => {
@@ -166,7 +166,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                                 <div className="flex justify-end p-4">
                                     <FernButton
                                         onClick={() => ref.current?.click()}
-                                        icon={<FilePlusIcon />}
+                                        icon={<PagePlusIn />}
                                         text="Add more files"
                                         rounded
                                         variant="outlined"

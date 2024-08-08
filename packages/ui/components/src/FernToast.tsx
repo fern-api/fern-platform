@@ -1,4 +1,4 @@
-import { AlertCircle, CheckCircle, Info, Loader, XCircle } from "react-feather";
+import { CheckCircle, InfoCircle, SystemRestart, WarningCircle, XmarkCircle } from "iconoir-react";
 import { Toaster as SonnerToaster } from "sonner";
 
 export { toast } from "sonner";
@@ -24,10 +24,10 @@ export const Toaster: React.FC<ToasterProps> = ({ position = "bottom-center" }: 
             }}
             icons={{
                 success: <CheckCircle className="size-3.5 text-text-muted" />,
-                info: <Info className="size-3.5 text-text-muted" />,
-                warning: <AlertCircle className="size-3.5 text-text-muted" />,
-                error: <XCircle className="size-3.5 text-text-muted" />,
-                loading: <Loader className="animate-spin size-3.5 text-text-muted" />,
+                info: <InfoCircle className="size-3.5 text-text-muted" />,
+                warning: <WarningCircle className="size-3.5 text-text-muted" />,
+                error: <XmarkCircle className="size-3.5 text-text-muted" />,
+                loading: <SystemRestart className="animate-spin size-3.5 text-text-muted" />,
             }}
         />
     );

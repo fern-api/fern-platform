@@ -1,5 +1,5 @@
 import { FernButton } from "@fern-ui/components";
-import { Cross1Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { Menu, Xmark } from "iconoir-react";
 import { ReactElement } from "react";
 import { useCloseMobileSidebar, useIsMobileSidebarOpen, useOpenMobileSidebar } from "../atoms";
 
@@ -18,7 +18,7 @@ export function MobileMenuButton(): ReactElement {
                     openMobileSidebar();
                 }
             }}
-            icon={isMobileSidebarOpen ? <Cross1Icon className="!size-5" /> : <HamburgerMenuIcon className="!size-5" />}
+            icon={isMobileSidebarOpen ? <Xmark className="!size-6" /> : <Menu className="!size-5" />}
             intent={isMobileSidebarOpen ? "primary" : "none"}
             variant={isMobileSidebarOpen ? "filled" : "minimal"}
             rounded={true}

@@ -1,6 +1,6 @@
 import { FernButton } from "@fern-ui/components";
-import { ExclamationTriangleIcon, ReloadIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
+import { RefreshDouble, WarningTriangle } from "iconoir-react";
 import { memoize } from "lodash-es";
 import { Router, useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
@@ -55,11 +55,11 @@ export function FernErrorTag({
         return (
             <div className={clsx(className ?? "my-4")}>
                 <span className="t-danger inline-flex items-center gap-2 rounded-full bg-tag-danger px-2">
-                    <ExclamationTriangleIcon />
+                    <WarningTriangle />
                     <span>{stringifyError(error)}</span>
                     {reset != null && (
                         <FernButton
-                            icon={<ReloadIcon />}
+                            icon={<RefreshDouble />}
                             variant="minimal"
                             rounded
                             onClick={() => {
