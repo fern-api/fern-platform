@@ -1,4 +1,3 @@
-import { FdrClient } from "@fern-api/fdr-sdk";
-import { once } from "lodash-es";
+import { FdrClient, once } from "@fern-api/fdr-sdk";
 
 export const provideRegistryService = once(() => new FdrClient());
