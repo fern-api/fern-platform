@@ -121,11 +121,6 @@ export const SEARCHBAR_PLACEMENT_ATOM = atom<DocsV1Read.SearchbarPlacement>((get
         return "SIDEBAR";
     }
 
-    // if searchbarPlacement is set to HEADER_TABS and there are no horizontal tabs, default to HEADER
-    if (layout.searchbarPlacement === "HEADER_TABS" && !get(HAS_HORIZONTAL_TABS)) {
-        return "HEADER";
-    }
-
     return layout.searchbarPlacement;
 });
 SEARCHBAR_PLACEMENT_ATOM.debugLabel = "SEARCHBAR_PLACEMENT_ATOM";
