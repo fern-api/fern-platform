@@ -1,7 +1,6 @@
-import { useAtomValue } from "jotai";
-import { memo } from "react";
-import { useCallbackOne } from "use-memo-one";
-import { FERN_STREAM_ATOM, SLUG_ATOM, useAtomEffect } from "../../atoms";
+import { useAtom } from "jotai";
+import { memo, useEffect } from "react";
+import { FERN_STREAM_ATOM, useResolvedPath } from "../../atoms";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
 import { EndpointContent } from "./EndpointContent";
@@ -25,25 +24,20 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
     isLastInApi,
     types,
 }) => {
-    const isStream = useAtomValue(FERN_STREAM_ATOM);
+    const [isStream, setStream] = useAtom(FERN_STREAM_ATOM);
+    const resolvedPath = useResolvedPath();
+
     const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;
 
-    // TODO: rewrite this with a reducer pattern
-    useAtomEffect(
-        useCallbackOne(
-            (get, set) => {
-                const selectedSlug = get(SLUG_ATOM);
-                if (endpoint.stream != null) {
-                    if (endpoint.slug === selectedSlug) {
-                        set(FERN_STREAM_ATOM, false);
-                    } else if (endpoint.stream.slug === selectedSlug) {
-                        set(FERN_STREAM_ATOM, true);
-                    }
-                }
-            },
-            [endpoint.stream, endpoint.slug],
-        ),
-    );
+    useEffect(() => {
+        if (endpoint.stream != null) {
+            if (endpoint.slug === resolvedPath.slug) {
+                setStream(false);
+            } else if (endpoint.stream.slug === resolvedPath.slug) {
+                setStream(true);
+            }
+        }
+    }, [endpoint.slug, endpoint.stream, resolvedPath.slug, setStream]);
 
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
     // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)

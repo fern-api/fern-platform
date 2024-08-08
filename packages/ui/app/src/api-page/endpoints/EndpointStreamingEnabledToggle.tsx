@@ -1,24 +1,27 @@
-import { useAtom, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { MutableRefObject, ReactElement } from "react";
-import { FERN_STREAM_ATOM, SLUG_ATOM } from "../../atoms";
+import { SLUG_ATOM } from "../../atoms";
 import { ResolvedEndpointDefinition } from "../../resolver/types";
 import { StreamingEnabledToggle } from "./StreamingEnabledToggle";
 
 export function EndpointStreamingEnabledToggle({
+    value,
+    setValue,
     endpointProp,
     container,
 }: {
+    value: boolean;
+    setValue: (enabled: boolean) => void;
     endpointProp: ResolvedEndpointDefinition;
     container: MutableRefObject<HTMLElement | null>;
 }): ReactElement {
-    const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
     const setSlug = useSetAtom(SLUG_ATOM);
     return (
         <StreamingEnabledToggle
             className="ml-2 w-[200px]"
-            value={isStream}
+            value={value}
             setValue={(value) => {
-                setIsStream(value);
+                setValue(value);
                 const endpoint = value && endpointProp.stream != null ? endpointProp.stream : endpointProp;
                 setSlug(endpoint.slug);
                 setTimeout(() => {
