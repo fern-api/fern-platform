@@ -138,10 +138,10 @@ export function renderTypeShorthand(
             )} to ${renderTypeShorthand(map.valueShape, { plural: true }, types)}`,
 
         // literals
-        literal: (_literal) =>
-            visitDiscriminatedUnion(_literal.value, "type")._visit({
-                stringLiteral: () => "string literal",
-                booleanLiteral: () => "boolean literal",
+        literal: (literal) =>
+            visitDiscriminatedUnion(literal.value, "type")._visit({
+                stringLiteral: ({ value }) => `"${value}"`,
+                booleanLiteral: ({ value }) => `"${value.toString()}"`,
                 _other: () => "<unknown>",
             }),
         // other
