@@ -13,7 +13,7 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
         <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
             <div className="w-full min-w-0 pt-8">
                 <article className="mx-auto break-words lg:ml-0 xl:mx-auto">
-                    <section id={resolvedPath.date} className="flex items-stretch">
+                    <section id={resolvedPath.date} className="flex items-stretch justify-between">
                         <div className="max-xl:hidden w-sidebar-width" />
                         <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-1 max-xl:mx-auto">
                             <header className="mb-8">
