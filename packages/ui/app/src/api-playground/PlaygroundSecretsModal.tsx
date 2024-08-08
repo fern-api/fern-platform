@@ -70,7 +70,7 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({ onClos
                                 />
                                 <FernButton
                                     variant="minimal"
-                                    icon={<ArrowRight />}
+                                    icon={<ArrowRight className="!size-icon" />}
                                     onClick={() => {
                                         selectSecret(secret);
                                     }}

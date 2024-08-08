@@ -39,7 +39,11 @@ module.exports = {
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
                 "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
                 "vh-minus-header-padded": "calc(100vh - var(--spacing-header-height) - 2rem)",
-                icon: "15px",
+                icon: "1rem",
+                "icon-sm": "0.75rem",
+                "icon-md": "1.25rem",
+                "icon-lg": "1.5rem",
+                "icon-xl": "2rem",
             },
             flex: {
                 2: "2 2 0%",

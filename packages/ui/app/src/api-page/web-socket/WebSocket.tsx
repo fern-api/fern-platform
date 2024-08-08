@@ -240,7 +240,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         <span className="inline-flex items-center gap-2">
                                             {"Send"}
                                             <span className="t-success inline-block rounded-full bg-tag-success p-1">
-                                                <ArrowUp className="size-4" />
+                                                <ArrowUp className="size-icon" />
                                             </span>
                                         </span>
                                     }
@@ -275,7 +275,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         <span className="inline-flex items-center gap-2">
                                             {"Receive"}
                                             <span className="t-accent-aaa inline-block rounded-full bg-tag-primary p-1">
-                                                <ArrowDown className="size-4" />
+                                                <ArrowDown className="size-icon" />
                                             </span>
                                         </span>
                                     }

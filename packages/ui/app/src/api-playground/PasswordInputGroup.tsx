@@ -7,7 +7,7 @@ export const PasswordInputGroup: FC<FernInputProps> = ({ ref, ...props }) => {
     const showPassword = useBooleanState(false);
     return (
         <FernInput
-            leftIcon={<Lock className="size-4" />}
+            leftIcon={<Lock className="size-icon" />}
             {...props}
             type={showPassword.value ? "text" : "password"}
             rightElement={

@@ -42,7 +42,7 @@ export const ThemeButton = memo(({ className, ...props }: ThemeButton.Props) => 
                     rounded={true}
                     variant="minimal"
                     intent="primary"
-                    icon={<IconToUse className="fern-theme-button-icon" />}
+                    icon={<IconToUse className="fern-theme-button-icon !size-icon-md" />}
                     title="toggle theme"
                 />
             </Popover.Trigger>

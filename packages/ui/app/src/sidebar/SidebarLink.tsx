@@ -139,7 +139,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
             data-state={showIndicator ? "active" : "inactive"}
         >
             <NavArrowDown
-                className={cn("size-5 lg:size-icon", {
+                className={cn("size-icon-md lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}

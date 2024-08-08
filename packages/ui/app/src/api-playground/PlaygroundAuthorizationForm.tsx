@@ -56,7 +56,11 @@ function BearerAuthForm({ bearerAuth, disabled }: { bearerAuth: APIV1Read.Bearer
                     autoComplete="off"
                     data-1p-ignore="true"
                     rightElement={
-                        <FernButton onClick={openSecretsModal} icon={<Globe className="size-4" />} variant="minimal" />
+                        <FernButton
+                            onClick={openSecretsModal}
+                            icon={<Globe className="size-icon" />}
+                            variant="minimal"
+                        />
                     }
                     disabled={disabled}
                 />
@@ -104,7 +108,7 @@ function BasicAuthForm({ basicAuth, disabled }: { basicAuth: APIV1Read.BasicAuth
                     <FernInput
                         onValueChange={handleChangeUsername}
                         value={value.username}
-                        leftIcon={<User className="size-4" />}
+                        leftIcon={<User className="size-icon" />}
                         rightElement={<span className="t-muted text-xs">{"string"}</span>}
                         disabled={disabled}
                     />
@@ -123,7 +127,7 @@ function BasicAuthForm({ basicAuth, disabled }: { basicAuth: APIV1Read.BasicAuth
                         rightElement={
                             <FernButton
                                 onClick={openSecretsModal}
-                                icon={<Globe className="size-4" />}
+                                icon={<Globe className="size-icon" />}
                                 variant="minimal"
                             />
                         }
@@ -188,7 +192,11 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
                     autoComplete="off"
                     data-1p-ignore="true"
                     rightElement={
-                        <FernButton onClick={openSecretsModal} icon={<Globe className="size-4" />} variant="minimal" />
+                        <FernButton
+                            onClick={openSecretsModal}
+                            icon={<Globe className="size-icon" />}
+                            variant="minimal"
+                        />
                     }
                     disabled={disabled}
                 />

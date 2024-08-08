@@ -54,7 +54,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                                 navbarLink.rightIcon ??
                                 (navbarLink.type === "primary" ||
                                 (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
-                                    <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
+                                    <ArrowRight className="!size-icon transition-transform group-hover:translate-x-0.5" />
                                 ) : undefined)
                             }
                             variant={
@@ -111,7 +111,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                                 e.stopPropagation();
                                 openSearchDialog();
                             }}
-                            icon={<Search className="!size-5" />}
+                            icon={<Search className="!size-icon-md" />}
                             intent="none"
                             variant="minimal"
                             rounded={true}

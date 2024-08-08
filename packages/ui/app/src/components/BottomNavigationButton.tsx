@@ -15,7 +15,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         <FernLinkCard className="my-12 flex flex-1 items-center rounded-xl p-6" href={`/${neighbor.slug}`}>
             {dir === "prev" && (
                 <span className="sm-4 t-muted inline-flex items-center gap-2 py-2.5 text-sm sm:border-default sm:mr-6 sm:border-r sm:pr-6">
-                    <NavArrowLeft className="size-4" />
+                    <NavArrowLeft className="size-icon" />
                     <span className="hidden leading-none sm:inline">Go Back</span>
                 </span>
             )}
@@ -31,7 +31,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
             {dir === "next" && (
                 <span className="sm-4 t-muted inline-flex items-center gap-2 py-2.5 text-sm sm:border-default sm:ml-6 sm:border-l sm:pl-6">
                     <span className="hidden leading-none sm:inline">Up Next</span>
-                    <NavArrowRight className="size-4" />
+                    <NavArrowRight className="size-icon" />
                 </span>
             )}
         </FernLinkCard>

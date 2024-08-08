@@ -25,7 +25,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
             disabled={!searchService.isAvailable}
         >
             <span className="search-placeholder">
-                <Search className="size-5" />
+                <Search className="size-icon-md" />
                 <span>Search...</span>
             </span>
 

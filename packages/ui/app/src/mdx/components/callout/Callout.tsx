@@ -45,7 +45,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                 <div className="mt-0.5 w-4">
                     {typeof icon === "string" ? (
                         <RemoteFontAwesomeIcon
-                            className={cn("card-icon size-5", {
+                            className={cn("card-icon size-icon-md", {
                                 "bg-intent-default": intent === "info",
                                 "bg-intent-warning": intent === "warning",
                                 "bg-intent-success": intent === "success",
@@ -59,15 +59,15 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                         <span className="callout-icon">{icon}</span>
                     ) : (
                         visitDiscriminatedUnion({ intent }, "intent")._visit({
-                            info: () => <InfoCircle className="size-5 text-intent-default" />,
-                            warning: () => <Bell className="size-5 text-intent-warning" />,
-                            success: () => <CheckCircle className="size-5 text-intent-success" />,
-                            error: () => <WarningTriangle className="size-5 text-intent-danger" />,
-                            note: () => <Pin className="size-5 text-intent-info" />,
-                            launch: () => <Rocket className="t-accent size-5" />,
-                            tip: () => <Star className="size-5 text-intent-success" />,
-                            check: () => <Check className="size-5 text-intent-success" />,
-                            _other: () => <InfoCircle className="size-5 text-intent-default" />,
+                            info: () => <InfoCircle className="size-icon-md text-intent-default" />,
+                            warning: () => <Bell className="size-icon-md text-intent-warning" />,
+                            success: () => <CheckCircle className="size-icon-md text-intent-success" />,
+                            error: () => <WarningTriangle className="size-icon-md text-intent-danger" />,
+                            note: () => <Pin className="size-icon-md text-intent-info" />,
+                            launch: () => <Rocket className="t-accent size-icon-md" />,
+                            tip: () => <Star className="size-icon-md text-intent-success" />,
+                            check: () => <Check className="size-icon-md text-intent-success" />,
+                            _other: () => <InfoCircle className="size-icon-md text-intent-default" />,
                         })
                     )}
                 </div>

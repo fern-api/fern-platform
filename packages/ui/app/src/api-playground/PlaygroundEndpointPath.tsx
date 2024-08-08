@@ -119,7 +119,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
             </div>
 
             <Dialog.Close asChild>
-                <FernButton icon={<Xmark className="!size-6" />} size="large" rounded variant="outlined" />
+                <FernButton icon={<Xmark />} size="large" rounded variant="outlined" />
             </Dialog.Close>
         </div>
     );

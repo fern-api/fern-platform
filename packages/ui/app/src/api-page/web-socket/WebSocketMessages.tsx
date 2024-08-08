@@ -44,11 +44,11 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                         >
                             {message.origin === APIV1Read.WebSocketMessageOrigin.Client ? (
                                 <span className="fern-web-socket-client">
-                                    <ArrowUp className="size-4" />
+                                    <ArrowUp className="size-icon" />
                                 </span>
                             ) : message.origin === APIV1Read.WebSocketMessageOrigin.Server ? (
                                 <span className="fern-web-socket-server">
-                                    <ArrowDown className="size-4" />
+                                    <ArrowDown className="size-icon" />
                                 </span>
                             ) : null}
                             <span className="fern-web-socket-trigger-data">{JSON.stringify(message.data)}</span>

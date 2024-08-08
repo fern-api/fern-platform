@@ -10,7 +10,7 @@ import {
 } from "@fern-ui/components";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import cn from "clsx";
-import { Download, Send } from "iconoir-react";
+import { Download, SendSolid } from "iconoir-react";
 import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
@@ -302,7 +302,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                                     setTabValue("1");
                                                 }}
                                                 sendRequestIcon={
-                                                    <Send className="size-6 transition-transform group-hover:translate-x-0.5" />
+                                                    <SendSolid className="transition-transform group-hover:translate-x-0.5" />
                                                 }
                                             />
                                         </div>

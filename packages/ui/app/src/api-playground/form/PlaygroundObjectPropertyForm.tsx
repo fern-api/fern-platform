@@ -136,7 +136,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                     type: "value",
                     value: ADD_ALL_KEY,
                     label: "Add all optional properties",
-                    rightElement: <PlusCircle className="size-4" />,
+                    rightElement: <PlusCircle className="size-icon" />,
                 },
             );
         }

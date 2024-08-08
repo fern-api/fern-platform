@@ -11,7 +11,7 @@ export function SearchHitBreadCrumbs({ parts }: SearchHitBreadCrumbsProps): Reac
         <>
             {parts.map((part, index) => (
                 <Fragment key={index}>
-                    {index > 0 && <NavArrowRight className="mx-0.5 inline-block size-3" />}
+                    {index > 0 && <NavArrowRight className="mx-0.5 inline-block size-icon-sm" />}
                     <span>{part.name}</span>
                 </Fragment>
             ))}

@@ -27,7 +27,7 @@ export const HeaderSidebarSlugLink: React.FC<HeaderSidebarSlugLinkProps> = ({ na
             <span className="whitespace-nowrap">{navbarLink.text}</span>
             {navbarLink.type === "primary" && (
                 <div className="flex size-5 items-center">
-                    <ArrowRight />
+                    <ArrowRight className="!size-icon" />
                 </div>
             )}
         </Link>
@@ -59,7 +59,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
                             navbarLink.rightIcon ??
                             (navbarLink.type === "primary" ||
                             (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
-                                <ArrowRight className="size-4" />
+                                <ArrowRight className="!size-icon" />
                             ) : undefined)
                         }
                         className={cn("w-full", {

@@ -11,7 +11,7 @@ export const ApiReferenceButton: React.FC<{ slug: string }> = ({ slug }) => {
                     className="-m-1"
                     rounded
                     variant="minimal"
-                    icon={<ArrowUpRight className="size-4" />}
+                    icon={<ArrowUpRight className="size-icon" />}
                     onClick={() => router.push(`/${slug}`)}
                 />
             </FernTooltip>

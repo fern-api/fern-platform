@@ -125,7 +125,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                         <div className="flex h-[30px] items-center px-3 py-1 truncate">
                             {apiGroup.breadcrumbs.map((breadcrumb, idx) => (
                                 <Fragment key={idx}>
-                                    {idx > 0 && <Slash className="mx-0.5 size-3 text-faded" />}
+                                    {idx > 0 && <Slash className="mx-0.5 size-icon-sm text-faded" />}
                                     <span className="t-accent shrink truncate whitespace-nowrap text-xs">
                                         {breadcrumb}
                                     </span>
@@ -210,7 +210,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                 <div className={clsx("flex flex-col size-full relative", className)} ref={scrollRef}>
                     <div className={cn("relative z-20 px-3 pt-3 pb-0")}>
                         <FernInput
-                            leftIcon={<Search className="size-4" />}
+                            leftIcon={<Search className="size-icon" />}
                             data-1p-ignore="true"
                             autoFocus={true}
                             value={filterValue}

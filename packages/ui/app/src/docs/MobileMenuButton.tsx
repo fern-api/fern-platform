@@ -18,7 +18,7 @@ export function MobileMenuButton(): ReactElement {
                     openMobileSidebar();
                 }
             }}
-            icon={isMobileSidebarOpen ? <Xmark className="!size-6" /> : <Menu className="!size-5" />}
+            icon={isMobileSidebarOpen ? <Xmark /> : <Menu className="!size-icon-md" />}
             intent={isMobileSidebarOpen ? "primary" : "none"}
             variant={isMobileSidebarOpen ? "filled" : "minimal"}
             rounded={true}

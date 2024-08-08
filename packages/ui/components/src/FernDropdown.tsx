@@ -165,7 +165,7 @@ function FernDropdownItemValue({
                     <span className="ml-auto space-x-1 pl-2">
                         {option.rightElement && <span>{option.rightElement}</span>}
                         {(isEllipsisActive || (option.tooltip != null && option.tooltip !== "")) && (
-                            <InfoCircle className="size-4" />
+                            <InfoCircle className="size-icon" />
                         )}
                     </span>
                 </div>

@@ -68,7 +68,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                 <FernButton
                     rightIcon={
                         <Select.Icon>
-                            <NavArrowDown className="size-4" />
+                            <NavArrowDown className="size-icon" />
                         </Select.Icon>
                     }
                     variant="minimal"
@@ -81,7 +81,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
             <Select.Portal>
                 <Select.Content className="overflow-hidden rounded-md bg-card backdrop-blur shadow-2xl ring-default ring-inset ring-1 z-50">
                     <Select.ScrollUpButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
-                        <NavArrowUp className="size-4" />
+                        <NavArrowUp className="size-icon" />
                     </Select.ScrollUpButton>
                     <Select.Viewport className="p-[5px]">
                         <Select.Group>
@@ -123,7 +123,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                         ))}
                     </Select.Viewport>
                     <Select.ScrollDownButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
-                        <NavArrowDown className="size-4" />
+                        <NavArrowDown className="size-icon" />
                     </Select.ScrollDownButton>
                 </Select.Content>
             </Select.Portal>
@@ -152,7 +152,7 @@ export const FernSelectItem = forwardRef<
         >
             <Select.ItemText className={textClassName}>{children}</Select.ItemText>
             <Select.ItemIndicator className="absolute left-0 inline-flex w-[25px] items-center justify-center">
-                <Check className="size-4" />
+                <Check className="size-icon" />
             </Select.ItemIndicator>
         </Select.Item>
     );

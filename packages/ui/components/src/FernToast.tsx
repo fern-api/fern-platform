@@ -23,11 +23,11 @@ export const Toaster: React.FC<ToasterProps> = ({ position = "bottom-center" }: 
                 },
             }}
             icons={{
-                success: <CheckCircle className="size-3.5 text-text-muted" />,
-                info: <InfoCircle className="size-3.5 text-text-muted" />,
-                warning: <WarningCircle className="size-3.5 text-text-muted" />,
-                error: <XmarkCircle className="size-3.5 text-text-muted" />,
-                loading: <SystemRestart className="animate-spin size-3.5 text-text-muted" />,
+                success: <CheckCircle className="size-icon text-text-muted" />,
+                info: <InfoCircle className="size-icon text-text-muted" />,
+                warning: <WarningCircle className="size-icon text-text-muted" />,
+                error: <XmarkCircle className="size-icon text-text-muted" />,
+                loading: <SystemRestart className="animate-spin size-icon text-text-muted" />,
             }}
         />
     );

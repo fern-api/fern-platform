@@ -27,7 +27,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                     className: "group/option",
                     icon: (
                         <RemoteFontAwesomeIcon
-                            className="size-3 bg-intent-default group-data-[highlighted]/option:bg-accent-contrast"
+                            className="size-icon-sm bg-intent-default group-data-[highlighted]/option:bg-accent-contrast"
                             icon={client.icon}
                         />
                     ),
@@ -44,7 +44,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
             >
                 <FernButton
                     icon={<RemoteFontAwesomeIcon className="bg-accent size-4" icon={selectedClientGroup?.icon} />}
-                    rightIcon={<NavArrowDown />}
+                    rightIcon={<NavArrowDown className="!size-icon" />}
                     text={selectedClientGroup?.languageDisplayName ?? selectedClient.language}
                     size="small"
                     variant="outlined"

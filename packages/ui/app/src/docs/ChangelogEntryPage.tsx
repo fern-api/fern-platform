@@ -21,7 +21,7 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
                                     <div className="not-prose">
                                         <FernLink href={`/${resolvedPath.changelogSlug}`}>
                                             <span className="t-accent shrink truncate whitespace-nowrap text-sm font-semibold inline-flex gap-1 items-center">
-                                                <ArrowLeft className="size-4" />
+                                                <ArrowLeft className="size-icon" />
                                                 Back to {resolvedPath.changelogTitle}
                                             </span>
                                         </FernLink>

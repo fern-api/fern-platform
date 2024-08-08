@@ -39,7 +39,7 @@ export function PlaygroundEndpointFormButtons({
                 onClick={closePlayground}
             >
                 <span>View in API Reference</span>
-                <ArrowUpRight className="size-4" />
+                <ArrowUpRight className="size-icon" />
             </FernLink>
         </div>
     );
