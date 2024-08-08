@@ -152,7 +152,7 @@ export const FernSelectItem = forwardRef<
         >
             <Select.ItemText className={textClassName}>{children}</Select.ItemText>
             <Select.ItemIndicator className="absolute left-0 inline-flex w-[25px] items-center justify-center">
-                <Check />
+                <Check className="size-4" />
             </Select.ItemIndicator>
         </Select.Item>
     );

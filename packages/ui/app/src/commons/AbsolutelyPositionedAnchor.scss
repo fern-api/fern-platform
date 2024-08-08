@@ -7,7 +7,11 @@
         }
 
         .fern-anchor-icon {
-            @apply absolute left-0 flex size-4 items-center justify-center rounded-md;
+            @apply absolute left-0 flex size-6 items-center justify-center rounded-md;
+
+            > svg {
+                @apply size-4;
+            }
         }
 
         .fern-anchor-icon:not(.copied) {
@@ -20,7 +24,7 @@
             @apply bg-tag-primary ring-border-accent-muted ring-1 backdrop-blur;
 
             > svg {
-                @apply t-accent size-4;
+                @apply t-accent;
             }
         }
 

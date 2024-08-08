@@ -61,7 +61,7 @@ export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>
                         as={Fragment}
                     >
                         <div className="fern-anchor-icon copied">
-                            <Check className="size-4" />
+                            <Check />
                         </div>
                     </Transition>
                 )}
