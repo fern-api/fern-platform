@@ -5,6 +5,7 @@ import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "reac
 import { Wifi, WifiOff } from "react-feather";
 import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
 import { useSelectedEnvironmentId } from "../atoms/environment";
+import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import {
     ResolvedTypeDefinition,
     ResolvedWebSocketChannel,
@@ -46,6 +47,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
     useEffect(() => () => socket.current?.close(), []);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
+    const environmentFilters = usePlaygroundSettings();
     const baseUrl = resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl;
 
     const startSession = useCallback(async () => {
@@ -147,6 +149,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
                                   : null
                         }
                         environment={resolveEnvironment(websocket, selectedEnvironmentId)}
+                        environmentFilters={environmentFilters}
                         path={websocket.path}
                         queryParameters={websocket.queryParameters}
                         sendRequestButtonLabel={

@@ -24,14 +24,14 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
             {allEnvironmentIds.length > 1 ? (
                 <FernDropdown
                     key="selectedEnvironment-selector"
-                    options={allEnvironmentIds
-                        .filter((environment) => !(environmentFilters && environmentFilters.includes(environment)))
-                        .map((env) => ({
-                            value: env,
-                            label: env,
-                            type: "value",
-                            // tooltip: "Select environment",
-                        }))}
+                    options={(environmentFilters
+                        ? [...new Set(...[allEnvironmentIds].concat(environmentFilters))]
+                        : allEnvironmentIds
+                    ).map((env) => ({
+                        value: env,
+                        label: env,
+                        type: "value",
+                    }))}
                     onValueChange={(value) => {
                         setSelectedEnvironmentId(value);
                     }}

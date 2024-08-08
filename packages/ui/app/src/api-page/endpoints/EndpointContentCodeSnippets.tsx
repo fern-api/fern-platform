@@ -168,11 +168,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 actions={
                     <>
                         {node != null &&
-                            selectedEnvironmentId &&
-                            !(
-                                environmentFilters &&
-                                environmentFilters.includes(selectedEnvironmentId as EnvironmentId)
-                            ) && (
+                            (!environmentFilters ||
+                                (environmentFilters &&
+                                    environmentFilters.includes(selectedEnvironmentId as EnvironmentId))) && (
                                 <PlaygroundButton
                                     state={node}
                                     // example={selectedClient.exampleCall}
