@@ -1,4 +1,4 @@
-import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { ColorScheme, FernTag } from "@fern-ui/components";
 import React, { memo } from "react";
 import { getEndpointAvailabilityLabel } from "../../util/endpoint";

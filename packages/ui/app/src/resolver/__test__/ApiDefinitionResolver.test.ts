@@ -1,4 +1,5 @@
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import fs from "fs";
 import path from "path";
 import { DEFAULT_FEATURE_FLAGS } from "../../atoms";

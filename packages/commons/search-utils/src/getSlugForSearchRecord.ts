@@ -1,4 +1,5 @@
-import { Algolia, FernNavigation } from "@fern-api/fdr-sdk";
+import type { Algolia } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { UnreachableCaseError } from "ts-essentials";
 
 export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: string | undefined): string {

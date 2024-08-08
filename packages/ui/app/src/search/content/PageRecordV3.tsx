@@ -1,4 +1,4 @@
-import type { Algolia } from "@fern-api/fdr-sdk";
+import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { CornerDownLeft } from "react-feather";
 import { SearchHitBreadCrumbsV2 } from "./SearchHitBreadCrumbsV2";

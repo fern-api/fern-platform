@@ -1,4 +1,4 @@
-import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk";
+import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk/client/types";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { UnionMatcher } from "./UnionResolver";
 import { accessByPathNonNull } from "./accessByPath";

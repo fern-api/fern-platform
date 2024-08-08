@@ -1,4 +1,5 @@
-import type { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";

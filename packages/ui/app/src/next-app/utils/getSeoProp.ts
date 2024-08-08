@@ -1,4 +1,5 @@
-import { FernNavigation, type APIV1Read, type DocsV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
 import { trim } from "lodash-es";

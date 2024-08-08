@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 
 /**
  * The layout used for guides. This is the default layout.

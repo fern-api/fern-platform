@@ -1,4 +1,4 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import useSWRImmutable from "swr/immutable";
 import { REGISTRY_SERVICE } from "../../services/registry";
 

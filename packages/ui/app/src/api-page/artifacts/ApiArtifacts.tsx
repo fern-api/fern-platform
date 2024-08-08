@@ -1,4 +1,5 @@
-import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useRef } from "react";
 import { API_ARTIFACTS_TITLE } from "../../config";
 import { ResolvedWithApiDefinition } from "../../resolver/types";

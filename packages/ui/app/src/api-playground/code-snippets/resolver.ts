@@ -1,4 +1,4 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { UnreachableCaseError } from "ts-essentials";
 import { ResolvedEndpointDefinition, stringifyResolvedEndpointPathPartsTemplate } from "../../resolver/types";

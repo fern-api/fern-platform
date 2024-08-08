@@ -1,5 +1,5 @@
 import { createFetchRequester } from "@algolia/requester-fetch";
-import { Algolia } from "@fern-api/fdr-sdk";
+import { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { assertNonNullish } from "@fern-ui/core-utils";
 import { getContentForSearchRecord, getSlugForSearchRecord, getTitleForSearchRecord } from "@fern-ui/search-utils";
 import { REGISTRY_SERVICE } from "@fern-ui/ui";

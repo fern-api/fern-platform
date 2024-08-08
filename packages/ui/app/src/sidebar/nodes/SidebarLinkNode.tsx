@@ -1,4 +1,4 @@
-import type { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { SidebarLink } from "../SidebarLink";
 

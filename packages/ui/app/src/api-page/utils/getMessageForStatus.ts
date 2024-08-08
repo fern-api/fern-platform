@@ -1,4 +1,4 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 
 type StatusCodeMessagesByMethod = Partial<Record<APIV1Read.HttpMethod, string>>;
 

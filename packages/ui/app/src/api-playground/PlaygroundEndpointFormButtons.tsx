@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useAtomValue } from "jotai";

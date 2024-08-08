@@ -1,4 +1,4 @@
-import { Algolia, FdrClient } from "@fern-api/fdr-sdk";
+import { Algolia, FdrClient } from "@fern-api/fdr-sdk/client/types";
 import { assertNonNullish } from "@fern-ui/core-utils";
 import type {
     InkeepAIChatSettings,

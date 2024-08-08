@@ -1,4 +1,4 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 
 export const CSS_VARIABLES = {
     BODY_FONT: "--typography-body-font-family",

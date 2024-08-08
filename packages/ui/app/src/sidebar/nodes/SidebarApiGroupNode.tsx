@@ -1,4 +1,4 @@
-import type { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 
 interface SidebarApiGroupNodeProps {

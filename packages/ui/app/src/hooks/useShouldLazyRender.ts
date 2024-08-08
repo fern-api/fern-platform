@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEffect } from "react";
 import { useIsReady, useIsSelectedSlug } from "../atoms";
 import { scrollToRoute } from "../util/anchor";
