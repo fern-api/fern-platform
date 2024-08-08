@@ -82,7 +82,7 @@ export function CohereChatButton(): ReactElement | null {
                 <Dialog.Trigger asChild>
                     <button className="fixed bottom-6 right-6 bg-background px-5 py-3 rounded-full border border-default inline-flex gap-2 items-center">
                         <CohereIcon />
-                        <span>Ask AI</span>
+                        <span>Ask Cohere</span>
                     </button>
                 </Dialog.Trigger>,
                 document.body,
