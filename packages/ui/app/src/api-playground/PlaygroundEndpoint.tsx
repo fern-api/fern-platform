@@ -1,3 +1,4 @@
+import { EnvironmentId } from "@fern-api/fdr-sdk/navigation";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
@@ -12,6 +13,7 @@ import {
     PLAYGROUND_AUTH_STATE_ATOM,
     store,
     useBasePath,
+    useCurrentNode,
     useDomain,
     useFeatureFlags,
     usePlaygroundEndpointFormState,
@@ -180,6 +182,12 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     }, [domain, endpoint, formState, proxyEnvironment, uploadEnvironment]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
+    const currentNode = useCurrentNode();
+
+    let environmentFilters: EnvironmentId[] | undefined;
+    if (currentNode?.type === "endpoint") {
+        environmentFilters = currentNode.playground?.allowedEnvironments;
+    }
 
     return (
         <FernTooltipProvider>
@@ -190,6 +198,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                         formState={formState}
                         sendRequest={sendRequest}
                         environment={resolveEnvironment(endpoint, selectedEnvironmentId)}
+                        environmentFilters={environmentFilters}
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}
                         sendRequestIcon={

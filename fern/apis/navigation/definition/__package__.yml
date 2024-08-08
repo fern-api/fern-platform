@@ -274,6 +274,9 @@ types:
     properties:
       type: literal<"apiPackage">
       children: list<ApiPackageChild>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affects all endpoints.
 
   # utilities
 

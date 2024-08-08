@@ -10,12 +10,13 @@ interface MaybeEnvironmentDropdownProps {
     urlTextStyle?: string;
     protocolTextStyle?: string;
     small?: boolean;
+    environmentFilters?: APIV1Read.EnvironmentId[];
 }
 export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): ReactElement | null {
     const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
 
-    const { selectedEnvironment, urlTextStyle, protocolTextStyle, small } = props;
+    const { selectedEnvironment, urlTextStyle, protocolTextStyle, small, environmentFilters } = props;
     const url = selectedEnvironment?.baseUrl && parse(selectedEnvironment?.baseUrl);
 
     return (
@@ -23,12 +24,14 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
             {allEnvironmentIds.length > 1 ? (
                 <FernDropdown
                     key="selectedEnvironment-selector"
-                    options={allEnvironmentIds.map((env) => ({
-                        value: env,
-                        label: env,
-                        type: "value",
-                        // tooltip: "Select environment",
-                    }))}
+                    options={allEnvironmentIds
+                        .filter((environment) => !(environmentFilters && environmentFilters.includes(environment)))
+                        .map((env) => ({
+                            value: env,
+                            label: env,
+                            type: "value",
+                            // tooltip: "Select environment",
+                        }))}
                     onValueChange={(value) => {
                         setSelectedEnvironmentId(value);
                     }}
