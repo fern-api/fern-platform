@@ -9,4 +9,6 @@ export interface EndpointNode extends FernNavigation.WithNodeMetadata, FernNavig
     method: FernNavigation.HttpMethod;
     endpointId: FernNavigation.EndpointId;
     isResponseStream: boolean | undefined;
+    /** Settings for the api playground that affect this endpoint specifically. */
+    playground: FernNavigation.PlaygroundSettings | undefined;
 }

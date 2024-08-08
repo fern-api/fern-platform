@@ -94,6 +94,7 @@ export class ApiReferenceNavigationConverter {
                 children,
                 availability: undefined,
                 pointsTo,
+                playground: undefined,
             };
         });
     }
@@ -124,6 +125,7 @@ export class ApiReferenceNavigationConverter {
                 apiDefinitionId: this.apiDefinitionId,
                 availability: convertAvailability(endpoint.availability),
                 isResponseStream: endpoint.response?.type.type === "stream",
+                playground: undefined,
             };
         });
     }
@@ -143,6 +145,7 @@ export class ApiReferenceNavigationConverter {
             hidden: undefined,
             apiDefinitionId: this.apiDefinitionId,
             availability: convertAvailability(webSocket.availability),
+            playground: undefined,
         }));
     }
 
@@ -239,6 +242,7 @@ export class ApiReferenceNavigationConverter {
                     availability: undefined,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo,
+                    playground: undefined,
                 };
             });
             if (child != null) {
@@ -370,6 +374,7 @@ export class ApiReferenceNavigationConverter {
                             availability: undefined,
                             apiDefinitionId: this.apiDefinitionId,
                             pointsTo: followRedirects(convertedItems),
+                            playground: undefined,
                         });
                     });
                 },

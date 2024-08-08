@@ -10,9 +10,12 @@ export interface ApiReferenceNode
         FernNavigation.WithApiDefinitionId,
         FernNavigation.WithRedirect {
     type: "apiReference";
+    /** If true, long-scrolling will be disabled. */
     paginated: boolean | undefined;
     showErrors: boolean | undefined;
     hideTitle: boolean | undefined;
     children: FernNavigation.ApiPackageChild[];
     changelog: FernNavigation.ChangelogNode | undefined;
+    /** Settings for the api playground that affects all endpoints. */
+    playground: FernNavigation.PlaygroundSettings | undefined;
 }
