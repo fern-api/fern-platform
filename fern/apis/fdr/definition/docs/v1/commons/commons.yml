@@ -41,7 +41,11 @@ types:
 
   AnalyticsConfig:
     properties:
-      segmentWriteKey: optional<string>
+      segment: optional<SegmentConfig>
+
+  SegmentConfig:
+    properties:
+      writeKey: string
 
   DocsLayoutConfig:
     properties:
