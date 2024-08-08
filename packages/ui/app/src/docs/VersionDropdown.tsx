@@ -22,7 +22,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
         return null;
     }
     return (
-        <div className="flex w-32">
+        <div className="flex max-w-32">
             <FernLinkDropdown
                 value={currentVersionId}
                 options={versions.map(({ id, title, availability, slug }) => ({

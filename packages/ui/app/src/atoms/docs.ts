@@ -58,6 +58,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
     apis: [],
     seo: {},
     analytics: undefined,
+    analyticsConfig: {},
     fallback: {},
     theme: "default",
     user: undefined,

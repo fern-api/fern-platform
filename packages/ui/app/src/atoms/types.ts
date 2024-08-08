@@ -51,7 +51,8 @@ export interface DocsProps {
     featureFlags: FeatureFlags;
     apis: FdrAPI.ApiDefinitionId[];
     seo: NextSeoProps;
-    analytics: CustomerAnalytics | undefined;
+    analytics: CustomerAnalytics | undefined; // deprecated
+    analyticsConfig: DocsV1Read.AnalyticsConfig | undefined;
     fallback: Record<string, any>;
     theme: FernTheme;
     user: FernUser | undefined;
