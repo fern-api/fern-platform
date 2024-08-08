@@ -39,6 +39,10 @@ types:
       - ts
       - js
 
+  AnalyticsConfig:
+    properties:
+      segmentWriteKey: optional<string>
+
   DocsLayoutConfig:
     properties:
       pageWidth: optional<PageWidthSizeConfig>

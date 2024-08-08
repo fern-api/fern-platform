@@ -83,6 +83,8 @@ types:
       title: optional<string>
       defaultLanguage: optional<commons.ProgrammingLanguage>
 
+      analytics: optional<commons.AnalyticsConfig>
+
       # navigation
       navigation: NavigationConfig
       navbarLinks: optional<list<commons.NavbarLink>>

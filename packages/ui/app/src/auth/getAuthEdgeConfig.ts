@@ -4,6 +4,7 @@ import { AuthEdgeConfig, AuthEdgeConfigSchema } from "./types";
 const KEY = "authentication";
 
 export async function getAuthEdgeConfig(currentDomain: string): Promise<AuthEdgeConfig | undefined> {
+    console.log("currentDomain", currentDomain);
     const domainToTokenConfigMap = await get<Record<string, any>>(KEY);
     const toRet = domainToTokenConfigMap?.[currentDomain];
 
