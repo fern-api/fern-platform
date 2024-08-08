@@ -20,7 +20,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                         {fullWidth ? (
                             <>
                                 <div className="flex-initial max-md:hidden w-64" />
-                                <div className="relative mr-6 max-w-content-width flex-auto">
+                                <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-auto">
                                     <PageHeader
                                         title={resolvedPath.node.title}
                                         breadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
@@ -36,7 +36,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                 </div>
                             </>
                         ) : (
-                            <div className="relative mr-6 max-w-content-width flex-auto">
+                            <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-auto">
                                 <PageHeader
                                     title={resolvedPath.node.title}
                                     breadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
@@ -67,7 +67,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                                             <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
                                                         </div>
                                                     </div>
-                                                    <div className="relative mr-6 max-w-full flex-auto">
+                                                    <div className="relative mr-6 max-w-full flex-auto min-w-0 shrink">
                                                         <div className="t-muted text-base mb-8 xl:hidden md:hidden">
                                                             <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
                                                         </div>

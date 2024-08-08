@@ -1,8 +1,12 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import clsx from "clsx";
-import { useCallback } from "react";
-import { useCurrentNodeId } from "../../atoms";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
+import {
+    useIsApiReferenceShallowLink,
+    useIsChildSelected,
+    useIsExpandedSidebarNode,
+    useIsSelectedSidebarNode,
+    useToggleExpandedSidebarNode,
+} from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 
@@ -17,16 +21,18 @@ export function SidebarApiPackageNode({
     depth,
     className,
 }: SidebarApiPackageNodeProps): React.ReactElement | null {
-    const { checkExpanded, toggleExpanded, checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
-    const selectedNodeId = useCurrentNodeId();
-    const handleToggleExpand = useCallback(() => toggleExpanded(node.id), [node.id, toggleExpanded]);
+    const selected = useIsSelectedSidebarNode(node.id);
+    const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
+    const childSelected = useIsChildSelected(node.id);
+    const expanded = useIsExpandedSidebarNode(node.id);
+    const shallow = useIsApiReferenceShallowLink(node);
 
     if (node.children.length === 0) {
         if (node.overviewPageId == null) {
             return null;
         }
 
-        if (node.hidden && selectedNodeId !== node.id) {
+        if (node.hidden && !selected) {
             return null;
         }
 
@@ -36,18 +42,14 @@ export function SidebarApiPackageNode({
                 className={className}
                 slug={node.slug}
                 depth={Math.max(depth - 1, 0)}
-                registerScrolledToPathListener={registerScrolledToPathListener}
                 title={node.title}
-                selected={node.id === selectedNodeId}
+                selected={selected}
                 icon={node.icon}
                 hidden={node.hidden}
-                shallow={selectedNodeId === node.id}
-                scrollOnShallow={false}
+                shallow={shallow}
             />
         );
     }
-
-    const childSelected = checkChildSelected(node.id);
 
     if (node.hidden && !childSelected) {
         return null;
@@ -58,15 +60,13 @@ export function SidebarApiPackageNode({
             <ul className={clsx("fern-sidebar-group")}>
                 {node.children.map((child) => (
                     <li key={child.id}>
-                        <SidebarApiPackageChild node={child} depth={depth} />
+                        <SidebarApiPackageChild node={child} depth={depth} shallow={shallow} />
                     </li>
                 ))}
             </ul>
         );
     }
 
-    const expanded =
-        selectedNodeId === node.id || checkExpanded(node.id) || (childSelected && node.overviewPageId != null);
     const showIndicator = childSelected && !expanded;
 
     return (
@@ -75,14 +75,14 @@ export function SidebarApiPackageNode({
             icon={node.icon}
             className={className}
             depth={Math.max(depth - 1, 0)}
-            registerScrolledToPathListener={registerScrolledToPathListener}
             title={node.title}
             expanded={expanded}
             toggleExpand={handleToggleExpand}
             showIndicator={showIndicator}
             hidden={node.hidden}
             slug={node.overviewPageId != null ? node.slug : undefined}
-            selected={node.id === selectedNodeId}
+            selected={selected}
+            shallow={shallow}
         >
             <ul
                 className={clsx("fern-sidebar-group", {
@@ -91,7 +91,7 @@ export function SidebarApiPackageNode({
             >
                 {node.children.map((child) => (
                     <li key={child.id}>
-                        <SidebarApiPackageChild node={child} depth={depth + 1} />
+                        <SidebarApiPackageChild node={child} depth={depth + 1} shallow={shallow} />
                     </li>
                 ))}
             </ul>

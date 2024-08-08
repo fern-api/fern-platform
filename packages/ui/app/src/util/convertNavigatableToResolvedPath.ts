@@ -1,5 +1,6 @@
 import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-ui/core-utils";
+import { reverse } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
@@ -63,7 +64,7 @@ export async function convertNavigatableToResolvedPath({
     featureFlags: FeatureFlags;
 }): Promise<ResolvedPath | undefined> {
     const neighbors = await getNeighbors(found, pages);
-    const { node, apiReference } = found;
+    const { node, apiReference, parents } = found;
 
     if (node.type === "changelog") {
         const pageIds = new Set<FernNavigation.PageId>();
@@ -114,8 +115,17 @@ export async function convertNavigatableToResolvedPath({
             slug: found.node.slug,
         };
     } else if (node.type === "changelogEntry") {
-        const markdown = pages[node.pageId]?.markdown;
+        const changelogNode = reverse(parents).find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
+        if (changelogNode == null) {
+            throw new Error("Changelog node not found");
+        }
+        const changelogMarkdown =
+            changelogNode.overviewPageId != null ? pages[changelogNode.overviewPageId]?.markdown : undefined;
+        const changelogTitle =
+            (changelogMarkdown != null ? getFrontmatter(changelogMarkdown).data.title : undefined) ??
+            changelogNode.title;
 
+        const markdown = pages[node.pageId]?.markdown;
         if (markdown == null) {
             // eslint-disable-next-line no-console
             console.error("Markdown content not found", node.pageId);
@@ -127,19 +137,13 @@ export async function convertNavigatableToResolvedPath({
             filename: node.pageId,
         });
 
-        const changelogNode = found.parents.find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
-        if (changelogNode == null) {
-            throw new Error("Changelog node not found");
-        }
-
         return {
+            ...node,
             type: "changelog-entry",
-            title: (typeof page !== "string" ? page.frontmatter.title : undefined) ?? changelogNode.title,
-            slug: changelogNode.slug,
-            changelogSlug: node.slug,
+            changelogTitle,
+            changelogSlug: changelogNode.slug,
             sectionTitleBreadcrumbs: found.breadcrumb,
-            node,
-            pages: { [node.pageId]: page },
+            page,
             neighbors,
         };
     } else if (apiReference != null) {
