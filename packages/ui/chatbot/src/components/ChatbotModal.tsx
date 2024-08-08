@@ -100,7 +100,7 @@ export const ChatbotModal = forwardRef<HTMLElement, ChatbotModalProps>(
                 <div className="px-4 py-2">
                     {shouldShowConversation && (
                         <div className="flex justify-between items-center">
-                            <span className="text-sm text-grayscale-a11">Ask AI</span>
+                            <span className="text-sm text-grayscale-a11">Ask Cohere</span>
                             <button className="text-xs text-grayscale-a11 hover:text-grayscale-a12" onClick={reset}>
                                 Clear Chat
                             </button>
