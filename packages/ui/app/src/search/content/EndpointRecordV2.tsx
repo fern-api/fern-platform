@@ -18,7 +18,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                 <div
                     className={cn("line-clamp-1 flex space-x-1 items-center text-sm text-start", {
                         "t-muted": !isHovered,
-                        "t-accent-contrast": isHovered,
+                        "t-accent": isHovered,
                     })}
                 >
                     <div
@@ -30,7 +30,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                             },
                             {
                                 "t-muted": !isHovered,
-                                "t-accent-contrast": isHovered,
+                                "t-accent-aaa": isHovered,
                             },
                         )}
                     >
@@ -52,7 +52,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                                 },
                                                 {
                                                     "t-muted": !isHovered,
-                                                    "t-accent-contrast": isHovered,
+                                                    "t-accent-aaa": isHovered,
                                                 },
                                             )}
                                             key={idx}
@@ -68,7 +68,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                 <div
                     className={cn("text-sm tracking-wide", {
                         "t-muted": !isHovered,
-                        "t-accent-contrast": isHovered,
+                        "t-accent-aaa": isHovered,
                     })}
                 >
                     Endpoint
@@ -77,7 +77,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
             <div className="flex items-center justify-between">
                 <span
                     className={cn("line-clamp-1 text-start text-xs", {
-                        "t-accent-contrast": isHovered,
+                        "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}
                 >
@@ -86,7 +86,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
 
                 <CornerDownLeft
                     className={cn("size-3", {
-                        "t-accent-contrast": isHovered,
+                        "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}
                 />
