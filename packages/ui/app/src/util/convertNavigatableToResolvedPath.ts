@@ -1,4 +1,5 @@
-import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-ui/core-utils";
 import { reverse } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";

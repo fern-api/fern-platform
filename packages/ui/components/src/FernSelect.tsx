@@ -1,6 +1,6 @@
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import * as Select from "@radix-ui/react-select";
 import classnames from "clsx";
+import { Check, NavArrowDown, NavArrowUp } from "iconoir-react";
 import { FC, forwardRef } from "react";
 
 export const FernSelect: FC<Select.SelectProps> = () => (
@@ -11,13 +11,13 @@ export const FernSelect: FC<Select.SelectProps> = () => (
         >
             <Select.Value placeholder="Select a fruit…" />
             <Select.Icon className="text-violet11">
-                <ChevronDownIcon />
+                <NavArrowDown className="size-icon" />
             </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
             <Select.Content className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
                 <Select.ScrollUpButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
-                    <ChevronUpIcon />
+                    <NavArrowUp className="size-icon" />
                 </Select.ScrollUpButton>
                 <Select.Viewport className="p-[5px]">
                     <Select.Group>
@@ -55,7 +55,7 @@ export const FernSelect: FC<Select.SelectProps> = () => (
                     </Select.Group>
                 </Select.Viewport>
                 <Select.ScrollDownButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
-                    <ChevronDownIcon />
+                    <NavArrowDown className="size-icon" />
                 </Select.ScrollDownButton>
             </Select.Content>
         </Select.Portal>
@@ -77,7 +77,7 @@ export const FernSelectItem = forwardRef<HTMLDivElement, Select.SelectItemProps>
         >
             <Select.ItemText>{children}</Select.ItemText>
             <Select.ItemIndicator className="absolute left-0 inline-flex w-[25px] items-center justify-center">
-                <CheckIcon />
+                <Check />
             </Select.ItemIndicator>
         </Select.Item>
     );

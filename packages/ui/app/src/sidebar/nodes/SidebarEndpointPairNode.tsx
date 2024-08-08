@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useAtomValue } from "jotai";
 import { FERN_STREAM_ATOM } from "../../atoms";
 import { SidebarApiLeafNode } from "./SidebarApiLeafNode";

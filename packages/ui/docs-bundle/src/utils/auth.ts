@@ -1,11 +1,7 @@
+import { once } from "@fern-api/fdr-sdk";
 import WorkOS, { AuthorizationURLOptions } from "@workos-inc/node";
 
-// Initialize the WorkOS client
-const workos = new WorkOS(getWorkOSApiKey());
-
-export function getWorkOS(): WorkOS {
-    return workos;
-}
+export const getWorkOS = once(() => new WorkOS(getWorkOSApiKey()));
 
 export function getWorkOSApiKey(): string {
     const apiKey = process.env.WORKOS_API_KEY;
@@ -36,7 +32,7 @@ export function getAuthorizationUrl(
             ? "http://localhost:3000/api/fern-docs/auth/callback"
             : `https://${xFernHost}/api/fern-docs/auth/callback`;
 
-    const authorizationUrl = workos.sso.getAuthorizationUrl({
+    const authorizationUrl = getWorkOS().sso.getAuthorizationUrl({
         ...options,
         provider: "authkit",
         clientId: getWorkOSClientId(),

@@ -1,6 +1,6 @@
 import { useEventCallback } from "@fern-ui/react-commons";
-import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Minus, Plus } from "iconoir-react";
 import {
     ComponentProps,
     MouseEventHandler,
@@ -95,7 +95,7 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
             {onValueChange && (
                 <FernButton
                     className="fern-numeric-input-step"
-                    icon={<MinusIcon />}
+                    icon={<Plus />}
                     variant="minimal"
                     onClick={decrement}
                     onMouseDown={handleDecrementMouseDown}
@@ -121,7 +121,7 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
             {onValueChange && (
                 <FernButton
                     className="fern-numeric-input-step"
-                    icon={<PlusIcon />}
+                    icon={<Minus />}
                     variant="minimal"
                     onClick={increment}
                     onMouseDown={handleIncrementMouseDown}

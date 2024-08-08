@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useIsSelectedSidebarNode } from "../../atoms";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import { SidebarSlugLink } from "../SidebarLink";

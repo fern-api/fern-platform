@@ -15,14 +15,14 @@
   "module": "src/index.ts",
   "main": "src/index.ts",
   "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    },
     "./bundlers": {
       "default": "./src/mdx/bundlers/index.ts"
     },
     "./auth": {
       "default": "./src/auth/index.ts"
+    },
+    ".": {
+      "default": "./src/index.ts"
     }
   },
   "sideEffects": [
@@ -46,7 +46,6 @@
     "chromatic": "pnpx chromatic --project-token=chpt_48b3c560025e978"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^5.14.0",
     "@emotion/is-prop-valid": "^1.2.2",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/template-resolver": "workspace:*",
@@ -64,7 +63,6 @@
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.1",
-    "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-tabs": "^1.1.0",
@@ -107,11 +105,10 @@
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
     "parse-numeric-range": "^1.3.0",
-    "posthog-js": "^1.81.1",
+    "posthog-js": "^1.154.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.10",
-    "react-feather": "^2.0.10",
     "react-instantsearch": "^7.7.0",
     "react-medium-image-zoom": "^5.1.10",
     "react-virtuoso": "^4.7.7",

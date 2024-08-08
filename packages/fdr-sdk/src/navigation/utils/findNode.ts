@@ -1,6 +1,5 @@
-import { visitDiscriminatedUnion } from "../../utils";
-
 import { noop } from "ts-essentials";
+import { visitDiscriminatedUnion } from "../../utils";
 import { NodeCollector } from "../NodeCollector";
 import { FernNavigation } from "../generated";
 import { NavigationNode, NavigationNodeNeighbor, NavigationNodePage, hasMetadata, isPage } from "../types";

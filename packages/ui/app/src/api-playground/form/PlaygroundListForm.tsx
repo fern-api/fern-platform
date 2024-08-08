@@ -1,6 +1,6 @@
 import { FernButton } from "@fern-ui/components";
-import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Plus, Xmark } from "iconoir-react";
 import { memo, useCallback } from "react";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getDefaultValueForType, shouldRenderInline } from "../utils";
@@ -78,7 +78,7 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
                                 )}
 
                                 <FernButton
-                                    icon={<Cross1Icon />}
+                                    icon={<Xmark />}
                                     onClick={() => handleRemoveItem(idx)}
                                     variant="minimal"
                                     size="small"
@@ -102,7 +102,7 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
                     ))}
                     <li className="pt-2">
                         <FernButton
-                            icon={<PlusIcon />}
+                            icon={<Plus />}
                             text="Add new item"
                             onClick={appendItem}
                             variant="outlined"
@@ -113,7 +113,7 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
             )}
             {valueAsList.length === 0 && (
                 <FernButton
-                    icon={<PlusIcon />}
+                    icon={<Plus />}
                     text="Add new item"
                     className="w-full"
                     onClick={appendItem}

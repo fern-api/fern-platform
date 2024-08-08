@@ -22,5 +22,4 @@ export * from "./FernTextarea";
 export * from "./FernToast";
 export * from "./FernTooltip";
 export * from "./FontAwesomeIcon";
-export * from "./SearchInput";
 export * from "./util/shared-component-types";

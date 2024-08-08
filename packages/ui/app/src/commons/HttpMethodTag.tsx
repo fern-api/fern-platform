@@ -1,4 +1,4 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernTag, FernTagColorScheme, FernTagProps, FernTooltip } from "@fern-ui/components";
 import clsx from "clsx";
 import { ReactNode, memo } from "react";
@@ -42,7 +42,7 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
             size={size}
             {...rest}
         >
-            {method === FdrAPI.api.v1.read.HttpMethod.Delete ? "DEL" : method}
+            {method === APIV1Read.HttpMethod.Delete ? "DEL" : method}
         </FernTag>
     );
 };

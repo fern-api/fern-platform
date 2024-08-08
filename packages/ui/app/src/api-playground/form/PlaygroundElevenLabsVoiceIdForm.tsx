@@ -1,5 +1,5 @@
 import { FernButton, FernDropdown, FernInput, FernInputProps } from "@fern-ui/components";
-import { CaretDownIcon } from "@radix-ui/react-icons";
+import { NavArrowDown } from "iconoir-react";
 import { ReactElement, useEffect, useMemo, useState } from "react";
 
 interface Voice {
@@ -48,7 +48,7 @@ export function PlaygroundElevenLabsVoiceIdForm(props: FernInputProps): ReactEle
                     )
                 }
                 variant="outlined"
-                rightIcon={<CaretDownIcon />}
+                rightIcon={<NavArrowDown />}
                 className="w-full text-left"
                 disabled={props.disabled}
             />

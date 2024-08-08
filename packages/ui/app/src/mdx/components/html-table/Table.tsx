@@ -1,8 +1,8 @@
 import { FernButton, FernScrollArea } from "@fern-ui/components";
 import * as Dialog from "@radix-ui/react-dialog";
-import { EnterFullScreenIcon } from "@radix-ui/react-icons";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
+import { Expand } from "iconoir-react";
 import { ComponentProps, FC, useState } from "react";
 
 export const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
@@ -21,11 +21,7 @@ export const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
                         <Tooltip.Content side="right" align="start" sideOffset={6} className="animate-popover">
-                            <FernButton
-                                variant="outlined"
-                                icon={<EnterFullScreenIcon />}
-                                onClick={() => setIsFullScreen(true)}
-                            />
+                            <FernButton variant="outlined" icon={<Expand />} onClick={() => setIsFullScreen(true)} />
                         </Tooltip.Content>
                     </Tooltip.Portal>
                 </Tooltip.Root>

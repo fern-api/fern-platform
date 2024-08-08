@@ -1,6 +1,6 @@
 import type { PageSearchRecordV2 } from "@fern-ui/search-utils";
 import cn from "clsx";
-import { CornerDownLeft } from "react-feather";
+import { LongArrowDownLeft } from "iconoir-react";
 import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
 
 export declare namespace PageRecordV2 {
@@ -41,8 +41,8 @@ export const PageRecordV2: React.FC<PageRecordV2.Props> = ({ hit, isHovered }) =
                     <SearchHitBreadCrumbs parts={hit.path.parts} />
                 </span>
 
-                <CornerDownLeft
-                    className={cn("size-3", {
+                <LongArrowDownLeft
+                    className={cn("size-4", {
                         "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}

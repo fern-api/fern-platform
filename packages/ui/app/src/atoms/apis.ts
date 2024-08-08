@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { atom, useAtomValue } from "jotai";
 import { mapValues } from "lodash-es";
 import { useMemoOne } from "use-memo-one";

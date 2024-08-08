@@ -1,6 +1,6 @@
 import * as RadixAccordion from "@radix-ui/react-accordion";
-import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { slug } from "github-slugger";
+import { NavArrowRight } from "iconoir-react";
 import { useAtom } from "jotai";
 import { NextRouter } from "next/router";
 import { FC, ReactNode, useCallback, useEffect, useState } from "react";
@@ -58,7 +58,7 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
                 return (
                     <RadixAccordion.Item key={idx} value={idx.toString()} className="fern-accordion-item" id={id}>
                         <RadixAccordion.Trigger className="fern-accordion-trigger">
-                            <ChevronRightIcon className="fern-accordion-trigger-arrow" />
+                            <NavArrowRight className="fern-accordion-trigger-arrow" />
                             <h6 className="fern-accordion-trigger-title" id={toc ? id : undefined}>
                                 {title}
                             </h6>

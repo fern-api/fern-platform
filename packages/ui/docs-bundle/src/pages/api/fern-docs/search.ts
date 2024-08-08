@@ -1,4 +1,5 @@
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
+import { provideRegistryService } from "@fern-ui/ui";
 // eslint-disable-next-line import/no-internal-modules
 import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
 import * as Sentry from "@sentry/nextjs";
@@ -30,7 +31,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
         }
 
         const searchInfo = docs.definition.search;
-        const config = await getSearchConfig(domain, searchInfo);
+        const config = await getSearchConfig(provideRegistryService(), domain, searchInfo);
         return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
     } catch (e) {
         const id = Sentry.captureException(e, { level: "fatal" });

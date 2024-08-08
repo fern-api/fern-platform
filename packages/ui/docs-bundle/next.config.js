@@ -30,7 +30,7 @@ const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    transpilePackages: ["next-mdx-remote", "esbuild"],
+    transpilePackages: ["next-mdx-remote", "esbuild", "lodash-es", "@fern-ui/ui", "@fern-api/fdr-sdk"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,
@@ -61,7 +61,6 @@ const nextConfig = {
             "https://*.posthog.com",
             "https://cdn.segment.com",
             "https://api.segment.io",
-            "https://browser-intake-datadoghq.com",
             "wss://api.getkoala.com",
             "https://www.google-analytics.com",
         ];

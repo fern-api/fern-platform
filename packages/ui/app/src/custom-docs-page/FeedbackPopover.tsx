@@ -1,8 +1,8 @@
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import clsx from "clsx";
 import { motion } from "framer-motion";
+import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
 import { forwardRef, useCallback, useMemo, useState } from "react";
-import { Check, ThumbsDown, ThumbsUp } from "react-feather";
 import * as Selection from "selection-popover";
 import { capturePosthogEvent } from "../analytics/posthog";
 import { useSelection } from "../hooks/useSelection";

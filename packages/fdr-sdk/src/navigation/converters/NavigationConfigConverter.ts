@@ -1,4 +1,8 @@
-import { APIV1Read, DocsV1Read, visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "../../client";
+import type { APIV1Read, DocsV1Read } from "../../client/types";
+import {
+    visitReadNavigationConfig,
+    visitUnversionedReadNavigationConfig,
+} from "../../client/visitReadNavigationConfig";
 import { assertNever, kebabCase, visitDiscriminatedUnion } from "../../utils";
 import { FernNavigation } from "../generated";
 import { hasMetadata } from "../types";

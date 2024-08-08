@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { isPlainObject } from "@fern-ui/core-utils";
 import { buildUrl } from "@fern-ui/fdr-utils";

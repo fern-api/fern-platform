@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { useAtom } from "jotai";
 import { ReactElement } from "react";

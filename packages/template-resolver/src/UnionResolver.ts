@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { accessByPathNonNull } from "./accessByPath";
 import { Template, UnionTemplateMember } from "./generated/api";
