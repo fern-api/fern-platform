@@ -2,6 +2,7 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { UnreachableCaseError } from "ts-essentials";
 import { ResolvedEndpointDefinition, stringifyResolvedEndpointPathPartsTemplate } from "../../resolver/types";
+import { provideRegistryService } from "../../services/registry";
 import { PlaygroundAuthState, PlaygroundEndpointRequestFormState } from "../types";
 import { buildAuthHeaders, convertToCustomSnippetPayload } from "../utils";
 import { CurlSnippetBuilder } from "./builders/curl";
@@ -92,6 +93,7 @@ export class PlaygroundCodeSnippetResolver {
                         },
                         snippetTemplate: endpoint.snippetTemplates.typescript,
                     },
+                    provideFdrClient: provideRegistryService,
                 });
             }
 
@@ -110,6 +112,7 @@ export class PlaygroundCodeSnippetResolver {
                         },
                         snippetTemplate: endpoint.snippetTemplates.python,
                     },
+                    provideFdrClient: provideRegistryService,
                 });
             }
         }

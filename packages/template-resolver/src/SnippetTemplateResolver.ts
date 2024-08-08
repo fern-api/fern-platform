@@ -1,4 +1,5 @@
-import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk";
+import type { FdrClient } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { UnionMatcher } from "./UnionResolver";
 import { accessByPathNonNull } from "./accessByPath";
@@ -74,13 +75,16 @@ export class SnippetTemplateResolver {
     private maybeObjectFlattener: ObjectFlattener | undefined;
     private maybeApiDefinitionId: string | undefined;
     private apiDefinitionHasBeenRequested: boolean;
+    private provideFdrClient: (() => FdrClient) | undefined;
 
     constructor({
         payload,
         endpointSnippetTemplate,
+        provideFdrClient,
     }: {
         payload: CustomSnippetPayload;
         endpointSnippetTemplate: EndpointSnippetTemplate;
+        provideFdrClient?: () => FdrClient;
     }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
@@ -90,6 +94,7 @@ export class SnippetTemplateResolver {
         // If we have already attempted to get the API definition
         // We only do this to be able to delay requesting the definition unless we really need to (ie if there's a union template)
         this.apiDefinitionHasBeenRequested = false;
+        this.provideFdrClient = provideFdrClient;
     }
 
     private accessParameterPayloadByPath(
@@ -148,9 +153,9 @@ export class SnippetTemplateResolver {
         }
 
         // If we were not provided an API definition, try to get it from FDR
-        if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested) {
+        if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested && this.provideFdrClient != null) {
             this.apiDefinitionHasBeenRequested = true;
-            const fdr = new FdrClient();
+            const fdr = this.provideFdrClient();
             const apiDefinitionResponse = await fdr.api.v1.read.getApi(this.maybeApiDefinitionId);
             if (apiDefinitionResponse.ok) {
                 // Cache the result for the next request

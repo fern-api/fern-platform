@@ -13,7 +13,7 @@ on:
 defaults:
   run:
     # change this if your nextjs app does not live at the root of the repo
-    working-directory: ./packages/ui/docs-bundle
+    working-directory: ./
 
 permissions:
   contents: read # for checkout repository
@@ -58,6 +58,9 @@ jobs:
 
       - name: Build Project Artifacts
         run: VERSION="$(scripts/git-version.sh)" vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: CD into the project directory
+        run: cd ./packages/ui/docs-bundle
 
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle
