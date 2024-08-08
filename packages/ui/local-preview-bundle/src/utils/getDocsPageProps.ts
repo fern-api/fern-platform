@@ -146,6 +146,7 @@ export async function getDocsPageProps(
         ),
         fallback: {},
         analytics: undefined,
+        analyticsConfig: docs.definition.config.analyticsConfig,
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
         user: undefined,
         defaultLang: docs.definition.config.defaultLanguage ?? "curl",

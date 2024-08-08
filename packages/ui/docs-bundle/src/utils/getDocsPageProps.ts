@@ -367,7 +367,9 @@ async function convertDocsToDocsPageProps({
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
-        analyticsConfig: docs.definition.config.analyticsConfig,
+        analyticsConfig: {
+            segmentWriteKey: docs.definition.config.analyticsConfig?.segmentWriteKey,
+        },
         defaultLang: docs.definition.config.defaultLanguage ?? "curl",
     };
 
