@@ -13,6 +13,7 @@ import {
     dereferenceObjectProperties,
     getParameterDescription,
 } from "../../resolver/types";
+import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointError } from "./EndpointError";
@@ -114,7 +115,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     }
 
     return (
-        <div className="flex max-w-full flex-1 flex-col  gap-12">
+        <div className="flex max-w-full flex-1 flex-col gap-12">
+            <ApiPageDescription className="text-base leading-6" description={endpoint.description} isMarkdown={true} />
             {endpoint.pathParameters.length > 0 && (
                 <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} route={"/" + endpoint.slug}>
                     <div>
