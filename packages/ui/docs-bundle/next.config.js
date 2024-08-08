@@ -61,7 +61,6 @@ const nextConfig = {
             "https://*.posthog.com",
             "https://cdn.segment.com",
             "https://api.segment.io",
-            "https://browser-intake-datadoghq.com",
             "wss://api.getkoala.com",
             "https://www.google-analytics.com",
         ];

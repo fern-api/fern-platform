@@ -1040,9 +1040,6 @@ importers:
 
   packages/ui/app:
     dependencies:
-      '@datadog/browser-logs':
-        specifier: ^5.14.0
-        version: 5.17.1
       '@emotion/is-prop-valid':
         specifier: ^1.2.2
         version: 1.2.2
@@ -1224,8 +1221,8 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0
       posthog-js:
-        specifier: ^1.81.1
-        version: 1.131.3
+        specifier: ^1.154.5
+        version: 1.154.5
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -3657,17 +3654,6 @@ packages:
 
   '@dabh/diagnostics@2.0.3':
     resolution: {integrity: sha512-hrlQOIi7hAfzsMqlGSFyVucrx38O+j6wiGOf//H2ecvIEqYN4ADBSS2iLMh5UFyDunCNniUIPk/q3riFv45xRA==}
-
-  '@datadog/browser-core@5.17.1':
-    resolution: {integrity: sha512-OsdjeRCCT1U9+ddygqg3PkqHOkkk7Vr2tI3U8xgZQyiqCzCuooDHebq/40UMP6mf9OVETDkqlSWQ/ouqvFKjUQ==}
-
-  '@datadog/browser-logs@5.17.1':
-    resolution: {integrity: sha512-QyoVZTwCwalcCnagpBWvoZ5aZ/xURnysm+78Yb30pQfQUfiEtRJD9hidyIVkXfeVKS0zIiMZbwX0zritwoAswg==}
-    peerDependencies:
-      '@datadog/browser-rum': 5.17.1
-    peerDependenciesMeta:
-      '@datadog/browser-rum':
-        optional: true
 
   '@devbookhq/splitter@1.4.2':
     resolution: {integrity: sha512-DqJXsL7WNeDn/DyCeyoeeSpFHHoYBXscYlKNd3cJQ5d1xur73MPezHpyR2OID6Kh40TZ4KAb4hYjl5nL2+5M1g==}
@@ -13270,8 +13256,8 @@ packages:
     resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  posthog-js@1.131.3:
-    resolution: {integrity: sha512-ds/TADDS+rT/WgUyeW4cJ+X+fX+O1KdkOyssNI/tP90PrFf0IJsck5B42YOLhfz87U2vgTyBaKHkdlMgWuOFog==}
+  posthog-js@1.154.5:
+    resolution: {integrity: sha512-YYhWckDIRObfCrQpiLq+fdcDTIbQp8ebiKi0ueGohMRgugIG9LJVSpBgCeCHZm2C7sOxDUNcAr3T5VBDUSQoOg==}
 
   preact@10.21.0:
     resolution: {integrity: sha512-aQAIxtzWEwH8ou+OovWVSVNlFImL7xUCwJX3YMqA3U8iKCNC34999fFOnWjYNsylgfPgMexpbk7WYOLtKr/mxg==}
@@ -15711,6 +15697,9 @@ packages:
     resolution: {integrity: sha512-QW95TCTaHmsYfHDybGMwO5IJIM93I/6vTRk+daHTWFPhwh+C8Cg7j7XyKrwrj8Ib6vYXe0ocYNrmzY4xAAN6ug==}
     engines: {node: '>= 14'}
 
+  web-vitals@4.2.3:
+    resolution: {integrity: sha512-/CFAm1mNxSmOj6i0Co+iGFJ58OS4NRGVP+AWS/l509uIK5a1bSoIVaHz/ZumpHTfHSZBpgrJ+wjfpAOrTHok5Q==}
+
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
@@ -17983,12 +17972,6 @@ snapshots:
       colorspace: 1.1.4
       enabled: 2.0.0
       kuler: 2.0.0
-
-  '@datadog/browser-core@5.17.1': {}
-
-  '@datadog/browser-logs@5.17.1':
-    dependencies:
-      '@datadog/browser-core': 5.17.1
 
   '@devbookhq/splitter@1.4.2':
     dependencies:
@@ -31516,10 +31499,11 @@ snapshots:
       picocolors: 1.0.0
       source-map-js: 1.2.0
 
-  posthog-js@1.131.3:
+  posthog-js@1.154.5:
     dependencies:
       fflate: 0.4.8
       preact: 10.21.0
+      web-vitals: 4.2.3
 
   preact@10.21.0: {}
 
@@ -34661,6 +34645,8 @@ snapshots:
   web-namespaces@2.0.1: {}
 
   web-streams-polyfill@4.0.0-beta.3: {}
+
+  web-vitals@4.2.3: {}
 
   webidl-conversions@3.0.1: {}
 
