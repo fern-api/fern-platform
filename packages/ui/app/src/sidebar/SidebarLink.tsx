@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import cn, { clsx } from "clsx";
 import { range } from "lodash-es";

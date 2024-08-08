@@ -1,4 +1,4 @@
-import { Algolia } from "@fern-api/fdr-sdk";
+import type { Algolia } from "@fern-api/fdr-sdk";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { Fragment, ReactElement } from "react";
 

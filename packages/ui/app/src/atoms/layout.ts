@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import { atom } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";

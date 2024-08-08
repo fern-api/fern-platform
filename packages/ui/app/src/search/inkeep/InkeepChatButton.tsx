@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { useColors } from "../../atoms";

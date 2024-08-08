@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { ActivityLogIcon } from "@radix-ui/react-icons";
 import { useIsSelectedSidebarNode } from "../../atoms";
 import { Changelog } from "../../util/dateUtils";

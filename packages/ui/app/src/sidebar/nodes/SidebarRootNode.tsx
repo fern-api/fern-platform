@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { memo } from "react";
 import { SidebarGroupNode } from "./SidebarGroupNode";

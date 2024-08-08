@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
 import { noop } from "ts-essentials";

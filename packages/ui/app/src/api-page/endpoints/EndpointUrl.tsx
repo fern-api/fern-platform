@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk";
 import { CopyToClipboardButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";

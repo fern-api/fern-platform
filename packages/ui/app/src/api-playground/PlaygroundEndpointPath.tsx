@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import * as Dialog from "@radix-ui/react-dialog";

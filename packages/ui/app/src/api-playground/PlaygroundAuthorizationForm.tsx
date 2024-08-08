@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk";
 import { FernButton, FernCard, FernCollapse, FernInput } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";

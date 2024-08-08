@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import clsx from "clsx";
 import { ReactElement } from "react";

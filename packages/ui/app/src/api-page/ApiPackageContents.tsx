@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { memo, useMemo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";

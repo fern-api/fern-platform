@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarApiLeafNode } from "./SidebarApiLeafNode";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";

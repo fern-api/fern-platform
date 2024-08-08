@@ -1,4 +1,4 @@
-import { Algolia } from "@fern-api/fdr-sdk";
+import type { Algolia } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { CornerDownLeft } from "react-feather";

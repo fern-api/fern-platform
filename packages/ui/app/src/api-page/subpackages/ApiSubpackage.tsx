@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { useRef } from "react";
 import { ResolvedApiDefinitionPackage, ResolvedTypeDefinition } from "../../resolver/types";
 import { ApiPackageContents } from "../ApiPackageContents";

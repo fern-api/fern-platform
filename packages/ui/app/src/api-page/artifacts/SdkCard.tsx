@@ -1,8 +1,8 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement, useMemo } from "react";
-import { NodeJsLogo } from "./sdk-logos/NodeJsLogo";
 import { SdkCardLayout } from "./SdkCardLayout";
+import { NodeJsLogo } from "./sdk-logos/NodeJsLogo";
 
 export declare namespace SdkCard {
     export interface Props {

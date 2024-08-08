@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowRightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import cn from "clsx";

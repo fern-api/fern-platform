@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import type { BundledMDX } from "../mdx/types";
 import { ResolvedRootPackage } from "./types";
 

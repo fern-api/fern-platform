@@ -6,6 +6,7 @@ import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
+    REGISTRY_SERVICE,
     convertNavigatableToResolvedPath,
     getGitHubInfo,
     getGitHubRepo,
@@ -39,10 +40,6 @@ async function getUnauthenticatedRedirect(xFernHost: string, path: string): Prom
     );
     return { destination: authorizationUrl, permanent: false };
 }
-
-const REGISTRY_SERVICE = new FdrClient({
-    environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-});
 
 function getRegistryServiceWithToken(token: string): FdrClient {
     return new FdrClient({
