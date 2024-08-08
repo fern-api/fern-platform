@@ -20,6 +20,7 @@ export { ApiDefinitionResolver } from "./resolver/ApiDefinitionResolver";
 export { ApiTypeResolver } from "./resolver/ApiTypeResolver";
 export * from "./resolver/types";
 export { REGISTRY_SERVICE } from "./services/registry";
+export { renderThemeStylesheet } from "./themes/stylesheet/renderThemeStylesheet";
 export { convertNavigatableToResolvedPath } from "./util/convertNavigatableToResolvedPath";
 export { getGitHubInfo, getGitHubRepo } from "./util/github";
 export { unknownToString } from "./util/unknownToString";

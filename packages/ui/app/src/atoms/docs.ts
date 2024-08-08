@@ -41,8 +41,6 @@ const EMPTY_DOCS_STATE: DocsProps = {
         dark: undefined,
     },
     layout: undefined,
-    typography: undefined,
-    css: undefined,
     js: undefined,
     navbarLinks: [],
     logoHeight: undefined,
@@ -64,6 +62,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
     theme: "default",
     user: undefined,
     defaultLang: "curl",
+    stylesheet: "",
 };
 
 export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(EMPTY_DOCS_STATE, (_, next) => {

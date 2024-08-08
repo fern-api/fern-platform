@@ -41,8 +41,6 @@ export interface DocsProps {
     favicon: string | undefined;
     colors: ColorsConfig;
     layout: DocsV1Read.DocsLayoutConfig | undefined;
-    typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
-    css: DocsV1Read.CssConfig | undefined;
     js: DocsV1Read.JsConfig | undefined;
     navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
@@ -57,4 +55,5 @@ export interface DocsProps {
     theme: FernTheme;
     user: FernUser | undefined;
     defaultLang: DocsV1Read.ProgrammingLanguage;
+    stylesheet: string;
 }

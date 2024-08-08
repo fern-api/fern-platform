@@ -11,6 +11,7 @@ import {
     getGitHubInfo,
     getGitHubRepo,
     getSeoProps,
+    renderThemeStylesheet,
     setMdxBundler,
 } from "@fern-ui/ui";
 import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
@@ -280,27 +281,27 @@ async function convertDocsToDocsPageProps({
         return { notFound: true };
     }
 
+    const colors = {
+        light:
+            docs.definition.config.colorsV3?.type === "light"
+                ? docs.definition.config.colorsV3
+                : docs.definition.config.colorsV3?.type === "darkAndLight"
+                  ? docs.definition.config.colorsV3.light
+                  : undefined,
+        dark:
+            docs.definition.config.colorsV3?.type === "dark"
+                ? docs.definition.config.colorsV3
+                : docs.definition.config.colorsV3?.type === "darkAndLight"
+                  ? docs.definition.config.colorsV3.dark
+                  : undefined,
+    };
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
         title: docs.definition.config.title,
         favicon: docs.definition.config.favicon,
-        colors: {
-            light:
-                docs.definition.config.colorsV3?.type === "light"
-                    ? docs.definition.config.colorsV3
-                    : docs.definition.config.colorsV3?.type === "darkAndLight"
-                      ? docs.definition.config.colorsV3.light
-                      : undefined,
-            dark:
-                docs.definition.config.colorsV3?.type === "dark"
-                    ? docs.definition.config.colorsV3
-                    : docs.definition.config.colorsV3?.type === "darkAndLight"
-                      ? docs.definition.config.colorsV3.dark
-                      : undefined,
-        },
-        typography: docs.definition.config.typographyV2,
-        css: docs.definition.config.css,
+        colors,
         js: docs.definition.config.js,
         navbarLinks: docs.definition.config.navbarLinks ?? [],
         logoHeight: docs.definition.config.logoHeight,
@@ -365,6 +366,14 @@ async function convertDocsToDocsPageProps({
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
         defaultLang: docs.definition.config.defaultLanguage ?? "curl",
+        stylesheet: renderThemeStylesheet(
+            colors,
+            docs.definition.config.typographyV2,
+            docs.definition.config.layout,
+            docs.definition.config.css,
+            docs.definition.filesV2,
+            node.tabs.length > 0,
+        ),
     };
 
     // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
