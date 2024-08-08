@@ -8,6 +8,8 @@ export * from "./WebhookId";
 export * from "./FileIdOrUrl";
 export * from "./RgbaColor";
 export * from "./ProgrammingLanguage";
+export * from "./AnalyticsConfig";
+export * from "./SegmentConfig";
 export * from "./DocsLayoutConfig";
 export * from "./SearchbarPlacement";
 export * from "./TabsPlacement";
