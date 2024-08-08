@@ -1,4 +1,3 @@
-import { useWhyDidYouUpdate } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { useInView } from "framer-motion";
 import { atom, useAtom, useAtomValue } from "jotai";
@@ -234,34 +233,6 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             [exampleHeight],
         ),
     );
-
-    // Reset the example height (not in view) if the viewport height changes
-    // useEffect(() => {
-    //     if (!isInViewport) {
-    //         setExampleHeight(initialExampleHeight);
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [initialExampleHeight]);
-
-    useWhyDidYouUpdate("EndpointContent", {
-        ...props,
-        selectedError,
-        contentType,
-        selectedClient,
-        requestJson,
-        responseJson,
-        responseCodeSnippet,
-        selectedExampleClientLineCount,
-        selectorHeight,
-        jsonLineLength,
-        requestHeight,
-        responseHeight,
-        padding,
-        initialExampleHeight,
-        exampleHeightWithoutPadding,
-        exampleHeight,
-        minHeight,
-    });
 
     return (
         <section
