@@ -15,14 +15,14 @@
   "module": "src/index.ts",
   "main": "src/index.ts",
   "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    },
     "./bundlers": {
       "default": "./src/mdx/bundlers/index.ts"
     },
     "./auth": {
       "default": "./src/auth/index.ts"
+    },
+    ".": {
+      "default": "./src/index.ts"
     }
   },
   "sideEffects": [
