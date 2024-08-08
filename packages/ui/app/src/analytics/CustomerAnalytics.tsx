@@ -9,17 +9,19 @@ import { GoogleTagManager } from "./GoogleTagManager";
 import { renderSegmentSnippet } from "./segment";
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
+const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConfig ?? {}, isEqual);
 
 export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
     const domain = useAtomValue(DOMAIN_ATOM);
-    const { ga4, gtm, segment } = useAtomValue(ANALYTICS_ATOM);
+    const { ga4, gtm } = useAtomValue(ANALYTICS_ATOM);
+    const { segmentWriteKey } = useAtomValue(ANALYTICS_CONFIG_ATOM);
     return (
         <>
             {
                 <Script
                     id="segment-script"
                     dangerouslySetInnerHTML={{
-                        __html: renderSegmentSnippet(domain, segment ? segment.writeKey : undefined),
+                        __html: renderSegmentSnippet(domain, segmentWriteKey ?? undefined),
                     }}
                 />
             }

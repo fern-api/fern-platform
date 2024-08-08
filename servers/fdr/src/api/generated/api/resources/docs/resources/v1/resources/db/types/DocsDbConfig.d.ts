@@ -5,7 +5,7 @@ import * as FernRegistry from "../../../../../../..";
 export interface DocsDbConfig {
     title?: string;
     defaultLanguage?: FernRegistry.docs.v1.commons.ProgrammingLanguage;
-    analytics?: FernRegistry.docs.v1.commons.AnalyticsConfig;
+    analyticsConfig?: FernRegistry.docs.v1.commons.AnalyticsConfig;
     navigation: FernRegistry.docs.v1.db.NavigationConfig;
     navbarLinks?: FernRegistry.docs.v1.commons.NavbarLink[];
     footerLinks?: FernRegistry.docs.v1.commons.FooterLink[];

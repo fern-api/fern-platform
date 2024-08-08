@@ -87,7 +87,7 @@ types:
       title: optional<string>
       defaultLanguage: optional<commons.ProgrammingLanguage>
 
-      analytics: optional<commons.AnalyticsConfig>
+      analyticsConfig: optional<commons.AnalyticsConfig>
 
       # navigation
       navigation: NavigationConfig

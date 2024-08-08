@@ -108,6 +108,7 @@ export function convertDocsDefinitionToDb({
             redirects: writeShape.config.redirects,
             integrations: writeShape.config.integrations,
             defaultLanguage: writeShape.config.defaultLanguage,
+            analyticsConfig: writeShape.config.analyticsConfig,
         },
         pages: writeShape.pages,
         jsFiles: writeShape.jsFiles,
