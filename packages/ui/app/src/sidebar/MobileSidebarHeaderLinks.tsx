@@ -59,7 +59,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
                             navbarLink.rightIcon ??
                             (navbarLink.type === "primary" ||
                             (navbarLink.type === "filled" && idx === navbarLinks.length - 1) ? (
-                                <ArrowRight className="!size-5" />
+                                <ArrowRight className="size-4" />
                             ) : undefined)
                         }
                         className={cn("w-full", {
