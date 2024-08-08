@@ -1,4 +1,4 @@
-import { APIV1Read, DocsV2Read } from "../../client";
+import type { APIV1Read, DocsV2Read } from "../../client/types";
 import { mapValues } from "../../utils";
 import { NavigationConfigConverter } from "../converters/NavigationConfigConverter";
 import { FernNavigation } from "../generated";

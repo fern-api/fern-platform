@@ -1,6 +1,6 @@
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
-import { APIV1Read, DocsV1Read } from "../../client";
+import type { APIV1Read, DocsV1Read } from "../../client/types";
 import { titleCase, visitDiscriminatedUnion } from "../../utils";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { ROOT_PACKAGE_ID } from "../consts";

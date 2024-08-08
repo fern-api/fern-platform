@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { DocsV2Read } from "../../client";
+import type { DocsV2Read } from "../../client/types";
 import { convertLoadDocsForUrlResponse, findNode, slugjoin } from "../utils";
 
 export function testGetNavigationRoot(fixtureName: string, slug: string): void {
