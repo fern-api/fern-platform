@@ -13,10 +13,11 @@ import {
     PLAYGROUND_AUTH_STATE_ATOM,
     store,
     useBasePath,
-    useCurrentNode,
     useDomain,
     useFeatureFlags,
+    useNavigationNodes,
     usePlaygroundEndpointFormState,
+    useResolvedPath,
 } from "../atoms";
 import { useSelectedEnvironmentId } from "../atoms/environment";
 import {
@@ -182,11 +183,20 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     }, [domain, endpoint, formState, proxyEnvironment, uploadEnvironment]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
-    const currentNode = useCurrentNode();
 
     let environmentFilters: EnvironmentId[] | undefined;
-    if (currentNode?.type === "endpoint") {
-        environmentFilters = currentNode.playground?.allowedEnvironments;
+    const resolvedPath = useResolvedPath();
+    const navigationNodes = useNavigationNodes();
+    const slug = resolvedPath.slug;
+    let cursor = navigationNodes.slugMap.get(slug);
+    while (cursor && cursor.slug) {
+        if (cursor && (cursor.type === "endpoint" || cursor.type === "webSocket" || cursor.type === "apiPackage")) {
+            environmentFilters = cursor.playground?.allowedEnvironments;
+            break;
+        }
+        const newSlug = slug.split("/");
+        newSlug.pop();
+        cursor = navigationNodes.slugMap.get(newSlug.join("/"));
     }
 
     return (

@@ -1,11 +1,12 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { EnvironmentId } from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
 import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
-import { useNavigationNodes } from "../../atoms";
+import { useNavigationNodes, useResolvedPath } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
@@ -52,6 +53,21 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const selectedEnvironmentId = useSelectedEnvironmentId();
     const maybeNode = nodes.get(websocket.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
+
+    let environmentFilters: EnvironmentId[] | undefined;
+    const resolvedPath = useResolvedPath();
+    const navigationNodes = useNavigationNodes();
+    const slug = resolvedPath.slug;
+    let cursor = navigationNodes.slugMap.get(slug);
+    while (cursor && cursor.slug) {
+        if (cursor && (cursor.type === "endpoint" || cursor.type === "webSocket" || cursor.type === "apiPackage")) {
+            environmentFilters = cursor.playground?.allowedEnvironments;
+            break;
+        }
+        const newSlug = slug.split("/");
+        newSlug.pop();
+        cursor = navigationNodes.slugMap.get(newSlug.join("/"));
+    }
 
     const route = `/${websocket.slug}`;
 
@@ -309,7 +325,16 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                             <div className="sticky top-header-offset flex max-h-content scroll-mt-content flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
-                                    actions={node != null ? <PlaygroundButton state={node} /> : undefined}
+                                    actions={
+                                        node != null &&
+                                        selectedEnvironmentId &&
+                                        !(
+                                            environmentFilters &&
+                                            environmentFilters.includes(selectedEnvironmentId as EnvironmentId)
+                                        ) ? (
+                                            <PlaygroundButton state={node} />
+                                        ) : undefined
+                                    }
                                     disableClipboard={true}
                                 >
                                     <FernScrollArea>

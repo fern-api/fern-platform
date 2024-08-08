@@ -17,6 +17,7 @@ import { buildRequestUrl, unknownToString } from "./utils";
 interface PlaygroundEndpointPathProps {
     method: APIV1Read.HttpMethod | undefined;
     environment: APIV1Read.Environment | undefined;
+    environmentFilters: APIV1Read.EnvironmentId[] | undefined;
     formState: PlaygroundRequestFormState;
     path: ResolvedEndpointPathParts[];
     queryParameters: ResolvedObjectProperty[];
@@ -27,6 +28,7 @@ interface PlaygroundEndpointPathProps {
 
 export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
     environment,
+    environmentFilters,
     method,
     formState,
     path,
@@ -52,6 +54,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                         {environment != null && (
                             <MaybeEnvironmentDropdown
                                 selectedEnvironment={environment}
+                                environmentFilters={environmentFilters}
                                 small
                                 urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
                                 protocolTextStyle="playground-endpoint-baseurl max-sm:hidden"
