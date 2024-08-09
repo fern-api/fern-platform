@@ -11,13 +11,14 @@ import { DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
+import { StringType } from "../../../../template-resolver/src/generated/api/resources/api/resources/v1/resources/read";
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     useEffect(() => {
         initializePosthog();
 
         // Track page views
-        const handleRouteChange = (url) => {
+        const handleRouteChange = (url: StringType) => {
             window.analytics.capturePosthogEvent("$pageview");
             window.analytics.page("Page View", { page: url });
         };
