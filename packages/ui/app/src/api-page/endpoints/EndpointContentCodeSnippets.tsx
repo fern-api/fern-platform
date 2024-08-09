@@ -168,8 +168,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         {node != null && (
                             <PlaygroundButton
                                 state={node}
-                                example={selectedClient.exampleCall}
-                                language={selectedClient.language}
+                                // example={selectedClient.exampleCall}
                             />
                         )}
                         {clients.length > 1 ? (
