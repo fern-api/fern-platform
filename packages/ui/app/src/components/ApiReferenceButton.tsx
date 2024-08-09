@@ -1,5 +1,5 @@
 import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
-import { ArrowUpRight } from "iconoir-react";
+import { ArrowUpRight } from "@fern-ui/icons";
 import { useRouter } from "next/router";
 
 export const ApiReferenceButton: React.FC<{ slug: string }> = ({ slug }) => {

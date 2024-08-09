@@ -1,7 +1,7 @@
 import { FernButton, FernInput, FernTooltipProvider } from "@fern-ui/components";
+import { Cross, MagnifyingGlass } from "@fern-ui/icons";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { Search, Xmark } from "iconoir-react";
 import React, { ReactElement, useState } from "react";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
@@ -39,11 +39,11 @@ export const EnumTypeDefinition = ({
                 onValueChange={setSearchInput}
                 className="w-full"
                 style={{ flex: 1, backgroundColor: "transparent" }}
-                leftIcon={<Search className="t-muted size-4" />}
+                leftIcon={<MagnifyingGlass className="t-muted size-4" />}
                 rightElement={
                     <FernButton
                         icon={
-                            <Xmark
+                            <Cross
                                 className={cn("transition", {
                                     "rotate-45": isCollapsed,
                                 })}

@@ -1,8 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
+import { ArrowDown, ArrowUp, Rss } from "@fern-ui/icons";
 import cn from "clsx";
-import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
@@ -138,7 +138,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     <span className="inline-flex items-center gap-2">
                                         {"Handshake"}
                                         <span className="inline-block rounded-full bg-tag-default p-1">
-                                            <Wifi className="t-muted size-icon" strokeWidth={1.5} />
+                                            <Rss className="-rotate-45 t-muted size-icon" strokeWidth={1.5} />
                                         </span>
                                     </span>
                                 }

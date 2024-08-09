@@ -1,6 +1,6 @@
+import { Minus, Plus } from "@fern-ui/icons";
 import { useEventCallback } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { Minus, Plus } from "iconoir-react";
 import {
     ComponentProps,
     MouseEventHandler,

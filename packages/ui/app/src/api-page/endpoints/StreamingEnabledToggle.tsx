@@ -1,5 +1,5 @@
 import { FernDropdown, FernSegmentedControl } from "@fern-ui/components";
-import { AntennaSignal, AppleShortcuts } from "iconoir-react";
+import { NetworkDevice, Rss } from "@fern-ui/icons";
 import { FC, PropsWithChildren, useCallback } from "react";
 
 export declare namespace StreamingEnabledToggle {
@@ -11,8 +11,8 @@ export declare namespace StreamingEnabledToggle {
 }
 
 const OPTIONS: FernDropdown.Option[] = [
-    { type: "value", value: "batch", label: "Batch", icon: <AppleShortcuts /> },
-    { type: "value", value: "stream", label: "Stream", icon: <AntennaSignal /> },
+    { type: "value", value: "batch", label: "Batch", icon: <NetworkDevice /> },
+    { type: "value", value: "stream", label: "Stream", icon: <Rss className="-rotate-45" /> },
 ];
 
 export const StreamingEnabledToggle: FC<PropsWithChildren<StreamingEnabledToggle.Props>> = ({

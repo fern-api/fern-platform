@@ -1,6 +1,6 @@
 import { FernButton } from "@fern-ui/components";
 import { isPlainObject } from "@fern-ui/core-utils";
-import { Plus, Xmark } from "iconoir-react";
+import { Cross, Plus } from "@fern-ui/icons";
 import { memo, useCallback, useEffect, useState } from "react";
 import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapOptional } from "../../resolver/types";
 import { getDefaultValueForType, unknownToString } from "../utils";
@@ -111,7 +111,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
                             </div>
                             <div>
                                 <FernButton
-                                    icon={<Xmark />}
+                                    icon={<Cross />}
                                     onClick={() => handleRemoveItem(idx)}
                                     variant="minimal"
                                     size="small"

@@ -1,5 +1,5 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { Calendar } from "iconoir-react";
+import { Calendar } from "@fern-ui/icons";
 import { useIsSelectedSidebarNode } from "../../atoms";
 import { Changelog } from "../../util/dateUtils";
 import { SidebarSlugLink } from "../SidebarLink";

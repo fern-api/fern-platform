@@ -1,6 +1,6 @@
+import { Check, Link } from "@fern-ui/icons";
 import { useCopyToClipboard, useMounted } from "@fern-ui/react-commons";
 import { Transition } from "@headlessui/react";
-import { Check, Link } from "iconoir-react";
 import { Url } from "next/dist/shared/lib/router/router";
 import { Fragment, memo } from "react";
 import { FernLink } from "../components/FernLink";
@@ -49,7 +49,7 @@ export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>
             <FernLink href={href} shallow={true} replace={true} onClick={copyToClipboard} tabIndex={-1}>
                 {!wasJustCopied && (
                     <span className="fern-anchor-icon opacity-0 group-hover/anchor-container:opacity-100">
-                        <Link />
+                        <Link className="rotate-45" />
                     </span>
                 )}
                 {mounted && (

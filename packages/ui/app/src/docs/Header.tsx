@@ -1,7 +1,7 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
+import { ArrowRight, MagnifyingGlass } from "@fern-ui/icons";
 import cn from "clsx";
-import { ArrowRight, Search } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
@@ -111,7 +111,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                                 e.stopPropagation();
                                 openSearchDialog();
                             }}
-                            icon={<Search className="!size-icon-md" />}
+                            icon={<MagnifyingGlass className="!size-icon-md" />}
                             intent="none"
                             variant="minimal"
                             rounded={true}

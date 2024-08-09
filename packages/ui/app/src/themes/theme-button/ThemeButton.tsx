@@ -1,8 +1,8 @@
 import { FernButton, FernButtonProps } from "@fern-ui/components";
+import { DesktopDevice, Moon, Sun } from "@fern-ui/icons";
 import { useMounted } from "@fern-ui/react-commons";
 import * as Popover from "@radix-ui/react-popover";
 import cn from "clsx";
-import { AppleImac2021, HalfMoon, SunLight } from "iconoir-react";
 import { memo, useState } from "react";
 import { useSetSystemTheme, useTheme, useToggleTheme } from "../../atoms";
 
@@ -19,7 +19,7 @@ export const ThemeButton = memo(({ className, ...props }: ThemeButton.Props) => 
     const mounted = useMounted();
     const [isOpen, setOpen] = useState(false);
 
-    const IconToUse = mounted && resolvedTheme === "dark" ? HalfMoon : SunLight;
+    const IconToUse = mounted && resolvedTheme === "dark" ? Moon : Sun;
 
     return (
         <Popover.Root
@@ -55,7 +55,7 @@ export const ThemeButton = memo(({ className, ...props }: ThemeButton.Props) => 
                         }}
                         variant="outlined"
                         intent="none"
-                        icon={<AppleImac2021 className="fern-theme-button-icon" />}
+                        icon={<DesktopDevice className="fern-theme-button-icon" />}
                         text="Auto"
                         title="set system theme"
                     />

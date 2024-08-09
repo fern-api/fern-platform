@@ -1,5 +1,5 @@
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { Minus, Plus } from "iconoir-react";
+import { Minus, Plus } from "@fern-ui/icons";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";

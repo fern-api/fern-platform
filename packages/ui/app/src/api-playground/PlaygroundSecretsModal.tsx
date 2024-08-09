@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup, FernModal, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
+import { ArrowRight, Cross, Trash } from "@fern-ui/icons";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { ArrowRight, Trash, Xmark } from "iconoir-react";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { FC, useState } from "react";
@@ -51,7 +51,7 @@ export const PlaygroundSecretsModal: FC<PlaygroundSecretsModalProps> = ({ onClos
     const [value, setValue] = useState<string>("");
     const modal = (
         <FernModal isOpen={isOpen} onClose={onClose} className="relative w-96 rounded-lg p-4">
-            <FernButton className="absolute right-2 top-2" variant="minimal" icon={<Xmark />} onClick={onClose} />
+            <FernButton className="absolute right-2 top-2" variant="minimal" icon={<Cross />} onClick={onClose} />
             <h3 className="m-0 mb-4">Secrets</h3>
             <ul>
                 {secrets.map((secret, idx) => (

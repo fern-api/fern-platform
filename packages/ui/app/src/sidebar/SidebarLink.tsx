@@ -1,7 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
+import { ChevronDown } from "@fern-ui/icons";
 import cn, { clsx } from "clsx";
-import { NavArrowDown } from "iconoir-react";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import {
@@ -138,7 +138,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
             })}
             data-state={showIndicator ? "active" : "inactive"}
         >
-            <NavArrowDown
+            <ChevronDown
                 className={cn("size-icon-md lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,

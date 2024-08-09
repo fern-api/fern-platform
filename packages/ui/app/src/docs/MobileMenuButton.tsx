@@ -1,5 +1,5 @@
 import { FernButton } from "@fern-ui/components";
-import { Menu, Xmark } from "iconoir-react";
+import { Cross, Menu } from "@fern-ui/icons";
 import { ReactElement } from "react";
 import { useCloseMobileSidebar, useIsMobileSidebarOpen, useOpenMobileSidebar } from "../atoms";
 
@@ -18,7 +18,7 @@ export function MobileMenuButton(): ReactElement {
                     openMobileSidebar();
                 }
             }}
-            icon={isMobileSidebarOpen ? <Xmark /> : <Menu className="!size-icon-md" />}
+            icon={isMobileSidebarOpen ? <Cross /> : <Menu className="!size-icon-md" />}
             intent={isMobileSidebarOpen ? "primary" : "none"}
             variant={isMobileSidebarOpen ? "filled" : "minimal"}
             rounded={true}

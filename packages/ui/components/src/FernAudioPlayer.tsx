@@ -1,7 +1,15 @@
+import {
+    Forward10Seconds,
+    Pause,
+    Play,
+    Rewind10Seconds,
+    SkipBack,
+    SpeakerOff,
+    SpeakerVolumeLoud,
+} from "@fern-ui/icons";
 import clsx from "clsx";
-import { Forward, Pause, Play, Restart, Rewind, SoundHigh, SoundOff } from "iconoir-react";
 import moment from "moment";
-import { createRef, ReactElement, useEffect, useState } from "react";
+import { ReactElement, createRef, useEffect, useState } from "react";
 import { FernButton, FernButtonGroup } from "./FernButton";
 
 export interface FernAudioPlayerProps {
@@ -57,7 +65,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                             variant="minimal"
                             size="normal"
                             intent="none"
-                            icon={<Restart />}
+                            icon={<SkipBack />}
                             onClick={() => {
                                 if (ref.current) {
                                     ref.current.currentTime = 0;
@@ -65,7 +73,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                             }}
                         />
                         <FernButton
-                            icon={<Rewind />}
+                            icon={<Rewind10Seconds />}
                             variant="minimal"
                             size="normal"
                             onClick={() => {
@@ -92,7 +100,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                             }}
                         />
                         <FernButton
-                            icon={<Forward />}
+                            icon={<Forward10Seconds />}
                             variant="minimal"
                             size="normal"
                             onClick={() => {
@@ -109,7 +117,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                             variant="minimal"
                             size="normal"
                             intent="none"
-                            icon={isMuted ? <SoundOff /> : <SoundHigh />}
+                            icon={isMuted ? <SpeakerOff /> : <SpeakerVolumeLoud />}
                             onClick={() => {
                                 if (ref.current) {
                                     ref.current.muted = !ref.current.muted;

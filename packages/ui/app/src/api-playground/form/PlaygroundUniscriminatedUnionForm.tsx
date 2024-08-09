@@ -1,5 +1,5 @@
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "@fern-ui/icons";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Markdown } from "../../mdx/Markdown";
 import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../resolver/types";
@@ -103,7 +103,7 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                                 <span className="t-muted">Select a variant...</span>
                             )
                         }
-                        rightIcon={<NavArrowDown />}
+                        rightIcon={<ChevronDown />}
                         className="w-full text-left"
                         variant="outlined"
                         mono={true}

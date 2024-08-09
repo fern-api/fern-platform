@@ -1,7 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { CornerDownLeft } from "@fern-ui/icons";
 import type { EndpointSearchRecordV2 } from "@fern-ui/search-utils";
 import cn from "clsx";
-import { LongArrowDownLeft } from "iconoir-react";
 import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
 
 export declare namespace EndpointRecordV2 {
@@ -84,7 +84,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                     <SearchHitBreadCrumbs parts={hit.path.parts} />
                 </span>
 
-                <LongArrowDownLeft
+                <CornerDownLeft
                     className={cn("size-4", {
                         "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,

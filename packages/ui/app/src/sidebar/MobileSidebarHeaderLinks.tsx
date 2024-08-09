@@ -1,5 +1,5 @@
+import { ArrowRight } from "@fern-ui/icons";
 import cn from "clsx";
-import { ArrowRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { DOCS_LAYOUT_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, NAVBAR_LINKS_ATOM } from "../atoms";

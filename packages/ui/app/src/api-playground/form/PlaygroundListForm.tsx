@@ -1,6 +1,6 @@
 import { FernButton } from "@fern-ui/components";
+import { Cross, Plus } from "@fern-ui/icons";
 import cn from "clsx";
-import { Plus, Xmark } from "iconoir-react";
 import { memo, useCallback } from "react";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getDefaultValueForType, shouldRenderInline } from "../utils";
@@ -78,7 +78,7 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
                                 )}
 
                                 <FernButton
-                                    icon={<Xmark />}
+                                    icon={<Cross />}
                                     onClick={() => handleRemoveItem(idx)}
                                     variant="minimal"
                                     size="small"

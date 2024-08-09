@@ -1,0 +1,49 @@
+{
+  "name": "@fern-ui/icons",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/ui/fontawesome-cdn"
+  },
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "source": "src/index.ts",
+  "module": "src/index.ts",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "test": "vitest --run --passWithNoTests --globals",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "depcheck": "depcheck",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/react": "^18.0.20",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.56.0",
+    "organize-imports-cli": "^0.10.0",
+    "prettier": "^3.3.2",
+    "stylelint": "^16.1.0",
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
+  }
+}

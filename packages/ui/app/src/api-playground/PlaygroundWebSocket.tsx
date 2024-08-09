@@ -1,6 +1,6 @@
 import { FernTooltipProvider } from "@fern-ui/components";
+import { PlayFill, StopCircle } from "@fern-ui/icons";
 import { usePrevious } from "@fern-ui/react-commons";
-import { Wifi, WifiOff } from "iconoir-react";
 import { merge } from "lodash-es";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
@@ -158,9 +158,9 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
                         }
                         sendRequestIcon={
                             connectedState === "opening" ? null : connectedState === "opened" ? (
-                                <WifiOff className="size-6 rotate-90" />
+                                <StopCircle className="size-6 rotate-90" />
                             ) : (
-                                <Wifi className="size-6 rotate-90" />
+                                <PlayFill className="size-6 rotate-90" />
                             )
                         }
                     />

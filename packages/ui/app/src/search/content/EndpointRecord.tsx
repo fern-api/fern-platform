@@ -1,6 +1,6 @@
+import { Code } from "@fern-ui/icons";
 import type { SearchRecord } from "@fern-ui/search-utils";
 import cn from "clsx";
-import { Code } from "iconoir-react";
 import { Snippet } from "react-instantsearch";
 
 export declare namespace EndpointRecord {

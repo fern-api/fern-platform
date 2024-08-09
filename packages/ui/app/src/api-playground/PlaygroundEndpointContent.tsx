@@ -8,9 +8,9 @@ import {
     FernTooltip,
     FernTooltipProvider,
 } from "@fern-ui/components";
+import { Download, PaperAirplane } from "@fern-ui/icons";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import cn from "clsx";
-import { Download, SendSolid } from "iconoir-react";
 import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
@@ -302,7 +302,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                                     setTabValue("1");
                                                 }}
                                                 sendRequestIcon={
-                                                    <SendSolid className="transition-transform group-hover:translate-x-0.5" />
+                                                    <PaperAirplane className="rotate-45 transition-transform group-hover:translate-x-0.5" />
                                                 }
                                             />
                                         </div>

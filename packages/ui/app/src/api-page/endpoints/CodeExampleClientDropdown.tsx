@@ -1,5 +1,5 @@
 import { FernButton, FernDropdown, RemoteFontAwesomeIcon } from "@fern-ui/components";
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "@fern-ui/icons";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 
 export declare namespace CodeExampleClientDropdown {
@@ -44,7 +44,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
             >
                 <FernButton
                     icon={<RemoteFontAwesomeIcon className="bg-accent size-4" icon={selectedClientGroup?.icon} />}
-                    rightIcon={<NavArrowDown className="!size-icon" />}
+                    rightIcon={<ChevronDown className="!size-icon" />}
                     text={selectedClientGroup?.languageDisplayName ?? selectedClient.language}
                     size="small"
                     variant="outlined"

@@ -1,7 +1,7 @@
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { Bell, Check, CheckCircle, Information, Lightning, Pin, Star, Warning } from "@fern-ui/icons";
 import cn from "clsx";
-import { Bell, Check, CheckCircle, InfoCircle, Pin, Rocket, Star, WarningTriangle } from "iconoir-react";
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 
 type Intent = "info" | "warning" | "success" | "error" | "note" | "launch" | "tip" | "check";
@@ -59,15 +59,15 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                         <span className="callout-icon">{icon}</span>
                     ) : (
                         visitDiscriminatedUnion({ intent }, "intent")._visit({
-                            info: () => <InfoCircle className="size-icon-md text-intent-default" />,
+                            info: () => <Information className="size-icon-md text-intent-default" />,
                             warning: () => <Bell className="size-icon-md text-intent-warning" />,
                             success: () => <CheckCircle className="size-icon-md text-intent-success" />,
-                            error: () => <WarningTriangle className="size-icon-md text-intent-danger" />,
+                            error: () => <Warning className="size-icon-md text-intent-danger" />,
                             note: () => <Pin className="size-icon-md text-intent-info" />,
-                            launch: () => <Rocket className="t-accent size-icon-md" />,
+                            launch: () => <Lightning className="t-accent size-icon-md" />, // TODO: this was a rocket icon
                             tip: () => <Star className="size-icon-md text-intent-success" />,
                             check: () => <Check className="size-icon-md text-intent-success" />,
-                            _other: () => <InfoCircle className="size-icon-md text-intent-default" />,
+                            _other: () => <Information className="size-icon-md text-intent-default" />,
                         })
                     )}
                 </div>

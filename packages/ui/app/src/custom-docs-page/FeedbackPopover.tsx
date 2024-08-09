@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
+import { Check, ThumbDown, ThumbUp } from "@fern-ui/icons";
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
 import { forwardRef, useCallback, useMemo, useState } from "react";
 import * as Selection from "selection-popover";
 import { capturePosthogEvent } from "../analytics/posthog";
@@ -80,7 +80,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
         const [isFeedbackSubmitted, setIsFeedbackSubmitted] = useState<boolean>(false);
         const { selection } = useSelection();
 
-        const handleThumbsUp = useCallback(() => {
+        const handleThumbUp = useCallback(() => {
             setIsHelpful(true);
             capturePosthogEvent("feedback_voted", {
                 satisfied: true,
@@ -88,7 +88,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
             });
         }, [selection]);
 
-        const handleThumbsDown = useCallback(() => {
+        const handleThumbDown = useCallback(() => {
             setIsHelpful(false);
             capturePosthogEvent("feedback_voted", {
                 satisfied: false,
@@ -130,11 +130,11 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                 <>
                     <MotionFernButton
                         layoutId="thumbs-up"
-                        icon={<ThumbsUp className={clsx("opacity-60", { "animate-thumb-rock": isHelpful })} />}
+                        icon={<ThumbUp className={clsx("opacity-60", { "animate-thumb-rock": isHelpful })} />}
                         variant="minimal"
                         intent={isHelpful ? "success" : "none"}
                         active={isHelpful}
-                        onClick={handleThumbsUp}
+                        onClick={handleThumbUp}
                         className={clsx({ "w-full": isHelpful !== undefined })}
                         transition={{ type: "spring", duration: 0.3, bounce: 0 }}
                     >
@@ -143,12 +143,12 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                     <MotionFernButton
                         layoutId="thumbs-down"
                         icon={
-                            <ThumbsDown className={clsx("opacity-60", { "animate-thumb-rock": isHelpful === false })} />
+                            <ThumbDown className={clsx("opacity-60", { "animate-thumb-rock": isHelpful === false })} />
                         }
                         variant="minimal"
                         intent={isHelpful === false ? "danger" : "none"}
                         active={isHelpful === false}
-                        onClick={handleThumbsDown}
+                        onClick={handleThumbDown}
                         className={clsx({ "w-full": isHelpful !== undefined })}
                         transition={{ type: "spring", duration: 0.3, bounce: 0 }}
                     >
@@ -156,7 +156,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                     </MotionFernButton>
                 </>
             ),
-            [handleThumbsDown, handleThumbsUp, isHelpful],
+            [handleThumbDown, handleThumbUp, isHelpful],
         );
 
         return (

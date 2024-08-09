@@ -1,4 +1,4 @@
-import { GitFork, GithubCircle, Star } from "iconoir-react";
+import { GitBranch, LogoGithub, Star } from "@fern-ui/icons";
 import React from "react";
 import useSWR from "swr";
 import { FernLinkButton } from "../components/FernLinkButton";
@@ -26,14 +26,14 @@ export const GitHubWidget: React.FC<{ repo: string }> = ({ repo }) => {
     return (
         <FernLinkButton
             href={`https://github.com/${repo}`}
-            icon={<GithubCircle className="!size-icon-lg" strokeWidth={1} />}
+            icon={<LogoGithub className="!size-icon-lg" strokeWidth={1} />}
             variant="minimal"
             className="h-10"
         >
             <div className="font-medium">{repo}</div>
             <div className="flex gap-2 text-xs">
                 <GitHubStat icon={Star} value={data.stars} />
-                <GitHubStat icon={GitFork} value={data.forks} />
+                <GitHubStat icon={GitBranch} value={data.forks} />
             </div>
         </FernLinkButton>
     );

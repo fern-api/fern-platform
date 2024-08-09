@@ -1,9 +1,9 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { Cross } from "@fern-ui/icons";
 import * as Dialog from "@radix-ui/react-dialog";
 import cn from "clsx";
-import { Xmark } from "iconoir-react";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../atoms/environment";
@@ -119,7 +119,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
             </div>
 
             <Dialog.Close asChild>
-                <FernButton icon={<Xmark />} size="large" rounded variant="outlined" />
+                <FernButton icon={<Cross />} size="large" rounded variant="outlined" />
             </Dialog.Close>
         </div>
     );

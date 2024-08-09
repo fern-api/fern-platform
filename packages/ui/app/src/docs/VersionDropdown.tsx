@@ -1,7 +1,7 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton } from "@fern-ui/components";
 import { getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "@fern-ui/icons";
 import { useAtomValue } from "jotai";
 import { CURRENT_VERSION_ID_ATOM, UNVERSIONED_SLUG_ATOM, VERSIONS_ATOM } from "../atoms";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
@@ -38,7 +38,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
                     intent="primary"
                     variant="outlined"
                     text={currentVersion?.title ?? currentVersionId}
-                    rightIcon={<NavArrowDown className="transition-transform data-[state=open]:rotate-180" />}
+                    rightIcon={<ChevronDown className="transition-transform data-[state=open]:rotate-180" />}
                     disableAutomaticTooltip
                 />
             </FernLinkDropdown>

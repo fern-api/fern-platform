@@ -1,8 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton } from "@fern-ui/components";
+import { ArrowDown, ArrowUp, ChevronDown } from "@fern-ui/icons";
 import * as Accordion from "@radix-ui/react-accordion";
 import cn from "clsx";
-import { ArrowDown, ArrowUp, NavArrowDown } from "iconoir-react";
 import { FC } from "react";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -64,7 +64,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                 onClick={(e) => e.stopPropagation()}
                             />
 
-                            <NavArrowDown
+                            <ChevronDown
                                 className="fern-web-socket-chevron group-data-[state=open]:rotate-180"
                                 aria-hidden
                             />

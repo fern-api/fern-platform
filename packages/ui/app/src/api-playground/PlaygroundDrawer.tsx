@@ -1,9 +1,9 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
+import { ArrowLeft, Cross } from "@fern-ui/icons";
 import * as Dialog from "@radix-ui/react-dialog";
 import { motion, useAnimate, useMotionValue } from "framer-motion";
-import { ArrowLeft, Xmark } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
 import { useFlattenedApis, useSidebarNodes } from "../atoms";
@@ -150,7 +150,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
             </div>
 
             <div className="flex items-center justify-end">
-                <FernButton variant="minimal" className="-mr-3" icon={<Xmark />} onClick={collapsePlayground} rounded />
+                <FernButton variant="minimal" className="-mr-3" icon={<Cross />} onClick={collapsePlayground} rounded />
             </div>
         </div>
     );

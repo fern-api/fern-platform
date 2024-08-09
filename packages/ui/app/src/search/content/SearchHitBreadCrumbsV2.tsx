@@ -1,4 +1,4 @@
-import { NavArrowRight } from "iconoir-react";
+import { ChevronRight } from "@fern-ui/icons";
 import { Fragment, ReactElement } from "react";
 
 interface SearchHitBreadCrumbsV2Props {
@@ -10,7 +10,7 @@ export function SearchHitBreadCrumbsV2({ breadcrumbs }: SearchHitBreadCrumbsV2Pr
         <>
             {breadcrumbs.map((part, index) => (
                 <Fragment key={index}>
-                    {index > 0 && <NavArrowRight className="mx-0.5 inline-block size-icon-sm" />}
+                    {index > 0 && <ChevronRight className="mx-0.5 inline-block size-icon-sm" />}
                     <span>{part}</span>
                 </Fragment>
             ))}

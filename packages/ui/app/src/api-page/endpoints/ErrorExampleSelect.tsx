@@ -1,7 +1,7 @@
 import { FernButton, Intent } from "@fern-ui/components";
+import { Check, ChevronDown, ChevronUp } from "@fern-ui/icons";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
-import { Check, NavArrowDown, NavArrowUp } from "iconoir-react";
 import { FC, Fragment, PropsWithChildren, forwardRef } from "react";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { ResolvedError, ResolvedExampleError } from "../../resolver/types";
@@ -68,7 +68,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                 <FernButton
                     rightIcon={
                         <Select.Icon>
-                            <NavArrowDown className="size-icon" />
+                            <ChevronDown className="size-icon" />
                         </Select.Icon>
                     }
                     variant="minimal"
@@ -81,7 +81,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
             <Select.Portal>
                 <Select.Content className="overflow-hidden rounded-md bg-card backdrop-blur shadow-2xl ring-default ring-inset ring-1 z-50">
                     <Select.ScrollUpButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
-                        <NavArrowUp className="size-icon" />
+                        <ChevronUp className="size-icon" />
                     </Select.ScrollUpButton>
                     <Select.Viewport className="p-[5px]">
                         <Select.Group>
@@ -123,7 +123,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                         ))}
                     </Select.Viewport>
                     <Select.ScrollDownButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
-                        <NavArrowDown className="size-icon" />
+                        <ChevronDown className="size-icon" />
                     </Select.ScrollDownButton>
                 </Select.Content>
             </Select.Portal>

@@ -1,8 +1,8 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { EMPTY_ARRAY, isNonNullish } from "@fern-ui/core-utils";
+import { Cross, MagnifyingGlass, Slash } from "@fern-ui/icons";
 import cn, { clsx } from "clsx";
-import { Search, Slash, Xmark } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useSetAndOpenPlayground } from "../atoms";
@@ -210,14 +210,14 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                 <div className={clsx("flex flex-col size-full relative", className)} ref={scrollRef}>
                     <div className={cn("relative z-20 px-3 pt-3 pb-0")}>
                         <FernInput
-                            leftIcon={<Search className="size-icon" />}
+                            leftIcon={<MagnifyingGlass className="size-icon" />}
                             data-1p-ignore="true"
                             autoFocus={true}
                             value={filterValue}
                             onValueChange={setFilterValue}
                             rightElement={
                                 filterValue.length > 0 && (
-                                    <FernButton icon={<Xmark />} variant="minimal" onClick={() => setFilterValue("")} />
+                                    <FernButton icon={<Cross />} variant="minimal" onClick={() => setFilterValue("")} />
                                 )
                             }
                             placeholder="Search for endpoints..."

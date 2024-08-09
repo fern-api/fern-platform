@@ -1,5 +1,5 @@
 import type { Algolia } from "@fern-api/fdr-sdk/client/types";
-import { NavArrowRight } from "iconoir-react";
+import { ChevronRight } from "@fern-ui/icons";
 import { Fragment, ReactElement } from "react";
 
 interface SearchHitBreadCrumbsProps {
@@ -11,7 +11,7 @@ export function SearchHitBreadCrumbs({ parts }: SearchHitBreadCrumbsProps): Reac
         <>
             {parts.map((part, index) => (
                 <Fragment key={index}>
-                    {index > 0 && <NavArrowRight className="mx-0.5 inline-block size-icon-sm" />}
+                    {index > 0 && <ChevronRight className="mx-0.5 inline-block size-icon-sm" />}
                     <span>{part.name}</span>
                 </Fragment>
             ))}

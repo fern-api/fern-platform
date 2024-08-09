@@ -1,7 +1,7 @@
 import { FernButton, FernDropdown } from "@fern-ui/components";
+import { PlusCircle } from "@fern-ui/icons";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { PlusCircle } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthandRoot } from "../../api-page/types/type-shorthand/TypeShorthand";

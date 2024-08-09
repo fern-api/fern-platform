@@ -1,4 +1,4 @@
-import { CheckCircle, InfoCircle, SystemRestart, WarningCircle, XmarkCircle } from "iconoir-react";
+import { CheckCircle, CrossCircle, Information, LoaderCircle, Warning } from "@fern-ui/icons";
 import { Toaster as SonnerToaster } from "sonner";
 
 export { toast } from "sonner";
@@ -24,10 +24,10 @@ export const Toaster: React.FC<ToasterProps> = ({ position = "bottom-center" }: 
             }}
             icons={{
                 success: <CheckCircle className="size-icon text-text-muted" />,
-                info: <InfoCircle className="size-icon text-text-muted" />,
-                warning: <WarningCircle className="size-icon text-text-muted" />,
-                error: <XmarkCircle className="size-icon text-text-muted" />,
-                loading: <SystemRestart className="animate-spin size-icon text-text-muted" />,
+                info: <Information className="size-icon text-text-muted" />,
+                warning: <Warning className="size-icon text-text-muted" />,
+                error: <CrossCircle className="size-icon text-text-muted" />,
+                loading: <LoaderCircle className="animate-spin size-icon text-text-muted" />,
             }}
         />
     );

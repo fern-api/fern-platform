@@ -1,8 +1,8 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernCard, FernCollapse, FernInput } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { Globe, Key, User } from "@fern-ui/icons";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { Globe, Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";

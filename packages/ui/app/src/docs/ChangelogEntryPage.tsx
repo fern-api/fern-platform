@@ -1,4 +1,4 @@
-import { ArrowLeft } from "iconoir-react";
+import { ArrowLeft } from "@fern-ui/icons";
 import { ReactElement } from "react";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernLink } from "../components/FernLink";

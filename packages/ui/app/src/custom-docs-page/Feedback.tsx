@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup, toast } from "@fern-ui/components";
+import { ThumbDown, ThumbUp } from "@fern-ui/icons";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
-import { ThumbsDown, ThumbsUp } from "iconoir-react";
 import { Router } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { capturePosthogEvent, registerPosthogProperties } from "../analytics/posthog";
@@ -94,7 +94,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                             content={<FeedbackForm isHelpful={isHelpful} onSubmit={handleSubmitFeedback} />}
                             trigger={
                                 <FernButton
-                                    icon={<ThumbsUp className={clsx({ "animate-thumb-rock": isHelpful })} />}
+                                    icon={<ThumbUp className={clsx({ "animate-thumb-rock": isHelpful })} />}
                                     variant="outlined"
                                     intent={isHelpful ? "success" : "none"}
                                     onClick={handleYes}
@@ -109,7 +109,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                             trigger={
                                 <FernButton
                                     icon={
-                                        <ThumbsDown
+                                        <ThumbDown
                                             className={clsx({
                                                 "animate-thumb-rock": isHelpful === false,
                                             })}

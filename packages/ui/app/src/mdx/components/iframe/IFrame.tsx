@@ -1,7 +1,7 @@
 import { FernButton } from "@fern-ui/components";
+import { Fullscreen } from "@fern-ui/icons";
 import { usePrevious } from "@fern-ui/react-commons";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { Expand } from "iconoir-react";
 import {
     ComponentProps,
     ReactElement,
@@ -111,7 +111,7 @@ const ExperimentalIFrameWithFullscreen = ({
                 <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
                 <Tooltip.Portal>
                     <Tooltip.Content side="right" align="start" sideOffset={6} className="animate-popover">
-                        <FernButton variant="outlined" icon={<Expand />} onClick={enterFullscreen} />
+                        <FernButton variant="outlined" icon={<Fullscreen />} onClick={enterFullscreen} />
                     </Tooltip.Content>
                 </Tooltip.Portal>
             </Tooltip.Root>

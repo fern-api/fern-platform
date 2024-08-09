@@ -1,4 +1,4 @@
-import { Edit } from "iconoir-react";
+import { PencilEdit } from "@fern-ui/icons";
 import { ReactElement } from "react";
 import { FernLinkButton } from "../components/FernLinkButton";
 
@@ -12,6 +12,11 @@ export function EditThisPageButton(props: EditThisPageButton): ReactElement | nu
         return null;
     }
     return (
-        <FernLinkButton href={props.editThisPageUrl} icon={<Edit />} text={EDIT_THIS_PAGE_TEXT} variant="outlined" />
+        <FernLinkButton
+            href={props.editThisPageUrl}
+            icon={<PencilEdit />}
+            text={EDIT_THIS_PAGE_TEXT}
+            variant="outlined"
+        />
     );
 }

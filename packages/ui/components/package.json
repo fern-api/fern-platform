@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.2",
+    "@fern-ui/icons": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@headlessui/react": "^1.7.18",
     "@radix-ui/colors": "^3.0.0",
@@ -51,7 +52,6 @@
     "@shikijs/transformers": "^1.2.2",
     "clsx": "^2.1.0",
     "copyfiles": "^2.4.1",
-    "iconoir-react": "^7.7.0",
     "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
