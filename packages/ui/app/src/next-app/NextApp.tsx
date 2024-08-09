@@ -1,23 +1,37 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
+import * as sentry from "@sentry/nextjs";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
+import { StringType } from "../../../../template-resolver/src/generated/api/resources/api/resources/v1/resources/read";
 import { capturePosthogEvent, initializePosthog } from "../analytics/posthog";
 import { DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
-
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     useEffect(() => {
         initializePosthog();
 
         // Track page views
-        const handleRouteChange = () => capturePosthogEvent("$pageview");
+        const handleRouteChange = (url: StringType) => {
+            try {
+                capturePosthogEvent("$pageview");
+                typeof window !== "undefined" &&
+                    window?.analytics &&
+                    typeof window.analytics.page === "function" &&
+                    window?.analytics?.page("Page View", { page: url });
+            } catch (e) {
+                //send the exception to sentry
+                sentry.captureException(e);
+                // eslint-disable-next-line no-console
+                console.error("Failed to track page view", e);
+            }
+        };
         Router.events.on("routeChangeComplete", handleRouteChange);
         return () => {
             Router.events.off("routeChangeComplete", handleRouteChange);
