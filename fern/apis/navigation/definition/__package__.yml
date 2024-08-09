@@ -276,7 +276,7 @@ types:
       children: list<ApiPackageChild>
       playground:
         type: optional<PlaygroundSettings>
-        docs: Settings for the api playground that affects all endpoints.
+        docs: Settings for the api playground that is applied only to descendants of this api package.
 
   # utilities
 
