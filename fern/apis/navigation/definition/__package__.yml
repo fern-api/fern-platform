@@ -214,12 +214,12 @@ types:
       children: list<ApiPackageChild>
       changelog: optional<ChangelogNode>
       playground:
+        # enabled: optional<boolean> (this is currently controlled in feature flags, global boolean)
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
 
   PlaygroundSettings:
     properties:
-      # enabled: optional<boolean> (this is currently controlled in feature flags)
       allowedEnvironments:
         type: optional<list<EnvironmentId>>
         docs: |
