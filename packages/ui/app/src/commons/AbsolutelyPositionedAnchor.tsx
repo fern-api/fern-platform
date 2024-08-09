@@ -7,7 +7,7 @@ import { FernLink } from "../components/FernLink";
 
 export declare namespace AbsolutelyPositionedAnchor {
     export interface Props {
-        href: Url;
+        href: string;
         smallGap?: boolean;
     }
 }
@@ -46,7 +46,7 @@ export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>
 
     return (
         <div className="fern-anchor">
-            <FernLink href={href} shallow={true} replace={true} onClick={copyToClipboard} tabIndex={-1}>
+            <FernLink href={href} shallow={true} scroll={false} replace={true} onClick={copyToClipboard} tabIndex={-1}>
                 {!wasJustCopied && (
                     <span className="fern-anchor-icon opacity-0 group-hover/anchor-container:opacity-100">
                         <Link />

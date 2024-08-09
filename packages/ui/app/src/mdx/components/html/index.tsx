@@ -37,7 +37,7 @@ export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): Rea
             ...props,
             className: cn(props.className, "flex items-center relative group/anchor-container mb-3"),
         },
-        <AbsolutelyPositionedAnchor href={{ hash: props.id, pathname: useCurrentPathname() }} />,
+        <AbsolutelyPositionedAnchor href={`#${props.id}`} />,
         <span>{props.children}</span>,
     );
 };
