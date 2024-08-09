@@ -54,7 +54,7 @@ jobs:
         run: npm install --global vercel@latest
 
       - name: Build Project Artifacts
-        run: pnpm docs:build
+        run: ANALYZE=true pnpm docs:build
 
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle
