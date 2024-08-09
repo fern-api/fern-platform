@@ -130,7 +130,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     );
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
-    const environmentFilters = usePlaygroundSettings();
+    const environmentFilters = usePlaygroundSettings(maybeNode?.id);
 
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>
