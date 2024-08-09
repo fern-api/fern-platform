@@ -11,6 +11,6 @@ export interface ApiPackageNode
         FernRegistry.navigation.WithRedirect {
     type: "apiPackage";
     children: FernRegistry.navigation.ApiPackageChild[];
-    /** Settings for the api playground that affects all endpoints. */
+    /** Settings for the api playground that is applied only to descendants of this api package. */
     playground?: FernRegistry.navigation.PlaygroundSettings;
 }
