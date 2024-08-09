@@ -280,7 +280,6 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                     return;
                 }
 
-                console.log(endpoint.examples);
                 set(
                     formStateAtom,
                     getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], apiPackage.types),
