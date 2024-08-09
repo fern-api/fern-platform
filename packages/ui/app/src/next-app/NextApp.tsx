@@ -7,7 +7,6 @@ import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
-import { StringType } from "../../../../template-resolver/src/generated/api/resources/api/resources/v1/resources/read";
 import { capturePosthogEvent, initializePosthog } from "../analytics/posthog";
 import { DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
@@ -18,7 +17,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
         initializePosthog();
 
         // Track page views
-        const handleRouteChange = (url: StringType) => {
+        const handleRouteChange = (url: string) => {
             try {
                 capturePosthogEvent("$pageview");
                 typeof window !== "undefined" &&
