@@ -6,12 +6,12 @@ import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
-import { initializePosthog } from "../analytics/posthog";
+import { StringType } from "../../../../template-resolver/src/generated/api/resources/api/resources/v1/resources/read";
+import { capturePosthogEvent, initializePosthog } from "../analytics/posthog";
 import { DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
-import { StringType } from "../../../../template-resolver/src/generated/api/resources/api/resources/v1/resources/read";
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     useEffect(() => {
@@ -19,8 +19,8 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
 
         // Track page views
         const handleRouteChange = (url: StringType) => {
-            window.analytics.capturePosthogEvent("$pageview");
-            window.analytics.page("Page View", { page: url });
+            capturePosthogEvent("$pageview");
+            window.analytics.page && window.analytics.page("Page View", { page: url });
         };
         Router.events.on("routeChangeComplete", handleRouteChange);
         return () => {
