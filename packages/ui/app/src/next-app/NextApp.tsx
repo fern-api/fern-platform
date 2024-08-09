@@ -20,7 +20,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
         // Track page views
         const handleRouteChange = (url: StringType) => {
             capturePosthogEvent("$pageview");
-            window.analytics.page && window.analytics.page("Page View", { page: url });
+            typeof window !== "undefined" && window?.analytics?.page("Page View", { page: url });
         };
         Router.events.on("routeChangeComplete", handleRouteChange);
         return () => {
