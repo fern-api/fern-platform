@@ -55,7 +55,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const maybeNode = nodes.get(websocket.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
 
-    const environmentFilters = usePlaygroundSettings();
+    const environmentFilters = usePlaygroundSettings(maybeNode?.id);
 
     const route = `/${websocket.slug}`;
 
