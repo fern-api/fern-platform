@@ -30,7 +30,7 @@ const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    transpilePackages: ["next-mdx-remote", "esbuild", "jotai-devtools"],
+    transpilePackages: ["next-mdx-remote", "esbuild", "lodash-es", "@fern-ui/ui", "@fern-api/fdr-sdk"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,
@@ -61,7 +61,6 @@ const nextConfig = {
             "https://*.posthog.com",
             "https://cdn.segment.com",
             "https://api.segment.io",
-            "https://browser-intake-datadoghq.com",
             "wss://api.getkoala.com",
             "https://www.google-analytics.com",
         ];
@@ -76,7 +75,9 @@ const nextConfig = {
             ...DOCS_FILES_URLS,
         ];
 
-        const styleSrc = ["'self'", "'unsafe-inline'"];
+        const styleSrc = ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"];
+
+        const fontSrc = ["'self'", "data:", ...DOCS_FILES_URLS];
 
         if (cdnUri != null) {
             scriptSrc.push(`${cdnUri.origin}`);
@@ -102,6 +103,7 @@ const nextConfig = {
             "base-uri 'self'",
             "form-action 'self'",
             "frame-ancestors 'none'",
+            `font-src ${fontSrc.join(" ")}`,
             // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
         ];
 

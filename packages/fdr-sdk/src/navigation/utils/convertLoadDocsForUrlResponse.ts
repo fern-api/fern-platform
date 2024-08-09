@@ -1,7 +1,9 @@
-import { APIV1Read, DocsV2Read } from "../../client";
+import type { APIV1Read, DocsV2Read } from "../../client/types";
 import { mapValues } from "../../utils";
 import { NavigationConfigConverter } from "../converters/NavigationConfigConverter";
 import { FernNavigation } from "../generated";
+import { getFrontmatter } from "./getFrontmatter";
+import { getFullSlugFromFrontmatter } from "./getFullSlugFromFrontmatter";
 import { getNoIndexFromFrontmatter } from "./getNoIndexFromFrontmatter";
 
 export function convertLoadDocsForUrlResponse(
@@ -10,15 +12,28 @@ export function convertLoadDocsForUrlResponse(
     paginated?: boolean,
 ): FernNavigation.RootNode {
     const noindexMap: Record<FernNavigation.PageId, boolean> = {};
+    const fullSlugMap: Record<FernNavigation.PageId, FernNavigation.Slug> = {};
     Object.entries(response.definition.pages).forEach(([pageId, page]) => {
-        const noindex = getNoIndexFromFrontmatter(page.markdown);
+        const frontmatter = getFrontmatter(page.markdown);
+        if (frontmatter == null) {
+            return;
+        }
+
+        const noindex = getNoIndexFromFrontmatter(frontmatter);
         if (noindex != null) {
             noindexMap[FernNavigation.PageId(pageId)] = noindex;
+        }
+
+        // get full slug from frontmatter
+        const fullSlug = getFullSlugFromFrontmatter(frontmatter);
+        if (fullSlug != null) {
+            fullSlugMap[FernNavigation.PageId(pageId)] = fullSlug;
         }
     });
     return NavigationConfigConverter.convert(
         response.definition.config.title,
         response.definition.config.navigation,
+        fullSlugMap,
         noindexMap,
         hackReorderApis(response.definition.apis, response.baseUrl.domain),
         response.baseUrl.basePath,

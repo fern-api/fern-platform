@@ -1,6 +1,5 @@
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookContent } from "./WebhookContent";
 import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 
@@ -14,7 +13,6 @@ export declare namespace Webhook {
 }
 
 export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastInApi, types }) => {
-    const { setTargetRef } = useApiPageCenterElement({ slug: webhook.slug });
     const route = `/${webhook.slug}`;
 
     // TODO: merge this with the Endpoint component
@@ -27,7 +25,6 @@ export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastI
             <WebhookContent
                 webhook={webhook}
                 breadcrumbs={breadcrumbs}
-                setContainerRef={setTargetRef}
                 hideBottomSeparator={isLastInApi}
                 route={route}
                 types={types}

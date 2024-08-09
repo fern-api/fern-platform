@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { atom } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
@@ -119,11 +119,6 @@ export const SEARCHBAR_PLACEMENT_ATOM = atom<DocsV1Read.SearchbarPlacement>((get
     // default to sidebar if searchbarPlacement is not set
     if (layout?.searchbarPlacement == null) {
         return "SIDEBAR";
-    }
-
-    // if searchbarPlacement is set to HEADER_TABS and there are no horizontal tabs, default to HEADER
-    if (layout.searchbarPlacement === "HEADER_TABS" && !get(HAS_HORIZONTAL_TABS)) {
-        return "HEADER";
     }
 
     return layout.searchbarPlacement;

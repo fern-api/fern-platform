@@ -24,6 +24,7 @@ client = AsyncOctoAI(
 )
         
 await client.text_gen.create_chat_completion_stream(
+logit_bias={},
 max_tokens=512,
 messages=[],
 model="qwen1.5-32b-chat",
@@ -36,6 +37,7 @@ top_p=0.9
 
 exports[`Snippet Template Resolver > Test Snippet Template Resolution 1`] = `
 "from octoai.image_gen import ImageGenerationRequest
+from octoai.image_gen import Scheduler
 
 from octoai import AsyncAcme
 
@@ -47,7 +49,8 @@ client.image_gen.generate_sdxl(
 		tune_id="someId",
 		offset="10",
 		output_format="pcm_16000",
-		loras={"key1": "value1", "key2": "value2"}
+		loras={"key1": "value1", "key2": "value2"},
+		sampler=OctoAI.myenum.PNDM
 	)
 )
 "

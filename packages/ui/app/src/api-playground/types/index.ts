@@ -21,7 +21,7 @@ export declare namespace PlaygroundFormStateBody {
 export function convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(
     value: PlaygroundFormDataEntryValue,
     property: ResolvedFormDataRequestProperty | undefined,
-    domain: string,
+    isFileForgeHackEnabled: boolean,
 ): ResolvedFormValue | undefined {
     switch (value.type) {
         case "file":
@@ -51,7 +51,7 @@ export function convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequ
                 value: value.value,
                 // this is a hack to allow the API Playground to send JSON blobs in form data
                 // revert this once we have a better solution
-                contentType: contentType ?? (domain.includes("fileforge") ? "application/json" : undefined),
+                contentType: contentType ?? (isFileForgeHackEnabled ? "application/json" : undefined),
             };
         }
         default:

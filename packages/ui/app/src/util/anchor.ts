@@ -2,44 +2,26 @@ export function getAnchorId(anchorIdParts: readonly string[]): string {
     return anchorIdParts.map((anchorId) => encodeURI(anchorId)).join(".");
 }
 
-export function getRouteSelector(route: string): string {
-    return `div[data-route="${route.toLowerCase()}"]`;
-}
-
 export function getRouteNode(route: string): HTMLElement | undefined {
-    return document.querySelector<HTMLElement>(getRouteSelector(route)) ?? undefined;
+    const toRet = document.getElementById(route) ?? undefined;
+    if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
+        console.debug(`getting route node: ${route} => ${toRet}`);
+    }
+    return toRet;
 }
 
-export function getRouteAndAnchorNode(route: string): HTMLElement | undefined {
-    const [routeWithoutAnchor, anchor] = route.split("#");
-    if (routeWithoutAnchor != null) {
-        return (
-            getRouteNode(route) ??
-            getRouteNode(routeWithoutAnchor) ??
-            (anchor != null ? document.getElementById(anchor) ?? undefined : undefined)
-        );
-    }
-    return undefined;
+export function getRouteNodeWithAnchor(route: string): HTMLElement | undefined {
+    const [, anchor] = route.split("#");
+    return getRouteNode(route) ?? (anchor != null ? getRouteNode(anchor) : undefined);
 }
 
-export function getRouteNodeWithAnchor(route: string): { node: HTMLElement | undefined; hasAnchor: boolean } {
-    const [routeWithoutAnchor, anchor] = route.split("#");
-    if (routeWithoutAnchor != null) {
-        let node = getRouteNode(route);
-        let hasAnchor = anchor != null && node != null;
-
-        if (!node && anchor != null) {
-            node = document.getElementById(anchor) ?? undefined;
-            if (node) {
-                hasAnchor = true;
-            }
-        }
-
-        if (!node) {
-            node = getRouteNode(routeWithoutAnchor);
-        }
-
-        return { node, hasAnchor };
+export function scrollToRoute(route: string, smooth = false): boolean {
+    if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
+        console.debug(`scrolling to route: ${route}`);
     }
-    return { node: undefined, hasAnchor: false };
+    const node = getRouteNodeWithAnchor(route);
+    node?.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
+    return node != null;
 }

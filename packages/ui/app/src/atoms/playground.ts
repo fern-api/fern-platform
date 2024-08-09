@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { captureMessage } from "@sentry/nextjs";
 import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -65,26 +65,31 @@ export const PLAYGROUND_NODE_ID = atom(
         if (playgroundParam == null) {
             return get(PREV_PLAYGROUND_NODE_ID);
         }
-        return FernNavigation.NodeId(playgroundParam);
+        const nodes = get(NAVIGATION_NODES_ATOM);
+        // return FernNavigation.NodeId(playgroundParam);
+        const node = nodes.slugMap.get(FernNavigation.utils.slugjoin(playgroundParam));
+        if (node == null || !FernNavigation.isApiLeaf(node)) {
+            return get(PREV_PLAYGROUND_NODE_ID);
+        }
+        return node.id;
     },
     (get, set, update: FernNavigation.NodeId | undefined) => {
         const newLocation = {
             ...get(LOCATION_ATOM),
             searchParams: new URLSearchParams(get(LOCATION_ATOM).searchParams),
         };
-        if (update != null) {
+        const node = update != null ? get(NAVIGATION_NODES_ATOM).get(update) : undefined;
+        if (node != null && FernNavigation.isApiLeaf(node)) {
             // set playground open
             set(PLAYGROUND_IS_OPEN_ATOM, true);
 
-            newLocation.searchParams.set("playground", update);
+            newLocation.searchParams.set("playground", `/${node.slug}`);
 
             // set playground height to be the window height - header height
             const contentHeight = get(BELOW_HEADER_HEIGHT_ATOM);
             set(PLAYGROUND_HEIGHT_ATOM, contentHeight);
 
-            const node = get(NAVIGATION_NODES_ATOM).get(update);
-            const apiNode = node != null && FernNavigation.isApiLeaf(node) ? node : undefined;
-            capturePosthogEvent("api_playground_opened", { apiNode });
+            capturePosthogEvent("api_playground_opened", { apiNode: node });
             set(PLAYGROUND_HEIGHT_ATOM, get(BELOW_HEADER_HEIGHT_ATOM));
         } else {
             newLocation.searchParams.delete("playground");

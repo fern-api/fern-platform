@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { BundledMDX } from "../mdx/types";
 import { ResolvedRootPackage } from "./types";
 
@@ -24,14 +24,12 @@ export declare namespace ResolvedPath {
         // neighbors: Neighbors;
     }
 
-    interface ChangelogEntryPage {
+    interface ChangelogEntryPage extends Omit<FernNavigation.ChangelogEntryNode, "type"> {
         type: "changelog-entry";
-        title: string;
-        pages: Record<FernNavigation.PageId, BundledMDX>;
-        node: FernNavigation.ChangelogEntryNode;
+        page: BundledMDX;
         sectionTitleBreadcrumbs: string[];
         neighbors: Neighbors;
-        slug: FernNavigation.Slug;
+        changelogTitle: string;
         changelogSlug: FernNavigation.Slug;
     }
 

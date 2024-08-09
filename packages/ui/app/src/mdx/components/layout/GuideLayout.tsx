@@ -53,7 +53,7 @@ export function GuideLayout({
             </aside>
             <article className="fern-layout-content max-w-content-width">
                 <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
-                <section className="max-w-full fern-prose">{children}</section>
+                <div className="max-w-full fern-prose">{children}</div>
                 {(!hideFeedback || !hideNavLinks || editThisPageUrl != null) && (
                     <footer className="mt-12">
                         <div className="flex sm:justify-between max-sm:flex-col gap-4">

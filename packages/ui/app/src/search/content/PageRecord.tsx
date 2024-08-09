@@ -1,7 +1,7 @@
-import { ActivityLogIcon } from "@radix-ui/react-icons";
+import type { SearchRecord } from "@fern-ui/search-utils";
 import cn from "clsx";
+import { Page } from "iconoir-react";
 import { Snippet } from "react-instantsearch";
-import type { SearchRecord } from "../types";
 
 export declare namespace PageRecord {
     export interface Props {
@@ -19,7 +19,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                     "border-white dark:border-black bg-white dark:bg-black text-black": isHovered,
                 })}
             >
-                <ActivityLogIcon
+                <Page
                     className={cn("size-4", {
                         "!t-muted": !isHovered,
                         "!t-accent": isHovered,

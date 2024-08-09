@@ -15,14 +15,14 @@
   "module": "src/index.ts",
   "main": "src/index.ts",
   "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    },
     "./bundlers": {
       "default": "./src/mdx/bundlers/index.ts"
     },
     "./auth": {
       "default": "./src/auth/index.ts"
+    },
+    ".": {
+      "default": "./src/index.ts"
     }
   },
   "sideEffects": [
@@ -46,24 +46,23 @@
     "chromatic": "pnpx chromatic --project-token=chpt_48b3c560025e978"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^5.14.0",
     "@emotion/is-prop-valid": "^1.2.2",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/template-resolver": "workspace:*",
+    "@fern-ui/chatbot": "workspace:*",
     "@fern-ui/components": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/next-seo": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
-    "@fern-ui/search-utils": "workspace:^",
+    "@fern-ui/search-utils": "workspace:*",
     "@headlessui/react": "^1.7.18",
     "@inkeep/widgets": "^0.2.288",
     "@next/third-parties": "^14.2.4",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.1",
-    "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-tabs": "^1.1.0",
@@ -73,7 +72,7 @@
     "@shikijs/transformers": "^1.2.2",
     "@types/nprogress": "^0.2.3",
     "@vercel/edge-config": "^1.1.0",
-    "algoliasearch": "^4.22.1",
+    "algoliasearch": "^4.24.0",
     "bezier-easing": "^2.1.0",
     "clsx": "^2.1.0",
     "colorjs.io": "^0.5.0",
@@ -90,10 +89,8 @@
     "hastscript": "^9.0.0",
     "httpsnippet-lite": "^3.0.5",
     "iconoir-react": "^7.7.0",
-    "instantsearch.js": "^4.63.0",
     "jose": "^5.2.3",
     "jotai": "^2.8.1",
-    "jotai-devtools": "^0.10.0",
     "jotai-effect": "^1.0.0",
     "jotai-location": "^0.5.5",
     "jsonpath": "^1.1.1",
@@ -108,13 +105,11 @@
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
     "parse-numeric-range": "^1.3.0",
-    "posthog-js": "^1.81.1",
+    "posthog-js": "^1.154.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.10",
-    "react-feather": "^2.0.10",
     "react-instantsearch": "^7.7.0",
-    "react-intersection-observer": "^9.4.3",
     "react-medium-image-zoom": "^5.1.10",
     "react-virtuoso": "^4.7.7",
     "rehype-katex": "^7.0.0",
@@ -168,6 +163,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "chromatic": "^11.3.0",
+    "cohere-ai": "^7.9.5",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
     "eslint-plugin-storybook": "^0.8.0",

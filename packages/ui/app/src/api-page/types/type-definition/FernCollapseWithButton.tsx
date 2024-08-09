@@ -1,6 +1,6 @@
 import { FernButton, FernButtonProps, FernCollapse } from "@fern-ui/components";
-import { Cross2Icon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Xmark } from "iconoir-react";
 import { FC, PropsWithChildren, ReactNode, useState } from "react";
 
 interface FernCollapseWithButtonProps {
@@ -50,7 +50,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
                 variant="minimal"
                 icon={
                     typeof text === "string" ? (
-                        <Cross2Icon
+                        <Xmark
                             className={cn("transition", {
                                 "rotate-45": !isOpen,
                             })}

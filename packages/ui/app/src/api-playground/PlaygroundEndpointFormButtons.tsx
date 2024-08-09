@@ -1,6 +1,6 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { ArrowUpRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { CURRENT_NODE_ATOM, useClosePlayground } from "../atoms";
@@ -34,12 +34,12 @@ export function PlaygroundEndpointFormButtons({
 
             <FernLink
                 href={`/${endpoint.slug}`}
-                shallow={apiReferenceId === endpoint.apiSectionId}
+                shallow={apiReferenceId === endpoint.apiDefinitionId}
                 className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
                 onClick={closePlayground}
             >
                 <span>View in API Reference</span>
-                <ArrowTopRightIcon className="size-4" />
+                <ArrowUpRight className="size-icon" />
             </FernLink>
         </div>
     );

@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { DocsV2Read } from "../../client";
+import type { DocsV2Read } from "../../client/types";
 import { NodeCollector } from "../NodeCollector";
 import { convertLoadDocsForUrlResponse } from "../utils";
 import { collectPageIds } from "../utils/collectPageIds";

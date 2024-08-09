@@ -1,10 +1,10 @@
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EnvironmentId } from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
-import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
-import { Children, FC, HTMLAttributes, ReactNode, useMemo } from "react";
-import { Wifi } from "react-feather";
+import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
+import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
@@ -59,7 +59,8 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
 
     const route = `/${websocket.slug}`;
 
-    const { setTargetRef } = useApiPageCenterElement({ slug: websocket.slug });
+    const ref = useRef<HTMLDivElement>(null);
+    useApiPageCenterElement(ref, websocket.slug);
 
     const publishMessages = useMemo(
         () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),
@@ -109,7 +110,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const headers = websocket.headers.filter((header) => !header.hidden);
 
     return (
-        <div className={"fern-endpoint-content"} ref={setTargetRef} data-route={route.toLowerCase()}>
+        <div className={"fern-endpoint-content"} ref={ref} id={route}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi,
@@ -243,7 +244,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         <span className="inline-flex items-center gap-2">
                                             {"Send"}
                                             <span className="t-success inline-block rounded-full bg-tag-success p-1">
-                                                <ArrowUpIcon />
+                                                <ArrowUp className="size-icon" />
                                             </span>
                                         </span>
                                     }
@@ -278,7 +279,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         <span className="inline-flex items-center gap-2">
                                             {"Receive"}
                                             <span className="t-accent-aaa inline-block rounded-full bg-tag-primary p-1">
-                                                <ArrowDownIcon />
+                                                <ArrowDown className="size-icon" />
                                             </span>
                                         </span>
                                     }
@@ -379,13 +380,9 @@ function CardedSection({
     children: ReactNode | undefined;
     route: string;
 } & Omit<HTMLAttributes<HTMLDivElement>, "title">) {
-    const anchorRoute = `${route}#${getSlugFromChildren(title)}`.toLowerCase();
+    const anchorRoute = `${route}#${getSlugFromChildren(title)}`;
     return (
-        <section
-            {...props}
-            data-route={anchorRoute}
-            className="border-default divide-default -mx-4 divide-y rounded-xl border"
-        >
+        <section {...props} id={anchorRoute} className="border-default divide-default -mx-4 divide-y rounded-xl border">
             <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
                 <h2 className="relative mt-0 flex items-center">
                     <AbsolutelyPositionedAnchor href={anchorRoute} />

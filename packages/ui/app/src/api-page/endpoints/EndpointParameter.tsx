@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { useRouteListener } from "../../atoms";
@@ -92,7 +92,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
     return (
         <div
             ref={ref}
-            data-route={routeWithHash.toLowerCase()}
+            id={routeWithHash}
             className={cn("scroll-mt-content-padded relative flex flex-col gap-2 py-3", {
                 "before:outline-border-accent-muted before:outline-1 before:outline before:outline-offset-0 before:content-[''] before:inset-y-0 before:-inset-x-2 before:rounded-sm":
                     isActive,

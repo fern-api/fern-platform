@@ -1,7 +1,6 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
-import { useCurrentNodeId } from "../../atoms";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
+import { useIsApiReferenceShallowLink, useIsChildSelected, useIsSelectedSidebarNode } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 import { SidebarRootHeading } from "./SidebarRootHeading";
@@ -15,15 +14,16 @@ export function SidebarRootApiPackageNode({
     node,
     className,
 }: SidebarRootApiPackageNodeProps): React.ReactElement | null {
-    const { checkChildSelected, registerScrolledToPathListener } = useCollapseSidebar();
-    const selectedNodeId = useCurrentNodeId();
+    const selected = useIsSelectedSidebarNode(node.id);
+    const childSelected = useIsChildSelected(node.id);
+    const shallow = useIsApiReferenceShallowLink(node);
 
     if (node.children.length === 0) {
         if (node.overviewPageId == null) {
             return null;
         }
 
-        if (node.hidden && selectedNodeId !== node.id) {
+        if (node.hidden && !selected) {
             return null;
         }
 
@@ -33,18 +33,14 @@ export function SidebarRootApiPackageNode({
                 linkClassName="font-semibold !text-text-default"
                 className={className}
                 slug={node.slug}
-                registerScrolledToPathListener={registerScrolledToPathListener}
                 title={node.title}
-                selected={node.id === selectedNodeId}
+                selected={selected}
                 icon={node.icon}
                 hidden={node.hidden}
-                shallow={selectedNodeId === node.id}
-                scrollOnShallow={false}
+                shallow={shallow}
             />
         );
     }
-
-    const childSelected = checkChildSelected(node.id);
 
     if (node.hidden && !childSelected) {
         return null;
@@ -52,17 +48,17 @@ export function SidebarRootApiPackageNode({
 
     return (
         <>
-            <SidebarRootHeading node={node} className={className} />
+            <SidebarRootHeading node={node} className={className} shallow={shallow} />
 
             <ul className={clsx("fern-sidebar-group")}>
                 {node.children.map((child) => (
                     <li key={child.id}>
-                        <SidebarApiPackageChild node={child} depth={1} />
+                        <SidebarApiPackageChild node={child} depth={1} shallow={shallow} />
                     </li>
                 ))}
                 {node.type === "apiReference" && node.changelog != null && (
                     <li>
-                        <SidebarApiPackageChild node={node.changelog} depth={1} />
+                        <SidebarApiPackageChild node={node.changelog} depth={1} shallow={shallow} />
                     </li>
                 )}
             </ul>

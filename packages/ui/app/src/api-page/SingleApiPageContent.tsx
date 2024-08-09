@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useAtomValue } from "jotai";
 import { ReactElement, useMemo } from "react";
 import { SLUG_ATOM, useNavigationNodes } from "../atoms";

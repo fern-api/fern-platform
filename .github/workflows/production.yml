@@ -6,7 +6,6 @@ env:
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
   ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
   POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
-  DATADOG_CLIENT_TOKEN: ${{ secrets.DATADOG_API_KEY }}
   FONTAWESOME_CDN_HOST: https://icons.ferndocs.com
   WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
   WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
@@ -63,8 +62,11 @@ jobs:
 
           for DOMAIN in ${ALIAS_DOMAINS[@]}; do
             if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
-              curl -s -X POST "https://$DOMAIN/api/revalidate-all" -H "x-fern-host: $DOMAIN"
-              echo "Revalidated: $DOMAIN"
+              if curl -s -X POST "https://$DOMAIN/api/revalidate-all" -H "x-fern-host: $DOMAIN"; then
+                echo "Revalidated: $DOMAIN"
+              else
+                echo "Failed to revalidate $DOMAIN, but continuing with other domains"
+              fi
             fi
           done
 
@@ -72,18 +74,6 @@ jobs:
           echo "Revalidated: docs.buildwithfern.com"
 
           echo "Done!"
-
-      - name: Install datadog-ci
-        run: pnpm install --global @datadog/datadog-ci
-
-      - name: Upload sourcemap
-        run: |
-          datadog-ci sourcemaps upload ./packages/ui/docs-bundle/.next/static \
-          --service=docs-frontend \
-          --release-version="$(scripts/git-version.sh)" \
-          --minified-path-prefix=https://app.buildwithfern.com/_next/static
-        env:
-          DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
 
   smoke-test:
     needs: deploy

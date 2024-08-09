@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { atomWithReducer } from "jotai/utils";
 import { DocsProps, FeatureFlags } from "./types";
 
@@ -19,6 +19,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     scrollInContainerEnabled: false,
     useMdxBundler: false,
     isBatchStreamToggleDisabled: false,
+    isAuthEnabledInDocs: false,
 };
 
 const EMPTY_DOCS_STATE: DocsProps = {
@@ -40,8 +41,6 @@ const EMPTY_DOCS_STATE: DocsProps = {
         dark: undefined,
     },
     layout: undefined,
-    typography: undefined,
-    css: undefined,
     js: undefined,
     navbarLinks: [],
     logoHeight: undefined,
@@ -59,9 +58,12 @@ const EMPTY_DOCS_STATE: DocsProps = {
     apis: [],
     seo: {},
     analytics: undefined,
+    analyticsConfig: {},
     fallback: {},
     theme: "default",
     user: undefined,
+    defaultLang: "curl",
+    stylesheet: "",
 };
 
 export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(EMPTY_DOCS_STATE, (_, next) => {

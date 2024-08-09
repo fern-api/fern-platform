@@ -1,4 +1,8 @@
-import { APIV1Read, DocsV1Read, visitReadNavigationConfig, visitUnversionedReadNavigationConfig } from "../../client";
+import type { APIV1Read, DocsV1Read } from "../../client/types";
+import {
+    visitReadNavigationConfig,
+    visitUnversionedReadNavigationConfig,
+} from "../../client/visitReadNavigationConfig";
 import { assertNever, kebabCase, visitDiscriminatedUnion } from "../../utils";
 import { FernNavigation } from "../generated";
 import { hasMetadata } from "../types";
@@ -14,6 +18,7 @@ export class NavigationConfigConverter {
     private constructor(
         private title: string | undefined,
         private config: DocsV1Read.NavigationConfig,
+        private fullSlugMap: Record<FernNavigation.PageId, FernNavigation.Slug>,
         private noindexMap: Record<FernNavigation.PageId, boolean>,
         private apis: Record<string, APIV1Read.ApiDefinition>,
         private basePath: string | undefined,
@@ -25,6 +30,7 @@ export class NavigationConfigConverter {
     public static convert(
         title: string | undefined,
         config: DocsV1Read.NavigationConfig,
+        fullSlugMap: Record<FernNavigation.PageId, FernNavigation.Slug>,
         noindexMap: Record<FernNavigation.PageId, boolean>,
         apis: Record<string, APIV1Read.ApiDefinition>,
         basePath: string | undefined,
@@ -35,6 +41,7 @@ export class NavigationConfigConverter {
         return new NavigationConfigConverter(
             title,
             config,
+            fullSlugMap,
             noindexMap,
             apis,
             basePath,
@@ -157,7 +164,13 @@ export class NavigationConfigConverter {
                             }));
                         } else if (tab.type === "changelog") {
                             const slug = parentSlug.apply(tab);
-                            return ChangelogNavigationConverter.convert(tab, this.noindexMap, slug, this.#idgen);
+                            return ChangelogNavigationConverter.convert(
+                                tab,
+                                this.fullSlugMap,
+                                this.noindexMap,
+                                slug,
+                                this.#idgen,
+                            );
                         } else if (tab.type === "changelogV3") {
                             return tab.node as unknown as FernNavigation.ChangelogNode;
                         } else {
@@ -258,13 +271,19 @@ export class NavigationConfigConverter {
                 })),
             section: (section) =>
                 this.#idgen.with(section.urlSlug, (id) => {
-                    const slug = parentSlug.apply(section);
+                    let slug = parentSlug.apply(section);
 
                     const children = section.items.map((item) => this.convertNavigationItem(item, slug));
                     const pointsTo = followRedirects(children);
                     const overviewPageId =
                         section.overviewPageId != null ? FernNavigation.PageId(section.overviewPageId) : undefined;
                     const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
+
+                    const frontmatterSlug = overviewPageId != null ? this.fullSlugMap[overviewPageId] : undefined;
+                    if (frontmatterSlug != null) {
+                        slug = parentSlug.set(frontmatterSlug);
+                    }
+
                     return {
                         id,
                         type: "section",
@@ -287,6 +306,7 @@ export class NavigationConfigConverter {
                 return ApiReferenceNavigationConverter.convert(
                     apiSection,
                     api,
+                    this.fullSlugMap,
                     this.noindexMap,
                     parentSlug,
                     this.#idgen,
@@ -296,7 +316,13 @@ export class NavigationConfigConverter {
                 );
             },
             changelog: (changelog) =>
-                ChangelogNavigationConverter.convert(changelog, this.noindexMap, parentSlug, this.#idgen),
+                ChangelogNavigationConverter.convert(
+                    changelog,
+                    this.fullSlugMap,
+                    this.noindexMap,
+                    parentSlug,
+                    this.#idgen,
+                ),
             // Note: apiSection.node is imported from `navigation`, and is guaranteed to be a FernNavigation.ApiReferenceNode
             apiV2: (apiSection) => {
                 const node = apiSection.node as unknown as FernNavigation.ApiReferenceNode;

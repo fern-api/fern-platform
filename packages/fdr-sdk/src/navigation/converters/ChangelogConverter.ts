@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { DocsV1Read } from "../../client";
+import type { DocsV1Read } from "../../client/types";
 import { FernNavigation } from "../generated";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { SlugGenerator } from "./SlugGenerator";
@@ -10,16 +10,18 @@ dayjs.extend(utc);
 export class ChangelogNavigationConverter {
     public static convert(
         changelog: DocsV1Read.ChangelogSection,
+        fullSlugMap: Record<FernNavigation.PageId, FernNavigation.Slug>,
         noindexMap: Record<FernNavigation.PageId, boolean>,
         slug: SlugGenerator,
         idgen: NodeIdGenerator,
     ): FernNavigation.ChangelogNode {
-        return new ChangelogNavigationConverter(idgen, noindexMap).convert(changelog, slug);
+        return new ChangelogNavigationConverter(idgen, fullSlugMap, noindexMap).convert(changelog, slug);
     }
 
     #idgen: NodeIdGenerator;
     private constructor(
         idgen: NodeIdGenerator,
+        private fullSlugMap: Record<FernNavigation.PageId, FernNavigation.Slug>,
         private noindexMap: Record<FernNavigation.PageId, boolean>,
     ) {
         this.#idgen = idgen;
@@ -27,9 +29,15 @@ export class ChangelogNavigationConverter {
 
     private convert(changelog: DocsV1Read.ChangelogSection, parentSlug: SlugGenerator): FernNavigation.ChangelogNode {
         return this.#idgen.with("log", (id) => {
-            const slug = parentSlug.apply(changelog);
+            let slug = parentSlug.apply(changelog);
             const overviewPageId = changelog.pageId != null ? FernNavigation.PageId(changelog.pageId) : undefined;
             const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
+
+            const frontmatterSlug = overviewPageId != null ? this.fullSlugMap[overviewPageId] : undefined;
+            if (frontmatterSlug != null) {
+                slug = parentSlug.set(frontmatterSlug);
+            }
+
             return {
                 id,
                 type: "changelog",

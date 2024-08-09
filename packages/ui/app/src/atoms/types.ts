@@ -1,4 +1,5 @@
-import { DocsV1Read, DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import type { DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { NextSeoProps } from "@fern-ui/next-seo";
 import { CustomerAnalytics } from "../analytics/types";
@@ -23,6 +24,7 @@ export interface FeatureFlags {
     scrollInContainerEnabled: boolean;
     useMdxBundler: boolean;
     isBatchStreamToggleDisabled: boolean;
+    isAuthEnabledInDocs: boolean;
 }
 
 export interface NavigationProps {
@@ -40,8 +42,6 @@ export interface DocsProps {
     favicon: string | undefined;
     colors: ColorsConfig;
     layout: DocsV1Read.DocsLayoutConfig | undefined;
-    typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
-    css: DocsV1Read.CssConfig | undefined;
     js: DocsV1Read.JsConfig | undefined;
     navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
@@ -51,8 +51,11 @@ export interface DocsProps {
     featureFlags: FeatureFlags;
     apis: FdrAPI.ApiDefinitionId[];
     seo: NextSeoProps;
-    analytics: CustomerAnalytics | undefined;
+    analytics: CustomerAnalytics | undefined; // deprecated
+    analyticsConfig: DocsV1Read.AnalyticsConfig | undefined;
     fallback: Record<string, any>;
     theme: FernTheme;
     user: FernUser | undefined;
+    defaultLang: DocsV1Read.ProgrammingLanguage;
+    stylesheet: string;
 }

@@ -1,4 +1,5 @@
-import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { getFrontmatter } from "@fern-ui/ui";
@@ -112,7 +113,8 @@ function toFeedItem(
         try {
             let image: string | undefined;
 
-            if (frontmatter.image != null) {
+            // TODO: (rohin) Clean up after safe deploy, but include for back compat
+            if (frontmatter.image != null && typeof frontmatter.image === "string") {
                 image = frontmatter.image;
             } else if (frontmatter["og:image"] != null) {
                 image = toUrl(frontmatter["og:image"], files);

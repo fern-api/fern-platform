@@ -1,5 +1,5 @@
 import { FernButton, FernDropdown } from "@fern-ui/components";
-import { CaretDownIcon } from "@radix-ui/react-icons";
+import { NavArrowDown } from "iconoir-react";
 import { sortBy } from "lodash-es";
 import { memo, useMemo } from "react";
 import { Markdown } from "../../mdx/Markdown";
@@ -69,7 +69,7 @@ export const PlaygroundEnumForm = memo<PlaygroundEnumFormProps>((props) => {
                     )
                 }
                 variant="outlined"
-                rightIcon={<CaretDownIcon />}
+                rightIcon={<NavArrowDown />}
                 className="w-full text-left"
                 disabled={disabled}
             />

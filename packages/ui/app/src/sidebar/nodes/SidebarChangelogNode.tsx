@@ -1,8 +1,7 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { ActivityLogIcon } from "@radix-ui/react-icons";
-import { useCurrentNodeId } from "../../atoms";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { Calendar } from "iconoir-react";
+import { useIsSelectedSidebarNode } from "../../atoms";
 import { Changelog } from "../../util/dateUtils";
-import { useCollapseSidebar } from "../CollapseSidebarContext";
 import { SidebarSlugLink } from "../SidebarLink";
 
 export interface SidebarChangelogNodeProps {
@@ -12,10 +11,9 @@ export interface SidebarChangelogNodeProps {
 }
 
 export function SidebarChangelogNode({ node, depth, className }: SidebarChangelogNodeProps): React.ReactElement | null {
-    const { registerScrolledToPathListener } = useCollapseSidebar();
-    const selectedNodeId = useCurrentNodeId();
+    const selected = useIsSelectedSidebarNode(node.id);
 
-    if (node.hidden && selectedNodeId === node.id) {
+    if (node.hidden && !selected) {
         return null;
     }
 
@@ -25,10 +23,9 @@ export function SidebarChangelogNode({ node, depth, className }: SidebarChangelo
             slug={node.slug}
             title={node.title}
             className={className}
-            registerScrolledToPathListener={registerScrolledToPathListener}
-            selected={node.id === selectedNodeId}
+            selected={selected}
             depth={Math.max(0, depth - 1)}
-            icon={node.icon ?? <ActivityLogIcon />}
+            icon={node.icon ?? <Calendar />}
             tooltipContent={renderChangelogTooltip(node)}
             hidden={node.hidden}
         />

@@ -1,4 +1,5 @@
-import { Algolia, FdrClient } from "@fern-api/fdr-sdk";
+import type { FdrClient } from "@fern-api/fdr-sdk";
+import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { assertNonNullish } from "@fern-ui/core-utils";
 import type {
     InkeepAIChatSettings,
@@ -8,10 +9,6 @@ import type {
 } from "@inkeep/widgets";
 import { getAll } from "@vercel/edge-config";
 import type { DeepReadonly } from "ts-essentials";
-
-export const REGISTRY_SERVICE = new FdrClient({
-    environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-});
 
 const FEATURE_FLAGS = ["inkeep-enabled" as const];
 
@@ -66,7 +63,10 @@ export interface SearchRequest {
     searchInfo: Algolia.SearchInfo | undefined;
 }
 
-async function getAlgoliaSearchConfig(searchInfo: Algolia.SearchInfo): Promise<SearchConfig.Algolia | undefined> {
+async function getAlgoliaSearchConfig(
+    client: FdrClient,
+    searchInfo: Algolia.SearchInfo,
+): Promise<SearchConfig.Algolia | undefined> {
     if (searchInfo.type === "legacyMultiAlgoliaIndex") {
         return undefined;
     }
@@ -78,7 +78,7 @@ async function getAlgoliaSearchConfig(searchInfo: Algolia.SearchInfo): Promise<S
     assertNonNullish(algoliaSearchIndex, "Missing environment variable: NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX");
 
     if (searchInfo.value.type === "unversioned") {
-        const resp = await REGISTRY_SERVICE.docs.v2.read.getSearchApiKeyForIndexSegment({
+        const resp = await client.docs.v2.read.getSearchApiKeyForIndexSegment({
             indexSegmentId: searchInfo.value.indexSegment.id,
         });
 
@@ -98,7 +98,7 @@ async function getAlgoliaSearchConfig(searchInfo: Algolia.SearchInfo): Promise<S
         const values: Record<string, string> = {};
 
         for (const [versionId, indexSegment] of Object.entries(searchInfo.value.indexSegmentsByVersionId)) {
-            const resp = await REGISTRY_SERVICE.docs.v2.read.getSearchApiKeyForIndexSegment({
+            const resp = await client.docs.v2.read.getSearchApiKeyForIndexSegment({
                 indexSegmentId: indexSegment.id,
             });
 
@@ -126,8 +126,12 @@ async function getAlgoliaSearchConfig(searchInfo: Algolia.SearchInfo): Promise<S
     return undefined;
 }
 
-export async function getSearchConfig(domain: string, searchInfo: Algolia.SearchInfo): Promise<SearchConfig> {
-    const algolia = await getAlgoliaSearchConfig(searchInfo);
+export async function getSearchConfig(
+    client: FdrClient,
+    domain: string,
+    searchInfo: Algolia.SearchInfo,
+): Promise<SearchConfig> {
+    const algolia = await getAlgoliaSearchConfig(client, searchInfo);
 
     // TODO: there shouldn't be a dependency on algolia being available, if inkeep is enabled.
     if (algolia == null) {

@@ -1,15 +1,12 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { Provider as JotaiProvider } from "jotai";
-import { DevTools } from "jotai-devtools";
-import "jotai-devtools/styles.css";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
-import type { Router } from "next/router";
+import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
-import DatadogInit from "../analytics/datadog";
-import { initializePosthog } from "../analytics/posthog";
+import { capturePosthogEvent, initializePosthog } from "../analytics/posthog";
 import { DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
@@ -18,6 +15,13 @@ import { NextNProgress } from "../docs/NProgress";
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     useEffect(() => {
         initializePosthog();
+
+        // Track page views
+        const handleRouteChange = () => capturePosthogEvent("$pageview");
+        Router.events.on("routeChangeComplete", handleRouteChange);
+        return () => {
+            Router.events.off("routeChangeComplete", handleRouteChange);
+        };
     }, []);
 
     // This is a hack to handle edge-cases related to multitenant subpath rendering:
@@ -31,11 +35,9 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
     return (
         <>
             <ThemeScript colors={pageProps?.colors} />
-            <DatadogInit />
             <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
             <Toaster />
             <JotaiProvider store={store}>
-                <DevTools store={store} />
                 <FernTooltipProvider>
                     <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>

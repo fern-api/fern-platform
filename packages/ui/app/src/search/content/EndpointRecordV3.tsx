@@ -1,7 +1,7 @@
-import { Algolia } from "@fern-api/fdr-sdk";
+import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
-import { CornerDownLeft } from "react-feather";
+import { LongArrowDownLeft } from "iconoir-react";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import { SearchHitBreadCrumbsV2 } from "./SearchHitBreadCrumbsV2";
 
@@ -19,7 +19,7 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
                 <div
                     className={cn("line-clamp-1 flex gap-1 items-center text-sm text-start", {
                         "t-muted": !isHovered,
-                        "t-accent-contrast": isHovered,
+                        "t-accent-aaa": isHovered,
                     })}
                 >
                     <HttpMethodTag
@@ -48,7 +48,7 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
                                                 },
                                                 {
                                                     "t-muted": !isHovered,
-                                                    "t-accent-contrast": isHovered,
+                                                    "t-accent-aaa": isHovered,
                                                 },
                                             )}
                                             key={idx}
@@ -64,7 +64,7 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
                 <div
                     className={cn("text-sm tracking-wide", {
                         "t-muted": !isHovered,
-                        "t-accent-contrast": isHovered,
+                        "t-accent-aaa": isHovered,
                     })}
                 >
                     Endpoint
@@ -73,16 +73,16 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
             <div className="flex items-center justify-between">
                 <span
                     className={cn("line-clamp-1 text-start text-xs", {
-                        "t-accent-contrast": isHovered,
+                        "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}
                 >
                     <SearchHitBreadCrumbsV2 breadcrumbs={hit.breadcrumbs} />
                 </span>
 
-                <CornerDownLeft
-                    className={cn("size-3", {
-                        "t-accent-contrast": isHovered,
+                <LongArrowDownLeft
+                    className={cn("size-4", {
+                        "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}
                 />

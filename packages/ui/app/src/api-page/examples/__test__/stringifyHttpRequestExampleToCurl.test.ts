@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { convertEndpointExampleToHttpRequestExample } from "../HttpRequestExample";
 import { stringifyHttpRequestExampleToCurl } from "../stringifyHttpRequestExampleToCurl";
@@ -17,7 +17,7 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     auth: undefined,
     availability: undefined,
     defaultEnvironment: MOCK_ENV,
-    apiSectionId: "",
+    apiDefinitionId: "",
     environments: [MOCK_ENV],
     method: "GET",
     title: "",

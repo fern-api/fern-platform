@@ -1,9 +1,8 @@
 import { FernButton, FernInput, FernTooltipProvider } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { Cross2Icon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Search, Xmark } from "iconoir-react";
 import React, { ReactElement, useState } from "react";
-import { Search } from "react-feather";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "../context/TypeDefinitionContext";
 import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 import { FernCollapseWithButton } from "./FernCollapseWithButton";
@@ -44,7 +43,7 @@ export const EnumTypeDefinition = ({
                 rightElement={
                     <FernButton
                         icon={
-                            <Cross2Icon
+                            <Xmark
                                 className={cn("transition", {
                                     "rotate-45": isCollapsed,
                                 })}

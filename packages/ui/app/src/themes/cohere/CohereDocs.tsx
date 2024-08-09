@@ -3,7 +3,7 @@ import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Router } from "next/router";
-import { ReactElement, memo, useEffect, useImperativeHandle, useRef } from "react";
+import { ReactElement, memo, useEffect, useRef } from "react";
 import { CONTENT_HEIGHT_ATOM, SCROLL_BODY_ATOM, SHOW_HEADER_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
@@ -44,7 +44,11 @@ function UnmemoizedCohereDocs(): ReactElement {
     const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
 
     const mainRef = useRef<HTMLDivElement>(null);
-    useImperativeHandle(useSetAtom(SCROLL_BODY_ATOM), () => mainRef.current ?? undefined);
+
+    const setScrollBody = useSetAtom(SCROLL_BODY_ATOM);
+    useEffect(() => {
+        setScrollBody(mainRef.current);
+    }, [setScrollBody]);
 
     const setContentHeight = useSetAtom(CONTENT_HEIGHT_ATOM);
     useResizeObserver(mainRef, ([entry]) => {

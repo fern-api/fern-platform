@@ -3,7 +3,6 @@ import { memo, useEffect } from "react";
 import { FERN_STREAM_ATOM, useResolvedPath } from "../../atoms";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
@@ -40,8 +39,6 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
         }
     }, [endpoint.slug, endpoint.stream, resolvedPath.slug, setStream]);
 
-    const { setTargetRef } = useApiPageCenterElement({ slug: endpointSlug });
-
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
     // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)
     // - this allows us to render the static page before hydrating, preventing layout-shift caused by the navigation context.
@@ -55,7 +52,6 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
             showErrors={showErrors}
             endpoint={endpoint}
             breadcrumbs={breadcrumbs}
-            containerRef={setTargetRef}
             hideBottomSeparator={isLastInApi}
             types={types}
         />

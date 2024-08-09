@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import clsx from "clsx";
 import { ReactNode } from "react";
@@ -6,6 +6,7 @@ import {
     DereferencedTypeShape,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
+    ResolvedUnknownTypeShape,
     unwrapAlias,
     unwrapOptional,
     unwrapReference,
@@ -137,14 +138,16 @@ export function renderTypeShorthand(
             )} to ${renderTypeShorthand(map.valueShape, { plural: true }, types)}`,
 
         // literals
-        literal: (_literal) =>
-            visitDiscriminatedUnion(_literal.value, "type")._visit({
-                stringLiteral: () => "string literal",
-                booleanLiteral: () => "boolean literal",
+        literal: (literal) =>
+            visitDiscriminatedUnion(literal.value, "type")._visit({
+                stringLiteral: ({ value }) => `"${value}"`,
+                booleanLiteral: ({ value }) => `"${value.toString()}"`,
                 _other: () => "<unknown>",
             }),
         // other
-        unknown: () => "any",
+        unknown: (unknown: ResolvedUnknownTypeShape) => {
+            return unknown.displayName ?? "any";
+        },
         _other: () => "<unknown>",
         alias: (reference) => renderTypeShorthand(reference.shape, { plural, withArticle }, types),
     });

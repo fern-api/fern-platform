@@ -1,7 +1,7 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton } from "@fern-ui/components";
 import { getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
-import { CaretDownIcon } from "@radix-ui/react-icons";
+import { NavArrowDown } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { CURRENT_VERSION_ID_ATOM, UNVERSIONED_SLUG_ATOM, VERSIONS_ATOM } from "../atoms";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
@@ -22,7 +22,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
         return null;
     }
     return (
-        <div className="flex w-32">
+        <div className="flex max-w-32">
             <FernLinkDropdown
                 value={currentVersionId}
                 options={versions.map(({ id, title, availability, slug }) => ({
@@ -38,7 +38,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
                     intent="primary"
                     variant="outlined"
                     text={currentVersion?.title ?? currentVersionId}
-                    rightIcon={<CaretDownIcon className="transition-transform data-[state=open]:rotate-180" />}
+                    rightIcon={<NavArrowDown className="transition-transform data-[state=open]:rotate-180" />}
                     disableAutomaticTooltip
                 />
             </FernLinkDropdown>

@@ -1,4 +1,4 @@
-import type { DocsV2Read } from "@fern-api/fdr-sdk";
+import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { toast } from "@fern-ui/components";
 import { DocsPage } from "@fern-ui/ui";
 import { useRouter } from "next/router";

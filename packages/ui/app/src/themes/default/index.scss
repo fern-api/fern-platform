@@ -17,7 +17,7 @@
     }
 
     .fern-header-content {
-        @apply flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full;
+        @apply flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full gap-4;
     }
 
     .fern-header {

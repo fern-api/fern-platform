@@ -17,6 +17,38 @@ await cohere.chatStream({
             message: "Hi! How can I help you today?",
         },
     ],
+    promptTruncation: Cohere.ChatStreamRequestPromptTruncation.Off,
+});
+"
+`;
+
+exports[`Snippet Template Resolver > Test Chat Completion snippet with deeply nested iterables 1`] = `
+"const cohere = new CohereClient({
+    token: "YOUR_TOKEN",
+    clientName: "YOUR_CLIENT_NAME",
+});
+await cohere.chatStream({
+    message: "Hello world!",
+    chatHistory: [
+        {
+            role: "USER",
+            message: "Hello",
+        },
+        {
+            role: "CHATBOT",
+            message: "Hi! How can I help you today?",
+        },
+    ],
+    promptTruncation: Cohere.ChatStreamRequestPromptTruncation.Off,
+    messages: [
+        {
+            tool_calls: [
+                {
+                    id: "qqw",
+                },
+            ],
+        },
+    ],
 });
 "
 `;

@@ -22,6 +22,30 @@ types:
       a: optional<double>
 
   # Docs layout config
+  ProgrammingLanguage:
+    enum:
+      - typescript
+      - javascript
+      - python
+      - java
+      - go
+      - ruby
+      - csharp
+      - nodets
+      - nodejs
+      - dotnet
+      - curl
+      - jvm
+      - ts
+      - js
+
+  AnalyticsConfig:
+    properties:
+      segment: optional<SegmentConfig>
+
+  SegmentConfig:
+    properties:
+      writeKey: string
 
   DocsLayoutConfig:
     properties:

@@ -1,16 +1,7 @@
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import {
-    BellIcon,
-    CheckCircledIcon,
-    CheckIcon,
-    DrawingPinIcon,
-    ExclamationTriangleIcon,
-    InfoCircledIcon,
-    RocketIcon,
-    StarIcon,
-} from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Bell, Check, CheckCircle, InfoCircle, Pin, Rocket, Star, WarningTriangle } from "iconoir-react";
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 
 type Intent = "info" | "warning" | "success" | "error" | "note" | "launch" | "tip" | "check";
@@ -54,7 +45,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                 <div className="mt-0.5 w-4">
                     {typeof icon === "string" ? (
                         <RemoteFontAwesomeIcon
-                            className={cn("card-icon size-5", {
+                            className={cn("card-icon size-icon-md", {
                                 "bg-intent-default": intent === "info",
                                 "bg-intent-warning": intent === "warning",
                                 "bg-intent-success": intent === "success",
@@ -68,15 +59,15 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                         <span className="callout-icon">{icon}</span>
                     ) : (
                         visitDiscriminatedUnion({ intent }, "intent")._visit({
-                            info: () => <InfoCircledIcon className="size-5 text-intent-default" />,
-                            warning: () => <BellIcon className="size-5 text-intent-warning" />,
-                            success: () => <CheckCircledIcon className="size-5 text-intent-success" />,
-                            error: () => <ExclamationTriangleIcon className="size-5 text-intent-danger" />,
-                            note: () => <DrawingPinIcon className="size-5 text-intent-info" />,
-                            launch: () => <RocketIcon className="t-accent size-5" />,
-                            tip: () => <StarIcon className="size-5 text-intent-success" />,
-                            check: () => <CheckIcon className="size-5 text-intent-success" />,
-                            _other: () => <InfoCircledIcon className="size-5 text-intent-default" />,
+                            info: () => <InfoCircle className="size-icon-md text-intent-default" />,
+                            warning: () => <Bell className="size-icon-md text-intent-warning" />,
+                            success: () => <CheckCircle className="size-icon-md text-intent-success" />,
+                            error: () => <WarningTriangle className="size-icon-md text-intent-danger" />,
+                            note: () => <Pin className="size-icon-md text-intent-info" />,
+                            launch: () => <Rocket className="t-accent size-icon-md" />,
+                            tip: () => <Star className="size-icon-md text-intent-success" />,
+                            check: () => <Check className="size-icon-md text-intent-success" />,
+                            _other: () => <InfoCircle className="size-icon-md text-intent-default" />,
                         })
                     )}
                 </div>

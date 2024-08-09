@@ -15,6 +15,8 @@ export function initializePosthog(): void {
             loaded: () => {
                 IS_POSTHOG_INITIALIZED = true;
             },
+            capture_pageview: true,
+            capture_pageleave: true,
         });
     }
 }

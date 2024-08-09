@@ -20,7 +20,7 @@
         }
 
         .keyboard-shortcut-hint {
-            @apply t-muted ring-card-border shadow-card-light inline-flex size-5 items-center justify-center rounded ring-1 font-mono text-xs leading-none;
+            @apply t-muted ring-card-border shadow-card-light inline-flex size-icon-md items-center justify-center rounded ring-1 font-mono text-xs leading-none;
             @apply dark:shadow-card-dark bg-card;
         }
 
@@ -35,6 +35,15 @@
 
     .fern-sidebar-heading {
         @apply flex min-h-[32px] lg:min-h-[36px] mb-1;
+        @apply px-4 lg:px-3 inline-flex items-center;
+
+        .fa-icon {
+            @apply mr-3 text-faded shrink-0;
+        }
+
+        .fern-sidebar-heading-content {
+            @apply m-0 text-base leading-6 lg:text-sm lg:leading-5 font-semibold;
+        }
     }
 
     .fern-sidebar-group {
@@ -120,7 +129,7 @@
         }
 
         svg.external-link-icon {
-            @apply ml-0.5 inline-block t-muted;
+            @apply ml-0.5 inline-block text-text-muted size-3.5;
         }
 
         &:hover {

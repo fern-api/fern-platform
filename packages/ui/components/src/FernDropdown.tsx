@@ -1,7 +1,7 @@
 import { useResizeObserver } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Check, InfoCircle } from "iconoir-react";
 import {
     MouseEventHandler,
     PropsWithChildren,
@@ -154,7 +154,7 @@ function FernDropdownItemValue({
                     <span className="fern-dropdown-item-indicator">
                         {value != null && (
                             <DropdownMenu.ItemIndicator asChild={true}>
-                                <CheckIcon />
+                                <Check />
                             </DropdownMenu.ItemIndicator>
                         )}
                     </span>
@@ -164,7 +164,9 @@ function FernDropdownItemValue({
                     <div className={option.labelClassName}>{option.label ?? option.value}</div>
                     <span className="ml-auto space-x-1 pl-2">
                         {option.rightElement && <span>{option.rightElement}</span>}
-                        {(isEllipsisActive || (option.tooltip != null && option.tooltip !== "")) && <InfoCircledIcon />}
+                        {(isEllipsisActive || (option.tooltip != null && option.tooltip !== "")) && (
+                            <InfoCircle className="size-icon" />
+                        )}
                     </span>
                 </div>
 

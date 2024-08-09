@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { JsonLd } from "@fern-ui/next-seo";
 import grayMatter from "gray-matter";
 
@@ -72,7 +72,7 @@ export interface FernDocsFrontmatter extends DocsV1Read.MetadataConfig {
     /**
      * The URL to the page's image. This is used for the <meta property="og:image"> tag in the HTML.
      */
-    image?: string;
+    image?: string | DocsV1Read.FileIdOrUrl;
 
     /**
      * Renders an "Edit this page" link at the bottom of the page.

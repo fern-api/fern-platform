@@ -1,4 +1,5 @@
-import { DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import {
@@ -6,9 +7,10 @@ import {
     DocsPage,
     FeatureFlags,
     convertNavigatableToResolvedPath,
-    getSeoProps,
     getGitHubInfo,
     getGitHubRepo,
+    getSeoProps,
+    renderThemeStylesheet,
 } from "@fern-ui/ui";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
@@ -66,27 +68,27 @@ export async function getDocsPageProps(
         return { notFound: true };
     }
 
+    const colors = {
+        light:
+            docs.definition.config.colorsV3?.type === "light"
+                ? docs.definition.config.colorsV3
+                : docs.definition.config.colorsV3?.type === "darkAndLight"
+                  ? docs.definition.config.colorsV3.light
+                  : undefined,
+        dark:
+            docs.definition.config.colorsV3?.type === "dark"
+                ? docs.definition.config.colorsV3
+                : docs.definition.config.colorsV3?.type === "darkAndLight"
+                  ? docs.definition.config.colorsV3.dark
+                  : undefined,
+    };
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
         title: docs.definition.config.title,
         favicon: docs.definition.config.favicon,
-        colors: {
-            light:
-                docs.definition.config.colorsV3?.type === "light"
-                    ? docs.definition.config.colorsV3
-                    : docs.definition.config.colorsV3?.type === "darkAndLight"
-                      ? docs.definition.config.colorsV3.light
-                      : undefined,
-            dark:
-                docs.definition.config.colorsV3?.type === "dark"
-                    ? docs.definition.config.colorsV3
-                    : docs.definition.config.colorsV3?.type === "darkAndLight"
-                      ? docs.definition.config.colorsV3.dark
-                      : undefined,
-        },
-        typography: docs.definition.config.typographyV2,
-        css: docs.definition.config.css,
+        colors,
         js: docs.definition.config.js,
         navbarLinks: docs.definition.config.navbarLinks ?? [],
         logoHeight: docs.definition.config.logoHeight,
@@ -146,8 +148,18 @@ export async function getDocsPageProps(
         ),
         fallback: {},
         analytics: undefined,
+        analyticsConfig: docs.definition.config.analyticsConfig,
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
         user: undefined,
+        defaultLang: docs.definition.config.defaultLanguage ?? "curl",
+        stylesheet: renderThemeStylesheet(
+            colors,
+            docs.definition.config.typographyV2,
+            docs.definition.config.layout,
+            docs.definition.config.css,
+            docs.definition.filesV2,
+            node.tabs.length > 0,
+        ),
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

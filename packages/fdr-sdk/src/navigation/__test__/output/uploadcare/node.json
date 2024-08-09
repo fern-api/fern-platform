@@ -354,10 +354,10 @@
                 "showErrors": true,
                 "children": [
                   {
-                    "id": "root.uv.api.api.rest-api-v-0-7.root.File metadata",
+                    "id": "root.uv.api.api.rest-api-v-0-7.__package__.File metadata",
                     "type": "endpoint",
                     "title": "Get file's metadata",
-                    "endpointId": "root.File metadata",
+                    "endpointId": "__package__.File metadata",
                     "slug": "api/rest-api-v-0-7/file-metadata",
                     "method": "GET",
                     "apiDefinitionId": "fb019a78-a773-4315-9c7b-6dcb585d6b30",

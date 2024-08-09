@@ -1,3 +1,5 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+
 /**
  * The layout used for guides. This is the default layout.
  * Guides are typically long-form content that is meant to be read from start to finish.
@@ -47,7 +49,7 @@ export interface FernDocsFrontmatter {
     /**
      * The URL to the page's image. This is used for the <meta property="og:image"> tag in the HTML.
      */
-    image?: string;
+    image?: string | DocsV1Read.FileIdOrUrl;
 
     /**
      * Full slug of the page.

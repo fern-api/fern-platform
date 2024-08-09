@@ -1,7 +1,7 @@
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { CardStackPlusIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { PlusCircle } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthandRoot } from "../../api-page/types/type-shorthand/TypeShorthand";
@@ -136,7 +136,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                     type: "value",
                     value: ADD_ALL_KEY,
                     label: "Add all optional properties",
-                    rightElement: <CardStackPlusIcon />,
+                    rightElement: <PlusCircle className="size-icon" />,
                 },
             );
         }
@@ -207,7 +207,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                             </span>
                         }
                         variant="outlined"
-                        rightIcon={<PlusCircledIcon />}
+                        rightIcon={<PlusCircle />}
                         className="mt-8 w-full text-left first:mt-0"
                     />
                 </FernDropdown>

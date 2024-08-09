@@ -1,8 +1,9 @@
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
-import { APIV1Read, DocsV1Read } from "../../client";
+import type { APIV1Read, DocsV1Read } from "../../client/types";
 import { titleCase, visitDiscriminatedUnion } from "../../utils";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
+import { ROOT_PACKAGE_ID } from "../consts";
 import { FernNavigation } from "../generated";
 import { followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
@@ -16,6 +17,7 @@ export class ApiReferenceNavigationConverter {
     public static convert(
         apiSection: DocsV1Read.ApiSection,
         api: APIV1Read.ApiDefinition,
+        fullSlugMap: Record<FernNavigation.PageId, FernNavigation.Slug>,
         noindexMap: Record<FernNavigation.PageId, boolean>,
         parentSlug: SlugGenerator,
         idgen?: NodeIdGenerator,
@@ -26,6 +28,7 @@ export class ApiReferenceNavigationConverter {
         return new ApiReferenceNavigationConverter(
             apiSection,
             api,
+            fullSlugMap,
             noindexMap,
             parentSlug,
             idgen ?? new NodeIdGenerator(),
@@ -45,6 +48,7 @@ export class ApiReferenceNavigationConverter {
     private constructor(
         private apiSection: DocsV1Read.ApiSection,
         private api: APIV1Read.ApiDefinition,
+        private fullSlugMap: Record<FernNavigation.PageId, FernNavigation.Slug>,
         private noindexMap: Record<FernNavigation.PageId, boolean>,
         private parentSlug: SlugGenerator,
         idgen: NodeIdGenerator,
@@ -65,12 +69,19 @@ export class ApiReferenceNavigationConverter {
                     : undefined;
             const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
 
-            const slug = this.parentSlug.apply(this.apiSection);
+            let slug = this.parentSlug.apply(this.apiSection);
+
+            const frontmatterSlug = overviewPageId != null ? this.fullSlugMap[overviewPageId] : undefined;
+            if (frontmatterSlug != null) {
+                slug = this.parentSlug.set(frontmatterSlug);
+            }
+
             const children = this.convertChildren(slug);
             const changelog =
                 this.apiSection.changelog != null
                     ? ChangelogNavigationConverter.convert(
                           this.apiSection.changelog,
+                          this.fullSlugMap,
                           this.noindexMap,
                           slug,
                           this.#idgen,
@@ -174,7 +185,7 @@ export class ApiReferenceNavigationConverter {
     ): FernNavigation.ApiPackageChild[] {
         const children: FernNavigation.ApiPackageChild[] = [];
 
-        let subpackageId = isSubpackage(package_) ? package_.subpackageId : "root";
+        let subpackageId = isSubpackage(package_) ? package_.subpackageId : "__package__";
         while (package_.pointsTo != null) {
             subpackageId = package_.pointsTo;
             const pointsToSubpackage = this.api.subpackages[package_.pointsTo];
@@ -283,7 +294,7 @@ export class ApiReferenceNavigationConverter {
                 return [];
             }
         }
-        const targetSubpackageId = isSubpackage(subpackage) ? subpackage.subpackageId : "root";
+        const targetSubpackageId = isSubpackage(subpackage) ? subpackage.subpackageId : ROOT_PACKAGE_ID;
         const endpoints = new Map<string, APIV1Read.EndpointDefinition>();
         const webSockets = new Map<string, APIV1Read.WebSocketChannel>();
         const webhooks = new Map<string, APIV1Read.WebhookDefinition>();
@@ -356,11 +367,18 @@ export class ApiReferenceNavigationConverter {
                         console.error(`Subpackage ${subpackageId} not found in ${targetSubpackageId}`);
                         return;
                     }
-                    const slug = parentSlug.apply(subpackage);
+                    let slug = parentSlug.apply(subpackage);
+
+                    const overviewPageId = summaryPageId != null ? FernNavigation.PageId(summaryPageId) : undefined;
+                    const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
+
+                    const frontmatterSlug = overviewPageId != null ? this.fullSlugMap[overviewPageId] : undefined;
+                    if (frontmatterSlug != null) {
+                        slug = this.parentSlug.set(frontmatterSlug);
+                    }
+
                     this.#idgen.with(subpackageId, (id) => {
                         const convertedItems = this.convertApiNavigationItems(items, slug, subpackageId);
-                        const overviewPageId = summaryPageId != null ? FernNavigation.PageId(summaryPageId) : undefined;
-                        const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
                         children.push({
                             id,
                             type: "apiPackage",

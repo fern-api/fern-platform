@@ -9,8 +9,8 @@ import {
     FernTooltipProvider,
 } from "@fern-ui/components";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
-import { DownloadIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Download, SendSolid } from "iconoir-react";
 import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
@@ -25,9 +25,9 @@ import { PlaygroundRequestPreview } from "./PlaygroundRequestPreview";
 import { PlaygroundResponsePreview } from "./PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
 import { HorizontalSplitPane, VerticalSplitPane } from "./VerticalSplitPane";
+import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { PlaygroundEndpointRequestFormState, ProxyResponse } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
-import { stringifyCurl, stringifyFetch, stringifyPythonRequests } from "./utils";
 
 interface PlaygroundEndpointContentProps {
     endpoint: ResolvedEndpointDefinition;
@@ -133,31 +133,12 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                 <CopyToClipboardButton
                     content={() => {
                         const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
-                        return requestType === "curl"
-                            ? stringifyCurl({
-                                  endpoint,
-                                  formState,
-                                  authState,
-                                  redacted: false,
-                                  domain,
-                              })
-                            : requestType === "typescript"
-                              ? stringifyFetch({
-                                    endpoint,
-                                    formState,
-                                    authState,
-                                    redacted: false,
-                                    isSnippetTemplatesEnabled,
-                                })
-                              : requestType === "python"
-                                ? stringifyPythonRequests({
-                                      endpoint,
-                                      formState,
-                                      authState,
-                                      redacted: false,
-                                      isSnippetTemplatesEnabled,
-                                  })
-                                : "";
+                        const resolver = new PlaygroundCodeSnippetResolverBuilder(
+                            endpoint,
+                            isSnippetTemplatesEnabled,
+                            domain,
+                        ).create(authState, formState);
+                        return resolver.resolve(requestType);
                     }}
                     className="-mr-2"
                 />
@@ -201,7 +182,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                             <FernTooltipProvider>
                                 <FernTooltip content="Download file">
                                     <FernButton
-                                        icon={<DownloadIcon />}
+                                        icon={<Download />}
                                         size="small"
                                         variant="minimal"
                                         onClick={() => {
@@ -321,7 +302,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                                                     setTabValue("1");
                                                 }}
                                                 sendRequestIcon={
-                                                    <PaperPlaneIcon className="size-6 transition-transform group-hover:translate-x-0.5" />
+                                                    <SendSolid className="transition-transform group-hover:translate-x-0.5" />
                                                 }
                                             />
                                         </div>

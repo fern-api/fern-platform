@@ -1,6 +1,6 @@
-import { Algolia } from "@fern-api/fdr-sdk";
+import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
-import { CornerDownLeft } from "react-feather";
+import { LongArrowDownLeft } from "iconoir-react";
 import { SearchHitBreadCrumbsV2 } from "./SearchHitBreadCrumbsV2";
 
 export declare namespace PageRecordV3 {
@@ -17,7 +17,7 @@ export const PageRecordV3: React.FC<PageRecordV3.Props> = ({ hit, isHovered }) =
                 <span
                     className={cn("line-clamp-1 text-sm text-start", {
                         "t-default": !isHovered,
-                        "t-accent-contrast": isHovered,
+                        "t-accent-aaa": isHovered,
                     })}
                 >
                     {hit.title}
@@ -25,7 +25,7 @@ export const PageRecordV3: React.FC<PageRecordV3.Props> = ({ hit, isHovered }) =
                 <div
                     className={cn("text-sm tracking-wide", {
                         "t-muted": !isHovered,
-                        "t-accent-contrast": isHovered,
+                        "t-accent-aaa": isHovered,
                     })}
                 >
                     Page
@@ -34,16 +34,16 @@ export const PageRecordV3: React.FC<PageRecordV3.Props> = ({ hit, isHovered }) =
             <div className="flex items-center justify-between">
                 <span
                     className={cn("line-clamp-1 text-start text-xs", {
-                        "t-accent-contrast": isHovered,
+                        "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}
                 >
                     <SearchHitBreadCrumbsV2 breadcrumbs={hit.breadcrumbs} />
                 </span>
 
-                <CornerDownLeft
-                    className={cn("size-3", {
-                        "t-accent-contrast": isHovered,
+                <LongArrowDownLeft
+                    className={cn("size-4", {
+                        "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}
                 />

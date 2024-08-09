@@ -1,4 +1,5 @@
-import type { APIV1Read, DocsV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
 import { UnreachableCaseError } from "ts-essentials";
@@ -220,7 +221,7 @@ export const ResolvedApiDefinition = {
 
 export interface ResolvedSubpackage extends WithMetadata, ResolvedWithApiDefinition {
     type: "subpackage";
-    // apiSectionId: FdrAPI.ApiDefinitionId;
+    // apiDefinitionId: FdrAPI.ApiDefinitionId;
     // id: APIV1Read.SubpackageId;
     // name: string;
     title: string;
@@ -243,7 +244,7 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     type: "endpoint";
     nodeId: FernNavigation.NodeId;
     id: APIV1Read.EndpointId;
-    apiSectionId: FdrAPI.ApiDefinitionId;
+    apiDefinitionId: FdrAPI.ApiDefinitionId;
     // apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
     slug: FernNavigation.Slug;
     auth: APIV1Read.ApiAuth | undefined;
@@ -550,7 +551,12 @@ export type ResolvedTypeShape =
     | ResolvedMapShape
     | (APIV1Read.TypeReference.Literal & WithMetadata)
     | APIV1Read.TypeReference.Unknown
+    | ResolvedUnknownTypeShape
     | ResolvedReferenceShape;
+
+export interface ResolvedUnknownTypeShape extends APIV1Read.TypeReference.Unknown {
+    displayName?: string;
+}
 
 export type WithoutMetadata = APIV1Read.TypeReference.Unknown | ResolvedReferenceShape;
 

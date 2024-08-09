@@ -133,7 +133,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                             templateString: "$FERN_INPUT",
                             templateInputs: [
                                 {
-                                    location: "BODY",
+                                    location: "RELATIVE",
                                     path: undefined,
                                     type: "payload",
                                 },
@@ -146,7 +146,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                             templateString: "$FERN_INPUT",
                             templateInputs: [
                                 {
-                                    location: "BODY",
+                                    location: "RELATIVE",
                                     path: undefined,
                                     type: "payload",
                                 },
@@ -646,5 +646,6 @@ export const CHAT_COMPLETION_PAYLOAD: FernRegistry.CustomSnippetPayload = {
         presence_penalty: 0,
         temperature: 0.1,
         top_p: 0.9,
+        logit_bias: { "": undefined },
     },
 };

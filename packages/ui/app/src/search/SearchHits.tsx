@@ -1,32 +1,28 @@
 import { FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
-import { Hit } from "instantsearch.js";
+import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
+import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
-import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
-import { useBasePath, useCloseSearchDialog } from "../atoms";
+import { COHERE_ASK_AI, COHERE_INITIAL_MESSAGE, useBasePath, useCloseSearchDialog, useDomain } from "../atoms";
 import { SearchHit } from "./SearchHit";
-import type { SearchRecord } from "./types";
-import { getFullPathForSearchRecord } from "./util";
+import { AskCohereHit } from "./cohere/AskCohereHit";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
     return <div className="justify t-muted flex h-24 w-full flex-col items-center py-3">{children}</div>;
 };
 
+const COHERE_AI_HIT_ID = "cohere-ai-hit";
+
 export const SearchHits: React.FC = () => {
+    const isCohere = useDomain().includes("cohere");
     const basePath = useBasePath();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
     const closeSearchDialog = useCloseSearchDialog();
-
-    const getFullPathForHit = useCallback(
-        (hit: Hit<SearchRecord>) => {
-            return getFullPathForSearchRecord(hit, basePath);
-        },
-        [basePath],
-    );
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -51,17 +47,22 @@ export const SearchHits: React.FC = () => {
 
     useEffect(() => {
         const [firstHit] = hits;
-        if (hoveredSearchHit == null && firstHit != null) {
-            setHoveredSearchHitId(firstHit.objectID);
+        if (firstHit != null) {
+            setHoveredSearchHitId((id) => id ?? (isCohere ? COHERE_AI_HIT_ID : firstHit.objectID));
         }
-    }, [hits, hoveredSearchHit]);
+    }, [hits, isCohere]);
 
     useKeyboardPress({
         key: "Up",
         onPress: () => {
             if (hoveredSearchHit == null) {
+                setHoveredSearchHitId(null);
+                return;
+            } else if (hoveredSearchHit.index === 0 && isCohere) {
+                setHoveredSearchHitId(COHERE_AI_HIT_ID);
                 return;
             }
+
             const previousHit = hits[hoveredSearchHit.index - 1];
             if (previousHit != null) {
                 setHoveredSearchHitId(previousHit.objectID);
@@ -76,10 +77,16 @@ export const SearchHits: React.FC = () => {
     useKeyboardPress({
         key: "Down",
         onPress: () => {
-            if (hoveredSearchHit == null) {
+            if (hoveredSearchHitId === COHERE_AI_HIT_ID) {
+                setHoveredSearchHitId(hits[0]?.objectID ?? null);
                 return;
             }
-            const nextHit = hits[hoveredSearchHit.index + 1];
+
+            if (hoveredSearchHit == null && isCohere) {
+                setHoveredSearchHitId(COHERE_AI_HIT_ID);
+                return;
+            }
+            const nextHit = hits[hoveredSearchHit != null ? hoveredSearchHit.index + 1 : 0];
             if (nextHit != null) {
                 setHoveredSearchHitId(nextHit.objectID);
                 const ref = refs.current.get(nextHit.objectID);
@@ -90,23 +97,46 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
+    const setOpenCohere = useSetAtom(COHERE_ASK_AI);
+    const setCohereInitialMessage = useSetAtom(COHERE_INITIAL_MESSAGE);
+
+    const openCohere = () => {
+        setCohereInitialMessage(`Can you tell me about ${search.results.query}?`);
+        setOpenCohere(true);
+    };
+
+    const navigateToHoveredHit = async () => {
+        if (hoveredSearchHit == null) {
+            if (isCohere && hoveredSearchHitId === COHERE_AI_HIT_ID && search.results.query.length > 0) {
+                closeSearchDialog();
+                openCohere();
+            }
+
+            return;
+        }
+        const slug = getSlugForSearchRecord(hoveredSearchHit.record, basePath);
+        void router.push(`/${slug}`, undefined, {
+            // TODO: shallow=true if currently in long scrolling api reference and the hit is on the same page
+            shallow: false,
+        });
+        closeSearchDialog();
+    };
+
     useKeyboardPress({
         key: "Enter",
-        onPress: async () => {
-            if (hoveredSearchHit == null) {
-                return;
-            }
-            const fullPath = getFullPathForHit(hoveredSearchHit.record);
-            void router.replace(`/${fullPath}`, undefined, {
-                shallow: false,
-            });
-            closeSearchDialog();
-        },
+        onPress: navigateToHoveredHit,
         preventDefault: true,
         capture: true,
     });
 
-    if (hits.length === 0 || search.results.query.length === 0) {
+    useKeyboardPress({
+        key: "Tab",
+        onPress: navigateToHoveredHit,
+        preventDefault: true,
+        capture: true,
+    });
+
+    if ((hits.length === 0 && !isCohere) || search.results.query.length === 0) {
         return null;
     }
 
@@ -116,6 +146,18 @@ export const SearchHits: React.FC = () => {
             className="p-2"
             scrollbars="vertical"
         >
+            {isCohere && (
+                <AskCohereHit
+                    setRef={(elem) => {
+                        if (elem != null) {
+                            refs.current.set(COHERE_AI_HIT_ID, elem);
+                        }
+                    }}
+                    message={search.results.query}
+                    isHovered={hoveredSearchHitId === COHERE_AI_HIT_ID}
+                    onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
+                />
+            )}
             {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {
@@ -134,6 +176,7 @@ export const SearchHits: React.FC = () => {
 };
 
 export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
+    const isCohere = useDomain().includes("cohere");
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
 
@@ -150,6 +193,17 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <FernScrollArea className="mask-grad-top-4 px-2 pt-4">
+            {isCohere && (
+                <AskCohereHit
+                    setRef={(elem) => {
+                        if (elem != null) {
+                            refs.current.set(COHERE_AI_HIT_ID, elem);
+                        }
+                    }}
+                    message={search.results.query}
+                    isHovered={true}
+                />
+            )}
             {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {

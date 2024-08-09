@@ -13,6 +13,10 @@
       "types": "./dist/navigation/index.d.ts",
       "default": "./dist/navigation/index.js"
     },
+    "./client/types": {
+      "types": "./dist/client/types.d.ts",
+      "default": "./dist/client/types.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"

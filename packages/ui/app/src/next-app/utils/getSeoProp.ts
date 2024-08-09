@@ -1,4 +1,5 @@
-import { APIV1Read, DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
 import { trim } from "lodash-es";
@@ -64,9 +65,32 @@ export function getSeoProps(
             const { data: frontmatter } = getFrontmatter(page.markdown);
             ogMetadata = { ...ogMetadata, ...frontmatter };
 
-            // retrofit og:image
-            if (frontmatter.image != null) {
-                ogMetadata["og:image"] ??= { type: "url", value: frontmatter.image };
+            // retrofit og:image, preferring og:image
+            // TODO: (rohin) Come back here and support more image transformations (twitter, logo, etc)
+            for (const frontmatterImageVar of [frontmatter.image, frontmatter["og:image"]]) {
+                if (frontmatterImageVar != null) {
+                    // TODO: (rohin) remove string check when fully migrated, but keeping for back compat
+                    if (typeof frontmatterImageVar === "string") {
+                        ogMetadata["og:image"] ??= {
+                            type: "url",
+                            value: frontmatterImageVar,
+                        };
+                    } else {
+                        visitDiscriminatedUnion(frontmatterImageVar, "type")._visit({
+                            fileId: (fileId) => {
+                                const realId = fileId.value.split(":")[1];
+                                if (realId != null) {
+                                    fileId.value = realId;
+                                    ogMetadata["og:image"] = fileId;
+                                }
+                            },
+                            url: (url) => {
+                                ogMetadata["og:image"] = url;
+                            },
+                            _other: undefined,
+                        });
+                    }
+                }
             }
 
             seo.title ??= frontmatter.title;
@@ -103,7 +127,7 @@ export function getSeoProps(
     }
 
     if (seo.title != null && stringHasMarkdown(seo.title)) {
-        seo.description = stripMarkdown(seo.title);
+        seo.title = stripMarkdown(seo.title);
     }
 
     if (seo.description != null && stringHasMarkdown(seo.description)) {

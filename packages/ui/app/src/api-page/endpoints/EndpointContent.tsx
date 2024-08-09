@@ -1,37 +1,28 @@
 import cn from "clsx";
+import { useInView } from "framer-motion";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
-import { memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { useInView } from "react-intersection-observer";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCallbackOne } from "use-memo-one";
 import {
+    ANCHOR_ATOM,
     BREAKPOINT_ATOM,
     CONTENT_HEIGHT_ATOM,
     CURRENT_NODE_ID_ATOM,
     FERN_LANGUAGE_ATOM,
     FERN_STREAM_ATOM,
-    HASH_ATOM,
     MOBILE_SIDEBAR_ENABLED_ATOM,
     store,
     useAtomEffect,
 } from "../../atoms";
-import { useSelectedEnvironmentId } from "../../atoms/environment";
-import { Breadcrumbs } from "../../components/Breadcrumbs";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedError,
-    ResolvedTypeDefinition,
-    resolveEnvironment,
-} from "../../resolver/types";
-import { ApiPageDescription } from "../ApiPageDescription";
+import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
+import { useApiPageCenterElement } from "../useApiPageCenterElement";
+import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
-import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
-import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
@@ -45,7 +36,6 @@ export declare namespace EndpointContent {
         endpoint: ResolvedEndpointDefinition;
         breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
-        containerRef: React.Ref<HTMLDivElement | null>;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -79,28 +69,18 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
-const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
-    api,
-    showErrors,
-    endpoint: endpointProp,
-    breadcrumbs,
-    hideBottomSeparator = false,
-    containerRef,
-    types,
-}) => {
-    const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
+export const EndpointContent = memo<EndpointContent.Props>((props) => {
+    const { api, showErrors, endpoint: endpointProp, breadcrumbs, hideBottomSeparator = false, types } = props;
+    const isStream = useAtomValue(FERN_STREAM_ATOM);
     const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
 
-    const ref = useRef<HTMLDivElement | null>(null);
+    const ref = useRef<HTMLDivElement>(null);
+    useApiPageCenterElement(ref, endpoint.slug);
 
-    useImperativeHandle(containerRef, () => ref.current);
-
-    const [isInViewport, setIsInViewport] = useState(() => store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId);
-    const { ref: viewportRef } = useInView({
-        onChange: setIsInViewport,
-        rootMargin: "100%",
-    });
-    useImperativeHandle(viewportRef, () => ref.current ?? undefined);
+    const isInViewport =
+        useInView(ref, {
+            margin: "100%",
+        }) || store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId;
 
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
@@ -121,8 +101,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
 
     useAtomEffect(
         useCallbackOne((get) => {
-            const hash = get(HASH_ATOM);
-            const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(hash);
+            const anchor = get(ANCHOR_ATOM);
+            const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
             if (statusCodeOrName != null) {
                 const error = endpoint.errors.find((e) =>
                     typeof statusCodeOrName === "number"
@@ -133,7 +113,6 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                     setSelectedError(error);
                 }
             }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []),
     );
 
@@ -260,51 +239,19 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialExampleHeight]);
 
-    const selectedEnvironmentId = useSelectedEnvironmentId();
     return (
-        <div
+        <section
             className={"fern-endpoint-content"}
             onClick={() => setSelectedError(undefined)}
             ref={ref}
-            data-route={`/${endpoint.slug}`}
+            id={`/${endpoint.slug}`}
         >
             <div
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
             >
-                <div className="space-y-1 pb-2 pt-8">
-                    <Breadcrumbs breadcrumbs={breadcrumbs} />
-                    <div className="flex items-center justify-between">
-                        <span>
-                            <h1 className="fern-page-heading">
-                                {/* <AnimatedTitle>{endpoint.title}</AnimatedTitle> */}
-                                {endpoint.title}
-                            </h1>
-                            {endpoint.availability != null && (
-                                <span className="inline-block ml-2 align-text-bottom">
-                                    <EndpointAvailabilityTag availability={endpoint.availability} minimal={true} />
-                                </span>
-                            )}
-                        </span>
-
-                        {endpointProp.stream != null && (
-                            <EndpointStreamingEnabledToggle
-                                value={isStream}
-                                setValue={setIsStream}
-                                endpointProp={endpointProp}
-                                container={ref}
-                            />
-                        )}
-                    </div>
-                    <EndpointUrlWithOverflow
-                        path={endpoint.path}
-                        method={endpoint.method}
-                        selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
-                        showEnvironment
-                        large
-                    />
-                </div>
+                <EndpointContentHeader endpoint={endpointProp} breadcrumbs={breadcrumbs} container={ref} />
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
                         className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
@@ -313,12 +260,6 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                             minHeight: `${minHeight}px`,
                         }}
                     >
-                        <ApiPageDescription
-                            className="text-base leading-6 mb-12"
-                            description={endpoint.description}
-                            isMarkdown={true}
-                        />
-
                         <EndpointContentLeft
                             endpoint={endpoint}
                             showErrors={showErrors}
@@ -360,8 +301,8 @@ const UnmemoizedEndpointContent: React.FC<EndpointContent.Props> = ({
                     </aside>
                 </div>
             </div>
-        </div>
+        </section>
     );
-};
+});
 
-export const EndpointContent = memo(UnmemoizedEndpointContent);
+EndpointContent.displayName = "EndpointContent";

@@ -1,7 +1,7 @@
 import clsx from "clsx";
+import { Forward, Pause, Play, Restart, Rewind, SoundHigh, SoundOff } from "iconoir-react";
 import moment from "moment";
 import { createRef, ReactElement, useEffect, useState } from "react";
-import { FastForward, Pause, Play, Rewind, RotateCcw, Volume2, VolumeX } from "react-feather";
 import { FernButton, FernButtonGroup } from "./FernButton";
 
 export interface FernAudioPlayerProps {
@@ -57,7 +57,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                             variant="minimal"
                             size="normal"
                             intent="none"
-                            icon={<RotateCcw />}
+                            icon={<Restart />}
                             onClick={() => {
                                 if (ref.current) {
                                     ref.current.currentTime = 0;
@@ -92,7 +92,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                             }}
                         />
                         <FernButton
-                            icon={<FastForward />}
+                            icon={<Forward />}
                             variant="minimal"
                             size="normal"
                             onClick={() => {
@@ -109,7 +109,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                             variant="minimal"
                             size="normal"
                             intent="none"
-                            icon={isMuted ? <VolumeX /> : <Volume2 />}
+                            icon={isMuted ? <SoundOff /> : <SoundHigh />}
                             onClick={() => {
                                 if (ref.current) {
                                     ref.current.muted = !ref.current.muted;

@@ -1,6 +1,6 @@
 import { FernButton } from "@fern-ui/components";
 import { isPlainObject } from "@fern-ui/core-utils";
-import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
+import { Plus, Xmark } from "iconoir-react";
 import { memo, useCallback, useEffect, useState } from "react";
 import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapOptional } from "../../resolver/types";
 import { getDefaultValueForType, unknownToString } from "../utils";
@@ -111,7 +111,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
                             </div>
                             <div>
                                 <FernButton
-                                    icon={<Cross1Icon />}
+                                    icon={<Xmark />}
                                     onClick={() => handleRemoveItem(idx)}
                                     variant="minimal"
                                     size="small"
@@ -122,7 +122,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
                     ))}
                     <li className="pt-2">
                         <FernButton
-                            icon={<PlusIcon />}
+                            icon={<Plus />}
                             text="Add new item"
                             onClick={handleAppendItem}
                             variant="outlined"
@@ -133,7 +133,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
             )}
             {internalState.length === 0 && (
                 <FernButton
-                    icon={<PlusIcon />}
+                    icon={<Plus />}
                     text="Add new item"
                     onClick={handleAppendItem}
                     variant="outlined"

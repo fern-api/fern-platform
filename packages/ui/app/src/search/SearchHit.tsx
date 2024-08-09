@@ -1,4 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { ReactElement, useMemo } from "react";
@@ -9,8 +10,6 @@ import { EndpointRecordV3 } from "./content/EndpointRecordV3";
 import { PageRecord } from "./content/PageRecord";
 import { PageRecordV2 } from "./content/PageRecordV2";
 import { PageRecordV3 } from "./content/PageRecordV3";
-import type { SearchRecord } from "./types";
-import { getFullPathForSearchRecord } from "./util";
 
 export declare namespace SearchHit {
     export interface Props {
@@ -33,9 +32,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
     const closeMobileSidebar = useCloseMobileSidebar();
     const closeSearchDialog = useCloseSearchDialog();
 
-    const fullPath = useMemo(() => {
-        return getFullPathForSearchRecord(hit, basePath);
-    }, [hit, basePath]);
+    const slug = getSlugForSearchRecord(hit, basePath);
 
     const content = useMemo(() => {
         return visitDiscriminatedUnion(hit)._visit<ReactElement | null>({
@@ -56,9 +53,9 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
         <Link
             ref={(elem) => setRef?.(elem)}
             className={cn("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
-                "bg-accent t-accent-contrast": isHovered,
+                "bg-accent-highlight": isHovered,
             })}
-            href={`/${fullPath}`}
+            href={`/${slug}`}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             onClick={() => {

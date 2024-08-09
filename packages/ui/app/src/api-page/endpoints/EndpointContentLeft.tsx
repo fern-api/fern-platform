@@ -2,15 +2,18 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
+import { useFeatureFlags } from "../../atoms";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
+    ResolvedObjectProperty,
     ResolvedTypeDefinition,
     dereferenceObjectProperties,
     getParameterDescription,
 } from "../../resolver/types";
+import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointError } from "./EndpointError";
@@ -60,11 +63,60 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     const requestExpandAll = useBooleanState(false);
     const responseExpandAll = useBooleanState(false);
     const errorExpandAll = useBooleanState(false);
+    const { isAuthEnabledInDocs } = useFeatureFlags();
 
-    const headers = endpoint.headers.filter((header) => !header.hidden);
+    let authHeaders: ResolvedObjectProperty | undefined;
+    if (endpoint.auth && isAuthEnabledInDocs) {
+        authHeaders = visitDiscriminatedUnion(endpoint.auth, "type")._visit<ResolvedObjectProperty>({
+            basicAuth: () => {
+                return {
+                    key: "Authorization",
+                    description: "Basic authentication of the form Basic <username:password>.",
+                    hidden: false,
+                    valueShape: {
+                        type: "unknown",
+                        displayName: "string",
+                    },
+                    availability: undefined,
+                };
+            },
+            bearerAuth: () => {
+                return {
+                    key: "Authorization",
+                    description: "Bearer authentication of the form Bearer <token>, where token is your auth token.",
+                    hidden: false,
+                    valueShape: {
+                        type: "unknown",
+                        displayName: "string",
+                    },
+                    availability: undefined,
+                };
+            },
+            header: (value) => {
+                return {
+                    key: value.headerWireValue,
+                    description:
+                        value.prefix != null ? `Header authentication of the form ${value.prefix} <token>` : undefined,
+                    hidden: false,
+                    valueShape: {
+                        type: "unknown",
+                        displayName: "string",
+                    },
+                    availability: undefined,
+                };
+            },
+        });
+    }
+
+    let headers = endpoint.headers.filter((header) => !header.hidden);
+
+    if (authHeaders) {
+        headers = [authHeaders, ...headers];
+    }
 
     return (
-        <div className="flex max-w-full flex-1 flex-col  gap-12">
+        <div className="flex max-w-full flex-1 flex-col gap-12">
+            <ApiPageDescription className="text-base leading-6" description={endpoint.description} isMarkdown={true} />
             {endpoint.pathParameters.length > 0 && (
                 <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} route={"/" + endpoint.slug}>
                     <div>
@@ -88,20 +140,38 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             {headers.length > 0 && (
                 <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} route={"/" + endpoint.slug}>
                     <div>
-                        {headers.map((parameter) => (
-                            <div key={parameter.key}>
-                                <TypeComponentSeparator />
-                                <EndpointParameter
-                                    name={parameter.key}
-                                    shape={parameter.valueShape}
-                                    anchorIdParts={[...REQUEST_HEADER, parameter.key]}
-                                    route={"/" + endpoint.slug}
-                                    description={getParameterDescription(parameter, types)}
-                                    availability={parameter.availability}
-                                    types={types}
-                                />
-                            </div>
-                        ))}
+                        {headers.map((parameter) => {
+                            let isAuth = false;
+                            const auth = endpoint.auth;
+                            if (
+                                (auth?.type === "header" && parameter.key === auth?.headerWireValue) ||
+                                parameter.key === "Authorization"
+                            ) {
+                                isAuth = true;
+                            }
+
+                            return (
+                                <div key={parameter.key} className="relative">
+                                    {isAuth && (
+                                        <div className="absolute right-0 top-3">
+                                            <div className="px-2 bg-tag-danger rounded-xl flex items-center h-5">
+                                                <span className="text-xs t-danger">Auth</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <TypeComponentSeparator />
+                                    <EndpointParameter
+                                        name={parameter.key}
+                                        shape={parameter.valueShape}
+                                        anchorIdParts={[...REQUEST_HEADER, parameter.key]}
+                                        route={"/" + endpoint.slug}
+                                        description={getParameterDescription(parameter, types)}
+                                        availability={parameter.availability}
+                                        types={types}
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                 </EndpointSection>
             )}
