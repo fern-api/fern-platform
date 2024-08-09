@@ -12,7 +12,8 @@ export declare namespace Markdown {
 }
 
 export const Markdown = React.memo<Markdown.Props>(function Markdown({ mdx, notProse, className }) {
-    if (mdx == null) {
+    // If the MDX is empty, return null
+    if (mdx == null || (typeof mdx === "string" && mdx.trim().length === 0)) {
         return null;
     }
 
