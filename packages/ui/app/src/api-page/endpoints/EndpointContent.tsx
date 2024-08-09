@@ -100,23 +100,20 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     const [selectedError, setSelectedError] = useState<ResolvedError | undefined>();
 
     useAtomEffect(
-        useCallbackOne(
-            (get) => {
-                const anchor = get(ANCHOR_ATOM);
-                const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
-                if (statusCodeOrName != null) {
-                    const error = endpoint.errors.find((e) =>
-                        typeof statusCodeOrName === "number"
-                            ? e.statusCode === statusCodeOrName
-                            : convertNameToAnchorPart(e.name) === statusCodeOrName,
-                    );
-                    if (error != null) {
-                        setSelectedError(error);
-                    }
+        useCallbackOne((get) => {
+            const anchor = get(ANCHOR_ATOM);
+            const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
+            if (statusCodeOrName != null) {
+                const error = endpoint.errors.find((e) =>
+                    typeof statusCodeOrName === "number"
+                        ? e.statusCode === statusCodeOrName
+                        : convertNameToAnchorPart(e.name) === statusCodeOrName,
+                );
+                if (error != null) {
+                    setSelectedError(error);
                 }
-            },
-            [setSelectedError],
-        ),
+            }
+        }, []),
     );
 
     const examples = useMemo(() => {
@@ -233,6 +230,14 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             [exampleHeight],
         ),
     );
+
+    // Reset the example height (not in view) if the viewport height changes
+    useEffect(() => {
+        if (!isInViewport) {
+            setExampleHeight(initialExampleHeight);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialExampleHeight]);
 
     return (
         <section
