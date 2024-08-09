@@ -6,7 +6,7 @@ import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
-import { capturePosthogEvent, initializePosthog } from "../analytics/posthog";
+import { initializePosthog } from "../analytics/posthog";
 import { DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
@@ -17,7 +17,10 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
         initializePosthog();
 
         // Track page views
-        const handleRouteChange = () => capturePosthogEvent("$pageview");
+        const handleRouteChange = (url) => {
+            window.analytics.capturePosthogEvent("$pageview");
+            window.analytics.page("Page View", { page: url });
+        };
         Router.events.on("routeChangeComplete", handleRouteChange);
         return () => {
             Router.events.off("routeChangeComplete", handleRouteChange);
