@@ -103,6 +103,10 @@
         height: calc(100vh - var(--header-offset, 0px));
     }
 
+    .max-h-below-header {
+        max-height: calc(100vh - var(--header-offset, 0px));
+    }
+
     .h-content {
         height: var(--content-height, 100vh);
     }

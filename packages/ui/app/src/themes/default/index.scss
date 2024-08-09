@@ -72,11 +72,11 @@
     }
 
     .fern-sidebar-container {
-        @apply bg-sidebar border-concealed sticky top-header-offset mt-header-offset hidden h-below-header w-sidebar-width lg:block;
+        @apply bg-sidebar border-concealed sticky top-header-offset mt-header-offset hidden h-fit max-h-below-header w-sidebar-width lg:block;
         @apply flex flex-col;
 
         &.fern-sidebar-fixed {
-            @apply fixed mt-0 z-30;
+            @apply fixed mt-0 z-30 h-below-header;
         }
 
         &:not(.fern-sidebar-fixed) {
