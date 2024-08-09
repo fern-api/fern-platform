@@ -17,9 +17,15 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
 
     const { selectedEnvironment, urlTextStyle, protocolTextStyle, small, environmentFilters } = props;
-    const url = selectedEnvironment?.baseUrl && parse(selectedEnvironment?.baseUrl);
 
-    const environmentIds = environmentFilters ? environmentFilters : allEnvironmentIds;
+    const environmentIds = environmentFilters
+        ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
+        : allEnvironmentIds;
+
+    if (environmentFilters && selectedEnvironment && !environmentFilters.includes(selectedEnvironment.id)) {
+        setSelectedEnvironmentId(environmentIds[0]);
+    }
+    const url = selectedEnvironment?.baseUrl && parse(selectedEnvironment?.baseUrl);
 
     return (
         <span>

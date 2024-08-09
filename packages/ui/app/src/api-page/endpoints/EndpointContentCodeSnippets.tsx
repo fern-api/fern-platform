@@ -1,6 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { EnvironmentId } from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
@@ -10,7 +9,6 @@ import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import {
     ResolvedEndpointDefinition,
@@ -130,7 +128,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     );
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
-    const environmentFilters = usePlaygroundSettings(maybeNode?.id);
 
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>
@@ -168,15 +165,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                 }}
                 actions={
                     <>
-                        {node != null &&
-                            (!environmentFilters ||
-                                (environmentFilters &&
-                                    environmentFilters.includes(selectedEnvironmentId as EnvironmentId))) && (
-                                <PlaygroundButton
-                                    state={node}
-                                    // example={selectedClient.exampleCall}
-                                />
-                            )}
+                        {node != null && (
+                            <PlaygroundButton
+                                state={node}
+                                example={selectedClient.exampleCall}
+                                language={selectedClient.language}
+                            />
+                        )}
                         {clients.length > 1 ? (
                             <CodeExampleClientDropdown
                                 clients={clients}

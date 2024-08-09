@@ -1,6 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { EnvironmentId } from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
@@ -9,7 +8,6 @@ import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import {
     ResolvedTypeDefinition,
@@ -54,8 +52,6 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const selectedEnvironmentId = useSelectedEnvironmentId();
     const maybeNode = nodes.get(websocket.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
-
-    const environmentFilters = usePlaygroundSettings(maybeNode?.id);
 
     const route = `/${websocket.slug}`;
 
@@ -314,17 +310,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                             <div className="sticky top-header-offset flex max-h-content scroll-mt-content flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
-                                    actions={
-                                        node != null &&
-                                        selectedEnvironmentId &&
-                                        (!environmentFilters ||
-                                            (environmentFilters &&
-                                                environmentFilters.includes(
-                                                    selectedEnvironmentId as EnvironmentId,
-                                                ))) ? (
-                                            <PlaygroundButton state={node} />
-                                        ) : undefined
-                                    }
+                                    actions={node != null ? <PlaygroundButton state={node} /> : undefined}
                                     disableClipboard={true}
                                 >
                                     <FernScrollArea>
