@@ -13,12 +13,12 @@ export function usePlaygroundSettings(currentNodeId?: NodeId): EnvironmentId[] |
         const maybeCurrentHasPlayground = nodeHasPlayground(navigationNodes.get(nodeIdToUse));
 
         if (maybeCurrentHasPlayground) {
-            return maybeCurrentHasPlayground.allowedEnvironments;
+            return maybeCurrentHasPlayground.environments;
         } else {
             for (const node of navigationNodes.getParents(nodeIdToUse).reverse()) {
                 const maybeNodeHasPlayground = nodeHasPlayground(node);
                 if (maybeNodeHasPlayground) {
-                    return maybeNodeHasPlayground.allowedEnvironments;
+                    return maybeNodeHasPlayground.environments;
                 }
             }
         }

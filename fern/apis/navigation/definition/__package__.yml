@@ -220,7 +220,7 @@ types:
 
   PlaygroundSettings:
     properties:
-      allowedEnvironments:
+      environments:
         type: optional<list<EnvironmentId>>
         docs: |
           A list of environment IDs that are allowed to be used in the playground.
