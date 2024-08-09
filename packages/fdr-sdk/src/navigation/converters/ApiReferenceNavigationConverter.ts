@@ -23,7 +23,7 @@ export class ApiReferenceNavigationConverter {
         idgen?: NodeIdGenerator,
         lexicographic?: boolean,
         disableEndpointPairs?: boolean,
-        disableLongScrolling?: boolean,
+        paginated?: boolean,
     ) {
         return new ApiReferenceNavigationConverter(
             apiSection,
@@ -34,7 +34,7 @@ export class ApiReferenceNavigationConverter {
             idgen ?? new NodeIdGenerator(),
             lexicographic,
             disableEndpointPairs,
-            disableLongScrolling,
+            paginated,
         ).convert();
     }
 
@@ -54,7 +54,7 @@ export class ApiReferenceNavigationConverter {
         idgen: NodeIdGenerator,
         private lexicographic: boolean = false,
         private disableEndpointPairs: boolean = false,
-        private disableLongScrolling: boolean | undefined,
+        private paginated: boolean | undefined,
     ) {
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api);
@@ -95,8 +95,7 @@ export class ApiReferenceNavigationConverter {
                 apiDefinitionId: FernNavigation.ApiDefinitionId(this.apiSection.api),
                 overviewPageId,
                 noindex,
-                disableLongScrolling:
-                    this.disableLongScrolling ?? (this.apiSection.longScrolling === false ? true : undefined),
+                paginated: this.paginated ?? (this.apiSection.longScrolling === false ? true : undefined),
                 slug: slug.get(),
                 icon: this.apiSection.icon,
                 hidden: this.apiSection.hidden,
@@ -106,6 +105,7 @@ export class ApiReferenceNavigationConverter {
                 children,
                 availability: undefined,
                 pointsTo,
+                playground: undefined,
             };
         });
     }
@@ -136,6 +136,7 @@ export class ApiReferenceNavigationConverter {
                 apiDefinitionId: this.apiDefinitionId,
                 availability: convertAvailability(endpoint.availability),
                 isResponseStream: endpoint.response?.type.type === "stream",
+                playground: undefined,
             };
         });
     }
@@ -155,6 +156,7 @@ export class ApiReferenceNavigationConverter {
             hidden: undefined,
             apiDefinitionId: this.apiDefinitionId,
             availability: convertAvailability(webSocket.availability),
+            playground: undefined,
         }));
     }
 
@@ -251,6 +253,7 @@ export class ApiReferenceNavigationConverter {
                     availability: undefined,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo,
+                    playground: undefined,
                 };
             });
             if (child != null) {
@@ -389,6 +392,7 @@ export class ApiReferenceNavigationConverter {
                             availability: undefined,
                             apiDefinitionId: this.apiDefinitionId,
                             pointsTo: followRedirects(convertedItems),
+                            playground: undefined,
                         });
                     });
                 },

@@ -9,7 +9,7 @@ import { getNoIndexFromFrontmatter } from "./getNoIndexFromFrontmatter";
 export function convertLoadDocsForUrlResponse(
     response: DocsV2Read.LoadDocsForUrlResponse,
     disableEndpointPairs: boolean = false,
-    disableLongScrolling?: boolean,
+    paginated?: boolean,
 ): FernNavigation.RootNode {
     const noindexMap: Record<FernNavigation.PageId, boolean> = {};
     const fullSlugMap: Record<FernNavigation.PageId, FernNavigation.Slug> = {};
@@ -39,7 +39,7 @@ export function convertLoadDocsForUrlResponse(
         response.baseUrl.basePath,
         isLexicographicSortEnabled(response.baseUrl.domain),
         disableEndpointPairs,
-        disableLongScrolling,
+        paginated,
     );
 }
 
