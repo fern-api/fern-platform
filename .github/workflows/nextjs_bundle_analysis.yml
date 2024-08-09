@@ -62,10 +62,28 @@ jobs:
         run: npx -p nextjs-bundle-analysis report
 
       - name: Upload bundle
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bundle
           path: packages/ui/docs-bundle/.next/analyze/__bundle_analysis.json
+
+      - name: Upload nodejs.html
+        uses: actions/upload-artifact@v4
+        with:
+          name: nodejs.html
+          path: packages/ui/docs-bundle/.next/analyze/nodejs.html
+
+      - name: Upload edge.html
+        uses: actions/upload-artifact@v4
+        with:
+          name: edge.html
+          path: packages/ui/docs-bundle/.next/analyze/edge.html
+
+      - name: Upload client.html
+        uses: actions/upload-artifact@v4
+        with:
+          name: client.html
+          path: packages/ui/docs-bundle/.next/analyze/client.html
 
       - name: Download base branch bundle stats
         uses: dawidd6/action-download-artifact@v2
