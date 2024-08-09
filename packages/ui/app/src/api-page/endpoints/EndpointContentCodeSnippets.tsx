@@ -9,6 +9,7 @@ import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import {
     ResolvedEndpointDefinition,
@@ -25,7 +26,6 @@ import { TitledExample } from "../examples/TitledExample";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
 import { getMessageForStatus } from "../utils/getMessageForStatus";
-import { usePlaygroundSettings } from "../utils/usePlaygroundSettings";
 import { WebSocketMessages } from "../web-socket/WebSocketMessages";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";

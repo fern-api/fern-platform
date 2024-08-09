@@ -9,6 +9,7 @@ import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import {
     ResolvedTypeDefinition,
@@ -30,7 +31,6 @@ import { TitledExample } from "../examples/TitledExample";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { usePlaygroundSettings } from "../utils/usePlaygroundSettings";
 import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
 export declare namespace WebSocket {

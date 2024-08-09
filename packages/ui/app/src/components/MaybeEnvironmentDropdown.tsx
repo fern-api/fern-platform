@@ -1,5 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { FernButton, FernDropdown } from "@fern-ui/components";
+import { CaretDownIcon } from "@radix-ui/react-icons";
 import { useAtom } from "jotai";
 import { ReactElement } from "react";
 import { parse } from "url";
@@ -11,21 +12,15 @@ interface MaybeEnvironmentDropdownProps {
     protocolTextStyle?: string;
     small?: boolean;
     environmentFilters?: APIV1Read.EnvironmentId[];
-    playground?: boolean;
 }
 export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): ReactElement | null {
     const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
 
-    const { selectedEnvironment, urlTextStyle, protocolTextStyle, small, environmentFilters, playground } = props;
+    const { selectedEnvironment, urlTextStyle, protocolTextStyle, small, environmentFilters } = props;
     const url = selectedEnvironment?.baseUrl && parse(selectedEnvironment?.baseUrl);
 
-    let environmentIds;
-    if (playground) {
-        environmentIds = environmentFilters ? environmentFilters : allEnvironmentIds;
-    } else {
-        environmentIds = [...new Set(allEnvironmentIds.concat(environmentFilters ?? []))];
-    }
+    const environmentIds = environmentFilters ? environmentFilters : allEnvironmentIds;
 
     return (
         <span>
@@ -52,6 +47,7 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
                         size={small ? "small" : "normal"}
                         variant="outlined"
                         mono={true}
+                        rightIcon={<CaretDownIcon />}
                     />
                 </FernDropdown>
             ) : (
