@@ -1,4 +1,5 @@
 import { readFile } from "fs/promises";
+import { v4 as uuidv4 } from "uuid";
 import { S3ServiceImpl } from "../../services/s3";
 
 describe("S3 Service", () => {
@@ -7,13 +8,18 @@ describe("S3 Service", () => {
             venusUrl: "string",
             awsAccessKey: process.env.AWS_ACCESS_KEY_ID ?? "",
             awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY ?? "",
-            publicS3: {
+            publicDocsS3: {
                 bucketName: "fdr-dev2-docs-files-public",
                 bucketRegion: "us-east-1",
                 urlOverride: undefined,
             },
-            privateS3: {
+            privateDocsS3: {
                 bucketName: "fdr-dev2-docs-files",
+                bucketRegion: "us-east-1",
+                urlOverride: undefined,
+            },
+            privateSourceS3: {
+                bucketName: "fdr-source-files",
                 bucketRegion: "us-east-1",
                 urlOverride: undefined,
             },
@@ -30,18 +36,32 @@ describe("S3 Service", () => {
             redisClusteringEnabled: true,
             applicationEnvironment: "string",
         });
-        const response = await s3Service.createPresignedUploadUrlWithClient({
+        const startUploadDocsResponse = await s3Service.createPresignedDocsUploadUrlWithClient({
             domain: "buildwithfern.com",
             time: "12340",
             isPrivate: false,
             filepath: "deep",
         });
-        console.log(response.url);
+        console.log(startUploadDocsResponse.url);
         expect(true).toEqual(true);
-        const response2 = await fetch(response.url, {
+        const uploadDocsResponse = await fetch(startUploadDocsResponse.url, {
             method: "PUT",
             body: await readFile("<path-to-files>"),
         });
-        expect(response2.status).toEqual(200);
+        expect(uploadDocsResponse.status).toEqual(200);
+
+        const startUploadSourceResponse = await s3Service.createPresignedSourceUploadUrlWithClient({
+            orgId: "fern-api",
+            apiId: "fern",
+            time: "12340",
+            sourceId: uuidv4(),
+        });
+        console.log(startUploadSourceResponse.url);
+        expect(true).toEqual(true);
+        const uploadSourceResponse = await fetch(startUploadSourceResponse.url, {
+            method: "PUT",
+            body: await readFile("<path-to-files>"),
+        });
+        expect(uploadSourceResponse.status).toEqual(200);
     });
 });

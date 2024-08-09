@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
 import { type FdrApplication } from "../../../app";
 import { IndexSegment } from "../../../services/algolia";
-import { type S3FileInfo } from "../../../services/s3";
+import { type S3DocsFileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 
@@ -13,7 +13,7 @@ export interface DocsRegistrationInfo {
     fernUrl: ParsedBaseUrl;
     customUrls: ParsedBaseUrl[];
     orgId: FdrAPI.OrgId;
-    s3FileInfos: Record<DocsV1Write.FilePath, S3FileInfo>;
+    s3FileInfos: Record<DocsV1Write.FilePath, S3DocsFileInfo>;
     isPreview: boolean;
     authType: AuthType;
 }
@@ -56,7 +56,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             }
 
             const docsRegistrationId = uuidv4();
-            const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
+            const s3FileInfos = await app.services.s3.getPresignedDocsUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],
@@ -96,7 +96,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     req.body.basePath ?? "",
                 ),
             );
-            const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
+            const s3FileInfos = await app.services.s3.getPresignedDocsUploadUrls({
                 domain: fernUrl.hostname,
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],

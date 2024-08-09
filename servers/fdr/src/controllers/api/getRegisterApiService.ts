@@ -72,6 +72,22 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 apiDefinitionId,
                 snippetHolder,
             );
+
+            let sources: Record<string, APIV1Write.SourceUpload> | undefined;
+            if (req.body.sources != null) {
+                app.logger.debug(
+                    `Preparing source upload URLs for {orgId: "${req.body.orgId}", apiId: "${req.body.apiId}"}`,
+                    REGISTER_API_DEFINITION_META,
+                );
+                sources = await getSourceUploads({
+                    app,
+                    orgId: req.body.orgId,
+                    apiId: req.body.apiId,
+                    sources: req.body.sources,
+                });
+                app.logger.debug(`Successfully prepared source upload URLs`, REGISTER_API_DEFINITION_META);
+            }
+
             app.logger.debug(
                 `Creating API Definition in database with name=${req.body.apiId} for org ${req.body.orgId}`,
                 REGISTER_API_DEFINITION_META,
@@ -87,6 +103,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
             app.logger.debug(`Returning API Definition ID id=${apiDefinitionId}`, REGISTER_API_DEFINITION_META);
             return res.send({
                 apiDefinitionId,
+                sources,
             });
         },
     });
@@ -216,4 +233,40 @@ async function getSnippetTemplatesIfEnabled({
         LOGGER.error("Failed to load snippet templates", e);
         return {};
     }
+}
+
+async function getSourceUploads({
+    app,
+    orgId,
+    apiId,
+    sources,
+}: {
+    app: FdrApplication;
+    orgId: string;
+    apiId: string;
+    sources: Record<string, APIV1Write.Source>;
+}): Promise<Record<string, APIV1Write.SourceUpload>> {
+    const sourceUploadUrls = await app.services.s3.getPresignedSourceUploadUrls({
+        orgId,
+        apiId,
+        sources,
+    });
+
+    const sourceUploads = await Promise.all(
+        Object.entries(sourceUploadUrls).map(async ([sourceId, fileInfo]) => {
+            const downloadUrl = await app.services.s3.getPresignedSourceDownloadUrl({
+                key: fileInfo.key,
+            });
+
+            return [
+                sourceId,
+                {
+                    uploadUrl: fileInfo.presignedUrl,
+                    downloadUrl,
+                },
+            ];
+        }),
+    );
+
+    return Object.fromEntries(sourceUploads);
 }

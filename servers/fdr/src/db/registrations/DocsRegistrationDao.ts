@@ -1,6 +1,6 @@
 import { DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { AuthType, PrismaClient } from "@prisma/client";
-import { S3FileInfo } from "../../services/s3";
+import { S3DocsFileInfo } from "../../services/s3";
 import { readBuffer, writeBuffer } from "../../util";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
 
@@ -8,7 +8,7 @@ export interface DocsRegistrationInfo {
     fernUrl: ParsedBaseUrl;
     customUrls: ParsedBaseUrl[];
     orgId: FdrAPI.OrgId;
-    s3FileInfos: Record<DocsV1Write.FilePath, S3FileInfo>;
+    s3FileInfos: Record<DocsV1Write.FilePath, S3DocsFileInfo>;
     isPreview: boolean;
     authType: AuthType;
 }
@@ -45,7 +45,7 @@ export class DocsRegistrationDao {
             isPreview: response.isPreview,
             orgId: response.orgID,
             fernUrl: ParsedBaseUrl.parse(response.fernURL),
-            s3FileInfos: readBuffer(response.s3FileInfos) as any as Record<DocsV1Write.FilePath, S3FileInfo>,
+            s3FileInfos: readBuffer(response.s3FileInfos) as any as Record<DocsV1Write.FilePath, S3DocsFileInfo>,
         };
     }
 }

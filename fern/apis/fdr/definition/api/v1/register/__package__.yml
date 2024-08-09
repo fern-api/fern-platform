@@ -34,7 +34,7 @@ types:
   RegisterApiDefinitionResponse:
     properties:
       apiDefinitionId: rootCommons.ApiDefinitionId
-      sourceUploadUrls: optional<map<SourceId, SourceUpload>>
+      sources: optional<map<SourceId, SourceUpload>>
 
   ApiDefinition:
     properties:
@@ -76,7 +76,10 @@ types:
   SourceUpload:
     properties:
       uploadUrl:
-        docs: The URL to upload the source files to.
+        docs: The presigned URL to upload the source files to.
+        type: string
+      downloadUrl:
+        docs: The presigned URL to download the source files from.
         type: string
 
   SnippetsConfig:

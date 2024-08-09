@@ -23,6 +23,11 @@ import * as FernRegistry from "../../../../../../../../index";
  *             globalHeaders: [{}],
  *             snippetsConfiguration: {},
  *             navigation: {}
+ *         },
+ *         sources: {
+ *             "string": {
+ *                 type: "openapi"
+ *             }
  *         }
  *     }
  */
@@ -30,4 +35,5 @@ export interface RegisterApiDefinitionRequest {
     orgId: FernRegistry.OrgId;
     apiId: FernRegistry.ApiId;
     definition: FernRegistry.api.v1.register.ApiDefinition;
+    sources?: Record<FernRegistry.api.v1.register.SourceId, FernRegistry.api.v1.register.Source>;
 }

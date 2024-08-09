@@ -120,12 +120,17 @@ class MockRevalidatorService implements RevalidatorService {
 export const baseMockFdrConfig: FdrConfig = {
     awsAccessKey: "",
     awsSecretKey: "",
-    publicS3: {
+    publicDocsS3: {
         bucketName: "fdr",
         bucketRegion: "us-east-1",
         urlOverride: "http://s3-mock:9090",
     },
-    privateS3: {
+    privateDocsS3: {
+        bucketName: "fdr",
+        bucketRegion: "us-east-1",
+        urlOverride: "http://s3-mock:9090",
+    },
+    privateSourceS3: {
         bucketName: "fdr",
         bucketRegion: "us-east-1",
         urlOverride: "http://s3-mock:9090",
