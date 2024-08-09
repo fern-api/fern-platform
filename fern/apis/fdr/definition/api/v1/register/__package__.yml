@@ -24,6 +24,7 @@ service:
             orgId: rootCommons.OrgId
             apiId: rootCommons.ApiId
             definition: ApiDefinition
+            sources: optional<map<SourceId, Source>>
       response: RegisterApiDefinitionResponse
       errors:
         - rootCommons.UnauthorizedError
@@ -33,6 +34,7 @@ types:
   RegisterApiDefinitionResponse:
     properties:
       apiDefinitionId: rootCommons.ApiDefinitionId
+      sourceUploadUrls: optional<map<SourceId, SourceUpload>>
 
   ApiDefinition:
     properties:
@@ -62,6 +64,20 @@ types:
     properties:
       subpackageId: SubpackageId
       items: list<ApiNavigationConfigItem>
+
+  SourceId: string
+
+  Source:
+    union:
+      openapi: {}
+      asyncapi: {}
+      proto: {}
+
+  SourceUpload:
+    properties:
+      uploadUrl:
+        docs: The URL to upload the source files to.
+        type: string
 
   SnippetsConfig:
     properties:
