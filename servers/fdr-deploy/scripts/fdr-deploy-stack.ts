@@ -87,8 +87,8 @@ export class FdrDeployStack extends Stack {
         });
         snsTopic.addSubscription(new EmailSubscription("support@buildwithfern.com"));
 
-        const privateSourcesBucket = new Bucket(this, "fdr-source-files", {
-            bucketName: `fdr-${environmentType.toLowerCase()}-source-files`,
+        const privateApiDefinitionSourceBucket = new Bucket(this, "fdr-api-definition-source-files", {
+            bucketName: `fdr-${environmentType.toLowerCase()}-api-definition-source-files`,
             removalPolicy: RemovalPolicy.RETAIN,
             cors: [
                 {
@@ -173,8 +173,8 @@ export class FdrDeployStack extends Stack {
                     PUBLIC_S3_BUCKET_REGION: publicDocsBucket.stack.region,
                     PRIVATE_S3_BUCKET_NAME: privateDocsBucket.bucketName,
                     PRIVATE_S3_BUCKET_REGION: privateDocsBucket.stack.region,
-                    API_DEFINITION_SOURCE_BUCKET_NAME: privateSourcesBucket.bucketName,
-                    API_DEFINITION_SOURCE_BUCKET_REGION: privateSourcesBucket.stack.region,
+                    API_DEFINITION_SOURCE_BUCKET_NAME: privateApiDefinitionSourceBucket.bucketName,
+                    API_DEFINITION_SOURCE_BUCKET_REGION: privateApiDefinitionSourceBucket.stack.region,
                     DOMAIN_SUFFIX: getDomainSuffix(environmentType),
                     ALGOLIA_APP_ID: getEnvironmentVariableOrThrow("ALGOLIA_APP_ID"),
                     ALGOLIA_ADMIN_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_ADMIN_API_KEY"),
