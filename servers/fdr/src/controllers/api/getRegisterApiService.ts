@@ -85,7 +85,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                     apiId: req.body.apiId,
                     sources: req.body.sources,
                 });
-                app.logger.debug(`Successfully prepared source upload URLs`, REGISTER_API_DEFINITION_META);
+                app.logger.debug("Successfully prepared source upload URLs", REGISTER_API_DEFINITION_META);
             }
 
             app.logger.debug(
