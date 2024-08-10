@@ -39,7 +39,7 @@ export interface FdrConfig {
     awsSecretKey: string;
     publicDocsS3: S3Config;
     privateDocsS3: S3Config;
-    privateSourceS3: S3Config;
+    privateApiDefinitionSourceS3: S3Config;
     domainSuffix: string;
     algoliaAppId: string;
     algoliaAdminApiKey: string;
@@ -69,7 +69,7 @@ export function getConfig(): FdrConfig {
             bucketRegion: getEnvironmentVariableOrThrow(PRIVATE_S3_BUCKET_REGION_ENV_VAR),
             urlOverride: process.env[PRIVATE_S3_URL_OVERRIDE_ENV_VAR],
         },
-        privateSourceS3: {
+        privateApiDefinitionSourceS3: {
             bucketName: getEnvironmentVariableOrThrow(API_DEFINITION_SOURCE_BUCKET_NAME_ENV_VAR),
             bucketRegion: getEnvironmentVariableOrThrow(API_DEFINITION_SOURCE_BUCKET_REGION_ENV_VAR),
             urlOverride: process.env[PRIVATE_S3_SOURCE_URL_OVERRIDE_ENV_VAR],

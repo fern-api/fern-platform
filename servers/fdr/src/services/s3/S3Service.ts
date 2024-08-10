@@ -61,7 +61,7 @@ export interface S3Service {
 export class S3ServiceImpl implements S3Service {
     private publicDocsS3: S3Client;
     private privateDocsS3: S3Client;
-    private privateSourceS3: S3Client;
+    private privateApiDefinitionSourceS3: S3Client;
     private presignedDownloadUrlCache = new Cache<string>(10_000, ONE_WEEK_IN_SECONDS);
 
     constructor(private readonly config: FdrConfig) {
@@ -81,9 +81,11 @@ export class S3ServiceImpl implements S3Service {
                 secretAccessKey: config.awsSecretKey,
             },
         });
-        this.privateSourceS3 = new S3Client({
-            ...(config.privateSourceS3.urlOverride != null ? { endpoint: config.privateSourceS3.urlOverride } : {}),
-            region: config.privateSourceS3.bucketRegion,
+        this.privateApiDefinitionSourceS3 = new S3Client({
+            ...(config.privateApiDefinitionSourceS3.urlOverride != null
+                ? { endpoint: config.privateApiDefinitionSourceS3.urlOverride }
+                : {}),
+            region: config.privateApiDefinitionSourceS3.bucketRegion,
             credentials: {
                 accessKeyId: config.awsAccessKey,
                 secretAccessKey: config.awsSecretKey,
@@ -192,7 +194,7 @@ export class S3ServiceImpl implements S3Service {
 
     async getPresignedApiDefinitionSourceDownloadUrl({ key }: { key: string }): Promise<string> {
         const command = new GetObjectCommand({
-            Bucket: this.config.privateSourceS3.bucketName,
+            Bucket: this.config.privateApiDefinitionSourceS3.bucketName,
             Key: key,
         });
         return await getSignedUrl(this.privateDocsS3, command, { expiresIn: 604800 });
@@ -235,15 +237,15 @@ export class S3ServiceImpl implements S3Service {
         time: string;
         sourceId: string;
     }): Promise<{ url: string; key: string }> {
-        const key = this.constructS3SourceKey({ orgId, apiId, time, sourceId });
-        const bucketName = this.config.privateSourceS3.bucketName;
+        const key = this.constructS3ApiDefinitionSourceKey({ orgId, apiId, time, sourceId });
+        const bucketName = this.config.privateApiDefinitionSourceS3.bucketName;
         const input: PutObjectCommandInput = {
             Bucket: bucketName,
             Key: key,
         };
         const command = new PutObjectCommand(input);
         return {
-            url: await getSignedUrl(this.privateSourceS3, command, { expiresIn: 3600 }),
+            url: await getSignedUrl(this.privateApiDefinitionSourceS3, command, { expiresIn: 3600 }),
             key,
         };
     }
@@ -260,7 +262,7 @@ export class S3ServiceImpl implements S3Service {
         return `${domain}/${time}/${filepath}`;
     }
 
-    constructS3SourceKey({
+    constructS3ApiDefinitionSourceKey({
         orgId,
         apiId,
         time,

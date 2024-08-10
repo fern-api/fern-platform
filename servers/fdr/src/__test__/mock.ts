@@ -130,7 +130,7 @@ export const baseMockFdrConfig: FdrConfig = {
         bucketRegion: "us-east-1",
         urlOverride: "http://s3-mock:9090",
     },
-    privateSourceS3: {
+    privateApiDefinitionSourceS3: {
         bucketName: "fdr",
         bucketRegion: "us-east-1",
         urlOverride: "http://s3-mock:9090",

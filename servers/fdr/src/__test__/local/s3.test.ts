@@ -18,7 +18,7 @@ describe("S3 Service", () => {
                 bucketRegion: "us-east-1",
                 urlOverride: undefined,
             },
-            privateSourceS3: {
+            privateApiDefinitionSourceS3: {
                 bucketName: "fdr-source-files",
                 bucketRegion: "us-east-1",
                 urlOverride: undefined,
