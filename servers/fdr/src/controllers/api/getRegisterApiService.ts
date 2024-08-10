@@ -246,7 +246,7 @@ async function getSourceUploads({
     apiId: string;
     sources: Record<string, APIV1Write.Source>;
 }): Promise<Record<string, APIV1Write.SourceUpload>> {
-    const sourceUploadUrls = await app.services.s3.getPresignedSourceUploadUrls({
+    const sourceUploadUrls = await app.services.s3.getPresignedApiDefinitionSourceUploadUrls({
         orgId,
         apiId,
         sources,

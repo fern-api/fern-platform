@@ -50,7 +50,7 @@ describe("S3 Service", () => {
         });
         expect(uploadDocsResponse.status).toEqual(200);
 
-        const startUploadSourceResponse = await s3Service.createPresignedSourceUploadUrlWithClient({
+        const startUploadSourceResponse = await s3Service.createPresignedApiDefinitionSourceUploadUrlWithClient({
             orgId: "fern-api",
             apiId: "fern",
             time: "12340",

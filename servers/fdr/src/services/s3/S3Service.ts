@@ -45,7 +45,7 @@ export interface S3Service {
 
     getPresignedDocsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string>;
 
-    getPresignedSourceUploadUrls({
+    getPresignedApiDefinitionSourceUploadUrls({
         orgId,
         apiId,
         sources,
@@ -198,7 +198,7 @@ export class S3ServiceImpl implements S3Service {
         return await getSignedUrl(this.privateDocsS3, command, { expiresIn: 604800 });
     }
 
-    async getPresignedSourceUploadUrls({
+    async getPresignedApiDefinitionSourceUploadUrls({
         orgId,
         apiId,
         sources,
@@ -210,7 +210,7 @@ export class S3ServiceImpl implements S3Service {
         const result: Record<SourceId, S3SourceFileInfo> = {};
         const time: string = new Date().toISOString();
         for (const [sourceId, _source] of Object.entries(sources)) {
-            const { url, key } = await this.createPresignedSourceUploadUrlWithClient({
+            const { url, key } = await this.createPresignedApiDefinitionSourceUploadUrlWithClient({
                 orgId,
                 apiId,
                 time,
@@ -224,7 +224,7 @@ export class S3ServiceImpl implements S3Service {
         return result;
     }
 
-    async createPresignedSourceUploadUrlWithClient({
+    async createPresignedApiDefinitionSourceUploadUrlWithClient({
         orgId,
         apiId,
         time,
