@@ -279,6 +279,7 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                     captureMessage("Could not find endpoint for API playground selection state", "fatal");
                     return;
                 }
+
                 set(
                     formStateAtom,
                     getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], apiPackage.types),

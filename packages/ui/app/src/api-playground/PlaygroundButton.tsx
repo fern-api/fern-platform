@@ -5,7 +5,9 @@ import { useAtomValue } from "jotai";
 import { FC } from "react";
 import { HAS_PLAYGROUND_ATOM, useSetAndOpenPlayground } from "../atoms";
 
-export const PlaygroundButton: FC<{ state: FernNavigation.NavigationNodeApiLeaf }> = ({ state }) => {
+export const PlaygroundButton: FC<{
+    state: FernNavigation.NavigationNodeApiLeaf;
+}> = ({ state }) => {
     const openPlayground = useSetAndOpenPlayground();
     const hasPlayground = useAtomValue(HAS_PLAYGROUND_ATOM);
 
