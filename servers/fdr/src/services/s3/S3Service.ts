@@ -55,7 +55,7 @@ export interface S3Service {
         sources: Record<SourceId, Source>;
     }): Promise<Record<SourceId, S3SourceFileInfo>>;
 
-    getPresignedSourceDownloadUrl({ key }: { key: string }): Promise<string>;
+    getPresignedApiDefinitionSourceDownloadUrl({ key }: { key: string }): Promise<string>;
 }
 
 export class S3ServiceImpl implements S3Service {
@@ -190,7 +190,7 @@ export class S3ServiceImpl implements S3Service {
         };
     }
 
-    async getPresignedSourceDownloadUrl({ key }: { key: string }): Promise<string> {
+    async getPresignedApiDefinitionSourceDownloadUrl({ key }: { key: string }): Promise<string> {
         const command = new GetObjectCommand({
             Bucket: this.config.privateSourceS3.bucketName,
             Key: key,

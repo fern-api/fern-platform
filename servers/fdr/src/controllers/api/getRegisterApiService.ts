@@ -254,7 +254,7 @@ async function getSourceUploads({
 
     const sourceUploads = await Promise.all(
         Object.entries(sourceUploadUrls).map(async ([sourceId, fileInfo]) => {
-            const downloadUrl = await app.services.s3.getPresignedSourceDownloadUrl({
+            const downloadUrl = await app.services.s3.getPresignedApiDefinitionSourceDownloadUrl({
                 key: fileInfo.key,
             });
 
