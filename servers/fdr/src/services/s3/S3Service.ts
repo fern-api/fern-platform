@@ -25,7 +25,7 @@ export interface S3DocsFileInfo {
         | undefined;
 }
 
-export interface S3SourceFileInfo {
+export interface S3ApiDefinitionSourceFileInfo {
     presignedUrl: string;
     key: string;
 }
@@ -53,7 +53,7 @@ export interface S3Service {
         orgId: FernRegistry.OrgId;
         apiId: FernRegistry.ApiId;
         sources: Record<SourceId, Source>;
-    }): Promise<Record<SourceId, S3SourceFileInfo>>;
+    }): Promise<Record<SourceId, S3ApiDefinitionSourceFileInfo>>;
 
     getPresignedApiDefinitionSourceDownloadUrl({ key }: { key: string }): Promise<string>;
 }
@@ -208,8 +208,8 @@ export class S3ServiceImpl implements S3Service {
         orgId: FernRegistry.OrgId;
         apiId: FernRegistry.ApiId;
         sources: Record<SourceId, Source>;
-    }): Promise<Record<SourceId, S3SourceFileInfo>> {
-        const result: Record<SourceId, S3SourceFileInfo> = {};
+    }): Promise<Record<SourceId, S3ApiDefinitionSourceFileInfo>> {
+        const result: Record<SourceId, S3ApiDefinitionSourceFileInfo> = {};
         const time: string = new Date().toISOString();
         for (const [sourceId, _source] of Object.entries(sources)) {
             const { url, key } = await this.createPresignedApiDefinitionSourceUploadUrlWithClient({
