@@ -1,7 +1,7 @@
-import { Algolia } from "@fern-api/fdr-sdk";
+import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
-import { CornerDownLeft } from "react-feather";
+import { LongArrowDownLeft } from "iconoir-react";
 import { HttpMethodTag } from "../../commons/HttpMethodTag";
 import { SearchHitBreadCrumbsV2 } from "./SearchHitBreadCrumbsV2";
 
@@ -80,8 +80,8 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
                     <SearchHitBreadCrumbsV2 breadcrumbs={hit.breadcrumbs} />
                 </span>
 
-                <CornerDownLeft
-                    className={cn("size-3", {
+                <LongArrowDownLeft
+                    className={cn("size-4", {
                         "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}

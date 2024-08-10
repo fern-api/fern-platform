@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { getBreadcrumbList } from "../getBreadcrumbList";
 
 describe("getBreadcrumbList", () => {

@@ -1,7 +1,7 @@
 import { FernTooltipProvider } from "@fern-ui/components";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
-import { PaperPlaneIcon } from "@radix-ui/react-icons";
+import { SendSolid } from "iconoir-react";
 import { compact, mapValues, once } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
 import urljoin from "url-join";
@@ -17,6 +17,7 @@ import {
     usePlaygroundEndpointFormState,
 } from "../atoms";
 import { useSelectedEnvironmentId } from "../atoms/environment";
+import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import {
     ResolvedEndpointDefinition,
     ResolvedFormDataRequestProperty,
@@ -181,6 +182,8 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
+    const environmentFilters = usePlaygroundSettings();
+
     return (
         <FernTooltipProvider>
             <div className="flex min-h-0 flex-1 shrink flex-col size-full">
@@ -190,11 +193,10 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                         formState={formState}
                         sendRequest={sendRequest}
                         environment={resolveEnvironment(endpoint, selectedEnvironmentId)}
+                        environmentFilters={environmentFilters}
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}
-                        sendRequestIcon={
-                            <PaperPlaneIcon className="size-6 transition-transform group-hover:translate-x-0.5" />
-                        }
+                        sendRequestIcon={<SendSolid className="transition-transform group-hover:translate-x-0.5" />}
                     />
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">

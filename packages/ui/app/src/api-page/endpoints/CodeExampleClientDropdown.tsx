@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { FernButton, FernDropdown, RemoteFontAwesomeIcon } from "@fern-ui/components";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { NavArrowDown } from "iconoir-react";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 
 export declare namespace CodeExampleClientDropdown {
@@ -39,7 +39,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
                     className: "group/option",
                     icon: (
                         <RemoteFontAwesomeIcon
-                            className="size-3 bg-intent-default group-data-[highlighted]/option:bg-accent-contrast"
+                            className="size-icon-sm bg-intent-default group-data-[highlighted]/option:bg-accent-contrast"
                             icon={client.icon}
                         />
                     ),
@@ -48,7 +48,7 @@ export const CodeExampleClientDropdown: React.FC<CodeExampleClientDropdown.Props
             >
                 <FernButton
                     icon={<RemoteFontAwesomeIcon className="bg-accent size-4" icon={selectedClientGroup?.icon} />}
-                    rightIcon={<ChevronDownIcon />}
+                    rightIcon={<NavArrowDown className="!size-icon" />}
                     text={selectedClientGroup?.languageDisplayName ?? selectedCodeExample.language}
                     size="small"
                     variant="outlined"

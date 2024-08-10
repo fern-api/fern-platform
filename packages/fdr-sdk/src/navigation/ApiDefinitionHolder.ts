@@ -1,4 +1,4 @@
-import { APIV1Read } from "../client";
+import type { APIV1Read } from "../client/types";
 import { ROOT_PACKAGE_ID } from "./consts";
 import { FernNavigation } from "./generated";
 import { isSubpackage } from "./utils/isSubpackage";

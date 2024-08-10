@@ -11,4 +11,6 @@ export interface EndpointNode
     method: FernRegistry.navigation.HttpMethod;
     endpointId: FernRegistry.navigation.EndpointId;
     isResponseStream?: boolean;
+    /** Settings for the api playground that affect this endpoint specifically. */
+    playground?: FernRegistry.navigation.PlaygroundSettings;
 }

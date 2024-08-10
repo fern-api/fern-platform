@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { JsonLd } from "@fern-ui/next-seo";
 import grayMatter from "gray-matter";
 

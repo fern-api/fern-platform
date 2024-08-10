@@ -1,13 +1,15 @@
 import { GetObjectCommand, PutObjectCommand, PutObjectCommandInput, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { APIV1Write } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
-import { Cache } from "../../Cache";
 import { DocsV1Write, DocsV2Write } from "../../api";
+import { FernRegistry } from "../../api/generated";
 import type { FdrConfig } from "../../app";
+import { Cache } from "../../Cache";
 
 const ONE_WEEK_IN_SECONDS = 604800;
 
-export interface S3FileInfo {
+export interface S3DocsFileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;
     key: string;
     imageMetadata:
@@ -20,8 +22,13 @@ export interface S3FileInfo {
         | undefined;
 }
 
+export interface S3ApiDefinitionSourceFileInfo {
+    presignedUrl: string;
+    key: string;
+}
+
 export interface S3Service {
-    getPresignedUploadUrls({
+    getPresignedDocsAssetsUploadUrls({
         domain,
         filepaths,
         images,
@@ -31,28 +38,51 @@ export interface S3Service {
         filepaths: DocsV1Write.FilePath[];
         images: DocsV2Write.ImageFilePath[];
         isPrivate: boolean;
-    }): Promise<Record<DocsV1Write.FilePath, S3FileInfo>>;
+    }): Promise<Record<DocsV1Write.FilePath, S3DocsFileInfo>>;
 
-    getPresignedDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string>;
+    getPresignedDocsAssetsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string>;
+
+    getPresignedApiDefinitionSourceUploadUrls({
+        orgId,
+        apiId,
+        sources,
+    }: {
+        orgId: FernRegistry.OrgId;
+        apiId: FernRegistry.ApiId;
+        sources: Record<APIV1Write.SourceId, APIV1Write.Source>;
+    }): Promise<Record<APIV1Write.SourceId, S3ApiDefinitionSourceFileInfo>>;
+
+    getPresignedApiDefinitionSourceDownloadUrl({ key }: { key: string }): Promise<string>;
 }
 
 export class S3ServiceImpl implements S3Service {
-    private publicS3: S3Client;
-    private privateS3: S3Client;
+    private publicDocsS3: S3Client;
+    private privateDocsS3: S3Client;
+    private privateApiDefinitionSourceS3: S3Client;
     private presignedDownloadUrlCache = new Cache<string>(10_000, ONE_WEEK_IN_SECONDS);
 
     constructor(private readonly config: FdrConfig) {
-        this.publicS3 = new S3Client({
-            ...(config.publicS3.urlOverride != null ? { endpoint: config.publicS3.urlOverride } : {}),
-            region: config.publicS3.bucketRegion,
+        this.publicDocsS3 = new S3Client({
+            ...(config.publicDocsS3.urlOverride != null ? { endpoint: config.publicDocsS3.urlOverride } : {}),
+            region: config.publicDocsS3.bucketRegion,
             credentials: {
                 accessKeyId: config.awsAccessKey,
                 secretAccessKey: config.awsSecretKey,
             },
         });
-        this.privateS3 = new S3Client({
-            ...(config.privateS3.urlOverride != null ? { endpoint: config.privateS3.urlOverride } : {}),
-            region: config.privateS3.bucketRegion,
+        this.privateDocsS3 = new S3Client({
+            ...(config.privateDocsS3.urlOverride != null ? { endpoint: config.privateDocsS3.urlOverride } : {}),
+            region: config.privateDocsS3.bucketRegion,
+            credentials: {
+                accessKeyId: config.awsAccessKey,
+                secretAccessKey: config.awsSecretKey,
+            },
+        });
+        this.privateApiDefinitionSourceS3 = new S3Client({
+            ...(config.privateApiDefinitionSourceS3.urlOverride != null
+                ? { endpoint: config.privateApiDefinitionSourceS3.urlOverride }
+                : {}),
+            region: config.privateApiDefinitionSourceS3.bucketRegion,
             credentials: {
                 accessKeyId: config.awsAccessKey,
                 secretAccessKey: config.awsSecretKey,
@@ -60,7 +90,7 @@ export class S3ServiceImpl implements S3Service {
         });
     }
 
-    async getPresignedDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string> {
+    async getPresignedDocsAssetsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string> {
         if (isPrivate) {
             // presigned url for private
             const cachedUrl = this.presignedDownloadUrlCache.get(key);
@@ -68,18 +98,18 @@ export class S3ServiceImpl implements S3Service {
                 return cachedUrl;
             }
             const command = new GetObjectCommand({
-                Bucket: this.config.privateS3.bucketName,
+                Bucket: this.config.privateDocsS3.bucketName,
                 Key: key,
             });
-            const signedUrl = await getSignedUrl(this.privateS3, command, { expiresIn: 604800 });
+            const signedUrl = await getSignedUrl(this.privateDocsS3, command, { expiresIn: 604800 });
             this.presignedDownloadUrlCache.set(key, signedUrl);
             return signedUrl;
         }
 
-        return `https://${this.config.publicS3.bucketName}.s3.amazonaws.com/${key}`;
+        return `https://${this.config.publicDocsS3.bucketName}.s3.amazonaws.com/${key}`;
     }
 
-    async getPresignedUploadUrls({
+    async getPresignedDocsAssetsUploadUrls({
         domain,
         filepaths,
         images,
@@ -89,11 +119,16 @@ export class S3ServiceImpl implements S3Service {
         filepaths: DocsV1Write.FilePath[];
         images: DocsV2Write.ImageFilePath[];
         isPrivate: boolean;
-    }): Promise<Record<DocsV1Write.FilePath, S3FileInfo>> {
-        const result: Record<DocsV1Write.FilePath, S3FileInfo> = {};
+    }): Promise<Record<DocsV1Write.FilePath, S3DocsFileInfo>> {
+        const result: Record<DocsV1Write.FilePath, S3DocsFileInfo> = {};
         const time: string = new Date().toISOString();
         for (const filepath of filepaths) {
-            const { url, key } = await this.createPresignedUploadUrlWithClient({ domain, time, filepath, isPrivate });
+            const { url, key } = await this.createPresignedDocsAssetsUploadUrlWithClient({
+                domain,
+                time,
+                filepath,
+                isPrivate,
+            });
             result[filepath] = {
                 presignedUrl: {
                     fileId: uuidv4(),
@@ -104,7 +139,7 @@ export class S3ServiceImpl implements S3Service {
             };
         }
         for (const image of images) {
-            const { url, key } = await this.createPresignedUploadUrlWithClient({
+            const { url, key } = await this.createPresignedDocsAssetsUploadUrlWithClient({
                 domain,
                 time,
                 filepath: image.filePath,
@@ -127,7 +162,7 @@ export class S3ServiceImpl implements S3Service {
         return result;
     }
 
-    async createPresignedUploadUrlWithClient({
+    async createPresignedDocsAssetsUploadUrlWithClient({
         domain,
         time,
         filepath,
@@ -138,8 +173,8 @@ export class S3ServiceImpl implements S3Service {
         filepath: DocsV1Write.FilePath;
         isPrivate: boolean;
     }): Promise<{ url: string; key: string }> {
-        const key = this.constructS3Key({ domain, time, filepath });
-        const bucketName = isPrivate ? this.config.privateS3.bucketName : this.config.publicS3.bucketName;
+        const key = this.constructS3DocsKey({ domain, time, filepath });
+        const bucketName = isPrivate ? this.config.privateDocsS3.bucketName : this.config.publicDocsS3.bucketName;
         const input: PutObjectCommandInput = {
             Bucket: bucketName,
             Key: key,
@@ -149,12 +184,70 @@ export class S3ServiceImpl implements S3Service {
         }
         const command = new PutObjectCommand(input);
         return {
-            url: await getSignedUrl(isPrivate ? this.privateS3 : this.publicS3, command, { expiresIn: 3600 }),
+            url: await getSignedUrl(isPrivate ? this.privateDocsS3 : this.publicDocsS3, command, { expiresIn: 3600 }),
             key,
         };
     }
 
-    constructS3Key({
+    async getPresignedApiDefinitionSourceDownloadUrl({ key }: { key: string }): Promise<string> {
+        const command = new GetObjectCommand({
+            Bucket: this.config.privateApiDefinitionSourceS3.bucketName,
+            Key: key,
+        });
+        return await getSignedUrl(this.privateDocsS3, command, { expiresIn: 604800 });
+    }
+
+    async getPresignedApiDefinitionSourceUploadUrls({
+        orgId,
+        apiId,
+        sources,
+    }: {
+        orgId: FernRegistry.OrgId;
+        apiId: FernRegistry.ApiId;
+        sources: Record<APIV1Write.SourceId, APIV1Write.Source>;
+    }): Promise<Record<APIV1Write.SourceId, S3ApiDefinitionSourceFileInfo>> {
+        const result: Record<APIV1Write.SourceId, S3ApiDefinitionSourceFileInfo> = {};
+        const time: string = new Date().toISOString();
+        for (const [sourceId, _source] of Object.entries(sources)) {
+            const { url, key } = await this.createPresignedApiDefinitionSourceUploadUrlWithClient({
+                orgId,
+                apiId,
+                time,
+                sourceId,
+            });
+            result[sourceId] = {
+                presignedUrl: url,
+                key,
+            };
+        }
+        return result;
+    }
+
+    async createPresignedApiDefinitionSourceUploadUrlWithClient({
+        orgId,
+        apiId,
+        time,
+        sourceId,
+    }: {
+        orgId: FernRegistry.OrgId;
+        apiId: FernRegistry.ApiId;
+        time: string;
+        sourceId: string;
+    }): Promise<{ url: string; key: string }> {
+        const key = this.constructS3ApiDefinitionSourceKey({ orgId, apiId, time, sourceId });
+        const bucketName = this.config.privateApiDefinitionSourceS3.bucketName;
+        const input: PutObjectCommandInput = {
+            Bucket: bucketName,
+            Key: key,
+        };
+        const command = new PutObjectCommand(input);
+        return {
+            url: await getSignedUrl(this.privateApiDefinitionSourceS3, command, { expiresIn: 3600 }),
+            key,
+        };
+    }
+
+    constructS3DocsKey({
         domain,
         time,
         filepath,
@@ -164,5 +257,19 @@ export class S3ServiceImpl implements S3Service {
         filepath: DocsV1Write.FilePath;
     }): string {
         return `${domain}/${time}/${filepath}`;
+    }
+
+    constructS3ApiDefinitionSourceKey({
+        orgId,
+        apiId,
+        time,
+        sourceId,
+    }: {
+        orgId: FernRegistry.OrgId;
+        apiId: FernRegistry.ApiId;
+        time: string;
+        sourceId: APIV1Write.SourceId;
+    }): string {
+        return `${orgId}/${apiId}/${time}/${sourceId}`;
     }
 }

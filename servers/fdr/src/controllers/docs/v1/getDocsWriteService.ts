@@ -2,7 +2,7 @@ import { convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV1Write, DocsV1WriteService, FdrAPI } from "../../../api";
 import type { FdrApplication } from "../../../app";
-import { type S3FileInfo } from "../../../services/s3";
+import { type S3DocsFileInfo } from "../../../services/s3";
 import { writeBuffer } from "../../../util";
 
 const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
@@ -10,7 +10,7 @@ const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistratio
 interface DocsRegistrationInfo {
     domain: string;
     orgId: FdrAPI.OrgId;
-    s3FileInfos: Record<DocsV1Write.FilePath, S3FileInfo>;
+    s3FileInfos: Record<DocsV1Write.FilePath, S3DocsFileInfo>;
 }
 
 export function getDocsWriteService(app: FdrApplication): DocsV1WriteService {
@@ -21,7 +21,7 @@ export function getDocsWriteService(app: FdrApplication): DocsV1WriteService {
                 orgId: req.body.orgId,
             });
             const docsRegistrationId = uuidv4();
-            const s3FileInfos = await app.services.s3.getPresignedUploadUrls({
+            const s3FileInfos = await app.services.s3.getPresignedDocsAssetsUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
                 images: [],

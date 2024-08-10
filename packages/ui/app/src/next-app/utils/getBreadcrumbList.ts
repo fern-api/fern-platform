@@ -1,4 +1,5 @@
-import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { JsonLd } from "@fern-ui/next-seo";
 import urljoin from "url-join";
 import { getFrontmatter } from "../../mdx/frontmatter";

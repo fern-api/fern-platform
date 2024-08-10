@@ -1,8 +1,8 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton } from "@fern-ui/components";
 import * as Accordion from "@radix-ui/react-accordion";
-import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { ArrowDown, ArrowUp, NavArrowDown } from "iconoir-react";
 import { FC } from "react";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 
@@ -44,11 +44,11 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                         >
                             {message.origin === APIV1Read.WebSocketMessageOrigin.Client ? (
                                 <span className="fern-web-socket-client">
-                                    <ArrowUpIcon />
+                                    <ArrowUp className="size-icon" />
                                 </span>
                             ) : message.origin === APIV1Read.WebSocketMessageOrigin.Server ? (
                                 <span className="fern-web-socket-server">
-                                    <ArrowDownIcon />
+                                    <ArrowDown className="size-icon" />
                                 </span>
                             ) : null}
                             <span className="fern-web-socket-trigger-data">{JSON.stringify(message.data)}</span>
@@ -64,7 +64,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                                 onClick={(e) => e.stopPropagation()}
                             />
 
-                            <ChevronDownIcon
+                            <NavArrowDown
                                 className="fern-web-socket-chevron group-data-[state=open]:rotate-180"
                                 aria-hidden
                             />

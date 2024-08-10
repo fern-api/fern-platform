@@ -1,5 +1,5 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { ActivityLogIcon } from "@radix-ui/react-icons";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { Calendar } from "iconoir-react";
 import { useIsSelectedSidebarNode } from "../../atoms";
 import { Changelog } from "../../util/dateUtils";
 import { SidebarSlugLink } from "../SidebarLink";
@@ -25,7 +25,7 @@ export function SidebarChangelogNode({ node, depth, className }: SidebarChangelo
             className={className}
             selected={selected}
             depth={Math.max(0, depth - 1)}
-            icon={node.icon ?? <ActivityLogIcon />}
+            icon={node.icon ?? <Calendar />}
             tooltipContent={renderChangelogTooltip(node)}
             hidden={node.hidden}
         />

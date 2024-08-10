@@ -1,6 +1,6 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import useSWRImmutable from "swr/immutable";
-import { REGISTRY_SERVICE } from "../../services/registry";
+import { provideRegistryService } from "../../services/registry";
 
 export function useApiDefinition(
     apiId: FdrAPI.ApiDefinitionId,
@@ -10,7 +10,7 @@ export function useApiDefinition(
         if (!isSnippetTemplatesEnabled) {
             return undefined;
         }
-        return REGISTRY_SERVICE.api.v1.read.getApi(apiId);
+        return provideRegistryService().api.v1.read.getApi(apiId);
     });
 
     if (data?.ok) {

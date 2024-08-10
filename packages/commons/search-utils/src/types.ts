@@ -1,4 +1,4 @@
-import { Algolia } from "@fern-api/fdr-sdk";
+import { Algolia } from "@fern-api/fdr-sdk/client/types";
 import type { Hit as AlgoliaHit } from "instantsearch.js";
 
 export type SearchRecord = AlgoliaHit<Algolia.AlgoliaRecord & Record<string, unknown>>;

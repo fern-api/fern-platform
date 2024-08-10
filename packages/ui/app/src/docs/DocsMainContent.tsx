@@ -39,7 +39,7 @@ function DocsMainContentInternal(): ReactElement | null {
             <ApiPage
                 initialApi={resolvedPath.apiDefinition}
                 showErrors={resolvedPath.showErrors}
-                disableLongScrolling={resolvedPath.disableLongScrolling}
+                paginated={resolvedPath.paginated}
             />
         ),
         changelog: (resolvedPath) => <ChangelogPage resolvedPath={resolvedPath} />,

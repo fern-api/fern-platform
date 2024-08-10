@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { useAtom } from "jotai";
 import { ReactElement } from "react";
@@ -10,24 +10,32 @@ interface MaybeEnvironmentDropdownProps {
     urlTextStyle?: string;
     protocolTextStyle?: string;
     small?: boolean;
+    environmentFilters?: APIV1Read.EnvironmentId[];
 }
 export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): ReactElement | null {
     const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
 
-    const { selectedEnvironment, urlTextStyle, protocolTextStyle, small } = props;
+    const { selectedEnvironment, urlTextStyle, protocolTextStyle, small, environmentFilters } = props;
+
+    const environmentIds = environmentFilters
+        ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
+        : allEnvironmentIds;
+
+    if (environmentFilters && selectedEnvironment && !environmentFilters.includes(selectedEnvironment.id)) {
+        setSelectedEnvironmentId(environmentIds[0]);
+    }
     const url = selectedEnvironment?.baseUrl && parse(selectedEnvironment?.baseUrl);
 
     return (
         <span>
-            {allEnvironmentIds.length > 1 ? (
+            {environmentIds && environmentIds.length > 1 ? (
                 <FernDropdown
                     key="selectedEnvironment-selector"
-                    options={allEnvironmentIds.map((env) => ({
+                    options={environmentIds.map((env) => ({
                         value: env,
                         label: env,
                         type: "value",
-                        // tooltip: "Select environment",
                     }))}
                     onValueChange={(value) => {
                         setSelectedEnvironmentId(value);

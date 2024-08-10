@@ -17,22 +17,12 @@ import {
     store,
     useAtomEffect,
 } from "../../atoms";
-import { useSelectedEnvironmentId } from "../../atoms/environment";
-import { Breadcrumbs } from "../../components/Breadcrumbs";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedError,
-    ResolvedTypeDefinition,
-    resolveEnvironment,
-} from "../../resolver/types";
-import { ApiPageDescription } from "../ApiPageDescription";
+import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
+import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
-import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
-import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
@@ -81,7 +71,7 @@ const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
 export const EndpointContent = memo<EndpointContent.Props>((props) => {
     const { api, showErrors, endpoint: endpointProp, breadcrumbs, hideBottomSeparator = false, types } = props;
-    const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
+    const isStream = useAtomValue(FERN_STREAM_ATOM);
     const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
 
     const ref = useRef<HTMLDivElement>(null);
@@ -123,7 +113,6 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     setSelectedError(error);
                 }
             }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []),
     );
 
@@ -270,9 +259,8 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialExampleHeight]);
 
-    const selectedEnvironmentId = useSelectedEnvironmentId();
     return (
-        <div
+        <section
             className={"fern-endpoint-content"}
             onClick={() => setSelectedError(undefined)}
             ref={ref}
@@ -283,38 +271,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
             >
-                <div className="space-y-1 pb-2 pt-8">
-                    <Breadcrumbs breadcrumbs={breadcrumbs} />
-                    <div className="flex items-center justify-between">
-                        <span>
-                            <h1 className="fern-page-heading">
-                                {/* <AnimatedTitle>{endpoint.title}</AnimatedTitle> */}
-                                {endpoint.title}
-                            </h1>
-                            {endpoint.availability != null && (
-                                <span className="inline-block ml-2 align-text-bottom">
-                                    <EndpointAvailabilityTag availability={endpoint.availability} minimal={true} />
-                                </span>
-                            )}
-                        </span>
-
-                        {endpointProp.stream != null && (
-                            <EndpointStreamingEnabledToggle
-                                value={isStream}
-                                setValue={setIsStream}
-                                endpointProp={endpointProp}
-                                container={ref}
-                            />
-                        )}
-                    </div>
-                    <EndpointUrlWithOverflow
-                        path={endpoint.path}
-                        method={endpoint.method}
-                        selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
-                        showEnvironment
-                        large
-                    />
-                </div>
+                <EndpointContentHeader endpoint={endpointProp} breadcrumbs={breadcrumbs} container={ref} />
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
                         className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
@@ -323,12 +280,6 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                             minHeight: `${minHeight}px`,
                         }}
                     >
-                        <ApiPageDescription
-                            className="text-base leading-6 mb-12"
-                            description={endpoint.description}
-                            isMarkdown={true}
-                        />
-
                         <EndpointContentLeft
                             endpoint={endpoint}
                             showErrors={showErrors}
@@ -370,7 +321,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     </aside>
                 </div>
             </div>
-        </div>
+        </section>
     );
 });
 

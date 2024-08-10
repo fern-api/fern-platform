@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import {
@@ -37,7 +37,7 @@ export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): Rea
             ...props,
             className: cn(props.className, "flex items-center relative group/anchor-container mb-3"),
         },
-        <AbsolutelyPositionedAnchor href={{ hash: props.id, pathname: useCurrentPathname() }} />,
+        <AbsolutelyPositionedAnchor href={`#${props.id}`} />,
         <span>{props.children}</span>,
     );
 };

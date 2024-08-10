@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 // eslint-disable-next-line import/no-internal-modules
 import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";

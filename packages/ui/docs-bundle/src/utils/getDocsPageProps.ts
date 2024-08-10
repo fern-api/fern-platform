@@ -1,5 +1,7 @@
 /* eslint-disable import/no-internal-modules */
-import { FdrClient, FernNavigation, type DocsV2Read } from "@fern-api/fdr-sdk";
+import { FdrClient } from "@fern-api/fdr-sdk";
+import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
@@ -10,6 +12,8 @@ import {
     getGitHubInfo,
     getGitHubRepo,
     getSeoProps,
+    provideRegistryService,
+    renderThemeStylesheet,
     setMdxBundler,
 } from "@fern-ui/ui";
 import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
@@ -39,10 +43,6 @@ async function getUnauthenticatedRedirect(xFernHost: string, path: string): Prom
     );
     return { destination: authorizationUrl, permanent: false };
 }
-
-const REGISTRY_SERVICE = new FdrClient({
-    environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-});
 
 function getRegistryServiceWithToken(token: string): FdrClient {
     return new FdrClient({
@@ -82,7 +82,7 @@ export async function getDocsPageProps(
     // eslint-disable-next-line no-console
     console.log("[getDocsPageProps] Loading docs for", url);
     const start = Date.now();
-    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
+    const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url });
     const end = Date.now();
     // eslint-disable-next-line no-console
     console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
@@ -169,7 +169,7 @@ export async function getDynamicDocsPageProps(
             return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
         } else if (user.partner === "ory" || user.partner === "custom") {
             // rightbrain's api key injection
-            const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
+            const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url });
 
             if (!docs.ok) {
                 throw new Error("Failed to fetch docs");
@@ -283,27 +283,27 @@ async function convertDocsToDocsPageProps({
         return { notFound: true };
     }
 
+    const colors = {
+        light:
+            docs.definition.config.colorsV3?.type === "light"
+                ? docs.definition.config.colorsV3
+                : docs.definition.config.colorsV3?.type === "darkAndLight"
+                  ? docs.definition.config.colorsV3.light
+                  : undefined,
+        dark:
+            docs.definition.config.colorsV3?.type === "dark"
+                ? docs.definition.config.colorsV3
+                : docs.definition.config.colorsV3?.type === "darkAndLight"
+                  ? docs.definition.config.colorsV3.dark
+                  : undefined,
+    };
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
         title: docs.definition.config.title,
         favicon: docs.definition.config.favicon,
-        colors: {
-            light:
-                docs.definition.config.colorsV3?.type === "light"
-                    ? docs.definition.config.colorsV3
-                    : docs.definition.config.colorsV3?.type === "darkAndLight"
-                      ? docs.definition.config.colorsV3.light
-                      : undefined,
-            dark:
-                docs.definition.config.colorsV3?.type === "dark"
-                    ? docs.definition.config.colorsV3
-                    : docs.definition.config.colorsV3?.type === "darkAndLight"
-                      ? docs.definition.config.colorsV3.dark
-                      : undefined,
-        },
-        typography: docs.definition.config.typographyV2,
-        css: docs.definition.config.css,
+        colors,
         js: docs.definition.config.js,
         navbarLinks: docs.definition.config.navbarLinks ?? [],
         logoHeight: docs.definition.config.logoHeight,
@@ -367,11 +367,21 @@ async function convertDocsToDocsPageProps({
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
+        analyticsConfig: docs.definition.config.analyticsConfig,
         defaultLang: docs.definition.config.defaultLanguage ?? "curl",
+        stylesheet: renderThemeStylesheet(
+            colors,
+            docs.definition.config.typographyV2,
+            docs.definition.config.layout,
+            docs.definition.config.css,
+            docs.definition.filesV2,
+            node.tabs.length > 0,
+        ),
     };
 
     // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
     props.fallback[urljoin(docs.baseUrl.basePath || "/", "/api/fern-docs/search")] = await getSearchConfig(
+        provideRegistryService(),
         xFernHost,
         docs.definition.search,
     );

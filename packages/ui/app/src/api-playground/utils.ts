@@ -1,4 +1,4 @@
-import { APIV1Read, Snippets } from "@fern-api/fdr-sdk";
+import { APIV1Read, Snippets } from "@fern-api/fdr-sdk/client/types";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { mapValues } from "lodash-es";
 import {

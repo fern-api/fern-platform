@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { BundledMDX } from "../mdx/types";
 import { ResolvedRootPackage } from "./types";
 
@@ -48,7 +48,7 @@ export declare namespace ResolvedPath {
         title: string;
         slug: FernNavigation.Slug;
         api: string;
-        disableLongScrolling: boolean;
+        paginated: boolean;
         apiDefinition: ResolvedRootPackage;
         showErrors: boolean;
         neighbors: Neighbors;

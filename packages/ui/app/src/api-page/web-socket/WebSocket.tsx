@@ -1,9 +1,9 @@
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
-import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
-import { Wifi } from "react-feather";
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
@@ -240,7 +240,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         <span className="inline-flex items-center gap-2">
                                             {"Send"}
                                             <span className="t-success inline-block rounded-full bg-tag-success p-1">
-                                                <ArrowUpIcon />
+                                                <ArrowUp className="size-icon" />
                                             </span>
                                         </span>
                                     }
@@ -275,7 +275,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         <span className="inline-flex items-center gap-2">
                                             {"Receive"}
                                             <span className="t-accent-aaa inline-block rounded-full bg-tag-primary p-1">
-                                                <ArrowDownIcon />
+                                                <ArrowDown className="size-icon" />
                                             </span>
                                         </span>
                                     }

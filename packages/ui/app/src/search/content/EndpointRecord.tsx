@@ -1,6 +1,6 @@
 import type { SearchRecord } from "@fern-ui/search-utils";
-import { CodeIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Code } from "iconoir-react";
 import { Snippet } from "react-instantsearch";
 
 export declare namespace EndpointRecord {
@@ -19,7 +19,7 @@ export const EndpointRecord: React.FC<EndpointRecord.Props> = ({ hit, isHovered 
                     "border-white bg-white text-black": isHovered,
                 })}
             >
-                <CodeIcon
+                <Code
                     className={cn("size-4", {
                         "t-muted": !isHovered,
                         "t-accent-aaa": isHovered,

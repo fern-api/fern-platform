@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { captureMessage } from "@sentry/nextjs";
 import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -279,6 +279,7 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                     captureMessage("Could not find endpoint for API playground selection state", "fatal");
                     return;
                 }
+
                 set(
                     formStateAtom,
                     getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], apiPackage.types),

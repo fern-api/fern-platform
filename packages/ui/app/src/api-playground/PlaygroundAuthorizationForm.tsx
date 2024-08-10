@@ -1,13 +1,12 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernCard, FernCollapse, FernInput } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { GlobeIcon, PersonIcon } from "@radix-ui/react-icons";
+import { Globe, Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
 import { FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
-import { Key } from "react-feather";
 import { useMemoOne } from "use-memo-one";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -59,7 +58,7 @@ function BearerAuthForm({ bearerAuth, disabled }: { bearerAuth: APIV1Read.Bearer
                     rightElement={
                         <FernButton
                             onClick={openSecretsModal}
-                            icon={<GlobeIcon className="size-4" />}
+                            icon={<Globe className="size-icon" />}
                             variant="minimal"
                         />
                     }
@@ -109,7 +108,7 @@ function BasicAuthForm({ basicAuth, disabled }: { basicAuth: APIV1Read.BasicAuth
                     <FernInput
                         onValueChange={handleChangeUsername}
                         value={value.username}
-                        leftIcon={<PersonIcon className="size-4" />}
+                        leftIcon={<User className="size-icon" />}
                         rightElement={<span className="t-muted text-xs">{"string"}</span>}
                         disabled={disabled}
                     />
@@ -128,7 +127,7 @@ function BasicAuthForm({ basicAuth, disabled }: { basicAuth: APIV1Read.BasicAuth
                         rightElement={
                             <FernButton
                                 onClick={openSecretsModal}
-                                icon={<GlobeIcon className="size-4" />}
+                                icon={<Globe className="size-icon" />}
                                 variant="minimal"
                             />
                         }
@@ -195,7 +194,7 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
                     rightElement={
                         <FernButton
                             onClick={openSecretsModal}
-                            icon={<GlobeIcon className="size-4" />}
+                            icon={<Globe className="size-icon" />}
                             variant="minimal"
                         />
                     }
@@ -295,7 +294,7 @@ export function PlaygroundAuthorizationFormCard({
                                 size="normal"
                                 intent="primary"
                                 text="Login"
-                                icon={<PersonIcon />}
+                                icon={<User />}
                                 onClick={redirectOrOpenAuthForm}
                             />
                             <FernButton

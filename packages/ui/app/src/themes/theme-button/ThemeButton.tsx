@@ -3,7 +3,7 @@ import { useMounted } from "@fern-ui/react-commons";
 import * as Popover from "@radix-ui/react-popover";
 import cn from "clsx";
 import { memo, useState } from "react";
-import { Monitor, Moon as MoonIcon, Sun as SunIcon } from "react-feather";
+import { Monitor, Moon, Sun } from "react-feather";
 import { useSetSystemTheme, useTheme, useToggleTheme } from "../../atoms";
 
 export declare namespace ThemeButton {
@@ -19,7 +19,7 @@ export const ThemeButton = memo(({ className, ...props }: ThemeButton.Props) => 
     const mounted = useMounted();
     const [isOpen, setOpen] = useState(false);
 
-    const IconToUse = mounted && resolvedTheme === "dark" ? MoonIcon : SunIcon;
+    const IconToUse = mounted && resolvedTheme === "dark" ? Moon : Sun;
 
     return (
         <Popover.Root
@@ -42,7 +42,7 @@ export const ThemeButton = memo(({ className, ...props }: ThemeButton.Props) => 
                     rounded={true}
                     variant="minimal"
                     intent="primary"
-                    icon={<IconToUse className="fern-theme-button-icon" />}
+                    icon={<IconToUse className="fern-theme-button-icon !size-icon max-lg:!size-icon-md" />}
                     title="toggle theme"
                 />
             </Popover.Trigger>

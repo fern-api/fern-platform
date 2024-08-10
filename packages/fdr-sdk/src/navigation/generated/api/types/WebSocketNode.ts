@@ -7,4 +7,6 @@ import * as FernNavigation from "../index";
 export interface WebSocketNode extends FernNavigation.WithNodeMetadata, FernNavigation.WithApiDefinitionId {
     type: "webSocket";
     webSocketId: FernNavigation.WebSocketId;
+    /** Settings for the api playground that affect this endpoint specifically. */
+    playground: FernNavigation.PlaygroundSettings | undefined;
 }

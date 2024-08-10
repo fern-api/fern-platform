@@ -1,4 +1,4 @@
-import type { DocsV2Read } from "@fern-api/fdr-sdk";
+import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 
 // vercel edge doesn't support lodash, which is imported from within @fern-api/fdr-sdk
 export async function loadWithUrl(url: string): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {

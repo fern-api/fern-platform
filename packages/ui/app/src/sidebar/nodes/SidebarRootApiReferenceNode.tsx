@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { last } from "lodash-es";
 import { ReactElement } from "react";
 import { useIsApiReferenceShallowLink } from "../../atoms";

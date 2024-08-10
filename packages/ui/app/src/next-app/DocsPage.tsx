@@ -26,12 +26,10 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
     // this is a hack to scroll to the correct anchor position when the route changes (see workato's docs)
     // the underlying issue is that content rendering is delayed by an undetermined amount of time, so the anchor doesn't exist yet.
     // TODO: fix this properly.
-    useRouteChanged((route, shallow) => {
-        if (!shallow) {
-            const scroll = () => scrollToRoute(route);
-            if (!scroll()) {
-                setTimeout(scroll, 150);
-            }
+    useRouteChanged((route) => {
+        const scroll = () => scrollToRoute(route);
+        if (!scroll()) {
+            setTimeout(scroll, 150);
         }
     });
 

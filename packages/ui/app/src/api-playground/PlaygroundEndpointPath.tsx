@@ -1,9 +1,9 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Cross1Icon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Xmark } from "iconoir-react";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../atoms/environment";
@@ -17,6 +17,7 @@ import { buildRequestUrl, unknownToString } from "./utils";
 interface PlaygroundEndpointPathProps {
     method: APIV1Read.HttpMethod | undefined;
     environment: APIV1Read.Environment | undefined;
+    environmentFilters: APIV1Read.EnvironmentId[] | undefined;
     formState: PlaygroundRequestFormState;
     path: ResolvedEndpointPathParts[];
     queryParameters: ResolvedObjectProperty[];
@@ -27,6 +28,7 @@ interface PlaygroundEndpointPathProps {
 
 export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
     environment,
+    environmentFilters,
     method,
     formState,
     path,
@@ -52,6 +54,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                         {environment != null && (
                             <MaybeEnvironmentDropdown
                                 selectedEnvironment={environment}
+                                environmentFilters={environmentFilters}
                                 small
                                 urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
                                 protocolTextStyle="playground-endpoint-baseurl max-sm:hidden"
@@ -119,7 +122,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
             </div>
 
             <Dialog.Close asChild>
-                <FernButton icon={<Cross1Icon />} size="large" rounded variant="outlined" />
+                <FernButton icon={<Xmark />} size="large" rounded variant="outlined" />
             </Dialog.Close>
         </div>
     );

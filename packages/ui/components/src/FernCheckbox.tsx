@@ -1,6 +1,6 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
 import cn from "clsx";
+import { Check } from "iconoir-react";
 import { FC, ReactNode } from "react";
 
 interface FernCheckboxProps extends Checkbox.CheckboxProps {
@@ -22,7 +22,7 @@ export const FernCheckbox: FC<FernCheckboxProps> = ({
     <label className={cn("fern-checkbox-label", { compact })}>
         <Checkbox.Root className="fern-checkbox-item" {...props}>
             <Checkbox.Indicator className="fern-checkbox-indicator">
-                <CheckIcon />
+                <Check />
             </Checkbox.Indicator>
         </Checkbox.Root>
 

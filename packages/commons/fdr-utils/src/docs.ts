@@ -1,4 +1,4 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { Availability } from "@fern-api/fdr-sdk/navigation";
 
 export function isVersionedNavigationConfig(

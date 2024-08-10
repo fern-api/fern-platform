@@ -1,5 +1,4 @@
-import { GitHubLogoIcon, StarIcon } from "@radix-ui/react-icons";
-import { GitFork } from "iconoir-react";
+import { GitFork, GithubCircle, Star } from "iconoir-react";
 import React from "react";
 import useSWR from "swr";
 import { FernLinkButton } from "../components/FernLinkButton";
@@ -11,7 +10,7 @@ const GitHubStat: React.FC<{
 }> = ({ icon: Icon, value }) => {
     return (
         <div className="flex items-center gap-1">
-            <Icon className="size-3" />
+            <Icon className="size-icon-sm" />
             {value}
         </div>
     );
@@ -27,13 +26,13 @@ export const GitHubWidget: React.FC<{ repo: string }> = ({ repo }) => {
     return (
         <FernLinkButton
             href={`https://github.com/${repo}`}
-            icon={<GitHubLogoIcon className="!size-5" />}
+            icon={<GithubCircle className="!size-icon-lg" strokeWidth={1} />}
             variant="minimal"
             className="h-10"
         >
             <div className="font-medium">{repo}</div>
             <div className="flex gap-2 text-xs">
-                <GitHubStat icon={StarIcon} value={data.stars} />
+                <GitHubStat icon={Star} value={data.stars} />
                 <GitHubStat icon={GitFork} value={data.forks} />
             </div>
         </FernLinkButton>

@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { atom, useAtomValue } from "jotai";
 import { mapValues } from "lodash-es";
 import { useMemoOne } from "use-memo-one";
@@ -21,7 +21,7 @@ export function useFlattenedApis(): Record<string, FlattenedRootPackage> {
 const IS_API_REFERENCE_PAGINATED = atom<boolean>((get) => {
     let isApiScrollingDisabled = get(FEATURE_FLAGS_ATOM).isApiScrollingDisabled;
     const resolvedPath = get(RESOLVED_PATH_ATOM);
-    if (resolvedPath.type === "api-page" && resolvedPath.disableLongScrolling) {
+    if (resolvedPath.type === "api-page" && resolvedPath.paginated) {
         isApiScrollingDisabled = true;
     }
     return isApiScrollingDisabled;

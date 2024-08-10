@@ -1,4 +1,5 @@
-import { DocsV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { getFrontmatter } from "@fern-ui/ui";

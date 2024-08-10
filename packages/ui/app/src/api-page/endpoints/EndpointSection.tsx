@@ -1,5 +1,5 @@
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
+import { Minus, Plus } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
@@ -50,10 +50,10 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                     )}
                     {showExpandCollapse && (
                         <FernButtonGroup className="invisible group-hover/anchor-container:visible">
-                            <FernButton onClick={handleExpandAll} icon={<PlusIcon />} size="small" variant="minimal">
+                            <FernButton onClick={handleExpandAll} icon={<Plus />} size="small" variant="minimal">
                                 Expand all
                             </FernButton>
-                            <FernButton onClick={handleCollapseAll} icon={<MinusIcon />} size="small" variant="minimal">
+                            <FernButton onClick={handleCollapseAll} icon={<Minus />} size="small" variant="minimal">
                                 Collapse all
                             </FernButton>
                         </FernButtonGroup>
