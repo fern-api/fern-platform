@@ -32,7 +32,9 @@ it.skip("presigned URLs", async () => {
     });
 
     const uploadUrl = await getSignedUrl(client, putCommand, { expiresIn: 3600 });
-    expect(uploadUrl).length.greaterThan(0);
+    expect(uploadUrl).not.toBe(null);
+    expect(uploadUrl.length).greaterThan(0);
+
     console.log("Upload URL: ", uploadUrl);
 
     const getCommand = new GetObjectCommand({
@@ -40,7 +42,8 @@ it.skip("presigned URLs", async () => {
         Key: `fern/fern/${time}/${sourceId}`,
     });
     const downloadUrl = await getSignedUrl(client, getCommand, { expiresIn: 604800 });
-    expect(downloadUrl).length.greaterThan(0);
+    expect(downloadUrl).not.toBe(null);
+    expect(downloadUrl.length).greaterThan(0);
 
     console.log("Download URL: ", uploadUrl);
 
