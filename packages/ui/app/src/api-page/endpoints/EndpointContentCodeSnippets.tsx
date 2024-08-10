@@ -35,7 +35,7 @@ export declare namespace EndpointContentCodeSnippets {
         endpoint: ResolvedEndpointDefinition;
         example: ResolvedExampleEndpointCall;
         clients: CodeExampleGroup[];
-        selectedClient: CodeExample;
+        selectedCodeExample: CodeExample;
         onClickClient: (example: CodeExample) => void;
         requestCodeSnippet: string;
         requestCurlJson: unknown;
@@ -53,7 +53,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     endpoint,
     example,
     clients,
-    selectedClient,
+    selectedCodeExample,
     onClickClient,
     requestCodeSnippet,
     requestCurlJson,
@@ -100,7 +100,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     }, [internalSelectedErrorExample, selectedError]);
 
     const exampleWithSchema = useMemo(() => mergeEndpointSchemaWithExample(endpoint, example), [endpoint, example]);
-    const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
+    const selectedClientGroup = clients.find((client) => client.language === selectedCodeExample.language);
 
     const successTitle =
         exampleWithSchema.responseBody != null
@@ -143,8 +143,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                             className="min-w-0 shrink truncate"
                             mono
                             size="small"
-                            variant={example === selectedClient ? "outlined" : "minimal"}
-                            intent={example === selectedClient ? "primary" : "none"}
+                            variant={example === selectedCodeExample ? "outlined" : "minimal"}
+                            intent={example === selectedCodeExample ? "primary" : "none"}
                         >
                             {example.name}
                         </FernButton>
@@ -174,17 +174,17 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                             <CodeExampleClientDropdown
                                 clients={clients}
                                 onClickClient={onClickClient}
-                                selectedClient={selectedClient}
+                                selectedCodeExample={selectedCodeExample}
                             />
                         ) : undefined}
                     </>
                 }
                 code={resolveEnvironmentUrlInCodeSnippet(endpoint, requestCodeSnippet)}
-                language={selectedClient.language}
-                hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
+                language={selectedCodeExample.language}
+                hoveredPropertyPath={selectedCodeExample.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
                 jsonStartLine={
-                    selectedClient.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
+                    selectedCodeExample.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
                 }
             />
             {selectedError != null && (

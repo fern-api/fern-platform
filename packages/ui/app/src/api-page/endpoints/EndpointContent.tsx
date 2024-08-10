@@ -138,35 +138,50 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody?.contentType);
     const clients = useMemo(() => generateCodeExamples(examples), [examples]);
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
-    const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
+    const [selectedCodeExample, setSelectedCodeExample] = useState<CodeExample>(() => {
         const curlExample = clients[0]?.examples[0];
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? curlExample!;
     });
-    useEffect(() => {
-        setSelectedClient((prev) => clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? prev);
-    }, [clients, selectedLanguage]);
+
+    const getNewCodeExample = useCallback(
+        (selectedCodeExample: CodeExample, prevCodeExample: CodeExample) => {
+            if (prevCodeExample.language === selectedCodeExample.language) {
+                return selectedCodeExample;
+            }
+            const newLanguageClient = clients.find((client) => client.language === selectedCodeExample.language);
+            const newCodeExample: CodeExample | undefined = newLanguageClient?.examples.find(
+                (example) => example.name === prevCodeExample.name,
+            );
+            if (!newCodeExample) {
+                return newLanguageClient?.examples[0] ?? prevCodeExample;
+            }
+            return newCodeExample;
+        },
+        [clients],
+    );
 
     const setSelectedExampleClientAndScrollToTop = useCallback(
         (nextClient: CodeExample) => {
-            setSelectedClient(nextClient);
+            const newCodeExample = getNewCodeExample(nextClient, selectedCodeExample);
+            setSelectedCodeExample(newCodeExample);
             setSelectedLanguage(nextClient.language);
         },
-        [setSelectedLanguage],
+        [getNewCodeExample, selectedCodeExample, setSelectedLanguage],
     );
 
     const requestJson =
-        selectedClient.exampleCall.requestBody?.type === "json"
-            ? selectedClient.exampleCall.requestBody.value
+        selectedCodeExample.exampleCall.requestBody?.type === "json"
+            ? selectedCodeExample.exampleCall.requestBody.value
             : undefined;
-    const responseJson = selectedClient.exampleCall.responseBody?.value;
+    const responseJson = selectedCodeExample.exampleCall.responseBody?.value;
     // const responseHast = selectedClient.exampleCall.responseHast;
     const responseCodeSnippet = useMemo(() => JSON.stringify(responseJson, undefined, 2), [responseJson]);
 
-    const selectedExampleClientLineCount = selectedClient.code.split("\n").length;
+    const selectedExampleClientLineCount = selectedCodeExample.code.split("\n").length;
 
     const selectorHeight =
-        (clients.find((c) => c.language === selectedClient.language)?.examples.length ?? 0) > 1 ? GAP_6 + 24 : 0;
+        (clients.find((c) => c.language === selectedCodeExample.language)?.examples.length ?? 0) > 1 ? GAP_6 + 24 : 0;
 
     const jsonLineLength = responseCodeSnippet?.split("\n").length ?? 0;
     const [requestHeight, responseHeight] = useAtomValue(
@@ -188,7 +203,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                         const maxResponseContainerHeight = jsonLineLength * LINE_HEIGHT + CONTENT_PADDING;
                         const containerHeight = contentHeight - PADDING_TOP - PADDING_BOTTOM - selectorHeight;
                         const halfContainerHeight = (containerHeight - GAP_6) / 2;
-                        if (selectedClient.exampleCall?.responseBody == null) {
+                        if (selectedCodeExample.exampleCall?.responseBody == null) {
                             return [Math.min(maxRequestContainerHeight, containerHeight), 0];
                         }
                         if (
@@ -217,7 +232,12 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     (v) => v,
                     isEqual,
                 ),
-            [jsonLineLength, selectedClient.exampleCall?.responseBody, selectedExampleClientLineCount, selectorHeight],
+            [
+                jsonLineLength,
+                selectedCodeExample.exampleCall?.responseBody,
+                selectedExampleClientLineCount,
+                selectorHeight,
+            ],
         ),
     );
 
@@ -332,11 +352,11 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                             <EndpointContentCodeSnippets
                                 api={api}
                                 endpoint={endpoint}
-                                example={selectedClient.exampleCall}
+                                example={selectedCodeExample.exampleCall}
                                 clients={clients}
-                                selectedClient={selectedClient}
+                                selectedCodeExample={selectedCodeExample}
                                 onClickClient={setSelectedExampleClientAndScrollToTop}
-                                requestCodeSnippet={selectedClient.code}
+                                requestCodeSnippet={selectedCodeExample.code}
                                 requestCurlJson={requestJson}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}

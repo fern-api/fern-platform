@@ -12,7 +12,6 @@ import {
 } from "@radix-ui/react-icons";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
-import { Button } from "../button/Button";
 
 type Intent = "info" | "warning" | "success" | "error" | "note" | "launch" | "tip" | "check";
 
@@ -21,10 +20,6 @@ export declare namespace Callout {
         intent: string;
         title?: string;
         icon?: unknown;
-        primaryCTAHref?: string;
-        primaryCTALabel?: string;
-        secondaryCTAHref?: string;
-        secondaryCTALabel?: string;
     }
 }
 
@@ -36,16 +31,7 @@ function parseIntent(unknownIntent: unknown): Intent {
     return unknownIntent.trim().toLowerCase() as Intent;
 }
 
-export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
-    intent: intentRaw,
-    title,
-    children,
-    icon,
-    primaryCTAHref,
-    primaryCTALabel,
-    secondaryCTAHref,
-    secondaryCTALabel,
-}) => {
+export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRaw, title, children, icon }) => {
     const intent = parseIntent(intentRaw);
     return (
         <div
@@ -94,6 +80,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
                         })
                     )}
                 </div>
+
                 <div
                     className={cn(
                         "flex-1 prose-sm prose dark:prose-invert overflow-x-auto -my-4 after:block after:mt-4 before:block before:mb-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
@@ -116,16 +103,6 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
                         {children}
                     </div>
                 </div>
-                <div>
-                    {primaryCTAHref && primaryCTALabel ? (
-                        <Button text={primaryCTALabel} href={primaryCTAHref}></Button>
-                    ) : null}
-                </div>
-                <div>
-                    {secondaryCTAHref && secondaryCTALabel ? (
-                        <Button text={secondaryCTALabel} href={secondaryCTAHref}></Button>
-                    ) : null}
-                </div>
             </div>
         </div>
     );
@@ -133,177 +110,65 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
 
 // aliases
 
-export function InfoCallout({
-    children,
-    title,
-    primaryCTAHref,
-    primaryCTALabel,
-    secondaryCTAHref,
-    secondaryCTALabel,
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function InfoCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout
-            intent="info"
-            title={title}
-            primaryCTAHref={primaryCTAHref}
-            secondaryCTAHref={secondaryCTAHref}
-            primaryCTALabel={primaryCTALabel}
-            secondaryCTALabel={secondaryCTALabel}
-        >
+        <Callout intent="info" title={title}>
             {children}
         </Callout>
     );
 }
 
-export function WarningCallout({
-    children,
-    title,
-    primaryCTAHref,
-    primaryCTALabel,
-    secondaryCTAHref,
-    secondaryCTALabel,
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function WarningCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout
-            intent="warning"
-            title={title}
-            primaryCTAHref={primaryCTAHref}
-            secondaryCTAHref={secondaryCTAHref}
-            primaryCTALabel={primaryCTALabel}
-            secondaryCTALabel={secondaryCTALabel}
-        >
+        <Callout intent="warning" title={title}>
             {children}
         </Callout>
     );
 }
 
-export function SuccessCallout({
-    children,
-    title,
-    primaryCTAHref,
-    primaryCTALabel,
-    secondaryCTAHref,
-    secondaryCTALabel,
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function SuccessCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout
-            intent="success"
-            title={title}
-            primaryCTAHref={primaryCTAHref}
-            secondaryCTAHref={secondaryCTAHref}
-            primaryCTALabel={primaryCTALabel}
-            secondaryCTALabel={secondaryCTALabel}
-        >
+        <Callout intent="success" title={title}>
             {children}
         </Callout>
     );
 }
 
-export function ErrorCallout({
-    children,
-    title,
-    primaryCTAHref,
-    primaryCTALabel,
-    secondaryCTAHref,
-    secondaryCTALabel,
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function ErrorCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout
-            intent="error"
-            title={title}
-            primaryCTAHref={primaryCTAHref}
-            secondaryCTAHref={secondaryCTAHref}
-            primaryCTALabel={primaryCTALabel}
-            secondaryCTALabel={secondaryCTALabel}
-        >
+        <Callout intent="error" title={title}>
             {children}
         </Callout>
     );
 }
 
-export function NoteCallout({
-    children,
-    title,
-    primaryCTAHref,
-    primaryCTALabel,
-    secondaryCTAHref,
-    secondaryCTALabel,
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function NoteCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout
-            intent="note"
-            title={title}
-            primaryCTAHref={primaryCTAHref}
-            secondaryCTAHref={secondaryCTAHref}
-            primaryCTALabel={primaryCTALabel}
-            secondaryCTALabel={secondaryCTALabel}
-        >
+        <Callout intent="note" title={title}>
             {children}
         </Callout>
     );
 }
 
-export function LaunchNoteCallout({
-    children,
-    title,
-    primaryCTAHref,
-    primaryCTALabel,
-    secondaryCTAHref,
-    secondaryCTALabel,
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function LaunchNoteCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout
-            intent="launch"
-            title={title}
-            primaryCTAHref={primaryCTAHref}
-            secondaryCTAHref={secondaryCTAHref}
-            primaryCTALabel={primaryCTALabel}
-            secondaryCTALabel={secondaryCTALabel}
-        >
+        <Callout intent="launch" title={title}>
             {children}
         </Callout>
     );
 }
 
-export function TipCallout({
-    children,
-    title,
-    primaryCTAHref,
-    primaryCTALabel,
-    secondaryCTAHref,
-    secondaryCTALabel,
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function TipCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout
-            intent="tip"
-            title={title}
-            primaryCTAHref={primaryCTAHref}
-            secondaryCTAHref={secondaryCTAHref}
-            primaryCTALabel={primaryCTALabel}
-            secondaryCTALabel={secondaryCTALabel}
-        >
+        <Callout intent="tip" title={title}>
             {children}
         </Callout>
     );
 }
 
-export function CheckCallout({
-    children,
-    title,
-    primaryCTAHref,
-    primaryCTALabel,
-    secondaryCTAHref,
-    secondaryCTALabel,
-}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function CheckCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout
-            intent="check"
-            title={title}
-            primaryCTAHref={primaryCTAHref}
-            secondaryCTAHref={secondaryCTAHref}
-            primaryCTALabel={primaryCTALabel}
-            secondaryCTALabel={secondaryCTALabel}
-        >
+        <Callout intent="check" title={title}>
             {children}
         </Callout>
     );
