@@ -31,7 +31,7 @@ export interface S3SourceFileInfo {
 }
 
 export interface S3Service {
-    getPresignedDocsUploadUrls({
+    getPresignedDocsAssetsUploadUrls({
         domain,
         filepaths,
         images,
@@ -110,7 +110,7 @@ export class S3ServiceImpl implements S3Service {
         return `https://${this.config.publicDocsS3.bucketName}.s3.amazonaws.com/${key}`;
     }
 
-    async getPresignedDocsUploadUrls({
+    async getPresignedDocsAssetsUploadUrls({
         domain,
         filepaths,
         images,
@@ -124,7 +124,7 @@ export class S3ServiceImpl implements S3Service {
         const result: Record<DocsV1Write.FilePath, S3DocsFileInfo> = {};
         const time: string = new Date().toISOString();
         for (const filepath of filepaths) {
-            const { url, key } = await this.createPresignedDocsUploadUrlWithClient({
+            const { url, key } = await this.createPresignedDocsAssetsUploadUrlWithClient({
                 domain,
                 time,
                 filepath,
@@ -140,7 +140,7 @@ export class S3ServiceImpl implements S3Service {
             };
         }
         for (const image of images) {
-            const { url, key } = await this.createPresignedDocsUploadUrlWithClient({
+            const { url, key } = await this.createPresignedDocsAssetsUploadUrlWithClient({
                 domain,
                 time,
                 filepath: image.filePath,
@@ -163,7 +163,7 @@ export class S3ServiceImpl implements S3Service {
         return result;
     }
 
-    async createPresignedDocsUploadUrlWithClient({
+    async createPresignedDocsAssetsUploadUrlWithClient({
         domain,
         time,
         filepath,

@@ -36,7 +36,7 @@ describe("S3 Service", () => {
             redisClusteringEnabled: true,
             applicationEnvironment: "string",
         });
-        const startUploadDocsResponse = await s3Service.createPresignedDocsUploadUrlWithClient({
+        const startUploadDocsResponse = await s3Service.createPresignedDocsAssetsUploadUrlWithClient({
             domain: "buildwithfern.com",
             time: "12340",
             isPrivate: false,

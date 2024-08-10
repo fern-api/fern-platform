@@ -56,7 +56,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             }
 
             const docsRegistrationId = uuidv4();
-            const s3FileInfos = await app.services.s3.getPresignedDocsUploadUrls({
+            const s3FileInfos = await app.services.s3.getPresignedDocsAssetsUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],
@@ -96,7 +96,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     req.body.basePath ?? "",
                 ),
             );
-            const s3FileInfos = await app.services.s3.getPresignedDocsUploadUrls({
+            const s3FileInfos = await app.services.s3.getPresignedDocsAssetsUploadUrls({
                 domain: fernUrl.hostname,
                 filepaths: req.body.filepaths,
                 images: req.body.images ?? [],
