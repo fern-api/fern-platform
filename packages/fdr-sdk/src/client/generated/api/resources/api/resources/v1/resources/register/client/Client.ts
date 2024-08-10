@@ -45,6 +45,11 @@ export class Register {
      *             globalHeaders: [{}],
      *             snippetsConfiguration: {},
      *             navigation: {}
+     *         },
+     *         sources: {
+     *             "string": {
+     *                 type: "openapi"
+     *             }
      *         }
      *     })
      */

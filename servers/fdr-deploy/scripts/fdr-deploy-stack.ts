@@ -87,7 +87,20 @@ export class FdrDeployStack extends Stack {
         });
         snsTopic.addSubscription(new EmailSubscription("support@buildwithfern.com"));
 
-        const privateBucket = new Bucket(this, "fdr-docs-files", {
+        const privateApiDefinitionSourceBucket = new Bucket(this, "fdr-api-definition-source-files", {
+            bucketName: `fdr-${environmentType.toLowerCase()}-api-definition-source-files`,
+            removalPolicy: RemovalPolicy.RETAIN,
+            cors: [
+                {
+                    allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
+                    allowedOrigins: ["*"],
+                    allowedHeaders: ["*"],
+                },
+            ],
+            versioned: true,
+        });
+
+        const privateDocsBucket = new Bucket(this, "fdr-docs-files", {
             bucketName: `fdr-${environmentType.toLowerCase()}-docs-files`,
             removalPolicy: RemovalPolicy.RETAIN,
             cors: [
@@ -100,7 +113,7 @@ export class FdrDeployStack extends Stack {
             versioned: true,
         });
 
-        const publicBucket = new Bucket(this, "fdr-docs-files-public", {
+        const publicDocsBucket = new Bucket(this, "fdr-docs-files-public", {
             bucketName: `fdr-${environmentType.toLowerCase()}-docs-files-public`,
             removalPolicy: RemovalPolicy.RETAIN,
             cors: [
@@ -118,7 +131,7 @@ export class FdrDeployStack extends Stack {
             },
             versioned: true,
         });
-        publicBucket.grantPublicAccess();
+        publicDocsBucket.grantPublicAccess();
 
         const fernDocsCacheEndpoint = this.constructElastiCacheInstance(this, {
             cacheName: options.cacheName,
@@ -156,10 +169,12 @@ export class FdrDeployStack extends Stack {
                     VENUS_URL: `http://venus.${cloudmapNamespaceName}:8080/`,
                     AWS_ACCESS_KEY_ID: getEnvironmentVariableOrThrow("AWS_ACCESS_KEY_ID"),
                     AWS_SECRET_ACCESS_KEY: getEnvironmentVariableOrThrow("AWS_SECRET_ACCESS_KEY"),
-                    PUBLIC_S3_BUCKET_NAME: publicBucket.bucketName,
-                    PUBLIC_S3_BUCKET_REGION: publicBucket.stack.region,
-                    PRIVATE_S3_BUCKET_NAME: privateBucket.bucketName,
-                    PRIVATE_S3_BUCKET_REGION: privateBucket.stack.region,
+                    PUBLIC_S3_BUCKET_NAME: publicDocsBucket.bucketName,
+                    PUBLIC_S3_BUCKET_REGION: publicDocsBucket.stack.region,
+                    PRIVATE_S3_BUCKET_NAME: privateDocsBucket.bucketName,
+                    PRIVATE_S3_BUCKET_REGION: privateDocsBucket.stack.region,
+                    API_DEFINITION_SOURCE_BUCKET_NAME: privateApiDefinitionSourceBucket.bucketName,
+                    API_DEFINITION_SOURCE_BUCKET_REGION: privateApiDefinitionSourceBucket.stack.region,
                     DOMAIN_SUFFIX: getDomainSuffix(environmentType),
                     ALGOLIA_APP_ID: getEnvironmentVariableOrThrow("ALGOLIA_APP_ID"),
                     ALGOLIA_ADMIN_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_ADMIN_API_KEY"),
