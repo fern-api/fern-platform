@@ -1,14 +1,11 @@
 import { GetObjectCommand, PutObjectCommand, PutObjectCommandInput, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import {
-    Source,
-    SourceId,
-} from "@fern-api/fdr-sdk/src/client/generated/api/resources/api/resources/v1/resources/register";
+import { APIV1Write } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
-import { Cache } from "../../Cache";
 import { DocsV1Write, DocsV2Write } from "../../api";
 import { FernRegistry } from "../../api/generated";
 import type { FdrConfig } from "../../app";
+import { Cache } from "../../Cache";
 
 const ONE_WEEK_IN_SECONDS = 604800;
 
@@ -52,8 +49,8 @@ export interface S3Service {
     }: {
         orgId: FernRegistry.OrgId;
         apiId: FernRegistry.ApiId;
-        sources: Record<SourceId, Source>;
-    }): Promise<Record<SourceId, S3ApiDefinitionSourceFileInfo>>;
+        sources: Record<APIV1Write.SourceId, APIV1Write.Source>;
+    }): Promise<Record<APIV1Write.SourceId, S3ApiDefinitionSourceFileInfo>>;
 
     getPresignedApiDefinitionSourceDownloadUrl({ key }: { key: string }): Promise<string>;
 }
@@ -207,9 +204,9 @@ export class S3ServiceImpl implements S3Service {
     }: {
         orgId: FernRegistry.OrgId;
         apiId: FernRegistry.ApiId;
-        sources: Record<SourceId, Source>;
-    }): Promise<Record<SourceId, S3ApiDefinitionSourceFileInfo>> {
-        const result: Record<SourceId, S3ApiDefinitionSourceFileInfo> = {};
+        sources: Record<APIV1Write.SourceId, APIV1Write.Source>;
+    }): Promise<Record<APIV1Write.SourceId, S3ApiDefinitionSourceFileInfo>> {
+        const result: Record<APIV1Write.SourceId, S3ApiDefinitionSourceFileInfo> = {};
         const time: string = new Date().toISOString();
         for (const [sourceId, _source] of Object.entries(sources)) {
             const { url, key } = await this.createPresignedApiDefinitionSourceUploadUrlWithClient({
@@ -271,7 +268,7 @@ export class S3ServiceImpl implements S3Service {
         orgId: FernRegistry.OrgId;
         apiId: FernRegistry.ApiId;
         time: string;
-        sourceId: SourceId;
+        sourceId: APIV1Write.SourceId;
     }): string {
         return `${orgId}/${apiId}/${time}/${sourceId}`;
     }
