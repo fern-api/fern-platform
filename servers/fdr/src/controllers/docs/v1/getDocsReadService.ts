@@ -129,7 +129,7 @@ async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrA
     if (docsDbDefinition.type === "v3") {
         promisedFiles = Object.entries(docsDbDefinition.files).map(
             async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
-                const s3DownloadUrl = await app.services.s3.getPresignedDocsDownloadUrl({
+                const s3DownloadUrl = await app.services.s3.getPresignedDocsAssetsDownloadUrl({
                     key: fileDbInfo.s3Key,
                     isPrivate: true, // for backcompat
                 });
@@ -150,7 +150,7 @@ async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrA
     } else {
         promisedFiles = Object.entries(docsDbDefinition.files).map(
             async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
-                const s3DownloadUrl = await app.services.s3.getPresignedDocsDownloadUrl({
+                const s3DownloadUrl = await app.services.s3.getPresignedDocsAssetsDownloadUrl({
                     key: fileDbInfo.s3Key,
                     isPrivate: true, // for backcompat
                 });

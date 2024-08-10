@@ -43,7 +43,7 @@ export interface S3Service {
         isPrivate: boolean;
     }): Promise<Record<DocsV1Write.FilePath, S3DocsFileInfo>>;
 
-    getPresignedDocsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string>;
+    getPresignedDocsAssetsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string>;
 
     getPresignedApiDefinitionSourceUploadUrls({
         orgId,
@@ -91,7 +91,7 @@ export class S3ServiceImpl implements S3Service {
         });
     }
 
-    async getPresignedDocsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string> {
+    async getPresignedDocsAssetsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string> {
         if (isPrivate) {
             // presigned url for private
             const cachedUrl = this.presignedDownloadUrlCache.get(key);
