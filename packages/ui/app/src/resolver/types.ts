@@ -784,6 +784,7 @@ export const resolveEnvironment = (
         // but do not have access to hooks
         selectedEnvironmentId = store.get(SELECTED_ENVIRONMENT_ATOM);
     }
+
     return (
         endpoint.environments.find((env) => env.id === selectedEnvironmentId) ??
         endpoint.defaultEnvironment ??
@@ -795,9 +796,13 @@ export const resolveEnvironmentUrlInCodeSnippet = (
     endpoint: ResolvedEndpointDefinition,
     requestCodeSnippet: string,
     selectedEnvironmentId?: string,
+    environmentIdsToFilter?: string[],
 ): string => {
     const urlToReplace = endpoint.environments.find((env) => requestCodeSnippet.includes(env.baseUrl))?.baseUrl;
-    const resolvedEnvironment = resolveEnvironment(endpoint, selectedEnvironmentId);
+    let resolvedEnvironment = resolveEnvironment(endpoint, selectedEnvironmentId);
+    if (environmentIdsToFilter && !(resolvedEnvironment && environmentIdsToFilter.includes(resolvedEnvironment.id))) {
+        resolvedEnvironment = endpoint.environments.find((env) => env.id === environmentIdsToFilter[0]);
+    }
     return urlToReplace && resolvedEnvironment
         ? requestCodeSnippet.replace(urlToReplace, resolvedEnvironment.baseUrl)
         : requestCodeSnippet;

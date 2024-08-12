@@ -18,6 +18,7 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoin
     const isStream = useAtomValue(FERN_STREAM_ATOM);
     const endpointProp = endpoint.stream != null && isStream ? endpoint.stream : endpoint;
     const selectedEnvironmentId = useSelectedEnvironmentId();
+
     return (
         <header className="space-y-1 pb-2 pt-8">
             <Breadcrumbs breadcrumbs={breadcrumbs} />

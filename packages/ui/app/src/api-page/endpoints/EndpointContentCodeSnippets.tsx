@@ -9,6 +9,7 @@ import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import {
     ResolvedEndpointDefinition,
@@ -128,6 +129,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     );
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
+    const environmentIdsToFilter = usePlaygroundSettings(node?.id);
 
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>
@@ -180,7 +182,12 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                code={resolveEnvironmentUrlInCodeSnippet(endpoint, requestCodeSnippet)}
+                code={resolveEnvironmentUrlInCodeSnippet(
+                    endpoint,
+                    requestCodeSnippet,
+                    selectedEnvironmentId,
+                    environmentIdsToFilter,
+                )}
                 language={selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
