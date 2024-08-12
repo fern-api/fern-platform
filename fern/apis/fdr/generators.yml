@@ -27,6 +27,20 @@ groups:
           extraDevDependencies:
             "@types/mime": "3.0.4"
 
+  fdr-cjs-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.38.6
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/fdr-cjs-sdk"
+        config:
+          noSerdeLayer: true
+          outputSourceFiles: true
+          neverThrowErrors: true
+          timeoutInSeconds: infinity
+
   internal-snippets-sdks:
     audiences:
       - snippets
