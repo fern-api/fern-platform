@@ -282,7 +282,7 @@ function stripMarkdown(markdown: string): string {
     }
 }
 
-function extractHeadline(markdownContent: string): string | undefined {
+export function extractHeadline(markdownContent: string): string | undefined {
     if (markdownContent.trim().startsWith("#") && !markdownContent.trim().startsWith("##")) {
         return stripMarkdown(markdownContent.trim().split("\n")[0] ?? "");
     }
