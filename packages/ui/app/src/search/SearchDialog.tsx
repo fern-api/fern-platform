@@ -36,11 +36,12 @@ export const SearchDialog = (): ReactElement | null => {
         return null;
     }
 
+    // TODO: (rohin) && false included here to disable chatbot for go-live
     if (config.inkeep == null) {
         return (
             <>
                 <AlgoliaSearchDialog />
-                {domain.includes("cohere") && <CohereChatButton />}
+                {domain.includes("cohere") && false && <CohereChatButton />}
             </>
         );
     } else {
