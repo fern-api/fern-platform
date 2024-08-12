@@ -20,6 +20,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     useMdxBundler: false,
     isBatchStreamToggleDisabled: false,
     isAuthEnabledInDocs: false,
+    isAiChatbotEnabledInPreview: false,
 };
 
 const EMPTY_DOCS_STATE: DocsProps = {
