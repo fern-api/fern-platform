@@ -7,7 +7,7 @@ import {
     CURRENT_VERSION_ATOM,
     IS_MOBILE_SCREEN_ATOM,
     SEARCH_DIALOG_OPEN_ATOM,
-    useDomain,
+    useFeatureFlags,
     useSidebarNodes,
 } from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
@@ -27,8 +27,8 @@ const CohereChatButton = dynamic(
 
 export const SearchDialog = (): ReactElement | null => {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
-    const domain = useDomain();
     useSearchTrigger(setSearchDialogState);
+    const { isAiChatbotEnabledInPreview } = useFeatureFlags();
 
     const [config] = useSearchConfig();
 
@@ -36,12 +36,11 @@ export const SearchDialog = (): ReactElement | null => {
         return null;
     }
 
-    // TODO: (rohin) && false included here to disable chatbot for go-live
     if (config.inkeep == null) {
         return (
             <>
                 <AlgoliaSearchDialog />
-                {domain.includes("cohere") && false && <CohereChatButton />}
+                {isAiChatbotEnabledInPreview && <CohereChatButton />}
             </>
         );
     } else {
