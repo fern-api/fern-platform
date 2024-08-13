@@ -27,6 +27,9 @@ export const PlaygroundButton: FC<{
                 }
             >
                 <FernButton
+                    aria-description={
+                        settings?.button?.href ? "Opens an API Playground in a new tab" : "Opens the API Playground"
+                    }
                     onClick={() => {
                         if (settings?.button?.href) {
                             // open custom playground in new tab
