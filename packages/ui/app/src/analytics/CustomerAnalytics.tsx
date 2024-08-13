@@ -6,6 +6,7 @@ import Script from "next/script";
 import { ReactElement, memo } from "react";
 import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
 import { GoogleTagManager } from "./GoogleTagManager";
+import { useIntercomInitializer } from "./Intercom";
 import { renderSegmentSnippet } from "./segment";
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
@@ -14,7 +15,10 @@ const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConf
 export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
     const domain = useAtomValue(DOMAIN_ATOM);
     const { ga4, gtm } = useAtomValue(ANALYTICS_ATOM);
-    const { segment } = useAtomValue(ANALYTICS_CONFIG_ATOM);
+    const { segment, intercom } = useAtomValue(ANALYTICS_CONFIG_ATOM);
+
+    useIntercomInitializer(intercom);
+
     return (
         <>
             {/* renders either segment with our write key or segment with the customer's write key */}
