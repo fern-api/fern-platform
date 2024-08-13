@@ -3,5 +3,5 @@
  */
 
 export interface IntercomConfig {
-    "access-token": string;
+    accessToken: string;
 }

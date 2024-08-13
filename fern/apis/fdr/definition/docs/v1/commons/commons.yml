@@ -64,11 +64,11 @@ types:
 
   FullStoryAnalyticsConfig:
     properties:
-      api-key: string
+      apiKey: string
 
   IntercomConfig:
     properties:
-      access-token: string
+      accessToken: string
 
   PostHogConfig:
     properties:
