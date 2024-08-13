@@ -57,6 +57,7 @@
     "@fern-ui/next-seo": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
+    "@fullstory/browser": "^2.0.5",
     "@headlessui/react": "^1.7.18",
     "@inkeep/widgets": "^0.2.288",
     "@intercom/messenger-js-sdk": "^0.0.13",

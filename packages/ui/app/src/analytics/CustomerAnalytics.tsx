@@ -5,6 +5,7 @@ import { isEqual } from "lodash-es";
 import Script from "next/script";
 import { ReactElement, memo } from "react";
 import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
+import { useFullstoryInitializer } from "./Fullstory";
 import { GoogleTagManager } from "./GoogleTagManager";
 import { useIntercomInitializer } from "./Intercom";
 import { renderSegmentSnippet } from "./segment";
@@ -15,9 +16,10 @@ const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConf
 export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
     const domain = useAtomValue(DOMAIN_ATOM);
     const { ga4, gtm } = useAtomValue(ANALYTICS_ATOM);
-    const { segment, intercom } = useAtomValue(ANALYTICS_CONFIG_ATOM);
+    const config = useAtomValue(ANALYTICS_CONFIG_ATOM);
 
-    useIntercomInitializer(intercom);
+    useIntercomInitializer(config.intercom);
+    useFullstoryInitializer(config.fullstory);
 
     return (
         <>
@@ -25,7 +27,7 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
             <Script
                 id="segment-script"
                 dangerouslySetInnerHTML={{
-                    __html: renderSegmentSnippet(domain, segment?.writeKey),
+                    __html: renderSegmentSnippet(domain, config.segment?.writeKey),
                 }}
             />
             {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}
