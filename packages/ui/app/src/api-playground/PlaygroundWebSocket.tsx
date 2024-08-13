@@ -47,7 +47,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
     useEffect(() => () => socket.current?.close(), []);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
-    const environmentFilters = usePlaygroundSettings();
+    const settings = usePlaygroundSettings();
     const baseUrl = resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl;
 
     const startSession = useCallback(async () => {
@@ -149,7 +149,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
                                   : null
                         }
                         environment={resolveEnvironment(websocket, selectedEnvironmentId)}
-                        environmentFilters={environmentFilters}
+                        environmentFilters={settings?.environments}
                         path={websocket.path}
                         queryParameters={websocket.queryParameters}
                         sendRequestButtonLabel={
