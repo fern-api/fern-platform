@@ -65,6 +65,7 @@ const nextConfig = {
             "https://www.google-analytics.com",
             "https://*.intercom.io",
             "wss://*.intercom.io",
+            "https://*.fullstory.com",
         ];
 
         const scriptSrc = [
@@ -76,6 +77,7 @@ const nextConfig = {
             "https://www.googletagmanager.com",
             "https://*.intercomcdn.com",
             "https://*.intercom.io",
+            "https://*.fullstory.com",
             ...DOCS_FILES_URLS,
         ];
 

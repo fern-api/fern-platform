@@ -1073,9 +1073,6 @@ importers:
       '@fern-ui/search-utils':
         specifier: workspace:*
         version: link:../../commons/search-utils
-      '@fullstory/browser':
-        specifier: ^2.0.5
-        version: 2.0.5
       '@headlessui/react':
         specifier: ^1.7.18
         version: 1.7.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3950,12 +3947,6 @@ packages:
   '@fortawesome/sharp-thin-svg-icons@6.5.2':
     resolution: {integrity: sha512-cpSTY52ycffnWsKTtd79+yyrsLYahU1njqSV5C3bAbEPWK+h3XWtzfDB4rjDpQGhX3n1wCMeLZ8Ak6uE5zFTyw==, tarball: https://npm.fontawesome.com/@fortawesome/sharp-thin-svg-icons/-/6.5.2/sharp-thin-svg-icons-6.5.2.tgz}
     engines: {node: '>=6'}
-
-  '@fullstory/browser@2.0.5':
-    resolution: {integrity: sha512-2UTJInKM1ReEeLpDKbhEgZiHEgFo84DPJr3FRqMAdCH5+j/s5llZd15BLIKsUn5Xo3YZfz/vbqcBJygA/duIBQ==}
-
-  '@fullstory/snippet@2.0.3':
-    resolution: {integrity: sha512-EaCuTQSLv5FvnjHLbTxErn3sS1+nLqf1p6sA/c4PV49stBtkUakA0eLhJJdaw0WLdXyEzZXf86lRNsjEzrgGPw==}
 
   '@graphql-typed-document-node/core@3.2.0':
     resolution: {integrity: sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==}
@@ -18118,12 +18109,6 @@ snapshots:
   '@fortawesome/sharp-thin-svg-icons@6.5.2':
     dependencies:
       '@fortawesome/fontawesome-common-types': 6.5.2
-
-  '@fullstory/browser@2.0.5':
-    dependencies:
-      '@fullstory/snippet': 2.0.3
-
-  '@fullstory/snippet@2.0.3': {}
 
   '@graphql-typed-document-node/core@3.2.0(graphql@16.9.0)':
     dependencies:
