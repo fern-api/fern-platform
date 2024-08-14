@@ -63,6 +63,8 @@ const nextConfig = {
             "https://api.segment.io",
             "wss://api.getkoala.com",
             "https://www.google-analytics.com",
+            "https://*.intercom.io",
+            "wss://*.intercom.io",
         ];
 
         const scriptSrc = [
@@ -72,12 +74,14 @@ const nextConfig = {
             "https://*.posthog.com",
             "https://cdn.segment.com",
             "https://www.googletagmanager.com",
+            "https://*.intercomcdn.com",
+            "https://*.intercom.io",
             ...DOCS_FILES_URLS,
         ];
 
         const styleSrc = ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"];
 
-        const fontSrc = ["'self'", "data:", ...DOCS_FILES_URLS];
+        const fontSrc = ["'self'", "data:", "https://*.intercomcdn.com", ...DOCS_FILES_URLS];
 
         if (cdnUri != null) {
             scriptSrc.push(`${cdnUri.origin}`);
