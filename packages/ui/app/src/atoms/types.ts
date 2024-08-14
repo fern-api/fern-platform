@@ -25,7 +25,6 @@ export interface FeatureFlags {
     useMdxBundler: boolean;
     isBatchStreamToggleDisabled: boolean;
     isAuthEnabledInDocs: boolean;
-    isAiChatbotEnabledInPreview: boolean;
 }
 
 export interface NavigationProps {
