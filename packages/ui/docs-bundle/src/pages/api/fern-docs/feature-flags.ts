@@ -23,7 +23,6 @@ const FEATURE_FLAGS = [
     "use-mdx-bundler" as const,
     "batch-stream-toggle-disabled" as const,
     "enabled-auth-in-generated-docs" as const,
-    "ai-chat-preview" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -62,8 +61,6 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const useMdxBundler = checkDomainMatchesCustomers(domain, config["use-mdx-bundler"]);
         const isBatchStreamToggleDisabled = checkDomainMatchesCustomers(domain, config["batch-stream-toggle-disabled"]);
         const isAuthEnabledInDocs = checkDomainMatchesCustomers(domain, config["enabled-auth-in-generated-docs"]);
-        const isAiChatbotEnabledInPreview = checkDomainMatchesCustomers(domain, config["ai-chat-preview"]);
-
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
             isApiScrollingDisabled,
@@ -82,7 +79,6 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             useMdxBundler,
             isBatchStreamToggleDisabled,
             isAuthEnabledInDocs,
-            isAiChatbotEnabledInPreview,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -105,15 +101,11 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             useMdxBundler: false,
             isBatchStreamToggleDisabled: false,
             isAuthEnabledInDocs: false,
-            isAiChatbotEnabledInPreview: false,
         };
     }
 }
 
 function checkDomainMatchesCustomers(domain: string, customers: readonly string[]): boolean {
-    if (customers == null) {
-        return false;
-    }
     return customers.some((customer) => domain.toLowerCase().includes(customer.toLowerCase()));
 }
 

@@ -7,7 +7,7 @@ import {
     CURRENT_VERSION_ATOM,
     IS_MOBILE_SCREEN_ATOM,
     SEARCH_DIALOG_OPEN_ATOM,
-    useFeatureFlags,
+    useDomain,
     useSidebarNodes,
 } from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
@@ -27,8 +27,8 @@ const CohereChatButton = dynamic(
 
 export const SearchDialog = (): ReactElement | null => {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
+    const domain = useDomain();
     useSearchTrigger(setSearchDialogState);
-    const { isAiChatbotEnabledInPreview } = useFeatureFlags();
 
     const [config] = useSearchConfig();
 
@@ -40,7 +40,7 @@ export const SearchDialog = (): ReactElement | null => {
         return (
             <>
                 <AlgoliaSearchDialog />
-                {isAiChatbotEnabledInPreview && <CohereChatButton />}
+                {domain.includes("cohere") && <CohereChatButton />}
             </>
         );
     } else {
