@@ -1,4 +1,4 @@
-export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVisitor";
+export { addDefaultProtocol } from "./addDefaultProtocol";
 export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { assertVoidNoThrow } from "./assertVoidNoThrow";
@@ -7,6 +7,7 @@ export { withMinimumTime } from "./delay/withMinimumTime";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
 export { identity } from "./identity";
 export { assertNonNullish, isNonNullish } from "./isNonNullish";
+export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVisitor";
 export { entries, type Entries } from "./objects/entries";
 export { isPlainObject } from "./objects/isPlainObject";
 export { keys } from "./objects/keys";
