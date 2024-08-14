@@ -5,9 +5,9 @@ import { isEqual } from "lodash-es";
 import Script from "next/script";
 import { ReactElement, memo } from "react";
 import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
-import { useFullstoryInitializer } from "./Fullstory";
+import { useFullstoryInitializer } from "./fullstory";
 import { GoogleTagManager } from "./GoogleTagManager";
-import { useIntercomInitializer } from "./Intercom";
+import { useIntercomInitializer } from "./intercom";
 import { renderSegmentSnippet } from "./segment";
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
