@@ -8,6 +8,7 @@ import {
     MOBILE_SIDEBAR_ENABLED_ATOM,
     SIDEBAR_SCROLL_CONTAINER_ATOM,
     TABS_ATOM,
+    useDomain,
     useIsMobileSidebarOpen,
     useSidebarNodes,
 } from "../atoms";
@@ -31,8 +32,9 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
     const isScrolled = useIsScrolled({ current: scrollRef });
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
+    const domain = useDomain();
 
-    if (!isMobileSidebarEnabled) {
+    if (!isMobileSidebarEnabled && domain.includes("cohere")) {
         return null;
     }
 
