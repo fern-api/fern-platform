@@ -1,3 +1,5 @@
+import { withDefaultProtocol } from "@fern-ui/core-utils";
+
 export const runtime = "edge";
 
 /**
@@ -9,8 +11,9 @@ export const runtime = "edge";
 export default async function handler(req: Request): Promise<Response> {
     const defaultPosthogInstance = "https://us.i.posthog.com";
     const destination = req.headers.get("x-fern-posthog-host") || defaultPosthogInstance;
+    const validDestination = getValidUrl(destination);
 
-    return passthroughTo(destination, req);
+    return passthroughTo(validDestination, req);
 }
 
 /**
@@ -34,4 +37,8 @@ function passthroughTo(destination: string, req: Request): Promise<Response> {
         body: req.body,
         signal: req.signal,
     });
+}
+
+function getValidUrl(endpoint: string): string {
+    return withDefaultProtocol(endpoint, "https://");
 }

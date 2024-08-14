@@ -1,4 +1,3 @@
-export { addDefaultProtocol } from "./addDefaultProtocol";
 export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { assertVoidNoThrow } from "./assertVoidNoThrow";
@@ -16,3 +15,4 @@ export { PLATFORM, type Platform } from "./platform";
 export { titleCase } from "./titleCase";
 export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
+export { withDefaultProtocol } from "./withDefaultProtocol";

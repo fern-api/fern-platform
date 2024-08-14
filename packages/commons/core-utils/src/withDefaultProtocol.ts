@@ -5,7 +5,7 @@
  * @param defaultProtocol defaults to "https://"
  * @returns the endpoint, which will always have a protocol
  */
-export function addDefaultProtocol(endpoint: string, defaultProtocol = "https://"): string {
+export function withDefaultProtocol(endpoint: string, defaultProtocol = "https://"): string {
     // matches any protocol scheme at the beginning of the string (e.g., "http://", "https://", "ftp://")
     const protocolRegex = /^[a-z]+:\/\//i;
 
