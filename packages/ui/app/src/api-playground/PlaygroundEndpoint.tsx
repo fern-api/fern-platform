@@ -182,7 +182,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
-    const environmentFilters = usePlaygroundSettings();
+    const settings = usePlaygroundSettings();
 
     return (
         <FernTooltipProvider>
@@ -193,7 +193,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                         formState={formState}
                         sendRequest={sendRequest}
                         environment={resolveEnvironment(endpoint, selectedEnvironmentId)}
-                        environmentFilters={environmentFilters}
+                        environmentFilters={settings?.environments}
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}
                         sendRequestIcon={<SendSolid className="transition-transform group-hover:translate-x-0.5" />}
