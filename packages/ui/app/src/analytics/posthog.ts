@@ -40,9 +40,11 @@ function ifCustomer(run: (hog: PostHogWithCustomer) => void): void {
 
 export function initializePosthog(customerConfig?: DocsV1Read.PostHogConfig): void {
     const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim();
-    if (apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
+    if (process.env.NODE_ENV === "production" && apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
+        const posthogProxy = "/api/fern-docs/analytics/posthog";
+
         posthog.init(apiKey, {
-            api_host: "https://app.posthog.com",
+            api_host: posthogProxy,
             loaded: () => {
                 IS_POSTHOG_INITIALIZED = true;
             },
@@ -51,7 +53,18 @@ export function initializePosthog(customerConfig?: DocsV1Read.PostHogConfig): vo
         });
 
         if (customerConfig) {
-            posthog.init(customerConfig.apiKey, { api_host: customerConfig.endpoint }, "customer");
+            posthog.init(
+                customerConfig.apiKey,
+                {
+                    api_host: posthogProxy,
+                    request_headers: {
+                        // default to posthog-js's default endpoint
+                        // this is probably the expected behavior
+                        "x-fern-posthog-host": customerConfig.endpoint ?? "https://us.i.posthog.com",
+                    },
+                },
+                "customer",
+            );
         }
     }
 }
