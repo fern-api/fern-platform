@@ -1,0 +1,64 @@
+imports:
+  commons: ./commons.yml
+
+types:
+  GeneratorDeclaration:
+    extends: commons.Release
+    properties:
+      type:
+        type: string
+        docs: The type of the generator, e.g. fern-python-sdk, could arguably a union of literals.
+      ir_version: string
+  ChangelogEntry:
+    properties:
+      version: string
+      changelog: string
+
+service:
+  base-path: /generators
+  auth: true
+  endpoints:
+    getLatestGeneratorVersion:
+      docs: Get the latest generator version that has not been yanked.
+      method: GET
+      path: /latest
+      request:
+        name: GetLatestGeneratorVersionRequest
+        body:
+          properties:
+            type: string
+            retain_major_version:
+              type: optional<string>
+              docs: |
+                Whether or not to include major versions when searching for the latest version. If specified, we will only return the latest version
+                that is the same major version as provided. Useful while we do not support config migrations, etc.
+            include_rcs:
+              type: optional<boolean>
+              docs: Whether or not to include RCs when searching for the latest version. Defaults to false.
+      response: GeneratorDeclaration
+    getChangelog:
+      docs: Get the changelog for the specified generator upgrade.
+      method: GET
+      path: /{generator}/{from_version}/to/{to_version}
+      request:
+        name: GetChangelogRequest
+        path-params:
+          generator: string
+          from_version: string
+          to_version: string
+      response: list<ChangelogEntry>
+    upsertGeneratorDeclaration:
+      docs: Update or create the specified generator version.
+      method: PUT
+      path: /
+      request: GeneratorDeclaration
+    getGeneratorDeclaration:
+      docs: Get the specified CLI version.
+      method: GET
+      path: /{generator}/{version}
+      request:
+        name: GetGeneratorRequest
+        path-params:
+          generator: string
+          version: string
+      response: GeneratorDeclaration
