@@ -26,7 +26,7 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
     const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
     useEffect(() => {
         if (anchor != null) {
-            const anchorTab = items.findIndex((tab) => slug(tab.title + key) === anchor);
+            const anchorTab = items.findIndex((tab) => slug(`${tab.title}-${key}`) === anchor);
             if (anchorTab >= 0) {
                 setActiveTabs((prev) => (prev.includes(anchorTab.toString()) ? prev : [...prev, anchorTab.toString()]));
             }
@@ -40,7 +40,7 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
                 if (added[0] != null) {
                     const addedItem = items[parseInt(added[0])];
                     if (addedItem != null) {
-                        setAnchor(slug(addedItem.title + key));
+                        setAnchor(slug(`${addedItem.title}-${key}`));
                     }
                 }
                 return nextActiveTabs;
