@@ -8,11 +8,25 @@ types:
     type: string
     docs: The type of the generator, e.g. fern-python-sdk
 
+  SdkGenerator:
+    properties: {}
+
+  ModelGenerator:
+    properties: {}
+
+  ServerGenerator:
+    properties: {}
+
+  OtherGenerator:
+    properties: {}
+
+  # Generator type is a union of the different types of generators in order to
+  # add more type-specific fields down the line.
   GeneratorType:
-    enum:
-      - sdk
-      - server
-      - model
+    union:
+      sdk: SdkGenerator
+      server: ServerGenerator
+      other: OtherGenerator
 
   GeneratorLanguage:
     enum:
@@ -30,7 +44,7 @@ types:
     properties:
       id: GeneratorId
       generator_type: string
-      generator_language: string
+      generator_language: optional<string>
       docker_image:
         type: string
         docs: The name of the docker image to pull to run this generator.
@@ -53,11 +67,8 @@ service:
         generator_id: GeneratorId
       response: Generator
 
-    getGeneratorByType:
-      docs: Get the specified generator by the language and type.
+    listGenerator:
+      docs: Get the all generators.
       method: GET
-      path: /{generator_type}/{generator_language}
-      path-parameters:
-        generator_type: GeneratorType
-        generator_language: GeneratorLanguage
-      response: Generator
+      path: ""
+      response: list<Generator>

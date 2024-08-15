@@ -32,6 +32,8 @@ types:
         docs: The JSON schema (stringified) for the custom config that this generator version supports.
 
 service:
+  audiences:
+    - generators
   base-path: /generators/versions
   auth: true
   endpoints:

@@ -18,6 +18,8 @@ types:
       ir_version: string
 
 service:
+  audiences:
+    - generators
   base-path: /generators/cli
   auth: true
   endpoints:
