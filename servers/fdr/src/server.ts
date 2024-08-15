@@ -14,6 +14,9 @@ import { getDocsReadService } from "./controllers/docs/v1/getDocsReadService";
 import { getDocsWriteService } from "./controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "./controllers/docs/v2/getDocsReadV2Service";
 import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Service";
+import { getGeneratorsCliController } from "./controllers/generators/getGeneratorsCliController";
+import { getGeneratorsRootController } from "./controllers/generators/getGeneratorsRootController";
+import { getGeneratorsVersionsController } from "./controllers/generators/getGeneratorsVersionsController";
 import { getVersionsService } from "./controllers/sdk/getVersionsService";
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
@@ -114,6 +117,11 @@ async function startServer(): Promise<void> {
             docsCache: getDocsCacheService(app),
             sdks: {
                 versions: getVersionsService(app),
+            },
+            generators: {
+                _root: getGeneratorsRootController(app),
+                cli: getGeneratorsCliController(app),
+                versions: getGeneratorsVersionsController(app),
             },
         });
         registerBackgroundTasks(app);

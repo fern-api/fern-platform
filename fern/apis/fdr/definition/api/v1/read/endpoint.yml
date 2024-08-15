@@ -103,7 +103,6 @@ types:
       reference: type.TypeReference
       bytes: type.BytesRequest
       formData: type.FormDataRequest
-
       # deprecated, use formData
       fileUpload:
         type: optional<type.FormDataRequest>
@@ -129,7 +128,6 @@ types:
       fileDownload: FileDownloadResponseBodyShape
       streamingText: {}
       stream: StreamResponseV2
-
       # deprecated
       streamCondition:
         type: StreamConditionResponse
@@ -189,7 +187,6 @@ types:
       statusCode: integer
       name: optional<string>
       examples: optional<list<ErrorExample>>
-
   # examples
 
   ExampleEndpointCall:

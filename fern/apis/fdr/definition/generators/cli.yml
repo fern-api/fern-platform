@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+docs: CRUD API for managing CLI versions, as well as the corresponding IR metadata.
+
+imports:
+  commons: ./commons.yml
+
+types:
+  CliReleaseRequest:
+    extends: commons.ReleaseRequest
+
+  CliRelease:
+    extends: commons.Release
+
+  IrDependency:
+    properties:
+      cli_version: string
+      ir_version: string
+
+service:
+  audiences:
+    - generators
+  base-path: /generators/cli
+  auth: true
+  endpoints:
+    getLatestCliRelease:
+      docs: Get the latest CLI version that has not been yanked.
+      method: POST
+      path: /latest
+      request:
+        name: GetLatestCliReleaseRequest
+        body:
+          properties:
+            release_type:
+              type: optional<commons.ReleaseType>
+              docs: A filter for the release type, specifically if you'd like to get RC releases only, etc.
+      response: CliRelease
+
+    getChangelog:
+      docs: Get the changelog for the specified CLI upgrade.
+      method: GET
+      path: /changelog/{from_version}/to/{to_version}
+      path-parameters:
+        from_version: string
+        to_version: string
+      response: list<commons.ChangelogEntry>
+
+    getMinCliForIr:
+      docs: Get the minimum CLI version that supports the given IR version. This does not include RCs.
+      method: GET
+      path: /for-ir/{ir_version}
+      path-parameters:
+        ir_version: string
+      response: CliRelease
+
+    upsertCliRelease:
+      docs: Update or create the specified CLI version.
+      method: PUT
+      path: ""
+      request: CliReleaseRequest
+
+    getCliRelease:
+      docs: Get the specified CLI version.
+      method: GET
+      path: /{cli_version}
+      path-parameters:
+        cli_version: string
+      response: CliRelease
+
+    getAllCliReleases:
+      docs: Get all CLI versions.
+      method: GET
+      path: ""
+      response: list<CliRelease>

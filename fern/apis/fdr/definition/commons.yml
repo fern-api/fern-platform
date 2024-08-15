@@ -2,6 +2,7 @@
 
 types:
   ApiDefinitionId: uuid
+
   VersionId: string
 
   OrgId:

@@ -98,7 +98,6 @@ types:
       json: JsonRequestBody
       formData: type.FormDataRequest
       bytes: type.BytesRequest
-
       # deprecated
       object:
         # deprecated, the CLI will use json instead
@@ -154,7 +153,6 @@ types:
       fileDownload: FileDownloadResponseBodyShape
       streamingText: {}
       stream: StreamResponseV2
-
       # deprecated
       streamCondition:
         type: StreamConditionResponse
@@ -197,8 +195,8 @@ types:
     availability: deprecated
     union:
       booleanRequestProperty: type.PropertyKey
-
   # examples
+
   ExampleEndpointCall:
     extends: commons.WithDescription
     properties:

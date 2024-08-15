@@ -11,3 +11,4 @@ audiences:
   - fiddle
   - snippets
   - templateResolver
+  - generators

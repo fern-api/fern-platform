@@ -1,7 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 types:
   ListDomainsResponse:
     properties:
       domains: list<Domain>
+
   GetConfigResponse:
     properties:
       misconfigured: boolean
@@ -29,6 +32,7 @@ service:
             type: string
             docs: The team id to filter by
       response: GetConfigResponse
+
     list:
       docs: |
         See Vercel's docs over here: https://vercel.com/docs/rest-api/endpoints/domains#list-all-the-domains

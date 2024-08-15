@@ -9,10 +9,8 @@ service:
         - fiddle
       docs: |
         Computes a semantic version for the SDK to be relesed on.
-
         The endpoint tries to find existing versions by looking up against 
         registries and github repositories. If none are found an error is thrown. 
-
         If a version is found, a new semantic version is returned.
       path: /semantic-version/compute
       request:

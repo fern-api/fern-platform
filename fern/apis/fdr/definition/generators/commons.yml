@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  Yank:
+    docs: A yank is a metadata object that declares if a version is safe to upgrade to, if present the answer is no.
+    properties:
+      remediation_verision:
+        type: optional<string>
+        docs: |
+          The remediation strategy to be used when a yank is detected. If one is not specified, we'll likely go backwards by publishing time
+          to find the last unyanked version.
+
+  ChangelogEntryType:
+    docs: Following `conventional commit` types for the entries here.
+    enum:
+      - fix
+      - feat
+      - chore
+      - refactor
+      - perf
+
+  ChangelogEntry:
+    docs: Following `keep a changelog` format for the entries here. These are effectively your release notes.
+    properties:
+      type: ChangelogEntryType
+      added: optional<list<string>>
+      changed: optional<list<string>>
+      deprecated: optional<list<string>>
+      removed: optional<list<string>>
+      fixed: optional<list<string>>
+      security: optional<list<string>>
+
+  ReleaseType:
+    enum:
+      - GA
+      - RC
+
+  ReleaseRequest:
+    properties:
+      version: string
+      is_yanked: optional<Yank>
+      changelog_entry: optional<ChangelogEntry>
+      created_at: datetime
+
+  Release:
+    extends: ReleaseRequest
+    properties:
+      release_type: ReleaseType
+      is_latest: boolean
+      major_version: string

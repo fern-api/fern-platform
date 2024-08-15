@@ -1,5 +1,6 @@
 export * as api from "./api";
 export * as docs from "./docs";
+export * as generators from "./generators";
 export * as navigation from "./navigation";
 export * as algolia from "./algolia";
 export * from "./algolia/types";

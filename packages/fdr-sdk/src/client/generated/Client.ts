@@ -6,6 +6,7 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Api } from "./api/resources/api/client/Client";
 import { Docs } from "./api/resources/docs/client/Client";
+import { Generators } from "./api/resources/generators/client/Client";
 import { Diff } from "./api/resources/diff/client/Client";
 import { DocsCache } from "./api/resources/docsCache/client/Client";
 import { Sdks } from "./api/resources/sdks/client/Client";
@@ -39,6 +40,12 @@ export class FernRegistryClient {
 
     public get docs(): Docs {
         return (this._docs ??= new Docs(this._options));
+    }
+
+    protected _generators: Generators | undefined;
+
+    public get generators(): Generators {
+        return (this._generators ??= new Generators(this._options));
     }
 
     protected _diff: Diff | undefined;
