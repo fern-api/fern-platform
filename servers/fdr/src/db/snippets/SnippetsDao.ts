@@ -1,7 +1,7 @@
 import { Language, Prisma, PrismaClient, Sdk, Snippet } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { FdrAPI } from "../../api";
-import { readBuffer, writeBuffer } from "../../util";
+import { assertNever, readBuffer, writeBuffer } from "../../util";
 import { SdkDaoImpl } from "../sdk/SdkDao";
 import { PrismaTransaction, SdkId } from "../types";
 import { EndpointSnippetCollector } from "./EndpointSnippetCollectors";
@@ -82,12 +82,14 @@ export class SnippetsDaoImpl implements SnippetsDao {
                 dbSdkRow,
                 dbSnippet: dbSnippetRow,
             });
-            snippetCollector.collect({
-                endpointPath: dbSnippetRow.endpointPath,
-                endpointMethod: dbSnippetRow.endpointMethod,
-                identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
-                snippet,
-            });
+            if (snippet != null) {
+                snippetCollector.collect({
+                    endpointPath: dbSnippetRow.endpointPath,
+                    endpointMethod: dbSnippetRow.endpointMethod,
+                    identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
+                    snippet,
+                });
+            }
         }
 
         return snippetCollector;
@@ -188,12 +190,14 @@ export class SnippetsDaoImpl implements SnippetsDao {
                     dbSdkRow,
                     dbSnippet: dbSnippetRow,
                 });
-                snippetCollector.collect({
-                    endpointPath: dbSnippetRow.endpointPath,
-                    endpointMethod: dbSnippetRow.endpointMethod,
-                    identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
-                    snippet,
-                });
+                if (snippet != null) {
+                    snippetCollector.collect({
+                        endpointPath: dbSnippetRow.endpointPath,
+                        endpointMethod: dbSnippetRow.endpointMethod,
+                        identifierOverride: dbSnippetRow.identifierOverride ?? undefined,
+                        snippet,
+                    });
+                }
             }
             return {
                 nextPage:
@@ -350,7 +354,13 @@ function sdkInfoFromSdk({ sdk }: { sdk: FdrAPI.Sdk }): SdkInfo {
     }
 }
 
-function convertSnippetFromDb({ dbSdkRow, dbSnippet }: { dbSdkRow: Sdk; dbSnippet: Snippet }): FdrAPI.Snippet {
+function convertSnippetFromDb({
+    dbSdkRow,
+    dbSnippet,
+}: {
+    dbSdkRow: Sdk;
+    dbSnippet: Snippet;
+}): FdrAPI.Snippet | undefined {
     const sdk = readBuffer(dbSdkRow.sdk) as FdrAPI.Sdk;
     switch (dbSdkRow.language) {
         case Language.TYPESCRIPT:
@@ -396,5 +406,12 @@ function convertSnippetFromDb({ dbSdkRow, dbSnippet }: { dbSdkRow: Sdk; dbSnippe
                 exampleIdentifier: dbSnippet.exampleIdentifier ?? undefined,
             };
         }
+        case Language.CSHARP:
+        case Language.PHP:
+        case Language.SWIFT:
+        case Language.RUST:
+            return undefined;
+        default:
+            assertNever(dbSdkRow.language);
     }
 }

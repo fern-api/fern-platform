@@ -1,6 +1,7 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import * as prisma from "@prisma/client";
-import { Generator, GeneratorId, GeneratorLanguage } from "../../api/generated/api/resources/generators";
+import { Generator, GeneratorId, GeneratorLanguage, GeneratorType } from "../../api/generated/api/resources/generators";
+import { assertNever, readBuffer, writeBuffer } from "../../util";
 
 export interface LoadSnippetAPIRequest {
     orgId: string;
@@ -49,7 +50,7 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
         await this.prisma.generator.create({
             data: {
                 id: generator.id,
-                generatorType: JSON.stringify(generator.generator_type),
+                generatorType: writeBuffer(generator.generator_type),
                 generatorLanguage: convertGeneratorLanguage(generator.generator_language),
                 dockerImage: generator.docker_image,
             },
@@ -80,6 +81,8 @@ function convertGeneratorLanguage(generatorLanguage: GeneratorLanguage | undefin
             return prisma.Language.SWIFT;
         case GeneratorLanguage.Rust:
             return prisma.Language.RUST;
+        default:
+            assertNever(generatorLanguage);
     }
 }
 
@@ -106,6 +109,8 @@ function convertPrismaLanguage(prismaLanguage: prisma.Language | null): Generato
             return GeneratorLanguage.Swift;
         case prisma.Language.RUST:
             return GeneratorLanguage.Rust;
+        default:
+            assertNever(prismaLanguage);
     }
 }
 
@@ -113,8 +118,7 @@ async function convertPrismaGenerator(generator: prisma.Generator | null): Promi
     return generator != null
         ? {
               id: generator.id,
-              generator_type:
-                  generator.generatorType != null ? JSON.parse(generator.generatorType as string) : undefined,
+              generator_type: readBuffer(generator.generatorType) as GeneratorType,
               generator_language: convertPrismaLanguage(generator.generatorLanguage),
               docker_image: generator.dockerImage,
           }
