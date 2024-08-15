@@ -79,7 +79,7 @@ export class GeneratorsService {
         }));
         this.router.get("", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.methods.listGenerator(req, {
+                yield this.methods.listGenerators(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
                         res.json(responseBody);
                     }),
@@ -91,7 +91,7 @@ export class GeneratorsService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'listGenerator' unexpectedly threw ${error.constructor.name}.` +
+                    console.warn(`Endpoint 'listGenerators' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
                         " the endpoint's errors list in your Fern Definition.");
                     yield error.send(res);

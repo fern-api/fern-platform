@@ -5,7 +5,7 @@
 import * as FernRegistry from "../../../index";
 import * as core from "../../../../core";
 
-export type Error = FernRegistry.generators.listGenerator.Error._Unknown;
+export type Error = FernRegistry.generators.listGenerators.Error._Unknown;
 
 export declare namespace Error {
     interface _Unknown {
@@ -19,7 +19,7 @@ export declare namespace Error {
 }
 
 export const Error = {
-    _unknown: (fetcherError: core.Fetcher.Error): FernRegistry.generators.listGenerator.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): FernRegistry.generators.listGenerators.Error._Unknown => {
         return {
             error: undefined,
             content: fetcherError,
@@ -27,8 +27,8 @@ export const Error = {
     },
 
     _visit: <_Result>(
-        value: FernRegistry.generators.listGenerator.Error,
-        visitor: FernRegistry.generators.listGenerator.Error._Visitor<_Result>
+        value: FernRegistry.generators.listGenerators.Error,
+        visitor: FernRegistry.generators.listGenerators.Error._Visitor<_Result>
     ): _Result => {
         switch (value.error) {
             default:

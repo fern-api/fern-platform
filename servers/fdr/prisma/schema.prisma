@@ -152,8 +152,23 @@ enum Language {
   GO
   JAVA
   RUBY
+  CSHARP
+  SWIFT
+  PHP
+  RUST
 }
 
 enum SnippetTemplateSemanticVersion {
   v1
+}
+
+
+model Generator {
+  id        String   @id
+  generatorType Json
+  dockerImage String
+  generatorLanguage  Language?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
