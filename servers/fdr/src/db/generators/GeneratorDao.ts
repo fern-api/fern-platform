@@ -26,10 +26,29 @@ export interface GeneratorsDao {
     getGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<Generator | undefined>;
 
     listGenerators(): Promise<Generator[]>;
+
+    deleteGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<void>;
+    deleteGenerators({ generatorIds }: { generatorIds: GeneratorId[] }): Promise<void>;
 }
 
 export class GeneratorsDaoImpl implements GeneratorsDao {
     constructor(private readonly prisma: prisma.PrismaClient) {}
+    async deleteGenerators({ generatorIds }: { generatorIds: string[] }): Promise<void> {
+        await this.prisma.generator.deleteMany({
+            where: {
+                id: { in: generatorIds },
+            },
+        });
+    }
+
+    async deleteGenerator({ generatorId }: { generatorId: string }): Promise<void> {
+        await this.prisma.generator.delete({
+            where: {
+                id: generatorId,
+            },
+        });
+    }
+
     async getGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<Generator | undefined> {
         return await convertPrismaGenerator(
             await this.prisma.generator.findUnique({
@@ -39,6 +58,7 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
             }),
         );
     }
+
     async listGenerators(): Promise<Generator[]> {
         const generators = await this.prisma.generator.findMany();
 
@@ -47,13 +67,18 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
 
     async upsertGenerator({ generator }: { generator: Generator }): Promise<void> {
         // We always just write over the previous entry here
-        await this.prisma.generator.create({
-            data: {
+        const data = {
+            id: generator.id,
+            generatorType: writeBuffer(generator.generator_type),
+            generatorLanguage: convertGeneratorLanguage(generator.generator_language),
+            dockerImage: generator.docker_image,
+        };
+        await this.prisma.generator.upsert({
+            where: {
                 id: generator.id,
-                generatorType: writeBuffer(generator.generator_type),
-                generatorLanguage: convertGeneratorLanguage(generator.generator_language),
-                dockerImage: generator.docker_image,
             },
+            update: data,
+            create: data,
         });
     }
 }
