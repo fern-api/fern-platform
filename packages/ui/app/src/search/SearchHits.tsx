@@ -146,7 +146,7 @@ export const SearchHits: React.FC = () => {
             className="p-2"
             scrollbars="vertical"
         >
-            {isCohere && false && (
+            {false && isCohere && (
                 <AskCohereHit
                     setRef={(elem) => {
                         if (elem != null) {
@@ -193,7 +193,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <FernScrollArea className="mask-grad-top-4 px-2 pt-4">
-            {isCohere && (
+            {false && isCohere && (
                 <AskCohereHit
                     setRef={(elem) => {
                         if (elem != null) {
