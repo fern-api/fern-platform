@@ -146,7 +146,7 @@ export const SearchHits: React.FC = () => {
             className="p-2"
             scrollbars="vertical"
         >
-            {isCohere && (
+            {isCohere && false && (
                 <AskCohereHit
                     setRef={(elem) => {
                         if (elem != null) {
