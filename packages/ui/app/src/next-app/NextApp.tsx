@@ -1,20 +1,26 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import * as sentry from "@sentry/nextjs";
-import { Provider as JotaiProvider } from "jotai";
+import { Provider as JotaiProvider, useAtomValue } from "jotai";
+import { selectAtom } from "jotai/utils";
+import isEqual from "lodash-es/isEqual";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
 import { capturePosthogEvent, initializePosthog } from "../analytics/posthog";
-import { DocsProps, ThemeScript, store } from "../atoms";
+import { DOCS_ATOM, DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
+
+const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConfig ?? {}, isEqual);
+
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
+    const { posthog } = useAtomValue(ANALYTICS_CONFIG_ATOM);
     useEffect(() => {
-        initializePosthog();
+        initializePosthog(posthog);
 
         // Track page views
         const handleRouteChange = (url: string) => {
@@ -35,7 +41,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
         return () => {
             Router.events.off("routeChangeComplete", handleRouteChange);
         };
-    }, []);
+    }, [posthog]);
 
     // This is a hack to handle edge-cases related to multitenant subpath rendering:
     // We need to intercept how prefetching is done and modify the hrefs to include the subpath.
