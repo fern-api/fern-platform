@@ -70,11 +70,12 @@ types:
 
   FullStoryAnalyticsConfig:
     properties:
-      apiKey: string
+      orgId: string
 
   IntercomConfig:
     properties:
-      accessToken: string
+      appId: string
+      apiBase: optional<string>
 
   PostHogConfig:
     properties:
