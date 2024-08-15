@@ -165,7 +165,7 @@ enum SnippetTemplateSemanticVersion {
 
 model Generator {
   id        String   @id
-  generatorType Json
+  generatorType Bytes
   dockerImage String
   generatorLanguage  Language?
 

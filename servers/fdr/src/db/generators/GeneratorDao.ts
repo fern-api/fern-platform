@@ -1,6 +1,7 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import * as prisma from "@prisma/client";
-import { Generator, GeneratorId, GeneratorLanguage } from "../../api/generated/api/resources/generators";
+import { Generator, GeneratorId, GeneratorLanguage, GeneratorType } from "../../api/generated/api/resources/generators";
+import { assertNever, readBuffer, writeBuffer } from "../../util";
 
 export interface LoadSnippetAPIRequest {
     orgId: string;
@@ -25,10 +26,29 @@ export interface GeneratorsDao {
     getGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<Generator | undefined>;
 
     listGenerators(): Promise<Generator[]>;
+
+    deleteGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<void>;
+    deleteGenerators({ generatorIds }: { generatorIds: GeneratorId[] }): Promise<void>;
 }
 
 export class GeneratorsDaoImpl implements GeneratorsDao {
     constructor(private readonly prisma: prisma.PrismaClient) {}
+    async deleteGenerators({ generatorIds }: { generatorIds: string[] }): Promise<void> {
+        await this.prisma.generator.deleteMany({
+            where: {
+                id: { in: generatorIds },
+            },
+        });
+    }
+
+    async deleteGenerator({ generatorId }: { generatorId: string }): Promise<void> {
+        await this.prisma.generator.delete({
+            where: {
+                id: generatorId,
+            },
+        });
+    }
+
     async getGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<Generator | undefined> {
         return convertPrismaGenerator(
             await this.prisma.generator.findUnique({
@@ -38,6 +58,7 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
             }),
         );
     }
+
     async listGenerators(): Promise<Generator[]> {
         const generators = await this.prisma.generator.findMany();
 
@@ -46,13 +67,18 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
 
     async upsertGenerator({ generator }: { generator: Generator }): Promise<void> {
         // We always just write over the previous entry here
-        await this.prisma.generator.create({
-            data: {
+        const data = {
+            id: generator.id,
+            generatorType: writeBuffer(generator.generator_type),
+            generatorLanguage: convertGeneratorLanguage(generator.generator_language),
+            dockerImage: generator.docker_image,
+        };
+        await this.prisma.generator.upsert({
+            where: {
                 id: generator.id,
-                generatorType: JSON.stringify(generator.generator_type),
-                generatorLanguage: convertGeneratorLanguage(generator.generator_language),
-                dockerImage: generator.docker_image,
             },
+            update: data,
+            create: data,
         });
     }
 }
@@ -80,6 +106,8 @@ function convertGeneratorLanguage(generatorLanguage: GeneratorLanguage | undefin
             return prisma.Language.SWIFT;
         case GeneratorLanguage.Rust:
             return prisma.Language.RUST;
+        default:
+            assertNever(generatorLanguage);
     }
 }
 
@@ -106,6 +134,8 @@ function convertPrismaLanguage(prismaLanguage: prisma.Language | null): Generato
             return GeneratorLanguage.Swift;
         case prisma.Language.RUST:
             return GeneratorLanguage.Rust;
+        default:
+            assertNever(prismaLanguage);
     }
 }
 
@@ -113,8 +143,7 @@ function convertPrismaGenerator(generator: prisma.Generator | null): Generator |
     return generator != null
         ? {
               id: generator.id,
-              generator_type:
-                  generator.generatorType != null ? JSON.parse(generator.generatorType as string) : undefined,
+              generator_type: readBuffer(generator.generatorType) as GeneratorType,
               generator_language: convertPrismaLanguage(generator.generatorLanguage),
               docker_image: generator.dockerImage,
           }
