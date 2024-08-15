@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-empty-function: 0 */
 import { GeneratorsService } from "../../api/generated/api/resources/generators/service/GeneratorsService";
 import { FdrApplication } from "../../app";
 

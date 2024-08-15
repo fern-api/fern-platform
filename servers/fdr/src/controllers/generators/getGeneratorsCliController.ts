@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-empty-function: 0 */
 import { CliService } from "../../api/generated/api/resources/generators/resources/cli/service/CliService";
 import { FdrApplication } from "../../app";
 

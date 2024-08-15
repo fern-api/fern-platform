@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-empty-function: 0 */
 import { VersionsService } from "../../api/generated/api/resources/generators/resources/versions/service/VersionsService";
 import { FdrApplication } from "../../app";
 
