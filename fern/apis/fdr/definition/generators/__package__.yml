@@ -40,7 +40,7 @@ service:
   base-path: /generators
   endpoints:
     upsertGenerator:
-      docs: Update or create the specified generator version.
+      docs: Update or create the specified generator.
       method: PUT
       path: ""
       request: Generator

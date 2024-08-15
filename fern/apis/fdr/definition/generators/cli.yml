@@ -37,7 +37,7 @@ service:
     getChangelog:
       docs: Get the changelog for the specified CLI upgrade.
       method: GET
-      path: /{from_version}/to/{to_version}
+      path: /changelog/{from_version}/to/{to_version}
       path-parameters:
         from_version: string
         to_version: string

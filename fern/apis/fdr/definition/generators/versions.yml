@@ -49,15 +49,15 @@ service:
               docs: |
                 Whether or not to include major versions when searching for the latest version. If specified, we will only return the latest version
                 that is the same major version as provided. Useful while we do not support config migrations, etc.
-            include_rcs:
-              type: optional<boolean>
-              docs: Whether or not to include RCs when searching for the latest version. Defaults to false.
+            release_type:
+              type: optional<commons.ReleaseType>
+              docs: A filter for the release type, specifically if you'd like to get RC releases only, etc.
       response: GeneratorRelease
 
     getChangelog:
       docs: Get the changelog for the specified generator upgrade.
       method: GET
-      path: /{generator}/{from_version}/to/{to_version}
+      path: /{generator}/changelog/{from_version}/to/{to_version}
       path-parameters:
         generator: root.GeneratorId
         from_version: string
