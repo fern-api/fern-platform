@@ -5,7 +5,7 @@
 import * as FernRegistry from "../../../../../index";
 import * as core from "../../../../../../core";
 
-export type Error = FernRegistry.generators.versions.getLatestGeneratorVersion.Error._Unknown;
+export type Error = FernRegistry.generators.versions.listGeneratorReleases.Error._Unknown;
 
 export declare namespace Error {
     interface _Unknown {
@@ -21,7 +21,7 @@ export declare namespace Error {
 export const Error = {
     _unknown: (
         fetcherError: core.Fetcher.Error
-    ): FernRegistry.generators.versions.getLatestGeneratorVersion.Error._Unknown => {
+    ): FernRegistry.generators.versions.listGeneratorReleases.Error._Unknown => {
         return {
             error: undefined,
             content: fetcherError,
@@ -29,8 +29,8 @@ export const Error = {
     },
 
     _visit: <_Result>(
-        value: FernRegistry.generators.versions.getLatestGeneratorVersion.Error,
-        visitor: FernRegistry.generators.versions.getLatestGeneratorVersion.Error._Visitor<_Result>
+        value: FernRegistry.generators.versions.listGeneratorReleases.Error,
+        visitor: FernRegistry.generators.versions.listGeneratorReleases.Error._Visitor<_Result>
     ): _Result => {
         switch (value.error) {
             default:

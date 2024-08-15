@@ -169,6 +169,40 @@ model Generator {
   dockerImage String
   generatorLanguage  Language?
 
+  releases GeneratorRelease[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+enum ReleaseType {
+  ga
+  rc
+}
+
+model GeneratorRelease {
+  @@id([generatorId, version])
+
+  // A bit of duplication here, but it's easier to query this way
+  version   String
+  major    Int
+  minor    Int
+  patch    Int
+
+  generatorId String
+  generator Generator @relation(fields: [generatorId], references: [id])
+
+  isYanked Json?
+  changelogEntry Json?
+
+  irVersion String
+  migration Bytes
+  customConfigSchema Json
+
+  releaseType ReleaseType
+  isLatest Boolean
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

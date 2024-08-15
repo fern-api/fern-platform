@@ -4,8 +4,8 @@
 import * as FernRegistry from "../../../../..";
 import express from "express";
 export interface VersionsServiceMethods {
-    getLatestGeneratorVersion(req: express.Request<never, FernRegistry.generators.GeneratorRelease, FernRegistry.generators.GetLatestGeneratorVersionRequest, never>, res: {
-        send: (responseBody: FernRegistry.generators.GeneratorRelease) => Promise<void>;
+    getLatestGeneratorRelease(req: express.Request<never, FernRegistry.generators.GeneratorRelease | undefined, FernRegistry.generators.GetLatestGeneratorReleaseRequest, never>, res: {
+        send: (responseBody: FernRegistry.generators.GeneratorRelease | undefined) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
@@ -26,14 +26,17 @@ export interface VersionsServiceMethods {
     getGeneratorRelease(req: express.Request<{
         generator: FernRegistry.generators.GeneratorId;
         version: string;
-    }, FernRegistry.generators.GeneratorRelease, never, never>, res: {
-        send: (responseBody: FernRegistry.generators.GeneratorRelease) => Promise<void>;
+    }, FernRegistry.generators.GeneratorRelease | undefined, never, never>, res: {
+        send: (responseBody: FernRegistry.generators.GeneratorRelease | undefined) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
-    getAllGeneratorReleases(req: express.Request<{
+    listGeneratorReleases(req: express.Request<{
         generator: FernRegistry.generators.GeneratorId;
-    }, FernRegistry.generators.GeneratorRelease[], never, never>, res: {
+    }, FernRegistry.generators.GeneratorRelease[], never, {
+        page?: number;
+        page_size?: number;
+    }>, res: {
         send: (responseBody: FernRegistry.generators.GeneratorRelease[]) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;

@@ -29,7 +29,7 @@ export class VersionsService {
     toRouter() {
         this.router.post("/latest", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.methods.getLatestGeneratorVersion(req, {
+                yield this.methods.getLatestGeneratorRelease(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
                         res.json(responseBody);
                     }),
@@ -41,7 +41,7 @@ export class VersionsService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'getLatestGeneratorVersion' unexpectedly threw ${error.constructor.name}.` +
+                    console.warn(`Endpoint 'getLatestGeneratorRelease' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
                         " the endpoint's errors list in your Fern Definition.");
                     yield error.send(res);
@@ -91,9 +91,14 @@ export class VersionsService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'upsertGeneratorRelease' unexpectedly threw ${error.constructor.name}.` +
-                        ` If this was intentional, please add ${error.constructor.name} to` +
-                        " the endpoint's errors list in your Fern Definition.");
+                    switch (error.errorName) {
+                        case "InvalidVersionError":
+                            break;
+                        default:
+                            console.warn(`Endpoint 'upsertGeneratorRelease' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.");
+                    }
                     yield error.send(res);
                 }
                 else {
@@ -129,7 +134,7 @@ export class VersionsService {
         }));
         this.router.get("/:generator", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.methods.getAllGeneratorReleases(req, {
+                yield this.methods.listGeneratorReleases(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
                         res.json(responseBody);
                     }),
@@ -141,7 +146,7 @@ export class VersionsService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'getAllGeneratorReleases' unexpectedly threw ${error.constructor.name}.` +
+                    console.warn(`Endpoint 'listGeneratorReleases' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
                         " the endpoint's errors list in your Fern Definition.");
                     yield error.send(res);

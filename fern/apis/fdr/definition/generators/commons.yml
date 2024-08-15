@@ -47,4 +47,13 @@ types:
     properties:
       release_type: ReleaseType
       is_latest: boolean
-      major_version: string
+      major_version: integer
+
+  InvalidVersionErrorMessage:
+    properties:
+      provided_version: string
+
+errors:
+  InvalidVersionError:
+    status-code: 400
+    type: InvalidVersionErrorMessage
