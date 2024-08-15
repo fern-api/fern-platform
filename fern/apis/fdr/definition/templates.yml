@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 imports:
   type: ./api/v1/read/type.yml
   commons: commons.yml
@@ -77,6 +79,7 @@ service:
 
 types:
   # Internal Snippet structure
+
   TemplateSentinel: literal<"$FERN_INPUT">
 
   UnionTemplateMember:
@@ -92,7 +95,6 @@ types:
         docs: |
           We might not need this, but the idea here is to be able to omit if it's optional and undefined,
           or default if omitted and required.
-
       templateString: string
       members: list<UnionTemplateMember>
       templateInput: optional<PayloadInput>
@@ -105,7 +107,6 @@ types:
         docs: |
           We might not need this, but the idea here is to be able to omit if it's optional and undefined,
           or default if omitted and required.
-
       templateString: string
       members:
         type: map<string, Template>
@@ -120,13 +121,13 @@ types:
         docs: |
           We might not need this, but the idea here is to be able to omit if it's optional and undefined,
           or default if omitted and required.
-
       templateString: string
       discriminantField: string
       members:
         type: map<string, Template>
         docs: A map of the union member's discriminant to the template to use to create it
       templateInput: optional<PayloadInput>
+
   EnumTemplate:
     properties:
       imports: optional<list<string>>
@@ -135,10 +136,10 @@ types:
         docs: |
           We might not need this, but the idea here is to be able to omit if it's optional and undefined,
           or default if omitted and required.
-
       templateString: optional<string>
       values: map<string, string>
       templateInput: optional<PayloadInput>
+
   GenericTemplate:
     properties:
       imports: optional<list<string>>
@@ -147,7 +148,6 @@ types:
         docs: |
           We might not need this, but the idea here is to be able to omit if it's optional and undefined,
           or default if omitted and required.
-
       templateString: string
       templateInputs:
         type: optional<list<TemplateInput>>
@@ -155,6 +155,7 @@ types:
       inputDelimiter:
         type: optional<string>
         docs: In the event you have multiple template inputs, how do you concat them together
+
   DictTemplate:
     properties:
       imports: optional<list<string>>
@@ -171,6 +172,7 @@ types:
       valueTemplate: Template
       keyValueSeparator: string
       templateInput: optional<PayloadInput>
+
   IterableTemplate:
     properties:
       imports: optional<list<string>>
@@ -189,6 +191,7 @@ types:
           In the event of an array, the root template would be something like `[ fern!{{ child }} ]`
           and so the child would be the actual object type seen in the example.
       templateInput: optional<PayloadInput>
+
   Template:
     union:
       generic: GenericTemplate
@@ -203,6 +206,7 @@ types:
     union:
       template: Template
       payload: PayloadInput
+
   PayloadLocation:
     docs: |
       The location of the payload, if omitted the full payload is used.
@@ -215,6 +219,7 @@ types:
       - HEADERS
       - RELATIVE
       - AUTH
+
   PayloadInput:
     properties:
       location: PayloadLocation

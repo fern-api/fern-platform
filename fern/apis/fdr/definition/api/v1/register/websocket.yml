@@ -7,6 +7,7 @@ imports:
 
 types:
   WebSocketId: string
+
   WebSocketMessageId: string
 
   WebSocketChannel:
@@ -17,11 +18,9 @@ types:
       id: WebSocketId
       auth: boolean
       name: optional<string>
-
       # environments (should match to wss://)
       defaultEnvironment: optional<http.EnvironmentId>
       environments: list<http.Environment>
-
       # mirror-ish of FDR-IR
       path: http.EndpointPath
       headers: list<http.Header>
@@ -45,8 +44,8 @@ types:
     enum:
       - client
       - server
-
   # mirror of http.HttpRequestBodyShape without fileUpload
+
   WebSocketMessageBodyShape:
     union:
       object: type.ObjectType

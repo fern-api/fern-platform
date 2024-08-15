@@ -2,11 +2,17 @@
 
 types:
   FileId: string
+
   PageId: string
+
   Url: string
+
   SubpackageId: string
+
   EndpointId: string
+
   WebSocketId: string
+
   WebhookId: string
 
   FileIdOrUrl:
@@ -20,8 +26,8 @@ types:
       g: integer
       b: integer
       a: optional<double>
-
   # Docs layout config
+
   ProgrammingLanguage:
     enum:
       - typescript
@@ -167,7 +173,6 @@ types:
     union:
       px: double
       rem: double
-
   # SEO Config
 
   MetadataConfig:
@@ -209,7 +214,6 @@ types:
       outlined: NavbarLinkMetadata
       minimal: NavbarLinkMetadata
       github: NavbarGithubMetadata
-
       # deprecated
       primary: NavbarLinkMetadata # -> outlined
       secondary: NavbarLinkMetadata # -> minimal
@@ -240,7 +244,6 @@ types:
       hackernews: Url
       medium: Url
       website: Url
-
   # Customization Config
 
   CssConfig:
@@ -272,7 +275,6 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
-
   # Typography
 
   DocsTypographyConfigV2:
@@ -280,8 +282,8 @@ types:
       headingsFont: optional<FontConfigV2>
       bodyFont: optional<FontConfigV2>
       codeFont: optional<FontConfigV2>
-
   # TODO: add support for google fonts
+
   FontConfigV2:
     union:
       custom: CustomFontConfig
@@ -292,7 +294,6 @@ types:
       variants: list<CustomFontConfigVariant>
       display: optional<FontDisplay>
       fallback: optional<list<string>>
-
       # declarations
       fontVariationSettings: optional<string>
 
@@ -314,7 +315,6 @@ types:
       - swap
       - fallback
       - optional
-
   # Deprecated
 
   ThemedFileId:

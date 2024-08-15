@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+docs: CRUD API for managing generator versions.
+
+imports:
+  commons: ./commons.yml
+
+types:
+  GeneratorReleaseRequest:
+    extends: commons.ReleaseRequest
+    properties:
+      generator_id: GeneratorId
+      ir_version: string
+      migration:
+        type: optional<string>
+        docs: The TypeScript file for the migration to run when upgrading to this version.
+      custom_config_schema:
+        type: optional<string>
+        docs: The JSON schema (stringified) for the custom config that this generator version supports.
+
+  GeneratorRelease:
+    extends: Release
+    properties:
+      generator_id: GeneratorId
+      ir_version: string
+      migration:
+        type: optional<string>
+        docs: The TypeScript file for the migration to run when upgrading to this version.
+      custom_config_schema:
+        type: optional<string>
+        docs: The JSON schema (stringified) for the custom config that this generator version supports.
+
+service:
+  base-path: /generators/versions
+  auth: true
+  endpoints:
+    getLatestGeneratorVersion:
+      docs: Get the latest generator version that has not been yanked.
+      method: GET
+      path: /latest
+      request:
+        name: GetLatestGeneratorVersionRequest
+        body:
+          properties:
+            type: string
+            retain_major_version:
+              type: optional<string>
+              docs: |
+                Whether or not to include major versions when searching for the latest version. If specified, we will only return the latest version
+                that is the same major version as provided. Useful while we do not support config migrations, etc.
+            include_rcs:
+              type: optional<boolean>
+              docs: Whether or not to include RCs when searching for the latest version. Defaults to false.
+      response: GeneratorRelease
+
+    getChangelog:
+      docs: Get the changelog for the specified generator upgrade.
+      method: GET
+      path: /{generator}/{from_version}/to/{to_version}
+      path-parameters:
+        generator: string
+        from_version: string
+        to_version: string
+      response: list<commons.ChangelogEntry>
+
+    upsertGeneratorRelease:
+      docs: Update or create the specified generator version.
+      method: PUT
+      path: /
+      request: GeneratorReleaseRequest
+
+    getGeneratorRelease:
+      docs: Get the specified generator version.
+      method: GET
+      path: /{generator}/{version}
+      path-parameters:
+        generator: string
+        version: string
+      response: GeneratorRelease

@@ -48,7 +48,6 @@ service:
               docs: |
                 The JSON payload to be used as the input for the code snippet. This should just be thought of as the
                 request body you'd be sending to the endpoint as a cURL. If not specified then the default payload will be used.
-
       response: list<Snippet>
       errors:
         - commons.UnauthorizedError
@@ -73,12 +72,10 @@ service:
                   version: 1.2.1
                 sync_client: |
                   import Vellum from vellum.client
-
                   client = Vellum(api_key="YOUR_API_KEY")
                   client.search(query="Find documents written in the last 5 days")
                 async_client: |
                   import VellumAsync from vellum.client
-
                   client = VellumAsync(api_key="YOUR_API_KEY")
                   await client.search(query="Find documents written in the last 5 days")
               - type: typescript
@@ -87,7 +84,6 @@ service:
                   version: 1.2.1
                 client: |
                   import { VellumClient } from "vellum-ai";
-
                   const vellum = VellumClient({
                     apiKey="YOUR_API_KEY"
                   })
@@ -156,12 +152,10 @@ service:
                         version: 1.2.1
                       sync_client: |
                         import Vellum from vellum.client
-
                         client = Vellum(api_key="YOUR_API_KEY")
                         client.search(query="Find documents written in the last 5 days")
                       async_client: |
                         import Vellum from vellum.client
-
                         client = Vellum(api_key="YOUR_API_KEY")
                         client.search(query="Find documents written in the last 5 days")
                     - type: typescript
@@ -170,7 +164,6 @@ service:
                         version: 1.2.1
                       client: |
                         import { VellumClient } from "vellum-ai";
-
                         const vellum = VellumClient({
                           apiKey="YOUR_API_KEY"
                         })
@@ -185,12 +178,10 @@ service:
                         version: 1.2.1
                       sync_client: |
                         import Vellum from vellum.client
-
                         client = Vellum(api_key="YOUR_API_KEY")
                         client.document_indexes.create(name="meeting-reports", status="ACTIVE")
                       async_client: |
                         import VellumAsync from vellum.client
-
                         client = VellumAsync(api_key="YOUR_API_KEY")
                         await client.document_indexes.create(name="meeting-reports", status="ACTIVE")
                     - type: typescript
@@ -199,7 +190,6 @@ service:
                         version: 1.2.1
                       client: |
                         import { VellumClient } from "vellum-ai";
-
                         const vellum = VellumClient({
                           apiKey="YOUR_API_KEY"
                         })
@@ -284,14 +274,14 @@ types:
         type: string
         docs: The artifact (e.g. `stripe-java`)
       version: string
-
   ####### Load Snippets #######
-
   ### Load Snippets Custom Payload ###
+
   ParameterPayload:
     properties:
       name: string
       value: unknown
+
   CustomSnippetPayload:
     audiences:
       - templateResolver
@@ -307,9 +297,11 @@ types:
       bearer: BearerTokenAuthPayload
       basic: BasicAuthPayload
       # Add more auth types here as needed
+
   BearerTokenAuthPayload:
     properties:
       token: string
+
   BasicAuthPayload:
     properties:
       username: string
