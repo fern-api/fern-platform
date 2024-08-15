@@ -34,15 +34,15 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
     const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "SIDEBAR";
 
-    if (
-        tabs.length > 0 &&
-        layout?.disableHeader !== true &&
-        layout?.tabsPlacement === "HEADER" &&
-        !showSearchBar &&
-        (sidebar == null || sidebar?.children.length === 0)
-    ) {
-        return null;
-    }
+    // if (
+    //     tabs.length > 0 &&
+    //     layout?.disableHeader !== true &&
+    //     layout?.tabsPlacement === "HEADER" &&
+    //     !showSearchBar &&
+    //     (sidebar == null || sidebar?.children.length === 0)
+    // ) {
+    //     return null;
+    // }
 
     return (
         <nav aria-label="secondary" ref={ref} {...props} className={clsx("fern-sidebar-container", props.className)}>
