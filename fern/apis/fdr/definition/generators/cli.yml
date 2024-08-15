@@ -23,7 +23,7 @@ service:
   endpoints:
     getLatestCliRelease:
       docs: Get the latest CLI version that has not been yanked.
-      method: GET
+      method: POST
       path: /latest
       request:
         name: GetLatestCliReleaseRequest
@@ -46,18 +46,15 @@ service:
     getMinCliForIr:
       docs: Get the minimum CLI version that supports the given IR version. This does not include RCs.
       method: GET
-      path: /for-ir
-      request:
-        name: GetMinCliForIrRequest
-        body:
-          properties:
-            ir_version: string
+      path: /for-ir/{ir_version}
+      path-parameters:
+        ir_version: string
       response: CliRelease
 
     upsertCliRelease:
       docs: Update or create the specified CLI version.
       method: PUT
-      path: /
+      path: ""
       request: CliReleaseRequest
 
     getCliRelease:
@@ -67,3 +64,9 @@ service:
       path-parameters:
         cli_version: string
       response: CliRelease
+
+    getAllCliReleases:
+      docs: Get all CLI versions.
+      method: GET
+      path: ""
+      response: list<CliRelease>

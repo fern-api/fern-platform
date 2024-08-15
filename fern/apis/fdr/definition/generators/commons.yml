@@ -23,12 +23,12 @@ types:
     docs: Following `keep a changelog` format for the entries here. These are effectively your release notes.
     properties:
       type: ChangelogEntryType
-      added: optional<array<string>>
-      changed: optional<array<string>>
-      deprecated: optional<array<string>>
-      removed: optional<array<string>>
-      fixed: optional<array<string>>
-      security: optional<array<string>>
+      added: optional<list<string>>
+      changed: optional<list<string>>
+      deprecated: optional<list<string>>
+      removed: optional<list<string>>
+      fixed: optional<list<string>>
+      security: optional<list<string>>
 
   ReleaseType:
     enum:

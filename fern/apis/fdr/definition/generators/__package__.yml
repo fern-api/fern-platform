@@ -42,7 +42,7 @@ service:
     upsertGenerator:
       docs: Update or create the specified generator version.
       method: PUT
-      path: /
+      path: ""
       request: Generator
 
     getGenerator:

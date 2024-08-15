@@ -4,12 +4,13 @@ docs: CRUD API for managing generator versions.
 
 imports:
   commons: ./commons.yml
+  root: ./__package__.yml
 
 types:
   GeneratorReleaseRequest:
     extends: commons.ReleaseRequest
     properties:
-      generator_id: GeneratorId
+      generator_id: root.GeneratorId
       ir_version: string
       migration:
         type: optional<string>
@@ -19,9 +20,9 @@ types:
         docs: The JSON schema (stringified) for the custom config that this generator version supports.
 
   GeneratorRelease:
-    extends: Release
+    extends: commons.Release
     properties:
-      generator_id: GeneratorId
+      generator_id: root.GeneratorId
       ir_version: string
       migration:
         type: optional<string>
@@ -36,7 +37,7 @@ service:
   endpoints:
     getLatestGeneratorVersion:
       docs: Get the latest generator version that has not been yanked.
-      method: GET
+      method: POST
       path: /latest
       request:
         name: GetLatestGeneratorVersionRequest
@@ -58,7 +59,7 @@ service:
       method: GET
       path: /{generator}/{from_version}/to/{to_version}
       path-parameters:
-        generator: string
+        generator: root.GeneratorId
         from_version: string
         to_version: string
       response: list<commons.ChangelogEntry>
@@ -66,7 +67,7 @@ service:
     upsertGeneratorRelease:
       docs: Update or create the specified generator version.
       method: PUT
-      path: /
+      path: ""
       request: GeneratorReleaseRequest
 
     getGeneratorRelease:
@@ -74,6 +75,14 @@ service:
       method: GET
       path: /{generator}/{version}
       path-parameters:
-        generator: string
+        generator: root.GeneratorId
         version: string
       response: GeneratorRelease
+
+    getAllGeneratorReleases:
+      docs: Get all generator versions for the specified generator.
+      method: GET
+      path: /{generator}
+      path-parameters:
+        generator: root.GeneratorId
+      response: list<GeneratorRelease>
