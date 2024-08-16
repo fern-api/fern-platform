@@ -8,3 +8,4 @@ export * from "./cli/service/requests";
 export * from "./versions/service/requests";
 export * from "./cli/errors";
 export * from "./commons/errors";
+export * from "./versions/errors";

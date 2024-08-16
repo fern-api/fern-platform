@@ -166,6 +166,11 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
         const releases = await this.prisma.cliRelease.findMany({
             skip: page * pageSize,
             take: pageSize,
+            orderBy: [
+                {
+                    nonce: "desc",
+                },
+            ],
         });
 
         return { cli_releases: releases.map(convertPrismaCliRelease).filter((g): g is CliRelease => g != null) };

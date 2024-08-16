@@ -12,9 +12,9 @@ CREATE TABLE "GeneratorRelease" (
     "changelogEntry" BYTEA,
     "migration" BYTEA,
     "irVersion" TEXT NOT NULL,
+    "nonce" TEXT NOT NULL,
     "customConfigSchema" TEXT,
     "releaseType" "ReleaseType" NOT NULL,
-    "isLatest" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -22,4 +22,4 @@ CREATE TABLE "GeneratorRelease" (
 );
 
 -- AddForeignKey
-ALTER TABLE "GeneratorRelease" ADD CONSTRAINT "GeneratorRelease_generatorId_fkey" FOREIGN KEY ("generatorId") REFERENCES "Generator"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "GeneratorRelease" ADD CONSTRAINT "GeneratorRelease_generatorId_fkey" FOREIGN KEY ("generatorId") REFERENCES "Generator"("id") ON DELETE CASCADE ON UPDATE CASCADE;
