@@ -193,12 +193,12 @@ model GeneratorRelease {
   generatorId String
   generator Generator @relation(fields: [generatorId], references: [id])
 
-  isYanked Json?
-  changelogEntry Json?
+  isYanked Bytes?
+  changelogEntry Bytes?
 
+  migration Bytes?
   irVersion String
-  migration Bytes
-  customConfigSchema Json
+  customConfigSchema String?
 
   releaseType ReleaseType
   isLatest Boolean

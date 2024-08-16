@@ -9,6 +9,7 @@ import {
     GetLatestGeneratorReleaseRequest,
     InvalidVersionError,
     ReleaseType,
+    Yank,
 } from "../../api/generated/api/resources/generators";
 import { readBuffer, writeBuffer } from "../../util";
 
@@ -44,7 +45,7 @@ export interface GeneratorVersionsDao {
         generator: GeneratorId;
         fromVersion: string;
         toVersion: string;
-    }): Promise<ChangelogEntry[]>;
+    }): Promise<Map<string, ChangelogEntry>>;
 
     upsertGeneratorRelease({ generatorRelease }: { generatorRelease: GeneratorReleaseRequest }): Promise<void>;
 
@@ -90,9 +91,22 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             // If there isn't a latest release, then this is the latest
             // If there is a latest release, then do a semver comparison to see if this is the latest
             const isNewVersionLatest =
-                currentLatest == null ? true : semver.lt(currentLatest?.version, generatorRelease.version);
-            const isRc = semver.prerelease(generatorRelease.version) != null;
+                currentLatest == null ? true : semver.lte(currentLatest?.version, generatorRelease.version);
 
+            // For good measure we make all the other releases not latest, not just the one we're sure was latest
+            if (isNewVersionLatest && currentLatest != null) {
+                await tx.generatorRelease.updateMany({
+                    where: {
+                        generatorId: generatorRelease.generator_id,
+                    },
+                    data: {
+                        isLatest: false,
+                    },
+                });
+            }
+
+            // Create new entry
+            const isRc = semver.prerelease(generatorRelease.version) != null;
             const data = {
                 version: generatorRelease.version,
                 generatorId: generatorRelease.generator_id,
@@ -100,13 +114,13 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
                 major: parsedVersion.major,
                 minor: parsedVersion.minor,
                 patch: parsedVersion.patch,
-                isYanked: generatorRelease.is_yanked != null ? JSON.stringify(generatorRelease.is_yanked) : undefined,
+                isYanked: generatorRelease.is_yanked != null ? writeBuffer(generatorRelease.is_yanked) : undefined,
                 changelogEntry:
                     generatorRelease.changelog_entry != null
-                        ? JSON.stringify(generatorRelease.changelog_entry)
+                        ? writeBuffer(generatorRelease.changelog_entry)
                         : undefined,
-                migration: writeBuffer(generatorRelease.migration),
-                customConfigSchema: JSON.stringify(generatorRelease.custom_config_schema),
+                migration: generatorRelease.migration != null ? writeBuffer(generatorRelease.migration) : undefined,
+                customConfigSchema: generatorRelease.custom_config_schema,
                 releaseType: isRc ? prisma.ReleaseType.rc : prisma.ReleaseType.ga,
                 isLatest: isNewVersionLatest,
             };
@@ -120,18 +134,6 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
                 create: data,
                 update: data,
             });
-
-            if (isNewVersionLatest && currentLatest != null) {
-                await tx.generatorRelease.updateMany({
-                    where: {
-                        // For good measure we make all the other releases not latest, not just the one we're sure was latest
-                        generatorId: generatorRelease.generator_id,
-                    },
-                    data: {
-                        isLatest: false,
-                    },
-                });
-            }
         });
     }
 
@@ -179,17 +181,23 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
         getLatestGeneratorReleaseRequest: GetLatestGeneratorReleaseRequest;
     }): Promise<GeneratorRelease | undefined> {
         // TODO: should we have a concept of latest per-release type? I assume no
-        // So for now we only grab by `isLatest` if the release type is not RC
+        // So for now we only grab by `isLatest` if the release type is not RC,
+        // if the release type is RC, we grab the latest RC by time.
         const releaseType =
             getLatestGeneratorReleaseRequest.releaseType != null
                 ? convertGeneratorReleaseType(getLatestGeneratorReleaseRequest.releaseType)
                 : undefined;
+        // We similarly do not explicitly track an isLatest within the major version, so we only filter to isLatest if that is not set too
+        const filterToIsLatest =
+            getLatestGeneratorReleaseRequest.retainMajorVersion == null &&
+            (releaseType == null || releaseType === prisma.ReleaseType.ga);
+
         const release = await this.prisma.generatorRelease.findFirst({
             where: {
                 generatorId: getLatestGeneratorReleaseRequest.generator,
                 releaseType,
                 major: getLatestGeneratorReleaseRequest.retainMajorVersion,
-                isLatest: releaseType === prisma.ReleaseType.ga ? true : undefined,
+                isLatest: filterToIsLatest ? true : undefined,
             },
             // TODO: This should ideally be a proper ordering by semver, but we'd have to paginate the response and manually sort
             // the list since you can't manage a more complex ordering in Prisma using TypeScript functions.
@@ -209,7 +217,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
         generator: GeneratorId;
         fromVersion: string;
         toVersion: string;
-    }): Promise<ChangelogEntry[]> {
+    }): Promise<Map<string, ChangelogEntry>> {
         const fromSem = semver.parse(fromVersion);
         const toSem = semver.parse(toVersion);
         const releases = await this.prisma.generatorRelease.findMany({
@@ -230,8 +238,15 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             },
         });
 
-        // TODO: Would love to change all these JSON.parse to a proper deserialization
-        return releases.map((release) => JSON.parse(release.changelogEntry as string));
+        return new Map(
+            releases
+                .map((release) =>
+                    release.changelogEntry != null
+                        ? [release.version, readBuffer(release.changelogEntry) as ChangelogEntry]
+                        : undefined,
+                )
+                .filter((c): c is [string, ChangelogEntry] => c != null),
+        );
     }
 }
 
@@ -263,12 +278,15 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
         version: generatorRelease.version,
         ir_version: generatorRelease.irVersion,
         release_type: convertPrismaReleaseType(generatorRelease.releaseType),
-        changelog_entry: JSON.parse(generatorRelease.changelogEntry as string),
-        migration: readBuffer(generatorRelease.migration) as string,
-        custom_config_schema: JSON.stringify(generatorRelease.customConfigSchema),
+        changelog_entry:
+            generatorRelease.changelogEntry != null
+                ? (readBuffer(generatorRelease.changelogEntry) as ChangelogEntry)
+                : undefined,
+        migration: generatorRelease.migration != null ? (readBuffer(generatorRelease.migration) as string) : undefined,
+        custom_config_schema:
+            generatorRelease.customConfigSchema != null ? generatorRelease.customConfigSchema : undefined,
         is_latest: generatorRelease.isLatest,
         major_version: generatorRelease.major,
-        created_at: generatorRelease.createdAt.toISOString(),
-        is_yanked: JSON.parse(generatorRelease.isYanked as string),
+        is_yanked: generatorRelease.isYanked != null ? (readBuffer(generatorRelease.isYanked) as Yank) : undefined,
     };
 }

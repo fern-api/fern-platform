@@ -57,14 +57,14 @@ service:
       response: optional<GeneratorRelease>
 
     getChangelog:
-      docs: Get the changelog for the specified generator upgrade.
+      docs: Get the changelog for the specified generator upgrade. The response will be a map of the generator version to it's corresponding changelog.
       method: GET
       path: /{generator}/changelog/{from_version}/to/{to_version}
       path-parameters:
         generator: root.GeneratorId
         from_version: string
         to_version: string
-      response: list<commons.ChangelogEntry>
+      response: map<string, commons.ChangelogEntry>
 
     upsertGeneratorRelease:
       docs: Update or create the specified generator version.

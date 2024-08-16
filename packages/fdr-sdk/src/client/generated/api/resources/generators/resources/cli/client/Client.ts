@@ -174,8 +174,7 @@ export class Cli {
      *     await fernRegistry.generators.cli.upsertCliRelease({
      *         version: "string",
      *         is_yanked: {},
-     *         changelog_entry: {},
-     *         created_at: new Date("2024-01-15T09:30:00.000Z")
+     *         changelog_entry: {}
      *     })
      */
     public async upsertCliRelease(

@@ -40,7 +40,6 @@ types:
       version: string
       is_yanked: optional<Yank>
       changelog_entry: optional<ChangelogEntry>
-      created_at: datetime
 
   Release:
     extends: ReleaseRequest
