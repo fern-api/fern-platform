@@ -4,6 +4,7 @@
 
 import * as FernRegistry from "../../../../../index";
 
-export interface CliRelease extends FernRegistry.generators.Release {
-    ir_version: string;
+export interface ChangelogResponse {
+    version: string;
+    changelog_entry: FernRegistry.generators.ChangelogEntry;
 }

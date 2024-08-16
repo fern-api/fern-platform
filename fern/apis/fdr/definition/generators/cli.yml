@@ -8,9 +8,13 @@ imports:
 types:
   CliReleaseRequest:
     extends: commons.ReleaseRequest
+    properties:
+      ir_version: string
 
   CliRelease:
     extends: commons.Release
+    properties:
+      ir_version: string
 
   IrDependency:
     properties:
@@ -35,15 +39,17 @@ service:
               type: optional<commons.ReleaseType>
               docs: A filter for the release type, specifically if you'd like to get RC releases only, etc.
       response: CliRelease
+      errors:
+        - NoValidClisFoundError
 
     getChangelog:
-      docs: Get the changelog for the specified CLI upgrade.
+      docs: Get the changelog for the specified CLI upgrade. The response will be a map of the generator version to it's corresponding changelog.
       method: GET
       path: /changelog/{from_version}/to/{to_version}
       path-parameters:
         from_version: string
         to_version: string
-      response: list<commons.ChangelogEntry>
+      response: commons.GetChangelogResponse
 
     getMinCliForIr:
       docs: Get the minimum CLI version that supports the given IR version. This does not include RCs.
@@ -52,6 +58,8 @@ service:
       path-parameters:
         ir_version: string
       response: CliRelease
+      errors:
+        - NoValidClisFoundError
 
     upsertCliRelease:
       docs: Update or create the specified CLI version.
@@ -66,9 +74,30 @@ service:
       path-parameters:
         cli_version: string
       response: CliRelease
+      errors:
+        - CliVersionNotFoundError
 
-    getAllCliReleases:
+    listCliReleases:
       docs: Get all CLI versions.
       method: GET
       path: ""
+      request:
+        name: ListCliReleasesRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page number to retrieve. Defaults to 0.
+          page_size:
+            type: optional<integer>
+            docs: The number of items to retrieve per page. Defaults to 20.
       response: list<CliRelease>
+
+errors:
+  CliVersionNotFoundError:
+    status-code: 404
+    type: commons.InvalidVersionErrorMessage
+  NoValidClisFoundError:
+    status-code: 404
+  NoValidCliForIrError:
+    status-code: 404
+    type: commons.InvalidVersionErrorMessage

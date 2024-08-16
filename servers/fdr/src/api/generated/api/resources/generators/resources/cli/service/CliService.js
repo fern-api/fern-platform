@@ -41,9 +41,14 @@ export class CliService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'getLatestCliRelease' unexpectedly threw ${error.constructor.name}.` +
-                        ` If this was intentional, please add ${error.constructor.name} to` +
-                        " the endpoint's errors list in your Fern Definition.");
+                    switch (error.errorName) {
+                        case "NoValidClisFoundError":
+                            break;
+                        default:
+                            console.warn(`Endpoint 'getLatestCliRelease' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.");
+                    }
                     yield error.send(res);
                 }
                 else {
@@ -91,9 +96,14 @@ export class CliService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'getMinCliForIr' unexpectedly threw ${error.constructor.name}.` +
-                        ` If this was intentional, please add ${error.constructor.name} to` +
-                        " the endpoint's errors list in your Fern Definition.");
+                    switch (error.errorName) {
+                        case "NoValidClisFoundError":
+                            break;
+                        default:
+                            console.warn(`Endpoint 'getMinCliForIr' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.");
+                    }
                     yield error.send(res);
                 }
                 else {
@@ -141,9 +151,14 @@ export class CliService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'getCliRelease' unexpectedly threw ${error.constructor.name}.` +
-                        ` If this was intentional, please add ${error.constructor.name} to` +
-                        " the endpoint's errors list in your Fern Definition.");
+                    switch (error.errorName) {
+                        case "CliVersionNotFoundError":
+                            break;
+                        default:
+                            console.warn(`Endpoint 'getCliRelease' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.");
+                    }
                     yield error.send(res);
                 }
                 else {
@@ -154,7 +169,7 @@ export class CliService {
         }));
         this.router.get("", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.methods.getAllCliReleases(req, {
+                yield this.methods.listCliReleases(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
                         res.json(responseBody);
                     }),
@@ -166,7 +181,7 @@ export class CliService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.FernRegistryError) {
-                    console.warn(`Endpoint 'getAllCliReleases' unexpectedly threw ${error.constructor.name}.` +
+                    console.warn(`Endpoint 'listCliReleases' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
                         " the endpoint's errors list in your Fern Definition.");
                     yield error.send(res);

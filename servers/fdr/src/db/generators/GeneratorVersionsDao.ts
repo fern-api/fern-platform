@@ -8,10 +8,10 @@ import {
     GeneratorReleaseRequest,
     GetLatestGeneratorReleaseRequest,
     InvalidVersionError,
-    ReleaseType,
     Yank,
 } from "../../api/generated/api/resources/generators";
 import { readBuffer, writeBuffer } from "../../util";
+import { convertGeneratorReleaseType, convertPrismaReleaseType, getSemverSortBetween } from "./daoUtils";
 
 export interface LoadSnippetAPIRequest {
     orgId: string;
@@ -218,23 +218,10 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
         fromVersion: string;
         toVersion: string;
     }): Promise<Record<string, ChangelogEntry>> {
-        const fromSem = semver.parse(fromVersion);
-        const toSem = semver.parse(toVersion);
         const releases = await this.prisma.generatorRelease.findMany({
             where: {
                 generatorId: generator,
-                major: {
-                    gte: fromSem?.major,
-                    lte: toSem?.major,
-                },
-                minor: {
-                    gte: fromSem?.minor,
-                    lte: toSem?.minor,
-                },
-                patch: {
-                    gte: fromSem?.patch,
-                    lte: toSem?.patch,
-                },
+                ...getSemverSortBetween(fromVersion, toVersion),
             },
         });
 
@@ -245,24 +232,6 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             }
         }
         return changelogs;
-    }
-}
-
-function convertGeneratorReleaseType(releaseType: ReleaseType): prisma.ReleaseType {
-    switch (releaseType) {
-        case ReleaseType.Ga:
-            return prisma.ReleaseType.ga;
-        case ReleaseType.Rc:
-            return prisma.ReleaseType.rc;
-    }
-}
-
-function convertPrismaReleaseType(releaseType: prisma.ReleaseType): ReleaseType {
-    switch (releaseType) {
-        case prisma.ReleaseType.ga:
-            return ReleaseType.Ga;
-        case prisma.ReleaseType.rc:
-            return ReleaseType.Rc;
     }
 }
 
@@ -283,7 +252,6 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
         migration: generatorRelease.migration != null ? (readBuffer(generatorRelease.migration) as string) : undefined,
         custom_config_schema:
             generatorRelease.customConfigSchema != null ? generatorRelease.customConfigSchema : undefined,
-        is_latest: generatorRelease.isLatest,
         major_version: generatorRelease.major,
         is_yanked: generatorRelease.isYanked != null ? (readBuffer(generatorRelease.isYanked) as Yank) : undefined,
     };
