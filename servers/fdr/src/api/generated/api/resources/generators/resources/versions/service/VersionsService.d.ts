@@ -13,8 +13,8 @@ export interface VersionsServiceMethods {
         generator: FernRegistry.generators.GeneratorId;
         from_version: string;
         to_version: string;
-    }, FernRegistry.generators.ChangelogEntry[], never, never>, res: {
-        send: (responseBody: FernRegistry.generators.ChangelogEntry[]) => Promise<void>;
+    }, Record<string, FernRegistry.generators.ChangelogEntry>, never, never>, res: {
+        send: (responseBody: Record<string, FernRegistry.generators.ChangelogEntry>) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;

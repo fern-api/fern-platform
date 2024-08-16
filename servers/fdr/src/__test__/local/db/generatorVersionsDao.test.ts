@@ -13,7 +13,6 @@ function delay(ms: number) {
 
 // Bad version on create throws
 it("generator version dao not semver", async () => {
-    // create snippets
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "my-cool/example-with-version",
@@ -36,10 +35,18 @@ it("generator version dao not semver", async () => {
 
 // Insert multiple and return the right latest (insert out of order)
 it("generator version get latest respects semver, not time", async () => {
+    await fdrApplication.dao.generators().upsertGenerator({
+        generator: {
+            id: "my-cool/example-for-latest",
+            generator_type: { type: "sdk" },
+            docker_image: "my-cool/example-for-latest",
+            generator_language: FdrAPI.generators.GeneratorLanguage.Python,
+        },
+    });
     // create some versions and sleep between them to ensure the timestamps are different
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generator_id: "my-cool/example-with-version",
+            generator_id: "my-cool/example-for-latest",
             ir_version: "0.0.2",
             version: "0.1.2",
         },
@@ -48,7 +55,7 @@ it("generator version get latest respects semver, not time", async () => {
     await delay(1000);
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generator_id: "my-cool/example-with-version",
+            generator_id: "my-cool/example-for-latest",
             ir_version: "0.0.1",
             version: "1.1.0",
         },
@@ -57,7 +64,7 @@ it("generator version get latest respects semver, not time", async () => {
     await delay(1000);
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generator_id: "my-cool/example-with-version",
+            generator_id: "my-cool/example-for-latest",
             ir_version: "0.0.1",
             version: "0.1.0",
         },
@@ -67,7 +74,7 @@ it("generator version get latest respects semver, not time", async () => {
     await delay(1000);
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generator_id: "my-cool/example-with-version",
+            generator_id: "my-cool/example-for-latest",
             ir_version: "0.0.5",
             version: "0.1.2",
         },
@@ -77,7 +84,7 @@ it("generator version get latest respects semver, not time", async () => {
     expect(
         (
             await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
-                getLatestGeneratorReleaseRequest: { generator: "my-cool/example-with-version" },
+                getLatestGeneratorReleaseRequest: { generator: "my-cool/example-for-latest" },
             })
         )?.version,
     ).toEqual("1.1.0");
@@ -141,26 +148,18 @@ it("generator changelog", async () => {
         await fdrApplication.dao
             .generatorVersions()
             .getChangelog({ generator: "my-cool/example-with-version", fromVersion: "2.1.3", toVersion: "2.1.7" }),
-    ).toEqual(
-        new Map([
-            [
-                "2.1.3",
-                {
-                    type: "fix",
-                    fixed: ["fixed that new feature"],
-                },
-            ],
-            [
-                "2.1.5",
-                {
-                    type: "fix",
-                    fixed: ["fixed that new feature"],
-                    security: ["fixed a security issue"],
-                    deprecated: ["idk google meet or something isn't there anymore"],
-                },
-            ],
-        ]),
-    );
+    ).toEqual({
+        "2.1.3": {
+            type: "fix",
+            fixed: ["fixed that new feature"],
+        },
+        "2.1.5": {
+            type: "fix",
+            fixed: ["fixed that new feature"],
+            security: ["fixed a security issue"],
+            deprecated: ["idk google meet or something isn't there anymore"],
+        },
+    });
 });
 // Update version
 it("generator version happy path update", async () => {

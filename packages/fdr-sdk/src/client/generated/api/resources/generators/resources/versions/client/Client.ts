@@ -80,7 +80,7 @@ export class Versions {
     }
 
     /**
-     * Get the changelog for the specified generator upgrade.
+     * Get the changelog for the specified generator upgrade. The response will be a map of the generator version to it's corresponding changelog.
      *
      * @param {FernRegistry.generators.GeneratorId} generator
      * @param {string} fromVersion
@@ -96,7 +96,10 @@ export class Versions {
         toVersion: string,
         requestOptions?: Versions.RequestOptions
     ): Promise<
-        core.APIResponse<FernRegistry.generators.ChangelogEntry[], FernRegistry.generators.versions.getChangelog.Error>
+        core.APIResponse<
+            Record<string, FernRegistry.generators.ChangelogEntry>,
+            FernRegistry.generators.versions.getChangelog.Error
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -120,7 +123,7 @@ export class Versions {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.ChangelogEntry[],
+                body: _response.body as Record<string, FernRegistry.generators.ChangelogEntry>,
             };
         }
 

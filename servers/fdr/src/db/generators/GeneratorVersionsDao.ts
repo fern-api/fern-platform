@@ -45,7 +45,7 @@ export interface GeneratorVersionsDao {
         generator: GeneratorId;
         fromVersion: string;
         toVersion: string;
-    }): Promise<Map<string, ChangelogEntry>>;
+    }): Promise<Record<string, ChangelogEntry>>;
 
     upsertGeneratorRelease({ generatorRelease }: { generatorRelease: GeneratorReleaseRequest }): Promise<void>;
 
@@ -63,8 +63,8 @@ export interface GeneratorVersionsDao {
         pageSize,
     }: {
         generator: GeneratorId;
-        page: number | undefined;
-        pageSize: number | undefined;
+        page?: number;
+        pageSize?: number;
     }): Promise<GeneratorRelease[]>;
 }
 
@@ -78,7 +78,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
         }
 
         // We always just write over the previous entry here
-        this.prisma.$transaction(async (tx) => {
+        await this.prisma.$transaction(async (tx) => {
             // Ideally we'd set a uniqueness constraint on `isLatest` and the generator ID, but I can't find a way
             // to ensure uniqueness only when `isLatest` is true (e.g. we expect to have tons that are false).
             const currentLatest = await tx.generatorRelease.findFirst({
@@ -161,8 +161,8 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
         pageSize = 20,
     }: {
         generator: GeneratorId;
-        page: number | undefined;
-        pageSize: number | undefined;
+        page?: number;
+        pageSize?: number;
     }): Promise<GeneratorRelease[]> {
         const releases = await this.prisma.generatorRelease.findMany({
             where: {
@@ -217,7 +217,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
         generator: GeneratorId;
         fromVersion: string;
         toVersion: string;
-    }): Promise<Map<string, ChangelogEntry>> {
+    }): Promise<Record<string, ChangelogEntry>> {
         const fromSem = semver.parse(fromVersion);
         const toSem = semver.parse(toVersion);
         const releases = await this.prisma.generatorRelease.findMany({
@@ -238,15 +238,13 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             },
         });
 
-        return new Map(
-            releases
-                .map((release) =>
-                    release.changelogEntry != null
-                        ? [release.version, readBuffer(release.changelogEntry) as ChangelogEntry]
-                        : undefined,
-                )
-                .filter((c): c is [string, ChangelogEntry] => c != null),
-        );
+        const changelogs: Record<string, ChangelogEntry> = {};
+        for (const release of releases) {
+            if (release.changelogEntry != null) {
+                changelogs[release.version] = readBuffer(release.changelogEntry) as ChangelogEntry;
+            }
+        }
+        return changelogs;
     }
 }
 
