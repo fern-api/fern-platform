@@ -36,11 +36,11 @@ export interface CliServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
-    listCliReleases(req: express.Request<never, FernRegistry.generators.CliRelease[], never, {
+    listCliReleases(req: express.Request<never, FernRegistry.generators.ListCliReleasesResponse, never, {
         page?: number;
         page_size?: number;
     }>, res: {
-        send: (responseBody: FernRegistry.generators.CliRelease[]) => Promise<void>;
+        send: (responseBody: FernRegistry.generators.ListCliReleasesResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;

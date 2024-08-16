@@ -70,38 +70,3 @@ export function getPrereleaseType(version: string): ReleaseType {
 
     return ReleaseType.Ga;
 }
-
-const NONCE_PIECE_LENGTH = 5;
-export function noncifySemanticVersion(version: string): string {
-    const parsedVersion = parseSemverOrThrow(version);
-
-    let prereleaseIndicator = "15"; // Indicative of a non-prerelease version
-    let prereleaseVersionNonce = "0";
-
-    // For convenience with the semver library, we are expecting versions to come through as:
-    // major.minor.patch[-prereleaseType].[prereleaseVersion] where `prereleaseVersion`
-    // may be omitted and assumed as 0.
-    if (parsedVersion.prerelease.length > 0 && parsedVersion.prerelease.length < 3) {
-        switch (parsedVersion.prerelease[0]) {
-            case "rc":
-                // Leaving some room between RC (12) and GA (15) in the event we
-                // ever want to add something that takes presedence over RC.
-                prereleaseIndicator = "12";
-                break;
-            default:
-                throw new InvalidVersionError({ provided_version: version });
-        }
-        if (parsedVersion.prerelease.length > 1) {
-            const prereleaseVersion = parseInt(parsedVersion.prerelease[1] as string);
-            if (isNaN(prereleaseVersion)) {
-                throw new InvalidVersionError({ provided_version: version });
-            }
-            prereleaseVersionNonce = prereleaseVersion.toString();
-        }
-    } else if (parsedVersion.prerelease.length >= 3) {
-        // For convenience we only want to allow alpha, beta, rc, etc.
-        throw new InvalidVersionError({ provided_version: version });
-    }
-
-    return `${parsedVersion.major.toString().padStart(NONCE_PIECE_LENGTH, "0")}-${parsedVersion.minor.toString().padStart(NONCE_PIECE_LENGTH, "0")}-${parsedVersion.patch.toString().padStart(NONCE_PIECE_LENGTH, "0")}-${prereleaseIndicator}-${prereleaseVersionNonce.padStart(NONCE_PIECE_LENGTH, "0")}`;
-}

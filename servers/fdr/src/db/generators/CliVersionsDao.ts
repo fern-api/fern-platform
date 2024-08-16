@@ -7,6 +7,7 @@ import {
     CliReleaseRequest,
     GetChangelogResponse,
     GetLatestCliReleaseRequest,
+    ListCliReleasesResponse,
     Yank,
 } from "../../api/generated/api/resources/generators";
 import { readBuffer, writeBuffer } from "../../util";
@@ -14,10 +15,9 @@ import {
     convertGeneratorReleaseType,
     convertPrismaReleaseType,
     getPrereleaseType,
-    getSemverSortBetween,
-    noncifySemanticVersion,
     parseSemverOrThrow,
 } from "./daoUtils";
+import { noncifySemanticVersion } from "./noncifySemanticVersion";
 
 export interface LoadSnippetAPIRequest {
     orgId: string;
@@ -51,7 +51,7 @@ export interface CliVersionsDao {
 
     getCliRelease({ cliVersion }: { cliVersion: string }): Promise<CliRelease | undefined>;
 
-    listCliReleases({ page, pageSize }: { page?: number; pageSize?: number }): Promise<CliRelease[]>;
+    listCliReleases({ page, pageSize }: { page?: number; pageSize?: number }): Promise<ListCliReleasesResponse>;
 }
 
 export class CliVersionsDaoImpl implements CliVersionsDao {
@@ -85,7 +85,10 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
     }): Promise<GetChangelogResponse> {
         const releases = await this.prisma.cliRelease.findMany({
             where: {
-                ...getSemverSortBetween(fromVersion, toVersion),
+                nonce: {
+                    gte: noncifySemanticVersion(fromVersion),
+                    lte: noncifySemanticVersion(toVersion),
+                },
             },
             orderBy: [
                 {
@@ -159,13 +162,13 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
     }: {
         page?: number | undefined;
         pageSize?: number | undefined;
-    }): Promise<CliRelease[]> {
+    }): Promise<ListCliReleasesResponse> {
         const releases = await this.prisma.cliRelease.findMany({
             skip: page * pageSize,
             take: pageSize,
         });
 
-        return releases.map(convertPrismaCliRelease).filter((g): g is CliRelease => g != null);
+        return { cli_releases: releases.map(convertPrismaCliRelease).filter((g): g is CliRelease => g != null) };
     }
 }
 

@@ -302,7 +302,10 @@ export class Cli {
         request: FernRegistry.generators.ListCliReleasesRequest = {},
         requestOptions?: Cli.RequestOptions
     ): Promise<
-        core.APIResponse<FernRegistry.generators.CliRelease[], FernRegistry.generators.cli.listCliReleases.Error>
+        core.APIResponse<
+            FernRegistry.generators.ListCliReleasesResponse,
+            FernRegistry.generators.cli.listCliReleases.Error
+        >
     > {
         const { page, page_size: pageSize } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -335,7 +338,7 @@ export class Cli {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.CliRelease[],
+                body: _response.body as FernRegistry.generators.ListCliReleasesResponse,
             };
         }
 

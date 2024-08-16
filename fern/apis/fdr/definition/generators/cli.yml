@@ -16,6 +16,10 @@ types:
     properties:
       ir_version: string
 
+  ListCliReleasesResponse:
+    properties:
+      cli_releases: list<CliRelease>
+
   IrDependency:
     properties:
       cli_version: string
@@ -90,7 +94,7 @@ service:
           page_size:
             type: optional<integer>
             docs: The number of items to retrieve per page. Defaults to 20.
-      response: list<CliRelease>
+      response: ListCliReleasesResponse
 
 errors:
   CliVersionNotFoundError:
