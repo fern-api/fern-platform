@@ -57,16 +57,56 @@ export function parseSemverOrThrow(version: string): semver.SemVer {
 }
 
 export function getPrereleaseType(version: string): ReleaseType {
+    return getPrereleaseTypeAndVersion(version)[0];
+}
+
+export function getPrereleaseTypeAndVersion(version: string): [ReleaseType, number] {
     const parsedVersion = parseSemverOrThrow(version);
 
-    if (parsedVersion.prerelease.length > 0) {
-        switch (parsedVersion.prerelease[0]) {
-            case "rc":
-                return ReleaseType.Rc;
-            default:
-                throw new InvalidVersionError({ provided_version: version });
+    // For convenience with the semver library, we are expecting versions to come through as:
+    // major.minor.patch[-prereleaseType].[prereleaseVersion] where `prereleaseVersion`
+    // may be omitted and assumed as 0.
+    if (parsedVersion.prerelease.length > 0 && parsedVersion.prerelease.length < 3) {
+        let prereleaseType = parsedVersion.prerelease[0]?.toString();
+        if (prereleaseType == null) {
+            throw new InvalidVersionError({ provided_version: version });
         }
+
+        // Here we have 2 match groups, one for the type and one for the version.
+        const prereleaseTypeWithVersion = prereleaseType.match(/((?:rc|alpha|beta))([0-9]+)/);
+        if (
+            parsedVersion.prerelease.length === 1 &&
+            prereleaseTypeWithVersion != null &&
+            prereleaseTypeWithVersion[1] != null &&
+            prereleaseTypeWithVersion[2] != null
+        ) {
+            const truePrereleaseType = prereleaseTypeWithVersion[1];
+            const prereleaseVersion = parseInt(prereleaseTypeWithVersion[2], 10);
+            return [getPrereleaseTypeRaw(truePrereleaseType), prereleaseVersion];
+        } else {
+            let prereleaseVersion = 0;
+            if (parsedVersion.prerelease.length > 1) {
+                const truePrereleaseVersion = parseInt(parsedVersion.prerelease[1] as string);
+                if (isNaN(prereleaseVersion)) {
+                    throw new InvalidVersionError({ provided_version: version });
+                }
+                prereleaseVersion = truePrereleaseVersion;
+            }
+
+            return [getPrereleaseTypeRaw(prereleaseType), prereleaseVersion];
+        }
+    } else if (parsedVersion.prerelease.length === 0) {
+        return [ReleaseType.Ga, 0];
     }
 
-    return ReleaseType.Ga;
+    throw new InvalidVersionError({ provided_version: version });
+}
+
+function getPrereleaseTypeRaw(version: string): ReleaseType {
+    switch (version) {
+        case "rc":
+            return ReleaseType.Rc;
+        default:
+            throw new InvalidVersionError({ provided_version: version });
+    }
 }

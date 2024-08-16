@@ -7,11 +7,15 @@ import {
     GeneratorRelease,
     GeneratorReleaseRequest,
     GetLatestGeneratorReleaseRequest,
-    InvalidVersionError,
     Yank,
 } from "../../api/generated/api/resources/generators";
 import { readBuffer, writeBuffer } from "../../util";
-import { convertGeneratorReleaseType, convertPrismaReleaseType, getSemverSortBetween } from "./daoUtils";
+import {
+    convertGeneratorReleaseType,
+    convertPrismaReleaseType,
+    getSemverSortBetween,
+    parseSemverOrThrow,
+} from "./daoUtils";
 
 export interface LoadSnippetAPIRequest {
     orgId: string;
@@ -72,10 +76,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
     constructor(private readonly prisma: prisma.PrismaClient) {}
 
     async upsertGeneratorRelease({ generatorRelease }: { generatorRelease: GeneratorReleaseRequest }): Promise<void> {
-        const parsedVersion = semver.parse(generatorRelease.version);
-        if (parsedVersion == null) {
-            throw new InvalidVersionError({ provided_version: generatorRelease.version });
-        }
+        const parsedVersion = parseSemverOrThrow(generatorRelease.version);
 
         // We always just write over the previous entry here
         await this.prisma.$transaction(async (tx) => {

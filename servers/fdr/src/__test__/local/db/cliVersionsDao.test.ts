@@ -1,5 +1,6 @@
 import { CliReleaseRequest } from "@fern-api/fdr-sdk/src/client/generated/api/resources/generators";
 import { InvalidVersionError, ReleaseType } from "../../../api/generated/api/resources/generators";
+import { noncifySemanticVersion } from "../../../db/generators/noncifySemanticVersion";
 import { createMockFdrApplication } from "../../mock";
 
 const fdrApplication = createMockFdrApplication({
@@ -184,4 +185,30 @@ it("generator version happy path update", async () => {
     expect(updatedRelease?.ir_version).toEqual(updateReleaseRequest.ir_version);
     expect(updatedRelease?.version).toEqual(updateReleaseRequest.version);
     expect(updatedRelease?.changelog_entry).toEqual(updateReleaseRequest.changelog_entry);
+});
+
+it("generator version happy path update", async () => {
+    await fdrApplication.dao.cliVersions().upsertCliRelease({
+        cliRelease: {
+            ir_version: "0.0.2",
+            version: "0.1.2-rc0",
+        },
+    });
+    const oneCli = await fdrApplication.dao.cliVersions().getCliRelease({
+        cliVersion: "0.1.2-rc0",
+    });
+    expect(oneCli?.release_type).toEqual(ReleaseType.Rc);
+    expect(noncifySemanticVersion("0.1.2-rc0")).toEqual("00000-00001-00002-12-00000");
+
+    await fdrApplication.dao.cliVersions().upsertCliRelease({
+        cliRelease: {
+            ir_version: "0.0.2",
+            version: "0.1.2-rc.1",
+        },
+    });
+    const twoCli = await fdrApplication.dao.cliVersions().getCliRelease({
+        cliVersion: "0.1.2-rc.1",
+    });
+    expect(twoCli?.release_type).toEqual(ReleaseType.Rc);
+    expect(noncifySemanticVersion("0.1.2-rc.1")).toEqual("00000-00001-00002-12-00001");
 });
