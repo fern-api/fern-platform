@@ -92,25 +92,33 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             const isNewVersionLatest =
                 currentLatest == null ? true : semver.lt(currentLatest?.version, generatorRelease.version);
             const isRc = semver.prerelease(generatorRelease.version) != null;
-            await tx.generatorRelease.create({
-                data: {
-                    version: generatorRelease.version,
-                    generatorId: generatorRelease.generator_id,
-                    irVersion: generatorRelease.ir_version,
-                    major: parsedVersion.major,
-                    minor: parsedVersion.minor,
-                    patch: parsedVersion.patch,
-                    isYanked:
-                        generatorRelease.is_yanked != null ? JSON.stringify(generatorRelease.is_yanked) : undefined,
-                    changelogEntry:
-                        generatorRelease.changelog_entry != null
-                            ? JSON.stringify(generatorRelease.changelog_entry)
-                            : undefined,
-                    migration: writeBuffer(generatorRelease.migration),
-                    customConfigSchema: JSON.stringify(generatorRelease.custom_config_schema),
-                    releaseType: isRc ? prisma.ReleaseType.rc : prisma.ReleaseType.ga,
-                    isLatest: isNewVersionLatest,
+
+            const data = {
+                version: generatorRelease.version,
+                generatorId: generatorRelease.generator_id,
+                irVersion: generatorRelease.ir_version,
+                major: parsedVersion.major,
+                minor: parsedVersion.minor,
+                patch: parsedVersion.patch,
+                isYanked: generatorRelease.is_yanked != null ? JSON.stringify(generatorRelease.is_yanked) : undefined,
+                changelogEntry:
+                    generatorRelease.changelog_entry != null
+                        ? JSON.stringify(generatorRelease.changelog_entry)
+                        : undefined,
+                migration: writeBuffer(generatorRelease.migration),
+                customConfigSchema: JSON.stringify(generatorRelease.custom_config_schema),
+                releaseType: isRc ? prisma.ReleaseType.rc : prisma.ReleaseType.ga,
+                isLatest: isNewVersionLatest,
+            };
+            await tx.generatorRelease.upsert({
+                where: {
+                    generatorId_version: {
+                        generatorId: generatorRelease.generator_id,
+                        version: generatorRelease.version,
+                    },
                 },
+                create: data,
+                update: data,
             });
 
             if (isNewVersionLatest && currentLatest != null) {
@@ -170,14 +178,18 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
     }: {
         getLatestGeneratorReleaseRequest: GetLatestGeneratorReleaseRequest;
     }): Promise<GeneratorRelease | undefined> {
+        // TODO: should we have a concept of latest per-release type? I assume no
+        // So for now we only grab by `isLatest` if the release type is not RC
+        const releaseType =
+            getLatestGeneratorReleaseRequest.releaseType != null
+                ? convertGeneratorReleaseType(getLatestGeneratorReleaseRequest.releaseType)
+                : undefined;
         const release = await this.prisma.generatorRelease.findFirst({
             where: {
                 generatorId: getLatestGeneratorReleaseRequest.generator,
-                releaseType:
-                    getLatestGeneratorReleaseRequest.releaseType != null
-                        ? convertGeneratorReleaseType(getLatestGeneratorReleaseRequest.releaseType)
-                        : undefined,
+                releaseType,
                 major: getLatestGeneratorReleaseRequest.retainMajorVersion,
+                isLatest: releaseType === prisma.ReleaseType.ga ? true : undefined,
             },
             // TODO: This should ideally be a proper ordering by semver, but we'd have to paginate the response and manually sort
             // the list since you can't manage a more complex ordering in Prisma using TypeScript functions.
