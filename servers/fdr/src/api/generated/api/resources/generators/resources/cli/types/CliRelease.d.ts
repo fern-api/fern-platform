@@ -3,4 +3,5 @@
  */
 import * as FernRegistry from "../../../../..";
 export interface CliRelease extends FernRegistry.generators.Release {
+    ir_version: string;
 }

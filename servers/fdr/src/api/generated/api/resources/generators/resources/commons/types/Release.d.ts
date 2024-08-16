@@ -4,6 +4,5 @@
 import * as FernRegistry from "../../../../..";
 export interface Release extends FernRegistry.generators.ReleaseRequest {
     release_type: FernRegistry.generators.ReleaseType;
-    is_latest: boolean;
     major_version: number;
 }

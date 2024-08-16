@@ -189,9 +189,10 @@ model GeneratorRelease {
   major    Int
   minor    Int
   patch    Int
+  nonce String
 
   generatorId String
-  generator Generator @relation(fields: [generatorId], references: [id])
+  generator Generator @relation(fields: [generatorId], references: [id], onDelete: Cascade)
 
   isYanked Bytes?
   changelogEntry Bytes?
@@ -201,7 +202,25 @@ model GeneratorRelease {
   customConfigSchema String?
 
   releaseType ReleaseType
-  isLatest Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CliRelease {
+  // A bit of duplication here, but it's easier to query this way
+  version   String @id
+  major    Int
+  minor    Int
+  patch    Int
+  nonce String
+
+  irVersion String
+
+  isYanked Bytes?
+  changelogEntry Bytes?
+
+  releaseType ReleaseType
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

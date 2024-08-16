@@ -44,7 +44,7 @@ export class Versions {
         requestOptions?: Versions.RequestOptions
     ): Promise<
         core.APIResponse<
-            FernRegistry.generators.GeneratorRelease | undefined,
+            FernRegistry.generators.GeneratorRelease,
             FernRegistry.generators.versions.getLatestGeneratorRelease.Error
         >
     > {
@@ -69,8 +69,18 @@ export class Versions {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.GeneratorRelease | undefined,
+                body: _response.body as FernRegistry.generators.GeneratorRelease,
             };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.generators.versions.getLatestGeneratorRelease.Error)?.error) {
+                case "NoValidGeneratorsFoundError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.generators.versions.getLatestGeneratorRelease.Error,
+                    };
+            }
         }
 
         return {
@@ -97,7 +107,7 @@ export class Versions {
         requestOptions?: Versions.RequestOptions
     ): Promise<
         core.APIResponse<
-            Record<string, FernRegistry.generators.ChangelogEntry>,
+            FernRegistry.generators.GetChangelogResponse,
             FernRegistry.generators.versions.getChangelog.Error
         >
     > {
@@ -123,7 +133,7 @@ export class Versions {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as Record<string, FernRegistry.generators.ChangelogEntry>,
+                body: _response.body as FernRegistry.generators.GetChangelogResponse,
             };
         }
 
@@ -143,7 +153,7 @@ export class Versions {
      *     await fernRegistry.generators.versions.upsertGeneratorRelease({
      *         generator_id: "string",
      *         ir_version: "string",
-     *         migration: "SGVsbG8gd29ybGQh",
+     *         migration: "string",
      *         custom_config_schema: "string",
      *         version: "string",
      *         is_yanked: {},
@@ -211,7 +221,7 @@ export class Versions {
         requestOptions?: Versions.RequestOptions
     ): Promise<
         core.APIResponse<
-            FernRegistry.generators.GeneratorRelease | undefined,
+            FernRegistry.generators.GeneratorRelease,
             FernRegistry.generators.versions.getGeneratorRelease.Error
         >
     > {
@@ -235,8 +245,18 @@ export class Versions {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.GeneratorRelease | undefined,
+                body: _response.body as FernRegistry.generators.GeneratorRelease,
             };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.generators.versions.getGeneratorRelease.Error)?.error) {
+                case "GeneratorVersionNotFoundError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.generators.versions.getGeneratorRelease.Error,
+                    };
+            }
         }
 
         return {
@@ -264,7 +284,7 @@ export class Versions {
         requestOptions?: Versions.RequestOptions
     ): Promise<
         core.APIResponse<
-            FernRegistry.generators.GeneratorRelease[],
+            FernRegistry.generators.ListGeneratorReleasesResponse,
             FernRegistry.generators.versions.listGeneratorReleases.Error
         >
     > {
@@ -299,7 +319,7 @@ export class Versions {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.GeneratorRelease[],
+                body: _response.body as FernRegistry.generators.ListGeneratorReleasesResponse,
             };
         }
 

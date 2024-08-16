@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { APIDefinitionDao, APIDefinitionDaoImpl } from "./api/APIDefinitionDao";
 import { DocsV2Dao, DocsV2DaoImpl } from "./docs/DocsV2Dao";
 import { IndexSegmentDaoImpl, type IndexSegmentDao } from "./docs/IndexSegmentDao";
+import { CliVersionsDaoImpl } from "./generators/CliVersionsDao";
 import { GeneratorsDaoImpl } from "./generators/GeneratorDao";
 import { GeneratorVersionsDaoImpl } from "./generators/GeneratorVersionsDao";
 import { DocsRegistrationDao } from "./registrations/DocsRegistrationDao";
@@ -21,6 +22,7 @@ export class FdrDao {
     private docsRegistrationDao;
     private generatorsDao;
     private generatorVersionsDao;
+    private cliVersionsDao;
 
     constructor(prisma: PrismaClient) {
         this.docsV2Dao = new DocsV2DaoImpl(prisma);
@@ -33,6 +35,7 @@ export class FdrDao {
         this.docsRegistrationDao = new DocsRegistrationDao(prisma);
         this.generatorsDao = new GeneratorsDaoImpl(prisma);
         this.generatorVersionsDao = new GeneratorVersionsDaoImpl(prisma);
+        this.cliVersionsDao = new CliVersionsDaoImpl(prisma);
     }
 
     public docsV2(): DocsV2Dao {
@@ -73,5 +76,9 @@ export class FdrDao {
 
     public generatorVersions(): GeneratorVersionsDaoImpl {
         return this.generatorVersionsDao;
+    }
+
+    public cliVersions(): CliVersionsDaoImpl {
+        return this.cliVersionsDao;
     }
 }

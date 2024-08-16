@@ -13,7 +13,7 @@ types:
       generator_id: root.GeneratorId
       ir_version: string
       migration:
-        type: optional<base64>
+        type: optional<string>
         docs: The TypeScript file for the migration to run when upgrading to this version. Ideally this would be typed as a file, but we don't support file upload in the express generator.
       custom_config_schema:
         type: optional<string>
@@ -25,11 +25,15 @@ types:
       generator_id: root.GeneratorId
       ir_version: string
       migration:
-        type: optional<base64>
+        type: optional<string>
         docs: The TypeScript file for the migration to run when upgrading to this version.
       custom_config_schema:
         type: optional<string>
         docs: The JSON schema (stringified) for the custom config that this generator version supports.
+
+  ListGeneratorReleasesResponse:
+    properties:
+      generator_releases: list<GeneratorRelease>
 
 service:
   audiences:
@@ -54,7 +58,9 @@ service:
             release_type:
               type: optional<commons.ReleaseType>
               docs: A filter for the release type, specifically if you'd like to get RC releases only, etc.
-      response: optional<GeneratorRelease>
+      response: GeneratorRelease
+      errors:
+        - NoValidGeneratorsFoundError
 
     getChangelog:
       docs: Get the changelog for the specified generator upgrade. The response will be a map of the generator version to it's corresponding changelog.
@@ -64,7 +70,7 @@ service:
         generator: root.GeneratorId
         from_version: string
         to_version: string
-      response: map<string, commons.ChangelogEntry>
+      response: commons.GetChangelogResponse
 
     upsertGeneratorRelease:
       docs: Update or create the specified generator version.
@@ -81,7 +87,9 @@ service:
       path-parameters:
         generator: root.GeneratorId
         version: string
-      response: optional<GeneratorRelease>
+      response: GeneratorRelease
+      errors:
+        - GeneratorVersionNotFoundError
 
     listGeneratorReleases:
       docs: Get all generator versions for the specified generator.
@@ -98,4 +106,11 @@ service:
           page_size:
             type: optional<integer>
             docs: The number of items to retrieve per page. Defaults to 20.
-      response: list<GeneratorRelease>
+      response: ListGeneratorReleasesResponse
+
+errors:
+  GeneratorVersionNotFoundError:
+    status-code: 404
+    type: commons.InvalidVersionErrorMessage
+  NoValidGeneratorsFoundError:
+    status-code: 404

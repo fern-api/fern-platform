@@ -4,8 +4,8 @@
 import * as FernRegistry from "../../../../..";
 import express from "express";
 export interface VersionsServiceMethods {
-    getLatestGeneratorRelease(req: express.Request<never, FernRegistry.generators.GeneratorRelease | undefined, FernRegistry.generators.GetLatestGeneratorReleaseRequest, never>, res: {
-        send: (responseBody: FernRegistry.generators.GeneratorRelease | undefined) => Promise<void>;
+    getLatestGeneratorRelease(req: express.Request<never, FernRegistry.generators.GeneratorRelease, FernRegistry.generators.GetLatestGeneratorReleaseRequest, never>, res: {
+        send: (responseBody: FernRegistry.generators.GeneratorRelease) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
@@ -13,8 +13,8 @@ export interface VersionsServiceMethods {
         generator: FernRegistry.generators.GeneratorId;
         from_version: string;
         to_version: string;
-    }, Record<string, FernRegistry.generators.ChangelogEntry>, never, never>, res: {
-        send: (responseBody: Record<string, FernRegistry.generators.ChangelogEntry>) => Promise<void>;
+    }, FernRegistry.generators.GetChangelogResponse, never, never>, res: {
+        send: (responseBody: FernRegistry.generators.GetChangelogResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
@@ -26,18 +26,18 @@ export interface VersionsServiceMethods {
     getGeneratorRelease(req: express.Request<{
         generator: FernRegistry.generators.GeneratorId;
         version: string;
-    }, FernRegistry.generators.GeneratorRelease | undefined, never, never>, res: {
-        send: (responseBody: FernRegistry.generators.GeneratorRelease | undefined) => Promise<void>;
+    }, FernRegistry.generators.GeneratorRelease, never, never>, res: {
+        send: (responseBody: FernRegistry.generators.GeneratorRelease) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
     listGeneratorReleases(req: express.Request<{
         generator: FernRegistry.generators.GeneratorId;
-    }, FernRegistry.generators.GeneratorRelease[], never, {
+    }, FernRegistry.generators.ListGeneratorReleasesResponse, never, {
         page?: number;
         page_size?: number;
     }>, res: {
-        send: (responseBody: FernRegistry.generators.GeneratorRelease[]) => Promise<void>;
+        send: (responseBody: FernRegistry.generators.ListGeneratorReleasesResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;

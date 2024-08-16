@@ -50,6 +50,8 @@ types:
         docs: The name of the docker image to pull to run this generator.
 
 service:
+  audiences:
+    - generators
   auth: false
   base-path: /generators
   endpoints:

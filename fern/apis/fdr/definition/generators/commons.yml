@@ -10,6 +10,15 @@ types:
           The remediation strategy to be used when a yank is detected. If one is not specified, we'll likely go backwards by publishing time
           to find the last unyanked version.
 
+  GetChangelogResponse:
+    properties:
+      entries: list<ChangelogResponse>
+
+  ChangelogResponse:
+    properties:
+      version: string
+      changelog_entry: ChangelogEntry
+
   ChangelogEntryType:
     docs: Following `conventional commit` types for the entries here.
     enum:
@@ -45,7 +54,6 @@ types:
     extends: ReleaseRequest
     properties:
       release_type: ReleaseType
-      is_latest: boolean
       major_version: integer
 
   InvalidVersionErrorMessage:
