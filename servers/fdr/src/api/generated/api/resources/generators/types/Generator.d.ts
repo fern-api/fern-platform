@@ -4,8 +4,8 @@
 import * as FernRegistry from "../../..";
 export interface Generator {
     id: FernRegistry.generators.GeneratorId;
-    generator_type: string;
-    generator_language?: string;
+    generator_type: FernRegistry.generators.GeneratorType;
+    generator_language?: FernRegistry.generators.GeneratorLanguage;
     /** The name of the docker image to pull to run this generator. */
     docker_image: string;
 }

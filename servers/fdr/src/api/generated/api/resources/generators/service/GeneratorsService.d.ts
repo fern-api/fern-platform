@@ -11,12 +11,12 @@ export interface GeneratorsServiceMethods {
     }): void | Promise<void>;
     getGenerator(req: express.Request<{
         generator_id: FernRegistry.generators.GeneratorId;
-    }, FernRegistry.generators.Generator, never, never>, res: {
-        send: (responseBody: FernRegistry.generators.Generator) => Promise<void>;
+    }, FernRegistry.generators.Generator | undefined, never, never>, res: {
+        send: (responseBody: FernRegistry.generators.Generator | undefined) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
-    listGenerator(req: express.Request<never, FernRegistry.generators.Generator[], never, never>, res: {
+    listGenerators(req: express.Request<never, FernRegistry.generators.Generator[], never, never>, res: {
         send: (responseBody: FernRegistry.generators.Generator[]) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;

@@ -37,8 +37,10 @@ export class Generators {
      * @example
      *     await fernRegistry.generators.upsertGenerator({
      *         id: "string",
-     *         generator_type: "string",
-     *         generator_language: "string",
+     *         generator_type: {
+     *             type: "sdk"
+     *         },
+     *         generator_language: FernRegistry.generators.GeneratorLanguage.Python,
      *         docker_image: "string"
      *     })
      */
@@ -89,7 +91,9 @@ export class Generators {
     public async getGenerator(
         generatorId: FernRegistry.generators.GeneratorId,
         requestOptions?: Generators.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.generators.Generator, FernRegistry.generators.getGenerator.Error>> {
+    ): Promise<
+        core.APIResponse<FernRegistry.generators.Generator | undefined, FernRegistry.generators.getGenerator.Error>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
@@ -110,7 +114,7 @@ export class Generators {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.Generator,
+                body: _response.body as FernRegistry.generators.Generator | undefined,
             };
         }
 
@@ -121,16 +125,16 @@ export class Generators {
     }
 
     /**
-     * Get the all generators.
+     * Get the all generators. This is currently not paginated since the list will be short, but there may in the future be need for pagination.
      *
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.listGenerator()
+     *     await fernRegistry.generators.listGenerators()
      */
-    public async listGenerator(
+    public async listGenerators(
         requestOptions?: Generators.RequestOptions
-    ): Promise<core.APIResponse<FernRegistry.generators.Generator[], FernRegistry.generators.listGenerator.Error>> {
+    ): Promise<core.APIResponse<FernRegistry.generators.Generator[], FernRegistry.generators.listGenerators.Error>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
@@ -157,7 +161,7 @@ export class Generators {
 
         return {
             ok: false,
-            error: FernRegistry.generators.listGenerator.Error._unknown(_response.error),
+            error: FernRegistry.generators.listGenerators.Error._unknown(_response.error),
         };
     }
 
