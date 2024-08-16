@@ -6,7 +6,6 @@ import {
     CURRENT_TAB_INDEX_ATOM,
     DOCS_LAYOUT_ATOM,
     MOBILE_SIDEBAR_ENABLED_ATOM,
-    SEARCHBAR_PLACEMENT_ATOM,
     SIDEBAR_SCROLL_CONTAINER_ATOM,
     TABS_ATOM,
     useIsMobileSidebarOpen,
@@ -32,17 +31,6 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
     const isScrolled = useIsScrolled({ current: scrollRef });
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
-    const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "SIDEBAR";
-
-    if (
-        tabs.length > 0 &&
-        layout?.disableHeader !== true &&
-        layout?.tabsPlacement === "HEADER" &&
-        !showSearchBar &&
-        (sidebar == null || sidebar?.children.length === 0)
-    ) {
-        return null;
-    }
 
     return (
         <nav aria-label="secondary" ref={ref} {...props} className={clsx("fern-sidebar-container", props.className)}>
