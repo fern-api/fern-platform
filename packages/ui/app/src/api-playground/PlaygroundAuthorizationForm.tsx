@@ -13,6 +13,7 @@ import {
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM,
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
+    useDomain,
 } from "../atoms";
 import { Callout } from "../mdx/components/callout";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
@@ -240,6 +241,7 @@ export function PlaygroundAuthorizationFormCard({
     const router = useRouter();
     const apiKey = apiKeyInjection.enabled && apiKeyInjection.authenticated ? apiKeyInjection.access_token : null;
     const [loginError, setLoginError] = useState<string | null>(null);
+    const domain = useDomain();
 
     const handleResetBearerAuth = useCallback(() => {
         setBearerAuth({ token: apiKey ?? "" });
@@ -309,7 +311,6 @@ export function PlaygroundAuthorizationFormCard({
                     </FernCard>
                 </>
             )}
-
             {apiKeyInjection.enabled && apiKey != null && (
                 <>
                     <FernCard className="rounded-xl p-4 shadow-sm mb-3" title="Login to send a real request">
@@ -325,9 +326,9 @@ export function PlaygroundAuthorizationFormCard({
                         <div className="-mx-4">
                             <PlaygroundAuthorizationForm auth={auth} disabled={disabled} />
                         </div>
-                        {apiKey !== authState?.bearerAuth?.token && (
+                        {
                             <div className="flex justify-end  gap-2">
-                                {apiKey && (
+                                {apiKey !== authState?.bearerAuth?.token && apiKey && (
                                     <FernButton
                                         text="Reset token to default"
                                         intent="none"
@@ -337,12 +338,29 @@ export function PlaygroundAuthorizationFormCard({
                                         variant="outlined"
                                     />
                                 )}
+                                {apiKeyInjection && (
+                                    <FernButton
+                                        text="Logout"
+                                        intent="none"
+                                        onClick={() => {
+                                            fetch(`${domain}/api/fern-docs/auth/logout`)
+                                                .then(() => {
+                                                    window.location.reload();
+                                                })
+                                                .catch((error) => {
+                                                    // eslint-disable-next-line no-console
+                                                    console.error(error);
+                                                });
+                                        }}
+                                        size="normal"
+                                        variant="outlined"
+                                    />
+                                )}
                             </div>
-                        )}
+                        }
                     </FernCard>
                 </>
             )}
-
             {!apiKeyInjection.enabled && (isAuthed(auth, authState) || apiKey != null) && (
                 <FernButton
                     className="w-full text-left"
@@ -377,6 +395,7 @@ export function PlaygroundAuthorizationFormCard({
                     active={isOpen.value}
                 />
             )}
+
             <FernCollapse isOpen={isOpen.value}>
                 <div className="pt-4">
                     <div className="fern-dropdown">
