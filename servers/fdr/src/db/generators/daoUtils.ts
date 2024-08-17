@@ -2,33 +2,6 @@ import * as prisma from "@prisma/client";
 import semver from "semver";
 import { InvalidVersionError, ReleaseType } from "../../api/generated/api/resources/generators";
 
-export function getSemverSortBetween(
-    fromVersion: string,
-    toVersion: string,
-): {
-    major: { gte: number | undefined; lte: number | undefined };
-    minor: { gte: number | undefined; lte: number | undefined };
-    patch: { gte: number | undefined; lte: number | undefined };
-} {
-    const fromSem = semver.parse(fromVersion);
-    const toSem = semver.parse(toVersion);
-
-    return {
-        major: {
-            gte: fromSem?.major,
-            lte: toSem?.major,
-        },
-        minor: {
-            gte: fromSem?.minor,
-            lte: toSem?.minor,
-        },
-        patch: {
-            gte: fromSem?.patch,
-            lte: toSem?.patch,
-        },
-    };
-}
-
 export function convertGeneratorReleaseType(releaseType: ReleaseType): prisma.ReleaseType {
     switch (releaseType) {
         case ReleaseType.Ga:
@@ -67,7 +40,7 @@ export function getPrereleaseTypeAndVersion(version: string): [ReleaseType, numb
     // major.minor.patch[-prereleaseType].[prereleaseVersion] where `prereleaseVersion`
     // may be omitted and assumed as 0.
     if (parsedVersion.prerelease.length > 0 && parsedVersion.prerelease.length < 3) {
-        let prereleaseType = parsedVersion.prerelease[0]?.toString();
+        const prereleaseType = parsedVersion.prerelease[0]?.toString();
         if (prereleaseType == null) {
             throw new InvalidVersionError({ provided_version: version });
         }

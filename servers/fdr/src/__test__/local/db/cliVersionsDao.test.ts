@@ -187,7 +187,7 @@ it("generator version happy path update", async () => {
     expect(updatedRelease?.changelog_entry).toEqual(updateReleaseRequest.changelog_entry);
 });
 
-it("generator version happy path update", async () => {
+it("generator version rc versions", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             ir_version: "0.0.2",

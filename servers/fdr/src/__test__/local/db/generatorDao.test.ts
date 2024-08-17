@@ -86,6 +86,5 @@ it("generator dao non-unique", async () => {
     });
 
     const generatorUpdated = await fdrApplication.dao.generators().listGenerators();
-    console.log(JSON.stringify(generatorUpdated));
     expect(generatorUpdated).length(3);
 });
