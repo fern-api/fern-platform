@@ -2,17 +2,31 @@
 // The config you add here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
+import { interceptAndLogSentryInDev, sentryEnv } from "@fern-ui/ui";
 import * as Sentry from "@sentry/nextjs";
 
-const sentryEnv = process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev";
+const isProduction = process.env.NODE_ENV === "production";
 const assetPrefix =
     process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
 const tunnelPath = "/api/fern-docs/monitoring";
 
+const PRODUCTION_INTEGRATIONS = isProduction
+    ? [
+          Sentry.replayIntegration({
+              // Additional Replay configuration goes in here, for example:
+              maskAllText: false,
+              maskAllInputs: false,
+              blockAllMedia: false,
+          }),
+      ]
+    : [];
+
+const DEV_INTEGRATIONS = [interceptAndLogSentryInDev()];
+
 Sentry.init({
     dsn: "https://216ad381a8f652e036b1833af58627e5@o4507138224160768.ingest.us.sentry.io/4507148139495424",
     // Do not enable sentry locally
-    enabled: process.env.NODE_ENV === "production",
+    enabled: isProduction,
     environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
 
     // This forces the browser to send all events to app.buildwithfern.com/api/fern-docs/monitoring
@@ -33,14 +47,7 @@ Sentry.init({
     autoSessionTracking: true,
 
     // You can remove this option if you're not planning to use the Sentry Session Replay feature:
-    integrations: [
-        Sentry.replayIntegration({
-            // Additional Replay configuration goes in here, for example:
-            maskAllText: false,
-            maskAllInputs: false,
-            blockAllMedia: false,
-        }),
-    ],
+    integrations: [...DEV_INTEGRATIONS, ...PRODUCTION_INTEGRATIONS],
     // This option is required for capturing headers and cookies.
     sendDefaultPii: true,
 

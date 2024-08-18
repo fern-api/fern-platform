@@ -1,3 +1,4 @@
+export * from "./analytics/sentry";
 export { type CustomerAnalytics } from "./analytics/types";
 export { Stream } from "./api-playground/Stream";
 export { ProxyRequestSchema } from "./api-playground/types";
