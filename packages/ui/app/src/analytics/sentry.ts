@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
+import type { Integration } from "@sentry/types";
 
 interface FernUIErrorContext {
     context: string;
@@ -18,4 +19,10 @@ export function captureSentryError(e: unknown, context: FernUIErrorContext): voi
 
 export function captureSentryErrorMessage(message: string): void {
     Sentry.captureMessage(message);
+}
+
+export function interceptAndLogSentryInDev(): Integration {
+    return {
+        name: "intercept-and-log-in-dev",
+    };
 }
