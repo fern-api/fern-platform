@@ -36,7 +36,9 @@ groups:
           url: npm.buildwithfern.com
           package-name: "@fern-fern/fdr-cjs-sdk"
         config:
-          noSerdeLayer: true
+          noSerdeLayer: false
+          noRequestValidation: true
+          noResponseValidation: true
           outputSourceFiles: true
           neverThrowErrors: true
           timeoutInSeconds: infinity
