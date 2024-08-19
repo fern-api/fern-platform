@@ -11,8 +11,6 @@ import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
 
-// const Posthog = dynamic(() => import("../analytics/PosthogContainer").then((mod) => mod.Posthog));
-
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     // This is a hack to handle edge-cases related to multitenant subpath rendering:
     // We need to intercept how prefetching is done and modify the hrefs to include the subpath.
@@ -28,7 +26,6 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
             <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
             <Toaster />
             <JotaiProvider store={store}>
-                {/* <Posthog /> */}
                 <FernTooltipProvider>
                     <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
