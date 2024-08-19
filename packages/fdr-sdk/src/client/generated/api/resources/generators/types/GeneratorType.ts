@@ -6,12 +6,17 @@ import * as FernRegistry from "../../../index";
 
 export type GeneratorType =
     | FernRegistry.generators.GeneratorType.Sdk
+    | FernRegistry.generators.GeneratorType.Model
     | FernRegistry.generators.GeneratorType.Server
     | FernRegistry.generators.GeneratorType.Other;
 
 export declare namespace GeneratorType {
     interface Sdk extends FernRegistry.generators.SdkGenerator {
         type: "sdk";
+    }
+
+    interface Model extends FernRegistry.generators.ModelGenerator {
+        type: "model";
     }
 
     interface Server extends FernRegistry.generators.ServerGenerator {
