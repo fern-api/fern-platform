@@ -3,7 +3,6 @@ import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
-import dynamic from "next/dynamic";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
@@ -12,7 +11,7 @@ import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
 
-const Posthog = dynamic(() => import("../analytics/PosthogContainer").then((mod) => mod.Posthog));
+// const Posthog = dynamic(() => import("../analytics/PosthogContainer").then((mod) => mod.Posthog));
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     // This is a hack to handle edge-cases related to multitenant subpath rendering:
@@ -29,7 +28,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
             <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
             <Toaster />
             <JotaiProvider store={store}>
-                <Posthog />
+                {/* <Posthog /> */}
                 <FernTooltipProvider>
                     <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
