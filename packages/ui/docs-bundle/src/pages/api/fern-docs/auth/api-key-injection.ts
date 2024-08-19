@@ -32,7 +32,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
         let exp = expires;
 
         if (edgeConfig != null && edgeConfig.type === "oauth2" && edgeConfig.partner === "ory") {
-            const oauthClient = new OAuth2Client(edgeConfig, urlJoin(`https://${domain}`));
+            const oauthClient = new OAuth2Client(edgeConfig, urlJoin(`https://${domain}/api/auth/callback`));
 
             const token = OryAccessTokenSchema.parse(await oauthClient.decode(access_token));
             exp = token.exp == null ? undefined : new Date(token.exp * 1000);
