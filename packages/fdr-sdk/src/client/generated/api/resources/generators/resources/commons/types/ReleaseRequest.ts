@@ -8,5 +8,4 @@ export interface ReleaseRequest {
     version: string;
     is_yanked?: FernRegistry.generators.Yank;
     changelog_entry?: FernRegistry.generators.ChangelogEntry;
-    created_at: string;
 }

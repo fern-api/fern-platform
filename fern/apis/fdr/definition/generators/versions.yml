@@ -14,7 +14,7 @@ types:
       ir_version: string
       migration:
         type: optional<string>
-        docs: The TypeScript file for the migration to run when upgrading to this version.
+        docs: The TypeScript file for the migration to run when upgrading to this version. Ideally this would be typed as a file, but we don't support file upload in the express generator.
       custom_config_schema:
         type: optional<string>
         docs: The JSON schema (stringified) for the custom config that this generator version supports.
@@ -31,23 +31,27 @@ types:
         type: optional<string>
         docs: The JSON schema (stringified) for the custom config that this generator version supports.
 
+  ListGeneratorReleasesResponse:
+    properties:
+      generator_releases: list<GeneratorRelease>
+
 service:
   audiences:
     - generators
   base-path: /generators/versions
   auth: true
   endpoints:
-    getLatestGeneratorVersion:
+    getLatestGeneratorRelease:
       docs: Get the latest generator version that has not been yanked.
       method: POST
       path: /latest
       request:
-        name: GetLatestGeneratorVersionRequest
+        name: GetLatestGeneratorReleaseRequest
         body:
           properties:
-            type: string
+            generator: root.GeneratorId
             retain_major_version:
-              type: optional<string>
+              type: optional<integer>
               docs: |
                 Whether or not to include major versions when searching for the latest version. If specified, we will only return the latest version
                 that is the same major version as provided. Useful while we do not support config migrations, etc.
@@ -55,22 +59,26 @@ service:
               type: optional<commons.ReleaseType>
               docs: A filter for the release type, specifically if you'd like to get RC releases only, etc.
       response: GeneratorRelease
+      errors:
+        - NoValidGeneratorsFoundError
 
     getChangelog:
-      docs: Get the changelog for the specified generator upgrade.
+      docs: Get the changelog for the specified generator upgrade. The response will be a map of the generator version to it's corresponding changelog.
       method: GET
       path: /{generator}/changelog/{from_version}/to/{to_version}
       path-parameters:
         generator: root.GeneratorId
         from_version: string
         to_version: string
-      response: list<commons.ChangelogEntry>
+      response: commons.GetChangelogResponse
 
     upsertGeneratorRelease:
       docs: Update or create the specified generator version.
       method: PUT
       path: ""
       request: GeneratorReleaseRequest
+      errors:
+        - commons.InvalidVersionError
 
     getGeneratorRelease:
       docs: Get the specified generator version.
@@ -80,11 +88,32 @@ service:
         generator: root.GeneratorId
         version: string
       response: GeneratorRelease
+      errors:
+        - GeneratorVersionNotFoundError
 
-    getAllGeneratorReleases:
+    listGeneratorReleases:
       docs: Get all generator versions for the specified generator.
       method: GET
       path: /{generator}
       path-parameters:
         generator: root.GeneratorId
-      response: list<GeneratorRelease>
+      pagination:
+        offset: $request.page
+        results: $response.generator_releases
+      request:
+        name: ListGeneratorReleasesRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page number to retrieve. Defaults to 0.
+          page_size:
+            type: optional<integer>
+            docs: The number of items to retrieve per page. Defaults to 20.
+      response: ListGeneratorReleasesResponse
+
+errors:
+  GeneratorVersionNotFoundError:
+    status-code: 404
+    type: commons.InvalidVersionErrorMessage
+  NoValidGeneratorsFoundError:
+    status-code: 404

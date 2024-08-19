@@ -4,4 +4,4 @@ export * as getChangelog from "./getChangelog";
 export * as getMinCliForIr from "./getMinCliForIr";
 export * as upsertCliRelease from "./upsertCliRelease";
 export * as getCliRelease from "./getCliRelease";
-export * as getAllCliReleases from "./getAllCliReleases";
+export * as listCliReleases from "./listCliReleases";

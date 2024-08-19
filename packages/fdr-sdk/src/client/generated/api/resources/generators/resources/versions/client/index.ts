@@ -1,6 +1,6 @@
 export * from "./requests";
-export * as getLatestGeneratorVersion from "./getLatestGeneratorVersion";
+export * as getLatestGeneratorRelease from "./getLatestGeneratorRelease";
 export * as getChangelog from "./getChangelog";
 export * as upsertGeneratorRelease from "./upsertGeneratorRelease";
 export * as getGeneratorRelease from "./getGeneratorRelease";
-export * as getAllGeneratorReleases from "./getAllGeneratorReleases";
+export * as listGeneratorReleases from "./listGeneratorReleases";

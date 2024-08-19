@@ -1,1 +1,1 @@
-export { GetLatestGeneratorVersionRequest } from "./GetLatestGeneratorVersionRequest";
+export { GetLatestGeneratorReleaseRequest } from "./GetLatestGeneratorReleaseRequest";

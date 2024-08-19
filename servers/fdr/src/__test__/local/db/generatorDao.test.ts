@@ -5,6 +5,24 @@ const fdrApplication = createMockFdrApplication({
     orgIds: ["acme", "octoai"],
 });
 
+// I didn't make a delete all endpoint because that felt like a bad idea
+// so we just have to clean up after ourselves with this list of used names.
+const GENERATORS_FROM_OTHER_TESTS = [
+    "this-fails-semver",
+    "this-picks-latest",
+    "this-gets-changelog",
+    "this-is-the-happy-path",
+    "python-sdk",
+    "python-sdk-2",
+    "python-sdk-3",
+    "my-cool/example",
+];
+
+beforeEach(async () => {
+    // Clean slate
+    await fdrApplication.dao.generators().deleteGenerators({ generatorIds: GENERATORS_FROM_OTHER_TESTS });
+});
+
 it("generator dao", async () => {
     // create snippets
     const generatorStarter: FdrAPI.generators.Generator = {
@@ -36,9 +54,6 @@ it("generator dao", async () => {
         docker_image: "changing things up",
         generator_language: FdrAPI.generators.GeneratorLanguage.Typescript,
     });
-
-    // test clean up
-    await fdrApplication.dao.generators().deleteGenerator({ generatorId: "my-cool/example" });
 });
 
 it("generator dao non-unique", async () => {
@@ -72,9 +87,4 @@ it("generator dao non-unique", async () => {
 
     const generatorUpdated = await fdrApplication.dao.generators().listGenerators();
     expect(generatorUpdated).length(3);
-
-    // test clean up
-    await fdrApplication.dao
-        .generators()
-        .deleteGenerators({ generatorIds: ["python-sdk", "python-sdk-2", "python-sdk-3"] });
 });

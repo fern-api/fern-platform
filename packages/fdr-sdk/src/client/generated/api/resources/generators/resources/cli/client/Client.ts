@@ -68,6 +68,16 @@ export class Cli {
             };
         }
 
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.generators.cli.getLatestCliRelease.Error)?.error) {
+                case "NoValidClisFoundError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.generators.cli.getLatestCliRelease.Error,
+                    };
+            }
+        }
+
         return {
             ok: false,
             error: FernRegistry.generators.cli.getLatestCliRelease.Error._unknown(_response.error),
@@ -75,7 +85,7 @@ export class Cli {
     }
 
     /**
-     * Get the changelog for the specified CLI upgrade.
+     * Get the changelog for the specified CLI upgrade. The response will be a map of the generator version to it's corresponding changelog.
      *
      * @param {string} fromVersion
      * @param {string} toVersion
@@ -89,7 +99,7 @@ export class Cli {
         toVersion: string,
         requestOptions?: Cli.RequestOptions
     ): Promise<
-        core.APIResponse<FernRegistry.generators.ChangelogEntry[], FernRegistry.generators.cli.getChangelog.Error>
+        core.APIResponse<FernRegistry.generators.GetChangelogResponse, FernRegistry.generators.cli.getChangelog.Error>
     > {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -111,7 +121,7 @@ export class Cli {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.ChangelogEntry[],
+                body: _response.body as FernRegistry.generators.GetChangelogResponse,
             };
         }
 
@@ -158,6 +168,16 @@ export class Cli {
             };
         }
 
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.generators.cli.getMinCliForIr.Error)?.error) {
+                case "NoValidClisFoundError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.generators.cli.getMinCliForIr.Error,
+                    };
+            }
+        }
+
         return {
             ok: false,
             error: FernRegistry.generators.cli.getMinCliForIr.Error._unknown(_response.error),
@@ -172,10 +192,10 @@ export class Cli {
      *
      * @example
      *     await fernRegistry.generators.cli.upsertCliRelease({
+     *         ir_version: "string",
      *         version: "string",
      *         is_yanked: {},
-     *         changelog_entry: {},
-     *         created_at: new Date("2024-01-15T09:30:00.000Z")
+     *         changelog_entry: {}
      *     })
      */
     public async upsertCliRelease(
@@ -250,6 +270,16 @@ export class Cli {
             };
         }
 
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.generators.cli.getCliRelease.Error)?.error) {
+                case "CliVersionNotFoundError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.generators.cli.getCliRelease.Error,
+                    };
+            }
+        }
+
         return {
             ok: false,
             error: FernRegistry.generators.cli.getCliRelease.Error._unknown(_response.error),
@@ -259,16 +289,34 @@ export class Cli {
     /**
      * Get all CLI versions.
      *
+     * @param {FernRegistry.generators.ListCliReleasesRequest} request
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getAllCliReleases()
+     *     await fernRegistry.generators.cli.listCliReleases({
+     *         page: 1,
+     *         page_size: 1
+     *     })
      */
-    public async getAllCliReleases(
+    public async listCliReleases(
+        request: FernRegistry.generators.ListCliReleasesRequest = {},
         requestOptions?: Cli.RequestOptions
     ): Promise<
-        core.APIResponse<FernRegistry.generators.CliRelease[], FernRegistry.generators.cli.getAllCliReleases.Error>
+        core.APIResponse<
+            FernRegistry.generators.ListCliReleasesResponse,
+            FernRegistry.generators.cli.listCliReleases.Error
+        >
     > {
+        const { page, page_size: pageSize } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (page != null) {
+            _queryParams["page"] = page.toString();
+        }
+
+        if (pageSize != null) {
+            _queryParams["page_size"] = pageSize.toString();
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
@@ -282,6 +330,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -289,13 +338,13 @@ export class Cli {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.CliRelease[],
+                body: _response.body as FernRegistry.generators.ListCliReleasesResponse,
             };
         }
 
         return {
             ok: false,
-            error: FernRegistry.generators.cli.getAllCliReleases.Error._unknown(_response.error),
+            error: FernRegistry.generators.cli.listCliReleases.Error._unknown(_response.error),
         };
     }
 
