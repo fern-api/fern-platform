@@ -100,25 +100,26 @@ export function capturePosthogEvent(eventName: string, properties?: Record<strin
     });
 }
 
+// Track page views
+const handleRouteChange = (url: string) => {
+    try {
+        capturePosthogEvent("$pageview");
+        typeof window !== "undefined" &&
+            window?.analytics &&
+            typeof window.analytics.page === "function" &&
+            window?.analytics?.page("Page View", { page: url });
+    } catch (e) {
+        //send the exception to sentry
+        sentry.captureException(e);
+        // eslint-disable-next-line no-console
+        console.error("Failed to track page view", e);
+    }
+};
+
 export function useInitializePosthog(customerConfig?: DocsV1Read.PostHogConfig): void {
     useEffect(() => {
         initializePosthog(customerConfig);
 
-        // Track page views
-        const handleRouteChange = (url: string) => {
-            try {
-                capturePosthogEvent("$pageview");
-                typeof window !== "undefined" &&
-                    window?.analytics &&
-                    typeof window.analytics.page === "function" &&
-                    window?.analytics?.page("Page View", { page: url });
-            } catch (e) {
-                //send the exception to sentry
-                sentry.captureException(e);
-                // eslint-disable-next-line no-console
-                console.error("Failed to track page view", e);
-            }
-        };
         Router.events.on("routeChangeComplete", handleRouteChange);
         return () => {
             Router.events.off("routeChangeComplete", handleRouteChange);

@@ -11,7 +11,7 @@ import { renderSegmentSnippet } from "./segment";
 
 const IntercomScript = dynamic(() => import("./IntercomScript").then((mod) => mod.IntercomScript));
 const FullstoryScript = dynamic(() => import("./FullstoryScript").then((mod) => mod.FullstoryScript));
-const Posthog = dynamic(() => import("./PosthogContainer").then((mod) => mod.Posthog));
+const Posthog = dynamic(() => import("./PosthogContainer").then((mod) => mod.Posthog), { ssr: false });
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
 const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConfig ?? {}, isEqual);
