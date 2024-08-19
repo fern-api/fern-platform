@@ -10,18 +10,17 @@ const assetPrefix =
     process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI).href : undefined;
 const tunnelPath = "/api/fern-docs/monitoring";
 
-const PRODUCTION_INTEGRATIONS = isProduction
-    ? [
-          Sentry.replayIntegration({
-              // Additional Replay configuration goes in here, for example:
-              maskAllText: false,
-              maskAllInputs: false,
-              blockAllMedia: false,
-          }),
-      ]
-    : [];
+const PRODUCTION_INTEGRATIONS = [
+    // You can remove this option if you're not planning to use the Sentry Session Replay feature:
+    Sentry.replayIntegration({
+        // Additional Replay configuration goes in here, for example:
+        maskAllText: false,
+        maskAllInputs: false,
+        blockAllMedia: false,
+    }),
+];
 
-const DEV_INTEGRATIONS = [interceptAndLogSentryInDev()];
+const DEFAULT_INTEGRATIONS = [interceptAndLogSentryInDev()];
 
 Sentry.init({
     dsn: "https://216ad381a8f652e036b1833af58627e5@o4507138224160768.ingest.us.sentry.io/4507148139495424",
@@ -46,8 +45,7 @@ Sentry.init({
 
     autoSessionTracking: true,
 
-    // You can remove this option if you're not planning to use the Sentry Session Replay feature:
-    integrations: [...DEV_INTEGRATIONS, ...PRODUCTION_INTEGRATIONS],
+    integrations: [...DEFAULT_INTEGRATIONS, ...(isProduction ? PRODUCTION_INTEGRATIONS : [])],
     // This option is required for capturing headers and cookies.
     sendDefaultPii: true,
 
