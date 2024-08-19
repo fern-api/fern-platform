@@ -22,4 +22,24 @@ Sentry.init({
     environment: process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev",
 
     spotlight: process.env.NODE_ENV === "development",
+
+    beforeSend: (event: Sentry.Event, _: Sentry.EventHint): Sentry.Event | null => {
+        if ((event.type as string) === "csp" || (event as any)?.csp != null) {
+            return null;
+        }
+        // Filter out events from privategpt
+        if (event.request?.url?.includes("privategpt")) {
+            return null;
+        }
+        if (
+            event.tags != null &&
+            event.tags["url"] != null &&
+            typeof event.tags["url"] === "string" &&
+            event.tags["url"].includes("privategpt")
+        ) {
+            return null;
+        }
+
+        return event;
+    },
 });
