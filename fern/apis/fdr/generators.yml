@@ -37,8 +37,8 @@ groups:
           package-name: "@fern-fern/fdr-cjs-sdk"
         config:
           noSerdeLayer: false
-          noRequestValidation: true
-          noResponseValidation: true
+          skipRequestValidation: true
+          skipResponseValidation: true
           outputSourceFiles: true
           neverThrowErrors: true
           timeoutInSeconds: infinity
