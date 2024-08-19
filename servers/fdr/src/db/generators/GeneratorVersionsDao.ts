@@ -96,6 +96,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             customConfigSchema: generatorRelease.custom_config_schema,
             releaseType,
             nonce: noncifySemanticVersion(generatorRelease.version),
+            createdAt: generatorRelease.created_at != null ? new Date(generatorRelease.created_at) : undefined,
         };
         await this.prisma.generatorRelease.upsert({
             where: {
@@ -238,5 +239,6 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
             generatorRelease.customConfigSchema != null ? generatorRelease.customConfigSchema : undefined,
         major_version: generatorRelease.major,
         is_yanked: generatorRelease.isYanked != null ? (readBuffer(generatorRelease.isYanked) as Yank) : undefined,
+        created_at: generatorRelease.createdAt?.toISOString(),
     };
 }
