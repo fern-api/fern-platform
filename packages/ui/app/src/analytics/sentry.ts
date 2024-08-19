@@ -24,9 +24,9 @@ export function captureSentryErrorMessage(message: string): void {
 export const sentryEnv = process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "dev";
 
 /**
- * In production, this integration is a no-op.
+ * In production and non-dev environments, this integration is a no-op.
  *
- * In non-prod environments, this integration will redirect Sentry events & messages to `console`
+ * In dev environments, this integration will redirect Sentry events & messages to `console`
  * and prevent them from being sent to our Sentry instance.
  *
  * The goal is to make it seamless for error detection and debugging code to go from
@@ -36,8 +36,17 @@ export const sentryEnv = process?.env.NEXT_PUBLIC_APPLICATION_ENVIRONMENT ?? "de
 export function interceptAndLogSentryInDev(): Integration {
     return {
         name: "intercept-and-log-in-dev",
+
+        // `setupOnce` is a no-op; it's supposed to be used for e.g. global monkey patching and similar things.
+        // That's irrelevant here.
+        //
+        // It's optional in Sentry v8, but we're still on v7, where this is a required field.
+        //
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        setupOnce() {},
+
         processEvent(event) {
-            if (event.environment === "production" || process.env.NODE_ENV === "production") {
+            if (sentryEnv !== "dev") {
                 return event;
             }
 
