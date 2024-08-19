@@ -1,4 +1,4 @@
-import { withDefaultProtocol } from "@fern-ui/core-utils";
+import { combineURLs, withDefaultProtocol } from "@fern-ui/core-utils";
 
 export const runtime = "edge";
 
@@ -24,11 +24,10 @@ export default async function handler(req: Request): Promise<Response> {
  * @returns Posthog's response
  */
 function passthroughTo(destination: string, req: Request): Promise<Response> {
-    const ourUrl = new URL(req.url);
-    const requestPath = ourUrl.pathname.replace(/^\/api\/fern-docs\/analytics\/posthog/, "");
+    const [, intendedPath = "/"] = req.url.split("/api/fern-docs/analytics/posthog");
 
-    const targetUrl = new URL(destination);
-    targetUrl.pathname = requestPath;
+    // parse as URL for validation
+    const targetUrl = new URL(combineURLs(destination, intendedPath));
 
     return fetch(targetUrl.toString(), {
         // we don't pass headers because we need fetch to figure out the correct content-encoding
