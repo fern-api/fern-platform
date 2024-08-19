@@ -7,6 +7,7 @@ import Script from "next/script";
 import { ReactElement, memo } from "react";
 import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
 import { GoogleTagManager } from "./GoogleTagManager";
+import { useInitializePosthog } from "./posthog";
 import { renderSegmentSnippet } from "./segment";
 
 const IntercomScript = dynamic(() => import("./IntercomScript").then((mod) => mod.IntercomScript));
@@ -19,6 +20,7 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
     const domain = useAtomValue(DOMAIN_ATOM);
     const { ga4, gtm } = useAtomValue(ANALYTICS_ATOM);
     const config = useAtomValue(ANALYTICS_CONFIG_ATOM);
+    useInitializePosthog(config.posthog);
 
     return (
         <>
