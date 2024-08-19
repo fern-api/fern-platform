@@ -23,7 +23,9 @@ async function searchFile(directory: string, fileName: string): Promise<string |
 
         if (stats.isDirectory()) {
             const result = searchFile(filePath, fileName);
-            if (result) return result;
+            if (result) {
+                return result;
+            }
         } else if (file === fileName) {
             return filePath;
         }
