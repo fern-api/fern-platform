@@ -48,6 +48,9 @@ jobs:
       - name: 🧪 Build and test
         run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
 
+      - name: Install Fern
+        run: npm install -g fern-api
+
       - name: Publish FDR SDK
         env:
           NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -67,3 +70,4 @@ jobs:
         run: |
           git_version="$(scripts/fdr-version.sh)"
           fern generate --api fdr --group fdr-cjs-sdk --version ${git_version} --log-level debug
+          fern generate --api fdr --group generator-sdk --version ${git_version} --log-level debug
