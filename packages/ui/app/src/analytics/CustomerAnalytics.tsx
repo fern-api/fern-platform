@@ -11,7 +11,7 @@ import { renderSegmentSnippet } from "./segment";
 
 const IntercomScript = dynamic(() => import("./IntercomScript").then((mod) => mod.IntercomScript));
 const FullstoryScript = dynamic(() => import("./FullstoryScript").then((mod) => mod.FullstoryScript));
-const Posthog = dynamic(() => import("./PosthogContainer").then((mod) => mod.Posthog), { ssr: false });
+// const Posthog = dynamic(() => import("./PosthogContainer").then((mod) => mod.Posthog), { ssr: false });
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
 const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConfig ?? {}, isEqual);
@@ -30,7 +30,7 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
                     __html: renderSegmentSnippet(domain, config.segment?.writeKey),
                 }}
             />
-            <Posthog customerConfig={config.posthog} />
+            {/* <Posthog customerConfig={config.posthog} /> */}
             <IntercomScript config={config.intercom} />
             <FullstoryScript config={config.fullstory} />
             {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}

@@ -6,6 +6,7 @@ import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
+import { Posthog } from "../analytics/PosthogContainer";
 import { DocsProps, ThemeScript, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
@@ -26,6 +27,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
             <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
             <Toaster />
             <JotaiProvider store={store}>
+                <Posthog />
                 <FernTooltipProvider>
                     <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
