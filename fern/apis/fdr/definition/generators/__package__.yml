@@ -25,6 +25,7 @@ types:
   GeneratorType:
     union:
       sdk: SdkGenerator
+      model: ModelGenerator
       server: ServerGenerator
       other: OtherGenerator
 
