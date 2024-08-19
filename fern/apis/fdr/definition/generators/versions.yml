@@ -97,6 +97,9 @@ service:
       path: /{generator}
       path-parameters:
         generator: root.GeneratorId
+      pagination:
+        offset: $request.page
+        results: $response.generator_releases
       request:
         name: ListGeneratorReleasesRequest
         query-parameters:

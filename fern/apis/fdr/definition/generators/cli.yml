@@ -85,6 +85,9 @@ service:
       docs: Get all CLI versions.
       method: GET
       path: ""
+      pagination:
+        offset: $request.page
+        results: $response.cli_releases
       request:
         name: ListCliReleasesRequest
         query-parameters:
