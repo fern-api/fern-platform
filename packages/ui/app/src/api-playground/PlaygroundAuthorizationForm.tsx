@@ -15,7 +15,6 @@ import {
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
     useBasePath,
-    useDomain,
 } from "../atoms";
 import { Callout } from "../mdx/components/callout";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
@@ -243,7 +242,6 @@ export function PlaygroundAuthorizationFormCard({
     const router = useRouter();
     const apiKey = apiKeyInjection.enabled && apiKeyInjection.authenticated ? apiKeyInjection.access_token : null;
     const [loginError, setLoginError] = useState<string | null>(null);
-    const domain = useDomain();
     const basePath = useBasePath();
 
     const handleResetBearerAuth = useCallback(() => {
@@ -260,7 +258,7 @@ export function PlaygroundAuthorizationFormCard({
             url.searchParams.set("state", state.toString());
 
             if (apiKeyInjection.partner === "ory") {
-                const redirect_uri = urlJoin(`https://${domain}`, basePath ?? "", "/api/fern-docs/auth/callback");
+                const redirect_uri = urlJoin(window.location.origin, basePath ?? "", "/api/fern-docs/auth/callback");
                 url.searchParams.set("redirect_uri", redirect_uri);
             }
 
@@ -351,7 +349,7 @@ export function PlaygroundAuthorizationFormCard({
                                         text="Logout"
                                         intent="none"
                                         onClick={() => {
-                                            fetch(`${domain}/api/fern-docs/auth/logout`)
+                                            fetch(urlJoin(window.location.origin, "/api/fern-docs/auth/logout"))
                                                 .then(() => {
                                                     window.location.reload();
                                                 })
