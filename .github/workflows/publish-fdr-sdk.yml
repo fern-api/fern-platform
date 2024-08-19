@@ -60,3 +60,10 @@ jobs:
           rm -rf package.json.tmp
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           npm publish --access public
+
+      - name: Publish CJS SDK
+        env:
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+        run: |
+          git_version="$(scripts/fdr-version.sh)"
+          fern generate --api fdr --group fdr-cjs-sdk --version ${git_version} --log-level debug
