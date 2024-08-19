@@ -7,6 +7,7 @@ import Script from "next/script";
 import { ReactElement, memo } from "react";
 import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
 import { GoogleTagManager } from "./GoogleTagManager";
+import { Posthog } from "./PosthogContainer";
 import { renderSegmentSnippet } from "./segment";
 
 const IntercomScript = dynamic(() => import("./IntercomScript").then((mod) => mod.IntercomScript));
@@ -29,6 +30,7 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
                     __html: renderSegmentSnippet(domain, config.segment?.writeKey),
                 }}
             />
+            <Posthog customerConfig={config.posthog} />
             <IntercomScript config={config.intercom} />
             <FullstoryScript config={config.fullstory} />
             {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}

@@ -1,5 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { Router } from "next/router";
 import posthog, { PostHog } from "posthog-js";
+import { useEffect } from "react";
+import { safeCall } from "./sentry";
 
 /**
  * Posthog natively allows us to define additional capture objects with distinct configs on the global instance,
@@ -23,7 +26,7 @@ function posthogHasCustomer(instance: PostHog): instance is PostHogWithCustomer 
 let IS_POSTHOG_INITIALIZED = false;
 function safeAccessPosthog(run: () => void): void {
     if (IS_POSTHOG_INITIALIZED) {
-        run();
+        safeCall(run);
     }
 }
 
@@ -33,9 +36,11 @@ function safeAccessPosthog(run: () => void): void {
  * @param run
  */
 function ifCustomer(run: (hog: PostHogWithCustomer) => void): void {
-    if (IS_POSTHOG_INITIALIZED && posthogHasCustomer(posthog)) {
-        run(posthog);
-    }
+    safeCall(() => {
+        if (IS_POSTHOG_INITIALIZED && posthogHasCustomer(posthog)) {
+            run(posthog);
+        }
+    });
 }
 
 export function initializePosthog(customerConfig?: DocsV1Read.PostHogConfig): void {
@@ -95,4 +100,25 @@ export function capturePosthogEvent(eventName: string, properties?: Record<strin
         posthog.capture(eventName, properties);
         ifCustomer((posthog) => posthog.customer.capture(eventName, properties));
     });
+}
+
+const trackPageView = (url: string) => {
+    safeCall(() => {
+        capturePosthogEvent("$pageview");
+        typeof window !== "undefined" &&
+            window?.analytics &&
+            typeof window.analytics.page === "function" &&
+            window?.analytics?.page("Page View", { page: url });
+    });
+};
+
+export function useInitializePosthog(customerConfig?: DocsV1Read.PostHogConfig): void {
+    useEffect(() => {
+        safeCall(() => initializePosthog(customerConfig));
+
+        Router.events.on("routeChangeComplete", trackPageView);
+        return () => {
+            Router.events.off("routeChangeComplete", trackPageView);
+        };
+    }, [customerConfig]);
 }
