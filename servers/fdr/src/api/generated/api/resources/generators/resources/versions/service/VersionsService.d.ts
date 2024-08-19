@@ -4,7 +4,7 @@
 import * as FernRegistry from "../../../../..";
 import express from "express";
 export interface VersionsServiceMethods {
-    getLatestGeneratorVersion(req: express.Request<never, FernRegistry.generators.GeneratorRelease, FernRegistry.generators.GetLatestGeneratorVersionRequest, never>, res: {
+    getLatestGeneratorRelease(req: express.Request<never, FernRegistry.generators.GeneratorRelease, FernRegistry.generators.GetLatestGeneratorReleaseRequest, never>, res: {
         send: (responseBody: FernRegistry.generators.GeneratorRelease) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
@@ -13,8 +13,8 @@ export interface VersionsServiceMethods {
         generator: FernRegistry.generators.GeneratorId;
         from_version: string;
         to_version: string;
-    }, FernRegistry.generators.ChangelogEntry[], never, never>, res: {
-        send: (responseBody: FernRegistry.generators.ChangelogEntry[]) => Promise<void>;
+    }, FernRegistry.generators.GetChangelogResponse, never, never>, res: {
+        send: (responseBody: FernRegistry.generators.GetChangelogResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
@@ -31,10 +31,13 @@ export interface VersionsServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
-    getAllGeneratorReleases(req: express.Request<{
+    listGeneratorReleases(req: express.Request<{
         generator: FernRegistry.generators.GeneratorId;
-    }, FernRegistry.generators.GeneratorRelease[], never, never>, res: {
-        send: (responseBody: FernRegistry.generators.GeneratorRelease[]) => Promise<void>;
+    }, FernRegistry.generators.ListGeneratorReleasesResponse, never, {
+        page?: number;
+        page_size?: number;
+    }>, res: {
+        send: (responseBody: FernRegistry.generators.ListGeneratorReleasesResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;

@@ -12,8 +12,8 @@ export interface CliServiceMethods {
     getChangelog(req: express.Request<{
         from_version: string;
         to_version: string;
-    }, FernRegistry.generators.ChangelogEntry[], never, never>, res: {
-        send: (responseBody: FernRegistry.generators.ChangelogEntry[]) => Promise<void>;
+    }, FernRegistry.generators.GetChangelogResponse, never, never>, res: {
+        send: (responseBody: FernRegistry.generators.GetChangelogResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
@@ -36,8 +36,11 @@ export interface CliServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
-    getAllCliReleases(req: express.Request<never, FernRegistry.generators.CliRelease[], never, never>, res: {
-        send: (responseBody: FernRegistry.generators.CliRelease[]) => Promise<void>;
+    listCliReleases(req: express.Request<never, FernRegistry.generators.ListCliReleasesResponse, never, {
+        page?: number;
+        page_size?: number;
+    }>, res: {
+        send: (responseBody: FernRegistry.generators.ListCliReleasesResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;

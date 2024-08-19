@@ -50,7 +50,7 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
     }
 
     async getGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<Generator | undefined> {
-        return await convertPrismaGenerator(
+        return convertPrismaGenerator(
             await this.prisma.generator.findUnique({
                 where: {
                     id: generatorId,
@@ -62,7 +62,7 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
     async listGenerators(): Promise<Generator[]> {
         const generators = await this.prisma.generator.findMany();
 
-        return (await Promise.all(generators.map(convertPrismaGenerator))).filter((g): g is Generator => g != null);
+        return generators.map(convertPrismaGenerator).filter((g): g is Generator => g != null);
     }
 
     async upsertGenerator({ generator }: { generator: Generator }): Promise<void> {
@@ -139,7 +139,7 @@ function convertPrismaLanguage(prismaLanguage: prisma.Language | null): Generato
     }
 }
 
-async function convertPrismaGenerator(generator: prisma.Generator | null): Promise<Generator | undefined> {
+function convertPrismaGenerator(generator: prisma.Generator | null): Generator | undefined {
     return generator != null
         ? {
               id: generator.id,

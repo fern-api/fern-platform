@@ -29,23 +29,23 @@ export class Versions {
     /**
      * Get the latest generator version that has not been yanked.
      *
-     * @param {FernRegistry.generators.GetLatestGeneratorVersionRequest} request
+     * @param {FernRegistry.generators.GetLatestGeneratorReleaseRequest} request
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.getLatestGeneratorVersion({
-     *         type: "string",
-     *         retain_major_version: "string",
+     *     await fernRegistry.generators.versions.getLatestGeneratorRelease({
+     *         generator: "string",
+     *         retain_major_version: 1,
      *         release_type: FernRegistry.generators.ReleaseType.Ga
      *     })
      */
-    public async getLatestGeneratorVersion(
-        request: FernRegistry.generators.GetLatestGeneratorVersionRequest,
+    public async getLatestGeneratorRelease(
+        request: FernRegistry.generators.GetLatestGeneratorReleaseRequest,
         requestOptions?: Versions.RequestOptions
     ): Promise<
         core.APIResponse<
             FernRegistry.generators.GeneratorRelease,
-            FernRegistry.generators.versions.getLatestGeneratorVersion.Error
+            FernRegistry.generators.versions.getLatestGeneratorRelease.Error
         >
     > {
         const _response = await core.fetcher({
@@ -73,14 +73,24 @@ export class Versions {
             };
         }
 
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.generators.versions.getLatestGeneratorRelease.Error)?.error) {
+                case "NoValidGeneratorsFoundError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.generators.versions.getLatestGeneratorRelease.Error,
+                    };
+            }
+        }
+
         return {
             ok: false,
-            error: FernRegistry.generators.versions.getLatestGeneratorVersion.Error._unknown(_response.error),
+            error: FernRegistry.generators.versions.getLatestGeneratorRelease.Error._unknown(_response.error),
         };
     }
 
     /**
-     * Get the changelog for the specified generator upgrade.
+     * Get the changelog for the specified generator upgrade. The response will be a map of the generator version to it's corresponding changelog.
      *
      * @param {FernRegistry.generators.GeneratorId} generator
      * @param {string} fromVersion
@@ -96,7 +106,10 @@ export class Versions {
         toVersion: string,
         requestOptions?: Versions.RequestOptions
     ): Promise<
-        core.APIResponse<FernRegistry.generators.ChangelogEntry[], FernRegistry.generators.versions.getChangelog.Error>
+        core.APIResponse<
+            FernRegistry.generators.GetChangelogResponse,
+            FernRegistry.generators.versions.getChangelog.Error
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -120,7 +133,7 @@ export class Versions {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.ChangelogEntry[],
+                body: _response.body as FernRegistry.generators.GetChangelogResponse,
             };
         }
 
@@ -144,8 +157,7 @@ export class Versions {
      *         custom_config_schema: "string",
      *         version: "string",
      *         is_yanked: {},
-     *         changelog_entry: {},
-     *         created_at: new Date("2024-01-15T09:30:00.000Z")
+     *         changelog_entry: {}
      *     })
      */
     public async upsertGeneratorRelease(
@@ -175,6 +187,16 @@ export class Versions {
                 ok: true,
                 body: undefined,
             };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.generators.versions.upsertGeneratorRelease.Error)?.error) {
+                case "InvalidVersionError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.generators.versions.upsertGeneratorRelease.Error,
+                    };
+            }
         }
 
         return {
@@ -227,6 +249,16 @@ export class Versions {
             };
         }
 
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.generators.versions.getGeneratorRelease.Error)?.error) {
+                case "GeneratorVersionNotFoundError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.generators.versions.getGeneratorRelease.Error,
+                    };
+            }
+        }
+
         return {
             ok: false,
             error: FernRegistry.generators.versions.getGeneratorRelease.Error._unknown(_response.error),
@@ -237,20 +269,35 @@ export class Versions {
      * Get all generator versions for the specified generator.
      *
      * @param {FernRegistry.generators.GeneratorId} generator
+     * @param {FernRegistry.generators.ListGeneratorReleasesRequest} request
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.getAllGeneratorReleases("string")
+     *     await fernRegistry.generators.versions.listGeneratorReleases("string", {
+     *         page: 1,
+     *         page_size: 1
+     *     })
      */
-    public async getAllGeneratorReleases(
+    public async listGeneratorReleases(
         generator: FernRegistry.generators.GeneratorId,
+        request: FernRegistry.generators.ListGeneratorReleasesRequest = {},
         requestOptions?: Versions.RequestOptions
     ): Promise<
         core.APIResponse<
-            FernRegistry.generators.GeneratorRelease[],
-            FernRegistry.generators.versions.getAllGeneratorReleases.Error
+            FernRegistry.generators.ListGeneratorReleasesResponse,
+            FernRegistry.generators.versions.listGeneratorReleases.Error
         >
     > {
+        const { page, page_size: pageSize } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (page != null) {
+            _queryParams["page"] = page.toString();
+        }
+
+        if (pageSize != null) {
+            _queryParams["page_size"] = pageSize.toString();
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
@@ -264,6 +311,7 @@ export class Versions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -271,13 +319,13 @@ export class Versions {
         if (_response.ok) {
             return {
                 ok: true,
-                body: _response.body as FernRegistry.generators.GeneratorRelease[],
+                body: _response.body as FernRegistry.generators.ListGeneratorReleasesResponse,
             };
         }
 
         return {
             ok: false,
-            error: FernRegistry.generators.versions.getAllGeneratorReleases.Error._unknown(_response.error),
+            error: FernRegistry.generators.versions.listGeneratorReleases.Error._unknown(_response.error),
         };
     }
 
