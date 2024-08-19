@@ -156,6 +156,7 @@ export class Versions {
      *         migration: "string",
      *         custom_config_schema: "string",
      *         version: "string",
+     *         created_at: "2023-01-15",
      *         is_yanked: {},
      *         changelog_entry: {}
      *     })

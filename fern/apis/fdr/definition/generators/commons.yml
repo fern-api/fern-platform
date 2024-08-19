@@ -47,6 +47,7 @@ types:
   ReleaseRequest:
     properties:
       version: string
+      created_at: optional<date>
       is_yanked: optional<Yank>
       changelog_entry: optional<ChangelogEntry>
 
