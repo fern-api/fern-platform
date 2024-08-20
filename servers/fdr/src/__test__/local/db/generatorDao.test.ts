@@ -12,6 +12,7 @@ const GENERATORS_FROM_OTHER_TESTS = [
     "this-picks-latest",
     "this-gets-changelog",
     "this-is-the-happy-path",
+    "this-is-cli-restricted",
     "python-sdk",
     "python-sdk-2",
     "python-sdk-3",

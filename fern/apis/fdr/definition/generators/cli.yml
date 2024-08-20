@@ -9,12 +9,16 @@ types:
   CliReleaseRequest:
     extends: commons.ReleaseRequest
     properties:
-      ir_version: string
+      ir_version:
+        type: integer
+        docs: The major version of the IR that this CLI exposes.
 
   CliRelease:
     extends: commons.Release
     properties:
-      ir_version: string
+      ir_version:
+        type: integer
+        docs: The major version of the IR that this CLI exposes.
 
   ListCliReleasesResponse:
     properties:
@@ -23,7 +27,7 @@ types:
   IrDependency:
     properties:
       cli_version: string
-      ir_version: string
+      ir_version: integer
 
 service:
   audiences:
@@ -39,9 +43,13 @@ service:
         name: GetLatestCliReleaseRequest
         body:
           properties:
-            release_type:
-              type: optional<commons.ReleaseType>
-              docs: A filter for the release type, specifically if you'd like to get RC releases only, etc.
+            release_types:
+              type: optional<list<commons.ReleaseType>>
+              docs: A filter for the release type, specifically if you'd like to get RC releases only, etc. Defaults to GA releases.
+            ir_version:
+              type: optional<integer>
+              docs: |
+                The IR version that the CLI must respect.
       response: CliRelease
       errors:
         - NoValidClisFoundError
@@ -60,7 +68,7 @@ service:
       method: GET
       path: /for-ir/{ir_version}
       path-parameters:
-        ir_version: string
+        ir_version: integer
       response: CliRelease
       errors:
         - NoValidClisFoundError
@@ -93,10 +101,10 @@ service:
         query-parameters:
           page:
             type: optional<integer>
-            docs: The page number to retrieve. Defaults to 0.
+            docs: The page integer to retrieve. Defaults to 0.
           page_size:
             type: optional<integer>
-            docs: The number of items to retrieve per page. Defaults to 20.
+            docs: The integer of items to retrieve per page. Defaults to 20.
       response: ListCliReleasesResponse
 
 errors:
@@ -107,4 +115,4 @@ errors:
     status-code: 404
   NoValidCliForIrError:
     status-code: 404
-    type: commons.InvalidVersionErrorMessage
+    type: commons.InvalidIrVersionErrorMessage

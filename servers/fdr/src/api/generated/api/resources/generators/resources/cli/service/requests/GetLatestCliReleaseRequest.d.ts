@@ -3,5 +3,6 @@
  */
 import * as FernRegistry from "../../../../../..";
 export interface GetLatestCliReleaseRequest {
-    releaseType?: FernRegistry.generators.ReleaseType;
+    releaseTypes?: FernRegistry.generators.ReleaseType[];
+    irVersion?: number;
 }

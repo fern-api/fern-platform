@@ -35,8 +35,10 @@ export class Versions {
      * @example
      *     await fernRegistry.generators.versions.getLatestGeneratorRelease({
      *         generator: "string",
-     *         retain_major_version: 1,
-     *         release_type: FernRegistry.generators.ReleaseType.Ga
+     *         cli_version: "string",
+     *         ir_version: 1,
+     *         generator_major_version: 1,
+     *         release_types: [FernRegistry.generators.ReleaseType.Ga]
      *     })
      */
     public async getLatestGeneratorRelease(
@@ -152,7 +154,7 @@ export class Versions {
      * @example
      *     await fernRegistry.generators.versions.upsertGeneratorRelease({
      *         generator_id: "string",
-     *         ir_version: "string",
+     *         ir_version: 1,
      *         migration: "string",
      *         custom_config_schema: "string",
      *         version: "string",

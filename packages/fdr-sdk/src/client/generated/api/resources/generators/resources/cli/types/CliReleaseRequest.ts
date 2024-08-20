@@ -5,5 +5,6 @@
 import * as FernRegistry from "../../../../../index";
 
 export interface CliReleaseRequest extends FernRegistry.generators.ReleaseRequest {
-    ir_version: string;
+    /** The major version of the IR that this CLI exposes. */
+    ir_version: number;
 }

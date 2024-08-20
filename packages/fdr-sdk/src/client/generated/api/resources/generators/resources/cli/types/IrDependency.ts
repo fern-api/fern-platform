@@ -4,5 +4,5 @@
 
 export interface IrDependency {
     cli_version: string;
-    ir_version: string;
+    ir_version: number;
 }
