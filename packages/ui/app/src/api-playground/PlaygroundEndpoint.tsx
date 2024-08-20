@@ -75,6 +75,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
 
     const domain = useDomain();
     const basePath = useBasePath();
+    const { isApplicationJsonFormDataValue } = useFeatureFlags();
     const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
@@ -119,7 +120,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                     uploadEnvironment,
                     endpoint.requestBody?.shape,
                     formState.body,
-                    domain,
+                    isApplicationJsonFormDataValue,
                 ),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
@@ -220,7 +221,7 @@ async function serializeFormStateBody(
     environment: string,
     shape: ResolvedHttpRequestBodyShape | undefined,
     body: PlaygroundFormStateBody | undefined,
-    domain: string,
+    isApplicationJsonFormDataValue: boolean,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
     if (shape == null || body == null) {
         return undefined;
@@ -266,7 +267,7 @@ async function serializeFormStateBody(
                             // revert this once we have a better solution
                             contentType:
                                 compact(property?.contentType)[0] ??
-                                (domain.includes("fileforge") ? "application/json" : undefined),
+                                (isApplicationJsonFormDataValue ? "application/json" : undefined),
                         };
                         break;
                     }

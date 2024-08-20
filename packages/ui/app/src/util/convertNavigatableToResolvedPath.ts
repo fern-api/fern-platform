@@ -168,7 +168,6 @@ export async function convertNavigatableToResolvedPath({
             pages,
             mdxOptions,
             featureFlags,
-            domain,
         );
         return {
             type: "api-page",
@@ -249,15 +248,7 @@ async function resolveMarkdownPage(
                 const typeResolver = new ApiTypeResolver(definition.types, mdxOptions);
                 return [
                     apiNode.title,
-                    await ApiDefinitionResolver.resolve(
-                        apiNode,
-                        holder,
-                        typeResolver,
-                        pages,
-                        mdxOptions,
-                        featureFlags,
-                        domain,
-                    ),
+                    await ApiDefinitionResolver.resolve(apiNode, holder, typeResolver, pages, mdxOptions, featureFlags),
                 ];
             }),
         ),

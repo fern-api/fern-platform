@@ -53,6 +53,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     types,
 }) => {
     const domain = useDomain();
+    const { isBinaryOctetStreamAudioPlayer } = useFeatureFlags();
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
@@ -226,7 +227,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                     response.type !== "file" ? (
                         <PlaygroundResponsePreview response={response} />
                     ) : response.contentType.startsWith("audio/") ||
-                      (domain.includes("ircamamplify") && response.contentType === "binary/octet-stream") ? (
+                      (isBinaryOctetStreamAudioPlayer && response.contentType === "binary/octet-stream") ? (
                         <FernAudioPlayer
                             src={response.response.body}
                             className="flex h-full items-center justify-center p-4"

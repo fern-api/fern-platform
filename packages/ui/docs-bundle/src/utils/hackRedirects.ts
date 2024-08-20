@@ -18,6 +18,7 @@ const HUME_REDIRECTS: DocsV1Read.RedirectConfig[] = [
     },
 ];
 
+// This should be moved out to the spec
 function getRedirects(domain: string): DocsV1Read.RedirectConfig[] {
     if (domain.includes("hume")) {
         return HUME_REDIRECTS;

@@ -24,6 +24,13 @@ const FEATURE_FLAGS = [
     "batch-stream-toggle-disabled" as const,
     "enabled-auth-in-generated-docs" as const,
     "ai-chat-preview" as const,
+    "audio-file-download-special-summary" as const,
+    "docs-logo-text-enabled" as const,
+    "audio-example-internal" as const,
+    "application-json-form-data-value" as const,
+    "binary-octet-stream-audio-player" as const,
+    "voice-id-playground-form" as const,
+    "special-theme" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -63,6 +70,22 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const isBatchStreamToggleDisabled = checkDomainMatchesCustomers(domain, config["batch-stream-toggle-disabled"]);
         const isAuthEnabledInDocs = checkDomainMatchesCustomers(domain, config["enabled-auth-in-generated-docs"]);
         const isAiChatbotEnabledInPreview = checkDomainMatchesCustomers(domain, config["ai-chat-preview"]);
+        const isAudioFileDownloadSpecialSummary = checkDomainMatchesCustomers(
+            domain,
+            config["audio-file-download-special-summary"],
+        );
+        const isDocsLogoTextEnabled = checkDomainMatchesCustomers(domain, config["docs-logo-text-enabled"]);
+        const isAudioExampleInternal = checkDomainMatchesCustomers(domain, config["audio-example-internal"]);
+        const isApplicationJsonFormDataValue = checkDomainMatchesCustomers(
+            domain,
+            config["application-json-form-data-value"],
+        );
+        const isBinaryOctetStreamAudioPlayer = checkDomainMatchesCustomers(
+            domain,
+            config["binary-octet-stream-audio-player"],
+        );
+        const hasVoiceIdPlaygroundForm = checkDomainMatchesCustomers(domain, config["voice-id-playground-form"]);
+        const isSpecialTheme = checkDomainMatchesCustomers(domain, config["special-theme"]);
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -83,6 +106,13 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isBatchStreamToggleDisabled,
             isAuthEnabledInDocs,
             isAiChatbotEnabledInPreview,
+            isAudioFileDownloadSpecialSummary,
+            isDocsLogoTextEnabled,
+            isAudioExampleInternal,
+            isApplicationJsonFormDataValue,
+            isBinaryOctetStreamAudioPlayer,
+            hasVoiceIdPlaygroundForm,
+            isSpecialTheme,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -106,6 +136,13 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isBatchStreamToggleDisabled: false,
             isAuthEnabledInDocs: false,
             isAiChatbotEnabledInPreview: false,
+            isAudioFileDownloadSpecialSummary: false,
+            isDocsLogoTextEnabled: false,
+            isAudioExampleInternal: false,
+            isApplicationJsonFormDataValue: false,
+            isBinaryOctetStreamAudioPlayer: false,
+            hasVoiceIdPlaygroundForm: false,
+            isSpecialTheme: false,
         };
     }
 }

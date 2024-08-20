@@ -1,8 +1,9 @@
 import { atom, useAtomValue } from "jotai";
 import { DOCS_ATOM } from "./docs";
+import { FEATURE_FLAGS_ATOM } from "./flags";
 
 export const LOGO_TEXT_ATOM = atom<string | undefined>((get) =>
-    get(DOCS_ATOM).baseUrl.domain.includes("cohere") ? "docs" : undefined,
+    get(FEATURE_FLAGS_ATOM).isDocsLogoTextEnabled ? "docs" : undefined,
 );
 LOGO_TEXT_ATOM.debugLabel = "LOGO_TEXT_ATOM";
 

@@ -46,9 +46,8 @@ export class ApiDefinitionResolver {
         pages: Record<string, DocsV1Read.PageContent>,
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
-        domain: string,
     ): Promise<ResolvedRootPackage> {
-        const resolver = new ApiDefinitionResolver(root, holder, typeResolver, pages, featureFlags, domain, mdxOptions);
+        const resolver = new ApiDefinitionResolver(root, holder, typeResolver, pages, featureFlags, mdxOptions);
         return resolver.resolveApiDefinition();
     }
 
@@ -60,7 +59,6 @@ export class ApiDefinitionResolver {
         private typeResolver: ApiTypeResolver,
         private pages: Record<string, DocsV1Read.PageContent>,
         private featureFlags: FeatureFlags,
-        private domain: string,
         private mdxOptions: FernSerializeMdxOptions | undefined,
     ) {}
 
@@ -846,7 +844,7 @@ export class ApiDefinitionResolver {
                             // revert this once we have a better solution
                             const contentType =
                                 compact(property?.contentType)[0] ??
-                                (this.domain.includes("fileforge") ? "application/json" : undefined);
+                                (this.featureFlags.isApplicationJsonFormDataValue ? "application/json" : undefined);
                             return { type: "json" as const, value: value.value, contentType };
                         },
                         filename: (value) => ({
