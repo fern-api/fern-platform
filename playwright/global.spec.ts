@@ -40,7 +40,9 @@ urls.forEach((url) => {
 
         if (faviconUrl) {
             const [response] = await Promise.all([
-                page.waitForResponse((response) => response.url() === faviconUrl && response.status() === 200),
+                page.waitForResponse((response) => response.url() === faviconUrl && response.status() === 200, {
+                    timeout: 5000,
+                }),
                 page.goto(faviconUrl),
             ]);
 
