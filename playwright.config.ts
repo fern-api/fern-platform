@@ -73,8 +73,8 @@ export default defineConfig({
     /* Run your local dev server before starting the tests */
     webServer: {
         command: process.env.CI
-            ? "NODE_ENV='production' pnpm docs:build && pnpm docs:start -- -p 8080"
-            : "NODE_ENV='development' pnpm docs:dev -- -p 8080",
+            ? "NODE_ENV='production' pnpm docs:build && pnpm docs:start -p 8080"
+            : "NODE_ENV='development' pnpm docs:dev -p 8080",
         url: "http://localhost:8080",
         reuseExistingServer: !process.env.CI,
         timeout: 60 * 1000 * 5, // 5 minutes
