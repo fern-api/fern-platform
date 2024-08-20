@@ -30,11 +30,11 @@ const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    transpilePackages: ["next-mdx-remote", "esbuild", "lodash-es", "@fern-ui/ui", "@fern-api/fdr-sdk"],
+    transpilePackages: ["next-mdx-remote", "esbuild", "lodash-es", "@fern-ui/ui", "@fern-api/fdr-sdk", "shiki"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,
-        optimizePackageImports: ["@fern-ui/ui", "lodash-es"],
+        optimizePackageImports: ["@fern-ui/ui"],
     },
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the
