@@ -3,7 +3,6 @@ import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
-import dynamic from "next/dynamic";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
@@ -11,8 +10,9 @@ import { DocsProps, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
+import { ThemeScript } from "./utils/ThemeScript";
 
-const ThemeScript = dynamic(() => import("./utils/ThemeScript").then((mod) => mod.ThemeScript));
+// const ThemeScript = dynamic(() => import("./utils/ThemeScript").then((mod) => mod.ThemeScript));
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     // This is a hack to handle edge-cases related to multitenant subpath rendering:
