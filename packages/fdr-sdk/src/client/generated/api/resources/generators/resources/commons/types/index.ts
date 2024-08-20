@@ -7,3 +7,4 @@ export * from "./ReleaseType";
 export * from "./ReleaseRequest";
 export * from "./Release";
 export * from "./InvalidVersionErrorMessage";
+export * from "./InvalidIrVersionErrorMessage";

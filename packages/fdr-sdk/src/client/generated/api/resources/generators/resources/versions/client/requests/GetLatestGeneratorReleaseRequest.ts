@@ -8,18 +8,29 @@ import * as FernRegistry from "../../../../../../index";
  * @example
  *     {
  *         generator: "string",
- *         retain_major_version: 1,
- *         release_type: FernRegistry.generators.ReleaseType.Ga
+ *         cli_version: "string",
+ *         ir_version: 1,
+ *         generator_major_version: 1,
+ *         release_types: [FernRegistry.generators.ReleaseType.Ga]
  *     }
  */
 export interface GetLatestGeneratorReleaseRequest {
     generator: FernRegistry.generators.GeneratorId;
     /**
-     * Whether or not to include major versions when searching for the latest version. If specified, we will only return the latest version
-     * that is the same major version as provided. Useful while we do not support config migrations, etc.
+     * The version of the CLI that is requesting the latest generator version. This is used to determine the latest IR version the generator must respect.
      *
      */
-    retain_major_version?: number;
-    /** A filter for the release type, specifically if you'd like to get RC releases only, etc. */
-    release_type?: FernRegistry.generators.ReleaseType;
+    cli_version?: string;
+    /**
+     * The IR version that the generator must respect. If this is provided alongside `cli_version`, `cli_version` takes precedence.
+     *
+     */
+    ir_version?: number;
+    /**
+     * If specified, we will only return the latest version that is the same major version as provided. Useful while we do not support config migrations, etc.
+     *
+     */
+    generator_major_version?: number;
+    /** A filter for the release type, specifically if you'd like to get RC releases only, etc. Defaults to GA releases. */
+    release_types?: FernRegistry.generators.ReleaseType[];
 }

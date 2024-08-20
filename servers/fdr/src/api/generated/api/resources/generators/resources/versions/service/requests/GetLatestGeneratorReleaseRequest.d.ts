@@ -4,6 +4,8 @@
 import * as FernRegistry from "../../../../../..";
 export interface GetLatestGeneratorReleaseRequest {
     generator: FernRegistry.generators.GeneratorId;
-    retainMajorVersion?: number;
-    releaseType?: FernRegistry.generators.ReleaseType;
+    cliVersion?: string;
+    irVersion?: number;
+    generatorMajorVersion?: number;
+    releaseTypes?: FernRegistry.generators.ReleaseType[];
 }

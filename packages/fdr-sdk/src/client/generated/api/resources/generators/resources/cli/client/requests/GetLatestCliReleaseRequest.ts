@@ -7,10 +7,16 @@ import * as FernRegistry from "../../../../../../index";
 /**
  * @example
  *     {
- *         release_type: FernRegistry.generators.ReleaseType.Ga
+ *         release_types: [FernRegistry.generators.ReleaseType.Ga],
+ *         ir_version: 1
  *     }
  */
 export interface GetLatestCliReleaseRequest {
-    /** A filter for the release type, specifically if you'd like to get RC releases only, etc. */
-    release_type?: FernRegistry.generators.ReleaseType;
+    /** A filter for the release type, specifically if you'd like to get RC releases only, etc. Defaults to GA releases. */
+    release_types?: FernRegistry.generators.ReleaseType[];
+    /**
+     * The IR version that the CLI must respect.
+     *
+     */
+    ir_version?: number;
 }

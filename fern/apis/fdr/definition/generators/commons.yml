@@ -61,6 +61,10 @@ types:
     properties:
       provided_version: string
 
+  InvalidIrVersionErrorMessage:
+    properties:
+      provided_version: integer
+
 errors:
   InvalidVersionError:
     status-code: 400
