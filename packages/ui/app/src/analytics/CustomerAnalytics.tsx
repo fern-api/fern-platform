@@ -1,4 +1,3 @@
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
@@ -6,12 +5,13 @@ import dynamic from "next/dynamic";
 import Script from "next/script";
 import { ReactElement, memo } from "react";
 import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
-import { GoogleTagManager } from "./GoogleTagManager";
 import { Posthog } from "./PosthogContainer";
 import { renderSegmentSnippet } from "./segment";
 
 const IntercomScript = dynamic(() => import("./IntercomScript").then((mod) => mod.IntercomScript));
 const FullstoryScript = dynamic(() => import("./FullstoryScript").then((mod) => mod.FullstoryScript));
+const GoogleAnalytics = dynamic(() => import("@next/third-parties/google").then((mod) => mod.GoogleAnalytics));
+const GoogleTagManager = dynamic(() => import("./GoogleTagManager").then((mod) => mod.GoogleTagManager));
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
 const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConfig ?? {}, isEqual);
