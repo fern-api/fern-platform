@@ -61,11 +61,14 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
     }: {
         getLatestCliReleaseRequest: GetLatestCliReleaseRequest;
     }): Promise<CliRelease | undefined> {
+        const releaseTypes =
+            getLatestCliReleaseRequest.releaseTypes != null
+                ? getLatestCliReleaseRequest.releaseTypes.map(convertGeneratorReleaseType)
+                : [prisma.ReleaseType.ga];
+
         const maybeRelease = await this.prisma.cliRelease.findFirst({
             where: {
-                releaseType: getLatestCliReleaseRequest.releaseType
-                    ? convertGeneratorReleaseType(getLatestCliReleaseRequest.releaseType)
-                    : undefined,
+                releaseType: { in: releaseTypes },
                 irVersion: { gte: getLatestCliReleaseRequest.irVersion },
             },
             orderBy: [

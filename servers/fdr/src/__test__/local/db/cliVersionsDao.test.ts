@@ -1,5 +1,4 @@
-import { CliReleaseRequest } from "@fern-api/fdr-sdk/src/client/generated/api/resources/generators";
-import { InvalidVersionError, ReleaseType } from "../../../api/generated/api/resources/generators";
+import { CliReleaseRequest, InvalidVersionError, ReleaseType } from "../../../api/generated/api/resources/generators";
 import { noncifySemanticVersion } from "../../../db/generators/noncifySemanticVersion";
 import { createMockFdrApplication } from "../../mock";
 
@@ -63,14 +62,14 @@ it("cli version get latest respects semver, not time", async () => {
         (
             await fdrApplication.dao
                 .cliVersions()
-                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseType: ReleaseType.Rc } })
+                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseTypes: [ReleaseType.Rc] } })
         )?.version,
     ).toEqual("1.1.0-rc.1");
     expect(
         (
             await fdrApplication.dao
                 .cliVersions()
-                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseType: ReleaseType.Ga } })
+                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseTypes: [ReleaseType.Ga] } })
         )?.version,
     ).toEqual("1.1.0");
 });

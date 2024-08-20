@@ -6,6 +6,6 @@ export interface GetLatestGeneratorReleaseRequest {
     generator: FernRegistry.generators.GeneratorId;
     cliVersion?: string;
     irVersion?: number;
-    retainMajorVersion?: number;
-    releaseType?: FernRegistry.generators.ReleaseType;
+    generatorMajorVersion?: number;
+    releaseTypes?: FernRegistry.generators.ReleaseType[];
 }

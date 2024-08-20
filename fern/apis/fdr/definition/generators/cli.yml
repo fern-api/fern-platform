@@ -43,9 +43,9 @@ service:
         name: GetLatestCliReleaseRequest
         body:
           properties:
-            release_type:
-              type: optional<commons.ReleaseType>
-              docs: A filter for the release type, specifically if you'd like to get RC releases only, etc.
+            release_types:
+              type: optional<list<commons.ReleaseType>>
+              docs: A filter for the release type, specifically if you'd like to get RC releases only, etc. Defaults to GA releases.
             ir_version:
               type: optional<integer>
               docs: |

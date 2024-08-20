@@ -34,7 +34,7 @@ export class Cli {
      *
      * @example
      *     await fernRegistry.generators.cli.getLatestCliRelease({
-     *         release_type: FernRegistry.generators.ReleaseType.Ga,
+     *         release_types: [FernRegistry.generators.ReleaseType.Ga],
      *         ir_version: 1
      *     })
      */

@@ -162,10 +162,10 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
     }: {
         getLatestGeneratorReleaseRequest: GetLatestGeneratorReleaseRequest;
     }): Promise<GeneratorRelease | undefined> {
-        const releaseType =
-            getLatestGeneratorReleaseRequest.releaseType != null
-                ? convertGeneratorReleaseType(getLatestGeneratorReleaseRequest.releaseType)
-                : undefined;
+        const releaseTypes =
+            getLatestGeneratorReleaseRequest.releaseTypes != null
+                ? getLatestGeneratorReleaseRequest.releaseTypes.map(convertGeneratorReleaseType)
+                : [prisma.ReleaseType.ga];
 
         const release = await this.prisma.$transaction(async (prisma) => {
             // If an IR version is provided outright, we can use that to filter the generators
@@ -190,8 +190,8 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             return await prisma.generatorRelease.findFirst({
                 where: {
                     generatorId: getLatestGeneratorReleaseRequest.generator,
-                    releaseType,
-                    major: getLatestGeneratorReleaseRequest.retainMajorVersion,
+                    releaseType: { in: releaseTypes },
+                    major: getLatestGeneratorReleaseRequest.generatorMajorVersion,
                     irVersion: { lte: irVersion },
                 },
                 orderBy: [

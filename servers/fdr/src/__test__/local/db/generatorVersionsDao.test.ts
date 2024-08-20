@@ -289,7 +289,7 @@ it("get generator that works for cli version", async () => {
         getLatestGeneratorReleaseRequest: {
             generator: "this-is-cli-restricted",
             cliVersion: "0.100.0",
-            retainMajorVersion: 2,
+            generatorMajorVersion: 2,
         },
     });
     expect(releaseRetainMajor?.version).toEqual("2.1.8");

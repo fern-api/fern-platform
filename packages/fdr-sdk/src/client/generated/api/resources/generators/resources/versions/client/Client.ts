@@ -37,8 +37,8 @@ export class Versions {
      *         generator: "string",
      *         cli_version: "string",
      *         ir_version: 1,
-     *         retain_major_version: 1,
-     *         release_type: FernRegistry.generators.ReleaseType.Ga
+     *         generator_major_version: 1,
+     *         release_types: [FernRegistry.generators.ReleaseType.Ga]
      *     })
      */
     public async getLatestGeneratorRelease(
