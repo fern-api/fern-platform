@@ -1,8 +1,14 @@
 import type { Root } from "hast";
 import { h } from "hastscript";
-import { memoize } from "lodash-es";
+import memoize from "lodash-es/memoize";
 import { useCallback, useEffect, useState } from "react";
-import { BundledLanguage, BundledTheme, Highlighter, SpecialLanguage, bundledLanguages, getHighlighter } from "shiki";
+import {
+    bundledLanguages,
+    type BundledLanguage,
+    type BundledTheme,
+    type Highlighter,
+    type SpecialLanguage,
+} from "shiki";
 import { additionalLanguages } from "./syntaxes";
 
 let highlighterPromise: Promise<Highlighter>;
@@ -19,6 +25,7 @@ export const getHighlighterInstance: (language: string) => Promise<Highlighter> 
         }
 
         if (highlighterPromise == null) {
+            const getHighlighter = (await import("shiki")).getHighlighter;
             highlighterPromise = getHighlighter({
                 langs: [additionalLanguages[lang] ?? lang],
                 themes: [LIGHT_THEME, DARK_THEME],
