@@ -86,7 +86,7 @@ jobs:
         run: pnpm exec playwright install --with-deps
 
       - name: Run Playwright tests
-        run: xvfb-run --auto-servernum -- pnpm exec playwright test playwright/global.spec.ts --workers 4
+        run: pnpm exec playwright test playwright/global.spec.ts --workers 6
 
       - uses: actions/upload-artifact@v4
         if: always()
