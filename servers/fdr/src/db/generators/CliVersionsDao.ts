@@ -70,6 +70,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             where: {
                 releaseType: { in: releaseTypes },
                 irVersion: { gte: getLatestCliReleaseRequest.irVersion },
+                isYanked: null,
             },
             orderBy: [
                 {

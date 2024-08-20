@@ -193,6 +193,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
                     releaseType: { in: releaseTypes },
                     major: getLatestGeneratorReleaseRequest.generatorMajorVersion,
                     irVersion: { lte: irVersion },
+                    isYanked: null,
                 },
                 orderBy: [
                     {
