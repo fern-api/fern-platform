@@ -12,7 +12,6 @@ import {
     PLAYGROUND_AUTH_STATE_ATOM,
     store,
     useBasePath,
-    useDomain,
     useFeatureFlags,
     usePlaygroundEndpointFormState,
 } from "../atoms";
@@ -73,7 +72,6 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
         setFormState(getInitialEndpointRequestFormState(endpoint, types));
     }, []);
 
-    const domain = useDomain();
     const basePath = useBasePath();
     const { isApplicationJsonFormDataValue } = useFeatureFlags();
     const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
