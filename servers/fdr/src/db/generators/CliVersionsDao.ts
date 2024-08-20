@@ -66,6 +66,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
                 releaseType: getLatestCliReleaseRequest.releaseType
                     ? convertGeneratorReleaseType(getLatestCliReleaseRequest.releaseType)
                     : undefined,
+                irVersion: { gte: getLatestCliReleaseRequest.irVersion },
             },
             orderBy: [
                 {

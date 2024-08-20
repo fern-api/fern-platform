@@ -26,7 +26,7 @@ it("generator version dao not semver", async () => {
         await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
             generatorRelease: {
                 generator_id: "this-fails-semver",
-                ir_version: "0.0.1",
+                ir_version: 0,
                 version: "abc.1.2",
             },
         });
@@ -47,7 +47,7 @@ it("generator version get latest respects semver, not time", async () => {
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
             generator_id: "this-picks-latest",
-            ir_version: "0.0.2",
+            ir_version: 2,
             version: "0.1.2",
         },
     });
@@ -56,7 +56,7 @@ it("generator version get latest respects semver, not time", async () => {
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
             generator_id: "this-picks-latest",
-            ir_version: "0.0.1",
+            ir_version: 0,
             version: "1.1.0",
         },
     });
@@ -65,7 +65,7 @@ it("generator version get latest respects semver, not time", async () => {
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
             generator_id: "this-picks-latest",
-            ir_version: "0.0.1",
+            ir_version: 0,
             version: "0.1.0",
         },
     });
@@ -75,7 +75,7 @@ it("generator version get latest respects semver, not time", async () => {
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
             generator_id: "this-picks-latest",
-            ir_version: "0.0.5",
+            ir_version: 5,
             version: "0.1.2",
         },
     });
@@ -104,7 +104,7 @@ it("generator changelog", async () => {
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
             generator_id: "this-gets-changelog",
-            ir_version: "0.0.1",
+            ir_version: 0,
             version: "2.1.2",
             changelog_entry: {
                 type: "feat",
@@ -115,7 +115,7 @@ it("generator changelog", async () => {
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
             generator_id: "this-gets-changelog",
-            ir_version: "0.0.1",
+            ir_version: 0,
             version: "2.1.3",
             changelog_entry: {
                 type: "fix",
@@ -126,7 +126,7 @@ it("generator changelog", async () => {
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
             generator_id: "this-gets-changelog",
-            ir_version: "0.0.1",
+            ir_version: 0,
             version: "2.1.5",
             changelog_entry: {
                 type: "fix",
@@ -139,7 +139,7 @@ it("generator changelog", async () => {
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
             generator_id: "this-gets-changelog",
-            ir_version: "0.0.1",
+            ir_version: 0,
             version: "2.1.6",
         },
     });
@@ -147,7 +147,7 @@ it("generator changelog", async () => {
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
             generator_id: "this-gets-changelog",
-            ir_version: "0.0.1",
+            ir_version: 0,
             version: "2.1.8",
         },
     });
@@ -191,7 +191,7 @@ it("generator version happy path update", async () => {
 
     const releaseRequest: GeneratorReleaseRequest = {
         generator_id: "this-is-the-happy-path",
-        ir_version: "0.0.2",
+        ir_version: 2,
         version: "3.1.2",
         changelog_entry: {
             type: "fix",
@@ -215,7 +215,7 @@ it("generator version happy path update", async () => {
     // Overwrite the release's changelog
     const updateReleaseRequest: GeneratorReleaseRequest = {
         generator_id: "this-is-the-happy-path",
-        ir_version: "0.0.2",
+        ir_version: 2,
         version: "3.1.2",
         changelog_entry: {
             type: "feat",
@@ -233,4 +233,72 @@ it("generator version happy path update", async () => {
     expect(updatedRelease?.ir_version).toEqual(updateReleaseRequest.ir_version);
     expect(updatedRelease?.version).toEqual(updateReleaseRequest.version);
     expect(updatedRelease?.changelog_entry).toEqual(updateReleaseRequest.changelog_entry);
+});
+
+it("get generator that works for cli version", async () => {
+    await fdrApplication.dao.generators().upsertGenerator({
+        generator: {
+            id: "this-is-cli-restricted",
+            generator_type: { type: "sdk" },
+            docker_image: "this-is-cli-restricted",
+            generator_language: FdrAPI.generators.GeneratorLanguage.Python,
+        },
+    });
+
+    await fdrApplication.dao.cliVersions().upsertCliRelease({
+        cliRelease: {
+            version: "0.100.0",
+            ir_version: 51,
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-gets-changelog",
+            ir_version: 50,
+            version: "2.1.8",
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-gets-changelog",
+            ir_version: 51,
+            version: "3.0.0",
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-gets-changelog",
+            ir_version: 51,
+            version: "3.1.0",
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-gets-changelog",
+            ir_version: 52,
+            version: "3.5.0",
+        },
+    });
+
+    // Get with retain major at 2
+    const releaseRetainMajor = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
+        getLatestGeneratorReleaseRequest: {
+            generator: "this-gets-changelog",
+            cliVersion: "0.100.0",
+            retainMajorVersion: 2,
+        },
+    });
+    expect(releaseRetainMajor?.version).toEqual("2.1.8");
+
+    const release = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
+        getLatestGeneratorReleaseRequest: {
+            generator: "this-gets-changelog",
+            cliVersion: "0.100.0",
+        },
+    });
+    expect(release?.version).toEqual("3.1.0");
 });

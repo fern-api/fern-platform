@@ -198,7 +198,7 @@ model GeneratorRelease {
   changelogEntry Bytes?
 
   migration Bytes?
-  irVersion String
+  irVersion Int
   customConfigSchema String?
 
   releaseType ReleaseType
@@ -215,7 +215,7 @@ model CliRelease {
   patch    Int
   nonce String
 
-  irVersion String
+  irVersion Int
 
   isYanked Bytes?
   changelogEntry Bytes?

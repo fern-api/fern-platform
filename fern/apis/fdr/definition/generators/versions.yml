@@ -11,7 +11,9 @@ types:
     extends: commons.ReleaseRequest
     properties:
       generator_id: root.GeneratorId
-      ir_version: string
+      ir_version:
+        type: integer
+        docs: The major version of the IR that this generator version consumes.
       migration:
         type: optional<string>
         docs: The TypeScript file for the migration to run when upgrading to this version. Ideally this would be typed as a file, but we don't support file upload in the express generator.
@@ -23,7 +25,9 @@ types:
     extends: commons.Release
     properties:
       generator_id: root.GeneratorId
-      ir_version: string
+      ir_version:
+        type: integer
+        docs: The major version of the IR that this generator version consumes.
       migration:
         type: optional<string>
         docs: The TypeScript file for the migration to run when upgrading to this version.
@@ -50,6 +54,14 @@ service:
         body:
           properties:
             generator: root.GeneratorId
+            cli_version:
+              type: optional<string>
+              docs: |
+                The version of the CLI that is requesting the latest generator version. This is used to determine the latest IR version the generator must respect.
+            ir_version:
+              type: optional<integer>
+              docs: |
+                The IR version that the generator must respect. If this is provided alongside `cli_version`, `cli_version` takes precedence.
             retain_major_version:
               type: optional<integer>
               docs: |
@@ -105,10 +117,10 @@ service:
         query-parameters:
           page:
             type: optional<integer>
-            docs: The page number to retrieve. Defaults to 0.
+            docs: The page integer to retrieve. Defaults to 0.
           page_size:
             type: optional<integer>
-            docs: The number of items to retrieve per page. Defaults to 20.
+            docs: The integer of items to retrieve per page. Defaults to 20.
       response: ListGeneratorReleasesResponse
 
 errors:

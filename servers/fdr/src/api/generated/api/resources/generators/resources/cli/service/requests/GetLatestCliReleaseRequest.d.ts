@@ -4,4 +4,5 @@
 import * as FernRegistry from "../../../../../..";
 export interface GetLatestCliReleaseRequest {
     releaseType?: FernRegistry.generators.ReleaseType;
+    irVersion?: number;
 }

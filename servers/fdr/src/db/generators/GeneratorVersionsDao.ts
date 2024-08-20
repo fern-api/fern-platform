@@ -167,17 +167,33 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
                 ? convertGeneratorReleaseType(getLatestGeneratorReleaseRequest.releaseType)
                 : undefined;
 
-        const release = await this.prisma.generatorRelease.findFirst({
-            where: {
-                generatorId: getLatestGeneratorReleaseRequest.generator,
-                releaseType,
-                major: getLatestGeneratorReleaseRequest.retainMajorVersion,
-            },
-            orderBy: [
-                {
-                    nonce: "desc",
+        const release = await this.prisma.$transaction(async (prisma) => {
+            let irVersion = getLatestGeneratorReleaseRequest.irVersion;
+
+            if (getLatestGeneratorReleaseRequest.cliVersion != null) {
+                const cliRelease = await prisma.cliRelease.findUnique({
+                    where: {
+                        version: getLatestGeneratorReleaseRequest.cliVersion,
+                    },
+                });
+
+                if (cliRelease != null) {
+                    irVersion = cliRelease.irVersion;
+                }
+            }
+            return await prisma.generatorRelease.findFirst({
+                where: {
+                    generatorId: getLatestGeneratorReleaseRequest.generator,
+                    releaseType,
+                    major: getLatestGeneratorReleaseRequest.retainMajorVersion,
+                    irVersion: { lte: irVersion },
                 },
-            ],
+                orderBy: [
+                    {
+                        nonce: "desc",
+                    },
+                ],
+            });
         });
 
         return convertPrismaGeneratorRelease(release);
