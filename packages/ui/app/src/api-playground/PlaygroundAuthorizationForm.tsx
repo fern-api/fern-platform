@@ -349,7 +349,12 @@ export function PlaygroundAuthorizationFormCard({
                                         text="Logout"
                                         intent="none"
                                         onClick={() => {
-                                            fetch(urlJoin(window.location.origin, "/api/fern-docs/auth/logout"))
+                                            const url = new URL(
+                                                urlJoin(window.location.origin, "/api/fern-docs/auth/logout"),
+                                            );
+                                            const state = new URL(window.location.href);
+                                            url.searchParams.set("state", state.toString());
+                                            fetch(url)
                                                 .then(() => {
                                                     window.location.reload();
                                                 })
