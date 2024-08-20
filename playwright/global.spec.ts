@@ -35,7 +35,9 @@ urls.forEach((url) => {
     test(`Check if favicon exists and URL does not return 404 for ${url}`, async ({ page }) => {
         await page.goto(url);
 
-        const faviconUrl = await page.getAttribute('link[rel="icon"]', "href");
+        const faviconUrl = await page.getAttribute('link[rel="icon"]', "href", {
+            timeout: 5000,
+        });
         expect(faviconUrl).not.toBeNull();
 
         if (faviconUrl) {
