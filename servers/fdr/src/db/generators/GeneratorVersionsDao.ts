@@ -168,8 +168,12 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
                 : undefined;
 
         const release = await this.prisma.$transaction(async (prisma) => {
+            // If an IR version is provided outright, we can use that to filter the generators
             let irVersion = getLatestGeneratorReleaseRequest.irVersion;
 
+            // If a CLI version is provided, this takes precedence over a provided IR version if both
+            // are provided. When a CLI version is provided we need to find the IR version that corresponds to it
+            // to filter the generators to compatible versions.
             if (getLatestGeneratorReleaseRequest.cliVersion != null) {
                 const cliRelease = await prisma.cliRelease.findUnique({
                     where: {
@@ -181,6 +185,8 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
                     irVersion = cliRelease.irVersion;
                 }
             }
+
+            // The above sets the filter `irVersion`, and that's all.
             return await prisma.generatorRelease.findFirst({
                 where: {
                     generatorId: getLatestGeneratorReleaseRequest.generator,

@@ -254,7 +254,7 @@ it("get generator that works for cli version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generator_id: "this-gets-changelog",
+            generator_id: "this-is-cli-restricted",
             ir_version: 50,
             version: "2.1.8",
         },
@@ -262,7 +262,7 @@ it("get generator that works for cli version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generator_id: "this-gets-changelog",
+            generator_id: "this-is-cli-restricted",
             ir_version: 51,
             version: "3.0.0",
         },
@@ -270,7 +270,7 @@ it("get generator that works for cli version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generator_id: "this-gets-changelog",
+            generator_id: "this-is-cli-restricted",
             ir_version: 51,
             version: "3.1.0",
         },
@@ -278,7 +278,7 @@ it("get generator that works for cli version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generator_id: "this-gets-changelog",
+            generator_id: "this-is-cli-restricted",
             ir_version: 52,
             version: "3.5.0",
         },
@@ -287,7 +287,7 @@ it("get generator that works for cli version", async () => {
     // Get with retain major at 2
     const releaseRetainMajor = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
-            generator: "this-gets-changelog",
+            generator: "this-is-cli-restricted",
             cliVersion: "0.100.0",
             retainMajorVersion: 2,
         },
@@ -296,7 +296,7 @@ it("get generator that works for cli version", async () => {
 
     const release = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
-            generator: "this-gets-changelog",
+            generator: "this-is-cli-restricted",
             cliVersion: "0.100.0",
         },
     });
