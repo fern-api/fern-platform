@@ -113,20 +113,26 @@ const nextConfig = {
             // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
         ];
 
-        const reportUri =
-            "https://o4507138224160768.ingest.sentry.io/api/4507148139495424/security/?sentry_key=216ad381a8f652e036b1833af58627e5";
-
-        const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
+        // BEGIN CSP REPORT SUPPRESSION
+        // CSP reports to sentry have been disabled because they often come from downstream custom js
+        // that we can't do much about. This results in a very expensive sentry bill for very little value or marginal security.
+        //
+        // const reportUri =
+        //     "https://o4507138224160768.ingest.sentry.io/api/4507148139495424/security/?sentry_key=216ad381a8f652e036b1833af58627e5";
+        //
+        // const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
 
         ContentSecurityPolicy.push("worker-src 'self' blob:");
 
-        ContentSecurityPolicy.push(`report-uri ${reportUri}`);
-        ContentSecurityPolicy.push("report-to csp-endpoint");
+        // ContentSecurityPolicy.push(`report-uri ${reportUri}`);
+        // ContentSecurityPolicy.push("report-to csp-endpoint");
 
         const ContentSecurityHeaders = [
             { key: "Content-Security-Policy-Report-Only", value: ContentSecurityPolicy.join("; ") },
-            { key: "Report-To", value: ReportTo },
+            // { key: "Report-To", value: ReportTo },
         ];
+
+        // END CSP REPORT SUPPRESSION
 
         const AccessControlHeaders = [
             {
