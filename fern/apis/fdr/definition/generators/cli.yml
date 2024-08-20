@@ -115,4 +115,4 @@ errors:
     status-code: 404
   NoValidCliForIrError:
     status-code: 404
-    type: commons.InvalidVersionErrorMessage
+    type: commons.InvalidIrVersionErrorMessage

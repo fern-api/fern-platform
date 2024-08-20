@@ -45,7 +45,7 @@ export interface CliVersionsDao {
 
     getChangelog({ fromVersion, toVersion }: { fromVersion: string; toVersion: string }): Promise<GetChangelogResponse>;
 
-    getMinCliForIr({ irVersion }: { irVersion: string }): Promise<CliRelease | undefined>;
+    getMinCliForIr({ irVersion }: { irVersion: number }): Promise<CliRelease | undefined>;
 
     upsertCliRelease({ cliRelease }: { cliRelease: CliReleaseRequest }): Promise<void>;
 
@@ -134,7 +134,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
         });
     }
 
-    async getMinCliForIr({ irVersion }: { irVersion: string }): Promise<CliRelease | undefined> {
+    async getMinCliForIr({ irVersion }: { irVersion: number }): Promise<CliRelease | undefined> {
         const maybeRelease = await this.prisma.cliRelease.findFirst({
             where: {
                 irVersion,
