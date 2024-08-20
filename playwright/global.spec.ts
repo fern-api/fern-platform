@@ -4,22 +4,17 @@ import * as fs from "fs";
 const urls: string[] = [];
 
 function processLineByLineSync(filePath: string): void {
-    // Read the entire file content synchronously
     const fileContent = fs.readFileSync(filePath, "utf-8");
 
-    // Split the content into lines
     const lines = fileContent.split(/\r?\n/);
 
-    // Process each line
     lines.forEach((line) => {
-        const urlPattern = /\((https?:\/\/[^)]+)\)/;
+        const urlPattern = /\(([^)]+)\)/;
         const match = line.match(urlPattern);
-
         if (match) {
             const fullUrl = match[1];
             if (fullUrl) {
-                const url = new URL(fullUrl);
-                urls.push(url.host);
+                urls.push(fullUrl);
             }
         }
     });
