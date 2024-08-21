@@ -11,11 +11,11 @@
  */
 export interface ListGeneratorReleasesRequest {
     /**
-     * The page number to retrieve. Defaults to 0.
+     * The page integer to retrieve. Defaults to 0.
      */
     page?: number;
     /**
-     * The number of items to retrieve per page. Defaults to 20.
+     * The integer of items to retrieve per page. Defaults to 20.
      */
     page_size?: number;
 }

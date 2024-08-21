@@ -1,5 +1,4 @@
-import { CliReleaseRequest } from "@fern-api/fdr-sdk/src/client/generated/api/resources/generators";
-import { InvalidVersionError, ReleaseType } from "../../../api/generated/api/resources/generators";
+import { CliReleaseRequest, InvalidVersionError, ReleaseType } from "../../../api/generated/api/resources/generators";
 import { noncifySemanticVersion } from "../../../db/generators/noncifySemanticVersion";
 import { createMockFdrApplication } from "../../mock";
 
@@ -16,18 +15,18 @@ it("cli verion not semver", async () => {
         await fdrApplication.dao.cliVersions().upsertCliRelease({
             cliRelease: {
                 version: "abc.1.2",
-                ir_version: "0.0.1",
+                ir_version: 0,
             },
         });
     }).rejects.toThrow(new InvalidVersionError({ provided_version: "abc.1.2" }));
 });
 
-it("generator version get latest respects semver, not time", async () => {
+it("cli version get latest respects semver, not time", async () => {
     // create some versions and sleep between them to ensure the timestamps are different
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             version: "0.1.2",
-            ir_version: "0.0.1",
+            ir_version: 0,
         },
     });
 
@@ -35,7 +34,7 @@ it("generator version get latest respects semver, not time", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             version: "1.1.0",
-            ir_version: "1.1.0",
+            ir_version: 1,
         },
     });
 
@@ -43,7 +42,7 @@ it("generator version get latest respects semver, not time", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             version: "0.1.5",
-            ir_version: "0.0.3",
+            ir_version: 0,
         },
     });
 
@@ -52,7 +51,7 @@ it("generator version get latest respects semver, not time", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             version: "1.1.0-rc.1",
-            ir_version: "0.0.3",
+            ir_version: 0,
         },
     });
 
@@ -63,14 +62,14 @@ it("generator version get latest respects semver, not time", async () => {
         (
             await fdrApplication.dao
                 .cliVersions()
-                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseType: ReleaseType.Rc } })
+                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseTypes: [ReleaseType.Rc] } })
         )?.version,
     ).toEqual("1.1.0-rc.1");
     expect(
         (
             await fdrApplication.dao
                 .cliVersions()
-                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseType: ReleaseType.Ga } })
+                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseTypes: [ReleaseType.Ga] } })
         )?.version,
     ).toEqual("1.1.0");
 });
@@ -79,7 +78,7 @@ it("generator changelog", async () => {
     // create some versions and sleep between them to ensure the timestamps are different
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: "1.1.0-rc.0",
+            ir_version: 1,
             version: "2.1.2",
             changelog_entry: {
                 type: "feat",
@@ -89,7 +88,7 @@ it("generator changelog", async () => {
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: "1.1.0-rc.0",
+            ir_version: 1,
             version: "2.1.3",
             changelog_entry: {
                 type: "fix",
@@ -99,7 +98,7 @@ it("generator changelog", async () => {
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: "1.1.0-rc.0",
+            ir_version: 1,
             version: "2.1.5",
             changelog_entry: {
                 type: "fix",
@@ -111,14 +110,14 @@ it("generator changelog", async () => {
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: "1.1.0-rc.0",
+            ir_version: 1,
             version: "2.1.6",
         },
     });
 
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: "0.0.1",
+            ir_version: 0,
             version: "2.1.8",
         },
     });
@@ -146,9 +145,9 @@ it("generator changelog", async () => {
     });
 });
 
-it("generator version happy path update", async () => {
+it("cli version happy path update", async () => {
     const releaseRequest: CliReleaseRequest = {
-        ir_version: "0.0.2",
+        ir_version: 0,
         version: "3.1.2",
         changelog_entry: {
             type: "fix",
@@ -169,7 +168,7 @@ it("generator version happy path update", async () => {
 
     // Overwrite the release's changelog
     const updateReleaseRequest: CliReleaseRequest = {
-        ir_version: "0.0.2",
+        ir_version: 0,
         version: "3.1.2",
         changelog_entry: {
             type: "feat",
@@ -187,10 +186,10 @@ it("generator version happy path update", async () => {
     expect(updatedRelease?.changelog_entry).toEqual(updateReleaseRequest.changelog_entry);
 });
 
-it("generator version rc versions", async () => {
+it("cli version rc versions", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: "0.0.2",
+            ir_version: 0,
             version: "0.1.2-rc0",
         },
     });
@@ -202,7 +201,7 @@ it("generator version rc versions", async () => {
 
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: "0.0.2",
+            ir_version: 0,
             version: "0.1.2-rc.1",
         },
     });

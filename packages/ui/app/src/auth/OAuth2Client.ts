@@ -74,9 +74,9 @@ export class OAuth2Client {
         const url = new URL(urlJoin(this.environment, "/auth"));
         url.searchParams.set("response_type", "code");
         url.searchParams.set("client_id", this.clientId);
-        // if (this.redirect_uri != null) {
-        //     url.searchParams.set("redirect_uri", this.redirect_uri);
-        // }
+        if (this.redirect_uri != null) {
+            url.searchParams.set("redirect_uri", this.redirect_uri);
+        }
         if (state != null) {
             url.searchParams.set("state", state);
         }
@@ -122,22 +122,19 @@ export class OAuth2Client {
         access_token: string | undefined,
         refresh_token: string | undefined,
     ): Promise<TokenInfo | undefined> {
-        if (access_token != null) {
-            let payload = await this.safeDecode(access_token);
+        let payload = await this.safeDecode(access_token ?? "");
 
-            if (payload == null && refresh_token != null) {
-                const refreshed = await this.refreshToken(refresh_token);
-                access_token = refreshed.access_token;
-                refresh_token = refreshed.refresh_token;
-                payload = await this.safeDecode(access_token);
-            }
-
-            if (payload == null) {
-                return undefined;
-            }
-
-            return { access_token, exp: payload.exp, refresh_token };
+        if (payload == null && refresh_token != null) {
+            const refreshed = await this.refreshToken(refresh_token);
+            access_token = refreshed.access_token;
+            refresh_token = refreshed.refresh_token;
+            payload = await this.safeDecode(access_token);
         }
-        return undefined;
+
+        if (payload == null || access_token == null) {
+            return undefined;
+        }
+
+        return { access_token, exp: payload.exp, refresh_token };
     }
 }

@@ -45,7 +45,7 @@ export interface CliVersionsDao {
 
     getChangelog({ fromVersion, toVersion }: { fromVersion: string; toVersion: string }): Promise<GetChangelogResponse>;
 
-    getMinCliForIr({ irVersion }: { irVersion: string }): Promise<CliRelease | undefined>;
+    getMinCliForIr({ irVersion }: { irVersion: number }): Promise<CliRelease | undefined>;
 
     upsertCliRelease({ cliRelease }: { cliRelease: CliReleaseRequest }): Promise<void>;
 
@@ -61,11 +61,16 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
     }: {
         getLatestCliReleaseRequest: GetLatestCliReleaseRequest;
     }): Promise<CliRelease | undefined> {
+        const releaseTypes =
+            getLatestCliReleaseRequest.releaseTypes != null
+                ? getLatestCliReleaseRequest.releaseTypes.map(convertGeneratorReleaseType)
+                : [prisma.ReleaseType.ga];
+
         const maybeRelease = await this.prisma.cliRelease.findFirst({
             where: {
-                releaseType: getLatestCliReleaseRequest.releaseType
-                    ? convertGeneratorReleaseType(getLatestCliReleaseRequest.releaseType)
-                    : undefined,
+                releaseType: { in: releaseTypes },
+                irVersion: { gte: getLatestCliReleaseRequest.irVersion },
+                isYanked: null,
             },
             orderBy: [
                 {
@@ -121,6 +126,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             releaseType: convertGeneratorReleaseType(getPrereleaseType(cliRelease.version)),
             changelogEntry: cliRelease.changelog_entry != null ? writeBuffer(cliRelease.changelog_entry) : null,
             isYanked: cliRelease.is_yanked != null ? writeBuffer(cliRelease.is_yanked) : null,
+            createdAt: cliRelease.created_at != null ? new Date(cliRelease.created_at) : undefined,
         };
 
         await this.prisma.cliRelease.upsert({
@@ -132,7 +138,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
         });
     }
 
-    async getMinCliForIr({ irVersion }: { irVersion: string }): Promise<CliRelease | undefined> {
+    async getMinCliForIr({ irVersion }: { irVersion: number }): Promise<CliRelease | undefined> {
         const maybeRelease = await this.prisma.cliRelease.findFirst({
             where: {
                 irVersion,
@@ -190,5 +196,6 @@ function convertPrismaCliRelease(cliRelease: prisma.CliRelease | null): CliRelea
             cliRelease.changelogEntry != null ? (readBuffer(cliRelease.changelogEntry) as ChangelogEntry) : undefined,
         major_version: cliRelease.major,
         is_yanked: cliRelease.isYanked != null ? (readBuffer(cliRelease.isYanked) as Yank) : undefined,
+        created_at: cliRelease.createdAt?.toISOString(),
     };
 }

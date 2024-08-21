@@ -41,6 +41,23 @@ groups:
           neverThrowErrors: true
           timeoutInSeconds: infinity
 
+  generators-sdk:
+    audiences:
+      - generators
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.38.6
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/generators-sdk"
+        config:
+          noSerdeLayer: false
+          skipResponseValidation: true
+          outputSourceFiles: true
+          neverThrowErrors: true
+          timeoutInSeconds: infinity
+
   internal-snippets-sdks:
     audiences:
       - snippets

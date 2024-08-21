@@ -34,7 +34,8 @@ export class Cli {
      *
      * @example
      *     await fernRegistry.generators.cli.getLatestCliRelease({
-     *         release_type: FernRegistry.generators.ReleaseType.Ga
+     *         release_types: [FernRegistry.generators.ReleaseType.Ga],
+     *         ir_version: 1
      *     })
      */
     public async getLatestCliRelease(
@@ -134,14 +135,14 @@ export class Cli {
     /**
      * Get the minimum CLI version that supports the given IR version. This does not include RCs.
      *
-     * @param {string} irVersion
+     * @param {number} irVersion
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getMinCliForIr("string")
+     *     await fernRegistry.generators.cli.getMinCliForIr(1)
      */
     public async getMinCliForIr(
-        irVersion: string,
+        irVersion: number,
         requestOptions?: Cli.RequestOptions
     ): Promise<core.APIResponse<FernRegistry.generators.CliRelease, FernRegistry.generators.cli.getMinCliForIr.Error>> {
         const _response = await core.fetcher({
@@ -192,8 +193,9 @@ export class Cli {
      *
      * @example
      *     await fernRegistry.generators.cli.upsertCliRelease({
-     *         ir_version: "string",
+     *         ir_version: 1,
      *         version: "string",
+     *         created_at: "2023-01-15",
      *         is_yanked: {},
      *         changelog_entry: {}
      *     })

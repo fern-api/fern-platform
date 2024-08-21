@@ -96,6 +96,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             customConfigSchema: generatorRelease.custom_config_schema,
             releaseType,
             nonce: noncifySemanticVersion(generatorRelease.version),
+            createdAt: generatorRelease.created_at != null ? new Date(generatorRelease.created_at) : undefined,
         };
         await this.prisma.generatorRelease.upsert({
             where: {
@@ -161,22 +162,45 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
     }: {
         getLatestGeneratorReleaseRequest: GetLatestGeneratorReleaseRequest;
     }): Promise<GeneratorRelease | undefined> {
-        const releaseType =
-            getLatestGeneratorReleaseRequest.releaseType != null
-                ? convertGeneratorReleaseType(getLatestGeneratorReleaseRequest.releaseType)
-                : undefined;
+        const releaseTypes =
+            getLatestGeneratorReleaseRequest.releaseTypes != null
+                ? getLatestGeneratorReleaseRequest.releaseTypes.map(convertGeneratorReleaseType)
+                : [prisma.ReleaseType.ga];
 
-        const release = await this.prisma.generatorRelease.findFirst({
-            where: {
-                generatorId: getLatestGeneratorReleaseRequest.generator,
-                releaseType,
-                major: getLatestGeneratorReleaseRequest.retainMajorVersion,
-            },
-            orderBy: [
-                {
-                    nonce: "desc",
+        const release = await this.prisma.$transaction(async (prisma) => {
+            // If an IR version is provided outright, we can use that to filter the generators
+            let irVersion = getLatestGeneratorReleaseRequest.irVersion;
+
+            // If a CLI version is provided, this takes precedence over a provided IR version if both
+            // are provided. When a CLI version is provided we need to find the IR version that corresponds to it
+            // to filter the generators to compatible versions.
+            if (getLatestGeneratorReleaseRequest.cliVersion != null) {
+                const cliRelease = await prisma.cliRelease.findUnique({
+                    where: {
+                        version: getLatestGeneratorReleaseRequest.cliVersion,
+                    },
+                });
+
+                if (cliRelease != null) {
+                    irVersion = cliRelease.irVersion;
+                }
+            }
+
+            // The above sets the filter `irVersion`, and that's all.
+            return await prisma.generatorRelease.findFirst({
+                where: {
+                    generatorId: getLatestGeneratorReleaseRequest.generator,
+                    releaseType: { in: releaseTypes },
+                    major: getLatestGeneratorReleaseRequest.generatorMajorVersion,
+                    irVersion: { lte: irVersion },
+                    isYanked: null,
                 },
-            ],
+                orderBy: [
+                    {
+                        nonce: "desc",
+                    },
+                ],
+            });
         });
 
         return convertPrismaGeneratorRelease(release);
@@ -238,5 +262,6 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
             generatorRelease.customConfigSchema != null ? generatorRelease.customConfigSchema : undefined,
         major_version: generatorRelease.major,
         is_yanked: generatorRelease.isYanked != null ? (readBuffer(generatorRelease.isYanked) as Yank) : undefined,
+        created_at: generatorRelease.createdAt?.toISOString(),
     };
 }

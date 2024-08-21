@@ -18,7 +18,7 @@ export interface CliServiceMethods {
         locals: any;
     }): void | Promise<void>;
     getMinCliForIr(req: express.Request<{
-        ir_version: string;
+        ir_version: number;
     }, FernRegistry.generators.CliRelease, never, never>, res: {
         send: (responseBody: FernRegistry.generators.CliRelease) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

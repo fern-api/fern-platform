@@ -10,6 +10,7 @@ interface APIKeyInjectionConfigEnabledUnauthorized {
     enabled: true;
     authenticated: false;
     url: string;
+    partner?: string;
 }
 interface APIKeyInjectionConfigEnabledAuthorized {
     enabled: true;
@@ -17,6 +18,7 @@ interface APIKeyInjectionConfigEnabledAuthorized {
     access_token: string;
     refresh_token?: string;
     exp?: number;
+    partner?: string;
 }
 
 export type APIKeyInjectionConfig =
@@ -41,6 +43,7 @@ export async function getAPIKeyInjectionConfig(
                 access_token: tokens.access_token,
                 refresh_token: tokens.refresh_token,
                 exp: tokens.exp,
+                partner: config?.partner,
             };
         }
 
@@ -50,6 +53,7 @@ export async function getAPIKeyInjectionConfig(
                 enabled: true,
                 authenticated: false,
                 url,
+                partner: config?.partner,
             };
         }
     }
