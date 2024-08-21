@@ -21,6 +21,7 @@ export async function updateGeneratorVersionsInternal(env: Env): Promise<void> {
             installation.repository,
             env.GITHUB_APP_LOGIN_NAME,
             env.GITHUB_APP_LOGIN_ID,
+            env.DEFAULT_VENUS_ORIGIN,
         );
     });
 }
