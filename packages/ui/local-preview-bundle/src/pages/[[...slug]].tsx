@@ -1,7 +1,6 @@
 import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { toast } from "@fern-ui/components";
-// import { DocsPage } from "@fern-ui/ui";
-import dynamic from "next/dynamic";
+import { DocsPage } from "@fern-ui/ui";
 import { useRouter } from "next/router";
 import { ComponentProps, ReactElement, useEffect, useRef, useState } from "react";
 import ReconnectingWebSocket from "../utils/ReconnectingWebsocket";
@@ -11,8 +10,6 @@ interface LocalPreviewWebsocketMessage {
     version: 1;
     type: "startReload" | "finishReload";
 }
-
-const DocsPage = dynamic(() => import("@fern-ui/ui").then((mod) => mod.DocsPage));
 
 export default function LocalPreviewDocs(): ReactElement {
     const router = useRouter();
