@@ -5,6 +5,7 @@ import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { DOCS_ATOM, useMessageHandler, type DocsProps } from "../atoms";
 import { BgImageGradient } from "../docs/BgImageGradient";
 import { useBeforePopState } from "../hooks/useBeforePopState";
+import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { useRouteChanged } from "../hooks/useRouteChanged";
 import { NextSeo } from "../seo/NextSeo";
 import { InitializeTheme } from "../themes";
@@ -16,7 +17,7 @@ const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ Sear
 });
 
 export function DocsPage(pageProps: DocsProps): ReactElement | null {
-    // useConsoleMessage();
+    useConsoleMessage();
     useMessageHandler();
     useBeforePopState();
     useHydrateAtoms([[DOCS_ATOM, pageProps]], { dangerouslyForceHydrate: true });
