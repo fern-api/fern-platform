@@ -21,13 +21,14 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isBatchStreamToggleDisabled: false,
     isAuthEnabledInDocs: false,
     isAiChatbotEnabledInPreview: false,
-    isAudioFileDownloadSpecialSummary: false,
+    isAudioFileDownloadSpanSummary: false,
     isDocsLogoTextEnabled: false,
     isAudioExampleInternal: false,
-    isApplicationJsonFormDataValue: false,
+    usesApplicationJsonInFormDataValue: false,
     isBinaryOctetStreamAudioPlayer: false,
     hasVoiceIdPlaygroundForm: false,
-    isSpecialTheme: false,
+    isCohereTheme: false,
+    isFileForgeHackEnabled: false,
 };
 
 const EMPTY_DOCS_STATE: DocsProps = {

@@ -26,13 +26,14 @@ export interface FeatureFlags {
     isBatchStreamToggleDisabled: boolean;
     isAuthEnabledInDocs: boolean;
     isAiChatbotEnabledInPreview: boolean;
-    isAudioFileDownloadSpecialSummary: boolean;
+    isAudioFileDownloadSpanSummary: boolean;
     isDocsLogoTextEnabled: boolean;
     isAudioExampleInternal: boolean;
-    isApplicationJsonFormDataValue: boolean;
+    usesApplicationJsonInFormDataValue: boolean;
     isBinaryOctetStreamAudioPlayer: boolean;
     hasVoiceIdPlaygroundForm: boolean;
-    isSpecialTheme: boolean;
+    isCohereTheme: boolean;
+    isFileForgeHackEnabled: boolean;
 }
 
 export interface NavigationProps {

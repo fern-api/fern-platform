@@ -15,7 +15,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import { IS_MOBILE_SCREEN_ATOM, PLAYGROUND_AUTH_STATE_ATOM, store, useDomain, useFeatureFlags } from "../atoms";
+import { IS_MOBILE_SCREEN_ATOM, PLAYGROUND_AUTH_STATE_ATOM, store, useFeatureFlags } from "../atoms";
 import { FernErrorTag } from "../components/FernErrorBoundary";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
@@ -52,9 +52,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     sendRequest,
     types,
 }) => {
-    const domain = useDomain();
-    const { isBinaryOctetStreamAudioPlayer } = useFeatureFlags();
-    const { isSnippetTemplatesEnabled } = useFeatureFlags();
+    const { isBinaryOctetStreamAudioPlayer, isSnippetTemplatesEnabled, isFileForgeHackEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(requestTypeAtom);
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -137,7 +135,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                         const resolver = new PlaygroundCodeSnippetResolverBuilder(
                             endpoint,
                             isSnippetTemplatesEnabled,
-                            domain,
+                            isFileForgeHackEnabled,
                         ).create(authState, formState);
                         return resolver.resolve(requestType);
                     }}

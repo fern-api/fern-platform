@@ -844,7 +844,7 @@ export class ApiDefinitionResolver {
                             // revert this once we have a better solution
                             const contentType =
                                 compact(property?.contentType)[0] ??
-                                (this.featureFlags.isApplicationJsonFormDataValue ? "application/json" : undefined);
+                                (this.featureFlags.usesApplicationJsonInFormDataValue ? "application/json" : undefined);
                             return { type: "json" as const, value: value.value, contentType };
                         },
                         filename: (value) => ({

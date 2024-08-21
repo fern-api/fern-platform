@@ -25,13 +25,13 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     defaultExpandAll = false,
     types,
 }) => {
-    const { isAudioFileDownloadSpecialSummary } = useFeatureFlags();
+    const { isAudioFileDownloadSpanSummary } = useFeatureFlags();
 
     return (
         <div>
             <ApiPageDescription className="mt-3 text-sm" description={responseBody.description} isMarkdown={true} />
             <div className="t-muted border-default border-b pb-5 text-sm leading-6">
-                {getResponseSummary({ responseBody, types, isAudioFileDownloadSpecialSummary })}
+                {getResponseSummary({ responseBody, types, isAudioFileDownloadSpanSummary })}
             </div>
             {visitResolvedHttpResponseBodyShape(responseBody.shape, {
                 fileDownload: () => null,
@@ -87,14 +87,14 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
 function getResponseSummary({
     responseBody,
     types,
-    isAudioFileDownloadSpecialSummary,
+    isAudioFileDownloadSpanSummary,
 }: {
     responseBody: ResolvedResponseBody;
     types: Record<string, ResolvedTypeDefinition>;
-    isAudioFileDownloadSpecialSummary: boolean;
+    isAudioFileDownloadSpanSummary: boolean;
 }) {
     if (responseBody.shape.type === "fileDownload") {
-        if (isAudioFileDownloadSpecialSummary) {
+        if (isAudioFileDownloadSpanSummary) {
             return (
                 <span>
                     This endpoint returns an <code>audio/mpeg</code> file.

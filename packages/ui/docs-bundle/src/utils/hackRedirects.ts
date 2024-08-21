@@ -18,7 +18,7 @@ const HUME_REDIRECTS: DocsV1Read.RedirectConfig[] = [
     },
 ];
 
-// This should be moved out to the spec
+// TODO(rohin): FER-3050
 function getRedirects(domain: string): DocsV1Read.RedirectConfig[] {
     if (domain.includes("hume")) {
         return HUME_REDIRECTS;
