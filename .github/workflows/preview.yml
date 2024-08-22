@@ -82,6 +82,10 @@ jobs:
           filePath: preview.txt
           comment_tag: pr_preview
 
+  smoke-tests:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 

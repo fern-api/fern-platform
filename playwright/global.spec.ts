@@ -12,8 +12,6 @@ const playwrightConfig = yaml.load(fs.readFileSync("playwright/global-exclusions
 const globalTestExclusions = new Set<string>(playwrightConfig["global-exclusions"]);
 const faviconExclusions = new Set<string>(playwrightConfig["favicon-exclusions"]);
 
-console.log("Global exclusions: ", globalTestExclusions);
-
 function processLineByLineSync(filePath: string): void {
     const fileContent = fs.readFileSync(filePath, "utf-8");
 
