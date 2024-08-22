@@ -31,16 +31,12 @@ if (urls.length === 0) {
 
 urls.forEach((url) => {
     test(`Check if ${url} is online`, async ({ page }) => {
-        const response = await page.goto(url, {
-            timeout: 5000,
-        });
+        const response = await page.goto(url);
         expect(response?.status()).toBe(200);
     });
 
     test(`Check if favicon exists and URL does not return 404 for ${url}`, async ({ page }) => {
-        await page.goto(url, {
-            timeout: 5000,
-        });
+        await page.goto(url);
 
         const faviconUrl = await page.getAttribute('link[rel="icon"]', "href", {
             timeout: 5000,
