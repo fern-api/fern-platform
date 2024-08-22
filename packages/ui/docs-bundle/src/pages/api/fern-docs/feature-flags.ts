@@ -24,6 +24,14 @@ const FEATURE_FLAGS = [
     "batch-stream-toggle-disabled" as const,
     "enabled-auth-in-generated-docs" as const,
     "ai-chat-preview" as const,
+    "audio-file-download-span-summary" as const,
+    "docs-logo-text-enabled" as const,
+    "audio-example-internal" as const,
+    "uses-application-json-in-form-data-value" as const,
+    "binary-octet-stream-audio-player" as const,
+    "voice-id-playground-form" as const,
+    "cohere-theme" as const,
+    "file-forge-hack-enabled" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -63,6 +71,23 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const isBatchStreamToggleDisabled = checkDomainMatchesCustomers(domain, config["batch-stream-toggle-disabled"]);
         const isAuthEnabledInDocs = checkDomainMatchesCustomers(domain, config["enabled-auth-in-generated-docs"]);
         const isAiChatbotEnabledInPreview = checkDomainMatchesCustomers(domain, config["ai-chat-preview"]);
+        const isAudioFileDownloadSpanSummary = checkDomainMatchesCustomers(
+            domain,
+            config["audio-file-download-span-summary"],
+        );
+        const isDocsLogoTextEnabled = checkDomainMatchesCustomers(domain, config["docs-logo-text-enabled"]);
+        const isAudioExampleInternal = checkDomainMatchesCustomers(domain, config["audio-example-internal"]);
+        const usesApplicationJsonInFormDataValue = checkDomainMatchesCustomers(
+            domain,
+            config["uses-application-json-in-form-data-value"],
+        );
+        const isBinaryOctetStreamAudioPlayer = checkDomainMatchesCustomers(
+            domain,
+            config["binary-octet-stream-audio-player"],
+        );
+        const hasVoiceIdPlaygroundForm = checkDomainMatchesCustomers(domain, config["voice-id-playground-form"]);
+        const isCohereTheme = checkDomainMatchesCustomers(domain, config["cohere-theme"]);
+        const isFileForgeHackEnabled = checkDomainMatchesCustomers(domain, config["file-forge-hack-enabled"]);
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -83,6 +108,14 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isBatchStreamToggleDisabled,
             isAuthEnabledInDocs,
             isAiChatbotEnabledInPreview,
+            isAudioFileDownloadSpanSummary,
+            isDocsLogoTextEnabled,
+            isAudioExampleInternal,
+            usesApplicationJsonInFormDataValue,
+            isBinaryOctetStreamAudioPlayer,
+            hasVoiceIdPlaygroundForm,
+            isCohereTheme,
+            isFileForgeHackEnabled,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -106,6 +139,14 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isBatchStreamToggleDisabled: false,
             isAuthEnabledInDocs: false,
             isAiChatbotEnabledInPreview: false,
+            isAudioFileDownloadSpanSummary: false,
+            isDocsLogoTextEnabled: false,
+            isAudioExampleInternal: false,
+            usesApplicationJsonInFormDataValue: false,
+            isBinaryOctetStreamAudioPlayer: false,
+            hasVoiceIdPlaygroundForm: false,
+            isCohereTheme: false,
+            isFileForgeHackEnabled: false,
         };
     }
 }

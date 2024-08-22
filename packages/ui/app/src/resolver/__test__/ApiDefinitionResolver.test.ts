@@ -38,7 +38,6 @@ describe("resolveApiDefinition", () => {
             {},
             undefined,
             DEFAULT_FEATURE_FLAGS,
-            "fern.docs.buildwithfern.com",
         );
         expect(resolved).toMatchSnapshot();
     });
@@ -73,7 +72,6 @@ describe("resolveApiDefinition", () => {
             {},
             undefined,
             DEFAULT_FEATURE_FLAGS,
-            "documentation.sayari.com",
         );
         expect(resolved).toMatchSnapshot();
         expect((resolved.items[0] as ResolvedEndpointDefinition).auth).toBeUndefined();

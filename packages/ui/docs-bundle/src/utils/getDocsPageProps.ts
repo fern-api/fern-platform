@@ -366,7 +366,7 @@ async function convertDocsToDocsPageProps({
         user,
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
-        theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
+        theme: featureFlags.isCohereTheme ? "cohere" : "default",
         analyticsConfig: docs.definition.config.analyticsConfig,
         defaultLang: docs.definition.config.defaultLanguage ?? "curl",
         stylesheet: renderThemeStylesheet(

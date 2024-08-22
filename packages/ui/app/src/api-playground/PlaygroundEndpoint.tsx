@@ -12,7 +12,6 @@ import {
     PLAYGROUND_AUTH_STATE_ATOM,
     store,
     useBasePath,
-    useDomain,
     useFeatureFlags,
     usePlaygroundEndpointFormState,
 } from "../atoms";
@@ -73,8 +72,8 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
         setFormState(getInitialEndpointRequestFormState(endpoint, types));
     }, []);
 
-    const domain = useDomain();
     const basePath = useBasePath();
+    const { usesApplicationJsonInFormDataValue } = useFeatureFlags();
     const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
@@ -119,7 +118,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                     uploadEnvironment,
                     endpoint.requestBody?.shape,
                     formState.body,
-                    domain,
+                    usesApplicationJsonInFormDataValue,
                 ),
             };
             if (endpoint.responseBody?.shape.type === "stream") {
@@ -178,7 +177,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 },
             });
         }
-    }, [domain, endpoint, formState, proxyEnvironment, uploadEnvironment]);
+    }, [endpoint, formState, proxyEnvironment, uploadEnvironment, usesApplicationJsonInFormDataValue]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
@@ -220,7 +219,7 @@ async function serializeFormStateBody(
     environment: string,
     shape: ResolvedHttpRequestBodyShape | undefined,
     body: PlaygroundFormStateBody | undefined,
-    domain: string,
+    usesApplicationJsonInFormDataValue: boolean,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
     if (shape == null || body == null) {
         return undefined;
@@ -266,7 +265,7 @@ async function serializeFormStateBody(
                             // revert this once we have a better solution
                             contentType:
                                 compact(property?.contentType)[0] ??
-                                (domain.includes("fileforge") ? "application/json" : undefined),
+                                (usesApplicationJsonInFormDataValue ? "application/json" : undefined),
                         };
                         break;
                     }
