@@ -196,7 +196,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
     }
 
     return (
-        <FernScrollArea className="mask-grad-top-4 px-2 pt-4">
+        <FernScrollArea rootClassName="min-h-[80vh]" className="mask-grad-top-4 px-2 pt-4">
             {isAiChatbotEnabledInPreview && (
                 <AskCohereHit
                     setRef={(elem) => {
