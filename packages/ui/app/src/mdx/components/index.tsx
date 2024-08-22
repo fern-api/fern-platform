@@ -1,6 +1,5 @@
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import type { MDXComponents } from "mdx/types";
-import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
 import { FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
 import { AccordionGroup } from "./accordion";
@@ -21,6 +20,8 @@ import {
 } from "./callout";
 import { Card, CardGroup } from "./card";
 import { ClientLibraries } from "./client-libraries";
+import { CodeBlock } from "./code/CodeBlock";
+import { CodeGroup } from "./code/CodeGroup";
 import { Column, ColumnGroup } from "./columns";
 import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
@@ -32,9 +33,6 @@ import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
 import { Steps } from "./steps";
 import { TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
-
-const CodeBlock = dynamic(() => import("./code").then((mod) => mod.CodeBlock));
-const CodeGroup = dynamic(() => import("./code").then((mod) => mod.CodeGroup));
 
 const FERN_COMPONENTS = {
     AccordionGroup,
