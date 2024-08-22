@@ -33,4 +33,7 @@ jobs:
         env:
           CI: false
         run: |
+          # Run compile to generate the dist folder for the Github dep
+          pnpm compile
+          pnpm --filter "@fern-platform/fern-bot" install
           pnpm --filter "@fern-platform/fern-bot" release --stage development
