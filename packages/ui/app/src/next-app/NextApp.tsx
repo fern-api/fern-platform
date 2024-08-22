@@ -12,8 +12,6 @@ import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
 import { ThemeScript } from "./utils/ThemeScript";
 
-// const ThemeScript = dynamic(() => import("./utils/ThemeScript").then((mod) => mod.ThemeScript));
-
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     // This is a hack to handle edge-cases related to multitenant subpath rendering:
     // We need to intercept how prefetching is done and modify the hrefs to include the subpath.
