@@ -121,6 +121,9 @@ jobs:
           name: preview
           path: .
 
+      - name: pnpm install
+        run: pnpm install
+
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 
