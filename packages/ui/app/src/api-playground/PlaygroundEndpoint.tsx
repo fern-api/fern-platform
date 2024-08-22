@@ -6,7 +6,6 @@ import { compact, mapValues, once } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
 import urljoin from "url-join";
 import { useCallbackOne } from "use-memo-one";
-import { capturePosthogEvent } from "../analytics/posthog";
 import { captureSentryError } from "../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -92,6 +91,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
         }
         setResponse(loading());
         try {
+            const { capturePosthogEvent } = await import("../analytics/posthog");
             capturePosthogEvent("api_playground_request_sent", {
                 endpointId: endpoint.id,
                 endpointName: endpoint.title,

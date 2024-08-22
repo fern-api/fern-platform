@@ -1,4 +1,4 @@
-import { camelCase } from "lodash-es";
+import camelCase from "lodash-es/camelCase";
 import StyleToObject from "style-to-object";
 import { captureSentryError } from "../analytics/sentry";
 

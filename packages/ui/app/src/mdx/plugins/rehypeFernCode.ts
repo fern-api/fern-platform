@@ -2,7 +2,7 @@ import type { Element, Root } from "hast";
 import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
-import { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
+import type { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { unknownToString } from "../../util/unknownToString";
 import type { CodeGroup } from "../components/code";
 import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
