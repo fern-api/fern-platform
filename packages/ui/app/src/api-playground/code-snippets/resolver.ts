@@ -13,7 +13,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
     constructor(
         private endpoint: ResolvedEndpointDefinition,
         private isSnippetTemplatesEnabled: boolean,
-        private docsHost: string,
+        private isFileForgeHackEnabled: boolean,
     ) {}
 
     public create(
@@ -26,7 +26,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
             formState,
             false,
             this.isSnippetTemplatesEnabled,
-            this.docsHost.includes("fileforge"),
+            this.isFileForgeHackEnabled,
         );
     }
 
@@ -40,7 +40,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
             formState,
             true,
             this.isSnippetTemplatesEnabled,
-            this.docsHost.includes("fileforge"),
+            this.isFileForgeHackEnabled,
         );
     }
 }

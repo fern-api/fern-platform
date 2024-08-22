@@ -1,6 +1,6 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import { Router } from "next/router";
-import posthog, { PostHog } from "posthog-js";
+import type { PostHog } from "posthog-js";
 import { useEffect } from "react";
 import { safeCall } from "./sentry";
 
@@ -24,9 +24,10 @@ function posthogHasCustomer(instance: PostHog): instance is PostHogWithCustomer 
 }
 
 let IS_POSTHOG_INITIALIZED = false;
-function safeAccessPosthog(run: () => void): void {
+async function safeAccessPosthog(run: (posthog: PostHog) => void): Promise<void> {
     if (IS_POSTHOG_INITIALIZED) {
-        safeCall(run);
+        const posthog = (await import("posthog-js")).default;
+        safeCall(() => run(posthog));
     }
 }
 
@@ -35,7 +36,7 @@ function safeAccessPosthog(run: () => void): void {
  *
  * @param run
  */
-function ifCustomer(run: (hog: PostHogWithCustomer) => void): void {
+function ifCustomer(posthog: PostHog, run: (hog: PostHogWithCustomer) => void): void {
     safeCall(() => {
         if (IS_POSTHOG_INITIALIZED && posthogHasCustomer(posthog)) {
             run(posthog);
@@ -43,10 +44,11 @@ function ifCustomer(run: (hog: PostHogWithCustomer) => void): void {
     });
 }
 
-export function initializePosthog(customerConfig?: DocsV1Read.PostHogConfig): void {
+export async function initializePosthog(customerConfig?: DocsV1Read.PostHogConfig): Promise<void> {
     const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim();
     if (process.env.NODE_ENV === "production" && apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
         const posthogProxy = "/api/fern-docs/analytics/posthog";
+        const posthog = (await import("posthog-js")).default;
 
         posthog.init(apiKey, {
             api_host: posthogProxy,
@@ -75,30 +77,30 @@ export function initializePosthog(customerConfig?: DocsV1Read.PostHogConfig): vo
 }
 
 export function identifyUser(userId: string): void {
-    safeAccessPosthog(() => {
+    void safeAccessPosthog((posthog) => {
         posthog.identify(userId);
-        ifCustomer((posthog) => posthog.customer.identify(userId));
+        ifCustomer(posthog, (posthog) => posthog.customer.identify(userId));
     });
 }
 
 export function registerPosthogProperties(properties: Record<string, unknown>): void {
-    safeAccessPosthog(() => {
+    void safeAccessPosthog((posthog) => {
         posthog.register(properties);
-        ifCustomer((posthog) => posthog.customer.register(properties));
+        ifCustomer(posthog, (posthog) => posthog.customer.register(properties));
     });
 }
 
 export function resetPosthog(): void {
-    safeAccessPosthog(() => {
+    void safeAccessPosthog((posthog) => {
         posthog.reset();
-        ifCustomer((posthog) => posthog.customer.reset());
+        ifCustomer(posthog, (posthog) => posthog.customer.reset());
     });
 }
 
 export function capturePosthogEvent(eventName: string, properties?: Record<string, unknown>): void {
-    safeAccessPosthog(() => {
+    void safeAccessPosthog((posthog) => {
         posthog.capture(eventName, properties);
-        ifCustomer((posthog) => posthog.customer.capture(eventName, properties));
+        ifCustomer(posthog, (posthog) => posthog.customer.capture(eventName, properties));
     });
 }
 
@@ -115,7 +117,6 @@ const trackPageView = (url: string) => {
 export function useInitializePosthog(customerConfig?: DocsV1Read.PostHogConfig): void {
     useEffect(() => {
         safeCall(() => initializePosthog(customerConfig));
-
         Router.events.on("routeChangeComplete", trackPageView);
         return () => {
             Router.events.off("routeChangeComplete", trackPageView);

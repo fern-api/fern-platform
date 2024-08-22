@@ -3,6 +3,7 @@ import { Transition } from "@headlessui/react";
 import { Check, Link } from "iconoir-react";
 import { Url } from "next/dist/shared/lib/router/router";
 import { Fragment, memo } from "react";
+import urlJoin from "url-join";
 import { FernLink } from "../components/FernLink";
 
 export declare namespace AbsolutelyPositionedAnchor {
@@ -40,7 +41,9 @@ export const AbsolutelyPositionedAnchor = memo<AbsolutelyPositionedAnchor.Props>
     href,
     // smallGap = false,
 }) {
-    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() => window.location.origin + hrefToString(href));
+    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() =>
+        urlJoin(window.location.origin, window.location.pathname, hrefToString(href)),
+    );
 
     const mounted = useMounted();
 

@@ -26,6 +26,7 @@ jobs:
       GITHUB_APP_CLIENT_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_ID }}
       GITHUB_APP_CLIENT_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_SECRET }}
       GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_WEBHOOK_SECRET }}
+      DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com"
       CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
     steps:
@@ -49,6 +50,7 @@ jobs:
       GITHUB_APP_CLIENT_ID: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_CLIENT_ID }}
       GITHUB_APP_CLIENT_SECRET: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_CLIENT_SECRET }}
       GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_PROD_GITHUB_APP_WEBHOOK_SECRET }}
+      DEFAULT_VENUS_ORIGIN: "https://venus.buildwithfern.com"
       CO_API_KEY: ${{ secrets.PROD_CO_API_KEY }}
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
     steps:
