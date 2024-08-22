@@ -2,6 +2,7 @@ import { useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
+import Script from "next/script";
 import { ReactElement, memo } from "react";
 import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
 import { Posthog } from "./PosthogContainer";
@@ -23,7 +24,7 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
     return (
         <>
             {/* renders either segment with our write key or segment with the customer's write key */}
-            <script
+            <Script
                 id="segment-script"
                 dangerouslySetInnerHTML={{
                     __html: renderSegmentSnippet(domain, config.segment?.writeKey),

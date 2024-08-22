@@ -1,4 +1,5 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import Script from "next/script";
 import { ReactElement } from "react";
 
 export function FullstoryScript(props: { config?: DocsV1Read.FullStoryAnalyticsConfig }): ReactElement {
@@ -6,7 +7,7 @@ export function FullstoryScript(props: { config?: DocsV1Read.FullStoryAnalyticsC
         return <></>;
     }
 
-    return <script id="init-fullstory" dangerouslySetInnerHTML={{ __html: initFullstory(props.config) }} />;
+    return <Script id="init-fullstory" dangerouslySetInnerHTML={{ __html: initFullstory(props.config) }} />;
 }
 
 function initFullstory(config: DocsV1Read.FullStoryAnalyticsConfig) {
