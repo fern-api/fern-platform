@@ -1,4 +1,5 @@
 import type { ColorsConfig } from "@fern-ui/fdr-utils";
+import Script from "next/script";
 import type { ReactElement } from "react";
 import type { AvailableThemes } from "../../atoms";
 
@@ -41,7 +42,7 @@ const getAvailableThemes = (colors: Partial<ColorsConfig> = {}): AvailableThemes
 export function ThemeScript({ colors }: { colors?: ColorsConfig }): ReactElement {
     const args = getAvailableThemes(colors);
     return (
-        <script
+        <Script
             id="theme-script"
             dangerouslySetInnerHTML={{ __html: `(${script.toString()})(${JSON.stringify(args)})` }}
         />
