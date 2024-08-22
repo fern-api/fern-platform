@@ -2,8 +2,17 @@ import { expect, test } from "@playwright/test";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 
-const urls: string[] = [];
-const exclusions = new Set<string>(yaml.load(fs.readFileSync("playwright/global-exclusions.yml", "utf-8")).exclusions);
+const testUrlConfigs: {
+    url: string;
+    isFaviconExcluded: boolean;
+}[] = [];
+
+const playwrightConfig = yaml.load(fs.readFileSync("playwright/global-exclusions.yml", "utf-8"));
+
+const globalTestExclusions = new Set<string>(playwrightConfig["global-exclusions"]);
+const faviconExclusions = new Set<string>(playwrightConfig["favicon-exclusions"]);
+
+console.log("Global exclusions: ", globalTestExclusions);
 
 function processLineByLineSync(filePath: string): void {
     const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -16,8 +25,11 @@ function processLineByLineSync(filePath: string): void {
         if (match) {
             const fullUrl = match[1];
             const isExcludedUrl = match[2];
-            if (fullUrl && !exclusions.has(isExcludedUrl ?? "")) {
-                urls.push(fullUrl);
+            if (fullUrl && !globalTestExclusions.has(isExcludedUrl ?? "")) {
+                testUrlConfigs.push({
+                    url: fullUrl,
+                    isFaviconExcluded: faviconExclusions.has(isExcludedUrl ?? ""),
+                });
             }
         }
     });
@@ -25,18 +37,22 @@ function processLineByLineSync(filePath: string): void {
 
 processLineByLineSync("preview.txt");
 
-if (urls.length === 0) {
+if (testUrlConfigs.length === 0) {
     throw new Error("No URLs found in preview.txt");
 }
 
-urls.forEach((url) => {
-    test(`Check if ${url} is online`, async ({ page }) => {
-        const response = await page.goto(url);
+testUrlConfigs.forEach((testUrlConfig) => {
+    test(`Check if ${testUrlConfig.url} is online`, async ({ page }) => {
+        const response = await page.goto(testUrlConfig.url);
         expect(response?.status()).toBe(200);
     });
 
-    test(`Check if favicon exists and URL does not return 404 for ${url}`, async ({ page }) => {
-        await page.goto(url);
+    test(`Check if favicon exists and URL does not return 404 for ${testUrlConfig.url}`, async ({ page }) => {
+        if (testUrlConfig.isFaviconExcluded) {
+            return;
+        }
+
+        await page.goto(testUrlConfig.url);
 
         const faviconUrl = await page.getAttribute('link[rel="icon"]', "href", {
             timeout: 5000,

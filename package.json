@@ -8,7 +8,7 @@
     "preinstall": "npx only-allow pnpm",
     "test": "CI=true turbo test",
     "test:update": "CI=true turbo test -- -u",
-    "test:playwright": "pnpm exec playwright test --debug",
+    "test:playwright": "pnpm exec playwright test",
     "clean": "turbo clean",
     "codegen": "turbo codegen",
     "compile": "turbo compile",
