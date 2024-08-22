@@ -4,6 +4,7 @@ import memoize from "lodash-es/memoize";
 import { useCallback, useEffect, useState } from "react";
 import {
     bundledLanguages,
+    getHighlighter,
     type BundledLanguage,
     type BundledTheme,
     type Highlighter,
@@ -25,7 +26,6 @@ export const getHighlighterInstance: (language: string) => Promise<Highlighter> 
         }
 
         if (highlighterPromise == null) {
-            const getHighlighter = (await import("shiki")).getHighlighter;
             highlighterPromise = getHighlighter({
                 langs: [additionalLanguages[lang] ?? lang],
                 themes: [LIGHT_THEME, DARK_THEME],
