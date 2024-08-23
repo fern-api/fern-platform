@@ -3,36 +3,12 @@ import * as Sentry from "@sentry/nextjs";
 import { compile, match } from "path-to-regexp";
 import urljoin from "url-join";
 
-const HUME_REDIRECTS: DocsV1Read.RedirectConfig[] = [
-    {
-        source: "/streaming-api-tutorial",
-        destination: "/docs/expression-measurement-api/websocket",
-    },
-    {
-        source: "/docs/support",
-        destination: "/support",
-    },
-    {
-        source: "/streaming-api-error-codes",
-        destination: "/docs/resources/errors",
-    },
-];
-
-// TODO(rohin): FER-3050
-function getRedirects(domain: string): DocsV1Read.RedirectConfig[] {
-    if (domain.includes("hume")) {
-        return HUME_REDIRECTS;
-    }
-
-    return [];
-}
-
 export function getRedirectForPath(
     path: string,
     baseUrl: DocsV2Read.BaseUrl,
     redirects: DocsV1Read.RedirectConfig[] = [],
 ): DocsV1Read.RedirectConfig | undefined {
-    for (const redirect of [...getRedirects(baseUrl.domain), ...withBasepath(redirects, baseUrl.basePath)]) {
+    for (const redirect of [...withBasepath(redirects, baseUrl.basePath)]) {
         if (redirect.source === path) {
             return redirect;
         }
