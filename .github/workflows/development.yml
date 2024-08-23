@@ -43,7 +43,39 @@ jobs:
         run: VERSION="$(scripts/git-version.sh)" ENABLE_SOURCE_MAPS=true vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
+          echo "Deployment URL: $DEPLOYMENT_URL"
+
+          echo "Starting revalidation..."
+
+          DEPLOYMENT_URL=$(echo $DEPLOYMENT_URL | awk -F'/' '{print $3}')
+
+          DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v13/deployments/$DEPLOYMENT_URL?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
+          ALIAS_DOMAINS=$(jq -r '.alias[]' <<< $DEPLOYMENT_INFO)
+
+          echo "## PR Preview" > preview.txt
+
+          for DOMAIN in ${ALIAS_DOMAINS[@]}; do
+            if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
+              if curl -s -X POST "https://$DOMAIN/api/revalidate-all" -H "x-fern-host: $DOMAIN"; then
+                echo "Revalidated: $DOMAIN"
+              else
+                echo "Failed to revalidate $DOMAIN, but continuing with other domains"
+              fi
+            fi
+          done
+
+          curl -s -X POST https://docs.buildwithfern.com/api/revalidate-all -H "x-fern-host: docs.buildwithfern.com"
+          echo "Revalidated: docs.buildwithfern.com"
+
+          echo "Done!"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: preview
+          path: preview.txt
 
   smoke-test:
     needs: deploy
@@ -68,3 +100,40 @@ jobs:
           else
               exit 1
           fi
+
+  playwright-tests:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.4.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: preview
+          path: .
+
+      - name: pnpm install
+        run: pnpm install
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: pnpm exec playwright test playwright/global.spec.ts --workers 6
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
