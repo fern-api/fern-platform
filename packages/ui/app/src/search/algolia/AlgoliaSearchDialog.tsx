@@ -4,7 +4,7 @@ import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useMemo, useRef } from "react";
-import { InstantSearch } from "react-instantsearch";
+import { InstantSearch, useInstantSearch } from "react-instantsearch";
 import {
     CURRENT_VERSION_ATOM,
     IS_MOBILE_SCREEN_ATOM,
@@ -52,6 +52,31 @@ interface FernInstantSearchProps {
     inputRef: React.RefObject<HTMLInputElement>;
 }
 
+import { ReactNode } from "react";
+
+function NoResultsBoundary({ children, fallback }: { children: ReactNode; fallback: ReactNode }) {
+    const { results } = useInstantSearch();
+
+    if (!results.__isArtificial && results.nbHits === 0) {
+        return (
+            <>
+                {fallback}
+                <div hidden>{children}</div>
+            </>
+        );
+    }
+
+    return children;
+}
+
+function NoResults() {
+    return (
+        <div className="justify t-muted flex w-full flex-col items-center py-3">
+            <p>No results found.</p>
+        </div>
+    );
+}
+
 function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSearchProps) {
     const sidebar = useSidebarNodes();
     const activeVersion = useAtomValue(CURRENT_VERSION_ATOM);
@@ -69,7 +94,9 @@ function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSea
                     className="flex-1"
                     inputClassName="form-input w-full text-base t-muted placeholder:t-muted !p-5 form-input !border-none !bg-transparent !outline-none !ring-0"
                 />
-                <SearchHits />
+                <NoResultsBoundary fallback={<NoResults />}>
+                    <SearchHits />
+                </NoResultsBoundary>
             </div>
         </InstantSearch>
     );
