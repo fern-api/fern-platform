@@ -59,6 +59,7 @@ function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSea
         () => createSearchPlaceholderWithVersion(activeVersion?.id, sidebar),
         [activeVersion, sidebar],
     );
+    // TODO (rohin): check how to display no results on no results with algolia
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
             <div className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
