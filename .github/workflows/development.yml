@@ -48,10 +48,6 @@ jobs:
           DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
           echo "Deployment URL: $DEPLOYMENT_URL"
 
-          echo "Starting revalidation..."
-
-          DEPLOYMENT_URL=$(echo $DEPLOYMENT_URL | awk -F'/' '{print $3}')
-
           DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v13/deployments/$DEPLOYMENT_URL?teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
           ALIAS_DOMAINS=$(jq -r '.alias[]' <<< $DEPLOYMENT_INFO)
 
