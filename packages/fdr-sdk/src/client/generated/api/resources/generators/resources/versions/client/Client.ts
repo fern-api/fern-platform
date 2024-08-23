@@ -159,8 +159,30 @@ export class Versions {
      *         custom_config_schema: "string",
      *         version: "string",
      *         created_at: "2023-01-15",
-     *         is_yanked: {},
-     *         changelog_entry: {}
+     *         is_yanked: {
+     *             remediation_verision: "string"
+     *         },
+     *         changelog_entry: {
+     *             type: FernRegistry.generators.ChangelogEntryType.Fix,
+     *             added: [{
+     *                     "key": "value"
+     *                 }],
+     *             changed: [{
+     *                     "key": "value"
+     *                 }],
+     *             deprecated: [{
+     *                     "key": "value"
+     *                 }],
+     *             removed: [{
+     *                     "key": "value"
+     *                 }],
+     *             fixed: [{
+     *                     "key": "value"
+     *                 }],
+     *             security: [{
+     *                     "key": "value"
+     *                 }]
+     *         }
      *     })
      */
     public async upsertGeneratorRelease(
