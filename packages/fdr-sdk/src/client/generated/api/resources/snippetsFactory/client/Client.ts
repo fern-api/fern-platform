@@ -35,8 +35,21 @@ export class SnippetsFactory {
      *         apiId: "string",
      *         snippets: {
      *             type: "typescript",
-     *             sdk: {},
-     *             snippets: [{}]
+     *             sdk: {
+     *                 package: "string",
+     *                 version: "string"
+     *             },
+     *             snippets: [{
+     *                     snippet: {
+     *                         client: "string"
+     *                     },
+     *                     endpoint: {
+     *                         path: "string",
+     *                         method: FernRegistry.EndpointMethod.Put,
+     *                         identifierOverride: "string"
+     *                     },
+     *                     exampleIdentifier: "string"
+     *                 }]
      *         }
      *     })
      */

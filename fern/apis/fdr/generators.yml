@@ -106,6 +106,7 @@ groups:
           includeApiReference: true
           extraDependencies:
             "@fern-api/template-resolver": "0.7.5"
+          allowCustomFetcher: true
 
   template-resolver:
     audiences:
