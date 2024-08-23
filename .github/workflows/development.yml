@@ -57,19 +57,11 @@ jobs:
           echo "## PR Preview" > preview.txt
 
           for DOMAIN in ${ALIAS_DOMAINS[@]}; do
+            echo "Handling domain: $DOMAIN"
             if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
-              if curl -s -X POST "https://$DOMAIN/api/revalidate-all" -H "x-fern-host: $DOMAIN"; then
-                echo "Revalidated: $DOMAIN"
-              else
-                echo "Failed to revalidate $DOMAIN, but continuing with other domains"
-              fi
+              echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
             fi
           done
-
-          curl -s -X POST https://docs.buildwithfern.com/api/revalidate-all -H "x-fern-host: docs.buildwithfern.com"
-          echo "Revalidated: docs.buildwithfern.com"
-
-          echo "Done!"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
