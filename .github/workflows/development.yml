@@ -12,10 +12,11 @@ env:
   FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-on:
-  push:
-    branches:
-      - main
+on: pull_request
+# on:
+# push:
+#   branches:
+#     - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
