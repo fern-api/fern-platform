@@ -1,0 +1,12 @@
+global-exclusions:
+  - developers.beehiiv.com
+  - hume.ferndocs.com
+  - docs.qlty.us
+  - docs.qlty.ai
+  - www.plantstore.dev
+
+favicon-exclusions:
+  - mongodb.ferndocs.com
+  - secure.docs.propexo.com
+  - docs.airtop.ai
+  - fern.ssoready.com
