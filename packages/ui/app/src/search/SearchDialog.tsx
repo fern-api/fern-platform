@@ -36,7 +36,6 @@ export const SearchDialog = (): ReactElement | null => {
     const [config] = useSearchConfig();
 
     if (!config.isAvailable) {
-        // TODO (rohin): add noisy alert here
         isSearchDialogOpen &&
             captureSentryError(new Error("Search dialog config is null"), {
                 context: "SearchDialogOpen",
