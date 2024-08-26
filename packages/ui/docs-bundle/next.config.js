@@ -27,16 +27,29 @@ const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
     ({ protocol, hostname, port }) => `${protocol}://${hostname}${port ? `:${port}` : ""}`,
 );
 
+function isTruthy(value) {
+    if (value == null) {
+        return false;
+    } else if (typeof value === "string") {
+        return value.toLowerCase() === "true" || value === "1";
+    } else if (typeof value === "boolean") {
+        return value;
+    } else if (typeof value === "number") {
+        return value > 0;
+    }
+    return false;
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
     transpilePackages: ["next-mdx-remote", "esbuild", "lodash-es", "@fern-ui/ui", "@fern-api/fdr-sdk"],
-    productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "1",
+    productionBrowserSourceMaps: isTruthy(process.env.ENABLE_SOURCE_MAPS),
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
     },
-    trailingSlash: process.env.TRAILING_SLASH === "1",
+    trailingSlash: isTruthy(process.env.TRAILING_SLASH),
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the
      * multi-tenant nature of this app, we cannot set a global basepath in the next.config.js. As a result, the `_next`
