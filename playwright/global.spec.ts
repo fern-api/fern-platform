@@ -4,13 +4,13 @@ import * as yaml from "js-yaml";
 
 const testUrlConfigs: {
     url: string;
-    isFaviconExcluded: boolean;
+    isFaviconIncluded: boolean;
 }[] = [];
 
-const playwrightConfig = yaml.load(fs.readFileSync("playwright/global-exclusions.yml", "utf-8"));
+const playwrightConfig = yaml.load(fs.readFileSync("playwright/global-inclusions.yml", "utf-8"));
 
-const globalTestExclusions = new Set<string>(playwrightConfig["global-exclusions"]);
-const faviconExclusions = new Set<string>(playwrightConfig["favicon-exclusions"]);
+const globalTestInclusions = new Set<string>(playwrightConfig["global-inclusions"]);
+const faviconInclusions = new Set<string>(playwrightConfig["favicon-inclusions"]);
 
 function processLineByLineSync(filePath: string): void {
     const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -22,11 +22,11 @@ function processLineByLineSync(filePath: string): void {
         const match = line.match(urlPattern);
         if (match) {
             const fullUrl = match[1];
-            const isExcludedUrl = match[2];
-            if (fullUrl && !globalTestExclusions.has(isExcludedUrl ?? "")) {
+            const isIncludedUrl = match[2];
+            if (fullUrl && globalTestInclusions.has(isIncludedUrl ?? "")) {
                 testUrlConfigs.push({
                     url: fullUrl,
-                    isFaviconExcluded: faviconExclusions.has(isExcludedUrl ?? ""),
+                    isFaviconIncluded: faviconInclusions.has(isIncludedUrl ?? ""),
                 });
             }
         }
@@ -46,7 +46,7 @@ testUrlConfigs.forEach((testUrlConfig) => {
     });
 
     test(`Check if favicon exists and URL does not return 404 for ${testUrlConfig.url}`, async ({ page }) => {
-        if (testUrlConfig.isFaviconExcluded) {
+        if (!testUrlConfig.isFaviconIncluded) {
             return;
         }
 
