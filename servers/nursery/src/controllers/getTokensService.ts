@@ -2,20 +2,20 @@ import { TokenService } from "../api/generated/api/resources/token/service/Token
 
 export function getTokensService(): TokenService {
     return new TokenService({
-        create: async (req, res) => {
-            return res.send();
+        create: async (req, _res) => {
+            throw new Error();
         },
         getTokenMetadata: async (_req, _res) => {
-            return res.send();
+            throw new Error();
         },
         getTokensForOwner: async (_req, _res) => {
-            return res.send();
+            throw new Error();
         },
         revokeTokenById: async (_req, _res) => {
-            return res.send();
+            throw new Error();
         },
         revokeToken: async (_req, _res) => {
-            return res.send();
+            throw new Error();
         },
     });
 }

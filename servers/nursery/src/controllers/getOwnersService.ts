@@ -3,13 +3,13 @@ import { OwnerService } from "../api/generated/api/resources/owner/service/Owner
 export function getOwnersService(): OwnerService {
     return new OwnerService({
         create: async (req, res) => {
-            return res.send();
+            throw new Error();
         },
         get: async (req, res) => {
-            return res.send();
+            throw new Error();
         },
         update: async (req, res) => {
-            return res.send();
+            throw new Error();
         },
     });
 }

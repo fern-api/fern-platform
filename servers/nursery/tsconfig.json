@@ -1,50 +1,22 @@
 {
-  "name": "@fern-platform/nursery",
-  "version": "0.0.0",
-  "main": "dist/index.js",
-  "repository": "git@github.com:fern-api/fern-definition-registry.git",
-  "author": "Deep Singhvi <deep@buildwithfern.com>",
-  "license": "MIT",
-  "files": ["dist"],
-  "type": "module",
-  "dependencies": {
-    "@prisma/client": "5.13.0",
-    "@sentry/cli": "^2.31.0",
-    "@sentry/node": "^7.112.2",
-    "@sentry/profiling-node": "^7.112.2",
-    "@slack/web-api": "^6.9.0",
-    "uuid": "^9.0.0",
-    "winston": "^3.10.0"
+  "extends": "@fern-platform/configs/tsconfig/server.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "isolatedModules": false,
+
+    "paths": {
+      "@prisma/client": ["../prisma/client"]
+    },
+
+    "sourceMap": true,
+    "inlineSources": true,
+
+    // Set `sourceRoot` to  "/" to strip the build path prefix
+    // from generated source code references.
+    // This improves issue grouping in Sentry.
+    "sourceRoot": "/"
   },
-  "devDependencies": {
-    "@babel/core": "^7.18.9",
-    "@babel/preset-env": "^7.24.3",
-    "@babel/preset-typescript": "^7.24.1",
-    "@fern-platform/configs": "workspace:*",
-    "typescript": "5.4.3",
-    "vitest": "^1.5.0"
-  },
-  "scripts": {
-    "compile": "prisma generate && tsc --build",
-    "db:migrate:dev": "dotenv -e .env.dev -- prisma migrate deploy",
-    "db:migrate:local": "dotenv -e .env.migrate -- prisma migrate dev",
-    "db:migrate:prod": "dotenv -e .env.prod -- prisma migrate deploy",
-    "db:up:local": "docker-compose -f docker-compose.local.yml up -d",
-    "db:down:local": "docker-compose -f docker-compose.local.yml down",
-    "dev": "tsx src/server.ts --watch",
-    "devjs": "node --experimental-specifier-resolution=node dist/server.js",
-    "clean": "rm -rf ./dist && tsc --build --clean",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:prisma": "prisma format",
-    "docker:local": "dotenv -e .env.test -- ./create_docker.sh local",
-    "docker:dev": "dotenv -e .env.dev -- ./create_docker.sh",
-    "docker:prod": "dotenv -e .env.prod -- ./create_docker.sh",
-    "test": "vitest src/__test__/unit-tests --globals",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
-    "lint:eslint:fix": "pnpm lint:eslint --fix",
-    "test:local": "dotenv -e .env.test -- vitest src/__test__/local --globals --config src/__test__/local/vitest.config.ts",
-    "test:ete": "dotenv -e .env.ete -- vitest src/__test__/ete --globals --config src/__test__/ete/vitest.config.ts",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org buildwithfern --project fdr ./dist && sentry-cli sourcemaps upload --org buildwithfern --project fdr ./dist"
-  }
+  "include": ["./src/**/*"],
+  "references": []
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@fern-platform/fdr",
+  "name": "@fern-platform/nursery",
   "version": "0.0.0",
   "main": "dist/index.js",
   "repository": "git@github.com:fern-api/fern-definition-registry.git",

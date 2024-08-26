@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { OwnerDao } from "./owner/OwnerDao";
-import { TokenDao } from "./token/TokenDao";
+import { OwnerDao } from "./OwnerDao";
+import { TokenDao } from "./TokenDao";
 
 export class NurseryDao {
     public owner: OwnerDao;

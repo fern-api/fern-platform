@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { writeBuffer } from "../utils/buffer";
+import { Owner } from "../api/generated/api";
+import { readBuffer, writeBuffer } from "../utils/buffer";
 
 export class OwnerDao {
     public constructor(private readonly prisma: PrismaClient) {}
@@ -13,17 +14,26 @@ export class OwnerDao {
         });
     }
 
-    public async getOwner(ownerId: string): Promise<Owner> {
-        await this.prisma.owner.findFirst({
+    public async getOwner(ownerId: string): Promise<Owner | undefined> {
+        const response = await this.prisma.owner.findFirst({
             select: {
-                ownerId,
+                ownerId: true,
+                data: true,
             },
-            data: {
-                data: writeBuffer(data),
+            where: {
                 ownerId,
             },
         });
+        if (response == null) {
+            return undefined;
+        }
+        return {
+            data: readBuffer(response.data),
+            ownerId,
+        };
     }
 
-    public async updateOwner({ ownerId, data }: { ownerId: string; data: Record<string, unknown> }): Promise<Owner> {}
+    public async updateOwner({ ownerId, data }: { ownerId: string; data: Record<string, unknown> }): Promise<Owner> {
+        throw new Error();
+    }
 }
