@@ -11,7 +11,7 @@ types:
         docs: The generated token
       id: 
         type: string
-        docs: The ID of the generated 
+        docs: The ID of the generated token.
 
 service:
   auth: true
