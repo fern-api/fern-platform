@@ -21,6 +21,7 @@ import { getVersionsService } from "./controllers/sdk/getVersionsService";
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
 import { getTemplatesService } from "./controllers/snippets/getTemplatesService";
+import { getTokensService } from "./controllers/tokens/getTokensService";
 import { checkRedis } from "./healthchecks/checkRedis";
 
 const PORT = 8080;
@@ -122,6 +123,7 @@ async function startServer(): Promise<void> {
                 cli: getGeneratorsCliController(app),
                 versions: getGeneratorsVersionsController(app),
             },
+            tokens: getTokensService(app),
         });
         registerBackgroundTasks(app);
         app.logger.info(`Listening for requests on port ${PORT}`);

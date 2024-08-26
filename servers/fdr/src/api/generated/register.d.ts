@@ -7,6 +7,7 @@ import { DocsCacheService } from "./api/resources/docsCache/service/DocsCacheSer
 import { SnippetsFactoryService } from "./api/resources/snippetsFactory/service/SnippetsFactoryService";
 import { SnippetsService } from "./api/resources/snippets/service/SnippetsService";
 import { TemplatesService } from "./api/resources/templates/service/TemplatesService";
+import { TokensService } from "./api/resources/tokens/service/TokensService";
 import { ReadService as api_v1_read_RootService } from "./api/resources/api/resources/v1/resources/read/service/ReadService";
 import { RegisterService as api_v1_register_RootService } from "./api/resources/api/resources/v1/resources/register/service/RegisterService";
 import { ReadService as docs_v1_read_RootService } from "./api/resources/docs/resources/v1/resources/read/service/ReadService";
@@ -23,6 +24,7 @@ export declare function register(expressApp: express.Express | express.Router, s
     snippetsFactory: SnippetsFactoryService;
     snippets: SnippetsService;
     templates: TemplatesService;
+    tokens: TokensService;
     api: {
         v1: {
             read: {

@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports: 
+  commons: commons.yml
+
+types: 
+  GenerateTokenResponse: 
+    properties: 
+      token: 
+        type: string
+        docs: The generated token
+      id: 
+        type: string
+        docs: The ID of the generated token.
+
+service:
+  auth: true
+  base-path: /tokens
+  audiences:
+    - external
+  endpoints:
+    generate:
+      path: /generate
+      docs: Generate a token
+      display-name: Generate Token
+      method: POST
+      auth: false
+      request:
+        name: GenerateTokenRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to generate a token for.
+            scope: 
+              type: string
+              docs: | 
+                The scope of the token. Valid scopes include: 
+                  - admin 
+                  - sdk:read:{package_name}
+      response: GenerateTokenResponse
+
+    revoke:
+      path: /revoke
+      docs: Revoke a token
+      display-name: Revoke Token
+      method: POST
+      auth: false
+      request:
+        name: RevokeTokenRequest
+        body:
+          properties:
+            orgId:
+              type: commons.OrgId
+              docs: |
+                The organization to create snippets for.
+            tokenId:
+              type: commons.TokenId
+            

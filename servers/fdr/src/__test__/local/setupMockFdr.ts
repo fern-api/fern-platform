@@ -20,6 +20,7 @@ import { getVersionsService } from "../../controllers/sdk/getVersionsService";
 import { getSnippetsFactoryService } from "../../controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "../../controllers/snippets/getSnippetsService";
 import { getTemplatesService } from "../../controllers/snippets/getTemplatesService";
+import { getTokensService } from "../../controllers/tokens/getTokensService";
 import { createMockFdrApplication } from "../mock";
 
 let teardown = false;
@@ -114,6 +115,7 @@ async function runMockFdr(port: number): Promise<MockFdr.Instance> {
             cli: getGeneratorsCliController(fdrApplication),
             versions: getGeneratorsVersionsController(fdrApplication),
         },
+        tokens: getTokensService(fdrApplication),
     });
     const server = app.listen(port);
     console.log(`Mock FDR server running on http://localhost:${port}/`);
