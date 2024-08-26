@@ -31,11 +31,12 @@ const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
 const nextConfig = {
     reactStrictMode: true,
     transpilePackages: ["next-mdx-remote", "esbuild", "lodash-es", "@fern-ui/ui", "@fern-api/fdr-sdk"],
-    productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
+    productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "1",
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
     },
+    trailingSlash: process.env.TRAILING_SLASH === "1",
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the
      * multi-tenant nature of this app, we cannot set a global basepath in the next.config.js. As a result, the `_next`
@@ -280,7 +281,7 @@ const nextConfig = {
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-    enabled: process.env.ANALYZE === "true",
+    enabled: process.env.ANALYZE === "1",
 });
 
 module.exports = withBundleAnalyzer(nextConfig);
