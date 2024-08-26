@@ -49,7 +49,7 @@ jobs:
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
-        run: VERSION="$(scripts/git-version.sh)" ENABLE_SOURCE_MAPS=1 vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
+        run: VERSION="$(scripts/git-version.sh)" ENABLE_SOURCE_MAPS=true vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Comment in PR
         uses: thollander/actions-comment-pull-request@v2.4.3
