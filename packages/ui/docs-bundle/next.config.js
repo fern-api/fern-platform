@@ -294,7 +294,7 @@ const nextConfig = {
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-    enabled: process.env.ANALYZE === "1",
+    enabled: isTruthy(process.env.ANALYZE),
 });
 
 module.exports = withBundleAnalyzer(nextConfig);
