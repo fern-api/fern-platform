@@ -4,6 +4,6 @@
 export interface GenerateTokenResponse {
     /** The generated token */
     token: string;
-    /** The ID of the generated */
+    /** The ID of the generated token. */
     id: string;
 }
