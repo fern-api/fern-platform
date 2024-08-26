@@ -26,6 +26,12 @@ export function AlgoliaSearchDialog(): ReactElement | null {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     const algoliaSearchClient = useAlgoliaSearchClient();
     if (algoliaSearchClient == null || isMobileScreen) {
+        algoliaSearchClient == null &&
+            captureSentryError(new Error("Algolia search client is null"), {
+                context: "AlgoliaSearchClient",
+                errorSource: "AlgoliaSearchDialog",
+                errorDescription: "Algolia search client is null, when attempting to use search.",
+            });
         return null;
     }
     const [searchClient, index] = algoliaSearchClient;
@@ -53,6 +59,7 @@ interface FernInstantSearchProps {
 }
 
 import { ReactNode } from "react";
+import { captureSentryError } from "../../analytics/sentry";
 
 function NoResultsBoundary({ children, fallback }: { children: ReactNode; fallback: ReactNode }) {
     const { results } = useInstantSearch();

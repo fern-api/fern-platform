@@ -41,7 +41,7 @@ export const SearchDialog = (): ReactElement | null => {
             captureSentryError(new Error("Search dialog config is null"), {
                 context: "SearchDialogOpen",
                 errorSource: "SearchDialog",
-                errorDescription: "Config for search dialog is null, when trying to open for user.",
+                errorDescription: "Search dialog is null, when attempting to use search.",
             });
         return null;
     }
