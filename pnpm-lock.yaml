@@ -2568,24 +2568,9 @@ importers:
 
   servers/nursery:
     dependencies:
-      '@aws-sdk/client-s3':
-        specifier: ^3.335.0
-        version: 3.572.0
-      '@aws-sdk/s3-request-presigner':
-        specifier: ^3.574.0
-        version: 3.574.0
-      '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../../packages/fdr-sdk
-      '@fern-api/template-resolver':
-        specifier: workspace:*
-        version: link:../../packages/template-resolver
       '@fern-api/venus-api-sdk':
         specifier: ^0.6.2-1-gbbd1ac5
         version: 0.6.2-1-gbbd1ac5
-      '@fern-fern/revalidation-sdk':
-        specifier: 0.0.9
-        version: 0.0.9
       '@prisma/client':
         specifier: 5.13.0
         version: 5.13.0(prisma@5.13.0)
@@ -2598,76 +2583,22 @@ importers:
       '@sentry/profiling-node':
         specifier: ^7.112.2
         version: 7.114.0
-      '@slack/web-api':
-        specifier: ^6.9.0
-        version: 6.12.0
-      '@ungap/url-search-params':
-        specifier: 0.2.2
-        version: 0.2.2
-      algoliasearch:
-        specifier: ^4.22.1
-        version: 4.23.3
-      axios:
-        specifier: ^1.6.5
-        version: 1.6.8
-      axios-logger:
-        specifier: ^2.6.2
-        version: 2.8.0
       compression:
         specifier: ^1.7.4
         version: 1.7.4
       cors:
         specifier: ^2.8.5
         version: 2.8.5
-      date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0
       express:
         specifier: ^4.18.1
         version: 4.19.2
-      hast:
-        specifier: ^1.0.0
-        version: 1.0.0
-      html-to-text:
-        specifier: ^9.0.5
-        version: 9.0.5
-      httpsnippet:
-        specifier: ^2.0.0
-        version: 2.0.0(mkdirp@3.0.1)
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      marked:
-        specifier: ^5.1.0
-        version: 5.1.2
-      moment:
-        specifier: ^2.30.1
-        version: 2.30.1
-      node-cron:
-        specifier: ^3.0.2
-        version: 3.0.3
-      path-resolver:
-        specifier: '*'
-        version: 0.0.2
-      redis:
-        specifier: ^4.6.13
-        version: 4.6.13
-      uuid:
-        specifier: ^9.0.0
-        version: 9.0.1
+      url-join:
+        specifier: 5.0.0
+        version: 5.0.0
       winston:
         specifier: ^3.10.0
         version: 3.13.0
     devDependencies:
-      '@babel/core':
-        specifier: ^7.18.9
-        version: 7.24.5
-      '@babel/preset-env':
-        specifier: ^7.24.3
-        version: 7.24.5(@babel/core@7.24.5)
-      '@babel/preset-typescript':
-        specifier: ^7.24.1
-        version: 7.24.1(@babel/core@7.24.5)
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../../packages/configs
@@ -2677,45 +2608,15 @@ importers:
       '@types/cors':
         specifier: ^2.8.13
         version: 2.8.17
-      '@types/execa':
-        specifier: ^2.0.0
-        version: 2.0.0
       '@types/express':
         specifier: ^4.17.13
         version: 4.17.21
-      '@types/html-to-text':
-        specifier: ^9.0.1
-        version: 9.0.4
-      '@types/httpsnippet':
-        specifier: ^1.23.1
-        version: 1.23.4
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/marked':
-        specifier: ^5.0.0
-        version: 5.0.2
-      '@types/node-cron':
-        specifier: ^3.0.8
-        version: 3.0.11
-      '@types/uuid':
-        specifier: ^9.0.1
-        version: 9.0.8
-      '@yarnpkg/pnpify':
-        specifier: ^4.0.1
-        version: 4.1.0(typanion@3.14.0)
       dotenv-cli:
         specifier: ^6.0.0
         version: 6.0.0
       eslint:
         specifier: ^8.56.0
         version: 8.57.0
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
-      nodemon:
-        specifier: ^3.0.0
-        version: 3.1.0
       prettier:
         specifier: ^3.2.4
         version: 3.3.2
@@ -10783,10 +10684,6 @@ packages:
 
   hast-util-whitespace@3.0.0:
     resolution: {integrity: sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==}
-
-  hast@1.0.0:
-    resolution: {integrity: sha512-vFUqlRV5C+xqP76Wwq2SrM0kipnmpxJm7OfvVXpB35Fp+Fn4MV+ozr+JZr5qFvyR1q/U+Foim2x+3P+x9S1PLA==}
-    deprecated: Renamed to rehype
 
   hastscript@7.2.0:
     resolution: {integrity: sha512-TtYPq24IldU8iKoJQqvZOuhi5CyCQRAbvDOX0x1eW6rsHSxa/1i2CCiptNTotGHJ3VoHRGmqiv6/D3q113ikkw==}
@@ -28364,8 +28261,6 @@ snapshots:
   hast-util-whitespace@3.0.0:
     dependencies:
       '@types/hast': 3.0.4
-
-  hast@1.0.0: {}
 
   hastscript@7.2.0:
     dependencies:
