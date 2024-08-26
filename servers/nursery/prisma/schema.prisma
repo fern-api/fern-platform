@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Token {
+  ownerId         String @map("owner_id")
+  tokenId         String @map("token_id")
+  tokenHash       String @map("token_hash")
+  isRevoked       Boolean @map("is_revoked")
+  createdAt       DateTime @default(now()) @map("created_datetime")
+  description     String?
+
+  @@id([tokenId])
+  @@map("tokens")
+}
+
+model Owner {
+  ownerId   String @map("owner_id")
+  data      Bytes
+
+  @@id([ownerId])
+  @@map("owners")
+}
