@@ -20,7 +20,7 @@ services:
       ALGOLIA_SEARCH_INDEX: dummy
       ALGOLIA_SEARCH_API_KEY: dummy
       SLACK_TOKEN: dummy
-      DOCS_CACHE_ENDPOINT: redis_0:6379
+      DOCS_CACHE_ENDPOINT: redis_0
       ENABLE_CUSTOMER_NOTIFICATIONS: "false"
       REDIS_ENABLED: "true"
       REDIS_CLUSTERING_ENABLED: "true"
