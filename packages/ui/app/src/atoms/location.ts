@@ -4,9 +4,9 @@ import { atom, useAtomValue } from "jotai";
 import { atomWithLocation } from "jotai-location";
 import { Router } from "next/router";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
-import { useHref } from "../hooks/useHref";
+import { selectHref, useHref } from "../hooks/useHref";
 import { useAtomEffect } from "./hooks";
-import { RESOLVED_PATH_ATOM, TRAILING_SLASH_ATOM } from "./navigation";
+import { RESOLVED_PATH_ATOM } from "./navigation";
 
 export const LOCATION_ATOM = atomWithLocation({
     subscribe: (callback) => {
@@ -45,8 +45,7 @@ export const SLUG_ATOM = atom(
     },
     (get, set, slug: FernNavigation.Slug) => {
         const location = get(LOCATION_ATOM);
-        const trailingSlash = get(TRAILING_SLASH_ATOM);
-        const pathname = trailingSlash ? `/${slug}/` : `/${slug}`;
+        const pathname = selectHref(get, slug);
         if (location.pathname === pathname) {
             return;
         }

@@ -1,5 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { useAtomValue } from "jotai";
+import { Atom, useAtomValue } from "jotai";
 import { TRAILING_SLASH_ATOM } from "../atoms";
 
 export function getToHref(trailingSlash: boolean = false): (slug: FernNavigation.Slug) => string {
@@ -19,4 +19,8 @@ export function useHref(slug: FernNavigation.Slug | undefined, anchor?: string):
     }
     const pathName = toHref(slug);
     return anchor != null ? `${pathName}#${anchor}` : pathName;
+}
+
+export function selectHref(get: <T>(atom: Atom<T>) => T, slug: FernNavigation.Slug): string {
+    return get(TRAILING_SLASH_ATOM) ? `/${slug}/` : `/${slug}`;
 }
