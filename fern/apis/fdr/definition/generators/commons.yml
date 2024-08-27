@@ -32,6 +32,7 @@ types:
     docs: Following `keep a changelog` format for the entries here. These are effectively your release notes.
     properties:
       type: ChangelogEntryType
+      description: optional<string>
       added: optional<list<string>>
       changed: optional<list<string>>
       deprecated: optional<list<string>>
@@ -49,7 +50,7 @@ types:
       version: string
       created_at: optional<date>
       is_yanked: optional<Yank>
-      changelog_entry: optional<ChangelogEntry>
+      changelog_entry: optional<list<ChangelogEntry>>
 
   Release:
     extends: ReleaseRequest
