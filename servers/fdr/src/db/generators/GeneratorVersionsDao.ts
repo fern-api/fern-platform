@@ -255,7 +255,7 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
         release_type: convertPrismaReleaseType(generatorRelease.releaseType),
         changelog_entry:
             generatorRelease.changelogEntry != null
-                ? (readBuffer(generatorRelease.changelogEntry) as ChangelogEntry)
+                ? (readBuffer(generatorRelease.changelogEntry) as ChangelogEntry[])
                 : undefined,
         migration: generatorRelease.migration != null ? (readBuffer(generatorRelease.migration) as string) : undefined,
         custom_config_schema:

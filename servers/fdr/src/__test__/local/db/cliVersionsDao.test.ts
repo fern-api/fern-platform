@@ -80,32 +80,40 @@ it("generator changelog", async () => {
         cliRelease: {
             ir_version: 1,
             version: "2.1.2",
-            changelog_entry: {
-                type: "feat",
-                added: ["added a new feature"],
-            },
+            changelog_entry: [
+                {
+                    type: "feat",
+                    summary: "added a new feature",
+                    added: ["added a new feature"],
+                },
+            ],
         },
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             ir_version: 1,
             version: "2.1.3",
-            changelog_entry: {
-                type: "fix",
-                fixed: ["fixed that new feature"],
-            },
+            changelog_entry: [
+                {
+                    type: "fix",
+                    summary: "fixed that new feature",
+                    fixed: ["fixed that new feature"],
+                },
+            ],
         },
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             ir_version: 1,
             version: "2.1.5",
-            changelog_entry: {
-                type: "fix",
-                fixed: ["fixed that new feature"],
-                security: ["fixed a security issue"],
-                deprecated: ["idk google meet or something isn't there anymore"],
-            },
+            changelog_entry: [
+                {
+                    type: "fix",
+                    summary: "did a bunch of stuff",
+                    fixed: ["fixed that new feature"],
+                    deprecated: ["idk google meet or something isn't there anymore"],
+                },
+            ],
         },
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
@@ -127,19 +135,24 @@ it("generator changelog", async () => {
         entries: [
             {
                 version: "2.1.5",
-                changelog_entry: {
-                    type: "fix",
-                    fixed: ["fixed that new feature"],
-                    security: ["fixed a security issue"],
-                    deprecated: ["idk google meet or something isn't there anymore"],
-                },
+                changelog_entry: [
+                    {
+                        type: "fix",
+                        summary: "did a bunch of stuff",
+                        fixed: ["fixed that new feature"],
+                        deprecated: ["idk google meet or something isn't there anymore"],
+                    },
+                ],
             },
             {
                 version: "2.1.3",
-                changelog_entry: {
-                    type: "fix",
-                    fixed: ["fixed that new feature"],
-                },
+                changelog_entry: [
+                    {
+                        type: "fix",
+                        summary: "fixed that new feature",
+                        fixed: ["fixed that new feature"],
+                    },
+                ],
             },
         ],
     });
@@ -149,12 +162,14 @@ it("cli version happy path update", async () => {
     const releaseRequest: CliReleaseRequest = {
         ir_version: 0,
         version: "3.1.2",
-        changelog_entry: {
-            type: "fix",
-            fixed: ["fixed that new feature"],
-            security: ["fixed a security issue"],
-            deprecated: ["idk google meet or something isn't there anymore"],
-        },
+        changelog_entry: [
+            {
+                type: "fix",
+                summary: "did a couple things",
+                fixed: ["fixed that new feature"],
+                deprecated: ["idk google meet or something isn't there anymore"],
+            },
+        ],
     };
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: releaseRequest,
@@ -170,10 +185,13 @@ it("cli version happy path update", async () => {
     const updateReleaseRequest: CliReleaseRequest = {
         ir_version: 0,
         version: "3.1.2",
-        changelog_entry: {
-            type: "feat",
-            added: ["added a new feature"],
-        },
+        changelog_entry: [
+            {
+                type: "feat",
+                summary: "added a new feature",
+                added: ["added a new feature"],
+            },
+        ],
     };
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: updateReleaseRequest,
