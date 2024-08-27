@@ -1,1 +1,1 @@
-export * as FernNavigation from "./api";
+export * as FernNavigation from "./api/resources/navigation/index";

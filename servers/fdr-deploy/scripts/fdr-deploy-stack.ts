@@ -137,8 +137,7 @@ export class FdrDeployStack extends Stack {
             cacheName: options.cacheName,
             IVpc: vpc,
             numCacheShards: 1,
-            // TODO(dsinghvi): bump this to > 1
-            numCacheReplicasPerShard: undefined,
+            numCacheReplicasPerShard: 0,
             clusterMode: "enabled",
             cacheNodeType: "cache.r7g.large",
             envType: environmentType,
@@ -327,14 +326,14 @@ export class FdrDeployStack extends Stack {
         const cacheEndpointAddress = cacheReplicationGroup.attrConfigurationEndPointAddress;
         const cacheEndpointPort = cacheReplicationGroup.attrConfigurationEndPointPort;
 
+        new CfnOutput(this, `${props.cacheName}Host`, { value: cacheEndpointAddress });
+        new CfnOutput(this, `${props.cacheName}Port`, { value: cacheEndpointPort });
+
         cacheSecurityGroup.addIngressRule(
             props.ingressSecurityGroup || Peer.anyIpv4(),
             Port.tcp(Token.asNumber(cacheEndpointPort)),
             "Redis Port Ingress rule",
         );
-
-        new CfnOutput(this, `${props.cacheName}Host`, { value: cacheEndpointAddress });
-        new CfnOutput(this, `${props.cacheName}Port`, { value: cacheEndpointPort });
 
         return `${cacheEndpointAddress}:${cacheEndpointPort}`;
     }

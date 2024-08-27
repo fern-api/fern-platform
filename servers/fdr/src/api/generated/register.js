@@ -17,4 +17,5 @@ export function register(expressApp, services) {
     expressApp.use("/snippets", services.snippetsFactory.toRouter());
     expressApp.use("/snippets", services.snippets.toRouter());
     expressApp.use("/snippet-template", services.templates.toRouter());
+    expressApp.use("/tokens", services.tokens.toRouter());
 }

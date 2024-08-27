@@ -1,5 +1,4 @@
 /* eslint-disable import/no-internal-modules */
-import { FdrClient } from "@fern-api/fdr-sdk";
 import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
@@ -11,6 +10,7 @@ import {
     convertNavigatableToResolvedPath,
     getGitHubInfo,
     getGitHubRepo,
+    getRegistryServiceWithToken,
     getSeoProps,
     provideRegistryService,
     renderThemeStylesheet,
@@ -42,13 +42,6 @@ async function getUnauthenticatedRedirect(xFernHost: string, path: string): Prom
         xFernHost,
     );
     return { destination: authorizationUrl, permanent: false };
-}
-
-function getRegistryServiceWithToken(token: string): FdrClient {
-    return new FdrClient({
-        environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-        token,
-    });
 }
 
 export interface User {
@@ -410,9 +403,7 @@ async function convertDocsToDocsPageProps({
 }
 
 async function maybeGetWorkosOrganization(host: string): Promise<string | undefined> {
-    const docsV2ReadClient = new FdrClient({
-        environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-    }).docs.v2.read;
+    const docsV2ReadClient = provideRegistryService().docs.v2.read;
     const maybeFernOrgId = await docsV2ReadClient.getOrganizationForUrl({ url: host });
     if (!maybeFernOrgId.ok) {
         return undefined;
