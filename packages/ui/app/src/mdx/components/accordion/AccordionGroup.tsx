@@ -3,9 +3,9 @@ import { slug } from "github-slugger";
 import { NavArrowRight } from "iconoir-react";
 import { useAtom } from "jotai";
 import { NextRouter } from "next/router";
-import { FC, ReactNode, useCallback, useEffect, useState } from "react";
-import { v4 } from "uuid";
+import { FC, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { ANCHOR_ATOM } from "../../../atoms";
+import { useUpdateAccordionFrequencyMap } from "../../../atoms/accordion";
 
 export interface AccordionItemProps {
     title: string;
@@ -21,17 +21,33 @@ export interface AccordionGroupProps {
 }
 
 export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: parentToc = true }) => {
-    const [key, _setKey] = useState(v4());
+    const firstRun = useRef(true);
+    const [tabSlugs, setTabSlugs] = useState<string[]>([]);
     const [activeTabs, setActiveTabs] = useState<string[]>([]);
     const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
+
+    const updateAccordionFrequencyMap = useUpdateAccordionFrequencyMap();
+
+    useEffect(() => {
+        if (firstRun.current) {
+            const newTabSlugs: string[] = [];
+            items.forEach(({ title }) => {
+                const count = updateAccordionFrequencyMap(title);
+                newTabSlugs.push(slug(count > 1 ? `${title}-${count}` : title));
+            });
+            setTabSlugs(newTabSlugs);
+        }
+        firstRun.current = false;
+    }, [firstRun, items, updateAccordionFrequencyMap]);
+
     useEffect(() => {
         if (anchor != null) {
-            const anchorTab = items.findIndex((tab) => slug(`${tab.title}-${key}`) === anchor);
+            const anchorTab = items.findIndex((_, idx) => tabSlugs[idx] === anchor);
             if (anchorTab >= 0) {
                 setActiveTabs((prev) => (prev.includes(anchorTab.toString()) ? prev : [...prev, anchorTab.toString()]));
             }
         }
-    }, [anchor, items, key]);
+    }, [anchor, items, tabSlugs]);
 
     const handleValueChange = useCallback(
         (nextActiveTabs: string[]) => {
@@ -40,13 +56,13 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
                 if (added[0] != null) {
                     const addedItem = items[parseInt(added[0])];
                     if (addedItem != null) {
-                        setAnchor(slug(`${addedItem.title}-${key}`));
+                        setAnchor(tabSlugs[parseInt(added[0])]);
                     }
                 }
                 return nextActiveTabs;
             });
         },
-        [items, setAnchor, key],
+        [items, setAnchor, tabSlugs],
     );
 
     return (
@@ -57,7 +73,7 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
             onValueChange={handleValueChange}
         >
             {items.map(({ title, toc = parentToc, children }, idx) => {
-                const id = slug(title);
+                const id = tabSlugs[idx];
                 return (
                     <RadixAccordion.Item key={idx} value={idx.toString()} className="fern-accordion-item" id={id}>
                         <RadixAccordion.Trigger className="fern-accordion-trigger">
