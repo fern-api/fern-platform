@@ -140,7 +140,7 @@ export class FdrDeployStack extends Stack {
             // TODO(dsinghvi): bump this to > 1
             numCacheReplicasPerShard: undefined,
             clusterMode: "enabled",
-            cacheNodeType: "cache.r7g.large",
+            cacheNodeType: environmentType === "PROD" ? "cache.r7g.4xlarge" : "cache.r7g.large",
             envType: environmentType,
             env: props?.env,
             ingressSecurityGroup: fdrSg,
