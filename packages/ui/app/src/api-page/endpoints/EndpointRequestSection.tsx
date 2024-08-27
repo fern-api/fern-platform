@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
@@ -22,7 +23,7 @@ export declare namespace EndpointRequestSection {
         requestBody: ResolvedRequestBody;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -32,7 +33,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     requestBody,
     onHoverProperty,
     anchorIdParts,
-    route,
+    slug,
     defaultExpandAll = false,
     types,
 }) => {
@@ -74,7 +75,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                             </span>
                                         }
                                         anchorIdParts={[...anchorIdParts, file.key]}
-                                        route={route}
+                                        slug={slug}
                                         availability={file.availability}
                                     />
                                 ),
@@ -88,7 +89,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                             </span>
                                         }
                                         anchorIdParts={[...anchorIdParts, fileArray.key]}
-                                        route={route}
+                                        slug={slug}
                                         availability={fileArray.availability}
                                     />
                                 ),
@@ -98,7 +99,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                         description={getDescription(bodyProperty, types)}
                                         shape={bodyProperty.valueShape}
                                         anchorIdParts={[...anchorIdParts, bodyProperty.key]}
-                                        route={route}
+                                        slug={slug}
                                         availability={bodyProperty.availability}
                                         types={types}
                                     />
@@ -114,7 +115,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
-                        route={route}
+                        slug={slug}
                         defaultExpandAll={defaultExpandAll}
                         applyErrorStyles={false}
                         types={types}

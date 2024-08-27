@@ -2,6 +2,7 @@ import cn from "clsx";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useRef } from "react";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { useRouteId } from "../../hooks/useRouteId";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition, getParameterDescription } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -23,13 +24,12 @@ export declare namespace WebhookContent {
         webhook: ResolvedWebhookDefinition;
         breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
-        route: string;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
 export const WebhookContent = memo<WebhookContent.Props>((props) => {
-    const { webhook, breadcrumbs, hideBottomSeparator = false, route, types } = props;
+    const { webhook, breadcrumbs, hideBottomSeparator = false, types } = props;
 
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, webhook.slug);
@@ -56,7 +56,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                     },
                 )}
                 ref={ref}
-                id={route}
+                id={useRouteId(webhook.slug)}
             >
                 <div className="flex min-w-0 max-w-content-width flex-1 flex-col">
                     <div className="space-y-1 py-8">
@@ -71,7 +71,11 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
                             <div className="flex max-w-full flex-1 flex-col gap-12">
-                                <EndpointSection title="Headers" anchorIdParts={["payload", "header"]} route={route}>
+                                <EndpointSection
+                                    title="Headers"
+                                    anchorIdParts={["payload", "header"]}
+                                    slug={webhook.slug}
+                                >
                                     <div className="flex flex-col">
                                         {webhook.headers.map((parameter) => (
                                             <div className="flex flex-col" key={parameter.key}>
@@ -80,7 +84,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                                                     name={parameter.key}
                                                     shape={parameter.valueShape}
                                                     anchorIdParts={["payload", "header", parameter.key]}
-                                                    route={route}
+                                                    slug={webhook.slug}
                                                     description={getParameterDescription(parameter, types)}
                                                     availability={parameter.availability}
                                                     types={types}
@@ -95,12 +99,12 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
 
                     <div className="mt-8 flex">
                         <div className="flex max-w-full flex-1 flex-col gap-12">
-                            <EndpointSection title="Payload" anchorIdParts={["payload"]} route={route}>
+                            <EndpointSection title="Payload" anchorIdParts={["payload"]} slug={webhook.slug}>
                                 <WebhookPayloadSection
                                     payload={webhook.payload}
                                     onHoverProperty={onHoverPayloadProperty}
                                     anchorIdParts={["payload", "body"]}
-                                    route={route}
+                                    slug={webhook.slug}
                                     types={types}
                                 />
                             </EndpointSection>
@@ -109,7 +113,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
 
                     <div className="mt-8 flex">
                         <div className="flex max-w-full flex-1 flex-col gap-12">
-                            <EndpointSection title="Response" anchorIdParts={["response"]} route={route}>
+                            <EndpointSection title="Response" anchorIdParts={["response"]} slug={webhook.slug}>
                                 <WebhookResponseSection />
                             </EndpointSection>
                         </div>

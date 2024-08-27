@@ -1,8 +1,10 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { useRouteListener } from "../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { useRouteId } from "../../hooks/useRouteId";
 import type { BundledMDX } from "../../mdx/types";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
@@ -17,7 +19,7 @@ export declare namespace EndpointParameter {
         description: BundledMDX | undefined;
         shape: ResolvedTypeShape;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         availability: APIV1Read.Availability | null | undefined;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -27,19 +29,19 @@ export declare namespace EndpointParameter {
         description: BundledMDX | undefined;
         typeShorthand: ReactNode;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         availability: APIV1Read.Availability | null | undefined;
     }
 }
 
 export const EndpointParameter = memo<EndpointParameter.Props>(
-    ({ name, description, anchorIdParts, route, shape, availability, types }) => (
+    ({ name, description, anchorIdParts, slug, shape, availability, types }) => (
         <EndpointParameterContent
             name={name}
             description={description}
             typeShorthand={renderTypeShorthandRoot(shape, types, false, "t-muted")}
             anchorIdParts={anchorIdParts}
-            route={route}
+            slug={slug}
             availability={availability}
         >
             <TypeReferenceDefinitions
@@ -47,7 +49,7 @@ export const EndpointParameter = memo<EndpointParameter.Props>(
                 isCollapsible={true}
                 // onHoverProperty={onHoverProperty}
                 anchorIdParts={anchorIdParts}
-                route={route}
+                slug={slug}
                 // defaultExpandAll={defaultExpandAll}
                 applyErrorStyles={false}
                 types={types}
@@ -57,7 +59,7 @@ export const EndpointParameter = memo<EndpointParameter.Props>(
     (prev, next) =>
         prev.name === next.name &&
         prev.description === next.description &&
-        prev.route === next.route &&
+        prev.slug === next.slug &&
         prev.availability === next.availability &&
         prev.shape === next.shape &&
         prev.anchorIdParts.join("/") === next.anchorIdParts.join("/"),
@@ -68,18 +70,17 @@ EndpointParameter.displayName = "EndpointParameter";
 export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.ContentProps>> = ({
     name,
     anchorIdParts,
-    route,
+    slug,
     availability,
     description,
     typeShorthand,
     children,
 }) => {
     const anchorId = getAnchorId(anchorIdParts);
-    const routeWithHash = `${route}#${anchorId}`;
     const ref = useRef<HTMLDivElement>(null);
 
     const [isActive, setIsActive] = useState(false);
-    useRouteListener(route, (anchor) => {
+    useRouteListener(slug, (anchor) => {
         const isActive = anchor === anchorId;
         setIsActive(isActive);
         if (isActive) {
@@ -89,6 +90,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
         }
     });
 
+    const routeWithHash = useRouteId(slug, anchorId);
     return (
         <div
             ref={ref}

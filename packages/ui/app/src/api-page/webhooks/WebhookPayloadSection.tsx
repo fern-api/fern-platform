@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { ResolvedPayload, ResolvedTypeDefinition } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -8,7 +9,7 @@ export declare namespace WebhookPayloadSection {
         payload: ResolvedPayload;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -17,7 +18,7 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
     payload,
     onHoverProperty,
     anchorIdParts,
-    route,
+    slug,
     types,
 }) => {
     return (
@@ -31,7 +32,7 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
                 onHoverProperty={onHoverProperty}
                 anchorIdParts={anchorIdParts}
                 applyErrorStyles={false}
-                route={route}
+                slug={slug}
                 types={types}
             />
         </div>

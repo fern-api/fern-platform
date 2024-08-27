@@ -8,6 +8,7 @@ import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { useRouteId } from "../../hooks/useRouteId";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import {
     ResolvedTypeDefinition,
@@ -52,8 +53,6 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const selectedEnvironmentId = useSelectedEnvironmentId();
     const maybeNode = nodes.get(websocket.nodeId);
     const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
-
-    const route = `/${websocket.slug}`;
 
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, websocket.slug);
@@ -106,7 +105,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const headers = websocket.headers.filter((header) => !header.hidden);
 
     return (
-        <div className={"fern-endpoint-content"} ref={ref} id={route}>
+        <div className={"fern-endpoint-content"} ref={ref} id={useRouteId(websocket.slug)}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi,
@@ -142,7 +141,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         </span>
                                     </span>
                                 }
-                                route={route}
+                                slug={websocket.slug}
                                 headingElement={
                                     <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
                                         <EndpointUrlWithOverflow
@@ -165,7 +164,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     <EndpointSection
                                         title="Headers"
                                         anchorIdParts={["request", "headers"]}
-                                        route={route}
+                                        slug={websocket.slug}
                                     >
                                         <div className="flex flex-col">
                                             {headers.map((parameter) => (
@@ -175,7 +174,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                                         name={parameter.key}
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "headers", parameter.key]}
-                                                        route={route}
+                                                        slug={websocket.slug}
                                                         description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
@@ -189,7 +188,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     <EndpointSection
                                         title="Path parameters"
                                         anchorIdParts={["request", "path"]}
-                                        route={route}
+                                        slug={websocket.slug}
                                     >
                                         <div className="flex flex-col">
                                             {websocket.pathParameters.map((parameter) => (
@@ -199,7 +198,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                                         name={parameter.key}
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "path", parameter.key]}
-                                                        route={route}
+                                                        slug={websocket.slug}
                                                         description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
@@ -213,7 +212,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     <EndpointSection
                                         title="Query parameters"
                                         anchorIdParts={["request", "query"]}
-                                        route={route}
+                                        slug={websocket.slug}
                                     >
                                         <div className="flex flex-col">
                                             {websocket.queryParameters.map((parameter) => (
@@ -223,7 +222,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                                         name={parameter.key}
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "query", parameter.key]}
-                                                        route={route}
+                                                        slug={websocket.slug}
                                                         description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
@@ -245,7 +244,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         </span>
                                     }
                                     anchorIdParts={["send"]}
-                                    route={route}
+                                    slug={websocket.slug}
                                     headerType="h2"
                                 >
                                     <div className="t-muted border-default border-b text-sm leading-6">
@@ -263,7 +262,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         shape={publishMessageShape}
                                         isCollapsible={false}
                                         anchorIdParts={["send"]}
-                                        route={route}
+                                        slug={websocket.slug}
                                         applyErrorStyles={false}
                                         types={types}
                                     />
@@ -280,7 +279,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         </span>
                                     }
                                     anchorIdParts={["receive"]}
-                                    route={route}
+                                    slug={websocket.slug}
                                     headerType="h2"
                                 >
                                     <div className="t-muted border-default border-b text-sm leading-6">
@@ -297,7 +296,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         shape={subscribeMessageShape}
                                         isCollapsible={false}
                                         anchorIdParts={["receive"]}
-                                        route={route}
+                                        slug={websocket.slug}
                                         applyErrorStyles={false}
                                         types={types}
                                     />
@@ -357,16 +356,16 @@ function CardedSection({
     title,
     headingElement,
     children,
-    route,
+    slug,
     ...props
 }: {
     number: number;
     title: ReactNode;
     headingElement: ReactNode;
     children: ReactNode | undefined;
-    route: string;
+    slug: FernNavigation.Slug;
 } & Omit<HTMLAttributes<HTMLDivElement>, "title">) {
-    const anchorRoute = `${route}#${getSlugFromChildren(title)}`;
+    const anchorRoute = useRouteId(slug, getSlugFromChildren(title));
     return (
         <section {...props} id={anchorRoute} className="border-default divide-default -mx-4 divide-y rounded-xl border">
             <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">

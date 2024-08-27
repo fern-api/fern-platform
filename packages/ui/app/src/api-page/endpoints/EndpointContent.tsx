@@ -17,6 +17,7 @@ import {
     store,
     useAtomEffect,
 } from "../../atoms";
+import { useRouteId } from "../../hooks/useRouteId";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
@@ -244,7 +245,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             className={"fern-endpoint-content"}
             onClick={() => setSelectedError(undefined)}
             ref={ref}
-            id={`/${endpoint.slug}`}
+            id={useRouteId(endpoint.slug)}
         >
             <div
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {

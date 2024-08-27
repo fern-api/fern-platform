@@ -29,6 +29,7 @@ import { getAuthorizationUrl } from "./auth";
 import { convertStaticToServerSidePropsResult } from "./convertStaticToServerSidePropsResult";
 import { getSeoDisabled } from "./disabledSeo";
 import { getRedirectForPath } from "./hackRedirects";
+// import { is } from "lodash-es";
 
 type GetStaticDocsPagePropsResult = GetStaticPropsResult<ComponentProps<typeof DocsPage>>;
 type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;
@@ -192,6 +193,10 @@ export async function getDynamicDocsPageProps(
     return convertStaticToServerSidePropsResult(await getDocsPageProps(xFernHost, slug));
 }
 
+function isTruthy(value: string | undefined) {
+    return value != null && ["true", "1"].includes(value.trim().toLowerCase());
+}
+
 async function convertDocsToDocsPageProps({
     docs,
     slug: slugArray,
@@ -344,6 +349,7 @@ async function convertDocsToDocsPageProps({
                     availability: version.availability,
                 })),
             sidebar: node.sidebar,
+            trailingSlash: isTruthy(process.env.TRAILING_SLASH),
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),

@@ -4,8 +4,9 @@ import { atom, useAtomValue } from "jotai";
 import { atomWithLocation } from "jotai-location";
 import { Router } from "next/router";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
+import { useRouteId } from "../hooks/useRouteId";
 import { useAtomEffect } from "./hooks";
-import { RESOLVED_PATH_ATOM } from "./navigation";
+import { RESOLVED_PATH_ATOM, TRAILING_SLASH_ATOM } from "./navigation";
 
 export const LOCATION_ATOM = atomWithLocation({
     subscribe: (callback) => {
@@ -40,11 +41,12 @@ export const SLUG_ATOM = atom(
         if (location.pathname == null) {
             return get(RESOLVED_PATH_ATOM).slug;
         }
-        return FernNavigation.Slug(location.pathname?.slice(1) ?? "");
+        return FernNavigation.Slug(location.pathname?.replace(/^\/|\/$/g, "") ?? "");
     },
     (get, set, slug: FernNavigation.Slug) => {
         const location = get(LOCATION_ATOM);
-        const pathname = `/${slug}`;
+        const trailingSlash = get(TRAILING_SLASH_ATOM);
+        const pathname = trailingSlash ? `/${slug}/` : `/${slug}`;
         if (location.pathname === pathname) {
             return;
         }
@@ -57,9 +59,9 @@ export function useIsSelectedSlug(slug: FernNavigation.Slug): boolean {
     return useAtomValue(useMemoOne(() => atom((get) => get(SLUG_ATOM) === slug), [slug]));
 }
 
-export function useRouteListener(route: string, callback: (hash: string | undefined) => void): void {
+export function useRouteListener(slug: FernNavigation.Slug, callback: (hash: string | undefined) => void): void {
     const callbackRef = useEventCallback(callback);
-
+    const route = useRouteId(slug);
     return useAtomEffect(
         useCallbackOne(
             (get) => {

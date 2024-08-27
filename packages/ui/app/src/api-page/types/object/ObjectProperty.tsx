@@ -1,8 +1,10 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
 import { useRouteListener } from "../../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
+import { useRouteId } from "../../../hooks/useRouteId";
 import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
@@ -24,7 +26,7 @@ export declare namespace ObjectProperty {
     export interface Props {
         property: ResolvedObjectProperty;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         applyErrorStyles: boolean;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
@@ -32,12 +34,12 @@ export declare namespace ObjectProperty {
 }
 
 export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
-    const { route, anchorIdParts } = props;
+    const { slug, anchorIdParts } = props;
     const anchorId = getAnchorId(anchorIdParts);
     const ref = useRef<HTMLDivElement>(null);
 
     const [isActive, setIsActive] = useState(false);
-    useRouteListener(route, (anchor) => {
+    useRouteListener(slug, (anchor) => {
         const isActive = anchor === anchorId;
         setIsActive(isActive);
         if (isActive) {
@@ -56,7 +58,7 @@ interface ObjectPropertyInternalProps extends ObjectProperty.Props {
 }
 
 const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectPropertyInternalProps>((props, ref) => {
-    const { route, property, applyErrorStyles, defaultExpandAll, types, anchorIdParts, anchorId, isActive } = props;
+    const { slug, property, applyErrorStyles, defaultExpandAll, types, anchorIdParts, anchorId, isActive } = props;
     const contextValue = useTypeDefinitionContext();
     const jsonPropertyPath = useMemo(
         (): JsonPropertyPath => [
@@ -96,7 +98,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
         };
     }, [contextValue, jsonPropertyPath]);
 
-    const anchorRoute = `${route}#${anchorId}`;
+    const anchorRoute = useRouteId(slug, anchorId);
 
     const description = useMemo(() => {
         if (property.description != null) {
@@ -139,7 +141,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                             isCollapsible
                             applyErrorStyles={applyErrorStyles}
                             anchorIdParts={anchorIdParts}
-                            route={route}
+                            slug={slug}
                             defaultExpandAll={defaultExpandAll}
                             types={types}
                         />
@@ -155,7 +157,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                             isCollapsible
                             applyErrorStyles={applyErrorStyles}
                             anchorIdParts={anchorIdParts}
-                            route={route}
+                            slug={slug}
                             defaultExpandAll={defaultExpandAll}
                             types={types}
                         />

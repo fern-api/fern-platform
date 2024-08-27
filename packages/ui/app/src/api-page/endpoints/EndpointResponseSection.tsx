@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
@@ -11,7 +12,7 @@ export declare namespace EndpointResponseSection {
         responseBody: ResolvedResponseBody;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -21,7 +22,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     responseBody,
     onHoverProperty,
     anchorIdParts,
-    route,
+    slug,
     defaultExpandAll = false,
     types,
 }) => {
@@ -59,7 +60,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
-                        route={route}
+                        slug={slug}
                         defaultExpandAll={defaultExpandAll}
                         applyErrorStyles={false}
                         types={types}
@@ -72,7 +73,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
-                        route={route}
+                        slug={slug}
                         defaultExpandAll={defaultExpandAll}
                         applyErrorStyles={false}
                         types={types}

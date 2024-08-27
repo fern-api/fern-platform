@@ -1,5 +1,6 @@
 import type { FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { useRef } from "react";
+import { useRouteId } from "../../hooks/useRouteId";
 import { ResolvedApiDefinitionPackage, ResolvedTypeDefinition } from "../../resolver/types";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -30,7 +31,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
 
     return (
         <>
-            <div ref={ref} className="scroll-mt-content" id={`/${apiDefinition.slug}`} />
+            <div ref={ref} className="scroll-mt-content" id={useRouteId(apiDefinition.slug)} />
             <ApiPackageContents
                 api={api}
                 types={types}

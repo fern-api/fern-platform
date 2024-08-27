@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { ReactElement } from "react";
 import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../resolver/types";
@@ -13,7 +14,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         isCollapsible: boolean;
         className?: string;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
         isResponse?: boolean;
@@ -84,7 +85,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     isCollapsible,
     className,
     anchorIdParts,
-    route,
+    slug,
     defaultExpandAll = false,
     types,
 }) => {
@@ -95,7 +96,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 typeShape={object}
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
-                route={route}
+                slug={slug}
                 defaultExpandAll={defaultExpandAll}
                 types={types}
             />
@@ -105,7 +106,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 typeShape={enum_}
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
-                route={route}
+                slug={slug}
                 defaultExpandAll={defaultExpandAll}
                 types={types}
             />
@@ -115,7 +116,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 typeShape={undiscriminatedUnion}
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
-                route={route}
+                slug={slug}
                 defaultExpandAll={defaultExpandAll}
                 types={types}
             />
@@ -125,7 +126,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 typeShape={discriminatedUnion}
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
-                route={route}
+                slug={slug}
                 defaultExpandAll={defaultExpandAll}
                 types={types}
             />
@@ -139,7 +140,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
-                    route={route}
+                    slug={slug}
                     defaultExpandAll={defaultExpandAll}
                     types={types}
                 />
@@ -153,7 +154,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
-                    route={route}
+                    slug={slug}
                     defaultExpandAll={defaultExpandAll}
                     types={types}
                 />
@@ -166,7 +167,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 applyErrorStyles={applyErrorStyles}
                 className={className}
                 anchorIdParts={anchorIdParts}
-                route={route}
+                slug={slug}
                 defaultExpandAll={defaultExpandAll}
                 types={types}
             />
@@ -179,7 +180,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
-                    route={route}
+                    slug={slug}
                     defaultExpandAll={defaultExpandAll}
                     types={types}
                 />
@@ -189,7 +190,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
-                    route={route}
+                    slug={slug}
                     defaultExpandAll={defaultExpandAll}
                     types={types}
                 />
@@ -201,7 +202,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 typeShape={literal}
                 isCollapsible={false}
                 anchorIdParts={anchorIdParts}
-                route={route}
+                slug={slug}
                 defaultExpandAll={defaultExpandAll}
                 types={types}
             />
@@ -215,7 +216,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 applyErrorStyles={applyErrorStyles}
                 className={className}
                 anchorIdParts={anchorIdParts}
-                route={route}
+                slug={slug}
                 defaultExpandAll={defaultExpandAll}
                 types={types}
             />

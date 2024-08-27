@@ -134,6 +134,7 @@ export async function getDocsPageProps(
                     availability: version.availability,
                 })),
             sidebar: node.sidebar,
+            trailingSlash: false,
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),

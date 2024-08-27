@@ -32,6 +32,9 @@ export const CURRENT_VERSION_ID_ATOM = atom<FernNavigation.VersionId | undefined
 );
 CURRENT_VERSION_ID_ATOM.debugLabel = "CURRENT_VERSION_ID_ATOM";
 
+export const TRAILING_SLASH_ATOM = atom<boolean>((get) => get(DOCS_ATOM).navigation.trailingSlash);
+TRAILING_SLASH_ATOM.debugLabel = "TRAILING_SLASH_ATOM";
+
 export const NAVBAR_LINKS_ATOM = selectAtom(
     DOCS_ATOM,
     (docs): ReadonlyArray<DocsV1Read.NavbarLink> => docs.navbarLinks,

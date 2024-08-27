@@ -1,9 +1,11 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { Minus, Plus } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
+import { useRouteId } from "../../hooks/useRouteId";
 import type { BundledMDX } from "../../mdx/types";
 import { getAnchorId } from "../../util/anchor";
 
@@ -17,7 +19,7 @@ export declare namespace EndpointSection {
         title: ReactNode;
         description?: BundledMDX | undefined;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         expandAll?: () => void;
         collapseAll?: () => void;
         showExpandCollapse?: boolean;
@@ -29,7 +31,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     title,
     description,
     anchorIdParts,
-    route,
+    slug,
     children,
     showExpandCollapse,
     expandAll: handleExpandAll,
@@ -37,7 +39,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
 }) => {
     const ref = useRef<HTMLDivElement>(null);
     const anchorId = getAnchorId(anchorIdParts);
-    const anchorRoute = `${route}#${anchorId}`;
+    const anchorRoute = useRouteId(slug, anchorId);
     return (
         <FernErrorBoundary component="EndpointSection">
             <div ref={ref} id={anchorRoute} className="scroll-mt-content">
