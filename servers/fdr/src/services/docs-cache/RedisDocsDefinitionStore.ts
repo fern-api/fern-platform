@@ -10,13 +10,18 @@ export declare namespace RedisDocsDefinitionStore {
 }
 
 export default class RedisDocsDefinitionStore {
-    private client: Cluster;
+    private client: Cluster | Redis;
 
     public constructor({ cacheEndpointUrl, clusterModeEnabled }: RedisDocsDefinitionStore.Args) {
-        this.client = new Redis.Cluster([cacheEndpointUrl], {
-            lazyConnect: true,
-            enableOfflineQueue: false,
-        });
+        this.client = clusterModeEnabled
+            ? new Redis.Cluster([cacheEndpointUrl], {
+                  lazyConnect: true,
+                  enableOfflineQueue: false,
+              })
+            : new Redis(cacheEndpointUrl, {
+                  lazyConnect: true,
+                  enableOfflineQueue: false,
+              });
         this.client.on("error", (error) => LOGGER.error("Encountered error from redis", error));
     }
 
