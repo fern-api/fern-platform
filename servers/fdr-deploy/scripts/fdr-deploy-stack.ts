@@ -1,5 +1,5 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { Duration, Environment, RemovalPolicy, Stack, StackProps, Token } from "aws-cdk-lib";
+import { CfnOutput, Duration, Environment, RemovalPolicy, Stack, StackProps, Token } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
@@ -325,6 +325,9 @@ export class FdrDeployStack extends Stack {
 
         const cacheEndpointAddress = cacheReplicationGroup.attrConfigurationEndPointAddress;
         const cacheEndpointPort = cacheReplicationGroup.attrConfigurationEndPointPort;
+
+        new CfnOutput(this, `${props.cacheName}Host`, { value: cacheEndpointAddress });
+        new CfnOutput(this, `${props.cacheName}Port`, { value: cacheEndpointPort });
 
         cacheSecurityGroup.addIngressRule(
             props.ingressSecurityGroup || Peer.anyIpv4(),
