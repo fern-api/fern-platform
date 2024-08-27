@@ -16,6 +16,7 @@ export async function updateGeneratorVersionInternal(env: Env, repoData: RepoDat
                 env.GITHUB_APP_LOGIN_NAME,
                 env.GITHUB_APP_LOGIN_ID,
                 env.DEFAULT_VENUS_ORIGIN,
+                env.DEFAULT_FDR_ORIGIN,
             );
         }
     });

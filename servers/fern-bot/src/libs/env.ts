@@ -13,6 +13,7 @@ export interface Env {
     REPO_DATA_S3_BUCKET?: string;
     REPO_DATA_S3_KEY?: string;
     DEFAULT_VENUS_ORIGIN?: string;
+    DEFAULT_FDR_ORIGIN?: string;
 }
 
 export function evaluateEnv(): Env {
@@ -31,5 +32,6 @@ export function evaluateEnv(): Env {
         REPO_DATA_S3_BUCKET: repoDataS3Bucket == null || repoDataS3Bucket == OMIT ? undefined : repoDataS3Bucket,
         REPO_DATA_S3_KEY: repoDataS3Key == null || repoDataS3Key == OMIT ? undefined : repoDataS3Key,
         DEFAULT_VENUS_ORIGIN: process?.env.DEFAULT_VENUS_ORIGIN,
+        DEFAULT_FDR_ORIGIN: process?.env.DEFAULT_FDR_ORIGIN,
     };
 }
