@@ -193,7 +193,7 @@ function convertPrismaCliRelease(cliRelease: prisma.CliRelease | null): CliRelea
         ir_version: cliRelease.irVersion,
         release_type: convertPrismaReleaseType(cliRelease.releaseType),
         changelog_entry:
-            cliRelease.changelogEntry != null ? (readBuffer(cliRelease.changelogEntry) as ChangelogEntry) : undefined,
+            cliRelease.changelogEntry != null ? (readBuffer(cliRelease.changelogEntry) as ChangelogEntry[]) : undefined,
         major_version: cliRelease.major,
         is_yanked: cliRelease.isYanked != null ? (readBuffer(cliRelease.isYanked) as Yank) : undefined,
         created_at: cliRelease.createdAt?.toISOString(),

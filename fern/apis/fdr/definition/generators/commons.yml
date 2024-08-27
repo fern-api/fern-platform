@@ -25,20 +25,22 @@ types:
       - fix
       - feat
       - chore
-      - refactor
-      - perf
+      - break
+      - internal
 
   ChangelogEntry:
-    docs: Following `keep a changelog` format for the entries here. These are effectively your release notes.
+    docs: Following `keep a changelog` format for the entries here. These are effectively your release notes, the strings are meant to be markdown.
     properties:
       type: ChangelogEntryType
-      description: optional<string>
+      summary: string
+      upgrade_notes: optional<string>
+
+      # Keep a Changelog
       added: optional<list<string>>
       changed: optional<list<string>>
       deprecated: optional<list<string>>
       removed: optional<list<string>>
       fixed: optional<list<string>>
-      security: optional<list<string>>
 
   ReleaseType:
     enum:

@@ -5,12 +5,12 @@
 /**
  * Following `conventional commit` types for the entries here.
  */
-export type ChangelogEntryType = "fix" | "feat" | "chore" | "refactor" | "perf";
+export type ChangelogEntryType = "fix" | "feat" | "chore" | "break" | "internal";
 
 export const ChangelogEntryType = {
     Fix: "fix",
     Feat: "feat",
     Chore: "chore",
-    Refactor: "refactor",
-    Perf: "perf",
+    Break: "break",
+    Internal: "internal",
 } as const;

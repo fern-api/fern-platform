@@ -199,27 +199,28 @@ export class Cli {
      *         is_yanked: {
      *             remediation_verision: "string"
      *         },
-     *         changelog_entry: {
-     *             type: FernRegistry.generators.ChangelogEntryType.Fix,
-     *             added: [{
+     *         changelog_entry: [{
+     *                 type: FernRegistry.generators.ChangelogEntryType.Fix,
+     *                 summary: "string",
+     *                 upgrade_notes: {
      *                     "key": "value"
-     *                 }],
-     *             changed: [{
+     *                 },
+     *                 added: {
      *                     "key": "value"
-     *                 }],
-     *             deprecated: [{
+     *                 },
+     *                 changed: {
      *                     "key": "value"
-     *                 }],
-     *             removed: [{
+     *                 },
+     *                 deprecated: {
      *                     "key": "value"
-     *                 }],
-     *             fixed: [{
+     *                 },
+     *                 removed: {
      *                     "key": "value"
-     *                 }],
-     *             security: [{
+     *                 },
+     *                 fixed: {
      *                     "key": "value"
-     *                 }]
-     *         }
+     *                 }
+     *             }]
      *     })
      */
     public async upsertCliRelease(

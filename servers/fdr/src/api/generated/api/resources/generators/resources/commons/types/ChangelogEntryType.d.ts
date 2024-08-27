@@ -4,11 +4,11 @@
 /**
  * Following `conventional commit` types for the entries here.
  */
-export declare type ChangelogEntryType = "fix" | "feat" | "chore" | "refactor" | "perf";
+export declare type ChangelogEntryType = "fix" | "feat" | "chore" | "break" | "internal";
 export declare const ChangelogEntryType: {
     readonly Fix: "fix";
     readonly Feat: "feat";
     readonly Chore: "chore";
-    readonly Refactor: "refactor";
-    readonly Perf: "perf";
+    readonly Break: "break";
+    readonly Internal: "internal";
 };
