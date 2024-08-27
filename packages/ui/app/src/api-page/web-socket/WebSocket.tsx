@@ -8,7 +8,7 @@ import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { useRouteId } from "../../hooks/useRouteId";
+import { useHref } from "../../hooks/useHref";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import {
     ResolvedTypeDefinition,
@@ -105,7 +105,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     const headers = websocket.headers.filter((header) => !header.hidden);
 
     return (
-        <div className={"fern-endpoint-content"} ref={ref} id={useRouteId(websocket.slug)}>
+        <div className={"fern-endpoint-content"} ref={ref} id={useHref(websocket.slug)}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi,
@@ -365,12 +365,12 @@ function CardedSection({
     children: ReactNode | undefined;
     slug: FernNavigation.Slug;
 } & Omit<HTMLAttributes<HTMLDivElement>, "title">) {
-    const anchorRoute = useRouteId(slug, getSlugFromChildren(title));
+    const href = useHref(slug, getSlugFromChildren(title));
     return (
-        <section {...props} id={anchorRoute} className="border-default divide-default -mx-4 divide-y rounded-xl border">
+        <section {...props} id={href} className="border-default divide-default -mx-4 divide-y rounded-xl border">
             <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
                 <h2 className="relative mt-0 flex items-center">
-                    <AbsolutelyPositionedAnchor href={anchorRoute} />
+                    <AbsolutelyPositionedAnchor href={href} />
                     {/* <div className="bg-tag-default mr-2 inline-flex size-7 items-center justify-center rounded-full font-mono text-base">
                         {num}
                     </div> */}

@@ -26,7 +26,7 @@ import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { BELOW_HEADER_HEIGHT_ATOM } from "./layout";
 import { LOCATION_ATOM } from "./location";
-import { NAVIGATION_NODES_ATOM } from "./navigation";
+import { NAVIGATION_NODES_ATOM, TRAILING_SLASH_ATOM } from "./navigation";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 
 const PLAYGROUND_IS_OPEN_ATOM = atom(false);
@@ -83,7 +83,7 @@ export const PLAYGROUND_NODE_ID = atom(
             // set playground open
             set(PLAYGROUND_IS_OPEN_ATOM, true);
 
-            newLocation.searchParams.set("playground", `/${node.slug}`);
+            newLocation.searchParams.set("playground", get(TRAILING_SLASH_ATOM) ? `/${node.slug}/` : `/${node.slug}`);
 
             // set playground height to be the window height - header height
             const contentHeight = get(BELOW_HEADER_HEIGHT_ATOM);

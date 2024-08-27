@@ -4,7 +4,7 @@ import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { useRouteListener } from "../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
-import { useRouteId } from "../../hooks/useRouteId";
+import { useHref } from "../../hooks/useHref";
 import type { BundledMDX } from "../../mdx/types";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
@@ -90,18 +90,18 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
         }
     });
 
-    const routeWithHash = useRouteId(slug, anchorId);
+    const href = useHref(slug, anchorId);
     return (
         <div
             ref={ref}
-            id={routeWithHash}
+            id={href}
             className={cn("scroll-mt-content-padded relative flex flex-col gap-2 py-3", {
                 "before:outline-border-accent-muted before:outline-1 before:outline before:outline-offset-0 before:content-[''] before:inset-y-0 before:-inset-x-2 before:rounded-sm":
                     isActive,
             })}
         >
             <div className="group/anchor-container flex items-center">
-                <AbsolutelyPositionedAnchor href={routeWithHash} />
+                <AbsolutelyPositionedAnchor href={href} />
                 <span className="inline-flex items-baseline gap-2">
                     <span className="fern-api-property-key">{name}</span>
                     {typeShorthand}

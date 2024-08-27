@@ -2,7 +2,7 @@ import cn from "clsx";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useRef } from "react";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
-import { useRouteId } from "../../hooks/useRouteId";
+import { useHref } from "../../hooks/useHref";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition, getParameterDescription } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -56,7 +56,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                     },
                 )}
                 ref={ref}
-                id={useRouteId(webhook.slug)}
+                id={useHref(webhook.slug)}
             >
                 <div className="flex min-w-0 max-w-content-width flex-1 flex-col">
                     <div className="space-y-1 py-8">

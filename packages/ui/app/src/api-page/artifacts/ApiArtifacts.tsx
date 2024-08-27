@@ -2,7 +2,7 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useRef } from "react";
 import { API_ARTIFACTS_TITLE } from "../../config";
-import { useRouteId } from "../../hooks/useRouteId";
+import { useHref } from "../../hooks/useHref";
 import { ResolvedWithApiDefinition } from "../../resolver/types";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -29,7 +29,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiA
 
     return (
         <ApiPageMargins>
-            <div ref={ref} id={useRouteId(slug)} className="scroll-mt-content">
+            <div ref={ref} id={useHref(slug)} className="scroll-mt-content">
                 <h1 className="pt-20">{API_ARTIFACTS_TITLE}</h1>
                 <div className="t-muted mt-5 text-lg">
                     Official open-source client libraries for your favorite platforms.

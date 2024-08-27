@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
@@ -6,6 +7,7 @@ import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
 import { COHERE_ASK_AI, COHERE_INITIAL_MESSAGE, useBasePath, useCloseSearchDialog, useFeatureFlags } from "../atoms";
+import { useToHref } from "../hooks/useHref";
 import { SearchHit } from "./SearchHit";
 import { AskCohereHit } from "./cohere/AskCohereHit";
 
@@ -105,6 +107,7 @@ export const SearchHits: React.FC = () => {
         setOpenCohere(true);
     };
 
+    const toHref = useToHref();
     const navigateToHoveredHit = async () => {
         if (hoveredSearchHit == null) {
             if (
@@ -118,8 +121,8 @@ export const SearchHits: React.FC = () => {
 
             return;
         }
-        const slug = getSlugForSearchRecord(hoveredSearchHit.record, basePath);
-        void router.push(`/${slug}`, undefined, {
+        const slug = FernNavigation.Slug(getSlugForSearchRecord(hoveredSearchHit.record, basePath));
+        void router.push(toHref(slug), undefined, {
             // TODO: shallow=true if currently in long scrolling api reference and the hit is on the same page
             shallow: false,
         });

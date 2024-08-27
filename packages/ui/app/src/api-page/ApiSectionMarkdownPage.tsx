@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { ReactElement, memo, useRef } from "react";
-import { useRouteId } from "../hooks/useRouteId";
+import { useHref } from "../hooks/useHref";
 import { useShouldLazyRender } from "../hooks/useShouldLazyRender";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPageMetadata } from "../resolver/types";
@@ -21,7 +21,7 @@ const ApiSectionMarkdownContent = ({ page, hideBottomSeparator }: ApiSectionMark
                 "border-default border-b mb-px": !hideBottomSeparator,
             })}
             ref={ref}
-            id={useRouteId(page.slug)}
+            id={useHref(page.slug)}
         >
             <MdxContent mdx={page.markdown} />
         </div>

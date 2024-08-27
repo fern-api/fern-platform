@@ -4,7 +4,7 @@ import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react"
 import { useRouteListener } from "../../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { useRouteId } from "../../../hooks/useRouteId";
+import { useHref } from "../../../hooks/useHref";
 import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
@@ -98,7 +98,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
         };
     }, [contextValue, jsonPropertyPath]);
 
-    const anchorRoute = useRouteId(slug, anchorId);
+    const href = useHref(slug, anchorId);
 
     const description = useMemo(() => {
         if (property.description != null) {
@@ -111,7 +111,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
     return (
         <div
             ref={ref}
-            id={anchorRoute}
+            id={href}
             className={cn("scroll-mt-content-padded fern-api-property", {
                 "px-3": !contextValue.isRootTypeDefinition,
                 "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
@@ -119,7 +119,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
         >
             <div className="fern-api-property-header">
                 <div className="group/anchor-container relative inline-flex items-center">
-                    <AbsolutelyPositionedAnchor href={anchorRoute} />
+                    <AbsolutelyPositionedAnchor href={href} />
                     <span
                         className="fern-api-property-key"
                         onMouseEnter={onMouseEnterPropertyName}
