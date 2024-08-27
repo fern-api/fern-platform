@@ -335,7 +335,9 @@ export class FdrDeployStack extends Stack {
             "Redis Port Ingress rule",
         );
 
-        return cacheReplicationGroup.attrReadEndPointAddressesList.map((host) => `${host}:6379`).join(",");
+        return Token.asString(
+            cacheReplicationGroup.attrReadEndPointAddressesList.map((host) => `${host}:6379`).join(","),
+        );
     }
 }
 
