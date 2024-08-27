@@ -33,7 +33,7 @@ async function main() {
                         redisClusteringModeEnabled: true,
                         memory: 1024,
                         cpu: 512,
-                        cacheName: "FernDocsCache2",
+                        cacheName: "FernDocsCache3",
                     },
                     {
                         env: { account: "985111089818", region: "us-east-1" },
@@ -54,7 +54,7 @@ async function main() {
                         memory: 4096,
                         redisClusteringModeEnabled: true,
                         cpu: 2048,
-                        cacheName: "FernDocsCache4",
+                        cacheName: "FernDocsCache5",
                     },
                     {
                         env: { account: "985111089818", region: "us-east-1" },
