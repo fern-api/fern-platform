@@ -1,4 +1,4 @@
-import { RedisClientType, RedisClusterType, createClient, createCluster } from "redis";
+import { Cluster, Redis } from "ioredis";
 import { LOGGER } from "../../app/FdrApplication";
 import { CachedDocsResponse } from "./DocsDefinitionCache";
 
@@ -10,21 +10,15 @@ export declare namespace RedisDocsDefinitionStore {
 }
 
 export default class RedisDocsDefinitionStore {
-    private client: RedisClusterType | RedisClientType;
+    private client: Cluster;
 
     public constructor({ cacheEndpointUrl, clusterModeEnabled }: RedisDocsDefinitionStore.Args) {
-        this.client = clusterModeEnabled
-            ? createCluster({
-                  rootNodes: cacheEndpointUrl.split(",").map((url) => {
-                      return {
-                          url,
-                      };
-                  }),
-                  defaults: {
-                      pingInterval: 10000,
-                  },
-              })
-            : createClient({ url: cacheEndpointUrl, pingInterval: 10000 });
+        this.client = new Redis.Cluster([
+            {
+                host: cacheEndpointUrl,
+                port: 6379,
+            },
+        ]);
         this.client.on("error", (error) => LOGGER.error("Encountered error from redis", error));
     }
 
