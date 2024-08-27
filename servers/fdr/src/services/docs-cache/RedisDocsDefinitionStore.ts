@@ -15,11 +15,11 @@ export default class RedisDocsDefinitionStore {
     public constructor({ cacheEndpointUrl, clusterModeEnabled }: RedisDocsDefinitionStore.Args) {
         this.client = clusterModeEnabled
             ? createCluster({
-                  rootNodes: [
-                      {
-                          url: cacheEndpointUrl,
-                      },
-                  ],
+                  rootNodes: cacheEndpointUrl.split(",").map((url) => {
+                      return {
+                          url,
+                      };
+                  }),
                   defaults: {
                       pingInterval: 10000,
                   },

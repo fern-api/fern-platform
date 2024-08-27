@@ -1,5 +1,5 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { CfnOutput, Duration, Environment, RemovalPolicy, Stack, StackProps, Token } from "aws-cdk-lib";
+import { Duration, Environment, RemovalPolicy, Stack, StackProps, Token } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
@@ -332,10 +332,7 @@ export class FdrDeployStack extends Stack {
             "Redis Port Ingress rule",
         );
 
-        new CfnOutput(this, `${props.cacheName}Host`, { value: cacheEndpointAddress });
-        new CfnOutput(this, `${props.cacheName}Port`, { value: cacheEndpointPort });
-
-        return `${cacheEndpointAddress}:${cacheEndpointPort}`;
+        return cacheReplicationGroup.attrReadEndPointAddressesList.map((host) => `${host}:6379`).join(",");
     }
 }
 
