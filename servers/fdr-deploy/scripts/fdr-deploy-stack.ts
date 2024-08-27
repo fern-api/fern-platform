@@ -138,7 +138,7 @@ export class FdrDeployStack extends Stack {
             IVpc: vpc,
             numCacheShards: 1,
             // TODO(dsinghvi): bump this to > 1
-            numCacheReplicasPerShard: undefined,
+            numCacheReplicasPerShard: 1,
             clusterMode: "enabled",
             cacheNodeType: environmentType === "PROD" ? "cache.r7g.4xlarge" : "cache.r7g.large",
             envType: environmentType,
