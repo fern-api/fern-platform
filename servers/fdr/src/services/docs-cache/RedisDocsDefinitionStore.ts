@@ -13,12 +13,10 @@ export default class RedisDocsDefinitionStore {
     private client: Cluster;
 
     public constructor({ cacheEndpointUrl, clusterModeEnabled }: RedisDocsDefinitionStore.Args) {
-        this.client = new Redis.Cluster([
-            {
-                host: cacheEndpointUrl,
-                port: 6379,
-            },
-        ]);
+        this.client = new Redis.Cluster([cacheEndpointUrl], {
+            lazyConnect: true,
+            enableOfflineQueue: false,
+        });
         this.client.on("error", (error) => LOGGER.error("Encountered error from redis", error));
     }
 
