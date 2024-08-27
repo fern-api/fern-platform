@@ -335,7 +335,7 @@ export class FdrDeployStack extends Stack {
             "Redis Port Ingress rule",
         );
 
-        return cacheEndpointAddress;
+        return `${cacheEndpointAddress}:${cacheEndpointPort}`;
     }
 }
 

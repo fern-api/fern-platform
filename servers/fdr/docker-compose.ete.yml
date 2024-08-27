@@ -26,18 +26,19 @@ services:
       REDIS_CLUSTERING_ENABLED: "true"
       APPLICATION_ENVIRONMENT: ete
     depends_on:
-      - redis_0
-      - redis_1
-      - redis_2
-      - redis_3
-      - redis_4
-      - redis_5
+      postgres:
+        condition: service_healthy
   postgres:
     image: postgres:10.3
     restart: always
     environment:
       - POSTGRES_USER=fdr
       - POSTGRES_PASSWORD=fdr1!
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5      
     ports:
       - "5434:5432"
   s3-mock:
