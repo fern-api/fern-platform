@@ -10,6 +10,7 @@ import {
     convertNavigatableToResolvedPath,
     getGitHubInfo,
     getGitHubRepo,
+    getRedirectForPath,
     getRegistryServiceWithToken,
     getSeoProps,
     provideRegistryService,
@@ -28,7 +29,6 @@ import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
 import { convertStaticToServerSidePropsResult } from "./convertStaticToServerSidePropsResult";
 import { getSeoDisabled } from "./disabledSeo";
-import { getRedirectForPath } from "./hackRedirects";
 
 type GetStaticDocsPagePropsResult = GetStaticPropsResult<ComponentProps<typeof DocsPage>>;
 type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;
@@ -230,21 +230,38 @@ async function convertDocsToDocsPageProps({
         featureFlags.isBatchStreamToggleDisabled,
         featureFlags.isApiScrollingDisabled,
     );
+
+    // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404
+    if (root.slug.length > 0 && slug.length === 0) {
+        return {
+            redirect: {
+                destination: encodeURI(urljoin("/", root.slug)),
+                permanent: false,
+            },
+        };
+    }
+
     const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {
+        // TODO: returning "notFound: true" here will render vercel's default 404 page
+        // this is better than following redirects, since it will signal a proper 404 status code.
+        // however, we should consider rendering a custom 404 page in the future using the customer's branding.
+        // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
+
         // eslint-disable-next-line no-console
-        console.error(`Failed to resolve navigation for ${url}`);
-        if (node.redirect != null) {
-            return {
-                // urljoin is bizarre: urljoin("/", "") === "", urljoin("/", "/") === "/", urljoin("/", "/a") === "/a"
-                // "" || "/" === "/"
-                redirect: {
-                    destination: encodeURI(urljoin("/", node.redirect) || "/"),
-                    permanent: false,
-                },
-            };
-        }
+        // console.error(`Failed to resolve navigation for ${url}`);
+        // if (node.redirect != null) {
+        //     return {
+        //         // urljoin is bizarre: urljoin("/", "") === "", urljoin("/", "/") === "/", urljoin("/", "/a") === "/a"
+        //         // "" || "/" === "/"
+        //         redirect: {
+        //             destination: encodeURI(urljoin("/", node.redirect) || "/"),
+        //             permanent: false,
+        //         },
+        //     };
+        // }
+
         return { notFound: true };
     }
 
