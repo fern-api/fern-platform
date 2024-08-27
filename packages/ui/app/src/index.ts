@@ -19,7 +19,7 @@ export { getSeoProps } from "./next-app/utils/getSeoProp";
 export { ApiDefinitionResolver } from "./resolver/ApiDefinitionResolver";
 export { ApiTypeResolver } from "./resolver/ApiTypeResolver";
 export * from "./resolver/types";
-export { provideRegistryService } from "./services/registry";
+export { getRegistryServiceWithToken, provideRegistryService } from "./services/registry";
 export { renderThemeStylesheet } from "./themes/stylesheet/renderThemeStylesheet";
 export { convertNavigatableToResolvedPath } from "./util/convertNavigatableToResolvedPath";
 export { getGitHubInfo, getGitHubRepo } from "./util/github";
