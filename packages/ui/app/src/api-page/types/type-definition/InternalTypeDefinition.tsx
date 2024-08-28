@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
@@ -25,7 +26,7 @@ export declare namespace InternalTypeDefinition {
         typeShape: ResolvedTypeDefinition;
         isCollapsible: boolean;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -42,7 +43,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
     typeShape,
     isCollapsible,
     anchorIdParts,
-    route,
+    slug,
     defaultExpandAll = false,
     types,
 }) {
@@ -56,7 +57,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                             property={property}
                             anchorIdParts={[...anchorIdParts, property.key]}
                             applyErrorStyles={false}
-                            route={route}
+                            slug={slug}
                             defaultExpandAll={defaultExpandAll}
                             types={types}
                         />
@@ -71,7 +72,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                             unionVariant={variant}
                             anchorIdParts={[...anchorIdParts, variant.displayName ?? variantIdx.toString()]}
                             applyErrorStyles={false}
-                            route={route}
+                            slug={slug}
                             defaultExpandAll={defaultExpandAll}
                             idx={variantIdx}
                             types={types}
@@ -88,7 +89,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                             discriminant={union.discriminant}
                             unionVariant={variant}
                             anchorIdParts={[...anchorIdParts, variant.discriminantValue]}
-                            route={route}
+                            slug={slug}
                             defaultExpandAll={defaultExpandAll}
                             types={types}
                         />
@@ -122,7 +123,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                 unknown: () => undefined,
                 _other: () => undefined,
             }),
-        [typeShape, types, anchorIdParts, route, defaultExpandAll],
+        [typeShape, types, anchorIdParts, slug, defaultExpandAll],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
@@ -141,7 +142,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useRouteListener(route, (anchor) => {
+    useRouteListener(slug, (anchor) => {
         const isActive = anchor?.startsWith(anchorIdSoFar + ".") ?? false;
         if (isActive) {
             setCollapsed(false);

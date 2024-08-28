@@ -1,12 +1,13 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab } from "@fern-ui/fdr-utils";
-import { slugToHref } from "./slugToHref";
+import { useToHref } from "./useHref";
 
-export function getSidebarTabHref(tab: SidebarTab): string {
+export function useSidebarTabHref(tab: SidebarTab): string {
+    const toHref = useToHref();
     const href = visitDiscriminatedUnion(tab, "type")._visit({
-        tabGroup: (value) => slugToHref(value.pointsTo ?? value.slug),
+        tabGroup: (value) => toHref(value.pointsTo ?? value.slug),
         tabLink: (value) => value.url,
-        tabChangelog: (value) => slugToHref(value.slug),
+        tabChangelog: (value) => toHref(value.slug),
         _other: () => "/",
     });
     return href;

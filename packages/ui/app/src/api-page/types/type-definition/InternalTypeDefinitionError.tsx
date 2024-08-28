@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
@@ -21,7 +22,7 @@ export declare namespace InternalTypeDefinitionError {
         typeShape: ResolvedTypeDefinition;
         isCollapsible: boolean;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -38,7 +39,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     typeShape,
     isCollapsible,
     anchorIdParts,
-    route,
+    slug,
     defaultExpandAll = false,
     types,
 }) => {
@@ -51,7 +52,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             key={property.key}
                             property={property}
                             anchorIdParts={[...anchorIdParts, property.key]}
-                            route={route}
+                            slug={slug}
                             applyErrorStyles
                             types={types}
                         />
@@ -66,7 +67,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             unionVariant={variant}
                             anchorIdParts={anchorIdParts}
                             applyErrorStyles={false}
-                            route={route}
+                            slug={slug}
                             idx={variantIdx}
                             types={types}
                         />
@@ -82,7 +83,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                             discriminant={union.discriminant}
                             unionVariant={variant}
                             anchorIdParts={anchorIdParts}
-                            route={route}
+                            slug={slug}
                             types={types}
                         />
                     )),
@@ -119,7 +120,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                 alias: () => undefined,
                 unknown: () => undefined,
             }),
-        [typeShape, types, anchorIdParts, route],
+        [typeShape, types, anchorIdParts, slug],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
@@ -138,7 +139,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useRouteListener(route, (anchor) => {
+    useRouteListener(slug, (anchor) => {
         const isActive = anchor?.startsWith(anchorIdSoFar + ".") ?? false;
         if (isActive) {
             setCollapsed(false);

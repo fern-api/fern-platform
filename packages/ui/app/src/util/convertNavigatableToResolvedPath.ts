@@ -11,7 +11,6 @@ import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
 import { ResolvedRootPackage } from "../resolver/types";
-import { slugToHref } from "./slugToHref";
 
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
@@ -42,7 +41,7 @@ async function getSubtitle(
             data: {
                 pageTitle: node.title,
                 pageId,
-                route: slugToHref(node.slug),
+                route: `/${node.slug}`,
             },
         });
         return undefined;

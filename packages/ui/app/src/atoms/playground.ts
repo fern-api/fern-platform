@@ -20,6 +20,7 @@ import {
     type PlaygroundWebSocketRequestFormState,
 } from "../api-playground/types";
 import { getInitialEndpointRequestFormStateWithExample } from "../api-playground/utils";
+import { selectHref } from "../hooks/useHref";
 import { isEndpoint, type ResolvedEndpointDefinition, type ResolvedWebSocketChannel } from "../resolver/types";
 import { APIS_ATOM, FLATTENED_APIS_ATOM } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
@@ -83,7 +84,7 @@ export const PLAYGROUND_NODE_ID = atom(
             // set playground open
             set(PLAYGROUND_IS_OPEN_ATOM, true);
 
-            newLocation.searchParams.set("playground", `/${node.slug}`);
+            newLocation.searchParams.set("playground", selectHref(get, node.slug));
 
             // set playground height to be the window height - header height
             const contentHeight = get(BELOW_HEADER_HEIGHT_ATOM);

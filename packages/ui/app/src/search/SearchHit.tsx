@@ -1,9 +1,11 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 import cn from "clsx";
 import Link from "next/link";
 import { ReactElement, useMemo } from "react";
 import { useBasePath, useCloseMobileSidebar, useCloseSearchDialog } from "../atoms";
+import { useHref } from "../hooks/useHref";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { EndpointRecordV3 } from "./content/EndpointRecordV3";
@@ -32,7 +34,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
     const closeMobileSidebar = useCloseMobileSidebar();
     const closeSearchDialog = useCloseSearchDialog();
 
-    const slug = getSlugForSearchRecord(hit, basePath);
+    const slug = FernNavigation.Slug(getSlugForSearchRecord(hit, basePath));
 
     const content = useMemo(() => {
         return visitDiscriminatedUnion(hit)._visit<ReactElement | null>({
@@ -55,7 +57,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
             className={cn("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
                 "bg-accent-highlight": isHovered,
             })}
-            href={`/${slug}`}
+            href={useHref(slug)}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             onClick={() => {

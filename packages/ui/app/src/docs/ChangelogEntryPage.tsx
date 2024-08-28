@@ -2,6 +2,7 @@ import { ArrowLeft } from "iconoir-react";
 import { ReactElement } from "react";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernLink } from "../components/FernLink";
+import { useHref } from "../hooks/useHref";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
 
@@ -19,7 +20,7 @@ export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPat
                             <header className="mb-8">
                                 <div className="space-y-1">
                                     <div className="not-prose">
-                                        <FernLink href={`/${resolvedPath.changelogSlug}`}>
+                                        <FernLink href={useHref(resolvedPath.changelogSlug)}>
                                             <span className="t-accent shrink truncate whitespace-nowrap text-sm font-semibold inline-flex gap-1 items-center">
                                                 <ArrowLeft className="size-icon" />
                                                 Back to {resolvedPath.changelogTitle}

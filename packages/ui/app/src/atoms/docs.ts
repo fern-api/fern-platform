@@ -42,6 +42,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
         currentVersionId: undefined,
         versions: [],
         sidebar: undefined,
+        trailingSlash: false,
     },
     title: undefined,
     favicon: undefined,

@@ -42,6 +42,7 @@ export interface NavigationProps {
     currentVersionId: FernNavigation.VersionId | undefined;
     versions: SidebarVersionInfo[];
     sidebar: FernNavigation.SidebarRootNode | undefined;
+    trailingSlash: boolean;
 }
 
 export interface DocsProps {
