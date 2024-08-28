@@ -63,6 +63,7 @@ jobs:
         run: |
           DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
           echo "Deployment URL: $DEPLOYMENT_URL"
+          echo "$DEPLOYMENT_URL" > deployment-url.txt
 
           DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v9/projects/app.buildwithfern.com/domains?limit=50&teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H  "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
           ALIAS_DOMAINS=$(jq -r '.domains[].name' <<< $DEPLOYMENT_INFO)
@@ -88,6 +89,12 @@ jobs:
           name: preview
           path: preview.txt
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-url
+          path: deployment-url.txt
+
   playwright-tests:
     needs: deploy
     runs-on: ubuntu-latest
@@ -111,6 +118,12 @@ jobs:
           name: preview
           path: .
 
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: deployment-url
+          path: .
+
       - name: pnpm install
         run: pnpm install
 
@@ -119,6 +132,9 @@ jobs:
 
       - name: Run Playwright tests
         run: pnpm exec playwright test playwright/global.spec.ts --workers 6
+
+      - name: Run Playwright tests
+        run: pnpm exec playwright test playwright/versioned-docs.spec.ts
 
       - uses: actions/upload-artifact@v4
         if: always()

@@ -1,8 +1,9 @@
 import { useResizeObserver } from "@fern-ui/react-commons";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import cn from "clsx";
+import cn, { clsx } from "clsx";
 import { Check, InfoCircle } from "iconoir-react";
 import {
+    ComponentProps,
     MouseEventHandler,
     PropsWithChildren,
     ReactElement,
@@ -49,6 +50,7 @@ export declare namespace FernDropdown {
         dropdownMenuElement?: ReactElement;
         container?: HTMLElement; // portal container
         onClick?: MouseEventHandler<HTMLDivElement> | undefined;
+        contentProps?: ComponentProps<typeof DropdownMenu.Content> & { "data-testid"?: string };
     }
 }
 
@@ -67,6 +69,7 @@ export const FernDropdown = forwardRef<HTMLButtonElement, PropsWithChildren<Fern
             dropdownMenuElement,
             container,
             onClick,
+            contentProps,
         },
         ref,
     ): ReactElement => {
@@ -81,7 +84,13 @@ export const FernDropdown = forwardRef<HTMLButtonElement, PropsWithChildren<Fern
             [onOpen],
         );
         const renderDropdownContent = () => (
-            <DropdownMenu.Content className="fern-dropdown" sideOffset={4} side={side} align={align}>
+            <DropdownMenu.Content
+                sideOffset={4}
+                side={side}
+                align={align}
+                {...contentProps}
+                className={clsx("fern-dropdown", contentProps?.className)}
+            >
                 <FernTooltipProvider>
                     <FernScrollArea rootClassName="min-h-0 shrink" className="p-1" scrollbars="vertical">
                         <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange} onClick={onClick}>
