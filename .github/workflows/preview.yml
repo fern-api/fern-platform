@@ -121,7 +121,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: preview
+          name: deployment-url
           path: .
 
       - name: pnpm install
