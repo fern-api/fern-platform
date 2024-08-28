@@ -8,6 +8,7 @@ import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
     convertNavigatableToResolvedPath,
+    getApiRouteSupplier,
     getGitHubInfo,
     getGitHubRepo,
     getRedirectForPath,
@@ -391,8 +392,12 @@ async function convertDocsToDocsPageProps({
         ),
     };
 
-    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
-    props.fallback[urljoin(docs.baseUrl.basePath || "/", "/api/fern-docs/search")] = await getSearchConfig(
+    const getApiRoute = getApiRouteSupplier({
+        basepath: docs.baseUrl.basePath,
+        includeTrailingSlash: isTrailingSlashEnabled(),
+    });
+
+    props.fallback[getApiRoute("/api/fern-docs/search")] = await getSearchConfig(
         provideRegistryService(),
         xFernHost,
         docs.definition.search,
@@ -411,9 +416,7 @@ async function convertDocsToDocsPageProps({
     }
 
     const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, cookies);
-    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
-    props.fallback[urljoin(docs.baseUrl.basePath || "/", "/api/fern-docs/auth/api-key-injection")] =
-        apiKeyInjectionConfig;
+    props.fallback[getApiRoute("/api/fern-docs/auth/api-key-injection")] = apiKeyInjectionConfig;
 
     return {
         props: JSON.parse(JSON.stringify(props)), // remove all undefineds

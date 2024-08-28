@@ -10,6 +10,7 @@ export type {
 export { DEFAULT_FEATURE_FLAGS } from "./atoms";
 export type { DocsProps, FeatureFlags } from "./atoms";
 export { LocalPreviewContextProvider } from "./contexts/local-preview";
+export { getApiRouteSupplier } from "./hooks/useApiRoute";
 export { setMdxBundler } from "./mdx/bundler";
 export { getFrontmatter } from "./mdx/frontmatter";
 export * from "./next-app/DocsPage";
