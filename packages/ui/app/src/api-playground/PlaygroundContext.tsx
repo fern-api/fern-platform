@@ -2,9 +2,9 @@ import { useAtomValue } from "jotai";
 import dynamic from "next/dynamic";
 import { FC, useEffect } from "react";
 import useSWR from "swr";
-import urljoin from "url-join";
-import { APIS_ATOM, store, useBasePath } from "../atoms";
+import { APIS_ATOM, store } from "../atoms";
 import { HAS_PLAYGROUND_ATOM, useInitPlaygroundRouter } from "../atoms/playground";
+import { useApiRoute } from "../hooks/useApiRoute";
 import { ResolvedRootPackage } from "../resolver/types";
 
 const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => m.PlaygroundDrawer), {
@@ -17,10 +17,7 @@ const fetcher = async (url: string) => {
 };
 
 export const PlaygroundContextProvider: FC = () => {
-    const basePath = useBasePath();
-    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
-    const key = urljoin(basePath || "/", "/api/fern-docs/resolve-api");
-
+    const key = useApiRoute("/api/fern-docs/resolve-api");
     const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {
         revalidateOnFocus: false,
     });

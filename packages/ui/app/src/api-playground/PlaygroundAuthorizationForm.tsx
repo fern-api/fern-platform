@@ -14,8 +14,8 @@ import {
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM,
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
-    useBasePath,
 } from "../atoms";
+import { useApiRoute } from "../hooks/useApiRoute";
 import { Callout } from "../mdx/components/callout";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
@@ -242,11 +242,13 @@ export function PlaygroundAuthorizationFormCard({
     const router = useRouter();
     const apiKey = apiKeyInjection.enabled && apiKeyInjection.authenticated ? apiKeyInjection.access_token : null;
     const [loginError, setLoginError] = useState<string | null>(null);
-    const basePath = useBasePath();
 
     const handleResetBearerAuth = useCallback(() => {
         setBearerAuth({ token: apiKey ?? "" });
     }, [apiKey, setBearerAuth]);
+
+    const logoutApiRoute = useApiRoute("/api/fern-docs/auth/logout");
+    const callbackApiRoute = useApiRoute("/api/fern-docs/auth/callback");
 
     const redirectOrOpenAuthForm = () => {
         if (apiKeyInjection.enabled && !apiKeyInjection.authenticated) {
@@ -258,7 +260,7 @@ export function PlaygroundAuthorizationFormCard({
             url.searchParams.set("state", state.toString());
 
             if (apiKeyInjection.partner === "ory") {
-                const redirect_uri = urlJoin(window.location.origin, basePath ?? "", "/api/fern-docs/auth/callback");
+                const redirect_uri = urlJoin(window.location.origin, callbackApiRoute);
                 url.searchParams.set("redirect_uri", redirect_uri);
             }
 
@@ -349,9 +351,7 @@ export function PlaygroundAuthorizationFormCard({
                                         text="Logout"
                                         intent="none"
                                         onClick={() => {
-                                            const url = new URL(
-                                                urlJoin(window.location.origin, "/api/fern-docs/auth/logout"),
-                                            );
+                                            const url = new URL(urlJoin(window.location.origin, logoutApiRoute));
                                             const state = new URL(window.location.href);
                                             url.searchParams.set("state", state.toString());
                                             fetch(url)

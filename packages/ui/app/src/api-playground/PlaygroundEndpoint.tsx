@@ -4,7 +4,6 @@ import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/l
 import { SendSolid } from "iconoir-react";
 import { compact, mapValues, once } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
-import urljoin from "url-join";
 import { useCallbackOne } from "use-memo-one";
 import { captureSentryError } from "../analytics/sentry";
 import {
@@ -15,6 +14,7 @@ import {
     usePlaygroundEndpointFormState,
 } from "../atoms";
 import { useSelectedEnvironmentId } from "../atoms/environment";
+import { useApiRoute } from "../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import {
     ResolvedEndpointDefinition,
@@ -76,14 +76,9 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
-    const proxyEnvironment = urljoin(
-        proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath ?? "",
-        "/api/fern-docs/proxy",
-    );
-    const uploadEnvironment = urljoin(
-        proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath ?? "",
-        "/api/fern-docs/upload",
-    );
+    const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
+    const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
+    const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
 
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
