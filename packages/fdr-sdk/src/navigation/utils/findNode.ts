@@ -58,7 +58,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
             }
         }
 
-        return { type: "notFound", redirect: maybeVersionNode.pointsTo ?? root.pointsTo };
+        return { type: "notFound", redirect: maybeVersionNode.pointsTo };
     }
 
     const sidebar = found.parents.find(isSidebarRootNode);

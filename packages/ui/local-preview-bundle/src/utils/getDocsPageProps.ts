@@ -144,6 +144,7 @@ export async function getDocsPageProps(
                     title: version.title,
                     id: version.versionId,
                     slug: version.slug,
+                    pointsTo: version.pointsTo,
                     index,
                     availability: version.availability,
                 })),

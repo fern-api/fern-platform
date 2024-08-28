@@ -12,6 +12,7 @@ export interface SidebarVersionInfo {
     slug: FernNavigation.Slug;
     index: number;
     availability: FernNavigation.Availability | undefined;
+    pointsTo: FernNavigation.Slug | undefined;
 }
 
 interface SidebarTabGroup {
