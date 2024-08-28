@@ -26,5 +26,22 @@ samples.forEach((sample) => {
         await page.goto(sample.preview);
         const response = await page.goto(sample.url);
         expect(response?.status()).toBe(200);
+
+        const versionDropdown = page.getByTestId("version-dropdown");
+        await versionDropdown.waitFor({ state: "visible", timeout: 500 });
+        await versionDropdown.click();
+        const versionDropdownContent = page.getByTestId("version-dropdown-content");
+        await versionDropdownContent.waitFor({ state: "visible", timeout: 500 });
+        const options = await versionDropdownContent.getByRole("menuitemradio", { checked: false }).all();
+
+        expect(options.length).toBeGreaterThan(0);
+        const hrefs = await Promise.all(options.map((option) => option.getAttribute("href")));
+
+        for (const href of hrefs) {
+            expect(href).not.toBeNull();
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const response = await page.goto(href!);
+            expect(response?.status()).toBe(200);
+        }
     });
 });

@@ -34,8 +34,12 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
                     disabled: availability == null,
                     href: toHref(FernNavigation.utils.slugjoin(slug, unversionedSlug)),
                 }))}
+                contentProps={{
+                    "data-testid": "version-dropdown-content",
+                }}
             >
                 <FernButton
+                    data-testid="version-dropdown"
                     intent="primary"
                     variant="outlined"
                     text={currentVersion?.title ?? currentVersionId}
