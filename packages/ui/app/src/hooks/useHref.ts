@@ -3,7 +3,7 @@ import { Atom, useAtomValue } from "jotai";
 import { TRAILING_SLASH_ATOM } from "../atoms";
 
 export function getToHref(includeTrailingSlash: boolean = false): (slug: FernNavigation.Slug) => string {
-    return (slug) => (trailingSlash ? `/${slug}/` : `/${slug}`);
+    return (slug) => (includeTrailingSlash ? `/${slug}/` : `/${slug}`);
 }
 
 export function useToHref(): (slug: FernNavigation.Slug) => string {
