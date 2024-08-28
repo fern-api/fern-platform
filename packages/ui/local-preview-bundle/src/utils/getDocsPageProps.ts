@@ -97,6 +97,23 @@ export async function getDocsPageProps(
                   : undefined,
     };
 
+    const versions = node.versions
+        .filter((version) => !version.hidden)
+        .map((version, index) => {
+            // if the same page exists in multiple versions, return the full slug of that page, otherwise default to version's landing page (pointsTo)
+            const expectedSlug = FernNavigation.utils.slugjoin(version.slug, node.unversionedSlug);
+            const pointsTo = node.collector.slugMap.has(expectedSlug) ? expectedSlug : version.pointsTo;
+
+            return {
+                title: version.title,
+                id: version.versionId,
+                slug: version.slug,
+                pointsTo,
+                index,
+                availability: version.availability,
+            };
+        });
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -138,16 +155,7 @@ export async function getDocsPageProps(
                 }),
             ),
             currentVersionId: node.currentVersion?.versionId,
-            versions: node.versions
-                .filter((version) => !version.hidden)
-                .map((version, index) => ({
-                    title: version.title,
-                    id: version.versionId,
-                    slug: version.slug,
-                    pointsTo: version.pointsTo,
-                    index,
-                    availability: version.availability,
-                })),
+            versions,
             sidebar: node.sidebar,
             trailingSlash: false,
         },

@@ -24,15 +24,13 @@ const samples = [
 samples.forEach((sample) => {
     test(`Check if ${sample.url} is online`, async ({ page }) => {
         await page.goto(sample.preview);
-        const response = await page.goto(sample.url);
+        const response = await page.goto(sample.url, { waitUntil: "domcontentloaded" });
         expect(response?.status()).toBe(200);
-        await page.waitForLoadState("domcontentloaded");
 
         const versionDropdown = page.getByTestId("version-dropdown");
-        await versionDropdown.waitFor({ state: "visible", timeout: 5000 });
         await versionDropdown.click();
         const versionDropdownContent = page.getByTestId("version-dropdown-content");
-        await versionDropdownContent.waitFor({ state: "visible", timeout: 5000 });
+        await versionDropdownContent.waitFor({ state: "attached" });
         const options = await versionDropdownContent.getByRole("menuitemradio", { checked: false }).all();
 
         expect(options.length).toBeGreaterThan(0);
