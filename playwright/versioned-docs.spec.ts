@@ -17,14 +17,16 @@ const samples = [
     "https://docs.flagright.com/framl-api/api-reference/webhooks/user/user-state-update",
     "https://docs.flagright.com/management-api/api-reference/api-reference/get-rules",
 ].map((url) => ({
-    preview: `${deploymentUrl}/api/fern-docs/preview?host=${encodeURIComponent(new URL(url).host)}`,
     url,
+    preview: `${deploymentUrl}/api/fern-docs/preview?host=${encodeURIComponent(new URL(url).host)}`,
+    origin: deploymentUrl,
+    goto: `${deploymentUrl}${new URL(url).pathname}`,
 }));
 
 samples.forEach((sample) => {
     test(`Check if ${sample.url} is online`, async ({ page }) => {
         await page.goto(sample.preview);
-        const response = await page.goto(sample.url, { waitUntil: "domcontentloaded" });
+        const response = await page.goto(sample.goto, { waitUntil: "domcontentloaded" });
         expect(response?.status()).toBe(200);
 
         const versionDropdown = page.getByTestId("version-dropdown");
@@ -38,7 +40,7 @@ samples.forEach((sample) => {
 
         for (const href of hrefs) {
             expect(href).not.toBeNull();
-            const url = href?.startsWith("http") ? href : new URL(sample.preview).origin + (href ?? "");
+            const url = href?.startsWith("http") ? href : sample.origin + (href ?? "");
             const response = await page.goto(url);
             expect(response?.status()).toBe(200);
         }
