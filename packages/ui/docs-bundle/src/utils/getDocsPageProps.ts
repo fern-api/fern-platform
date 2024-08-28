@@ -29,7 +29,6 @@ import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
 import { convertStaticToServerSidePropsResult } from "./convertStaticToServerSidePropsResult";
 import { getSeoDisabled } from "./disabledSeo";
-import { getRedirectForPath } from "./hackRedirects";
 import { isTrailingSlashEnabled } from "./trailingSlash";
 
 type GetStaticDocsPagePropsResult = GetStaticPropsResult<ComponentProps<typeof DocsPage>>;
