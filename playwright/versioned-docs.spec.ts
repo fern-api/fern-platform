@@ -38,8 +38,8 @@ samples.forEach((sample) => {
 
         for (const href of hrefs) {
             expect(href).not.toBeNull();
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const response = await page.goto(href!);
+            const url = href?.startsWith("http") ? href : new URL(sample.preview).origin + (href ?? "");
+            const response = await page.goto(url);
             expect(response?.status()).toBe(200);
         }
     });
