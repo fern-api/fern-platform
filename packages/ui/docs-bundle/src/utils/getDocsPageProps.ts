@@ -30,7 +30,6 @@ import { convertStaticToServerSidePropsResult } from "./convertStaticToServerSid
 import { getSeoDisabled } from "./disabledSeo";
 import { getRedirectForPath } from "./hackRedirects";
 import { isTrailingSlashEnabled } from "./trailingSlash";
-// import { is } from "lodash-es";
 
 type GetStaticDocsPagePropsResult = GetStaticPropsResult<ComponentProps<typeof DocsPage>>;
 type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;
