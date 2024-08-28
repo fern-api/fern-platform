@@ -43,7 +43,7 @@ export function generatePreviewContext(url: string): PreviewContext {
 
 export function toPreviewUrl(deploymentUrl: string, url: string): string {
     if (url.startsWith("http")) {
-        return `${deploymentUrl}${url}`;
+        return `${deploymentUrl}${new URL(url).pathname}`;
     } else if (url.startsWith("/")) {
         return `${deploymentUrl}${url}`;
     }
