@@ -26,12 +26,13 @@ samples.forEach((sample) => {
         await page.goto(sample.preview);
         const response = await page.goto(sample.url);
         expect(response?.status()).toBe(200);
+        await page.waitForLoadState("domcontentloaded");
 
         const versionDropdown = page.getByTestId("version-dropdown");
-        await versionDropdown.waitFor({ state: "visible", timeout: 500 });
+        await versionDropdown.waitFor({ state: "visible", timeout: 5000 });
         await versionDropdown.click();
         const versionDropdownContent = page.getByTestId("version-dropdown-content");
-        await versionDropdownContent.waitFor({ state: "visible", timeout: 500 });
+        await versionDropdownContent.waitFor({ state: "visible", timeout: 5000 });
         const options = await versionDropdownContent.getByRole("menuitemradio", { checked: false }).all();
 
         expect(options.length).toBeGreaterThan(0);

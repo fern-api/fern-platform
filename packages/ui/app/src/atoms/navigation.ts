@@ -49,20 +49,6 @@ export const CURRENT_VERSION_ATOM = atom((get) => {
 });
 CURRENT_VERSION_ATOM.debugLabel = "CURRENT_VERSION_ATOM";
 
-export const UNVERSIONED_SLUG_ATOM = atom<string>((get) => {
-    const slug = get(SLUG_ATOM);
-    const currentVersion = get(CURRENT_VERSION_ATOM);
-    if (currentVersion == null) {
-        return slug;
-    }
-
-    // the root slug is the basepath without the leading slash (defaults to ""):
-    const rootSlug = FernNavigation.utils.slugjoin(get(BASEPATH_ATOM) ?? "");
-
-    return FernNavigation.utils.toDefaultSlug(slug, rootSlug, currentVersion.slug);
-});
-UNVERSIONED_SLUG_ATOM.debugLabel = "UNVERSIONED_SLUG_ATOM";
-
 export const CURRENT_TAB_ATOM = atom((get) => {
     const tabIndex = get(CURRENT_TAB_INDEX_ATOM);
     if (tabIndex == null) {
