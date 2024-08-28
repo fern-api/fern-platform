@@ -45,6 +45,7 @@ export function ThemeScript({ colors }: { colors?: ColorsConfig }): ReactElement
         <Script
             id="theme-script"
             dangerouslySetInnerHTML={{ __html: `(${script.toString()})(${JSON.stringify(args)})` }}
+            strategy="beforeInteractive"
         />
     );
 }
