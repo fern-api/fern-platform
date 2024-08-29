@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
-import React, { ReactElement, useCallback, useEffect, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { useRouteListener } from "../../../atoms";
 import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
@@ -23,7 +23,6 @@ export declare namespace InternalTypeDefinitionError {
         isCollapsible: boolean;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -40,7 +39,6 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     isCollapsible,
     anchorIdParts,
     slug,
-    defaultExpandAll = false,
     types,
 }) => {
     const collapsableContent = useMemo(
@@ -124,20 +122,7 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
-    const {
-        value: isCollapsed,
-        toggleValue: toggleIsCollapsed,
-        setValue: setCollapsed,
-    } = useBooleanState(!defaultExpandAll);
-
-    useEffect(() => {
-        setCollapsed(!defaultExpandAll);
-    }, [defaultExpandAll, setCollapsed]);
-
-    useEffect(() => {
-        setCollapsed(!defaultExpandAll);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const { value: isCollapsed, toggleValue: toggleIsCollapsed, setValue: setCollapsed } = useBooleanState(true);
 
     useRouteListener(slug, (anchor) => {
         const isActive = anchor?.startsWith(anchorIdSoFar + ".") ?? false;

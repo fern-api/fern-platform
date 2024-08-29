@@ -28,7 +28,6 @@ export declare namespace EndpointError {
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
         availability: APIV1Read.Availability | null | undefined;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -43,7 +42,6 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     anchorIdParts,
     slug,
     availability,
-    defaultExpandAll = false,
     types,
 }) {
     return (
@@ -86,7 +84,6 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                     onHoverProperty={onHoverProperty}
                                     anchorIdParts={anchorIdParts}
                                     slug={slug}
-                                    defaultExpandAll={defaultExpandAll}
                                     types={types}
                                     isResponse={true}
                                 />

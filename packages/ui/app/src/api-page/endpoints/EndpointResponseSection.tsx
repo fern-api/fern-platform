@@ -13,7 +13,6 @@ export declare namespace EndpointResponseSection {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -23,7 +22,6 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     onHoverProperty,
     anchorIdParts,
     slug,
-    defaultExpandAll = false,
     types,
 }) => {
     const { isAudioFileDownloadSpanSummary } = useFeatureFlags();
@@ -61,7 +59,6 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
                         slug={slug}
-                        defaultExpandAll={defaultExpandAll}
                         applyErrorStyles={false}
                         types={types}
                         isResponse={true}
@@ -74,7 +71,6 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
                         slug={slug}
-                        defaultExpandAll={defaultExpandAll}
                         applyErrorStyles={false}
                         types={types}
                         isResponse={true}

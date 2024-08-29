@@ -50,7 +50,7 @@ export const SLUG_ATOM = atom(
             return;
         }
         // replaces the current location with the new slug, and removes any hash (from an anchor) that may be present
-        set(LOCATION_ATOM, { pathname, searchParams: location.searchParams }, { replace: true });
+        set(LOCATION_ATOM, { pathname, searchParams: location.searchParams, hash: "" }, { replace: true });
     },
 );
 SLUG_ATOM.debugLabel = "SLUG_ATOM";

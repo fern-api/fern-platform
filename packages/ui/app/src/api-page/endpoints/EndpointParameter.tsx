@@ -50,7 +50,6 @@ export const EndpointParameter = memo<EndpointParameter.Props>(
                 // onHoverProperty={onHoverProperty}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
-                // defaultExpandAll={defaultExpandAll}
                 applyErrorStyles={false}
                 types={types}
             />
