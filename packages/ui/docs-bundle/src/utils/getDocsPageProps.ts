@@ -221,7 +221,7 @@ async function convertDocsToDocsPageProps({
         return {
             redirect: {
                 destination: redirect.destination,
-                permanent: false,
+                permanent: redirect.permanent ?? false,
             },
         };
     }

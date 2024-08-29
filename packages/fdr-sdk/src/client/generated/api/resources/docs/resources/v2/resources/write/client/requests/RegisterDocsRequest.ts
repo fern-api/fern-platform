@@ -184,7 +184,10 @@ import * as FernRegistry from "../../../../../../../../index";
  *                 },
  *                 redirects: [{
  *                         source: "string",
- *                         destination: "string"
+ *                         destination: "string",
+ *                         permanent: {
+ *                             "key": "value"
+ *                         }
  *                     }],
  *                 colorsV3: {
  *                     type: "dark"
