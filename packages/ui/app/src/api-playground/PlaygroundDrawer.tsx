@@ -9,7 +9,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 import { ReactElement, memo, useEffect, useMemo } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { useAtomEffect, useFlattenedApis, useSidebarNodes } from "../atoms";
+import { HEADER_HEIGHT_ATOM, useAtomEffect, useFlattenedApis, useSidebarNodes } from "../atoms";
 import {
     MAX_PLAYGROUND_HEIGHT_ATOM,
     PLAYGROUND_NODE_ID,
@@ -60,7 +60,11 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
 
     const setOffset = useAtomCallback(
         useCallbackOne((get, _set, y: number) => {
-            const newHeight = get(VIEWPORT_HEIGHT_ATOM) - y;
+            const windowHeight = get(VIEWPORT_HEIGHT_ATOM);
+            const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM);
+            const headerHeight = get(HEADER_HEIGHT_ATOM);
+            const maxHeight = isMobileScreen ? windowHeight : windowHeight - headerHeight;
+            const newHeight = Math.min(windowHeight - y, maxHeight);
             height.jump(newHeight, true);
         }, []),
     );
