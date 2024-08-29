@@ -19,10 +19,19 @@ import {
     type PlaygroundRequestFormState,
     type PlaygroundWebSocketRequestFormState,
 } from "../api-playground/types";
-import { getInitialEndpointRequestFormStateWithExample } from "../api-playground/utils";
+import {
+    getInitialEndpointRequestFormState,
+    getInitialEndpointRequestFormStateWithExample,
+    getInitialWebSocketRequestFormState,
+} from "../api-playground/utils";
 import { selectHref } from "../hooks/useHref";
-import { isEndpoint, type ResolvedEndpointDefinition, type ResolvedWebSocketChannel } from "../resolver/types";
-import { APIS_ATOM, FLATTENED_APIS_ATOM } from "./apis";
+import {
+    isEndpoint,
+    isWebSocket,
+    type ResolvedEndpointDefinition,
+    type ResolvedWebSocketChannel,
+} from "../resolver/types";
+import { APIS_ATOM, FLATTENED_APIS_ATOM, useFlattenedApi } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { BELOW_HEADER_HEIGHT_ATOM } from "./layout";
@@ -286,36 +295,31 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                     getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], apiPackage.types),
                 );
             } else if (node.type === "webSocket") {
-                const webSocket = apiPackage.apiDefinitions.find(
-                    (definition) => !isEndpoint(definition) && definition.id === node.webSocketId,
-                );
+                const webSocket = apiPackage.apiDefinitions
+                    .filter(isWebSocket)
+                    .find((definition) => definition.id === node.webSocketId);
                 if (webSocket == null) {
                     captureMessage("Could not find websocket for API playground selection state", "fatal");
                     playgroundFormStateFamily.remove(node.id);
                     return;
                 }
+
+                set(formStateAtom, getInitialWebSocketRequestFormState(webSocket, apiPackage.types));
             }
             playgroundFormStateFamily.remove(node.id);
         }, []),
     );
 }
 
-const EMPTY_ENDPOINT_REQUEST_FORM_STATE: PlaygroundEndpointRequestFormState = {
-    type: "endpoint",
-    headers: {},
-    pathParameters: {},
-    queryParameters: {},
-    body: undefined,
-};
-
 export function usePlaygroundEndpointFormState(
     endpoint: ResolvedEndpointDefinition,
 ): [PlaygroundEndpointRequestFormState, Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(endpoint.nodeId);
     const formState = useAtomValue(playgroundFormStateFamily(endpoint.nodeId));
+    const types = useFlattenedApi(endpoint.apiDefinitionId)?.types ?? {};
 
     return [
-        formState?.type === "endpoint" ? formState : EMPTY_ENDPOINT_REQUEST_FORM_STATE,
+        formState?.type === "endpoint" ? formState : getInitialEndpointRequestFormState(endpoint, types),
         useAtomCallback(
             useCallbackOne(
                 (get, set, update: SetStateAction<PlaygroundEndpointRequestFormState>) => {
@@ -325,7 +329,7 @@ export function usePlaygroundEndpointFormState(
                             ? update(
                                   currentFormState?.type === "endpoint"
                                       ? currentFormState
-                                      : EMPTY_ENDPOINT_REQUEST_FORM_STATE,
+                                      : getInitialEndpointRequestFormState(endpoint, types),
                               )
                             : update;
                     set(formStateAtom, newFormState);
@@ -336,22 +340,15 @@ export function usePlaygroundEndpointFormState(
     ];
 }
 
-const EMPTY_WEBSOCKET_REQUEST_FORM_STATE: PlaygroundWebSocketRequestFormState = {
-    type: "websocket",
-    headers: {},
-    pathParameters: {},
-    queryParameters: {},
-    messages: {},
-};
-
 export function usePlaygroundWebsocketFormState(
     channel: ResolvedWebSocketChannel,
 ): [PlaygroundWebSocketRequestFormState, Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(channel.nodeId);
     const formState = useAtomValue(playgroundFormStateFamily(channel.nodeId));
+    const types = useFlattenedApi(channel.apiDefinitionId)?.types ?? {};
 
     return [
-        formState?.type === "websocket" ? formState : EMPTY_WEBSOCKET_REQUEST_FORM_STATE,
+        formState?.type === "websocket" ? formState : getInitialWebSocketRequestFormState(channel, types),
         useAtomCallback(
             useCallbackOne(
                 (get, set, update: SetStateAction<PlaygroundWebSocketRequestFormState>) => {
@@ -361,7 +358,7 @@ export function usePlaygroundWebsocketFormState(
                             ? update(
                                   currentFormState?.type === "websocket"
                                       ? currentFormState
-                                      : EMPTY_WEBSOCKET_REQUEST_FORM_STATE,
+                                      : getInitialWebSocketRequestFormState(channel, types),
                               )
                             : update;
                     set(formStateAtom, newFormState);

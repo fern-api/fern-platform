@@ -442,7 +442,6 @@ export function getInitialEndpointRequestFormState(
 }
 
 export function getInitialWebSocketRequestFormState(
-    auth: APIV1Read.ApiAuth | null | undefined,
     webSocket: ResolvedWebSocketChannel | undefined,
     types: Record<string, ResolvedTypeDefinition>,
 ): PlaygroundWebSocketRequestFormState {
@@ -451,9 +450,10 @@ export function getInitialWebSocketRequestFormState(
         headers: getDefaultValueForObjectProperties(webSocket?.headers, types),
         pathParameters: getDefaultValueForObjectProperties(webSocket?.pathParameters, types),
         queryParameters: getDefaultValueForObjectProperties(webSocket?.queryParameters, types),
-
         messages: Object.fromEntries(
-            webSocket?.messages.map((message) => [message.type, getDefaultValueForType(message.body, types)]) ?? [],
+            webSocket?.messages
+                .filter((message) => message.origin === "client")
+                .map((message) => [message.type, getDefaultValueForType(message.body, types)]) ?? [],
         ),
     };
 }
