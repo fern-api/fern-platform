@@ -1,6 +1,6 @@
 import cn, { clsx } from "clsx";
 import { Children, ComponentProps, PropsWithChildren, ReactElement, useCallback, useRef, useState } from "react";
-import { useHorizontalSplitPane, useVerticalSplitPane } from "./useSplitPlane";
+import { useHorizontalSplitPane, useResizeY } from "./useSplitPlane";
 
 interface VerticalSplitPaneProps extends ComponentProps<"div"> {
     aboveClassName?: string;
@@ -18,14 +18,14 @@ export function VerticalSplitPane({
 
     const ref = useRef<HTMLDivElement>(null);
 
-    const setHeight = useCallback((clientY: number) => {
+    const setClientY = useCallback((clientY: number) => {
         if (ref.current != null) {
             const { top, height } = ref.current.getBoundingClientRect();
             setAboveHeightPercent((clientY - top - 6) / height);
         }
     }, []);
 
-    const { handleVerticalResize } = useVerticalSplitPane(setHeight);
+    const resizeY = useResizeY(setClientY);
 
     const [above, below] = Children.toArray(children);
 
@@ -49,8 +49,9 @@ export function VerticalSplitPane({
                 {above}
             </div>
             <div
-                className="shink-0 group relative flex h-3 flex-none cursor-row-resize items-center px-3 opacity-0 transition-opacity after:absolute after:inset-x-0 after:-top-1 after:h-6 after:content-[''] hover:opacity-100 hover:delay-300"
-                onMouseDown={handleVerticalResize}
+                className="shink-0 group relative flex h-3 flex-none cursor-row-resize items-center px-3 opacity-0 transition-opacity after:absolute after:inset-x-0 after:-top-1 after:h-6 after:content-[''] hover:opacity-100 hover:delay-300 touch-none"
+                onMouseDown={resizeY.onMouseDown}
+                onTouchStart={resizeY.onTouchStart}
             >
                 <div className="bg-border-primary relative z-10 mx-auto h-0.5 w-full rounded-full group-active:bg-accent group-active:transition-[background]" />
             </div>

@@ -5,7 +5,6 @@ import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { capturePosthogEvent } from "../analytics/posthog";
 import {
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
@@ -34,10 +33,11 @@ import {
 import { APIS_ATOM, FLATTENED_APIS_ATOM, useFlattenedApi } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
-import { BELOW_HEADER_HEIGHT_ATOM } from "./layout";
+import { HEADER_HEIGHT_ATOM } from "./layout";
 import { LOCATION_ATOM } from "./location";
 import { NAVIGATION_NODES_ATOM } from "./navigation";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
+import { IS_MOBILE_SCREEN_ATOM } from "./viewport";
 
 const PLAYGROUND_IS_OPEN_ATOM = atom(false);
 PLAYGROUND_IS_OPEN_ATOM.debugLabel = "PLAYGROUND_IS_OPEN_ATOM";
@@ -46,6 +46,13 @@ export const HAS_PLAYGROUND_ATOM = atom(
     (get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled && Object.keys(get(APIS_ATOM)).length > 0,
 );
 HAS_PLAYGROUND_ATOM.debugLabel = "HAS_PLAYGROUND_ATOM";
+
+export const MAX_PLAYGROUND_HEIGHT_ATOM = atom((get) => {
+    const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM);
+    const headerHeight = get(HEADER_HEIGHT_ATOM);
+    return isMobileScreen ? "100vh" : `calc(100vh - ${headerHeight}px)`;
+});
+MAX_PLAYGROUND_HEIGHT_ATOM.debugLabel = "MAX_PLAYGROUND_HEIGHT_ATOM";
 
 const PLAYGROUND_HEIGHT_VALUE_ATOM = atom<number>(0);
 PLAYGROUND_HEIGHT_VALUE_ATOM.debugLabel = "PLAYGROUND_HEIGHT_VALUE_ATOM";
@@ -56,18 +63,6 @@ PLAYGROUND_HEIGHT_VALUE_ATOM.onMount = (set) => {
     }
     set(window.innerHeight);
 };
-
-export const PLAYGROUND_HEIGHT_ATOM = atom(
-    (get) => {
-        const playgroundHeight = Math.max(get(PLAYGROUND_HEIGHT_VALUE_ATOM), 0);
-        const maxPlaygroundHeight = get(BELOW_HEADER_HEIGHT_ATOM);
-        return Math.max(Math.min(maxPlaygroundHeight, playgroundHeight), 64);
-    },
-    (_get, set, update: number) => {
-        set(PLAYGROUND_HEIGHT_VALUE_ATOM, update);
-    },
-);
-PLAYGROUND_HEIGHT_ATOM.debugLabel = "PLAYGROUND_HEIGHT_ATOM";
 
 export const PLAYGROUND_NODE_ID = atom(
     (get) => {
@@ -94,13 +89,6 @@ export const PLAYGROUND_NODE_ID = atom(
             set(PLAYGROUND_IS_OPEN_ATOM, true);
 
             newLocation.searchParams.set("playground", selectHref(get, node.slug));
-
-            // set playground height to be the window height - header height
-            const contentHeight = get(BELOW_HEADER_HEIGHT_ATOM);
-            set(PLAYGROUND_HEIGHT_ATOM, contentHeight);
-
-            capturePosthogEvent("api_playground_opened", { apiNode: node });
-            set(PLAYGROUND_HEIGHT_ATOM, get(BELOW_HEADER_HEIGHT_ATOM));
         } else {
             newLocation.searchParams.delete("playground");
             set(PLAYGROUND_IS_OPEN_ATOM, false);
@@ -128,14 +116,6 @@ PREV_PLAYGROUND_NODE_ID.debugLabel = "PREV_PLAYGROUND_NODE_ID";
 
 export function useHasPlayground(): boolean {
     return useAtomValue(HAS_PLAYGROUND_ATOM);
-}
-
-export function usePlaygroundHeight(): number {
-    return useAtomValue(PLAYGROUND_HEIGHT_ATOM);
-}
-
-export function useSetPlaygroundHeight(): (height: number) => void {
-    return useSetAtom(PLAYGROUND_HEIGHT_ATOM);
 }
 
 export function usePlaygroundNodeId(): FernNavigation.NodeId | undefined {
