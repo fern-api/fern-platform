@@ -13,7 +13,6 @@ import { HEADER_HEIGHT_ATOM, useAtomEffect, useFlattenedApis, useSidebarNodes } 
 import {
     MAX_PLAYGROUND_HEIGHT_ATOM,
     PLAYGROUND_NODE_ID,
-    useClosePlayground,
     useHasPlayground,
     useIsPlaygroundOpen,
     usePlaygroundFormStateAtom,
@@ -30,7 +29,6 @@ import { HorizontalSplitPane } from "./VerticalSplitPane";
 import { useResizeY } from "./useSplitPlane";
 
 export const PlaygroundDrawer = memo((): ReactElement | null => {
-    const collapsePlayground = useClosePlayground();
     const hasPlayground = useHasPlayground();
     const selectionState = usePlaygroundNode();
     const apis = useFlattenedApis();
@@ -136,13 +134,16 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     const renderMobileHeader = () => (
         <div className="grid h-10 grid-cols-2 gap-2 px-4">
             <div className="flex items-center">
-                <span className="inline-flex items-baseline gap-2">
-                    <span className="t-accent text-sm font-semibold">API Playground</span>
+                <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                    <span className="t-accent">API Playground</span>
+                    {selectedEndpoint != null && <span>{selectedEndpoint.title}</span>}
                 </span>
             </div>
 
             <div className="flex items-center justify-end">
-                <FernButton variant="minimal" className="-mr-3" icon={<Xmark />} onClick={collapsePlayground} rounded />
+                <Dialog.Close asChild>
+                    <FernButton variant="minimal" className="-mr-3" icon={<Xmark />} rounded />
+                </Dialog.Close>
             </div>
         </div>
     );
