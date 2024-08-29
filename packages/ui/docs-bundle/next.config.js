@@ -64,70 +64,70 @@ const nextConfig = {
      */
     assetPrefix: cdnUri != null ? cdnUri.href : undefined,
     headers: async () => {
-        const defaultSrc = ["'self'", "https://*.buildwithfern.com", "https://*.ferndocs.com", ...DOCS_FILES_URLS];
+        // const defaultSrc = ["'self'", "https://*.buildwithfern.com", "https://*.ferndocs.com", ...DOCS_FILES_URLS];
 
-        const connectSrc = [
-            "'self'",
-            "https://*.buildwithfern.com",
-            "https://*.ferndocs.com",
-            "wss://websocket.proxy.ferndocs.com",
-            "https://*.algolia.net",
-            "https://*.algolianet.com",
-            "https://*.algolia.io",
-            "https://*.posthog.com",
-            "https://cdn.segment.com",
-            "https://api.segment.io",
-            "wss://api.getkoala.com",
-            "https://www.google-analytics.com",
-            "https://*.intercom.io",
-            "wss://*.intercom.io",
-            "https://*.fullstory.com",
-        ];
+        // const connectSrc = [
+        //     "'self'",
+        //     "https://*.buildwithfern.com",
+        //     "https://*.ferndocs.com",
+        //     "wss://websocket.proxy.ferndocs.com",
+        //     "https://*.algolia.net",
+        //     "https://*.algolianet.com",
+        //     "https://*.algolia.io",
+        //     "https://*.posthog.com",
+        //     "https://cdn.segment.com",
+        //     "https://api.segment.io",
+        //     "wss://api.getkoala.com",
+        //     "https://www.google-analytics.com",
+        //     "https://*.intercom.io",
+        //     "wss://*.intercom.io",
+        //     "https://*.fullstory.com",
+        // ];
 
-        const scriptSrc = [
-            "'self'",
-            "'unsafe-eval'",
-            "'unsafe-inline'",
-            "https://*.posthog.com",
-            "https://cdn.segment.com",
-            "https://www.googletagmanager.com",
-            "https://*.intercomcdn.com",
-            "https://*.intercom.io",
-            "https://*.fullstory.com",
-            ...DOCS_FILES_URLS,
-        ];
+        // const scriptSrc = [
+        //     "'self'",
+        //     "'unsafe-eval'",
+        //     "'unsafe-inline'",
+        //     "https://*.posthog.com",
+        //     "https://cdn.segment.com",
+        //     "https://www.googletagmanager.com",
+        //     "https://*.intercomcdn.com",
+        //     "https://*.intercom.io",
+        //     "https://*.fullstory.com",
+        //     ...DOCS_FILES_URLS,
+        // ];
 
-        const styleSrc = ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"];
+        // const styleSrc = ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"];
 
-        const fontSrc = ["'self'", "data:", "https://*.intercomcdn.com", ...DOCS_FILES_URLS];
+        // const fontSrc = ["'self'", "data:", "https://*.intercomcdn.com", ...DOCS_FILES_URLS];
 
-        if (cdnUri != null) {
-            scriptSrc.push(`${cdnUri.origin}`);
-            connectSrc.push(`${cdnUri.origin}`);
-            styleSrc.push(`${cdnUri.origin}`);
-        }
+        // if (cdnUri != null) {
+        //     scriptSrc.push(`${cdnUri.origin}`);
+        //     connectSrc.push(`${cdnUri.origin}`);
+        //     styleSrc.push(`${cdnUri.origin}`);
+        // }
 
-        // enable vercel toolbar
-        scriptSrc.push("https://vercel.live");
-        connectSrc.push("https://vercel.live");
-        connectSrc.push("wss://*.pusher.com");
-        styleSrc.push("https://vercel.live");
-        styleSrc.push("https://fonts.googleapis.com");
+        // // enable vercel toolbar
+        // scriptSrc.push("https://vercel.live");
+        // connectSrc.push("https://vercel.live");
+        // connectSrc.push("wss://*.pusher.com");
+        // styleSrc.push("https://vercel.live");
+        // styleSrc.push("https://fonts.googleapis.com");
 
-        const ContentSecurityPolicy = [
-            `default-src ${defaultSrc.join(" ")}`,
-            `script-src ${scriptSrc.join(" ")}`,
-            `style-src ${styleSrc.join(" ")}`,
-            "img-src 'self' https: blob: data:",
-            `connect-src ${connectSrc.join(" ")}`,
-            "frame-src 'self' https:",
-            "object-src 'none'",
-            "base-uri 'self'",
-            "form-action 'self'",
-            "frame-ancestors 'none'",
-            `font-src ${fontSrc.join(" ")}`,
-            // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
-        ];
+        // const ContentSecurityPolicy = [
+        //     `default-src ${defaultSrc.join(" ")}`,
+        //     `script-src ${scriptSrc.join(" ")}`,
+        //     `style-src ${styleSrc.join(" ")}`,
+        //     "img-src 'self' https: blob: data:",
+        //     `connect-src ${connectSrc.join(" ")}`,
+        //     "frame-src 'self' https:",
+        //     "object-src 'none'",
+        //     "base-uri 'self'",
+        //     "form-action 'self'",
+        //     "frame-ancestors 'none'",
+        //     `font-src ${fontSrc.join(" ")}`,
+        //     // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
+        // ];
 
         // BEGIN CSP REPORT SUPPRESSION
         // CSP reports to sentry have been disabled because they often come from downstream custom js
@@ -138,15 +138,15 @@ const nextConfig = {
         //
         // const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
 
-        ContentSecurityPolicy.push("worker-src 'self' blob:");
+        // ContentSecurityPolicy.push("worker-src 'self' blob:");
 
         // ContentSecurityPolicy.push(`report-uri ${reportUri}`);
         // ContentSecurityPolicy.push("report-to csp-endpoint");
 
-        const ContentSecurityHeaders = [
-            { key: "Content-Security-Policy-Report-Only", value: ContentSecurityPolicy.join("; ") },
-            // { key: "Report-To", value: ReportTo },
-        ];
+        // const ContentSecurityHeaders = [
+        //     { key: "Content-Security-Policy-Report-Only", value: ContentSecurityPolicy.join("; ") },
+        //     // { key: "Report-To", value: ReportTo },
+        // ];
 
         // END CSP REPORT SUPPRESSION
 
@@ -178,10 +178,10 @@ const nextConfig = {
                 source: "/:prefix*/api/fern-docs/auth/:path*",
                 headers: AccessControlHeaders,
             },
-            {
-                source: "/:path*",
-                headers: ContentSecurityHeaders,
-            },
+            // {
+            //     source: "/:path*",
+            //     headers: ContentSecurityHeaders,
+            // },
         ];
     },
     rewrites: async () => {
