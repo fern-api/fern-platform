@@ -48,8 +48,6 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
-        instrumentationHook: true,
-        webpackBuildWorker: true,
     },
     trailingSlash: isTruthy(process.env.TRAILING_SLASH),
     /**
