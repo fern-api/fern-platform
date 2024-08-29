@@ -15,7 +15,7 @@ import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderTypeShorthand, renderTypeShorthandFormDataProperty } from "../types/type-shorthand/TypeShorthand";
 import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter";
 
 export declare namespace EndpointRequestSection {
@@ -69,11 +69,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                     <EndpointParameterContent
                                         name={file.key}
                                         description={file.description}
-                                        typeShorthand={
-                                            <span className="t-muted inline-flex items-baseline gap-2 text-xs">
-                                                {file.isOptional ? "optional file" : "file"}
-                                            </span>
-                                        }
+                                        typeShorthand={renderTypeShorthandFormDataProperty(file)}
                                         anchorIdParts={[...anchorIdParts, file.key]}
                                         slug={slug}
                                         availability={file.availability}
@@ -83,11 +79,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                     <EndpointParameterContent
                                         name={fileArray.key}
                                         description={fileArray.description}
-                                        typeShorthand={
-                                            <span className="t-muted inline-flex items-baseline gap-2 text-xs">
-                                                {fileArray.isOptional ? "optional list of files" : "list of files"}
-                                            </span>
-                                        }
+                                        typeShorthand={renderTypeShorthandFormDataProperty(fileArray)}
                                         anchorIdParts={[...anchorIdParts, fileArray.key]}
                                         slug={slug}
                                         availability={fileArray.availability}
