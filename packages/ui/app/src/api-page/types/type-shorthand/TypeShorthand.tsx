@@ -1,9 +1,9 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import clsx from "clsx";
 import { ReactNode } from "react";
 import {
     DereferencedTypeShape,
+    ResolvedFormDataRequestProperty,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     ResolvedUnknownTypeShape,
@@ -22,16 +22,15 @@ export function renderTypeShorthandRoot(
     shape: ResolvedTypeShape,
     types: Record<string, ResolvedTypeDefinition>,
     isResponse: boolean = false,
-    className?: string,
 ): ReactNode {
     const typeShorthand = renderTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
     const unaliasedShape = unwrapAlias(shape, types);
     const defaultsTo = renderDefaultsTo(unaliasedShape);
     return (
-        <span className={clsx("fern-api-property-meta", className)}>
+        <span className="fern-api-property-meta">
             <span>{typeShorthand}</span>
             {unaliasedShape.type === "optional" ? (
-                <span>{isResponse ? "Optional" : "Optional"}</span>
+                <span>Optional</span>
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
             ) : null}
@@ -41,6 +40,17 @@ export function renderTypeShorthandRoot(
                     <code>{defaultsTo}</code>
                 </span>
             )}
+        </span>
+    );
+}
+
+export function renderTypeShorthandFormDataProperty(
+    property: Exclude<ResolvedFormDataRequestProperty, ResolvedFormDataRequestProperty.BodyProperty>,
+): ReactNode {
+    return (
+        <span className="fern-api-property-meta">
+            <span>{property.type === "file" ? "file" : property.type === "fileArray" ? "files" : "unknown"}</span>
+            {property.isOptional ? <span>Optional</span> : <span className="t-danger">Required</span>}
         </span>
     );
 }
