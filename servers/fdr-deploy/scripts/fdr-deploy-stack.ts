@@ -1,6 +1,8 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
 import { CfnOutput, Duration, Environment, RemovalPolicy, Stack, StackProps, Token } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
+import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
+import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 import { Alarm } from "aws-cdk-lib/aws-cloudwatch";
 import * as actions from "aws-cdk-lib/aws-cloudwatch-actions";
 import { IVpc, Peer, Port, SecurityGroup, Vpc } from "aws-cdk-lib/aws-ec2";
@@ -9,7 +11,9 @@ import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patte
 import { CfnReplicationGroup, CfnSubnetGroup } from "aws-cdk-lib/aws-elasticache";
 import { ApplicationProtocol, HttpCodeElb } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
+import * as route53 from "aws-cdk-lib/aws-route53";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
+import * as targets from "aws-cdk-lib/aws-route53-targets";
 import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
 import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
 import { PrivateDnsNamespace } from "aws-cdk-lib/aws-servicediscovery";
@@ -82,6 +86,11 @@ export class FdrDeployStack extends Stack {
             environmentInfo.route53Info.certificateArn,
         );
 
+        const hostedZone = HostedZone.fromHostedZoneAttributes(this, "zoneId", {
+            hostedZoneId: environmentInfo.route53Info.hostedZoneId,
+            zoneName: environmentInfo.route53Info.hostedZoneName,
+        });
+
         const snsTopic = new sns.Topic(this, "fdr-sns-topic", {
             topicName: id,
         });
@@ -133,6 +142,23 @@ export class FdrDeployStack extends Stack {
         });
         publicDocsBucket.grantPublicAccess();
 
+        const publicDocsFilesDomainName = getPublicBucketDomainName(environmentType, environmentInfo);
+        const publicDocsFilesDistribution = new cloudfront.Distribution(this, "MyDistribution", {
+            defaultBehavior: {
+                origin: new origins.S3Origin(publicDocsBucket),
+                viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+                cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+            },
+            domainNames: [publicDocsFilesDomainName],
+            certificate,
+        });
+
+        new route53.ARecord(this, "SiteAliasRecord", {
+            recordName: publicDocsFilesDomainName,
+            target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(publicDocsFilesDistribution)),
+            zone: hostedZone,
+        });
+
         const fernDocsCacheEndpoint = this.constructElastiCacheInstance(this, {
             cacheName: options.cacheName,
             IVpc: vpc,
@@ -151,10 +177,7 @@ export class FdrDeployStack extends Stack {
             namespaceId: environmentInfo.cloudMapNamespaceInfo.namespaceId,
             namespaceName: cloudmapNamespaceName,
         });
-        const hostedZone = HostedZone.fromHostedZoneAttributes(this, "zoneId", {
-            hostedZoneId: environmentInfo.route53Info.hostedZoneId,
-            zoneName: environmentInfo.route53Info.hostedZoneName,
-        });
+
         const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
             serviceName: SERVICE_NAME,
             cluster,
@@ -344,6 +367,13 @@ function getServiceDomainName(environmentType: EnvironmentType, environmentInfo:
         return "registry" + "." + environmentInfo.route53Info.hostedZoneName;
     }
     return "registry" + "-" + environmentType.toLowerCase() + "." + environmentInfo.route53Info.hostedZoneName;
+}
+
+function getPublicBucketDomainName(environmentType: EnvironmentType, environmentInfo: EnvironmentInfo) {
+    if (environmentType === EnvironmentType.Prod) {
+        return "files" + "." + environmentInfo.route53Info.hostedZoneName;
+    }
+    return "files" + "-" + environmentType.toLowerCase() + "." + environmentInfo.route53Info.hostedZoneName;
 }
 
 function getEnvironmentVariableOrThrow(environmentVariable: string): string {
