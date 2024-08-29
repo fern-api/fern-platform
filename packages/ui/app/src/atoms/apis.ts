@@ -18,6 +18,10 @@ export function useFlattenedApis(): Record<string, FlattenedRootPackage> {
     return useAtomValue(FLATTENED_APIS_ATOM);
 }
 
+export function useFlattenedApi(apiId: string): FlattenedRootPackage | undefined {
+    return useAtomValue(useMemoOne(() => atom((get) => get(FLATTENED_APIS_ATOM)[apiId]), [apiId]));
+}
+
 const IS_API_REFERENCE_PAGINATED = atom<boolean>((get) => {
     let isApiScrollingDisabled = get(FEATURE_FLAGS_ATOM).isApiScrollingDisabled;
     const resolvedPath = get(RESOLVED_PATH_ATOM);

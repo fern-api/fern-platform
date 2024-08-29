@@ -104,7 +104,7 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                             )
                         }
                         rightIcon={<NavArrowDown />}
-                        className="w-full text-left"
+                        className="w-full text-left mb-4"
                         variant="outlined"
                         mono={true}
                         disabled={disabled}
@@ -120,6 +120,7 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                         value={value}
                         types={types}
                         disabled={disabled}
+                        indent={false}
                     />
                 </div>
             )}

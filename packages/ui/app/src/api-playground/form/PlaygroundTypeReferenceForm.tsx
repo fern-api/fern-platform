@@ -33,11 +33,12 @@ interface PlaygroundTypeReferenceFormProps {
     onlyOptional?: boolean;
     types: Record<string, ResolvedTypeDefinition>;
     disabled?: boolean;
+    indent?: boolean;
 }
 
 export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps>((props) => {
     const { hasVoiceIdPlaygroundForm } = useFeatureFlags();
-    const { id, property, shape, onChange, value, types, disabled } = props;
+    const { id, property, shape, onChange, value, types, disabled, indent = true } = props;
     const onRemove = useCallback(() => {
         onChange(undefined);
     }, [onChange]);
@@ -48,7 +49,7 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                     properties={dereferenceObjectProperties(object, types)}
                     onChange={onChange}
                     value={value}
-                    indent={true}
+                    indent={indent}
                     id={id}
                     types={types}
                     disabled={disabled}

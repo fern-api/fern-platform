@@ -538,6 +538,7 @@ export class ApiDefinitionResolver {
             environments: websocket.environments,
             nodeId: node.id,
             id: node.webSocketId,
+            apiDefinitionId: node.apiDefinitionId,
             description: websocket.description,
             availability: websocket.availability,
             slug: node.slug,

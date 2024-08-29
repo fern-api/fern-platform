@@ -38,7 +38,9 @@ export function buildQueryParams(queryParameters: Record<string, unknown> | unde
     }
     const queryParams = new URLSearchParams();
     Object.entries(queryParameters).forEach(([key, value]) => {
-        queryParams.set(key, unknownToString(value));
+        if (value != null) {
+            queryParams.set(key, unknownToString(value));
+        }
     });
     return queryParams.size > 0 ? "?" + queryParams.toString() : "";
 }
@@ -141,7 +143,10 @@ export function getDefaultValueForObjectProperties(
     types: Record<string, ResolvedTypeDefinition>,
 ): Record<string, unknown> {
     return properties.reduce<Record<string, unknown>>((acc, property) => {
-        acc[property.key] = getDefaultValueForType(property.valueShape, types);
+        const defaultValue = getDefaultValueForType(property.valueShape, types);
+        if (defaultValue != null) {
+            acc[property.key] = defaultValue;
+        }
         return acc;
     }, {});
 }
@@ -442,7 +447,6 @@ export function getInitialEndpointRequestFormState(
 }
 
 export function getInitialWebSocketRequestFormState(
-    auth: APIV1Read.ApiAuth | null | undefined,
     webSocket: ResolvedWebSocketChannel | undefined,
     types: Record<string, ResolvedTypeDefinition>,
 ): PlaygroundWebSocketRequestFormState {
@@ -451,9 +455,10 @@ export function getInitialWebSocketRequestFormState(
         headers: getDefaultValueForObjectProperties(webSocket?.headers, types),
         pathParameters: getDefaultValueForObjectProperties(webSocket?.pathParameters, types),
         queryParameters: getDefaultValueForObjectProperties(webSocket?.queryParameters, types),
-
         messages: Object.fromEntries(
-            webSocket?.messages.map((message) => [message.type, getDefaultValueForType(message.body, types)]) ?? [],
+            webSocket?.messages
+                .filter((message) => message.origin === "client")
+                .map((message) => [message.type, getDefaultValueForType(message.body, types)]) ?? [],
         ),
     };
 }
