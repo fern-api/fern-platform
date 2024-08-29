@@ -15,7 +15,6 @@ export declare namespace TypeReferenceDefinitions {
         anchorIdParts: readonly string[];
         className?: string;
         slug: FernNavigation.Slug;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
         isResponse?: boolean;
     }
@@ -29,7 +28,6 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(fun
     anchorIdParts,
     className,
     slug,
-    defaultExpandAll = false,
     types,
     isResponse,
 }) {
@@ -43,7 +41,6 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(fun
                     className={className}
                     anchorIdParts={anchorIdParts}
                     slug={slug}
-                    defaultExpandAll={defaultExpandAll}
                     types={types}
                 />
             </TypeDefinitionContextProvider>

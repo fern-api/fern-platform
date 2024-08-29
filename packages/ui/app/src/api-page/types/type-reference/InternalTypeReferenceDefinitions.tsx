@@ -15,7 +15,6 @@ export declare namespace InternalTypeReferenceDefinitions {
         className?: string;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
         isResponse?: boolean;
     }
@@ -86,7 +85,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     className,
     anchorIdParts,
     slug,
-    defaultExpandAll = false,
     types,
 }) => {
     const InternalShapeRenderer = applyErrorStyles ? InternalTypeDefinitionError : InternalTypeDefinition;
@@ -97,7 +95,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
-                defaultExpandAll={defaultExpandAll}
                 types={types}
             />
         ),
@@ -107,7 +104,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
-                defaultExpandAll={defaultExpandAll}
                 types={types}
             />
         ),
@@ -117,7 +113,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
-                defaultExpandAll={defaultExpandAll}
                 types={types}
             />
         ),
@@ -127,7 +122,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
-                defaultExpandAll={defaultExpandAll}
                 types={types}
             />
         ),
@@ -141,7 +135,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     slug={slug}
-                    defaultExpandAll={defaultExpandAll}
                     types={types}
                 />
             </ListTypeContextProvider>
@@ -155,7 +148,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     slug={slug}
-                    defaultExpandAll={defaultExpandAll}
                     types={types}
                 />
             </ListTypeContextProvider>
@@ -168,7 +160,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 className={className}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
-                defaultExpandAll={defaultExpandAll}
                 types={types}
             />
         ),
@@ -181,7 +172,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     slug={slug}
-                    defaultExpandAll={defaultExpandAll}
                     types={types}
                 />
                 <InternalTypeReferenceDefinitions
@@ -191,7 +181,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     className={className}
                     anchorIdParts={anchorIdParts}
                     slug={slug}
-                    defaultExpandAll={defaultExpandAll}
                     types={types}
                 />
             </MapTypeContextProvider>
@@ -203,7 +192,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 isCollapsible={false}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
-                defaultExpandAll={defaultExpandAll}
                 types={types}
             />
         ),
@@ -217,7 +205,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 className={className}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
-                defaultExpandAll={defaultExpandAll}
                 types={types}
             />
         ),

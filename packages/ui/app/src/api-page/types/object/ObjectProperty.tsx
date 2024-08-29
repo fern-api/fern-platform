@@ -28,7 +28,6 @@ export declare namespace ObjectProperty {
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
         applyErrorStyles: boolean;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -58,7 +57,7 @@ interface ObjectPropertyInternalProps extends ObjectProperty.Props {
 }
 
 const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectPropertyInternalProps>((props, ref) => {
-    const { slug, property, applyErrorStyles, defaultExpandAll, types, anchorIdParts, anchorId, isActive } = props;
+    const { slug, property, applyErrorStyles, types, anchorIdParts, anchorId, isActive } = props;
     const contextValue = useTypeDefinitionContext();
     const jsonPropertyPath = useMemo(
         (): JsonPropertyPath => [
@@ -142,7 +141,6 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                             applyErrorStyles={applyErrorStyles}
                             anchorIdParts={anchorIdParts}
                             slug={slug}
-                            defaultExpandAll={defaultExpandAll}
                             types={types}
                         />
                     </TypeDefinitionContext.Provider>
@@ -158,7 +156,6 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                             applyErrorStyles={applyErrorStyles}
                             anchorIdParts={anchorIdParts}
                             slug={slug}
-                            defaultExpandAll={defaultExpandAll}
                             types={types}
                         />
                     </TypeDefinitionContext.Provider>

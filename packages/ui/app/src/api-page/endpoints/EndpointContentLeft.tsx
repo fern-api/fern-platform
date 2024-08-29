@@ -1,16 +1,12 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useBooleanState } from "@fern-ui/react-commons";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
-    ResolvedHttpRequestBodyShape,
-    ResolvedHttpResponseBodyShape,
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
-    dereferenceObjectProperties,
     getParameterDescription,
 } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -60,9 +56,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     // setContentType,
     types,
 }) => {
-    const requestExpandAll = useBooleanState(false);
-    const responseExpandAll = useBooleanState(false);
-    const errorExpandAll = useBooleanState(false);
     const { isAuthEnabledInDocs } = useFeatureFlags();
 
     let authHeaders: ResolvedObjectProperty | undefined;
@@ -226,16 +219,12 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         title="Request"
                                         anchorIdParts={REQUEST}
                                         slug={endpoint.slug}
-                                        expandAll={requestExpandAll.setTrue}
-                                        collapseAll={requestExpandAll.setFalse}
-                                        showExpandCollapse={shouldShowExpandCollapse(requestBody.shape, types)}
                                     >
                                         <EndpointRequestSection
                                             requestBody={requestBody}
                                             onHoverProperty={onHoverRequestProperty}
                                             anchorIdParts={REQUEST_BODY}
                                             slug={endpoint.slug}
-                                            defaultExpandAll={requestExpandAll.value}
                                             types={types}
                                         />
                                     </EndpointSection>
@@ -251,48 +240,29 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     title="Request"
                     anchorIdParts={REQUEST}
                     slug={endpoint.slug}
-                    expandAll={requestExpandAll.setTrue}
-                    collapseAll={requestExpandAll.setFalse}
-                    showExpandCollapse={shouldShowExpandCollapse(endpoint.requestBody.shape, types)}
                 >
                     <EndpointRequestSection
                         requestBody={endpoint.requestBody}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={REQUEST_BODY}
                         slug={endpoint.slug}
-                        defaultExpandAll={requestExpandAll.value}
                         types={types}
                     />
                 </EndpointSection>
             )}
             {endpoint.responseBody != null && (
-                <EndpointSection
-                    title="Response"
-                    anchorIdParts={RESPONSE}
-                    slug={endpoint.slug}
-                    expandAll={responseExpandAll.setTrue}
-                    collapseAll={responseExpandAll.setFalse}
-                    showExpandCollapse={shouldShowExpandCollapse(endpoint.responseBody.shape, types)}
-                >
+                <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={endpoint.slug}>
                     <EndpointResponseSection
                         responseBody={endpoint.responseBody}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={RESPONSE_BODY}
                         slug={endpoint.slug}
-                        defaultExpandAll={responseExpandAll.value}
                         types={types}
                     />
                 </EndpointSection>
             )}
             {showErrors && endpoint.errors.length > 0 && (
-                <EndpointSection
-                    title="Errors"
-                    anchorIdParts={RESPONSE_ERROR}
-                    slug={endpoint.slug}
-                    expandAll={errorExpandAll.setTrue}
-                    collapseAll={errorExpandAll.setFalse}
-                    showExpandCollapse={false}
-                >
+                <EndpointSection title="Errors" anchorIdParts={RESPONSE_ERROR} slug={endpoint.slug}>
                     <div className="border-default flex flex-col overflow-visible rounded-lg border">
                         {sortBy(
                             endpoint.errors,
@@ -317,7 +287,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     ]}
                                     slug={endpoint.slug}
                                     availability={error.availability}
-                                    defaultExpandAll={errorExpandAll.value}
                                     types={types}
                                 />
                             );
@@ -343,46 +312,4 @@ export function convertNameToAnchorPart(name: string | null | undefined): string
         return undefined;
     }
     return upperFirst(camelCase(name));
-}
-
-function shouldShowExpandCollapse(
-    shape: ResolvedHttpRequestBodyShape | ResolvedHttpResponseBodyShape,
-    types: Record<string, ResolvedTypeDefinition>,
-    depth = 0,
-): boolean {
-    return visitDiscriminatedUnion(shape, "type")._visit({
-        primitive: () => false,
-        literal: () => false,
-        object: (object) =>
-            depth > 1
-                ? true
-                : dereferenceObjectProperties(object, types).some(({ valueShape }) =>
-                      shouldShowExpandCollapse(valueShape, types, depth + 1),
-                  ),
-        map: () => true,
-        undiscriminatedUnion: () => true,
-        discriminatedUnion: () => true,
-        enum: () => false,
-        alias: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        unknown: () => false,
-        formData: () => false,
-        optional: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        list: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        set: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        reference: ({ typeId }) => {
-            const referenceShape = types[typeId];
-            if (referenceShape == null) {
-                return false;
-            }
-            return shouldShowExpandCollapse(referenceShape, types, depth);
-        },
-        _other: () => false,
-        fileDownload: () => false,
-        streamingText: () => false,
-        streamCondition: () => false,
-        bytes: () => false,
-        stream: (stream) => {
-            return shouldShowExpandCollapse(stream.value, types, depth);
-        },
-    });
 }

@@ -1,6 +1,4 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { Minus, Plus } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
@@ -20,9 +18,6 @@ export declare namespace EndpointSection {
         description?: BundledMDX | undefined;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        expandAll?: () => void;
-        collapseAll?: () => void;
-        showExpandCollapse?: boolean;
     }>;
 }
 
@@ -33,9 +28,6 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     anchorIdParts,
     slug,
     children,
-    showExpandCollapse,
-    expandAll: handleExpandAll,
-    collapseAll: handleCollapseAll,
 }) => {
     const ref = useRef<HTMLDivElement>(null);
     const anchorId = getAnchorId(anchorIdParts);
@@ -49,16 +41,6 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                         { className: "relative mt-0 flex items-center" },
                         <AbsolutelyPositionedAnchor href={href} />,
                         <span>{title}</span>,
-                    )}
-                    {showExpandCollapse && (
-                        <FernButtonGroup className="invisible group-hover/anchor-container:visible">
-                            <FernButton onClick={handleExpandAll} icon={<Plus />} size="small" variant="minimal">
-                                Expand all
-                            </FernButton>
-                            <FernButton onClick={handleCollapseAll} icon={<Minus />} size="small" variant="minimal">
-                                Collapse all
-                            </FernButton>
-                        </FernButtonGroup>
                     )}
                 </div>
                 {description != null && (
