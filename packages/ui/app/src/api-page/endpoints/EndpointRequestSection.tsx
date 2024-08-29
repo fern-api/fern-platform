@@ -24,7 +24,6 @@ export declare namespace EndpointRequestSection {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -34,7 +33,6 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     onHoverProperty,
     anchorIdParts,
     slug,
-    defaultExpandAll = false,
     types,
 }) => {
     return (
@@ -108,7 +106,6 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
                         slug={slug}
-                        defaultExpandAll={defaultExpandAll}
                         applyErrorStyles={false}
                         types={types}
                     />

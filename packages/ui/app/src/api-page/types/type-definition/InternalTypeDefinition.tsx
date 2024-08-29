@@ -3,7 +3,7 @@ import { FernTooltipProvider } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
+import { ReactElement, memo, useCallback, useMemo } from "react";
 import { useRouteListener } from "../../../atoms";
 import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
@@ -27,7 +27,6 @@ export declare namespace InternalTypeDefinition {
         isCollapsible: boolean;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -44,7 +43,6 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
     isCollapsible,
     anchorIdParts,
     slug,
-    defaultExpandAll = false,
     types,
 }) {
     const collapsableContent = useMemo(
@@ -58,7 +56,6 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                             anchorIdParts={[...anchorIdParts, property.key]}
                             applyErrorStyles={false}
                             slug={slug}
-                            defaultExpandAll={defaultExpandAll}
                             types={types}
                         />
                     )),
@@ -73,7 +70,6 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                             anchorIdParts={[...anchorIdParts, variant.displayName ?? variantIdx.toString()]}
                             applyErrorStyles={false}
                             slug={slug}
-                            defaultExpandAll={defaultExpandAll}
                             idx={variantIdx}
                             types={types}
                         />
@@ -90,7 +86,6 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                             unionVariant={variant}
                             anchorIdParts={[...anchorIdParts, variant.discriminantValue]}
                             slug={slug}
-                            defaultExpandAll={defaultExpandAll}
                             types={types}
                         />
                     )),
@@ -123,24 +118,11 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                 unknown: () => undefined,
                 _other: () => undefined,
             }),
-        [typeShape, types, anchorIdParts, slug, defaultExpandAll],
+        [typeShape, types, anchorIdParts, slug],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
-    const {
-        value: isCollapsed,
-        toggleValue: toggleIsCollapsed,
-        setValue: setCollapsed,
-    } = useBooleanState(!defaultExpandAll);
-
-    useEffect(() => {
-        setCollapsed(!defaultExpandAll);
-    }, [defaultExpandAll, setCollapsed]);
-
-    useEffect(() => {
-        setCollapsed(!defaultExpandAll);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const { value: isCollapsed, toggleValue: toggleIsCollapsed, setValue: setCollapsed } = useBooleanState(true);
 
     useRouteListener(slug, (anchor) => {
         const isActive = anchor?.startsWith(anchorIdSoFar + ".") ?? false;

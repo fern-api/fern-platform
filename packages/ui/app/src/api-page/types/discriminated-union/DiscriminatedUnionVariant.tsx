@@ -22,7 +22,6 @@ export declare namespace DiscriminatedUnionVariant {
         unionVariant: ResolvedDiscriminatedUnionShapeVariant;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -32,7 +31,6 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     unionVariant,
     anchorIdParts,
     slug,
-    defaultExpandAll = false,
     types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
@@ -99,7 +97,6 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                         isCollapsible={true}
                         anchorIdParts={anchorIdParts}
                         slug={slug}
-                        defaultExpandAll={defaultExpandAll}
                         types={types}
                     />
                 </TypeDefinitionContext.Provider>

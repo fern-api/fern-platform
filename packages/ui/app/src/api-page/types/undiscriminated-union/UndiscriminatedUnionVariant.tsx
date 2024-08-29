@@ -84,7 +84,6 @@ export declare namespace UndiscriminatedUnionVariant {
         anchorIdParts: readonly string[];
         applyErrorStyles: boolean;
         slug: FernNavigation.Slug;
-        defaultExpandAll?: boolean;
         idx: number;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -95,8 +94,6 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
     anchorIdParts,
     applyErrorStyles,
     slug,
-    defaultExpandAll = false,
-    // idx,
     types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
@@ -136,7 +133,6 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         isCollapsible
                         applyErrorStyles={applyErrorStyles}
                         slug={slug}
-                        defaultExpandAll={defaultExpandAll}
                         types={types}
                     />
                 </TypeDefinitionContext.Provider>
