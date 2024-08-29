@@ -38,7 +38,9 @@ export function buildQueryParams(queryParameters: Record<string, unknown> | unde
     }
     const queryParams = new URLSearchParams();
     Object.entries(queryParameters).forEach(([key, value]) => {
-        queryParams.set(key, unknownToString(value));
+        if (value != null) {
+            queryParams.set(key, unknownToString(value));
+        }
     });
     return queryParams.size > 0 ? "?" + queryParams.toString() : "";
 }
@@ -141,7 +143,10 @@ export function getDefaultValueForObjectProperties(
     types: Record<string, ResolvedTypeDefinition>,
 ): Record<string, unknown> {
     return properties.reduce<Record<string, unknown>>((acc, property) => {
-        acc[property.key] = getDefaultValueForType(property.valueShape, types);
+        const defaultValue = getDefaultValueForType(property.valueShape, types);
+        if (defaultValue != null) {
+            acc[property.key] = defaultValue;
+        }
         return acc;
     }, {});
 }
