@@ -143,7 +143,7 @@ export class FdrDeployStack extends Stack {
         publicDocsBucket.grantPublicAccess();
 
         const publicDocsFilesDomainName = getPublicBucketDomainName(environmentType, environmentInfo);
-        const publicDocsFilesDistribution = new cloudfront.Distribution(this, "MyDistribution", {
+        const publicDocsFilesDistribution = new cloudfront.Distribution(this, "PublicDocsFilesDistribution", {
             defaultBehavior: {
                 origin: new origins.S3Origin(publicDocsBucket),
                 viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
@@ -153,7 +153,7 @@ export class FdrDeployStack extends Stack {
             certificate,
         });
 
-        new route53.ARecord(this, "SiteAliasRecord", {
+        new route53.ARecord(this, "PublicDocsFilesRecord", {
             recordName: publicDocsFilesDomainName,
             target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(publicDocsFilesDistribution)),
             zone: hostedZone,
