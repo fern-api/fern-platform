@@ -4,7 +4,6 @@ import { NavArrowRight } from "iconoir-react";
 import { useAtom } from "jotai";
 import { NextRouter } from "next/router";
 import { FC, ReactNode, useCallback, useEffect, useState } from "react";
-import { v4 } from "uuid";
 import { ANCHOR_ATOM } from "../../../atoms";
 
 export interface AccordionItemProps {
@@ -17,21 +16,19 @@ export interface AccordionGroupProps {
     items: AccordionItemProps[];
     router: NextRouter;
     toc?: boolean;
-    key: string;
 }
 
 export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: parentToc = true }) => {
-    const [key, _setKey] = useState(v4());
     const [activeTabs, setActiveTabs] = useState<string[]>([]);
     const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
     useEffect(() => {
         if (anchor != null) {
-            const anchorTab = items.findIndex((tab) => slug(`${tab.title}-${key}`) === anchor);
+            const anchorTab = items.findIndex((tab) => slug(tab.title) === anchor);
             if (anchorTab >= 0) {
                 setActiveTabs((prev) => (prev.includes(anchorTab.toString()) ? prev : [...prev, anchorTab.toString()]));
             }
         }
-    }, [anchor, items, key]);
+    }, [anchor, items]);
 
     const handleValueChange = useCallback(
         (nextActiveTabs: string[]) => {
@@ -40,13 +37,13 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
                 if (added[0] != null) {
                     const addedItem = items[parseInt(added[0])];
                     if (addedItem != null) {
-                        setAnchor(slug(`${addedItem.title}-${key}`));
+                        setAnchor(slug(addedItem.title));
                     }
                 }
                 return nextActiveTabs;
             });
         },
-        [items, setAnchor, key],
+        [items, setAnchor],
     );
 
     return (
