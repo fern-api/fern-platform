@@ -152,7 +152,7 @@
     }
 
     .fern-api-property-meta {
-        @apply text-inherit inline-flex items-baseline gap-2 text-xs;
+        @apply t-muted inline-flex items-baseline gap-2 text-xs;
     }
 
     .custom-backdrop [data-rmiz-modal-overlay="visible"] {

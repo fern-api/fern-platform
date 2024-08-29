@@ -39,7 +39,7 @@ export const EndpointParameter = memo<EndpointParameter.Props>(
         <EndpointParameterContent
             name={name}
             description={description}
-            typeShorthand={renderTypeShorthandRoot(shape, types, false, "t-muted")}
+            typeShorthand={renderTypeShorthandRoot(shape, types, false)}
             anchorIdParts={anchorIdParts}
             slug={slug}
             availability={availability}
