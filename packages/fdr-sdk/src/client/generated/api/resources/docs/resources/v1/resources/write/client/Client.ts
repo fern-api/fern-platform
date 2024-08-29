@@ -258,7 +258,10 @@ export class Write {
      *                 },
      *                 redirects: [{
      *                         source: "string",
-     *                         destination: "string"
+     *                         destination: "string",
+     *                         permanent: {
+     *                             "key": "value"
+     *                         }
      *                     }],
      *                 colorsV3: {
      *                     type: "dark"

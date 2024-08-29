@@ -5,4 +5,5 @@
 export interface RedirectConfig {
     source: string;
     destination: string;
+    permanent?: boolean;
 }
