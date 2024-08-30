@@ -41,7 +41,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 
     return (
         <div className="playground-endpoint">
-            <div className="flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg bg-tag-default px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
+            <div className="flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg bg-tag-default px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px] items-center">
                 {method != null && <HttpMethodTag method={method} className="playground-endpoint-method" />}
                 <span
                     className={
@@ -121,7 +121,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                 />
             </div>
 
-            <Dialog.Close asChild>
+            <Dialog.Close asChild className="max-sm:hidden">
                 <FernButton icon={<Xmark />} size="large" rounded variant="outlined" />
             </Dialog.Close>
         </div>

@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { ReactElement, useCallback } from "react";
@@ -82,8 +83,7 @@ export declare namespace UndiscriminatedUnionVariant {
         unionVariant: ResolvedUndiscriminatedUnionShapeVariant;
         anchorIdParts: readonly string[];
         applyErrorStyles: boolean;
-        route: string;
-        defaultExpandAll?: boolean;
+        slug: FernNavigation.Slug;
         idx: number;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -93,9 +93,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
     unionVariant,
     anchorIdParts,
     applyErrorStyles,
-    route,
-    defaultExpandAll = false,
-    // idx,
+    slug,
     types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
@@ -134,8 +132,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         anchorIdParts={anchorIdParts}
                         isCollapsible
                         applyErrorStyles={applyErrorStyles}
-                        route={route}
-                        defaultExpandAll={defaultExpandAll}
+                        slug={slug}
                         types={types}
                     />
                 </TypeDefinitionContext.Provider>

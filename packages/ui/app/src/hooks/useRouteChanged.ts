@@ -1,16 +1,25 @@
 import { Router } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-export function useRouteChanged(callback: (route: string, shallow?: boolean) => void): void {
+export function useRouteChangeComplete(
+    callback: (route: string, shallow?: boolean) => void,
+    destroy?: () => void,
+): void {
+    const callbackRef = useRef(callback);
+    callbackRef.current = callback;
+
+    const destroyRef = useRef(destroy);
+    destroyRef.current = destroy;
+
     useEffect(() => {
         const handleRouteChange = (route: string, { shallow }: { shallow?: boolean }) => {
-            callback(route, shallow);
+            callbackRef.current(route, shallow);
         };
         const handleRouteChangeError = (_err: Error, route: string, { shallow }: { shallow?: boolean }) => {
-            callback(route, shallow);
+            callbackRef.current(route, shallow);
         };
         const handleHashChangeComplete = (route: string) => {
-            callback(route, true);
+            callbackRef.current(route, true);
         };
         Router.events.on("routeChangeComplete", handleRouteChange);
         Router.events.on("routeChangeError", handleRouteChangeError);
@@ -19,6 +28,31 @@ export function useRouteChanged(callback: (route: string, shallow?: boolean) => 
             Router.events.off("routeChangeComplete", handleRouteChange);
             Router.events.off("routeChangeError", handleRouteChangeError);
             Router.events.off("hashChangeComplete", handleHashChangeComplete);
+            destroyRef.current?.();
         };
-    }, [callback]);
+    }, []);
+}
+
+export function useRouteChangeStart(callback: (route: string, shallow?: boolean) => void, destroy?: () => void): void {
+    const callbackRef = useRef(callback);
+    callbackRef.current = callback;
+
+    const destroyRef = useRef(destroy);
+    destroyRef.current = destroy;
+
+    useEffect(() => {
+        const handleRouteChangeStart = (route: string, { shallow }: { shallow?: boolean }) => {
+            callbackRef.current(route, shallow);
+        };
+        const handleHashChangeStart = (route: string) => {
+            callbackRef.current(route, true);
+        };
+        Router.events.on("routeChangeStart", handleRouteChangeStart);
+        Router.events.on("hashChangeStart", handleHashChangeStart);
+        return () => {
+            Router.events.off("routeChangeStart", handleRouteChangeStart);
+            Router.events.off("hashChangeStart", handleHashChangeStart);
+            destroyRef.current?.();
+        };
+    }, []);
 }

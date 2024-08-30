@@ -2,6 +2,7 @@ export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVis
 export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { assertVoidNoThrow } from "./assertVoidNoThrow";
+export { combineURLs } from "./combineURLs";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
@@ -15,3 +16,4 @@ export { PLATFORM, type Platform } from "./platform";
 export { titleCase } from "./titleCase";
 export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
+export { withDefaultProtocol } from "./withDefaultProtocol";

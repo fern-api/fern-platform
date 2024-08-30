@@ -1,16 +1,12 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useBooleanState } from "@fern-ui/react-commons";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
-    ResolvedHttpRequestBodyShape,
-    ResolvedHttpResponseBodyShape,
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
-    dereferenceObjectProperties,
     getParameterDescription,
 } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -60,9 +56,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     // setContentType,
     types,
 }) => {
-    const requestExpandAll = useBooleanState(false);
-    const responseExpandAll = useBooleanState(false);
-    const errorExpandAll = useBooleanState(false);
     const { isAuthEnabledInDocs } = useFeatureFlags();
 
     let authHeaders: ResolvedObjectProperty | undefined;
@@ -118,7 +111,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         <div className="flex max-w-full flex-1 flex-col gap-12">
             <ApiPageDescription className="text-base leading-6" description={endpoint.description} isMarkdown={true} />
             {endpoint.pathParameters.length > 0 && (
-                <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} route={"/" + endpoint.slug}>
+                <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} slug={endpoint.slug}>
                     <div>
                         {endpoint.pathParameters.map((parameter) => (
                             <div key={parameter.key}>
@@ -127,7 +120,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_PATH, parameter.key]}
-                                    route={"/" + endpoint.slug}
+                                    slug={endpoint.slug}
                                     description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
@@ -138,7 +131,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 </EndpointSection>
             )}
             {headers.length > 0 && (
-                <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} route={"/" + endpoint.slug}>
+                <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} slug={endpoint.slug}>
                     <div>
                         {headers.map((parameter) => {
                             let isAuth = false;
@@ -164,7 +157,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         name={parameter.key}
                                         shape={parameter.valueShape}
                                         anchorIdParts={[...REQUEST_HEADER, parameter.key]}
-                                        route={"/" + endpoint.slug}
+                                        slug={endpoint.slug}
                                         description={getParameterDescription(parameter, types)}
                                         availability={parameter.availability}
                                         types={types}
@@ -176,7 +169,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 </EndpointSection>
             )}
             {endpoint.queryParameters.length > 0 && (
-                <EndpointSection title="Query parameters" anchorIdParts={REQUEST_QUERY} route={"/" + endpoint.slug}>
+                <EndpointSection title="Query parameters" anchorIdParts={REQUEST_QUERY} slug={endpoint.slug}>
                     <div>
                         {endpoint.queryParameters.map((parameter) => (
                             <div key={parameter.key}>
@@ -185,7 +178,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_QUERY, parameter.key]}
-                                    route={"/" + endpoint.slug}
+                                    slug={endpoint.slug}
                                     description={getParameterDescription(parameter, types)}
                                     availability={parameter.availability}
                                     types={types}
@@ -225,17 +218,13 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         key={requestBody.contentType}
                                         title="Request"
                                         anchorIdParts={REQUEST}
-                                        route={"/" + endpoint.slug}
-                                        expandAll={requestExpandAll.setTrue}
-                                        collapseAll={requestExpandAll.setFalse}
-                                        showExpandCollapse={shouldShowExpandCollapse(requestBody.shape, types)}
+                                        slug={endpoint.slug}
                                     >
                                         <EndpointRequestSection
                                             requestBody={requestBody}
                                             onHoverProperty={onHoverRequestProperty}
                                             anchorIdParts={REQUEST_BODY}
-                                            route={"/" + endpoint.slug}
-                                            defaultExpandAll={requestExpandAll.value}
+                                            slug={endpoint.slug}
                                             types={types}
                                         />
                                     </EndpointSection>
@@ -250,49 +239,30 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     key={endpoint.requestBody.contentType}
                     title="Request"
                     anchorIdParts={REQUEST}
-                    route={"/" + endpoint.slug}
-                    expandAll={requestExpandAll.setTrue}
-                    collapseAll={requestExpandAll.setFalse}
-                    showExpandCollapse={shouldShowExpandCollapse(endpoint.requestBody.shape, types)}
+                    slug={endpoint.slug}
                 >
                     <EndpointRequestSection
                         requestBody={endpoint.requestBody}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={REQUEST_BODY}
-                        route={"/" + endpoint.slug}
-                        defaultExpandAll={requestExpandAll.value}
+                        slug={endpoint.slug}
                         types={types}
                     />
                 </EndpointSection>
             )}
             {endpoint.responseBody != null && (
-                <EndpointSection
-                    title="Response"
-                    anchorIdParts={RESPONSE}
-                    route={"/" + endpoint.slug}
-                    expandAll={responseExpandAll.setTrue}
-                    collapseAll={responseExpandAll.setFalse}
-                    showExpandCollapse={shouldShowExpandCollapse(endpoint.responseBody.shape, types)}
-                >
+                <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={endpoint.slug}>
                     <EndpointResponseSection
                         responseBody={endpoint.responseBody}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={RESPONSE_BODY}
-                        route={"/" + endpoint.slug}
-                        defaultExpandAll={responseExpandAll.value}
+                        slug={endpoint.slug}
                         types={types}
                     />
                 </EndpointSection>
             )}
             {showErrors && endpoint.errors.length > 0 && (
-                <EndpointSection
-                    title="Errors"
-                    anchorIdParts={RESPONSE_ERROR}
-                    route={"/" + endpoint.slug}
-                    expandAll={errorExpandAll.setTrue}
-                    collapseAll={errorExpandAll.setFalse}
-                    showExpandCollapse={false}
-                >
+                <EndpointSection title="Errors" anchorIdParts={RESPONSE_ERROR} slug={endpoint.slug}>
                     <div className="border-default flex flex-col overflow-visible rounded-lg border">
                         {sortBy(
                             endpoint.errors,
@@ -315,9 +285,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         ...RESPONSE_ERROR,
                                         `${convertNameToAnchorPart(error.name) ?? error.statusCode}`,
                                     ]}
-                                    route={"/" + endpoint.slug}
+                                    slug={endpoint.slug}
                                     availability={error.availability}
-                                    defaultExpandAll={errorExpandAll.value}
                                     types={types}
                                 />
                             );
@@ -343,46 +312,4 @@ export function convertNameToAnchorPart(name: string | null | undefined): string
         return undefined;
     }
     return upperFirst(camelCase(name));
-}
-
-function shouldShowExpandCollapse(
-    shape: ResolvedHttpRequestBodyShape | ResolvedHttpResponseBodyShape,
-    types: Record<string, ResolvedTypeDefinition>,
-    depth = 0,
-): boolean {
-    return visitDiscriminatedUnion(shape, "type")._visit({
-        primitive: () => false,
-        literal: () => false,
-        object: (object) =>
-            depth > 1
-                ? true
-                : dereferenceObjectProperties(object, types).some(({ valueShape }) =>
-                      shouldShowExpandCollapse(valueShape, types, depth + 1),
-                  ),
-        map: () => true,
-        undiscriminatedUnion: () => true,
-        discriminatedUnion: () => true,
-        enum: () => false,
-        alias: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        unknown: () => false,
-        formData: () => false,
-        optional: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        list: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        set: ({ shape }) => shouldShowExpandCollapse(shape, types, depth),
-        reference: ({ typeId }) => {
-            const referenceShape = types[typeId];
-            if (referenceShape == null) {
-                return false;
-            }
-            return shouldShowExpandCollapse(referenceShape, types, depth);
-        },
-        _other: () => false,
-        fileDownload: () => false,
-        streamingText: () => false,
-        streamCondition: () => false,
-        bytes: () => false,
-        stream: (stream) => {
-            return shouldShowExpandCollapse(stream.value, types, depth);
-        },
-    });
 }

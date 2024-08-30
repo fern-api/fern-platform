@@ -1,17 +1,11 @@
 import useSWR from "swr";
-import urljoin from "url-join";
-import { useBasePath } from "../atoms";
 import { APIKeyInjectionConfig } from "../auth";
-
-export const API_KEY_INJECTION_ROUTE = "/api/fern-docs/auth/api-key-injection";
+import { useApiRoute } from "../hooks/useApiRoute";
 
 const DEFAULT = { enabled: false as const };
 
 export function useApiKeyInjectionConfig(): APIKeyInjectionConfig {
-    const basePath = useBasePath();
-    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
-    const key = urljoin(basePath || "/", API_KEY_INJECTION_ROUTE);
-
+    const key = useApiRoute("/api/fern-docs/auth/api-key-injection");
     const { data } = useSWR<APIKeyInjectionConfig>(
         key,
         async (url: string) => {

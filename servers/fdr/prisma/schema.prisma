@@ -152,8 +152,76 @@ enum Language {
   GO
   JAVA
   RUBY
+  CSHARP
+  SWIFT
+  PHP
+  RUST
 }
 
 enum SnippetTemplateSemanticVersion {
   v1
+}
+
+
+model Generator {
+  id        String   @id
+  generatorType Bytes
+  dockerImage String
+  generatorLanguage  Language?
+
+  releases GeneratorRelease[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+enum ReleaseType {
+  ga
+  rc
+}
+
+model GeneratorRelease {
+  @@id([generatorId, version])
+
+  // A bit of duplication here, but it's easier to query this way
+  version   String
+  major    Int
+  minor    Int
+  patch    Int
+  nonce String
+
+  generatorId String
+  generator Generator @relation(fields: [generatorId], references: [id], onDelete: Cascade)
+
+  isYanked Bytes?
+  changelogEntry Bytes?
+
+  migration Bytes?
+  irVersion Int
+  customConfigSchema String?
+
+  releaseType ReleaseType
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CliRelease {
+  // A bit of duplication here, but it's easier to query this way
+  version   String @id
+  major    Int
+  minor    Int
+  patch    Int
+  nonce String
+
+  irVersion Int
+
+  isYanked Bytes?
+  changelogEntry Bytes?
+
+  releaseType ReleaseType
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

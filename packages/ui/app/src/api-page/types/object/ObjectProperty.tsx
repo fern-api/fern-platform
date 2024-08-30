@@ -1,8 +1,10 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
-import { useRouteListener } from "../../../atoms";
-import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
+import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
+import { FernAnchor } from "../../../components/FernAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
+import { useHref } from "../../../hooks/useHref";
 import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import { ApiPageDescription } from "../../ApiPageDescription";
@@ -24,25 +26,25 @@ export declare namespace ObjectProperty {
     export interface Props {
         property: ResolvedObjectProperty;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         applyErrorStyles: boolean;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
 export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
-    const { route, anchorIdParts } = props;
+    const { slug, anchorIdParts } = props;
     const anchorId = getAnchorId(anchorIdParts);
     const ref = useRef<HTMLDivElement>(null);
 
     const [isActive, setIsActive] = useState(false);
-    useRouteListener(route, (anchor) => {
+    const isPaginated = useIsApiReferencePaginated();
+    useRouteListener(slug, (anchor) => {
         const isActive = anchor === anchorId;
         setIsActive(isActive);
         if (isActive) {
             setTimeout(() => {
-                ref.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+                ref.current?.scrollIntoView({ block: "start", behavior: isPaginated ? "smooth" : "instant" });
             }, 450);
         }
     });
@@ -56,7 +58,7 @@ interface ObjectPropertyInternalProps extends ObjectProperty.Props {
 }
 
 const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectPropertyInternalProps>((props, ref) => {
-    const { route, property, applyErrorStyles, defaultExpandAll, types, anchorIdParts, anchorId, isActive } = props;
+    const { slug, property, applyErrorStyles, types, anchorIdParts, anchorId, isActive } = props;
     const contextValue = useTypeDefinitionContext();
     const jsonPropertyPath = useMemo(
         (): JsonPropertyPath => [
@@ -96,7 +98,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
         };
     }, [contextValue, jsonPropertyPath]);
 
-    const anchorRoute = `${route}#${anchorId}`;
+    const href = useHref(slug, anchorId);
 
     const description = useMemo(() => {
         if (property.description != null) {
@@ -109,15 +111,14 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
     return (
         <div
             ref={ref}
-            id={anchorRoute}
+            id={href}
             className={cn("scroll-mt-content-padded fern-api-property", {
                 "px-3": !contextValue.isRootTypeDefinition,
                 "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >
             <div className="fern-api-property-header">
-                <div className="group/anchor-container relative inline-flex items-center">
-                    <AbsolutelyPositionedAnchor href={anchorRoute} />
+                <FernAnchor href={href} sideOffset={6}>
                     <span
                         className="fern-api-property-key"
                         onMouseEnter={onMouseEnterPropertyName}
@@ -125,8 +126,8 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                     >
                         {property.key}
                     </span>
-                </div>
-                {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse, "t-muted")}
+                </FernAnchor>
+                {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse)}
                 {property.availability != null && (
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}
@@ -139,8 +140,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                             isCollapsible
                             applyErrorStyles={applyErrorStyles}
                             anchorIdParts={anchorIdParts}
-                            route={route}
-                            defaultExpandAll={defaultExpandAll}
+                            slug={slug}
                             types={types}
                         />
                     </TypeDefinitionContext.Provider>
@@ -155,8 +155,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                             isCollapsible
                             applyErrorStyles={applyErrorStyles}
                             anchorIdParts={anchorIdParts}
-                            route={route}
-                            defaultExpandAll={defaultExpandAll}
+                            slug={slug}
                             types={types}
                         />
                     </TypeDefinitionContext.Provider>

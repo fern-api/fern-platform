@@ -13,8 +13,6 @@ export declare namespace Webhook {
 }
 
 export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastInApi, types }) => {
-    const route = `/${webhook.slug}`;
-
     // TODO: merge this with the Endpoint component
     if (useShouldLazyRender(webhook.slug)) {
         return null;
@@ -26,7 +24,6 @@ export const Webhook: React.FC<Webhook.Props> = ({ webhook, breadcrumbs, isLastI
                 webhook={webhook}
                 breadcrumbs={breadcrumbs}
                 hideBottomSeparator={isLastInApi}
-                route={route}
                 types={types}
             />
         </WebhookContextProvider>

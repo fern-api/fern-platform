@@ -13,10 +13,14 @@ import { getDocsReadService } from "../../controllers/docs/v1/getDocsReadService
 import { getDocsWriteService } from "../../controllers/docs/v1/getDocsWriteService";
 import { getDocsReadV2Service } from "../../controllers/docs/v2/getDocsReadV2Service";
 import { getDocsWriteV2Service } from "../../controllers/docs/v2/getDocsWriteV2Service";
+import { getGeneratorsCliController } from "../../controllers/generators/getGeneratorsCliController";
+import { getGeneratorsRootController } from "../../controllers/generators/getGeneratorsRootController";
+import { getGeneratorsVersionsController } from "../../controllers/generators/getGeneratorsVersionsController";
 import { getVersionsService } from "../../controllers/sdk/getVersionsService";
 import { getSnippetsFactoryService } from "../../controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "../../controllers/snippets/getSnippetsService";
 import { getTemplatesService } from "../../controllers/snippets/getTemplatesService";
+import { getTokensService } from "../../controllers/tokens/getTokensService";
 import { createMockFdrApplication } from "../mock";
 
 let teardown = false;
@@ -106,6 +110,12 @@ async function runMockFdr(port: number): Promise<MockFdr.Instance> {
         sdks: {
             versions: getVersionsService(fdrApplication),
         },
+        generators: {
+            _root: getGeneratorsRootController(fdrApplication),
+            cli: getGeneratorsCliController(fdrApplication),
+            versions: getGeneratorsVersionsController(fdrApplication),
+        },
+        tokens: getTokensService(fdrApplication),
     });
     const server = app.listen(port);
     console.log(`Mock FDR server running on http://localhost:${port}/`);

@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernCollapse } from "@fern-ui/components";
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -25,9 +26,8 @@ export declare namespace EndpointError {
         onClick: MouseEventHandler<HTMLButtonElement>;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
-        route: string;
+        slug: FernNavigation.Slug;
         availability: APIV1Read.Availability | null | undefined;
-        defaultExpandAll?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -40,9 +40,8 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     onHoverProperty,
     onClick,
     anchorIdParts,
-    route,
+    slug,
     availability,
-    defaultExpandAll = false,
     types,
 }) {
     return (
@@ -84,8 +83,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                     shape={error.shape}
                                     onHoverProperty={onHoverProperty}
                                     anchorIdParts={anchorIdParts}
-                                    route={route}
-                                    defaultExpandAll={defaultExpandAll}
+                                    slug={slug}
                                     types={types}
                                     isResponse={true}
                                 />

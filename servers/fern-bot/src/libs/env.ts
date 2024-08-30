@@ -12,6 +12,7 @@ export interface Env {
     REPO_TO_RUN_ON?: string;
     REPO_DATA_S3_BUCKET?: string;
     REPO_DATA_S3_KEY?: string;
+    DEFAULT_VENUS_ORIGIN?: string;
 }
 
 export function evaluateEnv(): Env {
@@ -29,5 +30,6 @@ export function evaluateEnv(): Env {
         REPO_TO_RUN_ON: repoToRunOn == null || repoToRunOn == OMIT ? undefined : repoToRunOn,
         REPO_DATA_S3_BUCKET: repoDataS3Bucket == null || repoDataS3Bucket == OMIT ? undefined : repoDataS3Bucket,
         REPO_DATA_S3_KEY: repoDataS3Key == null || repoDataS3Key == OMIT ? undefined : repoDataS3Key,
+        DEFAULT_VENUS_ORIGIN: process?.env.DEFAULT_VENUS_ORIGIN,
     };
 }

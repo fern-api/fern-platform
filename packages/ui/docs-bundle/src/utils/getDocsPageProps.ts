@@ -1,5 +1,4 @@
 /* eslint-disable import/no-internal-modules */
-import { FdrClient } from "@fern-api/fdr-sdk";
 import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
@@ -9,8 +8,11 @@ import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
     convertNavigatableToResolvedPath,
+    getApiRouteSupplier,
     getGitHubInfo,
     getGitHubRepo,
+    getRedirectForPath,
+    getRegistryServiceWithToken,
     getSeoProps,
     provideRegistryService,
     renderThemeStylesheet,
@@ -28,7 +30,7 @@ import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
 import { convertStaticToServerSidePropsResult } from "./convertStaticToServerSidePropsResult";
 import { getSeoDisabled } from "./disabledSeo";
-import { getRedirectForPath } from "./hackRedirects";
+import { isTrailingSlashEnabled } from "./trailingSlash";
 
 type GetStaticDocsPagePropsResult = GetStaticPropsResult<ComponentProps<typeof DocsPage>>;
 type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;
@@ -42,13 +44,6 @@ async function getUnauthenticatedRedirect(xFernHost: string, path: string): Prom
         xFernHost,
     );
     return { destination: authorizationUrl, permanent: false };
-}
-
-function getRegistryServiceWithToken(token: string): FdrClient {
-    return new FdrClient({
-        environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-        token,
-    });
 }
 
 export interface User {
@@ -226,7 +221,7 @@ async function convertDocsToDocsPageProps({
         return {
             redirect: {
                 destination: redirect.destination,
-                permanent: false,
+                permanent: redirect.permanent ?? false,
             },
         };
     }
@@ -237,21 +232,38 @@ async function convertDocsToDocsPageProps({
         featureFlags.isBatchStreamToggleDisabled,
         featureFlags.isApiScrollingDisabled,
     );
+
+    // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404
+    if (root.slug.length > 0 && slug.length === 0) {
+        return {
+            redirect: {
+                destination: encodeURI(urljoin("/", root.slug)),
+                permanent: false,
+            },
+        };
+    }
+
     const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {
+        // TODO: returning "notFound: true" here will render vercel's default 404 page
+        // this is better than following redirects, since it will signal a proper 404 status code.
+        // however, we should consider rendering a custom 404 page in the future using the customer's branding.
+        // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
+
         // eslint-disable-next-line no-console
-        console.error(`Failed to resolve navigation for ${url}`);
-        if (node.redirect != null) {
-            return {
-                // urljoin is bizarre: urljoin("/", "") === "", urljoin("/", "/") === "/", urljoin("/", "/a") === "/a"
-                // "" || "/" === "/"
-                redirect: {
-                    destination: encodeURI(urljoin("/", node.redirect) || "/"),
-                    permanent: false,
-                },
-            };
-        }
+        // console.error(`Failed to resolve navigation for ${url}`);
+        // if (node.redirect != null) {
+        //     return {
+        //         // urljoin is bizarre: urljoin("/", "") === "", urljoin("/", "/") === "/", urljoin("/", "/a") === "/a"
+        //         // "" || "/" === "/"
+        //         redirect: {
+        //             destination: encodeURI(urljoin("/", node.redirect) || "/"),
+        //             permanent: false,
+        //         },
+        //     };
+        // }
+
         return { notFound: true };
     }
 
@@ -298,6 +310,23 @@ async function convertDocsToDocsPageProps({
                   : undefined,
     };
 
+    const versions = node.versions
+        .filter((version) => !version.hidden)
+        .map((version, index) => {
+            // if the same page exists in multiple versions, return the full slug of that page, otherwise default to version's landing page (pointsTo)
+            const expectedSlug = FernNavigation.utils.slugjoin(version.slug, node.unversionedSlug);
+            const pointsTo = node.collector.slugMap.has(expectedSlug) ? expectedSlug : version.pointsTo;
+
+            return {
+                title: version.title,
+                id: version.versionId,
+                slug: version.slug,
+                pointsTo,
+                index,
+                availability: version.availability,
+            };
+        });
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -341,16 +370,9 @@ async function convertDocsToDocsPageProps({
                 }),
             ),
             currentVersionId: node.currentVersion?.versionId,
-            versions: node.versions
-                .filter((version) => !version.hidden)
-                .map((version, index) => ({
-                    title: version.title,
-                    id: version.versionId,
-                    slug: version.slug,
-                    index,
-                    availability: version.availability,
-                })),
+            versions,
             sidebar: node.sidebar,
+            trailingSlash: isTrailingSlashEnabled(),
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),
@@ -366,7 +388,7 @@ async function convertDocsToDocsPageProps({
         user,
         fallback: {},
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
-        theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
+        theme: featureFlags.isCohereTheme ? "cohere" : "default",
         analyticsConfig: docs.definition.config.analyticsConfig,
         defaultLang: docs.definition.config.defaultLanguage ?? "curl",
         stylesheet: renderThemeStylesheet(
@@ -379,8 +401,12 @@ async function convertDocsToDocsPageProps({
         ),
     };
 
-    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
-    props.fallback[urljoin(docs.baseUrl.basePath || "/", "/api/fern-docs/search")] = await getSearchConfig(
+    const getApiRoute = getApiRouteSupplier({
+        basepath: docs.baseUrl.basePath,
+        includeTrailingSlash: isTrailingSlashEnabled(),
+    });
+
+    props.fallback[getApiRoute("/api/fern-docs/search")] = await getSearchConfig(
         provideRegistryService(),
         xFernHost,
         docs.definition.search,
@@ -399,9 +425,7 @@ async function convertDocsToDocsPageProps({
     }
 
     const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, cookies);
-    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
-    props.fallback[urljoin(docs.baseUrl.basePath || "/", "/api/fern-docs/auth/api-key-injection")] =
-        apiKeyInjectionConfig;
+    props.fallback[getApiRoute("/api/fern-docs/auth/api-key-injection")] = apiKeyInjectionConfig;
 
     return {
         props: JSON.parse(JSON.stringify(props)), // remove all undefineds
@@ -410,9 +434,7 @@ async function convertDocsToDocsPageProps({
 }
 
 async function maybeGetWorkosOrganization(host: string): Promise<string | undefined> {
-    const docsV2ReadClient = new FdrClient({
-        environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-    }).docs.v2.read;
+    const docsV2ReadClient = provideRegistryService().docs.v2.read;
     const maybeFernOrgId = await docsV2ReadClient.getOrganizationForUrl({ url: host });
     if (!maybeFernOrgId.ok) {
         return undefined;

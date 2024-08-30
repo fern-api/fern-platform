@@ -2,38 +2,33 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import * as Dialog from "@radix-ui/react-dialog";
-import { motion, useAnimate, useMotionValue } from "framer-motion";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { animate, motion, useMotionValue } from "framer-motion";
 import { ArrowLeft, Xmark } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { ReactElement, memo, useCallback, useEffect, useMemo } from "react";
-import { useFlattenedApis, useSidebarNodes } from "../atoms";
+import { useAtomCallback } from "jotai/utils";
+import { ReactElement, memo, useEffect, useMemo } from "react";
+import { useCallbackOne } from "use-memo-one";
+import { HEADER_HEIGHT_ATOM, useAtomEffect, useFlattenedApis, useSidebarNodes } from "../atoms";
 import {
-    useClosePlayground,
+    MAX_PLAYGROUND_HEIGHT_ATOM,
+    PLAYGROUND_NODE_ID,
     useHasPlayground,
     useIsPlaygroundOpen,
     usePlaygroundFormStateAtom,
-    usePlaygroundHeight,
     usePlaygroundNode,
-    useSetPlaygroundHeight,
     useTogglePlayground,
 } from "../atoms/playground";
-import {
-    IS_MOBILE_SCREEN_ATOM,
-    JUST_NAVIGATED_ATOM,
-    MOBILE_SIDEBAR_ENABLED_ATOM,
-    useWindowHeight,
-} from "../atoms/viewport";
+import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { ResolvedApiDefinition, isEndpoint, isWebSocket } from "../resolver/types";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
-import { useVerticalSplitPane } from "./useSplitPlane";
+import { useResizeY } from "./useSplitPlane";
 
 export const PlaygroundDrawer = memo((): ReactElement | null => {
-    const windowHeight = useWindowHeight();
-    const collapsePlayground = useClosePlayground();
     const hasPlayground = useHasPlayground();
     const selectionState = usePlaygroundNode();
     const apis = useFlattenedApis();
@@ -57,34 +52,29 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
 
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
-    const height = usePlaygroundHeight();
-    const setHeight = useSetPlaygroundHeight();
 
-    const x = useMotionValue(isMobileScreen ? height : windowHeight);
-    const [scope, animate] = useAnimate();
+    const maxHeight = useAtomValue(MAX_PLAYGROUND_HEIGHT_ATOM);
+    const height = useMotionValue(useAtomValue(VIEWPORT_HEIGHT_ATOM));
 
-    const setOffset = useCallback(
-        (offset: number) => {
-            windowHeight != null && setHeight(windowHeight - offset);
-        },
-        [setHeight, windowHeight],
+    const setOffset = useAtomCallback(
+        useCallbackOne((get, _set, y: number) => {
+            const windowHeight = get(VIEWPORT_HEIGHT_ATOM);
+            const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM);
+            const headerHeight = get(HEADER_HEIGHT_ATOM);
+            const maxHeight = isMobileScreen ? windowHeight : windowHeight - headerHeight;
+            const newHeight = Math.min(windowHeight - y, maxHeight);
+            height.jump(newHeight, true);
+        }, []),
     );
 
-    const { handleVerticalResize, isResizing } = useVerticalSplitPane(setOffset);
-    const justNavigated = useAtomValue(JUST_NAVIGATED_ATOM);
+    useAtomEffect(
+        useCallbackOne((get) => {
+            get(PLAYGROUND_NODE_ID);
+            void animate(height, get.peek(VIEWPORT_HEIGHT_ATOM));
+        }, []),
+    );
 
-    useEffect(() => {
-        if (isResizing || justNavigated) {
-            x.jump(!isMobileScreen ? height : windowHeight, true);
-        } else {
-            if (scope.current != null) {
-                // x.setWithVelocity(layoutBreakpoint !== "mobile" ? height : windowHeight, 0);
-                void animate(scope.current, { height: !isMobileScreen ? height : windowHeight });
-            } else {
-                x.jump(!isMobileScreen ? height : windowHeight, true);
-            }
-        }
-    }, [animate, height, isMobileScreen, isResizing, justNavigated, scope, windowHeight, x]);
+    const resizeY = useResizeY(setOffset);
 
     const isPlaygroundOpen = useIsPlaygroundOpen();
     const togglePlayground = useTogglePlayground();
@@ -144,13 +134,16 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     const renderMobileHeader = () => (
         <div className="grid h-10 grid-cols-2 gap-2 px-4">
             <div className="flex items-center">
-                <span className="inline-flex items-baseline gap-2">
-                    <span className="t-accent text-sm font-semibold">API Playground</span>
+                <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                    <span className="t-accent">API Playground</span>
+                    {selectedEndpoint != null && <span>{selectedEndpoint.title}</span>}
                 </span>
             </div>
 
             <div className="flex items-center justify-end">
-                <FernButton variant="minimal" className="-mr-3" icon={<Xmark />} onClick={collapsePlayground} rounded />
+                <Dialog.Close asChild>
+                    <FernButton variant="minimal" className="-mr-3" icon={<Xmark />} rounded />
+                </Dialog.Close>
             </div>
         </div>
     );
@@ -164,7 +157,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                 setFormState(undefined);
             }}
         >
-            {isPlaygroundOpen && <div style={{ height }} />}
+            {isPlaygroundOpen && <motion.div style={{ height, maxHeight }} />}
             <Dialog.Root open={isPlaygroundOpen} onOpenChange={togglePlayground} modal={false}>
                 <Dialog.Portal>
                     <Dialog.Content
@@ -174,12 +167,22 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                         }}
                         asChild
                     >
-                        <motion.div style={{ height: x }} ref={scope}>
+                        <motion.div style={{ height, maxHeight }}>
+                            <VisuallyHidden.Root>
+                                <Dialog.Title>
+                                    API Playground{selectedEndpoint != null ? ` for ${selectedEndpoint.title}` : ""}
+                                </Dialog.Title>
+                                <Dialog.Description>
+                                    Browse, explore, and try out API endpoints without leaving the documentation.
+                                </Dialog.Description>
+                            </VisuallyHidden.Root>
+
                             {!isMobileScreen ? (
                                 <>
                                     <div
-                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-2 after:z-50 after:h-4 after:content-['']"
-                                        onMouseDown={handleVerticalResize}
+                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-2 after:z-50 after:h-4 after:content-[''] touch-none"
+                                        onMouseDown={resizeY.onMouseDown}
+                                        onTouchStart={resizeY.onTouchStart}
                                     >
                                         <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
                                         <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">

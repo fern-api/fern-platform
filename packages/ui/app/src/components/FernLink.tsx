@@ -5,6 +5,7 @@ import { ReactElement, forwardRef, useEffect, useState, type ComponentProps } fr
 import { format, parse, resolve, type UrlObject } from "url";
 import { useMemoOne } from "use-memo-one";
 import { SLUG_ATOM, useDomain } from "../atoms";
+import { selectHref } from "../hooks/useHref";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;
@@ -37,7 +38,7 @@ FernLink.displayName = "FernLink";
 const FernRelativeLink = forwardRef<HTMLAnchorElement, ComponentProps<typeof Link>>((props, ref) => {
     const href = useAtomValue(
         useMemoOne(
-            () => atom((get) => resolveRelativeUrl(`/${get(SLUG_ATOM)}`, formatUrlString(props.href))),
+            () => atom((get) => resolveRelativeUrl(selectHref(get, get(SLUG_ATOM)), formatUrlString(props.href))),
             [props.href],
         ),
     );

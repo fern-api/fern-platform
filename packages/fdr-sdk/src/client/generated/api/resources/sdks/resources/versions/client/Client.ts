@@ -25,10 +25,8 @@ export class Versions {
 
     /**
      * Computes a semantic version for the SDK to be relesed on.
-     *
      * The endpoint tries to find existing versions by looking up against
      * registries and github repositories. If none are found an error is thrown.
-     *
      * If a version is found, a new semantic version is returned.
      *
      * @param {FernRegistry.sdks.ComputeSemanticVersionRequest} request

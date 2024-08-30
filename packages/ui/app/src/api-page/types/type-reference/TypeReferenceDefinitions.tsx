@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { memo } from "react";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../../resolver/types";
@@ -13,8 +14,7 @@ export declare namespace TypeReferenceDefinitions {
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         className?: string;
-        route: string;
-        defaultExpandAll?: boolean;
+        slug: FernNavigation.Slug;
         types: Record<string, ResolvedTypeDefinition>;
         isResponse?: boolean;
     }
@@ -27,8 +27,7 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(fun
     onHoverProperty,
     anchorIdParts,
     className,
-    route,
-    defaultExpandAll = false,
+    slug,
     types,
     isResponse,
 }) {
@@ -41,8 +40,7 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(fun
                     applyErrorStyles={applyErrorStyles}
                     className={className}
                     anchorIdParts={anchorIdParts}
-                    route={route}
-                    defaultExpandAll={defaultExpandAll}
+                    slug={slug}
                     types={types}
                 />
             </TypeDefinitionContextProvider>

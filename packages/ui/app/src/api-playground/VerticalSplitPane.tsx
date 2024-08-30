@@ -1,6 +1,6 @@
 import cn, { clsx } from "clsx";
 import { Children, ComponentProps, PropsWithChildren, ReactElement, useCallback, useRef, useState } from "react";
-import { useHorizontalSplitPane, useVerticalSplitPane } from "./useSplitPlane";
+import { useResizeX, useResizeY } from "./useSplitPlane";
 
 interface VerticalSplitPaneProps extends ComponentProps<"div"> {
     aboveClassName?: string;
@@ -18,14 +18,14 @@ export function VerticalSplitPane({
 
     const ref = useRef<HTMLDivElement>(null);
 
-    const setHeight = useCallback((clientY: number) => {
+    const setClientY = useCallback((clientY: number) => {
         if (ref.current != null) {
             const { top, height } = ref.current.getBoundingClientRect();
             setAboveHeightPercent((clientY - top - 6) / height);
         }
     }, []);
 
-    const { handleVerticalResize } = useVerticalSplitPane(setHeight);
+    const resizeY = useResizeY(setClientY);
 
     const [above, below] = Children.toArray(children);
 
@@ -49,8 +49,9 @@ export function VerticalSplitPane({
                 {above}
             </div>
             <div
-                className="shink-0 group relative flex h-3 flex-none cursor-row-resize items-center px-3 opacity-0 transition-opacity after:absolute after:inset-x-0 after:-top-1 after:h-6 after:content-[''] hover:opacity-100 hover:delay-300"
-                onMouseDown={handleVerticalResize}
+                className="shink-0 group relative flex h-3 flex-none cursor-row-resize items-center px-3 opacity-0 transition-opacity after:absolute after:inset-x-0 after:-top-1 after:h-6 after:content-[''] hover:opacity-100 hover:delay-300 touch-none"
+                onMouseDown={resizeY.onMouseDown}
+                onTouchStart={resizeY.onTouchStart}
             >
                 <div className="bg-border-primary relative z-10 mx-auto h-0.5 w-full rounded-full group-active:bg-accent group-active:transition-[background]" />
             </div>
@@ -91,7 +92,7 @@ export function HorizontalSplitPane({
         [mode],
     );
 
-    const handleVerticalResize = useHorizontalSplitPane(setWidth);
+    const resizeX = useResizeX(setWidth);
 
     const [left, right] = Children.toArray(children);
 
@@ -119,13 +120,14 @@ export function HorizontalSplitPane({
             </div>
             <div
                 className={clsx(
-                    "shink-0 group sticky top-0 z-10 flex w-3 flex-none cursor-col-resize items-center justify-center opacity-0 transition-opacity after:absolute after:inset-y-0 after:-left-1 after:w-6 after:content-[''] hover:opacity-100 hover:delay-300",
+                    "shink-0 group sticky top-0 z-10 flex w-3 flex-none cursor-col-resize items-center justify-center opacity-0 transition-opacity after:absolute after:inset-y-0 after:-left-1 after:w-6 after:content-[''] hover:opacity-100 hover:delay-300 touch-none",
                     {
                         "py-8": rizeBarHeight != null,
                         "-mx-1.5": rizeBarHeight == null,
                     },
                 )}
-                onMouseDown={handleVerticalResize}
+                onMouseDown={resizeX.onMouseDown}
+                onTouchStart={resizeX.onTouchStart}
                 style={{ height: rizeBarHeight ?? "100%" }}
             >
                 <div className="bg-border-primary relative z-10 h-full w-0.5 rounded-full group-active:bg-accent group-active:transition-[background]" />

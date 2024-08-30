@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
@@ -14,7 +15,7 @@ import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderTypeShorthand, renderTypeShorthandFormDataProperty } from "../types/type-shorthand/TypeShorthand";
 import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter";
 
 export declare namespace EndpointRequestSection {
@@ -22,8 +23,7 @@ export declare namespace EndpointRequestSection {
         requestBody: ResolvedRequestBody;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
-        route: string;
-        defaultExpandAll?: boolean;
+        slug: FernNavigation.Slug;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -32,8 +32,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     requestBody,
     onHoverProperty,
     anchorIdParts,
-    route,
-    defaultExpandAll = false,
+    slug,
     types,
 }) => {
     return (
@@ -68,13 +67,9 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                     <EndpointParameterContent
                                         name={file.key}
                                         description={file.description}
-                                        typeShorthand={
-                                            <span className="t-muted inline-flex items-baseline gap-2 text-xs">
-                                                {file.isOptional ? "optional file" : "file"}
-                                            </span>
-                                        }
+                                        typeShorthand={renderTypeShorthandFormDataProperty(file)}
                                         anchorIdParts={[...anchorIdParts, file.key]}
-                                        route={route}
+                                        slug={slug}
                                         availability={file.availability}
                                     />
                                 ),
@@ -82,13 +77,9 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                     <EndpointParameterContent
                                         name={fileArray.key}
                                         description={fileArray.description}
-                                        typeShorthand={
-                                            <span className="t-muted inline-flex items-baseline gap-2 text-xs">
-                                                {fileArray.isOptional ? "optional list of files" : "list of files"}
-                                            </span>
-                                        }
+                                        typeShorthand={renderTypeShorthandFormDataProperty(fileArray)}
                                         anchorIdParts={[...anchorIdParts, fileArray.key]}
-                                        route={route}
+                                        slug={slug}
                                         availability={fileArray.availability}
                                     />
                                 ),
@@ -98,7 +89,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                         description={getDescription(bodyProperty, types)}
                                         shape={bodyProperty.valueShape}
                                         anchorIdParts={[...anchorIdParts, bodyProperty.key]}
-                                        route={route}
+                                        slug={slug}
                                         availability={bodyProperty.availability}
                                         types={types}
                                     />
@@ -114,8 +105,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
-                        route={route}
-                        defaultExpandAll={defaultExpandAll}
+                        slug={slug}
                         applyErrorStyles={false}
                         types={types}
                     />

@@ -67,8 +67,8 @@ types:
     properties:
       sdk: snippets.JavaSDK
       snippets: list<SingleJavaSnippetCreate>
-
   # Single creates
+
   BaseSnippetCreate:
     properties:
       endpoint: commons.EndpointIdentifier
@@ -98,7 +98,6 @@ types:
     extends: BaseSnippetCreate
     properties:
       snippet: JavaSnippetCode
-
   # Snippet Code
 
   TypeScriptSnippetCode:

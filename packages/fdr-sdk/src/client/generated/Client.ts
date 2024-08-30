@@ -6,12 +6,14 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Api } from "./api/resources/api/client/Client";
 import { Docs } from "./api/resources/docs/client/Client";
+import { Generators } from "./api/resources/generators/client/Client";
 import { Diff } from "./api/resources/diff/client/Client";
 import { DocsCache } from "./api/resources/docsCache/client/Client";
 import { Sdks } from "./api/resources/sdks/client/Client";
 import { SnippetsFactory } from "./api/resources/snippetsFactory/client/Client";
 import { Snippets } from "./api/resources/snippets/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
+import { Tokens } from "./api/resources/tokens/client/Client";
 
 export declare namespace FernRegistryClient {
     interface Options {
@@ -39,6 +41,12 @@ export class FernRegistryClient {
 
     public get docs(): Docs {
         return (this._docs ??= new Docs(this._options));
+    }
+
+    protected _generators: Generators | undefined;
+
+    public get generators(): Generators {
+        return (this._generators ??= new Generators(this._options));
     }
 
     protected _diff: Diff | undefined;
@@ -75,5 +83,11 @@ export class FernRegistryClient {
 
     public get templates(): Templates {
         return (this._templates ??= new Templates(this._options));
+    }
+
+    protected _tokens: Tokens | undefined;
+
+    public get tokens(): Tokens {
+        return (this._tokens ??= new Tokens(this._options));
     }
 }

@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { useCallback, useMemo } from "react";
@@ -20,8 +21,7 @@ export declare namespace DiscriminatedUnionVariant {
         discriminant: string;
         unionVariant: ResolvedDiscriminatedUnionShapeVariant;
         anchorIdParts: readonly string[];
-        route: string;
-        defaultExpandAll?: boolean;
+        slug: FernNavigation.Slug;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -30,8 +30,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     discriminant,
     unionVariant,
     anchorIdParts,
-    route,
-    defaultExpandAll = false,
+    slug,
     types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
@@ -97,8 +96,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                         typeShape={shape}
                         isCollapsible={true}
                         anchorIdParts={anchorIdParts}
-                        route={route}
-                        defaultExpandAll={defaultExpandAll}
+                        slug={slug}
                         types={types}
                     />
                 </TypeDefinitionContext.Provider>

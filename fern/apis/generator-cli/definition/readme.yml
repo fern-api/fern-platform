@@ -1,10 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 imports:
   feature: feature.yml
+
 types:
   ReadmeConfig:
     docs: |
       The configuration used to generate a README.md file.
-
       The information described here is a combination of user-defined information
       (i.e. specified in the generators.yml), and dynamically generated information
       that comes from each generator (i.e. features, requirements, and more).
@@ -56,7 +58,6 @@ types:
   LanguageInfo:
     docs: |
       The language and its associated publish information (if any).
-
       This is used to generate badges, the installation guide, and determine what language to
       use when surrounding the snippets in a code block.
     union:

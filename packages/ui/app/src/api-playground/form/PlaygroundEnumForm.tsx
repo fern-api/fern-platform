@@ -5,10 +5,6 @@ import { memo, useMemo } from "react";
 import { Markdown } from "../../mdx/Markdown";
 import { ResolvedEnumValue } from "../../resolver/types";
 
-// const Markdown = dynamic(() => import("../api-page/markdown/Markdown").then(({ Markdown }) => Markdown), {
-//     ssr: true,
-// });
-
 interface PlaygroundEnumFormProps {
     enumValues: ResolvedEnumValue[];
     onChange: (value: unknown) => void;

@@ -78,7 +78,6 @@ const resolveApiHandler: NextApiHandler = async (
                 docs.definition.pages,
                 { files: docs.definition.jsFiles },
                 featureFlags,
-                docs.baseUrl.domain,
             );
             packagesPromise.push(resolved);
         });

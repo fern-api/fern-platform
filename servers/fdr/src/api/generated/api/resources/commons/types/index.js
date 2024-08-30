@@ -1,6 +1,7 @@
 export * from "./ApiDefinitionId";
 export * from "./VersionId";
 export * from "./OrgId";
+export * from "./TokenId";
 export * from "./ApiId";
 export * from "./DocsConfigId";
 export * from "./EndpointIdentifier";

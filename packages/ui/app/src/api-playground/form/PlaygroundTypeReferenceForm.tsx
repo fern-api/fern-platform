@@ -1,7 +1,7 @@
 import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement, memo, useCallback } from "react";
-import { useDomain } from "../../atoms";
+import { useFeatureFlags } from "../../atoms";
 import {
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
@@ -33,11 +33,12 @@ interface PlaygroundTypeReferenceFormProps {
     onlyOptional?: boolean;
     types: Record<string, ResolvedTypeDefinition>;
     disabled?: boolean;
+    indent?: boolean;
 }
 
 export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps>((props) => {
-    const domain = useDomain();
-    const { id, property, shape, onChange, value, types, disabled } = props;
+    const { hasVoiceIdPlaygroundForm } = useFeatureFlags();
+    const { id, property, shape, onChange, value, types, disabled, indent = true } = props;
     const onRemove = useCallback(() => {
         onChange(undefined);
     }, [onChange]);
@@ -48,7 +49,7 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                     properties={dereferenceObjectProperties(object, types)}
                     onChange={onChange}
                     value={value}
-                    indent={true}
+                    indent={indent}
                     id={id}
                     types={types}
                     disabled={disabled}
@@ -88,7 +89,7 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
             visitDiscriminatedUnion(primitive.value, "type")._visit<ReactElement | null>({
                 string: (string) => (
                     <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                        {domain.includes("elevenlabs") && property?.key === "voice_id" ? (
+                        {hasVoiceIdPlaygroundForm && property?.key === "voice_id" ? (
                             <PlaygroundElevenLabsVoiceIdForm
                                 id={id}
                                 className="w-full"

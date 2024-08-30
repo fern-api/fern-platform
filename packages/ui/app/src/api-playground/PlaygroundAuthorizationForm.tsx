@@ -2,11 +2,12 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernCard, FernCollapse, FernInput } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { Globe, Key, User } from "iconoir-react";
+import { Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
 import { FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
+import urlJoin from "url-join";
 import { useMemoOne } from "use-memo-one";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -14,10 +15,10 @@ import {
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
 } from "../atoms";
+import { useApiRoute } from "../hooks/useApiRoute";
 import { Callout } from "../mdx/components/callout";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
-import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundAuthState } from "./types";
 
 interface PlaygroundAuthorizationFormProps {
@@ -28,20 +29,6 @@ interface PlaygroundAuthorizationFormProps {
 function BearerAuthForm({ bearerAuth, disabled }: { bearerAuth: APIV1Read.BearerAuth; disabled?: boolean }) {
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM);
     const handleChange = useCallback((newValue: string) => setValue({ token: newValue }), [setValue]);
-
-    const {
-        value: isSecretsModalOpen,
-        setTrue: openSecretsModal,
-        setFalse: closeSecretsModal,
-    } = useBooleanState(false);
-
-    const handleSelectSecret = useCallback(
-        (secret: SecretBearer) => {
-            closeSecretsModal();
-            handleChange(secret.token);
-        },
-        [closeSecretsModal, handleChange],
-    );
 
     return (
         <li className="-mx-4 space-y-2 p-4">
@@ -55,22 +42,9 @@ function BearerAuthForm({ bearerAuth, disabled }: { bearerAuth: APIV1Read.Bearer
                     value={value.token}
                     autoComplete="off"
                     data-1p-ignore="true"
-                    rightElement={
-                        <FernButton
-                            onClick={openSecretsModal}
-                            icon={<Globe className="size-icon" />}
-                            variant="minimal"
-                        />
-                    }
                     disabled={disabled}
                 />
             </div>
-
-            <PlaygroundSecretsModal
-                isOpen={isSecretsModalOpen && !disabled}
-                onClose={closeSecretsModal}
-                selectSecret={handleSelectSecret}
-            />
         </li>
     );
 }
@@ -84,19 +58,6 @@ function BasicAuthForm({ basicAuth, disabled }: { basicAuth: APIV1Read.BasicAuth
     const handleChangePassword = useCallback(
         (newValue: string) => setValue((prev) => ({ ...prev, password: newValue })),
         [setValue],
-    );
-    const {
-        value: isSecretsModalOpen,
-        setTrue: openSecretsModal,
-        setFalse: closeSecretsModal,
-    } = useBooleanState(false);
-
-    const handleSelectSecret = useCallback(
-        (secret: SecretBearer) => {
-            closeSecretsModal();
-            handleChangePassword(secret.token);
-        },
-        [closeSecretsModal, handleChangePassword],
     );
     return (
         <>
@@ -124,23 +85,10 @@ function BasicAuthForm({ basicAuth, disabled }: { basicAuth: APIV1Read.BasicAuth
                     <PasswordInputGroup
                         onValueChange={handleChangePassword}
                         value={value.password}
-                        rightElement={
-                            <FernButton
-                                onClick={openSecretsModal}
-                                icon={<Globe className="size-icon" />}
-                                variant="minimal"
-                            />
-                        }
                         disabled={disabled}
                     />
                 </div>
             </li>
-
-            <PlaygroundSecretsModal
-                isOpen={isSecretsModalOpen && !disabled}
-                onClose={closeSecretsModal}
-                selectSecret={handleSelectSecret}
-            />
         </>
     );
 }
@@ -166,19 +114,6 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
             [header.headerWireValue],
         ),
     );
-    const {
-        value: isSecretsModalOpen,
-        setTrue: openSecretsModal,
-        setFalse: closeSecretsModal,
-    } = useBooleanState(false);
-
-    const handleSelectSecret = useCallback(
-        (secret: SecretBearer) => {
-            closeSecretsModal();
-            setValue(secret.token);
-        },
-        [closeSecretsModal, setValue],
-    );
 
     return (
         <li className="-mx-4 space-y-2 p-4">
@@ -191,22 +126,9 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
                     value={value}
                     autoComplete="off"
                     data-1p-ignore="true"
-                    rightElement={
-                        <FernButton
-                            onClick={openSecretsModal}
-                            icon={<Globe className="size-icon" />}
-                            variant="minimal"
-                        />
-                    }
                     disabled={disabled}
                 />
             </div>
-
-            <PlaygroundSecretsModal
-                isOpen={isSecretsModalOpen && !disabled}
-                onClose={closeSecretsModal}
-                selectSecret={handleSelectSecret}
-            />
         </li>
     );
 }
@@ -245,15 +167,23 @@ export function PlaygroundAuthorizationFormCard({
         setBearerAuth({ token: apiKey ?? "" });
     }, [apiKey, setBearerAuth]);
 
+    const logoutApiRoute = useApiRoute("/api/fern-docs/auth/logout");
+    const callbackApiRoute = useApiRoute("/api/fern-docs/auth/callback");
+
     const redirectOrOpenAuthForm = () => {
         if (apiKeyInjection.enabled && !apiKeyInjection.authenticated) {
-            // const redirect_uri =  urlJoin(window.location.origin, basePath ?? "", "/api/fern-docs/auth/login"),
             const url = new URL(apiKeyInjection.url);
             const state = new URL(window.location.href);
             if (state.searchParams.has("loginError")) {
                 state.searchParams.delete("loginError");
             }
             url.searchParams.set("state", state.toString());
+
+            if (apiKeyInjection.partner === "ory") {
+                const redirect_uri = urlJoin(window.location.origin, callbackApiRoute);
+                url.searchParams.set("redirect_uri", redirect_uri);
+            }
+
             window.location.replace(url);
         } else {
             isOpen.toggleValue();
@@ -309,7 +239,6 @@ export function PlaygroundAuthorizationFormCard({
                     </FernCard>
                 </>
             )}
-
             {apiKeyInjection.enabled && apiKey != null && (
                 <>
                     <FernCard className="rounded-xl p-4 shadow-sm mb-3" title="Login to send a real request">
@@ -325,9 +254,9 @@ export function PlaygroundAuthorizationFormCard({
                         <div className="-mx-4">
                             <PlaygroundAuthorizationForm auth={auth} disabled={disabled} />
                         </div>
-                        {apiKey !== authState?.bearerAuth?.token && (
+                        {
                             <div className="flex justify-end  gap-2">
-                                {apiKey && (
+                                {apiKey !== authState?.bearerAuth?.token && apiKey && (
                                     <FernButton
                                         text="Reset token to default"
                                         intent="none"
@@ -337,12 +266,32 @@ export function PlaygroundAuthorizationFormCard({
                                         variant="outlined"
                                     />
                                 )}
+                                {apiKeyInjection && (
+                                    <FernButton
+                                        text="Logout"
+                                        intent="none"
+                                        onClick={() => {
+                                            const url = new URL(urlJoin(window.location.origin, logoutApiRoute));
+                                            const state = new URL(window.location.href);
+                                            url.searchParams.set("state", state.toString());
+                                            fetch(url)
+                                                .then(() => {
+                                                    window.location.reload();
+                                                })
+                                                .catch((error) => {
+                                                    // eslint-disable-next-line no-console
+                                                    console.error(error);
+                                                });
+                                        }}
+                                        size="normal"
+                                        variant="outlined"
+                                    />
+                                )}
                             </div>
-                        )}
+                        }
                     </FernCard>
                 </>
             )}
-
             {!apiKeyInjection.enabled && (isAuthed(auth, authState) || apiKey != null) && (
                 <FernButton
                     className="w-full text-left"
@@ -377,6 +326,7 @@ export function PlaygroundAuthorizationFormCard({
                     active={isOpen.value}
                 />
             )}
+
             <FernCollapse isOpen={isOpen.value}>
                 <div className="pt-4">
                     <div className="fern-dropdown">

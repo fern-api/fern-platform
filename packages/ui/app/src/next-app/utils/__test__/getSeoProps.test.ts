@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { getSeoProps } from "../getSeoProp";
+import { extractHeadline, getSeoProps } from "../getSeoProp";
 
 describe("getSeoProps", () => {
     it("seo disabled", () => {
@@ -28,5 +28,12 @@ describe("getSeoProps", () => {
         );
         expect(props.noindex).toBe(true);
         expect(props.nofollow).toBe(true);
+    });
+
+    it("extracts SEO title properly", () => {
+        expect(extractHeadline("#")).toBe("");
+        expect(extractHeadline("# goodcase")).toBe("goodcase");
+        expect(extractHeadline("## h2")).toBe(undefined);
+        expect(extractHeadline("##nospaceh2")).toBe(undefined);
     });
 });

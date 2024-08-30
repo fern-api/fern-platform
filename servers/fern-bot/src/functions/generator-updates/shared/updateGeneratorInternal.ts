@@ -1,15 +1,30 @@
 import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
+import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { execFernCli } from "@libs/fern";
 import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit, type Repository } from "@libs/github/utilities";
 import { Octokit } from "octokit";
 
 const GENERATOR_UPDATE_BRANCH = "fern/update-generators";
 
+async function isOrganizationCanary(venusUrl: string, fullRepoPath: string): Promise<boolean> {
+    const orgId = (await execFernCli("organization", fullRepoPath)).stdout;
+    console.log(`Found organization ID: ${orgId}`);
+    const client = new FernVenusApiClient({ environment: venusUrl });
+
+    const response = await client.organization.get(FernVenusApi.OrganizationId(orgId));
+    if (!response.ok) {
+        throw new Error(`Organization ${orgId} not found`);
+    }
+
+    return response.body.isFernbotCanary;
+}
+
 export async function updateVersionInternal(
     octokit: Octokit,
     repository: Repository,
     fernBotLoginName: string,
     fernBotLoginId: string,
+    venusUrl: string,
 ): Promise<void> {
     const [git, fullRepoPath] = await configureGit(repository);
     console.log(`Cloning repo: ${repository.clone_url} to ${fullRepoPath}`);
@@ -19,11 +34,17 @@ export async function updateVersionInternal(
     await getOrUpdateBranch(git, originDefaultBranch, GENERATOR_UPDATE_BRANCH);
 
     try {
+        if (!(await isOrganizationCanary(venusUrl, fullRepoPath))) {
+            console.log("Organization is not a fern-bot canary, skipping upgrade.");
+            return;
+        }
+
         // Run fern CLI upgrade as well as generator upgrade which will go through each group in gen.yml
         // and upgrade the generator version to the latest, non-RC version tagged in DockerHub.
         await execFernCli("upgrade", fullRepoPath);
         await execFernCli("generator upgrade", fullRepoPath);
     } catch (error) {
+        console.error("Error running fern CLI upgrade:", error);
         return;
     }
 

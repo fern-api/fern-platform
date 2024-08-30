@@ -3,12 +3,14 @@ import { Fragment, ReactElement } from "react";
 import { useSidebarNodes } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
+import { useToHref } from "../hooks/useHref";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
 export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
     const sidebar = useSidebarNodes();
+    const toHref = useToHref();
     const fullWidth = sidebar == null;
     const overview =
         resolvedPath.node.overviewPageId != null ? resolvedPath.pages[resolvedPath.node.overviewPageId] : undefined;
@@ -64,12 +66,12 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                                 <>
                                                     <div className="flex-initial max-md:hidden min-w-64">
                                                         <div className="sticky top-header-offset-padded t-muted text-base mb-8">
-                                                            <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
+                                                            <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
                                                         </div>
                                                     </div>
                                                     <div className="relative mr-6 max-w-full flex-auto min-w-0 shrink">
                                                         <div className="t-muted text-base mb-8 xl:hidden md:hidden">
-                                                            <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
+                                                            <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
                                                         </div>
                                                         <div className="prose dark:prose-invert">
                                                             {title != null && <h1>{title}</h1>}
@@ -82,7 +84,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                                 <>
                                                     <div className="relative mr-6 max-w-full flex-auto max-xl:mx-auto">
                                                         <div className="t-muted text-base mb-8 xl:hidden">
-                                                            <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
+                                                            <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
                                                         </div>
                                                         <div className="prose dark:prose-invert">
                                                             {title != null && <h1>{title}</h1>}
@@ -92,7 +94,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                                     </div>
                                                     <div className="-mt-2 w-72 pl-4 text-right max-xl:hidden">
                                                         <span className="t-muted text-base sticky top-header-offset-padded">
-                                                            <FernLink href={`/${entry.slug}`}>{entry.title}</FernLink>
+                                                            <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
                                                         </span>
                                                     </div>
                                                 </>

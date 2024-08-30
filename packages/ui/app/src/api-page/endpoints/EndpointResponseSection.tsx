@@ -1,4 +1,5 @@
-import { useDomain } from "../../atoms";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { useFeatureFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -11,8 +12,7 @@ export declare namespace EndpointResponseSection {
         responseBody: ResolvedResponseBody;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
-        route: string;
-        defaultExpandAll?: boolean;
+        slug: FernNavigation.Slug;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
@@ -21,16 +21,16 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     responseBody,
     onHoverProperty,
     anchorIdParts,
-    route,
-    defaultExpandAll = false,
+    slug,
     types,
 }) => {
-    const domain = useDomain();
+    const { isAudioFileDownloadSpanSummary } = useFeatureFlags();
+
     return (
         <div>
             <ApiPageDescription className="mt-3 text-sm" description={responseBody.description} isMarkdown={true} />
             <div className="t-muted border-default border-b pb-5 text-sm leading-6">
-                {getResponseSummary({ responseBody, types, domain })}
+                {getResponseSummary({ responseBody, types, isAudioFileDownloadSpanSummary })}
             </div>
             {visitResolvedHttpResponseBodyShape(responseBody.shape, {
                 fileDownload: () => null,
@@ -58,8 +58,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
-                        route={route}
-                        defaultExpandAll={defaultExpandAll}
+                        slug={slug}
                         applyErrorStyles={false}
                         types={types}
                         isResponse={true}
@@ -71,8 +70,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
-                        route={route}
-                        defaultExpandAll={defaultExpandAll}
+                        slug={slug}
                         applyErrorStyles={false}
                         types={types}
                         isResponse={true}
@@ -86,14 +84,14 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
 function getResponseSummary({
     responseBody,
     types,
-    domain,
+    isAudioFileDownloadSpanSummary,
 }: {
     responseBody: ResolvedResponseBody;
     types: Record<string, ResolvedTypeDefinition>;
-    domain: string;
+    isAudioFileDownloadSpanSummary: boolean;
 }) {
     if (responseBody.shape.type === "fileDownload") {
-        if (domain.includes("elevenlabs")) {
+        if (isAudioFileDownloadSpanSummary) {
             return (
                 <span>
                     This endpoint returns an <code>audio/mpeg</code> file.

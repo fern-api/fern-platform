@@ -58,11 +58,12 @@ export function getSeoProps(
     const pageId = FernNavigation.utils.getPageId(node);
 
     let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? {};
+    let seoTitleFromMarkdownH1;
 
     if (pageId != null) {
         const page = pages[pageId];
         if (page != null) {
-            const { data: frontmatter } = getFrontmatter(page.markdown);
+            const { data: frontmatter, content } = getFrontmatter(page.markdown);
             ogMetadata = { ...ogMetadata, ...frontmatter };
 
             // retrofit og:image, preferring og:image
@@ -93,7 +94,9 @@ export function getSeoProps(
                 }
             }
 
-            seo.title ??= frontmatter.title;
+            seoTitleFromMarkdownH1 = extractHeadline(content);
+
+            seo.title ??= seoTitleFromMarkdownH1 ?? frontmatter.title;
             seo.description ??= frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
         }
     }
@@ -129,7 +132,6 @@ export function getSeoProps(
     if (seo.title != null && stringHasMarkdown(seo.title)) {
         seo.title = stripMarkdown(seo.title);
     }
-
     if (seo.description != null && stringHasMarkdown(seo.description)) {
         seo.description = stripMarkdown(seo.description);
     }
@@ -198,7 +200,7 @@ export function getSeoProps(
     seo.title ??= node.title;
     openGraph.siteName ??= title;
     if (title != null) {
-        seo.titleTemplate ??= `%s — ${title}`;
+        seo.titleTemplate ??= seoTitleFromMarkdownH1 ?? `%s — ${title}`;
     }
 
     if (favicon != null && files[favicon] != null) {
@@ -278,4 +280,11 @@ function stripMarkdown(markdown: string): string {
     } catch (e) {
         return markdown;
     }
+}
+
+export function extractHeadline(markdownContent: string): string | undefined {
+    if (markdownContent.trim().startsWith("#") && !markdownContent.trim().startsWith("##")) {
+        return stripMarkdown(markdownContent.trim().split("\n")[0] ?? "");
+    }
+    return;
 }

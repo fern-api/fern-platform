@@ -7,7 +7,9 @@ imports:
 
 types:
   AlgoliaSearchIndex: string
+
   Breadcrumbs: list<string>
+
   IndexSegmentId: string
 
   AlgoliaRecord:
@@ -18,7 +20,6 @@ types:
       endpoint-v3: AlgoliaEndpointRecordV3
       websocket-v3: AlgoliaWebSocketRecordV3
       webhook-v3: AlgoliaWebhookRecordV3
-
       # deprecated
       endpoint: AlgoliaEndpointRecord
       page: AlgoliaPageRecord
@@ -83,7 +84,6 @@ types:
       singleAlgoliaIndex:
         docs: Every docs website is indexed in a global Algolia Index
         type: SingleAlgoliaIndexInfo
-
   # Deprecated
 
   LegacyMultiAlgoliaIndexInfo:

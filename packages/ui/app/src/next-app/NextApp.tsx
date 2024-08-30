@@ -1,42 +1,18 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
-import * as sentry from "@sentry/nextjs";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
-import { capturePosthogEvent, initializePosthog } from "../analytics/posthog";
-import { DocsProps, ThemeScript, store } from "../atoms";
+import { DocsProps, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../docs/NProgress";
+import { ThemeScript } from "./utils/ThemeScript";
+
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
-    useEffect(() => {
-        initializePosthog();
-
-        // Track page views
-        const handleRouteChange = (url: string) => {
-            try {
-                capturePosthogEvent("$pageview");
-                typeof window !== "undefined" &&
-                    window?.analytics &&
-                    typeof window.analytics.page === "function" &&
-                    window?.analytics?.page("Page View", { page: url });
-            } catch (e) {
-                //send the exception to sentry
-                sentry.captureException(e);
-                // eslint-disable-next-line no-console
-                console.error("Failed to track page view", e);
-            }
-        };
-        Router.events.on("routeChangeComplete", handleRouteChange);
-        return () => {
-            Router.events.off("routeChangeComplete", handleRouteChange);
-        };
-    }, []);
-
     // This is a hack to handle edge-cases related to multitenant subpath rendering:
     // We need to intercept how prefetching is done and modify the hrefs to include the subpath.
     useInterceptNextDataHref({

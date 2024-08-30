@@ -27,15 +27,29 @@ const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
     ({ protocol, hostname, port }) => `${protocol}://${hostname}${port ? `:${port}` : ""}`,
 );
 
+function isTruthy(value) {
+    if (value == null) {
+        return false;
+    } else if (typeof value === "string") {
+        return value.toLowerCase() === "true" || value === "1";
+    } else if (typeof value === "boolean") {
+        return value;
+    } else if (typeof value === "number") {
+        return value > 0;
+    }
+    return false;
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
     transpilePackages: ["next-mdx-remote", "esbuild", "lodash-es", "@fern-ui/ui", "@fern-api/fdr-sdk"],
-    productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
+    productionBrowserSourceMaps: isTruthy(process.env.ENABLE_SOURCE_MAPS),
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
     },
+    trailingSlash: isTruthy(process.env.TRAILING_SLASH),
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the
      * multi-tenant nature of this app, we cannot set a global basepath in the next.config.js. As a result, the `_next`
@@ -48,79 +62,91 @@ const nextConfig = {
      */
     assetPrefix: cdnUri != null ? cdnUri.href : undefined,
     headers: async () => {
-        const defaultSrc = ["'self'", "https://*.buildwithfern.com", "https://*.ferndocs.com", ...DOCS_FILES_URLS];
+        // const defaultSrc = ["'self'", "https://*.buildwithfern.com", "https://*.ferndocs.com", ...DOCS_FILES_URLS];
 
-        const connectSrc = [
-            "'self'",
-            "https://*.buildwithfern.com",
-            "https://*.ferndocs.com",
-            "wss://websocket.proxy.ferndocs.com",
-            "https://*.algolia.net",
-            "https://*.algolianet.com",
-            "https://*.algolia.io",
-            "https://*.posthog.com",
-            "https://cdn.segment.com",
-            "https://api.segment.io",
-            "wss://api.getkoala.com",
-            "https://www.google-analytics.com",
-        ];
+        // const connectSrc = [
+        //     "'self'",
+        //     "https://*.buildwithfern.com",
+        //     "https://*.ferndocs.com",
+        //     "wss://websocket.proxy.ferndocs.com",
+        //     "https://*.algolia.net",
+        //     "https://*.algolianet.com",
+        //     "https://*.algolia.io",
+        //     "https://*.posthog.com",
+        //     "https://cdn.segment.com",
+        //     "https://api.segment.io",
+        //     "wss://api.getkoala.com",
+        //     "https://www.google-analytics.com",
+        //     "https://*.intercom.io",
+        //     "wss://*.intercom.io",
+        //     "https://*.fullstory.com",
+        // ];
 
-        const scriptSrc = [
-            "'self'",
-            "'unsafe-eval'",
-            "'unsafe-inline'",
-            "https://*.posthog.com",
-            "https://cdn.segment.com",
-            "https://www.googletagmanager.com",
-            ...DOCS_FILES_URLS,
-        ];
+        // const scriptSrc = [
+        //     "'self'",
+        //     "'unsafe-eval'",
+        //     "'unsafe-inline'",
+        //     "https://*.posthog.com",
+        //     "https://cdn.segment.com",
+        //     "https://www.googletagmanager.com",
+        //     "https://*.intercomcdn.com",
+        //     "https://*.intercom.io",
+        //     "https://*.fullstory.com",
+        //     ...DOCS_FILES_URLS,
+        // ];
 
-        const styleSrc = ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"];
+        // const styleSrc = ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"];
 
-        const fontSrc = ["'self'", "data:", ...DOCS_FILES_URLS];
+        // const fontSrc = ["'self'", "data:", "https://*.intercomcdn.com", ...DOCS_FILES_URLS];
 
-        if (cdnUri != null) {
-            scriptSrc.push(`${cdnUri.origin}`);
-            connectSrc.push(`${cdnUri.origin}`);
-            styleSrc.push(`${cdnUri.origin}`);
-        }
+        // if (cdnUri != null) {
+        //     scriptSrc.push(`${cdnUri.origin}`);
+        //     connectSrc.push(`${cdnUri.origin}`);
+        //     styleSrc.push(`${cdnUri.origin}`);
+        // }
 
-        // enable vercel toolbar
-        scriptSrc.push("https://vercel.live");
-        connectSrc.push("https://vercel.live");
-        connectSrc.push("wss://*.pusher.com");
-        styleSrc.push("https://vercel.live");
-        styleSrc.push("https://fonts.googleapis.com");
+        // // enable vercel toolbar
+        // scriptSrc.push("https://vercel.live");
+        // connectSrc.push("https://vercel.live");
+        // connectSrc.push("wss://*.pusher.com");
+        // styleSrc.push("https://vercel.live");
+        // styleSrc.push("https://fonts.googleapis.com");
 
-        const ContentSecurityPolicy = [
-            `default-src ${defaultSrc.join(" ")}`,
-            `script-src ${scriptSrc.join(" ")}`,
-            `style-src ${styleSrc.join(" ")}`,
-            "img-src 'self' https: blob: data:",
-            `connect-src ${connectSrc.join(" ")}`,
-            "frame-src 'self' https:",
-            "object-src 'none'",
-            "base-uri 'self'",
-            "form-action 'self'",
-            "frame-ancestors 'none'",
-            `font-src ${fontSrc.join(" ")}`,
-            // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
-        ];
+        // const ContentSecurityPolicy = [
+        //     `default-src ${defaultSrc.join(" ")}`,
+        //     `script-src ${scriptSrc.join(" ")}`,
+        //     `style-src ${styleSrc.join(" ")}`,
+        //     "img-src 'self' https: blob: data:",
+        //     `connect-src ${connectSrc.join(" ")}`,
+        //     "frame-src 'self' https:",
+        //     "object-src 'none'",
+        //     "base-uri 'self'",
+        //     "form-action 'self'",
+        //     "frame-ancestors 'none'",
+        //     `font-src ${fontSrc.join(" ")}`,
+        //     // "upgrade-insecure-requests", <-- this is ignored because Report-Only mode is enabled
+        // ];
 
-        const reportUri =
-            "https://o4507138224160768.ingest.sentry.io/api/4507148139495424/security/?sentry_key=216ad381a8f652e036b1833af58627e5";
+        // BEGIN CSP REPORT SUPPRESSION
+        // CSP reports to sentry have been disabled because they often come from downstream custom js
+        // that we can't do much about. This results in a very expensive sentry bill for very little value or marginal security.
+        //
+        // const reportUri =
+        //     "https://o4507138224160768.ingest.sentry.io/api/4507148139495424/security/?sentry_key=216ad381a8f652e036b1833af58627e5";
+        //
+        // const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
 
-        const ReportTo = `{"group":"csp-endpoint","max_age":10886400,"endpoints":[{"url":"${reportUri}"}],"include_subdomains":true}`;
+        // ContentSecurityPolicy.push("worker-src 'self' blob:");
 
-        ContentSecurityPolicy.push("worker-src 'self' blob:");
+        // ContentSecurityPolicy.push(`report-uri ${reportUri}`);
+        // ContentSecurityPolicy.push("report-to csp-endpoint");
 
-        ContentSecurityPolicy.push(`report-uri ${reportUri}`);
-        ContentSecurityPolicy.push("report-to csp-endpoint");
+        // const ContentSecurityHeaders = [
+        //     { key: "Content-Security-Policy-Report-Only", value: ContentSecurityPolicy.join("; ") },
+        //     // { key: "Report-To", value: ReportTo },
+        // ];
 
-        const ContentSecurityHeaders = [
-            { key: "Content-Security-Policy-Report-Only", value: ContentSecurityPolicy.join("; ") },
-            { key: "Report-To", value: ReportTo },
-        ];
+        // END CSP REPORT SUPPRESSION
 
         const AccessControlHeaders = [
             {
@@ -150,10 +176,10 @@ const nextConfig = {
                 source: "/:prefix*/api/fern-docs/auth/:path*",
                 headers: AccessControlHeaders,
             },
-            {
-                source: "/:path*",
-                headers: ContentSecurityHeaders,
-            },
+            // {
+            //     source: "/:path*",
+            //     headers: ContentSecurityHeaders,
+            // },
         ];
     },
     rewrites: async () => {
@@ -268,7 +294,7 @@ const nextConfig = {
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-    enabled: process.env.ANALYZE === "true",
+    enabled: isTruthy(process.env.ANALYZE),
 });
 
 module.exports = withBundleAnalyzer(nextConfig);

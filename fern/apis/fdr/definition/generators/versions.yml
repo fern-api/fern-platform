@@ -1,0 +1,130 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+docs: CRUD API for managing generator versions.
+
+imports:
+  commons: ./commons.yml
+  root: ./__package__.yml
+
+types:
+  GeneratorReleaseRequest:
+    extends: commons.ReleaseRequest
+    properties:
+      generator_id: root.GeneratorId
+      ir_version:
+        type: integer
+        docs: The major version of the IR that this generator version consumes.
+      migration:
+        type: optional<string>
+        docs: The TypeScript file for the migration to run when upgrading to this version. Ideally this would be typed as a file, but we don't support file upload in the express generator.
+      custom_config_schema:
+        type: optional<string>
+        docs: The JSON schema (stringified) for the custom config that this generator version supports.
+
+  GeneratorRelease:
+    extends: commons.Release
+    properties:
+      generator_id: root.GeneratorId
+      ir_version:
+        type: integer
+        docs: The major version of the IR that this generator version consumes.
+      migration:
+        type: optional<string>
+        docs: The TypeScript file for the migration to run when upgrading to this version.
+      custom_config_schema:
+        type: optional<string>
+        docs: The JSON schema (stringified) for the custom config that this generator version supports.
+
+  ListGeneratorReleasesResponse:
+    properties:
+      generator_releases: list<GeneratorRelease>
+
+service:
+  audiences:
+    - generators
+  base-path: /generators/versions
+  auth: true
+  endpoints:
+    getLatestGeneratorRelease:
+      docs: Get the latest generator version that has not been yanked.
+      method: POST
+      path: /latest
+      request:
+        name: GetLatestGeneratorReleaseRequest
+        body:
+          properties:
+            generator: root.GeneratorId
+            cli_version:
+              type: optional<string>
+              docs: |
+                The version of the CLI that is requesting the latest generator version. This is used to determine the latest IR version the generator must respect.
+            ir_version:
+              type: optional<integer>
+              docs: |
+                The IR version that the generator must respect. If this is provided alongside `cli_version`, `cli_version` takes precedence.
+            generator_major_version:
+              type: optional<integer>
+              docs: |
+                If specified, we will only return the latest version that is the same major version as provided. Useful while we do not support config migrations, etc.
+            release_types:
+              type: optional<list<commons.ReleaseType>>
+              docs: A filter for the release type, specifically if you'd like to get RC releases only, etc. Defaults to GA releases.
+      response: GeneratorRelease
+      errors:
+        - NoValidGeneratorsFoundError
+
+    getChangelog:
+      docs: Get the changelog for the specified generator upgrade. The response will be a map of the generator version to it's corresponding changelog.
+      method: GET
+      path: /{generator}/changelog/{from_version}/to/{to_version}
+      path-parameters:
+        generator: root.GeneratorId
+        from_version: string
+        to_version: string
+      response: commons.GetChangelogResponse
+
+    upsertGeneratorRelease:
+      docs: Update or create the specified generator version.
+      method: PUT
+      path: ""
+      request: GeneratorReleaseRequest
+      errors:
+        - commons.InvalidVersionError
+
+    getGeneratorRelease:
+      docs: Get the specified generator version.
+      method: GET
+      path: /{generator}/{version}
+      path-parameters:
+        generator: root.GeneratorId
+        version: string
+      response: GeneratorRelease
+      errors:
+        - GeneratorVersionNotFoundError
+
+    listGeneratorReleases:
+      docs: Get all generator versions for the specified generator.
+      method: GET
+      path: /{generator}
+      path-parameters:
+        generator: root.GeneratorId
+      pagination:
+        offset: $request.page
+        results: $response.generator_releases
+      request:
+        name: ListGeneratorReleasesRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page integer to retrieve. Defaults to 0.
+          page_size:
+            type: optional<integer>
+            docs: The integer of items to retrieve per page. Defaults to 20.
+      response: ListGeneratorReleasesResponse
+
+errors:
+  GeneratorVersionNotFoundError:
+    status-code: 404
+    type: commons.InvalidVersionErrorMessage
+  NoValidGeneratorsFoundError:
+    status-code: 404

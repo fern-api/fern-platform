@@ -1,0 +1,78 @@
+docs: CRUD API for managing the generator entity itself.
+
+imports:
+  commons: ./commons.yml
+
+types:
+  GeneratorId:
+    type: string
+    docs: The type of the generator, e.g. fern-python-sdk
+
+  SdkGenerator:
+    properties: {}
+
+  ModelGenerator:
+    properties: {}
+
+  ServerGenerator:
+    properties: {}
+
+  OtherGenerator:
+    properties: {}
+
+  # Generator type is a union of the different types of generators in order to
+  # add more type-specific fields down the line.
+  GeneratorType:
+    union:
+      sdk: SdkGenerator
+      model: ModelGenerator
+      server: ServerGenerator
+      other: OtherGenerator
+
+  GeneratorLanguage:
+    enum:
+      - python
+      - go
+      - java
+      - typescript
+      - ruby
+      - csharp
+      - php
+      - swift
+      - rust
+
+  Generator:
+    properties:
+      id: GeneratorId
+      generator_type: GeneratorType
+      generator_language: optional<GeneratorLanguage>
+      docker_image:
+        type: string
+        docs: The name of the docker image to pull to run this generator.
+
+service:
+  audiences:
+    - generators
+  auth: false
+  base-path: /generators
+  endpoints:
+    upsertGenerator:
+      auth: true
+      docs: Update or create the specified generator.
+      method: PUT
+      path: ""
+      request: Generator
+
+    getGenerator:
+      docs: Get the specified generator.
+      method: GET
+      path: /{generator_id}
+      path-parameters:
+        generator_id: GeneratorId
+      response: optional<Generator>
+
+    listGenerators:
+      docs: Get the all generators. This is currently not paginated since the list will be short, but there may in the future be need for pagination.
+      method: GET
+      path: ""
+      response: list<Generator>

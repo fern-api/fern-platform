@@ -11,7 +11,6 @@ import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
 import { ResolvedRootPackage } from "../resolver/types";
-import { slugToHref } from "./slugToHref";
 
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
@@ -42,7 +41,7 @@ async function getSubtitle(
             data: {
                 pageTitle: node.title,
                 pageId,
-                route: slugToHref(node.slug),
+                route: `/${node.slug}`,
             },
         });
         return undefined;
@@ -168,7 +167,6 @@ export async function convertNavigatableToResolvedPath({
             pages,
             mdxOptions,
             featureFlags,
-            domain,
         );
         return {
             type: "api-page",
@@ -249,15 +247,7 @@ async function resolveMarkdownPage(
                 const typeResolver = new ApiTypeResolver(definition.types, mdxOptions);
                 return [
                     apiNode.title,
-                    await ApiDefinitionResolver.resolve(
-                        apiNode,
-                        holder,
-                        typeResolver,
-                        pages,
-                        mdxOptions,
-                        featureFlags,
-                        domain,
-                    ),
+                    await ApiDefinitionResolver.resolve(apiNode, holder, typeResolver, pages, mdxOptions, featureFlags),
                 ];
             }),
         ),

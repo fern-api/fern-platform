@@ -1,8 +1,8 @@
 import { visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
-import { EnvironmentId, NavigationNode, NodeId, PlaygroundSettings } from "@fern-api/fdr-sdk/navigation";
+import { NavigationNode, NodeId, PlaygroundSettings } from "@fern-api/fdr-sdk/navigation";
 import { useIsPlaygroundOpen, useNavigationNodes, usePlaygroundNodeId } from "../atoms";
 
-export function usePlaygroundSettings(currentNodeId?: NodeId): EnvironmentId[] | undefined {
+export function usePlaygroundSettings(currentNodeId?: NodeId): PlaygroundSettings | undefined {
     const playgroundNodeId = usePlaygroundNodeId();
     const playgroundOpen = useIsPlaygroundOpen();
     const navigationNodes = useNavigationNodes();
@@ -13,12 +13,12 @@ export function usePlaygroundSettings(currentNodeId?: NodeId): EnvironmentId[] |
         const maybeCurrentHasPlayground = nodeHasPlayground(navigationNodes.get(nodeIdToUse));
 
         if (maybeCurrentHasPlayground) {
-            return maybeCurrentHasPlayground.environments;
+            return maybeCurrentHasPlayground;
         } else {
             for (const node of navigationNodes.getParents(nodeIdToUse).reverse()) {
                 const maybeNodeHasPlayground = nodeHasPlayground(node);
                 if (maybeNodeHasPlayground) {
-                    return maybeNodeHasPlayground.environments;
+                    return maybeNodeHasPlayground;
                 }
             }
         }

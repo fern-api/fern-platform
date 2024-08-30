@@ -1,9 +1,9 @@
-import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import { Minus, Plus } from "iconoir-react";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
-import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { FernAnchor } from "../../components/FernAnchor";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
+import { useHref } from "../../hooks/useHref";
 import type { BundledMDX } from "../../mdx/types";
 import { getAnchorId } from "../../util/anchor";
 
@@ -17,10 +17,7 @@ export declare namespace EndpointSection {
         title: ReactNode;
         description?: BundledMDX | undefined;
         anchorIdParts: readonly string[];
-        route: string;
-        expandAll?: () => void;
-        collapseAll?: () => void;
-        showExpandCollapse?: boolean;
+        slug: FernNavigation.Slug;
     }>;
 }
 
@@ -29,36 +26,18 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
     title,
     description,
     anchorIdParts,
-    route,
+    slug,
     children,
-    showExpandCollapse,
-    expandAll: handleExpandAll,
-    collapseAll: handleCollapseAll,
 }) => {
     const ref = useRef<HTMLDivElement>(null);
     const anchorId = getAnchorId(anchorIdParts);
-    const anchorRoute = `${route}#${anchorId}`;
+    const href = useHref(slug, anchorId);
     return (
         <FernErrorBoundary component="EndpointSection">
-            <div ref={ref} id={anchorRoute} className="scroll-mt-content">
-                <div className="group/anchor-container relative flex items-baseline justify-between gap-4 pb-3">
-                    {createElement(
-                        headerType,
-                        { className: "relative mt-0 flex items-center" },
-                        <AbsolutelyPositionedAnchor href={anchorRoute} />,
-                        <span>{title}</span>,
-                    )}
-                    {showExpandCollapse && (
-                        <FernButtonGroup className="invisible group-hover/anchor-container:visible">
-                            <FernButton onClick={handleExpandAll} icon={<Plus />} size="small" variant="minimal">
-                                Expand all
-                            </FernButton>
-                            <FernButton onClick={handleCollapseAll} icon={<Minus />} size="small" variant="minimal">
-                                Collapse all
-                            </FernButton>
-                        </FernButtonGroup>
-                    )}
-                </div>
+            <div ref={ref} id={href} className="scroll-mt-content">
+                <FernAnchor href={href}>
+                    {createElement(headerType, { className: "relative mt-0 flex items-center" }, title)}
+                </FernAnchor>
                 {description != null && (
                     <div className="mb-2">
                         <Markdown className="text-base" mdx={description} />

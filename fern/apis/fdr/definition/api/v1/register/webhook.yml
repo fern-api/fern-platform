@@ -33,7 +33,7 @@ types:
     union:
       object: type.ObjectType
       reference: type.TypeReference
-  
-  ExampleWebhookPayload: 
-    properties: 
+
+  ExampleWebhookPayload:
+    properties:
       payload: unknown

@@ -1,0 +1,118 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+docs: CRUD API for managing CLI versions, as well as the corresponding IR metadata.
+
+imports:
+  commons: ./commons.yml
+
+types:
+  CliReleaseRequest:
+    extends: commons.ReleaseRequest
+    properties:
+      ir_version:
+        type: integer
+        docs: The major version of the IR that this CLI exposes.
+
+  CliRelease:
+    extends: commons.Release
+    properties:
+      ir_version:
+        type: integer
+        docs: The major version of the IR that this CLI exposes.
+
+  ListCliReleasesResponse:
+    properties:
+      cli_releases: list<CliRelease>
+
+  IrDependency:
+    properties:
+      cli_version: string
+      ir_version: integer
+
+service:
+  audiences:
+    - generators
+  base-path: /generators/cli
+  auth: true
+  endpoints:
+    getLatestCliRelease:
+      docs: Get the latest CLI version that has not been yanked.
+      method: POST
+      path: /latest
+      request:
+        name: GetLatestCliReleaseRequest
+        body:
+          properties:
+            release_types:
+              type: optional<list<commons.ReleaseType>>
+              docs: A filter for the release type, specifically if you'd like to get RC releases only, etc. Defaults to GA releases.
+            ir_version:
+              type: optional<integer>
+              docs: |
+                The IR version that the CLI must respect.
+      response: CliRelease
+      errors:
+        - NoValidClisFoundError
+
+    getChangelog:
+      docs: Get the changelog for the specified CLI upgrade. The response will be a map of the generator version to it's corresponding changelog.
+      method: GET
+      path: /changelog/{from_version}/to/{to_version}
+      path-parameters:
+        from_version: string
+        to_version: string
+      response: commons.GetChangelogResponse
+
+    getMinCliForIr:
+      docs: Get the minimum CLI version that supports the given IR version. This does not include RCs.
+      method: GET
+      path: /for-ir/{ir_version}
+      path-parameters:
+        ir_version: integer
+      response: CliRelease
+      errors:
+        - NoValidClisFoundError
+
+    upsertCliRelease:
+      docs: Update or create the specified CLI version.
+      method: PUT
+      path: ""
+      request: CliReleaseRequest
+
+    getCliRelease:
+      docs: Get the specified CLI version.
+      method: GET
+      path: /{cli_version}
+      path-parameters:
+        cli_version: string
+      response: CliRelease
+      errors:
+        - CliVersionNotFoundError
+
+    listCliReleases:
+      docs: Get all CLI versions.
+      method: GET
+      path: ""
+      pagination:
+        offset: $request.page
+        results: $response.cli_releases
+      request:
+        name: ListCliReleasesRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page integer to retrieve. Defaults to 0.
+          page_size:
+            type: optional<integer>
+            docs: The integer of items to retrieve per page. Defaults to 20.
+      response: ListCliReleasesResponse
+
+errors:
+  CliVersionNotFoundError:
+    status-code: 404
+    type: commons.InvalidVersionErrorMessage
+  NoValidClisFoundError:
+    status-code: 404
+  NoValidCliForIrError:
+    status-code: 404
+    type: commons.InvalidIrVersionErrorMessage

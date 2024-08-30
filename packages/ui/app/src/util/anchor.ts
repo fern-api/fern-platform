@@ -12,8 +12,12 @@ export function getRouteNode(route: string): HTMLElement | undefined {
 }
 
 export function getRouteNodeWithAnchor(route: string): HTMLElement | undefined {
-    const [, anchor] = route.split("#");
-    return getRouteNode(route) ?? (anchor != null ? getRouteNode(anchor) : undefined);
+    const [path, anchor] = route.split("#");
+    return (
+        getRouteNode(route) ??
+        (anchor != null ? getRouteNode(anchor) : undefined) ??
+        (path != null ? getRouteNode(path) : undefined)
+    );
 }
 
 export function scrollToRoute(route: string, smooth = false): boolean {
