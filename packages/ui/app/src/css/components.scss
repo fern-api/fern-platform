@@ -128,6 +128,12 @@
             font-weight: inherit;
         }
 
+        h1 &,
+        h2 &,
+        h3 & {
+            @apply t-accent; // WCAG AA
+        }
+
         svg.external-link-icon {
             @apply ml-0.5 inline-block text-text-muted size-3.5;
         }
