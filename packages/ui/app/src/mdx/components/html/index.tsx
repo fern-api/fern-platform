@@ -14,22 +14,13 @@ import {
 } from "react";
 import Zoom from "react-medium-image-zoom";
 import { FILES_ATOM, useFeatureFlags } from "../../../atoms";
-import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
+import { FernAnchor } from "../../../components/FernAnchor";
 import { FernImage } from "../../../components/FernImage";
 import { FernLink } from "../../../components/FernLink";
 import { useFrontmatter } from "../../../contexts/frontmatter";
 
 export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): ReactElement => {
-    return createElement(
-        `h${level}`,
-        {
-            id: props.id,
-            ...props,
-            className: cn(props.className, "flex items-center relative group/anchor-container mb-3"),
-        },
-        <AbsolutelyPositionedAnchor href={`#${props.id}`} />,
-        <span>{props.children}</span>,
-    );
+    return <FernAnchor href={`#${props.id}`}>{createElement(`h${level}`, props)}</FernAnchor>;
 };
 
 export const P: FC<{ variant: "api" | "markdown" } & ComponentProps<"p">> = ({ variant, className, ...rest }) => {

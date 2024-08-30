@@ -2,7 +2,7 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
-import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
+import { FernAnchor } from "../../../components/FernAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useHref } from "../../../hooks/useHref";
 import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
@@ -118,8 +118,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
             })}
         >
             <div className="fern-api-property-header">
-                <div className="group/anchor-container relative inline-flex items-center">
-                    <AbsolutelyPositionedAnchor href={href} />
+                <FernAnchor href={href} sideOffset={6}>
                     <span
                         className="fern-api-property-key"
                         onMouseEnter={onMouseEnterPropertyName}
@@ -127,7 +126,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                     >
                         {property.key}
                     </span>
-                </div>
+                </FernAnchor>
                 {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse)}
                 {property.availability != null && (
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
