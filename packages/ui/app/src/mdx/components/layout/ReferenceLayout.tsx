@@ -5,7 +5,7 @@ import { ReactElement, ReactNode, isValidElement } from "react";
 import { EditThisPageButton } from "../../../components/EditThisPage";
 import { PageHeader } from "../../../components/PageHeader";
 import { useApiPageContext } from "../../../contexts/api-page";
-import { Feedback } from "../../../custom-docs-page/Feedback";
+import { Feedback } from "../../../feedback/Feedback";
 import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 

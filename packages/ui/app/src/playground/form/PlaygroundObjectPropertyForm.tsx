@@ -4,7 +4,7 @@ import cn from "clsx";
 import { PlusCircle } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
-import { renderTypeShorthandRoot } from "../../api-page/types/type-shorthand/TypeShorthand";
+import { renderTypeShorthandRoot } from "../../api-reference/types/type-shorthand/TypeShorthand";
 import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../../resolver/types";
 import { castToRecord, getDefaultValueForType, isExpandable } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";

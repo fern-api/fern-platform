@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import { WebSocketMessage } from "../api-page/web-socket/WebSocketMessages";
+import { WebSocketMessage } from "../api-reference/web-socket/WebSocketMessages";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";

@@ -6,7 +6,7 @@ import { BottomNavigationButtons } from "../../../components/BottomNavigationBut
 import { EditThisPageButton } from "../../../components/EditThisPage";
 import { PageHeader } from "../../../components/PageHeader";
 import { TableOfContents, TableOfContentsItem } from "../../../components/TableOfContents";
-import { Feedback } from "../../../custom-docs-page/Feedback";
+import { Feedback } from "../../../feedback/Feedback";
 import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 

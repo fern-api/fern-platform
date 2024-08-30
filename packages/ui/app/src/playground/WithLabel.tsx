@@ -2,8 +2,8 @@ import { FernButton, FernTooltip } from "@fern-ui/components";
 import cn from "clsx";
 import { HelpCircle, Xmark } from "iconoir-react";
 import { FC, PropsWithChildren } from "react";
-import { EndpointAvailabilityTag } from "../api-page/endpoints/EndpointAvailabilityTag";
-import { renderTypeShorthand } from "../api-page/types/type-shorthand/TypeShorthand";
+import { EndpointAvailabilityTag } from "../api-reference/endpoints/EndpointAvailabilityTag";
+import { renderTypeShorthand } from "../api-reference/types/type-shorthand/TypeShorthand";
 import { Markdown } from "../mdx/Markdown";
 import {
     ResolvedObjectProperty,

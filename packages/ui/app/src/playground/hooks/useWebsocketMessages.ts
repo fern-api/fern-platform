@@ -1,6 +1,6 @@
 import { atom, useAtom } from "jotai";
 import { useCallback } from "react";
-import { WebSocketMessage } from "../../api-page/web-socket/WebSocketMessages";
+import { WebSocketMessage } from "../../api-reference/web-socket/WebSocketMessages";
 
 const WEBSOCKET_MESSAGES_ATOM = atom<Record<string, WebSocketMessage[]>>({});
 

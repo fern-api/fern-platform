@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty } from "lodash-es";
-import { stringifyHttpRequestExampleToCurl } from "../../../api-page/examples/stringifyHttpRequestExampleToCurl";
+import { stringifyHttpRequestExampleToCurl } from "../../../api-reference/examples/stringifyHttpRequestExampleToCurl";
 import { ResolvedExampleEndpointRequest, ResolvedFormValue } from "../../../resolver/types";
 import { convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest } from "../../types";
 import { PlaygroundCodeSnippetBuilder } from "./types";
