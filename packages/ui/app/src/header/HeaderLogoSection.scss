@@ -1,0 +1,19 @@
+@layer components {
+    .fern-logo-container {
+        @apply flex shrink-0 items-baseline;
+    }
+
+    .fern-logo,
+    .fern-logo-light,
+    .fern-logo-dark {
+        @apply max-h-full object-contain;
+    }
+
+    .fern-logo-light {
+        @apply block dark:hidden;
+    }
+
+    .fern-logo-dark {
+        @apply hidden dark:block;
+    }
+}

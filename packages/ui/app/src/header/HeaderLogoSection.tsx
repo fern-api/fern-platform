@@ -1,4 +1,3 @@
-import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
 import { DOCS_ATOM, LOGO_HREF_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM, useColors, useFile, useLogoHeight } from "../atoms";
@@ -15,7 +14,7 @@ export function HeaderLogoSection(): ReactElement {
         <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
             <div className="flex items-center gap-2">
                 <FernLogoContainer href={logoHref}>
-                    <FernLogoImage />
+                    <HeaderLogoImage />
                     {logoText != null && logoText.length > 0 && (
                         <span className="text-[1.5rem] lowercase font-heading ml-1 font-light text-accent">
                             {logoText}
@@ -36,10 +35,9 @@ function FernFileImage({ fileId, ...props }: Omit<FernImage.Props, "src"> & { fi
     return <FernImage src={useFile(fileId)} {...props} />;
 }
 
-function FernLogoImage(): ReactElement | null {
+function HeaderLogoImage(): ReactElement | null {
     const colors = useColors();
     const logoImageHeight = useLogoHeight();
-    const imageClassName = "max-h-full object-contain";
     const title = useAtomValue(DOCS_ATOM).title ?? "Logo";
 
     if (colors.dark != null && colors.light != null) {
@@ -49,7 +47,7 @@ function FernLogoImage(): ReactElement | null {
                     <FernFileImage
                         alt={title}
                         fileId={colors.light.logo}
-                        className={cn(imageClassName, "block dark:hidden")}
+                        className="fern-logo-light"
                         height={logoImageHeight}
                         style={{ height: logoImageHeight }}
                         priority={true}
@@ -61,7 +59,7 @@ function FernLogoImage(): ReactElement | null {
                     <FernFileImage
                         alt={title}
                         fileId={colors.dark.logo}
-                        className={cn(imageClassName, "hidden dark:block")}
+                        className="fern-logo-dark"
                         height={logoImageHeight}
                         style={{ height: logoImageHeight }}
                         priority={true}
@@ -81,7 +79,7 @@ function FernLogoImage(): ReactElement | null {
         return (
             <FernFileImage
                 fileId={logoFile}
-                className={cn(imageClassName, "block")}
+                className="fern-logo"
                 height={logoImageHeight}
                 style={{ height: logoImageHeight }}
                 priority={true}

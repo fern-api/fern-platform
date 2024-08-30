@@ -9,7 +9,7 @@ import { SWRConfig } from "swr";
 import { DocsProps, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
-import { NextNProgress } from "../docs/NProgress";
+import { NextNProgress } from "../header/NProgress";
 import { ThemeScript } from "./utils/ThemeScript";
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {

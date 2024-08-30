@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { DOCS_ATOM, useMessageHandler, useSetJustNavigated, type DocsProps } from "../atoms";
-import { BgImageGradient } from "../docs/BgImageGradient";
+import { BgImageGradient } from "../components/BgImageGradient";
 import { useBeforePopState } from "../hooks/useBeforePopState";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { useRouteChangeComplete, useRouteChangeStart } from "../hooks/useRouteChanged";

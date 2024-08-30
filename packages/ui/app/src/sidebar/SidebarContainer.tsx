@@ -11,7 +11,7 @@ import {
     useIsMobileSidebarOpen,
     useSidebarNodes,
 } from "../atoms";
-import { useIsScrolled } from "../docs/useIsScrolled";
+import { useIsScrolled } from "../hooks/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
