@@ -9,7 +9,6 @@ export * from "./FernCollapse";
 export * from "./FernDropdown";
 export * from "./FernInput";
 export * from "./FernLogo";
-export * from "./FernModal";
 export * from "./FernNumericInput";
 export * from "./FernRadioGroup";
 export * from "./FernScrollArea";
