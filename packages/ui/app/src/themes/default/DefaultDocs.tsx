@@ -10,7 +10,7 @@ import {
     useColors,
     useTheme,
 } from "../../atoms";
-import { DocsMainContent } from "../../content/DocsMainContent";
+import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 
