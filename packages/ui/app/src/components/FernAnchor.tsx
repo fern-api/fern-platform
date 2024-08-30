@@ -25,32 +25,36 @@ export function FernAnchor({ href, sideOffset = 12, children }: PropsWithChildre
     };
 
     return (
-        <Tooltip.Root delayDuration={0}>
-            <Tooltip.Content sideOffset={sideOffset} collisionPadding={6} side="left" forceMount={forceMount} asChild>
-                <FernLink
-                    className="fern-anchor"
-                    href={href}
-                    shallow={true}
-                    scroll={false}
-                    replace={true}
-                    onClick={copyToClipboard}
-                    tabIndex={-1}
-                >
-                    {!wasJustCopied && !forceMount && (
-                        <span className="fern-anchor-icon">
-                            <Link />
-                        </span>
-                    )}
-                    <AnimatePresence onExitComplete={handleExitComplete}>
-                        {wasJustCopied && (
-                            <motion.div className="fern-anchor-icon copied" exit={{ opacity: 0, x: -8 }}>
-                                <Check />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </FernLink>
-            </Tooltip.Content>
-            <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
-        </Tooltip.Root>
+        <Tooltip.Provider>
+            <Tooltip.Root delayDuration={0}>
+                <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
+                <Tooltip.Portal forceMount={forceMount}>
+                    <Tooltip.Content sideOffset={sideOffset} collisionPadding={6} side="left" asChild>
+                        <FernLink
+                            className="fern-anchor"
+                            href={href}
+                            shallow={true}
+                            scroll={false}
+                            replace={true}
+                            onClick={copyToClipboard}
+                            tabIndex={-1}
+                        >
+                            {!wasJustCopied && !forceMount && (
+                                <span className="fern-anchor-icon">
+                                    <Link />
+                                </span>
+                            )}
+                            <AnimatePresence onExitComplete={handleExitComplete}>
+                                {wasJustCopied && (
+                                    <motion.div className="fern-anchor-icon copied" exit={{ opacity: 0, x: -8 }}>
+                                        <Check />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </FernLink>
+                    </Tooltip.Content>
+                </Tooltip.Portal>
+            </Tooltip.Root>
+        </Tooltip.Provider>
     );
 }
