@@ -1,16 +1,16 @@
 import { useHydrateAtoms } from "jotai/utils";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
-import { PlaygroundContextProvider } from "../api-playground/PlaygroundContext";
 import { DOCS_ATOM, useMessageHandler, useSetJustNavigated, type DocsProps } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
+import { JavascriptProvider } from "../components/JavascriptProvider";
 import { useBeforePopState } from "../hooks/useBeforePopState";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { useRouteChangeComplete, useRouteChangeStart } from "../hooks/useRouteChanged";
+import { PlaygroundContextProvider } from "../playground/PlaygroundContext";
 import { NextSeo } from "../seo/NextSeo";
 import { InitializeTheme } from "../themes";
 import { ThemedDocs } from "../themes/ThemedDocs";
-import { JavascriptProvider } from "./utils/JavascriptProvider";
 
 const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
     ssr: true,

@@ -1,7 +1,7 @@
 import type { ColorsConfig } from "@fern-ui/fdr-utils";
 import Script from "next/script";
 import type { ReactElement } from "react";
-import type { AvailableThemes } from "../../atoms";
+import type { AvailableThemes } from "../atoms";
 
 // this script cannot reference any other code since it will be stringified to be executed in the browser
 const script = (themes: AvailableThemes): void => {

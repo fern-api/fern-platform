@@ -5,6 +5,7 @@ import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
+import { selectHref } from "../hooks/useHref";
 import {
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
@@ -17,13 +18,12 @@ import {
     type PlaygroundEndpointRequestFormState,
     type PlaygroundRequestFormState,
     type PlaygroundWebSocketRequestFormState,
-} from "../api-playground/types";
+} from "../playground/types";
 import {
     getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
     getInitialWebSocketRequestFormState,
-} from "../api-playground/utils";
-import { selectHref } from "../hooks/useHref";
+} from "../playground/utils";
 import {
     isEndpoint,
     isWebSocket,

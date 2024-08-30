@@ -6,9 +6,9 @@ import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
-import { stringHasMarkdown } from "../../mdx/common/util";
-import { getFrontmatter } from "../../mdx/frontmatter";
-import { getFontExtension } from "../../themes/stylesheet/getFontVariables";
+import { stringHasMarkdown } from "../mdx/common/util";
+import { getFrontmatter } from "../mdx/frontmatter";
+import { getFontExtension } from "../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
 
 function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1Read.File_>): DocsV1Read.File_ {

@@ -2,8 +2,8 @@ import { atom, useAtomValue } from "jotai";
 import Head from "next/head";
 import Script from "next/script";
 import { memo } from "react";
-import { CustomerAnalytics } from "../../analytics/CustomerAnalytics";
-import { DOCS_ATOM, FILES_ATOM } from "../../atoms";
+import { CustomerAnalytics } from "../analytics/CustomerAnalytics";
+import { DOCS_ATOM, FILES_ATOM } from "../atoms";
 
 const JS_ATOM = atom((get) => get(DOCS_ATOM).js);
 

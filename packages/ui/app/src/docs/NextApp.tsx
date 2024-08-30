@@ -10,7 +10,7 @@ import { DocsProps, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../header/NProgress";
-import { ThemeScript } from "./utils/ThemeScript";
+import { ThemeScript } from "../themes/ThemeScript";
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     // This is a hack to handle edge-cases related to multitenant subpath rendering:
