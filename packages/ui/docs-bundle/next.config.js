@@ -198,7 +198,7 @@ const nextConfig = {
                 /**
                  * while /_next/static routes are handled by the assetPrefix config, we need to handle the /_next/data routes separately
                  * when the user is hovering over a link, Next.js will prefetch the data route using `/_next/data` routes. We intercept
-                 * the prefetch request at packages/ui/app/src/next-app/NextApp.tsx and append the customer-defined basepath:
+                 * the prefetch request at packages/ui/app/src/docs/NextApp.tsx and append the customer-defined basepath:
                  *
                  * i.e. /base/path/_next/data/*
                  *
