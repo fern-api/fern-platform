@@ -13,21 +13,11 @@ import {
     useMemo,
 } from "react";
 import Zoom from "react-medium-image-zoom";
-import { FILES_ATOM, SLUG_ATOM, useFeatureFlags } from "../../../atoms";
+import { FILES_ATOM, useFeatureFlags } from "../../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { FernImage } from "../../../components/FernImage";
 import { FernLink } from "../../../components/FernLink";
 import { useFrontmatter } from "../../../contexts/frontmatter";
-
-/**
- * By default, next will use /host/current/slug in SSG.
- * Because of our custom routing (PathResolver) implementation, we need to override the pathname to be /basePath/current/slug.
- * @returns /basepath/current/slug
- */
-export function useCurrentPathname(): string {
-    const currentSlug = useAtomValue(SLUG_ATOM);
-    return `/${currentSlug}`;
-}
 
 export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): ReactElement => {
     return createElement(
