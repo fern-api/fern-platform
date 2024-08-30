@@ -5,13 +5,11 @@ import {
     BreadcrumbList,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { cn } from "@/lib/utils";
 import { useAuth0 } from "@auth0/auth0-react";
-import { FernButton, FernButtonGroup, RemoteFontAwesomeIcon } from "@fern-ui/components";
+import { FernButton, FernButtonGroup, FernLogo, FernLogoFill, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { Link } from "@tanstack/react-router";
 import { LogOutIcon } from "lucide-react";
-import { FernLogo } from "../FernLogo";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -53,7 +51,7 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
         <nav className="flex flex-row contents-center items-center gap-x-4 fixed inset-x-0 top-0 z-50 bg-background shadow-sm translate-y-0 md:translate-y-0/2 dark:bg-gray-950 p-6 h-16 justify-between">
             <div className="flex flex-row gap-x-3 items-center">
                 <Link to="/">
-                    <FernLogo className={cn("-mt-0.5 h-7 transition fill-black")} />
+                    <FernLogo className="-mt-0.5 h-7 transition" fill={FernLogoFill.Ground} />
                 </Link>
                 <Breadcrumb className="w-full">
                     <BreadcrumbList className="justify-center">

@@ -5,10 +5,10 @@ import { ResolvedEndpointDefinition } from "../../resolver/types";
 import { StreamingEnabledToggle } from "./StreamingEnabledToggle";
 
 export function EndpointStreamingEnabledToggle({
-    endpointProp,
+    endpoint,
     container,
 }: {
-    endpointProp: ResolvedEndpointDefinition;
+    endpoint: ResolvedEndpointDefinition;
     container: MutableRefObject<HTMLElement | null>;
 }): ReactElement {
     const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
@@ -19,8 +19,8 @@ export function EndpointStreamingEnabledToggle({
             value={isStream}
             setValue={(value) => {
                 setIsStream(value);
-                const endpoint = value && endpointProp.stream != null ? endpointProp.stream : endpointProp;
-                setSlug(endpoint.slug);
+                const selectedEndpoint = value && endpoint.stream != null ? endpoint.stream : endpoint;
+                setSlug(selectedEndpoint.slug);
                 setTimeout(() => {
                     if (container.current != null) {
                         container.current.scrollIntoView({ behavior: "instant" });

@@ -2,7 +2,7 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernCard, FernCollapse, FernInput } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { Globe, Key, User } from "iconoir-react";
+import { Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
@@ -19,7 +19,6 @@ import { useApiRoute } from "../hooks/useApiRoute";
 import { Callout } from "../mdx/components/callout";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
-import { PlaygroundSecretsModal, SecretBearer } from "./PlaygroundSecretsModal";
 import { PlaygroundAuthState } from "./types";
 
 interface PlaygroundAuthorizationFormProps {
@@ -30,20 +29,6 @@ interface PlaygroundAuthorizationFormProps {
 function BearerAuthForm({ bearerAuth, disabled }: { bearerAuth: APIV1Read.BearerAuth; disabled?: boolean }) {
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM);
     const handleChange = useCallback((newValue: string) => setValue({ token: newValue }), [setValue]);
-
-    const {
-        value: isSecretsModalOpen,
-        setTrue: openSecretsModal,
-        setFalse: closeSecretsModal,
-    } = useBooleanState(false);
-
-    const handleSelectSecret = useCallback(
-        (secret: SecretBearer) => {
-            closeSecretsModal();
-            handleChange(secret.token);
-        },
-        [closeSecretsModal, handleChange],
-    );
 
     return (
         <li className="-mx-4 space-y-2 p-4">
@@ -57,22 +42,9 @@ function BearerAuthForm({ bearerAuth, disabled }: { bearerAuth: APIV1Read.Bearer
                     value={value.token}
                     autoComplete="off"
                     data-1p-ignore="true"
-                    rightElement={
-                        <FernButton
-                            onClick={openSecretsModal}
-                            icon={<Globe className="size-icon" />}
-                            variant="minimal"
-                        />
-                    }
                     disabled={disabled}
                 />
             </div>
-
-            <PlaygroundSecretsModal
-                isOpen={isSecretsModalOpen && !disabled}
-                onClose={closeSecretsModal}
-                selectSecret={handleSelectSecret}
-            />
         </li>
     );
 }
@@ -86,19 +58,6 @@ function BasicAuthForm({ basicAuth, disabled }: { basicAuth: APIV1Read.BasicAuth
     const handleChangePassword = useCallback(
         (newValue: string) => setValue((prev) => ({ ...prev, password: newValue })),
         [setValue],
-    );
-    const {
-        value: isSecretsModalOpen,
-        setTrue: openSecretsModal,
-        setFalse: closeSecretsModal,
-    } = useBooleanState(false);
-
-    const handleSelectSecret = useCallback(
-        (secret: SecretBearer) => {
-            closeSecretsModal();
-            handleChangePassword(secret.token);
-        },
-        [closeSecretsModal, handleChangePassword],
     );
     return (
         <>
@@ -126,23 +85,10 @@ function BasicAuthForm({ basicAuth, disabled }: { basicAuth: APIV1Read.BasicAuth
                     <PasswordInputGroup
                         onValueChange={handleChangePassword}
                         value={value.password}
-                        rightElement={
-                            <FernButton
-                                onClick={openSecretsModal}
-                                icon={<Globe className="size-icon" />}
-                                variant="minimal"
-                            />
-                        }
                         disabled={disabled}
                     />
                 </div>
             </li>
-
-            <PlaygroundSecretsModal
-                isOpen={isSecretsModalOpen && !disabled}
-                onClose={closeSecretsModal}
-                selectSecret={handleSelectSecret}
-            />
         </>
     );
 }
@@ -168,19 +114,6 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
             [header.headerWireValue],
         ),
     );
-    const {
-        value: isSecretsModalOpen,
-        setTrue: openSecretsModal,
-        setFalse: closeSecretsModal,
-    } = useBooleanState(false);
-
-    const handleSelectSecret = useCallback(
-        (secret: SecretBearer) => {
-            closeSecretsModal();
-            setValue(secret.token);
-        },
-        [closeSecretsModal, setValue],
-    );
 
     return (
         <li className="-mx-4 space-y-2 p-4">
@@ -193,22 +126,9 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
                     value={value}
                     autoComplete="off"
                     data-1p-ignore="true"
-                    rightElement={
-                        <FernButton
-                            onClick={openSecretsModal}
-                            icon={<Globe className="size-icon" />}
-                            variant="minimal"
-                        />
-                    }
                     disabled={disabled}
                 />
             </div>
-
-            <PlaygroundSecretsModal
-                isOpen={isSecretsModalOpen && !disabled}
-                onClose={closeSecretsModal}
-                selectSecret={handleSelectSecret}
-            />
         </li>
     );
 }

@@ -1,6 +1,5 @@
-import { FernLogo } from "@/components/FernLogo";
 import { useAuth0 } from "@auth0/auth0-react";
-import { FernButton, RemoteFontAwesomeIcon, toast } from "@fern-ui/components";
+import { FernButton, FernLogo, FernLogoFill, RemoteFontAwesomeIcon, toast } from "@fern-ui/components";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { z } from "zod";
@@ -67,7 +66,7 @@ const Login: React.FC = () => {
                     </div>
                     <div className="pointer-events-none relative overflow-hidden bottom-0">
                         <div className="aspect-[6/1.75] z-100" />
-                        <FernLogo className="absolute fill-background -bottom-5 z-0" />
+                        <FernLogo className="absolute -bottom-5 z-0" fill={FernLogoFill.Air} />
                     </div>
                 </div>
             </div>
