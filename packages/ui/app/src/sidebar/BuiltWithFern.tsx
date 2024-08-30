@@ -28,13 +28,13 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
                     <span>
                         <FernLink
                             href={`https://buildwithfern.com/?utm_campaign=buildWith&utm_medium=docs&utm_source=${encodeURIComponent(domain)}`}
-                            className={"inline-flex items-center gap-2"}
+                            className={"inline-flex items-baseline gap-1"}
                             {...containerCallbacks}
                         >
                             <span className={cn("text-xs t-muted whitespace-nowrap")}>Built with</span>
                             <FernLogo
                                 fill={isHovering ? FernLogoFill.Default : FernLogoFill.Muted}
-                                className="-mt-0.5 h-4 transition"
+                                className="-mt-0.5 h-3.5 transition"
                             />
                         </FernLink>
                     </span>
