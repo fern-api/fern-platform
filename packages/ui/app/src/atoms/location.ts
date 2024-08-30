@@ -86,19 +86,27 @@ let justNavigatedTimeout: number;
 export const JUST_NAVIGATED_ATOM = atom(true);
 JUST_NAVIGATED_ATOM.debugLabel = "JUST_NAVIGATED_ATOM";
 JUST_NAVIGATED_ATOM.onMount = (setJustNavigated) => {
-    if (typeof window !== "undefined") {
-        justNavigatedTimeout = window.setTimeout(() => {
-            setJustNavigated(false);
-        }, 1000);
+    justNavigatedTimeout = window.setTimeout(() => {
+        setJustNavigated(false);
+    }, 1000);
 
-        return () => {
-            window.clearTimeout(justNavigatedTimeout);
-        };
-    }
-    return;
+    return () => {
+        window.clearTimeout(justNavigatedTimeout);
+    };
 };
 
 export function useSetJustNavigated(): [set: () => void, destroy: () => void] {
+    useAtomEffect(
+        useCallbackOne((_get, set) => {
+            window.clearTimeout(justNavigatedTimeout);
+            justNavigatedTimeout = window.setTimeout(() => {
+                set(JUST_NAVIGATED_ATOM, false);
+            }, 1000);
+            return () => {
+                window.clearTimeout(justNavigatedTimeout);
+            };
+        }, []),
+    );
     return [
         useAtomCallback(
             useCallbackOne((_get, set) => {
