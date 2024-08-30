@@ -43,7 +43,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
         setIsActive(isActive);
         if (isActive) {
             setTimeout(() => {
-                ref.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+                ref.current?.scrollIntoView({ block: "start", behavior: "instant" });
             }, 450);
         }
     });

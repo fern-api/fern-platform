@@ -11,21 +11,6 @@ IS_READY_ATOM.onMount = (setIsReady) => {
     }
 };
 
-export const JUST_NAVIGATED_ATOM = atom(true);
-JUST_NAVIGATED_ATOM.debugLabel = "JUST_NAVIGATED_ATOM";
-JUST_NAVIGATED_ATOM.onMount = (setJustNavigated) => {
-    if (typeof window !== "undefined") {
-        const timeout = setTimeout(() => {
-            setJustNavigated(false);
-        }, 1000);
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }
-    return;
-};
-
 export const SCROLL_BODY_ATOM = atom<HTMLElement | HTMLDivElement | null>(null);
 SCROLL_BODY_ATOM.debugLabel = "SCROLL_BODY_ATOM";
 SCROLL_BODY_ATOM.onMount = (set) => {
