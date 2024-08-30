@@ -3,7 +3,7 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
-import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { FernAnchor } from "../../components/FernAnchor";
 import { useHref } from "../../hooks/useHref";
 import type { BundledMDX } from "../../mdx/types";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
@@ -99,14 +99,13 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
                 "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >
-            <div className="group/anchor-container flex items-center">
-                <AbsolutelyPositionedAnchor href={href} />
+            <FernAnchor href={href} sideOffset={6}>
                 <span className="inline-flex items-baseline gap-2">
                     <span className="fern-api-property-key">{name}</span>
                     {typeShorthand}
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
-            </div>
+            </FernAnchor>
             <ApiPageDescription isMarkdown={true} description={description} className="!t-muted text-sm" />
             {children}
         </div>

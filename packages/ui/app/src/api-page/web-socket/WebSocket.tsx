@@ -7,7 +7,7 @@ import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react"
 import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
-import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
+import { FernAnchor } from "../../components/FernAnchor";
 import { useHref } from "../../hooks/useHref";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import {
@@ -352,7 +352,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
 };
 
 function CardedSection({
-    number: num,
+    // number: num,
     title,
     headingElement,
     children,
@@ -369,13 +369,9 @@ function CardedSection({
     return (
         <section {...props} id={href} className="border-default divide-default -mx-4 divide-y rounded-xl border">
             <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
-                <h2 className="relative mt-0 flex items-center">
-                    <AbsolutelyPositionedAnchor href={href} />
-                    {/* <div className="bg-tag-default mr-2 inline-flex size-7 items-center justify-center rounded-full font-mono text-base">
-                        {num}
-                    </div> */}
-                    <span>{title}</span>
-                </h2>
+                <FernAnchor href={href}>
+                    <h2 className="relative mt-0 flex items-center">{title}</h2>
+                </FernAnchor>
                 {headingElement}
             </div>
             {Children.toArray(children).some((child) => child) && <div className="space-y-12 p-4">{children}</div>}
