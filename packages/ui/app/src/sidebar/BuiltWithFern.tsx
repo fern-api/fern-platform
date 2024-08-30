@@ -4,7 +4,7 @@ import cn from "clsx";
 import { useDomain, useFeatureFlags } from "../atoms";
 import { FernLink } from "../components/FernLink";
 
-const BUILT_WITH_FERN_TOOLTIP_CONTENT = "Handcrafted SDKs and Docs for your API";
+const BUILT_WITH_FERN_TOOLTIP_CONTENT = "Developer-friendly docs for your API";
 
 export declare namespace BuiltWithFern {
     export interface Props {
