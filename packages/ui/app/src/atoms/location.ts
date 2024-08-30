@@ -85,17 +85,9 @@ let justNavigatedTimeout: number;
  */
 export const JUST_NAVIGATED_ATOM = atom(true);
 JUST_NAVIGATED_ATOM.debugLabel = "JUST_NAVIGATED_ATOM";
-JUST_NAVIGATED_ATOM.onMount = (setJustNavigated) => {
-    justNavigatedTimeout = window.setTimeout(() => {
-        setJustNavigated(false);
-    }, 1000);
-
-    return () => {
-        window.clearTimeout(justNavigatedTimeout);
-    };
-};
 
 export function useSetJustNavigated(): [set: () => void, destroy: () => void] {
+    // note: JUST_NAVIGATED_ATOM is never "mounted" so we need to implement mount/unmount as an effect
     useAtomEffect(
         useCallbackOne((_get, set) => {
             window.clearTimeout(justNavigatedTimeout);
