@@ -1,9 +1,8 @@
-import { FernTooltip, FernTooltipProvider } from "@fern-ui/components";
+import { FernLogo, FernLogoFill, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { useDomain, useFeatureFlags } from "../atoms";
 import { FernLink } from "../components/FernLink";
-import { FernLogo } from "./FernLogo";
 
 const BUILT_WITH_FERN_TOOLTIP_CONTENT = "Handcrafted SDKs and Docs for your API";
 
@@ -33,7 +32,10 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
                             {...containerCallbacks}
                         >
                             <span className={cn("text-xs t-muted whitespace-nowrap")}>Built with</span>
-                            <FernLogo muted={!isHovering} className="-mt-0.5 h-4 transition" />
+                            <FernLogo
+                                fill={isHovering ? FernLogoFill.Default : FernLogoFill.Muted}
+                                className="-mt-0.5 h-4 transition"
+                            />
                         </FernLink>
                     </span>
                 </FernTooltip>
