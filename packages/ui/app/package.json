@@ -57,7 +57,6 @@
     "@fern-ui/next-seo": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
-    "@headlessui/react": "^1.7.18",
     "@inkeep/widgets": "^0.2.288",
     "@next/third-parties": "^14.2.4",
     "@radix-ui/colors": "^3.0.0",
