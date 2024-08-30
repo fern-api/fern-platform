@@ -67,8 +67,9 @@ module.exports = {
             },
 
             colors: {
-                "fern-green": "#49932B",
-                "fern-green-dark": "#ADFF8C",
+                fern: "#1BA32A",
+                air: "#FBFFFA",
+                ground: "#081008",
 
                 /* Radix palettes */
                 green: generateScale("green"),
