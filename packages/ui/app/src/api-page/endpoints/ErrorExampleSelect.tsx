@@ -3,7 +3,7 @@ import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 import { Check, NavArrowDown, NavArrowUp } from "iconoir-react";
 import { FC, Fragment, PropsWithChildren, forwardRef } from "react";
-import { StatusCodeTag, statusCodeToIntent } from "../../commons/StatusCodeTag";
+import { StatusCodeTag, statusCodeToIntent } from "../../components/StatusCodeTag";
 import { ResolvedError, ResolvedExampleError } from "../../resolver/types";
 import { getMessageForStatus } from "../utils/getMessageForStatus";
 

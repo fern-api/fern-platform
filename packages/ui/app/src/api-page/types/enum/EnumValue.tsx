@@ -1,5 +1,5 @@
 import cn from "clsx";
-import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { MonospaceText } from "../../../components/MonospaceText";
 import { ResolvedEnumValue } from "../../../resolver/types";
 import { ApiPageDescription } from "../../ApiPageDescription";
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";

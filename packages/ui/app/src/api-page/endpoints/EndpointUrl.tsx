@@ -6,7 +6,7 @@ import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, u
 import { parse } from "url";
 import { buildRequestUrl } from "../../api-playground/utils";
 import { useAllEnvironmentIds } from "../../atoms/environment";
-import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { ResolvedEndpointPathParts } from "../../resolver/types";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";

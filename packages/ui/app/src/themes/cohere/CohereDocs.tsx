@@ -5,7 +5,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { Router } from "next/router";
 import { ReactElement, memo, useEffect, useRef } from "react";
 import { CONTENT_HEIGHT_ATOM, SCROLL_BODY_ATOM, SHOW_HEADER_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms";
-import { DocsMainContent } from "../../docs/DocsMainContent";
+import { DocsMainContent } from "../../content/DocsMainContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 

@@ -1,5 +1,5 @@
 import cn from "clsx";
-import { HorizontalOverflowMask } from "../../commons/HorizontalOverflowMask";
+import { HorizontalOverflowMask } from "../../components/HorizontalOverflowMask";
 import { EndpointUrl } from "./EndpointUrl";
 
 export const EndpointUrlWithOverflow: React.FC<Omit<EndpointUrl.Props, "urlStyle">> = ({ className, ...props }) => {

@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { SeparatedElements } from "../../../commons/SeparatedElements";
+import { SeparatedElements } from "../../../components/SeparatedElements";
 import { TypeComponentSeparator } from "../TypeComponentSeparator";
 
 export declare namespace TypeDefinitionDetails {

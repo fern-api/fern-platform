@@ -7,7 +7,7 @@ import { Xmark } from "iconoir-react";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../atoms/environment";
-import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { HttpMethodTag } from "../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../components/MaybeEnvironmentDropdown";
 import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../resolver/types";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";

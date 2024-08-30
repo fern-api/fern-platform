@@ -6,7 +6,7 @@ import { Search, Slash, Xmark } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useSetAndOpenPlayground } from "../atoms";
-import { HttpMethodTag } from "../commons/HttpMethodTag";
+import { HttpMethodTag } from "../components/HttpMethodTag";
 import { ResolvedApiDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 

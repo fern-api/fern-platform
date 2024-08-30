@@ -4,19 +4,15 @@ import { useRouter } from "next/router";
 import { Fragment, ReactElement, memo } from "react";
 import { useFeatureFlags, useIsReady, useResolvedPath } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
-import { ChangelogEntryPage } from "./ChangelogEntryPage";
-
-const CustomDocsPage = dynamic(
-    () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
-    { ssr: true },
-);
+import { FeedbackPopover } from "../feedback/FeedbackPopover";
+import { MdxContent } from "../mdx/MdxContent";
+import { ChangelogEntryPage } from "../changelog/ChangelogEntryPage";
 
 const ApiPage = dynamic(() => import("../api-page/ApiPage").then(({ ApiPage }) => ApiPage), {
     ssr: true,
 });
 
-const ChangelogPage = dynamic(() => import("./ChangelogPage").then(({ ChangelogPage }) => ChangelogPage), {
+const ChangelogPage = dynamic(() => import("../changelog/ChangelogPage").then(({ ChangelogPage }) => ChangelogPage), {
     ssr: true,
 });
 
@@ -34,7 +30,7 @@ function DocsMainContentInternal(): ReactElement | null {
     }
 
     return visitDiscriminatedUnion(resolvedPath)._visit({
-        "custom-markdown-page": (resolvedPath) => <CustomDocsPage mdx={resolvedPath.mdx} resolvedPath={resolvedPath} />,
+        "custom-markdown-page": (resolvedPath) => <MdxContent mdx={resolvedPath.mdx} />,
         "api-page": (resolvedPath) => (
             <ApiPage
                 initialApi={resolvedPath.apiDefinition}
