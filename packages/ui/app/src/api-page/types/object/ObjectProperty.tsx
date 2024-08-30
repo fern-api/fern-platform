@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
-import { useRouteListener } from "../../../atoms";
+import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useHref } from "../../../hooks/useHref";
@@ -38,12 +38,13 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
     const ref = useRef<HTMLDivElement>(null);
 
     const [isActive, setIsActive] = useState(false);
+    const isPaginated = useIsApiReferencePaginated();
     useRouteListener(slug, (anchor) => {
         const isActive = anchor === anchorId;
         setIsActive(isActive);
         if (isActive) {
             setTimeout(() => {
-                ref.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+                ref.current?.scrollIntoView({ block: "start", behavior: isPaginated ? "smooth" : "instant" });
             }, 450);
         }
     });

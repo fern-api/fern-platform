@@ -2,7 +2,9 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { atom, useAtomValue } from "jotai";
 import { atomWithLocation } from "jotai-location";
+import { useAtomCallback } from "jotai/utils";
 import { Router } from "next/router";
+import { useCallback } from "react";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
 import { selectHref, useHref } from "../hooks/useHref";
 import { useAtomEffect } from "./hooks";
@@ -73,4 +75,42 @@ export function useRouteListener(slug: FernNavigation.Slug, callback: (hash: str
             [route, callbackRef],
         ),
     );
+}
+
+let justNavigatedTimeout: number;
+
+/**
+ * This atom is used to prevent the slug from being updated when the user navigates to a new page,
+ * which sometimes happens when the on-scroll useApiPageCenterElement is overly sensitive.
+ */
+export const JUST_NAVIGATED_ATOM = atom(true);
+JUST_NAVIGATED_ATOM.debugLabel = "JUST_NAVIGATED_ATOM";
+JUST_NAVIGATED_ATOM.onMount = (setJustNavigated) => {
+    if (typeof window !== "undefined") {
+        justNavigatedTimeout = window.setTimeout(() => {
+            setJustNavigated(false);
+        }, 1000);
+
+        return () => {
+            window.clearTimeout(justNavigatedTimeout);
+        };
+    }
+    return;
+};
+
+export function useSetJustNavigated(): [set: () => void, destroy: () => void] {
+    return [
+        useAtomCallback(
+            useCallbackOne((_get, set) => {
+                window.clearTimeout(justNavigatedTimeout);
+                set(JUST_NAVIGATED_ATOM, true);
+                justNavigatedTimeout = window.setTimeout(() => {
+                    set(JUST_NAVIGATED_ATOM, false);
+                }, 1000);
+            }, []),
+        ),
+        useCallback(() => {
+            window.clearTimeout(justNavigatedTimeout);
+        }, []),
+    ];
 }

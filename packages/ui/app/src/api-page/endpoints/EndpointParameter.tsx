@@ -2,7 +2,7 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
-import { useRouteListener } from "../../atoms";
+import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
 import { AbsolutelyPositionedAnchor } from "../../commons/AbsolutelyPositionedAnchor";
 import { useHref } from "../../hooks/useHref";
 import type { BundledMDX } from "../../mdx/types";
@@ -79,12 +79,13 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
     const ref = useRef<HTMLDivElement>(null);
 
     const [isActive, setIsActive] = useState(false);
+    const isPaginated = useIsApiReferencePaginated();
     useRouteListener(slug, (anchor) => {
         const isActive = anchor === anchorId;
         setIsActive(isActive);
         if (isActive) {
             setTimeout(() => {
-                ref.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+                ref.current?.scrollIntoView({ block: "start", behavior: isPaginated ? "smooth" : "instant" });
             }, 450);
         }
     });
