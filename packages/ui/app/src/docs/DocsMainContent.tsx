@@ -1,40 +1,36 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { Fragment, ReactElement, memo } from "react";
 import { useFeatureFlags, useIsReady, useResolvedPath } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { FeedbackPopover } from "../custom-docs-page/FeedbackPopover";
-import { ChangelogEntryPage } from "./ChangelogEntryPage";
 
-const CustomDocsPage = dynamic(
-    () => import("../custom-docs-page/CustomDocsPage").then(({ CustomDocsPage }) => CustomDocsPage),
+const MdxContent = dynamic(() => import("../mdx/MdxContent").then(({ MdxContent }) => MdxContent), {
+    ssr: true,
+});
+
+const ApiPage = dynamic(() => import("../api-reference/ApiPage").then(({ ApiPage }) => ApiPage), {
+    ssr: true,
+});
+
+const ChangelogPage = dynamic(() => import("../changelog/ChangelogPage").then(({ ChangelogPage }) => ChangelogPage), {
+    ssr: true,
+});
+
+const ChangelogEntryPage = dynamic(
+    () => import("../changelog/ChangelogEntryPage").then(({ ChangelogEntryPage }) => ChangelogEntryPage),
     { ssr: true },
 );
 
-const ApiPage = dynamic(() => import("../api-page/ApiPage").then(({ ApiPage }) => ApiPage), {
-    ssr: true,
-});
+const FeedbackPopover = dynamic(
+    () => import("../feedback/FeedbackPopover").then(({ FeedbackPopover }) => FeedbackPopover),
+    { ssr: false },
+);
 
-const ChangelogPage = dynamic(() => import("./ChangelogPage").then(({ ChangelogPage }) => ChangelogPage), {
-    ssr: true,
-});
-
-export interface DocsMainContentProps {}
-
-function DocsMainContentInternal(): ReactElement | null {
+const DocsMainContentRenderer = memo(() => {
     const resolvedPath = useResolvedPath();
-    const hydrated = useIsReady();
-
-    const router = useRouter();
-    if (router.query.error === "true") {
-        if (!hydrated) {
-            return null;
-        }
-    }
-
     return visitDiscriminatedUnion(resolvedPath)._visit({
-        "custom-markdown-page": (resolvedPath) => <CustomDocsPage mdx={resolvedPath.mdx} resolvedPath={resolvedPath} />,
+        "custom-markdown-page": (resolvedPath) => <MdxContent mdx={resolvedPath.mdx} />,
         "api-page": (resolvedPath) => (
             <ApiPage
                 initialApi={resolvedPath.apiDefinition}
@@ -46,15 +42,25 @@ function DocsMainContentInternal(): ReactElement | null {
         "changelog-entry": (resolvedPath) => <ChangelogEntryPage resolvedPath={resolvedPath} />,
         _other: () => null,
     });
+});
+DocsMainContentRenderer.displayName = "DocsMainContentRenderer";
+
+function LazyDocsMainContentRenderer(): ReactElement | null {
+    const hydrated = useIsReady();
+    return hydrated ? <DocsMainContentRenderer /> : null;
 }
 
 export const DocsMainContent = memo(function DocsMainContent(): ReactElement {
     const { isInlineFeedbackEnabled } = useFeatureFlags();
+    const searchParams = useSearchParams();
     const FeedbackPopoverProvider = isInlineFeedbackEnabled ? FeedbackPopover : Fragment;
+    const ContentRenderer =
+        searchParams.get("error") === "true" ? LazyDocsMainContentRenderer : DocsMainContentRenderer;
+
     return (
         <FernErrorBoundary>
             <FeedbackPopoverProvider>
-                <DocsMainContentInternal />
+                <ContentRenderer />
             </FeedbackPopoverProvider>
         </FernErrorBoundary>
     );

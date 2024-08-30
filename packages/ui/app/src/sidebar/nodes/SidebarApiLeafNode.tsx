@@ -1,6 +1,6 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useIsSelectedSidebarNode } from "../../atoms";
-import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarApiLeafNodeProps {

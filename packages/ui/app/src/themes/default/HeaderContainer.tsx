@@ -2,10 +2,10 @@ import cn, { clsx } from "clsx";
 import { useAtomValue } from "jotai";
 import { ReactElement, useCallback } from "react";
 import { HAS_HORIZONTAL_TABS, MOBILE_SIDEBAR_ENABLED_ATOM, useColors, useIsMobileSidebarOpen } from "../../atoms";
-import { BgImageGradient } from "../../docs/BgImageGradient";
-import { Header } from "../../docs/Header";
-import { HeaderTabs } from "../../docs/HeaderTabs";
-import { useIsScrolled } from "../../docs/useIsScrolled";
+import { BgImageGradient } from "../../components/BgImageGradient";
+import { Header } from "../../header/Header";
+import { HeaderTabs } from "../../header/HeaderTabs";
+import { useIsScrolled } from "../../hooks/useIsScrolled";
 
 interface HeaderContainerProps {
     className?: string;

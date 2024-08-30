@@ -22,7 +22,7 @@ import { IS_READY_ATOM, SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMo
 import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { scrollToRoute } from "../util/anchor";
-import { scrollToCenter } from "./utils";
+import { scrollToCenter } from "../util/scrollToCenter";
 
 interface SidebarSlugLinkProps {
     nodeId: FernNavigation.NodeId;
