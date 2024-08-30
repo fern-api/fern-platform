@@ -1,6 +1,4 @@
-import { useAtomValue } from "jotai";
 import { memo } from "react";
-import { FERN_STREAM_ATOM } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ResolvedEndpointDefinition, resolveEnvironment } from "../../resolver/types";
@@ -15,8 +13,6 @@ interface EndpointContentHeaderProps {
 }
 
 export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoint, breadcrumbs, container }) => {
-    const isStream = useAtomValue(FERN_STREAM_ATOM);
-    const endpointProp = endpoint.stream != null && isStream ? endpoint.stream : endpoint;
     const selectedEnvironmentId = useSelectedEnvironmentId();
     return (
         <header className="space-y-1 pb-2 pt-8">
@@ -34,8 +30,8 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoin
                     )}
                 </span>
 
-                {endpointProp.stream != null && (
-                    <EndpointStreamingEnabledToggle endpointProp={endpointProp} container={container} />
+                {endpoint.stream != null && (
+                    <EndpointStreamingEnabledToggle endpoint={endpoint} container={container} />
                 )}
             </div>
             <EndpointUrlWithOverflow
