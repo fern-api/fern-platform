@@ -2,9 +2,9 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { HTTPSnippet, type HarRequest, type TargetId } from "httpsnippet-lite";
 import { noop } from "ts-essentials";
-import { buildRequestUrl, unknownToString } from "../api-playground/utils";
 import { convertEndpointExampleToHttpRequestExample } from "../api-reference/examples/HttpRequestExample";
 import { stringifyHttpRequestExampleToCurl } from "../api-reference/examples/stringifyHttpRequestExampleToCurl";
+import { buildRequestUrl, unknownToString } from "../playground/utils";
 import {
     ResolvedCodeSnippet,
     ResolvedEndpointDefinition,

@@ -4,12 +4,12 @@ import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
-import { PlaygroundButton } from "../../api-playground/PlaygroundButton";
 import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { FernAnchor } from "../../components/FernAnchor";
 import { useHref } from "../../hooks/useHref";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
+import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import {
     ResolvedTypeDefinition,
     ResolvedUndiscriminatedUnionShape,

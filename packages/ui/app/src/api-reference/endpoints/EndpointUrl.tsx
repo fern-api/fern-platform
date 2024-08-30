@@ -4,10 +4,10 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { parse } from "url";
-import { buildRequestUrl } from "../../api-playground/utils";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
+import { buildRequestUrl } from "../../playground/utils";
 import { ResolvedEndpointPathParts } from "../../resolver/types";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 

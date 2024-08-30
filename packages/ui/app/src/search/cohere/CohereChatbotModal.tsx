@@ -3,12 +3,12 @@ import { Cohere } from "cohere-ai";
 import { useAtomValue } from "jotai";
 import { ReactElement, isValidElement, useRef } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { Stream } from "../../api-playground/Stream";
 import { COHERE_INITIAL_MESSAGE, useAtomEffect } from "../../atoms";
 import { CURRENT_VERSION_ID_ATOM } from "../../atoms/navigation";
 import { FernLink } from "../../components/FernLink";
 import { useApiRoute } from "../../hooks/useApiRoute";
 import { CodeBlock } from "../../mdx/components/code";
+import { Stream } from "../../playground/Stream";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
 
 export function CohereChatbotModal({ className }: { className?: string }): ReactElement {
