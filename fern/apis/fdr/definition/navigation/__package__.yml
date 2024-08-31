@@ -24,6 +24,13 @@ types:
     union:
       - VersionedNode
       - UnversionedNode
+      - ProductGroupNode
+  
+  ProductChild: 
+    discriminated: false
+    union:
+      - VersionedNode
+      - UnverionsedNode
 
   VersionChild:
     discriminated: false
@@ -66,6 +73,15 @@ types:
       - LinkNode
 
   # nodes without metadata
+
+  ProductGroupNode: 
+    extends: WithNodeId
+    properties: 
+      type: literal<"productgroup">
+      landingPage: optional<LandingPageNode>
+      children: 
+        type: list<ProductNode>
+        docs: The individual products being documented
 
   VersionedNode:
     extends: WithNodeId
@@ -125,6 +141,19 @@ types:
       type: literal<"root">
       version: literal<"v1">
       child: RootChild
+  
+  ProductNode: 
+    extends:
+      - WithNodeMetadata
+      - WithRedirect
+    properties: 
+      type: literal<"product">      
+      default: boolean
+      productId: ProductId
+      child: ProductChild
+      subtitle: 
+        type: string
+        docs: Couple words for what the product is
 
   VersionNode:
     extends:
