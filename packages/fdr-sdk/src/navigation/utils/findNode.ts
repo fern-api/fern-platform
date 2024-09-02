@@ -146,6 +146,7 @@ export function createBreadcrumb(nodes: NavigationNode[]): string[] {
             version: noop,
             tab: noop,
             page: noop,
+            product: noop,
             section: (section) => {
                 breadcrumb.push(section.title);
             },

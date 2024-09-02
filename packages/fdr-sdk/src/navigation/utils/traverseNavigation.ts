@@ -36,6 +36,8 @@ export function traverseNavigation(
         }
         return visitDiscriminatedUnion(node)._visit({
             root: (root) => internalTraverser(root.child, undefined, [...parents, root]),
+            product: (product) => internalTraverser(product.child, undefined, [...parents, product]),
+            productgroup: (produtgroup) => internalChildrenTraverser(produtgroup.children, [...parents, produtgroup]),
             versioned: (versioned) => internalChildrenTraverser(versioned.children, [...parents, versioned]),
             tabbed: (tabbed) => internalChildrenTraverser(tabbed.children, [...parents, tabbed]),
             sidebarRoot: (sidebar) => internalChildrenTraverser(sidebar.children, [...parents, sidebar]),

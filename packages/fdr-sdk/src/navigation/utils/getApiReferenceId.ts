@@ -24,6 +24,8 @@ export function getApiReferenceId(node: NavigationNode | undefined): FernNavigat
         changelogYear: RETURN_UNDEFINED,
         changelogMonth: RETURN_UNDEFINED,
         changelogEntry: RETURN_UNDEFINED,
+        product: RETURN_UNDEFINED,
+        productgroup: RETURN_UNDEFINED,
 
         // api nodes
         apiReference: RETURN_API_DEFINITION_ID,
