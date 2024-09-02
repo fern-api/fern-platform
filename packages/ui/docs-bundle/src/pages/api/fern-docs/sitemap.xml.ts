@@ -7,6 +7,7 @@ import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { getXFernHostEdge } from "../../../utils/xFernHost";
 // eslint-disable-next-line import/no-internal-modules
 import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
+import { isTrailingSlashEnabled } from "../../../utils/trailingSlash";
 
 export const runtime = "edge";
 export const revalidate = 60 * 60 * 24;
@@ -36,7 +37,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const slugCollector = NodeCollector.collect(node);
     const urls = slugCollector.getIndexablePageSlugs().map((slug) => urljoin(xFernHost, slug));
 
-    const sitemap = getSitemapXml(urls.map((url) => `https://${url}`));
+    const sitemap = getSitemapXml(urls.map((url) => (isTrailingSlashEnabled() ? `https://${url}/` : `https://${url}`)));
 
     headers.set("Content-Type", "text/xml");
 

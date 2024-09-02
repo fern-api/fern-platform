@@ -27,6 +27,23 @@ groups:
           extraDevDependencies:
             "@types/mime": "3.0.4"
 
+  navigation: 
+    audiences: 
+      - navigation
+    generators:               
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.20.9
+        output:
+          location: local-file-system
+          path: ../../../packages/fdr-sdk/src/navigation/generated
+        config:
+          noOptionalProperties: true
+          outputEsm: true
+          outputSourceFiles: true
+          useBrandedStringAliases: true
+          noSerdeLayer: true
+          neverThrowErrors: true            
+
   fdr-cjs-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
@@ -106,6 +123,7 @@ groups:
           includeApiReference: true
           extraDependencies:
             "@fern-api/template-resolver": "0.7.5"
+          allowCustomFetcher: true
 
   template-resolver:
     audiences:

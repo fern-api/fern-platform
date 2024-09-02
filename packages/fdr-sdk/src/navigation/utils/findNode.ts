@@ -29,6 +29,13 @@ export declare namespace Node {
         prev: NavigationNodeNeighbor | undefined;
         collector: NodeCollector;
         landingPage: FernNavigation.LandingPageNode | undefined;
+
+        /**
+         * This is the part of the slug after the version (or basepath) prefix.
+         *
+         * For example, if the original slug is "docs/v1.0.0/foo/bar", the unversionedSlug is "foo/bar".
+         */
+        unversionedSlug: FernNavigation.Slug;
     }
 
     interface Redirect {
@@ -58,7 +65,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
             }
         }
 
-        return { type: "notFound", redirect: maybeVersionNode.pointsTo ?? root.pointsTo };
+        return { type: "notFound", redirect: maybeVersionNode.pointsTo };
     }
 
     const sidebar = found.parents.find(isSidebarRootNode);
@@ -92,6 +99,8 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         });
         const currentTab =
             currentTabNode?.type === "tab" || currentTabNode?.type === "changelog" ? currentTabNode : undefined;
+        const slugPrefix = currentVersion?.slug ?? root.slug;
+        const unversionedSlug = FernNavigation.Slug(found.node.slug.replace(new RegExp(`^${slugPrefix}/?`), ""));
         return {
             type: "found",
             node: found.node,
@@ -108,6 +117,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
             next: found.next,
             prev: found.prev,
             collector,
+            unversionedSlug,
         };
     }
 

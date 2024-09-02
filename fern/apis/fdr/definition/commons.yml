@@ -8,6 +8,10 @@ types:
   OrgId:
     type: string
     docs: Human readable org id (e.g. fern)
+  
+  TokenId: 
+    type: string
+    docs: ID for a given token
 
   ApiId:
     type: string

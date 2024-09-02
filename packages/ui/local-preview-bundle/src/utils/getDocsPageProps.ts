@@ -9,6 +9,7 @@ import {
     convertNavigatableToResolvedPath,
     getGitHubInfo,
     getGitHubRepo,
+    getRedirectForPath,
     getSeoProps,
     renderThemeStylesheet,
 } from "@fern-ui/ui";
@@ -23,19 +24,32 @@ export async function getDocsPageProps(
     // HACKHACK: temporarily disable endpoint pairs for cohere in local preview
     const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs, docs.baseUrl.domain.includes("cohere"));
     const slug = FernNavigation.utils.slugjoin(...slugArray);
+
+    // compute manual redirects
+    const redirect = getRedirectForPath(`/${slug}`, docs.baseUrl, docs.definition.config.redirects);
+    if (redirect != null) {
+        return {
+            redirect: {
+                destination: redirect.destination,
+                permanent: false,
+            },
+        };
+    }
+
+    // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404
+    if (root.slug.length > 0 && slug.length === 0) {
+        return {
+            redirect: {
+                destination: encodeURI(urljoin("/", root.slug)),
+                permanent: false,
+            },
+        };
+    }
+
     const node = FernNavigation.utils.findNode(root, slug);
 
+    // in local preview, always render 404 page if the node is not found
     if (node.type === "notFound") {
-        // eslint-disable-next-line no-console
-        console.error(`Failed to resolve navigation for ${slug}`);
-        if (node.redirect != null) {
-            return {
-                redirect: {
-                    destination: encodeURI(urljoin("/", node.redirect)),
-                    permanent: false,
-                },
-            };
-        }
         return { notFound: true };
     }
 
@@ -83,6 +97,23 @@ export async function getDocsPageProps(
                   : undefined,
     };
 
+    const versions = node.versions
+        .filter((version) => !version.hidden)
+        .map((version, index) => {
+            // if the same page exists in multiple versions, return the full slug of that page, otherwise default to version's landing page (pointsTo)
+            const expectedSlug = FernNavigation.utils.slugjoin(version.slug, node.unversionedSlug);
+            const pointsTo = node.collector.slugMap.has(expectedSlug) ? expectedSlug : version.pointsTo;
+
+            return {
+                title: version.title,
+                id: version.versionId,
+                slug: version.slug,
+                pointsTo,
+                index,
+                availability: version.availability,
+            };
+        });
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -124,16 +155,9 @@ export async function getDocsPageProps(
                 }),
             ),
             currentVersionId: node.currentVersion?.versionId,
-            versions: node.versions
-                .filter((version) => !version.hidden)
-                .map((version, index) => ({
-                    title: version.title,
-                    id: version.versionId,
-                    slug: version.slug,
-                    index,
-                    availability: version.availability,
-                })),
+            versions,
             sidebar: node.sidebar,
+            trailingSlash: false,
         },
         featureFlags,
         apis: Object.keys(docs.definition.apis),

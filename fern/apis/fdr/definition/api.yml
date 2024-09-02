@@ -12,3 +12,4 @@ audiences:
   - snippets
   - templateResolver
   - generators
+  - navigation

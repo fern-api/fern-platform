@@ -20,7 +20,8 @@ import {
 } from "./callout";
 import { Card, CardGroup } from "./card";
 import { ClientLibraries } from "./client-libraries";
-import { CodeBlock, CodeGroup } from "./code";
+import { CodeBlock } from "./code/CodeBlock";
+import { CodeGroup } from "./code/CodeGroup";
 import { Column, ColumnGroup } from "./columns";
 import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";

@@ -32,6 +32,9 @@ export const CURRENT_VERSION_ID_ATOM = atom<FernNavigation.VersionId | undefined
 );
 CURRENT_VERSION_ID_ATOM.debugLabel = "CURRENT_VERSION_ID_ATOM";
 
+export const TRAILING_SLASH_ATOM = atom<boolean>((get) => get(DOCS_ATOM).navigation.trailingSlash);
+TRAILING_SLASH_ATOM.debugLabel = "TRAILING_SLASH_ATOM";
+
 export const NAVBAR_LINKS_ATOM = selectAtom(
     DOCS_ATOM,
     (docs): ReadonlyArray<DocsV1Read.NavbarLink> => docs.navbarLinks,
@@ -45,20 +48,6 @@ export const CURRENT_VERSION_ATOM = atom((get) => {
     return versions.find((v) => v.id === versionId);
 });
 CURRENT_VERSION_ATOM.debugLabel = "CURRENT_VERSION_ATOM";
-
-export const UNVERSIONED_SLUG_ATOM = atom<string>((get) => {
-    const slug = get(SLUG_ATOM);
-    const currentVersion = get(CURRENT_VERSION_ATOM);
-    if (currentVersion == null) {
-        return slug;
-    }
-
-    // the root slug is the basepath without the leading slash (defaults to ""):
-    const rootSlug = FernNavigation.utils.slugjoin(get(BASEPATH_ATOM) ?? "");
-
-    return FernNavigation.utils.toDefaultSlug(slug, rootSlug, currentVersion.slug);
-});
-UNVERSIONED_SLUG_ATOM.debugLabel = "UNVERSIONED_SLUG_ATOM";
 
 export const CURRENT_TAB_ATOM = atom((get) => {
     const tabIndex = get(CURRENT_TAB_INDEX_ATOM);

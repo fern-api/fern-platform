@@ -1,10 +1,11 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { noop } from "ts-essentials";
 import { EndpointDescriptor } from "./EndpointDescriptor";
 
 export declare namespace SubpackageEndpointsOverview {
     export interface Props {
-        slug: string;
+        slug: FernNavigation.Slug;
         subpackage: APIV1Read.ApiDefinitionSubpackage;
     }
 }

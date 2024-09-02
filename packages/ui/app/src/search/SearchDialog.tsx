@@ -3,11 +3,13 @@ import { useAtomValue, useSetAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
 import { InstantSearch } from "react-instantsearch";
+import { captureSentryError } from "../analytics/sentry";
 import {
     CURRENT_VERSION_ATOM,
     IS_MOBILE_SCREEN_ATOM,
     SEARCH_DIALOG_OPEN_ATOM,
     useFeatureFlags,
+    useIsSearchDialogOpen,
     useSidebarNodes,
 } from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
@@ -28,11 +30,18 @@ const CohereChatButton = dynamic(
 export const SearchDialog = (): ReactElement | null => {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     useSearchTrigger(setSearchDialogState);
+    const isSearchDialogOpen = useIsSearchDialogOpen();
     const { isAiChatbotEnabledInPreview } = useFeatureFlags();
 
     const [config] = useSearchConfig();
 
     if (!config.isAvailable) {
+        isSearchDialogOpen &&
+            captureSentryError(new Error("Search dialog config is null"), {
+                context: "SearchDialogOpen",
+                errorSource: "SearchDialog",
+                errorDescription: "Search dialog is null, when attempting to use search.",
+            });
         return null;
     }
 

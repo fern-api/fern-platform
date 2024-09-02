@@ -13,6 +13,7 @@ import { Sdks } from "./api/resources/sdks/client/Client";
 import { SnippetsFactory } from "./api/resources/snippetsFactory/client/Client";
 import { Snippets } from "./api/resources/snippets/client/Client";
 import { Templates } from "./api/resources/templates/client/Client";
+import { Tokens } from "./api/resources/tokens/client/Client";
 
 export declare namespace FernRegistryClient {
     interface Options {
@@ -82,5 +83,11 @@ export class FernRegistryClient {
 
     public get templates(): Templates {
         return (this._templates ??= new Templates(this._options));
+    }
+
+    protected _tokens: Tokens | undefined;
+
+    public get tokens(): Tokens {
+        return (this._tokens ??= new Tokens(this._options));
     }
 }

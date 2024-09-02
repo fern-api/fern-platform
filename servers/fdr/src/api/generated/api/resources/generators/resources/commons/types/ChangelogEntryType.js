@@ -5,6 +5,6 @@ export const ChangelogEntryType = {
     Fix: "fix",
     Feat: "feat",
     Chore: "chore",
-    Refactor: "refactor",
-    Perf: "perf",
+    Break: "break",
+    Internal: "internal",
 };

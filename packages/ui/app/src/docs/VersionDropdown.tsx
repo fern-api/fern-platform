@@ -1,11 +1,10 @@
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton } from "@fern-ui/components";
 import { getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
 import { NavArrowDown } from "iconoir-react";
 import { useAtomValue } from "jotai";
-import { CURRENT_VERSION_ID_ATOM, UNVERSIONED_SLUG_ATOM, VERSIONS_ATOM } from "../atoms";
+import { CURRENT_VERSION_ID_ATOM, VERSIONS_ATOM } from "../atoms";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
-import { slugToHref } from "../util/slugToHref";
+import { useToHref } from "../hooks/useHref";
 
 export declare namespace VersionDropdown {
     export interface Props {}
@@ -14,7 +13,7 @@ export declare namespace VersionDropdown {
 export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
     const versions = useAtomValue(VERSIONS_ATOM);
     const currentVersionId = useAtomValue(CURRENT_VERSION_ID_ATOM);
-    const unversionedSlug = useAtomValue(UNVERSIONED_SLUG_ATOM);
+    const toHref = useToHref();
 
     const currentVersion = versions.find(({ id }) => id === currentVersionId);
 
@@ -25,16 +24,20 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
         <div className="flex max-w-32">
             <FernLinkDropdown
                 value={currentVersionId}
-                options={versions.map(({ id, title, availability, slug }) => ({
+                options={versions.map(({ id, title, availability, slug, pointsTo }) => ({
                     type: "value",
                     label: title,
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
                     value: id,
                     disabled: availability == null,
-                    href: slugToHref(FernNavigation.utils.slugjoin(slug, unversionedSlug)),
+                    href: toHref(pointsTo ?? slug),
                 }))}
+                contentProps={{
+                    "data-testid": "version-dropdown-content",
+                }}
             >
                 <FernButton
+                    data-testid="version-dropdown"
                     intent="primary"
                     variant="outlined"
                     text={currentVersion?.title ?? currentVersionId}

@@ -1,6 +1,6 @@
 import { FernAudioPlayer } from "@fern-ui/components";
 import { FC } from "react";
-import { useDomain } from "../../atoms";
+import { useFeatureFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { TitledExample } from "./TitledExample";
 
@@ -9,8 +9,9 @@ export declare namespace AudioExample {
 }
 
 const AudioExampleInternal: FC<AudioExample.Props> = ({ ...props }) => {
-    const domain = useDomain();
-    if (!domain.includes("elevenlabs")) {
+    const { isAudioExampleInternal } = useFeatureFlags();
+
+    if (!isAudioExampleInternal) {
         return null;
     }
     return (

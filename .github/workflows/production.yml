@@ -75,6 +75,12 @@ jobs:
 
           echo "Done!"
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: preview
+          path: preview.txt
+
   smoke-test:
     needs: deploy
     runs-on: ubuntu-latest

@@ -20,8 +20,8 @@ import {
 } from "react";
 import { IS_READY_ATOM, SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMobileSidebar } from "../atoms";
 import { FernLink } from "../components/FernLink";
+import { useHref } from "../hooks/useHref";
 import { scrollToRoute } from "../util/anchor";
-import { slugToHref } from "../util/slugToHref";
 import { scrollToCenter } from "./utils";
 
 interface SidebarSlugLinkProps {
@@ -215,7 +215,7 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
             ),
         );
 
-        const href = slug != null ? slugToHref(slug) : undefined;
+        const href = useHref(slug);
         const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>>(
             (e) => {
                 onClick?.(e);

@@ -2,7 +2,6 @@ import { ColorsConfig } from "@fern-ui/fdr-utils";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { atomWithRefresh, selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
-import { createElement, memo } from "react";
 import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
 import { z } from "zod";
@@ -167,49 +166,3 @@ export function useInitializeTheme(): void {
         }, []),
     );
 }
-
-// this script cannot reference any other code since it will be stringified to be executed in the browser
-export const script = (themes: AvailableThemes): void => {
-    const el = document.documentElement;
-
-    function updateDOM(theme: string) {
-        el.classList.remove("light", "dark");
-        el.classList.add(theme);
-        el.style.colorScheme = theme;
-    }
-
-    function getSystemTheme() {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    }
-
-    if (themes.length === 1) {
-        updateDOM(themes[0]);
-    } else {
-        try {
-            const themeName = localStorage.getItem("theme") ?? "system";
-            const isSystem = themes.length > 0 && themeName === "system";
-            const theme = isSystem ? getSystemTheme() : themeName;
-            updateDOM(theme);
-        } catch {
-            //
-        }
-    }
-};
-
-// including the ThemeScript component will prevent a flash of unstyled content (FOUC) when the page loads
-// by setting the theme from local storage before the page is rendered
-export const ThemeScript = memo(
-    ({ nonce, colors }: { nonce?: string; colors?: ColorsConfig }) => {
-        const scriptArgs = JSON.stringify(getAvailableThemes(colors));
-
-        return createElement("script", {
-            suppressHydrationWarning: true,
-            nonce: typeof window === "undefined" ? nonce : "",
-            dangerouslySetInnerHTML: { __html: `(${script.toString()})(${scriptArgs})` },
-        });
-    },
-    (prev, next) =>
-        prev.nonce === next.nonce && getAvailableThemes(prev.colors).length === getAvailableThemes(next.colors).length,
-);
-
-ThemeScript.displayName = "ThemeScript";

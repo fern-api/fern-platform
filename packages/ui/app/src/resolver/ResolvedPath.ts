@@ -4,7 +4,7 @@ import { ResolvedRootPackage } from "./types";
 
 export declare namespace ResolvedPath {
     export interface Neighbor {
-        slug: string;
+        slug: FernNavigation.Slug;
         title: string;
         excerpt: BundledMDX | undefined;
     }

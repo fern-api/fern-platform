@@ -5,14 +5,15 @@
 import * as FernRegistry from "../../../../../index";
 
 /**
- * Following `keep a changelog` format for the entries here. These are effectively your release notes.
+ * Following `keep a changelog` format for the entries here. These are effectively your release notes, the strings are meant to be markdown.
  */
 export interface ChangelogEntry {
     type: FernRegistry.generators.ChangelogEntryType;
+    summary: string;
+    upgrade_notes?: string;
     added?: string[];
     changed?: string[];
     deprecated?: string[];
     removed?: string[];
     fixed?: string[];
-    security?: string[];
 }

@@ -1,8 +1,15 @@
 import type { Root } from "hast";
 import { h } from "hastscript";
-import { memoize } from "lodash-es";
+import memoize from "lodash-es/memoize";
 import { useCallback, useEffect, useState } from "react";
-import { BundledLanguage, BundledTheme, Highlighter, SpecialLanguage, bundledLanguages, getHighlighter } from "shiki";
+import {
+    bundledLanguages,
+    getHighlighter,
+    type BundledLanguage,
+    type BundledTheme,
+    type Highlighter,
+    type SpecialLanguage,
+} from "shiki";
 import { additionalLanguages } from "./syntaxes";
 
 let highlighterPromise: Promise<Highlighter>;

@@ -192,7 +192,7 @@ export async function updateVersionInternal(
                             repository,
                             git,
                             branchName: `${branchName}${additionalName}`,
-                            prTitle: `Upgrade Fern Generator Version (${additionalName})`,
+                            prTitle: `Upgrade Fern Generator Version: (${additionalName})`,
                             upgradeAction: async () => {
                                 let command = `generator upgrade --generator ${generator} --group ${groupName}`;
                                 if (apiName !== NO_API_FALLBACK_KEY) {
