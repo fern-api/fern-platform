@@ -3,7 +3,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
 import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
-import { sortKeysByShape } from "../api-page/examples/sortKeysByShape";
+import { sortKeysByShape } from "../api-reference/examples/sortKeysByShape";
 import { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
 import { FernSerializeMdxOptions } from "../mdx/types";
@@ -538,6 +538,7 @@ export class ApiDefinitionResolver {
             environments: websocket.environments,
             nodeId: node.id,
             id: node.webSocketId,
+            apiDefinitionId: node.apiDefinitionId,
             description: websocket.description,
             availability: websocket.availability,
             slug: node.slug,

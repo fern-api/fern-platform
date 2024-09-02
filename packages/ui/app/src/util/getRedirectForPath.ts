@@ -18,7 +18,11 @@ export function getRedirectForPath(
             if (result) {
                 const destFn = compile(redirect.destination, { encode: false });
                 const destination = destFn(result.params);
-                return { source: path, destination };
+
+                // eslint-disable-next-line no-console
+                console.debug({ match: redirect, result });
+
+                return { source: path, destination, permanent: redirect.permanent };
             }
         } catch (e) {
             Sentry.captureException(e, {

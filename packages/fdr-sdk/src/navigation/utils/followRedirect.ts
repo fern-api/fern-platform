@@ -27,6 +27,8 @@ export function followRedirect(nodeToFollow: NavigationNode | undefined): FernNa
         apiReference: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
 
         // version is a special case where it should only consider it's first child (the first version)
+        product: (node) => followRedirect(node.child),
+        productgroup: (node) => followRedirect(node.children.filter((node) => !node.hidden)[0]),
         versioned: (node) => followRedirect(node.children.filter((node) => !node.hidden)[0]),
         unversioned: (node) => followRedirect(node.landingPage ?? node.child),
         tabbed: (node) => followRedirects(node.children),

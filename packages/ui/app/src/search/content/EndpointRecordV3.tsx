@@ -2,7 +2,7 @@ import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
-import { HttpMethodTag } from "../../commons/HttpMethodTag";
+import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { SearchHitBreadCrumbsV2 } from "./SearchHitBreadCrumbsV2";
 
 export declare namespace EndpointRecordV3 {

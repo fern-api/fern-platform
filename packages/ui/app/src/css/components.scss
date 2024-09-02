@@ -116,7 +116,7 @@
     }
 
     .fern-mdx-link {
-        @apply hover:t-accent underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-aa;
+        @apply t-accent-aaa underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-aa;
         @apply font-semibold;
 
         h1 &,
@@ -126,6 +126,12 @@
         h5 &,
         h6 & {
             font-weight: inherit;
+        }
+
+        h1 &,
+        h2 &,
+        h3 & {
+            @apply t-accent; // WCAG AA
         }
 
         svg.external-link-icon {
@@ -152,7 +158,7 @@
     }
 
     .fern-api-property-meta {
-        @apply text-inherit inline-flex items-baseline gap-2 text-xs;
+        @apply t-muted inline-flex items-baseline gap-2 text-xs;
     }
 
     .custom-backdrop [data-rmiz-modal-overlay="visible"] {

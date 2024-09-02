@@ -2,7 +2,9 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { atom, useAtomValue } from "jotai";
 import { atomWithLocation } from "jotai-location";
+import { useAtomCallback } from "jotai/utils";
 import { Router } from "next/router";
+import { useCallback } from "react";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
 import { selectHref, useHref } from "../hooks/useHref";
 import { useAtomEffect } from "./hooks";
@@ -49,7 +51,8 @@ export const SLUG_ATOM = atom(
         if (location.pathname === pathname) {
             return;
         }
-        set(LOCATION_ATOM, { ...location, pathname }, { replace: true });
+        // replaces the current location with the new slug, and removes any hash (from an anchor) that may be present
+        set(LOCATION_ATOM, { pathname, searchParams: location.searchParams, hash: "" }, { replace: true });
     },
 );
 SLUG_ATOM.debugLabel = "SLUG_ATOM";
@@ -72,4 +75,42 @@ export function useRouteListener(slug: FernNavigation.Slug, callback: (hash: str
             [route, callbackRef],
         ),
     );
+}
+
+let justNavigatedTimeout: number;
+
+/**
+ * This atom is used to prevent the slug from being updated when the user navigates to a new page,
+ * which sometimes happens when the on-scroll useApiPageCenterElement is overly sensitive.
+ */
+export const JUST_NAVIGATED_ATOM = atom(true);
+JUST_NAVIGATED_ATOM.debugLabel = "JUST_NAVIGATED_ATOM";
+
+export function useSetJustNavigated(): [set: () => void, destroy: () => void] {
+    // note: JUST_NAVIGATED_ATOM is never "mounted" so we need to implement mount/unmount as an effect
+    useAtomEffect(
+        useCallbackOne((_get, set) => {
+            window.clearTimeout(justNavigatedTimeout);
+            justNavigatedTimeout = window.setTimeout(() => {
+                set(JUST_NAVIGATED_ATOM, false);
+            }, 1000);
+            return () => {
+                window.clearTimeout(justNavigatedTimeout);
+            };
+        }, []),
+    );
+    return [
+        useAtomCallback(
+            useCallbackOne((_get, set) => {
+                window.clearTimeout(justNavigatedTimeout);
+                set(JUST_NAVIGATED_ATOM, true);
+                justNavigatedTimeout = window.setTimeout(() => {
+                    set(JUST_NAVIGATED_ATOM, false);
+                }, 1000);
+            }, []),
+        ),
+        useCallback(() => {
+            window.clearTimeout(justNavigatedTimeout);
+        }, []),
+    ];
 }

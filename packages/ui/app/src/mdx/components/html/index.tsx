@@ -13,33 +13,14 @@ import {
     useMemo,
 } from "react";
 import Zoom from "react-medium-image-zoom";
-import { FILES_ATOM, SLUG_ATOM, useFeatureFlags } from "../../../atoms";
-import { AbsolutelyPositionedAnchor } from "../../../commons/AbsolutelyPositionedAnchor";
+import { FILES_ATOM, useFeatureFlags } from "../../../atoms";
+import { FernAnchor } from "../../../components/FernAnchor";
 import { FernImage } from "../../../components/FernImage";
 import { FernLink } from "../../../components/FernLink";
 import { useFrontmatter } from "../../../contexts/frontmatter";
 
-/**
- * By default, next will use /host/current/slug in SSG.
- * Because of our custom routing (PathResolver) implementation, we need to override the pathname to be /basePath/current/slug.
- * @returns /basepath/current/slug
- */
-export function useCurrentPathname(): string {
-    const currentSlug = useAtomValue(SLUG_ATOM);
-    return `/${currentSlug}`;
-}
-
 export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): ReactElement => {
-    return createElement(
-        `h${level}`,
-        {
-            id: props.id,
-            ...props,
-            className: cn(props.className, "flex items-center relative group/anchor-container mb-3"),
-        },
-        <AbsolutelyPositionedAnchor href={`#${props.id}`} />,
-        <span>{props.children}</span>,
-    );
+    return <FernAnchor href={`#${props.id}`}>{createElement(`h${level}`, props)}</FernAnchor>;
 };
 
 export const P: FC<{ variant: "api" | "markdown" } & ComponentProps<"p">> = ({ variant, className, ...rest }) => {

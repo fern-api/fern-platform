@@ -1,10 +1,15 @@
 import * as fs from "fs";
-import { once } from "lodash-es";
 
-export const getPreviewDeploymentUrl = once((): string => {
+let previewDeploymentUrl: string | null = null;
+export const getPreviewDeploymentUrl = (): string => {
+    if (previewDeploymentUrl != null) {
+        return previewDeploymentUrl;
+    }
+
     // TODO: use an environment variable instead of a file
-    return fs.readFileSync("deployment-url.txt", "utf-8").trim();
-});
+    previewDeploymentUrl = fs.readFileSync("deployment-url.txt", "utf-8").trim();
+    return previewDeploymentUrl;
+};
 
 export interface PreviewContext {
     /**

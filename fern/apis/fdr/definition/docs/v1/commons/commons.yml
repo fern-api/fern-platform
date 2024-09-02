@@ -201,6 +201,9 @@ types:
     properties:
       source: string
       destination: string
+      permanent:
+        type: optional<boolean>
+        default: false
 
   TwitterCardSetting:
     enum:

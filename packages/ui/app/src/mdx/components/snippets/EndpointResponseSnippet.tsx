@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { CodeSnippetExample } from "../../../api-page/examples/CodeSnippetExample";
-import { generateCodeExamples } from "../../../api-page/examples/code-example";
+import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
+import { generateCodeExamples } from "../../../api-reference/examples/code-example";
 import { useResolvedPath } from "../../../atoms";
 import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";

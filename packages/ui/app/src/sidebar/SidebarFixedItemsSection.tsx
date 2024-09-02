@@ -2,7 +2,7 @@ import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 import { DOCS_LAYOUT_ATOM, SEARCHBAR_PLACEMENT_ATOM, THEME_SWITCH_ENABLED_ATOM } from "../atoms";
-import { HeaderLogoSection } from "../docs/HeaderLogoSection";
+import { HeaderLogoSection } from "../header/HeaderLogoSection";
 import { ThemeButton } from "../themes";
 import { SidebarSearchBar } from "./SidebarSearchBar";
 

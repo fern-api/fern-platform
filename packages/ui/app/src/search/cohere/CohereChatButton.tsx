@@ -3,9 +3,8 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useAtom } from "jotai";
 import { ReactElement } from "react";
 import { createPortal } from "react-dom";
-import { useCallbackOne } from "use-memo-one";
 import { COHERE_ASK_AI } from "../../atoms";
-import { useRouteChanged } from "../../hooks/useRouteChanged";
+import { useRouteChangeComplete } from "../../hooks/useRouteChanged";
 import { useSearchConfig } from "../../services/useSearchService";
 import { CohereChatbotModal } from "./CohereChatbotModal";
 
@@ -14,11 +13,9 @@ export function CohereChatButton(): ReactElement | null {
     const [enabled, setEnabled] = useAtom(COHERE_ASK_AI);
 
     // Close the dialog when the route changes
-    useRouteChanged(
-        useCallbackOne(() => {
-            setEnabled(false);
-        }, [setEnabled]),
-    );
+    useRouteChangeComplete(() => {
+        setEnabled(false);
+    });
 
     if (!config.isAvailable || config.inkeep != null || typeof window === "undefined") {
         return null;

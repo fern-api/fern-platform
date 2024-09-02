@@ -27,6 +27,7 @@ export function getAuthorizationUrl(
     options: Omit<AuthorizationURLOptions, "provider" | "clientId" | "redirectUri"> = {},
     xFernHost: string,
 ): string {
+    // TODO: make this work for docs with basepath or trailing slash
     const redirectUri =
         process.env.NODE_ENV === "development"
             ? "http://localhost:3000/api/fern-docs/auth/callback"

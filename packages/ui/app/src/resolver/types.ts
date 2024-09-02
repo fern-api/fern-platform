@@ -419,6 +419,7 @@ export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEn
 export interface ResolvedWebSocketChannel {
     type: "websocket";
     nodeId: FernNavigation.NodeId;
+    apiDefinitionId: FdrAPI.ApiDefinitionId;
     id: string;
     slug: FernNavigation.Slug;
     name: string | undefined;

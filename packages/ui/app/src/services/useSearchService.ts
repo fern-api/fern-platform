@@ -3,9 +3,8 @@ import type { SearchConfig } from "@fern-ui/search-utils";
 import { useCallback } from "react";
 import useSWR, { mutate } from "swr";
 import { noop } from "ts-essentials";
-import urljoin from "url-join";
-import { useBasePath } from "../atoms";
 import { useIsLocalPreview } from "../contexts/local-preview";
+import { useApiRoute } from "../hooks/useApiRoute";
 
 export type SearchCredentials = {
     appId: string;
@@ -27,16 +26,13 @@ export declare namespace SearchService {
 export type SearchService = SearchService.Available | SearchService.Unavailable;
 
 export function useSearchConfig(): [SearchConfig, refresh: () => void] {
-    const basePath = useBasePath();
     const isLocalPreview = useIsLocalPreview();
 
     if (isLocalPreview) {
         return [{ isAvailable: false }, noop];
     }
 
-    // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
-    const key = urljoin(basePath || "/", "/api/fern-docs/search");
-
+    const key = useApiRoute("/api/fern-docs/search");
     const { data } = useSWR<SearchConfig>(key, (url: string) => fetch(url).then((res) => res.json()), {
         refreshInterval: 1000 * 60 * 60 * 2, // 2 hours
         revalidateOnFocus: false,

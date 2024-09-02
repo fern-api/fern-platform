@@ -1,9 +1,9 @@
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { useMemo } from "react";
-import { CodeExampleClientDropdown } from "../../../api-page/endpoints/CodeExampleClientDropdown";
-import { EndpointUrlWithOverflow } from "../../../api-page/endpoints/EndpointUrlWithOverflow";
-import { CodeSnippetExample } from "../../../api-page/examples/CodeSnippetExample";
-import { generateCodeExamples } from "../../../api-page/examples/code-example";
+import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/CodeExampleClientDropdown";
+import { EndpointUrlWithOverflow } from "../../../api-reference/endpoints/EndpointUrlWithOverflow";
+import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
+import { generateCodeExamples } from "../../../api-reference/examples/code-example";
 import { useResolvedPath } from "../../../atoms";
 import { useSelectedEnvironmentId } from "../../../atoms/environment";
 import { ApiReferenceButton } from "../../../components/ApiReferenceButton";

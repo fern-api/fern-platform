@@ -2,17 +2,16 @@ import { ChatbotMessage, ChatbotModal, ChatbotModalRef, Citation } from "@fern-u
 import { Cohere } from "cohere-ai";
 import { useAtomValue } from "jotai";
 import { ReactElement, isValidElement, useRef } from "react";
-import urlJoin from "url-join";
 import { useCallbackOne } from "use-memo-one";
-import { Stream } from "../../api-playground/Stream";
 import { COHERE_INITIAL_MESSAGE, useAtomEffect } from "../../atoms";
-import { CURRENT_VERSION_ID_ATOM, useBasePath } from "../../atoms/navigation";
+import { CURRENT_VERSION_ID_ATOM } from "../../atoms/navigation";
 import { FernLink } from "../../components/FernLink";
+import { useApiRoute } from "../../hooks/useApiRoute";
 import { CodeBlock } from "../../mdx/components/code";
+import { Stream } from "../../playground/Stream";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
 
 export function CohereChatbotModal({ className }: { className?: string }): ReactElement {
-    const basePath = useBasePath();
     const versionId = useAtomValue(CURRENT_VERSION_ID_ATOM);
 
     const ref = useRef<ChatbotModalRef>(null);
@@ -28,9 +27,11 @@ export function CohereChatbotModal({ className }: { className?: string }): React
         }, []),
     );
 
+    const cohereApiRoute = useApiRoute("/api/fern-docs/search/cohere");
+
     const chatStream = async (message: string, conversationId: string) => {
         const abortController = new AbortController();
-        const body = await fetch(urlJoin(basePath || "/", "/api/fern-docs/search/cohere"), {
+        const body = await fetch(cohereApiRoute, {
             method: "POST",
             signal: abortController.signal,
             headers: {
