@@ -5,10 +5,12 @@ import { FernNavigation } from "../generated";
  */
 export type NavigationNode =
     | FernNavigation.RootNode
+    | FernNavigation.ProductGroupNode
     | FernNavigation.VersionedNode
     | FernNavigation.TabbedNode
     | FernNavigation.SidebarRootNode
     | FernNavigation.SidebarGroupNode
+    | FernNavigation.ProductNode
     | FernNavigation.VersionNode
     | FernNavigation.UnversionedNode
     | FernNavigation.TabNode

@@ -8,6 +8,7 @@ types:
   TabId: string
   PageId: string
   NodeId: string
+  ProductId: string
   EnvironmentId:
     type: string
     docs: Identifier for an API environment (i.e. "Prod", "Staging", "Dev")
@@ -30,7 +31,7 @@ types:
     discriminated: false
     union:
       - VersionedNode
-      - UnverionsedNode
+      - UnversionedNode
 
   VersionChild:
     discriminated: false
