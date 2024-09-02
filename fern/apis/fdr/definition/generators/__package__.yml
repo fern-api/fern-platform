@@ -63,6 +63,14 @@ service:
       path: ""
       request: Generator
 
+    getGeneratorByImage:
+      docs: Get the generator corresponding to the given docker image.
+      method: GET
+      path: /{docker_image}
+      path-parameters:
+        docker_image: string
+      response: optional<Generator>
+
     getGenerator:
       docs: Get the specified generator.
       method: GET

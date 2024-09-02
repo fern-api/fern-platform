@@ -9,6 +9,13 @@ export interface GeneratorsServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
+    getGeneratorByImage(req: express.Request<{
+        docker_image: string;
+    }, FernRegistry.generators.Generator | undefined, never, never>, res: {
+        send: (responseBody: FernRegistry.generators.Generator | undefined) => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }): void | Promise<void>;
     getGenerator(req: express.Request<{
         generator_id: FernRegistry.generators.GeneratorId;
     }, FernRegistry.generators.Generator | undefined, never, never>, res: {
