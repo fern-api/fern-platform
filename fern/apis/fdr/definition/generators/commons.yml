@@ -17,7 +17,7 @@ types:
   ChangelogResponse:
     properties:
       version: string
-      changelog_entry: ChangelogEntry
+      changelog_entry: list<ChangelogEntry>
 
   ChangelogEntryType:
     docs: Following `conventional commit` types for the entries here.
