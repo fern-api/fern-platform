@@ -1,3 +1,4 @@
+export * from "./GetGeneratorByImageRequest";
 export * from "./GeneratorId";
 export * from "./SdkGenerator";
 export * from "./ModelGenerator";

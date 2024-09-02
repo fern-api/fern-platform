@@ -25,6 +25,8 @@ export interface GeneratorsDao {
 
     getGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<Generator | undefined>;
 
+    getGeneratorByImage({ image }: { image: string }): Promise<Generator | undefined>;
+
     listGenerators(): Promise<Generator[]>;
 
     deleteGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<void>;
@@ -33,6 +35,16 @@ export interface GeneratorsDao {
 
 export class GeneratorsDaoImpl implements GeneratorsDao {
     constructor(private readonly prisma: prisma.PrismaClient) {}
+
+    async getGeneratorByImage({ image }: { image: string }): Promise<Generator | undefined> {
+        return convertPrismaGenerator(
+            await this.prisma.generator.findUnique({
+                where: {
+                    dockerImage: image,
+                },
+            }),
+        );
+    }
     async deleteGenerators({ generatorIds }: { generatorIds: string[] }): Promise<void> {
         await this.prisma.generator.deleteMany({
             where: {

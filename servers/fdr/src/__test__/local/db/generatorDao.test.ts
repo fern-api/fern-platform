@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { Generator } from "../../../api/generated/api/resources/generators";
 import { createMockFdrApplication } from "../../mock";
 
 const fdrApplication = createMockFdrApplication({
@@ -72,7 +73,7 @@ it("generator dao non-unique", async () => {
         generator: {
             id: "python-sdk-2",
             generator_type: { type: "sdk" },
-            docker_image: "my-cool/example",
+            docker_image: "my-cool/example-1",
             generator_language: FdrAPI.generators.GeneratorLanguage.Python,
         },
     });
@@ -81,11 +82,38 @@ it("generator dao non-unique", async () => {
         generator: {
             id: "python-sdk-3",
             generator_type: { type: "sdk" },
-            docker_image: "my-cool/example",
+            docker_image: "my-cool/example-2",
             generator_language: FdrAPI.generators.GeneratorLanguage.Python,
         },
     });
 
     const generatorUpdated = await fdrApplication.dao.generators().listGenerators();
     expect(generatorUpdated).length(3);
+});
+
+it("generator dao image non-unique", async () => {
+    const generator: Generator = {
+        id: "python-sdk-3",
+        generator_type: { type: "sdk" },
+        docker_image: "my-cool/example",
+        generator_language: FdrAPI.generators.GeneratorLanguage.Python,
+    };
+    await fdrApplication.dao.generators().upsertGenerator({ generator });
+
+    await expect(async () => {
+        await fdrApplication.dao.generators().upsertGenerator({
+            generator: {
+                id: "python-sdk-15",
+                generator_type: { type: "sdk" },
+                docker_image: "my-cool/example",
+                generator_language: FdrAPI.generators.GeneratorLanguage.Python,
+            },
+        });
+    }).rejects.toThrowError(
+        "\nInvalid `prisma.generator.upsert()` invocation:\n\n\nUnique constraint failed on the fields: (`dockerImage`)",
+    );
+
+    const generatorByImage = await fdrApplication.dao.generators().getGeneratorByImage({ image: "my-cool/example" });
+
+    expect(generatorByImage).toEqual(generator);
 });

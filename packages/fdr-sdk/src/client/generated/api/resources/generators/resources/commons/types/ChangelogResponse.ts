@@ -6,5 +6,5 @@ import * as FernRegistry from "../../../../../index";
 
 export interface ChangelogResponse {
     version: string;
-    changelog_entry: FernRegistry.generators.ChangelogEntry;
+    changelog_entry: FernRegistry.generators.ChangelogEntry[];
 }

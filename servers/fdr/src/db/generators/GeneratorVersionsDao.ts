@@ -235,7 +235,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             if (release.changelogEntry != null) {
                 changelogs.push({
                     version: release.version,
-                    changelog_entry: readBuffer(release.changelogEntry) as ChangelogEntry,
+                    changelog_entry: readBuffer(release.changelogEntry) as ChangelogEntry[],
                 });
             }
         }
