@@ -52,7 +52,7 @@ export class GeneratorsService {
                 next(error);
             }
         }));
-        this.router.get("/:docker_image", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/by-image", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getGeneratorByImage(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {

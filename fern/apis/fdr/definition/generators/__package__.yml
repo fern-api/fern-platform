@@ -4,6 +4,10 @@ imports:
   commons: ./commons.yml
 
 types:
+  GetGeneratorByImageRequest:
+    properties:
+      docker_image: string
+
   GeneratorId:
     type: string
     docs: The type of the generator, e.g. fern-python-sdk
@@ -65,10 +69,9 @@ service:
 
     getGeneratorByImage:
       docs: Get the generator corresponding to the given docker image.
-      method: GET
-      path: /{docker_image}
-      path-parameters:
-        docker_image: string
+      method: POST
+      path: /by-image
+      request: GetGeneratorByImageRequest
       response: optional<Generator>
 
     getGenerator:

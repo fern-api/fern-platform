@@ -82,14 +82,16 @@ export class Generators {
     /**
      * Get the generator corresponding to the given docker image.
      *
-     * @param {string} dockerImage
+     * @param {FernRegistry.generators.GetGeneratorByImageRequest} request
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.getGeneratorByImage("string")
+     *     await fernRegistry.generators.getGeneratorByImage({
+     *         docker_image: "string"
+     *     })
      */
     public async getGeneratorByImage(
-        dockerImage: string,
+        request: FernRegistry.generators.GetGeneratorByImageRequest,
         requestOptions?: Generators.RequestOptions
     ): Promise<
         core.APIResponse<
@@ -100,9 +102,9 @@ export class Generators {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/${encodeURIComponent(dockerImage)}`
+                "/generators/by-image"
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
@@ -110,6 +112,7 @@ export class Generators {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
