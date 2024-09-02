@@ -19,7 +19,7 @@ export function getGeneratorsRootController(app: FdrApplication): GeneratorsServ
             return res.send(await app.dao.generators().listGenerators());
         },
         getGeneratorByImage: async (req, res) => {
-            return res.send(await app.dao.generators().getGeneratorByImage({ image: req.params.image }));
+            return res.send(await app.dao.generators().getGeneratorByImage({ image: req.params.docker_image }));
         },
     });
 }
