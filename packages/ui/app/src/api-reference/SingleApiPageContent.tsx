@@ -1,12 +1,14 @@
-import { visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import dynamic from "next/dynamic";
 import { ReactElement, useMemo } from "react";
 import { useNavigationNodes } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
-import { Endpoint } from "./endpoints/Endpoint";
-import { WebSocket } from "./web-socket/WebSocket";
-import { Webhook } from "./webhooks/Webhook";
+import type { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
+
+const Endpoint = dynamic(() => import("./endpoints/Endpoint").then(({ Endpoint }) => Endpoint), { ssr: true });
+const Webhook = dynamic(() => import("./webhooks/Webhook").then(({ Webhook }) => Webhook), { ssr: true });
+const WebSocket = dynamic(() => import("./web-socket/WebSocket").then(({ WebSocket }) => WebSocket), { ssr: true });
 
 interface SingleApiPageContentProps {
     item: ResolvedApiEndpoint;

@@ -1,18 +1,17 @@
-import { visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
-import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { isNonNullish } from "@fern-ui/core-utils";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { reverse } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
-import { FeatureFlags } from "../atoms";
+import type { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
 import { getFrontmatter } from "../mdx/frontmatter";
-import { FernSerializeMdxOptions, type BundledMDX } from "../mdx/types";
+import type { BundledMDX, FernSerializeMdxOptions } from "../mdx/types";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
-import { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
+import type { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
 
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,

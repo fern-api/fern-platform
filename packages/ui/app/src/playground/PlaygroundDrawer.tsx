@@ -21,7 +21,7 @@ import {
 } from "../atoms/playground";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { ResolvedApiEndpointWithPackage, isEndpoint, isWebSocket } from "../resolver/types";
+import { isEndpoint, isWebSocket, type ResolvedApiEndpointWithPackage } from "../resolver/types";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
