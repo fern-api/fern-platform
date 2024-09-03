@@ -1,15 +1,15 @@
-import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-reference/examples/sortKeysByShape";
-import { FeatureFlags } from "../atoms";
+import type { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
-import { FernSerializeMdxOptions } from "../mdx/types";
+import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiTypeResolver } from "./ApiTypeResolver";
 import { resolveCodeSnippets } from "./resolveCodeSnippets";
-import {
+import type {
     ResolvedEndpointDefinition,
     ResolvedEndpointPathParts,
     ResolvedError,

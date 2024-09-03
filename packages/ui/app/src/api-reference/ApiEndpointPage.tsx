@@ -1,6 +1,6 @@
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { ApiPageContext } from "../contexts/api-page";
-import { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
+import type { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { SingleApiPageContent } from "./SingleApiPageContent";
 

@@ -1,12 +1,13 @@
-import { DocsV1Read, FernNavigation, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
-import { isNonNullish } from "@fern-ui/core-utils";
+import type { DocsV1Read } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { captureSentryErrorMessage } from "../analytics/sentry";
-import { FeatureFlags } from "../atoms";
+import type { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
-import { FernSerializeMdxOptions } from "../mdx/types";
+import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiEndpointResolver } from "./ApiEndpointResolver";
 import { ApiTypeResolver } from "./ApiTypeResolver";
-import {
+import type {
     ResolvedPackageItem,
     ResolvedRootPackage,
     ResolvedSubpackage,

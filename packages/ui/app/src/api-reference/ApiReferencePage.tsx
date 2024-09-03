@@ -3,9 +3,10 @@ import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { APIS_ATOM, useIsReady } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
-import { ResolvedRootPackage } from "../resolver/types";
+import type { ResolvedRootPackage } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { ApiPackageContents } from "./ApiPackageContents";
+
 export declare namespace ApiReferencePage {
     export interface Props {
         initialApi: ResolvedRootPackage;

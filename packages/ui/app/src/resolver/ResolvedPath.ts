@@ -1,7 +1,7 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { BundledMDX } from "../mdx/types";
-import { ResolvedApiEndpoint, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
+import type { ResolvedApiEndpoint, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
 
 export declare namespace ResolvedPath {
     export interface Neighbor {
