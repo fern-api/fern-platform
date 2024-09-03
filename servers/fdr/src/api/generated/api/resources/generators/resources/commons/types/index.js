@@ -1,4 +1,5 @@
 export * from "./Yank";
+export * from "./GetChangelogRequest";
 export * from "./GetChangelogResponse";
 export * from "./ChangelogResponse";
 export * from "./ChangelogEntryType";

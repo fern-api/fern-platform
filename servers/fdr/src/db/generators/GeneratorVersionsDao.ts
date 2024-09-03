@@ -6,6 +6,7 @@ import {
     GeneratorId,
     GeneratorRelease,
     GeneratorReleaseRequest,
+    GetChangelogRequest,
     GetChangelogResponse,
     GetLatestGeneratorReleaseRequest,
     ListGeneratorReleasesResponse,
@@ -46,12 +47,10 @@ export interface GeneratorVersionsDao {
 
     getChangelog({
         generator,
-        fromVersion,
-        toVersion,
+        versionRanges,
     }: {
         generator: GeneratorId;
-        fromVersion: string;
-        toVersion: string;
+        versionRanges: GetChangelogRequest;
     }): Promise<GetChangelogResponse>;
 
     upsertGeneratorRelease({ generatorRelease }: { generatorRelease: GeneratorReleaseRequest }): Promise<void>;
@@ -208,19 +207,31 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
 
     async getChangelog({
         generator,
-        fromVersion,
-        toVersion,
+        versionRanges,
     }: {
         generator: GeneratorId;
-        fromVersion: string;
-        toVersion: string;
+        versionRanges: GetChangelogRequest;
     }): Promise<GetChangelogResponse> {
         const releases = await this.prisma.generatorRelease.findMany({
             where: {
                 generatorId: generator,
                 nonce: {
-                    gte: noncifySemanticVersion(fromVersion),
-                    lte: noncifySemanticVersion(toVersion),
+                    gte:
+                        versionRanges.from_version_inclusive != null
+                            ? noncifySemanticVersion(versionRanges.from_version_inclusive)
+                            : undefined,
+                    gt:
+                        versionRanges.from_version_exclusive != null
+                            ? noncifySemanticVersion(versionRanges.from_version_exclusive)
+                            : undefined,
+                    lte:
+                        versionRanges.to_version_inclusive != null
+                            ? noncifySemanticVersion(versionRanges.to_version_inclusive)
+                            : undefined,
+                    lt:
+                        versionRanges.to_version_exclusive != null
+                            ? noncifySemanticVersion(versionRanges.to_version_exclusive)
+                            : undefined,
                 },
             },
             orderBy: [
