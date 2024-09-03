@@ -12,7 +12,7 @@ import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
-import { ResolvedApiDefinitionItem, ResolvedRootPackage } from "../resolver/types";
+import { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
 
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
@@ -176,7 +176,7 @@ export async function convertNavigatableToResolvedPath({
                 api: apiReference.apiDefinitionId,
                 auth: api.auth,
                 types: await typeResolver.resolve(),
-                item: await visitDiscriminatedUnion(node)._visit<Promise<ResolvedApiDefinitionItem>>({
+                item: await visitDiscriminatedUnion(node)._visit<Promise<ResolvedApiEndpoint>>({
                     endpoint: (endpoint) => defResolver.resolveEndpointDefinition(endpoint),
                     webSocket: (webSocket) => defResolver.resolveWebsocketChannel(webSocket),
                     webhook: (webhook) => defResolver.resolveWebhookDefinition(webhook),

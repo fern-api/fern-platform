@@ -1,7 +1,7 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { BundledMDX } from "../mdx/types";
-import { ResolvedApiDefinitionItem, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
+import { ResolvedApiEndpoint, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
 
 export declare namespace ResolvedPath {
     export interface Neighbor {
@@ -50,7 +50,7 @@ export declare namespace ResolvedPath {
         api: FdrAPI.ApiDefinitionId;
         auth: APIV1Read.ApiAuth | undefined;
         types: Record<string, ResolvedTypeDefinition>;
-        item: ResolvedApiDefinitionItem;
+        item: ResolvedApiEndpoint;
         showErrors: boolean;
         neighbors: Neighbors;
     }

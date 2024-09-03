@@ -1,12 +1,12 @@
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { ApiPageContext } from "../contexts/api-page";
-import { ResolvedApiDefinitionItem, ResolvedTypeDefinition } from "../resolver/types";
+import { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { SingleApiPageContent } from "./SingleApiPageContent";
 
 export declare namespace ApiEndpointPage {
     export interface Props {
-        item: ResolvedApiDefinitionItem;
+        item: ResolvedApiEndpoint;
         showErrors: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }

@@ -3,13 +3,13 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ReactElement, useMemo } from "react";
 import { useNavigationNodes } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { ResolvedApiDefinitionItem, ResolvedTypeDefinition } from "../resolver/types";
+import { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
 import { Endpoint } from "./endpoints/Endpoint";
 import { WebSocket } from "./web-socket/WebSocket";
 import { Webhook } from "./webhooks/Webhook";
 
 interface SingleApiPageContentProps {
-    item: ResolvedApiDefinitionItem;
+    item: ResolvedApiEndpoint;
     types: Record<string, ResolvedTypeDefinition>;
     showErrors: boolean;
 }

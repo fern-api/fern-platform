@@ -95,14 +95,14 @@ export interface ResolvedNavigationItemApiSection
 export interface FlattenedRootPackage {
     auth: APIV1Read.ApiAuth | undefined;
     types: Record<string, ResolvedTypeDefinition>;
-    apiDefinitions: ResolvedApiDefinition[];
+    endpoints: ResolvedApiEndpointWithPackage[];
 }
 
 export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedRootPackage {
-    function getApiDefinitions(apiPackage: ResolvedApiDefinitionPackage): ResolvedApiDefinition[] {
+    function getApiEndpoints(apiPackage: ResolvedApiDefinitionPackage): ResolvedApiEndpointWithPackage[] {
         return apiPackage.items.flatMap((item) => {
             if (item.type === "subpackage") {
-                return getApiDefinitions(item);
+                return getApiEndpoints(item);
             }
             if (item.type === "page") {
                 return [];
@@ -120,7 +120,7 @@ export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedR
     return {
         auth: rootPackage.auth,
         types: rootPackage.types,
-        apiDefinitions: getApiDefinitions(rootPackage),
+        endpoints: getApiEndpoints(rootPackage),
     };
 }
 
@@ -167,17 +167,14 @@ export const ResolvedPackageItem = {
     },
 };
 
-export type ResolvedApiDefinition =
-    | ResolvedApiDefinition.Endpoint
-    | ResolvedApiDefinition.Webhook
-    | ResolvedApiDefinition.WebSocket;
+export type ResolvedApiEndpointWithPackage =
+    | ResolvedApiEndpointWithPackage.Endpoint
+    | ResolvedApiEndpointWithPackage.Webhook
+    | ResolvedApiEndpointWithPackage.WebSocket;
 
-export type ResolvedApiDefinitionItem =
-    | ResolvedEndpointDefinition
-    | ResolvedWebhookDefinition
-    | ResolvedWebSocketChannel;
+export type ResolvedApiEndpoint = ResolvedEndpointDefinition | ResolvedWebhookDefinition | ResolvedWebSocketChannel;
 
-export declare namespace ResolvedApiDefinition {
+export declare namespace ResolvedApiEndpointWithPackage {
     export interface Endpoint extends ResolvedEndpointDefinition {
         package: ResolvedApiDefinitionPackage;
     }
@@ -191,26 +188,32 @@ export declare namespace ResolvedApiDefinition {
     }
 }
 
-export function isEndpoint(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.Endpoint {
+export function isEndpoint(
+    definition: ResolvedApiEndpointWithPackage,
+): definition is ResolvedApiEndpointWithPackage.Endpoint {
     return definition.type === "endpoint";
 }
 
-export function isWebhook(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.Webhook {
+export function isWebhook(
+    definition: ResolvedApiEndpointWithPackage,
+): definition is ResolvedApiEndpointWithPackage.Webhook {
     return definition.type === "webhook";
 }
 
-export function isWebSocket(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.WebSocket {
+export function isWebSocket(
+    definition: ResolvedApiEndpointWithPackage,
+): definition is ResolvedApiEndpointWithPackage.WebSocket {
     return definition.type === "websocket";
 }
 
-interface ResolvedApiDefinitionVisitor<T> {
-    endpoint(definition: ResolvedApiDefinition.Endpoint): T;
-    webhook(definition: ResolvedApiDefinition.Webhook): T;
-    websocket(definition: ResolvedApiDefinition.WebSocket): T;
+interface ResolvedApiEndpointWithPackageVisitor<T> {
+    endpoint(definition: ResolvedApiEndpointWithPackage.Endpoint): T;
+    webhook(definition: ResolvedApiEndpointWithPackage.Webhook): T;
+    websocket(definition: ResolvedApiEndpointWithPackage.WebSocket): T;
 }
 
-export const ResolvedApiDefinition = {
-    visit: <T>(definition: ResolvedApiDefinition, visitor: ResolvedApiDefinitionVisitor<T>): T => {
+export const ResolvedApiEndpointWithPackage = {
+    visit: <T>(definition: ResolvedApiEndpointWithPackage, visitor: ResolvedApiEndpointWithPackageVisitor<T>): T => {
         switch (definition.type) {
             case "endpoint":
                 return visitor.endpoint(definition);
