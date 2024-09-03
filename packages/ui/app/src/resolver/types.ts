@@ -257,7 +257,6 @@ export interface ResolvedEndpointDefinition extends WithMetadata {
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
     method: APIV1Read.HttpMethod;
-    // name: string | undefined;
     title: string;
     path: ResolvedEndpointPathParts[];
     pathParameters: ResolvedObjectProperty[];
@@ -427,7 +426,7 @@ export interface ResolvedWebSocketChannel {
     apiDefinitionId: FdrAPI.ApiDefinitionId;
     id: string;
     slug: FernNavigation.Slug;
-    name: string | undefined;
+    title: string;
     description: string | undefined;
     availability: APIV1Read.Availability | undefined;
     auth: APIV1Read.ApiAuth | undefined;
@@ -456,7 +455,7 @@ export interface ResolvedWebhookDefinition extends WithMetadata {
     slug: FernNavigation.Slug;
 
     method: APIV1Read.WebhookHttpMethod;
-    name: string | undefined;
+    title: string;
     path: string[];
     headers: ResolvedObjectProperty[];
     payload: ResolvedPayload;

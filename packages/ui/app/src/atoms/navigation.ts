@@ -70,6 +70,16 @@ SIDEBAR_ROOT_NODE_ATOM.debugLabel = "SIDEBAR_ROOT_NODE_ATOM";
 export const RESOLVED_PATH_ATOM = atom<ResolvedPath>((get) => get(DOCS_ATOM).resolvedPath);
 RESOLVED_PATH_ATOM.debugLabel = "RESOLVED_PATH_ATOM";
 
+export const RESOLVED_PATH_SLUG_ATOM = atom((get) => get(RESOLVED_PATH_ATOM).slug);
+
+export const RESOLVED_PATH_TITLE_ATOM = atom((get) => {
+    const resolvedPath = get(RESOLVED_PATH_ATOM);
+    if (resolvedPath.type === "api-definition-page") {
+        return resolvedPath.item.title;
+    }
+    return resolvedPath.title;
+});
+
 export const NEIGHBORS_ATOM = atom((get) => {
     const resolvedPath = get(RESOLVED_PATH_ATOM);
     if (resolvedPath.type === "api-reference-page" || resolvedPath.type === "changelog") {
