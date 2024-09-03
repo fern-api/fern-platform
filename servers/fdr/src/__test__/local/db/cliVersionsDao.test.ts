@@ -131,14 +131,7 @@ it("generator changelog", async () => {
     });
 
     // Note we explicitly do not include 0.1.2 and 0.1.8 in the range to ensure we're only including the range
-    expect(
-        await fdrApplication.dao.cliVersions().getChangelog({
-            versionRanges: {
-                from_version: { type: "inclusive", value: "2.1.3" },
-                to_version: { type: "inclusive", value: "2.1.7" },
-            },
-        }),
-    ).toEqual({
+    expect(await fdrApplication.dao.cliVersions().getChangelog({ fromVersion: "2.1.3", toVersion: "2.1.7" })).toEqual({
         entries: [
             {
                 version: "2.1.5",
@@ -158,75 +151,6 @@ it("generator changelog", async () => {
                         type: "fix",
                         summary: "fixed that new feature",
                         fixed: ["fixed that new feature"],
-                    },
-                ],
-            },
-        ],
-    });
-    // Should not get the minimum, given it's exclusive
-    expect(
-        await fdrApplication.dao.generatorVersions().getChangelog({
-            generator: "this-gets-changelog",
-            versionRanges: {
-                from_version: { type: "exclusive", value: "2.1.3" },
-                to_version: { type: "exclusive", value: "2.1.7" },
-            },
-        }),
-    ).toEqual({
-        entries: [
-            {
-                version: "2.1.5",
-                changelog_entry: [
-                    {
-                        type: "fix",
-                        summary: "did a couple things",
-                        fixed: ["fixed that new feature"],
-                        deprecated: ["idk google meet or something isn't there anymore"],
-                    },
-                ],
-            },
-        ],
-    });
-
-    // Should get every changelog
-    expect(
-        await fdrApplication.dao.generatorVersions().getChangelog({
-            generator: "this-gets-changelog",
-            versionRanges: {
-                from_version: { type: "inclusive", value: "2.1.2" },
-                to_version: { type: "inclusive", value: "2.1.8" },
-            },
-        }),
-    ).toEqual({
-        entries: [
-            {
-                version: "2.1.5",
-                changelog_entry: [
-                    {
-                        type: "fix",
-                        summary: "did a couple things",
-                        fixed: ["fixed that new feature"],
-                        deprecated: ["idk google meet or something isn't there anymore"],
-                    },
-                ],
-            },
-            {
-                version: "2.1.3",
-                changelog_entry: [
-                    {
-                        type: "fix",
-                        summary: "fixed that new feature",
-                        fixed: ["fixed that new feature"],
-                    },
-                ],
-            },
-            {
-                version: "2.1.2",
-                changelog_entry: [
-                    {
-                        type: "feat",
-                        summary: "added a new feature",
-                        added: ["added a new feature"],
                     },
                 ],
             },

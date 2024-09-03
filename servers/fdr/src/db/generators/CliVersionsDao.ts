@@ -5,7 +5,6 @@ import {
     ChangelogResponse,
     CliRelease,
     CliReleaseRequest,
-    GetChangelogRequest,
     GetChangelogResponse,
     GetLatestCliReleaseRequest,
     ListCliReleasesResponse,
@@ -44,7 +43,7 @@ export interface CliVersionsDao {
         getLatestCliReleaseRequest: GetLatestCliReleaseRequest;
     }): Promise<CliRelease | undefined>;
 
-    getChangelog({ versionRanges }: { versionRanges: GetChangelogRequest }): Promise<GetChangelogResponse>;
+    getChangelog({ fromVersion, toVersion }: { fromVersion: string; toVersion: string }): Promise<GetChangelogResponse>;
 
     getMinCliForIr({ irVersion }: { irVersion: number }): Promise<CliRelease | undefined>;
 
@@ -82,26 +81,18 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
         return convertPrismaCliRelease(maybeRelease);
     }
 
-    async getChangelog({ versionRanges }: { versionRanges: GetChangelogRequest }): Promise<GetChangelogResponse> {
+    async getChangelog({
+        fromVersion,
+        toVersion,
+    }: {
+        fromVersion: string;
+        toVersion: string;
+    }): Promise<GetChangelogResponse> {
         const releases = await this.prisma.cliRelease.findMany({
             where: {
                 nonce: {
-                    gte:
-                        versionRanges.from_version.type == "inclusive"
-                            ? noncifySemanticVersion(versionRanges.from_version.value)
-                            : undefined,
-                    gt:
-                        versionRanges.from_version.type == "exclusive"
-                            ? noncifySemanticVersion(versionRanges.from_version.value)
-                            : undefined,
-                    lte:
-                        versionRanges.to_version.type == "inclusive"
-                            ? noncifySemanticVersion(versionRanges.to_version.value)
-                            : undefined,
-                    lt:
-                        versionRanges.to_version.type == "exclusive"
-                            ? noncifySemanticVersion(versionRanges.to_version.value)
-                            : undefined,
+                    gte: noncifySemanticVersion(fromVersion),
+                    lte: noncifySemanticVersion(toVersion),
                 },
             },
             orderBy: [

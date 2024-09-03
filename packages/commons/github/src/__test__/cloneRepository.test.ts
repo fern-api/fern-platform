@@ -12,7 +12,7 @@ describe("cloneRepository", () => {
     it("invalid installation token", async () => {
         await expect(async () => {
             await cloneRepository({
-                githubRepository: "https://github.com/fern-api/github-app-test",
+                githubRepository: "https://github.com/fern-api/fern-platform",
                 installationToken: "ghp_xyz",
             });
         }).rejects.toThrow();

@@ -10,16 +10,6 @@ types:
           The remediation strategy to be used when a yank is detected. If one is not specified, we'll likely go backwards by publishing time
           to find the last unyanked version.
 
-  VersionRange:
-    union:
-      inclusive: string
-      exclusive: string
-
-  GetChangelogRequest:
-    properties:
-      from_version: VersionRange
-      to_version: VersionRange
-
   GetChangelogResponse:
     properties:
       entries: list<ChangelogResponse>
