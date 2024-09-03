@@ -4,7 +4,7 @@ import { ResolvedApiDefinitionItem, ResolvedTypeDefinition } from "../resolver/t
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { SingleApiPageContent } from "./SingleApiPageContent";
 
-export declare namespace ApiDefinitionPage {
+export declare namespace ApiEndpointPage {
     export interface Props {
         item: ResolvedApiDefinitionItem;
         showErrors: boolean;
@@ -12,7 +12,7 @@ export declare namespace ApiDefinitionPage {
     }
 }
 
-export const ApiDefinitionPage: React.FC<ApiDefinitionPage.Props> = ({ item, showErrors, types }) => {
+export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ item, showErrors, types }) => {
     return (
         <ApiPageContext.Provider value={true}>
             <SingleApiPageContent item={item} showErrors={showErrors} types={types} />

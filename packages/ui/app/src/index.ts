@@ -11,7 +11,7 @@ export { Stream } from "./playground/Stream";
 export { ProxyRequestSchema } from "./playground/types";
 export type { ProxyRequest, ProxyResponse, SerializableFile, SerializableFormDataEntryValue } from "./playground/types";
 export { ApiDefinitionResolver } from "./resolver/ApiDefinitionResolver";
-export { ApiReferenceResolver } from "./resolver/ApiReferenceResolver";
+export { ApiEndpointResolver } from "./resolver/ApiEndpointResolver";
 export { ApiTypeResolver } from "./resolver/ApiTypeResolver";
 export * from "./resolver/types";
 export { getBreadcrumbList } from "./seo/getBreadcrumbList";

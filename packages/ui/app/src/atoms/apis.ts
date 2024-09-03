@@ -24,7 +24,7 @@ export function useFlattenedApi(apiId: string): FlattenedRootPackage | undefined
 
 const IS_API_REFERENCE_PAGINATED = atom<boolean>((get) => {
     const resolvedPath = get(RESOLVED_PATH_ATOM);
-    if (resolvedPath.type === "api-definition-page") {
+    if (resolvedPath.type === "api-endpoint-page") {
         return true;
     }
     return get(FEATURE_FLAGS_ATOM).isApiScrollingDisabled;

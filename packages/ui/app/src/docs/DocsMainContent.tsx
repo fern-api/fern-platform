@@ -14,8 +14,8 @@ const ApiReferencePage = dynamic(
     { ssr: true },
 );
 
-const ApiDefinitionPage = dynamic(
-    () => import("../api-reference/ApiDefinitionPage").then(({ ApiDefinitionPage }) => ApiDefinitionPage),
+const ApiEndpointPage = dynamic(
+    () => import("../api-reference/ApiEndpointPage").then(({ ApiEndpointPage }) => ApiEndpointPage),
     { ssr: true },
 );
 
@@ -40,12 +40,8 @@ const DocsMainContentRenderer = memo(() => {
         "api-reference-page": (resolvedPath) => (
             <ApiReferencePage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />
         ),
-        "api-definition-page": (resolvedPath) => (
-            <ApiDefinitionPage
-                item={resolvedPath.item}
-                showErrors={resolvedPath.showErrors}
-                types={resolvedPath.types}
-            />
+        "api-endpoint-page": (resolvedPath) => (
+            <ApiEndpointPage item={resolvedPath.item} showErrors={resolvedPath.showErrors} types={resolvedPath.types} />
         ),
         changelog: (resolvedPath) => <ChangelogPage resolvedPath={resolvedPath} />,
         "changelog-entry": (resolvedPath) => <ChangelogEntryPage resolvedPath={resolvedPath} />,

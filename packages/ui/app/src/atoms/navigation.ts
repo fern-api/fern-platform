@@ -74,7 +74,7 @@ export const RESOLVED_PATH_SLUG_ATOM = atom((get) => get(RESOLVED_PATH_ATOM).slu
 
 export const RESOLVED_PATH_TITLE_ATOM = atom((get) => {
     const resolvedPath = get(RESOLVED_PATH_ATOM);
-    if (resolvedPath.type === "api-definition-page") {
+    if (resolvedPath.type === "api-endpoint-page") {
         return resolvedPath.item.title;
     }
     return resolvedPath.title;
@@ -93,7 +93,7 @@ export const NEIGHBORS_ATOM = atom((get) => {
 
 export const RESOLVED_API_DEFINITION_ATOM = atom((get) => {
     const resolvedPath = get(RESOLVED_PATH_ATOM);
-    return resolvedPath.type === "api-definition-page" || resolvedPath.type === "api-reference-page"
+    return resolvedPath.type === "api-endpoint-page" || resolvedPath.type === "api-reference-page"
         ? resolvedPath.api
         : undefined;
 });

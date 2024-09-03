@@ -44,8 +44,8 @@ export declare namespace ResolvedPath {
         apis: Record<string, ResolvedRootPackage>;
     }
 
-    interface ApiDefinitionPage {
-        type: "api-definition-page";
+    interface ApiEndpointPage {
+        type: "api-endpoint-page";
         slug: FernNavigation.Slug;
         api: FdrAPI.ApiDefinitionId;
         auth: APIV1Read.ApiAuth | undefined;
@@ -68,7 +68,7 @@ export declare namespace ResolvedPath {
 
 export type ResolvedPath =
     | ResolvedPath.CustomMarkdownPage
-    | ResolvedPath.ApiDefinitionPage
+    | ResolvedPath.ApiEndpointPage
     | ResolvedPath.ApiReferencePage
     | ResolvedPath.ChangelogPage
     | ResolvedPath.ChangelogEntryPage;

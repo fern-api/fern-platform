@@ -9,7 +9,7 @@ import { serializeMdx } from "../mdx/bundler";
 import { getFrontmatter } from "../mdx/frontmatter";
 import { FernSerializeMdxOptions, type BundledMDX } from "../mdx/types";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
-import { ApiReferenceResolver } from "../resolver/ApiReferenceResolver";
+import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
 import { ResolvedApiDefinitionItem, ResolvedRootPackage } from "../resolver/types";
@@ -163,7 +163,7 @@ export async function convertNavigatableToResolvedPath({
             api = pruner.prune(node);
             const holder = FernNavigation.ApiDefinitionHolder.create(api);
             const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
-            const defResolver = new ApiDefinitionResolver(
+            const defResolver = new ApiEndpointResolver(
                 holder,
                 typeResolver,
                 await typeResolver.resolve(),
@@ -171,7 +171,7 @@ export async function convertNavigatableToResolvedPath({
                 mdxOptions,
             );
             return {
-                type: "api-definition-page",
+                type: "api-endpoint-page",
                 slug: found.node.slug,
                 api: apiReference.apiDefinitionId,
                 auth: api.auth,
@@ -187,7 +187,7 @@ export async function convertNavigatableToResolvedPath({
         }
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
         const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
-        const apiDefinition = await ApiReferenceResolver.resolve(
+        const apiDefinition = await ApiDefinitionResolver.resolve(
             apiReference,
             holder,
             typeResolver,
@@ -274,7 +274,7 @@ async function resolveMarkdownPage(
                 const typeResolver = new ApiTypeResolver(definition.types, mdxOptions);
                 return [
                     apiNode.title,
-                    await ApiReferenceResolver.resolve(apiNode, holder, typeResolver, pages, mdxOptions, featureFlags),
+                    await ApiDefinitionResolver.resolve(apiNode, holder, typeResolver, pages, mdxOptions, featureFlags),
                 ];
             }),
         ),
