@@ -20,8 +20,7 @@ export function getGeneratorsCliController(app: FdrApplication): CliService {
         getChangelog: async (req, res) => {
             return res.send(
                 await app.dao.cliVersions().getChangelog({
-                    fromVersion: req.params.from_version,
-                    toVersion: req.params.to_version,
+                    versionRanges: req.body,
                 }),
             );
         },

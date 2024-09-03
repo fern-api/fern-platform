@@ -56,11 +56,9 @@ service:
 
     getChangelog:
       docs: Get the changelog for the specified CLI upgrade. The response will be a map of the generator version to it's corresponding changelog.
-      method: GET
-      path: /changelog/{from_version}/to/{to_version}
-      path-parameters:
-        from_version: string
-        to_version: string
+      method: POST
+      path: /changelog
+      request: commons.GetChangelogRequest
       response: commons.GetChangelogResponse
 
     getMinCliForIr:

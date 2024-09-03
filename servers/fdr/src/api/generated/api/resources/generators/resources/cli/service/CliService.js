@@ -57,7 +57,7 @@ export class CliService {
                 next(error);
             }
         }));
-        this.router.get("/changelog/:from_version/to/:to_version", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/changelog", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getChangelog(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
