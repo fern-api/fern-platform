@@ -1,8 +1,8 @@
-import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
-import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
+import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-reference/examples/sortKeysByShape";
 import { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
@@ -21,16 +21,12 @@ import {
     ResolvedHttpRequestBodyShape,
     ResolvedHttpResponseBodyShape,
     ResolvedObjectProperty,
-    ResolvedPackageItem,
     ResolvedRequestBody,
     ResolvedResponseBody,
-    ResolvedRootPackage,
-    ResolvedSubpackage,
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     ResolvedWebSocketChannel,
     ResolvedWebhookDefinition,
-    ResolvedWithApiDefinition,
 } from "./types";
 
 interface MergedAuthAndHeaders {
@@ -39,145 +35,13 @@ interface MergedAuthAndHeaders {
 }
 
 export class ApiDefinitionResolver {
-    public static async resolve(
-        root: FernNavigation.ApiReferenceNode,
-        holder: FernNavigation.ApiDefinitionHolder,
-        typeResolver: ApiTypeResolver,
-        pages: Record<string, DocsV1Read.PageContent>,
-        mdxOptions: FernSerializeMdxOptions | undefined,
-        featureFlags: FeatureFlags,
-    ): Promise<ResolvedRootPackage> {
-        const resolver = new ApiDefinitionResolver(root, holder, typeResolver, pages, featureFlags, mdxOptions);
-        return resolver.resolveApiDefinition();
-    }
-
-    private resolvedTypes: Record<string, ResolvedTypeDefinition> = {};
-
-    private constructor(
-        private root: FernNavigation.ApiReferenceNode,
+    public constructor(
         private holder: FernNavigation.ApiDefinitionHolder,
         private typeResolver: ApiTypeResolver,
-        private pages: Record<string, DocsV1Read.PageContent>,
+        private resolvedTypes: Record<string, ResolvedTypeDefinition>,
         private featureFlags: FeatureFlags,
         private mdxOptions: FernSerializeMdxOptions | undefined,
     ) {}
-
-    private async resolveApiDefinition(): Promise<ResolvedRootPackage> {
-        this.resolvedTypes = await this.typeResolver.resolve();
-
-        const withPackage = await this.resolveApiDefinitionPackage(this.root);
-
-        return {
-            type: "rootPackage",
-            ...withPackage,
-            api: this.root.apiDefinitionId,
-            auth: this.holder.api.auth,
-            types: this.resolvedTypes,
-        };
-    }
-
-    async resolveApiDefinitionPackage(
-        node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode,
-    ): Promise<ResolvedWithApiDefinition> {
-        const maybeItems = await Promise.all(
-            node.children.map((item) =>
-                visitDiscriminatedUnion(item)._visit<Promise<ResolvedPackageItem | undefined>>({
-                    endpoint: (endpoint) => this.resolveEndpointDefinition(endpoint),
-                    endpointPair: async (endpointPair) => {
-                        if (this.featureFlags.isBatchStreamToggleDisabled) {
-                            captureSentryErrorMessage(
-                                "Batch stream toggle is disabled, but an endpoint pair was found",
-                            );
-                        }
-                        const [nonStream, stream] = await Promise.all([
-                            this.resolveEndpointDefinition(endpointPair.nonStream),
-                            this.resolveEndpointDefinition(endpointPair.stream),
-                        ]);
-                        nonStream.stream = stream;
-                        return nonStream;
-                    },
-                    link: async () => undefined,
-                    webSocket: (websocket) => this.resolveWebsocketChannel(websocket),
-                    webhook: (webhook) => this.resolveWebhookDefinition(webhook),
-                    apiPackage: (section) => this.resolveSubpackage(section),
-                    page: async (page) => {
-                        const pageContent = this.pages[page.pageId];
-                        if (pageContent == null) {
-                            return undefined;
-                        }
-                        return {
-                            type: "page",
-                            id: page.pageId,
-                            slug: page.slug,
-                            title: page.title,
-                            markdown: await serializeMdx(pageContent.markdown, {
-                                ...this.mdxOptions,
-                                filename: page.pageId,
-                                frontmatterDefaults: {
-                                    title: page.title,
-                                    breadcrumbs: [], // TODO: implement breadcrumbs
-                                    "edit-this-page-url": pageContent.editThisPageUrl,
-                                    "hide-nav-links": true,
-                                    layout: "reference",
-                                    "force-toc": this.featureFlags.isTocDefaultEnabled,
-                                },
-                            }),
-                        };
-                    },
-                }),
-            ),
-        );
-
-        const items = maybeItems.filter(isNonNullish);
-
-        if (node.overviewPageId != null && this.pages[node.overviewPageId] != null) {
-            const pageContent = this.pages[node.overviewPageId];
-            if (pageContent != null) {
-                items.unshift({
-                    type: "page",
-                    id: node.overviewPageId,
-                    slug: node.slug,
-                    title: node.title,
-                    markdown: await serializeMdx(pageContent.markdown, {
-                        ...this.mdxOptions,
-                        filename: node.overviewPageId,
-                        frontmatterDefaults: {
-                            title: node.title,
-                            breadcrumbs: [], // TODO: implement breadcrumbs
-                            "edit-this-page-url": pageContent.editThisPageUrl,
-                            "hide-nav-links": true,
-                            layout: "reference",
-                            "force-toc": this.featureFlags.isTocDefaultEnabled,
-                        },
-                    }),
-                });
-            } else {
-                // TODO: alert if the page is null
-            }
-        }
-
-        return {
-            items,
-            slug: node.slug,
-        };
-    }
-
-    async resolveSubpackage(subpackage: FernNavigation.ApiPackageNode): Promise<ResolvedSubpackage | undefined> {
-        const { items } = await this.resolveApiDefinitionPackage(subpackage);
-
-        if (subpackage == null || items.length === 0) {
-            return undefined;
-        }
-        return {
-            // description: await serializeMdx(subpackage.description),
-            description: undefined,
-            availability: undefined,
-            title: subpackage.title,
-            type: "subpackage",
-            slug: subpackage.slug,
-            items,
-        };
-    }
 
     async resolveEndpointDefinition(node: FernNavigation.EndpointNode): Promise<ResolvedEndpointDefinition> {
         const endpoint = this.holder.endpoints.get(node.endpointId);
@@ -438,12 +302,12 @@ export class ApiDefinitionResolver {
     }
 
     async resolveWebsocketChannel(node: FernNavigation.WebSocketNode): Promise<ResolvedWebSocketChannel> {
-        const websocket = this.holder.webSockets.get(node.webSocketId);
-        if (websocket == null) {
-            throw new Error(`Websocket with ID ${node.webSocketId} not found`);
+        const channel = this.holder.webSockets.get(node.webSocketId);
+        if (channel == null) {
+            throw new Error(`WebSocket channel with ID ${node.webSocketId} not found`);
         }
         const pathParametersPromise = Promise.all(
-            websocket.path.pathParameters.map(
+            channel.path.pathParameters.map(
                 async (parameter): Promise<ResolvedObjectProperty> => ({
                     key: parameter.key,
                     valueShape: await this.typeResolver.resolveTypeReference(parameter.type),
@@ -456,7 +320,7 @@ export class ApiDefinitionResolver {
             ),
         );
         const headersPromise = Promise.all([
-            ...websocket.headers.map(async (header): Promise<ResolvedObjectProperty> => {
+            ...channel.headers.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.typeResolver.resolveTypeReference(header.type),
                     serializeMdx(header.description, {
@@ -488,7 +352,7 @@ export class ApiDefinitionResolver {
             }),
         ]);
         const queryParametersPromise = Promise.all(
-            websocket.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
+            channel.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.typeResolver.resolveTypeReference(parameter.type),
                     serializeMdx(parameter.description, {
@@ -505,7 +369,7 @@ export class ApiDefinitionResolver {
             }),
         );
         const messagesPromise = Promise.all(
-            websocket.messages.map(async ({ type, body, origin, displayName, description, availability }) => {
+            channel.messages.map(async ({ type, body, origin, displayName, description, availability }) => {
                 const [resolvedBody, resolvedDescription] = await Promise.all([
                     this.resolvePayloadShape(body),
                     serializeMdx(description, {
@@ -535,15 +399,15 @@ export class ApiDefinitionResolver {
         return {
             type: "websocket",
             auth,
-            environments: websocket.environments,
+            environments: channel.environments,
             nodeId: node.id,
             id: node.webSocketId,
             apiDefinitionId: node.apiDefinitionId,
-            description: websocket.description,
-            availability: websocket.availability,
+            description: channel.description,
+            availability: channel.availability,
             slug: node.slug,
-            name: websocket.name,
-            path: websocket.path.parts
+            name: channel.name,
+            path: channel.path.parts
                 .map((pathPart): ResolvedEndpointPathParts | undefined => {
                     if (pathPart.type === "literal") {
                         return { ...pathPart };
@@ -565,8 +429,8 @@ export class ApiDefinitionResolver {
             pathParameters,
             queryParameters,
             messages,
-            examples: websocket.examples,
-            defaultEnvironment: websocket.environments.find((env) => env.id === websocket.defaultEnvironment),
+            examples: channel.examples,
+            defaultEnvironment: channel.environments.find((env) => env.id === channel.defaultEnvironment),
         };
     }
 
@@ -575,7 +439,6 @@ export class ApiDefinitionResolver {
         if (webhook == null) {
             throw new Error(`Webhook with ID ${node.webhookId} not found`);
         }
-
         const [payloadShape, description, headers] = await Promise.all([
             this.resolvePayloadShape(webhook.payload.type),
             await serializeMdx(webhook.description, {
@@ -603,6 +466,7 @@ export class ApiDefinitionResolver {
             slug: node.slug,
             method: webhook.method,
             nodeId: node.id,
+            apiDefinitionId: node.apiDefinitionId,
             id: node.webhookId,
             path: webhook.path,
             headers,
@@ -764,62 +628,6 @@ export class ApiDefinitionResolver {
         );
     }
 
-    resolveExampleEndpointResponse(
-        responseBodyV3: APIV1Read.ExampleEndpointResponse | undefined,
-        shape: ResolvedHttpResponseBodyShape | undefined,
-    ): ResolvedExampleEndpointResponse | undefined {
-        if (responseBodyV3 == null) {
-            return undefined;
-        }
-        return visitDiscriminatedUnion(responseBodyV3, "type")._visit<ResolvedExampleEndpointResponse | undefined>({
-            json: (json) => ({
-                type: "json",
-                value: json.value != null ? this.safeSortKeysByShape(json.value, shape) : undefined,
-            }),
-            filename: (filename) => ({ type: "filename", value: filename.value }),
-            stream: (stream) => ({
-                type: "stream",
-                value: stream.value.map((streamValue) => this.safeSortKeysByShape(streamValue, shape)),
-            }),
-            sse: (sse) => ({
-                type: "sse",
-                value: sse.value.map((sse) => ({
-                    event: sse.event,
-                    data: this.safeSortKeysByShape(sse.data, shape),
-                })),
-            }),
-            _other: () => undefined,
-        });
-    }
-
-    safeSortKeysByShape(
-        value: unknown,
-        shape: ResolvedTypeShape | ResolvedHttpRequestBodyShape | ResolvedHttpResponseBodyShape | null | undefined,
-    ): unknown {
-        if (value == null) {
-            return value;
-        }
-        try {
-            return this.stripUndefines(sortKeysByShape(value, shape, this.resolvedTypes));
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error("Failed to sort JSON keys by type shape", e);
-
-            captureSentryError(e, {
-                context: "ApiPage",
-                errorSource: "sortKeysByShape",
-                errorDescription:
-                    "Failed to sort and strip undefines from JSON value, indicating a bug in the resolver. This error should be investigated.",
-            });
-
-            return value;
-        }
-    }
-
-    stripUndefines(obj: unknown): unknown {
-        return JSON.parse(JSON.stringify(obj));
-    }
-
     resolveExampleEndpointRequest(
         requestBodyV3: APIV1Read.ExampleEndpointRequest | undefined,
         shape: ResolvedHttpRequestBodyShape | undefined,
@@ -885,5 +693,61 @@ export class ApiDefinitionResolver {
             bytes: (bytes) => ({ type: "bytes", value: bytes.value.value, fileName: undefined }),
             _other: () => undefined,
         });
+    }
+
+    resolveExampleEndpointResponse(
+        responseBodyV3: APIV1Read.ExampleEndpointResponse | undefined,
+        shape: ResolvedHttpResponseBodyShape | undefined,
+    ): ResolvedExampleEndpointResponse | undefined {
+        if (responseBodyV3 == null) {
+            return undefined;
+        }
+        return visitDiscriminatedUnion(responseBodyV3, "type")._visit<ResolvedExampleEndpointResponse | undefined>({
+            json: (json) => ({
+                type: "json",
+                value: json.value != null ? this.safeSortKeysByShape(json.value, shape) : undefined,
+            }),
+            filename: (filename) => ({ type: "filename", value: filename.value }),
+            stream: (stream) => ({
+                type: "stream",
+                value: stream.value.map((streamValue) => this.safeSortKeysByShape(streamValue, shape)),
+            }),
+            sse: (sse) => ({
+                type: "sse",
+                value: sse.value.map((sse) => ({
+                    event: sse.event,
+                    data: this.safeSortKeysByShape(sse.data, shape),
+                })),
+            }),
+            _other: () => undefined,
+        });
+    }
+
+    safeSortKeysByShape(
+        value: unknown,
+        shape: ResolvedTypeShape | ResolvedHttpRequestBodyShape | ResolvedHttpResponseBodyShape | null | undefined,
+    ): unknown {
+        if (value == null) {
+            return value;
+        }
+        try {
+            return this.stripUndefines(sortKeysByShape(value, shape, this.resolvedTypes));
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to sort JSON keys by type shape", e);
+
+            captureSentryError(e, {
+                context: "ApiPage",
+                errorSource: "sortKeysByShape",
+                errorDescription:
+                    "Failed to sort and strip undefines from JSON value, indicating a bug in the resolver. This error should be investigated.",
+            });
+
+            return value;
+        }
+    }
+
+    stripUndefines(obj: unknown): unknown {
+        return JSON.parse(JSON.stringify(obj));
     }
 }

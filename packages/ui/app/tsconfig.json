@@ -6,7 +6,11 @@
     "outDir": "./dist",
     "rootDir": "."
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*",
+    "../../fdr-sdk/src/navigation/ApiDefinitionPruner.ts",
+    "../../fdr-sdk/src/navigation/ApiTypeIdVisitor.ts"
+  ],
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/loadable" },

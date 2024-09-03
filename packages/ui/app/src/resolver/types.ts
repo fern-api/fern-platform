@@ -172,6 +172,11 @@ export type ResolvedApiDefinition =
     | ResolvedApiDefinition.Webhook
     | ResolvedApiDefinition.WebSocket;
 
+export type ResolvedApiDefinitionItem =
+    | ResolvedEndpointDefinition
+    | ResolvedWebhookDefinition
+    | ResolvedWebSocketChannel;
+
 export declare namespace ResolvedApiDefinition {
     export interface Endpoint extends ResolvedEndpointDefinition {
         package: ResolvedApiDefinitionPackage;
@@ -447,6 +452,7 @@ export interface ResolvedWebhookDefinition extends WithMetadata {
     type: "webhook";
     nodeId: FernNavigation.NodeId;
     id: APIV1Read.WebhookId;
+    apiDefinitionId: FdrAPI.ApiDefinitionId;
     slug: FernNavigation.Slug;
 
     method: APIV1Read.WebhookHttpMethod;

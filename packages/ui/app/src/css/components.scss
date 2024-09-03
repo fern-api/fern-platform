@@ -84,6 +84,7 @@
     .fern-sidebar-link {
         @apply text-left relative inline-flex flex-1 content-between items-stretch lg:px-3 max-lg:px-4;
         @apply max-lg:rounded-none lg:rounded-lg;
+        @apply overflow-hidden;
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
@@ -100,6 +101,7 @@
 
     .fern-sidebar-link-text {
         @apply flex-1 text-base leading-6 lg:text-sm lg:leading-5;
+        word-break: break-word;
     }
 
     .fern-sidebar-link-expand {

@@ -1,7 +1,7 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
 import {
-    ApiDefinitionResolver,
+    ApiReferenceResolver,
     ApiTypeResolver,
     provideRegistryService,
     setMdxBundler,
@@ -71,7 +71,7 @@ const resolveApiHandler: NextApiHandler = async (
             const typeResolver = new ApiTypeResolver(api.types, {
                 files: docs.definition.jsFiles,
             });
-            const resolved = ApiDefinitionResolver.resolve(
+            const resolved = ApiReferenceResolver.resolve(
                 apiReference,
                 holder,
                 typeResolver,
