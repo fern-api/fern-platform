@@ -36,7 +36,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
         <FernErrorBoundary component="EndpointSection">
             <div ref={ref} id={href} className="scroll-mt-content">
                 <FernAnchor href={href}>
-                    {createElement(headerType, { className: "relative mt-0 flex items-center" }, title)}
+                    {createElement(headerType, { className: "relative mt-0 flex items-center mb-3" }, title)}
                 </FernAnchor>
                 {description != null && (
                     <div className="mb-2">

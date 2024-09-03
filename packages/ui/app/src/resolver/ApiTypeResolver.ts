@@ -220,4 +220,8 @@ export class ApiTypeResolver {
         }
         return shape;
     }
+
+    public getTypes(): Record<string, APIV1Read.TypeDefinition> {
+        return this.types;
+    }
 }

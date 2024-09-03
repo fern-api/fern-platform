@@ -119,7 +119,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     </div>
                                 )} */}
                         <div className="t-accent text-xs font-semibold uppercase tracking-wider">WebSocket</div>
-                        <h1 className="my-0 inline-block leading-tight">{websocket.name}</h1>
+                        <h1 className="my-0 inline-block leading-tight">{websocket.title}</h1>
                     </div>
 
                     <ApiPageDescription

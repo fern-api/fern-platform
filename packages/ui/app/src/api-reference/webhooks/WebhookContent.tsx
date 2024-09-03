@@ -61,7 +61,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                 <div className="flex min-w-0 max-w-content-width flex-1 flex-col">
                     <div className="space-y-1 py-8">
                         <Breadcrumbs breadcrumbs={breadcrumbs} />
-                        <h1 className="my-0 inline-block leading-tight">{webhook.name}</h1>
+                        <h1 className="my-0 inline-block leading-tight">{webhook.title}</h1>
                     </div>
                     <ApiPageDescription
                         className="text-base leading-6"

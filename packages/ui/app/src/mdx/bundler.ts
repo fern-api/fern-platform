@@ -20,6 +20,10 @@ export async function serializeMdx(
     content: string | undefined,
     options: FernSerializeMdxOptions = {},
 ): Promise<BundledMDX | undefined> {
+    if (content == null || content.trim().length === 0) {
+        return content;
+    }
+
     const bundler = await getMdxBundler();
     return bundler(content, options);
 }

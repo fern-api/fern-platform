@@ -21,7 +21,7 @@ import {
 } from "../atoms/playground";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { ResolvedApiDefinition, isEndpoint, isWebSocket } from "../resolver/types";
+import { ResolvedApiEndpointWithPackage, isEndpoint, isWebSocket } from "../resolver/types";
 import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
@@ -39,10 +39,10 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     const matchedSection = selectionState != null ? apis[selectionState.apiDefinitionId] : undefined;
 
     const nodeIdToApiDefinition = useMemo(() => {
-        const nodes = new Map<FernNavigation.NodeId, ResolvedApiDefinition>();
+        const nodes = new Map<FernNavigation.NodeId, ResolvedApiEndpointWithPackage>();
         Object.values(apis).forEach((api) => {
-            api.apiDefinitions.forEach((apiDefinition) => {
-                nodes.set(apiDefinition.nodeId, apiDefinition);
+            api.endpoints.forEach((endpoint) => {
+                nodes.set(endpoint.nodeId, endpoint);
             });
         });
         return nodes;
@@ -81,16 +81,16 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
 
     const matchedEndpoint =
         selectionState?.type === "endpoint"
-            ? (matchedSection?.apiDefinitions.find(
+            ? (matchedSection?.endpoints.find(
                   (definition) => isEndpoint(definition) && definition.id === selectionState.endpointId,
-              ) as ResolvedApiDefinition.Endpoint | undefined)
+              ) as ResolvedApiEndpointWithPackage.Endpoint | undefined)
             : undefined;
 
     const matchedWebSocket =
         selectionState?.type === "webSocket"
-            ? (matchedSection?.apiDefinitions.find(
+            ? (matchedSection?.endpoints.find(
                   (definition) => isWebSocket(definition) && definition.id === selectionState.webSocketId,
-              ) as ResolvedApiDefinition.WebSocket | undefined)
+              ) as ResolvedApiEndpointWithPackage.WebSocket | undefined)
             : undefined;
 
     useEffect(() => {

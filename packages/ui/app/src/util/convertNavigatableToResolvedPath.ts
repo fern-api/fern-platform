@@ -1,4 +1,5 @@
-import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import { visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-ui/core-utils";
 import { reverse } from "lodash-es";
@@ -8,9 +9,10 @@ import { serializeMdx } from "../mdx/bundler";
 import { getFrontmatter } from "../mdx/frontmatter";
 import { FernSerializeMdxOptions, type BundledMDX } from "../mdx/types";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
+import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { ResolvedPath } from "../resolver/ResolvedPath";
-import { ResolvedRootPackage } from "../resolver/types";
+import { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
 
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
@@ -146,17 +148,42 @@ export async function convertNavigatableToResolvedPath({
             page,
             neighbors,
         };
-    } else if (apiReference != null) {
+    } else if (apiReference != null && apiReference.paginated && FernNavigation.hasMarkdown(node)) {
         // if long scrolling is disabled, we should render a markdown page by itself
-        if (apiReference.paginated && FernNavigation.hasMarkdown(node)) {
-            return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, domain, neighbors);
-        }
-
-        const api = apis[apiReference.apiDefinitionId];
+        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, domain, neighbors);
+    } else if (apiReference != null) {
+        let api = apis[apiReference.apiDefinitionId];
         if (api == null) {
             // eslint-disable-next-line no-console
             console.error("API not found", apiReference.apiDefinitionId);
             return;
+        }
+        if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
+            const pruner = new FernNavigation.ApiDefinitionPruner(api);
+            api = pruner.prune(node);
+            const holder = FernNavigation.ApiDefinitionHolder.create(api);
+            const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
+            const defResolver = new ApiEndpointResolver(
+                holder,
+                typeResolver,
+                await typeResolver.resolve(),
+                featureFlags,
+                mdxOptions,
+            );
+            return {
+                type: "api-endpoint-page",
+                slug: found.node.slug,
+                api: apiReference.apiDefinitionId,
+                auth: api.auth,
+                types: await typeResolver.resolve(),
+                item: await visitDiscriminatedUnion(node)._visit<Promise<ResolvedApiEndpoint>>({
+                    endpoint: (endpoint) => defResolver.resolveEndpointDefinition(endpoint),
+                    webSocket: (webSocket) => defResolver.resolveWebsocketChannel(webSocket),
+                    webhook: (webhook) => defResolver.resolveWebhookDefinition(webhook),
+                }),
+                showErrors: apiReference.showErrors ?? false,
+                neighbors,
+            };
         }
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
         const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
@@ -169,7 +196,7 @@ export async function convertNavigatableToResolvedPath({
             featureFlags,
         );
         return {
-            type: "api-page",
+            type: "api-reference-page",
             slug: found.node.slug,
             title: node.title,
             api: apiReference.apiDefinitionId,
@@ -177,7 +204,7 @@ export async function convertNavigatableToResolvedPath({
             paginated: apiReference.paginated ?? false,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
             showErrors: apiReference.showErrors ?? false,
-            neighbors,
+            // neighbors,
         };
     } else {
         return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, domain, neighbors);
