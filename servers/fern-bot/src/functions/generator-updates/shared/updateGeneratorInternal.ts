@@ -14,7 +14,7 @@ async function isOrganizationCanary(venusUrl: string, fullRepoPath: string): Pro
     const client = new FernVenusApiClient({ environment: venusUrl });
 
     const response = await client.organization.get(FernVenusApi.OrganizationId(orgId));
-    console.log(`Organization response: ${JSON.stringify(response)}, orgId: ${orgId}`);
+    console.log(`Organization response: ${JSON.stringify(response)}, orgId: ${orgId}.`);
     if (!response.ok) {
         throw new Error(`Organization ${orgId} not found`);
     }
@@ -28,7 +28,7 @@ async function getGeneratorChangelog(
     from: string,
     to: string,
 ): Promise<ChangelogResponse[]> {
-    console.log(`Getting changelog for generator ${generator} from ${from} to ${to}`);
+    console.log(`Getting changelog for generator ${generator} from ${from} to ${to}.`);
     const client = new FernRegistryClient({ environment: fdrUrl });
 
     const response = await client.generators.versions.getChangelog("python-sdk", from, to);
@@ -40,6 +40,7 @@ async function getGeneratorChangelog(
 }
 
 async function getCliChangelog(fdrUrl: string, from: string, to: string): Promise<ChangelogResponse[]> {
+    console.log(`Getting changelog for CLI from ${from} to ${to}`);
     const client = new FernRegistryClient({ environment: fdrUrl });
 
     const response = await client.generators.cli.getChangelog(from, to);
@@ -47,11 +48,12 @@ async function getCliChangelog(fdrUrl: string, from: string, to: string): Promis
         throw new Error(`Changelog for CLI (from version: ${from} to: ${to}) not found: ${JSON.stringify(response)}`);
     }
 
+    console.log("Changelog response: ", JSON.stringify(response.body));
+
     return response.body.entries;
 }
 
 function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
-    // TODO: actually format these
     // The format is effectively the below, where sections are only included if there is at
     // least one entry in that section, and we try to cap the number of entries in each section to ~5
     // ## [<Lowest Version> - <Highest Version>] - Changelog
@@ -93,7 +95,11 @@ function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
         }
     }
 
-    const prBodyTitle = `## [${changelogs[0].version} - ${changelogs[changelogs.length - 1].version}] - Changelog\n\n`;
+    if (changelogs.length === 0) {
+        throw new Error("Version difference was found, but no changelog entries were found. This is unexpected.");
+    }
+
+    const prBodyTitle = `## [${changelogs[0]!.version} - ${changelogs[changelogs.length - 1]!.version}] - Changelog\n\n`;
     let prBody = "";
     let addedChanges = false;
     if (added.length > 0) {
@@ -157,8 +163,9 @@ async function getGenerators(fullRepoPath: string): Promise<GeneratorList> {
 }
 
 // We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
-function cleanStdout(stdout: string): string {
-    return stdout.split("╭─")[0].split("\n")[0].trim();
+// Exported to leverage in tests
+export function cleanStdout(stdout: string): string {
+    return stdout.split("╭─")[0]!.split("\n")[0]!.trim();
 }
 
 export async function updateVersionInternal(
@@ -179,7 +186,8 @@ export async function updateVersionInternal(
             return;
         }
     } catch (error) {
-        throw new Error("Could not determine if the repo owner was a fern-bot canary, quitting:", error);
+        console.error("Could not determine if the repo owner was a fern-bot canary, quitting.");
+        throw error;
     }
 
     await handleSingleUpgrade({

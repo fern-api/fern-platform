@@ -14,9 +14,7 @@ provider:
   memorySize: 10240
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
-    NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000 -r @sentry/aws-serverless/awslambda-auto"
-    SENTRY_DSN: "https://12538df95a0d9a56afa7d8180956e9c4@o4507138224160768.ingest.us.sentry.io/4507888612605952"
-    SENTRY_ENVIRONMENT: ${opt:stage, 'dev'}
+    NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
     GITHUB_APP_LOGIN_NAME: ${env:GITHUB_APP_LOGIN_NAME, 'fern-api[bot]'}
     GITHUB_APP_LOGIN_ID: ${env:GITHUB_APP_LOGIN_ID, 'placeholder'}
     GITHUB_APP_ID: ${env:GITHUB_APP_ID, 'placeholder'}
@@ -26,7 +24,6 @@ provider:
     GITHUB_APP_WEBHOOK_SECRET: ${env:GITHUB_APP_WEBHOOK_SECRET, 'placeholder'}
     CO_API_KEY: ${env:CO_API_KEY, 'placeholder'}
     DEFAULT_VENUS_ORIGIN: ${env:DEFAULT_VENUS_ORIGIN, 'placeholder'}
-    DEFAULT_FDR_ORIGIN: ${env:DEFAULT_FDR_ORIGIN, 'placeholder'}
     REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
   # Roles for the lambda functions
   iam:
@@ -60,8 +57,6 @@ functions:
     # https://github.com/lambci/git-lambda-layer
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
-      # Sentry layer for error tracking: https://docs.sentry.io/platforms/javascript/guides/aws-lambda/install/cjs-layer/
-      - arn:aws:lambda:us-east-1:943013980633:layer:SentryNodeServerlessSDK:269
     environment:
       REPO_DATA_S3_BUCKET: "fern-bot-${opt:stage}"
       REPO_DATA_S3_KEY: "lambdas/repos.csv"
@@ -74,8 +69,6 @@ functions:
     handler: "src/functions/oas-cron/updateOpenApiSpec.handler"
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
-      # Sentry layer for error tracking: https://docs.sentry.io/platforms/javascript/guides/aws-lambda/install/cjs-layer/
-      - arn:aws:lambda:us-east-1:943013980633:layer:SentryNodeServerlessSDK:269
 
   updateGeneratorVersion:
     timeout: 900
@@ -84,8 +77,6 @@ functions:
     handler: "src/functions/generator-updates/updateGeneratorVersion.handler"
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
-      # Sentry layer for error tracking: https://docs.sentry.io/platforms/javascript/guides/aws-lambda/install/cjs-layer/
-      - arn:aws:lambda:us-east-1:943013980633:layer:SentryNodeServerlessSDK:269
 
   # =============================================
 
@@ -97,8 +88,6 @@ functions:
     handler: "src/functions/oas-cron/updateOpenApiSpecs.handler"
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
-      # Sentry layer for error tracking: https://docs.sentry.io/platforms/javascript/guides/aws-lambda/install/cjs-layer/
-      - arn:aws:lambda:us-east-1:943013980633:layer:SentryNodeServerlessSDK:269
 
   updateGeneratorVersions:
     timeout: 900
@@ -107,8 +96,6 @@ functions:
     handler: "src/functions/generator-updates/updateGeneratorVersions.handler"
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
-      # Sentry layer for error tracking: https://docs.sentry.io/platforms/javascript/guides/aws-lambda/install/cjs-layer/
-      - arn:aws:lambda:us-east-1:943013980633:layer:SentryNodeServerlessSDK:269
 
 stepFunctions:
   stateMachines:

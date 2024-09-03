@@ -24,7 +24,7 @@ export async function execFernCli(command: string, cwd?: string): Promise<execa.
         }
         return command;
     } catch (error) {
-        console.error(`fern command failed. stderr: ${error.stderr} (${error.exitCode})`);
+        console.error(`fern command failed.`);
         throw error;
     }
 }

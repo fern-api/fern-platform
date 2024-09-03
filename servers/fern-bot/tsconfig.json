@@ -1,4 +1,5 @@
 {
+  // "extends": "@fern-platform/configs/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -15,7 +16,8 @@
     "target": "ES2020",
     "outDir": "lib",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "types": ["vitest/globals"]
   },
   "include": ["src/**/*.ts", "serverless.ts"],
   "exclude": ["node_modules/**/*", ".serverless/**/*", ".webpack/**/*", "_warmup/**/*", ".vscode/**/*"],
