@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish_fiddle_sdk:
+  publish_postman_collection:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
