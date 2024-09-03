@@ -101,6 +101,7 @@
 
     .fern-sidebar-link-text {
         @apply flex-1 text-base leading-6 lg:text-sm lg:leading-5;
+
         word-break: break-word;
     }
 
