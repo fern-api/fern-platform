@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk";
 import { atom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEndpoint, isWebSocket } from "../resolver/types";
