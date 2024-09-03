@@ -16,7 +16,7 @@ describe("cloneRepository", () => {
                 installationToken: "ghp_xyz",
             });
         }).rejects.toThrow();
-    });
+    }, 10_000);
     it("repository does not exist", async () => {
         await expect(async () => {
             await cloneRepository({
