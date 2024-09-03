@@ -86,8 +86,7 @@ types:
     properties:
       title: optional<string>
       defaultLanguage: optional<commons.ProgrammingLanguage>
-
-      analyticsConfig: optional<commons.AnalyticsConfig>
+      banner: optional<commons.BannerConfig>
 
       # navigation
       navigation: NavigationConfig
@@ -109,6 +108,7 @@ types:
       typographyV2: optional<commons.DocsTypographyConfigV2>
 
       # integrations
+      analyticsConfig: optional<commons.AnalyticsConfig>
       integrations: optional<commons.IntegrationsConfig>
 
       # css and js

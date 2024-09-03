@@ -17,62 +17,16 @@ import * as FernRegistry from "../../../../../../../../index";
  *             config: {
  *                 title: "string",
  *                 defaultLanguage: FernRegistry.docs.v1.commons.ProgrammingLanguage.Typescript,
- *                 analyticsConfig: {
- *                     segment: {
- *                         writeKey: "string"
+ *                 banner: {
+ *                     text: "string",
+ *                     backgroundColor: {
+ *                         type: "unthemed"
  *                     },
- *                     fullstory: {
- *                         orgId: "string"
+ *                     textColor: {
+ *                         type: "unthemed"
  *                     },
- *                     intercom: {
- *                         appId: "string",
- *                         apiBase: {
- *                             "key": "value"
- *                         }
- *                     },
- *                     posthog: {
- *                         apiKey: "string",
- *                         endpoint: {
- *                             "key": "value"
- *                         }
- *                     },
- *                     gtm: {
- *                         containerId: "string"
- *                     },
- *                     ga4: {
- *                         measurementId: "string"
- *                     },
- *                     amplitude: {
- *                         apiKey: "string"
- *                     },
- *                     mixpanel: {
- *                         apiKey: "string"
- *                     },
- *                     hotjar: {
- *                         hjid: "string",
- *                         hjsv: "string"
- *                     },
- *                     koala: {
- *                         apiKey: "string"
- *                     },
- *                     logrocket: {
- *                         apiKey: "string"
- *                     },
- *                     pirsch: {
- *                         id: "string"
- *                     },
- *                     plausible: {
- *                         domain: "string"
- *                     },
- *                     fathom: {
- *                         siteId: "string"
- *                     },
- *                     clearbit: {
- *                         apiKey: "string"
- *                     },
- *                     heap: {
- *                         appId: "string"
- *                     }
+ *                     icon: "string",
+ *                     dismissable: true
  *                 },
  *                 navigation: {
  *                     tabs: [{
@@ -232,6 +186,63 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     },
  *                     codeFont: {
  *                         type: "custom"
+ *                     }
+ *                 },
+ *                 analyticsConfig: {
+ *                     segment: {
+ *                         writeKey: "string"
+ *                     },
+ *                     fullstory: {
+ *                         orgId: "string"
+ *                     },
+ *                     intercom: {
+ *                         appId: "string",
+ *                         apiBase: {
+ *                             "key": "value"
+ *                         }
+ *                     },
+ *                     posthog: {
+ *                         apiKey: "string",
+ *                         endpoint: {
+ *                             "key": "value"
+ *                         }
+ *                     },
+ *                     gtm: {
+ *                         containerId: "string"
+ *                     },
+ *                     ga4: {
+ *                         measurementId: "string"
+ *                     },
+ *                     amplitude: {
+ *                         apiKey: "string"
+ *                     },
+ *                     mixpanel: {
+ *                         apiKey: "string"
+ *                     },
+ *                     hotjar: {
+ *                         hjid: "string",
+ *                         hjsv: "string"
+ *                     },
+ *                     koala: {
+ *                         apiKey: "string"
+ *                     },
+ *                     logrocket: {
+ *                         apiKey: "string"
+ *                     },
+ *                     pirsch: {
+ *                         id: "string"
+ *                     },
+ *                     plausible: {
+ *                         domain: "string"
+ *                     },
+ *                     fathom: {
+ *                         siteId: "string"
+ *                     },
+ *                     clearbit: {
+ *                         apiKey: "string"
+ *                     },
+ *                     heap: {
+ *                         appId: "string"
  *                     }
  *                 },
  *                 integrations: {

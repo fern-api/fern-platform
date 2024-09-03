@@ -8,6 +8,7 @@ export * from "./WebhookId";
 export * from "./FileIdOrUrl";
 export * from "./RgbaColor";
 export * from "./ProgrammingLanguage";
+export * from "./BannerConfig";
 export * from "./AnalyticsConfig";
 export * from "./SegmentConfig";
 export * from "./FullStoryAnalyticsConfig";
