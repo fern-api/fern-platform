@@ -1,6 +1,7 @@
+import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { BundledMDX } from "../mdx/types";
-import { ResolvedRootPackage } from "./types";
+import type { ResolvedApiEndpoint, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
 
 export declare namespace ResolvedPath {
     export interface Neighbor {
@@ -43,20 +44,31 @@ export declare namespace ResolvedPath {
         apis: Record<string, ResolvedRootPackage>;
     }
 
-    interface ApiPage {
-        type: "api-page";
+    interface ApiEndpointPage {
+        type: "api-endpoint-page";
+        slug: FernNavigation.Slug;
+        api: FdrAPI.ApiDefinitionId;
+        auth: APIV1Read.ApiAuth | undefined;
+        types: Record<string, ResolvedTypeDefinition>;
+        item: ResolvedApiEndpoint;
+        showErrors: boolean;
+        neighbors: Neighbors;
+    }
+
+    interface ApiReferencePage {
+        type: "api-reference-page";
         title: string;
         slug: FernNavigation.Slug;
         api: string;
         paginated: boolean;
         apiDefinition: ResolvedRootPackage;
         showErrors: boolean;
-        neighbors: Neighbors;
     }
 }
 
 export type ResolvedPath =
     | ResolvedPath.CustomMarkdownPage
-    | ResolvedPath.ApiPage
+    | ResolvedPath.ApiEndpointPage
+    | ResolvedPath.ApiReferencePage
     | ResolvedPath.ChangelogPage
     | ResolvedPath.ChangelogEntryPage;

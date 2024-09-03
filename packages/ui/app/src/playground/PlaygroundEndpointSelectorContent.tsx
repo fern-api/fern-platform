@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useSetAndOpenPlayground } from "../atoms";
 import { HttpMethodTag } from "../components/HttpMethodTag";
-import { ResolvedApiDefinition } from "../resolver/types";
+import { type ResolvedApiEndpointWithPackage } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
@@ -17,7 +17,7 @@ export interface PlaygroundEndpointSelectorContentProps {
     closeDropdown?: () => void;
     selectedEndpoint?: FernNavigation.NavigationNodeApiLeaf;
     className?: string;
-    nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiDefinition>;
+    nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiEndpointWithPackage>;
 }
 
 export interface ApiGroup {
