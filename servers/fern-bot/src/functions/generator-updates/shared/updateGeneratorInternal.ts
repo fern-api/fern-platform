@@ -16,8 +16,7 @@ async function isOrganizationCanary(venusUrl: string, fullRepoPath: string): Pro
     const response = await client.organization.get(FernVenusApi.OrganizationId(orgId));
     console.log(`Organization response: ${JSON.stringify(response)}, orgId: ${orgId}`);
     if (!response.ok) {
-        // throw new Error(`Organization ${orgId} not found`);
-        return true;
+        throw new Error(`Organization ${orgId} not found`);
     }
 
     return response.body.isFernbotCanary;
@@ -159,7 +158,7 @@ async function getGenerators(fullRepoPath: string): Promise<GeneratorList> {
 
 // We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
 function cleanStdout(stdout: string): string {
-    return stdout.split("\n")[0].trim();
+    return stdout.split("╭─")[0].split("\n")[0].trim();
 }
 
 export async function updateVersionInternal(
@@ -269,12 +268,16 @@ async function handleSingleUpgrade({
     getPRBody: (fromVersion: string, toversion: string) => Promise<string>;
     getEntityVersion: () => Promise<string>;
 }): Promise<void> {
-    const originDefaultBranch = `${DEFAULT_REMOTE_NAME}/${repository.default_branch}`;
+    // Before we checkout a new branch, we need to ensure we have the current version off the default branch
+    // Checkout the default branch and run the version command to get the current version
+    await git.checkout(repository.default_branch);
+    const fromVersion = await getEntityVersion();
 
+    // Checkout an upgrade branch, if one exists, update it, otherwise create it
+    const originDefaultBranch = `${DEFAULT_REMOTE_NAME}/${repository.default_branch}`;
     await getOrUpdateBranch(git, originDefaultBranch, branchName);
 
-    // TODO: compare these versions off main (fromVersion is on main, toVersion is on the branch)
-    const fromVersion = await getEntityVersion();
+    // Perform the upgrade and get the new version you just upgraded to
     console.log(`Upgrading entity to latest version, from version: ${fromVersion}`);
     await upgradeAction();
     const toVersion = await getEntityVersion();
@@ -291,7 +294,7 @@ async function handleSingleUpgrade({
         // Push the changes
         await git.push(["--force-with-lease", DEFAULT_REMOTE_NAME, `${branchName}:refs/heads/${branchName}`]);
 
-        // Open a PR
+        // Open a PR, or update it in place
         await createOrUpdatePullRequest(
             octokit,
             {
