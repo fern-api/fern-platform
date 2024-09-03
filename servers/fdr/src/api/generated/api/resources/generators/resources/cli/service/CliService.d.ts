@@ -9,7 +9,10 @@ export interface CliServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
-    getChangelog(req: express.Request<never, FernRegistry.generators.GetChangelogResponse, FernRegistry.generators.GetChangelogRequest, never>, res: {
+    getChangelog(req: express.Request<{
+        from_version: string;
+        to_version: string;
+    }, FernRegistry.generators.GetChangelogResponse, never, never>, res: {
         send: (responseBody: FernRegistry.generators.GetChangelogResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;

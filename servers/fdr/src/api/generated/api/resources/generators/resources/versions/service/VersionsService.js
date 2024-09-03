@@ -57,7 +57,7 @@ export class VersionsService {
                 next(error);
             }
         }));
-        this.router.post("/:generator/changelog", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/:generator/changelog/:from_version/to/:to_version", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getChangelog(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
