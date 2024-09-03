@@ -88,16 +88,23 @@ export class Cli {
     /**
      * Get the changelog for the specified CLI upgrade. The response will be a map of the generator version to it's corresponding changelog.
      *
-     * @param {string} fromVersion
-     * @param {string} toVersion
+     * @param {FernRegistry.generators.GetChangelogRequest} request
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getChangelog("string", "string")
+     *     await fernRegistry.generators.cli.getChangelog({
+     *         from_version: {
+     *             type: "inclusive",
+     *             value: "string"
+     *         },
+     *         to_version: {
+     *             type: "inclusive",
+     *             value: "string"
+     *         }
+     *     })
      */
     public async getChangelog(
-        fromVersion: string,
-        toVersion: string,
+        request: FernRegistry.generators.GetChangelogRequest,
         requestOptions?: Cli.RequestOptions
     ): Promise<
         core.APIResponse<FernRegistry.generators.GetChangelogResponse, FernRegistry.generators.cli.getChangelog.Error>
@@ -105,9 +112,9 @@ export class Cli {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/cli/changelog/${encodeURIComponent(fromVersion)}/to/${encodeURIComponent(toVersion)}`
+                "/generators/cli/changelog"
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
@@ -115,6 +122,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
