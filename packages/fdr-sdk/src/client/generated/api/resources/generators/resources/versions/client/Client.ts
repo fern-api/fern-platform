@@ -100,10 +100,14 @@ export class Versions {
      *
      * @example
      *     await fernRegistry.generators.versions.getChangelog("string", {
-     *         from_version_inclusive: "string",
-     *         from_version_exclusive: "string",
-     *         to_version_exclusive: "string",
-     *         to_version_inclusive: "string"
+     *         from_version: {
+     *             type: "inclusive",
+     *             value: "string"
+     *         },
+     *         to_version: {
+     *             type: "inclusive",
+     *             value: "string"
+     *         }
      *     })
      */
     public async getChangelog(

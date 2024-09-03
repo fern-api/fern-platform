@@ -164,7 +164,10 @@ it("generator changelog", async () => {
     expect(
         await fdrApplication.dao.generatorVersions().getChangelog({
             generator: "this-gets-changelog",
-            versionRanges: { from_version_inclusive: "2.1.3", to_version_inclusive: "2.1.7" },
+            versionRanges: {
+                from_version: { type: "inclusive", value: "2.1.3" },
+                to_version: { type: "inclusive", value: "2.1.7" },
+            },
         }),
     ).toEqual({
         entries: [
@@ -196,7 +199,10 @@ it("generator changelog", async () => {
     expect(
         await fdrApplication.dao.generatorVersions().getChangelog({
             generator: "this-gets-changelog",
-            versionRanges: { from_version_exclusive: "2.1.3", to_version_exclusive: "2.1.7" },
+            versionRanges: {
+                from_version: { type: "exclusive", value: "2.1.3" },
+                to_version: { type: "exclusive", value: "2.1.7" },
+            },
         }),
     ).toEqual({
         entries: [
@@ -218,7 +224,10 @@ it("generator changelog", async () => {
     expect(
         await fdrApplication.dao.generatorVersions().getChangelog({
             generator: "this-gets-changelog",
-            versionRanges: {},
+            versionRanges: {
+                from_version: { type: "inclusive", value: "2.1.2" },
+                to_version: { type: "inclusive", value: "2.1.8" },
+            },
         }),
     ).toEqual({
         entries: [

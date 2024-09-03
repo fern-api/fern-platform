@@ -217,20 +217,20 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
                 generatorId: generator,
                 nonce: {
                     gte:
-                        versionRanges.from_version_inclusive != null
-                            ? noncifySemanticVersion(versionRanges.from_version_inclusive)
+                        versionRanges.from_version.type == "inclusive"
+                            ? noncifySemanticVersion(versionRanges.from_version.value)
                             : undefined,
                     gt:
-                        versionRanges.from_version_exclusive != null
-                            ? noncifySemanticVersion(versionRanges.from_version_exclusive)
+                        versionRanges.from_version.type == "exclusive"
+                            ? noncifySemanticVersion(versionRanges.from_version.value)
                             : undefined,
                     lte:
-                        versionRanges.to_version_inclusive != null
-                            ? noncifySemanticVersion(versionRanges.to_version_inclusive)
+                        versionRanges.to_version.type == "inclusive"
+                            ? noncifySemanticVersion(versionRanges.to_version.value)
                             : undefined,
                     lt:
-                        versionRanges.to_version_exclusive != null
-                            ? noncifySemanticVersion(versionRanges.to_version_exclusive)
+                        versionRanges.to_version.type == "exclusive"
+                            ? noncifySemanticVersion(versionRanges.to_version.value)
                             : undefined,
                 },
             },
