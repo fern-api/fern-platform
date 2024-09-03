@@ -30,5 +30,6 @@ jobs:
         env:
           CI: false
         run: |
+          pnpm compile
           pnpm --filter "@fern-platform/fern-bot" install
           pnpm --filter "@fern-platform/fern-bot" release --stage production
