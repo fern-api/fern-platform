@@ -19,13 +19,9 @@ export async function updateSpecInternal(
     await cloneRepo(git, repository, octokit, fernBotLoginName, fernBotLoginId);
     await getOrUpdateBranch(git, originDefaultBranch, OPENAPI_UPDATE_BRANCH);
 
-    try {
-        // Run API update command which will pull the new spec from the specified
-        // origin and write it to disk we can then commit it to github from there.
-        await execFernCli("api update", fullRepoPath);
-    } catch (error) {
-        return;
-    }
+    // Run API update command which will pull the new spec from the specified
+    // origin and write it to disk we can then commit it to github from there.
+    await execFernCli("api update", fullRepoPath);
 
     console.log("Checking for changes to commit and push");
     if (!(await git.status()).isClean()) {

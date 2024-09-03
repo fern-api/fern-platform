@@ -9,13 +9,15 @@ import { Octokit } from "octokit";
 import { SimpleGit } from "simple-git";
 
 async function isOrganizationCanary(venusUrl: string, fullRepoPath: string): Promise<boolean> {
-    const orgId = (await execFernCli("organization", fullRepoPath)).stdout;
+    const orgId = cleanStdout((await execFernCli("organization", fullRepoPath)).stdout);
     console.log(`Found organization ID: ${orgId}`);
     const client = new FernVenusApiClient({ environment: venusUrl });
 
     const response = await client.organization.get(FernVenusApi.OrganizationId(orgId));
+    console.log(`Organization response: ${JSON.stringify(response)}, orgId: ${orgId}`);
     if (!response.ok) {
-        throw new Error(`Organization ${orgId} not found`);
+        // throw new Error(`Organization ${orgId} not found`);
+        return true;
     }
 
     return response.body.isFernbotCanary;
@@ -27,9 +29,10 @@ async function getGeneratorChangelog(
     from: string,
     to: string,
 ): Promise<ChangelogResponse[]> {
+    console.log(`Getting changelog for generator ${generator} from ${from} to ${to}`);
     const client = new FernRegistryClient({ environment: fdrUrl });
 
-    const response = await client.generators.versions.getChangelog(generator, from, to);
+    const response = await client.generators.versions.getChangelog("python-sdk", from, to);
     if (!response.ok) {
         throw new Error(`Changelog for generator ${generator} (from version: ${from} to: ${to}) not found`);
     }
@@ -42,14 +45,13 @@ async function getCliChangelog(fdrUrl: string, from: string, to: string): Promis
 
     const response = await client.generators.cli.getChangelog(from, to);
     if (!response.ok) {
-        throw new Error(`Changelog for CLI (from version: ${from} to: ${to}) not found`);
+        throw new Error(`Changelog for CLI (from version: ${from} to: ${to}) not found: ${JSON.stringify(response)}`);
     }
 
     return response.body.entries;
 }
 
-// TODO: need to get the upgrade CLI to return the from and to versions
-function formatChangelogResponses(changelog: ChangelogResponse[]): string {
+function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
     // TODO: actually format these
     // The format is effectively the below, where sections are only included if there is at
     // least one entry in that section, and we try to cap the number of entries in each section to ~5
@@ -64,17 +66,36 @@ function formatChangelogResponses(changelog: ChangelogResponse[]): string {
     // - <entry>
     // ### Deprecated:
     // - <entry>
-    // ### Security:
-    // - <entry>
-    // TODO: populate these arrays
+
     const added: string[] = [];
     const changed: string[] = [];
     const removed: string[] = [];
     const fixed: string[] = [];
     const deprecated: string[] = [];
-    const security: string[] = [];
 
-    let prBody = `## [${changelog[0].version} - ${changelog[changelog.length - 1].version}] - Changelog\n\n`;
+    const changelogEntries = changelogs.flatMap((cl) => cl.changelogEntry);
+
+    // Otherwise stack up the changes
+    for (const entry of changelogEntries) {
+        if (entry.added) {
+            added.push(...entry.added);
+        }
+        if (entry.changed) {
+            changed.push(...entry.changed);
+        }
+        if (entry.removed) {
+            removed.push(...entry.removed);
+        }
+        if (entry.fixed) {
+            fixed.push(...entry.fixed);
+        }
+        if (entry.deprecated) {
+            deprecated.push(...entry.deprecated);
+        }
+    }
+
+    const prBodyTitle = `## [${changelogs[0].version} - ${changelogs[changelogs.length - 1].version}] - Changelog\n\n`;
+    let prBody = "";
     let addedChanges = false;
     if (added.length > 0) {
         prBody += "### Added:\n";
@@ -106,18 +127,23 @@ function formatChangelogResponses(changelog: ChangelogResponse[]): string {
         prBody += "\n";
         addedChanges = true;
     }
-    if (security.length > 0) {
-        prBody += "### Security:\n";
-        prBody += security.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
-    }
 
     if (!addedChanges) {
         prBody += "No changes found.";
     }
 
-    return prBody;
+    if (changelogs.length > 5 || !addedChanges) {
+        console.log("Changelog too long, truncating to only outputting summaries");
+        // Reset the body
+        prBody = "";
+
+        for (const changelog of changelogs) {
+            prBody += `\n### ${changelog.version}\n`;
+            prBody += changelog.changelogEntry.map((cle) => `- ${cle.type}: ${cle.summary}`).join("\n");
+        }
+    }
+
+    return prBodyTitle + prBody;
 }
 
 // This type is meant to mirror the data model for the `generator list` command
@@ -125,9 +151,15 @@ function formatChangelogResponses(changelog: ChangelogResponse[]): string {
 type GeneratorList = Record<string, Record<string, string[]>>;
 const NO_API_FALLBACK_KEY = "NO_API_FALLBACK";
 async function getGenerators(fullRepoPath: string): Promise<GeneratorList> {
+    // Note since this is multi-line, we do not call `cleanStdout` on it, but it should be parsed ok.
     const response = await execFernCli(`generator list --api-fallback ${NO_API_FALLBACK_KEY}`, fullRepoPath);
 
     return yaml.load(response.stdout) as GeneratorList;
+}
+
+// We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
+function cleanStdout(stdout: string): string {
+    return stdout.split("\n")[0].trim();
 }
 
 export async function updateVersionInternal(
@@ -148,86 +180,77 @@ export async function updateVersionInternal(
             return;
         }
     } catch (error) {
-        console.error("Could not determine if the repo owner was a fern-bot canary, quitting:", error);
-        return;
+        throw new Error("Could not determine if the repo owner was a fern-bot canary, quitting:", error);
     }
 
-    try {
-        await updateSingleEntity({
-            octokit,
-            repository,
-            git,
-            branchName: "fern/update/cli",
-            prTitle: "Upgrade Fern CLI version",
-            upgradeAction: async () => {
-                const response = await execFernCli("upgrade", fullRepoPath);
-                console.log(response.stdout);
-                console.log(response.stderr);
-            },
-            getPRBody: async (fromVersion, toVersion) => {
-                return formatChangelogResponses(await getCliChangelog(fdrUrl, fromVersion, toVersion));
-            },
-            getEntityVersion: async () => {
-                return (await execFernCli("--version", fullRepoPath)).stdout;
-            },
-        });
+    await handleSingleUpgrade({
+        octokit,
+        repository,
+        git,
+        branchName: "fern/update/cli",
+        prTitle: "Upgrade Fern CLI version",
+        upgradeAction: async () => {
+            const response = await execFernCli("upgrade", fullRepoPath);
+            console.log(response.stdout);
+            console.log(response.stderr);
+        },
+        getPRBody: async (fromVersion, toVersion) => {
+            return formatChangelogResponses(await getCliChangelog(fdrUrl, fromVersion, toVersion));
+        },
+        getEntityVersion: async () => {
+            return cleanStdout((await execFernCli("--version", fullRepoPath)).stdout);
+        },
+    });
 
-        // Pull a branch of fern/update/<api>/<group>/<generator>
-        // as well as fern/update/cli
-        const generatorUpdates: Promise<void>[] = [];
-        const generatorsList = await getGenerators(fullRepoPath);
-        for (const [apiName, api] of Object.entries(generatorsList)) {
-            for (const [groupName, group] of Object.entries(api)) {
-                for (const generator of group) {
-                    const branchName = "fern/update/";
-                    let additionalName = "";
-                    if (apiName !== NO_API_FALLBACK_KEY) {
-                        additionalName += `${apiName}/`;
-                    }
-                    additionalName += `${groupName}/${generator}`;
-
-                    generatorUpdates.push(
-                        updateSingleEntity({
-                            octokit,
-                            repository,
-                            git,
-                            branchName: `${branchName}${additionalName}`,
-                            prTitle: `Upgrade Fern Generator Version: (${additionalName})`,
-                            upgradeAction: async () => {
-                                let command = `generator upgrade --generator ${generator} --group ${groupName}`;
-                                if (apiName !== NO_API_FALLBACK_KEY) {
-                                    command += ` --api ${apiName}`;
-                                }
-                                const response = await execFernCli(command, fullRepoPath);
-                                console.log(response.stdout);
-                                console.log(response.stderr);
-                            },
-                            getPRBody: async (fromVersion, toVersion) => {
-                                return formatChangelogResponses(
-                                    await getGeneratorChangelog(fdrUrl, generator, fromVersion, toVersion),
-                                );
-                            },
-                            getEntityVersion: async () => {
-                                let command = `generator get --version --generator ${generator} --group ${groupName}`;
-                                if (apiName !== NO_API_FALLBACK_KEY) {
-                                    command += ` --api ${apiName}`;
-                                }
-                                return (await execFernCli(command, fullRepoPath)).stdout;
-                            },
-                        }),
-                    );
+    // Pull a branch of fern/update/<generator>/<api>:<group>
+    // as well as fern/update/cli
+    const generatorsList = await getGenerators(fullRepoPath);
+    for (const [apiName, api] of Object.entries(generatorsList)) {
+        for (const [groupName, group] of Object.entries(api)) {
+            for (const generator of group) {
+                const branchName = "fern/update/";
+                let additionalName = groupName;
+                if (apiName !== NO_API_FALLBACK_KEY) {
+                    additionalName = `${apiName}:${groupName}`;
                 }
+                additionalName = `${generator.replace("fernapi/", "")}@${additionalName}`;
+
+                // We could collect the promises here and await them at the end, but there aren't many you'd parallelize,
+                // and I think you'd outweigh that benefit by having to make several clones to manage the branches in isolation.
+                await handleSingleUpgrade({
+                    octokit,
+                    repository,
+                    git,
+                    branchName: `${branchName}${additionalName}`,
+                    prTitle: `Upgrade Fern Generator Version: (${additionalName})`,
+                    upgradeAction: async () => {
+                        let command = `generator upgrade --generator ${generator} --group ${groupName}`;
+                        if (apiName !== NO_API_FALLBACK_KEY) {
+                            command += ` --api ${apiName}`;
+                        }
+                        const response = await execFernCli(command, fullRepoPath);
+                        console.log(response.stdout);
+                        console.log(response.stderr);
+                    },
+                    getPRBody: async (fromVersion, toVersion) => {
+                        return formatChangelogResponses(
+                            await getGeneratorChangelog(fdrUrl, generator, fromVersion, toVersion),
+                        );
+                    },
+                    getEntityVersion: async () => {
+                        let command = `generator get --version --generator ${generator} --group ${groupName}`;
+                        if (apiName !== NO_API_FALLBACK_KEY) {
+                            command += ` --api ${apiName}`;
+                        }
+                        return cleanStdout((await execFernCli(command, fullRepoPath)).stdout);
+                    },
+                });
             }
         }
-
-        await Promise.all(generatorUpdates);
-    } catch (error) {
-        console.error("Error running fern CLI upgrade:", error);
-        return;
     }
 }
 
-async function updateSingleEntity({
+async function handleSingleUpgrade({
     octokit,
     repository,
     git,
@@ -250,17 +273,20 @@ async function updateSingleEntity({
 
     await getOrUpdateBranch(git, originDefaultBranch, branchName);
 
+    // TODO: compare these versions off main (fromVersion is on main, toVersion is on the branch)
     const fromVersion = await getEntityVersion();
+    console.log(`Upgrading entity to latest version, from version: ${fromVersion}`);
     await upgradeAction();
     const toVersion = await getEntityVersion();
+    console.log(`Upgraded entity to latest version, to version: ${toVersion}`);
 
     console.log("Checking for changes to commit and push");
-    if (!(await git.status()).isClean()) {
+    if (!(await git.status()).isClean() && fromVersion !== toVersion) {
         console.log("Changes detected, committing and pushing");
         // Add + commit files
         await git.add(["-A"]);
         // TODO: use AI to generate commit messages from the changelog
-        await git.commit("(chore): upgrade generator versions to latest");
+        await git.commit("(chore): upgrade versions to latest");
 
         // Push the changes
         await git.push(["--force-with-lease", DEFAULT_REMOTE_NAME, `${branchName}:refs/heads/${branchName}`]);

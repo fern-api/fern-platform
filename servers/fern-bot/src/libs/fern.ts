@@ -2,6 +2,7 @@ import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import execa from "execa";
 
 export async function execFernCli(command: string, cwd?: string): Promise<execa.ExecaChildProcess<string>> {
+    console.log(`Running command on fern CLI: ${command}`);
     const commandParts = command.split(" ");
     try {
         // Running the commands on Lambdas is a bit odd...specifically you can only write to tmp on a lambda
