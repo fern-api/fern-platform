@@ -32,11 +32,15 @@ jobs:
       CI: false
     steps:
       - uses: actions/checkout@v4
+      
       - name: 📥 Install
         uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile           
+      
       - name: 🚀 serverless deploy
         run: |
-          pnpm compile
           pnpm --filter "@fern-platform/fern-bot" install
           pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpecs --stage development
 
@@ -58,10 +62,14 @@ jobs:
       CI: false
     steps:
       - uses: actions/checkout@v4
+      
       - name: 📥 Install
         uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile                   
+      
       - name: 🚀 serverless deploy
         run: |
-          pnpm compile
           pnpm --filter "@fern-platform/fern-bot" install
           pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpecs --stage production
