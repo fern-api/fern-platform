@@ -36,6 +36,7 @@ jobs:
         uses: ./.github/actions/install
       - name: 🚀 serverless deploy
         run: |
+          pnpm compile
           pnpm --filter "@fern-platform/fern-bot" install
           pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpecs --stage development
 
@@ -61,5 +62,6 @@ jobs:
         uses: ./.github/actions/install
       - name: 🚀 serverless deploy
         run: |
+          pnpm compile
           pnpm --filter "@fern-platform/fern-bot" install
           pnpm --filter "@fern-platform/fern-bot" invoke local --function updateOpenApiSpecs --stage production
