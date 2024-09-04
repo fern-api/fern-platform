@@ -30,6 +30,7 @@ jobs:
       DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com"
       CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
+      CI: false
     steps:
       - uses: actions/checkout@v4
       
@@ -60,6 +61,7 @@ jobs:
       DEFAULT_FDR_ORIGIN: "https://registry.buildwithfern.com"
       CO_API_KEY: ${{ secrets.PROD_CO_API_KEY }}
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
+      CI: false
     steps:
       - uses: actions/checkout@v4
       
