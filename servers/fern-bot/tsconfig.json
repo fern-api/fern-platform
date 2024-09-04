@@ -1,5 +1,5 @@
 {
-  // "extends": "@fern-platform/configs/tsconfig/base.json",
+  "extends": "@fern-platform/configs/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

@@ -1,5 +1,5 @@
-import { doesPathExist } from "@libs/fs";
 import execa from "execa";
+import { doesPathExist } from "./fs";
 
 export async function execFernCli(command: string, cwd?: string): Promise<execa.ExecaChildProcess<string>> {
     console.log(`Running command on fern CLI: ${command}`);
