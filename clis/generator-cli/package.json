@@ -24,8 +24,9 @@
     "depcheck": "depcheck"
   },
   "devDependencies": {
-    "@fern-api/github": "workspace:*",
     "@fern-api/fs-utils": "0.15.0-rc63",
+    "@fern-api/github": "workspace:*",
+    "@fern-api/logger": "0.4.24-rc1",
     "@types/jest": "^29.5.11",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
@@ -35,6 +36,7 @@
     "esbuild": "0.20.2",
     "eslint": "^8.56.0",
     "execa": "^5.1.1",
+    "extract-zip": "^2.0.1",
     "lodash-es": "^4.17.12",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.3.2",

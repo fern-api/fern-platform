@@ -26,6 +26,8 @@ types:
       - CUSTOM_CLIENT
 
   FeatureConfig:
+    audiences:
+      - public
     docs: |
       The configuration used to specify a generator's set of supported features.
       This is static data associated with a particular version of a generator, and
@@ -43,4 +45,4 @@ types:
       id: FeatureId
       description: optional<string>
       addendum: optional<string>
-      advanced: optional<string>
+      advanced: optional<boolean>

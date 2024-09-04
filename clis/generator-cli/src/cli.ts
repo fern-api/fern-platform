@@ -1,11 +1,13 @@
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
 import fs from "fs";
 import { mkdir, readFile } from "fs/promises";
 import path from "path";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { loadReadmeConfig } from "./configuration/loadReadmeConfig";
-import { loadReferenceConfig } from "./configuration/loadReferenceConfig";
+import { FernGeneratorCli } from "./configuration/generated";
+import { loadConfig } from "./configuration/loadConfig";
+import { MockGenerator } from "./mock/MockGenerator";
 import { ReadmeGenerator } from "./readme/ReadmeGenerator";
 import { ReadmeParser } from "./readme/ReadmeParser";
 import { ReferenceGenerator } from "./reference/ReferenceGenerator";
@@ -20,15 +22,15 @@ void yargs(hideBin(process.argv))
             argv
                 .option("config", {
                     string: true,
-                    requred: true,
+                    required: true,
                 })
                 .option("original-readme", {
                     string: true,
-                    requred: false,
+                    required: false,
                 })
                 .option("output", {
                     string: true,
-                    requred: false,
+                    required: false,
                 }),
         async (argv) => {
             if (argv.config == null) {
@@ -36,7 +38,7 @@ void yargs(hideBin(process.argv))
                 process.exit(1);
             }
             const wd = cwd();
-            const readmeConfig = await loadReadmeConfig({
+            const readmeConfig = await loadConfig<FernGeneratorCli.ReadmeConfig>({
                 absolutePathToConfig: resolve(wd, argv.config),
             });
             const generator = new ReadmeGenerator({
@@ -51,17 +53,17 @@ void yargs(hideBin(process.argv))
         },
     )
     .command(
-        "generate-reference",
+        ["generate reference", "generate-reference"], // The latter is deprecated, but kept for backwards compatibility.
         "Generate an SDK reference (`reference.md`) using the provided configuration file.",
         (argv) =>
             argv
                 .option("config", {
                     string: true,
-                    requred: true,
+                    required: true,
                 })
                 .option("output", {
                     string: true,
-                    requred: false,
+                    required: false,
                 }),
         async (argv) => {
             if (argv.config == null) {
@@ -69,7 +71,7 @@ void yargs(hideBin(process.argv))
                 process.exit(1);
             }
             const wd = cwd();
-            const referenceConfig = await loadReferenceConfig({
+            const referenceConfig = await loadConfig<FernGeneratorCli.ReferenceConfig>({
                 absolutePathToConfig: resolve(wd, argv.config),
             });
             const generator = new ReferenceGenerator({
@@ -77,6 +79,39 @@ void yargs(hideBin(process.argv))
             });
             await generator.generate({
                 output: await createWriteStream(argv.output),
+            });
+            process.exit(0);
+        },
+    )
+    .command(
+        "generate mock",
+        "Generate a .mock directory using the provided configuration file.",
+        (argv) =>
+            argv
+                .option("config", {
+                    string: true,
+                    required: true,
+                })
+                .option("output", {
+                    string: true,
+                    required: false,
+                    describe: "The filepath to deposit the generated .mock directory (e.g. ./path/to/output)",
+                }),
+        async (argv) => {
+            if (argv.config == null) {
+                process.stderr.write("missing required arguments; please specify the --config flag\n");
+                process.exit(1);
+            }
+            const wd = AbsoluteFilePath.of(cwd());
+            const mockConfig = await loadConfig<FernGeneratorCli.MockConfig>({
+                absolutePathToConfig: resolve(wd, argv.config),
+            });
+            const generator = new MockGenerator({
+                logger: CONSOLE_LOGGER,
+                mockConfig,
+            });
+            await generator.generate({
+                output: argv.output != null ? resolve(wd, argv.output) : wd,
             });
             process.exit(0);
         },

@@ -5,6 +5,8 @@ imports:
 
 types:
   ReadmeConfig:
+    audiences:
+      - public
     docs: |
       The configuration used to generate a README.md file.
       The information described here is a combination of user-defined information

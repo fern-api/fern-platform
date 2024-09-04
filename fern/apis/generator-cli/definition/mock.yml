@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  MockConfig:
+    audiences:
+      - public
+    docs: |
+      The configuration used to generate a .mock directory, which is
+      used to create a mock server with the `fern test` command.
+    properties:
+      organization: string
+      cliVersion:
+        docs: |
+          The user's CLI version. This version is the same version
+          used in the generated `fern.config.json`.
+        type: string
+      definitionUrl:
+        docs: |
+          The URL used to fetch the user's Fern definition files. This
+          is used to retrieve the files copied into the generated
+          `.mock` directory.
+        type: string
+
+  FernConfigJson:
+    audiences:
+      - internal
+    docs: |
+      A structured representation of the `fern.config.json` file.
+
+      Note that this type is purely an implementation detail, so we can
+      freely break compatibility (i.e. when we introduce fern.yml).
+    properties:
+      organization: string
+      version: string

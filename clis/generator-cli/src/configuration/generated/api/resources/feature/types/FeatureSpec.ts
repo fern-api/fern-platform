@@ -13,4 +13,5 @@ export interface FeatureSpec {
     id: FernGeneratorCli.FeatureId;
     description?: string;
     addendum?: string;
+    advanced?: boolean;
 }

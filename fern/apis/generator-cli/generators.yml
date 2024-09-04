@@ -1,6 +1,9 @@
 default-group: local
 groups:
   local:
+    audiences:
+      - public
+      - internal
     generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.20.9
@@ -14,6 +17,8 @@ groups:
           outputEsm: true
 
   sdk:
+    audiences:
+      - public
     generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.20.9

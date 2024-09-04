@@ -6,7 +6,6 @@ import * as FernGeneratorCli from "../../../index";
 
 /**
  * The configuration used to generate a README.md file.
- *
  * The information described here is a combination of user-defined information
  * (i.e. specified in the generators.yml), and dynamically generated information
  * that comes from each generator (i.e. features, requirements, and more).

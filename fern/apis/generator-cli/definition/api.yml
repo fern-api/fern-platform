@@ -1,1 +1,4 @@
 name: generator-cli
+audiences:
+  - public
+  - internal
