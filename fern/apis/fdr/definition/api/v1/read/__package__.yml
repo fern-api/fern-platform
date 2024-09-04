@@ -90,7 +90,7 @@ types:
       bearerAuth: BearerAuth
       basicAuth: BasicAuth
       header: HeaderAuth
-      oauth: OauthAuth
+      oAuth: OAuth
 
   BasicAuth:
     properties:
@@ -109,12 +109,30 @@ types:
         type: optional<string>
         docs: The prefix that comes before the header
 
-  OauthAuth:
+  OAuth:
+    properties:
+      implementation: OAuthImplementation
+
+  OAuthImplementation:
+    union:
+      ClientCredentials: OAuthClientCredentials
+      AuthorizationCode: OAuthAuthorizationCode
+
+  OAuthClientCredentials:
+    properties:
+      tokenUrl: string
+      clientIdName: optional<string>
+      clientSecretName: optional<string>
+      tokenPrefix: optional<string>
+      accessTokenName: optional<string>
+      refreshTokenName: optional<string>
+
+  OAuthAuthorizationCode:
     properties:
       # for kicking off the authorization flow, required
-      authorizationEndpoint: string
+      authorizationUrl: string
       # for exchanging the code for a token, required
-      tokenEndpoint: string
+      tokenUrl: string
       # for use with validation, optional
       tokenPrefix: optional<string>
       accessTokenName: optional<string>
