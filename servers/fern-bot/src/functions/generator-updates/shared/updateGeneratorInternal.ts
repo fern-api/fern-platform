@@ -207,6 +207,7 @@ export async function updateVersionInternal(
         branchName: "fern/update/cli",
         prTitle: "Upgrade Fern CLI version",
         upgradeAction: async () => {
+            // Here we have to pipe yes to get through interactive prompts in the CLI
             const response = await execFernCli("upgrade", fullRepoPath, true);
             console.log(response.stdout);
             console.log(response.stderr);
