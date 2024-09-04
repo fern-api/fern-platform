@@ -55,4 +55,4 @@ jobs:
       - name: 🧪 Test
         env:
           CI: false
-        run: pnpm --filter "@fern-platform/fern-bot" test
+        run: pnpm --filter "@fern-platform/fern-bot" test:ete

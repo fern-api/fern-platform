@@ -6,7 +6,7 @@
     "package": "sls package",
     "release": "sls deploy",
     "invoke": "sls invoke",
-    "test": "vitest --run --passWithNoTests --globals",
+    "test:ete": "vitest --run --passWithNoTests --globals",
     "lint": "eslint --max-warnings 0 src --ext .ts",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint:fix": "pnpm lint --fix",

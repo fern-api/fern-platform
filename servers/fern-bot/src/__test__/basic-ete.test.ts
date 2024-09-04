@@ -37,12 +37,12 @@ beforeEach(async () => {
             env.GITHUB_APP_LOGIN_ID,
         );
         try {
-            installation.octokit.rest.git.deleteRef({
+            await installation.octokit.rest.git.deleteRef({
                 owner: installation.repository.owner.login,
                 repo: installation.repository.name,
                 ref: `heads/${CLI_TEST_BRANCH}`,
             });
-            installation.octokit.rest.git.deleteRef({
+            await installation.octokit.rest.git.deleteRef({
                 owner: installation.repository.owner.login,
                 repo: installation.repository.name,
                 ref: `heads/${PYTHON_TEST_BRANCH}`,
@@ -79,7 +79,7 @@ it(
             const pythonVersion = cleanStdout(
                 (
                     await execFernCli(
-                        `generator get --version --generator fernapi/fern-python-sdk --group local`,
+                        "generator get --version --generator fernapi/fern-python-sdk --group local",
                         fullRepoPath,
                     )
                 ).stdout,

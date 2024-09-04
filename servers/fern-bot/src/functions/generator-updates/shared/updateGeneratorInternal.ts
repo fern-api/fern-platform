@@ -107,6 +107,7 @@ function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
         throw new Error("Version difference was found, but no changelog entries were found. This is unexpected.");
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const prBodyTitle = `## [${changelogs[0]!.version} - ${changelogs[changelogs.length - 1]!.version}] - Changelog\n\n`;
     let prBody = "";
     let addedChanges = false;
@@ -173,6 +174,7 @@ async function getGenerators(fullRepoPath: string): Promise<GeneratorList> {
 // We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
 // Exported to leverage in tests
 export function cleanStdout(stdout: string): string {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return stdout.split("╭─")[0]!.split("\n")[0]!.trim();
 }
 
