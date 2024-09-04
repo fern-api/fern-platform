@@ -37,7 +37,7 @@ groups:
             include_union_utils: true
 
       - name: fernapi/fern-go-sdk
-        version: 0.22.0
+        version: 0.23.4
         github:
           repository: fern-api/generator-cli-go
         config:
