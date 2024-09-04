@@ -1,11 +1,22 @@
-import type { Element, ElementContent, Root } from "hast";
-import { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
-import { CONTINUE, visit } from "unist-util-visit";
+import GithubSlugger from "github-slugger";
+import type { Doctype, Element, ElementContent, Root } from "hast";
+import { toString } from "hast-util-to-string";
+import type { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast, MdxJsxTextElementHast } from "mdast-util-mdx-jsx";
+import { CONTINUE, visit, type BuildVisitor, type VisitorResult } from "unist-util-visit";
 import { wrapChildren } from "./to-estree";
 import { isMdxJsxFlowElement, toAttribute } from "./utils";
 
+const slugger = new GithubSlugger();
+
+type Visitor = BuildVisitor<
+    Root | Doctype | ElementContent,
+    Root | Element | MdxJsxTextElementHast | MdxJsxFlowElementHast | undefined
+>;
+
 export function rehypeFernComponents(): (tree: Root) => void {
     return function (tree: Root): void {
+        slugger.reset();
+
         // convert img to Image
         visit(tree, (node) => {
             if (isMdxJsxFlowElement(node)) {
@@ -81,25 +92,25 @@ export function rehypeFernComponents(): (tree: Root) => void {
             return CONTINUE; // this line helps avoid a typescript warning
         });
 
-        visit(tree, (node, index, parent) => {
+        const visitor: Visitor = (node, index, parent) => {
             if (index == null || parent == null || parent.type === "mdxJsxTextElement") {
                 return;
             }
 
             if (isMdxJsxFlowElement(node) && node.name != null) {
-                if (node.name === "Tabs") {
-                    transformTabs(node, index, parent);
-                }
-
-                if (node.name === "TabGroup") {
-                    transformTabs(node, index, parent);
-                }
-
-                if (node.name === "AccordionGroup") {
-                    transformAccordionGroup(node, index, parent);
+                if (node.name === "Steps") {
+                    return transformSteps(node, index, parent, visitor);
+                } else if (node.name === "Tabs") {
+                    return transformTabs(node, index, parent);
+                } else if (node.name === "TabGroup") {
+                    return transformTabs(node, index, parent);
+                } else if (node.name === "AccordionGroup") {
+                    return transformAccordionGroup(node, index, parent);
                 }
             }
-        });
+        };
+
+        visit(tree, visitor);
 
         visit(tree, (node, index, parent) => {
             if (index == null || parent == null || parent.type === "mdxJsxTextElement") {
@@ -123,7 +134,7 @@ function transformTabs(
     node: MdxJsxFlowElementHast,
     index: number,
     parent: Root | Element | MdxJsxFlowElementHast,
-): void {
+): VisitorResult {
     const tabs = node.children
         .filter(isMdxJsxFlowElement)
         .filter((child) => child.name === "Tab")
@@ -139,13 +150,15 @@ function transformTabs(
         attributes: [toAttribute("tabs", tabs), ...node.attributes],
         children: [],
     });
+
+    return index + 1;
 }
 
 function transformTabItem(
     node: MdxJsxFlowElementHast,
     index: number,
     parent: Root | Element | MdxJsxFlowElementHast,
-): void {
+): VisitorResult {
     const tabItem = collectProps(node);
     const tabs = [tabItem];
 
@@ -155,13 +168,15 @@ function transformTabItem(
         attributes: [toAttribute("tabs", tabs), ...node.attributes],
         children: [],
     });
+
+    return index + 1;
 }
 
 function transformAccordionGroup(
     node: MdxJsxFlowElementHast,
     index: number,
     parent: Root | Element | MdxJsxFlowElementHast,
-): void {
+): VisitorResult {
     const items = node.children
         .filter(isMdxJsxFlowElement)
         .filter((child) => child.name === "Accordion")
@@ -173,13 +188,70 @@ function transformAccordionGroup(
         attributes: [toAttribute("items", items), ...node.attributes],
         children: [],
     });
+
+    return index + 1;
+}
+
+function transformSteps(
+    node: MdxJsxFlowElementHast,
+    index: number,
+    parent: Root | Element | MdxJsxFlowElementHast,
+    visitor: Visitor,
+): VisitorResult {
+    const children: MdxJsxFlowElementHast[] = [];
+
+    node.children.forEach((child) => {
+        if (child.type === "mdxJsxFlowElement" && child.name === "Step") {
+            children.push(child);
+        } else if (child.type === "element" && child.tagName === "h3") {
+            const title = toString(child);
+            const slug = slugger.slug(title);
+            children.push({
+                type: "mdxJsxFlowElement",
+                name: "Step",
+                attributes: [
+                    toAttribute("title", title),
+                    toAttribute("id", slug),
+                    toAttribute("index", children.length + 1),
+                ],
+                children: [],
+            });
+        } else {
+            const lastChild = children[children.length - 1];
+            const index = children.length + 1;
+            const slug = slugger.slug(`step-${index}`);
+            if (lastChild == null) {
+                children.push({
+                    type: "mdxJsxFlowElement",
+                    name: "Step",
+                    attributes: [toAttribute("id", slug), toAttribute("index", index)],
+                    children: [child],
+                });
+            } else {
+                lastChild.children.push(child);
+            }
+        }
+    });
+
+    const child = {
+        type: "mdxJsxFlowElement" as const,
+        name: "Steps",
+        attributes: node.attributes,
+        children,
+    };
+
+    visit(child, visitor);
+
+    parent.children.splice(index, 1, child);
+
+    return index + 1;
 }
 
 function transformAccordion(
     node: MdxJsxFlowElementHast,
     index: number,
     parent: Root | Element | MdxJsxFlowElementHast,
-): void {
+): VisitorResult {
     const item = collectProps(node);
     const items = [item];
 
@@ -189,6 +261,8 @@ function transformAccordion(
         attributes: [toAttribute("items", items)],
         children: [],
     });
+
+    return index + 1;
 }
 
 function collectProps(child: MdxJsxFlowElementHast) {
