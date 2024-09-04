@@ -151,7 +151,7 @@ export function renderTypeShorthand(
         literal: (literal) =>
             visitDiscriminatedUnion(literal.value, "type")._visit({
                 stringLiteral: ({ value }) => `"${value}"`,
-                booleanLiteral: ({ value }) => `"${value.toString()}"`,
+                booleanLiteral: ({ value }) => value.toString(),
                 _other: () => "<unknown>",
             }),
         // other
