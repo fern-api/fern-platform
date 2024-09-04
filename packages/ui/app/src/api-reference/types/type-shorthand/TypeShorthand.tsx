@@ -123,20 +123,15 @@ export function renderTypeShorthand(
         // referenced shapes
         object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
         undiscriminatedUnion: (union) => {
-            if (union.variants.length > 0 && union.variants.length < 3) {
-                return uniq(
-                    union.variants.map((variant) => renderTypeShorthand(variant.shape, { plural, withArticle }, types)),
-                ).join(" or ");
-            }
-
-            return plural ? "objects" : maybeWithArticle("an", "object");
+            return uniq(
+                union.variants.map((variant) => renderTypeShorthand(variant.shape, { plural, withArticle }, types)),
+            ).join(" or ");
         },
         discriminatedUnion: () => (plural ? "objects" : maybeWithArticle("an", "object")),
         enum: (enumValue) => {
+            // if there are only 1 or 2 values, we can list them like literals (e.g. "apple" or "banana")
             if (enumValue.values.length > 0 && enumValue.values.length < 3) {
-                return uniq(enumValue.values.map((value) => value.value))
-                    .map((value) => `"${value}"`)
-                    .join(" or ");
+                return enumValue.values.map((value) => `"${value.value}"`).join(" or ");
             }
             return plural ? "enums" : maybeWithArticle("an", "enum");
         },
