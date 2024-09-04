@@ -1,1 +1,1 @@
-export { RepoData } from "./RepoData";
+export type { RepoData } from "./RepoData";

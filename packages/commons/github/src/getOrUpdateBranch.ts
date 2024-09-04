@@ -10,7 +10,7 @@ export async function getOrUpdateBranch(
     try {
         // If you can fetch the branch, checkout the branch
         await git.fetch(DEFAULT_REMOTE_NAME, branchToCheckoutName);
-        console.log("Branch exists, checking out");
+        console.log(`Branch (${branchToCheckoutName}) exists, checking out`);
         await git.checkout(branchToCheckoutName);
         // Merge the default branch into this branch to update it
         // prefer the default branch changes
@@ -20,7 +20,7 @@ export async function getOrUpdateBranch(
         // to the same branch that are not OpenAPI related, that we'd lose if we deleted and reupdated the spec.
         await git.merge(["-X", "theirs", defaultBranchName]);
     } catch (e) {
-        console.log("Branch does not exist, create and checkout");
+        console.log(`Branch (${branchToCheckoutName}) does not exist, create and checkout`);
         await git.checkoutBranch(branchToCheckoutName, defaultBranchName);
     }
 }

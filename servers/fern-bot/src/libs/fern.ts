@@ -1,7 +1,12 @@
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import execa from "execa";
+import { doesPathExist } from "./fs";
 
-export async function execFernCli(command: string, cwd?: string): Promise<execa.ExecaChildProcess<string>> {
+export async function execFernCli(
+    command: string,
+    cwd?: string,
+    pipeYes: boolean = false,
+): Promise<execa.ExecaChildProcess<string>> {
+    console.log(`Running command on fern CLI: ${command}`);
     const commandParts = command.split(" ");
     try {
         // Running the commands on Lambdas is a bit odd...specifically you can only write to tmp on a lambda
@@ -12,18 +17,21 @@ export async function execFernCli(command: string, cwd?: string): Promise<execa.
 
         let command: execa.ExecaChildProcess<string>;
         // If you don't have node_modules/fern-api, try using the CLI directly
-        if (!(await doesPathExist(AbsoluteFilePath.of(`${process.cwd()}/node_modules/fern-api`)))) {
+        if (!(await doesPathExist(`${process.cwd()}/node_modules/fern-api`))) {
+            // TODO: is there a better way to pip `yes`? Piping the output of the real `yes` command doesn't work -- resulting in an EPIPE error.
             command = execa("fern", commandParts, {
                 cwd,
+                input: pipeYes ? "y" : undefined,
             });
         } else {
             command = execa(`${process.cwd()}/node_modules/fern-api/cli.cjs`, commandParts, {
                 cwd,
+                input: pipeYes ? "y" : undefined,
             });
         }
         return command;
     } catch (error) {
-        console.error(`fern command failed. stderr: ${error.stderr} (${error.exitCode})`);
+        console.error("fern command failed.");
         throw error;
     }
 }
