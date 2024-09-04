@@ -122,8 +122,7 @@ types:
       accessTokenName: optional<PropertyPath>
       refreshTokenName: optional<PropertyPath>
 
-  PropertyPath:
-    type: array<string>
+  PropertyPath: list<string>
 
 errors:
   ApiDoesNotExistError:
