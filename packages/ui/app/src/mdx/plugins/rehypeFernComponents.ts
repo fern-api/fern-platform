@@ -4,7 +4,7 @@ import { toString } from "hast-util-to-string";
 import type { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast, MdxJsxTextElementHast } from "mdast-util-mdx-jsx";
 import { CONTINUE, visit, type BuildVisitor, type VisitorResult } from "unist-util-visit";
 import { wrapChildren } from "./to-estree";
-import { isMdxJsxFlowElement, toAttribute } from "./utils";
+import { isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "./utils";
 
 const slugger = new GithubSlugger();
 
@@ -192,6 +192,7 @@ function transformAccordionGroup(
     return index + 1;
 }
 
+// TODO: handle lone <Step> component
 function transformSteps(
     node: MdxJsxFlowElementHast,
     index: number,
@@ -202,6 +203,20 @@ function transformSteps(
 
     node.children.forEach((child) => {
         if (child.type === "mdxJsxFlowElement" && child.name === "Step") {
+            const index = children.length + 1;
+            child.attributes = child.attributes.filter((attr) =>
+                isMdxJsxAttribute(attr) ? attr.name !== "index" : true,
+            );
+            child.attributes.push(toAttribute("index", index));
+
+            const titleValue = child.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "title")?.value;
+            const title = typeof titleValue === "string" ? titleValue : `Step ${index}`;
+            const slug = slugger.slug(title);
+
+            if (child.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "id") == null) {
+                child.attributes.push(toAttribute("id", slug));
+            }
+
             children.push(child);
         } else if (child.type === "element" && child.tagName === "h3") {
             const title = toString(child);
@@ -219,7 +234,7 @@ function transformSteps(
         } else {
             const lastChild = children[children.length - 1];
             const index = children.length + 1;
-            const slug = slugger.slug(`step-${index}`);
+            const slug = slugger.slug(`Step ${index}`);
             if (lastChild == null) {
                 children.push({
                     type: "mdxJsxFlowElement",
