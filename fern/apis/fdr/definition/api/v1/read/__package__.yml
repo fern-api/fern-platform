@@ -110,10 +110,6 @@ types:
         docs: The prefix that comes before the header
 
   OAuth:
-    properties:
-      implementation: OAuthImplementation
-
-  OAuthImplementation:
     union:
       ClientCredentials: OAuthClientCredentials
       AuthorizationCode: OAuthAuthorizationCode
