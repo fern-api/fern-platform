@@ -1,5 +1,6 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { uniq } from "lodash-es";
 import { ReactNode } from "react";
 import {
     DereferencedTypeShape,
@@ -121,9 +122,24 @@ export function renderTypeShorthand(
 
         // referenced shapes
         object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
-        undiscriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
-        discriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
-        enum: () => (plural ? "enums" : maybeWithArticle("an", "enum")),
+        undiscriminatedUnion: (union) => {
+            if (union.variants.length > 0 && union.variants.length < 3) {
+                return uniq(
+                    union.variants.map((variant) => renderTypeShorthand(variant.shape, { plural, withArticle }, types)),
+                ).join(" or ");
+            }
+
+            return plural ? "objects" : maybeWithArticle("an", "object");
+        },
+        discriminatedUnion: () => (plural ? "objects" : maybeWithArticle("an", "object")),
+        enum: (enumValue) => {
+            if (enumValue.values.length > 0 && enumValue.values.length < 3) {
+                return uniq(enumValue.values.map((value) => value.value))
+                    .map((value) => `"${value}"`)
+                    .join(" or ");
+            }
+            return plural ? "enums" : maybeWithArticle("an", "enum");
+        },
 
         // containing shapes
         optional: (optional) =>
