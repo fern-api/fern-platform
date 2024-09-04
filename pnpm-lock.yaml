@@ -2480,9 +2480,6 @@ importers:
       '@fern-api/core-utils':
         specifier: 0.15.0-rc63
         version: 0.15.0-rc63
-      '@fern-api/fs-utils':
-        specifier: 0.15.0-rc63
-        version: 0.15.0-rc63
       '@fern-api/github':
         specifier: workspace:*
         version: link:../../packages/commons/github
@@ -2490,8 +2487,8 @@ importers:
         specifier: 0.8.1-1-gd6d1a5b
         version: 0.8.1-1-gd6d1a5b
       '@fern-fern/generators-sdk':
-        specifier: 0.107.0-5c0782c84
-        version: 0.107.0-5c0782c84
+        specifier: 0.107.0-892e7c392
+        version: 0.107.0-892e7c392
       '@octokit/openapi-types':
         specifier: ^22.1.0
         version: 22.2.0
@@ -3886,8 +3883,8 @@ packages:
   '@fern-fern/fern-cloud-sdk@0.0.257':
     resolution: {integrity: sha512-JwlE6Qk84VAGrTYR1EMgwQlneKDIQ3ZRlHTu3O/L56bLtIbhdMTzLSGqSxf4/KFXfhH/RukhRuTsM4/DRmgJ/A==}
 
-  '@fern-fern/generators-sdk@0.107.0-5c0782c84':
-    resolution: {integrity: sha512-j7Miazr56wZjmHC2t0udVM0ePyNqbZHkmkvLaS58JOJmYfpordW1PvHInfLBeTvOn6PSPAbuu+o9MsFj4ERLzw==}
+  '@fern-fern/generators-sdk@0.107.0-892e7c392':
+    resolution: {integrity: sha512-QZMP6cMMIbxSzSZ67hzUkDsb8Mn1la8AHngi9L+AbJN9nlqLOcvufoxhGMK6oPvLHsEX6pXOlFYbjG1QTLfThg==}
 
   '@fern-fern/revalidation-sdk@0.0.9':
     resolution: {integrity: sha512-iZhm1odMdgWqlJi8B6lUPkza8YFfPz6iAhLfTkTnG4cpgPLER4sdQ8tlO+sUcGJF07Z3KkCRKmD6k54wNhv6Gg==}
@@ -18326,7 +18323,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@fern-fern/generators-sdk@0.107.0-5c0782c84':
+  '@fern-fern/generators-sdk@0.107.0-892e7c392':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3

@@ -20,10 +20,9 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.335.0",
     "@fern-api/core-utils": "0.15.0-rc63",
-    "@fern-api/fs-utils": "0.15.0-rc63",
     "@fern-api/github": "workspace:*",
     "@fern-api/venus-api-sdk": "0.8.1-1-gd6d1a5b",
-    "@fern-fern/generators-sdk": "0.107.0-5c0782c84",
+    "@fern-fern/generators-sdk": "0.107.0-892e7c392",
     "@octokit/openapi-types": "^22.1.0",
     "cohere-ai": "^7.9.5",
     "fern-api": "^0.21.0",

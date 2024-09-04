@@ -31,7 +31,10 @@ async function getGeneratorChangelog(
     console.log(`Getting changelog for generator ${generator} from ${from} to ${to}.`);
     const client = new FernRegistryClient({ environment: fdrUrl });
 
-    const response = await client.generators.versions.getChangelog("python-sdk", from, to);
+    const response = await client.generators.versions.getChangelog("python-sdk", {
+        fromVersion: { type: "exclusive", value: from },
+        toVersion: { type: "inclusive", value: to },
+    });
     if (!response.ok) {
         throw new Error(`Changelog for generator ${generator} (from version: ${from} to: ${to}) not found`);
     }
@@ -43,9 +46,14 @@ async function getCliChangelog(fdrUrl: string, from: string, to: string): Promis
     console.log(`Getting changelog for CLI from ${from} to ${to}`);
     const client = new FernRegistryClient({ environment: fdrUrl });
 
-    const response = await client.generators.cli.getChangelog(from, to);
+    const response = await client.generators.cli.getChangelog({
+        fromVersion: { type: "exclusive", value: from },
+        toVersion: { type: "inclusive", value: to },
+    });
     if (!response.ok) {
-        throw new Error(`Changelog for CLI (from version: ${from} to: ${to}) not found: ${JSON.stringify(response)}`);
+        throw new Error(
+            `Changelog for CLI (from version: ${from} to: ${to}) not found: ${JSON.stringify(response)} from url ${fdrUrl}`,
+        );
     }
 
     console.log("Changelog response: ", JSON.stringify(response.body));
@@ -215,12 +223,13 @@ export async function updateVersionInternal(
     for (const [apiName, api] of Object.entries(generatorsList)) {
         for (const [groupName, group] of Object.entries(api)) {
             for (const generator of group) {
+                const generatorName = cleanStdout(generator);
                 const branchName = "fern/update/";
                 let additionalName = groupName;
                 if (apiName !== NO_API_FALLBACK_KEY) {
                     additionalName = `${apiName}:${groupName}`;
                 }
-                additionalName = `${generator.replace("fernapi/", "")}@${additionalName}`;
+                additionalName = `${generatorName.replace("fernapi/", "")}@${additionalName}`;
 
                 // We could collect the promises here and await them at the end, but there aren't many you'd parallelize,
                 // and I think you'd outweigh that benefit by having to make several clones to manage the branches in isolation.
@@ -231,7 +240,7 @@ export async function updateVersionInternal(
                     branchName: `${branchName}${additionalName}`,
                     prTitle: `Upgrade Fern Generator Version: (${additionalName})`,
                     upgradeAction: async () => {
-                        let command = `generator upgrade --generator ${generator} --group ${groupName}`;
+                        let command = `generator upgrade --generator ${generatorName} --group ${groupName}`;
                         if (apiName !== NO_API_FALLBACK_KEY) {
                             command += ` --api ${apiName}`;
                         }
@@ -241,11 +250,11 @@ export async function updateVersionInternal(
                     },
                     getPRBody: async (fromVersion, toVersion) => {
                         return formatChangelogResponses(
-                            await getGeneratorChangelog(fdrUrl, generator, fromVersion, toVersion),
+                            await getGeneratorChangelog(fdrUrl, generatorName, fromVersion, toVersion),
                         );
                     },
                     getEntityVersion: async () => {
-                        let command = `generator get --version --generator ${generator} --group ${groupName}`;
+                        let command = `generator get --version --generator ${generatorName} --group ${groupName}`;
                         if (apiName !== NO_API_FALLBACK_KEY) {
                             command += ` --api ${apiName}`;
                         }

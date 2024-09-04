@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { doesPathExist } from "@libs/fs";
 import execa from "execa";
 
 export async function execFernCli(command: string, cwd?: string): Promise<execa.ExecaChildProcess<string>> {
@@ -13,7 +13,7 @@ export async function execFernCli(command: string, cwd?: string): Promise<execa.
 
         let command: execa.ExecaChildProcess<string>;
         // If you don't have node_modules/fern-api, try using the CLI directly
-        if (!(await doesPathExist(AbsoluteFilePath.of(`${process.cwd()}/node_modules/fern-api`)))) {
+        if (!(await doesPathExist(`${process.cwd()}/node_modules/fern-api`))) {
             command = execa("fern", commandParts, {
                 cwd,
             });

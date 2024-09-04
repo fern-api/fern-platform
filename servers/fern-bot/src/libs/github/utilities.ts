@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { doesPathExist } from "@libs/fs";
 import { components } from "@octokit/openapi-types";
 import { mkdir } from "fs/promises";
 import { Octokit } from "octokit";
@@ -9,18 +9,9 @@ import tmp from "tmp-promise";
 export const DEFAULT_REMOTE_NAME = "origin";
 export type Repository = components["schemas"]["repository"];
 
-export async function configureGitRaw(repoId: string, repoName: string): Promise<[SimpleGit, string]> {
-    const tmpDir = await tmp.dir();
-    const fullRepoPath = AbsoluteFilePath.of(path.join(tmpDir.path, repoId, repoName));
-    if (!(await doesPathExist(fullRepoPath))) {
-        await mkdir(fullRepoPath, { recursive: true });
-    }
-    return [simpleGit(fullRepoPath), fullRepoPath];
-}
-
 export async function configureGit(repository: Repository): Promise<[SimpleGit, string]> {
     const tmpDir = await tmp.dir();
-    const fullRepoPath = AbsoluteFilePath.of(path.join(tmpDir.path, repository.id.toString(), repository.name));
+    const fullRepoPath = path.join(tmpDir.path, repository.id.toString(), repository.name);
     if (!(await doesPathExist(fullRepoPath))) {
         await mkdir(fullRepoPath, { recursive: true });
     }
