@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  owner: owner.yml
+
+types:
+  TokenId:
+    type: string
+
+  CreateTokenResponse:
+    properties:
+      token: string
+      tokenId: TokenId
+
+  TokenMetadata:
+    properties:
+      tokenId: TokenId
+      ownerId: owner.OwnerId
+      description: optional<string>
+      createdTime: datetime
+      status: TokenStatus
+
+  TokenStatus:
+    union:
+      active: {}
+      expired: {}
+      revoked: {}
+service:
+  auth: false
+  base-path: /tokens
+  endpoints:
+
+    create:
+      method: POST
+      path: /create
+      request:
+        name: CreateTokenRequest
+        body:
+          properties:
+            ownerId: owner.OwnerId
+            prefix:
+              type: optional<string>
+              docs: If specified, the token will be <prefix>_<token>
+            description: optional<string>
+      response: CreateTokenResponse
+      errors:
+        - owner.OwnerNotFoundError
+
+    getTokenMetadata:
+      method: POST
+      path: /metadata
+      request:
+        name: GetTokenMetadataRequest
+        body:
+          properties:
+            token: string
+      response: TokenMetadata
+      errors:
+        - TokenNotFoundError
+
+    getTokensForOwner:
+      method: GET
+      path: /owner/{ownerId}
+      path-parameters:
+        ownerId: owner.OwnerId
+      response: list<TokenMetadata>
+      errors:
+        - owner.OwnerNotFoundError
+
+    revokeTokenById:
+      method: POST
+      path: /revoke/{tokenId}
+      path-parameters:
+        tokenId: TokenId
+      errors:
+        - TokenNotFoundError
+
+    revokeToken:
+      method: POST
+      path: /revoke
+      request:
+        name: RevokeTokenRequest
+        body:
+          properties:
+            token: string
+      errors:
+        - TokenNotFoundError
+
+errors:
+  TokenNotFoundError:
+    status-code: 404
