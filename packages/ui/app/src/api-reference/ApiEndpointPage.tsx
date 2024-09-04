@@ -1,4 +1,3 @@
-import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { ApiPageContext } from "../contexts/api-page";
 import type { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
@@ -16,9 +15,9 @@ export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ item, showErr
     return (
         <ApiPageContext.Provider value={true}>
             <SingleApiPageContent item={item} showErrors={showErrors} types={types} />
-            <div className="px-4 md:px-6 lg:px-8">
+            {/* <div className="px-4 md:px-6 lg:px-8">
                 <BottomNavigationButtons showPrev />
-            </div>
+            </div> */}
             <BuiltWithFern className="w-fit mx-auto my-8" />
         </ApiPageContext.Provider>
     );
