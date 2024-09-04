@@ -207,7 +207,7 @@ export async function updateVersionInternal(
         branchName: "fern/update/cli",
         prTitle: "Upgrade Fern CLI version",
         upgradeAction: async () => {
-            const response = await execFernCli("upgrade", fullRepoPath);
+            const response = await execFernCli("upgrade", fullRepoPath, true);
             console.log(response.stdout);
             console.log(response.stderr);
         },

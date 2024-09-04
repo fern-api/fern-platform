@@ -20,7 +20,14 @@
     "types": ["vitest/globals"]
   },
   "include": ["src/**/*.ts", "serverless.ts"],
-  "exclude": ["node_modules/**/*", ".serverless/**/*", ".webpack/**/*", "_warmup/**/*", ".vscode/**/*"],
+  "exclude": [
+    "node_modules/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*",
+    "src/__test__/**/*"
+  ],
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   },

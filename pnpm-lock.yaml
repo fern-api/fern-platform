@@ -2495,6 +2495,9 @@ importers:
       cohere-ai:
         specifier: ^7.9.5
         version: 7.9.5
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
       fern-api:
         specifier: ^0.21.0
         version: 0.21.0
