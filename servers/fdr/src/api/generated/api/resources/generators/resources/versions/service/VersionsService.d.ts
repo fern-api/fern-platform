@@ -11,9 +11,7 @@ export interface VersionsServiceMethods {
     }): void | Promise<void>;
     getChangelog(req: express.Request<{
         generator: FernRegistry.generators.GeneratorId;
-        from_version: string;
-        to_version: string;
-    }, FernRegistry.generators.GetChangelogResponse, never, never>, res: {
+    }, FernRegistry.generators.GetChangelogResponse, FernRegistry.generators.GetChangelogRequest, never>, res: {
         send: (responseBody: FernRegistry.generators.GetChangelogResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;

@@ -33,8 +33,13 @@ jobs:
       CI: false
     steps:
       - uses: actions/checkout@v4
+      
       - name: 📥 Install
         uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile           
+      
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
@@ -59,8 +64,13 @@ jobs:
       CI: false
     steps:
       - uses: actions/checkout@v4
+      
       - name: 📥 Install
         uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile                   
+      
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install

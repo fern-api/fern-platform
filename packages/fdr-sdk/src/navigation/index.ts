@@ -1,4 +1,6 @@
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
+import { ApiDefinitionPruner } from "./ApiDefinitionPruner";
+import { ApiTypeIdVisitor } from "./ApiTypeIdVisitor";
 import { NodeCollector } from "./NodeCollector";
 import { ApiReferenceNavigationConverter } from "./converters/ApiReferenceNavigationConverter";
 import { ChangelogNavigationConverter } from "./converters/ChangelogConverter";
@@ -12,7 +14,9 @@ export * from "./types";
 export * as utils from "./utils";
 export {
     ApiDefinitionHolder,
+    ApiDefinitionPruner,
     ApiReferenceNavigationConverter,
+    ApiTypeIdVisitor,
     ChangelogNavigationConverter,
     NavigationConfigConverter,
     NodeCollector,

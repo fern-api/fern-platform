@@ -95,17 +95,24 @@ export class Versions {
      * Get the changelog for the specified generator upgrade. The response will be a map of the generator version to it's corresponding changelog.
      *
      * @param {FernRegistry.generators.GeneratorId} generator
-     * @param {string} fromVersion
-     * @param {string} toVersion
+     * @param {FernRegistry.generators.GetChangelogRequest} request
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.getChangelog("string", "string", "string")
+     *     await fernRegistry.generators.versions.getChangelog("string", {
+     *         from_version: {
+     *             type: "inclusive",
+     *             value: "string"
+     *         },
+     *         to_version: {
+     *             type: "inclusive",
+     *             value: "string"
+     *         }
+     *     })
      */
     public async getChangelog(
         generator: FernRegistry.generators.GeneratorId,
-        fromVersion: string,
-        toVersion: string,
+        request: FernRegistry.generators.GetChangelogRequest,
         requestOptions?: Versions.RequestOptions
     ): Promise<
         core.APIResponse<
@@ -116,11 +123,9 @@ export class Versions {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/versions/${encodeURIComponent(generator)}/changelog/${encodeURIComponent(
-                    fromVersion
-                )}/to/${encodeURIComponent(toVersion)}`
+                `/generators/versions/${encodeURIComponent(generator)}/changelog`
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
@@ -128,6 +133,7 @@ export class Versions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

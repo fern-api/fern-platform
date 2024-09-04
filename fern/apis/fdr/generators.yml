@@ -27,10 +27,20 @@ groups:
           extraDevDependencies:
             "@types/mime": "3.0.4"
 
-  navigation: 
-    audiences: 
+  postman:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.3.2
+        output:
+          location: postman
+          api-key: ${POSTMAN_API_KEY}
+          workspace-id: 5579b37c-ab1f-4660-90d1-0409e81d57bc
+          collection-id: 30404764-47b97d6f-d2af-439c-bcff-5b75e6c0e5b6
+
+  navigation:
+    audiences:
       - navigation
-    generators:               
+    generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.20.9
         output:
@@ -42,7 +52,7 @@ groups:
           outputSourceFiles: true
           useBrandedStringAliases: true
           noSerdeLayer: true
-          neverThrowErrors: true            
+          neverThrowErrors: true
 
   fdr-cjs-sdk:
     generators:

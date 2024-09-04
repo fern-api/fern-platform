@@ -32,8 +32,13 @@ jobs:
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
     steps:
       - uses: actions/checkout@v4
+      
       - name: 📥 Install
         uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile                           
+      
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
@@ -57,8 +62,13 @@ jobs:
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
     steps:
       - uses: actions/checkout@v4
+      
       - name: 📥 Install
         uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile                                   
+      
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
