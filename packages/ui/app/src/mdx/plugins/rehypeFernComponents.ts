@@ -220,7 +220,11 @@ function transformSteps(
             children.push(child);
         } else if (child.type === "element" && child.tagName === "h3") {
             const title = toString(child);
-            const slug = slugger.slug(title);
+
+            // id may have been set by customHeadingHandler in remarkRehypeHandlers.ts
+            const slug =
+                (typeof child.properties["id"] === "string" ? child.properties["id"] : undefined) ??
+                slugger.slug(title);
             children.push({
                 type: "mdxJsxFlowElement",
                 name: "Step",
