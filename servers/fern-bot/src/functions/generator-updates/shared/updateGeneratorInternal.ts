@@ -230,7 +230,7 @@ export async function updateVersionInternal(
                 const branchName = "fern/update/";
                 let additionalName = groupName;
                 if (apiName !== NO_API_FALLBACK_KEY) {
-                    additionalName = `${apiName}:${groupName}`;
+                    additionalName = `${apiName}/${groupName}`;
                 }
                 additionalName = `${generatorName.replace("fernapi/", "")}@${additionalName}`;
 
