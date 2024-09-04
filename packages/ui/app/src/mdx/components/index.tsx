@@ -30,7 +30,7 @@ import { IFrame } from "./iframe";
 import { CustomLayout, GuideLayout, OverviewLayout, PageLayout, ReferenceLayout } from "./layout";
 import { ParamField } from "./mintlify";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
-import { Steps } from "./steps";
+import { Step, Steps } from "./steps";
 import { TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
 
@@ -54,6 +54,7 @@ const FERN_COMPONENTS = {
     Frame,
     Icon: RemoteFontAwesomeIcon,
     ParamField,
+    Step,
     Steps,
     TabGroup,
     Tooltip,
