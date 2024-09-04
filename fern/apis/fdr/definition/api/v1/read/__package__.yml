@@ -111,30 +111,19 @@ types:
 
   OAuth:
     union:
-      ClientCredentials: OAuthClientCredentials
-      AuthorizationCode: OAuthAuthorizationCode
+      clientCredentials: OAuthClientCredentials
 
   OAuthClientCredentials:
     properties:
-      tokenUrl: string
-      clientIdName: optional<string>
-      clientSecretName: optional<string>
-      tokenPrefix: optional<string>
-      accessTokenName: optional<string>
-      refreshTokenName: optional<string>
+      tokenUrl: PropertyPath
+      clientIdName: optional<PropertyPath>
+      clientSecretName: optional<PropertyPath>
+      tokenPrefix: optional<PropertyPath>
+      accessTokenName: optional<PropertyPath>
+      refreshTokenName: optional<PropertyPath>
 
-  OAuthAuthorizationCode:
-    properties:
-      # for kicking off the authorization flow, required
-      authorizationUrl: string
-      # for exchanging the code for a token, required
-      tokenUrl: string
-      # for use with validation, optional
-      tokenPrefix: optional<string>
-      accessTokenName: optional<string>
-      refreshTokenName: optional<string>
-      # for logging users in with a specific set of scopes -- if not set by org, let user set
-      scopes: optional<list<string>>
+  PropertyPath:
+    type: array<string>
 
 errors:
   ApiDoesNotExistError:
