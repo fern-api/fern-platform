@@ -90,6 +90,7 @@ types:
       bearerAuth: BearerAuth
       basicAuth: BasicAuth
       header: HeaderAuth
+      oauth2: Oauth2Auth
 
   BasicAuth:
     properties:
@@ -107,6 +108,19 @@ types:
       prefix:
         type: optional<string>
         docs: The prefix that comes before the header
+
+  Oauth2Auth:
+    properties:
+      # for kicking off the authorization flow, required
+      authorizationEndpoint: string
+      # for exchanging the code for a token, required
+      tokenEndpoint: string
+      # for use with validation, optional
+      tokenPrefix: optional<string>
+      accessTokenName: optional<string>
+      refreshTokenName: optional<string>
+      # for logging users in with a specific set of scopes -- if not set by org, let user set
+      scopes: optional<list<string>>
 
 errors:
   ApiDoesNotExistError:
