@@ -46,21 +46,20 @@ types:
       - ts
       - js
 
-  BannerConfig:
+  AnnouncementConfig:
     properties:
       text:
         type: string
         docs: The text to display in the banner, using markdown.
-      backgroundColor:
-        type: optional<ColorConfig>
-        docs: By default, the banner will use the accent primary color as its background color.
-      textColor:
-        type: optional<ColorConfig>
-        docs: By default, the banner will use the highest contrast (black or white) as its text color, unless a custom color is provided.
-      icon: optional<string>
-      dismissable:
-        type: optional<boolean>
-        default: false
+      # backgroundColor:
+      #   type: optional<ColorConfig>
+      #   docs: By default, the banner will use the accent primary color as its background color.
+      # textColor:
+      #   type: optional<ColorConfig>
+      #   docs: By default, the banner will use the highest contrast (black or white) as its text color, unless a custom color is provided.
+      # dismissable:
+      #   type: optional<boolean>
+      #   default: false
 
   AnalyticsConfig:
     properties:

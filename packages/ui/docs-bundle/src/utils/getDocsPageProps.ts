@@ -25,6 +25,7 @@ import { NextApiRequestCookies } from "next/dist/server/api-utils";
 import { type IncomingMessage, type ServerResponse } from "node:http";
 import { ComponentProps } from "react";
 import { default as urlJoin, default as urljoin } from "url-join";
+import { serializeMdx } from "../../../app/src/mdx/bundler";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
@@ -341,6 +342,13 @@ async function convertDocsToDocsPageProps({
             (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined),
         files: docs.definition.filesV2,
         resolvedPath,
+        announcement:
+            docs.definition.config.announcement != null
+                ? {
+                      mdx: await serializeMdx(docs.definition.config.announcement.text),
+                      text: docs.definition.config.announcement.text,
+                  }
+                : undefined,
         navigation: {
             currentTabIndex: node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab),
             tabs: node.tabs.map((tab, index) =>

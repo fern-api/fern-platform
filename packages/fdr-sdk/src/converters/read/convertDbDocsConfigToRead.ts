@@ -29,7 +29,7 @@ export function convertDbDocsConfigToRead({
         integrations: dbShape.integrations,
         defaultLanguage: dbShape.defaultLanguage,
         analyticsConfig: dbShape.analyticsConfig,
-        banner: dbShape.banner,
+        announcement: dbShape.announcement,
     };
 }
 

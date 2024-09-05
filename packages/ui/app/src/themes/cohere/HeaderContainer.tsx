@@ -1,6 +1,7 @@
 import { useAtomValue } from "jotai";
 import { ReactElement, memo } from "react";
 import { HAS_HORIZONTAL_TABS, SEARCHBAR_PLACEMENT_ATOM } from "../../atoms";
+import { Announcement } from "../../header/Announcement";
 import { Header } from "../../header/Header";
 import { HeaderTabs } from "../../header/HeaderTabs";
 import { SidebarSearchBar } from "../../sidebar/SidebarSearchBar";
@@ -16,6 +17,7 @@ export const HeaderContainer = memo(function HeaderContainer({ className }: Head
     return (
         <header id="fern-header" className={className}>
             <div className="fern-header-container width-before-scroll-bar">
+                <Announcement />
                 <div className="fern-header">
                     <Header className="mx-auto max-w-page-width" />
                 </div>

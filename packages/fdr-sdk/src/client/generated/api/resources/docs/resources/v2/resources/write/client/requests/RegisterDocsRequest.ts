@@ -17,16 +17,8 @@ import * as FernRegistry from "../../../../../../../../index";
  *             config: {
  *                 title: "string",
  *                 defaultLanguage: FernRegistry.docs.v1.commons.ProgrammingLanguage.Typescript,
- *                 banner: {
- *                     text: "string",
- *                     backgroundColor: {
- *                         type: "unthemed"
- *                     },
- *                     textColor: {
- *                         type: "unthemed"
- *                     },
- *                     icon: "string",
- *                     dismissable: true
+ *                 announcement: {
+ *                     text: "string"
  *                 },
  *                 navigation: {
  *                     tabs: [{

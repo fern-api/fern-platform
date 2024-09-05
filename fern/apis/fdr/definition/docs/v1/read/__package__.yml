@@ -86,7 +86,7 @@ types:
     properties:
       title: optional<string>
       defaultLanguage: optional<commons.ProgrammingLanguage>
-      banner: optional<commons.BannerConfig>
+      announcement: optional<commons.AnnouncementConfig>
 
       # navigation
       navigation: NavigationConfig
