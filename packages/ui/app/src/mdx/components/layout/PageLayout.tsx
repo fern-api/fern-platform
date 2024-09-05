@@ -1,5 +1,6 @@
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import type { ElementContent } from "hast";
-import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
+import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { ReactElement, ReactNode } from "react";
 import { EditThisPageButton } from "../../../components/EditThisPage";
 import { PageHeader } from "../../../components/PageHeader";
@@ -8,7 +9,7 @@ import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 
 interface PageLayoutProps {
-    breadcrumbs: string[];
+    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
     title: string;
     subtitle: ReactNode | undefined;
     children: ReactNode;
@@ -18,7 +19,7 @@ interface PageLayoutProps {
 }
 
 interface PageLayoutOpts {
-    breadcrumbs: string[];
+    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
     title: string;
     subtitle: ElementContent | undefined;
     children: ElementContent[];

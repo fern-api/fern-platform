@@ -43,15 +43,7 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
                 return;
             }
 
-            const breadcrumbs = [...parents, node]
-                .filter(FernNavigation.isSection)
-                .filter((n) => {
-                    if (n.type === "apiReference") {
-                        return n.hideTitle !== true;
-                    }
-                    return true;
-                })
-                .map((parent) => parent.title);
+            const breadcrumbs = FernNavigation.utils.createBreadcrumbs(parents).map((breadcrumb) => breadcrumb.title);
             result.push({
                 api: node.apiDefinitionId,
                 id: node.id,

@@ -1,5 +1,5 @@
-import { FernNavigation } from "../generated";
-import { NavigationNode } from "./NavigationNode";
+import type { FernNavigation } from "../generated";
+import type { NavigationNode } from "./NavigationNode";
 
 /**
  * A navigation node that has a title and a slug

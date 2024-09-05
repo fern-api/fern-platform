@@ -107,7 +107,7 @@ export async function convertNavigatableToResolvedPath({
 
         return {
             type: "changelog",
-            sectionTitleBreadcrumbs: found.breadcrumb,
+            breadcrumbs: found.breadcrumbs,
             title: (page != null && typeof page !== "string" ? page.frontmatter.title : undefined) ?? found.node.title,
             node,
             pages: Object.fromEntries(pageRecords.map((record) => [record.pageId, record.markdown])),
@@ -143,7 +143,7 @@ export async function convertNavigatableToResolvedPath({
             type: "changelog-entry",
             changelogTitle,
             changelogSlug: changelogNode.slug,
-            sectionTitleBreadcrumbs: found.breadcrumb,
+            breadcrumbs: found.breadcrumbs,
             page,
             neighbors,
         };
@@ -163,6 +163,7 @@ export async function convertNavigatableToResolvedPath({
             const holder = FernNavigation.ApiDefinitionHolder.create(api);
             const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
             const defResolver = new ApiEndpointResolver(
+                found.collector,
                 holder,
                 typeResolver,
                 await typeResolver.resolve(),
@@ -187,6 +188,7 @@ export async function convertNavigatableToResolvedPath({
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
         const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
         const apiDefinition = await ApiDefinitionResolver.resolve(
+            found.collector,
             apiReference,
             holder,
             typeResolver,
@@ -235,7 +237,7 @@ async function resolveMarkdownPage(
         filename: pageId,
         frontmatterDefaults: {
             title: node.title,
-            breadcrumbs: found.breadcrumb,
+            breadcrumbs: found.breadcrumbs,
             "edit-this-page-url": pageContent.editThisPageUrl,
             "force-toc": featureFlags.isTocDefaultEnabled,
         },
@@ -273,7 +275,15 @@ async function resolveMarkdownPage(
                 const typeResolver = new ApiTypeResolver(definition.types, mdxOptions);
                 return [
                     apiNode.title,
-                    await ApiDefinitionResolver.resolve(apiNode, holder, typeResolver, pages, mdxOptions, featureFlags),
+                    await ApiDefinitionResolver.resolve(
+                        found.collector,
+                        apiNode,
+                        holder,
+                        typeResolver,
+                        pages,
+                        mdxOptions,
+                        featureFlags,
+                    ),
                 ];
             }),
         ),

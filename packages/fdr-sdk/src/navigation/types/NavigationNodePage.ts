@@ -1,7 +1,7 @@
-import { FernNavigation } from "../generated";
-import { NavigationNode } from "./NavigationNode";
-import { NavigationNodeApiLeaf, isApiLeaf } from "./NavigationNodeApiLeaf";
-import { NavigationNodeWithMarkdown, hasMarkdown } from "./NavigationNodeMarkdown";
+import type { FernNavigation } from "../generated";
+import type { NavigationNode } from "./NavigationNode";
+import { isApiLeaf, type NavigationNodeApiLeaf } from "./NavigationNodeApiLeaf";
+import { hasMarkdown, type NavigationNodeWithMarkdown } from "./NavigationNodeMarkdown";
 
 /**
  * A navigation node that represents a visitable page in the documentation

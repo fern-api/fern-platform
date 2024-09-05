@@ -1,7 +1,8 @@
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernScrollArea } from "@fern-ui/components";
 import type { ElementContent } from "hast";
 import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
-import { ReactNode, type ReactElement } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { BottomNavigationButtons } from "../../../components/BottomNavigationButtons";
 import { EditThisPageButton } from "../../../components/EditThisPage";
 import { PageHeader } from "../../../components/PageHeader";
@@ -11,7 +12,7 @@ import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 
 interface GuideLayoutProps {
-    breadcrumbs: string[];
+    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
     title: string;
     subtitle: ReactNode | undefined;
     tableOfContents: TableOfContentsItem[] | undefined;

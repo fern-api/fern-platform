@@ -1,4 +1,4 @@
-import { FernNavigation } from "../generated";
+import type { FernNavigation } from "../generated";
 
 /**
  * All possible types of navigation nodes.
