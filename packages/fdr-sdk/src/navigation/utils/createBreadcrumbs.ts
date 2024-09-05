@@ -16,14 +16,14 @@ export function createBreadcrumbs(nodes: NavigationNode[]): readonly NavigationB
             section: (section) => {
                 breadcrumb.push({
                     title: section.title,
-                    pointsTo: section.pointsTo,
+                    pointsTo: section.overviewPageId != null ? section.slug : section.pointsTo,
                 });
             },
             apiReference: (apiReference) => {
                 if (!apiReference.hideTitle) {
                     breadcrumb.push({
                         title: apiReference.title,
-                        pointsTo: apiReference.pointsTo,
+                        pointsTo: apiReference.overviewPageId != null ? apiReference.slug : apiReference.pointsTo,
                     });
                 }
             },
@@ -48,7 +48,7 @@ export function createBreadcrumbs(nodes: NavigationNode[]): readonly NavigationB
             apiPackage: (apiPackage) => {
                 breadcrumb.push({
                     title: apiPackage.title,
-                    pointsTo: apiPackage.pointsTo,
+                    pointsTo: apiPackage.overviewPageId != null ? apiPackage.slug : apiPackage.pointsTo,
                 });
             },
         });
