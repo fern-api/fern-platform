@@ -340,7 +340,7 @@ it("get generator that works for cli version", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             version: "0.100.0",
-            ir_version: 51,
+            ir_version: 52,
         },
     });
 
@@ -392,5 +392,82 @@ it("get generator that works for cli version", async () => {
             cliVersion: "0.100.0",
         },
     });
-    expect(release?.version).toEqual("3.1.0");
+    expect(release?.version).toEqual("3.5.0");
+});
+
+it("get generator retain major version", async () => {
+    await fdrApplication.dao.generators().upsertGenerator({
+        generator: {
+            id: "this-is-major-version-restricted",
+            generator_type: { type: "sdk" },
+            docker_image: "this-is-major-version-restricted",
+            generator_language: FdrAPI.generators.GeneratorLanguage.Python,
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-is-major-version-restricted",
+            ir_version: 50,
+            version: "2.0.0",
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-is-major-version-restricted",
+            ir_version: 50,
+            version: "2.1.0-rc0",
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-is-major-version-restricted",
+            ir_version: 50,
+            version: "2.1.8",
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-is-major-version-restricted",
+            ir_version: 51,
+            version: "3.0.0",
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-is-major-version-restricted",
+            ir_version: 51,
+            version: "3.1.0",
+        },
+    });
+
+    await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
+        generatorRelease: {
+            generator_id: "this-is-major-version-restricted",
+            ir_version: 52,
+            version: "3.5.0",
+        },
+    });
+
+    // Get with retain major at 2
+    const releaseRetainMajor = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
+        getLatestGeneratorReleaseRequest: {
+            generator: "this-is-major-version-restricted",
+            releaseTypes: ["GA"],
+            generatorMajorVersion: 2,
+        },
+    });
+    expect(releaseRetainMajor?.version).toEqual("2.1.8");
+
+    const release = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
+        getLatestGeneratorReleaseRequest: {
+            generator: "this-is-major-version-restricted",
+            releaseTypes: ["GA"],
+        },
+    });
+    expect(release?.version).toEqual("3.5.0");
 });
