@@ -24,6 +24,7 @@ import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
+import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
@@ -251,7 +252,14 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
             >
-                <EndpointContentHeader endpoint={endpointProp} container={ref} />
+                <EndpointContentHeader
+                    endpoint={endpoint}
+                    streamToggle={
+                        endpointProp.stream != null && (
+                            <EndpointStreamingEnabledToggle endpoint={endpointProp} container={ref} />
+                        )
+                    }
+                />
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
                         className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
