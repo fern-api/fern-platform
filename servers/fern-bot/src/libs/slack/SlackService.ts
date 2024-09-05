@@ -10,7 +10,7 @@ export class SlackService {
     private slackClient: WebClient;
 
     constructor(
-        private readonly slackToken: string,
+        slackToken: string,
         private readonly slackChannel: string,
     ) {
         this.slackClient = new WebClient(slackToken);
