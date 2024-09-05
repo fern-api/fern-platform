@@ -46,7 +46,7 @@ interface PlaygroundEndpointProps {
 
 const APP_BUILDWITHFERN_COM = "app.buildwithfern.com";
 
-const getAppBuildwithfernCom = once((): string => {
+export const getAppBuildwithfernCom = once((): string => {
     if (process.env.NODE_ENV === "development") {
         return "http://localhost:3000";
     }
@@ -72,14 +72,14 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     }, []);
 
     const basePath = useBasePath();
-    const { usesApplicationJsonInFormDataValue } = useFeatureFlags();
-    const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
+    const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
     const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
 
+    // TODO: use this
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
             return;
@@ -210,7 +210,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     );
 };
 
-async function serializeFormStateBody(
+export async function serializeFormStateBody(
     environment: string,
     shape: ResolvedHttpRequestBodyShape | undefined,
     body: PlaygroundFormStateBody | undefined,

@@ -10,9 +10,11 @@ import {
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
     PLAYGROUND_AUTH_STATE_HEADER_INITIAL,
+    PLAYGROUND_AUTH_STATE_OAUTH_INITIAL,
     PlaygroundAuthStateBasicAuth,
     PlaygroundAuthStateBearerToken,
     PlaygroundAuthStateHeader,
+    PlaygroundAuthStateOAuth,
     PlaygroundAuthStateSchema,
     type PlaygroundAuthState,
     type PlaygroundEndpointRequestFormState,
@@ -214,6 +216,16 @@ export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM = atom(
                 typeof update === "function"
                     ? update(prev.basicAuth ?? PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL)
                     : update,
+        }));
+    },
+);
+
+export const PLAYGROUND_AUTH_STATE_OAUTH_ATOM = atom(
+    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).oauth ?? PLAYGROUND_AUTH_STATE_OAUTH_INITIAL,
+    (_get, set, update: SetStateAction<PlaygroundAuthStateOAuth>) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
+            ...prev,
+            oauth: typeof update === "function" ? update(prev.oauth ?? PLAYGROUND_AUTH_STATE_OAUTH_INITIAL) : update,
         }));
     },
 );

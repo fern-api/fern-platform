@@ -115,12 +115,9 @@ types:
 
   OAuthClientCredentials:
     properties:
-      tokenUrl: PropertyPath
-      clientIdName: optional<PropertyPath>
-      clientSecretName: optional<PropertyPath>
-      tokenPrefix: optional<PropertyPath>
-      accessTokenName: optional<PropertyPath>
-      refreshTokenName: optional<PropertyPath>
+      tokenEndpointPath: string
+      tokenPrefix: optional<string>
+      accessTokenLocation: PropertyPath
 
   PropertyPath: list<string>
 

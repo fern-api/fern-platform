@@ -9,20 +9,33 @@ import { useRouter } from "next/router";
 import { FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import urlJoin from "url-join";
 import { useMemoOne } from "use-memo-one";
+import mapValue from "../../../../fdr-sdk/src/utils/lodash/mapValues";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM,
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
+    PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
+    useBasePath,
+    useFeatureFlags,
+    useFlattenedApis,
+    usePlaygroundEndpointFormState,
 } from "../atoms";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { Callout } from "../mdx/components/callout";
+import { ResolvedApiEndpointWithPackage } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
+import { unknownToString } from "../util/unknownToString";
 import { PasswordInputGroup } from "./PasswordInputGroup";
-import { PlaygroundAuthState } from "./types";
+import { getAppBuildwithfernCom, serializeFormStateBody } from "./PlaygroundEndpoint";
+import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
+import { executeProxyRest } from "./fetch-utils/executeProxyRest";
+import { PlaygroundAuthState, ProxyRequest } from "./types";
+import { buildEndpointUrl } from "./utils";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
+    closeContainer: () => void;
     disabled: boolean;
 }
 
@@ -133,13 +146,160 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
     );
 }
 
-export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> = ({ auth, disabled }) => {
+function OAuthForm({
+    oAuth,
+    closeContainer,
+    disabled,
+}: {
+    oAuth: APIV1Read.ApiAuth.OAuth;
+    closeContainer: () => void;
+    disabled?: boolean;
+}) {
+    // Client Credential hooks
+    const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
+    const basePath = useBasePath();
+    const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
+    const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
+    const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
+    const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
+    const apis = useFlattenedApis();
+
+    const endpointSlug = oAuth.value.tokenEndpointPath.startsWith("/")
+        ? oAuth.value.tokenEndpointPath.slice(1)
+        : oAuth.value.tokenEndpointPath;
+
+    let endpoint: ResolvedApiEndpointWithPackage.Endpoint | null = null;
+    let types = null;
+
+    for (const node of Object.values(apis)) {
+        endpoint = node.endpoints.find((e) => e.slug === endpointSlug) as ResolvedApiEndpointWithPackage.Endpoint;
+        if (endpoint) {
+            types = apis[endpoint?.apiDefinitionId ?? ""]?.types;
+            break;
+        }
+    }
+
+    if (endpoint != null && types != null) {
+        const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);
+
+        const refreshOAuthToken = async () => {
+            const headers: Record<string, string> = {
+                ...mapValue(formState.headers ?? {}, unknownToString),
+            };
+
+            if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
+                headers["Content-Type"] = endpoint.requestBody.contentType;
+            }
+
+            const req: ProxyRequest = {
+                url: buildEndpointUrl(endpoint, formState),
+                method: endpoint.method,
+                headers,
+                body: await serializeFormStateBody(
+                    uploadEnvironment,
+                    endpoint.requestBody?.shape,
+                    formState.body,
+                    usesApplicationJsonInFormDataValue,
+                ),
+            };
+            const res = await executeProxyRest(proxyEnvironment, req);
+
+            if (res.response.status >= 200 && res.response.status < 400) {
+                const mutableAccessTokenLocationCopy = [...oAuth.value.accessTokenLocation];
+                visitDiscriminatedUnion(res, "type")._visit({
+                    json: (jsonRes) => {
+                        const container = mutableAccessTokenLocationCopy.shift();
+                        if (container == null || (container !== "body" && container !== "headers")) {
+                            throw new Error("Expected access location to be defined");
+                        }
+                        let cursor: any = jsonRes.response[container];
+                        for (const accessor of mutableAccessTokenLocationCopy) {
+                            if (accessor in cursor) {
+                                cursor = cursor[accessor];
+                            }
+                        }
+                        setValue((prev) => ({ ...prev, accessToken: cursor }));
+                        closeContainer();
+                    },
+                    file: () => {
+                        throw new Error("Expected response to be JSON");
+                    },
+                    stream: () => {
+                        throw new Error("Expected response to be JSON");
+                    },
+                    _other: () => {
+                        throw new Error("Expected response to be JSON");
+                    },
+                });
+            }
+        };
+
+        return (
+            <>
+                <li className="-mx-4 space-y-2 p-4 pb-2">
+                    <label className="inline-flex flex-wrap items-baseline">
+                        <span className="font-mono text-sm">{"OAuth Client Credentials login"}</span>
+                    </label>
+                    <PlaygroundEndpointForm
+                        endpoint={endpoint}
+                        formState={formState}
+                        setFormState={setFormState}
+                        types={types}
+                        ignoreHeaders={true}
+                    />
+                </li>
+                <li className="-mx-4 space-y-2 p-4 pt-0">
+                    {value.accessToken.length > 0 && (
+                        <>
+                            <label className="inline-flex flex-wrap items-baseline">
+                                <span className="font-mono text-sm">
+                                    {oAuth.value.tokenPrefix != null
+                                        ? `${oAuth.value.tokenPrefix} token`
+                                        : "Bearer token"}
+                                </span>
+                            </label>
+
+                            <div>
+                                <PasswordInputGroup
+                                    onValueChange={(newValue: string) =>
+                                        setValue((prev) => ({ ...prev, accessToken: newValue }))
+                                    }
+                                    value={value.accessToken}
+                                    autoComplete="off"
+                                    data-1p-ignore="true"
+                                    disabled={disabled}
+                                />
+                            </div>
+                        </>
+                    )}
+                </li>
+                <li className="flex justify-end py-2">
+                    <FernButton
+                        text={value.accessToken.length > 0 ? "Refresh token" : "Login"}
+                        intent="primary"
+                        onClick={refreshOAuthToken}
+                        disabled={disabled}
+                    />
+                </li>
+            </>
+        );
+    } else {
+        throw new Error("Could not find the endpoint to leverage the OAuth login flow");
+    }
+}
+
+export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> = ({
+    auth,
+    closeContainer,
+    disabled,
+}) => {
     return (
         <ul className="list-none px-4">
             {visitDiscriminatedUnion(auth, "type")._visit({
                 bearerAuth: (bearerAuth) => <BearerAuthForm bearerAuth={bearerAuth} disabled={disabled} />,
                 basicAuth: (basicAuth) => <BasicAuthForm basicAuth={basicAuth} disabled={disabled} />,
                 header: (header) => <HeaderAuthForm header={header} disabled={disabled} />,
+                oAuth: (oAuth) => <OAuthForm oAuth={oAuth} closeContainer={closeContainer} disabled={disabled} />,
                 _other: () => null,
             })}
         </ul>
@@ -252,7 +412,11 @@ export function PlaygroundAuthorizationFormCard({
                             active={true}
                         />
                         <div className="-mx-4">
-                            <PlaygroundAuthorizationForm auth={auth} disabled={disabled} />
+                            <PlaygroundAuthorizationForm
+                                auth={auth}
+                                closeContainer={isOpen.setFalse}
+                                disabled={disabled}
+                            />
                         </div>
                         {
                             <div className="flex justify-end  gap-2">
@@ -329,11 +493,13 @@ export function PlaygroundAuthorizationFormCard({
 
             <FernCollapse isOpen={isOpen.value}>
                 <div className="pt-4">
-                    <div className="fern-dropdown">
-                        <PlaygroundAuthorizationForm auth={auth} disabled={disabled} />
+                    <div className="fern-dropdown !max-h-[350px]">
+                        <PlaygroundAuthorizationForm auth={auth} closeContainer={isOpen.setFalse} disabled={disabled} />
 
                         <div className="flex justify-end p-4 pt-2 gap-2">
-                            <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
+                            {auth.type !== "oAuth" && (
+                                <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
+                            )}
                             {apiKey != null && (
                                 <FernButton
                                     text="Reset token to default"
@@ -357,6 +523,7 @@ function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState): bool
         basicAuth: () =>
             !isEmpty(authState.basicAuth?.username.trim()) && !isEmpty(authState.basicAuth?.password.trim()),
         header: (header) => !isEmpty(authState.header?.headers[header.headerWireValue]?.trim()),
+        oAuth: () => !isEmpty(authState.oauth?.accessToken.trim()),
         _other: () => false,
     });
 }

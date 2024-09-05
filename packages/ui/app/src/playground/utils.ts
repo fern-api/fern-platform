@@ -132,6 +132,15 @@ export function buildAuthHeaders(
                 }
                 headers["Authorization"] = `Basic ${btoa(`${username}:${obfuscateSecret(password)}`)}`;
             },
+            oAuth: () => {
+                const token = authState.oauth?.accessToken ?? "";
+                const tokenPrefix = authState.oauth?.tokenPrefix?.length ? authState.oauth.tokenPrefix : "Bearer";
+                if (redacted) {
+                    headers["Authorization"] = `${tokenPrefix} ${obfuscateSecret(token)}`;
+                } else {
+                    headers["Authorization"] = `${tokenPrefix} ${token}`;
+                }
+            },
         });
     }
 

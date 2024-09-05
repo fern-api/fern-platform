@@ -98,6 +98,21 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     availability: undefined,
                 };
             },
+            oAuth: (value) => {
+                return {
+                    key: "Authorization",
+                    description:
+                        value.value.tokenPrefix != null
+                            ? `OAuth authentication of the form ${value.value.tokenPrefix} <token>.`
+                            : undefined,
+                    hidden: false,
+                    valueShape: {
+                        type: "unknown",
+                        displayName: "string",
+                    },
+                    availability: undefined,
+                };
+            },
         });
     }
 

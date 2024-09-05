@@ -260,6 +260,12 @@ function getHarRequest(
                     value: prefix != null ? `${prefix} <${nameOverride}>` : `<${nameOverride}>`,
                 });
             },
+            oAuth: ({ value: { tokenPrefix } }) => {
+                request.headers.push({
+                    name: "Authorization",
+                    value: `${tokenPrefix} <token>`,
+                });
+            },
             _other: noop,
         });
     }
