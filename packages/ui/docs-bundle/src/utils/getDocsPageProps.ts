@@ -16,6 +16,7 @@ import {
     getSeoProps,
     provideRegistryService,
     renderThemeStylesheet,
+    serializeMdx,
     setMdxBundler,
 } from "@fern-ui/ui";
 import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
@@ -25,7 +26,6 @@ import { NextApiRequestCookies } from "next/dist/server/api-utils";
 import { type IncomingMessage, type ServerResponse } from "node:http";
 import { ComponentProps } from "react";
 import { default as urlJoin, default as urljoin } from "url-join";
-import { serializeMdx } from "../../../app/src/mdx/bundler";
 import { getFeatureFlags } from "../pages/api/fern-docs/feature-flags";
 import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";

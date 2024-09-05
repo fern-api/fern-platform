@@ -5,7 +5,7 @@ export { LocalPreviewContextProvider } from "./contexts/local-preview";
 export * from "./docs/DocsPage";
 export { NextApp } from "./docs/NextApp";
 export { getApiRouteSupplier } from "./hooks/useApiRoute";
-export { setMdxBundler } from "./mdx/bundler";
+export { serializeMdx, setMdxBundler } from "./mdx/bundler";
 export { getFrontmatter } from "./mdx/frontmatter";
 export { Stream } from "./playground/Stream";
 export { ProxyRequestSchema } from "./playground/types";
