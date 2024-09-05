@@ -10,20 +10,12 @@ export declare namespace Endpoint {
         api: string;
         showErrors: boolean;
         endpoint: ResolvedEndpointDefinition;
-        breadcrumbs: readonly string[];
         isLastInApi: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
-const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
-    api,
-    showErrors,
-    endpoint,
-    breadcrumbs,
-    isLastInApi,
-    types,
-}) => {
+const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, isLastInApi, types }) => {
     const [isStream, setStream] = useAtom(FERN_STREAM_ATOM);
     const resolvedPath = useResolvedPath();
 
@@ -51,7 +43,6 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
             api={api}
             showErrors={showErrors}
             endpoint={endpoint}
-            breadcrumbs={breadcrumbs}
             hideBottomSeparator={isLastInApi}
             types={types}
         />

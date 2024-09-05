@@ -2,6 +2,7 @@ export * from "./collectApiReferences";
 export * from "./collectPageIds";
 export * from "./convertAvailability";
 export * from "./convertLoadDocsForUrlResponse";
+export { createBreadcrumbs } from "./createBreadcrumbs";
 export * from "./findNode";
 export * from "./followRedirect";
 export * from "./getApiReferenceId";

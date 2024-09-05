@@ -25,7 +25,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                 <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-auto">
                                     <PageHeader
                                         title={resolvedPath.node.title}
-                                        breadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
+                                        breadcrumbs={resolvedPath.breadcrumbs}
                                         subtitle={
                                             typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined
                                         }
@@ -41,7 +41,7 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                             <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-auto">
                                 <PageHeader
                                     title={resolvedPath.node.title}
-                                    breadcrumbs={resolvedPath.sectionTitleBreadcrumbs}
+                                    breadcrumbs={resolvedPath.breadcrumbs}
                                     subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
                                 />
                                 {overview != null && (

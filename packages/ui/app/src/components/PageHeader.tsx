@@ -1,20 +1,21 @@
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
-import { ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { MdxContent } from "../mdx/MdxContent";
 import type { BundledMDX } from "../mdx/types";
-import { Breadcrumbs } from "./Breadcrumbs";
+import { FernBreadcrumbs } from "./FernBreadcrumbs";
 
 interface PageHeaderProps {
-    breadcrumbs: string[];
     title: string;
     subtitle: BundledMDX | ReactNode | undefined;
+    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
 }
 
 export const PageHeader = ({ breadcrumbs, title, subtitle }: PageHeaderProps): ReactElement => {
     return (
         <header className="mb-8">
             <div className="space-y-1">
-                <Breadcrumbs breadcrumbs={breadcrumbs} />
+                <FernBreadcrumbs breadcrumbs={breadcrumbs} />
 
                 <h1 className="fern-page-heading">{title}</h1>
             </div>

@@ -20,6 +20,7 @@ env:
   GITHUB_APP_CLIENT_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_SECRET }}
   GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_WEBHOOK_SECRET }}
   DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com"
+  DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com"
   CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
 
 jobs:
@@ -37,4 +38,6 @@ jobs:
       - name: 🚀 serverless deploy
         env:
           CI: false
-        run: pnpm --filter "@fern-platform/fern-bot" release --stage development
+        run: |
+          pnpm --filter "@fern-platform/fern-bot" install
+          pnpm --filter "@fern-platform/fern-bot" release --stage development

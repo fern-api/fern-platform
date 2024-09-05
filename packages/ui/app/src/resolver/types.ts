@@ -19,6 +19,14 @@ export interface WithMetadata {
     availability: APIV1Read.Availability | undefined;
 }
 
+export interface WithEndpointMetadata extends WithMetadata {
+    title: string;
+    nodeId: FernNavigation.NodeId;
+    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    apiDefinitionId: FdrAPI.ApiDefinitionId;
+    slug: FernNavigation.Slug;
+}
+
 export function dereferenceObjectProperties(
     object: ResolvedObjectShape | ResolvedDiscriminatedUnionShapeVariant,
     types: Record<string, ResolvedTypeDefinition>,
@@ -248,15 +256,10 @@ export interface ResolvedRootPackage extends ResolvedWithApiDefinition {
 
 export type ResolvedApiDefinitionPackage = ResolvedRootPackage | ResolvedSubpackage;
 
-export interface ResolvedEndpointDefinition extends WithMetadata {
+export interface ResolvedEndpointDefinition extends WithEndpointMetadata {
     type: "endpoint";
-    nodeId: FernNavigation.NodeId;
     id: APIV1Read.EndpointId;
-    apiDefinitionId: FdrAPI.ApiDefinitionId;
-    // apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
-    slug: FernNavigation.Slug;
     auth: APIV1Read.ApiAuth | undefined;
-    availability: APIV1Read.Availability | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
     method: APIV1Read.HttpMethod;
@@ -423,15 +426,9 @@ export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEn
     return pathParts.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)).join("");
 }
 
-export interface ResolvedWebSocketChannel {
+export interface ResolvedWebSocketChannel extends WithEndpointMetadata {
     type: "websocket";
-    nodeId: FernNavigation.NodeId;
-    apiDefinitionId: FdrAPI.ApiDefinitionId;
-    id: string;
-    slug: FernNavigation.Slug;
-    title: string;
-    description: string | undefined;
-    availability: APIV1Read.Availability | undefined;
+    id: APIV1Read.WebSocketId;
     auth: APIV1Read.ApiAuth | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
@@ -450,15 +447,10 @@ export interface ResolvedWebSocketMessage extends WithMetadata {
     origin: APIV1Read.WebSocketMessageOrigin;
 }
 
-export interface ResolvedWebhookDefinition extends WithMetadata {
+export interface ResolvedWebhookDefinition extends WithEndpointMetadata {
     type: "webhook";
-    nodeId: FernNavigation.NodeId;
     id: APIV1Read.WebhookId;
-    apiDefinitionId: FdrAPI.ApiDefinitionId;
-    slug: FernNavigation.Slug;
-
     method: APIV1Read.WebhookHttpMethod;
-    title: string;
     path: string[];
     headers: ResolvedObjectProperty[];
     payload: ResolvedPayload;

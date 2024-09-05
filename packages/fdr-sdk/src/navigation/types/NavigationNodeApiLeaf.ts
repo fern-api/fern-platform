@@ -1,5 +1,5 @@
-import { FernNavigation } from "../generated";
-import { NavigationNode } from "./NavigationNode";
+import type { FernNavigation } from "../generated";
+import type { NavigationNode } from "./NavigationNode";
 
 /**
  * A node in the navigation tree that represents an API endpoint, web socket, or webhook.

@@ -1,5 +1,7 @@
+export * from "./NavigationBreadcrumbItem";
 export * from "./NavigationNode";
 export * from "./NavigationNodeApiLeaf";
+export * from "./NavigationNodeLeaf";
 export * from "./NavigationNodeMarkdown";
 export * from "./NavigationNodeNeighbor";
 export * from "./NavigationNodePage";

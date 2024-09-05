@@ -1,9 +1,14 @@
-import { noop } from "ts-essentials";
-import { visitDiscriminatedUnion } from "../../utils";
 import { NodeCollector } from "../NodeCollector";
 import { FernNavigation } from "../generated";
-import { NavigationNode, NavigationNodeNeighbor, NavigationNodePage, hasMetadata, isPage } from "../types";
+import {
+    isPage,
+    type NavigationBreadcrumbItem,
+    type NavigationNode,
+    type NavigationNodeNeighbor,
+    type NavigationNodePage,
+} from "../types";
 import { hasRedirect } from "../types/NavigationNodeWithRedirect";
+import { createBreadcrumbs } from "./createBreadcrumbs";
 import { isApiReferenceNode } from "./isApiReferenceNode";
 import { isSidebarRootNode } from "./isSidebarRootNode";
 import { isTabbedNode } from "./isTabbedNode";
@@ -17,7 +22,7 @@ export declare namespace Node {
         type: "found";
         node: NavigationNodePage;
         parents: NavigationNode[];
-        breadcrumb: string[];
+        breadcrumbs: readonly NavigationBreadcrumbItem[];
         root: FernNavigation.RootNode;
         versions: FernNavigation.VersionNode[];
         currentVersion: FernNavigation.VersionNode | undefined;
@@ -104,7 +109,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         return {
             type: "found",
             node: found.node,
-            breadcrumb: createBreadcrumb(found.parents),
+            breadcrumbs: createBreadcrumbs(found.parents),
             parents: found.parents,
             root,
             versions, // this is used to render the version switcher
@@ -133,47 +138,4 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
     }
 
     return { type: "redirect", redirect };
-}
-
-export function createBreadcrumb(nodes: NavigationNode[]): string[] {
-    const breadcrumb: string[] = [];
-    nodes.forEach((node) => {
-        if (!hasMetadata(node)) {
-            return;
-        }
-        visitDiscriminatedUnion(node)._visit({
-            root: noop,
-            version: noop,
-            tab: noop,
-            page: noop,
-            product: noop,
-            section: (section) => {
-                breadcrumb.push(section.title);
-            },
-            apiReference: (apiReference) => {
-                if (!apiReference.hideTitle) {
-                    breadcrumb.push(apiReference.title);
-                }
-            },
-            changelog: (changelog) => {
-                breadcrumb.push(changelog.title);
-            },
-            changelogYear: (changelogYear) => {
-                breadcrumb.push(changelogYear.title);
-            },
-            changelogMonth: (changelogMonth) => {
-                breadcrumb.push(changelogMonth.title);
-            },
-            apiPackage: (apiPackage) => {
-                breadcrumb.push(apiPackage.title);
-            },
-            changelogEntry: noop,
-            endpoint: noop,
-            webSocket: noop,
-            webhook: noop,
-            landingPage: noop,
-        });
-    });
-
-    return breadcrumb;
 }

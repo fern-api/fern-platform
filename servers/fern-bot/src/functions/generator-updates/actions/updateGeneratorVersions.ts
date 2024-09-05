@@ -22,6 +22,7 @@ export async function updateGeneratorVersionsInternal(env: Env): Promise<void> {
             env.GITHUB_APP_LOGIN_NAME,
             env.GITHUB_APP_LOGIN_ID,
             env.DEFAULT_VENUS_ORIGIN,
+            env.DEFAULT_FDR_ORIGIN,
         );
     });
 }
