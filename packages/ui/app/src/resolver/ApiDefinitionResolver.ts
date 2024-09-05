@@ -17,6 +17,7 @@ import type {
 
 export class ApiDefinitionResolver {
     public static async resolve(
+        collector: FernNavigation.NodeCollector,
         root: FernNavigation.ApiReferenceNode,
         holder: FernNavigation.ApiDefinitionHolder,
         typeResolver: ApiTypeResolver,
@@ -24,7 +25,15 @@ export class ApiDefinitionResolver {
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
     ): Promise<ResolvedRootPackage> {
-        const resolver = new ApiDefinitionResolver(root, holder, typeResolver, pages, featureFlags, mdxOptions);
+        const resolver = new ApiDefinitionResolver(
+            collector,
+            root,
+            holder,
+            typeResolver,
+            pages,
+            featureFlags,
+            mdxOptions,
+        );
         return resolver.resolveApiDefinition();
     }
 
@@ -32,6 +41,7 @@ export class ApiDefinitionResolver {
 
     private definitionResolver: ApiEndpointResolver;
     private constructor(
+        private collector: FernNavigation.NodeCollector, // used for breadcrumb generation
         private root: FernNavigation.ApiReferenceNode,
         private holder: FernNavigation.ApiDefinitionHolder,
         private typeResolver: ApiTypeResolver,
@@ -40,6 +50,7 @@ export class ApiDefinitionResolver {
         private mdxOptions: FernSerializeMdxOptions | undefined,
     ) {
         this.definitionResolver = new ApiEndpointResolver(
+            this.collector,
             this.holder,
             typeResolver,
             this.resolvedTypes,

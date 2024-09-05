@@ -59,6 +59,8 @@ const resolveApiHandler: NextApiHandler = async (
             featureFlags.isApiScrollingDisabled,
         );
 
+        const collector = FernNavigation.NodeCollector.collect(root);
+
         setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
@@ -72,6 +74,7 @@ const resolveApiHandler: NextApiHandler = async (
                 files: docs.definition.jsFiles,
             });
             const resolved = ApiDefinitionResolver.resolve(
+                collector,
                 apiReference,
                 holder,
                 typeResolver,

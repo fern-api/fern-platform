@@ -1,7 +1,7 @@
-import { FernNavigation } from "../generated";
-import { NavigationNode } from "./NavigationNode";
-import { NavigationNodeApiLeaf, isApiLeaf } from "./NavigationNodeApiLeaf";
-import { NavigationNodeSectionOverview, isSectionOverview } from "./NavigationNodeSectionOverview";
+import type { FernNavigation } from "../generated";
+import type { NavigationNode } from "./NavigationNode";
+import { isApiLeaf, type NavigationNodeApiLeaf } from "./NavigationNodeApiLeaf";
+import { isSectionOverview, type NavigationNodeSectionOverview } from "./NavigationNodeSectionOverview";
 
 export type NavigationNodeNeighbor =
     | NavigationNodeApiLeaf

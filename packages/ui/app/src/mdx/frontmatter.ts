@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { JsonLd } from "@fern-ui/next-seo";
 import grayMatter from "gray-matter";
@@ -106,7 +107,10 @@ export interface FernDocsFrontmatter extends DocsV1Read.MetadataConfig {
      */
     "no-image-zoom"?: boolean;
 
-    breadcrumbs?: string[];
+    /**
+     * Do not use this externally.
+     */
+    breadcrumbs?: readonly FernNavigation.NavigationBreadcrumbItem[];
 
     // deprecated:
     editThisPageUrl?: string; // use "edit-this-page-url" instead
