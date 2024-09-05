@@ -1,5 +1,6 @@
 import { FernButton } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
+import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { Xmark } from "iconoir-react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -13,11 +14,12 @@ import {
 import { MdxContent } from "../mdx/MdxContent";
 
 interface AnnouncementInternalProps {
+    className?: string;
     dismiss: () => void;
 }
 
 const AnnouncementInternal = forwardRef<HTMLDivElement, AnnouncementInternalProps>(
-    ({ dismiss, ...props }, forwardedRef) => {
+    ({ dismiss, className, ...props }, forwardedRef) => {
         const announcement = useAtomValue(ANNOUNCEMENT_CONFIG_ATOM);
         const setHeight = useSetAtom(ANNOUNCEMENT_HEIGHT_ATOM);
         const ref = useRef<HTMLDivElement>(null);
@@ -32,7 +34,7 @@ const AnnouncementInternal = forwardRef<HTMLDivElement, AnnouncementInternalProp
         useImperativeHandle(forwardedRef, () => ref.current!);
 
         return (
-            <motion.div ref={ref} {...props} className="overflow-hidden">
+            <motion.div ref={ref} {...props} className={clsx("overflow-hidden", className)}>
                 <motion.div className="min-h-8 bg-accent text-accent-contrast flex items-center" exit={{ y: "-100%" }}>
                     <div className="text-center px-4 md:px-6 lg:px-8 max-w-page-width mx-auto flex-1">
                         {announcement != null && <MdxContent mdx={announcement.mdx} />}
@@ -52,7 +54,7 @@ AnnouncementInternal.displayName = "AnnouncementInternal";
 
 const MotionAnnouncement = motion(AnnouncementInternal, { forwardMotionProps: true });
 
-export function Announcement(): ReactElement | null {
+export function Announcement({ className }: { className?: string }): ReactElement | null {
     const announcement = useAtomValue(ANNOUNCEMENT_CONFIG_ATOM);
     const [isDismissed, setIsDismissed] = useAtom(ANNOUNCEMENT_DISMISSED_ATOM);
     const setIsDismissing = useSetAtom(ANNOUNCEMENT_IS_DISMISSING_ATOM);
@@ -65,6 +67,7 @@ export function Announcement(): ReactElement | null {
         <AnimatePresence mode="popLayout" onExitComplete={() => setIsDismissing(false)}>
             {!isDismissed && (
                 <MotionAnnouncement
+                    className={className}
                     exit={{ height: 0 }}
                     dismiss={() => {
                         setIsDismissing(true);
