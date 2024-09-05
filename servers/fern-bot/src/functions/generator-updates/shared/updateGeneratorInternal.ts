@@ -9,9 +9,7 @@ import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import { SimpleGit } from "simple-git";
 
-async function isOrganizationCanary(venusUrl: string, fullRepoPath: string): Promise<boolean> {
-    const orgId = cleanStdout((await execFernCli("organization", fullRepoPath)).stdout);
-    console.log(`Found organization ID: ${orgId}`);
+async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
     const client = new FernVenusApiClient({ environment: venusUrl });
 
     const response = await client.organization.get(FernVenusApi.OrganizationId(orgId));
@@ -140,8 +138,11 @@ export async function updateVersionInternal(
     console.log(`Cloning repo: ${repository.clone_url} to ${fullRepoPath}`);
     await cloneRepo(git, repository, octokit, fernBotLoginName, fernBotLoginId);
 
+    const organization = cleanStdout((await execFernCli("organization", fullRepoPath)).stdout);
+    console.log(`Found organization ID: ${organization}`);
+
     try {
-        if (!(await isOrganizationCanary(venusUrl, fullRepoPath))) {
+        if (!(await isOrganizationCanary(organization, venusUrl))) {
             console.log("Organization is not a fern-bot canary, skipping upgrade.");
             return;
         }
@@ -171,6 +172,7 @@ export async function updateVersionInternal(
             return cleanStdout((await execFernCli("--version", fullRepoPath)).stdout);
         },
         slackClient,
+        organization,
     });
 
     // Pull a branch of fern/update/<generator>/<api>:<group>
@@ -227,6 +229,7 @@ export async function updateVersionInternal(
                         };
                     },
                     slackClient,
+                    organization,
                 });
             }
         }
@@ -244,6 +247,7 @@ async function handleSingleUpgrade({
     getEntityVersion,
     maybeGetGeneratorMetadata,
     slackClient,
+    organization,
 }: {
     octokit: Octokit;
     repository: Repository;
@@ -255,6 +259,7 @@ async function handleSingleUpgrade({
     getEntityVersion: () => Promise<string>;
     maybeGetGeneratorMetadata?: () => Promise<GeneratorMessageMetadata>;
     slackClient: SlackService;
+    organization: string;
 }): Promise<void> {
     // Before we checkout a new branch, we need to ensure we have the current version off the default branch
     // Checkout the default branch and run the version command to get the current version
@@ -302,6 +307,7 @@ async function handleSingleUpgrade({
             prUrl,
             repoName: repository.full_name,
             generator: maybeGetGeneratorMetadata ? await maybeGetGeneratorMetadata() : undefined,
+            organization,
         });
         return;
     } else if (fromVersion === toVersion) {
@@ -312,6 +318,7 @@ async function handleSingleUpgrade({
                 repoUrl: repository.html_url,
                 repoName: repository.full_name,
                 currentVersion: fromVersion,
+                organization,
             });
             console.log("No change made as the upgrade is across major versions.");
             return;
