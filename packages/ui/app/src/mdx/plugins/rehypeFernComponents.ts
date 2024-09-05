@@ -6,6 +6,7 @@ import { CONTINUE, visit, type BuildVisitor, type VisitorResult } from "unist-ut
 import { wrapChildren } from "./to-estree";
 import { isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "./utils";
 
+// TODO: combine this with rehype-slug so that we don't have to maintain two slugger instances
 const slugger = new GithubSlugger();
 
 type Visitor = BuildVisitor<
