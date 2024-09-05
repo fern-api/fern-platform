@@ -466,7 +466,7 @@ export function PlaygroundAuthorizationFormCard({
                     icon={<Key />}
                     rightIcon={
                         <span className="flex items-center rounded-[4px] bg-tag-success p-1 font-mono text-xs uppercase leading-none text-intent-success">
-                            Connect
+                            Authenticated
                         </span>
                     }
                     onClick={isOpen.toggleValue}
@@ -483,7 +483,7 @@ export function PlaygroundAuthorizationFormCard({
                     icon={<Key />}
                     rightIcon={
                         <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
-                            Connect
+                            Not Authenticated
                         </span>
                     }
                     onClick={redirectOrOpenAuthForm}
