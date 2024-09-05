@@ -61,47 +61,25 @@ async function getCliChangelog(fdrUrl: string, from: string, to: string): Promis
     return response.body.entries;
 }
 
+function formatChangelogEntry(changelog: ChangelogResponse): string {
+    let entry = "";
+    entry += `\n**\`${changelog.version}\`**\n`;
+    entry += changelog.changelogEntry.map((cle) => `- \`${cle.type}:\` ${cle.summary}`).join("\n");
+    entry += "\n";
+
+    return entry;
+}
+
 function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
     // The format is effectively the below, where sections are only included if there is at
-    // least one entry in that section, and we try to cap the number of entries in each section to ~5
+    // least one entry in that section, and we try to cap the number of entries in each section to ~5 with a see more
     // ## [<Lowest Version> - <Highest Version>] - Changelog
-    // ### Added:
-    // - <entry>
-    // ### Changed:
-    // - <entry>
-    // ### Removed:
-    // - <entry>
-    // ### Fixed:
-    // - <entry>
-    // ### Deprecated:
-    // - <entry>
-
-    const added: string[] = [];
-    const changed: string[] = [];
-    const removed: string[] = [];
-    const fixed: string[] = [];
-    const deprecated: string[] = [];
-
-    const changelogEntries = changelogs.flatMap((cl) => cl.changelogEntry);
-
-    // Otherwise stack up the changes
-    for (const entry of changelogEntries) {
-        if (entry.added) {
-            added.push(...entry.added);
-        }
-        if (entry.changed) {
-            changed.push(...entry.changed);
-        }
-        if (entry.removed) {
-            removed.push(...entry.removed);
-        }
-        if (entry.fixed) {
-            fixed.push(...entry.fixed);
-        }
-        if (entry.deprecated) {
-            deprecated.push(...entry.deprecated);
-        }
-    }
+    // **`x.y.z`**
+    // - `fix:` <summary>
+    // **`x.y.z-rc0`**
+    // - `feat:` <summary>
+    // ...
+    // > N additional updates, see more
 
     if (changelogs.length === 0) {
         throw new Error("Version difference was found, but no changelog entries were found. This is unexpected.");
@@ -110,53 +88,22 @@ function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const prBodyTitle = `## [${changelogs[0]!.version} - ${changelogs[changelogs.length - 1]!.version}] - Changelog\n\n`;
     let prBody = "";
-    let addedChanges = false;
-    if (added.length > 0) {
-        prBody += "### Added:\n";
-        prBody += added.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
-    }
-    if (changed.length > 0) {
-        prBody += "### Changed:\n";
-        prBody += changed.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
-    }
-    if (removed.length > 0) {
-        prBody += "### Removed:\n";
-        prBody += removed.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
-    }
-    if (fixed.length > 0) {
-        prBody += "### Fixed:\n";
-        prBody += fixed.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
-    }
-    if (deprecated.length > 0) {
-        prBody += "### Deprecated:\n";
-        prBody += deprecated.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
+
+    // Get the first 5 changelogs
+    for (const changelog of changelogs.slice(0, 5)) {
+        prBody += formatChangelogEntry(changelog);
     }
 
-    if (!addedChanges) {
-        prBody += "No changes found.";
-    }
+    if (changelogs.length > 5) {
+        const numChangelogsLeft = changelogs.length - 5;
+        prBody += `<details>\n\t<summary><strong>${numChangelogsLeft} additional update${numChangelogsLeft > 1 ? "s" : ""}</strong>, see more</summary>\n\n<br/>\n\n`;
 
-    if (changelogs.length > 5 || !addedChanges) {
-        console.log("Changelog too long, truncating to only outputting summaries");
-        // Reset the body
-        prBody = "";
-
-        for (const changelog of changelogs) {
-            prBody += `\n### ${changelog.version}\n`;
-            prBody += changelog.changelogEntry.map((cle) => `- ${cle.type}: ${cle.summary}`).join("\n");
+        for (const changelog of changelogs.slice(5)) {
+            prBody += "\t";
+            prBody += formatChangelogEntry(changelog);
         }
+        prBody += "</details>";
     }
-
     return prBodyTitle + prBody;
 }
 
