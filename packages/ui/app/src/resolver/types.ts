@@ -19,6 +19,14 @@ export interface WithMetadata {
     availability: APIV1Read.Availability | undefined;
 }
 
+export interface WithEndpointMetadata extends WithMetadata {
+    title: string;
+    nodeId: FernNavigation.NodeId;
+    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    apiDefinitionId: FdrAPI.ApiDefinitionId;
+    slug: FernNavigation.Slug;
+}
+
 export function dereferenceObjectProperties(
     object: ResolvedObjectShape | ResolvedDiscriminatedUnionShapeVariant,
     types: Record<string, ResolvedTypeDefinition>,
@@ -95,14 +103,14 @@ export interface ResolvedNavigationItemApiSection
 export interface FlattenedRootPackage {
     auth: APIV1Read.ApiAuth | undefined;
     types: Record<string, ResolvedTypeDefinition>;
-    apiDefinitions: ResolvedApiDefinition[];
+    endpoints: ResolvedApiEndpointWithPackage[];
 }
 
 export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedRootPackage {
-    function getApiDefinitions(apiPackage: ResolvedApiDefinitionPackage): ResolvedApiDefinition[] {
+    function getApiEndpoints(apiPackage: ResolvedApiDefinitionPackage): ResolvedApiEndpointWithPackage[] {
         return apiPackage.items.flatMap((item) => {
             if (item.type === "subpackage") {
-                return getApiDefinitions(item);
+                return getApiEndpoints(item);
             }
             if (item.type === "page") {
                 return [];
@@ -120,7 +128,7 @@ export function flattenRootPackage(rootPackage: ResolvedRootPackage): FlattenedR
     return {
         auth: rootPackage.auth,
         types: rootPackage.types,
-        apiDefinitions: getApiDefinitions(rootPackage),
+        endpoints: getApiEndpoints(rootPackage),
     };
 }
 
@@ -167,12 +175,14 @@ export const ResolvedPackageItem = {
     },
 };
 
-export type ResolvedApiDefinition =
-    | ResolvedApiDefinition.Endpoint
-    | ResolvedApiDefinition.Webhook
-    | ResolvedApiDefinition.WebSocket;
+export type ResolvedApiEndpointWithPackage =
+    | ResolvedApiEndpointWithPackage.Endpoint
+    | ResolvedApiEndpointWithPackage.Webhook
+    | ResolvedApiEndpointWithPackage.WebSocket;
 
-export declare namespace ResolvedApiDefinition {
+export type ResolvedApiEndpoint = ResolvedEndpointDefinition | ResolvedWebhookDefinition | ResolvedWebSocketChannel;
+
+export declare namespace ResolvedApiEndpointWithPackage {
     export interface Endpoint extends ResolvedEndpointDefinition {
         package: ResolvedApiDefinitionPackage;
     }
@@ -186,26 +196,32 @@ export declare namespace ResolvedApiDefinition {
     }
 }
 
-export function isEndpoint(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.Endpoint {
+export function isEndpoint(
+    definition: ResolvedApiEndpointWithPackage,
+): definition is ResolvedApiEndpointWithPackage.Endpoint {
     return definition.type === "endpoint";
 }
 
-export function isWebhook(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.Webhook {
+export function isWebhook(
+    definition: ResolvedApiEndpointWithPackage,
+): definition is ResolvedApiEndpointWithPackage.Webhook {
     return definition.type === "webhook";
 }
 
-export function isWebSocket(definition: ResolvedApiDefinition): definition is ResolvedApiDefinition.WebSocket {
+export function isWebSocket(
+    definition: ResolvedApiEndpointWithPackage,
+): definition is ResolvedApiEndpointWithPackage.WebSocket {
     return definition.type === "websocket";
 }
 
-interface ResolvedApiDefinitionVisitor<T> {
-    endpoint(definition: ResolvedApiDefinition.Endpoint): T;
-    webhook(definition: ResolvedApiDefinition.Webhook): T;
-    websocket(definition: ResolvedApiDefinition.WebSocket): T;
+interface ResolvedApiEndpointWithPackageVisitor<T> {
+    endpoint(definition: ResolvedApiEndpointWithPackage.Endpoint): T;
+    webhook(definition: ResolvedApiEndpointWithPackage.Webhook): T;
+    websocket(definition: ResolvedApiEndpointWithPackage.WebSocket): T;
 }
 
-export const ResolvedApiDefinition = {
-    visit: <T>(definition: ResolvedApiDefinition, visitor: ResolvedApiDefinitionVisitor<T>): T => {
+export const ResolvedApiEndpointWithPackage = {
+    visit: <T>(definition: ResolvedApiEndpointWithPackage, visitor: ResolvedApiEndpointWithPackageVisitor<T>): T => {
         switch (definition.type) {
             case "endpoint":
                 return visitor.endpoint(definition);
@@ -240,19 +256,13 @@ export interface ResolvedRootPackage extends ResolvedWithApiDefinition {
 
 export type ResolvedApiDefinitionPackage = ResolvedRootPackage | ResolvedSubpackage;
 
-export interface ResolvedEndpointDefinition extends WithMetadata {
+export interface ResolvedEndpointDefinition extends WithEndpointMetadata {
     type: "endpoint";
-    nodeId: FernNavigation.NodeId;
     id: APIV1Read.EndpointId;
-    apiDefinitionId: FdrAPI.ApiDefinitionId;
-    // apiPackageId: FdrAPI.ApiDefinitionId | APIV1Read.SubpackageId;
-    slug: FernNavigation.Slug;
     auth: APIV1Read.ApiAuth | undefined;
-    availability: APIV1Read.Availability | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
     method: APIV1Read.HttpMethod;
-    // name: string | undefined;
     title: string;
     path: ResolvedEndpointPathParts[];
     pathParameters: ResolvedObjectProperty[];
@@ -416,15 +426,9 @@ export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEn
     return pathParts.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)).join("");
 }
 
-export interface ResolvedWebSocketChannel {
+export interface ResolvedWebSocketChannel extends WithEndpointMetadata {
     type: "websocket";
-    nodeId: FernNavigation.NodeId;
-    apiDefinitionId: FdrAPI.ApiDefinitionId;
-    id: string;
-    slug: FernNavigation.Slug;
-    name: string | undefined;
-    description: string | undefined;
-    availability: APIV1Read.Availability | undefined;
+    id: APIV1Read.WebSocketId;
     auth: APIV1Read.ApiAuth | undefined;
     defaultEnvironment: APIV1Read.Environment | undefined;
     environments: APIV1Read.Environment[];
@@ -443,14 +447,10 @@ export interface ResolvedWebSocketMessage extends WithMetadata {
     origin: APIV1Read.WebSocketMessageOrigin;
 }
 
-export interface ResolvedWebhookDefinition extends WithMetadata {
+export interface ResolvedWebhookDefinition extends WithEndpointMetadata {
     type: "webhook";
-    nodeId: FernNavigation.NodeId;
     id: APIV1Read.WebhookId;
-    slug: FernNavigation.Slug;
-
     method: APIV1Read.WebhookHttpMethod;
-    name: string | undefined;
     path: string[];
     headers: ResolvedObjectProperty[];
     payload: ResolvedPayload;

@@ -21,8 +21,7 @@ export function getGeneratorsVersionsController(app: FdrApplication): VersionsSe
             return res.send(
                 await app.dao.generatorVersions().getChangelog({
                     generator: req.params.generator,
-                    fromVersion: req.params.from_version,
-                    toVersion: req.params.to_version,
+                    versionRanges: req.body,
                 }),
             );
         },

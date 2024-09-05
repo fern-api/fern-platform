@@ -9,9 +9,15 @@ const MdxContent = dynamic(() => import("../mdx/MdxContent").then(({ MdxContent 
     ssr: true,
 });
 
-const ApiPage = dynamic(() => import("../api-reference/ApiPage").then(({ ApiPage }) => ApiPage), {
-    ssr: true,
-});
+const ApiReferencePage = dynamic(
+    () => import("../api-reference/ApiReferencePage").then(({ ApiReferencePage }) => ApiReferencePage),
+    { ssr: true },
+);
+
+const ApiEndpointPage = dynamic(
+    () => import("../api-reference/ApiEndpointPage").then(({ ApiEndpointPage }) => ApiEndpointPage),
+    { ssr: true },
+);
 
 const ChangelogPage = dynamic(() => import("../changelog/ChangelogPage").then(({ ChangelogPage }) => ChangelogPage), {
     ssr: true,
@@ -31,12 +37,11 @@ const DocsMainContentRenderer = memo(() => {
     const resolvedPath = useResolvedPath();
     return visitDiscriminatedUnion(resolvedPath)._visit({
         "custom-markdown-page": (resolvedPath) => <MdxContent mdx={resolvedPath.mdx} />,
-        "api-page": (resolvedPath) => (
-            <ApiPage
-                initialApi={resolvedPath.apiDefinition}
-                showErrors={resolvedPath.showErrors}
-                paginated={resolvedPath.paginated}
-            />
+        "api-reference-page": (resolvedPath) => (
+            <ApiReferencePage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />
+        ),
+        "api-endpoint-page": (resolvedPath) => (
+            <ApiEndpointPage item={resolvedPath.item} showErrors={resolvedPath.showErrors} types={resolvedPath.types} />
         ),
         changelog: (resolvedPath) => <ChangelogPage resolvedPath={resolvedPath} />,
         "changelog-entry": (resolvedPath) => <ChangelogEntryPage resolvedPath={resolvedPath} />,

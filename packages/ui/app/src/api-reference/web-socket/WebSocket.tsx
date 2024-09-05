@@ -7,6 +7,7 @@ import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react"
 import { useNavigationNodes } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { FernAnchor } from "../../components/FernAnchor";
+import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
@@ -23,6 +24,7 @@ import {
 } from "../../resolver/types";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { ApiPageDescription } from "../ApiPageDescription";
+import { EndpointAvailabilityTag } from "../endpoints/EndpointAvailabilityTag";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
@@ -40,6 +42,7 @@ export declare namespace WebSocket {
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
+
 export const WebSocket: FC<WebSocket.Props> = (props) => {
     if (useShouldLazyRender(props.websocket.slug)) {
         return null;
@@ -111,26 +114,26 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                     "border-default border-b mb-px pb-20": !isLastInApi,
                 })}
             >
-                <header className="space-y-2.5 pt-8">
+                <header className="space-y-1 pt-8">
+                    <FernBreadcrumbs breadcrumbs={websocket.breadcrumbs} />
                     <div>
-                        {/* {subpackageTitle != null && (
-                                    <div className="t-accent text-xs font-semibold uppercase tracking-wider">
-                                        {subpackageTitle}
-                                    </div>
-                                )} */}
-                        <div className="t-accent text-xs font-semibold uppercase tracking-wider">WebSocket</div>
-                        <h1 className="my-0 inline-block leading-tight">{websocket.name}</h1>
+                        <h1 className="fern-page-heading">{websocket.title}</h1>
+                        {websocket.availability != null && (
+                            <span className="inline-block ml-2 align-text-bottom">
+                                <EndpointAvailabilityTag availability={websocket.availability} minimal={true} />
+                            </span>
+                        )}
                     </div>
-
-                    <ApiPageDescription
-                        className="mt-4 text-base leading-6"
-                        description={websocket.description}
-                        isMarkdown={true}
-                    />
                 </header>
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <section className="max-w-content-width space-y-12 py-8">
                         <main className="space-y-12">
+                            <ApiPageDescription
+                                className="mt-4 text-base leading-6"
+                                description={websocket.description}
+                                isMarkdown={true}
+                            />
+
                             <CardedSection
                                 number={1}
                                 title={
@@ -233,6 +236,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     </EndpointSection>
                                 )}
                             </CardedSection>
+
                             {publishMessages.length > 0 && (
                                 <EndpointSection
                                     title={

@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useSetAndOpenPlayground } from "../atoms";
 import { HttpMethodTag } from "../components/HttpMethodTag";
-import { ResolvedApiDefinition } from "../resolver/types";
+import { type ResolvedApiEndpointWithPackage } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
 const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
@@ -17,7 +17,7 @@ export interface PlaygroundEndpointSelectorContentProps {
     closeDropdown?: () => void;
     selectedEndpoint?: FernNavigation.NavigationNodeApiLeaf;
     className?: string;
-    nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiDefinition>;
+    nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiEndpointWithPackage>;
 }
 
 export interface ApiGroup {
@@ -43,15 +43,7 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
                 return;
             }
 
-            const breadcrumbs = [...parents, node]
-                .filter(FernNavigation.isSection)
-                .filter((n) => {
-                    if (n.type === "apiReference") {
-                        return n.hideTitle !== true;
-                    }
-                    return true;
-                })
-                .map((parent) => parent.title);
+            const breadcrumbs = FernNavigation.utils.createBreadcrumbs(parents).map((breadcrumb) => breadcrumb.title);
             result.push({
                 api: node.apiDefinitionId,
                 id: node.id,

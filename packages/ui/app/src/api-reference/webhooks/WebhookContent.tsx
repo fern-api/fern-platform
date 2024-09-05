@@ -1,7 +1,7 @@
 import cn from "clsx";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useRef } from "react";
-import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition, getParameterDescription } from "../../resolver/types";
 import { ApiPageDescription } from "../ApiPageDescription";
@@ -22,14 +22,13 @@ const WebhookExample = dynamic(
 export declare namespace WebhookContent {
     export interface Props {
         webhook: ResolvedWebhookDefinition;
-        breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
 export const WebhookContent = memo<WebhookContent.Props>((props) => {
-    const { webhook, breadcrumbs, hideBottomSeparator = false, types } = props;
+    const { webhook, hideBottomSeparator = false, types } = props;
 
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, webhook.slug);
@@ -60,8 +59,8 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
             >
                 <div className="flex min-w-0 max-w-content-width flex-1 flex-col">
                     <div className="space-y-1 py-8">
-                        <Breadcrumbs breadcrumbs={breadcrumbs} />
-                        <h1 className="my-0 inline-block leading-tight">{webhook.name}</h1>
+                        <FernBreadcrumbs breadcrumbs={webhook.breadcrumbs} />
+                        <h1 className="my-0 inline-block leading-tight">{webhook.title}</h1>
                     </div>
                     <ApiPageDescription
                         className="text-base leading-6"

@@ -30,8 +30,10 @@ describe("resolveApiDefinition", () => {
             {},
             FernNavigation.SlugGenerator.init(""),
         );
+        const collector = FernNavigation.NodeCollector.collect(node);
 
         const resolved = await ApiDefinitionResolver.resolve(
+            collector,
             node,
             holder,
             typeResolver,
@@ -64,8 +66,10 @@ describe("resolveApiDefinition", () => {
             {},
             FernNavigation.SlugGenerator.init(""),
         );
+        const collector = FernNavigation.NodeCollector.collect(node);
 
         const resolved = await ApiDefinitionResolver.resolve(
+            collector,
             node,
             holder,
             typeResolver,

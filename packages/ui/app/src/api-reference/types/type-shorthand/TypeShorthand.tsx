@@ -1,5 +1,6 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { uniq } from "lodash-es";
 import { ReactNode } from "react";
 import {
     DereferencedTypeShape,
@@ -121,9 +122,19 @@ export function renderTypeShorthand(
 
         // referenced shapes
         object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
-        undiscriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
-        discriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
-        enum: () => (plural ? "enums" : maybeWithArticle("an", "enum")),
+        undiscriminatedUnion: (union) => {
+            return uniq(
+                union.variants.map((variant) => renderTypeShorthand(variant.shape, { plural, withArticle }, types)),
+            ).join(" or ");
+        },
+        discriminatedUnion: () => (plural ? "objects" : maybeWithArticle("an", "object")),
+        enum: (enumValue) => {
+            // if there are only 1 or 2 values, we can list them like literals (e.g. "apple" or "banana")
+            if (enumValue.values.length > 0 && enumValue.values.length < 3) {
+                return enumValue.values.map((value) => `"${value.value}"`).join(" or ");
+            }
+            return plural ? "enums" : maybeWithArticle("an", "enum");
+        },
 
         // containing shapes
         optional: (optional) =>
@@ -151,7 +162,7 @@ export function renderTypeShorthand(
         literal: (literal) =>
             visitDiscriminatedUnion(literal.value, "type")._visit({
                 stringLiteral: ({ value }) => `"${value}"`,
-                booleanLiteral: ({ value }) => `"${value.toString()}"`,
+                booleanLiteral: ({ value }) => value.toString(),
                 _other: () => "<unknown>",
             }),
         // other

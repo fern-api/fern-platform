@@ -262,7 +262,7 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                 return;
             }
             if (node.type === "endpoint") {
-                const endpoint = apiPackage.apiDefinitions
+                const endpoint = apiPackage.endpoints
                     .filter(isEndpoint)
                     .find((definition) => definition.id === node.endpointId);
                 if (endpoint == null) {
@@ -275,7 +275,7 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                     getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], apiPackage.types),
                 );
             } else if (node.type === "webSocket") {
-                const webSocket = apiPackage.apiDefinitions
+                const webSocket = apiPackage.endpoints
                     .filter(isWebSocket)
                     .find((definition) => definition.id === node.webSocketId);
                 if (webSocket == null) {

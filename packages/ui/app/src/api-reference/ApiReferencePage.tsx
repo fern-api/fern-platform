@@ -3,20 +3,18 @@ import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { APIS_ATOM, useIsReady } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
-import { ResolvedRootPackage } from "../resolver/types";
+import type { ResolvedRootPackage } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { ApiPackageContents } from "./ApiPackageContents";
-import { SingleApiPageContent } from "./SingleApiPageContent";
 
-export declare namespace ApiPage {
+export declare namespace ApiReferencePage {
     export interface Props {
         initialApi: ResolvedRootPackage;
         showErrors: boolean;
-        paginated: boolean;
     }
 }
 
-export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors, paginated }) => {
+export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ initialApi, showErrors }) => {
     const hydrated = useIsReady();
     const setDefinitions = useSetAtom(APIS_ATOM);
     useEffect(() => {
@@ -25,24 +23,14 @@ export const ApiPage: React.FC<ApiPage.Props> = ({ initialApi, showErrors, pagin
 
     return (
         <ApiPageContext.Provider value={true}>
-            {paginated ? (
-                <SingleApiPageContent root={initialApi} showErrors={showErrors} />
-            ) : (
-                <ApiPackageContents
-                    api={initialApi.api}
-                    types={initialApi.types}
-                    showErrors={showErrors}
-                    apiDefinition={initialApi}
-                    isLastInParentPackage={true}
-                    anchorIdParts={EMPTY_ARRAY}
-                />
-            )}
-
-            {/* {isApiScrollingDisabled && (
-                <div className="mx-4 max-w-content-width md:mx-6 md:max-w-endpoint-width lg:mx-8">
-                    <BottomNavigationButtons showPrev={true} />
-                </div>
-            )} */}
+            <ApiPackageContents
+                api={initialApi.api}
+                types={initialApi.types}
+                showErrors={showErrors}
+                apiDefinition={initialApi}
+                isLastInParentPackage={true}
+                anchorIdParts={EMPTY_ARRAY}
+            />
 
             {/* anchor links should get additional padding to scroll to on initial load */}
             {!hydrated && <div className="h-full" />}

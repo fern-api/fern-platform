@@ -6,13 +6,13 @@ export const dashboard = async (app: App): Promise<Response> => {
 
     return new Response(
         `
-<h1>GitHub App: ${data.name}</h1>
+<h1>GitHub App: ${data?.name}</h1>
 
-<p>Installation count: ${data.installations_count}</p>
+<p>Installation count: ${data?.installations_count}</p>
 
 <p>
-    <a href="https://github.com/apps/${data.slug}">
-        <img src="https://img.shields.io/static/v1?label=Install%20App:&message=${data.slug}&color=orange&logo=github&style=for-the-badge" alt="Install ${data.name}"/>
+    <a href="https://github.com/apps/${data?.slug}">
+        <img src="https://img.shields.io/static/v1?label=Install%20App:&message=${data?.slug}&color=orange&logo=github&style=for-the-badge" alt="Install ${data?.name}"/>
     </a>
 </p>
 

@@ -75,12 +75,11 @@ service:
 
     getChangelog:
       docs: Get the changelog for the specified generator upgrade. The response will be a map of the generator version to it's corresponding changelog.
-      method: GET
-      path: /{generator}/changelog/{from_version}/to/{to_version}
+      method: POST
+      path: /{generator}/changelog
       path-parameters:
         generator: root.GeneratorId
-        from_version: string
-        to_version: string
+      request: commons.GetChangelogRequest
       response: commons.GetChangelogResponse
 
     upsertGeneratorRelease:
