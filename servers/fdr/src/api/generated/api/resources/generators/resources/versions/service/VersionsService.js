@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import * as errors from "../../../../../../errors";
+import * as errors from "../../../../../../errors/index";
 /**
  * CRUD API for managing generator versions.
  */
@@ -35,11 +35,10 @@ export class VersionsService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "NoValidGeneratorsFoundError":
@@ -65,11 +64,10 @@ export class VersionsService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'getChangelog' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
@@ -90,11 +88,10 @@ export class VersionsService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "InvalidVersionError":
@@ -120,11 +117,10 @@ export class VersionsService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "GeneratorVersionNotFoundError":
@@ -150,11 +146,10 @@ export class VersionsService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'listGeneratorReleases' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
