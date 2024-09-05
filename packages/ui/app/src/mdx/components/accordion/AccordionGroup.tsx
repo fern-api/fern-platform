@@ -1,5 +1,4 @@
 import * as RadixAccordion from "@radix-ui/react-accordion";
-import { slug } from "github-slugger";
 import { NavArrowRight } from "iconoir-react";
 import { useAtom } from "jotai";
 import { NextRouter } from "next/router";
@@ -8,6 +7,7 @@ import { ANCHOR_ATOM } from "../../../atoms";
 
 export interface AccordionItemProps {
     title: string;
+    id: string;
     toc?: boolean;
     children: ReactNode;
 }
@@ -18,14 +18,13 @@ export interface AccordionGroupProps {
     toc?: boolean;
 }
 
-export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: parentToc = true }) => {
+export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [] }) => {
     const [activeTabs, setActiveTabs] = useState<string[]>([]);
     const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
     useEffect(() => {
         if (anchor != null) {
-            const anchorTab = items.findIndex((tab) => slug(tab.title) === anchor);
-            if (anchorTab >= 0) {
-                setActiveTabs((prev) => (prev.includes(anchorTab.toString()) ? prev : [...prev, anchorTab.toString()]));
+            if (items.some((tab) => tab.id === anchor)) {
+                setActiveTabs((prev) => (prev.includes(anchor) ? prev : [...prev, anchor]));
             }
         }
     }, [anchor, items]);
@@ -35,15 +34,12 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
             setActiveTabs((prev) => {
                 const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
                 if (added[0] != null) {
-                    const addedItem = items[parseInt(added[0])];
-                    if (addedItem != null) {
-                        setAnchor(slug(addedItem.title));
-                    }
+                    setAnchor(added[0]);
                 }
                 return nextActiveTabs;
             });
         },
-        [items, setAnchor],
+        [setAnchor],
     );
 
     return (
@@ -53,22 +49,17 @@ export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [], toc: paren
             value={activeTabs}
             onValueChange={handleValueChange}
         >
-            {items.map(({ title, toc = parentToc, children }, idx) => {
-                const id = slug(title);
-                return (
-                    <RadixAccordion.Item key={idx} value={idx.toString()} className="fern-accordion-item" id={id}>
-                        <RadixAccordion.Trigger className="fern-accordion-trigger">
-                            <NavArrowRight className="fern-accordion-trigger-arrow" />
-                            <h6 className="fern-accordion-trigger-title" id={toc ? id : undefined}>
-                                {title}
-                            </h6>
-                        </RadixAccordion.Trigger>
-                        <RadixAccordion.Content className="fern-accordion-content">
-                            <div className="m-5">{children}</div>
-                        </RadixAccordion.Content>
-                    </RadixAccordion.Item>
-                );
-            })}
+            {items.map(({ title, id, children }) => (
+                <RadixAccordion.Item key={id} value={id} className="fern-accordion-item" id={id}>
+                    <RadixAccordion.Trigger className="fern-accordion-trigger">
+                        <NavArrowRight className="fern-accordion-trigger-arrow" />
+                        <h6 className="fern-accordion-trigger-title">{title}</h6>
+                    </RadixAccordion.Trigger>
+                    <RadixAccordion.Content className="fern-accordion-content">
+                        <div className="m-5">{children}</div>
+                    </RadixAccordion.Content>
+                </RadixAccordion.Item>
+            ))}
         </RadixAccordion.Root>
     );
 };
