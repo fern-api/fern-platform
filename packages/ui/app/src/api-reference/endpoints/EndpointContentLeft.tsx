@@ -104,7 +104,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     description:
                         value.value.tokenPrefix != null
                             ? `OAuth authentication of the form ${value.value.tokenPrefix} <token>.`
-                            : undefined,
+                            : "OAuth authentication of the form Bearer <token>.",
                     hidden: false,
                     valueShape: {
                         type: "unknown",

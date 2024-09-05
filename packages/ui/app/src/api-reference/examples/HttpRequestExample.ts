@@ -42,7 +42,7 @@ export function convertEndpointExampleToHttpRequestExample(
                 headers[headerWireValue] = prefix != null ? `${prefix} <${nameOverride}>` : `<${nameOverride}>`;
             },
             oAuth: ({ value: { tokenPrefix } }) => {
-                headers.Authorization = `${tokenPrefix} <token>`;
+                headers.Authorization = tokenPrefix != null ? `${tokenPrefix} <token>` : "Bearer <token>";
             },
             _other: noop,
         });
