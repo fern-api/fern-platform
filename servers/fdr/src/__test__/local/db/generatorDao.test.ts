@@ -18,6 +18,7 @@ const GENERATORS_FROM_OTHER_TESTS = [
     "python-sdk-2",
     "python-sdk-3",
     "my-cool/example",
+    "this-is-major-version-restricted",
 ];
 
 beforeEach(async () => {
