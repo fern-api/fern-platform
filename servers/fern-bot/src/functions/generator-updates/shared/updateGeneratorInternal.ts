@@ -4,6 +4,7 @@ import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import { ChangelogResponse } from "@fern-fern/generators-sdk/api/resources/generators";
 import { execFernCli } from "@libs/fern";
 import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit, type Repository } from "@libs/github/utilities";
+import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService";
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import { SimpleGit } from "simple-git";
@@ -132,6 +133,8 @@ export async function updateVersionInternal(
     fernBotLoginId: string,
     venusUrl: string,
     fdrUrl: string,
+    slackToken: string,
+    slackChannel: string,
 ): Promise<void> {
     const [git, fullRepoPath] = await configureGit(repository);
     console.log(`Cloning repo: ${repository.clone_url} to ${fullRepoPath}`);
@@ -146,6 +149,8 @@ export async function updateVersionInternal(
         console.error("Could not determine if the repo owner was a fern-bot canary, quitting.");
         throw error;
     }
+
+    const slackClient = new SlackService(slackToken, slackChannel);
 
     await handleSingleUpgrade({
         octokit,
@@ -165,6 +170,7 @@ export async function updateVersionInternal(
         getEntityVersion: async () => {
             return cleanStdout((await execFernCli("--version", fullRepoPath)).stdout);
         },
+        slackClient,
     });
 
     // Pull a branch of fern/update/<generator>/<api>:<group>
@@ -210,6 +216,14 @@ export async function updateVersionInternal(
                         }
                         return cleanStdout((await execFernCli(command, fullRepoPath)).stdout);
                     },
+                    maybeGetGeneratorMetadata: async () => {
+                        return {
+                            group: groupName,
+                            generatorName: generatorName,
+                            apiName: apiName !== NO_API_FALLBACK_KEY ? apiName : undefined,
+                        };
+                    },
+                    slackClient,
                 });
             }
         }
@@ -225,6 +239,8 @@ async function handleSingleUpgrade({
     upgradeAction,
     getPRBody,
     getEntityVersion,
+    maybeGetGeneratorMetadata,
+    slackClient,
 }: {
     octokit: Octokit;
     repository: Repository;
@@ -234,6 +250,8 @@ async function handleSingleUpgrade({
     upgradeAction: () => Promise<void>;
     getPRBody: (fromVersion: string, toversion: string) => Promise<string>;
     getEntityVersion: () => Promise<string>;
+    maybeGetGeneratorMetadata?: () => Promise<GeneratorMessageMetadata>;
+    slackClient: SlackService;
 }): Promise<void> {
     // Before we checkout a new branch, we need to ensure we have the current version off the default branch
     // Checkout the default branch and run the version command to get the current version
@@ -262,7 +280,7 @@ async function handleSingleUpgrade({
         await git.push(["--force-with-lease", DEFAULT_REMOTE_NAME, `${branchName}:refs/heads/${branchName}`]);
 
         // Open a PR, or update it in place
-        await createOrUpdatePullRequest(
+        const prUrl = await createOrUpdatePullRequest(
             octokit,
             {
                 title: `:herb: :sparkles: [Scheduled] ${prTitle}`,
@@ -273,6 +291,22 @@ async function handleSingleUpgrade({
             repository.full_name,
             branchName,
         );
+
+        // Notify via slack that the upgrade PR was created
+        await slackClient.notifyUpgradePRCreated({
+            fromVersion,
+            toVersion,
+            prUrl,
+            repoName: repository.full_name,
+            generator: maybeGetGeneratorMetadata ? await maybeGetGeneratorMetadata() : undefined,
+        });
+    } else if (fromVersion === toVersion) {
+        // TODO: Attempt major version change, then notify
+        // slackClient.notifyMajorVersionUpgradeEncountered({
+        //     repoUrl: repository.html_url,
+        //     repoName: repository.full_name,
+        //     currentVersion: fromVersion,
+        // });
     } else {
         console.log("No changes detected, skipping PR creation");
     }
