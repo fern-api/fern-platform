@@ -17,7 +17,7 @@ export class SlackService {
     }
 
     private getGeneratorMetadataMessage(generator: GeneratorMessageMetadata): string {
-        return `**Generator Group:** ${generator.group}\n**Generator:** ${generator.generatorName}${generator.apiName ? `\n**API:** ${generator.apiName}` : ""}`;
+        return `*Generator Group:* ${generator.group}\n*Generator:* ${generator.generatorName}${generator.apiName ? `\n*API:* ${generator.apiName}` : ""}`;
     }
 
     // TODO: would be nice if we stored customer metadata in a DB to then add that information to this message
@@ -73,7 +73,7 @@ export class SlackService {
                     type: "section",
                     text: {
                         type: "mrkdwn",
-                        text: `**Github Repo:** ${repoName}${generator ? "\n" + this.getGeneratorMetadataMessage(generator) : ""}\n**Upgrading:** ${fromVersion} :arrow_right: ${toVersion}`,
+                        text: `*Github Repo:* ${repoName}${generator ? "\n" + this.getGeneratorMetadataMessage(generator) : ""}\n*Upgrading:* ${fromVersion} :arrow_right: ${toVersion}`,
                     },
                 },
                 {

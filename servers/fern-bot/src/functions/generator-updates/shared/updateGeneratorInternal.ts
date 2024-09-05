@@ -195,10 +195,13 @@ export async function updateVersionInternal(
                     git,
                     branchName: `${branchName}${additionalName}`,
                     prTitle: `Upgrade Fern Generator Version: (${additionalName})`,
-                    upgradeAction: async () => {
+                    upgradeAction: async ({ includeMajor }: { includeMajor?: boolean }) => {
                         let command = `generator upgrade --generator ${generatorName} --group ${groupName}`;
                         if (apiName !== NO_API_FALLBACK_KEY) {
                             command += ` --api ${apiName}`;
+                        }
+                        if (includeMajor) {
+                            command += " --include-major";
                         }
                         const response = await execFernCli(command, fullRepoPath);
                         console.log(response.stdout);
@@ -247,7 +250,7 @@ async function handleSingleUpgrade({
     git: SimpleGit;
     branchName: string;
     prTitle: string;
-    upgradeAction: () => Promise<void>;
+    upgradeAction: ({ includeMajor }: { includeMajor?: boolean }) => Promise<void>;
     getPRBody: (fromVersion: string, toversion: string) => Promise<string>;
     getEntityVersion: () => Promise<string>;
     maybeGetGeneratorMetadata?: () => Promise<GeneratorMessageMetadata>;
@@ -264,7 +267,7 @@ async function handleSingleUpgrade({
 
     // Perform the upgrade and get the new version you just upgraded to
     console.log(`Upgrading entity to latest version, from version: ${fromVersion}`);
-    await upgradeAction();
+    await upgradeAction({});
     const toVersion = await getEntityVersion();
     console.log(`Upgraded entity to latest version, to version: ${toVersion}`);
 
@@ -300,14 +303,20 @@ async function handleSingleUpgrade({
             repoName: repository.full_name,
             generator: maybeGetGeneratorMetadata ? await maybeGetGeneratorMetadata() : undefined,
         });
+        return;
     } else if (fromVersion === toVersion) {
-        // TODO: Attempt major version change, then notify
-        // slackClient.notifyMajorVersionUpgradeEncountered({
-        //     repoUrl: repository.html_url,
-        //     repoName: repository.full_name,
-        //     currentVersion: fromVersion,
-        // });
-    } else {
-        console.log("No changes detected, skipping PR creation");
+        await upgradeAction({ includeMajor: true });
+        const toVersion = await getEntityVersion();
+        if (fromVersion !== toVersion) {
+            slackClient.notifyMajorVersionUpgradeEncountered({
+                repoUrl: repository.html_url,
+                repoName: repository.full_name,
+                currentVersion: fromVersion,
+            });
+            console.log("No change made as the upgrade is across major versions.");
+            return;
+        }
     }
+
+    console.log("No changes detected, skipping PR creation");
 }
