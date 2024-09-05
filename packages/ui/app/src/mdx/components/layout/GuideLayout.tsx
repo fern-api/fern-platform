@@ -23,7 +23,7 @@ interface GuideLayoutProps {
 }
 
 interface GuideLayoutOpts {
-    breadcrumbs: string[];
+    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
     title: string;
     subtitle: ElementContent | undefined;
     tableOfContents: TableOfContentsItem[] | undefined;
