@@ -62,14 +62,14 @@ it("cli version get latest respects semver, not time", async () => {
         (
             await fdrApplication.dao
                 .cliVersions()
-                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseTypes: [ReleaseType.Rc] } })
+                .getLatestCliRelease({ getLatestCliReleaseRequest: { release_types: [ReleaseType.Rc] } })
         )?.version,
     ).toEqual("1.1.0-rc.1");
     expect(
         (
             await fdrApplication.dao
                 .cliVersions()
-                .getLatestCliRelease({ getLatestCliReleaseRequest: { releaseTypes: [ReleaseType.Ga] } })
+                .getLatestCliRelease({ getLatestCliReleaseRequest: { release_types: [ReleaseType.Ga] } })
         )?.version,
     ).toEqual("1.1.0");
 });

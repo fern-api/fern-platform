@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import * as errors from "../../../../../../../../errors";
+import * as errors from "../../../../../../../../errors/index";
 export class WriteService {
     constructor(methods, middleware = []) {
         this.methods = methods;
@@ -32,11 +32,10 @@ export class WriteService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "UnauthorizedError":
@@ -67,11 +66,10 @@ export class WriteService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "UnauthorizedError":
@@ -100,11 +98,10 @@ export class WriteService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "UnauthorizedError":
@@ -132,11 +129,10 @@ export class WriteService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "DocsNotFoundError":
