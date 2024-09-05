@@ -20,7 +20,7 @@ export declare namespace ResolvedPath {
         title: string;
         pages: Record<FernNavigation.PageId, BundledMDX>;
         node: FernNavigation.ChangelogNode;
-        sectionTitleBreadcrumbs: string[];
+        breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
         slug: FernNavigation.Slug;
         // neighbors: Neighbors;
     }
@@ -28,7 +28,7 @@ export declare namespace ResolvedPath {
     interface ChangelogEntryPage extends Omit<FernNavigation.ChangelogEntryNode, "type"> {
         type: "changelog-entry";
         page: BundledMDX;
-        sectionTitleBreadcrumbs: string[];
+        breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
         neighbors: Neighbors;
         changelogTitle: string;
         changelogSlug: FernNavigation.Slug;

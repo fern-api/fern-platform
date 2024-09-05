@@ -9,6 +9,7 @@ describe("PlaygroundCodeSnippetBuilder", () => {
     const endpoint: ResolvedEndpointDefinition = {
         type: "endpoint",
         nodeId: FernNavigation.NodeId(""),
+        breadcrumbs: [],
         id: "",
         apiDefinitionId: "",
         slug: FernNavigation.Slug(""),

@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
-import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { ResolvedEndpointDefinition, resolveEnvironment } from "../../resolver/types";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
@@ -8,15 +8,14 @@ import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 interface EndpointContentHeaderProps {
     endpoint: ResolvedEndpointDefinition;
-    breadcrumbs: readonly string[];
     container: React.MutableRefObject<HTMLElement | null>;
 }
 
-export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoint, breadcrumbs, container }) => {
+export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoint, container }) => {
     const selectedEnvironmentId = useSelectedEnvironmentId();
     return (
         <header className="space-y-1 pb-2 pt-8">
-            <Breadcrumbs breadcrumbs={breadcrumbs} />
+            <FernBreadcrumbs breadcrumbs={endpoint.breadcrumbs} />
             <div className="flex items-center justify-between">
                 <span>
                     <h1 className="fern-page-heading">

@@ -58,16 +58,19 @@ export class NodeCollector {
     }
 
     private defaultVersion: FernNavigation.VersionNode | undefined;
+    private versionNodes: FernNavigation.VersionNode[] = [];
     constructor(rootNode: NavigationNode | undefined) {
         if (rootNode == null) {
             return;
         }
         traverseNavigation(rootNode, (node, _index, parents) => {
-            this.idToNode.set(node.id, node);
-            this.idToNodeParents.set(node.id, parents);
-
             // if the node is the default version, make a copy of it and "prune" the version slug from all children nodes
             const parent = parents[parents.length - 1];
+
+            if (node.type === "version") {
+                this.versionNodes.push(node);
+            }
+
             if (
                 node.type === "version" &&
                 node.default &&
@@ -78,7 +81,7 @@ export class NodeCollector {
                 const copy = JSON.parse(JSON.stringify(node)) as FernNavigation.VersionNode;
                 this.defaultVersion = pruneVersionNode(copy, rootNode.slug, node.slug);
                 traverseNavigation(this.defaultVersion, (node, _index, innerParents) => {
-                    this.visitNode(node, [...parents, ...innerParents]);
+                    this.visitNode(node, [...parents, ...innerParents], true);
                 });
             }
 
@@ -86,7 +89,12 @@ export class NodeCollector {
         });
     }
 
-    private visitNode(node: NavigationNode, parents: NavigationNode[]): void {
+    private visitNode(node: NavigationNode, parents: NavigationNode[], isDefaultVersion = false): void {
+        if (!this.idToNode.has(node.id) || isDefaultVersion) {
+            this.idToNode.set(node.id, node);
+            this.idToNodeParents.set(node.id, parents);
+        }
+
         if (node.type === "sidebarRoot") {
             this.#last = undefined;
             this.#lastNeighboringNode = undefined;
@@ -167,9 +175,7 @@ export class NodeCollector {
             .map(({ node }) => urljoin(node.slug));
     });
 
-    public getVersionNodes = once((): FernNavigation.VersionNode[] => {
-        return [...this.idToNode.values()]
-            .filter((node): node is FernNavigation.VersionNode => node.type === "version")
-            .map((node) => node);
-    });
+    public getVersionNodes = (): FernNavigation.VersionNode[] => {
+        return this.versionNodes;
+    };
 }

@@ -10,6 +10,7 @@ const MOCK_ENV = {
 
 const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     type: "endpoint",
+    breadcrumbs: [],
     nodeId: FernNavigation.NodeId(""),
     id: "",
     // apiPackageId: "",

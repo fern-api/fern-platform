@@ -1,6 +1,6 @@
-import { FernNavigation } from "../generated";
-import { NavigationNode } from "./NavigationNode";
-import { NavigationNodeSection, isSection } from "./NavigationNodeSection";
+import type { FernNavigation } from "../generated";
+import type { NavigationNode } from "./NavigationNode";
+import { isSection, type NavigationNodeSection } from "./NavigationNodeSection";
 
 type WithRequiredOverviewPage<T extends FernNavigation.WithOverviewPage> = T & {
     overviewPageId: FernNavigation.PageId;
