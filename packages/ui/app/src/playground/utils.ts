@@ -132,14 +132,21 @@ export function buildAuthHeaders(
                 }
                 headers["Authorization"] = `Basic ${btoa(`${username}:${obfuscateSecret(password)}`)}`;
             },
-            oAuth: () => {
-                const token = authState.oauth?.accessToken ?? "";
-                const tokenPrefix = authState.oauth?.tokenPrefix?.length ? authState.oauth.tokenPrefix : "Bearer";
-                if (redacted) {
-                    headers["Authorization"] = `${tokenPrefix} ${obfuscateSecret(token)}`;
-                } else {
-                    headers["Authorization"] = `${tokenPrefix} ${token}`;
-                }
+            oAuth: (oAuth) => {
+                visitDiscriminatedUnion(oAuth.value)._visit({
+                    clientCredentials: () => {
+                        const token = authState.oauth?.accessToken ?? "";
+                        // TODO: check if token is expired and then refresh if is
+                        const tokenPrefix = authState.oauth?.tokenPrefix?.length
+                            ? authState.oauth.tokenPrefix
+                            : "Bearer";
+                        if (redacted) {
+                            headers["Authorization"] = `${tokenPrefix} ${obfuscateSecret(token)}`;
+                        } else {
+                            headers["Authorization"] = `${tokenPrefix} ${token}`;
+                        }
+                    },
+                });
             },
         });
     }

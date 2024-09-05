@@ -178,9 +178,12 @@ function OAuthForm({
             break;
         }
     }
-
-    if (endpoint != null && types != null) {
+    if (endpoint == null || types == null) {
+        return <Callout intent="error">{"Could not find the endpoint to leverage the OAuth login flow"}</Callout>;
+    } else {
         const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);
+
+        const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
         const refreshOAuthToken = async () => {
             const headers: Record<string, string> = {
@@ -204,10 +207,10 @@ function OAuthForm({
             };
             const res = await executeProxyRest(proxyEnvironment, req);
 
-            if (res.response.status >= 200 && res.response.status < 400) {
-                const mutableAccessTokenLocationCopy = [...oAuth.value.accessTokenLocation];
-                visitDiscriminatedUnion(res, "type")._visit({
-                    json: (jsonRes) => {
+            const mutableAccessTokenLocationCopy = [...oAuth.value.accessTokenLocation];
+            visitDiscriminatedUnion(res, "type")._visit({
+                json: (jsonRes) => {
+                    if (jsonRes.response.ok) {
                         const container = mutableAccessTokenLocationCopy.shift();
                         if (container == null || (container !== "body" && container !== "headers")) {
                             throw new Error("Expected access location to be defined");
@@ -220,18 +223,21 @@ function OAuthForm({
                         }
                         setValue((prev) => ({ ...prev, accessToken: cursor }));
                         closeContainer();
-                    },
-                    file: () => {
-                        throw new Error("Expected response to be JSON");
-                    },
-                    stream: () => {
-                        throw new Error("Expected response to be JSON");
-                    },
-                    _other: () => {
-                        throw new Error("Expected response to be JSON");
-                    },
-                });
-            }
+                    } else {
+                        console.log(displayFailedLogin);
+                        setDisplayFailedLogin(true);
+                    }
+                },
+                file: () => {
+                    setDisplayFailedLogin(true);
+                },
+                stream: () => {
+                    setDisplayFailedLogin(true);
+                },
+                _other: () => {
+                    setDisplayFailedLogin(true);
+                },
+            });
         };
 
         return (
@@ -273,6 +279,13 @@ function OAuthForm({
                         </>
                     )}
                 </li>
+                {displayFailedLogin && (
+                    <li className="-mx-4 space-y-2 p-4 py-0">
+                        <span className="font-mono text-sm text-red-600">
+                            Failed to login with the provided credentials
+                        </span>
+                    </li>
+                )}
                 <li className="flex justify-end py-2">
                     <FernButton
                         text={value.accessToken.length > 0 ? "Refresh token" : "Login"}
@@ -283,8 +296,6 @@ function OAuthForm({
                 </li>
             </>
         );
-    } else {
-        throw new Error("Could not find the endpoint to leverage the OAuth login flow");
     }
 }
 

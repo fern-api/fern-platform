@@ -79,7 +79,6 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
 
-    // TODO: use this
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
             return;
