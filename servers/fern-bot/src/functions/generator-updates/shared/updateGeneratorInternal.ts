@@ -222,7 +222,7 @@ export async function updateVersionInternal(
                     maybeGetGeneratorMetadata: async () => {
                         return {
                             group: groupName,
-                            generatorName: generatorName,
+                            generatorName,
                             apiName: apiName !== NO_API_FALLBACK_KEY ? apiName : undefined,
                         };
                     },
