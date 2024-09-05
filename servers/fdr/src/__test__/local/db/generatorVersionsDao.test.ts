@@ -380,8 +380,8 @@ it("get generator that works for cli version", async () => {
     const releaseRetainMajor = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
             generator: "this-is-cli-restricted",
-            cliVersion: "0.100.0",
-            generatorMajorVersion: 2,
+            cli_version: "0.100.0",
+            generator_major_version: 2,
         },
     });
     expect(releaseRetainMajor?.version).toEqual("2.1.8");
@@ -389,7 +389,7 @@ it("get generator that works for cli version", async () => {
     const release = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
             generator: "this-is-cli-restricted",
-            cliVersion: "0.100.0",
+            cli_version: "0.100.0",
         },
     });
     expect(release?.version).toEqual("3.5.0");
@@ -457,8 +457,8 @@ it("get generator retain major version", async () => {
     const releaseRetainMajor = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
             generator: "this-is-major-version-restricted",
-            releaseTypes: ["GA"],
-            generatorMajorVersion: 2,
+            release_types: ["GA"],
+            generator_major_version: 2,
         },
     });
     expect(releaseRetainMajor?.version).toEqual("2.1.8");
@@ -466,7 +466,7 @@ it("get generator retain major version", async () => {
     const release = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
             generator: "this-is-major-version-restricted",
-            releaseTypes: ["GA"],
+            release_types: ["GA"],
         },
     });
     expect(release?.version).toEqual("3.5.0");
