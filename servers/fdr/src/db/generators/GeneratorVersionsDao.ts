@@ -162,21 +162,21 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
         getLatestGeneratorReleaseRequest: GetLatestGeneratorReleaseRequest;
     }): Promise<GeneratorRelease | undefined> {
         const releaseTypes =
-            getLatestGeneratorReleaseRequest.releaseTypes != null
-                ? getLatestGeneratorReleaseRequest.releaseTypes.map(convertGeneratorReleaseType)
+            getLatestGeneratorReleaseRequest.release_types != null
+                ? getLatestGeneratorReleaseRequest.release_types.map(convertGeneratorReleaseType)
                 : [prisma.ReleaseType.ga];
 
         const release = await this.prisma.$transaction(async (prisma) => {
             // If an IR version is provided outright, we can use that to filter the generators
-            let irVersion = getLatestGeneratorReleaseRequest.irVersion;
+            let irVersion = getLatestGeneratorReleaseRequest.ir_version;
 
             // If a CLI version is provided, this takes precedence over a provided IR version if both
             // are provided. When a CLI version is provided we need to find the IR version that corresponds to it
             // to filter the generators to compatible versions.
-            if (getLatestGeneratorReleaseRequest.cliVersion != null) {
+            if (getLatestGeneratorReleaseRequest.cli_version != null) {
                 const cliRelease = await prisma.cliRelease.findUnique({
                     where: {
-                        version: getLatestGeneratorReleaseRequest.cliVersion,
+                        version: getLatestGeneratorReleaseRequest.cli_version,
                     },
                 });
 
@@ -190,7 +190,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
                 where: {
                     generatorId: getLatestGeneratorReleaseRequest.generator,
                     releaseType: { in: releaseTypes },
-                    major: getLatestGeneratorReleaseRequest.generatorMajorVersion,
+                    major: getLatestGeneratorReleaseRequest.generator_major_version,
                     irVersion: { lte: irVersion },
                     isYanked: null,
                 },
