@@ -58,6 +58,7 @@ export class NodeCollector {
     }
 
     private defaultVersion: FernNavigation.VersionNode | undefined;
+    private versionNodes: FernNavigation.VersionNode[] = [];
     constructor(rootNode: NavigationNode | undefined) {
         if (rootNode == null) {
             return;
@@ -65,6 +66,11 @@ export class NodeCollector {
         traverseNavigation(rootNode, (node, _index, parents) => {
             // if the node is the default version, make a copy of it and "prune" the version slug from all children nodes
             const parent = parents[parents.length - 1];
+
+            if (node.type === "version") {
+                this.versionNodes.push(node);
+            }
+
             if (
                 node.type === "version" &&
                 node.default &&
@@ -169,9 +175,7 @@ export class NodeCollector {
             .map(({ node }) => urljoin(node.slug));
     });
 
-    public getVersionNodes = once((): FernNavigation.VersionNode[] => {
-        return [...this.idToNode.values()]
-            .filter((node): node is FernNavigation.VersionNode => node.type === "version")
-            .map((node) => node);
-    });
+    public getVersionNodes = (): FernNavigation.VersionNode[] => {
+        return this.versionNodes;
+    };
 }
