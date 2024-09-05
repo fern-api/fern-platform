@@ -1,5 +1,6 @@
 import { APIV1Read, Snippets } from "@fern-api/fdr-sdk/client/types";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { decodeJwt } from "jose";
 import { mapValues } from "lodash-es";
 import {
     ResolvedEndpointDefinition,
@@ -16,6 +17,7 @@ import {
     visitResolvedHttpRequestBodyShape,
 } from "../resolver/types";
 import { unknownToString } from "../util/unknownToString";
+import { OAuthClientCredentialLoginFlowProps, oAuthClientCredentialLoginFlow } from "./PlaygroundAuthorizationForm";
 import {
     PlaygroundAuthState,
     PlaygroundEndpointRequestFormState,
@@ -105,6 +107,7 @@ export function buildAuthHeaders(
     auth: APIV1Read.ApiAuth | undefined,
     authState: PlaygroundAuthState,
     { redacted }: { redacted: boolean },
+    oAuthClientCredentialLoginFlowProps?: Omit<OAuthClientCredentialLoginFlowProps, "oAuth">,
 ): Record<string, string> {
     const headers: Record<string, string> = {};
 
@@ -132,11 +135,30 @@ export function buildAuthHeaders(
                 }
                 headers["Authorization"] = `Basic ${btoa(`${username}:${obfuscateSecret(password)}`)}`;
             },
-            oAuth: (oAuth) => {
-                visitDiscriminatedUnion(oAuth.value)._visit({
-                    clientCredentials: () => {
+            oAuth: async (oAuth) => {
+                await visitDiscriminatedUnion(oAuth.value)._visit({
+                    clientCredentials: async () => {
                         const token = authState.oauth?.accessToken ?? "";
-                        // TODO: check if token is expired and then refresh if is
+
+                        if (oAuthClientCredentialLoginFlowProps) {
+                            const {
+                                formState,
+                                endpoint,
+                                proxyEnvironment,
+                                setValue: setOAuthValue,
+                            } = oAuthClientCredentialLoginFlowProps;
+                            const payload = decodeJwt(token);
+                            if (payload.exp && new Date().getTime() > payload.exp) {
+                                await oAuthClientCredentialLoginFlow({
+                                    formState,
+                                    endpoint,
+                                    proxyEnvironment,
+                                    oAuth,
+                                    setValue: setOAuthValue,
+                                });
+                            }
+                        }
+
                         const tokenPrefix = authState.oauth?.tokenPrefix?.length
                             ? authState.oauth.tokenPrefix
                             : "Bearer";

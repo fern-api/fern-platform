@@ -2,12 +2,14 @@ import { FernTooltipProvider } from "@fern-ui/components";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { SendSolid } from "iconoir-react";
+import { useSetAtom } from "jotai";
 import { compact, mapValues, once } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { captureSentryError } from "../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
+    PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
     store,
     useBasePath,
     useFeatureFlags,
@@ -79,6 +81,8 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
 
+    const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
+
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
             return;
@@ -92,9 +96,19 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 method: endpoint.method,
                 docsRoute: `/${endpoint.slug}`,
             });
-            const authHeaders = buildAuthHeaders(endpoint.auth, store.get(PLAYGROUND_AUTH_STATE_ATOM), {
-                redacted: false,
-            });
+            const authHeaders = buildAuthHeaders(
+                endpoint.auth,
+                store.get(PLAYGROUND_AUTH_STATE_ATOM),
+                {
+                    redacted: false,
+                },
+                {
+                    formState,
+                    endpoint,
+                    proxyEnvironment,
+                    setValue: setOAuthValue,
+                },
+            );
             const headers = {
                 ...authHeaders,
                 ...mapValues(formState.headers ?? {}, unknownToString),
@@ -171,7 +185,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 },
             });
         }
-    }, [endpoint, formState, proxyEnvironment, uploadEnvironment, usesApplicationJsonInFormDataValue]);
+    }, [endpoint, formState, proxyEnvironment, uploadEnvironment, usesApplicationJsonInFormDataValue, setOAuthValue]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 

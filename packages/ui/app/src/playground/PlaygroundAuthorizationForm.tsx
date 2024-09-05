@@ -16,21 +16,20 @@ import {
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-    useBasePath,
-    useFeatureFlags,
     useFlattenedApis,
     usePlaygroundEndpointFormState,
 } from "../atoms";
 import { useApiRoute } from "../hooks/useApiRoute";
+import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { Callout } from "../mdx/components/callout";
-import { ResolvedApiEndpointWithPackage } from "../resolver/types";
+import { ResolvedApiEndpointWithPackage, ResolvedEndpointDefinition } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { unknownToString } from "../util/unknownToString";
 import { PasswordInputGroup } from "./PasswordInputGroup";
-import { getAppBuildwithfernCom, serializeFormStateBody } from "./PlaygroundEndpoint";
+import { serializeFormStateBody } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { executeProxyRest } from "./fetch-utils/executeProxyRest";
-import { PlaygroundAuthState, ProxyRequest } from "./types";
+import { PlaygroundAuthState, PlaygroundEndpointRequestFormState, ProxyRequest } from "./types";
 import { buildEndpointUrl } from "./utils";
 
 interface PlaygroundAuthorizationFormProps {
@@ -146,6 +145,73 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
     );
 }
 
+export interface OAuthClientCredentialLoginFlowProps {
+    formState: PlaygroundEndpointRequestFormState;
+    endpoint: ResolvedApiEndpointWithPackage.Endpoint | ResolvedEndpointDefinition;
+    proxyEnvironment: string;
+    oAuth: APIV1Read.ApiAuth.OAuth;
+    setValue: (value: (prev: any) => any) => void;
+    closeContainer?: () => void;
+    setDisplayFailedLogin?: (value: boolean) => void;
+}
+
+export const oAuthClientCredentialLoginFlow = async ({
+    formState,
+    endpoint,
+    proxyEnvironment,
+    oAuth,
+    setValue,
+    closeContainer,
+    setDisplayFailedLogin,
+}: OAuthClientCredentialLoginFlowProps): Promise<void> => {
+    const headers: Record<string, string> = {
+        ...mapValue(formState.headers ?? {}, unknownToString),
+    };
+
+    if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
+        headers["Content-Type"] = endpoint.requestBody.contentType;
+    }
+
+    const req: ProxyRequest = {
+        url: buildEndpointUrl(endpoint, formState),
+        method: endpoint.method,
+        headers,
+        body: await serializeFormStateBody("", endpoint.requestBody?.shape, formState.body, false),
+    };
+    const res = await executeProxyRest(proxyEnvironment, req);
+
+    const mutableAccessTokenLocationCopy = [...oAuth.value.accessTokenLocation];
+    visitDiscriminatedUnion(res, "type")._visit({
+        json: (jsonRes) => {
+            if (jsonRes.response.ok) {
+                const container = mutableAccessTokenLocationCopy.shift();
+                if (container == null || (container !== "body" && container !== "headers")) {
+                    throw new Error("Expected access location to be defined");
+                }
+                let cursor: any = jsonRes.response[container];
+                for (const accessor of mutableAccessTokenLocationCopy) {
+                    if (accessor in cursor) {
+                        cursor = cursor[accessor];
+                    }
+                }
+                setValue((prev) => ({ ...prev, accessToken: cursor }));
+                closeContainer && closeContainer();
+            } else {
+                setDisplayFailedLogin && setDisplayFailedLogin(true);
+            }
+        },
+        file: () => {
+            setDisplayFailedLogin && setDisplayFailedLogin(true);
+        },
+        stream: () => {
+            setDisplayFailedLogin && setDisplayFailedLogin(true);
+        },
+        _other: () => {
+            setDisplayFailedLogin && setDisplayFailedLogin(true);
+        },
+    });
+};
+
 function OAuthForm({
     oAuth,
     closeContainer,
@@ -157,12 +223,9 @@ function OAuthForm({
 }) {
     // Client Credential hooks
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
-    const basePath = useBasePath();
-    const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
-    const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
-    const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
-    const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
+    const proxyEnvironment = useStandardProxyEnvironment();
     const apis = useFlattenedApis();
+    const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
     const endpointSlug = oAuth.value.tokenEndpointPath.startsWith("/")
         ? oAuth.value.tokenEndpointPath.slice(1)
@@ -181,64 +244,19 @@ function OAuthForm({
     if (endpoint == null || types == null) {
         return <Callout intent="error">{"Could not find the endpoint to leverage the OAuth login flow"}</Callout>;
     } else {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);
 
-        const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
-
-        const refreshOAuthToken = async () => {
-            const headers: Record<string, string> = {
-                ...mapValue(formState.headers ?? {}, unknownToString),
-            };
-
-            if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
-                headers["Content-Type"] = endpoint.requestBody.contentType;
-            }
-
-            const req: ProxyRequest = {
-                url: buildEndpointUrl(endpoint, formState),
-                method: endpoint.method,
-                headers,
-                body: await serializeFormStateBody(
-                    uploadEnvironment,
-                    endpoint.requestBody?.shape,
-                    formState.body,
-                    usesApplicationJsonInFormDataValue,
-                ),
-            };
-            const res = await executeProxyRest(proxyEnvironment, req);
-
-            const mutableAccessTokenLocationCopy = [...oAuth.value.accessTokenLocation];
-            visitDiscriminatedUnion(res, "type")._visit({
-                json: (jsonRes) => {
-                    if (jsonRes.response.ok) {
-                        const container = mutableAccessTokenLocationCopy.shift();
-                        if (container == null || (container !== "body" && container !== "headers")) {
-                            throw new Error("Expected access location to be defined");
-                        }
-                        let cursor: any = jsonRes.response[container];
-                        for (const accessor of mutableAccessTokenLocationCopy) {
-                            if (accessor in cursor) {
-                                cursor = cursor[accessor];
-                            }
-                        }
-                        setValue((prev) => ({ ...prev, accessToken: cursor }));
-                        closeContainer();
-                    } else {
-                        console.log(displayFailedLogin);
-                        setDisplayFailedLogin(true);
-                    }
-                },
-                file: () => {
-                    setDisplayFailedLogin(true);
-                },
-                stream: () => {
-                    setDisplayFailedLogin(true);
-                },
-                _other: () => {
-                    setDisplayFailedLogin(true);
-                },
+        const oAuthClientCredentialLogin = async () =>
+            await oAuthClientCredentialLoginFlow({
+                formState,
+                endpoint,
+                proxyEnvironment,
+                oAuth,
+                setValue,
+                closeContainer,
+                setDisplayFailedLogin,
             });
-        };
 
         return (
             <>
@@ -290,7 +308,7 @@ function OAuthForm({
                     <FernButton
                         text={value.accessToken.length > 0 ? "Refresh token" : "Login"}
                         intent="primary"
-                        onClick={refreshOAuthToken}
+                        onClick={oAuthClientCredentialLogin}
                         disabled={disabled}
                     />
                 </li>
