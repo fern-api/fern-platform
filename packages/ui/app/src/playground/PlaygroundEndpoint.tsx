@@ -188,7 +188,15 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 },
             });
         }
-    }, [endpoint, formState, proxyEnvironment, uploadEnvironment, usesApplicationJsonInFormDataValue, setOAuthValue]);
+    }, [
+        endpoint,
+        formState,
+        proxyEnvironment,
+        uploadEnvironment,
+        usesApplicationJsonInFormDataValue,
+        setOAuthValue,
+        oAuthPlaygroundEnabled,
+    ]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
