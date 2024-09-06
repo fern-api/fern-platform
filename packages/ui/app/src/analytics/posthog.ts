@@ -49,34 +49,38 @@ export async function initializePosthog(api_host: string, customerConfig?: DocsV
     const posthog = (await import("posthog-js")).default;
 
     if (posthog.__loaded) {
+        // api_host may change because of useApiRoute
         posthog.set_config({ api_host });
-        ifCustomer(posthog, (posthog) => posthog.customer.set_config({ api_host }));
-        return;
+    } else {
+        posthog.init(apiKey, {
+            api_host,
+            debug: process.env.NODE_ENV === "development",
+            capture_pageview: true,
+            capture_pageleave: true,
+        });
     }
 
-    posthog.init(apiKey, {
-        api_host,
-        debug: process.env.NODE_ENV === "development",
-        capture_pageview: true,
-        capture_pageleave: true,
-    });
-
-    if (customerConfig) {
-        posthog.init(
-            customerConfig.apiKey,
-            {
-                api_host,
-                request_headers: {
-                    // default to posthog-js's default endpoint
-                    // this is probably the expected behavior
-                    "x-fern-posthog-host": customerConfig.endpoint ?? "https://us.i.posthog.com",
+    if (customerConfig != null) {
+        if (posthogHasCustomer(posthog) && posthog.customer.__loaded) {
+            // api_host may change because of useApiRoute
+            posthog.customer.set_config({ api_host });
+        } else {
+            posthog.init(
+                customerConfig.apiKey,
+                {
+                    api_host,
+                    request_headers: {
+                        // default to posthog-js's default endpoint
+                        // this is probably the expected behavior
+                        "x-fern-posthog-host": customerConfig.endpoint ?? "https://us.i.posthog.com",
+                    },
+                    debug: process.env.NODE_ENV === "development",
+                    capture_pageview: true,
+                    capture_pageleave: true,
                 },
-                debug: process.env.NODE_ENV === "development",
-                capture_pageview: true,
-                capture_pageleave: true,
-            },
-            "customer",
-        );
+                "customer",
+            );
+        }
     }
 }
 
