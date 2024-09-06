@@ -4,7 +4,7 @@ import { SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
-import { ResolvedPath } from "../resolver/ResolvedPath";
+import { DocsContent } from "../resolver/DocsContent";
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 
@@ -67,7 +67,7 @@ export const SIDEBAR_ROOT_NODE_ATOM = selectAtom(
 SIDEBAR_ROOT_NODE_ATOM.debugLabel = "SIDEBAR_ROOT_NODE_ATOM";
 
 // the initial path that was hard-navigated to
-export const RESOLVED_PATH_ATOM = atom<ResolvedPath>((get) => get(DOCS_ATOM).content);
+export const RESOLVED_PATH_ATOM = atom<DocsContent>((get) => get(DOCS_ATOM).content);
 RESOLVED_PATH_ATOM.debugLabel = "RESOLVED_PATH_ATOM";
 
 export const RESOLVED_PATH_SLUG_ATOM = atom((get) => get(RESOLVED_PATH_ATOM).slug);
@@ -127,7 +127,7 @@ export function useCurrentNodeId(): FernNavigation.NodeId | undefined {
     return useAtomValue(CURRENT_NODE_ID_ATOM);
 }
 
-export function useResolvedPath(): ResolvedPath {
+export function useDocsContent(): DocsContent {
     return useAtomValue(RESOLVED_PATH_ATOM);
 }
 

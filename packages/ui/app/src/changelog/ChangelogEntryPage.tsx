@@ -4,9 +4,9 @@ import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPath } from "../resolver/ResolvedPath";
+import { DocsContent } from "../resolver/DocsContent";
 
-export function ChangelogEntryPage({ content }: { content: ResolvedPath.ChangelogEntryPage }): ReactElement {
+export function ChangelogEntryPage({ content }: { content: DocsContent.ChangelogEntryPage }): ReactElement {
     const page = content.page;
     const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
     const excerpt = typeof page !== "string" ? page?.frontmatter.subtitle ?? page?.frontmatter.excerpt : undefined;

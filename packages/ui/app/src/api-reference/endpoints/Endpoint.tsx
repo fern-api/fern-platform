@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { memo, useEffect } from "react";
-import { FERN_STREAM_ATOM, useResolvedPath } from "../../atoms";
+import { FERN_STREAM_ATOM, useDocsContent } from "../../atoms";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
 import { EndpointContent } from "./EndpointContent";
@@ -17,7 +17,7 @@ export declare namespace Endpoint {
 
 const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, isLastInApi, types }) => {
     const [isStream, setStream] = useAtom(FERN_STREAM_ATOM);
-    const content = useResolvedPath();
+    const content = useDocsContent();
 
     const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;
 

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-reference/examples/code-example";
-import { useResolvedPath } from "../../../atoms";
+import { useDocsContent } from "../../../atoms";
 import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";
 import { RequestSnippet } from "./types";
@@ -25,7 +25,7 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
     method,
     example,
 }) => {
-    const content = useResolvedPath();
+    const content = useDocsContent();
 
     const endpoint = useMemo(() => {
         if (content.type !== "custom-markdown-page") {

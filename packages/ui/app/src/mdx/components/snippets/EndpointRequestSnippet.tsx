@@ -4,7 +4,7 @@ import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/Code
 import { EndpointUrlWithOverflow } from "../../../api-reference/endpoints/EndpointUrlWithOverflow";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-reference/examples/code-example";
-import { useResolvedPath } from "../../../atoms";
+import { useDocsContent } from "../../../atoms";
 import { useSelectedEnvironmentId } from "../../../atoms/environment";
 import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
 import { ResolvedEndpointDefinition, resolveEnvironment } from "../../../resolver/types";
@@ -30,7 +30,7 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
     path,
     example,
 }) => {
-    const content = useResolvedPath();
+    const content = useDocsContent();
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
     const endpoint = useMemo(() => {

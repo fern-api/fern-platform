@@ -6,7 +6,7 @@ import {
     DEFAULT_FEATURE_FLAGS,
     DocsPage,
     FeatureFlags,
-    convertNavigatableToResolvedPath,
+    convertNavigatableToDocsContent,
     getGitHubInfo,
     getGitHubRepo,
     getRedirectForPath,
@@ -66,7 +66,7 @@ export async function getDocsPageProps(
     // TODO: get feature flags from the API
     const featureFlags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
 
-    const content = await convertNavigatableToResolvedPath({
+    const content = await convertNavigatableToDocsContent({
         found: node,
         apis: docs.definition.apis,
         pages: docs.definition.pages,

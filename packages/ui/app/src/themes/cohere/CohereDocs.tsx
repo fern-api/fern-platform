@@ -13,7 +13,7 @@ import {
 } from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Announcement } from "../../header/Announcement";
-import { ResolvedPath } from "../../resolver/ResolvedPath";
+import { DocsContent } from "../../resolver/DocsContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -46,7 +46,7 @@ const CohereDocsStyle = () => {
     );
 };
 
-function UnmemoizedCohereDocs({ content }: { content: ResolvedPath }): ReactElement {
+function UnmemoizedCohereDocs({ content }: { content: DocsContent }): ReactElement {
     const showHeader = useAtomValue(SHOW_HEADER_ATOM);
     const announcementHeight = useAtomValue(ANNOUNCEMENT_HEIGHT_ATOM);
 

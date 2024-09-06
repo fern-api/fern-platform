@@ -11,7 +11,7 @@ import {
     useTheme,
 } from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
-import { ResolvedPath } from "../../resolver/ResolvedPath";
+import { DocsContent } from "../../resolver/DocsContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -31,7 +31,7 @@ const DefaultDocsStyle = () => {
     );
 };
 
-function UnmemoizedDefaultDocs({ content }: { content: ResolvedPath }): ReactElement {
+function UnmemoizedDefaultDocs({ content }: { content: DocsContent }): ReactElement {
     const colors = useColors();
     const layout = useAtomValue(DOCS_LAYOUT_ATOM);
     const showHeader = useAtomValue(SHOW_HEADER_ATOM);

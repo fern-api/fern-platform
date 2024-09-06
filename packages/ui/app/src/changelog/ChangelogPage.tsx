@@ -5,10 +5,10 @@ import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
 import { useToHref } from "../hooks/useHref";
 import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPath } from "../resolver/ResolvedPath";
+import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
-export function ChangelogPage({ content }: { content: ResolvedPath.ChangelogPage }): ReactElement {
+export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage }): ReactElement {
     const sidebar = useSidebarNodes();
     const toHref = useToHref();
     const fullWidth = sidebar == null;

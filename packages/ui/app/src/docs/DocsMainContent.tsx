@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Fragment, ReactElement, memo } from "react";
 import { useFeatureFlags, useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { ResolvedPath } from "../resolver/ResolvedPath";
+import { DocsContent } from "../resolver/DocsContent";
 
 const MdxContent = dynamic(() => import("../mdx/MdxContent").then(({ MdxContent }) => MdxContent), {
     ssr: true,
@@ -34,7 +34,7 @@ const FeedbackPopover = dynamic(
     { ssr: false },
 );
 
-const DocsMainContentRenderer = memo(({ content }: { content: ResolvedPath }) => {
+const DocsMainContentRenderer = memo(({ content }: { content: DocsContent }) => {
     return visitDiscriminatedUnion(content)._visit({
         "custom-markdown-page": (content) => <MdxContent mdx={content.mdx} />,
         "api-reference-page": (content) => (
@@ -50,12 +50,12 @@ const DocsMainContentRenderer = memo(({ content }: { content: ResolvedPath }) =>
 });
 DocsMainContentRenderer.displayName = "DocsMainContentRenderer";
 
-function LazyDocsMainContentRenderer({ content }: { content: ResolvedPath }): ReactElement | null {
+function LazyDocsMainContentRenderer({ content }: { content: DocsContent }): ReactElement | null {
     const hydrated = useIsReady();
     return hydrated ? <DocsMainContentRenderer content={content} /> : null;
 }
 
-export const DocsMainContent = memo(function DocsMainContent({ content }: { content: ResolvedPath }): ReactElement {
+export const DocsMainContent = memo(function DocsMainContent({ content }: { content: DocsContent }): ReactElement {
     const { isInlineFeedbackEnabled } = useFeatureFlags();
     const searchParams = useSearchParams();
     const FeedbackPopoverProvider = isInlineFeedbackEnabled ? FeedbackPopover : Fragment;
