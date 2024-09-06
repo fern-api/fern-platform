@@ -159,7 +159,8 @@ export async function convertNavigatableToResolvedPath({
         }
         if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
             const pruner = new FernNavigation.ApiDefinitionPruner(api);
-            api = pruner.prune(node);
+            const parent = found.parents[found.parents.length - 1];
+            api = pruner.prune(parent?.type === "endpointPair" ? parent : node);
             const holder = FernNavigation.ApiDefinitionHolder.create(api);
             const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
             const defResolver = new ApiEndpointResolver(
@@ -177,7 +178,17 @@ export async function convertNavigatableToResolvedPath({
                 auth: api.auth,
                 types: await typeResolver.resolve(),
                 item: await visitDiscriminatedUnion(node)._visit<Promise<ResolvedApiEndpoint>>({
-                    endpoint: (endpoint) => defResolver.resolveEndpointDefinition(endpoint),
+                    endpoint: async (endpoint) => {
+                        if (parent?.type === "endpointPair") {
+                            const [stream, nonStream] = await Promise.all([
+                                defResolver.resolveEndpointDefinition(parent.stream),
+                                defResolver.resolveEndpointDefinition(parent.nonStream),
+                            ]);
+                            nonStream.stream = stream;
+                            return nonStream;
+                        }
+                        return defResolver.resolveEndpointDefinition(endpoint);
+                    },
                     webSocket: (webSocket) => defResolver.resolveWebsocketChannel(webSocket),
                     webhook: (webhook) => defResolver.resolveWebhookDefinition(webhook),
                 }),

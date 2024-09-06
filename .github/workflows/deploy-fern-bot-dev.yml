@@ -21,6 +21,8 @@ env:
   GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_WEBHOOK_SECRET }}
   DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com"
   DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com"
+  FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
+  CUSTOMER_ALERTS_SLACK_CHANNEL: "customer-upgrades-dev"
   CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
 
 jobs:
@@ -28,12 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: 📥 Install
         uses: ./.github/actions/install
 
       - name: Compile
-        run: pnpm compile 
+        run: pnpm compile
 
       - name: 🚀 serverless deploy
         env:
