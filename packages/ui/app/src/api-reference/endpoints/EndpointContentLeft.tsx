@@ -317,6 +317,13 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 
 export const EndpointContentLeft = memo(UnmemoizedEndpointContentLeft);
 
+function isErrorEqual(a: ResolvedError, b: ResolvedError): boolean {
+    return (
+        a.statusCode === b.statusCode &&
+        (a.name != null && b.name != null ? a.name === b.name : a.name == null && b.name == null)
+    );
+}
+
 export function convertNameToAnchorPart(name: string | null | undefined): string | undefined {
     if (name == null) {
         return undefined;
