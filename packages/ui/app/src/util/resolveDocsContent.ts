@@ -49,7 +49,7 @@ async function getSubtitle(
     }
 }
 
-export async function convertNavigatableToDocsContent({
+export async function resolveDocsContent({
     found,
     apis,
     pages,

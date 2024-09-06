@@ -6,12 +6,12 @@ import {
     DEFAULT_FEATURE_FLAGS,
     DocsPage,
     FeatureFlags,
-    convertNavigatableToDocsContent,
     getGitHubInfo,
     getGitHubRepo,
     getRedirectForPath,
     getSeoProps,
     renderThemeStylesheet,
+    resolveDocsContent,
     serializeMdx,
 } from "@fern-ui/ui";
 import type { GetServerSidePropsResult } from "next";
@@ -66,7 +66,7 @@ export async function getDocsPageProps(
     // TODO: get feature flags from the API
     const featureFlags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
 
-    const content = await convertNavigatableToDocsContent({
+    const content = await resolveDocsContent({
         found: node,
         apis: docs.definition.apis,
         pages: docs.definition.pages,

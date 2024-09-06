@@ -7,7 +7,6 @@ import { SidebarTab, buildUrl } from "@fern-ui/fdr-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
-    convertNavigatableToDocsContent,
     getApiRouteSupplier,
     getGitHubInfo,
     getGitHubRepo,
@@ -16,6 +15,7 @@ import {
     getSeoProps,
     provideRegistryService,
     renderThemeStylesheet,
+    resolveDocsContent,
     serializeMdx,
     setMdxBundler,
 } from "@fern-ui/ui";
@@ -279,7 +279,7 @@ async function convertDocsToDocsPageProps({
 
     setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
-    const content = await convertNavigatableToDocsContent({
+    const content = await resolveDocsContent({
         found: node,
         apis: docs.definition.apis,
         pages: docs.definition.pages,
