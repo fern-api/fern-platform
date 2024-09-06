@@ -16,6 +16,7 @@ import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import {
+    DOCS_ATOM,
     IS_MOBILE_SCREEN_ATOM,
     PLAYGROUND_AUTH_STATE_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
@@ -69,6 +70,8 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
 
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
+
+    const { oAuthPlaygroundEnabled } = useAtomValue(DOCS_ATOM);
 
     useEffect(() => {
         if (typeof window === "undefined" || scrollAreaRef.current == null) {
@@ -146,7 +149,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                             endpoint,
                             isSnippetTemplatesEnabled,
                             isFileForgeHackEnabled,
-                        ).create(authState, formState, proxyEnvironment, setOAuthValue);
+                        ).create(authState, formState, proxyEnvironment, setOAuthValue, oAuthPlaygroundEnabled);
                         return resolver.resolve(requestType);
                     }}
                     className="-mr-2"

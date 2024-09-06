@@ -1,7 +1,8 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { useAtomValue } from "jotai";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
-import { useFeatureFlags } from "../../atoms";
+import { DOCS_ATOM, useFeatureFlags } from "../../atoms";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
@@ -57,6 +58,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     types,
 }) => {
     const { isAuthEnabledInDocs } = useFeatureFlags();
+    const { oAuthPlaygroundEnabled } = useAtomValue(DOCS_ATOM);
 
     let authHeaders: ResolvedObjectProperty | undefined;
     if (endpoint.auth && isAuthEnabledInDocs) {
@@ -99,19 +101,38 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 };
             },
             oAuth: (value) => {
-                return {
-                    key: "Authorization",
-                    description:
-                        value.value.tokenPrefix != null
-                            ? `OAuth authentication of the form ${value.value.tokenPrefix} <token>.`
-                            : "OAuth authentication of the form Bearer <token>.",
-                    hidden: false,
-                    valueShape: {
-                        type: "unknown",
-                        displayName: "string",
-                    },
-                    availability: undefined,
-                };
+                // Temporary feature flag
+                if (!oAuthPlaygroundEnabled) {
+                    return {
+                        key: "Authorization",
+                        description:
+                            "Bearer authentication of the form Bearer <token>, where token is your auth token.",
+                        hidden: false,
+                        valueShape: {
+                            type: "unknown",
+                            displayName: "string",
+                        },
+                        availability: undefined,
+                    };
+                }
+                return visitDiscriminatedUnion(value.value, "type")._visit({
+                    clientCredentials: (clientCredentialsValue) =>
+                        visitDiscriminatedUnion(clientCredentialsValue.value, "type")._visit({
+                            definedEndpoint: (definedEndpoint) => ({
+                                key: "Authorization",
+                                description:
+                                    definedEndpoint.tokenPrefix != null
+                                        ? `OAuth authentication of the form ${definedEndpoint.tokenPrefix} <token>.`
+                                        : "OAuth authentication of the form Bearer <token>.",
+                                hidden: false,
+                                valueShape: {
+                                    type: "unknown",
+                                    displayName: "string",
+                                },
+                                availability: undefined,
+                            }),
+                        }),
+                });
             },
         });
     }

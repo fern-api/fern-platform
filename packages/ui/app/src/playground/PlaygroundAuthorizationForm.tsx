@@ -11,6 +11,7 @@ import urlJoin from "url-join";
 import { useMemoOne } from "use-memo-one";
 import mapValue from "../../../../fdr-sdk/src/utils/lodash/mapValues";
 import {
+    DOCS_ATOM,
     PLAYGROUND_AUTH_STATE_ATOM,
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM,
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
@@ -22,7 +23,12 @@ import {
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { Callout } from "../mdx/components/callout";
-import { ResolvedApiEndpointWithPackage, ResolvedEndpointDefinition } from "../resolver/types";
+import {
+    ResolvedApiEndpointWithPackage,
+    ResolvedEndpointDefinition,
+    ResolvedTypeDefinition,
+    isEndpoint,
+} from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { unknownToString } from "../util/unknownToString";
 import { PasswordInputGroup } from "./PasswordInputGroup";
@@ -145,25 +151,26 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
     );
 }
 
-export interface OAuthClientCredentialLoginFlowProps {
+export interface OAuthClientCredentialDefinedEndpointLoginFlowProps {
     formState: PlaygroundEndpointRequestFormState;
     endpoint: ResolvedApiEndpointWithPackage.Endpoint | ResolvedEndpointDefinition;
     proxyEnvironment: string;
-    oAuth: APIV1Read.ApiAuth.OAuth;
+    oAuthClientCredentialsDefinedEndpoint: APIV1Read.OAuthClientCredentialsDefinedEndpoint;
     setValue: (value: (prev: any) => any) => void;
+    oAuthPlaygroundEnabled?: boolean;
     closeContainer?: () => void;
     setDisplayFailedLogin?: (value: boolean) => void;
 }
 
-export const oAuthClientCredentialLoginFlow = async ({
+export const oAuthClientCredentialDefinedEndpointLoginFlow = async ({
     formState,
     endpoint,
     proxyEnvironment,
-    oAuth,
+    oAuthClientCredentialsDefinedEndpoint,
     setValue,
     closeContainer,
     setDisplayFailedLogin,
-}: OAuthClientCredentialLoginFlowProps): Promise<void> => {
+}: OAuthClientCredentialDefinedEndpointLoginFlowProps): Promise<void> => {
     const headers: Record<string, string> = {
         ...mapValue(formState.headers ?? {}, unknownToString),
     };
@@ -180,7 +187,7 @@ export const oAuthClientCredentialLoginFlow = async ({
     };
     const res = await executeProxyRest(proxyEnvironment, req);
 
-    const mutableAccessTokenLocationCopy = [...oAuth.value.accessTokenLocation];
+    const mutableAccessTokenLocationCopy = [...oAuthClientCredentialsDefinedEndpoint.accessTokenLocation];
     visitDiscriminatedUnion(res, "type")._visit({
         json: (jsonRes) => {
             if (jsonRes.response.ok) {
@@ -212,6 +219,92 @@ export const oAuthClientCredentialLoginFlow = async ({
     });
 };
 
+function OAuthDefinedEndpointForm(
+    {
+        oAuthEndpoint,
+        types,
+    }: {
+        oAuthEndpoint: ResolvedEndpointDefinition;
+        types: Record<string, ResolvedTypeDefinition>;
+    },
+    oAuthClientCredentialsDefinedEndpoint: APIV1Read.OAuthClientCredentialsDefinedEndpoint,
+    closeContainer: () => void,
+    disabled?: boolean,
+) {
+    const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
+    const proxyEnvironment = useStandardProxyEnvironment();
+    const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
+    const [formState, setFormState] = usePlaygroundEndpointFormState(oAuthEndpoint);
+
+    const oAuthClientCredentialLogin = async () =>
+        await oAuthClientCredentialDefinedEndpointLoginFlow({
+            formState,
+            endpoint: oAuthEndpoint,
+            proxyEnvironment,
+            oAuthClientCredentialsDefinedEndpoint,
+            setValue,
+            closeContainer,
+            setDisplayFailedLogin,
+        });
+
+    return (
+        <>
+            <li className="-mx-4 space-y-2 p-4 pb-2">
+                <label className="inline-flex flex-wrap items-baseline">
+                    <span className="font-mono text-sm">{"OAuth Client Credentials login"}</span>
+                </label>
+                <PlaygroundEndpointForm
+                    endpoint={oAuthEndpoint}
+                    formState={formState}
+                    setFormState={setFormState}
+                    types={types}
+                    ignoreHeaders={true}
+                />
+            </li>
+            <li className="-mx-4 space-y-2 p-4 pt-0">
+                {value.accessToken.length > 0 && (
+                    <>
+                        <label className="inline-flex flex-wrap items-baseline">
+                            <span className="font-mono text-sm">
+                                {oAuthClientCredentialsDefinedEndpoint.tokenPrefix != null
+                                    ? `${oAuthClientCredentialsDefinedEndpoint.tokenPrefix} token`
+                                    : "Bearer token"}
+                            </span>
+                        </label>
+
+                        <div>
+                            <PasswordInputGroup
+                                onValueChange={(newValue: string) =>
+                                    setValue((prev) => ({ ...prev, accessToken: newValue }))
+                                }
+                                value={value.accessToken}
+                                autoComplete="off"
+                                data-1p-ignore="true"
+                                disabled={disabled}
+                            />
+                        </div>
+                    </>
+                )}
+            </li>
+            {displayFailedLogin && (
+                <li className="-mx-4 space-y-2 p-4 py-0">
+                    <span className="font-mono text-sm text-red-600">
+                        Failed to login with the provided credentials
+                    </span>
+                </li>
+            )}
+            <li className="flex justify-end py-2">
+                <FernButton
+                    text={value.accessToken.length > 0 ? "Refresh token" : "Login"}
+                    intent="primary"
+                    onClick={oAuthClientCredentialLogin}
+                    disabled={disabled}
+                />
+            </li>
+        </>
+    );
+}
+
 function OAuthForm({
     oAuth,
     closeContainer,
@@ -221,100 +314,35 @@ function OAuthForm({
     closeContainer: () => void;
     disabled?: boolean;
 }) {
-    // Client Credential hooks
-    const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
-    const proxyEnvironment = useStandardProxyEnvironment();
     const apis = useFlattenedApis();
-    const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
-    const endpointSlug = oAuth.value.tokenEndpointPath.startsWith("/")
-        ? oAuth.value.tokenEndpointPath.slice(1)
-        : oAuth.value.tokenEndpointPath;
-
-    let endpoint: ResolvedApiEndpointWithPackage.Endpoint | null = null;
-    let types = null;
-
-    for (const node of Object.values(apis)) {
-        endpoint = node.endpoints.find((e) => e.slug === endpointSlug) as ResolvedApiEndpointWithPackage.Endpoint;
-        if (endpoint) {
-            types = apis[endpoint?.apiDefinitionId ?? ""]?.types;
-            break;
-        }
-    }
-    if (endpoint == null || types == null) {
-        return <Callout intent="error">{"Could not find the endpoint to leverage the OAuth login flow"}</Callout>;
-    } else {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);
-
-        const oAuthClientCredentialLogin = async () =>
-            await oAuthClientCredentialLoginFlow({
-                formState,
-                endpoint,
-                proxyEnvironment,
-                oAuth,
-                setValue,
-                closeContainer,
-                setDisplayFailedLogin,
+    return visitDiscriminatedUnion(oAuth.value, "type")._visit({
+        clientCredentials: (clientCredentials) => {
+            return visitDiscriminatedUnion(clientCredentials.value, "type")._visit({
+                definedEndpoint: (definedEndpoint) => {
+                    let oAuthFormInputs = null;
+                    for (const node of Object.values(apis)) {
+                        const oAuthEndpoint = node.endpoints.find((e) => e.id === definedEndpoint.endpointId);
+                        if (oAuthEndpoint && isEndpoint(oAuthEndpoint)) {
+                            const maybeTypes = apis[oAuthEndpoint.apiDefinitionId ?? ""]?.types;
+                            if (maybeTypes != null) {
+                                oAuthFormInputs = {
+                                    oAuthEndpoint,
+                                    types: maybeTypes,
+                                };
+                                break;
+                            }
+                        }
+                    }
+                    return oAuthFormInputs != null
+                        ? OAuthDefinedEndpointForm(oAuthFormInputs, definedEndpoint, closeContainer, disabled)
+                        : null;
+                },
+                _other: () => null,
             });
-
-        return (
-            <>
-                <li className="-mx-4 space-y-2 p-4 pb-2">
-                    <label className="inline-flex flex-wrap items-baseline">
-                        <span className="font-mono text-sm">{"OAuth Client Credentials login"}</span>
-                    </label>
-                    <PlaygroundEndpointForm
-                        endpoint={endpoint}
-                        formState={formState}
-                        setFormState={setFormState}
-                        types={types}
-                        ignoreHeaders={true}
-                    />
-                </li>
-                <li className="-mx-4 space-y-2 p-4 pt-0">
-                    {value.accessToken.length > 0 && (
-                        <>
-                            <label className="inline-flex flex-wrap items-baseline">
-                                <span className="font-mono text-sm">
-                                    {oAuth.value.tokenPrefix != null
-                                        ? `${oAuth.value.tokenPrefix} token`
-                                        : "Bearer token"}
-                                </span>
-                            </label>
-
-                            <div>
-                                <PasswordInputGroup
-                                    onValueChange={(newValue: string) =>
-                                        setValue((prev) => ({ ...prev, accessToken: newValue }))
-                                    }
-                                    value={value.accessToken}
-                                    autoComplete="off"
-                                    data-1p-ignore="true"
-                                    disabled={disabled}
-                                />
-                            </div>
-                        </>
-                    )}
-                </li>
-                {displayFailedLogin && (
-                    <li className="-mx-4 space-y-2 p-4 py-0">
-                        <span className="font-mono text-sm text-red-600">
-                            Failed to login with the provided credentials
-                        </span>
-                    </li>
-                )}
-                <li className="flex justify-end py-2">
-                    <FernButton
-                        text={value.accessToken.length > 0 ? "Refresh token" : "Login"}
-                        intent="primary"
-                        onClick={oAuthClientCredentialLogin}
-                        disabled={disabled}
-                    />
-                </li>
-            </>
-        );
-    }
+        },
+        _other: () => null,
+    });
 }
 
 export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> = ({
@@ -322,13 +350,24 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
     closeContainer,
     disabled,
 }) => {
+    const { oAuthPlaygroundEnabled } = useAtomValue(DOCS_ATOM);
     return (
         <ul className="list-none px-4">
             {visitDiscriminatedUnion(auth, "type")._visit({
                 bearerAuth: (bearerAuth) => <BearerAuthForm bearerAuth={bearerAuth} disabled={disabled} />,
                 basicAuth: (basicAuth) => <BasicAuthForm basicAuth={basicAuth} disabled={disabled} />,
                 header: (header) => <HeaderAuthForm header={header} disabled={disabled} />,
-                oAuth: (oAuth) => <OAuthForm oAuth={oAuth} closeContainer={closeContainer} disabled={disabled} />,
+                oAuth: (oAuth) =>
+                    oAuthPlaygroundEnabled ? (
+                        <OAuthForm oAuth={oAuth} closeContainer={closeContainer} disabled={disabled} />
+                    ) : (
+                        <BearerAuthForm
+                            bearerAuth={{
+                                tokenName: "token",
+                            }}
+                            disabled={disabled}
+                        />
+                    ),
                 _other: () => null,
             })}
         </ul>
@@ -351,6 +390,7 @@ export function PlaygroundAuthorizationFormCard({
     const router = useRouter();
     const apiKey = apiKeyInjection.enabled && apiKeyInjection.authenticated ? apiKeyInjection.access_token : null;
     const [loginError, setLoginError] = useState<string | null>(null);
+    const { oAuthPlaygroundEnabled } = useAtomValue(DOCS_ATOM);
 
     const handleResetBearerAuth = useCallback(() => {
         setBearerAuth({ token: apiKey ?? "" });
@@ -485,7 +525,7 @@ export function PlaygroundAuthorizationFormCard({
                     </FernCard>
                 </>
             )}
-            {!apiKeyInjection.enabled && (isAuthed(auth, authState) || apiKey != null) && (
+            {!apiKeyInjection.enabled && (isAuthed(auth, authState, oAuthPlaygroundEnabled) || apiKey != null) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"
@@ -502,7 +542,7 @@ export function PlaygroundAuthorizationFormCard({
                     active={isOpen.value}
                 />
             )}
-            {!apiKeyInjection.enabled && !(isAuthed(auth, authState) || apiKey != null) && (
+            {!apiKeyInjection.enabled && !(isAuthed(auth, authState, oAuthPlaygroundEnabled) || apiKey != null) && (
                 <FernButton
                     className="w-full text-left"
                     size="large"
@@ -522,7 +562,7 @@ export function PlaygroundAuthorizationFormCard({
 
             <FernCollapse isOpen={isOpen.value}>
                 <div className="pt-4">
-                    <div className="fern-dropdown !max-h-[350px]">
+                    <div className="fern-dropdown !max-h-[500px]">
                         <PlaygroundAuthorizationForm auth={auth} closeContainer={isOpen.setFalse} disabled={disabled} />
 
                         <div className="flex justify-end p-4 pt-2 gap-2">
@@ -546,13 +586,16 @@ export function PlaygroundAuthorizationFormCard({
     );
 }
 
-function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState): boolean {
+function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState, oAuthPlaygroundEnabled: boolean): boolean {
     return visitDiscriminatedUnion(auth)._visit({
         bearerAuth: () => !isEmpty(authState.bearerAuth?.token.trim()),
         basicAuth: () =>
             !isEmpty(authState.basicAuth?.username.trim()) && !isEmpty(authState.basicAuth?.password.trim()),
         header: (header) => !isEmpty(authState.header?.headers[header.headerWireValue]?.trim()),
-        oAuth: () => !isEmpty(authState.oauth?.accessToken.trim()),
+        oAuth: () =>
+            oAuthPlaygroundEnabled
+                ? !isEmpty(authState.oauth?.accessToken.trim())
+                : !isEmpty(authState.bearerAuth?.token.trim()),
         _other: () => false,
     });
 }

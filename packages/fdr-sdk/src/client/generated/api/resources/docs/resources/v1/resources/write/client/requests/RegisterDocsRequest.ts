@@ -256,6 +256,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }]
  *                 },
+ *                 oAuthPlaygroundEnabled: true,
  *                 backgroundImage: "string",
  *                 logoV2: {
  *                     dark: "string",

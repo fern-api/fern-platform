@@ -114,8 +114,12 @@ types:
       clientCredentials: OAuthClientCredentials
 
   OAuthClientCredentials:
+    union:
+      definedEndpoint: OAuthClientCredentialsDefinedEndpoint
+
+  OAuthClientCredentialsDefinedEndpoint:
     properties:
-      tokenEndpointPath: string
+      endpointId: endpoint.EndpointId
       tokenPrefix: optional<string>
       accessTokenLocation: PropertyPath
 

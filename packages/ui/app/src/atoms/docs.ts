@@ -74,6 +74,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
     user: undefined,
     defaultLang: "curl",
     stylesheet: "",
+    oAuthPlaygroundEnabled: false,
 };
 
 export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(EMPTY_DOCS_STATE, (_, next) => {

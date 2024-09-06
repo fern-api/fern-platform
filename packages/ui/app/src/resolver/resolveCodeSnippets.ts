@@ -260,10 +260,19 @@ function getHarRequest(
                     value: prefix != null ? `${prefix} <${nameOverride}>` : `<${nameOverride}>`,
                 });
             },
-            oAuth: ({ value: { tokenPrefix } }) => {
-                request.headers.push({
-                    name: "Authorization",
-                    value: `${tokenPrefix} <token>`,
+            oAuth: (oAuth) => {
+                visitDiscriminatedUnion(oAuth.value, "type")._visit({
+                    clientCredentials: (clientCredentials) => {
+                        visitDiscriminatedUnion(clientCredentials.value, "type")._visit({
+                            definedEndpoint: ({ tokenPrefix }) => {
+                                request.headers.push({
+                                    name: "Authorization",
+                                    value: tokenPrefix != null ? `${tokenPrefix} <token>` : "Bearer <token>",
+                                });
+                            },
+                        });
+                    },
+                    _other: noop,
                 });
             },
             _other: noop,

@@ -4,8 +4,10 @@
 
 import * as FernRegistry from "../../../../../../../index";
 
-export interface OAuthClientCredentials {
-    tokenEndpointPath: string;
-    tokenPrefix?: string;
-    accessTokenLocation: FernRegistry.api.v1.read.PropertyPath;
+export type OAuthClientCredentials = FernRegistry.api.v1.read.OAuthClientCredentials.DefinedEndpoint;
+
+export declare namespace OAuthClientCredentials {
+    interface DefinedEndpoint extends FernRegistry.api.v1.read.OAuthClientCredentialsDefinedEndpoint {
+        type: "definedEndpoint";
+    }
 }

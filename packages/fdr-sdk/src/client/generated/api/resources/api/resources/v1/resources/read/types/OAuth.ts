@@ -7,7 +7,8 @@ import * as FernRegistry from "../../../../../../../index";
 export type OAuth = FernRegistry.api.v1.read.OAuth.ClientCredentials;
 
 export declare namespace OAuth {
-    interface ClientCredentials extends FernRegistry.api.v1.read.OAuthClientCredentials {
+    interface ClientCredentials {
         type: "clientCredentials";
+        value: FernRegistry.api.v1.read.OAuthClientCredentials;
     }
 }

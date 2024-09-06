@@ -399,6 +399,7 @@ async function convertDocsToDocsPageProps({
             docs.definition.filesV2,
             node.tabs.length > 0,
         ),
+        oAuthPlaygroundEnabled: docs.definition.config.oAuthPlaygroundEnabled ?? false,
     };
 
     const getApiRoute = getApiRouteSupplier({

@@ -17,7 +17,10 @@ import {
     visitResolvedHttpRequestBodyShape,
 } from "../resolver/types";
 import { unknownToString } from "../util/unknownToString";
-import { OAuthClientCredentialLoginFlowProps, oAuthClientCredentialLoginFlow } from "./PlaygroundAuthorizationForm";
+import {
+    OAuthClientCredentialDefinedEndpointLoginFlowProps,
+    oAuthClientCredentialDefinedEndpointLoginFlow,
+} from "./PlaygroundAuthorizationForm";
 import {
     PlaygroundAuthState,
     PlaygroundEndpointRequestFormState,
@@ -107,7 +110,10 @@ export function buildAuthHeaders(
     auth: APIV1Read.ApiAuth | undefined,
     authState: PlaygroundAuthState,
     { redacted }: { redacted: boolean },
-    oAuthClientCredentialLoginFlowProps?: Omit<OAuthClientCredentialLoginFlowProps, "oAuth">,
+    oAuthClientCredentialDefinedEndpointLoginFlowProps?: Omit<
+        OAuthClientCredentialDefinedEndpointLoginFlowProps,
+        "oAuthClientCredentialsDefinedEndpoint"
+    >,
 ): Record<string, string> {
     const headers: Record<string, string> = {};
 
@@ -135,38 +141,43 @@ export function buildAuthHeaders(
                 }
                 headers["Authorization"] = `Basic ${btoa(`${username}:${obfuscateSecret(password)}`)}`;
             },
-            oAuth: async (oAuth) => {
-                await visitDiscriminatedUnion(oAuth.value)._visit({
-                    clientCredentials: async () => {
-                        const token = authState.oauth?.accessToken ?? "";
+            oAuth: (oAuth) => {
+                visitDiscriminatedUnion(oAuth.value)._visit({
+                    clientCredentials: (oAuthClientCredentials) => {
+                        visitDiscriminatedUnion(oAuthClientCredentials.value)._visit({
+                            definedEndpoint: (oAuthClientCredentialsDefinedEndpoint) => {
+                                const token = authState.oauth?.accessToken ?? "";
 
-                        if (oAuthClientCredentialLoginFlowProps) {
-                            const {
-                                formState,
-                                endpoint,
-                                proxyEnvironment,
-                                setValue: setOAuthValue,
-                            } = oAuthClientCredentialLoginFlowProps;
-                            const payload = decodeJwt(token);
-                            if (payload.exp && new Date().getTime() > payload.exp) {
-                                await oAuthClientCredentialLoginFlow({
-                                    formState,
-                                    endpoint,
-                                    proxyEnvironment,
-                                    oAuth,
-                                    setValue: setOAuthValue,
-                                });
-                            }
-                        }
+                                if (oAuthClientCredentialDefinedEndpointLoginFlowProps && token) {
+                                    const {
+                                        formState,
+                                        endpoint,
+                                        proxyEnvironment,
+                                        setValue: setOAuthValue,
+                                    } = oAuthClientCredentialDefinedEndpointLoginFlowProps;
+                                    const payload = decodeJwt(token);
+                                    if (payload.exp && new Date().getTime() > payload.exp) {
+                                        oAuthClientCredentialDefinedEndpointLoginFlow({
+                                            formState,
+                                            endpoint,
+                                            proxyEnvironment,
+                                            oAuthClientCredentialsDefinedEndpoint,
+                                            setValue: setOAuthValue,
+                                            // eslint-disable-next-line @typescript-eslint/no-empty-function
+                                        }).catch(() => {});
+                                    }
+                                }
 
-                        const tokenPrefix = authState.oauth?.tokenPrefix?.length
-                            ? authState.oauth.tokenPrefix
-                            : "Bearer";
-                        if (redacted) {
-                            headers["Authorization"] = `${tokenPrefix} ${obfuscateSecret(token)}`;
-                        } else {
-                            headers["Authorization"] = `${tokenPrefix} ${token}`;
-                        }
+                                const tokenPrefix = authState.oauth?.tokenPrefix?.length
+                                    ? authState.oauth.tokenPrefix
+                                    : "Bearer";
+                                if (redacted) {
+                                    headers["Authorization"] = `${tokenPrefix} ${obfuscateSecret(token)}`;
+                                } else {
+                                    headers["Authorization"] = `${tokenPrefix} ${token}`;
+                                }
+                            },
+                        });
                     },
                 });
             },

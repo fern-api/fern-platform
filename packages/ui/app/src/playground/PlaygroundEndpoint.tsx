@@ -2,12 +2,13 @@ import { FernTooltipProvider } from "@fern-ui/components";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { SendSolid } from "iconoir-react";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { compact, mapValues, once } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { captureSentryError } from "../analytics/sentry";
 import {
+    DOCS_ATOM,
     PLAYGROUND_AUTH_STATE_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
     store,
@@ -82,6 +83,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
 
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
+    const { oAuthPlaygroundEnabled } = useAtomValue(DOCS_ATOM);
 
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
@@ -107,6 +109,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                     endpoint,
                     proxyEnvironment,
                     setValue: setOAuthValue,
+                    oAuthPlaygroundEnabled,
                 },
             );
             const headers = {

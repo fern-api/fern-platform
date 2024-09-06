@@ -112,6 +112,9 @@ types:
       css: optional<commons.CssConfig>
       js: optional<commons.JsConfig>
 
+      # OAuth Playground Feature Flag
+      oAuthPlaygroundEnabled: optional<boolean>
+
       # deprecated
       backgroundImage: optional<commons.FileId>
       logoV2: optional<commons.ThemedFileId>
