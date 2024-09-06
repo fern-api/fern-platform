@@ -3,7 +3,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { BundledMDX } from "../mdx/types";
 import type { ResolvedApiEndpoint, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
 
-export declare namespace ResolvedPath {
+export declare namespace DocsContent {
     export interface Neighbor {
         slug: FernNavigation.Slug;
         title: string;
@@ -66,9 +66,9 @@ export declare namespace ResolvedPath {
     }
 }
 
-export type ResolvedPath =
-    | ResolvedPath.CustomMarkdownPage
-    | ResolvedPath.ApiEndpointPage
-    | ResolvedPath.ApiReferencePage
-    | ResolvedPath.ChangelogPage
-    | ResolvedPath.ChangelogEntryPage;
+export type DocsContent =
+    | DocsContent.CustomMarkdownPage
+    | DocsContent.ApiEndpointPage
+    | DocsContent.ApiReferencePage
+    | DocsContent.ChangelogPage
+    | DocsContent.ChangelogEntryPage;

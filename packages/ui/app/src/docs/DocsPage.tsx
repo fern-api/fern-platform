@@ -1,7 +1,6 @@
-import { useHydrateAtoms } from "jotai/utils";
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
-import { DOCS_ATOM, useMessageHandler, useSetJustNavigated, type DocsProps } from "../atoms";
+import { useMessageHandler, useSetJustNavigated, type DocsProps } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
 import { JavascriptProvider } from "../components/JavascriptProvider";
 import { useBeforePopState } from "../hooks/useBeforePopState";
@@ -22,7 +21,6 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
     useConsoleMessage();
     useMessageHandler();
     useBeforePopState();
-    useHydrateAtoms([[DOCS_ATOM, pageProps]], { dangerouslyForceHydrate: true });
 
     const [setJustNavigated, destroy] = useSetJustNavigated();
     useRouteChangeStart(setJustNavigated, destroy);
@@ -50,7 +48,7 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
             <InitializeTheme />
             <SearchDialog />
             <BgImageGradient />
-            <ThemedDocs theme={pageProps.theme} />
+            <ThemedDocs theme={pageProps.theme} content={pageProps.content} />
             <PlaygroundContextProvider />
             <JavascriptProvider />
         </>

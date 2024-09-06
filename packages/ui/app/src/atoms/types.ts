@@ -5,7 +5,7 @@ import { NextSeoProps } from "@fern-ui/next-seo";
 import { CustomerAnalytics } from "../analytics/types";
 import { FernUser } from "../auth";
 import type { BundledMDX } from "../mdx/types";
-import { ResolvedPath } from "../resolver/ResolvedPath";
+import { DocsContent } from "../resolver/DocsContent";
 import { FernTheme } from "../themes/ThemedDocs";
 
 export interface FeatureFlags {
@@ -64,7 +64,7 @@ export interface DocsProps {
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-    resolvedPath: ResolvedPath;
+    content: DocsContent;
     featureFlags: FeatureFlags;
     apis: FdrAPI.ApiDefinitionId[];
     seo: NextSeoProps;
