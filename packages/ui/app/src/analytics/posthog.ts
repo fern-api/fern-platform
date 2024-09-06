@@ -49,8 +49,10 @@ export async function initializePosthog(api_host: string, customerConfig?: DocsV
     const posthog = (await import("posthog-js")).default;
 
     if (posthog.__loaded) {
-        // api_host may change because of useApiRoute
-        posthog.set_config({ api_host });
+        if (posthog.config.api_host !== api_host) {
+            // api_host may change because of useApiRoute
+            posthog.set_config({ api_host });
+        }
     } else {
         posthog.init(apiKey, {
             api_host,
@@ -62,8 +64,10 @@ export async function initializePosthog(api_host: string, customerConfig?: DocsV
 
     if (customerConfig != null) {
         if (posthogHasCustomer(posthog) && posthog.customer.__loaded) {
-            // api_host may change because of useApiRoute
-            posthog.customer.set_config({ api_host });
+            if (posthog.customer.config.api_host !== api_host) {
+                // api_host may change because of useApiRoute
+                posthog.customer.set_config({ api_host });
+            }
         } else {
             posthog.init(
                 customerConfig.apiKey,
