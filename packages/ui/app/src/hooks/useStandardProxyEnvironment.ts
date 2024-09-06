@@ -1,6 +1,6 @@
 import { once } from "lodash-es";
-// import { useBasePath, useFeatureFlags } from "../atoms";
-// import { useApiRoute } from "./useApiRoute";
+import { useBasePath, useFeatureFlags } from "../atoms";
+import { useApiRoute } from "./useApiRoute";
 
 const APP_BUILDWITHFERN_COM = "app.buildwithfern.com";
 
@@ -18,9 +18,9 @@ export const getAppBuildwithfernCom = once((): string => {
     return `https://${APP_BUILDWITHFERN_COM}`;
 });
 
-// export function useStandardProxyEnvironment(): string {
-//     const basePath = useBasePath();
-//     const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
-//     const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
-//     return useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
-// }
+export function useStandardProxyEnvironment(): string {
+    const basePath = useBasePath();
+    const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
+    const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
+    return useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
+}

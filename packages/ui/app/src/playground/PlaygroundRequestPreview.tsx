@@ -1,14 +1,7 @@
 import { useAtom, useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
-import {
-    DOCS_ATOM,
-    PLAYGROUND_AUTH_STATE_ATOM,
-    PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-    useBasePath,
-    useFeatureFlags,
-} from "../atoms";
-import { useApiRoute } from "../hooks/useApiRoute";
-import { getAppBuildwithfernCom } from "../hooks/useStandardProxyEnvironment";
+import { DOCS_ATOM, PLAYGROUND_AUTH_STATE_ATOM, PLAYGROUND_AUTH_STATE_OAUTH_ATOM, useFeatureFlags } from "../atoms";
+import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { ResolvedEndpointDefinition } from "../resolver/types";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
@@ -32,12 +25,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
         () => new PlaygroundCodeSnippetResolverBuilder(endpoint, isSnippetTemplatesEnabled, isFileForgeHackEnabled),
         [endpoint, isSnippetTemplatesEnabled, isFileForgeHackEnabled],
     );
-    // const proxyEnvironment = useStandardProxyEnvironment();
-    const basePath = useBasePath();
-    const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
-    const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
-    const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
-    //
+    const proxyEnvironment = useStandardProxyEnvironment();
 
     const resolver = useMemo(
         () =>

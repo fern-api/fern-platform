@@ -16,13 +16,11 @@ import {
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-    useBasePath,
-    useFeatureFlags,
     useFlattenedApis,
     usePlaygroundEndpointFormState,
 } from "../atoms";
 import { useApiRoute } from "../hooks/useApiRoute";
-import { getAppBuildwithfernCom } from "../hooks/useStandardProxyEnvironment";
+import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { Callout } from "../mdx/components/callout";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition, isEndpoint } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
@@ -157,12 +155,7 @@ function OAuthDefinedEndpointForm(
     disabled?: boolean,
 ) {
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
-    // const proxyEnvironment = useStandardProxyEnvironment();
-    const basePath = useBasePath();
-    const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
-    const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
-    const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
-    //
+    const proxyEnvironment = useStandardProxyEnvironment();
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
     const [formState, setFormState] = usePlaygroundEndpointFormState(oAuthEndpoint);
