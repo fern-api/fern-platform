@@ -25,9 +25,9 @@ export function getGeneratorsCliController(app: FdrApplication): CliService {
             );
         },
         getMinCliForIr: async (req, res) => {
-            const maybeRelease = await app.dao.cliVersions().getMinCliForIr({ irVersion: req.params.ir_version });
+            const maybeRelease = await app.dao.cliVersions().getMinCliForIr({ irVersion: req.params.irVersion });
             if (!maybeRelease) {
-                throw new NoValidCliForIrError({ provided_version: req.params.ir_version });
+                throw new NoValidCliForIrError({ providedVersion: req.params.irVersion });
             }
             return res.send(maybeRelease);
         },
@@ -40,9 +40,9 @@ export function getGeneratorsCliController(app: FdrApplication): CliService {
             await app.dao.cliVersions().upsertCliRelease({ cliRelease: req.body });
         },
         getCliRelease: async (req, res) => {
-            const maybeRelease = await app.dao.cliVersions().getCliRelease({ cliVersion: req.params.cli_version });
+            const maybeRelease = await app.dao.cliVersions().getCliRelease({ cliVersion: req.params.cliVersion });
             if (!maybeRelease) {
-                throw new CliVersionNotFoundError({ provided_version: req.params.cli_version });
+                throw new CliVersionNotFoundError({ providedVersion: req.params.cliVersion });
             }
             return res.send(maybeRelease);
         },
@@ -50,7 +50,7 @@ export function getGeneratorsCliController(app: FdrApplication): CliService {
             return res.send(
                 await app.dao.cliVersions().listCliReleases({
                     page: req.query.page,
-                    pageSize: req.query.page_size,
+                    pageSize: req.query.pageSize,
                 }),
             );
         },

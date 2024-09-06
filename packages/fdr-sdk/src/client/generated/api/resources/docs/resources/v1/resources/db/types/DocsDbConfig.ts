@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../../../../../index";
 export interface DocsDbConfig {
     title?: string;
     defaultLanguage?: FernRegistry.docs.v1.commons.ProgrammingLanguage;
-    analyticsConfig?: FernRegistry.docs.v1.commons.AnalyticsConfig;
+    announcement?: FernRegistry.docs.v1.commons.AnnouncementConfig;
     navigation: FernRegistry.docs.v1.db.NavigationConfig;
     navbarLinks?: FernRegistry.docs.v1.commons.NavbarLink[];
     footerLinks?: FernRegistry.docs.v1.commons.FooterLink[];
@@ -20,6 +20,7 @@ export interface DocsDbConfig {
     colorsV3?: FernRegistry.docs.v1.read.ColorsConfigV3;
     layout?: FernRegistry.docs.v1.commons.DocsLayoutConfig;
     typographyV2?: FernRegistry.docs.v1.commons.DocsTypographyConfigV2;
+    analyticsConfig?: FernRegistry.docs.v1.commons.AnalyticsConfig;
     integrations?: FernRegistry.docs.v1.commons.IntegrationsConfig;
     css?: FernRegistry.docs.v1.commons.CssConfig;
     js?: FernRegistry.docs.v1.commons.JsConfig;

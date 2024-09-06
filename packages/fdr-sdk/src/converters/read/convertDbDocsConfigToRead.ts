@@ -30,6 +30,7 @@ export function convertDbDocsConfigToRead({
         defaultLanguage: dbShape.defaultLanguage,
         analyticsConfig: dbShape.analyticsConfig,
         oAuthPlaygroundEnabled: dbShape.oAuthPlaygroundEnabled,
+        announcement: dbShape.announcement,
     };
 }
 

@@ -4,8 +4,15 @@ import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Router } from "next/router";
 import { ReactElement, memo, useEffect, useRef } from "react";
-import { CONTENT_HEIGHT_ATOM, SCROLL_BODY_ATOM, SHOW_HEADER_ATOM, SIDEBAR_DISMISSABLE_ATOM } from "../../atoms";
+import {
+    ANNOUNCEMENT_HEIGHT_ATOM,
+    CONTENT_HEIGHT_ATOM,
+    SCROLL_BODY_ATOM,
+    SHOW_HEADER_ATOM,
+    SIDEBAR_DISMISSABLE_ATOM,
+} from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
+import { Announcement } from "../../header/Announcement";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -40,6 +47,7 @@ const CohereDocsStyle = () => {
 
 function UnmemoizedCohereDocs(): ReactElement {
     const showHeader = useAtomValue(SHOW_HEADER_ATOM);
+    const announcementHeight = useAtomValue(ANNOUNCEMENT_HEIGHT_ATOM);
 
     const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
 
@@ -67,8 +75,8 @@ function UnmemoizedCohereDocs(): ReactElement {
         return () => Router.events.off("routeChangeComplete", handleRouteChange);
     }, []);
 
-    return (
-        <div id="fern-docs" className="fern-container fern-theme-cohere">
+    const fernDocs = (
+        <div id="fern-docs" className="fern-container fern-theme-cohere" style={{ top: announcementHeight }}>
             <CohereDocsStyle />
             {showHeader && <HeaderContainer />}
             <div className="fern-body">
@@ -88,6 +96,14 @@ function UnmemoizedCohereDocs(): ReactElement {
                 </FernScrollArea>
             </div>
         </div>
+    );
+
+    return (
+        <>
+            <CohereDocsStyle />
+            <Announcement className="fixed top-0 inset-x-0" />
+            {fernDocs}
+        </>
     );
 }
 

@@ -3,5 +3,5 @@
  */
 
 export interface InvalidIrVersionErrorMessage {
-    provided_version: number;
+    providedVersion: number;
 }

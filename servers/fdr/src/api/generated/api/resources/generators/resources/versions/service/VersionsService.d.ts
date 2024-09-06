@@ -33,7 +33,7 @@ export interface VersionsServiceMethods {
         generator: FernRegistry.generators.GeneratorId;
     }, FernRegistry.generators.ListGeneratorReleasesResponse, never, {
         page?: number;
-        page_size?: number;
+        pageSize?: number;
     }>, res: {
         send: (responseBody: FernRegistry.generators.ListGeneratorReleasesResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

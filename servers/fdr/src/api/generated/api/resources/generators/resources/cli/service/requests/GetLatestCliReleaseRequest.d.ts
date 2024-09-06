@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../index";
 export interface GetLatestCliReleaseRequest {
-    release_types?: FernRegistry.generators.ReleaseType[];
-    ir_version?: number;
+    releaseTypes?: FernRegistry.generators.ReleaseType[];
+    irVersion?: number;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain */
 // This is a placeholder for envvars that are unset, since serverless doesn't support passing undefined
 export const OMIT = "OMIT";
 
@@ -14,6 +15,8 @@ export interface Env {
     REPO_DATA_S3_KEY?: string;
     DEFAULT_VENUS_ORIGIN: string;
     DEFAULT_FDR_ORIGIN: string;
+    CUSTOMER_ALERTS_SLACK_CHANNEL: string;
+    FERNIE_SLACK_APP_TOKEN: string;
 }
 
 export function evaluateEnv(): Env {
@@ -23,26 +26,19 @@ export function evaluateEnv(): Env {
 
     // These assertions are technically unsafe, but we don't want the bot to deploy without them
     return {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
         GITHUB_APP_LOGIN_NAME: process?.env.GITHUB_APP_LOGIN_NAME!,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
         GITHUB_APP_LOGIN_ID: process?.env.GITHUB_APP_LOGIN_ID!,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
         GITHUB_APP_ID: process?.env.GITHUB_APP_ID!,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
         GITHUB_APP_PRIVATE_KEY: process?.env.GITHUB_APP_PRIVATE_KEY?.replaceAll("\\n", "\n")!,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
         GITHUB_APP_CLIENT_ID: process?.env.GITHUB_APP_CLIENT_ID!,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
         GITHUB_APP_CLIENT_SECRET: process?.env.GITHUB_APP_CLIENT_SECRET!,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
         GITHUB_APP_WEBHOOK_SECRET: process?.env.GITHUB_APP_WEBHOOK_SECRET!,
         REPO_TO_RUN_ON: repoToRunOn == null || repoToRunOn == OMIT ? undefined : repoToRunOn,
         REPO_DATA_S3_BUCKET: repoDataS3Bucket == null || repoDataS3Bucket == OMIT ? undefined : repoDataS3Bucket,
         REPO_DATA_S3_KEY: repoDataS3Key == null || repoDataS3Key == OMIT ? undefined : repoDataS3Key,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
         DEFAULT_VENUS_ORIGIN: process?.env.DEFAULT_VENUS_ORIGIN!,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
         DEFAULT_FDR_ORIGIN: process?.env.DEFAULT_FDR_ORIGIN!,
+        FERNIE_SLACK_APP_TOKEN: process?.env.FERNIE_SLACK_APP_TOKEN!,
+        CUSTOMER_ALERTS_SLACK_CHANNEL: process?.env.CUSTOMER_ALERTS_SLACK_CHANNEL!,
     };
 }

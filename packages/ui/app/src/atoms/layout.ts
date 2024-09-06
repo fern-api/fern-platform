@@ -2,6 +2,7 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { atom } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
+import { ANNOUNCEMENT_HEIGHT_ATOM } from "./announcement";
 import { DOCS_ATOM } from "./docs";
 import { TABS_ATOM } from "./navigation";
 import { MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "./viewport";
@@ -76,12 +77,13 @@ export const POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM = atom<boolean>((get) => {
 POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM.debugLabel = "POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM";
 
 export const HEADER_OFFSET_ATOM = atom<number>((get) => {
+    const announcementHeight = get(ANNOUNCEMENT_HEIGHT_ATOM);
     if (!get(SHOW_HEADER_ATOM)) {
-        return 0;
+        return announcementHeight;
     }
     const headerHeight = get(HEADER_HEIGHT_ATOM);
     const tabsHeight = get(HEADER_TABS_HEIGHT_ATOM);
-    return headerHeight + tabsHeight;
+    return headerHeight + tabsHeight + announcementHeight;
 });
 HEADER_OFFSET_ATOM.debugLabel = "HEADER_OFFSET_ATOM";
 

@@ -15,7 +15,7 @@ export interface CliServiceMethods {
         locals: any;
     }, next: express.NextFunction): void | Promise<void>;
     getMinCliForIr(req: express.Request<{
-        ir_version: number;
+        irVersion: number;
     }, FernRegistry.generators.CliRelease, never, never>, res: {
         send: (responseBody: FernRegistry.generators.CliRelease) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -27,7 +27,7 @@ export interface CliServiceMethods {
         locals: any;
     }, next: express.NextFunction): void | Promise<void>;
     getCliRelease(req: express.Request<{
-        cli_version: string;
+        cliVersion: string;
     }, FernRegistry.generators.CliRelease, never, never>, res: {
         send: (responseBody: FernRegistry.generators.CliRelease) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -35,7 +35,7 @@ export interface CliServiceMethods {
     }, next: express.NextFunction): void | Promise<void>;
     listCliReleases(req: express.Request<never, FernRegistry.generators.ListCliReleasesResponse, never, {
         page?: number;
-        page_size?: number;
+        pageSize?: number;
     }>, res: {
         send: (responseBody: FernRegistry.generators.ListCliReleasesResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

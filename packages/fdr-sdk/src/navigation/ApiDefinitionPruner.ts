@@ -1,12 +1,13 @@
 import type { APIV1Read } from "../client/types";
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ApiTypeIdVisitor } from "./ApiTypeIdVisitor";
+import type { FernNavigation } from "./generated";
 import type { NavigationNodeApiLeaf } from "./types";
 
 export class ApiDefinitionPruner {
     constructor(private api: APIV1Read.ApiDefinition) {}
 
-    public prune(node: NavigationNodeApiLeaf): APIV1Read.ApiDefinition {
+    public prune(node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode): APIV1Read.ApiDefinition {
         const rootPackage = this.pruneRootPackage(node);
         const subpackages = this.pruneSubpackages(node);
         const types = this.pruneTypes(rootPackage, subpackages, this.api.globalHeaders);
@@ -70,11 +71,15 @@ export class ApiDefinitionPruner {
         return visitedTypeIds;
     }
 
-    private pruneRootPackage(node: NavigationNodeApiLeaf): APIV1Read.ApiDefinitionPackage {
+    private pruneRootPackage(
+        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+    ): APIV1Read.ApiDefinitionPackage {
         return this.prunePackage(node, this.api.rootPackage);
     }
 
-    private pruneSubpackages(node: NavigationNodeApiLeaf): Record<string, APIV1Read.ApiDefinitionSubpackage> {
+    private pruneSubpackages(
+        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+    ): Record<string, APIV1Read.ApiDefinitionSubpackage> {
         const subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage> = {};
 
         for (const [subpackageId, subpackage] of Object.entries(this.api.subpackages)) {
@@ -85,7 +90,7 @@ export class ApiDefinitionPruner {
     }
 
     private prunePackage<T extends APIV1Read.ApiDefinitionPackage>(
-        node: NavigationNodeApiLeaf,
+        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
         pkg: T,
         subpackageId?: string,
     ): T {
@@ -113,12 +118,19 @@ export class ApiDefinitionPruner {
     }
 
     private pruneEndpoints(
-        node: NavigationNodeApiLeaf,
+        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
         endpoints: APIV1Read.EndpointDefinition[],
         subpackageId?: string,
     ): APIV1Read.EndpointDefinition[] {
-        if (node.type !== "endpoint") {
+        if (node.type !== "endpoint" && node.type !== "endpointPair") {
             return [];
+        }
+
+        if (node.type === "endpointPair") {
+            return [
+                ...this.pruneEndpoints(node.stream, endpoints, subpackageId),
+                ...this.pruneEndpoints(node.nonStream, endpoints, subpackageId),
+            ];
         }
 
         const endpointId = node.endpointId;
@@ -130,7 +142,7 @@ export class ApiDefinitionPruner {
     }
 
     private pruneWebSockets(
-        node: NavigationNodeApiLeaf,
+        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
         websockets: APIV1Read.WebSocketChannel[],
         subpackageId?: string,
     ): APIV1Read.WebSocketChannel[] {
@@ -147,7 +159,7 @@ export class ApiDefinitionPruner {
     }
 
     private pruneWebhooks(
-        node: NavigationNodeApiLeaf,
+        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
         webhooks: APIV1Read.WebhookDefinition[],
         subpackageId?: string,
     ): APIV1Read.WebhookDefinition[] {

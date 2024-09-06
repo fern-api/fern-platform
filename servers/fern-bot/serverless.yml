@@ -24,6 +24,9 @@ provider:
     GITHUB_APP_WEBHOOK_SECRET: ${env:GITHUB_APP_WEBHOOK_SECRET, 'placeholder'}
     CO_API_KEY: ${env:CO_API_KEY, 'placeholder'}
     DEFAULT_VENUS_ORIGIN: ${env:DEFAULT_VENUS_ORIGIN, 'placeholder'}
+    DEFAULT_FDR_ORIGIN: ${env:DEFAULT_FDR_ORIGIN, 'placeholder'}
+    FERNIE_SLACK_APP_TOKEN: ${env:FERNIE_SLACK_APP_TOKEN, 'placeholder'}
+    CUSTOMER_ALERTS_SLACK_CHANNEL: ${env:CUSTOMER_ALERTS_SLACK_CHANNEL, 'placeholder'}
     REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
   # Roles for the lambda functions
   iam:

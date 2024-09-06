@@ -32,6 +32,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
 };
 
 const EMPTY_DOCS_STATE: DocsProps = {
+    announcement: undefined,
     baseUrl: {
         domain: "app.buildwithfern.com",
         basePath: undefined,
