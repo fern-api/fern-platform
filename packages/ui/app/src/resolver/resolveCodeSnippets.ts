@@ -264,10 +264,10 @@ function getHarRequest(
                 visitDiscriminatedUnion(oAuth.value, "type")._visit({
                     clientCredentials: (clientCredentials) => {
                         visitDiscriminatedUnion(clientCredentials.value, "type")._visit({
-                            definedEndpoint: ({ tokenPrefix }) => {
+                            referencedEndpoint: () => {
                                 request.headers.push({
                                     name: "Authorization",
-                                    value: tokenPrefix != null ? `${tokenPrefix} <token>` : "Bearer <token>",
+                                    value: "Bearer <token>",
                                 });
                             },
                         });

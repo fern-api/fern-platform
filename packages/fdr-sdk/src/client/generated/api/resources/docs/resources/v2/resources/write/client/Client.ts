@@ -434,7 +434,6 @@ export class Write {
      *                             "key": "value"
      *                         }]
      *                 },
-     *                 oAuthPlaygroundEnabled: true,
      *                 backgroundImage: "string",
      *                 logoV2: {
      *                     dark: "string",

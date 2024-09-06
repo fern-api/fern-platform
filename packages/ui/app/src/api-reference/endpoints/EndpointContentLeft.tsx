@@ -1,8 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { useAtomValue } from "jotai";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
-import { DOCS_ATOM, useFeatureFlags } from "../../atoms";
+import { useFeatureFlags } from "../../atoms";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
@@ -58,7 +57,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     types,
 }) => {
     const { isAuthEnabledInDocs } = useFeatureFlags();
-    const { oAuthPlaygroundEnabled } = useAtomValue(DOCS_ATOM);
 
     let authHeaders: ResolvedObjectProperty | undefined;
     if (endpoint.auth && isAuthEnabledInDocs) {
@@ -101,29 +99,12 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 };
             },
             oAuth: (value) => {
-                // Temporary feature flag
-                if (!oAuthPlaygroundEnabled) {
-                    return {
-                        key: "Authorization",
-                        description:
-                            "Bearer authentication of the form Bearer <token>, where token is your auth token.",
-                        hidden: false,
-                        valueShape: {
-                            type: "unknown",
-                            displayName: "string",
-                        },
-                        availability: undefined,
-                    };
-                }
                 return visitDiscriminatedUnion(value.value, "type")._visit({
                     clientCredentials: (clientCredentialsValue) =>
                         visitDiscriminatedUnion(clientCredentialsValue.value, "type")._visit({
-                            definedEndpoint: (definedEndpoint) => ({
+                            referencedEndpoint: () => ({
                                 key: "Authorization",
-                                description:
-                                    definedEndpoint.tokenPrefix != null
-                                        ? `OAuth authentication of the form ${definedEndpoint.tokenPrefix} <token>.`
-                                        : "OAuth authentication of the form Bearer <token>.",
+                                description: "OAuth authentication of the form Bearer <token>.",
                                 hidden: false,
                                 valueShape: {
                                     type: "unknown",
@@ -335,13 +316,6 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 };
 
 export const EndpointContentLeft = memo(UnmemoizedEndpointContentLeft);
-
-function isErrorEqual(a: ResolvedError, b: ResolvedError): boolean {
-    return (
-        a.statusCode === b.statusCode &&
-        (a.name != null && b.name != null ? a.name === b.name : a.name == null && b.name == null)
-    );
-}
 
 export function convertNameToAnchorPart(name: string | null | undefined): string | undefined {
     if (name == null) {

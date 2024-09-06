@@ -112,9 +112,9 @@ export function buildAuthHeaders(
     auth: APIV1Read.ApiAuth | undefined,
     authState: PlaygroundAuthState,
     { redacted }: { redacted: boolean },
-    oAuthClientCredentialDefinedEndpointLoginFlowProps?: Omit<
-        OAuthClientCredentialDefinedEndpointLoginFlowProps,
-        "oAuthClientCredentialsDefinedEndpoint"
+    oAuthClientCredentialReferencedEndpointLoginFlowProps?: Omit<
+        OAuthClientCredentialReferencedEndpointLoginFlowProps,
+        "oAuthClientCredentialsReferencedEndpoint"
     >,
 ): Record<string, string> {
     const headers: Record<string, string> = {};
@@ -147,23 +147,23 @@ export function buildAuthHeaders(
                 visitDiscriminatedUnion(oAuth.value)._visit({
                     clientCredentials: (oAuthClientCredentials) => {
                         visitDiscriminatedUnion(oAuthClientCredentials.value)._visit({
-                            definedEndpoint: (oAuthClientCredentialsDefinedEndpoint) => {
+                            referencedEndpoint: (oAuthClientCredentialsReferencedEndpoint) => {
                                 const token = authState.oauth?.accessToken ?? "";
 
-                                if (oAuthClientCredentialDefinedEndpointLoginFlowProps && token) {
+                                if (oAuthClientCredentialReferencedEndpointLoginFlowProps && token) {
                                     const {
                                         formState,
                                         endpoint,
                                         proxyEnvironment,
                                         setValue: setOAuthValue,
-                                    } = oAuthClientCredentialDefinedEndpointLoginFlowProps;
+                                    } = oAuthClientCredentialReferencedEndpointLoginFlowProps;
                                     const payload = decodeJwt(token);
                                     if (payload.exp && new Date().getTime() > payload.exp) {
-                                        oAuthClientCredentialDefinedEndpointLoginFlow({
+                                        oAuthClientCredentialReferencedEndpointLoginFlow({
                                             formState,
                                             endpoint,
                                             proxyEnvironment,
-                                            oAuthClientCredentialsDefinedEndpoint,
+                                            oAuthClientCredentialsReferencedEndpoint,
                                             setValue: setOAuthValue,
                                             // eslint-disable-next-line @typescript-eslint/no-empty-function
                                         }).catch(() => {});
@@ -550,26 +550,25 @@ export function getInitialEndpointRequestFormStateWithExample(
     };
 }
 
-export interface OAuthClientCredentialDefinedEndpointLoginFlowProps {
+export interface OAuthClientCredentialReferencedEndpointLoginFlowProps {
     formState: PlaygroundEndpointRequestFormState;
     endpoint: ResolvedEndpointDefinition;
     proxyEnvironment: string;
-    oAuthClientCredentialsDefinedEndpoint: APIV1Read.OAuthClientCredentialsDefinedEndpoint;
+    oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
     setValue: (value: (prev: any) => any) => void;
-    oAuthPlaygroundEnabled?: boolean;
     closeContainer?: () => void;
     setDisplayFailedLogin?: (value: boolean) => void;
 }
 
-export const oAuthClientCredentialDefinedEndpointLoginFlow = async ({
+export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     formState,
     endpoint,
     proxyEnvironment,
-    oAuthClientCredentialsDefinedEndpoint,
+    oAuthClientCredentialsReferencedEndpoint,
     setValue,
     closeContainer,
     setDisplayFailedLogin,
-}: OAuthClientCredentialDefinedEndpointLoginFlowProps): Promise<void> => {
+}: OAuthClientCredentialReferencedEndpointLoginFlowProps): Promise<void> => {
     const headers: Record<string, string> = {
         ...mapValues(formState.headers ?? {}, unknownToString),
     };
@@ -586,7 +585,7 @@ export const oAuthClientCredentialDefinedEndpointLoginFlow = async ({
     };
     const res = await executeProxyRest(proxyEnvironment, req);
 
-    const mutableAccessTokenLocationCopy = [...oAuthClientCredentialsDefinedEndpoint.accessTokenLocation];
+    const mutableAccessTokenLocationCopy = [...oAuthClientCredentialsReferencedEndpoint.accessTokenLocation];
     visitDiscriminatedUnion(res, "type")._visit({
         json: (jsonRes) => {
             if (jsonRes.response.ok) {

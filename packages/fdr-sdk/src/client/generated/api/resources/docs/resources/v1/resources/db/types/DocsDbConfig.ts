@@ -24,7 +24,6 @@ export interface DocsDbConfig {
     integrations?: FernRegistry.docs.v1.commons.IntegrationsConfig;
     css?: FernRegistry.docs.v1.commons.CssConfig;
     js?: FernRegistry.docs.v1.commons.JsConfig;
-    oAuthPlaygroundEnabled?: boolean;
     logo?: FernRegistry.docs.v1.commons.FileId;
     logoV2?: FernRegistry.docs.v1.commons.ThemedFileId;
     colors?: FernRegistry.docs.v1.commons.ColorsConfig;

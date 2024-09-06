@@ -75,5 +75,4 @@ export interface DocsProps {
     user: FernUser | undefined;
     defaultLang: DocsV1Read.ProgrammingLanguage;
     stylesheet: string;
-    oAuthPlaygroundEnabled: boolean;
 }

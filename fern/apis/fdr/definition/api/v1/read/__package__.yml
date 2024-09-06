@@ -115,15 +115,12 @@ types:
 
   OAuthClientCredentials:
     union:
-      definedEndpoint: OAuthClientCredentialsDefinedEndpoint
+      referencedEndpoint: OAuthClientCredentialsReferencedEndpoint
 
-  OAuthClientCredentialsDefinedEndpoint:
+  OAuthClientCredentialsReferencedEndpoint:
     properties:
       endpointId: endpoint.EndpointId
-      tokenPrefix: optional<string>
-      accessTokenLocation: PropertyPath
-
-  PropertyPath: list<string>
+      accessTokenLocation: commons.JqString
 
 errors:
   ApiDoesNotExistError:

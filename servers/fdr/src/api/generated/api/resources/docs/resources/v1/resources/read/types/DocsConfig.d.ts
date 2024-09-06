@@ -21,5 +21,4 @@ export interface DocsConfig {
     integrations?: FernRegistry.docs.v1.commons.IntegrationsConfig;
     css?: FernRegistry.docs.v1.commons.CssConfig;
     js?: FernRegistry.docs.v1.commons.JsConfig;
-    oAuthPlaygroundEnabled?: boolean;
 }

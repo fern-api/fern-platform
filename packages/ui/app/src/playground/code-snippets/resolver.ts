@@ -21,7 +21,6 @@ export class PlaygroundCodeSnippetResolverBuilder {
         formState: PlaygroundEndpointRequestFormState,
         proxyEnvironment: string,
         setOAuthValue: (value: (prev: any) => any) => void,
-        oAuthPlaygroundEnabled: boolean,
     ): PlaygroundCodeSnippetResolver {
         return new PlaygroundCodeSnippetResolver(
             this.endpoint,
@@ -32,7 +31,6 @@ export class PlaygroundCodeSnippetResolverBuilder {
             this.isFileForgeHackEnabled,
             proxyEnvironment,
             setOAuthValue,
-            oAuthPlaygroundEnabled,
         );
     }
 
@@ -41,7 +39,6 @@ export class PlaygroundCodeSnippetResolverBuilder {
         formState: PlaygroundEndpointRequestFormState,
         proxyEnvironment: string,
         setOAuthValue: (value: (prev: any) => any) => void,
-        oAuthPlaygroundEnabled: boolean,
     ): PlaygroundCodeSnippetResolver {
         return new PlaygroundCodeSnippetResolver(
             this.endpoint,
@@ -52,7 +49,6 @@ export class PlaygroundCodeSnippetResolverBuilder {
             this.isFileForgeHackEnabled,
             proxyEnvironment,
             setOAuthValue,
-            oAuthPlaygroundEnabled,
         );
     }
 }
@@ -84,7 +80,6 @@ export class PlaygroundCodeSnippetResolver {
         private isFileForgeHackEnabled: boolean,
         proxyEnvironment: string,
         setOAuthValue: (value: (prev: any) => any) => void,
-        oAuthPlaygroundEnabled: boolean,
     ) {
         const authHeaders = buildAuthHeaders(
             endpoint.auth,
@@ -95,7 +90,6 @@ export class PlaygroundCodeSnippetResolver {
                 endpoint,
                 proxyEnvironment,
                 setValue: setOAuthValue,
-                oAuthPlaygroundEnabled,
             },
         );
 

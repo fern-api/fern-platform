@@ -43,8 +43,8 @@ export function convertEndpointExampleToHttpRequestExample(
             },
             oAuth: ({ value: clientCredentials }) => {
                 visitDiscriminatedUnion(clientCredentials, "type")._visit({
-                    clientCredentials: ({ value: { tokenPrefix } }) => {
-                        headers.Authorization = tokenPrefix != null ? `${tokenPrefix} <token>` : "Bearer <token>";
+                    clientCredentials: () => {
+                        headers.Authorization = "Bearer <token>";
                     },
                     _other: noop,
                 });
