@@ -3,5 +3,5 @@
  */
 import * as FernRegistry from "../../../../../index";
 export interface ListGeneratorReleasesResponse {
-    generator_releases: FernRegistry.generators.GeneratorRelease[];
+    generatorReleases: FernRegistry.generators.GeneratorRelease[];
 }

@@ -34,8 +34,8 @@ export class Cli {
      *
      * @example
      *     await fernRegistry.generators.cli.getLatestCliRelease({
-     *         release_types: [FernRegistry.generators.ReleaseType.Ga],
-     *         ir_version: 1
+     *         releaseTypes: [FernRegistry.generators.ReleaseType.Ga],
+     *         irVersion: 1
      *     })
      */
     public async getLatestCliRelease(
@@ -93,11 +93,11 @@ export class Cli {
      *
      * @example
      *     await fernRegistry.generators.cli.getChangelog({
-     *         from_version: {
+     *         fromVersion: {
      *             type: "inclusive",
      *             value: "string"
      *         },
-     *         to_version: {
+     *         toVersion: {
      *             type: "inclusive",
      *             value: "string"
      *         }
@@ -201,16 +201,16 @@ export class Cli {
      *
      * @example
      *     await fernRegistry.generators.cli.upsertCliRelease({
-     *         ir_version: 1,
+     *         irVersion: 1,
      *         version: "string",
-     *         created_at: "2023-01-15",
-     *         is_yanked: {
-     *             remediation_verision: "string"
+     *         createdAt: "2023-01-15",
+     *         isYanked: {
+     *             remediationVerision: "string"
      *         },
-     *         changelog_entry: [{
+     *         changelogEntry: [{
      *                 type: FernRegistry.generators.ChangelogEntryType.Fix,
      *                 summary: "string",
-     *                 upgrade_notes: {
+     *                 upgradeNotes: {
      *                     "key": "value"
      *                 },
      *                 added: {
@@ -328,7 +328,7 @@ export class Cli {
      * @example
      *     await fernRegistry.generators.cli.listCliReleases({
      *         page: 1,
-     *         page_size: 1
+     *         pageSize: 1
      *     })
      */
     public async listCliReleases(
@@ -340,14 +340,14 @@ export class Cli {
             FernRegistry.generators.cli.listCliReleases.Error
         >
     > {
-        const { page, page_size: pageSize } = request;
+        const { page, pageSize } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
 
         if (pageSize != null) {
-            _queryParams["page_size"] = pageSize.toString();
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         const _response = await core.fetcher({

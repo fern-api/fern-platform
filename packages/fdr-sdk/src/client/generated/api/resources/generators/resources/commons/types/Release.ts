@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../index";
 
 export interface Release extends FernRegistry.generators.ReleaseRequest {
-    release_type: FernRegistry.generators.ReleaseType;
-    major_version: number;
+    releaseType: FernRegistry.generators.ReleaseType;
+    majorVersion: number;
 }

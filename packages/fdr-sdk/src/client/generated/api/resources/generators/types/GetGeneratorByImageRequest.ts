@@ -3,5 +3,5 @@
  */
 
 export interface GetGeneratorByImageRequest {
-    docker_image: string;
+    dockerImage: string;
 }

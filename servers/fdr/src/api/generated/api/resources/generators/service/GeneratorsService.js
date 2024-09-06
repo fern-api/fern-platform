@@ -75,7 +75,7 @@ export class GeneratorsService {
                 next(error);
             }
         }));
-        this.router.get("/:generator_id", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/:generatorId", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getGenerator(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {

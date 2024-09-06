@@ -37,11 +37,11 @@ export class Generators {
      * @example
      *     await fernRegistry.generators.upsertGenerator({
      *         id: "string",
-     *         generator_type: {
+     *         generatorType: {
      *             type: "sdk"
      *         },
-     *         generator_language: FernRegistry.generators.GeneratorLanguage.Python,
-     *         docker_image: "string"
+     *         generatorLanguage: FernRegistry.generators.GeneratorLanguage.Python,
+     *         dockerImage: "string"
      *     })
      */
     public async upsertGenerator(
@@ -87,7 +87,7 @@ export class Generators {
      *
      * @example
      *     await fernRegistry.generators.getGeneratorByImage({
-     *         docker_image: "string"
+     *         dockerImage: "string"
      *     })
      */
     public async getGeneratorByImage(
