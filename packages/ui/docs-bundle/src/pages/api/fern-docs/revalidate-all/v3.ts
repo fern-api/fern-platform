@@ -5,6 +5,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
+import { isTrailingSlashEnabled } from "../../../../utils/trailingSlash";
 import { getXFernHostNode } from "../../../../utils/xFernHost";
 
 export const config = {
@@ -64,7 +65,9 @@ const handler: NextApiHandler = async (
 
         const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
         const slugCollector = NodeCollector.collect(node);
-        const urls = slugCollector.getSlugs().map((slug) => urljoin(xFernHost, slug));
+        const urls = slugCollector
+            .getSlugs()
+            .map((slug) => urljoin(xFernHost, slug, isTrailingSlashEnabled() ? "/" : ""));
 
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
