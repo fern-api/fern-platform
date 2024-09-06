@@ -24,6 +24,7 @@
     "@fern-api/venus-api-sdk": "0.8.1-1-gd6d1a5b",
     "@fern-fern/generators-sdk": "0.107.0-892e7c392",
     "@octokit/openapi-types": "^22.1.0",
+    "@slack/web-api": "^6.9.0",
     "cohere-ai": "^7.9.5",
     "execa": "^5.1.1",
     "fern-api": "^0.21.0",
