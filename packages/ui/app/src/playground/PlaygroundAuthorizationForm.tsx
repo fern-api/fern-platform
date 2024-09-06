@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import { FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import urlJoin from "url-join";
 import { useMemoOne } from "use-memo-one";
-import mapValue from "../../../../fdr-sdk/src/utils/lodash/mapValues";
 import {
     DOCS_ATOM,
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -17,26 +16,20 @@ import {
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
+    useBasePath,
+    useFeatureFlags,
     useFlattenedApis,
     usePlaygroundEndpointFormState,
 } from "../atoms";
 import { useApiRoute } from "../hooks/useApiRoute";
-import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
+import { getAppBuildwithfernCom } from "../hooks/useStandardProxyEnvironment";
 import { Callout } from "../mdx/components/callout";
-import {
-    ResolvedApiEndpointWithPackage,
-    ResolvedEndpointDefinition,
-    ResolvedTypeDefinition,
-    isEndpoint,
-} from "../resolver/types";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition, isEndpoint } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
-import { unknownToString } from "../util/unknownToString";
 import { PasswordInputGroup } from "./PasswordInputGroup";
-import { serializeFormStateBody } from "./PlaygroundEndpoint";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
-import { executeProxyRest } from "./fetch-utils/executeProxyRest";
-import { PlaygroundAuthState, PlaygroundEndpointRequestFormState, ProxyRequest } from "./types";
-import { buildEndpointUrl } from "./utils";
+import { PlaygroundAuthState } from "./types";
+import { oAuthClientCredentialDefinedEndpointLoginFlow } from "./utils";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
@@ -151,74 +144,6 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
     );
 }
 
-export interface OAuthClientCredentialDefinedEndpointLoginFlowProps {
-    formState: PlaygroundEndpointRequestFormState;
-    endpoint: ResolvedApiEndpointWithPackage.Endpoint | ResolvedEndpointDefinition;
-    proxyEnvironment: string;
-    oAuthClientCredentialsDefinedEndpoint: APIV1Read.OAuthClientCredentialsDefinedEndpoint;
-    setValue: (value: (prev: any) => any) => void;
-    oAuthPlaygroundEnabled?: boolean;
-    closeContainer?: () => void;
-    setDisplayFailedLogin?: (value: boolean) => void;
-}
-
-export const oAuthClientCredentialDefinedEndpointLoginFlow = async ({
-    formState,
-    endpoint,
-    proxyEnvironment,
-    oAuthClientCredentialsDefinedEndpoint,
-    setValue,
-    closeContainer,
-    setDisplayFailedLogin,
-}: OAuthClientCredentialDefinedEndpointLoginFlowProps): Promise<void> => {
-    const headers: Record<string, string> = {
-        ...mapValue(formState.headers ?? {}, unknownToString),
-    };
-
-    if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
-        headers["Content-Type"] = endpoint.requestBody.contentType;
-    }
-
-    const req: ProxyRequest = {
-        url: buildEndpointUrl(endpoint, formState),
-        method: endpoint.method,
-        headers,
-        body: await serializeFormStateBody("", endpoint.requestBody?.shape, formState.body, false),
-    };
-    const res = await executeProxyRest(proxyEnvironment, req);
-
-    const mutableAccessTokenLocationCopy = [...oAuthClientCredentialsDefinedEndpoint.accessTokenLocation];
-    visitDiscriminatedUnion(res, "type")._visit({
-        json: (jsonRes) => {
-            if (jsonRes.response.ok) {
-                const container = mutableAccessTokenLocationCopy.shift();
-                if (container == null || (container !== "body" && container !== "headers")) {
-                    throw new Error("Expected access location to be defined");
-                }
-                let cursor: any = jsonRes.response[container];
-                for (const accessor of mutableAccessTokenLocationCopy) {
-                    if (accessor in cursor) {
-                        cursor = cursor[accessor];
-                    }
-                }
-                setValue((prev) => ({ ...prev, accessToken: cursor }));
-                closeContainer && closeContainer();
-            } else {
-                setDisplayFailedLogin && setDisplayFailedLogin(true);
-            }
-        },
-        file: () => {
-            setDisplayFailedLogin && setDisplayFailedLogin(true);
-        },
-        stream: () => {
-            setDisplayFailedLogin && setDisplayFailedLogin(true);
-        },
-        _other: () => {
-            setDisplayFailedLogin && setDisplayFailedLogin(true);
-        },
-    });
-};
-
 function OAuthDefinedEndpointForm(
     {
         oAuthEndpoint,
@@ -232,7 +157,13 @@ function OAuthDefinedEndpointForm(
     disabled?: boolean,
 ) {
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
-    const proxyEnvironment = useStandardProxyEnvironment();
+    // const proxyEnvironment = useStandardProxyEnvironment();
+    const basePath = useBasePath();
+    const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
+    const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
+    const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
+    //
+
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
     const [formState, setFormState] = usePlaygroundEndpointFormState(oAuthEndpoint);
 

@@ -17,10 +17,8 @@ import {
     visitResolvedHttpRequestBodyShape,
 } from "../resolver/types";
 import { unknownToString } from "../util/unknownToString";
-import {
-    OAuthClientCredentialDefinedEndpointLoginFlowProps,
-    oAuthClientCredentialDefinedEndpointLoginFlow,
-} from "./PlaygroundAuthorizationForm";
+import { serializeFormStateBody } from "./PlaygroundEndpoint";
+import { executeProxyRest } from "./fetch-utils/executeProxyRest";
 import {
     PlaygroundAuthState,
     PlaygroundEndpointRequestFormState,
@@ -28,6 +26,7 @@ import {
     PlaygroundFormStateBody,
     PlaygroundRequestFormState,
     PlaygroundWebSocketRequestFormState,
+    ProxyRequest,
 } from "./types";
 
 export function castToRecord(value: unknown): Record<string, unknown> {
@@ -547,3 +546,71 @@ export function getInitialEndpointRequestFormStateWithExample(
                   : { type: "json", value: exampleCall.requestBody?.value },
     };
 }
+
+export interface OAuthClientCredentialDefinedEndpointLoginFlowProps {
+    formState: PlaygroundEndpointRequestFormState;
+    endpoint: ResolvedEndpointDefinition;
+    proxyEnvironment: string;
+    oAuthClientCredentialsDefinedEndpoint: APIV1Read.OAuthClientCredentialsDefinedEndpoint;
+    setValue: (value: (prev: any) => any) => void;
+    oAuthPlaygroundEnabled?: boolean;
+    closeContainer?: () => void;
+    setDisplayFailedLogin?: (value: boolean) => void;
+}
+
+export const oAuthClientCredentialDefinedEndpointLoginFlow = async ({
+    formState,
+    endpoint,
+    proxyEnvironment,
+    oAuthClientCredentialsDefinedEndpoint,
+    setValue,
+    closeContainer,
+    setDisplayFailedLogin,
+}: OAuthClientCredentialDefinedEndpointLoginFlowProps): Promise<void> => {
+    const headers: Record<string, string> = {
+        ...mapValues(formState.headers ?? {}, unknownToString),
+    };
+
+    if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
+        headers["Content-Type"] = endpoint.requestBody.contentType;
+    }
+
+    const req: ProxyRequest = {
+        url: buildEndpointUrl(endpoint, formState),
+        method: endpoint.method,
+        headers,
+        body: await serializeFormStateBody("", endpoint.requestBody?.shape, formState.body, false),
+    };
+    const res = await executeProxyRest(proxyEnvironment, req);
+
+    const mutableAccessTokenLocationCopy = [...oAuthClientCredentialsDefinedEndpoint.accessTokenLocation];
+    visitDiscriminatedUnion(res, "type")._visit({
+        json: (jsonRes) => {
+            if (jsonRes.response.ok) {
+                const container = mutableAccessTokenLocationCopy.shift();
+                if (container == null || (container !== "body" && container !== "headers")) {
+                    throw new Error("Expected access location to be defined");
+                }
+                let cursor: any = jsonRes.response[container];
+                for (const accessor of mutableAccessTokenLocationCopy) {
+                    if (accessor in cursor) {
+                        cursor = cursor[accessor];
+                    }
+                }
+                setValue((prev) => ({ ...prev, accessToken: cursor }));
+                closeContainer && closeContainer();
+            } else {
+                setDisplayFailedLogin && setDisplayFailedLogin(true);
+            }
+        },
+        file: () => {
+            setDisplayFailedLogin && setDisplayFailedLogin(true);
+        },
+        stream: () => {
+            setDisplayFailedLogin && setDisplayFailedLogin(true);
+        },
+        _other: () => {
+            setDisplayFailedLogin && setDisplayFailedLogin(true);
+        },
+    });
+};

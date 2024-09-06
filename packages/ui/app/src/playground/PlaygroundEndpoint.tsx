@@ -3,7 +3,7 @@ import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { SendSolid } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { compact, mapValues, once } from "lodash-es";
+import { compact, mapValues } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { captureSentryError } from "../analytics/sentry";
@@ -19,6 +19,7 @@ import {
 import { useSelectedEnvironmentId } from "../atoms/environment";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
+import { getAppBuildwithfernCom } from "../hooks/useStandardProxyEnvironment";
 import {
     ResolvedEndpointDefinition,
     ResolvedFormDataRequestProperty,
@@ -46,22 +47,6 @@ interface PlaygroundEndpointProps {
     endpoint: ResolvedEndpointDefinition;
     types: Record<string, ResolvedTypeDefinition>;
 }
-
-const APP_BUILDWITHFERN_COM = "app.buildwithfern.com";
-
-export const getAppBuildwithfernCom = once((): string => {
-    if (process.env.NODE_ENV === "development") {
-        return "http://localhost:3000";
-    }
-
-    // see: https://vercel.com/docs/projects/environment-variables/system-environment-variables#framework-environment-variables
-    if (process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" || process.env.NEXT_PUBLIC_VERCEL_ENV === "development") {
-        // this mimics the behavior of hitting app.buildwithfern.com in a preview environment
-        return `https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? APP_BUILDWITHFERN_COM}`;
-    }
-
-    return `https://${APP_BUILDWITHFERN_COM}`;
-});
 
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, types }): ReactElement => {
     const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);

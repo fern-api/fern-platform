@@ -21,10 +21,12 @@ import {
     PLAYGROUND_AUTH_STATE_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
     store,
+    useBasePath,
     useFeatureFlags,
 } from "../atoms";
 import { FernErrorTag } from "../components/FernErrorBoundary";
-import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
+import { useApiRoute } from "../hooks/useApiRoute";
+import { getAppBuildwithfernCom } from "../hooks/useStandardProxyEnvironment";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
@@ -69,7 +71,12 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
-    const proxyEnvironment = useStandardProxyEnvironment();
+    // const proxyEnvironment = useStandardProxyEnvironment();
+    const basePath = useBasePath();
+    const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
+    const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
+    const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
+    //
 
     const { oAuthPlaygroundEnabled } = useAtomValue(DOCS_ATOM);
 
