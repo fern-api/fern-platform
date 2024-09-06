@@ -24,10 +24,9 @@ function posthogHasCustomer(instance: PostHog): instance is PostHogWithCustomer 
     return Boolean((instance as PostHogWithCustomer).customer);
 }
 
-let IS_POSTHOG_INITIALIZED = false;
 async function safeAccessPosthog(run: (posthog: PostHog) => void): Promise<void> {
-    if (IS_POSTHOG_INITIALIZED) {
-        const posthog = (await import("posthog-js")).default;
+    const posthog = (await import("posthog-js")).default;
+    if (posthog.__loaded) {
         safeCall(() => run(posthog));
     }
 }
@@ -39,27 +38,37 @@ async function safeAccessPosthog(run: (posthog: PostHog) => void): Promise<void>
  */
 function ifCustomer(posthog: PostHog, run: (hog: PostHogWithCustomer) => void): void {
     safeCall(() => {
-        if (IS_POSTHOG_INITIALIZED && posthogHasCustomer(posthog)) {
+        if (posthogHasCustomer(posthog) && posthog.customer.__loaded) {
             run(posthog);
         }
     });
 }
 
 export async function initializePosthog(api_host: string, customerConfig?: DocsV1Read.PostHogConfig): Promise<void> {
-    const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim();
-    if (process.env.NODE_ENV === "production" && apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
-        const posthog = (await import("posthog-js")).default;
+    const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim() ?? "";
+    const posthog = (await import("posthog-js")).default;
 
+    if (posthog.__loaded) {
+        if (posthog.config.api_host !== api_host) {
+            // api_host may change because of useApiRoute
+            posthog.set_config({ api_host });
+        }
+    } else {
         posthog.init(apiKey, {
             api_host,
-            loaded: () => {
-                IS_POSTHOG_INITIALIZED = true;
-            },
+            debug: process.env.NODE_ENV === "development",
             capture_pageview: true,
             capture_pageleave: true,
         });
+    }
 
-        if (customerConfig) {
+    if (customerConfig != null) {
+        if (posthogHasCustomer(posthog) && posthog.customer.__loaded) {
+            if (posthog.customer.config.api_host !== api_host) {
+                // api_host may change because of useApiRoute
+                posthog.customer.set_config({ api_host });
+            }
+        } else {
             posthog.init(
                 customerConfig.apiKey,
                 {
@@ -69,6 +78,9 @@ export async function initializePosthog(api_host: string, customerConfig?: DocsV
                         // this is probably the expected behavior
                         "x-fern-posthog-host": customerConfig.endpoint ?? "https://us.i.posthog.com",
                     },
+                    debug: process.env.NODE_ENV === "development",
+                    capture_pageview: true,
+                    capture_pageleave: true,
                 },
                 "customer",
             );
