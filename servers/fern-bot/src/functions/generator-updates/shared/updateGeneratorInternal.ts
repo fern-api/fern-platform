@@ -311,6 +311,7 @@ async function handleSingleUpgrade({
         });
         return;
     } else if (fromVersion === toVersion) {
+        console.log("Versions were the same, let's see if there's a new version across major versions.");
         await upgradeAction({ includeMajor: true });
         const toVersion = await getEntityVersion();
         if (fromVersion !== toVersion) {
@@ -319,6 +320,7 @@ async function handleSingleUpgrade({
                 repoName: repository.full_name,
                 currentVersion: fromVersion,
                 organization,
+                generator: maybeGetGeneratorMetadata ? await maybeGetGeneratorMetadata() : undefined,
             });
             console.log("No change made as the upgrade is across major versions.");
             return;

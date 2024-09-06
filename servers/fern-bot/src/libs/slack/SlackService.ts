@@ -38,6 +38,8 @@ export class SlackService {
             return `:csharp: ${organization} - ${header} for \`${generatorName}\``;
         } else if (generatorName.includes("go")) {
             return `:gopher: ${organization} - ${header} for \`${generatorName}\``;
+        } else if (generatorName.includes("php")) {
+            return `:php: ${organization} - ${header} for \`${generatorName}\``;
         }
 
         return `:interrobang: ${header} for \`${generatorName}\``;
@@ -126,7 +128,7 @@ export class SlackService {
                     type: "section",
                     text: {
                         type: "mrkdwn",
-                        text: `Hey <!here>, we've encountered a major version upgrade which needs manual intervention!\n\n*Organization*: ${organization}\n*Github Repo*: ${repoName}${generator && "\n" + this.getGeneratorMetadataMessage(generator)}\n*Current version*: ${currentVersion}`,
+                        text: `Hey <!here>, we've encountered a major version upgrade which needs manual intervention!\n\n*Organization*: ${organization}\n*Github Repo*: ${repoName}${generator ? "\n" + this.getGeneratorMetadataMessage(generator) : ""}\n*Current version*: ${currentVersion}`,
                     },
                 },
                 {
