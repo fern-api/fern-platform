@@ -10,7 +10,7 @@ import type { BundledMDX, FernSerializeMdxOptions } from "../mdx/types";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
-import type { ResolvedPath } from "../resolver/ResolvedPath";
+import type { DocsContent } from "../resolver/DocsContent";
 import type { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
 
 async function getSubtitle(
@@ -49,7 +49,7 @@ async function getSubtitle(
     }
 }
 
-export async function convertNavigatableToResolvedPath({
+export async function resolveDocsContent({
     found,
     apis,
     pages,
@@ -63,7 +63,7 @@ export async function convertNavigatableToResolvedPath({
     mdxOptions?: FernSerializeMdxOptions;
     domain: string;
     featureFlags: FeatureFlags;
-}): Promise<ResolvedPath | undefined> {
+}): Promise<DocsContent | undefined> {
     const neighbors = await getNeighbors(found, pages);
     const { node, apiReference, parents } = found;
 
@@ -231,8 +231,8 @@ async function resolveMarkdownPage(
     mdxOptions: FernSerializeMdxOptions | undefined,
     featureFlags: FeatureFlags,
     domain: string,
-    neighbors: ResolvedPath.Neighbors,
-): Promise<ResolvedPath.CustomMarkdownPage | undefined> {
+    neighbors: DocsContent.Neighbors,
+): Promise<DocsContent.CustomMarkdownPage | undefined> {
     const pageId = FernNavigation.utils.getPageId(node);
     if (pageId == null) {
         return;
@@ -312,7 +312,7 @@ async function resolveMarkdownPage(
 async function getNeighbor(
     node: FernNavigation.NavigationNodeNeighbor | undefined,
     pages: Record<string, DocsV1Read.PageContent>,
-): Promise<ResolvedPath.Neighbor | null> {
+): Promise<DocsContent.Neighbor | null> {
     if (node == null) {
         return null;
     }
@@ -327,7 +327,7 @@ async function getNeighbor(
 async function getNeighbors(
     node: FernNavigation.utils.Node.Found,
     pages: Record<string, DocsV1Read.PageContent>,
-): Promise<ResolvedPath.Neighbors> {
+): Promise<DocsContent.Neighbors> {
     const [prev, next] = await Promise.all([getNeighbor(node.prev, pages), getNeighbor(node.next, pages)]);
     return { prev, next };
 }

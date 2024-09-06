@@ -6,12 +6,12 @@ import {
     DEFAULT_FEATURE_FLAGS,
     DocsPage,
     FeatureFlags,
-    convertNavigatableToResolvedPath,
     getGitHubInfo,
     getGitHubRepo,
     getRedirectForPath,
     getSeoProps,
     renderThemeStylesheet,
+    resolveDocsContent,
     serializeMdx,
 } from "@fern-ui/ui";
 import type { GetServerSidePropsResult } from "next";
@@ -66,7 +66,7 @@ export async function getDocsPageProps(
     // TODO: get feature flags from the API
     const featureFlags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
 
-    const resolvedPath = await convertNavigatableToResolvedPath({
+    const content = await resolveDocsContent({
         found: node,
         apis: docs.definition.apis,
         pages: docs.definition.pages,
@@ -77,7 +77,7 @@ export async function getDocsPageProps(
         },
     });
 
-    if (resolvedPath == null) {
+    if (content == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${slug}`);
         return { notFound: true };
@@ -126,7 +126,7 @@ export async function getDocsPageProps(
         logoHeight: docs.definition.config.logoHeight,
         logoHref: docs.definition.config.logoHref,
         files: docs.definition.filesV2,
-        resolvedPath,
+        content,
         announcement:
             docs.definition.config.announcement != null
                 ? {

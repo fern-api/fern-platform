@@ -18,7 +18,7 @@ export { getBreadcrumbList } from "./seo/getBreadcrumbList";
 export { getSeoProps } from "./seo/getSeoProp";
 export { getRegistryServiceWithToken, provideRegistryService } from "./services/registry";
 export { renderThemeStylesheet } from "./themes/stylesheet/renderThemeStylesheet";
-export { convertNavigatableToResolvedPath } from "./util/convertNavigatableToResolvedPath";
 export { getRedirectForPath } from "./util/getRedirectForPath";
 export { getGitHubInfo, getGitHubRepo } from "./util/github";
+export { resolveDocsContent } from "./util/resolveDocsContent";
 export { unknownToString } from "./util/unknownToString";

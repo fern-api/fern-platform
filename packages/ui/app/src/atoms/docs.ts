@@ -57,7 +57,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
     logoHeight: undefined,
     logoHref: undefined,
     files: {},
-    resolvedPath: {
+    content: {
         type: "custom-markdown-page",
         slug: FernNavigation.Slug(""),
         title: "",
