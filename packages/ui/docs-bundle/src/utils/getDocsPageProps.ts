@@ -16,6 +16,7 @@ import {
     getSeoProps,
     provideRegistryService,
     renderThemeStylesheet,
+    serializeMdx,
     setMdxBundler,
 } from "@fern-ui/ui";
 import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
@@ -341,6 +342,13 @@ async function convertDocsToDocsPageProps({
             (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined),
         files: docs.definition.filesV2,
         resolvedPath,
+        announcement:
+            docs.definition.config.announcement != null
+                ? {
+                      mdx: await serializeMdx(docs.definition.config.announcement.text),
+                      text: docs.definition.config.announcement.text,
+                  }
+                : undefined,
         navigation: {
             currentTabIndex: node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab),
             tabs: node.tabs.map((tab, index) =>

@@ -12,6 +12,7 @@ import {
     getRedirectForPath,
     getSeoProps,
     renderThemeStylesheet,
+    serializeMdx,
 } from "@fern-ui/ui";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
@@ -126,6 +127,13 @@ export async function getDocsPageProps(
         logoHref: docs.definition.config.logoHref,
         files: docs.definition.filesV2,
         resolvedPath,
+        announcement:
+            docs.definition.config.announcement != null
+                ? {
+                      mdx: await serializeMdx(docs.definition.config.announcement.text),
+                      text: docs.definition.config.announcement.text,
+                  }
+                : undefined,
         navigation: {
             currentTabIndex: node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab),
             tabs: node.tabs.map((tab, index) =>

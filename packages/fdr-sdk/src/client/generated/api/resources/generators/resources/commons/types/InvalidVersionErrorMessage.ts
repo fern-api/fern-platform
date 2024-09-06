@@ -3,5 +3,5 @@
  */
 
 export interface InvalidVersionErrorMessage {
-    provided_version: string;
+    providedVersion: string;
 }

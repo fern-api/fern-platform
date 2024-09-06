@@ -35,10 +35,10 @@ export class Versions {
      * @example
      *     await fernRegistry.generators.versions.getLatestGeneratorRelease({
      *         generator: "string",
-     *         cli_version: "string",
-     *         ir_version: 1,
-     *         generator_major_version: 1,
-     *         release_types: [FernRegistry.generators.ReleaseType.Ga]
+     *         cliVersion: "string",
+     *         irVersion: 1,
+     *         generatorMajorVersion: 1,
+     *         releaseTypes: [FernRegistry.generators.ReleaseType.Ga]
      *     })
      */
     public async getLatestGeneratorRelease(
@@ -100,11 +100,11 @@ export class Versions {
      *
      * @example
      *     await fernRegistry.generators.versions.getChangelog("string", {
-     *         from_version: {
+     *         fromVersion: {
      *             type: "inclusive",
      *             value: "string"
      *         },
-     *         to_version: {
+     *         toVersion: {
      *             type: "inclusive",
      *             value: "string"
      *         }
@@ -159,19 +159,19 @@ export class Versions {
      *
      * @example
      *     await fernRegistry.generators.versions.upsertGeneratorRelease({
-     *         generator_id: "string",
-     *         ir_version: 1,
+     *         generatorId: "string",
+     *         irVersion: 1,
      *         migration: "string",
-     *         custom_config_schema: "string",
+     *         customConfigSchema: "string",
      *         version: "string",
-     *         created_at: "2023-01-15",
-     *         is_yanked: {
-     *             remediation_verision: "string"
+     *         createdAt: "2023-01-15",
+     *         isYanked: {
+     *             remediationVerision: "string"
      *         },
-     *         changelog_entry: [{
+     *         changelogEntry: [{
      *                 type: FernRegistry.generators.ChangelogEntryType.Fix,
      *                 summary: "string",
-     *                 upgrade_notes: {
+     *                 upgradeNotes: {
      *                     "key": "value"
      *                 },
      *                 added: {
@@ -307,7 +307,7 @@ export class Versions {
      * @example
      *     await fernRegistry.generators.versions.listGeneratorReleases("string", {
      *         page: 1,
-     *         page_size: 1
+     *         pageSize: 1
      *     })
      */
     public async listGeneratorReleases(
@@ -320,14 +320,14 @@ export class Versions {
             FernRegistry.generators.versions.listGeneratorReleases.Error
         >
     > {
-        const { page, page_size: pageSize } = request;
+        const { page, pageSize } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
 
         if (pageSize != null) {
-            _queryParams["page_size"] = pageSize.toString();
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         const _response = await core.fetcher({

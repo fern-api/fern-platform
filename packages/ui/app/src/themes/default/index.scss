@@ -1,8 +1,12 @@
 .fern-theme-default.fern-container {
     @apply relative flex min-h-screen flex-1 flex-col z-0;
 
+    #fern-header {
+        @apply fixed inset-x-0 top-0 z-30;
+    }
+
     .fern-header-container {
-        @apply fixed inset-x-0 top-0 z-30 shadow-none h-header-height-real lg:h-header-height;
+        @apply shadow-none h-header-height-real lg:h-header-height;
     }
 
     .fern-header-container:is(.light *):not(.has-background-light),
