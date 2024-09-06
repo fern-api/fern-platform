@@ -64,7 +64,7 @@ export interface DocsProps {
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-    resolvedPath: ResolvedPath;
+    content: ResolvedPath;
     featureFlags: FeatureFlags;
     apis: FdrAPI.ApiDefinitionId[];
     seo: NextSeoProps;

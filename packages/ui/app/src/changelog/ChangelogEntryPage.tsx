@@ -6,29 +6,29 @@ import { useHref } from "../hooks/useHref";
 import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
 
-export function ChangelogEntryPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogEntryPage }): ReactElement {
-    const page = resolvedPath.page;
+export function ChangelogEntryPage({ content }: { content: ResolvedPath.ChangelogEntryPage }): ReactElement {
+    const page = content.page;
     const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
     const excerpt = typeof page !== "string" ? page?.frontmatter.subtitle ?? page?.frontmatter.excerpt : undefined;
     return (
         <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
             <div className="w-full min-w-0 pt-8">
                 <article className="mx-auto break-words lg:ml-0 xl:mx-auto">
-                    <section id={resolvedPath.date} className="flex items-stretch justify-between">
+                    <section id={content.date} className="flex items-stretch justify-between">
                         <div className="max-xl:hidden w-sidebar-width" />
                         <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-1 max-xl:mx-auto">
                             <header className="mb-8">
                                 <div className="space-y-1">
                                     <div className="not-prose">
-                                        <FernLink href={useHref(resolvedPath.changelogSlug)}>
+                                        <FernLink href={useHref(content.changelogSlug)}>
                                             <span className="t-accent shrink truncate whitespace-nowrap text-sm font-semibold inline-flex gap-1 items-center">
                                                 <ArrowLeft className="size-icon" />
-                                                Back to {resolvedPath.changelogTitle}
+                                                Back to {content.changelogTitle}
                                             </span>
                                         </FernLink>
                                     </div>
 
-                                    <h1 className="my-0 inline-block leading-tight">{title ?? resolvedPath.title}</h1>
+                                    <h1 className="my-0 inline-block leading-tight">{title ?? content.title}</h1>
                                 </div>
 
                                 {excerpt != null && (

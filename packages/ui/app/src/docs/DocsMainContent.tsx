@@ -2,8 +2,9 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { Fragment, ReactElement, memo } from "react";
-import { useFeatureFlags, useIsReady, useResolvedPath } from "../atoms";
+import { useFeatureFlags, useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { ResolvedPath } from "../resolver/ResolvedPath";
 
 const MdxContent = dynamic(() => import("../mdx/MdxContent").then(({ MdxContent }) => MdxContent), {
     ssr: true,
@@ -33,29 +34,28 @@ const FeedbackPopover = dynamic(
     { ssr: false },
 );
 
-const DocsMainContentRenderer = memo(() => {
-    const resolvedPath = useResolvedPath();
-    return visitDiscriminatedUnion(resolvedPath)._visit({
-        "custom-markdown-page": (resolvedPath) => <MdxContent mdx={resolvedPath.mdx} />,
-        "api-reference-page": (resolvedPath) => (
-            <ApiReferencePage initialApi={resolvedPath.apiDefinition} showErrors={resolvedPath.showErrors} />
+const DocsMainContentRenderer = memo(({ content }: { content: ResolvedPath }) => {
+    return visitDiscriminatedUnion(content)._visit({
+        "custom-markdown-page": (content) => <MdxContent mdx={content.mdx} />,
+        "api-reference-page": (content) => (
+            <ApiReferencePage initialApi={content.apiDefinition} showErrors={content.showErrors} />
         ),
-        "api-endpoint-page": (resolvedPath) => (
-            <ApiEndpointPage item={resolvedPath.item} showErrors={resolvedPath.showErrors} types={resolvedPath.types} />
+        "api-endpoint-page": (content) => (
+            <ApiEndpointPage item={content.item} showErrors={content.showErrors} types={content.types} />
         ),
-        changelog: (resolvedPath) => <ChangelogPage resolvedPath={resolvedPath} />,
-        "changelog-entry": (resolvedPath) => <ChangelogEntryPage resolvedPath={resolvedPath} />,
+        changelog: (content) => <ChangelogPage content={content} />,
+        "changelog-entry": (content) => <ChangelogEntryPage content={content} />,
         _other: () => null,
     });
 });
 DocsMainContentRenderer.displayName = "DocsMainContentRenderer";
 
-function LazyDocsMainContentRenderer(): ReactElement | null {
+function LazyDocsMainContentRenderer({ content }: { content: ResolvedPath }): ReactElement | null {
     const hydrated = useIsReady();
-    return hydrated ? <DocsMainContentRenderer /> : null;
+    return hydrated ? <DocsMainContentRenderer content={content} /> : null;
 }
 
-export const DocsMainContent = memo(function DocsMainContent(): ReactElement {
+export const DocsMainContent = memo(function DocsMainContent({ content }: { content: ResolvedPath }): ReactElement {
     const { isInlineFeedbackEnabled } = useFeatureFlags();
     const searchParams = useSearchParams();
     const FeedbackPopoverProvider = isInlineFeedbackEnabled ? FeedbackPopover : Fragment;
@@ -65,7 +65,7 @@ export const DocsMainContent = memo(function DocsMainContent(): ReactElement {
     return (
         <FernErrorBoundary>
             <FeedbackPopoverProvider>
-                <ContentRenderer />
+                <ContentRenderer content={content} />
             </FeedbackPopoverProvider>
         </FernErrorBoundary>
     );

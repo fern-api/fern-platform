@@ -252,13 +252,13 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
 
     // always hide sidebar on changelog entries
     // this may be a bit too aggressive, but it's a good starting point
-    const resolvedPath = get(RESOLVED_PATH_ATOM);
-    if (resolvedPath.type === "changelog-entry") {
+    const content = get(RESOLVED_PATH_ATOM);
+    if (content.type === "changelog-entry") {
         return true;
     }
 
-    if (resolvedPath.type === "custom-markdown-page" && typeof resolvedPath.mdx !== "string") {
-        const layout = resolvedPath.mdx.frontmatter.layout;
+    if (content.type === "custom-markdown-page" && typeof content.mdx !== "string") {
+        const layout = content.mdx.frontmatter.layout;
 
         if (layout === "page" || layout === "custom") {
             return true;

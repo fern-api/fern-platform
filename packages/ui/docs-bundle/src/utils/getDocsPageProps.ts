@@ -279,7 +279,7 @@ async function convertDocsToDocsPageProps({
 
     setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
-    const resolvedPath = await convertNavigatableToResolvedPath({
+    const content = await convertNavigatableToResolvedPath({
         found: node,
         apis: docs.definition.apis,
         pages: docs.definition.pages,
@@ -290,7 +290,7 @@ async function convertDocsToDocsPageProps({
         },
     });
 
-    if (resolvedPath == null) {
+    if (content == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${url}`);
         return { notFound: true };
@@ -341,7 +341,7 @@ async function convertDocsToDocsPageProps({
             docs.definition.config.logoHref ??
             (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined),
         files: docs.definition.filesV2,
-        resolvedPath,
+        content,
         announcement:
             docs.definition.config.announcement != null
                 ? {

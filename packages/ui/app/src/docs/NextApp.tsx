@@ -1,12 +1,12 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
-import { Provider as JotaiProvider } from "jotai";
+import { useHydrateAtoms } from "jotai/utils";
 import type { AppProps } from "next/app";
 import PageLoader from "next/dist/client/page-loader";
 import { Router } from "next/router";
-import { ReactElement, useEffect } from "react";
+import { PropsWithChildren, ReactElement, useEffect } from "react";
 import { SWRConfig } from "swr";
-import { DocsProps, store } from "../atoms";
+import { DOCS_ATOM, DocsProps } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import "../css/globals.scss";
 import { NextNProgress } from "../header/NProgress";
@@ -22,21 +22,24 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
     });
 
     return (
-        <>
+        <HydrateAtoms pageProps={pageProps}>
             <ThemeScript colors={pageProps?.colors} />
             <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
             <Toaster />
-            <JotaiProvider store={store}>
-                <FernTooltipProvider>
-                    <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
-                        <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                            <Component {...pageProps} />
-                        </FernErrorBoundary>
-                    </SWRConfig>
-                </FernTooltipProvider>
-            </JotaiProvider>
-        </>
+            <FernTooltipProvider>
+                <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
+                    <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+                        <Component {...pageProps} />
+                    </FernErrorBoundary>
+                </SWRConfig>
+            </FernTooltipProvider>
+        </HydrateAtoms>
     );
+}
+
+function HydrateAtoms({ pageProps, children }: PropsWithChildren<{ pageProps: DocsProps | undefined }>) {
+    useHydrateAtoms(new Map([[DOCS_ATOM, pageProps]]), { dangerouslyForceHydrate: true });
+    return children;
 }
 
 // hack for basepath: https://github.com/vercel/next.js/discussions/25681#discussioncomment-2026813

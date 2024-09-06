@@ -13,6 +13,7 @@ import {
 } from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Announcement } from "../../header/Announcement";
+import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -45,7 +46,7 @@ const CohereDocsStyle = () => {
     );
 };
 
-function UnmemoizedCohereDocs(): ReactElement {
+function UnmemoizedCohereDocs({ content }: { content: ResolvedPath }): ReactElement {
     const showHeader = useAtomValue(SHOW_HEADER_ATOM);
     const announcementHeight = useAtomValue(ANNOUNCEMENT_HEIGHT_ATOM);
 
@@ -89,7 +90,7 @@ function UnmemoizedCohereDocs(): ReactElement {
                     ref={mainRef}
                     scrollbars="vertical"
                 >
-                    <DocsMainContent />
+                    <DocsMainContent content={content} />
 
                     {/* Enables footer DOM injection */}
                     <footer id="fern-footer" />

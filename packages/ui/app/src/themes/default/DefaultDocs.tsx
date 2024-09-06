@@ -11,6 +11,7 @@ import {
     useTheme,
 } from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
+import { ResolvedPath } from "../../resolver/ResolvedPath";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -30,7 +31,7 @@ const DefaultDocsStyle = () => {
     );
 };
 
-function UnmemoizedDefaultDocs(): ReactElement {
+function UnmemoizedDefaultDocs({ content }: { content: ResolvedPath }): ReactElement {
     const colors = useColors();
     const layout = useAtomValue(DOCS_LAYOUT_ATOM);
     const showHeader = useAtomValue(SHOW_HEADER_ATOM);
@@ -65,7 +66,7 @@ function UnmemoizedDefaultDocs(): ReactElement {
                         "fern-sidebar-disabled": isSidebarDismissable,
                     })}
                 >
-                    <DocsMainContent />
+                    <DocsMainContent content={content} />
                 </div>
             </div>
 

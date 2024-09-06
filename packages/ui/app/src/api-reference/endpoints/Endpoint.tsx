@@ -17,19 +17,19 @@ export declare namespace Endpoint {
 
 const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({ api, showErrors, endpoint, isLastInApi, types }) => {
     const [isStream, setStream] = useAtom(FERN_STREAM_ATOM);
-    const resolvedPath = useResolvedPath();
+    const content = useResolvedPath();
 
     const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;
 
     useEffect(() => {
         if (endpoint.stream != null) {
-            if (endpoint.slug === resolvedPath.slug) {
+            if (endpoint.slug === content.slug) {
                 setStream(false);
-            } else if (endpoint.stream.slug === resolvedPath.slug) {
+            } else if (endpoint.stream.slug === content.slug) {
                 setStream(true);
             }
         }
-    }, [endpoint.slug, endpoint.stream, resolvedPath.slug, setStream]);
+    }, [endpoint.slug, endpoint.stream, content.slug, setStream]);
 
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
     // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)

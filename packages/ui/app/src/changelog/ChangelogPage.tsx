@@ -8,12 +8,11 @@ import { MdxContent } from "../mdx/MdxContent";
 import { ResolvedPath } from "../resolver/ResolvedPath";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
-export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.ChangelogPage }): ReactElement {
+export function ChangelogPage({ content }: { content: ResolvedPath.ChangelogPage }): ReactElement {
     const sidebar = useSidebarNodes();
     const toHref = useToHref();
     const fullWidth = sidebar == null;
-    const overview =
-        resolvedPath.node.overviewPageId != null ? resolvedPath.pages[resolvedPath.node.overviewPageId] : undefined;
+    const overview = content.node.overviewPageId != null ? content.pages[content.node.overviewPageId] : undefined;
     return (
         <div className="flex justify-between px-4 md:px-6 lg:px-8">
             <div className={clsx("w-full min-w-0 pt-8", { "sm:pt-8 lg:pt-24": fullWidth })}>
@@ -24,8 +23,8 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                                 <div className="flex-initial max-md:hidden w-64" />
                                 <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-auto">
                                     <PageHeader
-                                        title={resolvedPath.node.title}
-                                        breadcrumbs={resolvedPath.breadcrumbs}
+                                        title={content.node.title}
+                                        breadcrumbs={content.breadcrumbs}
                                         subtitle={
                                             typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined
                                         }
@@ -40,8 +39,8 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                         ) : (
                             <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-auto">
                                 <PageHeader
-                                    title={resolvedPath.node.title}
-                                    breadcrumbs={resolvedPath.breadcrumbs}
+                                    title={content.node.title}
+                                    breadcrumbs={content.breadcrumbs}
                                     subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
                                 />
                                 {overview != null && (
@@ -53,10 +52,10 @@ export function ChangelogPage({ resolvedPath }: { resolvedPath: ResolvedPath.Cha
                         )}
                     </section>
 
-                    {resolvedPath.node.children.flatMap((year) =>
+                    {content.node.children.flatMap((year) =>
                         year.children.flatMap((month) =>
                             month.children.map((entry) => {
-                                const page = resolvedPath.pages[entry.pageId];
+                                const page = content.pages[entry.pageId];
                                 const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
                                 return (
                                     <Fragment key={entry.id}>

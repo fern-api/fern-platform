@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
+import { ResolvedPath } from "../resolver/ResolvedPath";
 
 const THEMES = {
     default: dynamic(() => import("./default/DefaultDocs").then(({ DefaultDocs }) => DefaultDocs), { ssr: true }),
@@ -8,7 +9,7 @@ const THEMES = {
 
 export type FernTheme = keyof typeof THEMES;
 
-export function ThemedDocs({ theme }: { theme: FernTheme }): ReactElement {
+export function ThemedDocs({ theme, content }: { theme: FernTheme; content: ResolvedPath }): ReactElement {
     const Docs = THEMES[theme];
-    return <Docs />;
+    return <Docs content={content} />;
 }
