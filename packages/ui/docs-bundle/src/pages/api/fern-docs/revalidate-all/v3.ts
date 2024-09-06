@@ -65,7 +65,9 @@ const handler: NextApiHandler = async (
 
         const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
         const slugCollector = NodeCollector.collect(node);
-        const urls = slugCollector.getSlugs().map((slug) => urljoin(xFernHost, slug));
+        const urls = slugCollector
+            .getSlugs()
+            .map((slug) => urljoin(xFernHost, slug, isTrailingSlashEnabled() ? "/" : ""));
 
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request
@@ -87,9 +89,7 @@ const handler: NextApiHandler = async (
                         // eslint-disable-next-line no-console
                         console.log(`Revalidating ${url}`);
                         try {
-                            await res.revalidate(
-                                isTrailingSlashEnabled() ? `/static/${encodeURI(url)}/` : `/static/${encodeURI(url)}`,
-                            );
+                            await res.revalidate(`/static/${encodeURI(url)}`);
                             return { success: true, url };
                         } catch (e) {
                             // eslint-disable-next-line no-console
