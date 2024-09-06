@@ -6,7 +6,7 @@
  * @example
  *     {
  *         page: 1,
- *         page_size: 1
+ *         pageSize: 1
  *     }
  */
 export interface ListGeneratorReleasesRequest {
@@ -17,5 +17,5 @@ export interface ListGeneratorReleasesRequest {
     /**
      * The integer of items to retrieve per page. Defaults to 20.
      */
-    page_size?: number;
+    pageSize?: number;
 }

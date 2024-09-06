@@ -80,7 +80,7 @@ export class CliService {
                 next(error);
             }
         }));
-        this.router.get("/for-ir/:ir_version", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/for-ir/:irVersion", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getMinCliForIr(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
@@ -133,7 +133,7 @@ export class CliService {
                 next(error);
             }
         }));
-        this.router.get("/:cli_version", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/:cliVersion", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getCliRelease(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {

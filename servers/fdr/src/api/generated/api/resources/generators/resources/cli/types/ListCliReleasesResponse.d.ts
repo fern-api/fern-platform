@@ -3,5 +3,5 @@
  */
 import * as FernRegistry from "../../../../../index";
 export interface ListCliReleasesResponse {
-    cli_releases: FernRegistry.generators.CliRelease[];
+    cliReleases: FernRegistry.generators.CliRelease[];
 }
