@@ -48,7 +48,6 @@ function ifCustomer(posthog: PostHog, run: (hog: PostHogWithCustomer) => void): 
 export async function initializePosthog(api_host: string, customerConfig?: DocsV1Read.PostHogConfig): Promise<void> {
     const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim();
     if (process.env.NODE_ENV === "production" && apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
-        // const posthogProxy = "/api/fern-docs/analytics/posthog";
         const posthog = (await import("posthog-js")).default;
 
         posthog.init(apiKey, {
