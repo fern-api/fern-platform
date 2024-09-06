@@ -6,6 +6,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";
 import { loadWithUrl } from "../../../../utils/loadWithUrl";
 import { toValidPathname } from "../../../../utils/toValidPathname";
+import { isTrailingSlashEnabled } from "../../../../utils/trailingSlash";
 import { cleanHost, getXFernHostNode } from "../../../../utils/xFernHost";
 
 export const config = {
@@ -82,7 +83,9 @@ const handler: NextApiHandler = async (
                         // eslint-disable-next-line no-console
                         console.log(`Revalidating ${url}`);
                         try {
-                            await res.revalidate(`/static/${encodeURI(url)}`);
+                            await res.revalidate(
+                                isTrailingSlashEnabled() ? `/static/${encodeURI(url)}/` : `/static/${encodeURI(url)}`,
+                            );
                             return { success: true, url };
                         } catch (e) {
                             // eslint-disable-next-line no-console
