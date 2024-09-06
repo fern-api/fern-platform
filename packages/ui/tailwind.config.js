@@ -1,5 +1,4 @@
 const plugin = require("tailwindcss/plugin");
-const { blackA } = require("@radix-ui/colors");
 
 const round = (num) =>
     num
@@ -200,6 +199,7 @@ module.exports = {
                         "--tw-prose-th-borders": "var(--border)",
                         "--tw-prose-td-borders": "var(--border)",
                         "--tw-prose-bullets": "var(--grayscale-a8)",
+                        "--tw-prose-counters": "var(--grayscale-a9)",
                         "tbody td[rowspan]:first-child, tfoot td[rowspan]:first-child": {
                             paddingRight: em(8, 14),
                         },
@@ -241,14 +241,16 @@ module.exports = {
                 invert: {
                     css: {
                         color: "#ffffff",
-                        "--tw-prose-bold": "inherit",
-                        "--tw-prose-links": "inherit",
-                        "--tw-prose-hr": "var(--border)",
+                        "--tw-prose-invert-bold": "inherit",
+                        "--tw-prose-invert-links": "inherit",
+                        "--tw-prose-invert-hr": "var(--border)",
                         "--tw-prose-invert-body": "inherit",
                         "--tw-prose-invert-headings": "inherit",
-                        "--tw-prose-pre-bg": "initial",
+                        "--tw-prose-invert-pre-bg": "initial",
                         "--tw-prose-invert-th-borders": "var(--border)",
                         "--tw-prose-invert-td-borders": "var(--border)",
+                        "--tw-prose-invert-bullets": "var(--grayscale-a8)",
+                        "--tw-prose-invert-counters": "var(--grayscale-a9)",
                     },
                 },
                 "invert-sm": {
