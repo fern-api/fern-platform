@@ -2,6 +2,7 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import { Router } from "next/router";
 import type { PostHog } from "posthog-js";
 import { useEffect } from "react";
+import { useApiRoute } from "../hooks/useApiRoute";
 import { safeCall } from "./sentry";
 
 /**
@@ -44,14 +45,14 @@ function ifCustomer(posthog: PostHog, run: (hog: PostHogWithCustomer) => void): 
     });
 }
 
-export async function initializePosthog(customerConfig?: DocsV1Read.PostHogConfig): Promise<void> {
+export async function initializePosthog(api_host: string, customerConfig?: DocsV1Read.PostHogConfig): Promise<void> {
     const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim();
     if (process.env.NODE_ENV === "production" && apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
-        const posthogProxy = "/api/fern-docs/analytics/posthog";
+        // const posthogProxy = "/api/fern-docs/analytics/posthog";
         const posthog = (await import("posthog-js")).default;
 
         posthog.init(apiKey, {
-            api_host: posthogProxy,
+            api_host,
             loaded: () => {
                 IS_POSTHOG_INITIALIZED = true;
             },
@@ -63,7 +64,7 @@ export async function initializePosthog(customerConfig?: DocsV1Read.PostHogConfi
             posthog.init(
                 customerConfig.apiKey,
                 {
-                    api_host: posthogProxy,
+                    api_host,
                     request_headers: {
                         // default to posthog-js's default endpoint
                         // this is probably the expected behavior
@@ -115,11 +116,12 @@ const trackPageView = (url: string) => {
 };
 
 export function useInitializePosthog(customerConfig?: DocsV1Read.PostHogConfig): void {
+    const route = useApiRoute("/api/fern-docs/analytics/posthog");
     useEffect(() => {
-        safeCall(() => initializePosthog(customerConfig));
+        safeCall(() => initializePosthog(route, customerConfig));
         Router.events.on("routeChangeComplete", trackPageView);
         return () => {
             Router.events.off("routeChangeComplete", trackPageView);
         };
-    }, [customerConfig]);
+    }, [customerConfig, route]);
 }
