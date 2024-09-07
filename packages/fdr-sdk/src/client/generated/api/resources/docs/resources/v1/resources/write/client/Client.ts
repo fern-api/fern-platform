@@ -333,6 +333,9 @@ export class Write {
      *                             "key": "value"
      *                         }]
      *                 },
+     *                 playground: {
+     *                     oauth: true
+     *                 },
      *                 backgroundImage: "string",
      *                 logoV2: {
      *                     dark: "string",
