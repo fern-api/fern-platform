@@ -19,6 +19,8 @@ export class PlaygroundCodeSnippetResolverBuilder {
     public create(
         authState: PlaygroundAuthState,
         formState: PlaygroundEndpointRequestFormState,
+        proxyEnvironment: string,
+        setOAuthValue: (value: (prev: any) => any) => void,
     ): PlaygroundCodeSnippetResolver {
         return new PlaygroundCodeSnippetResolver(
             this.endpoint,
@@ -27,12 +29,16 @@ export class PlaygroundCodeSnippetResolverBuilder {
             false,
             this.isSnippetTemplatesEnabled,
             this.isFileForgeHackEnabled,
+            proxyEnvironment,
+            setOAuthValue,
         );
     }
 
     public createRedacted(
         authState: PlaygroundAuthState,
         formState: PlaygroundEndpointRequestFormState,
+        proxyEnvironment: string,
+        setOAuthValue: (value: (prev: any) => any) => void,
     ): PlaygroundCodeSnippetResolver {
         return new PlaygroundCodeSnippetResolver(
             this.endpoint,
@@ -41,6 +47,8 @@ export class PlaygroundCodeSnippetResolverBuilder {
             true,
             this.isSnippetTemplatesEnabled,
             this.isFileForgeHackEnabled,
+            proxyEnvironment,
+            setOAuthValue,
         );
     }
 }
@@ -70,9 +78,23 @@ export class PlaygroundCodeSnippetResolver {
         isAuthHeadersRedacted: boolean,
         public isSnippetTemplatesEnabled: boolean,
         private isFileForgeHackEnabled: boolean,
+        proxyEnvironment: string,
+        setOAuthValue: (value: (prev: any) => any) => void,
     ) {
-        const authHeaders = buildAuthHeaders(endpoint.auth, authState, { redacted: isAuthHeadersRedacted });
+        const authHeaders = buildAuthHeaders(
+            endpoint.auth,
+            authState,
+            { redacted: isAuthHeadersRedacted },
+            {
+                formState,
+                endpoint,
+                proxyEnvironment,
+                setValue: setOAuthValue,
+            },
+        );
+
         this.headers = { ...authHeaders, ...formState.headers };
+
         if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
             this.headers["Content-Type"] = endpoint.requestBody.contentType;
         }

@@ -41,6 +41,14 @@ export function convertEndpointExampleToHttpRequestExample(
             header: ({ headerWireValue, nameOverride = headerWireValue, prefix }) => {
                 headers[headerWireValue] = prefix != null ? `${prefix} <${nameOverride}>` : `<${nameOverride}>`;
             },
+            oAuth: ({ value: clientCredentials }) => {
+                visitDiscriminatedUnion(clientCredentials, "type")._visit({
+                    clientCredentials: () => {
+                        headers.Authorization = "Bearer <token>";
+                    },
+                    _other: noop,
+                });
+            },
             _other: noop,
         });
     }

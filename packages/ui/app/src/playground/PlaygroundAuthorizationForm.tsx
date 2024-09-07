@@ -14,15 +14,23 @@ import {
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM,
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM,
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
+    PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
+    usePlaygroundEndpointFormState,
 } from "../atoms";
+import { useOAuthEndpoint } from "../atoms/oauth";
 import { useApiRoute } from "../hooks/useApiRoute";
+import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { Callout } from "../mdx/components/callout";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
+import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundAuthState } from "./types";
+import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
+    closeContainer: () => void;
     disabled: boolean;
 }
 
@@ -133,13 +141,156 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
     );
 }
 
-export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> = ({ auth, disabled }) => {
+function FoundOAuthReferencedEndpointForm({
+    oAuthEndpoint,
+    types,
+    oAuthClientCredentialsReferencedEndpoint,
+    closeContainer,
+    disabled,
+}: {
+    oAuthEndpoint: ResolvedEndpointDefinition;
+    types: Record<string, ResolvedTypeDefinition>;
+    oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
+    closeContainer: () => void;
+    disabled?: boolean;
+}) {
+    const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
+    const proxyEnvironment = useStandardProxyEnvironment();
+    const [formState, setFormState] = usePlaygroundEndpointFormState(oAuthEndpoint);
+
+    const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
+
+    // TODO: implement a loading state
+    const oAuthClientCredentialLogin = async () =>
+        await oAuthClientCredentialReferencedEndpointLoginFlow({
+            formState,
+            endpoint: oAuthEndpoint,
+            proxyEnvironment,
+            oAuthClientCredentialsReferencedEndpoint,
+            setValue,
+            closeContainer,
+            setDisplayFailedLogin,
+        });
+
+    return (
+        <>
+            <li className="-mx-4 space-y-2 p-4 pb-2">
+                <label className="inline-flex flex-wrap items-baseline">
+                    <span className="font-mono text-sm">{"OAuth Client Credentials login"}</span>
+                </label>
+                <PlaygroundEndpointForm
+                    endpoint={oAuthEndpoint}
+                    formState={formState}
+                    setFormState={setFormState}
+                    types={types}
+                    ignoreHeaders={true}
+                />
+            </li>
+            <li className="-mx-4 space-y-2 p-4 pt-0">
+                <label className="inline-flex flex-wrap items-baseline">
+                    <span className="font-mono text-sm">Bearer token</span>
+                </label>
+
+                <div>
+                    <PasswordInputGroup
+                        onValueChange={(newValue: string) => setValue((prev) => ({ ...prev, accessToken: newValue }))}
+                        value={value.accessToken}
+                        autoComplete="off"
+                        data-1p-ignore="true"
+                        disabled={disabled}
+                    />
+                </div>
+            </li>
+            {displayFailedLogin && (
+                <li className="-mx-4 space-y-2 p-4 py-0">
+                    <span className="font-mono text-sm text-red-600">
+                        Failed to login with the provided credentials
+                    </span>
+                </li>
+            )}
+            <li className="flex justify-end py-2">
+                <FernButton
+                    text={value.accessToken.length > 0 ? "Refresh token" : "Login"}
+                    intent="primary"
+                    onClick={oAuthClientCredentialLogin}
+                    disabled={disabled}
+                />
+            </li>
+        </>
+    );
+}
+
+function OAuthReferencedEndpointForm({
+    referencedEndpoint,
+    oAuthClientCredentialsReferencedEndpoint,
+    closeContainer,
+    disabled,
+}: {
+    referencedEndpoint: APIV1Read.OAuthClientCredentials.ReferencedEndpoint;
+    oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
+    closeContainer: () => void;
+    disabled?: boolean;
+}) {
+    const { oAuthEndpoint, types } = useOAuthEndpoint(referencedEndpoint) ?? {};
+
+    if (oAuthEndpoint == null || types == null) {
+        // eslint-disable-next-line no-console
+        console.error("Could not find OAuth endpoint for referenced endpoint", referencedEndpoint);
+        return <BearerAuthForm bearerAuth={{ tokenName: "token" }} disabled={disabled} />;
+    }
+
+    return (
+        <FoundOAuthReferencedEndpointForm
+            oAuthEndpoint={oAuthEndpoint}
+            types={types}
+            oAuthClientCredentialsReferencedEndpoint={oAuthClientCredentialsReferencedEndpoint}
+            closeContainer={closeContainer}
+            disabled={disabled}
+        />
+    );
+}
+
+function OAuthForm({
+    oAuth,
+    closeContainer,
+    disabled,
+}: {
+    oAuth: APIV1Read.ApiAuth.OAuth;
+    closeContainer: () => void;
+    disabled?: boolean;
+}) {
+    return visitDiscriminatedUnion(oAuth.value, "type")._visit({
+        clientCredentials: (clientCredentials) => {
+            return visitDiscriminatedUnion(clientCredentials.value, "type")._visit({
+                referencedEndpoint: (referencedEndpoint) => {
+                    return (
+                        <OAuthReferencedEndpointForm
+                            referencedEndpoint={referencedEndpoint}
+                            oAuthClientCredentialsReferencedEndpoint={referencedEndpoint}
+                            closeContainer={closeContainer}
+                            disabled={disabled}
+                        />
+                    );
+                },
+                _other: () => null,
+            });
+        },
+        _other: () => null,
+    });
+}
+
+export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> = ({
+    auth,
+    closeContainer,
+    disabled,
+}) => {
     return (
         <ul className="list-none px-4">
             {visitDiscriminatedUnion(auth, "type")._visit({
                 bearerAuth: (bearerAuth) => <BearerAuthForm bearerAuth={bearerAuth} disabled={disabled} />,
                 basicAuth: (basicAuth) => <BasicAuthForm basicAuth={basicAuth} disabled={disabled} />,
                 header: (header) => <HeaderAuthForm header={header} disabled={disabled} />,
+                oAuth: (oAuth) => <OAuthForm oAuth={oAuth} closeContainer={closeContainer} disabled={disabled} />,
                 _other: () => null,
             })}
         </ul>
@@ -191,7 +342,7 @@ export function PlaygroundAuthorizationFormCard({
     };
     const authButtonCopy = apiKeyInjection.enabled
         ? "Login to send a real request"
-        : "Authenticate with your API key to send a real request";
+        : `Authenticate with your ${auth.type === "oAuth" ? "credentials" : "API key"} to send a real request`;
 
     useEffect(() => {
         if (!router.isReady) {
@@ -252,7 +403,11 @@ export function PlaygroundAuthorizationFormCard({
                             active={true}
                         />
                         <div className="-mx-4">
-                            <PlaygroundAuthorizationForm auth={auth} disabled={disabled} />
+                            <PlaygroundAuthorizationForm
+                                auth={auth}
+                                closeContainer={isOpen.setFalse}
+                                disabled={disabled}
+                            />
                         </div>
                         {
                             <div className="flex justify-end  gap-2">
@@ -302,7 +457,7 @@ export function PlaygroundAuthorizationFormCard({
                     icon={<Key />}
                     rightIcon={
                         <span className="flex items-center rounded-[4px] bg-tag-success p-1 font-mono text-xs uppercase leading-none text-intent-success">
-                            Connect
+                            Authenticated
                         </span>
                     }
                     onClick={isOpen.toggleValue}
@@ -319,7 +474,7 @@ export function PlaygroundAuthorizationFormCard({
                     icon={<Key />}
                     rightIcon={
                         <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
-                            Connect
+                            Not Authenticated
                         </span>
                     }
                     onClick={redirectOrOpenAuthForm}
@@ -329,11 +484,13 @@ export function PlaygroundAuthorizationFormCard({
 
             <FernCollapse isOpen={isOpen.value}>
                 <div className="pt-4">
-                    <div className="fern-dropdown">
-                        <PlaygroundAuthorizationForm auth={auth} disabled={disabled} />
+                    <div className="fern-dropdown !max-h-[500px]">
+                        <PlaygroundAuthorizationForm auth={auth} closeContainer={isOpen.setFalse} disabled={disabled} />
 
                         <div className="flex justify-end p-4 pt-2 gap-2">
-                            <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
+                            {auth.type !== "oAuth" && (
+                                <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
+                            )}
                             {apiKey != null && (
                                 <FernButton
                                     text="Reset token to default"
@@ -357,6 +514,7 @@ function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState): bool
         basicAuth: () =>
             !isEmpty(authState.basicAuth?.username.trim()) && !isEmpty(authState.basicAuth?.password.trim()),
         header: (header) => !isEmpty(authState.header?.headers[header.headerWireValue]?.trim()),
+        oAuth: () => !isEmpty(authState.oauth?.accessToken.trim()),
         _other: () => false,
     });
 }

@@ -18,6 +18,7 @@ interface PlaygroundEndpointFormProps {
     formState: PlaygroundEndpointRequestFormState | undefined;
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
     types: Record<string, ResolvedTypeDefinition>;
+    ignoreHeaders?: boolean;
 }
 
 export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
@@ -25,6 +26,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     formState,
     setFormState,
     types,
+    ignoreHeaders,
 }) => {
     const setHeaders = useCallback(
         (value: ((old: unknown) => unknown) | unknown) => {
@@ -172,9 +174,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
         <div className="col-span-2 space-y-8">
             {endpoint.headers.length > 0 && (
                 <div>
-                    <div className="mb-4 px-4">
-                        <h5 className="t-muted m-0">Headers</h5>
-                    </div>
+                    {!ignoreHeaders && (
+                        <div className="mb-4 px-4">
+                            <h5 className="t-muted m-0">Headers</h5>
+                        </div>
+                    )}
                     <FernCard className="rounded-xl p-4 shadow-sm">
                         <PlaygroundObjectPropertiesForm
                             id="header"
@@ -189,9 +193,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
             {endpoint.pathParameters.length > 0 && (
                 <div>
-                    <div className="mb-4 px-4">
-                        <h5 className="t-muted m-0">Path Parameters</h5>
-                    </div>
+                    {!ignoreHeaders && (
+                        <div className="mb-4 px-4">
+                            <h5 className="t-muted m-0">Path Parameters</h5>
+                        </div>
+                    )}
                     <FernCard className="rounded-xl p-4 shadow-sm">
                         <PlaygroundObjectPropertiesForm
                             id="path"
@@ -206,9 +212,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
             {endpoint.queryParameters.length > 0 && (
                 <div>
-                    <div className="mb-4 px-4">
-                        <h5 className="t-muted m-0">Query Parameters</h5>
-                    </div>
+                    {!ignoreHeaders && (
+                        <div className="mb-4 px-4">
+                            <h5 className="t-muted m-0">Query Parameters</h5>
+                        </div>
+                    )}
                     <FernCard className="rounded-xl p-4 shadow-sm">
                         <PlaygroundObjectPropertiesForm
                             id="query"
@@ -227,9 +235,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         const formDataFormValue = formState?.body?.type === "form-data" ? formState?.body.value : {};
                         return (
                             <div className="min-w-0 flex-1 shrink">
-                                <div className="mb-4 px-4">
-                                    <h5 className="t-muted m-0">{titleCase(formData.name)}</h5>
-                                </div>
+                                {!ignoreHeaders && (
+                                    <div className="mb-4 px-4">
+                                        <h5 className="t-muted m-0">{titleCase(formData.name)}</h5>
+                                    </div>
+                                )}
                                 <FernCard className="rounded-xl p-4 shadow-sm">
                                     <ul className="list-none space-y-8">
                                         {formData.properties.map((property) =>
@@ -299,9 +309,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     },
                     bytes: (bytes) => (
                         <div>
-                            <div className="mb-4 px-4">
-                                <h5 className="t-muted m-0">Body</h5>
-                            </div>
+                            {!ignoreHeaders && (
+                                <div className="mb-4 px-4">
+                                    <h5 className="t-muted m-0">Body</h5>
+                                </div>
+                            )}
                             <FernCard className="rounded-xl p-4 shadow-sm">
                                 <PlaygroundFileUploadForm
                                     id="body"
@@ -324,9 +336,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         if (shape.type === "object") {
                             return (
                                 <div>
-                                    <div className="mb-4 px-4">
-                                        <h5 className="t-muted m-0">Body Parameters</h5>
-                                    </div>
+                                    {!ignoreHeaders && (
+                                        <div className="mb-4 px-4">
+                                            <h5 className="t-muted m-0">Body Parameters</h5>
+                                        </div>
+                                    )}
                                     <FernCard className="rounded-xl p-4 shadow-sm">
                                         <PlaygroundObjectPropertiesForm
                                             id="body"
@@ -341,9 +355,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         } else if (shape.type === "optional") {
                             return (
                                 <div>
-                                    <div className="mb-4 px-4">
-                                        <h5 className="t-muted m-0">Optional Body</h5>
-                                    </div>
+                                    {!ignoreHeaders && (
+                                        <div className="mb-4 px-4">
+                                            <h5 className="t-muted m-0">Optional Body</h5>
+                                        </div>
+                                    )}
                                     <FernCard className="rounded-xl p-4 shadow-sm">
                                         <PlaygroundTypeReferenceForm
                                             id="body"
@@ -361,9 +377,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         return (
                             <div>
                                 <FernCard className="rounded-xl p-4 shadow-sm">
-                                    <div className="mb-4">
-                                        <h5 className="t-muted m-0">Body</h5>
-                                    </div>
+                                    {!ignoreHeaders && (
+                                        <div className="mb-4">
+                                            <h5 className="t-muted m-0">Body</h5>
+                                        </div>
+                                    )}
                                     <PlaygroundTypeReferenceForm
                                         id="body"
                                         shape={shape}

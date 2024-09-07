@@ -1,13 +1,14 @@
 import { FernTooltipProvider } from "@fern-ui/components";
-import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { SendSolid } from "iconoir-react";
-import { compact, mapValues, once } from "lodash-es";
+import { useSetAtom } from "jotai";
+import { mapValues } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { captureSentryError } from "../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
+    PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
     store,
     useBasePath,
     useFeatureFlags,
@@ -16,26 +17,21 @@ import {
 import { useSelectedEnvironmentId } from "../atoms/environment";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedFormDataRequestProperty,
-    ResolvedHttpRequestBodyShape,
-    ResolvedTypeDefinition,
-    resolveEnvironment,
-} from "../resolver/types";
+import { getAppBuildwithfernCom } from "../hooks/useStandardProxyEnvironment";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition, resolveEnvironment } from "../resolver/types";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
-import { blobToDataURL } from "./fetch-utils/blobToDataURL";
 import { executeProxyFile } from "./fetch-utils/executeProxyFile";
 import { executeProxyRest } from "./fetch-utils/executeProxyRest";
 import { executeProxyStream } from "./fetch-utils/executeProxyStream";
-import type { PlaygroundFormStateBody, ProxyRequest, SerializableFile, SerializableFormDataEntryValue } from "./types";
+import type { ProxyRequest } from "./types";
 import { PlaygroundResponse } from "./types/playgroundResponse";
 import {
     buildAuthHeaders,
     buildEndpointUrl,
     getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
+    serializeFormStateBody,
     unknownToString,
 } from "./utils";
 
@@ -43,22 +39,6 @@ interface PlaygroundEndpointProps {
     endpoint: ResolvedEndpointDefinition;
     types: Record<string, ResolvedTypeDefinition>;
 }
-
-const APP_BUILDWITHFERN_COM = "app.buildwithfern.com";
-
-const getAppBuildwithfernCom = once((): string => {
-    if (process.env.NODE_ENV === "development") {
-        return "http://localhost:3000";
-    }
-
-    // see: https://vercel.com/docs/projects/environment-variables/system-environment-variables#framework-environment-variables
-    if (process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" || process.env.NEXT_PUBLIC_VERCEL_ENV === "development") {
-        // this mimics the behavior of hitting app.buildwithfern.com in a preview environment
-        return `https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? APP_BUILDWITHFERN_COM}`;
-    }
-
-    return `https://${APP_BUILDWITHFERN_COM}`;
-});
 
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, types }): ReactElement => {
     const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);
@@ -72,13 +52,14 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     }, []);
 
     const basePath = useBasePath();
-    const { usesApplicationJsonInFormDataValue } = useFeatureFlags();
-    const { proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
+    const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
     const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
+
+    const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
@@ -93,9 +74,19 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 method: endpoint.method,
                 docsRoute: `/${endpoint.slug}`,
             });
-            const authHeaders = buildAuthHeaders(endpoint.auth, store.get(PLAYGROUND_AUTH_STATE_ATOM), {
-                redacted: false,
-            });
+            const authHeaders = buildAuthHeaders(
+                endpoint.auth,
+                store.get(PLAYGROUND_AUTH_STATE_ATOM),
+                {
+                    redacted: false,
+                },
+                {
+                    formState,
+                    endpoint,
+                    proxyEnvironment,
+                    setValue: setOAuthValue,
+                },
+            );
             const headers = {
                 ...authHeaders,
                 ...mapValues(formState.headers ?? {}, unknownToString),
@@ -172,7 +163,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 },
             });
         }
-    }, [endpoint, formState, proxyEnvironment, uploadEnvironment, usesApplicationJsonInFormDataValue]);
+    }, [endpoint, formState, proxyEnvironment, uploadEnvironment, usesApplicationJsonInFormDataValue, setOAuthValue]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
@@ -209,95 +200,3 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
         </FernTooltipProvider>
     );
 };
-
-async function serializeFormStateBody(
-    environment: string,
-    shape: ResolvedHttpRequestBodyShape | undefined,
-    body: PlaygroundFormStateBody | undefined,
-    usesApplicationJsonInFormDataValue: boolean,
-): Promise<ProxyRequest.SerializableBody | undefined> {
-    if (shape == null || body == null) {
-        return undefined;
-    }
-
-    switch (body.type) {
-        case "json":
-            return { type: "json", value: body.value };
-        case "form-data": {
-            const formDataValue: Record<string, SerializableFormDataEntryValue> = {};
-            for (const [key, value] of Object.entries(body.value)) {
-                switch (value.type) {
-                    case "file":
-                        formDataValue[key] = {
-                            type: "file",
-                            value: await serializeFile(environment, value.value),
-                        };
-                        break;
-                    case "fileArray":
-                        formDataValue[key] = {
-                            type: "fileArray",
-                            value: (
-                                await Promise.all(value.value.map((value) => serializeFile(environment, value)))
-                            ).filter(isNonNullish),
-                        };
-                        break;
-                    case "json": {
-                        if (shape.type !== "formData") {
-                            return undefined;
-                        }
-                        const property = shape.properties.find((p) => p.key === key && p.type === "bodyProperty") as
-                            | ResolvedFormDataRequestProperty.BodyProperty
-                            | undefined;
-
-                        // check if the json value is a string and performa a safe parse operation to check if the json is stringified
-                        if (typeof value.value === "string") {
-                            value.value = safeParse(value.value);
-                        }
-
-                        formDataValue[key] = {
-                            ...value,
-                            // this is a hack to allow the API Playground to send JSON blobs in form data
-                            // revert this once we have a better solution
-                            contentType:
-                                compact(property?.contentType)[0] ??
-                                (usesApplicationJsonInFormDataValue ? "application/json" : undefined),
-                        };
-                        break;
-                    }
-                    default:
-                        assertNever(value);
-                }
-            }
-            return { type: "form-data", value: formDataValue };
-        }
-        case "octet-stream":
-            return { type: "octet-stream", value: await serializeFile(environment, body.value) };
-        default:
-            assertNever(body);
-    }
-}
-
-async function serializeFile(environment: string, file: File | undefined): Promise<SerializableFile | undefined> {
-    if (file == null || !isFile(file)) {
-        return undefined;
-    }
-    return {
-        name: file.name,
-        lastModified: file.lastModified,
-        size: file.size,
-        type: file.type,
-        dataUrl: await blobToDataURL(environment, file),
-    };
-}
-
-function isFile(value: any): value is File {
-    return value instanceof File;
-}
-
-function safeParse(value: string): unknown {
-    try {
-        return JSON.parse(value);
-    } catch {
-        return value;
-    }
-}

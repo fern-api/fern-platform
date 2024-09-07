@@ -98,6 +98,23 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     availability: undefined,
                 };
             },
+            oAuth: (value) => {
+                return visitDiscriminatedUnion(value.value, "type")._visit({
+                    clientCredentials: (clientCredentialsValue) =>
+                        visitDiscriminatedUnion(clientCredentialsValue.value, "type")._visit({
+                            referencedEndpoint: () => ({
+                                key: "Authorization",
+                                description: "OAuth authentication of the form Bearer <token>.",
+                                hidden: false,
+                                valueShape: {
+                                    type: "unknown",
+                                    displayName: "string",
+                                },
+                                availability: undefined,
+                            }),
+                        }),
+                });
+            },
         });
     }
 

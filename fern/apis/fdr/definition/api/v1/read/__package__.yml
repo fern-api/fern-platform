@@ -90,6 +90,7 @@ types:
       bearerAuth: BearerAuth
       basicAuth: BasicAuth
       header: HeaderAuth
+      oAuth: OAuth
 
   BasicAuth:
     properties:
@@ -107,6 +108,19 @@ types:
       prefix:
         type: optional<string>
         docs: The prefix that comes before the header
+
+  OAuth:
+    union:
+      clientCredentials: OAuthClientCredentials
+
+  OAuthClientCredentials:
+    union:
+      referencedEndpoint: OAuthClientCredentialsReferencedEndpoint
+
+  OAuthClientCredentialsReferencedEndpoint:
+    properties:
+      endpointId: endpoint.EndpointId
+      accessTokenLocator: commons.JqString
 
 errors:
   ApiDoesNotExistError:
