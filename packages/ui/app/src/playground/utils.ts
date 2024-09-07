@@ -1,6 +1,7 @@
 import { APIV1Read, Snippets } from "@fern-api/fdr-sdk/client/types";
 import { assertNever, isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { decodeJwt } from "jose";
+import jp from "jsonpath";
 import { compact, mapValues } from "lodash-es";
 import {
     ResolvedEndpointDefinition,
@@ -157,17 +158,19 @@ export function buildAuthHeaders(
                                         proxyEnvironment,
                                         setValue: setOAuthValue,
                                     } = oAuthClientCredentialReferencedEndpointLoginFlowProps;
-                                    const payload = decodeJwt(token);
-                                    if (payload.exp && new Date().getTime() > payload.exp) {
-                                        oAuthClientCredentialReferencedEndpointLoginFlow({
-                                            formState,
-                                            endpoint,
-                                            proxyEnvironment,
-                                            oAuthClientCredentialsReferencedEndpoint,
-                                            setValue: setOAuthValue,
-                                            // eslint-disable-next-line @typescript-eslint/no-empty-function
-                                        }).catch(() => {});
-                                    }
+                                    try {
+                                        const payload = decodeJwt(token);
+                                        if (payload.exp && new Date().getTime() > payload.exp) {
+                                            oAuthClientCredentialReferencedEndpointLoginFlow({
+                                                formState,
+                                                endpoint,
+                                                proxyEnvironment,
+                                                oAuthClientCredentialsReferencedEndpoint,
+                                                setValue: setOAuthValue,
+                                                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                                            }).catch(() => {});
+                                        }
+                                    } catch {}
                                 }
 
                                 const tokenPrefix = authState.oauth?.tokenPrefix?.length
@@ -585,22 +588,21 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     };
     const res = await executeProxyRest(proxyEnvironment, req);
 
-    const mutableAccessTokenLocationCopy = [...oAuthClientCredentialsReferencedEndpoint.accessTokenLocation];
     visitDiscriminatedUnion(res, "type")._visit({
         json: (jsonRes) => {
             if (jsonRes.response.ok) {
-                const container = mutableAccessTokenLocationCopy.shift();
-                if (container == null || (container !== "body" && container !== "headers")) {
-                    throw new Error("Expected access location to be defined");
+                try {
+                    const accessToken = jp.query(
+                        jsonRes.response,
+                        oAuthClientCredentialsReferencedEndpoint.accessTokenLocator,
+                    )?.[0];
+                    setValue((prev) => ({ ...prev, accessToken }));
+                    closeContainer && closeContainer();
+                } catch (e) {
+                    // eslint-disable-next-line no-console
+                    console.error(e);
+                    closeContainer && closeContainer();
                 }
-                let cursor: any = jsonRes.response[container];
-                for (const accessor of mutableAccessTokenLocationCopy) {
-                    if (accessor in cursor) {
-                        cursor = cursor[accessor];
-                    }
-                }
-                setValue((prev) => ({ ...prev, accessToken: cursor }));
-                closeContainer && closeContainer();
             } else {
                 setDisplayFailedLogin && setDisplayFailedLogin(true);
             }

@@ -120,7 +120,7 @@ types:
   OAuthClientCredentialsReferencedEndpoint:
     properties:
       endpointId: endpoint.EndpointId
-      accessTokenLocation: commons.JqString
+      accessTokenLocator: commons.JqString
 
 errors:
   ApiDoesNotExistError:

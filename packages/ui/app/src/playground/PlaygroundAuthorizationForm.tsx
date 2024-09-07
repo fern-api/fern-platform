@@ -160,6 +160,7 @@ function FoundOAuthReferencedEndpointForm({
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
+    // TODO: implement a loading state
     const oAuthClientCredentialLogin = async () =>
         await oAuthClientCredentialReferencedEndpointLoginFlow({
             formState,
@@ -186,25 +187,19 @@ function FoundOAuthReferencedEndpointForm({
                 />
             </li>
             <li className="-mx-4 space-y-2 p-4 pt-0">
-                {value.accessToken.length > 0 && (
-                    <>
-                        <label className="inline-flex flex-wrap items-baseline">
-                            <span className="font-mono text-sm">Bearer token</span>
-                        </label>
+                <label className="inline-flex flex-wrap items-baseline">
+                    <span className="font-mono text-sm">Bearer token</span>
+                </label>
 
-                        <div>
-                            <PasswordInputGroup
-                                onValueChange={(newValue: string) =>
-                                    setValue((prev) => ({ ...prev, accessToken: newValue }))
-                                }
-                                value={value.accessToken}
-                                autoComplete="off"
-                                data-1p-ignore="true"
-                                disabled={disabled}
-                            />
-                        </div>
-                    </>
-                )}
+                <div>
+                    <PasswordInputGroup
+                        onValueChange={(newValue: string) => setValue((prev) => ({ ...prev, accessToken: newValue }))}
+                        value={value.accessToken}
+                        autoComplete="off"
+                        data-1p-ignore="true"
+                        disabled={disabled}
+                    />
+                </div>
             </li>
             {displayFailedLogin && (
                 <li className="-mx-4 space-y-2 p-4 py-0">
@@ -239,11 +234,9 @@ function OAuthReferencedEndpointForm({
     const { oAuthEndpoint, types } = useOAuthEndpoint(referencedEndpoint) ?? {};
 
     if (oAuthEndpoint == null || types == null) {
-        return (
-            <li className="-mx-4 space-y-2 p-4 py-0">
-                <span className="font-mono text-sm text-red-600">Invalid configuration supplied for OAuth</span>
-            </li>
-        );
+        // eslint-disable-next-line no-console
+        console.error("Could not find OAuth endpoint for referenced endpoint", referencedEndpoint);
+        return <BearerAuthForm bearerAuth={{ tokenName: "token" }} disabled={disabled} />;
     }
 
     return (
@@ -349,7 +342,7 @@ export function PlaygroundAuthorizationFormCard({
     };
     const authButtonCopy = apiKeyInjection.enabled
         ? "Login to send a real request"
-        : "Authenticate with your API key to send a real request";
+        : `Authenticate with your ${auth.type === "oAuth" ? "credentials" : "API key"} to send a real request`;
 
     useEffect(() => {
         if (!router.isReady) {
