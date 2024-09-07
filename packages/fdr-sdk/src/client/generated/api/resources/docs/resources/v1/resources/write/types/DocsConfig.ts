@@ -23,6 +23,7 @@ export interface DocsConfig {
     integrations?: FernRegistry.docs.v1.commons.IntegrationsConfig;
     css?: FernRegistry.docs.v1.commons.CssConfig;
     js?: FernRegistry.docs.v1.commons.JsConfig;
+    playground?: FernRegistry.docs.v1.commons.PlaygroundConfig;
     backgroundImage?: FernRegistry.docs.v1.commons.FileId;
     logoV2?: FernRegistry.docs.v1.commons.ThemedFileId;
     logo?: FernRegistry.docs.v1.commons.FileId;
