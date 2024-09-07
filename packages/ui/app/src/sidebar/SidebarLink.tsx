@@ -151,28 +151,22 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
         <>
             <div
                 ref={ref}
-                className={cn("fern-sidebar-link-container group", className)}
+                className={cn("fern-sidebar-link-container", className)}
                 data-state={selected ? "active" : "inactive"}
             >
                 {withTooltip(
                     renderLink(
                         <>
                             {range(0, depth).map((i) => (
-                                <div
-                                    key={i}
-                                    className={cn(
-                                        "fern-sidebar-link-indent",
-                                        "group-hover/sidebar:opacity-100 transition-opacity ease-out",
-                                    )}
-                                />
+                                <div key={i} className="fern-sidebar-link-indent" />
                             ))}
                             <span className="fern-sidebar-link-content">
                                 {icon != null && (
-                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:t-accent-aaa my-0.5">
+                                    <span className="fern-sidebar-icon">
                                         {typeof icon === "string" ? (
                                             <RemoteFontAwesomeIcon
                                                 icon={icon}
-                                                className="bg-faded group-data-[state=active]:bg-text-default"
+                                                className="bg-faded group-data-[state=active]:bg-accent"
                                             />
                                         ) : (
                                             icon
@@ -198,7 +192,7 @@ export const SidebarLink = memo(SidebarLinkInternal);
 
 export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<SidebarSlugLinkProps>>(
     (props, parentRef) => {
-        const { slug, onClick, ...innerProps } = props;
+        const { slug, onClick, toggleExpand, ...innerProps } = props;
         const ref = useRef<HTMLDivElement>(null);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(parentRef, () => ref.current!);
@@ -235,6 +229,7 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
                 ref={ref}
                 href={href}
                 onClick={handleClick}
+                toggleExpand={toggleExpand}
                 shallow={innerProps.shallow || innerProps.selected}
                 scroll={!innerProps.shallow}
             />

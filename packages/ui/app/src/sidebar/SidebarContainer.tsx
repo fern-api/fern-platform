@@ -8,6 +8,7 @@ import {
     MOBILE_SIDEBAR_ENABLED_ATOM,
     SIDEBAR_SCROLL_CONTAINER_ATOM,
     TABS_ATOM,
+    useInitSidebarExpandedNodes,
     useIsMobileSidebarOpen,
     useSidebarNodes,
 } from "../atoms";
@@ -31,6 +32,7 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
     const isScrolled = useIsScrolled({ current: scrollRef });
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
+    useInitSidebarExpandedNodes();
 
     return (
         <nav aria-label="secondary" ref={ref} {...props} className={clsx("fern-sidebar-container", props.className)}>
