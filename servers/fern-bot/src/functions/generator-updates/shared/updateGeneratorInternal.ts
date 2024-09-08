@@ -62,8 +62,10 @@ async function getCliChangelog(fdrUrl: string, from: string, to: string): Promis
 
 function formatChangelogEntry(changelog: ChangelogResponse): string {
     let entry = "";
-    entry += `\n**\`${changelog.version}\`**\n`;
-    entry += changelog.changelogEntry.map((cle) => `- \`${cle.type}:\` ${cle.summary}`).join("\n");
+    entry += `\n<strong><code>${changelog.version}</code></strong>\n`;
+    entry += changelog.changelogEntry
+        .map((cle) => `<li>\n\n<code>${cle.type}:</code> ${cle.summary}\n</li>`)
+        .join("\n\n");
     entry += "\n";
 
     return entry;
@@ -85,7 +87,7 @@ function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const prBodyTitle = `## [${changelogs[0]!.version} - ${changelogs[changelogs.length - 1]!.version}] - Changelog\n\n`;
+    const prBodyTitle = `## [${changelogs[0]!.version} - ${changelogs[changelogs.length - 1]!.version}] - Changelog\n\n<dl>\n<dd>\n<ul>`;
     let prBody = "";
 
     // Get the first 5 changelogs
@@ -103,7 +105,7 @@ function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
         }
         prBody += "</details>";
     }
-    return prBodyTitle + prBody;
+    return prBodyTitle + prBody + "</ul>\n</dd>\n</dl>";
 }
 
 // This type is meant to mirror the data model for the `generator list` command
