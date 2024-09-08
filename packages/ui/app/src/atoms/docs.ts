@@ -32,6 +32,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
 };
 
 const EMPTY_DOCS_STATE: DocsProps = {
+    announcement: undefined,
     baseUrl: {
         domain: "app.buildwithfern.com",
         basePath: undefined,
@@ -56,7 +57,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
     logoHeight: undefined,
     logoHref: undefined,
     files: {},
-    resolvedPath: {
+    content: {
         type: "custom-markdown-page",
         slug: FernNavigation.Slug(""),
         title: "",

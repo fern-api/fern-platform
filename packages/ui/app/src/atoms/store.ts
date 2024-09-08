@@ -1,3 +1,3 @@
-import { createStore } from "jotai";
+import { getDefaultStore } from "jotai";
 
-export const store = createStore();
+export const store = getDefaultStore();

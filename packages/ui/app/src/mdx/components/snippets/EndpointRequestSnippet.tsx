@@ -4,7 +4,7 @@ import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/Code
 import { EndpointUrlWithOverflow } from "../../../api-reference/endpoints/EndpointUrlWithOverflow";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-reference/examples/code-example";
-import { useResolvedPath } from "../../../atoms";
+import { useDocsContent } from "../../../atoms";
 import { useSelectedEnvironmentId } from "../../../atoms/environment";
 import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
 import { ResolvedEndpointDefinition, resolveEnvironment } from "../../../resolver/types";
@@ -30,15 +30,15 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
     path,
     example,
 }) => {
-    const resolvedPath = useResolvedPath();
+    const content = useDocsContent();
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
     const endpoint = useMemo(() => {
-        if (resolvedPath.type !== "custom-markdown-page") {
+        if (content.type !== "custom-markdown-page") {
             return;
         }
         let endpoint: ResolvedEndpointDefinition | undefined;
-        for (const api of Object.values(resolvedPath.apis)) {
+        for (const api of Object.values(content.apis)) {
             endpoint = findEndpoint({
                 api,
                 path,
@@ -49,7 +49,7 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
             }
         }
         return endpoint;
-    }, [method, path, resolvedPath]);
+    }, [method, path, content]);
 
     const clients = useMemo(() => generateCodeExamples(endpoint?.examples ?? []), [endpoint?.examples]);
     const [selectedClient, setSelectedClient] = useSelectedClient(clients, example);

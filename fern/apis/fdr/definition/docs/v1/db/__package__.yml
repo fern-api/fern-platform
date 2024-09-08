@@ -49,8 +49,7 @@ types:
     properties:
       title: optional<string>
       defaultLanguage: optional<commons.ProgrammingLanguage>
-
-      analyticsConfig: optional<commons.AnalyticsConfig>
+      announcement: optional<commons.AnnouncementConfig>
 
       # navigation
       navigation: NavigationConfig
@@ -73,11 +72,15 @@ types:
       typographyV2: optional<commons.DocsTypographyConfigV2>
 
       # integrations
+      analyticsConfig: optional<commons.AnalyticsConfig>
       integrations: optional<commons.IntegrationsConfig>
 
       # css and js
       css: optional<commons.CssConfig>
       js: optional<commons.JsConfig>
+
+      # playground
+      playground: optional<commons.PlaygroundConfig>
 
       # deprecated
       logo:

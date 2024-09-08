@@ -5,7 +5,7 @@ env:
   ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
   ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
-  POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+  NEXT_PUBLIC_POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
   FONTAWESOME_CDN_HOST: https://icons.ferndocs.com
   WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
   WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}

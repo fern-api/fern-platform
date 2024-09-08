@@ -9,11 +9,13 @@ const meta: Meta<typeof AccordionGroup> = {
     args: {
         items: [
             {
+                id: "accordion-item-1",
                 title: "Accordion Item 1. This is a long title to test the wrapping of the title.",
                 children:
                     "Accordion Item 1 Content. Irure sunt enim proident est excepteur aute qui aliquip. Irure sunt enim proident est excepteur aute qui aliquip.",
             },
             {
+                id: "accordion-item-2",
                 title: "Accordion Item 2",
                 children: "Accordion Item 2 Content",
             },

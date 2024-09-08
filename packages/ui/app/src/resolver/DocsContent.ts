@@ -3,7 +3,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { BundledMDX } from "../mdx/types";
 import type { ResolvedApiEndpoint, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
 
-export declare namespace ResolvedPath {
+export declare namespace DocsContent {
     export interface Neighbor {
         slug: FernNavigation.Slug;
         title: string;
@@ -20,7 +20,7 @@ export declare namespace ResolvedPath {
         title: string;
         pages: Record<FernNavigation.PageId, BundledMDX>;
         node: FernNavigation.ChangelogNode;
-        sectionTitleBreadcrumbs: string[];
+        breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
         slug: FernNavigation.Slug;
         // neighbors: Neighbors;
     }
@@ -28,7 +28,7 @@ export declare namespace ResolvedPath {
     interface ChangelogEntryPage extends Omit<FernNavigation.ChangelogEntryNode, "type"> {
         type: "changelog-entry";
         page: BundledMDX;
-        sectionTitleBreadcrumbs: string[];
+        breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
         neighbors: Neighbors;
         changelogTitle: string;
         changelogSlug: FernNavigation.Slug;
@@ -66,9 +66,9 @@ export declare namespace ResolvedPath {
     }
 }
 
-export type ResolvedPath =
-    | ResolvedPath.CustomMarkdownPage
-    | ResolvedPath.ApiEndpointPage
-    | ResolvedPath.ApiReferencePage
-    | ResolvedPath.ChangelogPage
-    | ResolvedPath.ChangelogEntryPage;
+export type DocsContent =
+    | DocsContent.CustomMarkdownPage
+    | DocsContent.ApiEndpointPage
+    | DocsContent.ApiReferencePage
+    | DocsContent.ChangelogPage
+    | DocsContent.ChangelogEntryPage;

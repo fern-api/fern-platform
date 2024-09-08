@@ -1,5 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
@@ -36,6 +36,7 @@ interface MergedAuthAndHeaders {
 
 export class ApiEndpointResolver {
     public constructor(
+        private collector: FernNavigation.NodeCollector,
         private holder: FernNavigation.ApiDefinitionHolder,
         private typeResolver: ApiTypeResolver,
         private resolvedTypes: Record<string, ResolvedTypeDefinition>,
@@ -189,6 +190,7 @@ export class ApiEndpointResolver {
         const toRet: ResolvedEndpointDefinition = {
             type: "endpoint",
             nodeId: node.id,
+            breadcrumbs: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
             id: node.endpointId,
             slug: node.slug,
             description,
@@ -386,11 +388,17 @@ export class ApiEndpointResolver {
                 };
             }),
         );
-        const [pathParameters, rawHeaders, queryParameters, messages] = await Promise.all([
+
+        const descriptionPromise = serializeMdx(channel.description, {
+            files: this.mdxOptions?.files,
+        });
+
+        const [pathParameters, rawHeaders, queryParameters, messages, description] = await Promise.all([
             pathParametersPromise,
             headersPromise,
             queryParametersPromise,
             messagesPromise,
+            descriptionPromise,
         ]);
 
         // HACKHACK: force auth=true forces auth to always be included since websocket security schemes is borked in FernIR -> FDR
@@ -398,12 +406,13 @@ export class ApiEndpointResolver {
 
         return {
             type: "websocket",
+            nodeId: node.id,
+            breadcrumbs: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
             auth,
             environments: channel.environments,
-            nodeId: node.id,
             id: node.webSocketId,
             apiDefinitionId: node.apiDefinitionId,
-            description: channel.description,
+            description,
             availability: channel.availability,
             slug: node.slug,
             title: node.title,
@@ -460,12 +469,13 @@ export class ApiEndpointResolver {
         ]);
         return {
             type: "webhook",
+            nodeId: node.id,
+            breadcrumbs: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
             title: node.title,
             description,
             availability: undefined,
             slug: node.slug,
             method: webhook.method,
-            nodeId: node.id,
             apiDefinitionId: node.apiDefinitionId,
             id: node.webhookId,
             path: webhook.path,

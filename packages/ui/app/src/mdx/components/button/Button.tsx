@@ -15,6 +15,7 @@ export declare namespace Button {
         rounded?: boolean;
         active?: boolean;
         disabled?: boolean;
+        small?: boolean;
         large?: boolean;
         intent?: "none" | "primary" | "success" | "warning" | "danger";
         text?: ReactNode;
@@ -22,9 +23,9 @@ export declare namespace Button {
     }
 }
 
-export function Button({ minimal, outlined, large, href, className, ...props }: Button.Props): ReactElement {
+export function Button({ minimal, outlined, small, large, href, className, ...props }: Button.Props): ReactElement {
     const variant = outlined ? "outlined" : minimal ? "minimal" : "filled";
-    const size = large ? "large" : "normal";
+    const size = small ? "small" : large ? "large" : "normal";
     if (href != null) {
         return (
             <FernLinkButton

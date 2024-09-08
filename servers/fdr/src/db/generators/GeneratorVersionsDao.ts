@@ -83,24 +83,24 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
         const releaseType = convertGeneratorReleaseType(getPrereleaseType(generatorRelease.version));
         const data = {
             version: generatorRelease.version,
-            generatorId: generatorRelease.generator_id,
-            irVersion: generatorRelease.ir_version,
+            generatorId: generatorRelease.generatorId,
+            irVersion: generatorRelease.irVersion,
             major: parsedVersion.major,
             minor: parsedVersion.minor,
             patch: parsedVersion.patch,
-            isYanked: generatorRelease.is_yanked != null ? writeBuffer(generatorRelease.is_yanked) : undefined,
+            isYanked: generatorRelease.isYanked != null ? writeBuffer(generatorRelease.isYanked) : undefined,
             changelogEntry:
-                generatorRelease.changelog_entry != null ? writeBuffer(generatorRelease.changelog_entry) : undefined,
+                generatorRelease.changelogEntry != null ? writeBuffer(generatorRelease.changelogEntry) : undefined,
             migration: generatorRelease.migration != null ? writeBuffer(generatorRelease.migration) : undefined,
-            customConfigSchema: generatorRelease.custom_config_schema,
+            customConfigSchema: generatorRelease.customConfigSchema,
             releaseType,
             nonce: noncifySemanticVersion(generatorRelease.version),
-            createdAt: generatorRelease.created_at != null ? new Date(generatorRelease.created_at) : undefined,
+            createdAt: generatorRelease.createdAt != null ? new Date(generatorRelease.createdAt) : undefined,
         };
         await this.prisma.generatorRelease.upsert({
             where: {
                 generatorId_version: {
-                    generatorId: generatorRelease.generator_id,
+                    generatorId: generatorRelease.generatorId,
                     version: generatorRelease.version,
                 },
             },
@@ -150,7 +150,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
         });
 
         return {
-            generator_releases: releases
+            generatorReleases: releases
                 .map(convertPrismaGeneratorRelease)
                 .filter((g): g is GeneratorRelease => g != null),
         };
@@ -217,20 +217,20 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
                 generatorId: generator,
                 nonce: {
                     gte:
-                        versionRanges.from_version.type == "inclusive"
-                            ? noncifySemanticVersion(versionRanges.from_version.value)
+                        versionRanges.fromVersion.type == "inclusive"
+                            ? noncifySemanticVersion(versionRanges.fromVersion.value)
                             : undefined,
                     gt:
-                        versionRanges.from_version.type == "exclusive"
-                            ? noncifySemanticVersion(versionRanges.from_version.value)
+                        versionRanges.fromVersion.type == "exclusive"
+                            ? noncifySemanticVersion(versionRanges.fromVersion.value)
                             : undefined,
                     lte:
-                        versionRanges.to_version.type == "inclusive"
-                            ? noncifySemanticVersion(versionRanges.to_version.value)
+                        versionRanges.toVersion.type == "inclusive"
+                            ? noncifySemanticVersion(versionRanges.toVersion.value)
                             : undefined,
                     lt:
-                        versionRanges.to_version.type == "exclusive"
-                            ? noncifySemanticVersion(versionRanges.to_version.value)
+                        versionRanges.toVersion.type == "exclusive"
+                            ? noncifySemanticVersion(versionRanges.toVersion.value)
                             : undefined,
                 },
             },
@@ -246,7 +246,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             if (release.changelogEntry != null) {
                 changelogs.push({
                     version: release.version,
-                    changelog_entry: readBuffer(release.changelogEntry) as ChangelogEntry[],
+                    changelogEntry: readBuffer(release.changelogEntry) as ChangelogEntry[],
                 });
             }
         }
@@ -260,19 +260,19 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
     }
 
     return {
-        generator_id: generatorRelease.generatorId,
+        generatorId: generatorRelease.generatorId,
         version: generatorRelease.version,
-        ir_version: generatorRelease.irVersion,
-        release_type: convertPrismaReleaseType(generatorRelease.releaseType),
-        changelog_entry:
+        irVersion: generatorRelease.irVersion,
+        releaseType: convertPrismaReleaseType(generatorRelease.releaseType),
+        changelogEntry:
             generatorRelease.changelogEntry != null
                 ? (readBuffer(generatorRelease.changelogEntry) as ChangelogEntry[])
                 : undefined,
         migration: generatorRelease.migration != null ? (readBuffer(generatorRelease.migration) as string) : undefined,
-        custom_config_schema:
+        customConfigSchema:
             generatorRelease.customConfigSchema != null ? generatorRelease.customConfigSchema : undefined,
-        major_version: generatorRelease.major,
-        is_yanked: generatorRelease.isYanked != null ? (readBuffer(generatorRelease.isYanked) as Yank) : undefined,
-        created_at: generatorRelease.createdAt?.toISOString(),
+        majorVersion: generatorRelease.major,
+        isYanked: generatorRelease.isYanked != null ? (readBuffer(generatorRelease.isYanked) as Yank) : undefined,
+        createdAt: generatorRelease.createdAt?.toISOString(),
     };
 }

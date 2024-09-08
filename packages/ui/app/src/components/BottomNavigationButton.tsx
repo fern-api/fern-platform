@@ -1,12 +1,12 @@
 import { NavArrowLeft, NavArrowRight } from "iconoir-react";
 import { useHref } from "../hooks/useHref";
 import { MdxContent } from "../mdx/MdxContent";
-import { ResolvedPath } from "../resolver/ResolvedPath";
+import { DocsContent } from "../resolver/DocsContent";
 import { FernLinkCard } from "./FernLinkCard";
 
 export declare namespace BottomNavigationButton {
     export interface Props {
-        neighbor: ResolvedPath.Neighbor;
+        neighbor: DocsContent.Neighbor;
         dir: "prev" | "next";
     }
 }

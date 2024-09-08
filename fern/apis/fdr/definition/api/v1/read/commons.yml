@@ -18,3 +18,5 @@ types:
       - GenerallyAvailable
       - Deprecated
       - Beta
+
+  JqString: string

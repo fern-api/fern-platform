@@ -1,5 +1,6 @@
 import type { FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import {
@@ -9,10 +10,11 @@ import {
     isResolvedSubpackage,
 } from "../resolver/types";
 import { ApiSectionMarkdownPage } from "./ApiSectionMarkdownPage";
-import { Endpoint } from "./endpoints/Endpoint";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
-import { WebSocket } from "./web-socket/WebSocket";
-import { Webhook } from "./webhooks/Webhook";
+
+const Endpoint = dynamic(() => import("./endpoints/Endpoint").then(({ Endpoint }) => Endpoint), { ssr: true });
+const Webhook = dynamic(() => import("./webhooks/Webhook").then(({ Webhook }) => Webhook), { ssr: true });
+const WebSocket = dynamic(() => import("./web-socket/WebSocket").then(({ WebSocket }) => WebSocket), { ssr: true });
 
 export declare namespace ApiPackageContents {
     export interface Props {
@@ -52,7 +54,6 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                                 api={api}
                                 showErrors={showErrors}
                                 endpoint={endpoint}
-                                breadcrumbs={currentBreadcrumbs}
                                 isLastInApi={isLastInParentPackage && idx === items.length - 1}
                                 types={types}
                             />
@@ -61,7 +62,6 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                             <Webhook
                                 key={webhook.id}
                                 webhook={webhook}
-                                breadcrumbs={breadcrumbs}
                                 isLastInApi={isLastInParentPackage && idx === items.length - 1}
                                 types={types}
                             />

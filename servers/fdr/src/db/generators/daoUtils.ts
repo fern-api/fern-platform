@@ -23,7 +23,7 @@ export function convertPrismaReleaseType(releaseType: prisma.ReleaseType): Relea
 export function parseSemverOrThrow(version: string): semver.SemVer {
     const parsedVersion = semver.parse(version);
     if (parsedVersion == null) {
-        throw new InvalidVersionError({ provided_version: version });
+        throw new InvalidVersionError({ providedVersion: version });
     }
 
     return parsedVersion;
@@ -42,7 +42,7 @@ export function getPrereleaseTypeAndVersion(version: string): [ReleaseType, numb
     if (parsedVersion.prerelease.length > 0 && parsedVersion.prerelease.length < 3) {
         const prereleaseType = parsedVersion.prerelease[0]?.toString();
         if (prereleaseType == null) {
-            throw new InvalidVersionError({ provided_version: version });
+            throw new InvalidVersionError({ providedVersion: version });
         }
 
         // Here we have 2 match groups, one for the type and one for the version.
@@ -61,7 +61,7 @@ export function getPrereleaseTypeAndVersion(version: string): [ReleaseType, numb
             if (parsedVersion.prerelease.length > 1) {
                 const truePrereleaseVersion = parseInt(parsedVersion.prerelease[1] as string);
                 if (isNaN(prereleaseVersion)) {
-                    throw new InvalidVersionError({ provided_version: version });
+                    throw new InvalidVersionError({ providedVersion: version });
                 }
                 prereleaseVersion = truePrereleaseVersion;
             }
@@ -72,7 +72,7 @@ export function getPrereleaseTypeAndVersion(version: string): [ReleaseType, numb
         return [ReleaseType.Ga, 0];
     }
 
-    throw new InvalidVersionError({ provided_version: version });
+    throw new InvalidVersionError({ providedVersion: version });
 }
 
 function getPrereleaseTypeRaw(version: string): ReleaseType {
@@ -80,6 +80,6 @@ function getPrereleaseTypeRaw(version: string): ReleaseType {
         case "rc":
             return ReleaseType.Rc;
         default:
-            throw new InvalidVersionError({ provided_version: version });
+            throw new InvalidVersionError({ providedVersion: version });
     }
 }

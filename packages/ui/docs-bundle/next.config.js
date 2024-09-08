@@ -23,9 +23,9 @@ const DOCS_FILES_ALLOWLIST = [
     },
 ];
 
-const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
-    ({ protocol, hostname, port }) => `${protocol}://${hostname}${port ? `:${port}` : ""}`,
-);
+// const DOCS_FILES_URLS = DOCS_FILES_ALLOWLIST.map(
+//     ({ protocol, hostname, port }) => `${protocol}://${hostname}${port ? `:${port}` : ""}`,
+// );
 
 function isTruthy(value) {
     if (value == null) {
@@ -303,6 +303,16 @@ module.exports = withBundleAnalyzer(nextConfig);
 
 const { withSentryConfig } = require("@sentry/nextjs");
 
+let sentryTunnelRoute = "/api/fern-docs/monitoring";
+
+if (isTruthy(process.env.TRAILING_SLASH)) {
+    sentryTunnelRoute += "/";
+}
+
+if (cdnUri != null) {
+    sentryTunnelRoute = new URL(sentryTunnelRoute, cdnUri).pathname;
+}
+
 module.exports = withSentryConfig(
     module.exports,
     {
@@ -328,10 +338,10 @@ module.exports = withSentryConfig(
         // This can increase your server load as well as your hosting bill.
         // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
         // side errors will fail.
-        tunnelRoute: "/api/fern-docs/monitoring",
+        tunnelRoute: sentryTunnelRoute,
 
         // Hides source maps from generated client bundles
-        hideSourceMaps: true,
+        hideSourceMaps: !isTruthy(process.env.ENABLE_SOURCE_MAPS),
 
         // Automatically tree-shake Sentry logger statements to reduce bundle size
         disableLogger: true,
