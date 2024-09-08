@@ -26,6 +26,7 @@ jobs:
       GITHUB_APP_CLIENT_ID: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_ID }}
       GITHUB_APP_CLIENT_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_CLIENT_SECRET }}
       GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_WEBHOOK_SECRET }}
+      FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
       DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com"
       DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com"
       CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
@@ -33,13 +34,13 @@ jobs:
       CI: false
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: 📥 Install
         uses: ./.github/actions/install
 
       - name: Compile
-        run: pnpm compile           
-      
+        run: pnpm compile
+
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
@@ -64,13 +65,13 @@ jobs:
       CI: false
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: 📥 Install
         uses: ./.github/actions/install
 
       - name: Compile
-        run: pnpm compile                   
-      
+        run: pnpm compile
+
       - name: 🚀 serverless deploy
         run: |
           pnpm --filter "@fern-platform/fern-bot" install
