@@ -1,0 +1,9 @@
+instances:
+  - url: https://stylesheet-fixture.docs.buildwithfern.com
+title: Sample Styled Docs
+navigation:
+  - page: Test Page
+    path: ./page.mdx
+colors:
+  accentPrimary: "#ffffff"
+  background: "#330000"

@@ -1,4 +1,4 @@
-global-inclusions:
+existence:
   - docs.trykeet.com
   - docs.argolabs.ai
   - docs.conductorquantum.com
@@ -45,7 +45,7 @@ global-inclusions:
   - dev.documentation.sayari.com
   - fern.assemblyai.com
 
-favicon-inclusions:
+favicon:
   - docs.argolabs.ai
   - docs.conductorquantum.com
   - developers.gappify.com
@@ -91,3 +91,6 @@ favicon-inclusions:
   - docs.darwinbio.io
   - dev.documentation.sayari.com
   - fern.assemblyai.com
+
+stylesheet:
+  -
