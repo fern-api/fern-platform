@@ -1,22 +1,22 @@
-@keyframes slideDown {
+@keyframes slide-down {
     0% {
         height: 0;
         opacity: 0;
     }
 
-    to {
+    100% {
         opacity: 1;
         height: var(--radix-collapsible-content-height);
     }
 }
 
-@keyframes slideUp {
+@keyframes slide-up {
     0% {
         opacity: 1;
         height: var(--radix-collapsible-content-height);
     }
 
-    to {
+    100% {
         opacity: 0;
         height: 0;
     }
@@ -46,10 +46,11 @@
     }
 
     .fern-sidebar-group[data-state="open"] {
-        animation: slideDown 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation: slide-down 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     }
+
     .fern-sidebar-group[data-state="closed"] {
-        animation: slideUp 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation: slide-up 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     }
 
     .fern-sidebar-item {
