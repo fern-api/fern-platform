@@ -93,15 +93,18 @@ export function useInitSidebarExpandedNodes(): void {
                 return;
             }
 
-            const sidebarNodeId = get(SIDEBAR_ROOT_NODE_ATOM)?.id;
+            const sidebarNodeId = get.peek(SIDEBAR_ROOT_NODE_ATOM)?.id;
 
+            // resets the sidebar expanded state when switching between tabs or versions
             if (sidebarNodeId !== get.peek(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM).sidebarRootId) {
                 set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, RESET);
                 return;
             }
 
             set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, (prev) => {
-                const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
+                const childToParentsMap = get.peek(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
+
+                // always clear the implicitly expanded nodes as a side effect of changing the current node
                 const implicitExpandedNodes = new Set<FernNavigation.NodeId>();
                 implicitExpandedNodes.add(currentNodeId);
                 childToParentsMap.get(currentNodeId)?.forEach((parent) => {
@@ -160,10 +163,12 @@ export const useToggleExpandedSidebarNode = (nodeId: FernNavigation.NodeId): (()
             (get, set) => {
                 const parentToChildrenMap = get(SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM);
                 const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
+
                 set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, (prev) => {
                     const expandedNodes = new Set(prev.expandedNodes);
                     const implicitExpandedNodes = new Set(prev.implicitExpandedNodes);
                     const collector = get(NAVIGATION_NODES_ATOM);
+
                     if (prev.expandedNodes.has(nodeId) || prev.implicitExpandedNodes.has(nodeId)) {
                         const node = collector.get(nodeId);
 
@@ -187,6 +192,8 @@ export const useToggleExpandedSidebarNode = (nodeId: FernNavigation.NodeId): (()
                     } else {
                         const parents = childToParentsMap.get(nodeId) ?? [];
                         const { isApiScrollingDisabled } = get(FEATURE_FLAGS_ATOM);
+
+                        // if long scrolling is enabled, implicitly "expand" its parent nodes
                         if (!isApiScrollingDisabled) {
                             const isLongScrollingApiReference = [...parents, nodeId]
                                 .map((id) => collector.get(id))

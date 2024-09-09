@@ -72,7 +72,6 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
         toggleExpand,
         expanded = false,
         rightElement,
-        children,
         tooltipContent,
         target,
         rel,
@@ -148,41 +147,38 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
     );
 
     return (
-        <>
-            <div
-                ref={ref}
-                className={cn("fern-sidebar-link-container", className)}
-                data-state={selected ? "active" : "inactive"}
-            >
-                {withTooltip(
-                    renderLink(
-                        <>
-                            {range(0, depth).map((i) => (
-                                <div key={i} className="fern-sidebar-link-indent" />
-                            ))}
-                            <span className="fern-sidebar-link-content">
-                                {icon != null && (
-                                    <span className="fern-sidebar-icon">
-                                        {typeof icon === "string" ? (
-                                            <RemoteFontAwesomeIcon
-                                                icon={icon}
-                                                className="bg-faded group-data-[state=active]:bg-accent"
-                                            />
-                                        ) : (
-                                            icon
-                                        )}
-                                    </span>
-                                )}
-                                {createElement(as, { className: "fern-sidebar-link-text" }, title)}
-                                {rightElement}
-                            </span>
-                            {expandButton}
-                        </>,
-                    ),
-                )}
-            </div>
-            {children}
-        </>
+        <div
+            ref={ref}
+            className={cn("fern-sidebar-link-container", className)}
+            data-state={selected ? "active" : "inactive"}
+        >
+            {withTooltip(
+                renderLink(
+                    <>
+                        {range(0, depth).map((i) => (
+                            <div key={i} className="fern-sidebar-link-indent" />
+                        ))}
+                        <span className="fern-sidebar-link-content">
+                            {icon != null && (
+                                <span className="fern-sidebar-icon">
+                                    {typeof icon === "string" ? (
+                                        <RemoteFontAwesomeIcon
+                                            icon={icon}
+                                            className="bg-faded group-data-[state=active]:bg-accent"
+                                        />
+                                    ) : (
+                                        icon
+                                    )}
+                                </span>
+                            )}
+                            {createElement(as, { className: "fern-sidebar-link-text" }, title)}
+                            {rightElement}
+                        </span>
+                        {expandButton}
+                    </>,
+                ),
+            )}
+        </div>
     );
 });
 

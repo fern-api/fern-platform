@@ -39,7 +39,7 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
             <SidebarFixedItemsSection showBorder={isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled)} />
             <SearchSidebar>
                 <FernScrollArea
-                    rootClassName="flex-1 shrink-1 min-h-[80vh]"
+                    rootClassName="flex-1"
                     className={clsx("group/sidebar fern-sidebar-content", {
                         "overscroll-contain": layout?.disableHeader === true,
                     })}

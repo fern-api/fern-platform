@@ -20,7 +20,7 @@ export function DismissableSidebar({ className }: { className?: string }): React
     const handleDismissSidebar = useDismissSidebar();
     const showSidebar = useAtomValue(DISMISSABLE_SIDEBAR_OPEN_ATOM);
     const sidebarRef = useRef<HTMLElement>(null);
-    const duration = useAtomValue(IS_MOBILE_SCREEN_ATOM) ? 0 : 0.15;
+    const duration = useAtomValue(IS_MOBILE_SCREEN_ATOM) ? 0 : 0.18;
 
     useAtomEffect(
         useCallbackOne((_get, set) => {

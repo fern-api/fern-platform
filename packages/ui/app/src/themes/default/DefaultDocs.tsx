@@ -5,6 +5,7 @@ import {
     CONTENT_HEIGHT_ATOM,
     DOCS_LAYOUT_ATOM,
     HEADER_OFFSET_ATOM,
+    MOBILE_HEADER_OFFSET_ATOM,
     SHOW_HEADER_ATOM,
     SIDEBAR_DISMISSABLE_ATOM,
     useColors,
@@ -18,6 +19,7 @@ import { HeaderContainer } from "./HeaderContainer";
 const DefaultDocsStyle = () => {
     const contentHeight = useAtomValue(CONTENT_HEIGHT_ATOM);
     const headerOffset = useAtomValue(HEADER_OFFSET_ATOM);
+    const mobileHeaderOffset = useAtomValue(MOBILE_HEADER_OFFSET_ATOM);
     return (
         // eslint-disable-next-line react/no-unknown-property
         <style jsx global>
@@ -25,6 +27,12 @@ const DefaultDocsStyle = () => {
                 :root {
                     ${contentHeight > 0 ? `--content-height: ${contentHeight}px;` : ""}
                     --header-offset: ${headerOffset}px;
+                }
+
+                @media (max-width: 1024px) {
+                    :root {
+                        --header-offset: ${mobileHeaderOffset}px;
+                    }
                 }
             `}
         </style>

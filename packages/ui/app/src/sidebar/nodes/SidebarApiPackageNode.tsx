@@ -1,5 +1,5 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import clsx from "clsx";
+import { useCallback } from "react";
 import {
     useIsApiReferenceShallowLink,
     useIsChildSelected,
@@ -7,6 +7,7 @@ import {
     useIsSelectedSidebarNode,
     useToggleExpandedSidebarNode,
 } from "../../atoms";
+import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 
@@ -26,6 +27,13 @@ export function SidebarApiPackageNode({
     const childSelected = useIsChildSelected(node.id);
     const expanded = useIsExpandedSidebarNode(node.id);
     const shallow = useIsApiReferenceShallowLink(node);
+
+    const renderNode = useCallback(
+        (node: FernNavigation.ApiPackageChild) => (
+            <SidebarApiPackageChild node={node} depth={depth + 1} shallow={shallow} />
+        ),
+        [depth, shallow],
+    );
 
     if (node.children.length === 0) {
         if (node.overviewPageId == null) {
@@ -57,7 +65,7 @@ export function SidebarApiPackageNode({
 
     if (node.type === "apiReference" && node.hideTitle) {
         return (
-            <ul className={clsx("fern-sidebar-group")}>
+            <ul className="fern-sidebar-group">
                 {node.children.map((child) => (
                     <li key={child.id}>
                         <SidebarApiPackageChild node={child} depth={depth} shallow={shallow} />
@@ -70,31 +78,25 @@ export function SidebarApiPackageNode({
     const showIndicator = childSelected && !expanded;
 
     return (
-        <SidebarSlugLink
-            nodeId={node.id}
-            icon={node.icon}
-            className={className}
-            depth={Math.max(depth - 1, 0)}
-            title={node.title}
-            expanded={expanded}
-            toggleExpand={handleToggleExpand}
-            showIndicator={showIndicator}
-            hidden={node.hidden}
-            slug={node.overviewPageId != null ? node.slug : undefined}
-            selected={selected}
-            shallow={shallow}
+        <CollapsibleSidebarGroup<FernNavigation.ApiPackageChild>
+            open={expanded}
+            nodes={node.children}
+            renderNode={renderNode}
         >
-            <ul
-                className={clsx("fern-sidebar-group", {
-                    hidden: !expanded,
-                })}
-            >
-                {node.children.map((child) => (
-                    <li key={child.id}>
-                        <SidebarApiPackageChild node={child} depth={depth + 1} shallow={shallow} />
-                    </li>
-                ))}
-            </ul>
-        </SidebarSlugLink>
+            <SidebarSlugLink
+                nodeId={node.id}
+                icon={node.icon}
+                className={className}
+                depth={Math.max(depth - 1, 0)}
+                title={node.title}
+                expanded={expanded}
+                toggleExpand={handleToggleExpand}
+                showIndicator={showIndicator}
+                hidden={node.hidden}
+                slug={node.overviewPageId != null ? node.slug : undefined}
+                selected={selected}
+                shallow={shallow}
+            />
+        </CollapsibleSidebarGroup>
     );
 }

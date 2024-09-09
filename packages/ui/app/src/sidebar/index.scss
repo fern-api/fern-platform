@@ -1,3 +1,27 @@
+@keyframes slideDown {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+        height: var(--radix-collapsible-content-height);
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        opacity: 1;
+        height: var(--radix-collapsible-content-height);
+    }
+
+    to {
+        opacity: 0;
+        height: 0;
+    }
+}
+
 @layer components {
     .fern-sidebar-heading {
         @apply flex min-h-[32px] lg:min-h-[36px] mb-1;
@@ -13,12 +37,19 @@
     }
 
     .fern-sidebar-group {
-        @apply list-none;
+        @apply list-none overflow-hidden;
         @apply max-lg:-mx-4;
 
         .fern-sidebar-group {
             @apply max-lg:mx-0;
         }
+    }
+
+    .fern-sidebar-group[data-state="open"] {
+        animation: slideDown 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+    .fern-sidebar-group[data-state="closed"] {
+        animation: slideUp 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     }
 
     .fern-sidebar-item {
@@ -27,11 +58,10 @@
 
     .fern-sidebar-link-container {
         @apply items-stretch relative flex min-h-[36px];
-        @apply data-[state=active]:t-accent-aaa;
-        @apply data-[state=inactive]:hover:t-accent-aaa;
+        @apply data-[state=active]:text-accented-a11;
 
         &:not(.top-level) {
-            @apply data-[state=inactive]:t-muted;
+            @apply data-[state=inactive]:text-grayscale-a11;
         }
     }
 
@@ -51,11 +81,11 @@
         }
 
         .fa-icon {
-            @apply bg-accent;
+            @apply bg-accented-a10;
         }
 
         .fern-sidebar-icon {
-            @apply text-accent;
+            @apply text-accented-a10;
         }
     }
 
@@ -76,11 +106,11 @@
     }
 
     .fern-sidebar-link-container[data-state="active"] .fern-sidebar-link {
-        @apply bg-tag-primary;
+        @apply bg-accented-a5;
     }
 
     .fern-sidebar-link-container[data-state="inactive"] .fern-sidebar-link {
-        @apply hover:bg-tag-default-soft;
+        @apply hover:bg-grayscale-a3;
     }
 
     .fern-sidebar-link-content {

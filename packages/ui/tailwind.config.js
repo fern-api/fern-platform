@@ -36,8 +36,12 @@ module.exports = {
                 "header-height-real": "var(--spacing-header-height-real)",
                 "header-height": "var(--spacing-header-height)",
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
-                "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
-                "vh-minus-header-padded": "calc(100vh - var(--spacing-header-height) - 2rem)",
+                "header-offset": "var(--header-offset, 0)",
+                "header-offset-padded": "calc(var(--header-offset, 0) + 1rem)",
+                "vh-minus-header": "calc(100vh - var(--header-offset, var(--spacing-header-height)))",
+                "vh-minus-header-padded": "calc(100vh - var(--header-offset, var(--spacing-header-height)) - 2rem)",
+                "dvh-minus-header": "calc(100dvh - var(--header-offset, var(--spacing-header-height)))",
+                "dvh-minus-header-padded": "calc(100dvh - var(--header-offset, var(--spacing-header-height)) - 2rem)",
                 icon: "1rem",
                 "icon-sm": "0.75rem",
                 "icon-md": "1.25rem",
@@ -83,7 +87,7 @@ module.exports = {
 
                 /* Full custom scale */
                 grayscale: generateScale("grayscale"),
-                // "accent": generateScale("accent")},
+                accented: generateScale("accent"),
 
                 /* Tokens */
                 accent: withOpacity("--accent"),
