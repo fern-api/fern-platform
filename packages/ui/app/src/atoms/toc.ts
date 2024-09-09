@@ -2,6 +2,7 @@ import { PrimitiveAtom, SetStateAction, WritableAtom, atom } from "jotai";
 import { atomEffect } from "jotai-effect";
 import { RESET, atomWithDefault } from "jotai/utils";
 import { ANCHOR_ATOM } from "./location";
+import { SCROLL_BODY_ATOM } from "./viewport";
 
 export interface TableOfContentsItem {
     simpleString: string;
@@ -27,9 +28,10 @@ export function createAnchorInViewAtom(
 
     const hashChangeEffect = atomEffect((get, set) => {
         const anchor = get(ANCHOR_ATOM);
+        const scrollBody = get(SCROLL_BODY_ATOM);
         const allAnchors = get(allAnchorsAtom);
 
-        if (typeof window === "undefined") {
+        if (scrollBody == null) {
             return;
         }
 
@@ -38,7 +40,7 @@ export function createAnchorInViewAtom(
         }
 
         const handleScroll = () => {
-            const scrollY = window.scrollY;
+            const scrollY = scrollBody.scrollTop;
 
             // when the user scrolls to the very top of the page, set the anchorInView to the first anchor
             if (scrollY === 0) {
@@ -47,7 +49,7 @@ export function createAnchorInViewAtom(
             }
 
             // when the user scrolls to the very bottom of the page, set the anchorInView to the last anchor
-            if (window.innerHeight + scrollY >= document.body.scrollHeight) {
+            if (scrollBody.clientHeight + scrollY >= scrollBody.scrollHeight) {
                 set(anchorInViewAtom, allAnchors[allAnchors.length - 1]);
                 return;
             }
@@ -70,9 +72,9 @@ export function createAnchorInViewAtom(
             }
         };
 
-        window.addEventListener("scroll", handleScroll);
+        scrollBody.addEventListener("scroll", handleScroll);
         return () => {
-            window.removeEventListener("scroll", handleScroll);
+            scrollBody.removeEventListener("scroll", handleScroll);
         };
     });
 
