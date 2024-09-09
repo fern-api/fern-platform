@@ -20,13 +20,7 @@ const METHOD_COLOR_SCHEMES: Record<HttpMethodTag.Props["method"], FernTagColorSc
     PATCH: "amber",
 };
 
-const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
-    method,
-    active,
-    size = "lg",
-    className,
-    ...rest
-}) => {
+export const HttpMethodTag = memo<HttpMethodTag.Props>(({ method, active, size = "lg", className, ...rest }) => {
     return (
         <FernTag
             colorScheme={METHOD_COLOR_SCHEMES[method]}
@@ -45,13 +39,14 @@ const UnmemoizedHttpMethodTag: React.FC<HttpMethodTag.Props> = ({
             {method === APIV1Read.HttpMethod.Delete ? "DEL" : method}
         </FernTag>
     );
-};
+});
+HttpMethodTag.displayName = "HttpMethodTag";
 
 export function withStream(text: ReactNode, size: "sm" | "lg" = "sm"): ReactNode {
     return (
         <span className="inline-flex items-center gap-2">
             <span>{text}</span>
-            <UnmemoizedHttpMethodTag size={size} method="STREAM" />
+            <HttpMethodTag size={size} method="STREAM" />
         </span>
     );
 }
@@ -60,10 +55,8 @@ export function withWss(text: ReactNode, size: "sm" | "lg" = "sm"): ReactNode {
         <span className="inline-flex items-center gap-2">
             <span>{text}</span>
             <FernTooltip content="WebSocket Channel">
-                <UnmemoizedHttpMethodTag size={size} method="WSS" />
+                <HttpMethodTag size={size} method="WSS" />
             </FernTooltip>
         </span>
     );
 }
-
-export const HttpMethodTag = memo(UnmemoizedHttpMethodTag);

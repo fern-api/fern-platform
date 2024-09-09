@@ -1,10 +1,10 @@
 @layer components {
     .fern-card {
-        @apply border-card-border t-default hover:t-default border bg-card;
+        @apply border-card-border t-default hover:t-default border bg-card transition-all hover:transition-none;
 
         &.interactive {
             @apply cursor-pointer shadow-card;
-            @apply hover:shadow-card-elevated hover:border-accent transition-all;
+            @apply hover:shadow-card-elevated hover:border-accent;
             @apply active:shadow-card-elevated active:border-primary;
 
             &.active {
@@ -13,7 +13,7 @@
         }
 
         &.elevated {
-            @apply shadow-card-elevated border-primary transition-all;
+            @apply shadow-card-elevated border-primary;
         }
     }
 }

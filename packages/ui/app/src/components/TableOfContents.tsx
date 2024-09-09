@@ -37,7 +37,7 @@ function TableOfContentsItem({
             {text.length > 0 && (
                 <FernLink
                     className={cn(
-                        "hover:t-default block hyphens-auto break-words py-1.5 text-sm leading-5 transition-all",
+                        "hover:t-default block hyphens-auto break-words py-1.5 text-sm leading-5 transition-all hover:transition-none",
                         {
                             "t-muted": anchorInView !== anchorString,
                             "t-accent-aaa": anchorInView === anchorString,

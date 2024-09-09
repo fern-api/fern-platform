@@ -87,26 +87,6 @@
         scroll-margin-top: calc(var(--header-offset, 0px) + 1rem);
     }
 
-    .top-header-offset {
-        top: var(--header-offset, 0);
-    }
-
-    .top-header-offset-padded {
-        top: calc(var(--header-offset, 0px) + 1rem);
-    }
-
-    .mt-header-offset {
-        margin-top: var(--header-offset, 0);
-    }
-
-    .h-below-header {
-        height: calc(100vh - var(--header-offset, 0px));
-    }
-
-    .max-h-below-header {
-        max-height: calc(100vh - var(--header-offset, 0px));
-    }
-
     .h-content {
         height: var(--content-height, 100vh);
     }

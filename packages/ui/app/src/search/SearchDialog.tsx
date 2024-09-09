@@ -80,7 +80,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
     if (!searchConfig.isAvailable || !isMobileScreen) {
-        return <>{children}</>;
+        return children;
     }
 
     if (searchConfig.inkeep?.replaceSearch !== true && algoliaSearchClient != null) {
@@ -105,5 +105,5 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
         );
     }
 
-    return <>{children}</>;
+    return children;
 };
