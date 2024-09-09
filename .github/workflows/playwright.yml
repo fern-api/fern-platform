@@ -1,7 +1,5 @@
 name: Playwright Tests
-on:
-  push:
-    branches: [main]
+on: pull_request
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
