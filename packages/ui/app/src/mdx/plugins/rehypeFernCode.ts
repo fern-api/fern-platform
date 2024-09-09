@@ -79,6 +79,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                         highlightLines: meta.highlights,
                         highlightStyle: meta.focused ? "focus" : "highlight",
                         maxLines: meta.maxLines,
+                        wordWrap: meta.wordWrap,
                     };
                     if (meta.title == null) {
                         parent?.children.splice(index, 1, {
@@ -132,6 +133,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                                     : title?.value?.type === "mdxJsxAttributeValueExpression"
                                       ? title.value.value
                                       : undefined),
+                            wordWrap: meta.wordWrap,
                         });
                     }
                 }
@@ -151,6 +153,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                     highlightStyle: meta.focused ? "focus" : "highlight",
                     maxLines: meta.maxLines,
                     title: meta.title,
+                    wordWrap: meta.wordWrap,
                 });
             }
         }
