@@ -104,7 +104,7 @@ function getResponseSummary({
     } else if (responseBody.shape.type === "streamCondition") {
         return "This endpoint returns a stream.";
     } else if (responseBody.shape.type === "stream") {
-        return `This endpoint returns a stream of ${renderTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}`;
+        return `This endpoint returns a stream of ${renderTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}.`;
     }
-    return `This endpoint returns ${renderTypeShorthand(responseBody.shape, { withArticle: true }, types)}`;
+    return `This endpoint returns ${renderTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
 }
