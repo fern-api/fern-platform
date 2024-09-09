@@ -247,17 +247,14 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     slug={websocket.slug}
                                     headerType="h2"
                                 >
-                                    <div className="t-muted border-default border-b text-sm leading-6">
-                                        {/* <ApiPageDescription
-                                        className="text-sm"
-                                        description={websocket.publish.description}
-                                        isMarkdown={true}
-                                    />
-                                    {websocket.publish.description == null &&
-                                        `This channel expects ${renderTypeShorthand(websocket.publish.shape, {
+                                    {/* <Markdown
+                                        size="sm"
+                                        className="t-muted border-default border-b leading-6"
+                                        mdx={websocket.publish.description}
+                                        fallback={`This channel expects ${renderTypeShorthand(websocket.publish.shape, {
                                             withArticle: true,
-                                        })}.`} */}
-                                    </div>
+                                        })}.`}
+                                    /> */}
                                     <TypeReferenceDefinitions
                                         shape={publishMessageShape}
                                         isCollapsible={false}
@@ -282,16 +279,14 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     slug={websocket.slug}
                                     headerType="h2"
                                 >
-                                    <div className="t-muted border-default border-b text-sm leading-6">
-                                        {/* <ApiPageDescription
-                                        className="text-sm"
-                                        description={websocket.subscribe.description}
-                                        isMarkdown={true}
-                                    />
-                                    {`This channel emits ${renderTypeShorthand(websocket.subscribe.shape, {
-                                        withArticle: true,
-                                    })}.`} */}
-                                    </div>
+                                    {/* <Markdown
+                                        size="sm"
+                                        className="t-muted border-default border-b leading-6"
+                                        mdx={websocket.subscribe.description}
+                                        fallback={`This channel emits ${renderTypeShorthand(websocket.subscribe.shape, {
+                                            withArticle: true,
+                                        })}.`}
+                                    /> */}
                                     <TypeReferenceDefinitions
                                         shape={subscribeMessageShape}
                                         isCollapsible={false}
