@@ -35,6 +35,7 @@ export interface FeatureFlags {
     hasVoiceIdPlaygroundForm: boolean;
     isCohereTheme: boolean;
     isFileForgeHackEnabled: boolean;
+    is404PageHidden: boolean;
 }
 
 export interface NavigationProps {

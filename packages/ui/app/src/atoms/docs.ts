@@ -30,6 +30,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     hasVoiceIdPlaygroundForm: false,
     isCohereTheme: false,
     isFileForgeHackEnabled: false,
+    is404PageHidden: false,
 };
 
 const EMPTY_DOCS_STATE: DocsProps = {
