@@ -6,6 +6,7 @@ export * from "./docs";
 export * from "./files";
 export * from "./flags";
 export * from "./hooks";
+export * from "./hydrate";
 export * from "./lang";
 export * from "./layout";
 export * from "./location";

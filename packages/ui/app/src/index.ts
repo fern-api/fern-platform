@@ -1,9 +1,8 @@
 export { type CustomerAnalytics } from "./analytics/types";
 export { DEFAULT_FEATURE_FLAGS } from "./atoms";
 export type { DocsProps, FeatureFlags } from "./atoms";
-export { LocalPreviewContextProvider } from "./contexts/local-preview";
 export * from "./docs/DocsPage";
-export { NextApp } from "./docs/NextApp";
+export * from "./docs/NextApp";
 export { getApiRouteSupplier } from "./hooks/useApiRoute";
 export { serializeMdx, setMdxBundler } from "./mdx/bundler";
 export { getFrontmatter } from "./mdx/frontmatter";

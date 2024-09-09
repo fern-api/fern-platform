@@ -1,6 +1,7 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { atomWithReducer } from "jotai/utils";
-import { DocsProps, FeatureFlags } from "./types";
+import { atomWithReducer, useHydrateAtoms } from "jotai/utils";
+import type { PropsWithChildren, ReactNode } from "react";
+import type { DocsProps, FeatureFlags } from "./types";
 
 export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isApiPlaygroundEnabled: false,
@@ -84,3 +85,11 @@ export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(EMPTY_DOCS_STATE,
     return next;
 });
 DOCS_ATOM.debugLabel = "DOCS_ATOM";
+
+export function HydrateAtoms({
+    pageProps,
+    children,
+}: PropsWithChildren<{ pageProps: DocsProps | undefined }>): ReactNode {
+    useHydrateAtoms(new Map([[DOCS_ATOM, pageProps]]), { dangerouslyForceHydrate: true });
+    return children;
+}
