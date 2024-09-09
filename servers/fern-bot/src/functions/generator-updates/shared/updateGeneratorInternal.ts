@@ -240,7 +240,7 @@ export async function updateVersionInternal(
                         };
                     },
                     slackClient,
-                    organization,
+                    maybeOrganization,
                 });
             }
         }
