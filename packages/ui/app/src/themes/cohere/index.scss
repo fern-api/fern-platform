@@ -158,11 +158,11 @@
     }
 
     .fern-sidebar-hidden:has(.fern-layout-toc) {
-        @apply lg:pl-sidebar-width;
+        @apply xl:pl-sidebar-width;
 
         .fern-guide-layout,
         .fern-overview-layout {
-            @apply lg:pl-3 lg:max-xl:mx-auto;
+            @apply xl:pl-3 xl:pr-0 lg:max-xl:mx-auto;
         }
     }
 }
