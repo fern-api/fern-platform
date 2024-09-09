@@ -1,6 +1,6 @@
-import { NavigationNode } from "./NavigationNode";
-import { NavigationNodeMarkdownLeaf, isMarkdownLeaf } from "./NavigationNodePageLeaf";
-import { NavigationNodeSectionOverview, isSectionOverview } from "./NavigationNodeSectionOverview";
+import type { NavigationNode } from "./NavigationNode";
+import { isMarkdownLeaf, type NavigationNodeMarkdownLeaf } from "./NavigationNodePageLeaf";
+import { isSectionOverview, type NavigationNodeSectionOverview } from "./NavigationNodeSectionOverview";
 
 /**
  * A navigation node that contains markdown content

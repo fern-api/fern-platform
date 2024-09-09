@@ -1,11 +1,18 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { SetStateAction, atom, useAtomValue, useSetAtom } from "jotai";
-import { useAtomCallback } from "jotai/utils";
+import { atom, useAtomValue, useSetAtom } from "jotai";
+import { RESET, atomWithDefault, useAtomCallback } from "jotai/utils";
 import { useCallback } from "react";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
+import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { DOCS_LAYOUT_ATOM } from "./layout";
-import { CURRENT_NODE_ATOM, CURRENT_NODE_ID_ATOM, RESOLVED_PATH_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "./navigation";
+import {
+    CURRENT_NODE_ATOM,
+    CURRENT_NODE_ID_ATOM,
+    NAVIGATION_NODES_ATOM,
+    RESOLVED_PATH_ATOM,
+    SIDEBAR_ROOT_NODE_ATOM,
+} from "./navigation";
 import { THEME_ATOM } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
@@ -42,24 +49,22 @@ export const SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM = atom((get) => {
 });
 SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM.debugLabel = "SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM";
 
-const INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM = atom<{
+const INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM = atomWithDefault<{
     sidebarRootId: FernNavigation.NodeId;
-    expandedNodes: FernNavigation.NodeId[];
-}>({
-    sidebarRootId: FernNavigation.NodeId(""),
-    expandedNodes: [],
-});
-
-const INITIAL_EXPANDED_SIDEBAR_NODES_ATOM = atom((get) => {
+    expandedNodes: Set<FernNavigation.NodeId>;
+    implicitExpandedNodes: Set<FernNavigation.NodeId>;
+}>((get) => {
+    const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
     const expandedNodes = new Set<FernNavigation.NodeId>();
     const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
-    const currentNode = get(CURRENT_NODE_ATOM);
+    const currentNode = get(CURRENT_NODE_ID_ATOM);
     if (currentNode != null) {
-        expandedNodes.add(currentNode.id);
-        childToParentsMap.get(currentNode.id)?.forEach((parent) => {
+        expandedNodes.add(currentNode);
+        childToParentsMap.get(currentNode)?.forEach((parent) => {
             expandedNodes.add(parent);
         });
     }
+
     // TODO: compute default expanded nodes
     // the following was commented out because FDR stores `collapsed: false` by default. Another solution is needed.
     // const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
@@ -71,64 +76,61 @@ const INITIAL_EXPANDED_SIDEBAR_NODES_ATOM = atom((get) => {
     //         }
     //     });
     // }
-    return [...expandedNodes];
+
+    return {
+        sidebarRootId: sidebar?.id ?? FernNavigation.NodeId(""),
+        expandedNodes: new Set(),
+        implicitExpandedNodes: expandedNodes,
+    };
 });
-INITIAL_EXPANDED_SIDEBAR_NODES_ATOM.debugLabel = "INITIAL_EXPANDED_SIDEBAR_NODES_ATOM";
 
-export const EXPANDED_SIDEBAR_NODES_ATOM = atom(
-    (get) => {
-        const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
-        const { expandedNodes: internalExpandedNodes, sidebarRootId } = get(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM);
+export function useInitSidebarExpandedNodes(): void {
+    useAtomEffect(
+        useCallbackOne((get, set) => {
+            const currentNodeId = get(CURRENT_NODE_ID_ATOM);
 
-        // when the sidebar changes, reset the expanded nodes to the initial state
-        if (sidebarRootId !== sidebar?.id) {
-            return new Set(get(INITIAL_EXPANDED_SIDEBAR_NODES_ATOM));
-        }
+            if (currentNodeId == null) {
+                return;
+            }
 
-        const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
-        const expandedNodes = new Set<FernNavigation.NodeId>();
-        internalExpandedNodes.forEach((nodeId) => {
-            expandedNodes.add(nodeId);
-            childToParentsMap.get(nodeId)?.forEach((parent) => {
-                expandedNodes.add(parent);
+            const sidebarNodeId = get.peek(SIDEBAR_ROOT_NODE_ATOM)?.id;
+
+            // resets the sidebar expanded state when switching between tabs or versions
+            if (sidebarNodeId !== get.peek(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM).sidebarRootId) {
+                set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, RESET);
+                return;
+            }
+
+            set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, (prev) => {
+                const childToParentsMap = get.peek(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
+
+                // always clear the implicitly expanded nodes as a side effect of changing the current node
+                const implicitExpandedNodes = new Set<FernNavigation.NodeId>();
+                implicitExpandedNodes.add(currentNodeId);
+                childToParentsMap.get(currentNodeId)?.forEach((parent) => {
+                    implicitExpandedNodes.add(parent);
+                });
+                return {
+                    sidebarRootId: prev.sidebarRootId,
+                    expandedNodes: prev.expandedNodes,
+                    implicitExpandedNodes,
+                };
             });
-        });
-        const current = get(CURRENT_NODE_ATOM);
-        if (current != null) {
-            expandedNodes.add(current.id);
-            childToParentsMap.get(current.id)?.forEach((parent) => {
-                expandedNodes.add(parent);
-            });
-        }
-        return expandedNodes;
-    },
-    (get, set, update: SetStateAction<FernNavigation.NodeId[]>) => {
-        const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
-        const internal = get(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM);
-
-        // when the sidebar changes, reset the expanded nodes to the initial state
-        if (internal.sidebarRootId !== sidebar?.id) {
-            const expandedNodes = get(INITIAL_EXPANDED_SIDEBAR_NODES_ATOM);
-            set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, {
-                sidebarRootId: sidebar?.id ?? FernNavigation.NodeId(""),
-                expandedNodes: typeof update === "function" ? update(expandedNodes) : update,
-            });
-        } else {
-            // only update the expanded nodes that are still in the sidebar
-            const nodes = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
-            set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, (prev) => ({
-                sidebarRootId: prev.sidebarRootId,
-                expandedNodes: (typeof update === "function" ? update(prev.expandedNodes) : update).filter((nodeId) =>
-                    nodes.has(nodeId),
-                ),
-            }));
-        }
-    },
-);
-EXPANDED_SIDEBAR_NODES_ATOM.debugLabel = "EXPANDED_SIDEBAR_NODES_ATOM";
+        }, []),
+    );
+}
 
 export const useIsExpandedSidebarNode = (nodeId: FernNavigation.NodeId): boolean => {
-    return useAtomValue(useMemoOne(() => atom((get) => get(EXPANDED_SIDEBAR_NODES_ATOM).has(nodeId)), [nodeId]));
+    return useAtomValue(
+        useMemoOne(
+            () =>
+                atom((get) => {
+                    const { expandedNodes, implicitExpandedNodes } = get(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM);
+                    return expandedNodes.has(nodeId) || implicitExpandedNodes.has(nodeId);
+                }),
+            [nodeId],
+        ),
+    );
 };
 
 export const useIsSelectedSidebarNode = (nodeId: FernNavigation.NodeId): boolean => {
@@ -160,12 +162,65 @@ export const useToggleExpandedSidebarNode = (nodeId: FernNavigation.NodeId): (()
         useCallbackOne(
             (get, set) => {
                 const parentToChildrenMap = get(SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM);
-                set(EXPANDED_SIDEBAR_NODES_ATOM, (prev) => {
-                    if (prev.includes(nodeId)) {
+                const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
+
+                set(INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM, (prev) => {
+                    const expandedNodes = new Set(prev.expandedNodes);
+                    const implicitExpandedNodes = new Set(prev.implicitExpandedNodes);
+                    const collector = get(NAVIGATION_NODES_ATOM);
+
+                    if (prev.expandedNodes.has(nodeId) || prev.implicitExpandedNodes.has(nodeId)) {
+                        const node = collector.get(nodeId);
+
+                        if (node != null && node.id !== get(CURRENT_NODE_ID_ATOM) && FernNavigation.hasMarkdown(node)) {
+                            return prev;
+                        }
+
                         // remove this node and all children from the expanded set
-                        return prev.filter((id) => id !== nodeId && !parentToChildrenMap.get(nodeId)?.includes(id));
+                        // return prev.filter((id) => id !== nodeId && !parentToChildrenMap.get(nodeId)?.includes(id));
+                        expandedNodes.delete(nodeId);
+                        implicitExpandedNodes.delete(nodeId);
+                        parentToChildrenMap.get(nodeId)?.forEach((child) => {
+                            expandedNodes.delete(child);
+                            implicitExpandedNodes.delete(child);
+                        });
+                        return {
+                            sidebarRootId: prev.sidebarRootId,
+                            expandedNodes,
+                            implicitExpandedNodes,
+                        };
                     } else {
-                        return [...prev, nodeId];
+                        const parents = childToParentsMap.get(nodeId) ?? [];
+                        const { isApiScrollingDisabled } = get(FEATURE_FLAGS_ATOM);
+
+                        // if long scrolling is enabled, implicitly "expand" its parent nodes
+                        if (!isApiScrollingDisabled) {
+                            const isLongScrollingApiReference = [...parents, nodeId]
+                                .map((id) => collector.get(id))
+                                .some((node) => node?.type === "apiReference" && !node.paginated);
+                            if (isLongScrollingApiReference) {
+                                implicitExpandedNodes.add(nodeId);
+                                parents.forEach((parent) => {
+                                    implicitExpandedNodes.add(parent);
+                                });
+                                return {
+                                    sidebarRootId: prev.sidebarRootId,
+                                    expandedNodes,
+                                    implicitExpandedNodes,
+                                };
+                            }
+                        }
+
+                        expandedNodes.add(nodeId);
+                        childToParentsMap.get(nodeId)?.forEach((child) => {
+                            expandedNodes.add(child);
+                        });
+
+                        return {
+                            sidebarRootId: prev.sidebarRootId,
+                            expandedNodes,
+                            implicitExpandedNodes,
+                        };
                     }
                 });
             },
@@ -252,13 +307,13 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
 
     // always hide sidebar on changelog entries
     // this may be a bit too aggressive, but it's a good starting point
-    const resolvedPath = get(RESOLVED_PATH_ATOM);
-    if (resolvedPath.type === "changelog-entry") {
+    const content = get(RESOLVED_PATH_ATOM);
+    if (content.type === "changelog-entry") {
         return true;
     }
 
-    if (resolvedPath.type === "custom-markdown-page" && typeof resolvedPath.mdx !== "string") {
-        const layout = resolvedPath.mdx.frontmatter.layout;
+    if (content.type === "custom-markdown-page" && typeof content.mdx !== "string") {
+        const layout = content.mdx.frontmatter.layout;
 
         if (layout === "page" || layout === "custom") {
             return true;

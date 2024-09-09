@@ -5,11 +5,11 @@
 import * as FernRegistry from "../../../../../index";
 
 export interface GeneratorRelease extends FernRegistry.generators.Release {
-    generator_id: FernRegistry.generators.GeneratorId;
+    generatorId: FernRegistry.generators.GeneratorId;
     /** The major version of the IR that this generator version consumes. */
-    ir_version: number;
+    irVersion: number;
     /** The TypeScript file for the migration to run when upgrading to this version. */
     migration?: string;
     /** The JSON schema (stringified) for the custom config that this generator version supports. */
-    custom_config_schema?: string;
+    customConfigSchema?: string;
 }

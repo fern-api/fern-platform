@@ -1,5 +1,4 @@
 const plugin = require("tailwindcss/plugin");
-const { blackA } = require("@radix-ui/colors");
 
 const round = (num) =>
     num
@@ -37,8 +36,12 @@ module.exports = {
                 "header-height-real": "var(--spacing-header-height-real)",
                 "header-height": "var(--spacing-header-height)",
                 "header-height-padded": "calc(var(--spacing-header-height) + 1rem)",
-                "vh-minus-header": "calc(100vh - var(--spacing-header-height))",
-                "vh-minus-header-padded": "calc(100vh - var(--spacing-header-height) - 2rem)",
+                "header-offset": "var(--header-offset, 0)",
+                "header-offset-padded": "calc(var(--header-offset, 0) + 1rem)",
+                "vh-minus-header": "calc(100vh - var(--header-offset, var(--spacing-header-height)))",
+                "vh-minus-header-padded": "calc(100vh - var(--header-offset, var(--spacing-header-height)) - 2rem)",
+                "dvh-minus-header": "calc(100dvh - var(--header-offset, var(--spacing-header-height)))",
+                "dvh-minus-header-padded": "calc(100dvh - var(--header-offset, var(--spacing-header-height)) - 2rem)",
                 icon: "1rem",
                 "icon-sm": "0.75rem",
                 "icon-md": "1.25rem",
@@ -84,7 +87,7 @@ module.exports = {
 
                 /* Full custom scale */
                 grayscale: generateScale("grayscale"),
-                // "accent": generateScale("accent")},
+                accented: generateScale("accent"),
 
                 /* Tokens */
                 accent: withOpacity("--accent"),
@@ -200,6 +203,7 @@ module.exports = {
                         "--tw-prose-th-borders": "var(--border)",
                         "--tw-prose-td-borders": "var(--border)",
                         "--tw-prose-bullets": "var(--grayscale-a8)",
+                        "--tw-prose-counters": "var(--grayscale-a9)",
                         "tbody td[rowspan]:first-child, tfoot td[rowspan]:first-child": {
                             paddingRight: em(8, 14),
                         },
@@ -241,14 +245,16 @@ module.exports = {
                 invert: {
                     css: {
                         color: "#ffffff",
-                        "--tw-prose-bold": "inherit",
-                        "--tw-prose-links": "inherit",
-                        "--tw-prose-hr": "var(--border)",
+                        "--tw-prose-invert-bold": "inherit",
+                        "--tw-prose-invert-links": "inherit",
+                        "--tw-prose-invert-hr": "var(--border)",
                         "--tw-prose-invert-body": "inherit",
                         "--tw-prose-invert-headings": "inherit",
-                        "--tw-prose-pre-bg": "initial",
+                        "--tw-prose-invert-pre-bg": "initial",
                         "--tw-prose-invert-th-borders": "var(--border)",
                         "--tw-prose-invert-td-borders": "var(--border)",
+                        "--tw-prose-invert-bullets": "var(--grayscale-a8)",
+                        "--tw-prose-invert-counters": "var(--grayscale-a9)",
                     },
                 },
                 "invert-sm": {

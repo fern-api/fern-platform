@@ -87,20 +87,20 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             where: {
                 nonce: {
                     gte:
-                        versionRanges.from_version.type == "inclusive"
-                            ? noncifySemanticVersion(versionRanges.from_version.value)
+                        versionRanges.fromVersion.type == "inclusive"
+                            ? noncifySemanticVersion(versionRanges.fromVersion.value)
                             : undefined,
                     gt:
-                        versionRanges.from_version.type == "exclusive"
-                            ? noncifySemanticVersion(versionRanges.from_version.value)
+                        versionRanges.fromVersion.type == "exclusive"
+                            ? noncifySemanticVersion(versionRanges.fromVersion.value)
                             : undefined,
                     lte:
-                        versionRanges.to_version.type == "inclusive"
-                            ? noncifySemanticVersion(versionRanges.to_version.value)
+                        versionRanges.toVersion.type == "inclusive"
+                            ? noncifySemanticVersion(versionRanges.toVersion.value)
                             : undefined,
                     lt:
-                        versionRanges.to_version.type == "exclusive"
-                            ? noncifySemanticVersion(versionRanges.to_version.value)
+                        versionRanges.toVersion.type == "exclusive"
+                            ? noncifySemanticVersion(versionRanges.toVersion.value)
                             : undefined,
                 },
             },
@@ -116,7 +116,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             if (release.changelogEntry != null) {
                 changelogs.push({
                     version: release.version,
-                    changelog_entry: readBuffer(release.changelogEntry) as ChangelogEntry[],
+                    changelogEntry: readBuffer(release.changelogEntry) as ChangelogEntry[],
                 });
             }
         }
@@ -131,11 +131,11 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             minor: parsedVersion.minor,
             patch: parsedVersion.patch,
             nonce: noncifySemanticVersion(cliRelease.version),
-            irVersion: cliRelease.ir_version,
+            irVersion: cliRelease.irVersion,
             releaseType: convertGeneratorReleaseType(getPrereleaseType(cliRelease.version)),
-            changelogEntry: cliRelease.changelog_entry != null ? writeBuffer(cliRelease.changelog_entry) : null,
-            isYanked: cliRelease.is_yanked != null ? writeBuffer(cliRelease.is_yanked) : null,
-            createdAt: cliRelease.created_at != null ? new Date(cliRelease.created_at) : undefined,
+            changelogEntry: cliRelease.changelogEntry != null ? writeBuffer(cliRelease.changelogEntry) : null,
+            isYanked: cliRelease.isYanked != null ? writeBuffer(cliRelease.isYanked) : null,
+            createdAt: cliRelease.createdAt != null ? new Date(cliRelease.createdAt) : undefined,
         };
 
         await this.prisma.cliRelease.upsert({
@@ -188,7 +188,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             ],
         });
 
-        return { cli_releases: releases.map(convertPrismaCliRelease).filter((g): g is CliRelease => g != null) };
+        return { cliReleases: releases.map(convertPrismaCliRelease).filter((g): g is CliRelease => g != null) };
     }
 }
 
@@ -199,12 +199,12 @@ function convertPrismaCliRelease(cliRelease: prisma.CliRelease | null): CliRelea
 
     return {
         version: cliRelease.version,
-        ir_version: cliRelease.irVersion,
-        release_type: convertPrismaReleaseType(cliRelease.releaseType),
-        changelog_entry:
+        irVersion: cliRelease.irVersion,
+        releaseType: convertPrismaReleaseType(cliRelease.releaseType),
+        changelogEntry:
             cliRelease.changelogEntry != null ? (readBuffer(cliRelease.changelogEntry) as ChangelogEntry[]) : undefined,
-        major_version: cliRelease.major,
-        is_yanked: cliRelease.isYanked != null ? (readBuffer(cliRelease.isYanked) as Yank) : undefined,
-        created_at: cliRelease.createdAt?.toISOString(),
+        majorVersion: cliRelease.major,
+        isYanked: cliRelease.isYanked != null ? (readBuffer(cliRelease.isYanked) as Yank) : undefined,
+        createdAt: cliRelease.createdAt?.toISOString(),
     };
 }

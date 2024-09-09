@@ -26,6 +26,7 @@ types:
       g: integer
       b: integer
       a: optional<double>
+
   # Docs layout config
 
   ProgrammingLanguage:
@@ -44,6 +45,21 @@ types:
       - jvm
       - ts
       - js
+
+  AnnouncementConfig:
+    properties:
+      text:
+        type: string
+        docs: The text to display in the banner, using markdown.
+      # backgroundColor:
+      #   type: optional<ColorConfig>
+      #   docs: By default, the banner will use the accent primary color as its background color.
+      # textColor:
+      #   type: optional<ColorConfig>
+      #   docs: By default, the banner will use the highest contrast (black or white) as its text color, unless a custom color is provided.
+      # dismissable:
+      #   type: optional<boolean>
+      #   default: false
 
   AnalyticsConfig:
     properties:
@@ -174,6 +190,7 @@ types:
     union:
       px: double
       rem: double
+
   # SEO Config
 
   MetadataConfig:
@@ -248,6 +265,7 @@ types:
       hackernews: Url
       medium: Url
       website: Url
+
   # Customization Config
 
   CssConfig:
@@ -279,6 +297,7 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
+
   # Typography
 
   DocsTypographyConfigV2:
@@ -286,8 +305,8 @@ types:
       headingsFont: optional<FontConfigV2>
       bodyFont: optional<FontConfigV2>
       codeFont: optional<FontConfigV2>
-  # TODO: add support for google fonts
 
+  # TODO: add support for google fonts
   FontConfigV2:
     union:
       custom: CustomFontConfig
@@ -319,6 +338,12 @@ types:
       - swap
       - fallback
       - optional
+
+  # Playground
+  PlaygroundConfig:
+    properties:
+      oauth: optional<boolean>
+
   # Deprecated
 
   ThemedFileId:

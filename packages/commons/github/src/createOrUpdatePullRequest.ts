@@ -37,7 +37,7 @@ export async function createOrUpdatePullRequest(
     baseRepository: string,
     headRepository: string,
     branchName: string,
-): Promise<void> {
+): Promise<string> {
     const [headOwner] = headRepository.split("/");
     const headBranch = `${headOwner}:${branchName}`;
 
@@ -60,6 +60,8 @@ export async function createOrUpdatePullRequest(
                 created: true,
             })}`,
         );
+
+        return pull.html_url;
     } catch (e) {
         if (getErrorMessage(e).includes("A pull request already exists for")) {
             console.error(`A pull request already exists for ${headBranch}`);
@@ -96,4 +98,6 @@ export async function createOrUpdatePullRequest(
             created: false,
         })}`,
     );
+
+    return pull.html_url;
 }

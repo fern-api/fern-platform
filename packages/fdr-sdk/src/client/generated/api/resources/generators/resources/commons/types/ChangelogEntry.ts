@@ -10,7 +10,7 @@ import * as FernRegistry from "../../../../../index";
 export interface ChangelogEntry {
     type: FernRegistry.generators.ChangelogEntryType;
     summary: string;
-    upgrade_notes?: string;
+    upgradeNotes?: string;
     added?: string[];
     changed?: string[];
     deprecated?: string[];

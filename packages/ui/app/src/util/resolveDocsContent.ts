@@ -10,7 +10,7 @@ import type { BundledMDX, FernSerializeMdxOptions } from "../mdx/types";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
-import type { ResolvedPath } from "../resolver/ResolvedPath";
+import type { DocsContent } from "../resolver/DocsContent";
 import type { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
 
 async function getSubtitle(
@@ -49,7 +49,7 @@ async function getSubtitle(
     }
 }
 
-export async function convertNavigatableToResolvedPath({
+export async function resolveDocsContent({
     found,
     apis,
     pages,
@@ -63,7 +63,7 @@ export async function convertNavigatableToResolvedPath({
     mdxOptions?: FernSerializeMdxOptions;
     domain: string;
     featureFlags: FeatureFlags;
-}): Promise<ResolvedPath | undefined> {
+}): Promise<DocsContent | undefined> {
     const neighbors = await getNeighbors(found, pages);
     const { node, apiReference, parents } = found;
 
@@ -107,7 +107,7 @@ export async function convertNavigatableToResolvedPath({
 
         return {
             type: "changelog",
-            sectionTitleBreadcrumbs: found.breadcrumb,
+            breadcrumbs: found.breadcrumbs,
             title: (page != null && typeof page !== "string" ? page.frontmatter.title : undefined) ?? found.node.title,
             node,
             pages: Object.fromEntries(pageRecords.map((record) => [record.pageId, record.markdown])),
@@ -143,7 +143,7 @@ export async function convertNavigatableToResolvedPath({
             type: "changelog-entry",
             changelogTitle,
             changelogSlug: changelogNode.slug,
-            sectionTitleBreadcrumbs: found.breadcrumb,
+            breadcrumbs: found.breadcrumbs,
             page,
             neighbors,
         };
@@ -159,10 +159,12 @@ export async function convertNavigatableToResolvedPath({
         }
         if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
             const pruner = new FernNavigation.ApiDefinitionPruner(api);
-            api = pruner.prune(node);
+            const parent = found.parents[found.parents.length - 1];
+            api = pruner.prune(parent?.type === "endpointPair" ? parent : node);
             const holder = FernNavigation.ApiDefinitionHolder.create(api);
             const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
             const defResolver = new ApiEndpointResolver(
+                found.collector,
                 holder,
                 typeResolver,
                 await typeResolver.resolve(),
@@ -176,7 +178,17 @@ export async function convertNavigatableToResolvedPath({
                 auth: api.auth,
                 types: await typeResolver.resolve(),
                 item: await visitDiscriminatedUnion(node)._visit<Promise<ResolvedApiEndpoint>>({
-                    endpoint: (endpoint) => defResolver.resolveEndpointDefinition(endpoint),
+                    endpoint: async (endpoint) => {
+                        if (parent?.type === "endpointPair") {
+                            const [stream, nonStream] = await Promise.all([
+                                defResolver.resolveEndpointDefinition(parent.stream),
+                                defResolver.resolveEndpointDefinition(parent.nonStream),
+                            ]);
+                            nonStream.stream = stream;
+                            return nonStream;
+                        }
+                        return defResolver.resolveEndpointDefinition(endpoint);
+                    },
                     webSocket: (webSocket) => defResolver.resolveWebsocketChannel(webSocket),
                     webhook: (webhook) => defResolver.resolveWebhookDefinition(webhook),
                 }),
@@ -187,6 +199,7 @@ export async function convertNavigatableToResolvedPath({
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
         const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
         const apiDefinition = await ApiDefinitionResolver.resolve(
+            found.collector,
             apiReference,
             holder,
             typeResolver,
@@ -218,8 +231,8 @@ async function resolveMarkdownPage(
     mdxOptions: FernSerializeMdxOptions | undefined,
     featureFlags: FeatureFlags,
     domain: string,
-    neighbors: ResolvedPath.Neighbors,
-): Promise<ResolvedPath.CustomMarkdownPage | undefined> {
+    neighbors: DocsContent.Neighbors,
+): Promise<DocsContent.CustomMarkdownPage | undefined> {
     const pageId = FernNavigation.utils.getPageId(node);
     if (pageId == null) {
         return;
@@ -235,7 +248,7 @@ async function resolveMarkdownPage(
         filename: pageId,
         frontmatterDefaults: {
             title: node.title,
-            breadcrumbs: found.breadcrumb,
+            breadcrumbs: found.breadcrumbs,
             "edit-this-page-url": pageContent.editThisPageUrl,
             "force-toc": featureFlags.isTocDefaultEnabled,
         },
@@ -273,7 +286,15 @@ async function resolveMarkdownPage(
                 const typeResolver = new ApiTypeResolver(definition.types, mdxOptions);
                 return [
                     apiNode.title,
-                    await ApiDefinitionResolver.resolve(apiNode, holder, typeResolver, pages, mdxOptions, featureFlags),
+                    await ApiDefinitionResolver.resolve(
+                        found.collector,
+                        apiNode,
+                        holder,
+                        typeResolver,
+                        pages,
+                        mdxOptions,
+                        featureFlags,
+                    ),
                 ];
             }),
         ),
@@ -291,7 +312,7 @@ async function resolveMarkdownPage(
 async function getNeighbor(
     node: FernNavigation.NavigationNodeNeighbor | undefined,
     pages: Record<string, DocsV1Read.PageContent>,
-): Promise<ResolvedPath.Neighbor | null> {
+): Promise<DocsContent.Neighbor | null> {
     if (node == null) {
         return null;
     }
@@ -306,7 +327,7 @@ async function getNeighbor(
 async function getNeighbors(
     node: FernNavigation.utils.Node.Found,
     pages: Record<string, DocsV1Read.PageContent>,
-): Promise<ResolvedPath.Neighbors> {
+): Promise<DocsContent.Neighbors> {
     const [prev, next] = await Promise.all([getNeighbor(node.prev, pages), getNeighbor(node.next, pages)]);
     return { prev, next };
 }

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import * as errors from "../../../../../../errors";
+import * as errors from "../../../../../../errors/index";
 /**
  * CRUD API for managing CLI versions, as well as the corresponding IR metadata.
  */
@@ -35,11 +35,10 @@ export class CliService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "NoValidClisFoundError":
@@ -65,11 +64,10 @@ export class CliService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'getChangelog' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
@@ -82,7 +80,7 @@ export class CliService {
                 next(error);
             }
         }));
-        this.router.get("/for-ir/:ir_version", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/for-ir/:irVersion", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getMinCliForIr(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
@@ -90,11 +88,10 @@ export class CliService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "NoValidClisFoundError":
@@ -120,11 +117,10 @@ export class CliService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'upsertCliRelease' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
@@ -137,7 +133,7 @@ export class CliService {
                 next(error);
             }
         }));
-        this.router.get("/:cli_version", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/:cliVersion", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getCliRelease(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
@@ -145,11 +141,10 @@ export class CliService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "CliVersionNotFoundError":
@@ -175,11 +170,10 @@ export class CliService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'listCliReleases' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +

@@ -260,6 +260,21 @@ function getHarRequest(
                     value: prefix != null ? `${prefix} <${nameOverride}>` : `<${nameOverride}>`,
                 });
             },
+            oAuth: (oAuth) => {
+                visitDiscriminatedUnion(oAuth.value, "type")._visit({
+                    clientCredentials: (clientCredentials) => {
+                        visitDiscriminatedUnion(clientCredentials.value, "type")._visit({
+                            referencedEndpoint: () => {
+                                request.headers.push({
+                                    name: "Authorization",
+                                    value: "Bearer <token>",
+                                });
+                            },
+                        });
+                    },
+                    _other: noop,
+                });
+            },
             _other: noop,
         });
     }

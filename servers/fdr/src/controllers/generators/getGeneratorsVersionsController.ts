@@ -38,7 +38,7 @@ export function getGeneratorsVersionsController(app: FdrApplication): VersionsSe
                 .generatorVersions()
                 .getGeneratorRelease({ generator: req.params.generator, version: req.params.version });
             if (!maybeRelease) {
-                throw new GeneratorVersionNotFoundError({ provided_version: req.params.version });
+                throw new GeneratorVersionNotFoundError({ providedVersion: req.params.version });
             }
 
             return res.send(maybeRelease);
@@ -48,7 +48,7 @@ export function getGeneratorsVersionsController(app: FdrApplication): VersionsSe
                 await app.dao.generatorVersions().listGeneratorReleases({
                     generator: req.params.generator,
                     page: req.query.page,
-                    pageSize: req.query.page_size,
+                    pageSize: req.query.pageSize,
                 }),
             );
         },

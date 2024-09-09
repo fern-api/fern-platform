@@ -3,6 +3,6 @@
  */
 
 export interface IrDependency {
-    cli_version: string;
-    ir_version: number;
+    cliVersion: string;
+    irVersion: number;
 }

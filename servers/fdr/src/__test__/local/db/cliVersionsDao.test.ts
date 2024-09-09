@@ -15,10 +15,10 @@ it("cli verion not semver", async () => {
         await fdrApplication.dao.cliVersions().upsertCliRelease({
             cliRelease: {
                 version: "abc.1.2",
-                ir_version: 0,
+                irVersion: 0,
             },
         });
-    }).rejects.toThrow(new InvalidVersionError({ provided_version: "abc.1.2" }));
+    }).rejects.toThrow(new InvalidVersionError({ providedVersion: "abc.1.2" }));
 });
 
 it("cli version get latest respects semver, not time", async () => {
@@ -26,7 +26,7 @@ it("cli version get latest respects semver, not time", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             version: "0.1.2",
-            ir_version: 0,
+            irVersion: 0,
         },
     });
 
@@ -34,7 +34,7 @@ it("cli version get latest respects semver, not time", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             version: "1.1.0",
-            ir_version: 1,
+            irVersion: 1,
         },
     });
 
@@ -42,7 +42,7 @@ it("cli version get latest respects semver, not time", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             version: "0.1.5",
-            ir_version: 0,
+            irVersion: 0,
         },
     });
 
@@ -51,7 +51,7 @@ it("cli version get latest respects semver, not time", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             version: "1.1.0-rc.1",
-            ir_version: 0,
+            irVersion: 0,
         },
     });
 
@@ -78,9 +78,9 @@ it("generator changelog", async () => {
     // create some versions and sleep between them to ensure the timestamps are different
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: 1,
+            irVersion: 1,
             version: "2.1.2",
-            changelog_entry: [
+            changelogEntry: [
                 {
                     type: "feat",
                     summary: "added a new feature",
@@ -91,9 +91,9 @@ it("generator changelog", async () => {
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: 1,
+            irVersion: 1,
             version: "2.1.3",
-            changelog_entry: [
+            changelogEntry: [
                 {
                     type: "fix",
                     summary: "fixed that new feature",
@@ -104,9 +104,9 @@ it("generator changelog", async () => {
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: 1,
+            irVersion: 1,
             version: "2.1.5",
-            changelog_entry: [
+            changelogEntry: [
                 {
                     type: "fix",
                     summary: "did a bunch of stuff",
@@ -118,14 +118,14 @@ it("generator changelog", async () => {
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: 1,
+            irVersion: 1,
             version: "2.1.6",
         },
     });
 
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: 0,
+            irVersion: 0,
             version: "2.1.8",
         },
     });
@@ -134,15 +134,15 @@ it("generator changelog", async () => {
     expect(
         await fdrApplication.dao.cliVersions().getChangelog({
             versionRanges: {
-                from_version: { type: "inclusive", value: "2.1.3" },
-                to_version: { type: "inclusive", value: "2.1.7" },
+                fromVersion: { type: "inclusive", value: "2.1.3" },
+                toVersion: { type: "inclusive", value: "2.1.7" },
             },
         }),
     ).toEqual({
         entries: [
             {
                 version: "2.1.5",
-                changelog_entry: [
+                changelogEntry: [
                     {
                         type: "fix",
                         summary: "did a bunch of stuff",
@@ -153,7 +153,7 @@ it("generator changelog", async () => {
             },
             {
                 version: "2.1.3",
-                changelog_entry: [
+                changelogEntry: [
                     {
                         type: "fix",
                         summary: "fixed that new feature",
@@ -168,15 +168,15 @@ it("generator changelog", async () => {
         await fdrApplication.dao.generatorVersions().getChangelog({
             generator: "this-gets-changelog",
             versionRanges: {
-                from_version: { type: "exclusive", value: "2.1.3" },
-                to_version: { type: "exclusive", value: "2.1.7" },
+                fromVersion: { type: "exclusive", value: "2.1.3" },
+                toVersion: { type: "exclusive", value: "2.1.7" },
             },
         }),
     ).toEqual({
         entries: [
             {
                 version: "2.1.5",
-                changelog_entry: [
+                changelogEntry: [
                     {
                         type: "fix",
                         summary: "did a couple things",
@@ -193,15 +193,15 @@ it("generator changelog", async () => {
         await fdrApplication.dao.generatorVersions().getChangelog({
             generator: "this-gets-changelog",
             versionRanges: {
-                from_version: { type: "inclusive", value: "2.1.2" },
-                to_version: { type: "inclusive", value: "2.1.8" },
+                fromVersion: { type: "inclusive", value: "2.1.2" },
+                toVersion: { type: "inclusive", value: "2.1.8" },
             },
         }),
     ).toEqual({
         entries: [
             {
                 version: "2.1.5",
-                changelog_entry: [
+                changelogEntry: [
                     {
                         type: "fix",
                         summary: "did a couple things",
@@ -212,7 +212,7 @@ it("generator changelog", async () => {
             },
             {
                 version: "2.1.3",
-                changelog_entry: [
+                changelogEntry: [
                     {
                         type: "fix",
                         summary: "fixed that new feature",
@@ -222,7 +222,7 @@ it("generator changelog", async () => {
             },
             {
                 version: "2.1.2",
-                changelog_entry: [
+                changelogEntry: [
                     {
                         type: "feat",
                         summary: "added a new feature",
@@ -236,9 +236,9 @@ it("generator changelog", async () => {
 
 it("cli version happy path update", async () => {
     const releaseRequest: CliReleaseRequest = {
-        ir_version: 0,
+        irVersion: 0,
         version: "3.1.2",
-        changelog_entry: [
+        changelogEntry: [
             {
                 type: "fix",
                 summary: "did a couple things",
@@ -253,15 +253,15 @@ it("cli version happy path update", async () => {
     const release = await fdrApplication.dao.cliVersions().getCliRelease({
         cliVersion: "3.1.2",
     });
-    expect(release?.ir_version).toEqual(releaseRequest.ir_version);
+    expect(release?.irVersion).toEqual(releaseRequest.irVersion);
     expect(release?.version).toEqual(releaseRequest.version);
-    expect(release?.changelog_entry).toEqual(releaseRequest.changelog_entry);
+    expect(release?.changelogEntry).toEqual(releaseRequest.changelogEntry);
 
     // Overwrite the release's changelog
     const updateReleaseRequest: CliReleaseRequest = {
-        ir_version: 0,
+        irVersion: 0,
         version: "3.1.2",
-        changelog_entry: [
+        changelogEntry: [
             {
                 type: "feat",
                 summary: "added a new feature",
@@ -275,33 +275,33 @@ it("cli version happy path update", async () => {
     const updatedRelease = await fdrApplication.dao.cliVersions().getCliRelease({
         cliVersion: "3.1.2",
     });
-    expect(updatedRelease?.ir_version).toEqual(updateReleaseRequest.ir_version);
+    expect(updatedRelease?.irVersion).toEqual(updateReleaseRequest.irVersion);
     expect(updatedRelease?.version).toEqual(updateReleaseRequest.version);
-    expect(updatedRelease?.changelog_entry).toEqual(updateReleaseRequest.changelog_entry);
+    expect(updatedRelease?.changelogEntry).toEqual(updateReleaseRequest.changelogEntry);
 });
 
 it("cli version rc versions", async () => {
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: 0,
+            irVersion: 0,
             version: "0.1.2-rc0",
         },
     });
     const oneCli = await fdrApplication.dao.cliVersions().getCliRelease({
         cliVersion: "0.1.2-rc0",
     });
-    expect(oneCli?.release_type).toEqual(ReleaseType.Rc);
+    expect(oneCli?.releaseType).toEqual(ReleaseType.Rc);
     expect(noncifySemanticVersion("0.1.2-rc0")).toEqual("00000-00001-00002-12-00000");
 
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
-            ir_version: 0,
+            irVersion: 0,
             version: "0.1.2-rc.1",
         },
     });
     const twoCli = await fdrApplication.dao.cliVersions().getCliRelease({
         cliVersion: "0.1.2-rc.1",
     });
-    expect(twoCli?.release_type).toEqual(ReleaseType.Rc);
+    expect(twoCli?.releaseType).toEqual(ReleaseType.Rc);
     expect(noncifySemanticVersion("0.1.2-rc.1")).toEqual("00000-00001-00002-12-00001");
 });

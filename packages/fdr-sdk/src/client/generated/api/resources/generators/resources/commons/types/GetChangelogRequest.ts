@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../index";
 
 export interface GetChangelogRequest {
-    from_version: FernRegistry.generators.VersionRange;
-    to_version: FernRegistry.generators.VersionRange;
+    fromVersion: FernRegistry.generators.VersionRange;
+    toVersion: FernRegistry.generators.VersionRange;
 }

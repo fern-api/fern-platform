@@ -4,7 +4,8 @@ import { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils
 import { NextSeoProps } from "@fern-ui/next-seo";
 import { CustomerAnalytics } from "../analytics/types";
 import { FernUser } from "../auth";
-import { ResolvedPath } from "../resolver/ResolvedPath";
+import type { BundledMDX } from "../mdx/types";
+import { DocsContent } from "../resolver/DocsContent";
 import { FernTheme } from "../themes/ThemedDocs";
 
 export interface FeatureFlags {
@@ -45,19 +46,25 @@ export interface NavigationProps {
     trailingSlash: boolean;
 }
 
+export interface AnnouncementConfig {
+    text: string;
+    mdx: BundledMDX;
+}
+
 export interface DocsProps {
     baseUrl: DocsV2Read.BaseUrl;
     navigation: NavigationProps;
     title: string | undefined;
     favicon: string | undefined;
     colors: ColorsConfig;
+    announcement: AnnouncementConfig | undefined;
     layout: DocsV1Read.DocsLayoutConfig | undefined;
     js: DocsV1Read.JsConfig | undefined;
     navbarLinks: DocsV1Read.NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
-    resolvedPath: ResolvedPath;
+    content: DocsContent;
     featureFlags: FeatureFlags;
     apis: FdrAPI.ApiDefinitionId[];
     seo: NextSeoProps;

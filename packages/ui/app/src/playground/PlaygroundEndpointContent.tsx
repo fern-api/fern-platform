@@ -11,12 +11,19 @@ import {
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import cn from "clsx";
 import { Download, SendSolid } from "iconoir-react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import { IS_MOBILE_SCREEN_ATOM, PLAYGROUND_AUTH_STATE_ATOM, store, useFeatureFlags } from "../atoms";
+import {
+    IS_MOBILE_SCREEN_ATOM,
+    PLAYGROUND_AUTH_STATE_ATOM,
+    PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
+    store,
+    useFeatureFlags,
+} from "../atoms";
 import { FernErrorTag } from "../components/FernErrorBoundary";
+import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
@@ -59,6 +66,9 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
     const [scrollAreaHeight, setScrollAreaHeight] = useState(0);
 
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
+
+    const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
+    const proxyEnvironment = useStandardProxyEnvironment();
 
     useEffect(() => {
         if (typeof window === "undefined" || scrollAreaRef.current == null) {
@@ -136,7 +146,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                             endpoint,
                             isSnippetTemplatesEnabled,
                             isFileForgeHackEnabled,
-                        ).create(authState, formState);
+                        ).create(authState, formState, proxyEnvironment, setOAuthValue);
                         return resolver.resolve(requestType);
                     }}
                     className="-mr-2"

@@ -81,9 +81,9 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
         // We always just write over the previous entry here
         const data = {
             id: generator.id,
-            generatorType: writeBuffer(generator.generator_type),
-            generatorLanguage: convertGeneratorLanguage(generator.generator_language),
-            dockerImage: generator.docker_image,
+            generatorType: writeBuffer(generator.generatorType),
+            generatorLanguage: convertGeneratorLanguage(generator.generatorLanguage),
+            dockerImage: generator.dockerImage,
         };
         await this.prisma.generator.upsert({
             where: {
@@ -155,9 +155,9 @@ function convertPrismaGenerator(generator: prisma.Generator | null): Generator |
     return generator != null
         ? {
               id: generator.id,
-              generator_type: readBuffer(generator.generatorType) as GeneratorType,
-              generator_language: convertPrismaLanguage(generator.generatorLanguage),
-              docker_image: generator.dockerImage,
+              generatorType: readBuffer(generator.generatorType) as GeneratorType,
+              generatorLanguage: convertPrismaLanguage(generator.generatorLanguage),
+              dockerImage: generator.dockerImage,
           }
         : undefined;
 }

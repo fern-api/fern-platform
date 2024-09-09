@@ -4,7 +4,7 @@ types:
   Yank:
     docs: A yank is a metadata object that declares if a version is safe to upgrade to, if present the answer is no.
     properties:
-      remediation_verision:
+      remediationVerision:
         type: optional<string>
         docs: |
           The remediation strategy to be used when a yank is detected. If one is not specified, we'll likely go backwards by publishing time
@@ -17,8 +17,8 @@ types:
 
   GetChangelogRequest:
     properties:
-      from_version: VersionRange
-      to_version: VersionRange
+      fromVersion: VersionRange
+      toVersion: VersionRange
 
   GetChangelogResponse:
     properties:
@@ -27,7 +27,7 @@ types:
   ChangelogResponse:
     properties:
       version: string
-      changelog_entry: list<ChangelogEntry>
+      changelogEntry: list<ChangelogEntry>
 
   ChangelogEntryType:
     docs: Following `conventional commit` types for the entries here.
@@ -43,7 +43,7 @@ types:
     properties:
       type: ChangelogEntryType
       summary: string
-      upgrade_notes: optional<string>
+      upgradeNotes: optional<string>
 
       # Keep a Changelog
       added: optional<list<string>>
@@ -60,23 +60,23 @@ types:
   ReleaseRequest:
     properties:
       version: string
-      created_at: optional<date>
-      is_yanked: optional<Yank>
-      changelog_entry: optional<list<ChangelogEntry>>
+      createdAt: optional<date>
+      isYanked: optional<Yank>
+      changelogEntry: optional<list<ChangelogEntry>>
 
   Release:
     extends: ReleaseRequest
     properties:
-      release_type: ReleaseType
-      major_version: integer
+      releaseType: ReleaseType
+      majorVersion: integer
 
   InvalidVersionErrorMessage:
     properties:
-      provided_version: string
+      providedVersion: string
 
   InvalidIrVersionErrorMessage:
     properties:
-      provided_version: integer
+      providedVersion: integer
 
 errors:
   InvalidVersionError:

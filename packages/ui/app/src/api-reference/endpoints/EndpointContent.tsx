@@ -24,6 +24,7 @@ import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
+import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
@@ -35,7 +36,6 @@ export declare namespace EndpointContent {
         api: string;
         showErrors: boolean;
         endpoint: ResolvedEndpointDefinition;
-        breadcrumbs: readonly string[];
         hideBottomSeparator?: boolean;
         types: Record<string, ResolvedTypeDefinition>;
     }
@@ -71,7 +71,7 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
 export const EndpointContent = memo<EndpointContent.Props>((props) => {
-    const { api, showErrors, endpoint: endpointProp, breadcrumbs, hideBottomSeparator = false, types } = props;
+    const { api, showErrors, endpoint: endpointProp, hideBottomSeparator = false, types } = props;
     const isStream = useAtomValue(FERN_STREAM_ATOM);
     const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
 
@@ -252,7 +252,14 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
             >
-                <EndpointContentHeader endpoint={endpointProp} breadcrumbs={breadcrumbs} container={ref} />
+                <EndpointContentHeader
+                    endpoint={endpoint}
+                    streamToggle={
+                        endpointProp.stream != null && (
+                            <EndpointStreamingEnabledToggle endpoint={endpointProp} container={ref} />
+                        )
+                    }
+                />
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
                         className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"

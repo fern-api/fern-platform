@@ -2,6 +2,7 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import { Router } from "next/router";
 import type { PostHog } from "posthog-js";
 import { useEffect } from "react";
+import { useApiRoute } from "../hooks/useApiRoute";
 import { safeCall } from "./sentry";
 
 /**
@@ -23,10 +24,9 @@ function posthogHasCustomer(instance: PostHog): instance is PostHogWithCustomer 
     return Boolean((instance as PostHogWithCustomer).customer);
 }
 
-let IS_POSTHOG_INITIALIZED = false;
 async function safeAccessPosthog(run: (posthog: PostHog) => void): Promise<void> {
-    if (IS_POSTHOG_INITIALIZED) {
-        const posthog = (await import("posthog-js")).default;
+    const posthog = (await import("posthog-js")).default;
+    if (posthog.__loaded) {
         safeCall(() => run(posthog));
     }
 }
@@ -38,37 +38,49 @@ async function safeAccessPosthog(run: (posthog: PostHog) => void): Promise<void>
  */
 function ifCustomer(posthog: PostHog, run: (hog: PostHogWithCustomer) => void): void {
     safeCall(() => {
-        if (IS_POSTHOG_INITIALIZED && posthogHasCustomer(posthog)) {
+        if (posthogHasCustomer(posthog) && posthog.customer.__loaded) {
             run(posthog);
         }
     });
 }
 
-export async function initializePosthog(customerConfig?: DocsV1Read.PostHogConfig): Promise<void> {
-    const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim();
-    if (process.env.NODE_ENV === "production" && apiKey != null && apiKey.length > 0 && !IS_POSTHOG_INITIALIZED) {
-        const posthogProxy = "/api/fern-docs/analytics/posthog";
-        const posthog = (await import("posthog-js")).default;
+export async function initializePosthog(api_host: string, customerConfig?: DocsV1Read.PostHogConfig): Promise<void> {
+    const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim() ?? "";
+    const posthog = (await import("posthog-js")).default;
 
+    if (posthog.__loaded) {
+        if (posthog.config.api_host !== api_host) {
+            // api_host may change because of useApiRoute
+            posthog.set_config({ api_host });
+        }
+    } else {
         posthog.init(apiKey, {
-            api_host: posthogProxy,
-            loaded: () => {
-                IS_POSTHOG_INITIALIZED = true;
-            },
+            api_host,
+            debug: process.env.NODE_ENV === "development",
             capture_pageview: true,
             capture_pageleave: true,
         });
+    }
 
-        if (customerConfig) {
+    if (customerConfig != null) {
+        if (posthogHasCustomer(posthog) && posthog.customer.__loaded) {
+            if (posthog.customer.config.api_host !== api_host) {
+                // api_host may change because of useApiRoute
+                posthog.customer.set_config({ api_host });
+            }
+        } else {
             posthog.init(
                 customerConfig.apiKey,
                 {
-                    api_host: posthogProxy,
+                    api_host,
                     request_headers: {
                         // default to posthog-js's default endpoint
                         // this is probably the expected behavior
                         "x-fern-posthog-host": customerConfig.endpoint ?? "https://us.i.posthog.com",
                     },
+                    debug: process.env.NODE_ENV === "development",
+                    capture_pageview: true,
+                    capture_pageleave: true,
                 },
                 "customer",
             );
@@ -115,11 +127,12 @@ const trackPageView = (url: string) => {
 };
 
 export function useInitializePosthog(customerConfig?: DocsV1Read.PostHogConfig): void {
+    const route = useApiRoute("/api/fern-docs/analytics/posthog");
     useEffect(() => {
-        safeCall(() => initializePosthog(customerConfig));
+        safeCall(() => initializePosthog(route, customerConfig));
         Router.events.on("routeChangeComplete", trackPageView);
         return () => {
             Router.events.off("routeChangeComplete", trackPageView);
         };
-    }, [customerConfig]);
+    }, [customerConfig, route]);
 }

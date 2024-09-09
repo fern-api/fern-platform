@@ -1,6 +1,6 @@
 @layer components {
     .fern-web-socket-trigger {
-        @apply w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default data-[state=closed]:rounded-[inherit] transition-[background,border-radius] duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
+        @apply w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default data-[state=closed]:rounded-[inherit] transition-[background,border-radius] duration-75 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
         @apply sticky top-0 z-10 backdrop-blur;
 
         .fern-web-socket-client,

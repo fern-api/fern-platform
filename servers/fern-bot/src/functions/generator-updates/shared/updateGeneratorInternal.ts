@@ -4,13 +4,12 @@ import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import { ChangelogResponse } from "@fern-fern/generators-sdk/api/resources/generators";
 import { execFernCli } from "@libs/fern";
 import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit, type Repository } from "@libs/github/utilities";
+import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService";
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import { SimpleGit } from "simple-git";
 
-async function isOrganizationCanary(venusUrl: string, fullRepoPath: string): Promise<boolean> {
-    const orgId = cleanStdout((await execFernCli("organization", fullRepoPath)).stdout);
-    console.log(`Found organization ID: ${orgId}`);
+async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
     const client = new FernVenusApiClient({ environment: venusUrl });
 
     const response = await client.organization.get(FernVenusApi.OrganizationId(orgId));
@@ -61,103 +60,52 @@ async function getCliChangelog(fdrUrl: string, from: string, to: string): Promis
     return response.body.entries;
 }
 
+function formatChangelogEntry(changelog: ChangelogResponse): string {
+    let entry = "";
+    entry += `\n<strong><code>${changelog.version}</code></strong>\n`;
+    entry += changelog.changelogEntry
+        .map((cle) => `<li>\n\n<code>${cle.type}:</code> ${cle.summary}\n</li>`)
+        .join("\n\n");
+    entry += "\n";
+
+    return entry;
+}
+
 function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
     // The format is effectively the below, where sections are only included if there is at
-    // least one entry in that section, and we try to cap the number of entries in each section to ~5
+    // least one entry in that section, and we try to cap the number of entries in each section to ~5 with a see more
     // ## [<Lowest Version> - <Highest Version>] - Changelog
-    // ### Added:
-    // - <entry>
-    // ### Changed:
-    // - <entry>
-    // ### Removed:
-    // - <entry>
-    // ### Fixed:
-    // - <entry>
-    // ### Deprecated:
-    // - <entry>
-
-    const added: string[] = [];
-    const changed: string[] = [];
-    const removed: string[] = [];
-    const fixed: string[] = [];
-    const deprecated: string[] = [];
-
-    const changelogEntries = changelogs.flatMap((cl) => cl.changelogEntry);
-
-    // Otherwise stack up the changes
-    for (const entry of changelogEntries) {
-        if (entry.added) {
-            added.push(...entry.added);
-        }
-        if (entry.changed) {
-            changed.push(...entry.changed);
-        }
-        if (entry.removed) {
-            removed.push(...entry.removed);
-        }
-        if (entry.fixed) {
-            fixed.push(...entry.fixed);
-        }
-        if (entry.deprecated) {
-            deprecated.push(...entry.deprecated);
-        }
-    }
+    // **`x.y.z`**
+    // - `fix:` <summary>
+    // **`x.y.z-rc0`**
+    // - `feat:` <summary>
+    // ...
+    // > N additional updates, see more
 
     if (changelogs.length === 0) {
         throw new Error("Version difference was found, but no changelog entries were found. This is unexpected.");
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const prBodyTitle = `## [${changelogs[0]!.version} - ${changelogs[changelogs.length - 1]!.version}] - Changelog\n\n`;
+    const prBodyTitle = `## [${changelogs[0]!.version} - ${changelogs[changelogs.length - 1]!.version}] - Changelog\n\n<dl>\n<dd>\n<ul>`;
     let prBody = "";
-    let addedChanges = false;
-    if (added.length > 0) {
-        prBody += "### Added:\n";
-        prBody += added.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
-    }
-    if (changed.length > 0) {
-        prBody += "### Changed:\n";
-        prBody += changed.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
-    }
-    if (removed.length > 0) {
-        prBody += "### Removed:\n";
-        prBody += removed.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
-    }
-    if (fixed.length > 0) {
-        prBody += "### Fixed:\n";
-        prBody += fixed.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
-    }
-    if (deprecated.length > 0) {
-        prBody += "### Deprecated:\n";
-        prBody += deprecated.map((entry) => `- ${entry}`).join("\n");
-        prBody += "\n";
-        addedChanges = true;
+
+    // Get the first 5 changelogs
+    for (const changelog of changelogs.slice(0, 5)) {
+        prBody += formatChangelogEntry(changelog);
     }
 
-    if (!addedChanges) {
-        prBody += "No changes found.";
-    }
+    if (changelogs.length > 5) {
+        const numChangelogsLeft = changelogs.length - 5;
+        prBody += `<details>\n\t<summary><strong>${numChangelogsLeft} additional update${numChangelogsLeft > 1 ? "s" : ""}</strong>, see more</summary>\n\n<br/>\n\n`;
 
-    if (changelogs.length > 5 || !addedChanges) {
-        console.log("Changelog too long, truncating to only outputting summaries");
-        // Reset the body
-        prBody = "";
-
-        for (const changelog of changelogs) {
-            prBody += `\n### ${changelog.version}\n`;
-            prBody += changelog.changelogEntry.map((cle) => `- ${cle.type}: ${cle.summary}`).join("\n");
+        for (const changelog of changelogs.slice(5)) {
+            prBody += "\t";
+            prBody += formatChangelogEntry(changelog);
         }
+        prBody += "</details>";
     }
-
-    return prBodyTitle + prBody;
+    return prBodyTitle + prBody + "</ul>\n</dd>\n</dl>";
 }
 
 // This type is meant to mirror the data model for the `generator list` command
@@ -185,13 +133,18 @@ export async function updateVersionInternal(
     fernBotLoginId: string,
     venusUrl: string,
     fdrUrl: string,
+    slackToken: string,
+    slackChannel: string,
 ): Promise<void> {
     const [git, fullRepoPath] = await configureGit(repository);
     console.log(`Cloning repo: ${repository.clone_url} to ${fullRepoPath}`);
     await cloneRepo(git, repository, octokit, fernBotLoginName, fernBotLoginId);
 
+    const organization = cleanStdout((await execFernCli("organization", fullRepoPath)).stdout);
+    console.log(`Found organization ID: ${organization}`);
+
     try {
-        if (!(await isOrganizationCanary(venusUrl, fullRepoPath))) {
+        if (!(await isOrganizationCanary(organization, venusUrl))) {
             console.log("Organization is not a fern-bot canary, skipping upgrade.");
             return;
         }
@@ -199,6 +152,8 @@ export async function updateVersionInternal(
         console.error("Could not determine if the repo owner was a fern-bot canary, quitting.");
         throw error;
     }
+
+    const slackClient = new SlackService(slackToken, slackChannel);
 
     await handleSingleUpgrade({
         octokit,
@@ -218,6 +173,8 @@ export async function updateVersionInternal(
         getEntityVersion: async () => {
             return cleanStdout((await execFernCli("--version", fullRepoPath)).stdout);
         },
+        slackClient,
+        organization,
     });
 
     // Pull a branch of fern/update/<generator>/<api>:<group>
@@ -230,7 +187,7 @@ export async function updateVersionInternal(
                 const branchName = "fern/update/";
                 let additionalName = groupName;
                 if (apiName !== NO_API_FALLBACK_KEY) {
-                    additionalName = `${apiName}:${groupName}`;
+                    additionalName = `${apiName}/${groupName}`;
                 }
                 additionalName = `${generatorName.replace("fernapi/", "")}@${additionalName}`;
 
@@ -242,10 +199,13 @@ export async function updateVersionInternal(
                     git,
                     branchName: `${branchName}${additionalName}`,
                     prTitle: `Upgrade Fern Generator Version: (${additionalName})`,
-                    upgradeAction: async () => {
+                    upgradeAction: async ({ includeMajor }: { includeMajor?: boolean }) => {
                         let command = `generator upgrade --generator ${generatorName} --group ${groupName}`;
                         if (apiName !== NO_API_FALLBACK_KEY) {
                             command += ` --api ${apiName}`;
+                        }
+                        if (includeMajor) {
+                            command += " --include-major";
                         }
                         const response = await execFernCli(command, fullRepoPath);
                         console.log(response.stdout);
@@ -263,6 +223,15 @@ export async function updateVersionInternal(
                         }
                         return cleanStdout((await execFernCli(command, fullRepoPath)).stdout);
                     },
+                    maybeGetGeneratorMetadata: async () => {
+                        return {
+                            group: groupName,
+                            generatorName,
+                            apiName: apiName !== NO_API_FALLBACK_KEY ? apiName : undefined,
+                        };
+                    },
+                    slackClient,
+                    organization,
                 });
             }
         }
@@ -278,15 +247,21 @@ async function handleSingleUpgrade({
     upgradeAction,
     getPRBody,
     getEntityVersion,
+    maybeGetGeneratorMetadata,
+    slackClient,
+    organization,
 }: {
     octokit: Octokit;
     repository: Repository;
     git: SimpleGit;
     branchName: string;
     prTitle: string;
-    upgradeAction: () => Promise<void>;
+    upgradeAction: ({ includeMajor }: { includeMajor?: boolean }) => Promise<void>;
     getPRBody: (fromVersion: string, toversion: string) => Promise<string>;
     getEntityVersion: () => Promise<string>;
+    maybeGetGeneratorMetadata?: () => Promise<GeneratorMessageMetadata>;
+    slackClient: SlackService;
+    organization: string;
 }): Promise<void> {
     // Before we checkout a new branch, we need to ensure we have the current version off the default branch
     // Checkout the default branch and run the version command to get the current version
@@ -299,7 +274,7 @@ async function handleSingleUpgrade({
 
     // Perform the upgrade and get the new version you just upgraded to
     console.log(`Upgrading entity to latest version, from version: ${fromVersion}`);
-    await upgradeAction();
+    await upgradeAction({});
     const toVersion = await getEntityVersion();
     console.log(`Upgraded entity to latest version, to version: ${toVersion}`);
 
@@ -315,7 +290,7 @@ async function handleSingleUpgrade({
         await git.push(["--force-with-lease", DEFAULT_REMOTE_NAME, `${branchName}:refs/heads/${branchName}`]);
 
         // Open a PR, or update it in place
-        await createOrUpdatePullRequest(
+        const prUrl = await createOrUpdatePullRequest(
             octokit,
             {
                 title: `:herb: :sparkles: [Scheduled] ${prTitle}`,
@@ -326,7 +301,33 @@ async function handleSingleUpgrade({
             repository.full_name,
             branchName,
         );
-    } else {
-        console.log("No changes detected, skipping PR creation");
+
+        // Notify via slack that the upgrade PR was created
+        await slackClient.notifyUpgradePRCreated({
+            fromVersion,
+            toVersion,
+            prUrl,
+            repoName: repository.full_name,
+            generator: maybeGetGeneratorMetadata ? await maybeGetGeneratorMetadata() : undefined,
+            organization,
+        });
+        return;
+    } else if (fromVersion === toVersion) {
+        console.log("Versions were the same, let's see if there's a new version across major versions.");
+        await upgradeAction({ includeMajor: true });
+        const toVersion = await getEntityVersion();
+        if (fromVersion !== toVersion) {
+            slackClient.notifyMajorVersionUpgradeEncountered({
+                repoUrl: repository.html_url,
+                repoName: repository.full_name,
+                currentVersion: fromVersion,
+                organization,
+                generator: maybeGetGeneratorMetadata ? await maybeGetGeneratorMetadata() : undefined,
+            });
+            console.log("No change made as the upgrade is across major versions.");
+            return;
+        }
     }
+
+    console.log("No changes detected, skipping PR creation");
 }

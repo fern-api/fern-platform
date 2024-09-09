@@ -1,28 +1,23 @@
-import { memo } from "react";
+import { memo, type ReactNode } from "react";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
-import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { ResolvedEndpointDefinition, resolveEnvironment } from "../../resolver/types";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
-import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 interface EndpointContentHeaderProps {
     endpoint: ResolvedEndpointDefinition;
-    breadcrumbs: readonly string[];
-    container: React.MutableRefObject<HTMLElement | null>;
+    streamToggle?: ReactNode;
 }
 
-export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoint, breadcrumbs, container }) => {
+export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoint, streamToggle }) => {
     const selectedEnvironmentId = useSelectedEnvironmentId();
     return (
         <header className="space-y-1 pb-2 pt-8">
-            <Breadcrumbs breadcrumbs={breadcrumbs} />
+            <FernBreadcrumbs breadcrumbs={endpoint.breadcrumbs} />
             <div className="flex items-center justify-between">
                 <span>
-                    <h1 className="fern-page-heading">
-                        {/* <AnimatedTitle>{endpoint.title}</AnimatedTitle> */}
-                        {endpoint.title}
-                    </h1>
+                    <h1 className="fern-page-heading">{endpoint.title}</h1>
                     {endpoint.availability != null && (
                         <span className="inline-block ml-2 align-text-bottom">
                             <EndpointAvailabilityTag availability={endpoint.availability} minimal={true} />
@@ -30,9 +25,7 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoin
                     )}
                 </span>
 
-                {endpoint.stream != null && (
-                    <EndpointStreamingEnabledToggle endpoint={endpoint} container={container} />
-                )}
+                {streamToggle}
             </div>
             <EndpointUrlWithOverflow
                 path={endpoint.path}
