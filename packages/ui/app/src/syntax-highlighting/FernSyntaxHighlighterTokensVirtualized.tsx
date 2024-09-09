@@ -18,6 +18,7 @@ interface CodeBlockContext {
     highlightStyle: "highlight" | "focus" | undefined;
     highlightedLines: number[];
     lang: string;
+    wordWrap?: boolean;
 }
 
 const CodeBlockTable = forwardRef<HTMLTableElement, FernScrollArea.Props & { context?: CodeBlockContext }>(
@@ -40,6 +41,7 @@ const CodeBlockTable = forwardRef<HTMLTableElement, FernScrollArea.Props & { con
                     <table
                         className={cn("code-block-line-group", {
                             "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
+                            "word-wrap": context?.wordWrap || plaintext,
                         })}
                         {...props}
                         ref={ref}
@@ -85,6 +87,7 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
             viewportRef,
             tokens,
             maxLines,
+            wordWrap,
         } = props;
 
         const virtuosoRef = useRef<TableVirtuosoHandle>(null);
@@ -148,8 +151,9 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
                 lang: tokens.lang,
                 highlightStyle,
                 highlightedLines: flattenHighlightLines(highlightLines ?? []),
+                wordWrap,
             }),
-            [fontSize, highlightLines, highlightStyle, tokens.lang],
+            [fontSize, highlightLines, highlightStyle, tokens.lang, wordWrap],
         );
 
         const lang = tokens.lang;

@@ -183,6 +183,7 @@ interface FernCodeMeta {
     maxLines: number | undefined;
     lang: string;
     focused?: boolean;
+    wordWrap?: boolean;
     highlights: number[];
 }
 
@@ -226,6 +227,11 @@ export function parseBlockMetaString(element: Element, defaultFallback: string =
         meta = meta.replace(focused[0], "");
     }
 
+    const wordWrap = meta.match(/wrap/);
+    if (wordWrap) {
+        meta = meta.replace(wordWrap[0], "");
+    }
+
     const [highlights, strippedMeta] = parseHighlightedLineNumbers(meta);
     meta = strippedMeta;
 
@@ -251,6 +257,7 @@ export function parseBlockMetaString(element: Element, defaultFallback: string =
         maxLines,
         lang,
         focused: focused != null,
+        wordWrap: wordWrap != null,
         highlights,
     };
 }

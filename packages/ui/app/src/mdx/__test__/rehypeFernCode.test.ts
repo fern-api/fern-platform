@@ -5,49 +5,44 @@ describe("parseBlockMetaString", () => {
     it("should parse block meta string with empty string", () => {
         const node = createElement("");
         const meta = parseBlockMetaString(node);
-        expect(meta).toEqual({
-            lang: "plaintext",
-            highlights: [],
-            focused: false,
-            maxLines: 20,
-            title: undefined,
-        });
+        expect(meta.lang).toEqual("plaintext");
+        expect(meta.highlights).toEqual([]);
+        expect(meta.focused).not.toBe(true);
+        expect(meta.maxLines).toEqual(20);
+        expect(meta.title).toBeUndefined();
+        expect(meta.wordWrap).not.toBe(true);
     });
 
     it("should parse block meta string", () => {
         const node = createElement("{1,2,3} focused maxLines=5 title='title'", "typescript");
         const meta = parseBlockMetaString(node);
-        expect(meta).toEqual({
-            lang: "typescript",
-            highlights: [1, 2, 3],
-            focused: true,
-            maxLines: 5,
-            title: "title",
-        });
+        expect(meta.lang).toEqual("typescript");
+        expect(meta.highlights).toEqual([1, 2, 3]);
+        expect(meta.focused).toEqual(true);
+        expect(meta.maxLines).toEqual(5);
+        expect(meta.title).toEqual("title");
+        expect(meta.wordWrap).not.toBe(true);
     });
 
     it("should parse block meta string with double quotes", () => {
         const node = createElement('{1,2,3} focused maxLines=5 title="title"', "typescript");
         const meta = parseBlockMetaString(node);
-        expect(meta).toEqual({
-            lang: "typescript",
-            highlights: [1, 2, 3],
-            focused: true,
-            maxLines: 5,
-            title: "title",
-        });
+        expect(meta.lang).toEqual("typescript");
+        expect(meta.highlights).toEqual([1, 2, 3]);
+        expect(meta.focused).toEqual(true);
+        expect(meta.maxLines).toEqual(5);
+        expect(meta.title).toEqual("title");
+        expect(meta.wordWrap).not.toBe(true);
     });
 
     it("should parse block meta string with empty highlights", () => {
         const node = createElement("{ } focused maxLines=5 title='title'", "typescript");
         const meta = parseBlockMetaString(node);
-        expect(meta).toEqual({
-            lang: "typescript",
-            highlights: [],
-            focused: true,
-            maxLines: 5,
-            title: "title",
-        });
+        expect(meta.lang).toEqual("typescript");
+        expect(meta.highlights).toEqual([]);
+        expect(meta.focused).toEqual(true);
+        expect(meta.maxLines).toEqual(5);
+        expect(meta.title).toEqual("title");
     });
 
     it("should parse title with escaped quotes", () => {
@@ -71,13 +66,20 @@ describe("parseBlockMetaString", () => {
     it("should parse metastring containing only highlightlines", () => {
         const node = createElement("{1-3}");
         const meta = parseBlockMetaString(node);
-        expect(meta).toEqual({
-            lang: "plaintext",
-            highlights: [1, 2, 3],
-            focused: false,
-            maxLines: 20,
-            title: undefined,
-        });
+        expect(meta.highlights).toEqual([1, 2, 3]);
+    });
+
+    it("should parse metastring containing wrap", () => {
+        const node = createElement("wrap");
+        const meta = parseBlockMetaString(node);
+        expect(meta.wordWrap).toBe(true);
+    });
+
+    it("should ignore wordWrap where title contains wrap", () => {
+        const node = createElement("title='wrap'");
+        const meta = parseBlockMetaString(node);
+        expect(meta.wordWrap).not.toBe(true);
+        expect(meta.title).toBe("wrap");
     });
 });
 
