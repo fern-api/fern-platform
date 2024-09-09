@@ -69,17 +69,22 @@ describe("parseBlockMetaString", () => {
         expect(meta.highlights).toEqual([1, 2, 3]);
     });
 
-    it("should parse metastring containing wrap", () => {
-        const node = createElement("wrap");
+    /**
+     * ``` wordWrap
+     * a long sentence here
+     * ```
+     */
+    it("should parse metastring containing wordWrap", () => {
+        const node = createElement("wordWrap");
         const meta = parseBlockMetaString(node);
         expect(meta.wordWrap).toBe(true);
     });
 
-    it("should ignore wordWrap where title contains wrap", () => {
-        const node = createElement("title='wrap'");
+    it("should ignore wordWrap where title contains wordWrap", () => {
+        const node = createElement("title='wordWrap'");
         const meta = parseBlockMetaString(node);
         expect(meta.wordWrap).not.toBe(true);
-        expect(meta.title).toBe("wrap");
+        expect(meta.title).toBe("wordWrap");
     });
 });
 

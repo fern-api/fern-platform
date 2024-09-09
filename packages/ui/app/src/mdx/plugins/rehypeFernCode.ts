@@ -227,7 +227,7 @@ export function parseBlockMetaString(element: Element, defaultFallback: string =
         meta = meta.replace(focused[0], "");
     }
 
-    const wordWrap = meta.match(/wrap/);
+    const wordWrap = meta.match(/wordWrap/);
     if (wordWrap) {
         meta = meta.replace(wordWrap[0], "");
     }
