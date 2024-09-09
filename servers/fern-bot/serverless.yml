@@ -209,6 +209,3 @@ custom:
     external:
       - fern-api
       - fern
-    # packagerOptions:
-    #   scripts:
-    #     - npm install -g fern-api
