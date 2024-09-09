@@ -21,28 +21,36 @@ export class SlackService {
     }
 
     // TODO: would be nice if we stored customer metadata in a DB to then add that information to this message
-    private addContextToHeader(header: string, organization: string, generatorName?: string): string {
+    private addContextToHeader(header: string, maybeOrganization: string | undefined, generatorName?: string): string {
         if (generatorName == null) {
-            return `:fern: ${organization} - ${header} for Fern CLI`;
+            return `:fern: ${this.getOrganizationName(maybeOrganization, true)} - ${header} for Fern CLI`;
         }
 
         if (generatorName.includes("python")) {
-            return `:python: ${organization} - ${header} for \`${generatorName}\``;
+            return `:python: ${this.getOrganizationName(maybeOrganization, true)} - ${header} for \`${generatorName}\``;
         } else if (generatorName.includes("typescript")) {
-            return `:ts: ${organization} - ${header} for \`${generatorName}\``;
+            return `:ts: ${this.getOrganizationName(maybeOrganization, true)} - ${header} for \`${generatorName}\``;
         } else if (generatorName.includes("java")) {
-            return `:java: ${organization} - ${header} for \`${generatorName}\``;
+            return `:java: ${this.getOrganizationName(maybeOrganization, true)} - ${header} for \`${generatorName}\``;
         } else if (generatorName.includes("ruby")) {
-            return `:ruby: ${organization} - ${header} for \`${generatorName}\``;
+            return `:ruby: ${this.getOrganizationName(maybeOrganization, true)} - ${header} for \`${generatorName}\``;
         } else if (generatorName.includes("csharp")) {
-            return `:csharp: ${organization} - ${header} for \`${generatorName}\``;
+            return `:csharp: ${this.getOrganizationName(maybeOrganization, true)} - ${header} for \`${generatorName}\``;
         } else if (generatorName.includes("go")) {
-            return `:gopher: ${organization} - ${header} for \`${generatorName}\``;
+            return `:gopher: ${this.getOrganizationName(maybeOrganization, true)} - ${header} for \`${generatorName}\``;
         } else if (generatorName.includes("php")) {
-            return `:php: ${organization} - ${header} for \`${generatorName}\``;
+            return `:php: ${this.getOrganizationName(maybeOrganization, true)} - ${header} for \`${generatorName}\``;
         }
 
         return `:interrobang: ${header} for \`${generatorName}\``;
+    }
+
+    getOrganizationName(organization: string | undefined, inTitle?: boolean): string {
+        if (inTitle) {
+            return organization ? organization : "No Org";
+        } else {
+            return organization ? organization : "Org Not Found (you may need that CLI upgrade)";
+        }
     }
 
     public async notifyUpgradePRCreated({
@@ -51,14 +59,14 @@ export class SlackService {
         prUrl,
         repoName,
         generator,
-        organization,
+        maybeOrganization,
     }: {
         fromVersion: string;
         toVersion: string;
         prUrl: string;
         repoName: string;
         generator?: GeneratorMessageMetadata;
-        organization: string;
+        maybeOrganization: string | undefined;
     }): Promise<void> {
         await this.slackClient.chat.postMessage({
             channel: this.slackChannel,
@@ -67,7 +75,11 @@ export class SlackService {
                     type: "header",
                     text: {
                         type: "plain_text",
-                        text: this.addContextToHeader("Upgrade PR Created", organization, generator?.generatorName),
+                        text: this.addContextToHeader(
+                            "Upgrade PR Created",
+                            maybeOrganization,
+                            generator?.generatorName,
+                        ),
                     },
                 },
                 {
@@ -77,7 +89,7 @@ export class SlackService {
                     type: "section",
                     text: {
                         type: "mrkdwn",
-                        text: `*Organization*: ${organization}\n*Github Repo:* ${repoName}${generator ? "\n" + this.getGeneratorMetadataMessage(generator) : ""}\n*Upgrading:* ${fromVersion} :arrow_right: ${toVersion}`,
+                        text: `*Organization*: ${this.getOrganizationName(maybeOrganization)}\n*Github Repo:* ${repoName}${generator ? "\n" + this.getGeneratorMetadataMessage(generator) : ""}\n*Upgrading:* ${fromVersion} :arrow_right: ${toVersion}`,
                     },
                 },
                 {
@@ -103,13 +115,13 @@ export class SlackService {
         repoName,
         currentVersion,
         generator,
-        organization,
+        maybeOrganization,
     }: {
         repoUrl: string;
         repoName: string;
         currentVersion: string;
         generator?: GeneratorMessageMetadata;
-        organization: string;
+        maybeOrganization: string | undefined;
     }): Promise<void> {
         await this.slackClient.chat.postMessage({
             channel: this.slackChannel,
@@ -118,7 +130,7 @@ export class SlackService {
                     type: "header",
                     text: {
                         type: "plain_text",
-                        text: `:rotating_light: ${this.addContextToHeader("Major version upgrade encountered", organization, generator?.generatorName)}`,
+                        text: `:rotating_light: ${this.addContextToHeader("Major version upgrade encountered", maybeOrganization, generator?.generatorName)}`,
                     },
                 },
                 {
@@ -128,7 +140,7 @@ export class SlackService {
                     type: "section",
                     text: {
                         type: "mrkdwn",
-                        text: `Hey <!here>, we've encountered a major version upgrade which needs manual intervention!\n\n*Organization*: ${organization}\n*Github Repo*: ${repoName}${generator ? "\n" + this.getGeneratorMetadataMessage(generator) : ""}\n*Current version*: ${currentVersion}`,
+                        text: `Hey <!here>, we've encountered a major version upgrade which needs manual intervention!\n\n*Organization*: ${this.getOrganizationName(maybeOrganization)}\n*Github Repo*: ${repoName}${generator ? "\n" + this.getGeneratorMetadataMessage(generator) : ""}\n*Current version*: ${currentVersion}`,
                     },
                 },
                 {
