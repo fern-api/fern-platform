@@ -10,6 +10,7 @@ import { FernAnchor } from "../../components/FernAnchor";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
+import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import {
     ResolvedTypeDefinition,
@@ -23,7 +24,6 @@ import {
     unwrapReference,
 } from "../../resolver/types";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
-import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../endpoints/EndpointAvailabilityTag";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
@@ -128,11 +128,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <section className="max-w-content-width space-y-12 py-8">
                         <main className="space-y-12">
-                            <ApiPageDescription
-                                className="mt-4 text-base leading-6"
-                                description={websocket.description}
-                                isMarkdown={true}
-                            />
+                            <Markdown className="mt-4 leading-6" mdx={websocket.description} />
 
                             <CardedSection
                                 number={1}

@@ -1,8 +1,8 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
+import { Markdown } from "../../mdx/Markdown";
 import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
-import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
@@ -28,10 +28,12 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
 
     return (
         <div>
-            <ApiPageDescription className="mt-3 text-sm" description={responseBody.description} isMarkdown={true} />
-            <div className="t-muted border-default border-b pb-5 text-sm leading-6">
-                {getResponseSummary({ responseBody, types, isAudioFileDownloadSpanSummary })}
-            </div>
+            <Markdown
+                size="sm"
+                className="!t-muted border-default border-b pb-5 leading-6"
+                mdx={responseBody.description}
+                fallback={getResponseSummary({ responseBody, types, isAudioFileDownloadSpanSummary })}
+            />
             {visitResolvedHttpResponseBodyShape(responseBody.shape, {
                 fileDownload: () => null,
                 streamingText: () => {
