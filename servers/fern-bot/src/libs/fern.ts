@@ -1,4 +1,5 @@
 import execa from "execa";
+import tmp from "tmp-promise";
 import { doesPathExist } from "./fs";
 
 export async function execFernCli(
@@ -12,13 +13,20 @@ export async function execFernCli(
         // Running the commands on Lambdas is a bit odd...specifically you can only write to tmp on a lambda
         // so here we make sure the CLI is bundled via the `external` block in serverless.yml
         // and then execute the command directly via node_modules, with the home and cache set to /tmp.
-        process.env.NPM_CONFIG_CACHE = "/tmp/.npm";
-        process.env.HOME = "/tmp";
+        const tmpDir = await tmp.dir();
+        const tmpDirPath = tmpDir.path;
+        process.env.NPM_CONFIG_CACHE = `${tmpDirPath}/.npm`;
+        process.env.HOME = tmpDirPath;
+
+        // Update config to allow `npm install` to work from within the `fern upgrade` command
+        process.env.NPM_CONFIG_PREFIX = tmpDirPath;
+        // Re-install the CLI to ensure it's at the correct path, given the updated config
+        await execa("npm", ["install", "-g", "fern-api"]);
 
         let command: execa.ExecaChildProcess<string>;
         // If you don't have node_modules/fern-api, try using the CLI directly
         if (!(await doesPathExist(`${process.cwd()}/node_modules/fern-api`))) {
-            // TODO: is there a better way to pip `yes`? Piping the output of the real `yes` command doesn't work -- resulting in an EPIPE error.
+            // TODO: is there a better way to pipe `yes`? Piping the output of the real `yes` command doesn't work -- resulting in an EPIPE error.
             command = execa("fern", commandParts, {
                 cwd,
                 input: pipeYes ? "y" : undefined,
