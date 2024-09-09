@@ -76,7 +76,7 @@
 
     .fern-sidebar-link-container[data-state="active"] {
         .fern-sidebar-link-indent::after {
-            @apply border-l border-border-accent-muted absolute inset-y-1 -left-px;
+            @apply border-l border-accented-a7 absolute inset-y-1 -left-px;
 
             content: "";
         }
