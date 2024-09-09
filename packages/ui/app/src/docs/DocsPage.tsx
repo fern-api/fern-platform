@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { ReactElement } from "react";
-import { useMessageHandler, useSetJustNavigated, type DocsProps } from "../atoms";
+import { HydrateAtoms, useMessageHandler, useSetJustNavigated, type DocsProps } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
 import { JavascriptProvider } from "../components/JavascriptProvider";
 import { useBeforePopState } from "../hooks/useBeforePopState";
@@ -9,6 +9,7 @@ import { useRouteChangeComplete, useRouteChangeStart } from "../hooks/useRouteCh
 import { PlaygroundContextProvider } from "../playground/PlaygroundContext";
 import { NextSeo } from "../seo/NextSeo";
 import { InitializeTheme } from "../themes";
+import { ThemeScript } from "../themes/ThemeScript";
 import { ThemedDocs } from "../themes/ThemedDocs";
 
 const SearchDialog = dynamic(() => import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog), {
@@ -52,5 +53,15 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
             <PlaygroundContextProvider />
             <JavascriptProvider />
         </>
+    );
+}
+
+// local preview doesn't use getServerSideProps, so its _app file cannot hydrate the atoms
+export function LocalPreviewDocsPage(pageProps: DocsProps): ReactElement | null {
+    return (
+        <HydrateAtoms pageProps={pageProps}>
+            <ThemeScript colors={pageProps.colors} />
+            <DocsPage {...pageProps} />
+        </HydrateAtoms>
     );
 }

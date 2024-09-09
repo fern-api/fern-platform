@@ -1,15 +1,14 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
-import { useHydrateAtoms } from "jotai/utils";
 import type { AppProps } from "next/app";
-import PageLoader from "next/dist/client/page-loader";
-import { Router } from "next/router";
-import { PropsWithChildren, ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 import { SWRConfig } from "swr";
-import { DOCS_ATOM, DocsProps } from "../atoms";
+import { DocsProps, HydrateAtoms } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { LocalPreviewContextProvider } from "../contexts/local-preview";
 import "../css/globals.scss";
 import { NextNProgress } from "../header/NProgress";
+import { useInterceptNextDataHref } from "../hooks/useInterceptNextDataHref";
 import { ThemeScript } from "../themes/ThemeScript";
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
@@ -37,49 +36,17 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
     );
 }
 
-function HydrateAtoms({ pageProps, children }: PropsWithChildren<{ pageProps: DocsProps | undefined }>) {
-    useHydrateAtoms(new Map([[DOCS_ATOM, pageProps]]), { dangerouslyForceHydrate: true });
-    return children;
-}
-
-// hack for basepath: https://github.com/vercel/next.js/discussions/25681#discussioncomment-2026813
-const useInterceptNextDataHref = ({
-    router,
-    basePath,
-    host,
-}: {
-    router: Router;
-    basePath: string | undefined;
-    host: string | undefined;
-}) => {
-    useEffect(() => {
-        try {
-            if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
-                const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
-
-                const originalGetDataHref = router.pageLoader.getDataHref;
-                router.pageLoader.getDataHref = function (...args: Parameters<PageLoader["getDataHref"]>) {
-                    const r = originalGetDataHref.call(router.pageLoader, ...args);
-                    return r && r.startsWith("/_next/data") ? fixHost(`${prefixedBasePath}${r}`, host) : r;
-                };
-            }
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error("Failed to intercept next data href", e);
-        }
-    }, [router, basePath, host]);
-};
-
-function fixHost(path: string, host: string | undefined) {
-    // path is like /_next/data/development/.../index.json?host=docs&slug=x&slug=x
-    // we want to replace the host with the actual host like docs.devexpress.com
-    if (host == null) {
-        return path;
-    }
-    if (!path.includes("?") || path.includes(`?host=${host}`)) {
-        return path;
-    }
-
-    // use regex to replace ?host=docs&slug=x&slug=x with ?host=docs.devexpress.com&slug=host&slug=x&slug=x
-    return path.replace(/(\?host=)([^&]+)/, `$1${host}&slug=$2`);
+// local preview doesn't use getServerSideProps, so pageProps is always undefined
+export function LocalPreviewNextApp({ Component }: AppProps): ReactElement {
+    return (
+        <LocalPreviewContextProvider>
+            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+            <Toaster />
+            <FernTooltipProvider>
+                <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+                    <Component />
+                </FernErrorBoundary>
+            </FernTooltipProvider>
+        </LocalPreviewContextProvider>
+    );
 }
