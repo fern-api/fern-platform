@@ -136,7 +136,7 @@ export const FernSyntaxHighlighterTokens = memo(
                             <table
                                 className={cn("code-block-line-group", {
                                     "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
-                                    "word-wrap": wordWrap || plaintext,
+                                    "word-wrap": wordWrap,
                                 })}
                             >
                                 {!plaintext && (

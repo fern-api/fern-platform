@@ -41,7 +41,7 @@ const CodeBlockTable = forwardRef<HTMLTableElement, FernScrollArea.Props & { con
                     <table
                         className={cn("code-block-line-group", {
                             "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
-                            "word-wrap": context?.wordWrap || plaintext,
+                            "word-wrap": context?.wordWrap,
                         })}
                         {...props}
                         ref={ref}
