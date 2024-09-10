@@ -596,8 +596,14 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
                         jsonRes.response,
                         oAuthClientCredentialsReferencedEndpoint.accessTokenLocator,
                     )?.[0];
-                    setValue((prev) => ({ ...prev, accessToken }));
-                    closeContainer && closeContainer();
+                    setValue((prev) => ({
+                        ...prev,
+                        selectedInputMethod: "credentials",
+                        accessToken,
+                        isLoggedIn: true,
+                        loggedInStartingToken: accessToken,
+                    }));
+                    setTimeout(() => closeContainer && closeContainer(), 500);
                 } catch (e) {
                     // eslint-disable-next-line no-console
                     console.error(e);
