@@ -12,11 +12,11 @@ IS_READY_ATOM.onMount = (setIsReady) => {
     }
 };
 
-export const SCROLL_BODY_ATOM = atomWithDefault<HTMLElement | HTMLDivElement | null>(() => {
-    if (typeof window === "undefined") {
+export const SCROLL_BODY_ATOM = atomWithDefault<Document | HTMLDivElement | null>(() => {
+    if (typeof document === "undefined") {
         return null;
     }
-    return document.body;
+    return document;
 });
 SCROLL_BODY_ATOM.debugLabel = "SCROLL_BODY_ATOM";
 
