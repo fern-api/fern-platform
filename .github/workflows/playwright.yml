@@ -26,8 +26,8 @@ jobs:
           WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
           WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
 
-      - name: Verify dependencies
-        run: ls packages/ui/local-preview-bundle; ls packages/ui/local-preview-bundle/out
+      - name: Build next bundle
+        run: cd packages/ui/local-preview-bundle; pnpm next build
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
