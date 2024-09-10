@@ -35,12 +35,12 @@ export function fernSyntaxHighlighterTokenPropsAreEqual(
 ): boolean {
     return (
         isEqual(prevProps.highlightLines, nextProps.highlightLines) &&
-            isEqual(prevProps.style, nextProps.style) &&
-            prevProps.fontSize === nextProps.fontSize &&
-            prevProps.highlightStyle === nextProps.highlightStyle &&
-            prevProps.className === nextProps.className &&
-            prevProps.maxLines === nextProps.maxLines &&
-            prevProps.tokens === nextProps.tokens,
+        isEqual(prevProps.style, nextProps.style) &&
+        prevProps.fontSize === nextProps.fontSize &&
+        prevProps.highlightStyle === nextProps.highlightStyle &&
+        prevProps.className === nextProps.className &&
+        prevProps.maxLines === nextProps.maxLines &&
+        prevProps.tokens === nextProps.tokens &&
         prevProps.wordWrap === nextProps.wordWrap
     );
 }
