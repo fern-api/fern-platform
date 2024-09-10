@@ -70,7 +70,7 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                                                                     <h2>
                                                                         <FernLink
                                                                             href={toHref(entry.slug)}
-                                                                            className="no-underline"
+                                                                            className="not-prose"
                                                                         >
                                                                             {title}
                                                                         </FernLink>
@@ -93,7 +93,7 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                                                                     <h2>
                                                                         <FernLink
                                                                             href={toHref(entry.slug)}
-                                                                            className="no-underline"
+                                                                            className="not-prose"
                                                                         >
                                                                             {title}
                                                                         </FernLink>
