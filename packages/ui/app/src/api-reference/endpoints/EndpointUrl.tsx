@@ -3,13 +3,13 @@ import { CopyToClipboardButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { noop } from "ts-essentials";
 import { parse } from "url";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { buildRequestUrl } from "../../playground/utils";
 import { ResolvedEndpointPathParts } from "../../resolver/types";
-import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
@@ -27,8 +27,6 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     { path, method, selectedEnvironment, showEnvironment, large, className },
     parentRef,
 ) {
-    const endpointPathParts = useMemo(() => divideEndpointPathToParts(path), [path]);
-
     const ref = useRef<HTMLDivElement>(null);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     useImperativeHandle(parentRef, () => ref.current!);
@@ -36,7 +34,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     const allEnvironmentIds = useAllEnvironmentIds();
     const [isHovered, setIsHovered] = useState(false);
 
-    const renderPathParts = (parts: EndpointPathPart[]) => {
+    const pathParts = useMemo(() => {
         const elements: (ReactElement | null)[] = [];
         if (selectedEnvironment != null) {
             const url = parse(selectedEnvironment?.baseUrl);
@@ -64,30 +62,40 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                 );
             });
         }
-        parts.forEach((p, i) => {
-            elements.push(
-                <span key={`separator-${i}`} className="text-faded">
-                    {"/"}
-                </span>,
-                visitDiscriminatedUnion(p, "type")._visit({
-                    literal: (literal) => {
-                        return (
-                            <span key={`part-${i}`} className="t-muted whitespace-nowrap">
-                                {literal.value}
-                            </span>
-                        );
-                    },
-                    pathParameter: (pathParameter) => (
-                        <span key={`part-${i}`} className="t-accent bg-accent-highlight whitespace-nowrap rounded px-1">
-                            :{pathParameter.name}
-                        </span>
-                    ),
-                    _other: () => null,
-                }),
-            );
+        path.forEach((part, i) => {
+            visitDiscriminatedUnion(part)._visit({
+                literal: (literal) => {
+                    literal.value.split(/(?=\/)|(?<=\/)/).forEach((value, j) => {
+                        if (value === "/") {
+                            elements.push(
+                                <span key={`separator-${i}-${j}`} className="text-faded">
+                                    {"/"}
+                                </span>,
+                            );
+                        } else {
+                            elements.push(
+                                <span key={`part-${i}-${j}`} className="whitespace-nowrap text-faded">
+                                    {value}
+                                </span>,
+                            );
+                        }
+                    });
+                },
+                pathParameter: (pathParameter) => {
+                    elements.push(
+                        <span
+                            key={`part-${i}`}
+                            className="whitespace-nowrap text-accent bg-accent-highlight rounded px-1"
+                        >
+                            :{pathParameter.key}
+                        </span>,
+                    );
+                },
+                _other: noop,
+            });
         });
         return elements;
-    };
+    }, [path, selectedEnvironment, showEnvironment, allEnvironmentIds]);
 
     return (
         <div ref={ref} className={cn("flex h-8 items-center gap-1 pr-2", className)}>
@@ -117,7 +125,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                         "text-sm": large,
                                     })}
                                 >
-                                    {renderPathParts(endpointPathParts)}
+                                    {pathParts}
                                 </span>
                             </button>
                         )}
