@@ -14,7 +14,7 @@ import { Download, SendSolid } from "iconoir-react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEmpty, round } from "lodash-es";
-import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, FC, SetStateAction, useDeferredValue, useEffect, useRef, useState } from "react";
 import {
     IS_MOBILE_SCREEN_ATOM,
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -85,6 +85,8 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
         };
     }, []);
 
+    const deferredFormState = useDeferredValue(formState);
+
     const form = (
         <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
             {endpoint.auth != null && <PlaygroundAuthorizationFormCard auth={endpoint.auth} disabled={false} />}
@@ -152,7 +154,7 @@ export const PlaygroundEndpointContent: FC<PlaygroundEndpointContentProps> = ({
                     className="-mr-2"
                 />
             </div>
-            <PlaygroundRequestPreview endpoint={endpoint} formState={formState} requestType={requestType} />
+            <PlaygroundRequestPreview endpoint={endpoint} formState={deferredFormState} requestType={requestType} />
         </FernCard>
     );
 
