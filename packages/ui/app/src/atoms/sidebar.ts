@@ -268,6 +268,12 @@ export const useDismissSidebar = (): (() => void) => {
 };
 
 export const FORCE_ENABLE_SIDEBAR_ATOM = atom((get) => {
+    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
+
+    if (isMobileSidebarEnabled) {
+        return true;
+    }
+
     const layout = get(DOCS_LAYOUT_ATOM);
 
     // sidebar is always enabled if the header is disabled
