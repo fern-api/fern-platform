@@ -5,10 +5,10 @@ import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react"
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";
 import { useHref } from "../../hooks/useHref";
+import { Markdown } from "../../mdx/Markdown";
 import type { BundledMDX } from "../../mdx/types";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
-import { ApiPageDescription } from "../ApiPageDescription";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
@@ -106,7 +106,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
             </FernAnchor>
-            <ApiPageDescription isMarkdown={true} description={description} className="!t-muted text-sm" />
+            <Markdown mdx={description} className="!t-muted" size="sm" />
             {children}
         </div>
     );

@@ -2,13 +2,13 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { ReactElement, useCallback } from "react";
+import { Markdown } from "../../../mdx/Markdown";
 import {
     ResolvedTypeDefinition,
     ResolvedTypeShape,
     ResolvedUndiscriminatedUnionShapeVariant,
     unwrapReference,
 } from "../../../resolver/types";
-import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
@@ -125,7 +125,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
                     )}
                 </div>
-                <ApiPageDescription isMarkdown={true} description={unionVariant.description} className="text-sm" />
+                <Markdown mdx={unionVariant.description} size="sm" />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions
                         shape={unionVariant.shape}

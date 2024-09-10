@@ -3,6 +3,7 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
+import { Markdown } from "../../mdx/Markdown";
 import type { BundledMDX } from "../../mdx/types";
 import {
     ResolvedFormDataRequestProperty,
@@ -11,7 +12,6 @@ import {
     unwrapDescription,
     visitResolvedHttpRequestBodyShape,
 } from "../../resolver/types";
-import { ApiPageDescription } from "../ApiPageDescription";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -37,13 +37,13 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 }) => {
     return (
         <div className="flex flex-col">
-            <ApiPageDescription className="mt-3 text-sm" description={requestBody.description} isMarkdown={true} />
-            <div
-                className={cn("t-muted pb-5 text-sm leading-6", {
+            <Markdown
+                size="sm"
+                className={cn("t-muted pb-5 leading-6", {
                     "border-default border-b": requestBody.shape.type !== "formData",
                 })}
-            >
-                {`This endpoint expects ${visitResolvedHttpRequestBodyShape<string>(requestBody.shape, {
+                mdx={requestBody.description}
+                fallback={`This endpoint expects ${visitResolvedHttpRequestBodyShape<string>(requestBody.shape, {
                     formData: (formData) => {
                         const fileArrays = formData.properties.filter(
                             (p) => p.type === "fileArray",
@@ -56,7 +56,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                     bytes: (bytes) => `binary data${bytes.contentType != null ? ` of type ${bytes.contentType}` : ""}`,
                     typeShape: (typeShape) => renderTypeShorthand(typeShape, { withArticle: true }, types),
                 })}.`}
-            </div>
+            />
             {visitResolvedHttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
                 formData: (formData) =>
                     formData.properties.map((p) => (

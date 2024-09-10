@@ -1,6 +1,6 @@
 import { NavArrowLeft, NavArrowRight } from "iconoir-react";
 import { useHref } from "../hooks/useHref";
-import { MdxContent } from "../mdx/MdxContent";
+import { Markdown } from "../mdx/Markdown";
 import { DocsContent } from "../resolver/DocsContent";
 import { FernLinkCard } from "./FernLinkCard";
 
@@ -23,11 +23,11 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
             <div className="flex-1">
                 <div className="text-base font-semibold">{neighbor.title}</div>
 
-                {neighbor.excerpt && (
-                    <div className="prose prose-sm mt-1 font-normal prose-p:t-muted dark:prose-invert prose-p:m-0 prose-p:leading-snug">
-                        <MdxContent mdx={neighbor.excerpt} />
-                    </div>
-                )}
+                <Markdown
+                    mdx={neighbor.excerpt}
+                    size="sm"
+                    className="mt-1 font-normal prose-p:t-muted prose-p:m-0 prose-p:leading-snug"
+                />
             </div>
             {dir === "next" && (
                 <span className="sm-4 t-muted inline-flex items-center gap-2 py-2.5 text-sm sm:border-default sm:ml-6 sm:border-l sm:pl-6">

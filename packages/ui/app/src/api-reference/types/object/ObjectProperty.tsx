@@ -5,9 +5,9 @@ import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useHref } from "../../../hooks/useHref";
+import { Markdown } from "../../../mdx/Markdown";
 import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
-import { ApiPageDescription } from "../../ApiPageDescription";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import {
@@ -146,7 +146,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                     </TypeDefinitionContext.Provider>
                 </FernErrorBoundary>
             )}
-            <ApiPageDescription isMarkdown={true} description={description} className="text-sm" />
+            <Markdown mdx={description} size="sm" />
             {hasInternalTypeReference(property.valueShape, types) && !hasInlineEnum(property.valueShape, types) && (
                 <FernErrorBoundary component="ObjectProperty">
                     <TypeDefinitionContext.Provider value={newContextValue}>

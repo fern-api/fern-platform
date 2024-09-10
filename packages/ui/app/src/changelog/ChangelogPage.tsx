@@ -4,7 +4,7 @@ import { useSidebarNodes } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
 import { useToHref } from "../hooks/useHref";
-import { MdxContent } from "../mdx/MdxContent";
+import { Markdown } from "../mdx/Markdown";
 import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 
@@ -29,11 +29,7 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                                             typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined
                                         }
                                     />
-                                    {overview != null && (
-                                        <section className="prose dark:prose-invert">
-                                            <MdxContent mdx={overview} />
-                                        </section>
-                                    )}
+                                    <Markdown mdx={overview} />
                                 </div>
                             </>
                         ) : (
@@ -43,11 +39,7 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                                     breadcrumbs={content.breadcrumbs}
                                     subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
                                 />
-                                {overview != null && (
-                                    <section className="prose dark:prose-invertw-content-width">
-                                        <MdxContent mdx={overview} />
-                                    </section>
-                                )}
+                                <Markdown mdx={overview} />
                             </div>
                         )}
                     </section>
@@ -72,11 +64,7 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                                                         <div className="t-muted text-base mb-8 xl:hidden md:hidden">
                                                             <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
                                                         </div>
-                                                        <div className="prose dark:prose-invert">
-                                                            {title != null && <h1>{title}</h1>}
-                                                            {/* TODO: alert if the page is null */}
-                                                            {page != null && <MdxContent mdx={page} />}
-                                                        </div>
+                                                        <Markdown title={title} mdx={page} />
                                                     </div>
                                                 </>
                                             ) : (
@@ -85,11 +73,7 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                                                         <div className="t-muted text-base mb-8 xl:hidden">
                                                             <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
                                                         </div>
-                                                        <div className="prose dark:prose-invert">
-                                                            {title != null && <h1>{title}</h1>}
-                                                            {/* TODO: alert if the page is null */}
-                                                            {page != null && <MdxContent mdx={page} />}
-                                                        </div>
+                                                        <Markdown title={title} mdx={page} />
                                                     </div>
                                                     <div className="-mt-2 w-72 pl-4 text-right max-xl:hidden">
                                                         <span className="t-muted text-base sticky top-header-offset-padded">
