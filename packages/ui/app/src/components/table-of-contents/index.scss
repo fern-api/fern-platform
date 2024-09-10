@@ -16,9 +16,9 @@
 
     .toc-root::after {
         @apply bg-accent;
+
         height: var(--height, 20px);
         transform: translateY(calc(var(--top, 0px)));
-
         transition: 0.25s;
         transition-property: transform, height;
     }
