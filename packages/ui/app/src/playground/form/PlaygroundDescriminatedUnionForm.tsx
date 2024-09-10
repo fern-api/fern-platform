@@ -66,10 +66,7 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
                     label: titleCase(variant.discriminantValue),
                     value: variant.discriminantValue,
                     // todo: handle availability
-                    tooltip:
-                        variant.description != null ? (
-                            <Markdown className="text-xs" mdx={variant.description} />
-                        ) : undefined,
+                    tooltip: variant.description != null ? <Markdown size="xs" mdx={variant.description} /> : undefined,
                 }),
             ),
         [discriminatedUnion.variants],
