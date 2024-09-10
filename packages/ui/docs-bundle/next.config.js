@@ -50,6 +50,7 @@ const nextConfig = {
         optimizePackageImports: ["@fern-ui/ui"],
     },
     trailingSlash: isTruthy(process.env.TRAILING_SLASH),
+    skipTrailingSlashRedirect: true,
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the
      * multi-tenant nature of this app, we cannot set a global basepath in the next.config.js. As a result, the `_next`

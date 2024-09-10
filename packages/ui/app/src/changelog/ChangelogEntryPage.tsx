@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
-import { MdxContent } from "../mdx/MdxContent";
+import { Markdown } from "../mdx/Markdown";
 import { DocsContent } from "../resolver/DocsContent";
 
 export function ChangelogEntryPage({ content }: { content: DocsContent.ChangelogEntryPage }): ReactElement {
@@ -31,18 +31,11 @@ export function ChangelogEntryPage({ content }: { content: DocsContent.Changelog
                                     <h1 className="my-0 inline-block leading-tight">{title ?? content.title}</h1>
                                 </div>
 
-                                {excerpt != null && (
-                                    <div className="prose prose-lg mt-2 leading-7 prose-p:t-muted dark:prose-invert">
-                                        <MdxContent mdx={excerpt} />
-                                    </div>
-                                )}
+                                <Markdown mdx={excerpt} size="lg" className="mt-2 leading-7 prose-p:t-muted" />
                             </header>
+
                             {/* TODO: alert if the page is null */}
-                            {page != null && (
-                                <div className="prose dark:prose-invert">
-                                    <MdxContent mdx={page} />
-                                </div>
-                            )}
+                            <Markdown mdx={page} />
 
                             <BottomNavigationButtons />
                         </div>

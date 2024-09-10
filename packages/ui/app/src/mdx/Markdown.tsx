@@ -1,29 +1,43 @@
-import cn from "clsx";
-import React from "react";
+import clsx from "clsx";
+import { memo, type ReactNode } from "react";
 import { MdxContent } from "./MdxContent";
 import type { BundledMDX } from "./types";
 
 export declare namespace Markdown {
     export interface Props {
+        title?: ReactNode;
+
         mdx: BundledMDX | undefined;
         className?: string;
-        notProse?: boolean;
+        size?: "xs" | "sm" | "lg";
+
+        /**
+         * Fallback content to render if the MDX is empty
+         */
+        fallback?: ReactNode;
     }
 }
 
-export const Markdown = React.memo<Markdown.Props>(function Markdown({ mdx, notProse, className }) {
+export const Markdown = memo<Markdown.Props>(({ title, mdx, className, size, fallback }) => {
     // If the MDX is empty, return null
-    if (mdx == null || (typeof mdx === "string" && mdx.trim().length === 0)) {
+    if (!fallback && (mdx == null || (typeof mdx === "string" && mdx.trim().length === 0))) {
         return null;
     }
 
     return (
-        <section
-            className={cn(className, "break-words max-w-none", {
-                ["prose dark:prose-invert"]: !notProse,
+        <div
+            className={clsx(className, "break-words max-w-none prose dark:prose-invert", {
+                "whitespace-pre-wrap": typeof mdx === "string",
+                "prose-base": size == null,
+                "prose-sm dark:prose-invert-sm !text-xs": size === "xs",
+                "prose-sm dark:prose-invert-sm": size === "sm",
+                "prose-lg": size === "lg",
             })}
         >
-            <MdxContent mdx={mdx} />
-        </section>
+            {title != null && <h1>{title}</h1>}
+            <MdxContent mdx={mdx} fallback={fallback} />
+        </div>
     );
 });
+
+Markdown.displayName = "Markdown";
