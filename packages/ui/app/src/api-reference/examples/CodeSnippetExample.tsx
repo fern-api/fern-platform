@@ -63,12 +63,6 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
         }
     }, [requestHighlightLines, viewportRef]);
 
-    // Scroll to top when code changes
-    useEffect(() => {
-        viewportRef.current?.scrollTo({ top: 0 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [code]);
-
     return (
         <TitledExample
             copyToClipboardText={useCallback(() => code, [code])}
