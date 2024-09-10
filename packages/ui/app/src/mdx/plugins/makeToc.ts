@@ -3,7 +3,7 @@ import type { Doctype, ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { toString } from "hast-util-to-string";
 import { SKIP, visit, type BuildVisitor } from "unist-util-visit";
-import type { TableOfContentsItem } from "../../components/TableOfContents";
+import type { TableOfContentsItem } from "../../atoms";
 import type { AccordionItemProps } from "../components/accordion";
 import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement } from "./utils";
 
