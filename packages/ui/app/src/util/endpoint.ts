@@ -1,6 +1,6 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ResolvedEndpointDefinition, ResolvedEndpointPathParts, resolveEnvironment } from "../resolver/types";
+import { ResolvedEndpointDefinition, resolveEnvironment } from "../resolver/types";
 
 export type EndpointPathPart =
     | {
@@ -27,25 +27,6 @@ export function getEndpointAvailabilityLabel(
         default:
             return "Unknown";
     }
-}
-
-export function divideEndpointPathToParts(path: ResolvedEndpointPathParts[]): EndpointPathPart[] {
-    const parts: EndpointPathPart[] = [];
-    path.forEach((part) => {
-        if (part.type === "literal") {
-            const subparts = part.value.split("/");
-            subparts.forEach((subpart) => {
-                if (subpart.length > 0) {
-                    parts.push({ type: "literal", value: subpart });
-                }
-            });
-        } else {
-            if (part.key.length > 0) {
-                parts.push({ type: "pathParameter", name: part.key });
-            }
-        }
-    });
-    return parts;
 }
 
 export function getEndpointEnvironmentUrl(endpoint: ResolvedEndpointDefinition): string | undefined {
