@@ -17,7 +17,6 @@ export * from "./sidebar";
 export * from "./store";
 export * from "./stream";
 export * from "./theme";
-export * from "./toc";
 export * from "./types";
 export * from "./utils";
 export * from "./viewport";
