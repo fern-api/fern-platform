@@ -13,6 +13,7 @@ interface FernSegmentedControlProps {
     onValueChange: (value: string) => void;
     muted?: boolean;
     container?: HTMLElement;
+    disabled?: boolean;
 }
 
 export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
@@ -23,6 +24,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
     onValueChange,
     muted,
     container,
+    disabled,
 }) => (
     <FernTooltipProvider>
         <ToggleGroup.Root
@@ -30,6 +32,7 @@ export const FernSegmentedControl: FC<FernSegmentedControlProps> = ({
             type="single"
             value={value}
             onValueChange={onValueChange}
+            disabled={disabled}
         >
             {options.map((option) =>
                 option.type === "value" ? (

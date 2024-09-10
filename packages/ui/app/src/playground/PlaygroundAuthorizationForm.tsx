@@ -1,8 +1,17 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernButton, FernCard, FernCollapse, FernInput } from "@fern-ui/components";
+import {
+    FernButton,
+    FernCard,
+    FernCollapse,
+    FernDropdown,
+    FernInput,
+    FernSegmentedControl,
+    FernTooltip,
+    FernTooltipProvider,
+} from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { Key, User } from "iconoir-react";
+import { HelpCircle, Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
@@ -160,8 +169,8 @@ function FoundOAuthReferencedEndpointForm({
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
-    // TODO: implement a loading state
-    const oAuthClientCredentialLogin = async () =>
+    const oAuthClientCredentialLogin = async () => {
+        setValue((prev) => ({ ...prev, isLoggingIn: true }));
         await oAuthClientCredentialReferencedEndpointLoginFlow({
             formState,
             endpoint: oAuthEndpoint,
@@ -171,50 +180,97 @@ function FoundOAuthReferencedEndpointForm({
             closeContainer,
             setDisplayFailedLogin,
         });
+        setValue((prev) => ({ ...prev, isLoggingIn: false }));
+    };
 
-    return (
+    const authenticationOptions: FernDropdown.Option[] = [
+        { type: "value", value: "credentials", label: "Credentials", icon: <User /> },
+        { type: "value", value: "token", label: "Bearer Token", icon: <Key /> },
+    ];
+
+    return value.isLoggingIn ? (
+        <li className="-mx-4 space-y-2 p-4 pt-8 flex flex-1 items-center justify-center">Loading...</li>
+    ) : (
         <>
             <li className="-mx-4 space-y-2 p-4 pb-2">
-                <label className="inline-flex flex-wrap items-baseline">
-                    <span className="font-mono text-sm">{"OAuth Client Credentials login"}</span>
-                </label>
-                <PlaygroundEndpointForm
-                    endpoint={oAuthEndpoint}
-                    formState={formState}
-                    setFormState={setFormState}
-                    types={types}
-                    ignoreHeaders={true}
-                />
-            </li>
-            <li className="-mx-4 space-y-2 p-4 pt-0">
-                <label className="inline-flex flex-wrap items-baseline">
-                    <span className="font-mono text-sm">Bearer token</span>
-                </label>
-
-                <div>
-                    <PasswordInputGroup
-                        onValueChange={(newValue: string) => setValue((prev) => ({ ...prev, accessToken: newValue }))}
-                        value={value.accessToken}
-                        autoComplete="off"
-                        data-1p-ignore="true"
-                        disabled={disabled}
-                    />
-                </div>
-            </li>
-            {displayFailedLogin && (
-                <li className="-mx-4 space-y-2 p-4 py-0">
-                    <span className="font-mono text-sm text-red-600">
-                        Failed to login with the provided credentials
-                    </span>
-                </li>
-            )}
-            <li className="flex justify-end py-2">
-                <FernButton
-                    text={value.accessToken.length > 0 ? "Refresh token" : "Login"}
-                    intent="primary"
-                    onClick={oAuthClientCredentialLogin}
+                <FernSegmentedControl
+                    options={authenticationOptions}
+                    onValueChange={(value: string) =>
+                        setValue((prev) => ({ ...prev, selectedInputMethod: value as "credentials" | "token" }))
+                    }
+                    value={value.selectedInputMethod}
                     disabled={disabled}
                 />
+            </li>
+
+            {value.selectedInputMethod === "credentials" ? (
+                <>
+                    <li className="-mx-4 space-y-2 p-4">
+                        <label className="inline-flex flex-wrap items-baseline">
+                            <span className="font-mono text-sm">OAuth Client Credentials Login</span>
+                        </label>
+                        <PlaygroundEndpointForm
+                            endpoint={oAuthEndpoint}
+                            formState={formState}
+                            setFormState={setFormState}
+                            types={types}
+                            ignoreHeaders={true}
+                        />
+                    </li>
+                    {displayFailedLogin && (
+                        <Callout intent="error">Failed to login with the provided credentials</Callout>
+                    )}
+                    {value.isLoggedIn && (
+                        <li className="-mx-4 space-y-2 p-4 pt-0">
+                            <FernTooltipProvider>
+                                <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2">
+                                    <label className="inline-flex items-baseline gap-2 truncate">
+                                        <span className="font-mono text-sm inline-flex">
+                                            Generated OAuth Token
+                                            <FernTooltip content="This bearer token was generated from an OAuth API call, and as a result cannot be edited">
+                                                <HelpCircle className="t-muted size-4 self-center ml-2" />
+                                            </FernTooltip>
+                                        </span>
+                                    </label>
+                                </div>
+                            </FernTooltipProvider>
+                            <PasswordInputGroup value={value.accessToken} disabled={true} className="t-muted" />
+                        </li>
+                    )}
+                    {value.isLoggedIn && value.accessToken !== value.loggedInStartingToken && (
+                        <Callout intent="warning">
+                            The bearer token is no longer valid. Please refresh it by clicking the button below
+                        </Callout>
+                    )}
+                </>
+            ) : (
+                <>
+                    <li className="-mx-4 space-y-2 p-4">
+                        <label className="inline-flex flex-wrap items-baseline">
+                            <span className="font-mono text-sm">User Supplied Bearer Token</span>
+                        </label>
+
+                        <PasswordInputGroup
+                            onValueChange={(newValue: string) =>
+                                setValue((prev) => ({ ...prev, userSuppliedAccessToken: newValue }))
+                            }
+                            value={value.userSuppliedAccessToken}
+                            autoComplete="off"
+                            data-1p-ignore="true"
+                            disabled={disabled}
+                        />
+                    </li>
+                </>
+            )}
+            <li className="flex justify-end pt-4">
+                {value.selectedInputMethod === "credentials" && (
+                    <FernButton
+                        text={`${value.isLoggedIn ? "Refresh" : "Fetch"} Bearer Token`}
+                        intent="primary"
+                        onClick={oAuthClientCredentialLogin}
+                        disabled={disabled}
+                    />
+                )}
             </li>
         </>
     );
@@ -308,6 +364,7 @@ export function PlaygroundAuthorizationFormCard({
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
     const setBearerAuth = useSetAtom(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM);
+    const oAuth = useAtomValue(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const isOpen = useBooleanState(false);
     const apiKeyInjection = useApiKeyInjectionConfig();
     const router = useRouter();
@@ -340,9 +397,16 @@ export function PlaygroundAuthorizationFormCard({
             isOpen.toggleValue();
         }
     };
+
     const authButtonCopy = apiKeyInjection.enabled
         ? "Login to send a real request"
-        : `Authenticate with your ${auth.type === "oAuth" ? "credentials" : "API key"} to send a real request`;
+        : `Authenticate with your ${
+              auth.type === "oAuth"
+                  ? oAuth.selectedInputMethod === "credentials"
+                      ? "credentials"
+                      : "bearer token"
+                  : "API key"
+          } to send a real request`;
 
     useEffect(() => {
         if (!router.isReady) {
@@ -453,7 +517,7 @@ export function PlaygroundAuthorizationFormCard({
                     size="large"
                     intent="success"
                     variant="outlined"
-                    text="Authenticate with your API key to send a real request"
+                    text={authButtonCopy}
                     icon={<Key />}
                     rightIcon={
                         <span className="flex items-center rounded-[4px] bg-tag-success p-1 font-mono text-xs uppercase leading-none text-intent-success">
@@ -514,7 +578,13 @@ function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState): bool
         basicAuth: () =>
             !isEmpty(authState.basicAuth?.username.trim()) && !isEmpty(authState.basicAuth?.password.trim()),
         header: (header) => !isEmpty(authState.header?.headers[header.headerWireValue]?.trim()),
-        oAuth: () => !isEmpty(authState.oauth?.accessToken.trim()),
+        oAuth: () => {
+            const authToken =
+                authState.oauth?.selectedInputMethod === "credentials"
+                    ? authState.oauth?.accessToken
+                    : authState.oauth?.userSuppliedAccessToken;
+            return authToken ? !isEmpty(authToken.trim()) : false;
+        },
         _other: () => false,
     });
 }
