@@ -61,6 +61,7 @@ jobs:
       DEFAULT_VENUS_ORIGIN: "https://venus.buildwithfern.com"
       DEFAULT_FDR_ORIGIN: "https://registry.buildwithfern.com"
       CO_API_KEY: ${{ secrets.PROD_CO_API_KEY }}
+      FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
       CI: false
     steps:
