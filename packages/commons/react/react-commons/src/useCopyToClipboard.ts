@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTimeout } from "./useTimeout";
 
 export declare namespace useCopyToClipboard {
@@ -11,17 +11,26 @@ export declare namespace useCopyToClipboard {
 export function useCopyToClipboard(
     content: string | (() => string | Promise<string>) | undefined,
 ): useCopyToClipboard.Return {
+    const contentRef = useRef(content);
+
+    useEffect(() => {
+        contentRef.current = content;
+    }, [content]);
+
     const [wasJustCopied, setWasJustCopied] = useState(false);
 
     const copyToClipboard = useMemo(() => {
-        if (content == null) {
+        const currentContent = contentRef.current;
+        if (currentContent == null) {
             return undefined;
         }
         return async () => {
             setWasJustCopied(true);
-            await navigator.clipboard.writeText(typeof content === "function" ? await content() : content);
+            await navigator.clipboard.writeText(
+                typeof currentContent === "function" ? await currentContent() : currentContent,
+            );
         };
-    }, [content]);
+    }, []);
 
     useTimeout(
         () => {

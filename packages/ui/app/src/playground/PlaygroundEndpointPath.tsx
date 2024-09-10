@@ -11,6 +11,7 @@ import { HttpMethodTag } from "../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../components/MaybeEnvironmentDropdown";
 import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../resolver/types";
 import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
+import { PlaygroundShareButton } from "./PlaygroundShareButton";
 import { PlaygroundRequestFormState } from "./types";
 import { buildRequestUrl, unknownToString } from "./utils";
 
@@ -119,6 +120,10 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                     sendRequestButtonLabel={sendRequestButtonLabel}
                     sendRequestIcon={sendRequestIcon}
                 />
+            </div>
+
+            <div className="max-sm:hidden">
+                <PlaygroundShareButton />
             </div>
 
             <Dialog.Close asChild className="max-sm:hidden">
