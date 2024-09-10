@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { getPlaywrightTestUrls } from "./test-runner";
+import { getPlaywrightTestUrls } from "../test-runner";
 
 const existenceUrls = getPlaywrightTestUrls("existence");
 existenceUrls.forEach((testUrl) => {
