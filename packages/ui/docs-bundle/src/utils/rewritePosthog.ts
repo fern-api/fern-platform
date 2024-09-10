@@ -23,7 +23,7 @@ export function rewritePosthog(request: NextRequest): NextResponse {
     url.pathname = intendedPathname;
     url.protocol = "https";
     url.hostname = hostname;
-    url.port = 443;
+    url.port = "443";
 
     return NextResponse.rewrite(url, {
         headers: requestHeaders,
