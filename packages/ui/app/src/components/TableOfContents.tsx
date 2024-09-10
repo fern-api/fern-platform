@@ -1,7 +1,10 @@
-import cn from "clsx";
-import { useAtomValue } from "jotai";
-import { CSSProperties, useEffect, useMemo, useState } from "react";
+import cn, { clsx } from "clsx";
+import { useAtom, useAtomValue } from "jotai";
+import { atomWithDefault } from "jotai/utils";
+import { CSSProperties, useEffect, useMemo } from "react";
+import { useCallbackOne, useMemoOne } from "use-memo-one";
 import { ANCHOR_ATOM } from "../atoms";
+import { useRouteChangeComplete } from "../hooks/useRouteChanged";
 import { FernLink } from "./FernLink";
 
 export declare namespace TableOfContents {
@@ -33,14 +36,14 @@ function TableOfContentsItem({
     anchorInView?: string;
 }) {
     return (
-        <li>
+        <li className="mb-2 last:mb-0">
             {text.length > 0 && (
                 <FernLink
                     className={cn(
-                        "hover:t-default block hyphens-auto break-words py-1.5 text-sm leading-5 transition-all hover:transition-none",
+                        "block hyphens-auto break-words text-sm leading-5 transition-all hover:transition-none",
                         {
-                            "t-muted": anchorInView !== anchorString,
-                            "t-accent-aaa": anchorInView === anchorString,
+                            "text-grayscale-a11 hover:text-grayscale-a12": anchorInView !== anchorString,
+                            "text-accent-aaa": anchorInView === anchorString,
                         },
                     )}
                     href={`#${anchorString}`}
@@ -74,7 +77,6 @@ function TableOfContentsList({
             className={cn("list-none", {
                 "pl-4": indent,
                 [rootClassName ?? ""]: !indent,
-                "pt-3 pb-4": !indent,
             })}
             style={!indent ? rootStyle : undefined}
         >
@@ -97,15 +99,40 @@ function TableOfContentsList({
     );
 }
 
-export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, tableOfContents, style }) => {
-    const currentPathAnchor = useAtomValue(ANCHOR_ATOM);
+function useIntersectionObserver(ids: string[], setActiveId: (id: string) => void) {
+    useEffect(() => {
+        const callback: IntersectionObserverCallback = (headings) => {
+            const visibleHeadings: IntersectionObserverEntry[] = headings.filter((heading) => heading.isIntersecting);
 
+            const sortedVisibleHeadings = visibleHeadings
+                .map((heading) => heading.target.id)
+                .sort((a, b) => ids.indexOf(a) - ids.indexOf(b));
+
+            if (sortedVisibleHeadings[0] != null) {
+                setActiveId(sortedVisibleHeadings[0]);
+            }
+        };
+
+        const observer = new IntersectionObserver(callback, {
+            rootMargin: "-110px 0px -40% 0px",
+        });
+
+        const headingElements = Array.from(document.querySelectorAll(ids.map((id) => `#${id}`).join(", ")));
+        headingElements.forEach((element) => observer.observe(element));
+
+        return () => observer.disconnect();
+    }, [ids, setActiveId]);
+}
+
+export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, tableOfContents, style }) => {
     const allAnchors = useMemo(() => getAllAnchorStrings(tableOfContents), [tableOfContents]);
 
-    const [anchorInView, setAnchorInView] = useState(currentPathAnchor ?? allAnchors[0]);
+    const anchorInViewAtom = useMemoOne(() => atomWithDefault(() => allAnchors[0]), [allAnchors]);
+    const [anchorInView, setAnchorInView] = useAtom(anchorInViewAtom);
 
-    useEffect(() => {
-        if (currentPathAnchor != null) {
+    const currentPathAnchor = useAtomValue(ANCHOR_ATOM);
+    useRouteChangeComplete(() => {
+        if (currentPathAnchor != null && allAnchors.includes(currentPathAnchor)) {
             setAnchorInView(currentPathAnchor);
             anchorJustSet = true;
             clearTimeout(anchorJustSetTimeout);
@@ -113,55 +140,19 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
                 anchorJustSet = false;
             }, 150);
         }
-    }, [currentPathAnchor]);
+    });
 
-    useEffect(() => {
-        if (typeof window === "undefined") {
-            return;
-        }
-
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-
-            // when the user scrolls to the very top of the page, set the anchorInView to the first anchor
-            if (scrollY === 0) {
-                setAnchorInView(allAnchors[0]);
-                return;
-            }
-
-            // when the user scrolls to the very bottom of the page, set the anchorInView to the last anchor
-            if (window.innerHeight + scrollY >= document.body.scrollHeight) {
-                setAnchorInView(allAnchors[allAnchors.length - 1]);
-                return;
-            }
-
-            // when the user scrolls down, check if an anchor has just scrolled up just past 40% from the top of the viewport
-            // if so, set the anchorInView to that anchor
-
-            if (!anchorJustSet) {
-                for (let i = allAnchors.length - 1; i >= 0; i--) {
-                    const anchor = allAnchors[i];
-                    if (anchor == null) {
-                        continue;
-                    }
-                    const element = document.getElementById(anchor);
-                    if (element != null) {
-                        const { bottom } = element.getBoundingClientRect();
-                        if (bottom < window.innerHeight * 0.5) {
-                            setAnchorInView(anchor);
-                            break;
-                        }
-                    }
+    useIntersectionObserver(
+        allAnchors,
+        useCallbackOne(
+            (id: string) => {
+                if (!anchorJustSet) {
+                    setAnchorInView(id);
                 }
-            }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [allAnchors, tableOfContents]);
+            },
+            [setAnchorInView],
+        ),
+    );
 
     return (
         <>
@@ -171,7 +162,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
                     headings={tableOfContents}
                     indent={false}
                     anchorInView={anchorInView}
-                    rootClassName={className}
+                    rootClassName={clsx("toc-root", className)}
                     rootStyle={style}
                 />
             )}
