@@ -1,5 +1,6 @@
 import fastdom from "fastdom";
 import { atom, useAtomValue } from "jotai";
+import { atomWithDefault } from "jotai/utils";
 import { useMemo } from "react";
 import { noop } from "ts-essentials";
 
@@ -11,14 +12,13 @@ IS_READY_ATOM.onMount = (setIsReady) => {
     }
 };
 
-export const SCROLL_BODY_ATOM = atom<HTMLElement | HTMLDivElement | null>(null);
-SCROLL_BODY_ATOM.debugLabel = "SCROLL_BODY_ATOM";
-SCROLL_BODY_ATOM.onMount = (set) => {
+export const SCROLL_BODY_ATOM = atomWithDefault<HTMLElement | HTMLDivElement | null>(() => {
     if (typeof window === "undefined") {
-        return;
+        return null;
     }
-    set(document.body);
-};
+    return document.body;
+});
+SCROLL_BODY_ATOM.debugLabel = "SCROLL_BODY_ATOM";
 
 export function useIsReady(): boolean {
     return useAtomValue(IS_READY_ATOM);
