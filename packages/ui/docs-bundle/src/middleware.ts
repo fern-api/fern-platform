@@ -1,3 +1,4 @@
+import { NextResponse, type NextRequest } from "next/server";
 import { rewritePosthog } from "./utils/rewritePosthog";
 
 export function middleware(request: NextRequest): NextResponse {
