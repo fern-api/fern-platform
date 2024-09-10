@@ -30,12 +30,14 @@ groups:
   postman:
     generators:
       - name: fernapi/fern-postman
-        version: 0.3.2
+        version: 0.4.0
         output:
           location: postman
           api-key: ${POSTMAN_API_KEY}
           workspace-id: 5579b37c-ab1f-4660-90d1-0409e81d57bc
           collection-id: 30404764-47b97d6f-d2af-439c-bcff-5b75e6c0e5b6
+        config:
+          collection-name: fdr
 
   navigation:
     audiences:
