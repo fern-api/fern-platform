@@ -51,6 +51,8 @@ const nextConfig = {
     },
     trailingSlash: isTruthy(process.env.TRAILING_SLASH),
     skipTrailingSlashRedirect: true,
+    skipMiddlewareUrlNormalize: true,
+    middlewarePrefetch: "flexible",
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the
      * multi-tenant nature of this app, we cannot set a global basepath in the next.config.js. As a result, the `_next`
@@ -183,101 +185,101 @@ const nextConfig = {
             // },
         ];
     },
-    rewrites: async () => {
-        const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
-        // const HAS_X_FORWARDED_HOST = { type: "header", key: "x-forwarded-host", value: "(?<host>.*)" };
-        const HAS_X_FERN_HOST = { type: "header", key: "x-fern-host", value: "(?<host>.*)" };
-        const HAS_HOST = { type: "host", value: "(?<host>.*)" };
+    // rewrites: async () => {
+    //     const HAS_FERN_DOCS_PREVIEW = { type: "cookie", key: "_fern_docs_preview", value: "(?<host>.*)" };
+    //     // const HAS_X_FORWARDED_HOST = { type: "header", key: "x-forwarded-host", value: "(?<host>.*)" };
+    //     const HAS_X_FERN_HOST = { type: "header", key: "x-fern-host", value: "(?<host>.*)" };
+    //     const HAS_HOST = { type: "host", value: "(?<host>.*)" };
 
-        // The order of the following array is important. The first match will be used.
-        const WITH_MATCHED_HOST = [HAS_FERN_DOCS_PREVIEW, HAS_X_FERN_HOST, HAS_HOST];
+    //     // The order of the following array is important. The first match will be used.
+    //     const WITH_MATCHED_HOST = [HAS_FERN_DOCS_PREVIEW, HAS_X_FERN_HOST, HAS_HOST];
 
-        const HAS_FERN_TOKEN = { type: "cookie", key: "fern_token" };
-        const THREW_ERROR = { type: "query", key: "error", value: "true" };
-        return {
-            beforeFiles: [
-                /**
-                 * while /_next/static routes are handled by the assetPrefix config, we need to handle the /_next/data routes separately
-                 * when the user is hovering over a link, Next.js will prefetch the data route using `/_next/data` routes. We intercept
-                 * the prefetch request at packages/ui/app/src/docs/NextApp.tsx and append the customer-defined basepath:
-                 *
-                 * i.e. /base/path/_next/data/*
-                 *
-                 * This rewrite rule will ensure that /base/path/_next/data/* is rewritten to /_next/data/* on the server
-                 */
-                { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
-                { source: "/:prefix*/api/fern-docs/:path*", destination: "/api/fern-docs/:path*" },
-                { source: "/:prefix*/robots.txt", destination: "/api/fern-docs/robots.txt" },
-                { source: "/:prefix*/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
-                /**
-                 * Since we use cookie rewrites to determine if the path should be rewritten to /static or /dynamic, prefetch requests
-                 * do not have access to these cookies, and will always be matched to /static. This rewrite rule will ensure that
-                 * when the fern_token cookie is present, the /static route will be rewritten to /dynamic
-                 */
-                {
-                    source: "/_next/data/:hash/static/:host/:path*",
-                    has: [HAS_FERN_TOKEN],
-                    destination: "/_next/data/:hash/dynamic/:host/:path*",
-                },
-                /**
-                 * This rewrite rule will ensure that when the `_fern_docs_preview` cookie is present, the /_next/data route will be
-                 * rewritten to the host specified in the cookie. This is necessary for the PR Preview feature to work.
-                 */
-                {
-                    source: "/_next/data/:hash/:subpath/:oldhost/:path*",
-                    has: [HAS_FERN_DOCS_PREVIEW],
-                    destination: "/_next/data/:hash/:subpath/:host/:path*",
-                },
-            ],
-            afterFiles: [
-                { source: "/_next/:path*", destination: "/_next/:path*" },
-                { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
-                { source: "/robots.txt", destination: "/api/fern-docs/robots.txt" },
-                { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
-                { source: "/:path*.rss", destination: "/api/fern-docs/changelog?format=rss&path=:path*" },
-                { source: "/:path*.atom", destination: "/api/fern-docs/changelog?format=atom&path=:path*" },
+    //     const HAS_FERN_TOKEN = { type: "cookie", key: "fern_token" };
+    //     const THREW_ERROR = { type: "query", key: "error", value: "true" };
+    //     return {
+    //         beforeFiles: [
+    //             /**
+    //              * while /_next/static routes are handled by the assetPrefix config, we need to handle the /_next/data routes separately
+    //              * when the user is hovering over a link, Next.js will prefetch the data route using `/_next/data` routes. We intercept
+    //              * the prefetch request at packages/ui/app/src/docs/NextApp.tsx and append the customer-defined basepath:
+    //              *
+    //              * i.e. /base/path/_next/data/*
+    //              *
+    //              * This rewrite rule will ensure that /base/path/_next/data/* is rewritten to /_next/data/* on the server
+    //              */
+    //             { source: "/:prefix*/_next/:path*", destination: "/_next/:path*" },
+    //             { source: "/:prefix*/api/fern-docs/:path*", destination: "/api/fern-docs/:path*" },
+    //             { source: "/:prefix*/robots.txt", destination: "/api/fern-docs/robots.txt" },
+    //             { source: "/:prefix*/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
+    //             /**
+    //              * Since we use cookie rewrites to determine if the path should be rewritten to /static or /dynamic, prefetch requests
+    //              * do not have access to these cookies, and will always be matched to /static. This rewrite rule will ensure that
+    //              * when the fern_token cookie is present, the /static route will be rewritten to /dynamic
+    //              */
+    //             {
+    //                 source: "/_next/data/:hash/static/:host/:path*",
+    //                 has: [HAS_FERN_TOKEN],
+    //                 destination: "/_next/data/:hash/dynamic/:host/:path*",
+    //             },
+    //             /**
+    //              * This rewrite rule will ensure that when the `_fern_docs_preview` cookie is present, the /_next/data route will be
+    //              * rewritten to the host specified in the cookie. This is necessary for the PR Preview feature to work.
+    //              */
+    //             {
+    //                 source: "/_next/data/:hash/:subpath/:oldhost/:path*",
+    //                 has: [HAS_FERN_DOCS_PREVIEW],
+    //                 destination: "/_next/data/:hash/:subpath/:host/:path*",
+    //             },
+    //         ],
+    //         afterFiles: [
+    //             { source: "/_next/:path*", destination: "/_next/:path*" },
+    //             { source: "/_vercel/:path*", destination: "/_vercel/:path*" },
+    //             { source: "/robots.txt", destination: "/api/fern-docs/robots.txt" },
+    //             { source: "/sitemap.xml", destination: "/api/fern-docs/sitemap.xml" },
+    //             { source: "/:path*.rss", destination: "/api/fern-docs/changelog?format=rss&path=:path*" },
+    //             { source: "/:path*.atom", destination: "/api/fern-docs/changelog?format=atom&path=:path*" },
 
-                // backwards compatibility with currently deployed FDR
-                { source: "/api/revalidate-all", destination: "/api/fern-docs/revalidate-all" },
-            ],
-            fallback: [
-                /**
-                 * The following rewrite rules are used to determine if the path should be rewritten to /static or /dynamic
-                 * On the presence of fern_token, or if the query contains error=true, the path will be rewritten to /dynamic
-                 */
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, HAS_FERN_TOKEN],
-                    source: "/:path*",
-                    destination: "/dynamic/:host/:path*",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, THREW_ERROR],
-                    source: "/:path*",
-                    destination: "/dynamic/:host/:path*",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE],
-                    source: "/:path*",
-                    destination: "/static/:host/:path*",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, HAS_FERN_TOKEN],
-                    source: "/",
-                    destination: "/dynamic/:host/",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE, THREW_ERROR],
-                    source: "/",
-                    destination: "/dynamic/:host/",
-                })),
-                ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
-                    has: [HOST_RULE],
-                    source: "/",
-                    destination: "/static/:host/",
-                })),
-            ],
-        };
-    },
+    //             // backwards compatibility with currently deployed FDR
+    //             { source: "/api/revalidate-all", destination: "/api/fern-docs/revalidate-all" },
+    //         ],
+    //         fallback: [
+    //             /**
+    //              * The following rewrite rules are used to determine if the path should be rewritten to /static or /dynamic
+    //              * On the presence of fern_token, or if the query contains error=true, the path will be rewritten to /dynamic
+    //              */
+    //             ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
+    //                 has: [HOST_RULE, HAS_FERN_TOKEN],
+    //                 source: "/:path*",
+    //                 destination: "/dynamic/:host/:path*",
+    //             })),
+    //             ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
+    //                 has: [HOST_RULE, THREW_ERROR],
+    //                 source: "/:path*",
+    //                 destination: "/dynamic/:host/:path*",
+    //             })),
+    //             ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
+    //                 has: [HOST_RULE],
+    //                 source: "/:path*",
+    //                 destination: "/static/:host/:path*",
+    //             })),
+    //             ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
+    //                 has: [HOST_RULE, HAS_FERN_TOKEN],
+    //                 source: "/",
+    //                 destination: "/dynamic/:host/",
+    //             })),
+    //             ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
+    //                 has: [HOST_RULE, THREW_ERROR],
+    //                 source: "/",
+    //                 destination: "/dynamic/:host/",
+    //             })),
+    //             ...WITH_MATCHED_HOST.map((HOST_RULE) => ({
+    //                 has: [HOST_RULE],
+    //                 source: "/",
+    //                 destination: "/static/:host/",
+    //             })),
+    //         ],
+    //     };
+    // },
     images: {
         remotePatterns: DOCS_FILES_ALLOWLIST,
         path: cdnUri != null ? `${cdnUri.href}_next/image` : undefined,
