@@ -1,8 +1,17 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernButton, FernCard, FernCollapse, FernDropdown, FernInput, FernSegmentedControl } from "@fern-ui/components";
+import {
+    FernButton,
+    FernCard,
+    FernCollapse,
+    FernDropdown,
+    FernInput,
+    FernSegmentedControl,
+    FernTooltip,
+    FernTooltipProvider,
+} from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { Key, User } from "iconoir-react";
+import { HelpCircle, Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
@@ -194,11 +203,11 @@ function FoundOAuthReferencedEndpointForm({
                 />
             </li>
 
-            {value.selectedInputMethod === "credentials" && !value.isLoggedIn ? (
+            {value.selectedInputMethod === "credentials" ? (
                 <>
                     <li className="-mx-4 space-y-2 p-4">
                         <label className="inline-flex flex-wrap items-baseline">
-                            <span className="font-mono text-sm">{"OAuth Client Credentials login"}</span>
+                            <span className="font-mono text-sm">OAuth Client Credentials Login</span>
                         </label>
                         <PlaygroundEndpointForm
                             endpoint={oAuthEndpoint}
@@ -209,74 +218,57 @@ function FoundOAuthReferencedEndpointForm({
                         />
                     </li>
                     {displayFailedLogin && (
-                        <li className="-mx-4 space-y-2 p-4 py-0">
-                            <span className="font-mono text-sm text-red-600">
-                                Failed to login with the provided credentials
-                            </span>
+                        <Callout intent="error">Failed to login with the provided credentials</Callout>
+                    )}
+                    {value.isLoggedIn && (
+                        <li className="-mx-4 space-y-2 p-4 pt-0">
+                            <FernTooltipProvider>
+                                <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2">
+                                    <label className="inline-flex items-baseline gap-2 truncate">
+                                        <span className="font-mono text-sm inline-flex">
+                                            Generated OAuth Token
+                                            <FernTooltip content="This bearer token was generated from an OAuth API call, and as a result cannot be edited">
+                                                <HelpCircle className="t-muted size-4 self-center ml-2" />
+                                            </FernTooltip>
+                                        </span>
+                                    </label>
+                                </div>
+                            </FernTooltipProvider>
+                            <PasswordInputGroup value={value.accessToken} disabled={true} className="t-muted" />
                         </li>
+                    )}
+                    {value.isLoggedIn && value.accessToken !== value.loggedInStartingToken && (
+                        <Callout intent="warning">
+                            The bearer token is no longer valid. Please refresh it by clicking the button below
+                        </Callout>
                     )}
                 </>
             ) : (
                 <>
                     <li className="-mx-4 space-y-2 p-4">
                         <label className="inline-flex flex-wrap items-baseline">
-                            <span className="font-mono text-sm">Bearer token</span>
+                            <span className="font-mono text-sm">User Supplied Bearer Token</span>
                         </label>
 
-                        <div>
-                            <PasswordInputGroup
-                                onValueChange={(newValue: string) =>
-                                    setValue((prev) => ({ ...prev, accessToken: newValue }))
-                                }
-                                value={value.accessToken}
-                                autoComplete="off"
-                                data-1p-ignore="true"
-                                disabled={disabled}
-                            />
-                        </div>
+                        <PasswordInputGroup
+                            onValueChange={(newValue: string) =>
+                                setValue((prev) => ({ ...prev, userSuppliedAccessToken: newValue }))
+                            }
+                            value={value.userSuppliedAccessToken}
+                            autoComplete="off"
+                            data-1p-ignore="true"
+                            disabled={disabled}
+                        />
                     </li>
-                    {value.isLoggedIn && (
-                        <>
-                            {value.accessToken !== value.loggedInStartingToken ? (
-                                value.selectedInputMethod === "credentials" && (
-                                    <Callout intent="warning">
-                                        The bearer token has been changed since the last login. Please refresh the
-                                        token.
-                                    </Callout>
-                                )
-                            ) : (
-                                <Callout intent="info">
-                                    This bearer token was generated as a result of Client Credential login
-                                </Callout>
-                            )}
-                        </>
-                    )}
                 </>
             )}
-            <li className="flex">
-                {value.isLoggedIn && value.selectedInputMethod === "credentials" && (
+            <li className="flex justify-end pt-4">
+                {value.selectedInputMethod === "credentials" && (
                     <FernButton
-                        text="Logout"
-                        intent="danger"
-                        onClick={() => {
-                            setValue((prev) => ({
-                                ...prev,
-                                selectedInputMethod: "credentials",
-                                accessToken: "",
-                                isLoggedIn: false,
-                            }));
-                        }}
-                        disabled={disabled}
-                    />
-                )}
-
-                {value.selectedInputMethod !== "token" && (
-                    <FernButton
-                        text={value.isLoggedIn ? "Refresh token" : "Login"}
+                        text={`${value.isLoggedIn ? "Refresh" : "Fetch"} Bearer Token`}
                         intent="primary"
                         onClick={oAuthClientCredentialLogin}
                         disabled={disabled}
-                        className="ml-auto"
                     />
                 )}
             </li>
@@ -586,7 +578,13 @@ function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState): bool
         basicAuth: () =>
             !isEmpty(authState.basicAuth?.username.trim()) && !isEmpty(authState.basicAuth?.password.trim()),
         header: (header) => !isEmpty(authState.header?.headers[header.headerWireValue]?.trim()),
-        oAuth: () => !isEmpty(authState.oauth?.accessToken.trim()),
+        oAuth: () => {
+            const authToken =
+                authState.oauth?.selectedInputMethod === "credentials"
+                    ? authState.oauth?.accessToken
+                    : authState.oauth?.userSuppliedAccessToken;
+            return authToken ? !isEmpty(authToken.trim()) : false;
+        },
         _other: () => false,
     });
 }

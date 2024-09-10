@@ -149,7 +149,10 @@ export function buildAuthHeaders(
                     clientCredentials: (oAuthClientCredentials) => {
                         visitDiscriminatedUnion(oAuthClientCredentials.value)._visit({
                             referencedEndpoint: (oAuthClientCredentialsReferencedEndpoint) => {
-                                const token = authState.oauth?.accessToken ?? "";
+                                const token =
+                                    authState.oauth?.selectedInputMethod === "credentials"
+                                        ? authState.oauth?.accessToken
+                                        : authState.oauth?.userSuppliedAccessToken ?? "";
 
                                 if (oAuthClientCredentialReferencedEndpointLoginFlowProps && token) {
                                     const {

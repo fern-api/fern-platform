@@ -32,6 +32,7 @@ export const PlaygroundAuthStateOAuthSchema = z.strictObject({
     isLoggingIn: z.boolean(),
     selectedInputMethod: z.enum(["credentials", "token"]),
     loggedInStartingToken: z.string(),
+    userSuppliedAccessToken: z.string(),
 });
 export type PlaygroundAuthStateOAuth = z.infer<typeof PlaygroundAuthStateOAuthSchema>;
 export const PLAYGROUND_AUTH_STATE_OAUTH_INITIAL: PlaygroundAuthStateOAuth = {
@@ -48,6 +49,7 @@ export const PLAYGROUND_AUTH_STATE_OAUTH_INITIAL: PlaygroundAuthStateOAuth = {
     isLoggingIn: false,
     selectedInputMethod: "credentials",
     loggedInStartingToken: "",
+    userSuppliedAccessToken: "",
 };
 
 export const PlaygroundAuthStateSchema = z.strictObject({
