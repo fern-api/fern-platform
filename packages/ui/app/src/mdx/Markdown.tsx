@@ -34,7 +34,7 @@ export const Markdown = memo<Markdown.Props>(({ title, mdx, className, size, fal
                 "prose-lg": size === "lg",
             })}
         >
-            {title != null && <h1>{title}</h1>}
+            {title}
             <MdxContent mdx={mdx} fallback={fallback} />
         </div>
     );
