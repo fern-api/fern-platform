@@ -19,6 +19,7 @@ export interface FernSyntaxHighlighterProps {
     highlightStyle?: "highlight" | "focus";
     viewportRef?: React.RefObject<ScrollToHandle>;
     maxLines?: number;
+    wordWrap?: boolean;
 }
 
 export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighlighterProps>((props, ref) => {
