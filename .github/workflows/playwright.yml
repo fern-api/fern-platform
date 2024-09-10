@@ -1,7 +1,5 @@
 name: Playwright Tests
-on:
-  push:
-    branches: [main]
+on: pull_request
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -11,25 +9,43 @@ env:
   WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
   # HUME_API_KEY: ${{ secrets.HUME_API_KEY }}
 
-jobs: {}
-  # test:
-  #   timeout-minutes: 60
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
+jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Install
-  #       uses: ./.github/actions/install
+      - name: Install
+        uses: ./.github/actions/install
 
-  #     - name: Install Playwright Browsers
-  #       run: pnpm exec playwright install --with-deps
+      - name: Compile and build
+        run: pnpm turbo compile codegen build
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
+          WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
 
-  #     - name: Run Playwright tests
-  #       run: pnpm exec playwright test --debug
+      - name: Build next bundle
+        run: cd packages/ui/local-preview-bundle; pnpm next build
 
-  #     - uses: actions/upload-artifact@v4
-  #       if: always()
-  #       with:
-  #         name: playwright-report
-  #         path: playwright-report/
-  #         retention-days: 30
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Install fern-dev API
+        env:
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+          npm install -g @fern-api/fern-api-dev
+
+      - name: Run Playwright tests
+        run: pnpm exec playwright test playwright/fixtures
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

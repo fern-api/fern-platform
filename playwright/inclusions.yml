@@ -1,4 +1,4 @@
-global-inclusions:
+existence:
   - docs.trykeet.com
   - docs.argolabs.ai
   - docs.conductorquantum.com
@@ -45,7 +45,7 @@ global-inclusions:
   - dev.documentation.sayari.com
   - fern.assemblyai.com
 
-favicon-inclusions:
+favicon:
   - docs.argolabs.ai
   - docs.conductorquantum.com
   - developers.gappify.com
@@ -57,14 +57,10 @@ favicon-inclusions:
   - www.intern.mavenagi.com
   - docs.schematichq.com
   - plantstore.dev
-  - www.plantstore.dev
   - docs.boundaryml.com
-  - docs.qlty.ai
   - docs.rightbrain.ai
   - docs.getkard.com
   - docs.syndicate.io
-  - docs.qlty.us
-  - hume.ferndocs.com
   - docs.stack-auth.com
   - gemini2.ferndocs.com
   - docs.darwincloud.xyz
@@ -77,7 +73,6 @@ favicon-inclusions:
   - docs.reka.ai
   - docs.aiaplatform.com.au
   - docs.anterior.com
-  - developers.beehiiv.com
   - docs.scorecard.io
   - fern.humanloop.com
   - docs.goldenbasis.com
