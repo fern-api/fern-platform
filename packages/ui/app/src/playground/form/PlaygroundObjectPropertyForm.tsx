@@ -122,10 +122,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                 label: property.key,
                 helperText: renderTypeShorthandRoot(property.valueShape, types),
                 labelClassName: "font-mono",
-                tooltip:
-                    property.description != null ? (
-                        <Markdown className="text-xs" mdx={property.description} />
-                    ) : undefined,
+                tooltip: property.description != null ? <Markdown size="xs" mdx={property.description} /> : undefined,
             }),
         );
 

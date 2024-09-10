@@ -32,6 +32,7 @@ const FEATURE_FLAGS = [
     "voice-id-playground-form" as const,
     "cohere-theme" as const,
     "file-forge-hack-enabled" as const,
+    "hide-404-page" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -88,6 +89,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const hasVoiceIdPlaygroundForm = checkDomainMatchesCustomers(domain, config["voice-id-playground-form"]);
         const isCohereTheme = checkDomainMatchesCustomers(domain, config["cohere-theme"]);
         const isFileForgeHackEnabled = checkDomainMatchesCustomers(domain, config["file-forge-hack-enabled"]);
+        const is404PageHidden = checkDomainMatchesCustomers(domain, config["hide-404-page"]);
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -116,6 +118,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             hasVoiceIdPlaygroundForm,
             isCohereTheme,
             isFileForgeHackEnabled,
+            is404PageHidden,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -147,6 +150,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             hasVoiceIdPlaygroundForm: false,
             isCohereTheme: false,
             isFileForgeHackEnabled: false,
+            is404PageHidden: false,
         };
     }
 }

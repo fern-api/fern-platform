@@ -1,7 +1,7 @@
 import cn from "clsx";
 import { MonospaceText } from "../../../components/MonospaceText";
+import { Markdown } from "../../../mdx/Markdown";
 import { ResolvedEnumValue } from "../../../resolver/types";
-import { ApiPageDescription } from "../../ApiPageDescription";
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
 
 export declare namespace EnumValue {
@@ -20,7 +20,7 @@ export const EnumValue: React.FC<EnumValue.Props> = ({ enumValue }) => {
             })}
         >
             <MonospaceText className="t-default text-sm">{`"${enumValue.value}"`}</MonospaceText>
-            <ApiPageDescription className="text-sm" description={enumValue.description} isMarkdown={true} />
+            <Markdown size="sm" mdx={enumValue.description} />
         </div>
     );
 };

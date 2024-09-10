@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { ReactElement, memo, useRef } from "react";
 import { useHref } from "../hooks/useHref";
 import { useShouldLazyRender } from "../hooks/useShouldLazyRender";
-import { MdxContent } from "../mdx/MdxContent";
+import { Markdown } from "../mdx/Markdown";
 import { ResolvedPageMetadata } from "../resolver/types";
 import { useApiPageCenterElement } from "./useApiPageCenterElement";
 
@@ -23,7 +23,7 @@ const ApiSectionMarkdownContent = ({ page, hideBottomSeparator }: ApiSectionMark
             ref={ref}
             id={useHref(page.slug)}
         >
-            <MdxContent mdx={page.markdown} />
+            <Markdown mdx={page.markdown} />
         </div>
     );
 };

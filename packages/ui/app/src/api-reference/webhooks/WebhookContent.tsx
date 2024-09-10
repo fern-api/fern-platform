@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import { memo, useCallback, useRef } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
+import { Markdown } from "../../mdx/Markdown";
 import { ResolvedTypeDefinition, ResolvedWebhookDefinition, getParameterDescription } from "../../resolver/types";
-import { ApiPageDescription } from "../ApiPageDescription";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -62,11 +62,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                         <FernBreadcrumbs breadcrumbs={webhook.breadcrumbs} />
                         <h1 className="my-0 inline-block leading-tight">{webhook.title}</h1>
                     </div>
-                    <ApiPageDescription
-                        className="text-base leading-6"
-                        description={webhook.description}
-                        isMarkdown={true}
-                    />
+                    <Markdown className="leading-6" mdx={webhook.description} />
                     {webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
                             <div className="flex max-w-full flex-1 flex-col gap-12">

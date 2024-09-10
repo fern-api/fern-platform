@@ -1,7 +1,7 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import type { ReactElement, ReactNode } from "react";
-import { MdxContent } from "../mdx/MdxContent";
+import { Markdown } from "../mdx/Markdown";
 import type { BundledMDX } from "../mdx/types";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
 
@@ -20,11 +20,12 @@ export const PageHeader = ({ breadcrumbs, title, subtitle }: PageHeaderProps): R
                 <h1 className="fern-page-heading">{title}</h1>
             </div>
 
-            {subtitle != null && (
-                <div className="prose prose-lg mt-2 leading-7 prose-p:t-muted dark:prose-invert">
-                    {isBundledMDX(subtitle) ? <MdxContent mdx={subtitle} /> : subtitle}
-                </div>
-            )}
+            <Markdown
+                mdx={isBundledMDX(subtitle) ? subtitle : undefined}
+                fallback={!isBundledMDX(subtitle) ? subtitle : undefined}
+                size="lg"
+                className="mt-2 leading-7 prose-p:t-muted"
+            />
         </header>
     );
 };

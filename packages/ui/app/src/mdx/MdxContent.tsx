@@ -1,13 +1,14 @@
 import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
-import { memo } from "react";
+import React, { memo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FrontmatterContextProvider } from "../contexts/frontmatter";
 import type { BundledMDX } from "./types";
 
 export declare namespace MdxContent {
     export interface Props {
-        mdx: BundledMDX;
+        mdx: BundledMDX | undefined;
+        fallback?: React.ReactNode;
     }
 }
 
@@ -22,9 +23,17 @@ const NextMdxRemoteComponent = dynamic(
 );
 
 export const MdxContent = memo<MdxContent.Props>(
-    function MdxContent({ mdx }) {
+    function MdxContent({ mdx, fallback }) {
+        if (
+            mdx == null ||
+            (typeof mdx === "string" && mdx.trim().length === 0) ||
+            (typeof mdx !== "string" && mdx.code.trim().length === 0)
+        ) {
+            return fallback;
+        }
+
         if (typeof mdx === "string") {
-            return <span className="whitespace-pre-wrap">{mdx}</span>;
+            return mdx;
         }
 
         const MdxComponent = mdx.engine === "mdx-bundler" ? MdxBundlerComponent : NextMdxRemoteComponent;
@@ -39,6 +48,6 @@ export const MdxContent = memo<MdxContent.Props>(
     },
     (prev, next) =>
         typeof next.mdx !== "string" && typeof prev.mdx !== "string"
-            ? next.mdx.code === prev.mdx.code && isEqual(next.mdx.frontmatter, prev.mdx.frontmatter)
-            : next === prev,
+            ? next.mdx?.code === prev.mdx?.code && isEqual(next.mdx?.frontmatter, prev.mdx?.frontmatter)
+            : next.mdx === prev.mdx || next.fallback === prev.fallback,
 );

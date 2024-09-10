@@ -66,10 +66,7 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                     label: variant.displayName ?? labelFallback,
                     value: idx.toString(),
                     // todo: handle availability
-                    tooltip:
-                        variant.description != null ? (
-                            <Markdown className="text-xs" mdx={variant.description} />
-                        ) : undefined,
+                    tooltip: variant.description != null ? <Markdown size="xs" mdx={variant.description} /> : undefined,
                 };
             }),
         [undiscriminatedUnion.variants],

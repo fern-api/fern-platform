@@ -7,11 +7,11 @@ import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { DOCS_LAYOUT_ATOM } from "./layout";
 import {
-    CURRENT_NODE_ATOM,
     CURRENT_NODE_ID_ATOM,
     NAVIGATION_NODES_ATOM,
     RESOLVED_PATH_ATOM,
     SIDEBAR_ROOT_NODE_ATOM,
+    TABS_ATOM,
 } from "./navigation";
 import { THEME_ATOM } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
@@ -267,27 +267,28 @@ export const useDismissSidebar = (): (() => void) => {
     });
 };
 
-// in certain cases, the sidebar should be completely removed from the DOM.
-export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
-    // sidebar is always enabled on mobile, because of search + tabs
-    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
-    if (isMobileSidebarEnabled) {
-        return true;
-    }
+export const FORCE_ENABLE_SIDEBAR_ATOM = atom((get) => {
+    const layout = get(DOCS_LAYOUT_ATOM);
 
     // sidebar is always enabled if the header is disabled
-    const layout = get(DOCS_LAYOUT_ATOM);
     if (layout?.disableHeader) {
         return false;
     }
 
     // sidebar is always enabled if vertical tabs are enabled
     if (layout?.tabsPlacement !== "HEADER") {
-        return false;
+        return get(TABS_ATOM).length > 0;
     }
 
-    // sidebar can be null when viewing a tabbed changelog
+    return false;
+});
+
+export const DISABLE_SIDEBAR_ATOM = atom((get) => {
+    if (get(FORCE_ENABLE_SIDEBAR_ATOM)) {
+        return false;
+    }
     const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
+
     if (sidebar == null) {
         return true;
     }
@@ -305,6 +306,27 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
         return true;
     }
 
+    return false;
+});
+
+// in certain cases, the sidebar should be completely removed from the DOM.
+export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
+    // sidebar is always enabled on mobile, because of search + tabs
+    const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
+    if (isMobileSidebarEnabled) {
+        return true;
+    }
+
+    const isForceEnableSidebar = get(FORCE_ENABLE_SIDEBAR_ATOM);
+    if (isForceEnableSidebar) {
+        return false;
+    }
+
+    const isSidebarDisabled = get(DISABLE_SIDEBAR_ATOM);
+    if (isSidebarDisabled) {
+        return true;
+    }
+
     // always hide sidebar on changelog entries
     // this may be a bit too aggressive, but it's a good starting point
     const content = get(RESOLVED_PATH_ATOM);
@@ -318,12 +340,6 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
         if (layout === "page" || layout === "custom") {
             return true;
         }
-    }
-
-    const node = get(CURRENT_NODE_ATOM);
-
-    if (node?.hidden) {
-        return true;
     }
 
     return false;

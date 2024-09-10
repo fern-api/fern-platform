@@ -253,17 +253,17 @@ async function convertDocsToDocsPageProps({
         // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
 
         // eslint-disable-next-line no-console
-        // console.error(`Failed to resolve navigation for ${url}`);
-        // if (node.redirect != null) {
-        //     return {
-        //         // urljoin is bizarre: urljoin("/", "") === "", urljoin("/", "/") === "/", urljoin("/", "/a") === "/a"
-        //         // "" || "/" === "/"
-        //         redirect: {
-        //             destination: encodeURI(urljoin("/", node.redirect) || "/"),
-        //             permanent: false,
-        //         },
-        //     };
-        // }
+        console.error(`Failed to resolve navigation for ${url}`);
+        if (featureFlags.is404PageHidden && node.redirect != null) {
+            return {
+                // urljoin is bizarre: urljoin("/", "") === "", urljoin("/", "/") === "/", urljoin("/", "/a") === "/a"
+                // "" || "/" === "/"
+                redirect: {
+                    destination: encodeURI(urljoin("/", node.redirect) || "/"),
+                    permanent: false,
+                },
+            };
+        }
 
         return { notFound: true };
     }

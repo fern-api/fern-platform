@@ -136,7 +136,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                         <FernTooltip
                                             content={
                                                 apiDefinition?.description != null ? (
-                                                    <Markdown className="text-xs" mdx={apiDefinition.description} />
+                                                    <Markdown size="xs" mdx={apiDefinition.description} />
                                                 ) : undefined
                                             }
                                             side="right"
@@ -170,7 +170,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                         <FernTooltip
                                             content={
                                                 apiDefinition?.description != null ? (
-                                                    <Markdown className="text-xs" mdx={apiDefinition.description} />
+                                                    <Markdown size="xs" mdx={apiDefinition.description} />
                                                 ) : undefined
                                             }
                                             side="right"
