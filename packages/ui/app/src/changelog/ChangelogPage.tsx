@@ -64,7 +64,21 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                                                         <div className="t-muted text-base mb-8 xl:hidden md:hidden">
                                                             <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
                                                         </div>
-                                                        <Markdown title={title} mdx={page} />
+                                                        <Markdown
+                                                            title={
+                                                                title != null ? (
+                                                                    <h2>
+                                                                        <FernLink
+                                                                            href={toHref(entry.slug)}
+                                                                            className="no-underline"
+                                                                        >
+                                                                            {title}
+                                                                        </FernLink>
+                                                                    </h2>
+                                                                ) : undefined
+                                                            }
+                                                            mdx={page}
+                                                        />
                                                     </div>
                                                 </>
                                             ) : (
@@ -73,7 +87,21 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                                                         <div className="t-muted text-base mb-8 xl:hidden">
                                                             <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
                                                         </div>
-                                                        <Markdown title={title} mdx={page} />
+                                                        <Markdown
+                                                            title={
+                                                                title != null ? (
+                                                                    <h2>
+                                                                        <FernLink
+                                                                            href={toHref(entry.slug)}
+                                                                            className="no-underline"
+                                                                        >
+                                                                            {title}
+                                                                        </FernLink>
+                                                                    </h2>
+                                                                ) : undefined
+                                                            }
+                                                            mdx={page}
+                                                        />
                                                     </div>
                                                     <div className="-mt-2 w-72 pl-4 text-right max-xl:hidden">
                                                         <span className="t-muted text-base sticky top-header-offset-padded">
