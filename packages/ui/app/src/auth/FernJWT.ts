@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify } from "jose";
-import { AuthEdgeConfig, FernUser, FernUserSchema } from "./types";
+import { FernUser, FernUserSchema } from "./types";
 
 // "user" is reserved for workos
 
@@ -18,14 +18,6 @@ export async function verifyFernJWT(token: string, secret?: string, issuer?: str
         issuer: issuer ?? "https://buildwithfern.com",
     });
     return FernUserSchema.parse(verified.payload.fern);
-}
-
-export async function verifyFernJWTConfig(token: string, authConfig: AuthEdgeConfig | undefined): Promise<FernUser> {
-    if (authConfig?.type === "basic_token_verification") {
-        return verifyFernJWT(token, authConfig.secret, authConfig.issuer);
-    } else {
-        return verifyFernJWT(token);
-    }
 }
 
 const encoder = new TextEncoder();

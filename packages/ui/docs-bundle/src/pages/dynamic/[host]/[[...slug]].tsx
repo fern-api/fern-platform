@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next";
 import { ComponentProps } from "react";
 import { convertStaticToServerSidePropsResult } from "../../../utils/convertStaticToServerSidePropsResult";
 import { getDocsPageProps, getDynamicDocsPageProps } from "../../../utils/getDocsPageProps";
-import { getNextPublicDocsDomain } from "../../../utils/xFernHost";
 
 export default DocsPage;
 
@@ -20,7 +19,7 @@ const getDocsServerSideProps: GetServerSideProps<ComponentProps<typeof DocsPage>
     req,
     res,
 }) => {
-    const xFernHost = getNextPublicDocsDomain() ?? (params.host as string);
+    const xFernHost = process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? (params.host as string);
     // eslint-disable-next-line no-console
     console.log(`[getDocsServerSideProps] host=${xFernHost}`);
     const slugArray = params.slug == null ? [] : Array.isArray(params.slug) ? params.slug : [params.slug];

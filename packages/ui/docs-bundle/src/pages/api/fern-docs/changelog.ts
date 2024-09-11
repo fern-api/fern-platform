@@ -5,6 +5,7 @@ import { assertNever } from "@fern-ui/core-utils";
 import { getFrontmatter } from "@fern-ui/ui";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { getXFernHostNode } from "../../../utils/xFernHost";
@@ -50,7 +51,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
     const node = collector.slugMap.get(slug);
 
     if (node?.type !== "changelog") {
-        return res.status(404).end();
+        return new NextResponse(null, { status: 404 });
     }
 
     const link = `https://${xFernHost}/${node.slug}`;
