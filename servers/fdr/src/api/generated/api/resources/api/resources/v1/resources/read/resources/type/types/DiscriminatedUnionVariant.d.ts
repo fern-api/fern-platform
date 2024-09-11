@@ -4,5 +4,6 @@
 import * as FernRegistry from "../../../../../../../../../index";
 export interface DiscriminatedUnionVariant extends FernRegistry.api.v1.read.WithDescription, FernRegistry.api.v1.read.WithAvailability {
     discriminantValue: string;
+    displayName?: string;
     additionalProperties: FernRegistry.api.v1.read.ObjectType;
 }

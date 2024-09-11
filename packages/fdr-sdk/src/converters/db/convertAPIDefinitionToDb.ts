@@ -646,6 +646,7 @@ function transformDiscriminatedVariant({
     return {
         description: writeShape.description,
         availability: writeShape.availability,
+        displayName: writeShape.displayName,
         // htmlDescription,
         // descriptionContainsMarkdown: true,
         discriminantValue: writeShape.discriminantValue,

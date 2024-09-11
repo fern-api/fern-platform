@@ -63,7 +63,7 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
             discriminatedUnion.variants.map(
                 (variant): FernDropdown.Option => ({
                     type: "value",
-                    label: titleCase(variant.discriminantValue),
+                    label: variant.displayName ?? titleCase(variant.discriminantValue),
                     value: variant.discriminantValue,
                     // todo: handle availability
                     tooltip: variant.description != null ? <Markdown size="xs" mdx={variant.description} /> : undefined,

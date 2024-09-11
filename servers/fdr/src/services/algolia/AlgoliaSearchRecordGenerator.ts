@@ -695,7 +695,7 @@ export class AlgoliaSearchRecordGenerator {
                     },
                     discriminatedUnion: (value) => {
                         value.variants.forEach((variant) => {
-                            contents.push(`#### ${titleCase(variant.discriminantValue)}\n`);
+                            contents.push(`#### ${variant.displayName ?? titleCase(variant.discriminantValue)}\n`);
                             if (variant.description != null) {
                                 contents.push(variant.description);
                             }
