@@ -112,12 +112,6 @@ export const middleware: NextMiddleware = async (request) => {
     const isDynamic = isLoggedIn || hasError;
 
     /**
-     * Rewrite all other requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]]
-     */
-
-    nextUrl.pathname = getPageRoute(!isDynamic, xFernHost, pathname);
-
-    /**
      * Mock the /_next/data/... request to the corresponding page route
      */
     if (request.nextUrl.pathname.includes("/_next/data/")) {
@@ -158,6 +152,8 @@ export const middleware: NextMiddleware = async (request) => {
     /**
      * Rewrite all other requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]]
      */
+
+    nextUrl.pathname = getPageRoute(!isDynamic, xFernHost, pathname);
     return NextResponse.rewrite(nextUrl, { request: { headers } });
 };
 
