@@ -112,7 +112,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     const destination = new URL(urlJoin(prefix, xFernHost, removeIndex(pathname)), request.url);
 
     /**
-     * Add __nextDataReq=1 query param to the destination URL if the request is for a nextjs data request
+     * Add __nextDataReq=1 query param to the destination URL if the request is for a nextjs data request.
      */
     if (request.nextUrl.pathname.includes("/_next/data/")) {
         destination.searchParams.set("__nextDataReq", "1");
