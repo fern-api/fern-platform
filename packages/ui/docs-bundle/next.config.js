@@ -52,12 +52,19 @@ const nextConfig = {
          * This flag will prevent nextjs from redirecting to the external URL.
          */
         externalMiddlewareRewritesResolve: true,
+
+        /**
+         * This flag disables middleware effects on the client-side, which breaks
+         * when an external nextjs app is rewriting to this app.
+         */
+        middlewarePrefetch: "strict",
     },
     trailingSlash: isTruthy(process.env.TRAILING_SLASH),
     /**
      * This is required for posthog. See https://posthog.com/docs/advanced/proxy/nextjs-middleware
      */
     skipTrailingSlashRedirect: true,
+
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the
      * multi-tenant nature of this app, we cannot set a global basepath in the next.config.js. As a result, the `_next`
