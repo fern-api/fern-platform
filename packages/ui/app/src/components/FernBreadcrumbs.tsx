@@ -10,14 +10,15 @@ export interface FernBreadcrumbsProps {
 
 export function FernBreadcrumbs({ breadcrumbs }: FernBreadcrumbsProps): ReactElement | null {
     const toHref = useToHref();
+    const filteredBreadcrumbs = breadcrumbs.filter((item) => item.title.trim().length > 0);
 
-    if (breadcrumbs.length === 0) {
+    if (filteredBreadcrumbs.length === 0) {
         return null;
     }
     return (
         <div>
             <span className="fern-breadcrumbs">
-                {breadcrumbs.map((breadcrumb, idx) => (
+                {filteredBreadcrumbs.map((breadcrumb, idx) => (
                     <Fragment key={idx}>
                         {idx > 0 && <NavArrowRight className="fern-breadcrumbs-arrow" />}
                         {breadcrumb.pointsTo != null ? (
