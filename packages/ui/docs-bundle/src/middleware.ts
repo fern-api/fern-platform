@@ -1,15 +1,15 @@
+// eslint-disable-next-line import/no-internal-modules
+import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
 import { NextResponse, type MiddlewareConfig, type NextRequest } from "next/server";
 import urlJoin from "url-join";
 import { extractNextDataPathname } from "./utils/extractNextDataPathname";
 import { rewritePosthog } from "./utils/rewritePosthog";
 import { getXFernHostEdge } from "./utils/xFernHost";
 
-// const NEXT_REWRITE_PATTERN = /^(?!\/_next\/).*(\/_next\/)/;
-
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
 
-export function middleware(request: NextRequest): NextResponse {
+export async function middleware(request: NextRequest): Promise<NextResponse> {
     const xFernHost = getXFernHostEdge(request);
 
     /**
@@ -55,7 +55,37 @@ export function middleware(request: NextRequest): NextResponse {
         );
     }
 
-    const hasFernToken = request.cookies.has("fern_token");
+    const pathname = extractNextDataPathname(request.nextUrl.pathname);
+
+    const fernToken = request.cookies.get("fern_token");
+
+    let user: FernUser | undefined = undefined;
+
+    const authConfig = await getAuthEdgeConfig(xFernHost);
+
+    // TODO: check if the site is SSO protected, and if so, redirect to the SSO provider
+    if (fernToken != null) {
+        try {
+            user = await verifyFernJWTConfig(fernToken.value, authConfig);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Failed to verify fern_token", e);
+        }
+    }
+
+    // using custom auth (e.g. qlty, propexo, etc)
+    if (authConfig != null && authConfig.type === "basic_token_verification" && user == null) {
+        const destination = new URL(authConfig.redirect);
+        destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, pathname));
+        return NextResponse.redirect(destination, { status: 302 });
+    }
+
+    /**
+     * error=true is a hack to force dynamic rendering when `_error.ts` is rendered.
+     *
+     * This is because: sometimes SSR'd markdown content throws an error during rendering,
+     * and we want to show a partially errored page to the user.
+     */
     const hasError = request.nextUrl.searchParams.get("error") === "true";
 
     /**
@@ -63,14 +93,13 @@ export function middleware(request: NextRequest): NextResponse {
      * - static = SSG pages
      * - dynamic = SSR pages (because fern_token is present or there is an error)
      */
-    const isDynamic = hasFernToken || hasError;
+    const isDynamic = user != null || hasError;
     const prefix = isDynamic ? "/dynamic/" : "/static/";
 
     /**
      * Rewrite all other requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]]
      */
-    const pathname = urlJoin(prefix, xFernHost, extractNextDataPathname(request.nextUrl.pathname));
-    const destination = new URL(pathname, request.url);
+    const destination = new URL(urlJoin(prefix, xFernHost, pathname), request.url);
 
     /**
      * Add __nextDataReq=1 query param to the destination URL if the request is for a nextjs data request
