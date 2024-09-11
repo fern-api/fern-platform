@@ -44,6 +44,14 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
+
+        /**
+         * If the rewrite comes from another nextjs middleware,
+         * x-nextjs-rewrite gets set to the external URL, and then nextjs will try to redirect to that URL.
+         *
+         * This flag will prevent nextjs from redirecting to the external URL.
+         */
+        externalMiddlewareRewritesResolve: true,
     },
     trailingSlash: isTruthy(process.env.TRAILING_SLASH),
     /**
