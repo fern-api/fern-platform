@@ -66,8 +66,7 @@ export async function getDocsPageProps(
         destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
         return {
             redirect: {
-                // TODO: this will break if the docs tenant uses basepaths
-                destination: `/api/fern-docs/redirect?destination=${encodeURIComponent(destination.toString())}`,
+                destination: destination.toString(),
                 permanent: false,
             },
         };
@@ -129,7 +128,7 @@ export async function getDynamicDocsPageProps(
                 destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
                 return {
                     redirect: {
-                        destination: `/api/fern-docs/redirect?destination=${encodeURIComponent(destination.toString())}`,
+                        destination: destination.toString(),
                         permanent: false,
                     },
                 };
