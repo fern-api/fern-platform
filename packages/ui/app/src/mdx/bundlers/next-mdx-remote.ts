@@ -6,7 +6,6 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
-import { captureSentryError } from "../../analytics/sentry";
 import { stringHasMarkdown } from "../common/util";
 import { FernDocsFrontmatter } from "../frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
@@ -103,28 +102,16 @@ export async function serializeMdx(
 
     content = replaceBrokenBrTags(content);
 
-    try {
-        const result = await serialize<Record<string, unknown>, FernDocsFrontmatter>(content, {
-            scope: {},
-            mdxOptions: withDefaultMdxOptions(options),
-            parseFrontmatter: true,
-        });
-        return {
-            engine: "next-mdx-remote",
-            code: result.compiledSource,
-            frontmatter: result.frontmatter,
-            errors: [],
-        };
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+    const result = await serialize<Record<string, unknown>, FernDocsFrontmatter>(content, {
+        scope: {},
+        mdxOptions: withDefaultMdxOptions(options),
+        parseFrontmatter: true,
+    });
 
-        captureSentryError(e, {
-            context: "MDX",
-            errorSource: "maybeSerializeMdxContent",
-            errorDescription: "Failed to serialize MDX content",
-        });
-
-        return content;
-    }
+    return {
+        engine: "next-mdx-remote",
+        code: result.compiledSource,
+        frontmatter: result.frontmatter,
+        errors: [],
+    };
 }

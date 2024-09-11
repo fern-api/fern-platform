@@ -55,97 +55,91 @@ export async function serializeMdx(
         }
     }
 
-    try {
-        const bundled = await bundleMDX<FernDocsFrontmatter>({
-            source: content,
-            files: mapKeys(files ?? {}, (_file, filename) => {
-                if (cwd != null) {
-                    return path.relative(cwd, filename);
-                }
-                return filename;
-            }),
+    const bundled = await bundleMDX<FernDocsFrontmatter>({
+        source: content,
+        files: mapKeys(files ?? {}, (_file, filename) => {
+            if (cwd != null) {
+                return path.relative(cwd, filename);
+            }
+            return filename;
+        }),
 
-            mdxOptions: (o: Options, matter) => {
-                o.remarkRehypeOptions = {
-                    ...o.remarkRehypeOptions,
-                    ...options,
-                    handlers: {
-                        ...o.remarkRehypeOptions?.handlers,
-                        heading: customHeadingHandler,
-                        ...options?.remarkRehypeOptions?.handlers,
-                    },
+        mdxOptions: (o: Options, matter) => {
+            o.remarkRehypeOptions = {
+                ...o.remarkRehypeOptions,
+                ...options,
+                handlers: {
+                    ...o.remarkRehypeOptions?.handlers,
+                    heading: customHeadingHandler,
+                    ...options?.remarkRehypeOptions?.handlers,
+                },
+            };
+
+            const remarkPlugins: PluggableList = [
+                remarkSqueezeParagraphs,
+                remarkGfm,
+                remarkSmartypants,
+                remarkMath,
+                remarkGemoji,
+            ];
+
+            if (options?.remarkPlugins != null) {
+                remarkPlugins.push(...options.remarkPlugins);
+            }
+
+            o.remarkPlugins = [...(o.remarkPlugins ?? []), ...remarkPlugins, ...(options?.remarkPlugins ?? [])];
+
+            const rehypePlugins: PluggableList = [
+                rehypeSqueezeParagraphs,
+                rehypeSlug,
+                rehypeKatex,
+                rehypeFernCode,
+                rehypeFernComponents,
+            ];
+
+            if (options?.rehypePlugins != null) {
+                rehypePlugins.push(...options.rehypePlugins);
+            }
+
+            if (frontmatterDefaults != null) {
+                const opts = {
+                    matter: mergeMatter(matter, frontmatterDefaults),
                 };
+                rehypePlugins.push([rehypeFernLayout, opts]);
+                frontmatter = opts.matter;
+            } else {
+                frontmatter = mergeMatter(matter, frontmatter);
+            }
 
-                const remarkPlugins: PluggableList = [
-                    remarkSqueezeParagraphs,
-                    remarkGfm,
-                    remarkSmartypants,
-                    remarkMath,
-                    remarkGemoji,
-                ];
+            // Always sanitize JSX at the end.
+            // rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
 
-                if (options?.remarkPlugins != null) {
-                    remarkPlugins.push(...options.remarkPlugins);
-                }
+            o.rehypePlugins = [...(o.rehypePlugins ?? []), ...rehypePlugins, ...(options?.rehypePlugins ?? [])];
 
-                o.remarkPlugins = [...(o.remarkPlugins ?? []), ...remarkPlugins, ...(options?.remarkPlugins ?? [])];
+            o.recmaPlugins = [...(o.recmaPlugins ?? []), ...(options?.recmaPlugins ?? [])];
 
-                const rehypePlugins: PluggableList = [
-                    rehypeSqueezeParagraphs,
-                    rehypeSlug,
-                    rehypeKatex,
-                    rehypeFernCode,
-                    rehypeFernComponents,
-                ];
+            o.development = options.development ?? o.development;
 
-                if (options?.rehypePlugins != null) {
-                    rehypePlugins.push(...options.rehypePlugins);
-                }
+            return o;
+        },
 
-                if (frontmatterDefaults != null) {
-                    const opts = {
-                        matter: mergeMatter(matter, frontmatterDefaults),
-                    };
-                    rehypePlugins.push([rehypeFernLayout, opts]);
-                    frontmatter = opts.matter;
-                } else {
-                    frontmatter = mergeMatter(matter, frontmatter);
-                }
+        esbuildOptions: (o) => {
+            o.minify = disableMinify ? false : true;
+            return o;
+        },
+    });
 
-                // Always sanitize JSX at the end.
-                // rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
-
-                o.rehypePlugins = [...(o.rehypePlugins ?? []), ...rehypePlugins, ...(options?.rehypePlugins ?? [])];
-
-                o.recmaPlugins = [...(o.recmaPlugins ?? []), ...(options?.recmaPlugins ?? [])];
-
-                o.development = options.development ?? o.development;
-
-                return o;
-            },
-
-            esbuildOptions: (o) => {
-                o.minify = disableMinify ? false : true;
-                return o;
-            },
+    if (bundled.errors.length > 0) {
+        bundled.errors.forEach((error) => {
+            // eslint-disable-next-line no-console
+            console.error(error);
         });
-
-        if (bundled.errors.length > 0) {
-            bundled.errors.forEach((error) => {
-                // eslint-disable-next-line no-console
-                console.error(error);
-            });
-        }
-
-        return {
-            engine: "mdx-bundler",
-            code: bundled.code,
-            frontmatter,
-            errors: bundled.errors,
-        };
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-        return content;
     }
+
+    return {
+        engine: "mdx-bundler",
+        code: bundled.code,
+        frontmatter,
+        errors: bundled.errors,
+    };
 }

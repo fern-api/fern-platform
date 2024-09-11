@@ -4,7 +4,7 @@ export type { DocsProps, FeatureFlags } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
 export { getApiRouteSupplier } from "./hooks/useApiRoute";
-export { serializeMdx, setMdxBundler } from "./mdx/bundler";
+export { serializeMdx, setMdxBundler, unsafeSerializeMdx } from "./mdx/bundler";
 export { getFrontmatter } from "./mdx/frontmatter";
 export { Stream } from "./playground/Stream";
 export { ProxyRequestSchema } from "./playground/types";
