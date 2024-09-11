@@ -31,7 +31,7 @@ import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
 import { convertStaticToServerSidePropsResult } from "./convertStaticToServerSidePropsResult";
 import { getSeoDisabled } from "./disabledSeo";
-import { isTrailingSlashEnabled } from "./trailingSlash";
+import { conformTrailingSlash, isTrailingSlashEnabled } from "./trailingSlash";
 
 type GetStaticDocsPagePropsResult = GetStaticPropsResult<ComponentProps<typeof DocsPage>>;
 type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;
@@ -188,7 +188,7 @@ async function convertDocsToDocsPageProps({
     if (redirect != null) {
         return {
             redirect: {
-                destination: redirect.destination,
+                destination: conformTrailingSlash(redirect.destination),
                 permanent: redirect.permanent ?? false,
             },
         };
