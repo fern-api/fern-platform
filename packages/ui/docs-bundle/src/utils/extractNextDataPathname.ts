@@ -13,3 +13,7 @@ export function extractNextDataPathname(pathname: string): string {
         pathname
     );
 }
+
+export function removeIndex(pathname: string): string {
+    return pathname.replace(/\/index$/, "");
+}

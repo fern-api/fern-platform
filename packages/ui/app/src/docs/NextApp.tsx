@@ -18,7 +18,6 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
     useInterceptNextDataHref({
         router,
         basePath: pageProps?.baseUrl?.basePath,
-        host: pageProps?.baseUrl?.domain,
     });
 
     return (

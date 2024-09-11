@@ -44,6 +44,7 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
+        middlewarePrefetch: "strict",
     },
     trailingSlash: isTruthy(process.env.TRAILING_SLASH),
     skipTrailingSlashRedirect: true,
