@@ -86,7 +86,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
             })}
         >
             <span className="fern-api-property-key">
-                {titleCase(unionVariant.displayName ?? unionVariant.discriminantValue)}
+                {unionVariant.displayName ?? titleCase(unionVariant.discriminantValue)}
             </span>
             {unionVariant.availability != null && (
                 <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
