@@ -111,6 +111,7 @@ export class ApiTypeResolver {
                             description: await serializeMdx(variant.description, {
                                 files: this.mdxOptions?.files,
                             }),
+                            displayName: variant.displayName,
                             availability: variant.availability,
                         })),
                     ),
