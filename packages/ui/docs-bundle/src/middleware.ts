@@ -4,13 +4,15 @@ import { NextResponse, type MiddlewareConfig, type NextRequest } from "next/serv
 import urlJoin from "url-join";
 import { extractNextDataPathname, removeIndex } from "./utils/extractNextDataPathname";
 import { rewritePosthog } from "./utils/rewritePosthog";
-import { conformTrailingSlash } from "./utils/trailingSlash";
 import { getXFernHostEdge } from "./utils/xFernHost";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
+    // eslint-disable-next-line no-console
+    console.log(request.nextUrl);
+
     const xFernHost = getXFernHostEdge(request);
     const nextUrl = request.nextUrl.clone();
 
@@ -62,12 +64,12 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     /**
      * Redirect to the trailing slash version of the URL if it's missing
      */
-    const conformedPathname = conformTrailingSlash(pathname);
-    if (pathname !== conformedPathname) {
-        nextUrl.pathname = conformedPathname;
-        nextUrl.host = request.headers.get("x-fern-host") ?? nextUrl.host;
-        return NextResponse.redirect(nextUrl, { status: 308 });
-    }
+    // const conformedPathname = conformTrailingSlash(pathname);
+    // if (pathname !== conformedPathname) {
+    //     nextUrl.pathname = conformedPathname;
+    //     nextUrl.host = request.headers.get("x-fern-host") ?? nextUrl.host;
+    //     return NextResponse.redirect(nextUrl, { status: 308 });
+    // }
 
     let user: FernUser | undefined;
     const fernToken = request.cookies.get("fern_token");
