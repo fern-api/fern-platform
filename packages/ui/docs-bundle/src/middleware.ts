@@ -4,7 +4,6 @@ import { NextRequest, NextResponse, type MiddlewareConfig, type NextMiddleware }
 import urlJoin from "url-join";
 import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "./utils/pageRoutes";
-import { conformTrailingSlash } from "./utils/trailingSlash";
 import { getXFernHostEdge } from "./utils/xFernHost";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
@@ -127,26 +126,6 @@ export const middleware: NextMiddleware = async (request) => {
         response.headers.set("x-matched-path", getPageRouteMatch(!isDynamic, buildId));
 
         return response;
-    }
-
-    /**
-     * Ensure that the trailing slash is conformed to environment settings
-     */
-    if (!request.headers.has("x-nextjs-data")) {
-        const conformedPathname = conformTrailingSlash(nextUrl.pathname);
-
-        if (conformedPathname !== nextUrl.pathname) {
-            nextUrl.pathname = conformedPathname;
-
-            const referer = request.headers.get("referer");
-            if (referer != null) {
-                const refererUrl = new URL(referer);
-                nextUrl.host = refererUrl.host;
-                nextUrl.protocol = refererUrl.protocol;
-            }
-
-            return NextResponse.redirect(nextUrl, { status: 308 });
-        }
     }
 
     /**
