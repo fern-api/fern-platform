@@ -487,7 +487,6 @@ export interface ResolvedDiscriminatedUnionShapeVariant extends WithMetadata {
     discriminantValue: string;
     extends: string[];
     properties: ResolvedObjectProperty[];
-    // TODO: make this optional, after finding all type references
     displayName?: string;
 }
 
