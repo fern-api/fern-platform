@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-internal-modules
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
-import { NextResponse, type MiddlewareConfig, type NextMiddleware } from "next/server";
+import { NextRequest, NextResponse, type MiddlewareConfig, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "./utils/pageRoutes";
@@ -130,7 +130,7 @@ export const middleware: NextMiddleware = async (request) => {
      * Mock the /_next/data/... request to the corresponding page route
      */
     if (request.nextUrl.pathname.includes("/_next/data/")) {
-        const buildId = request.nextUrl.buildId ?? extractBuildId(request.nextUrl.pathname) ?? "development";
+        const buildId = getBuildId(request);
         nextUrl.pathname = getPageRoutePath(!isDynamic, buildId, xFernHost, pathname);
 
         const response = NextResponse.rewrite(nextUrl, {
@@ -164,3 +164,11 @@ export const config: MiddlewareConfig = {
         "/((?!api/fern-docs|_next/static|_next/image|favicon.ico).*)",
     ],
 };
+
+function getBuildId(req: NextRequest): string {
+    return (
+        req.nextUrl.buildId ??
+        extractBuildId(req.nextUrl.pathname) ??
+        (process.env.NODE_ENV === "development" ? "development" : "")
+    );
+}
