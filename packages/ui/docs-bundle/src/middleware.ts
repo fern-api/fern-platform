@@ -51,13 +51,14 @@ export function middleware(request: NextRequest): NextResponse {
     }
 
     if (request.nextUrl.pathname.includes("/_next/data/")) {
-        const match = request.nextUrl.pathname.match(/\/_next\/data\/([^/]*)(\/.*).json/);
+        const match =
+            request.nextUrl.pathname.match(/\/_next\/data\/.*\/_next\/data\/([^/]*)(\/.*\.json).json/) ??
+            request.nextUrl.pathname.match(/\/_next\/data\/([^/]*)(\/.*\.json)/);
         const buildId = match?.[1];
         const pathname = match?.[2];
         if (buildId != null && pathname != null) {
-            const nextDataPathname = urlJoin("/static/", xFernHost, pathname);
+            const nextDataPathname = urlJoin("/static/", xFernHost, pathname).replace(".json", "");
             const destination = new URL(nextDataPathname, request.url);
-            // destination.search = request.nextUrl.search;
             destination.searchParams.set("__nextDataReq", "1");
             return NextResponse.rewrite(destination);
         }
@@ -77,12 +78,6 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        {
-            source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-            missing: [
-                { type: "header", key: "next-router-prefetch" },
-                { type: "header", key: "purpose", value: "prefetch" },
-            ],
-        },
+        "/((?!api|_next/static|_next/image|favicon.ico).*)",
     ],
 };
