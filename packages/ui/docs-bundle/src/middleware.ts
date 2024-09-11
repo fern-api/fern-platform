@@ -2,8 +2,8 @@
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
 import { NextResponse, type MiddlewareConfig, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
-import { extractNextDataPathname } from "./utils/extractNextDataPathname";
-import { getPageRoute } from "./utils/pageRoutes";
+import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
+import { getPageRoute, getPageRouteMatch } from "./utils/pageRoutes";
 import { rewritePosthog } from "./utils/rewritePosthog";
 import { getXFernHostEdge } from "./utils/xFernHost";
 
@@ -123,7 +123,14 @@ export const middleware: NextMiddleware = async (request) => {
      * Add __nextDataReq=1 query param to the destination URL if the request is for a nextjs data request.
      */
     if (request.nextUrl.pathname.includes("/_next/data/")) {
+        const buildId = request.nextUrl.buildId ?? extractBuildId(request.nextUrl.pathname);
+
         nextUrl.searchParams.set("__nextDataReq", "1");
+        const response = NextResponse.rewrite(nextUrl);
+        if (buildId != null) {
+            response.headers.set("x-matched-path", getPageRouteMatch(!isDynamic, buildId));
+        }
+        return response;
     }
 
     /**

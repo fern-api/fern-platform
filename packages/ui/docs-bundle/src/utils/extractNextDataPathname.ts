@@ -21,3 +21,7 @@ function removeIndex(pathname: string | undefined): string | undefined {
     }
     return pathname;
 }
+
+export function extractBuildId(pathname: string): string | undefined {
+    return pathname.match(/\/_next\/data\/([^/]+)\//)?.[1];
+}
