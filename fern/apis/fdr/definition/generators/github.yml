@@ -1,0 +1,158 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+docs: Produces an internal schema to easily track and view pull requests across Fern-managed repositories.
+
+imports:
+  commons: ./commons.yml
+
+types:
+  GithubUser:
+    properties:
+      name: string
+      email: string
+      username: string
+
+  GithubTeam:
+    properties:
+      name: string
+      teamId: string
+
+  PullRequestReviewer:
+    union:
+      user: GithubUser
+      team: GithubTeam
+
+  PullRequestState:
+    enum:
+      - open
+      - closed
+      # Technically Github's API only returns open or closed, and merged_at indicates the merge, but we'll add it here for querying convenience.
+      - merged
+
+  PullRequest:
+    properties:
+      id: string
+      author: GithubUser
+      reviewers: list<string>
+      title: string
+      repositoryId: string
+      repositoryFullName: string
+      link: string
+      checks: list<string>
+      state: PullRequestState
+      createdAt: datetime
+      updatedAt: optional<datetime>
+      mergedAt: optional<datetime>
+      closedAt: optional<datetime>
+      repositoryOwner:
+        type: commons.OrganizationId
+        docs: The Fern organization ID of the repository owner.
+
+  OrganizationRepositoryMap:
+    docs: A mapping of organization ID to the repositories that Fern manages for that organization.
+    properties:
+      organizationId: commons.OrganizationId
+      repositoryIds: list<string>
+
+  ListPullRequestsResponse:
+    properties:
+      pullRequests: list<PullRequest>
+
+  ListOrganizationRepositoryMapsResponse:
+    properties:
+      maps: list<OrganizationRepositoryMap>
+
+service:
+  audiences:
+    - generators
+  base-path: /generators/github
+  auth: true
+  endpoints:
+    getPullRequest:
+      docs: Get a pull request by its ID.
+      method: GET
+      path: /pull-request/{id}
+      path-parameters:
+        id: string
+      response: PullRequest
+
+    listPullRequests:
+      docs: Get all pull requests.
+      method: GET
+      path: "/pull-request"
+      pagination:
+        offset: $request.page
+        results: $response.pullRequests
+      request:
+        name: ListPullRequestsRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page integer to retrieve. Defaults to 0.
+          pageSize:
+            type: optional<integer>
+            docs: The integer of items to retrieve per page. Defaults to 20.
+      response: ListPullRequestsResponse
+
+    upsertPullRequest:
+      docs: Update or create the specified pull request.
+      method: PUT
+      path: /pull-request
+      request: PullRequest
+
+    deletePullRequest:
+      docs: Delete specified pull request.
+      method: DELETE
+      path: /pull-request/{id}
+      path-parameters:
+        id: string
+
+    getOrganizationRepositoryMap:
+      docs: Get the repositories owned by a particular organization.
+      method: GET
+      path: /repository-owners/{organizationId}
+      path-parameters:
+        organizationId: string
+      response: OrganizationRepositoryMap
+
+    listOrganizationRepositoryMaps:
+      docs: Get all repository/owner mappings.
+      method: GET
+      path: "/repository-owners"
+      pagination:
+        offset: $request.page
+        results: $response.maps
+      request:
+        name: ListOrganizationRepositoryMapsRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page integer to retrieve. Defaults to 0.
+          pageSize:
+            type: optional<integer>
+            docs: The integer of items to retrieve per page. Defaults to 20.
+      response: ListOrganizationRepositoryMapsResponse
+
+    upsertOrganizationRepositoryMap:
+      docs: Update or create the specified CLI version.
+      method: PUT
+      path: "/repository-owners"
+      request: OrganizationRepositoryMap
+
+    addRepositorytToOrganization:
+      docs: Add a repository to an organization.
+      method: POST
+      path: "/repository-owners/{organizationId}"
+      path-parameters:
+        organizationId: string
+      request:
+        name: AddRepositoryToOrganizationRequest
+        body:
+          properties:
+            repositoryId: string
+      response: OrganizationRepositoryMap
+
+errors:
+  PullRequestNotFoundError:
+    status-code: 404
+    type: commons.InvalidVersionErrorMessage
