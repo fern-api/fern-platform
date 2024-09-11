@@ -1,5 +1,6 @@
 import { NextResponse, type MiddlewareConfig, type NextRequest } from "next/server";
 import urlJoin from "url-join";
+import { extractNextDataPathname } from "./utils/extractNextDataPathname";
 import { rewritePosthog } from "./utils/rewritePosthog";
 import { getXFernHostEdge } from "./utils/xFernHost";
 
@@ -57,35 +58,35 @@ export function middleware(request: NextRequest): NextResponse {
     const hasFernToken = request.cookies.has("fern_token");
     const hasError = request.nextUrl.searchParams.get("error") === "true";
 
+    /**
+     * There are two types of pages in the docs bundle:
+     * - static = SSG pages
+     * - dynamic = SSR pages (because fern_token is present or there is an error)
+     */
     const isDynamic = hasFernToken || hasError;
     const prefix = isDynamic ? "/dynamic/" : "/static/";
 
     /**
-     * Rewrite /_next/data requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]] + __nextDataReq=1
-     */
-    if (request.nextUrl.pathname.includes("/_next/data/")) {
-        const match =
-            request.nextUrl.pathname.match(/\/_next\/data\/.*\/_next\/data\/([^/]*)(\/.*\.json).json/) ??
-            request.nextUrl.pathname.match(/\/_next\/data\/([^/]*)(\/.*\.json)/);
-        const buildId = match?.[1];
-        const pathname = match?.[2];
-        if (buildId != null && pathname != null) {
-            const nextDataPathname = urlJoin(prefix, xFernHost, pathname).replace(".json", "");
-            const destination = new URL(nextDataPathname, request.url);
-            destination.searchParams.set("__nextDataReq", "1");
-            return NextResponse.rewrite(destination);
-        }
-    }
-    const pathname = urlJoin(prefix, xFernHost, request.nextUrl.pathname);
-
-    /**
      * Rewrite all other requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]]
      */
-    return NextResponse.rewrite(new URL(pathname, request.url));
+    const pathname = urlJoin(prefix, xFernHost, extractNextDataPathname(request.nextUrl.pathname));
+    const destination = new URL(pathname, request.url);
+
+    /**
+     * Add __nextDataReq=1 query param to the destination URL if the request is for a nextjs data request
+     */
+    if (request.nextUrl.pathname.includes("/_next/data/")) {
+        destination.searchParams.set("__nextDataReq", "1");
+    }
+
+    return NextResponse.rewrite(destination);
 }
 
 export const config: MiddlewareConfig = {
     matcher: [
+        /**
+         * Match all requests to posthog
+         */
         "/api/fern-docs/analytics/posthog/:path*",
         /*
          * Match all request paths except for the ones starting with:
