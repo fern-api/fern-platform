@@ -49,6 +49,7 @@ const nextConfig = {
     /**
      * This is required for posthog. See https://posthog.com/docs/advanced/proxy/nextjs-middleware
      */
+    skipMiddlewareUrlNormalize: true,
     skipTrailingSlashRedirect: true,
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the

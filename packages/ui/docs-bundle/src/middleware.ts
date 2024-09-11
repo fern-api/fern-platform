@@ -3,8 +3,7 @@ import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/au
 import { NextResponse, type MiddlewareConfig, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
-import { getPageRoute, getPageRouteMatch } from "./utils/pageRoutes";
-import { rewritePosthog } from "./utils/rewritePosthog";
+import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "./utils/pageRoutes";
 import { getXFernHostEdge } from "./utils/xFernHost";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
@@ -13,13 +12,21 @@ const CHANGELOG_PATTERN = /\.(rss|atom)$/;
 export const middleware: NextMiddleware = async (request) => {
     const xFernHost = getXFernHostEdge(request);
     const nextUrl = request.nextUrl.clone();
+    const headers = new Headers(request.headers);
+
+    /**
+     * Add x-fern-host header to the request
+     */
+    if (!headers.has("x-fern-host")) {
+        headers.set("x-fern-host", xFernHost);
+    }
 
     /**
      * Rewrite robots.txt
      */
     if (nextUrl.pathname.endsWith("/robots.txt")) {
         nextUrl.pathname = "/api/fern-docs/robots.txt";
-        return NextResponse.rewrite(nextUrl);
+        return NextResponse.rewrite(nextUrl, { request: { headers } });
     }
 
     /**
@@ -27,14 +34,14 @@ export const middleware: NextMiddleware = async (request) => {
      */
     if (nextUrl.pathname.endsWith("/sitemap.xml")) {
         nextUrl.pathname = "/api/fern-docs/sitemap.xml";
-        return NextResponse.rewrite(nextUrl);
+        return NextResponse.rewrite(nextUrl, { request: { headers } });
     }
 
     /**
      * Rewrite Posthog analytics ingestion
      */
     if (nextUrl.pathname.includes("/api/fern-docs/analytics/posthog")) {
-        return rewritePosthog(request);
+        return NextResponse.rewrite(nextUrl, { request: { headers } });
     }
 
     /**
@@ -42,7 +49,7 @@ export const middleware: NextMiddleware = async (request) => {
      */
     if (nextUrl.pathname.match(API_FERN_DOCS_PATTERN)) {
         nextUrl.pathname = request.nextUrl.pathname.replace(API_FERN_DOCS_PATTERN, "/api/fern-docs/");
-        return NextResponse.rewrite(nextUrl);
+        return NextResponse.rewrite(nextUrl, { request: { headers } });
     }
 
     /**
@@ -54,7 +61,7 @@ export const middleware: NextMiddleware = async (request) => {
         nextUrl.pathname = "/api/fern-docs/changelog";
         nextUrl.searchParams.set("format", changelogFormat);
         nextUrl.searchParams.set("path", pathname);
-        return NextResponse.rewrite(nextUrl);
+        return NextResponse.rewrite(nextUrl, { request: { headers } });
     }
 
     // eslint-disable-next-line no-console
@@ -120,23 +127,25 @@ export const middleware: NextMiddleware = async (request) => {
     nextUrl.pathname = getPageRoute(!isDynamic, xFernHost, pathname);
 
     /**
-     * Add __nextDataReq=1 query param to the destination URL if the request is for a nextjs data request.
+     * Mock the /_next/data/... request to the corresponding page route
      */
     if (request.nextUrl.pathname.includes("/_next/data/")) {
-        const buildId = request.nextUrl.buildId ?? extractBuildId(request.nextUrl.pathname);
+        const buildId = request.nextUrl.buildId ?? extractBuildId(request.nextUrl.pathname) ?? "development";
+        nextUrl.pathname = getPageRoutePath(!isDynamic, buildId, xFernHost, pathname);
 
-        nextUrl.searchParams.set("__nextDataReq", "1");
-        const response = NextResponse.rewrite(nextUrl);
-        if (buildId != null) {
-            response.headers.set("x-matched-path", getPageRouteMatch(!isDynamic, buildId));
-        }
+        const response = NextResponse.rewrite(nextUrl, {
+            request: { headers },
+        });
+
+        response.headers.set("x-matched-path", getPageRouteMatch(!isDynamic, buildId));
+
         return response;
     }
 
     /**
      * Rewrite all other requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]]
      */
-    return NextResponse.rewrite(nextUrl);
+    return NextResponse.rewrite(nextUrl, { request: { headers } });
 };
 
 export const config: MiddlewareConfig = {
