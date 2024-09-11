@@ -8,8 +8,8 @@
  */
 export function extractNextDataPathname(pathname: string): string {
     return (
-        pathname.match(/\/_next\/data\/.*\/_next\/data\/[^/]*(\/.*\.json).json/)?.[1] ??
-        pathname.match(/\/_next\/data\/[^/]*(\/.*\.json)/)?.[1] ??
+        pathname.match(/\/_next\/data\/.*\/_next\/data\/[^/]*(\/.*)\.json.json/)?.[1] ??
+        pathname.match(/\/_next\/data\/[^/]*(\/.*)\.json/)?.[1] ??
         pathname
     );
 }
