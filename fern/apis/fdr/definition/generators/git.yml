@@ -4,13 +4,20 @@ docs: Produces an internal schema to easily track and view pull requests across 
 
 imports:
   commons: ./commons.yml
+  fdrCommons: ../commons.yml
 
 types:
   # Soon to add to our data model:
   #   - Orgs (internal)
   #   - Products (internal)
   #   - Features (internal)
-  RepositoryId: string
+  GithubRepositoryId:
+    properties:
+      id: string
+
+  RepositoryId:
+    union:
+      github: GithubRepositoryId
 
   Repository:
     properties:
@@ -22,7 +29,7 @@ types:
         docs: The full name of the repository, e.g. fern-api/fern. It includes the owner, as well as the name of the repository.
       url: string
       repositoryOwner:
-        type: commons.OrganizationId
+        type: fdrCommons.OrgId
         docs: The Fern organization ID of the repository owner.
 
   GithubUser:
@@ -66,7 +73,7 @@ types:
   OrganizationRepositoryMap:
     docs: A mapping of organization ID to the repositories that Fern manages for that organization.
     properties:
-      organizationId: commons.OrganizationId
+      organizationId: fdrCommons.OrgId
       repositoryIds: list<RepositoryId>
 
   ListRepositoriesResponse:

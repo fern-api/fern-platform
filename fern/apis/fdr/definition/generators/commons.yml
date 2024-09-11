@@ -1,9 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
-  OrganizationId:
-    type: string
-
   Yank:
     docs: A yank is a metadata object that declares if a version is safe to upgrade to, if present the answer is no.
     properties:
