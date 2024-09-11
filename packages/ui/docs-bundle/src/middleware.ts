@@ -4,6 +4,7 @@ import { NextRequest, NextResponse, type MiddlewareConfig, type NextMiddleware }
 import urlJoin from "url-join";
 import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "./utils/pageRoutes";
+import { conformTrailingSlash } from "./utils/trailingSlash";
 import { getXFernHostEdge } from "./utils/xFernHost";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
@@ -69,16 +70,6 @@ export const middleware: NextMiddleware = async (request) => {
 
     const pathname = extractNextDataPathname(request.nextUrl.pathname);
 
-    // /**
-    //  * Redirect to the trailing slash version of the URL if it's missing
-    //  */
-    // const conformedPathname = conformTrailingSlash(pathname);
-    // if (pathname !== conformedPathname) {
-    //     nextUrl.pathname = conformedPathname;
-    //     nextUrl.host = request.headers.get("x-fern-host") ?? nextUrl.host;
-    //     return NextResponse.redirect(nextUrl, { status: 308 });
-    // }
-
     const fernToken = request.cookies.get("fern_token");
     const authConfig = await getAuthEdgeConfig(xFernHost);
     let fernUser: FernUser | undefined;
@@ -131,15 +122,37 @@ export const middleware: NextMiddleware = async (request) => {
      */
     if (request.nextUrl.pathname.includes("/_next/data/")) {
         const buildId = getBuildId(request);
+
         nextUrl.pathname = getPageRoutePath(!isDynamic, buildId, xFernHost, pathname);
 
-        const response = NextResponse.rewrite(nextUrl, {
-            request: { headers },
-        });
+        const response = NextResponse.rewrite(nextUrl, { request: { headers } });
 
+        /**
+         * Add x-matched-path header to the response to help with debugging
+         */
         response.headers.set("x-matched-path", getPageRouteMatch(!isDynamic, buildId));
 
         return response;
+    }
+
+    /**
+     * Ensure that the trailing slash is conformed to environment settings
+     */
+    if (!request.headers.has("x-nextjs-data")) {
+        const conformedPathname = conformTrailingSlash(nextUrl.pathname);
+
+        if (conformedPathname !== nextUrl.pathname) {
+            nextUrl.pathname = conformedPathname;
+
+            const referer = request.headers.get("referer");
+            if (referer != null) {
+                const refererUrl = new URL(referer);
+                nextUrl.host = refererUrl.host;
+                nextUrl.protocol = refererUrl.protocol;
+            }
+
+            return NextResponse.redirect(nextUrl, { status: 308 });
+        }
     }
 
     /**
