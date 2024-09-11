@@ -19,7 +19,7 @@ import {
     serializeMdx,
     setMdxBundler,
 } from "@fern-ui/ui";
-import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
+import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import type { GetServerSidePropsResult, GetStaticPropsResult, Redirect } from "next";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
@@ -58,6 +58,18 @@ export async function getDocsPageProps(
 ): Promise<GetStaticDocsPagePropsResult> {
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return { notFound: true };
+    }
+
+    const config = await getAuthEdgeConfig(xFernHost);
+    if (config != null && config.type === "basic_token_verification") {
+        const destination = new URL(config.redirect);
+        destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
+        return {
+            redirect: {
+                destination: destination.toString(),
+                permanent: false,
+            },
+        };
     }
 
     const pathname = decodeURI(slug != null ? slug.join("/") : "");
@@ -103,7 +115,27 @@ export async function getDynamicDocsPageProps(
 
     try {
         const config = await getAuthEdgeConfig(xFernHost);
-        const user: FernUser | undefined = await verifyFernJWTConfig(cookies.fern_token, config);
+        let user: FernUser | undefined = undefined;
+
+        // using custom auth (e.g. qlty, propexo, etc)
+        if (config?.type === "basic_token_verification") {
+            try {
+                user = await verifyFernJWT(cookies.fern_token, config.secret, config.issuer);
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error(error);
+                const destination = new URL(config.redirect);
+                destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
+                return {
+                    redirect: {
+                        destination: destination.toString(),
+                        permanent: false,
+                    },
+                };
+            }
+        } else {
+            user = await verifyFernJWT(cookies.fern_token);
+        }
 
         // SSO
         if (user.partner === "workos") {

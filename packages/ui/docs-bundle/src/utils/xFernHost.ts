@@ -1,4 +1,3 @@
-import { withDefaultProtocol } from "@fern-ui/core-utils";
 import type { NextApiRequest } from "next";
 import type { NextRequest } from "next/server";
 
@@ -13,26 +12,10 @@ import type { NextRequest } from "next/server";
  * _fern_docs_preview is used for previewing the docs.
  */
 
-export function getNextPublicDocsDomain(): string | undefined {
-    try {
-        const domain = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
-
-        if (domain == null) {
-            return undefined;
-        }
-
-        return new URL(withDefaultProtocol(domain)).host;
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-        return undefined;
-    }
-}
-
 export function getXFernHostEdge(req: NextRequest, useSearchParams = false): string {
     const hosts = [
         useSearchParams ? req.nextUrl.searchParams.get("host") : undefined,
-        getNextPublicDocsDomain(),
+        process.env.NEXT_PUBLIC_DOCS_DOMAIN,
         req.cookies.get("_fern_docs_preview")?.value,
         // req.headers.get("x-forwarded-host"),
         req.headers.get("x-fern-host"),
@@ -52,7 +35,7 @@ export function getXFernHostEdge(req: NextRequest, useSearchParams = false): str
 export function getXFernHostNode(req: NextApiRequest, useSearchParams = false): string {
     const hosts = [
         useSearchParams ? req.query["host"] : undefined,
-        getNextPublicDocsDomain(),
+        process.env.NEXT_PUBLIC_DOCS_DOMAIN,
         req.cookies["_fern_docs_preview"],
         // req.headers["x-forwarded-host"],
         req.headers["x-fern-host"],
