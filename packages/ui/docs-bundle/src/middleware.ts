@@ -1,18 +1,16 @@
 // eslint-disable-next-line import/no-internal-modules
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
-import { NextResponse, type MiddlewareConfig, type NextRequest } from "next/server";
+import { NextResponse, type MiddlewareConfig, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
-import { extractNextDataPathname, removeIndex } from "./utils/extractNextDataPathname";
+import { extractNextDataPathname } from "./utils/extractNextDataPathname";
+import { getPageRoute } from "./utils/pageRoutes";
 import { rewritePosthog } from "./utils/rewritePosthog";
 import { getXFernHostEdge } from "./utils/xFernHost";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
 
-export async function middleware(request: NextRequest): Promise<NextResponse> {
-    // eslint-disable-next-line no-console
-    console.log(request.nextUrl);
-
+export const middleware: NextMiddleware = async (request) => {
     const xFernHost = getXFernHostEdge(request);
     const nextUrl = request.nextUrl.clone();
 
@@ -59,11 +57,14 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         return NextResponse.rewrite(nextUrl);
     }
 
+    // eslint-disable-next-line no-console
+    // console.log(request);
+
     const pathname = extractNextDataPathname(request.nextUrl.pathname);
 
-    /**
-     * Redirect to the trailing slash version of the URL if it's missing
-     */
+    // /**
+    //  * Redirect to the trailing slash version of the URL if it's missing
+    //  */
     // const conformedPathname = conformTrailingSlash(pathname);
     // if (pathname !== conformedPathname) {
     //     nextUrl.pathname = conformedPathname;
@@ -71,22 +72,27 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     //     return NextResponse.redirect(nextUrl, { status: 308 });
     // }
 
-    let user: FernUser | undefined;
     const fernToken = request.cookies.get("fern_token");
     const authConfig = await getAuthEdgeConfig(xFernHost);
+    let fernUser: FernUser | undefined;
 
     // TODO: check if the site is SSO protected, and if so, redirect to the SSO provider
     if (fernToken != null) {
         try {
-            user = await verifyFernJWTConfig(fernToken.value, authConfig);
+            fernUser = await verifyFernJWTConfig(fernToken?.value, authConfig);
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error("Failed to verify fern_token", e);
         }
     }
 
-    // using custom auth (e.g. qlty, propexo, etc)
-    if (authConfig != null && authConfig.type === "basic_token_verification" && user == null) {
+    const isLoggedIn = fernUser != null;
+
+    /**
+     * if using custom auth (e.g. qlty, propexo, etc), and the user is not authenticated,
+     * redirect to the custom auth provider
+     */
+    if (!isLoggedIn && authConfig?.type === "basic_token_verification") {
         const destination = new URL(authConfig.redirect);
         destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, pathname));
         return NextResponse.redirect(destination, { status: 302 });
@@ -105,26 +111,26 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
      * - static = SSG pages
      * - dynamic = SSR pages (because fern_token is present or there is an error)
      */
-    const isDynamic = user != null || hasError;
-    const prefix = isDynamic ? "/dynamic/" : "/static/";
+    const isDynamic = isLoggedIn || hasError;
 
     /**
      * Rewrite all other requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]]
      */
-    const destination = new URL(urlJoin(prefix, xFernHost, removeIndex(pathname)), request.url);
+
+    nextUrl.pathname = getPageRoute(!isDynamic, xFernHost, pathname);
 
     /**
      * Add __nextDataReq=1 query param to the destination URL if the request is for a nextjs data request.
      */
     if (request.nextUrl.pathname.includes("/_next/data/")) {
-        destination.searchParams.set("__nextDataReq", "1");
+        nextUrl.searchParams.set("__nextDataReq", "1");
     }
 
     /**
      * Rewrite all other requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]]
      */
-    return NextResponse.rewrite(destination);
-}
+    return NextResponse.rewrite(nextUrl);
+};
 
 export const config: MiddlewareConfig = {
     matcher: [

@@ -8,12 +8,16 @@
  */
 export function extractNextDataPathname(pathname: string): string {
     return (
-        pathname.match(/\/_next\/data\/.*\/_next\/data\/[^/]*(\/.*)\.json.json/)?.[1] ??
-        pathname.match(/\/_next\/data\/[^/]*(\/.*)\.json/)?.[1] ??
-        pathname
+        removeIndex(
+            pathname.match(/\/_next\/data\/.*\/_next\/data\/[^/]*(\/.*)\.json.json/)?.[1] ??
+                pathname.match(/\/_next\/data\/[^/]*(\/.*)\.json/)?.[1],
+        ) ?? pathname
     );
 }
 
-export function removeIndex(pathname: string): string {
-    return pathname.replace(/\/index$/, "");
+function removeIndex(pathname: string | undefined): string | undefined {
+    if (pathname === "/index") {
+        return "/";
+    }
+    return pathname;
 }

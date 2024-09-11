@@ -44,9 +44,11 @@ const nextConfig = {
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
-        middlewarePrefetch: "strict",
     },
     trailingSlash: isTruthy(process.env.TRAILING_SLASH),
+    /**
+     * This is required for posthog. See https://posthog.com/docs/advanced/proxy/nextjs-middleware
+     */
     skipTrailingSlashRedirect: true,
     /**
      * Customers who opt-in for subpath routing must use rewrite rules from their hosting provider. Because of the
