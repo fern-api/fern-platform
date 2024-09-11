@@ -65,7 +65,7 @@ export const middleware: NextMiddleware = async (request) => {
     }
 
     // eslint-disable-next-line no-console
-    // console.log(request);
+    console.log(request);
 
     const pathname = extractNextDataPathname(request.nextUrl.pathname);
 
