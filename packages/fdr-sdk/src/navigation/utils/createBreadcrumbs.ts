@@ -54,5 +54,6 @@ export function createBreadcrumbs(nodes: NavigationNode[]): readonly NavigationB
         });
     });
 
-    return breadcrumb;
+    // Remove breadcrumbs with empty titles
+    return breadcrumb.filter((item) => item.title.trim().length > 0);
 }
