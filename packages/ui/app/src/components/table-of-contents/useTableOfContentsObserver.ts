@@ -1,44 +1,111 @@
+import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
 import { useEffect, useRef } from "react";
+import { useCallbackOne } from "use-memo-one";
 import { SCROLL_BODY_ATOM } from "../../atoms";
 
-export function useTableOfContentsObserver(ids: string[], setActiveId: (id: string) => void): void {
-    const ref = useRef<Record<string, IntersectionObserverEntry>>({});
+/**
+ *
+ * This hook observes the visibility of <h1> to <h6> elements that are tracked in the table of contents.
+ * IntersectionObserver is not used because it is not as reactive as scroll events, and only measures the intersection of the directly observed elements.
+ *
+ * Algorithm:
+ * - on mount, or page resize, measure the top Y position of each element
+ * - on scroll event, determine which is the last element that is visible above 40% of the viewport height
+ *
+ * implicit assumption: the content that immediately follows an anchor (heading) is assumed to be the content that the anchor represents,
+ * and is considered to be a factor in determining the visibility of the anchor ID.
+ *
+ * @param ids the ids of the elements to observe
+ * @param setActiveId the function to call when an observed element (and its immediate siblings below) is visible above 40% of the viewport height
+ * @returns a function to call to trigger another measurement (to be called between page views)
+ */
+export function useTableOfContentsObserver(ids: string[], setActiveId: (id: string | undefined) => void): () => void {
+    const idToYRef = useRef<Record<string, number>>({});
     const root = useAtomValue(SCROLL_BODY_ATOM);
 
-    useEffect(() => {
-        ref.current = Object.fromEntries(Object.entries(ref.current).filter(([id]) => ids.includes(id)));
-    }, [ids]);
+    /**
+     * on every scroll event, measure the top Y position of each element and determine
+     * which is the last element that is visible above 40% of the viewport height
+     */
+    const take = useCallbackOne(() => {
+        if (!root) {
+            setActiveId(undefined);
+            return;
+        }
+        fastdom.measure(() => {
+            const scrollY = root instanceof Document ? window.scrollY : root.scrollTop;
+            const scrollHeight = root instanceof Document ? document.body.scrollHeight : root.scrollHeight;
+            const clientHeight = root instanceof Document ? window.innerHeight : root.clientHeight;
+            const rootTop = root instanceof Document ? 0 : root.getBoundingClientRect().top;
+            const intersectionTop = scrollY + rootTop;
+            const intersectionBottom = scrollY + rootTop + clientHeight;
 
-    useEffect(() => {
-        const callback: IntersectionObserverCallback = (headings) => {
-            ref.current = headings.reduce((acc, heading) => {
-                acc[heading.target.id] = heading;
-                return acc;
-            }, ref.current);
-
-            const visibleHeadings: IntersectionObserverEntry[] = Object.values(ref.current).filter(
-                (heading) => heading.isIntersecting,
-            );
-
-            const sortedVisibleHeadings = visibleHeadings
-                .map((item) => item.target.id)
-                .filter((id) => ids.includes(id))
-                .sort((a, b) => ids.indexOf(a) - ids.indexOf(b));
-
-            if (sortedVisibleHeadings[0] != null) {
-                setActiveId(sortedVisibleHeadings[0]);
+            // when the user scrolls to the very bottom of the page, set the anchorInView to the last anchor
+            const lastAnchor = ids[ids.length - 1];
+            if (scrollHeight - clientHeight <= scrollY) {
+                if (lastAnchor) {
+                    setActiveId(lastAnchor);
+                }
+                return;
             }
-        };
 
-        const observer = new IntersectionObserver(callback, {
-            rootMargin: "-110px 0px -40% 0px",
-            root,
+            let activeId: string | undefined;
+            for (const id of ids) {
+                const y = idToYRef.current[id];
+                if (y == null) {
+                    continue;
+                }
+
+                if (y > intersectionBottom) {
+                    break;
+                }
+
+                if (y < intersectionTop + clientHeight * 0.4) {
+                    // if the element is visible above 40% of the viewport height, set it as the activeId
+                    activeId = id;
+                }
+            }
+
+            setActiveId(activeId);
+        });
+    }, [ids, root, setActiveId]);
+
+    /**
+     * when the page is mounted or resized, measure the top Y position of each element
+     */
+    const measure = useCallbackOne(() => {
+        if (!root) {
+            return;
+        }
+        fastdom.measure(() => {
+            const scrollY = root instanceof Document ? window.scrollY : root.scrollTop;
+            const top = root instanceof Document ? 0 : root.getBoundingClientRect().top;
+            idToYRef.current = Array.from(document.querySelectorAll(ids.map((id) => `#${id}`).join(", "))).reduce<
+                Record<string, number>
+            >((prev, curr) => {
+                prev[curr.id] = curr.getBoundingClientRect().top + scrollY - top;
+                return prev;
+            }, {});
         });
 
-        const headingElements = Array.from(document.querySelectorAll(ids.map((id) => `#${id}`).join(", ")));
-        headingElements.forEach((element) => observer.observe(element));
+        take();
+    }, [ids, root, take]);
 
-        return () => observer.disconnect();
-    }, [ids, root, setActiveId]);
+    useEffect(() => {
+        if (!root) {
+            return;
+        }
+        const observer = new ResizeObserver(measure);
+        root.addEventListener("scroll", measure);
+        observer.observe(root instanceof Document ? document.body : root);
+        window.addEventListener("resize", measure);
+        return () => {
+            observer.disconnect();
+            root.removeEventListener("scroll", measure);
+            window.removeEventListener("resize", measure);
+        };
+    }, [ids, measure, root]);
+
+    return measure;
 }

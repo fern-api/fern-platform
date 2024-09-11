@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ReactElement, useEffect, useRef } from "react";
+import { memo, ReactElement, useEffect, useRef } from "react";
 import { FernLink } from "../FernLink";
 
 export interface TableOfContentsItem {
@@ -8,19 +8,16 @@ export interface TableOfContentsItem {
     children: TableOfContentsItem[];
 }
 
-export function TableOfContentsItem({
-    text,
-    anchorString,
-    active,
-    setActiveRef,
-    depth = 0,
-}: {
+export interface TableOfContentsItemProps {
     text: string;
     anchorString: string;
     active: boolean;
     setActiveRef: (ref: HTMLLIElement) => void;
     depth?: number;
-}): ReactElement {
+}
+
+export const TableOfContentsItem = memo<TableOfContentsItemProps>((props): ReactElement => {
+    const { text, anchorString, active, setActiveRef, depth = 0 } = props;
     const ref = useRef<HTMLLIElement>(null);
 
     useEffect(() => {
@@ -45,4 +42,6 @@ export function TableOfContentsItem({
             </FernLink>
         </li>
     );
-}
+});
+
+TableOfContentsItem.displayName = "TableOfContentsItem";

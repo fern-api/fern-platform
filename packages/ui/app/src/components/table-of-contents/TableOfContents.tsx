@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
-import { CSSProperties, ReactNode, useEffect, useMemo, useState } from "react";
+import fastdom from "fastdom";
+import { CSSProperties, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { ANCHOR_ATOM, useAtomEffect } from "../../atoms";
 import { TableOfContentsItem } from "./TableOfContentsItem";
@@ -23,11 +24,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
         return flatten(tableOfContents);
     }, [tableOfContents]);
 
-    const [anchorInView, setAnchorInView] = useState(() => allAnchors[0]);
-
-    useEffect(() => {
-        setAnchorInView(allAnchors[0]);
-    }, [allAnchors]);
+    const [anchorInView, setAnchorInView] = useState<string | undefined>(undefined);
 
     useAtomEffect(
         useCallbackOne(
@@ -39,17 +36,17 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
                     clearTimeout(anchorJustSetTimeout);
                     anchorJustSetTimeout = window.setTimeout(() => {
                         anchorJustSet = false;
-                    }, 200);
+                    }, 500);
                 }
             },
             [allAnchors],
         ),
     );
 
-    useTableOfContentsObserver(
+    const measure = useTableOfContentsObserver(
         allAnchors,
-        useCallbackOne(
-            (id: string) => {
+        useCallback(
+            (id: string | undefined) => {
                 if (!anchorJustSet) {
                     setAnchorInView(id);
                 }
@@ -58,12 +55,28 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
         ),
     );
 
-    const [liHeight, setLiHeight] = useState<number>(20);
+    useEffect(() => {
+        measure();
+    }, [measure]);
+
+    const [liHeight, setLiHeight] = useState<number>(0);
     const [offsetTop, setOffsetTop] = useState<number>(0);
 
+    /**
+     * when the anchorInView changes to null, reset the height and top of the active li
+     */
+    useEffect(() => {
+        if (anchorInView == null) {
+            setLiHeight(0);
+            setOffsetTop(0);
+        }
+    }, [anchorInView]);
+
     const setActiveRef = useCallbackOne((liRef: HTMLLIElement) => {
-        setLiHeight(liRef.getBoundingClientRect().height);
-        setOffsetTop(liRef.offsetTop);
+        fastdom.measure(() => {
+            setLiHeight(liRef.getBoundingClientRect().height);
+            setOffsetTop(liRef.offsetTop);
+        });
     }, []);
 
     const flattenTableOfContents = (items: TableOfContentsItem[], depth = 0): ReactNode => {
