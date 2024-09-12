@@ -35,7 +35,7 @@ async function getGeneratorChangelog(
         throw new Error(`Generator ${generator} not found`);
     }
 
-    const response = await client.generators.versions.getChangelog(generatorResponse.body!.id, {
+    const response = await client.generators.versions.getChangelog(generatorResponse.body.id, {
         fromVersion: { type: "exclusive", value: from },
         toVersion: { type: "inclusive", value: to },
     });
