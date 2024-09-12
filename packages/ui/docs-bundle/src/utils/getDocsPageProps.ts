@@ -71,9 +71,9 @@ export async function getDocsPageProps(
     console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
     if (!docs.ok) {
         if ((docs.error as any).content.statusCode === 401) {
-            return { redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`) };
+            return { redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`), revalidate: 0 };
         } else if ((docs.error as any).content.statusCode === 404) {
-            return { notFound: true };
+            return { notFound: true, revalidate: 0 };
         }
 
         // eslint-disable-next-line no-console
@@ -191,6 +191,7 @@ async function convertDocsToDocsPageProps({
                 destination: conformTrailingSlash(redirect.destination),
                 permanent: redirect.permanent ?? false,
             },
+            revalidate: 0,
         };
     }
 
@@ -208,6 +209,7 @@ async function convertDocsToDocsPageProps({
                 destination: encodeURI(urljoin("/", root.slug)),
                 permanent: false,
             },
+            revalidate: 0,
         };
     }
 
@@ -229,10 +231,11 @@ async function convertDocsToDocsPageProps({
                     destination: encodeURI(urljoin("/", node.redirect) || "/"),
                     permanent: false,
                 },
+                revalidate: 0,
             };
         }
 
-        return { notFound: true };
+        return { notFound: true, revalidate: 0 };
     }
 
     if (node.type === "redirect") {
@@ -241,6 +244,7 @@ async function convertDocsToDocsPageProps({
                 destination: encodeURI(urljoin("/", node.redirect)),
                 permanent: false,
             },
+            revalidate: 0,
         };
     }
 
