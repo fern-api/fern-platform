@@ -25,9 +25,10 @@ export function getGeneratorsCliController(app: FdrApplication): CliService {
             );
         },
         getMinCliForIr: async (req, res) => {
-            const maybeRelease = await app.dao.cliVersions().getMinCliForIr({ irVersion: req.params.irVersion });
+            const irVersion = Number(req.params.irVersion);
+            const maybeRelease = await app.dao.cliVersions().getMinCliForIr({ irVersion });
             if (!maybeRelease) {
-                throw new NoValidCliForIrError({ providedVersion: req.params.irVersion });
+                throw new NoValidCliForIrError({ providedVersion: irVersion });
             }
             return res.send(maybeRelease);
         },
