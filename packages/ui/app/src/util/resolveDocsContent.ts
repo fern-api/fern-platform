@@ -1,6 +1,7 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import GithubSlugger from "github-slugger";
 import { reverse } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
@@ -12,6 +13,8 @@ import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { DocsContent } from "../resolver/DocsContent";
 import type { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
+
+const slugger = new GithubSlugger();
 
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
@@ -84,13 +87,25 @@ export async function resolveDocsContent({
                     if (pageContent == null) {
                         return;
                     }
+
+                    // TODO: (rohin) clean this up
+                    const matches = pageContent.markdown.match(/^(#{1,6})\s+(.+)$/gm);
+                    let anchorTag = undefined;
+                    if (matches) {
+                        matches.sort((a, b) => a.split("#").length - b.split("#").length);
+                        const originalSlug = slugger.slug(matches[0]);
+                        anchorTag = originalSlug.match(/[^$$]+/)?.[0].slice(1);
+                    }
                     return {
                         pageId,
                         markdown: await serializeMdx(pageContent.markdown, {
                             ...mdxOptions,
                             filename: pageId,
                         }),
+                        anchorTag,
                     };
+
+                    // end TODO
                 }),
             )
         ).filter(isNonNullish);
@@ -114,6 +129,7 @@ export async function resolveDocsContent({
             // items: await Promise.all(itemsPromise),
             // neighbors,
             slug: found.node.slug,
+            anchorIds: Object.fromEntries(pageRecords.map((record) => [record.pageId, record.anchorTag ?? ""])),
         };
     } else if (node.type === "changelogEntry") {
         const changelogNode = reverse(parents).find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
