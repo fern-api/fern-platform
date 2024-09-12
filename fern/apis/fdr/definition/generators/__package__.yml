@@ -48,6 +48,7 @@ types:
   Generator:
     properties:
       id: GeneratorId
+      displayName: string
       generatorType: GeneratorType
       generatorLanguage: optional<GeneratorLanguage>
       dockerImage:
