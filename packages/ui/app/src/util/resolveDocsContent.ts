@@ -338,6 +338,7 @@ async function getNeighbors(
 }
 
 export function parseMarkdownPageToAnchorTag(markdown: string): string | undefined {
+    // This regex match is temporary and will be replaced with a more robust solution
     const matches = markdown.match(/^(#{1,6})\s+(.+)$/gm);
     let anchorTag = undefined;
     if (matches) {
