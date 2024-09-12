@@ -162,7 +162,7 @@ const anchorIds = [
     "project-folders",
     "datasets",
     "get-api-tool",
-    "evaluations-improvements-1",
+    "evaluations-improvements",
     "organization-slug-in-urls",
     "allow-trusted-email-domains",
     "editor---insert-new-message-within-existing-chat",
