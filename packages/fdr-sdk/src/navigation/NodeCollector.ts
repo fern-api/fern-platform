@@ -112,10 +112,6 @@ export class NodeCollector {
             this.orphanedNodes.push(existing.node);
             this.#setNode(node.slug, node, parents);
         } else {
-            if (isPage(existing.node)) {
-                // eslint-disable-next-line no-console
-                console.warn(`Duplicate slug found: ${node.slug}`, node.title);
-            }
             this.orphanedNodes.push(node);
         }
     }

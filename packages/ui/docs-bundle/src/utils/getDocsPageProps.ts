@@ -31,6 +31,7 @@ import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
 import { convertStaticToServerSidePropsResult } from "./convertStaticToServerSidePropsResult";
 import { getSeoDisabled } from "./disabledSeo";
+import { trackPromiseDuration } from "./events";
 import { conformTrailingSlash, isTrailingSlashEnabled } from "./trailingSlash";
 
 type GetStaticDocsPagePropsResult = GetStaticPropsResult<ComponentProps<typeof DocsPage>>;
@@ -62,31 +63,28 @@ export async function getDocsPageProps(
 
     const pathname = decodeURI(slug != null ? slug.join("/") : "");
     const url = buildUrl({ host: xFernHost, pathname });
-    // eslint-disable-next-line no-console
-    console.log("[getDocsPageProps] Loading docs for", url);
-    const start = Date.now();
-    const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url });
-    const end = Date.now();
-    // eslint-disable-next-line no-console
-    console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
+
+    const docs = await trackPromiseDuration(
+        provideRegistryService().docs.v2.read.getDocsForUrl({ url }),
+        "load-docs-for-url",
+        url,
+    );
+
     if (!docs.ok) {
         if ((docs.error as any).content.statusCode === 401) {
             return { redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`), revalidate: true };
         } else if ((docs.error as any).content.statusCode === 404) {
             return { notFound: true, revalidate: true };
         }
-
-        // eslint-disable-next-line no-console
-        console.error(`[getDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
-        throw new Error("Failed to fetch docs");
+        throw new Error("Failed to fetch docs for ${url}", { cause: docs.error });
     }
 
-    const start2 = Date.now();
-    const toRet = convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
-    const end2 = Date.now();
+    const toRet = await trackPromiseDuration(
+        convertDocsToDocsPageProps({ docs: docs.body, slug, xFernHost }),
+        "serialize-mdx",
+        url,
+    );
 
-    // eslint-disable-next-line no-console
-    console.log(`[getDocsPageProps] serializeMdx completed in ${end2 - start2}ms for ${url}`);
     return toRet;
 }
 
@@ -109,27 +107,21 @@ export async function getDynamicDocsPageProps(
         if (user.partner === "workos") {
             const registryService = getRegistryServiceWithToken(`workos_${cookies.fern_token}`);
 
-            // eslint-disable-next-line no-console
-            console.log("[getDynamicDocsPageProps] Loading docs for", url);
-            const start = Date.now();
-            const docs = await registryService.docs.v2.read.getPrivateDocsForUrl({ url });
-            const end = Date.now();
-            // eslint-disable-next-line no-console
-            console.log(`[getDynamicDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
+            const docs = await trackPromiseDuration(
+                registryService.docs.v2.read.getPrivateDocsForUrl({ url }),
+                "load-private-docs-for-url",
+                url,
+            );
 
             if (!docs.ok) {
                 if (docs.error.error === "UnauthorizedError") {
-                    return {
-                        redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`),
-                    };
+                    return { redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`) };
                 }
 
-                // eslint-disable-next-line no-console
-                console.error(`[getDynamicDocsPageProps] Failed to fetch docs for ${url}`, docs.error);
-                throw new Error("Failed to fetch private docs");
+                throw new Error("Failed to fetch private docs for ${url}", { cause: docs.error });
             }
 
-            return convertDocsToDocsPageProps({ docs: docs.body, slug, url, xFernHost });
+            return convertDocsToDocsPageProps({ docs: docs.body, slug, xFernHost });
         } else if (user.partner === "ory" || user.partner === "custom") {
             // rightbrain's api key injection
             const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url });
@@ -146,7 +138,6 @@ export async function getDynamicDocsPageProps(
                 await convertDocsToDocsPageProps({
                     docs: docs.body,
                     slug,
-                    url,
                     xFernHost,
                     user,
                     cookies,
@@ -155,7 +146,7 @@ export async function getDynamicDocsPageProps(
         }
     } catch (error) {
         // eslint-disable-next-line no-console
-        console.log(error);
+        console.error(error);
     }
 
     // fallback to public docs
@@ -165,14 +156,12 @@ export async function getDynamicDocsPageProps(
 async function convertDocsToDocsPageProps({
     docs,
     slug: slugArray,
-    url,
     xFernHost,
     user,
     cookies,
 }: {
     docs: DocsV2Read.LoadDocsForUrlResponse;
     slug: string[];
-    url: string;
     xFernHost: string;
     user?: FernUser;
     cookies?: NextApiRequestCookies;
@@ -221,8 +210,6 @@ async function convertDocsToDocsPageProps({
         // however, we should consider rendering a custom 404 page in the future using the customer's branding.
         // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
 
-        // eslint-disable-next-line no-console
-        console.error(`Failed to resolve navigation for ${url}`);
         if (featureFlags.is404PageHidden && node.redirect != null) {
             return {
                 // urljoin is bizarre: urljoin("/", "") === "", urljoin("/", "/") === "/", urljoin("/", "/a") === "/a"
@@ -262,8 +249,6 @@ async function convertDocsToDocsPageProps({
     });
 
     if (content == null) {
-        // eslint-disable-next-line no-console
-        console.error(`Failed to resolve path for ${url}`);
         return { notFound: true, revalidate: true };
     }
 
