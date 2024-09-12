@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-internal-modules
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
-import { PRERENDER_REVALIDATE_HEADER } from "next/dist/lib/constants";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
@@ -155,7 +154,7 @@ export const config = {
             /**
              * Do not rewrite any revalidation requests
              */
-            missing: [{ type: "header", key: PRERENDER_REVALIDATE_HEADER }],
+            missing: [{ type: "header", key: "x-prerender-revalidate" }],
         },
     ],
 };
