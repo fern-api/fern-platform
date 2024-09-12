@@ -341,7 +341,6 @@ export function parseMarkdownPageToAnchorTag(markdown: string): string | undefin
     const matches = markdown.match(/^(#{1,6})\s+(.+)$/gm);
     let anchorTag = undefined;
     if (matches) {
-        matches.sort((a, b) => a.split("#").length - b.split("#").length);
         const originalSlug = slugger.slug(matches[0]);
         anchorTag = originalSlug.match(/[^$$]+/)?.[0].slice(1);
     }

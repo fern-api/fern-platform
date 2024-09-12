@@ -138,7 +138,7 @@ const anchorIds = [
     "prompt-version-authorship",
     "filterable-and-sortable-evaluations-overview",
     "projects-rename-and-file-creation-flow",
-    "you-need-to-initialize-the-humanloop-sdk-with-your-api-keys",
+    "control-logging-level",
     "add-evaluators-to-existing-runs",
     "improved-evaluation-run-launcher",
     "faster-offline-evaluations",
@@ -149,10 +149,10 @@ const anchorIds = [
     "improved-evaluator-ui",
     "tool-linking",
     "improved-log-table-ui",
-    "1-retrieve-a-dataset",
+    "improved-rbacs",
     "quality-of-life-app-improvements",
     "claude-21",
-    "initialize-the-humanloop-sdk-with-your-api-keys",
+    "parallel-tool-calling",
     "llm-evaluators",
     "evaluation-comparison-charts",
     "comparison-mode-in-editor",
@@ -174,7 +174,7 @@ const anchorIds = [
     "claude-2",
     "evaluators",
     "chain-llm-calls",
-    "example-dummy-function-hard-coded-to-return-the-same-weather",
+    "introducing-tools",
     "deployment-environments",
     "improved-python-sdk-streaming-response",
     "project-editor",
@@ -188,8 +188,6 @@ const anchorIds = [
 
 describe("parseMarkdownPageToAnchorTag", () => {
     it("should parse markdown and retrieve proper anchor tag", () => {
-        expect(humanloopMarkdown.map((markdown) => parseMarkdownPageToAnchorTag(markdown)).toString()).toBe(
-            anchorIds.toString(),
-        );
+        humanloopMarkdown.map((markdown, idx) => expect(parseMarkdownPageToAnchorTag(markdown)).toBe(anchorIds[idx]));
     });
 });
