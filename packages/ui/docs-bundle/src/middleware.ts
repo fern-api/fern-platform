@@ -4,6 +4,7 @@ import { NextRequest, NextResponse, type MiddlewareConfig, type NextMiddleware }
 import urlJoin from "url-join";
 import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "./utils/pageRoutes";
+import { rewritePosthog } from "./utils/rewritePosthog";
 import { getXFernHostEdge } from "./utils/xFernHost";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
@@ -41,7 +42,7 @@ export const middleware: NextMiddleware = async (request) => {
      * Rewrite Posthog analytics ingestion
      */
     if (nextUrl.pathname.includes("/api/fern-docs/analytics/posthog")) {
-        return NextResponse.rewrite(nextUrl, { request: { headers } });
+        return rewritePosthog(request);
     }
 
     /**
