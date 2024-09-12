@@ -50,16 +50,13 @@ const nextConfig = {
          * x-nextjs-rewrite gets set to the external URL, and then nextjs will try to redirect to that URL.
          *
          * This flag will prevent nextjs from redirecting to the external URL.
+         *
+         * NOTE: @fern-api/next uses this flag to prevent the client from throwing an error.
          */
         externalMiddlewareRewritesResolve: true,
-
-        /**
-         * This flag disables middleware effects on the client-side, which breaks
-         * when an external nextjs app is rewriting to this app.
-         */
-        middlewarePrefetch: "strict",
     },
     trailingSlash: isTruthy(process.env.TRAILING_SLASH),
+
     /**
      * This is required for posthog. See https://posthog.com/docs/advanced/proxy/nextjs-middleware
      */
