@@ -7,6 +7,7 @@ import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit, type Repository } from "@
 import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService";
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
+import SemVer from "semver";
 import { SimpleGit } from "simple-git";
 
 async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
@@ -333,7 +334,13 @@ async function handleSingleUpgrade({
         console.log("Versions were the same, let's see if there's a new version across major versions.");
         await upgradeAction({ includeMajor: true });
         const toVersion = await getEntityVersion();
-        if (fromVersion !== toVersion) {
+        const parsedFrom = SemVer.parse(fromVersion);
+        const parsedTo = SemVer.parse(toVersion);
+        if (parsedFrom == null || parsedTo == null) {
+            console.log("An invalid version was found, quitting", fromVersion, toVersion);
+            return;
+        }
+        if (parsedFrom.major < parsedTo.major) {
             slackClient.notifyMajorVersionUpgradeEncountered({
                 repoUrl: repository.html_url,
                 repoName: repository.full_name,
