@@ -64,7 +64,7 @@ const handler: NextApiHandler = async (
 
         const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
         const slugCollector = NodeCollector.collect(node);
-        const urls = slugCollector.getSlugs().map((slug) => urljoin(xFernHost, slug));
+        const urls = slugCollector.getPageSlugs().map((slug) => urljoin(xFernHost, slug));
 
         const results = await Promise.all(
             urls.map(async (url): Promise<RevalidatePathResult> => {
