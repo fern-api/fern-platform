@@ -50,7 +50,7 @@
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
-    "@sentry/nextjs": "^7.112.2",
+    "@sentry/nextjs": "^8.30.0",
     "@vercel/edge-config": "^1.1.0",
     "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^6.1.0",

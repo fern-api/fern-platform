@@ -39,7 +39,19 @@ function isTruthy(value) {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    transpilePackages: ["next-mdx-remote", "esbuild", "lodash-es", "@fern-ui/ui", "@fern-api/fdr-sdk"],
+    transpilePackages: [
+        "next-mdx-remote",
+        "esbuild",
+        "lodash-es",
+
+        /**
+         * Monorepo packages that are not transpiled by default.
+         */
+        "@fern-ui/core-utils",
+        "@fern-api/fdr-sdk",
+        "@fern-ui/components",
+        "@fern-ui/ui",
+    ],
     productionBrowserSourceMaps: isTruthy(process.env.ENABLE_SOURCE_MAPS),
     experimental: {
         scrollRestoration: true,
@@ -107,9 +119,6 @@ const nextConfig = {
     images: {
         remotePatterns: DOCS_FILES_ALLOWLIST,
         path: cdnUri != null ? `${cdnUri.href}_next/image` : undefined,
-    },
-    env: {
-        VERSION: process.env.VERSION,
     },
     webpack: (config, { isServer }) => {
         if (isServer) {
