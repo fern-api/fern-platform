@@ -47,7 +47,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
             const content = `${
                 selectedError.examples.length > 1
                     ? `${selectedError.name ?? getMessageForStatus(selectedError.statusCode)} Example ${selectedExampleIndex + 1}`
-                    : selectedError.name ?? getMessageForStatus(selectedError.statusCode)
+                    : (selectedError.name ?? getMessageForStatus(selectedError.statusCode))
             }`;
             return (
                 <span className={clsx("inline-flex gap-2 items-center")}>
@@ -103,7 +103,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                                                     {example.name ??
                                                         (error.examples.length > 1
                                                             ? `${error.name ?? getMessageForStatus(error.statusCode)} Example ${j + 1}`
-                                                            : error.name ?? getMessageForStatus(error.statusCode))}
+                                                            : (error.name ?? getMessageForStatus(error.statusCode)))}
                                                 </span>
                                             </span>
                                         </FernSelectItem>
