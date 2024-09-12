@@ -22,7 +22,7 @@ export declare namespace DocsContent {
         node: FernNavigation.ChangelogNode;
         breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
         slug: FernNavigation.Slug;
-        anchorIds: Record<FernNavigation.PageId, string>;
+        anchorIds: Record<string, FernNavigation.PageId>;
         // neighbors: Neighbors;
     }
 
