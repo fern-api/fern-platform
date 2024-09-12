@@ -1,0 +1,180 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+docs: Produces an internal schema to easily track and view pull requests across Fern-managed repositories. This API is named `git` to allow for flexibility in adding other git providers down the line (e.g. gitlab).
+
+imports:
+  commons: ./commons.yml
+
+types:
+  # Soon to add to our data model:
+  #   - Orgs (internal)
+  #   - Products (internal)
+  #   - Features (internal)
+  GithubRepositoryId:
+    properties:
+      id: string
+
+  RepositoryId:
+    union:
+      github: GithubRepositoryId
+
+  BaseRepository:
+    properties:
+      id: RepositoryId
+      name: string
+      owner: string
+      fullName:
+        type: string
+        docs: The full name of the repository, e.g. fern-api/fern. It includes the owner, as well as the name of the repository.
+      url: string
+      repositoryOwner:
+        type: commons.OrgId
+        docs: The Fern organization ID of the repository owner.
+
+  SdkRepository:
+    extends: BaseRepository
+    properties:
+      sdkLanguage: string
+
+  FernConfigRepository:
+    extends: BaseRepository
+
+  FernRepository:
+    union:
+      sdk: SdkRepository
+      config: FernConfigRepository
+
+  GithubUser:
+    properties:
+      name: string
+      email: string
+      username: string
+
+  GithubTeam:
+    properties:
+      name: string
+      teamId: string
+
+  PullRequestReviewer:
+    union:
+      user: GithubUser
+      team: GithubTeam
+
+  PullRequestState:
+    enum:
+      - open
+      - closed
+      # Technically Github's API only returns open or closed, and merged_at indicates the merge, but we'll add it here for querying convenience.
+      - merged
+
+  PullRequest:
+    properties:
+      id: string
+      repositoryId: RepositoryId
+      author: GithubUser
+      reviewers: list<string>
+      title: string
+      link: string
+      checks: list<string>
+      state: PullRequestState
+      createdAt: datetime
+      updatedAt: optional<datetime>
+      mergedAt: optional<datetime>
+      closedAt: optional<datetime>
+
+  ListRepositoriesResponse:
+    properties:
+      repositories: list<FernRepository>
+
+  ListPullRequestsResponse:
+    properties:
+      pullRequests: list<PullRequest>
+
+service:
+  audiences:
+    - generators
+  base-path: /generators/github
+  auth: true
+  endpoints:
+    getRepository:
+      docs: Get a repository by its ID.
+      method: GET
+      path: /repository/{id}
+      path-parameters:
+        id: RepositoryId
+      response: FernRepository
+
+    listRepositories:
+      docs: Get all repositories.
+      method: GET
+      path: "/repository"
+      pagination:
+        offset: $request.page
+        results: $response.repositories
+      request:
+        name: ListRepositoriesRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page integer to retrieve. Defaults to 0.
+          pageSize:
+            type: optional<integer>
+            docs: The integer of items to retrieve per page. Defaults to 20.
+          organizationId:
+            type: optional<commons.OrgId>
+            docs: The organization ID to filter repositories by.
+      response: ListRepositoriesResponse
+
+    upsertRepository:
+      docs: Update or create the specified repository.
+      method: PUT
+      path: /repository
+      request: FernRepository
+
+    getPullRequest:
+      docs: Get a pull request by its ID.
+      method: GET
+      path: /pull-request/{id}
+      path-parameters:
+        id: string
+      response: PullRequest
+
+    listPullRequests:
+      docs: Get all pull requests.
+      method: GET
+      path: "/pull-request"
+      pagination:
+        offset: $request.page
+        results: $response.pullRequests
+      request:
+        name: ListPullRequestsRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page integer to retrieve. Defaults to 0.
+          pageSize:
+            type: optional<integer>
+            docs: The integer of items to retrieve per page. Defaults to 20.
+      response: ListPullRequestsResponse
+
+    upsertPullRequest:
+      docs: Update or create the specified pull request.
+      method: PUT
+      path: /pull-request
+      request: PullRequest
+
+    deletePullRequest:
+      docs: Delete specified pull request.
+      method: DELETE
+      path: /pull-request/{id}
+      path-parameters:
+        id: string
+
+errors:
+  PullRequestNotFoundError:
+    status-code: 404
+    type: string
+
+  RepositoryNotFoundError:
+    status-code: 404
+    type: string
