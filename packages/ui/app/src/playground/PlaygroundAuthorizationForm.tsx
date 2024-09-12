@@ -195,9 +195,11 @@ function FoundOAuthReferencedEndpointForm({
             <li className="-mx-4 space-y-2 p-4 pb-2">
                 <FernSegmentedControl
                     options={authenticationOptions}
-                    onValueChange={(value: string) =>
-                        setValue((prev) => ({ ...prev, selectedInputMethod: value as "credentials" | "token" }))
-                    }
+                    onValueChange={(value: string) => {
+                        if (value != null && value.length > 0) {
+                            setValue((prev) => ({ ...prev, selectedInputMethod: value as "credentials" | "token" }));
+                        }
+                    }}
                     value={value.selectedInputMethod}
                     disabled={disabled}
                 />
@@ -548,7 +550,7 @@ export function PlaygroundAuthorizationFormCard({
 
             <FernCollapse isOpen={isOpen.value}>
                 <div className="pt-4">
-                    <div className="fern-dropdown !max-h-[500px]">
+                    <div className="fern-dropdown max-h-full">
                         <PlaygroundAuthorizationForm auth={auth} closeContainer={isOpen.setFalse} disabled={disabled} />
 
                         <div className="flex justify-end p-4 pt-2 gap-2">
