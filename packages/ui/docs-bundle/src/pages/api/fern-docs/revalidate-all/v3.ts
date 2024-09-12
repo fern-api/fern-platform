@@ -76,7 +76,7 @@ const handler: NextApiHandler = async (
 
         const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
         const slugCollector = NodeCollector.collect(node);
-        const urls = slugCollector.getSlugs().map((slug) => conformTrailingSlash(urljoin(xFernHost, slug)));
+        const urls = slugCollector.getPageSlugs().map((slug) => conformTrailingSlash(urljoin(xFernHost, slug)));
 
         // when we call res.revalidate() nextjs uses
         // req.headers.host to make the network request

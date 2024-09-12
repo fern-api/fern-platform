@@ -17,8 +17,9 @@ export function isPage(node: NavigationNode): node is NavigationNodePage {
     return (
         isApiLeaf(node) ||
         node.type === "changelog" ||
-        node.type === "changelogYear" ||
-        node.type === "changelogMonth" ||
+        // TODO: implement changelog pages for year and month
+        // node.type === "changelogYear" ||
+        // node.type === "changelogMonth" ||
         hasMarkdown(node)
     );
 }
