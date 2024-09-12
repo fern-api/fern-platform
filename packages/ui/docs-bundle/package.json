@@ -50,7 +50,7 @@
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
-    "@sentry/nextjs": "^7.112.2",
+    "@sentry/nextjs": "^8.30.0",
     "@vercel/edge-config": "^1.1.0",
     "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^6.1.0",
@@ -61,7 +61,7 @@
     "feed": "^4.2.2",
     "form-data": "4.0.0",
     "jsonpath": "^1.1.1",
-    "next": "^14.2.4",
+    "next": "npm:@fern-api/next@14.2.9-fork.0",
     "node-fetch": "2.7.0",
     "postcss-import": "^16.0.1",
     "react": "^18.2.0",
@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@next/bundle-analyzer": "^14.0.3",
+    "@next/bundle-analyzer": "14.2.9",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^18.7.18",
@@ -94,5 +94,11 @@
     "tailwindcss": "^3.4.3",
     "typescript": "5.4.3",
     "vitest": "^1.5.0"
+  },
+  "optionalDependencies": {
+    "@next/swc-linux-x64-gnu": "14.2.9",
+    "@next/swc-win32-x64-msvc": "14.2.9",
+    "@next/swc-darwin-x64": "14.2.9",
+    "@next/swc-darwin-arm64": "14.2.9"
   }
 }

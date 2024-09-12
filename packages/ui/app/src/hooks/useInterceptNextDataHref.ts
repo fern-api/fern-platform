@@ -1,45 +1,54 @@
+import { addLocale } from "next/dist/client/add-locale";
 import type PageLoader from "next/dist/client/page-loader";
+import { addPathPrefix } from "next/dist/shared/lib/router/utils/add-path-prefix";
+import getAssetPathFromRoute from "next/dist/shared/lib/router/utils/get-asset-path-from-route";
+import { interpolateAs } from "next/dist/shared/lib/router/utils/interpolate-as";
+import { isDynamicRoute } from "next/dist/shared/lib/router/utils/is-dynamic";
+import { parseRelativeUrl } from "next/dist/shared/lib/router/utils/parse-relative-url";
+import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { Router } from "next/router";
 import { useEffect } from "react";
+
+/**
+ * This function is adapted from https://github.com/vercel/next.js/blob/canary/packages/next/src/client/page-loader.ts
+ * It is modified to include a basePath via a parameter, rather than reading it from environment variables.
+ */
+function createPageLoaderGetDataHref(basePath: string | undefined): PageLoader["getDataHref"] {
+    return ({ asPath, href, locale, skipInterpolation }): string => {
+        const buildId = window.__NEXT_DATA__.buildId;
+        const { pathname: hrefPathname, query, search } = parseRelativeUrl(href);
+        const { pathname: asPathname } = parseRelativeUrl(asPath);
+        const route = removeTrailingSlash(hrefPathname);
+        if (route[0] !== "/") {
+            throw new Error(`Route name should start with a "/", got "${route}"`);
+        }
+
+        const getHrefForSlug = (path: string) => {
+            const dataRoute = getAssetPathFromRoute(removeTrailingSlash(addLocale(path, locale)), ".json");
+            return addPathPrefix(`/_next/data/${buildId}${dataRoute}${search}`, basePath);
+        };
+
+        const toRet = getHrefForSlug(
+            skipInterpolation
+                ? asPathname
+                : isDynamicRoute(route)
+                  ? interpolateAs(hrefPathname, asPathname, query).result
+                  : route,
+        );
+
+        return toRet;
+    };
+}
 
 // hack for basepath: https://github.com/vercel/next.js/discussions/25681#discussioncomment-2026813
 export const useInterceptNextDataHref = ({
     router,
     basePath,
-    host,
 }: {
     router: Router;
     basePath: string | undefined;
-    host: string | undefined;
 }): void => {
     useEffect(() => {
-        try {
-            if (basePath != null && basePath !== "" && basePath !== "/" && router.pageLoader?.getDataHref) {
-                const prefixedBasePath = basePath.startsWith("/") ? basePath : `/${basePath}`;
-
-                const originalGetDataHref = router.pageLoader.getDataHref;
-                router.pageLoader.getDataHref = function (...args: Parameters<PageLoader["getDataHref"]>) {
-                    const r = originalGetDataHref.call(router.pageLoader, ...args);
-                    return r && r.startsWith("/_next/data") ? fixHost(`${prefixedBasePath}${r}`, host) : r;
-                };
-            }
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error("Failed to intercept next data href", e);
-        }
-    }, [router, basePath, host]);
+        router.pageLoader.getDataHref = createPageLoaderGetDataHref(basePath);
+    }, [router, basePath]);
 };
-
-function fixHost(path: string, host: string | undefined) {
-    // path is like /_next/data/development/.../index.json?host=docs&slug=x&slug=x
-    // we want to replace the host with the actual host like docs.devexpress.com
-    if (host == null) {
-        return path;
-    }
-    if (!path.includes("?") || path.includes(`?host=${host}`)) {
-        return path;
-    }
-
-    // use regex to replace ?host=docs&slug=x&slug=x with ?host=docs.devexpress.com&slug=host&slug=x&slug=x
-    return path.replace(/(\?host=)([^&]+)/, `$1${host}&slug=$2`);
-}

@@ -42,7 +42,7 @@
     "cssnano": "^6.0.3",
     "jsonpath": "^1.1.1",
     "lodash-es": "^4.17.21",
-    "next": "^14.2.4",
+    "next": "npm:@fern-api/next@14.2.9-fork.0",
     "node-fetch": "2.7.0",
     "postcss-import": "^16.0.1",
     "react": "^18.2.0",
@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@next/bundle-analyzer": "^14.0.3",
+    "@next/bundle-analyzer": "14.2.9",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@types/lodash-es": "^4.17.12",
@@ -73,5 +73,11 @@
     "typescript": "5.4.3",
     "vitest": "^1.5.0",
     "ws": "^8.16.0"
+  },
+  "optionalDependencies": {
+    "@next/swc-linux-x64-gnu": "14.2.9",
+    "@next/swc-win32-x64-msvc": "14.2.9",
+    "@next/swc-darwin-x64": "14.2.9",
+    "@next/swc-darwin-arm64": "14.2.9"
   }
 }

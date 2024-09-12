@@ -12,7 +12,7 @@ import { SearchHit } from "./SearchHit";
 import { AskCohereHit } from "./cohere/AskCohereHit";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
-    return <div className="justify t-muted flex h-24 w-full flex-col items-center py-3">{children}</div>;
+    return <div className="justify t-muted flex h-24 w-full flex-col hits-center py-3">{children}</div>;
 };
 
 const COHERE_AI_HIT_ID = "cohere-ai-hit";
@@ -195,7 +195,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
     }
 
     if (hits.length === 0) {
-        return <div className="justify t-muted flex w-full flex-col items-center py-3">No results found</div>;
+        return <div className="justify t-muted flex w-full flex-col hits-center py-3">No results found</div>;
     }
 
     return (
