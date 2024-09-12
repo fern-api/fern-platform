@@ -22,10 +22,6 @@ export const middleware: NextMiddleware = async (request) => {
         headers.set("x-fern-host", xFernHost);
     }
 
-    if (headers.has("x-prerender-revalidate")) {
-        return NextResponse.next({ request: { headers } });
-    }
-
     /**
      * Rewrite robots.txt
      */
