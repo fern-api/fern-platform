@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@next/bundle-analyzer": "^14.0.3",
+    "@next/bundle-analyzer": "^14.2.9",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@types/lodash-es": "^4.17.12",
@@ -75,9 +75,9 @@
     "ws": "^8.16.0"
   },
   "optionalDependencies": {
-    "@next/swc-linux-x64-gnu": "canary",
-    "@next/swc-win32-x64-msvc": "canary",
-    "@next/swc-darwin-x64": "canary",
-    "@next/swc-darwin-arm64": "canary"
+    "@next/swc-linux-x64-gnu": "^14.2.9",
+    "@next/swc-win32-x64-msvc": "^14.2.9",
+    "@next/swc-darwin-x64": "^14.2.9",
+    "@next/swc-darwin-arm64": "^14.2.9"
   }
 }
