@@ -23,24 +23,19 @@ async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<bo
 
 async function getGeneratorChangelog(
     fdrUrl: string,
-    generator: string,
+    generatorId: string,
     from: string,
     to: string,
 ): Promise<ChangelogResponse[]> {
-    console.log(`Getting changelog for generator ${generator} from ${from} to ${to}.`);
+    console.log(`Getting changelog for generator ${generatorId} from ${from} to ${to}.`);
     const client = new FernRegistryClient({ environment: fdrUrl });
 
-    const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generator });
-    if (!generatorResponse.ok || generatorResponse.body == null) {
-        throw new Error(`Generator ${generator} not found`);
-    }
-
-    const response = await client.generators.versions.getChangelog(generatorResponse.body.id, {
+    const response = await client.generators.versions.getChangelog(generatorId, {
         fromVersion: { type: "exclusive", value: from },
         toVersion: { type: "inclusive", value: to },
     });
     if (!response.ok) {
-        throw new Error(`Changelog for generator ${generator} (from version: ${from} to: ${to}) not found`);
+        throw new Error(`Changelog for generator ${generatorId} (from version: ${from} to: ${to}) not found`);
     }
 
     return response.body.entries;
@@ -191,6 +186,7 @@ export async function updateVersionInternal(
         throw error;
     }
 
+    const client = new FernRegistryClient({ environment: fdrUrl });
     // Pull a branch of fern/update/<generator>/<api>:<group>
     // as well as fern/update/cli
     const generatorsList = await getGenerators(fullRepoPath);
@@ -205,6 +201,12 @@ export async function updateVersionInternal(
                 }
                 additionalName = `${generatorName.replace("fernapi/", "")}@${additionalName}`;
 
+                const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generator });
+                if (!generatorResponse.ok || generatorResponse.body == null) {
+                    throw new Error(`Generator ${generator} not found`);
+                }
+                const generatorEntity = generatorResponse.body;
+
                 // We could collect the promises here and await them at the end, but there aren't many you'd parallelize,
                 // and I think you'd outweigh that benefit by having to make several clones to manage the branches in isolation.
                 await handleSingleUpgrade({
@@ -212,7 +214,7 @@ export async function updateVersionInternal(
                     repository,
                     git,
                     branchName: `${branchName}${additionalName}`,
-                    prTitle: `Upgrade Fern Generator Version: (\`${groupName}\`)`,
+                    prTitle: `Upgrade Fern ${generatorEntity.displayName} Generator: (\`${groupName}\`)`,
                     upgradeAction: async ({ includeMajor }: { includeMajor?: boolean }) => {
                         let command = `generator upgrade --generator ${generatorName} --group ${groupName}`;
                         if (apiName !== NO_API_FALLBACK_KEY) {
@@ -228,7 +230,7 @@ export async function updateVersionInternal(
                     getPRBody: async (fromVersion, toVersion) => {
                         return formatChangelogResponses(
                             fromVersion,
-                            await getGeneratorChangelog(fdrUrl, generatorName, fromVersion, toVersion),
+                            await getGeneratorChangelog(fdrUrl, generatorEntity.id, fromVersion, toVersion),
                         );
                     },
                     getEntityVersion: async () => {
