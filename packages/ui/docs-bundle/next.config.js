@@ -126,8 +126,11 @@ const nextConfig = {
              * to work across origins (i.e. subpath routing)
              */
             {
-                source: `/:prefix*${SENTRY_TUNNEL_ROUTE}`,
-                headers: [{ key: "Access-Control-Allow-Origin", value: "*" }],
+                source: SENTRY_TUNNEL_ROUTE,
+                headers: [
+                    { key: "Access-Control-Allow-Origin", value: "*" },
+                    { key: "Access-Control-Allow-Headers", value: "sentry-trace, baggage" },
+                ],
             },
         ];
     },
