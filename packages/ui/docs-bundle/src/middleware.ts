@@ -139,6 +139,7 @@ export const config: MiddlewareConfig = {
          * Match all requests to posthog
          */
         "/api/fern-docs/analytics/posthog/:path*",
+        "/:prefix*/api/fern-docs/analytics/posthog/:path*",
         /*
          * Match all request paths except for the ones starting with:
          * - api (API routes)

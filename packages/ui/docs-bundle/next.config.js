@@ -145,10 +145,6 @@ if (isTruthy(process.env.TRAILING_SLASH)) {
     sentryTunnelRoute += "/";
 }
 
-if (cdnUri != null) {
-    sentryTunnelRoute = new URL(sentryTunnelRoute, cdnUri).pathname;
-}
-
 module.exports = withSentryConfig(
     module.exports,
     {
