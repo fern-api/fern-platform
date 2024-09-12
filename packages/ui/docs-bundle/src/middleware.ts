@@ -147,7 +147,7 @@ export const config: MiddlewareConfig = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        "/((?!api/fern-docs|_next/static|_next/image|favicon.ico).*)",
+        "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
     ],
 };
 
