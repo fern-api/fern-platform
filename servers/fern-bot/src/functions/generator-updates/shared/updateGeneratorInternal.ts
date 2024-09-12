@@ -162,7 +162,7 @@ export async function updateVersionInternal(
         repository,
         git,
         branchName: "fern/update/cli",
-        prTitle: "Upgrade Fern CLI version",
+        prTitle: "Upgrade Fern CLI",
         upgradeAction: async () => {
             // Here we have to pipe yes to get through interactive prompts in the CLI
             const response = await execFernCli("upgrade", fullRepoPath, true);
@@ -212,7 +212,7 @@ export async function updateVersionInternal(
                     repository,
                     git,
                     branchName: `${branchName}${additionalName}`,
-                    prTitle: `Upgrade Fern Generator Version: (${additionalName})`,
+                    prTitle: `Upgrade Fern Generator Version: (\`${groupName}\`)`,
                     upgradeAction: async ({ includeMajor }: { includeMajor?: boolean }) => {
                         let command = `generator upgrade --generator ${generatorName} --group ${groupName}`;
                         if (apiName !== NO_API_FALLBACK_KEY) {
