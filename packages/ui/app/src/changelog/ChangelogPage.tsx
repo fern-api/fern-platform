@@ -41,10 +41,12 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                     return 1;
                 }
 
-                const pageId = content.anchorIds[hash.slice(1)];
-
-                if (pageId != null) {
-                    const entry = flattenedEntries.findIndex((entry) => entry.pageId === pageId);
+                /**
+                 * if the hash appears on an entry, navigate to page where the entry is located
+                 */
+                const entryPageId = content.anchorIds[hash.slice(1)];
+                if (entryPageId != null) {
+                    const entry = flattenedEntries.findIndex((entry) => entry.pageId === entryPageId);
                     if (entry !== -1) {
                         return Math.floor(entry / CHANGELOG_PAGE_SIZE) + 1;
                     }
