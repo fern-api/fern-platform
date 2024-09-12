@@ -30,6 +30,7 @@ it("generator dao", async () => {
     // create snippets
     const generatorStarter: FdrAPI.generators.Generator = {
         id: "my-cool/example",
+        displayName: "My Cool Example",
         generatorType: { type: "sdk" },
         dockerImage: "my-cool/example",
         generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -45,6 +46,7 @@ it("generator dao", async () => {
         generator: {
             id: "my-cool/example",
             generatorType: { type: "sdk" },
+            displayName: "My Cool Example",
             dockerImage: "changing things up",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Typescript,
         },
@@ -64,6 +66,7 @@ it("generator dao non-unique", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "python-sdk",
+            displayName: "Python SDK",
             generatorType: { type: "sdk" },
             dockerImage: "my-cool/example",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -73,6 +76,7 @@ it("generator dao non-unique", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "python-sdk-2",
+            displayName: "Python SDK",
             generatorType: { type: "sdk" },
             dockerImage: "my-cool/example-1",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -82,6 +86,7 @@ it("generator dao non-unique", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "python-sdk-3",
+            displayName: "Python SDK",
             generatorType: { type: "sdk" },
             dockerImage: "my-cool/example-2",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -95,6 +100,7 @@ it("generator dao non-unique", async () => {
 it("generator dao image non-unique", async () => {
     const generator: Generator = {
         id: "python-sdk-3",
+        displayName: "Python SDK",
         generatorType: { type: "sdk" },
         dockerImage: "my-cool/example",
         generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -105,6 +111,7 @@ it("generator dao image non-unique", async () => {
         await fdrApplication.dao.generators().upsertGenerator({
             generator: {
                 id: "python-sdk-15",
+                displayName: "Python SDK",
                 generatorType: { type: "sdk" },
                 dockerImage: "my-cool/example",
                 generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,

@@ -16,6 +16,7 @@ it("generator version dao not semver", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "this-fails-semver",
+            displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-fails-semver",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -38,6 +39,7 @@ it("generator version get latest respects semver, not time", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "this-picks-latest",
+            displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-picks-latest",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -94,6 +96,7 @@ it("generator changelog", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "this-gets-changelog",
+            displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-gets-changelog",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -270,6 +273,7 @@ it("generator version happy path update", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "this-is-the-happy-path",
+            displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-is-the-happy-path",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -331,6 +335,7 @@ it("get generator that works for cli version", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "this-is-cli-restricted",
+            displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-is-cli-restricted",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
@@ -399,6 +404,7 @@ it("get generator retain major version", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
             id: "this-is-major-version-restricted",
+            displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-is-major-version-restricted",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
