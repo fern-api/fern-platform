@@ -54,6 +54,10 @@ export async function initializePosthog(api_host: string, customerConfig?: DocsV
             posthog.set_config({ api_host });
         }
     } else {
+        /**
+         * Initialize the global posthog instance.
+         * Events will be tunneled through the /api/fern-docs/analytics/posthog route.
+         */
         posthog.init(apiKey, {
             api_host,
             debug: process.env.NODE_ENV === "development",
@@ -62,29 +66,23 @@ export async function initializePosthog(api_host: string, customerConfig?: DocsV
         });
     }
 
-    if (customerConfig != null) {
-        if (posthogHasCustomer(posthog) && posthog.customer.__loaded) {
-            if (posthog.customer.config.api_host !== api_host) {
-                // api_host may change because of useApiRoute
-                posthog.customer.set_config({ api_host });
-            }
-        } else {
-            posthog.init(
-                customerConfig.apiKey,
-                {
-                    api_host,
-                    request_headers: {
-                        // default to posthog-js's default endpoint
-                        // this is probably the expected behavior
-                        "x-fern-posthog-host": customerConfig.endpoint ?? "https://us.i.posthog.com",
-                    },
-                    debug: process.env.NODE_ENV === "development",
-                    capture_pageview: true,
-                    capture_pageleave: true,
-                },
-                "customer",
-            );
-        }
+    /**
+     * If the customer has a custom PostHog config, we initialize a secondary capturing object for them.
+     * This allows us to funnel posthog events to both our posthog instance as well as theirs.
+     *
+     * Note: Events will NOT be tunneled through the /api/fern-docs/analytics/posthog route.
+     * Posthog will default to the https://us.i.posthog.com capture endpoint, unless a custom endpoint is provided.
+     */
+    if (customerConfig != null && process.env.NODE_ENV !== "development") {
+        posthog.init(
+            customerConfig.apiKey,
+            {
+                api_host: customerConfig.endpoint,
+                capture_pageview: true,
+                capture_pageleave: true,
+            },
+            "customer",
+        );
     }
 }
 
