@@ -6,7 +6,7 @@ import { provideRegistryService } from "@fern-ui/ui";
 import { kv } from "@vercel/kv";
 import algoliasearch from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
-import { ChatMessage } from "cohere-ai/api";
+import { Message as ChatMessage } from "cohere-ai/api";
 import { NextRequest } from "next/server";
 import { v4 } from "uuid";
 import { z } from "zod";
