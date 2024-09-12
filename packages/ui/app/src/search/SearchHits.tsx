@@ -12,7 +12,7 @@ import { SearchHit } from "./SearchHit";
 import { AskCohereHit } from "./cohere/AskCohereHit";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
-    return <div className="justify t-muted flex h-24 w-full flex-col items-center py-3">{children}</div>;
+    return <div className="justify t-muted flex h-24 w-full flex-col hits-center py-3">{children}</div>;
 };
 
 const COHERE_AI_HIT_ID = "cohere-ai-hit";
@@ -20,7 +20,7 @@ const COHERE_AI_HIT_ID = "cohere-ai-hit";
 export const SearchHits: React.FC = () => {
     const { isAiChatbotEnabledInPreview } = useFeatureFlags();
     const basePath = useBasePath();
-    const { items } = useInfiniteHits<SearchRecord>();
+    const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
@@ -42,17 +42,17 @@ export const SearchHits: React.FC = () => {
     }, []);
 
     const hoveredSearchHit = useMemo(() => {
-        return items
+        return hits
             .map((hit, index) => ({ record: hit, index }))
             .find(({ record }) => record.objectID === hoveredSearchHitId);
-    }, [items, hoveredSearchHitId]);
+    }, [hits, hoveredSearchHitId]);
 
     useEffect(() => {
-        const [firstHit] = items;
+        const [firstHit] = hits;
         if (firstHit != null) {
             setHoveredSearchHitId((id) => id ?? (isAiChatbotEnabledInPreview ? COHERE_AI_HIT_ID : firstHit.objectID));
         }
-    }, [items, isAiChatbotEnabledInPreview]);
+    }, [hits, isAiChatbotEnabledInPreview]);
 
     useKeyboardPress({
         key: "Up",
@@ -65,7 +65,7 @@ export const SearchHits: React.FC = () => {
                 return;
             }
 
-            const previousHit = items[hoveredSearchHit.index - 1];
+            const previousHit = hits[hoveredSearchHit.index - 1];
             if (previousHit != null) {
                 setHoveredSearchHitId(previousHit.objectID);
                 const ref = refs.current.get(previousHit.objectID);
@@ -80,7 +80,7 @@ export const SearchHits: React.FC = () => {
         key: "Down",
         onPress: () => {
             if (hoveredSearchHitId === COHERE_AI_HIT_ID) {
-                setHoveredSearchHitId(items[0]?.objectID ?? null);
+                setHoveredSearchHitId(hits[0]?.objectID ?? null);
                 return;
             }
 
@@ -88,7 +88,7 @@ export const SearchHits: React.FC = () => {
                 setHoveredSearchHitId(COHERE_AI_HIT_ID);
                 return;
             }
-            const nextHit = items[hoveredSearchHit != null ? hoveredSearchHit.index + 1 : 0];
+            const nextHit = hits[hoveredSearchHit != null ? hoveredSearchHit.index + 1 : 0];
             if (nextHit != null) {
                 setHoveredSearchHitId(nextHit.objectID);
                 const ref = refs.current.get(nextHit.objectID);
@@ -143,7 +143,7 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
-    if ((items.length === 0 && !isAiChatbotEnabledInPreview) || search.results.query.length === 0) {
+    if ((hits.length === 0 && !isAiChatbotEnabledInPreview) || search.results.query.length === 0) {
         return null;
     }
 
@@ -165,7 +165,7 @@ export const SearchHits: React.FC = () => {
                     onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
                 />
             )}
-            {items.map((hit) => (
+            {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {
                         if (elem != null) {
@@ -184,7 +184,7 @@ export const SearchHits: React.FC = () => {
 
 export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
     const { isAiChatbotEnabledInPreview } = useFeatureFlags();
-    const { items } = useInfiniteHits<SearchRecord>();
+    const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
@@ -194,8 +194,8 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
         return <>{children}</>;
     }
 
-    if (items.length === 0) {
-        return <div className="justify t-muted flex w-full flex-col items-center py-3">No results found</div>;
+    if (hits.length === 0) {
+        return <div className="justify t-muted flex w-full flex-col hits-center py-3">No results found</div>;
     }
 
     return (
@@ -211,7 +211,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                     isHovered={true}
                 />
             )}
-            {items.map((hit) => (
+            {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {
                         if (elem != null) {
