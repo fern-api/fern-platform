@@ -7,4 +7,4 @@
 -- AlterTable
 ALTER TABLE "Generator" ADD COLUMN "displayName" TEXT;
 UPDATE "Generator" SET "displayName" = "id";
-ALTER TABLE "Generator" ALTER COLUMN "displayName" TEXT NOT NULL;
+ALTER TABLE "Generator" ALTER COLUMN "displayName" SET NOT NULL;
