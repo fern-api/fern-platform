@@ -110,4 +110,28 @@
     .m-mdx {
         @apply mt-4 mb-6 first:mt-0;
     }
+
+    @keyframes slide-down {
+        0% {
+            height: 0;
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+            height: var(--radix-collapsible-content-height);
+        }
+    }
+
+    @keyframes slide-up {
+        0% {
+            opacity: 1;
+            height: var(--radix-collapsible-content-height);
+        }
+
+        100% {
+            opacity: 0;
+            height: 0;
+        }
+    }
 }

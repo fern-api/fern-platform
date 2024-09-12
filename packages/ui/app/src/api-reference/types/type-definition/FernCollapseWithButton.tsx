@@ -1,7 +1,8 @@
-import { FernButton, FernButtonProps, FernCollapse } from "@fern-ui/components";
+import { FernButton, FernButtonProps } from "@fern-ui/components";
+import * as Collapsible from "@radix-ui/react-collapsible";
 import cn from "clsx";
 import { Xmark } from "iconoir-react";
-import { FC, PropsWithChildren, ReactNode, useState } from "react";
+import { FC, PropsWithChildren, ReactNode } from "react";
 
 interface FernCollapseWithButtonProps {
     isOpen: boolean;
@@ -23,67 +24,44 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
     hideText,
     buttonProps,
 }) => {
-    const [isFullWidth, setFullWidth] = useState(isOpen);
-    const [transition, setTransition] = useState<"closed" | "open" | "closing" | "opening">(isOpen ? "open" : "closed");
-
     const text = !isOpen ? showText : hideText;
 
     return (
-        <div
-            className={cn(
-                "fern-collapse-with-button data-[state=opening]:overflow-hidden data-[state=closing]:overflow-hidden",
-                "ring-default flex flex-col max-md:rounded-xl rounded-lg ring-1 m-px",
-                {
-                    "w-full": isFullWidth,
-                    "w-fit max-sm:w-full": !isFullWidth,
-                },
-            )}
-            data-state={transition}
-        >
-            <FernButton
-                {...buttonProps}
-                className={cn("fern-collapse-trigger text-left", buttonProps?.className)}
-                onClick={(e) => {
-                    toggleIsOpen();
-                    e.stopPropagation();
-                }}
-                variant="minimal"
-                icon={
-                    typeof text === "string" ? (
-                        <Xmark
-                            className={cn("transition", {
-                                "rotate-45": !isOpen,
-                            })}
-                        />
-                    ) : null
-                }
-                active={isOpen}
-                data-state={transition}
-            >
-                {text}
-            </FernButton>
-            <FernCollapse
-                className="border-default -mt-px border-t"
-                isOpen={isOpen}
-                onOpenStart={() => {
-                    setFullWidth(true);
-                    setTransition("opening");
+        <Collapsible.Root
+            className="fern-collapse-card"
+            open={isOpen}
+            onOpenChange={(open) => {
+                if (open) {
                     onOpen?.();
-                }}
-                onOpenEnd={() => {
-                    setTransition("open");
-                }}
-                onCloseStart={() => {
-                    setTransition("closing");
+                } else {
                     onClose?.();
-                }}
-                onCloseEnd={() => {
-                    setFullWidth(false);
-                    setTransition("closed");
-                }}
-            >
-                {children}
-            </FernCollapse>
-        </div>
+                }
+            }}
+        >
+            <Collapsible.Trigger asChild>
+                <FernButton
+                    {...buttonProps}
+                    className={cn("fern-collapse-trigger text-left", buttonProps?.className)}
+                    onClick={(e) => {
+                        toggleIsOpen();
+                        e.stopPropagation();
+                    }}
+                    variant="minimal"
+                    icon={
+                        typeof text === "string" ? (
+                            <Xmark
+                                className={cn("transition", {
+                                    "rotate-45": !isOpen,
+                                })}
+                            />
+                        ) : null
+                    }
+                    active={isOpen}
+                >
+                    {text}
+                </FernButton>
+            </Collapsible.Trigger>
+            <Collapsible.Content className="fern-collapse-card-content">{children}</Collapsible.Content>
+        </Collapsible.Root>
     );
 };
