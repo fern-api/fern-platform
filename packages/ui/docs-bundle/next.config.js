@@ -36,6 +36,12 @@ function isTruthy(value) {
     return false;
 }
 
+let SENTRY_TUNNEL_ROUTE = "/api/fern-docs/monitoring";
+
+if (isTruthy(process.env.TRAILING_SLASH)) {
+    SENTRY_TUNNEL_ROUTE += "/";
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
@@ -114,6 +120,18 @@ const nextConfig = {
                 source: "/:prefix*/api/fern-docs/auth/:path*",
                 headers: AccessControlHeaders,
             },
+
+            /**
+             * Access-Control-Allow-Origin header is required for sentry tunnel
+             * to work across origins (i.e. subpath routing)
+             */
+            {
+                source: SENTRY_TUNNEL_ROUTE,
+                headers: [
+                    { key: "Access-Control-Allow-Origin", value: "*" },
+                    { key: "Access-Control-Allow-Headers", value: "sentry-trace, baggage" },
+                ],
+            },
         ];
     },
     images: {
@@ -138,12 +156,6 @@ module.exports = withBundleAnalyzer(nextConfig);
 // Injected content via Sentry wizard below
 
 const { withSentryConfig } = require("@sentry/nextjs");
-
-let sentryTunnelRoute = "/api/fern-docs/monitoring";
-
-if (isTruthy(process.env.TRAILING_SLASH)) {
-    sentryTunnelRoute += "/";
-}
 
 module.exports = withSentryConfig(
     module.exports,
@@ -170,7 +182,7 @@ module.exports = withSentryConfig(
         // This can increase your server load as well as your hosting bill.
         // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
         // side errors will fail.
-        tunnelRoute: sentryTunnelRoute,
+        tunnelRoute: SENTRY_TUNNEL_ROUTE,
 
         // Hides source maps from generated client bundles
         hideSourceMaps: !isTruthy(process.env.ENABLE_SOURCE_MAPS),
