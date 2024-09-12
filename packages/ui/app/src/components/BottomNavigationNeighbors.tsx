@@ -14,16 +14,18 @@ export const BottomNavigationNeighbors: FC<BottomNavigationNeighborsProps> = (pr
     const neighborsFromAtom = useAtomValue(NEIGHBORS_ATOM);
     const neighbors = props.neighbors ?? neighborsFromAtom;
 
-    const prev = useMemo(() => {
-        if (neighbors.prev == null) {
-            return undefined;
-        }
-        return {
-            title: neighbors.prev.title,
-            excerpt: neighbors.prev.excerpt,
-            href: toHref(neighbors.prev.slug),
-        };
-    }, [neighbors.prev, toHref]);
+    // TODO: Uncomment this when we improve the UI for the previous button
+
+    // const prev = useMemo(() => {
+    //     if (neighbors.prev == null) {
+    //         return undefined;
+    //     }
+    //     return {
+    //         title: neighbors.prev.title,
+    //         excerpt: neighbors.prev.excerpt,
+    //         href: toHref(neighbors.prev.slug),
+    //     };
+    // }, [neighbors.prev, toHref]);
 
     const next = useMemo(() => {
         if (neighbors.next == null) {
@@ -36,5 +38,5 @@ export const BottomNavigationNeighbors: FC<BottomNavigationNeighborsProps> = (pr
         };
     }, [neighbors.next, toHref]);
 
-    return <BottomNavigationButtons prev={prev} next={next} />;
+    return <BottomNavigationButtons next={next} />;
 };
