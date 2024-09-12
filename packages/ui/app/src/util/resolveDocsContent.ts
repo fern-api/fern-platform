@@ -1,6 +1,7 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import GithubSlugger from "github-slugger";
 import { reverse } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
@@ -12,6 +13,8 @@ import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { DocsContent } from "../resolver/DocsContent";
 import type { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
+
+const slugger = new GithubSlugger();
 
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
@@ -90,6 +93,7 @@ export async function resolveDocsContent({
                             ...mdxOptions,
                             filename: pageId,
                         }),
+                        anchorTag: parseMarkdownPageToAnchorTag(pageContent.markdown),
                     };
                 }),
             )
@@ -114,6 +118,7 @@ export async function resolveDocsContent({
             // items: await Promise.all(itemsPromise),
             // neighbors,
             slug: found.node.slug,
+            anchorIds: Object.fromEntries(pageRecords.map((record) => [record.anchorTag ?? "", record.pageId])),
         };
     } else if (node.type === "changelogEntry") {
         const changelogNode = reverse(parents).find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
@@ -330,4 +335,16 @@ async function getNeighbors(
 ): Promise<DocsContent.Neighbors> {
     const [prev, next] = await Promise.all([getNeighbor(node.prev, pages), getNeighbor(node.next, pages)]);
     return { prev, next };
+}
+
+export function parseMarkdownPageToAnchorTag(markdown: string): string | undefined {
+    // This regex match is temporary and will be replaced with a more robust solution
+    const matches = markdown.match(/^(#{1,6})\s+(.+)$/gm);
+    let anchorTag = undefined;
+    if (matches) {
+        const originalSlug = slugger.slug(matches[0]);
+        anchorTag = originalSlug.match(/[^$$]+/)?.[0].slice(1);
+    }
+
+    return anchorTag;
 }
