@@ -8,7 +8,6 @@ import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import { SimpleGit } from "simple-git";
-import { getGeneratorNameFromImageName } from "./getGeneratorNameFromImageName";
 
 async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
     const client = new FernVenusApiClient({ environment: venusUrl });
@@ -31,7 +30,12 @@ async function getGeneratorChangelog(
     console.log(`Getting changelog for generator ${generator} from ${from} to ${to}.`);
     const client = new FernRegistryClient({ environment: fdrUrl });
 
-    const response = await client.generators.versions.getChangelog(getGeneratorNameFromImageName(generator), {
+    const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generator });
+    if (!generatorResponse.ok || generatorResponse.body == null) {
+        throw new Error(`Generator ${generator} not found`);
+    }
+
+    const response = await client.generators.versions.getChangelog(generatorResponse.body!.id, {
         fromVersion: { type: "exclusive", value: from },
         toVersion: { type: "inclusive", value: to },
     });
