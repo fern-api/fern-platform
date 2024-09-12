@@ -64,9 +64,6 @@ export const middleware: NextMiddleware = async (request) => {
         return NextResponse.rewrite(nextUrl, { request: { headers } });
     }
 
-    // eslint-disable-next-line no-console
-    console.log(request);
-
     const pathname = extractNextDataPathname(request.nextUrl.pathname);
 
     const fernToken = request.cookies.get("fern_token");
