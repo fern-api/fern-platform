@@ -22,6 +22,10 @@ export const middleware: NextMiddleware = async (request) => {
         headers.set("x-fern-host", xFernHost);
     }
 
+    if (headers.has("x-prerender-revalidate")) {
+        return NextResponse.next({ request: { headers } });
+    }
+
     /**
      * Rewrite robots.txt
      */
@@ -139,8 +143,8 @@ export const config = {
         /**
          * Match all requests to posthog
          */
-        { source: "/api/fern-docs/analytics/posthog/:path*" },
-        { source: "/:prefix*/api/fern-docs/analytics/posthog/:path*" },
+        "/api/fern-docs/analytics/posthog/:path*",
+        "/:prefix*/api/fern-docs/analytics/posthog/:path*",
         /*
          * Match all request paths except for the ones starting with:
          * - api (API routes)
@@ -148,14 +152,7 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        {
-            source: "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
-
-            /**
-             * Do not rewrite any revalidation requests
-             */
-            missing: [{ type: "header", key: "x-prerender-revalidate" }],
-        },
+        "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
     ],
 };
 
