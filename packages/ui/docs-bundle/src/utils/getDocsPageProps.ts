@@ -221,7 +221,7 @@ async function convertDocsToDocsPageProps({
         // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
 
         try {
-            capturePosthogEvent("broken_link", {
+            capturePosthogEvent("not_found", {
                 slug,
             });
         } catch (e) {
