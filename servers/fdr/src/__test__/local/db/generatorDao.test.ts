@@ -56,6 +56,7 @@ it("generator dao", async () => {
     expect(generatorUpdated[0]).toEqual({
         id: "my-cool/example",
         generatorType: { type: "sdk" },
+        displayName: "My Cool Example",
         dockerImage: "changing things up",
         generatorLanguage: FdrAPI.generators.GeneratorLanguage.Typescript,
     });
