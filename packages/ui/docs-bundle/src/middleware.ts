@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-internal-modules
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
-import { NextRequest, NextResponse, type MiddlewareConfig, type NextMiddleware } from "next/server";
+import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "./utils/pageRoutes";
@@ -134,7 +134,7 @@ export const middleware: NextMiddleware = async (request) => {
     return NextResponse.rewrite(nextUrl, { request: { headers } });
 };
 
-export const config: MiddlewareConfig = {
+export const config = {
     matcher: [
         /**
          * Match all requests to posthog
