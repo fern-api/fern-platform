@@ -21,6 +21,9 @@
     "./auth": {
       "default": "./src/auth/index.ts"
     },
+    "./analytics": {
+      "default": "./src/analytics/index.ts"
+    },
     ".": {
       "default": "./src/index.ts"
     }

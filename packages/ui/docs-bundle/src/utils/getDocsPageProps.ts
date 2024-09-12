@@ -19,6 +19,7 @@ import {
     serializeMdx,
     setMdxBundler,
 } from "@fern-ui/ui";
+import { capturePosthogEvent } from "@fern-ui/ui/analytics";
 import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import type { GetServerSidePropsResult, GetStaticPropsResult, Redirect } from "next";
@@ -220,7 +221,6 @@ async function convertDocsToDocsPageProps({
         // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
 
         try {
-            const { capturePosthogEvent } = await import("../../../app/src/analytics/posthog");
             capturePosthogEvent("broken_link", {
                 slug,
             });
