@@ -43,7 +43,7 @@ Sentry.init({
     // This option is required for capturing headers and cookies.
     sendDefaultPii: true,
 
-    beforeSend: (event: Sentry.ErrorEvent, _: Sentry.EventHint): Sentry.ErrorEvent | null => {
+    beforeSend: (event: Sentry.Event, _: Sentry.EventHint): Sentry.Event | null => {
         // Filter out events from privategpt
         if (event.request?.url?.includes("privategpt")) {
             return null;
