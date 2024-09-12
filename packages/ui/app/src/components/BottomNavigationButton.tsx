@@ -1,4 +1,3 @@
-import { FernCard } from "@fern-ui/components";
 import clsx from "clsx";
 import { NavArrowLeft, NavArrowRight } from "iconoir-react";
 import { Markdown } from "../mdx/Markdown";
@@ -9,9 +8,8 @@ export declare namespace BottomNavigationButton {
     export interface Props {
         title: string;
         hint?: string;
-        href?: string;
+        href: string;
         excerpt?: BundledMDX;
-        onClick?: () => void;
         dir: "prev" | "next";
         className?: string;
     }
@@ -23,11 +21,10 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     hint,
     excerpt,
     href,
-    onClick,
     className,
 }) => {
-    const content = (
-        <>
+    return (
+        <FernLinkCard className={clsx("my-12 flex flex-1 items-center rounded-xl p-6", className)} href={href}>
             {dir === "prev" && (
                 <span className="sm-4 t-muted inline-flex items-center gap-2 py-2.5 text-sm sm:border-default sm:mr-6 sm:border-r sm:pr-6">
                     <NavArrowLeft className="size-icon" />
@@ -49,22 +46,6 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
                     <NavArrowRight className="size-icon" />
                 </span>
             )}
-        </>
-    );
-
-    const cardClassName = clsx("my-12 flex flex-1 items-center rounded-xl p-6", className);
-
-    if (href == null) {
-        return (
-            <FernCard className={cardClassName} onClick={onClick}>
-                {content}
-            </FernCard>
-        );
-    }
-
-    return (
-        <FernLinkCard className={cardClassName} href={href} onClick={onClick}>
-            {content}
         </FernLinkCard>
     );
 };
