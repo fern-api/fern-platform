@@ -8,6 +8,7 @@ import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import { SimpleGit } from "simple-git";
+import { getGeneratorNameFromImageName } from "./getGeneratorNameFromImageName";
 
 async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
     const client = new FernVenusApiClient({ environment: venusUrl });
@@ -30,7 +31,7 @@ async function getGeneratorChangelog(
     console.log(`Getting changelog for generator ${generator} from ${from} to ${to}.`);
     const client = new FernRegistryClient({ environment: fdrUrl });
 
-    const response = await client.generators.versions.getChangelog("python-sdk", {
+    const response = await client.generators.versions.getChangelog(getGeneratorNameFromImageName(generator), {
         fromVersion: { type: "exclusive", value: from },
         toVersion: { type: "inclusive", value: to },
     });
@@ -71,10 +72,10 @@ function formatChangelogEntry(changelog: ChangelogResponse): string {
     return entry;
 }
 
-function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
+function formatChangelogResponses(previousVersion: string, changelogs: ChangelogResponse[]): string {
     // The format is effectively the below, where sections are only included if there is at
     // least one entry in that section, and we try to cap the number of entries in each section to ~5 with a see more
-    // ## [<Lowest Version> - <Highest Version>] - Changelog
+    // ## Upgrading from `<previous version>` to `<new version>` - Changelog
     // **`x.y.z`**
     // - `fix:` <summary>
     // **`x.y.z-rc0`**
@@ -87,7 +88,7 @@ function formatChangelogResponses(changelogs: ChangelogResponse[]): string {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const prBodyTitle = `## [${changelogs[0]!.version} - ${changelogs[changelogs.length - 1]!.version}] - Changelog\n\n<dl>\n<dd>\n<ul>`;
+    const prBodyTitle = `## Upgrading from \`${previousVersion}\` to \`${changelogs[0]!.version}\` - Changelog\n\n<dl>\n<dd>\n<ul>`;
     let prBody = "";
 
     // Get the first 5 changelogs
@@ -165,7 +166,7 @@ export async function updateVersionInternal(
             console.log(response.stderr);
         },
         getPRBody: async (fromVersion, toVersion) => {
-            return formatChangelogResponses(await getCliChangelog(fdrUrl, fromVersion, toVersion));
+            return formatChangelogResponses(fromVersion, await getCliChangelog(fdrUrl, fromVersion, toVersion));
         },
         getEntityVersion: async () => {
             return cleanStdout((await execFernCli("--version", fullRepoPath)).stdout);
@@ -222,6 +223,7 @@ export async function updateVersionInternal(
                     },
                     getPRBody: async (fromVersion, toVersion) => {
                         return formatChangelogResponses(
+                            fromVersion,
                             await getGeneratorChangelog(fdrUrl, generatorName, fromVersion, toVersion),
                         );
                     },
