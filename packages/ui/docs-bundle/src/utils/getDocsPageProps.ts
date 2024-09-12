@@ -219,6 +219,16 @@ async function convertDocsToDocsPageProps({
         // however, we should consider rendering a custom 404 page in the future using the customer's branding.
         // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
 
+        try {
+            const { capturePosthogEvent } = await import("../../../app/src/analytics/posthog");
+            capturePosthogEvent("broken_link", {
+                slug,
+            });
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+        }
+
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve navigation for ${url}`);
         if (featureFlags.is404PageHidden && node.redirect != null) {
