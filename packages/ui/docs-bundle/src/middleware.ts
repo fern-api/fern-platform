@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
-import { NextRequest, NextResponse, type MiddlewareConfig, type NextMiddleware } from "next/server";
+import { PRERENDER_REVALIDATE_HEADER } from "next/dist/lib/constants";
+import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "./utils/pageRoutes";
@@ -134,13 +135,13 @@ export const middleware: NextMiddleware = async (request) => {
     return NextResponse.rewrite(nextUrl, { request: { headers } });
 };
 
-export const config: MiddlewareConfig = {
+export const config = {
     matcher: [
         /**
          * Match all requests to posthog
          */
-        "/api/fern-docs/analytics/posthog/:path*",
-        "/:prefix*/api/fern-docs/analytics/posthog/:path*",
+        { source: "/api/fern-docs/analytics/posthog/:path*" },
+        { source: "/:prefix*/api/fern-docs/analytics/posthog/:path*" },
         /*
          * Match all request paths except for the ones starting with:
          * - api (API routes)
@@ -148,7 +149,14 @@ export const config: MiddlewareConfig = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
+        {
+            source: "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
+
+            /**
+             * Do not rewrite any revalidation requests
+             */
+            missing: [{ type: "header", key: PRERENDER_REVALIDATE_HEADER }],
+        },
     ],
 };
 
