@@ -1,10 +1,10 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
-import { usePrevious } from "@fern-ui/react-commons";
 import clsx from "clsx";
-import { SetStateAction, atom, useAtom, useAtomValue } from "jotai";
+import { atom, useAtomValue } from "jotai";
 import { chunk } from "lodash-es";
 import { Fragment, ReactElement, useEffect, useMemo } from "react";
+import { useMemoOne } from "use-memo-one";
 import { IS_READY_ATOM, LOCATION_ATOM, SCROLL_BODY_ATOM, SIDEBAR_ROOT_NODE_ATOM } from "../atoms";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
 import { FernLink } from "../components/FernLink";
@@ -21,65 +21,67 @@ function flattenChangelogEntries(page: DocsContent.ChangelogPage): FernNavigatio
 }
 
 const CHANGELOG_PAGE_SIZE = 10;
-const CHANGELOG_PAGE_ATOM = atom(
-    (get) => {
-        if (!get(IS_READY_ATOM)) {
-            return 1;
-        }
-
-        const hash = get(LOCATION_ATOM).hash;
-        if (hash == null) {
-            return 1;
-        }
-        const match = hash.match(/^#page-(\d+)$/)?.[1];
-        if (match == null) {
-            return 1;
-        }
-        return Math.max(parseInt(match, 10), 1);
-    },
-    (get, set, page: SetStateAction<number>) => {
-        const newPage = typeof page === "function" ? page(get(CHANGELOG_PAGE_ATOM)) : page;
-        set(LOCATION_ATOM, { hash: newPage > 1 ? `#page-${newPage}` : "" }, { replace: false });
-    },
-);
 
 function getOverviewMdx(page: DocsContent.ChangelogPage): BundledMDX | undefined {
     return page.node.overviewPageId != null ? page.pages[page.node.overviewPageId] : undefined;
 }
 
 export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage }): ReactElement {
-    const [page, setPage] = useAtom(CHANGELOG_PAGE_ATOM);
+    const flattenedEntries = useMemo(() => flattenChangelogEntries(content), [content]);
+    const chunkedEntries = useMemo(() => chunk(flattenedEntries, CHANGELOG_PAGE_SIZE), [flattenedEntries]);
+    const page = useAtomValue(
+        useMemoOne(() => {
+            const pageAtom = atom((get) => {
+                if (!get(IS_READY_ATOM)) {
+                    return 1;
+                }
+
+                const hash = get(LOCATION_ATOM).hash;
+                if (hash == null) {
+                    return 1;
+                }
+
+                /**
+                 * if the hash appears on an entry, navigate to page where the entry is located
+                 */
+                const entryPageId = content.anchorIds[hash.slice(1)];
+                if (entryPageId != null) {
+                    const entry = flattenedEntries.findIndex((entry) => entry.pageId === entryPageId);
+                    if (entry !== -1) {
+                        return Math.floor(entry / CHANGELOG_PAGE_SIZE) + 1;
+                    }
+                }
+
+                const match = hash.match(/^#page-(\d+)$/)?.[1];
+                if (match == null) {
+                    return 1;
+                }
+                /**
+                 * Ensure the page number is within the bounds of the changelog entries
+                 */
+                return Math.min(Math.max(parseInt(match, 10), 1), chunkedEntries.length);
+            });
+            return pageAtom;
+        }, [content.anchorIds, flattenedEntries, chunkedEntries.length]),
+    );
 
     const overview = getOverviewMdx(content);
-    const chunkedEntries = useMemo(() => chunk(flattenChangelogEntries(content), CHANGELOG_PAGE_SIZE), [content]);
 
     const toHref = useToHref();
     const fullWidth = useAtomValue(SIDEBAR_ROOT_NODE_ATOM) == null;
-
-    /**
-     * Reset paging when navigating between different changelog pages
-     */
-    const prevousNodeId = usePrevious(content.node.id);
-    useEffect(() => {
-        if (prevousNodeId !== content.node.id) {
-            setPage(1);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [prevousNodeId, content.node.id]);
-
-    /**
-     * Ensure that the page is within bounds
-     */
-    useEffect(() => {
-        setPage((prev) => Math.min(prev, chunkedEntries.length));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chunkedEntries.length]);
 
     /**
      * Scroll to the top of the page when navigating to a new page of the changelog
      */
     const scrollBody = useAtomValue(SCROLL_BODY_ATOM);
     useEffect(() => {
+        const element = document.getElementById(window.location.hash.slice(1));
+
+        if (element != null) {
+            element.scrollIntoView();
+            return;
+        }
+
         if (scrollBody instanceof Document) {
             window.scrollTo(0, 0);
         } else {

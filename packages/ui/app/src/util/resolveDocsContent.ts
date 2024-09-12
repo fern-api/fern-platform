@@ -14,8 +14,6 @@ import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { DocsContent } from "../resolver/DocsContent";
 import type { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
 
-const slugger = new GithubSlugger();
-
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
     pages: Record<string, DocsV1Read.PageContent>,
@@ -109,6 +107,16 @@ export async function resolveDocsContent({
                   })
                 : undefined;
 
+        /**
+         * if there are duplicate anchor tags, the anchor from the first page where it appears will be used
+         */
+        const anchorIds: Record<string, FernNavigation.PageId> = {};
+        pageRecords.forEach((record) => {
+            if (record.anchorTag != null && anchorIds[record.anchorTag] == null) {
+                anchorIds[record.anchorTag] = record.pageId;
+            }
+        });
+
         return {
             type: "changelog",
             breadcrumbs: found.breadcrumbs,
@@ -118,7 +126,7 @@ export async function resolveDocsContent({
             // items: await Promise.all(itemsPromise),
             // neighbors,
             slug: found.node.slug,
-            anchorIds: Object.fromEntries(pageRecords.map((record) => [record.anchorTag ?? "", record.pageId])),
+            anchorIds,
         };
     } else if (node.type === "changelogEntry") {
         const changelogNode = reverse(parents).find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
@@ -338,6 +346,11 @@ async function getNeighbors(
 }
 
 export function parseMarkdownPageToAnchorTag(markdown: string): string | undefined {
+    /**
+     * new slugger instance per page to avoid conflicts between pages
+     */
+    const slugger = new GithubSlugger();
+
     // This regex match is temporary and will be replaced with a more robust solution
     const matches = markdown.match(/^(#{1,6})\s+(.+)$/gm);
     let anchorTag = undefined;
