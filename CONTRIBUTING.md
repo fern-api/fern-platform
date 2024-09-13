@@ -70,9 +70,9 @@ FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
 
 To build and run the NextJS docs UI, run either:
 
-- `pnpm --filter=@fern-ui/docs-bundle dev:fern-dev`. This compiles and runs a NextJS app that communicates with our dev cloud environment.
+- `pnpm docs:dev`. This compiles and runs a NextJS app that communicates with our cloud production environment.
 
-- `pnpm --filter=@fern-ui/docs-bundle dev:fern-prod`. This compiles and runs a NextJS app that communicates with our cloud production environment.
+- `pnpm docs:dev:fern-dev`. This compiles and runs a NextJS app that communicates with our dev cloud environment.
 
 The frontend is served at `localhost:3000`. You can configure which docs are loaded by using `.env.local`:
 
