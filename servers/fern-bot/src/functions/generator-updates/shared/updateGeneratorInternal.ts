@@ -336,6 +336,9 @@ async function handleSingleUpgrade({
         const toVersion = await getEntityVersion();
         const parsedFrom = SemVer.parse(fromVersion);
         const parsedTo = SemVer.parse(toVersion);
+        // Clean the branch back up, to remove any unstaged changes
+        await git.reset(["--hard"]);
+
         if (parsedFrom == null || parsedTo == null) {
             console.log("An invalid version was found, quitting", fromVersion, toVersion);
             return;
