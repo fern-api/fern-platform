@@ -1,11 +1,8 @@
+import { checkViewerAllowedEdge, getXFernHostEdge, loadWithUrl } from "@fern-ui/docs-server";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
-// eslint-disable-next-line import/no-internal-modules
-import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 

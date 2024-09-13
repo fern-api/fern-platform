@@ -1,8 +1,7 @@
+import { getDocsPageProps, getNextPublicDocsDomain } from "@fern-ui/docs-server";
 import { DocsPage } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ComponentProps } from "react";
-import { getDocsPageProps } from "../../../utils/getDocsPageProps";
-import { getNextPublicDocsDomain } from "../../../utils/xFernHost";
 
 export default DocsPage;
 

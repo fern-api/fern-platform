@@ -1,9 +1,12 @@
+import {
+    convertStaticToServerSidePropsResult,
+    getDocsPageProps,
+    getDynamicDocsPageProps,
+    getNextPublicDocsDomain,
+} from "@fern-ui/docs-server";
 import { DocsPage } from "@fern-ui/ui";
 import { GetServerSideProps } from "next";
 import { ComponentProps } from "react";
-import { convertStaticToServerSidePropsResult } from "../../../utils/convertStaticToServerSidePropsResult";
-import { getDocsPageProps, getDynamicDocsPageProps } from "../../../utils/getDocsPageProps";
-import { getNextPublicDocsDomain } from "../../../utils/xFernHost";
 
 export default DocsPage;
 

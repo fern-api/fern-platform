@@ -15,5 +15,6 @@ export { values, type Values } from "./objects/values";
 export { PLATFORM, type Platform } from "./platform";
 export { titleCase } from "./titleCase";
 export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
+export { unknownToString } from "./unknownToString";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
 export { withDefaultProtocol } from "./withDefaultProtocol";

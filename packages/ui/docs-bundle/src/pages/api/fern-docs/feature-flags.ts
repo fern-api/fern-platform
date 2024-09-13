@@ -1,7 +1,7 @@
+import { getXFernHostEdge } from "@fern-ui/docs-server";
 import { FeatureFlags } from "@fern-ui/ui";
 import { getAll } from "@vercel/edge-config";
 import { NextRequest, NextResponse } from "next/server";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 

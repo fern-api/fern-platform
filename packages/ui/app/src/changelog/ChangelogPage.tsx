@@ -12,7 +12,7 @@ import { PageHeader } from "../components/PageHeader";
 import { useToHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
 import { BundledMDX } from "../mdx/types";
-import { DocsContent } from "../resolver/DocsContent";
+import { DocsContent } from "../../../docs-server/src/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 

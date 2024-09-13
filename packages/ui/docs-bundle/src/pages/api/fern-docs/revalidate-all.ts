@@ -1,11 +1,9 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import { getXFernHostNode, loadWithUrl, toValidPathname } from "@fern-ui/docs-server";
 import { buildUrl } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { toValidPathname } from "../../../utils/toValidPathname";
-import { getXFernHostNode } from "../../../utils/xFernHost";
 
 export const config = {
     maxDuration: 300,

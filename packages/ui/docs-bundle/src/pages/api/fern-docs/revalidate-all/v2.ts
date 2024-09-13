@@ -1,13 +1,9 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { isPlainObject } from "@fern-ui/core-utils";
+import { cleanHost, conformTrailingSlash, getXFernHostNode, loadWithUrl, toValidPathname } from "@fern-ui/docs-server";
 import { buildUrl } from "@fern-ui/fdr-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";
-import { loadWithUrl } from "../../../../utils/loadWithUrl";
-import { toValidPathname } from "../../../../utils/toValidPathname";
-import { conformTrailingSlash } from "../../../../utils/trailingSlash";
-import { cleanHost, getXFernHostNode } from "../../../../utils/xFernHost";
 
 export const config = {
     maxDuration: 300,
@@ -65,7 +61,7 @@ const handler: NextApiHandler = async (
         }
 
         const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
-        const slugCollector = NodeCollector.collect(node);
+        const slugCollector = FernNavigation.NodeCollector.collect(node);
         const urls = slugCollector.getSlugs().map((slug) => conformTrailingSlash(urljoin(xFernHost, slug)));
 
         // when we call res.revalidate() nextjs uses

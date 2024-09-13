@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Fragment, ReactElement, memo } from "react";
 import { useFeatureFlags, useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { DocsContent } from "../resolver/DocsContent";
+import { DocsContent } from "../../../docs-server/src/DocsContent";
 
 const MdxContent = dynamic(() => import("../mdx/MdxContent").then(({ MdxContent }) => MdxContent), {
     ssr: true,

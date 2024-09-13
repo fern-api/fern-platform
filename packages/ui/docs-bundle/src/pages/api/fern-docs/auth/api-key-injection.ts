@@ -1,16 +1,14 @@
-/* eslint-disable import/no-internal-modules */
 import {
     APIKeyInjectionConfig,
     OAuth2Client,
     OryAccessTokenSchema,
     getAPIKeyInjectionConfig,
     getAuthEdgeConfig,
+    getXFernHostEdge,
     withSecureCookie,
-} from "@fern-ui/ui/auth";
+} from "@fern-ui/docs-server";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
-import { getXFernHostEdge } from "../../../../utils/xFernHost";
-
 export const runtime = "edge";
 
 export default async function handler(req: NextRequest): Promise<NextResponse<APIKeyInjectionConfig>> {

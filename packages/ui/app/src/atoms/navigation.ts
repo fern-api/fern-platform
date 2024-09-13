@@ -4,7 +4,7 @@ import { SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
-import { DocsContent } from "../resolver/DocsContent";
+import { DocsContent } from "../../../docs-server/src/DocsContent";
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 

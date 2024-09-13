@@ -1,5 +1,5 @@
+import { notFoundResponse, redirectResponse } from "@fern-ui/docs-server";
 import { NextRequest, NextResponse } from "next/server";
-import { notFoundResponse, redirectResponse } from "../../../utils/serverResponse";
 
 export const runtime = "edge";
 

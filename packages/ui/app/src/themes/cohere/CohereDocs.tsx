@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Router } from "next/router";
 import { ReactElement, memo, useEffect, useRef } from "react";
+import { DocsContent } from "../../../../docs-server/src/DocsContent";
 import {
     ANNOUNCEMENT_HEIGHT_ATOM,
     CONTENT_HEIGHT_ATOM,
@@ -13,7 +14,6 @@ import {
 } from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Announcement } from "../../header/Announcement";
-import { DocsContent } from "../../resolver/DocsContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 

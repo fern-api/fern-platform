@@ -12,7 +12,7 @@ import {
     useTheme,
 } from "../../atoms";
 import { DocsMainContent } from "../../docs/DocsMainContent";
-import { DocsContent } from "../../resolver/DocsContent";
+import { DocsContent } from "../../../../docs-server/src/DocsContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 

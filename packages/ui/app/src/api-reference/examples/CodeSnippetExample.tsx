@@ -1,10 +1,10 @@
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { createRef, FC, useCallback, useEffect, useMemo } from "react";
+import { FernSyntaxHighlighter } from "../../../../syntax-highlighter/src/FernSyntaxHighlighter";
+import { ScrollToHandle } from "../../../../syntax-highlighter/src/FernSyntaxHighlighterTokens";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
-import { ScrollToHandle } from "../../syntax-highlighting/FernSyntaxHighlighterTokens";
 import { getJsonLineNumbers } from "./getJsonLineNumbers";
 import { JsonPropertyPath } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";

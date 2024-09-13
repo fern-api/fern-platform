@@ -1,8 +1,8 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { UnreachableCaseError } from "ts-essentials";
+import { provideRegistryService } from "../../../../docs-server/src/registry";
 import { ResolvedEndpointDefinition, stringifyResolvedEndpointPathPartsTemplate } from "../../resolver/types";
-import { provideRegistryService } from "../../services/registry";
 import { PlaygroundAuthState, PlaygroundEndpointRequestFormState } from "../types";
 import { buildAuthHeaders, convertToCustomSnippetPayload } from "../utils";
 import { CurlSnippetBuilder } from "./builders/curl";

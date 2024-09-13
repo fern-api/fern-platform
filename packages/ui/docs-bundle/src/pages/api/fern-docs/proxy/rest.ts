@@ -1,10 +1,9 @@
 import { assertNever } from "@fern-ui/core-utils";
+import { buildFormData, resolveSerializableFile } from "@fern-ui/docs-server";
 import type { ProxyRequest } from "@fern-ui/ui";
 import { ProxyRequestSchema } from "@fern-ui/ui";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import fetch, { Headers, type BodyInit } from "node-fetch";
-import { buildFormData } from "../../../../utils/buildFormData";
-import { resolveSerializableFile } from "../../../../utils/resolveSerializableFile";
 
 /**
  * Note: this API route must be deployed as an node.js serverless function because

@@ -4,7 +4,7 @@ import * as Accordion from "@radix-ui/react-accordion";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, NavArrowDown } from "iconoir-react";
 import { FC } from "react";
-import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
+import { FernSyntaxHighlighter } from "../../../../syntax-highlighter/src/FernSyntaxHighlighter";
 
 export interface WebSocketMessage {
     type: string | undefined;

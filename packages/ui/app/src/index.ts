@@ -1,3 +1,6 @@
+export { unknownToString } from "@fern-ui/core-utils";
+export { getRedirectForPath } from "../../docs-server/src/getRedirectForPath";
+export { getRegistryServiceWithToken, provideRegistryService } from "../../docs-server/src/registry";
 export { type CustomerAnalytics } from "./analytics/types";
 export { DEFAULT_FEATURE_FLAGS } from "./atoms";
 export type { DocsProps, FeatureFlags } from "./atoms";
@@ -15,9 +18,6 @@ export { ApiTypeResolver } from "./resolver/ApiTypeResolver";
 export * from "./resolver/types";
 export { getBreadcrumbList } from "./seo/getBreadcrumbList";
 export { getSeoProps } from "./seo/getSeoProp";
-export { getRegistryServiceWithToken, provideRegistryService } from "./services/registry";
 export { renderThemeStylesheet } from "./themes/stylesheet/renderThemeStylesheet";
-export { getRedirectForPath } from "./util/getRedirectForPath";
 export { getGitHubInfo, getGitHubRepo } from "./util/github";
-export { resolveDocsContent } from "./util/resolveDocsContent";
-export { unknownToString } from "./util/unknownToString";
+export { resolveDocsContent } from "./util/resolver/resolveDocsContent";

@@ -1,6 +1,7 @@
 import { createFetchRequester } from "@algolia/requester-fetch";
 import { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { assertNonNullish } from "@fern-ui/core-utils";
+import { getXFernHostEdge } from "@fern-ui/docs-server";
 import { getContentForSearchRecord, getSlugForSearchRecord, getTitleForSearchRecord } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
 import { kv } from "@vercel/kv";
@@ -10,7 +11,6 @@ import { ChatMessage } from "cohere-ai/api";
 import { NextRequest } from "next/server";
 import { v4 } from "uuid";
 import { z } from "zod";
-import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
 

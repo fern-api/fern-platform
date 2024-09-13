@@ -1,7 +1,6 @@
 /* eslint-disable import/no-internal-modules */
-import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
+import { getAuthEdgeConfig, getXFernHostEdge } from "@fern-ui/docs-server";
 import { NextRequest, NextResponse } from "next/server";
-import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
 

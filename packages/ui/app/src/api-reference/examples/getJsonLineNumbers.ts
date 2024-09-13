@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-ui/core-utils";
+import { captureException } from "@sentry/nextjs";
 import jp from "jsonpath";
-import { captureSentryError } from "../../analytics/sentry";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
 
@@ -22,11 +22,15 @@ export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start 
         // eslint-disable-next-line no-console
         console.error(e);
 
-        captureSentryError(e, {
-            context: "ApiPage",
-            errorSource: "getJsonLineNumbers",
-            errorDescription:
-                "Jsonpath failed to query JSON object. Check the query that was constructed when the user hovered over a specific property",
+        captureException(e, {
+            captureContext: {
+                extra: {
+                    context: "ApiPage",
+                    errorSource: "getJsonLineNumbers",
+                    errorDescription:
+                        "Jsonpath failed to query JSON object. Check the query that was constructed when the user hovered over a specific property",
+                },
+            },
             data: { json, query },
         });
     }

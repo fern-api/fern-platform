@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { APIKeyInjectionConfig } from "../auth";
+import { APIKeyInjectionConfig } from "../../../docs-server/src/auth";
 import { useApiRoute } from "../hooks/useApiRoute";
 
 const DEFAULT = { enabled: false as const };

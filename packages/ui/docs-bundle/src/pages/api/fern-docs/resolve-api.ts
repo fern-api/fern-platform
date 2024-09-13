@@ -1,5 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
+import { buildUrlFromApiNode, checkViewerAllowedNode, getXFernHostNode } from "@fern-ui/docs-server";
 import {
     ApiDefinitionResolver,
     ApiTypeResolver,
@@ -7,14 +8,10 @@ import {
     setMdxBundler,
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
-import { NextApiHandler, NextApiResponse } from "next";
-import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
-import { getXFernHostNode } from "../../../utils/xFernHost";
-import { getFeatureFlags } from "./feature-flags";
-// eslint-disable-next-line import/no-internal-modules
-import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 // eslint-disable-next-line import/no-internal-modules
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
+import { NextApiHandler, NextApiResponse } from "next";
+import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
 

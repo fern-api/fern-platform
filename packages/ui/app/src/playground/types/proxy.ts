@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { SerializableFileSchema, SerializableFormDataEntryValueSchema, SerializableJsonSchema } from "./serializable";
+import {
+    SerializableFileSchema,
+    SerializableFormDataEntryValueSchema,
+    SerializableJsonSchema,
+} from "../../../../docs-server/src/serializable";
 
 export const SerializableFormDataSchema = z.object({
     type: z.literal("form-data"),

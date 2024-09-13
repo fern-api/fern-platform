@@ -1,5 +1,5 @@
+import { unknownToString } from "@fern-ui/core-utils";
 import { ResolvedEndpointPathParts } from "../../../resolver/types";
-import { unknownToString } from "../../../util/unknownToString";
 // import { unknownToString } from "../../utils";
 
 export function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<string, unknown>): string {

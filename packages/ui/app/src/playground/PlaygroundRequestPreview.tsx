@@ -1,9 +1,9 @@
 import { useAtom, useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
+import { FernSyntaxHighlighter } from "../../../syntax-highlighter/src/FernSyntaxHighlighter";
 import { PLAYGROUND_AUTH_STATE_ATOM, PLAYGROUND_AUTH_STATE_OAUTH_ATOM, useFeatureFlags } from "../atoms";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { ResolvedEndpointDefinition } from "../resolver/types";
-import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { useSnippet } from "./code-snippets/useSnippet";
 import { PlaygroundEndpointRequestFormState } from "./types";

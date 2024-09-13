@@ -1,5 +1,11 @@
 import { APIV1Read, Snippets } from "@fern-api/fdr-sdk/client/types";
-import { assertNever, isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import {
+    assertNever,
+    isNonNullish,
+    isPlainObject,
+    unknownToString,
+    visitDiscriminatedUnion,
+} from "@fern-ui/core-utils";
 import { decodeJwt } from "jose";
 import jp from "jsonpath";
 import { compact, mapValues } from "lodash-es";
@@ -18,7 +24,6 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../resolver/types";
-import { unknownToString } from "../util/unknownToString";
 import { blobToDataURL } from "./fetch-utils/blobToDataURL";
 import { executeProxyRest } from "./fetch-utils/executeProxyRest";
 import {

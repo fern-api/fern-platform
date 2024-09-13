@@ -1,16 +1,16 @@
-/* eslint-disable import/no-internal-modules */
 import {
     FernUser,
     OAuth2Client,
     OryAccessTokenSchema,
     getAuthEdgeConfig,
+    getWorkOS,
+    getWorkOSClientId,
+    getXFernHostEdge,
     signFernJWT,
     withSecureCookie,
-} from "@fern-ui/ui/auth";
+} from "@fern-ui/docs-server";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
-import { getWorkOS, getWorkOSClientId } from "../../../../utils/auth";
-import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
 

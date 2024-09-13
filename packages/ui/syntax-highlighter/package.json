@@ -1,0 +1,55 @@
+{
+  "name": "@fern-ui/syntax-highlighter",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/ui/syntax-highlighter"
+  },
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "source": "src/index.ts",
+  "module": "src/index.ts",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "test": "vitest --run --passWithNoTests --globals",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "depcheck": "depcheck"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/hast": "^3.0.4",
+    "@types/node": "^18.7.18",
+    "@types/react": "^18.3.5",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.56.0",
+    "organize-imports-cli": "^0.10.0",
+    "prettier": "^3.3.2",
+    "stylelint": "^16.1.0",
+    "tailwindcss": "^3.4.3",
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
+  },
+  "dependencies": {
+    "@fern-ui/components": "workspace:*",
+    "clsx": "^2.1.1",
+    "hastscript": "^9.0.0",
+    "lodash-es": "^4.17.21",
+    "react": "^18.2.0",
+    "react-virtuoso": "^4.7.7",
+    "shiki": "^1.6.0",
+    "unist-util-visit": "^5.0.0"
+  }
+}

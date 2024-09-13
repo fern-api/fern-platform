@@ -80,7 +80,7 @@ export interface PlaygroundWebSocketRequestFormState {
     messages: Record<string, unknown>;
 }
 
+export * from "../../../../docs-server/src/serializable";
 export * from "./auth";
 export * from "./formDataEntryValue";
 export * from "./proxy";
-export * from "./serializable";

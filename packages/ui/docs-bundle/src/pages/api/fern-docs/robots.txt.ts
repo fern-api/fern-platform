@@ -1,7 +1,6 @@
+import { getSeoDisabled, getXFernHostEdge } from "@fern-ui/docs-server";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
-import { getSeoDisabled } from "../../../utils/disabledSeo";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 

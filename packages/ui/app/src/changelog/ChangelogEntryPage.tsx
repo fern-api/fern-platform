@@ -4,7 +4,7 @@ import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbo
 import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
-import { DocsContent } from "../resolver/DocsContent";
+import { DocsContent } from "../../../docs-server/src/DocsContent";
 
 export function ChangelogEntryPage({ content }: { content: DocsContent.ChangelogEntryPage }): ReactElement {
     const page = content.page;

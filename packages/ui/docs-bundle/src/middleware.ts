@@ -1,11 +1,16 @@
 // eslint-disable-next-line import/no-internal-modules
+import {
+    extractBuildId,
+    extractNextDataPathname,
+    getPageRoute,
+    getPageRouteMatch,
+    getPageRoutePath,
+    getXFernHostEdge,
+    rewritePosthog,
+} from "@fern-ui/docs-server";
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
-import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
-import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "./utils/pageRoutes";
-import { rewritePosthog } from "./utils/rewritePosthog";
-import { getXFernHostEdge } from "./utils/xFernHost";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
