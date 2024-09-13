@@ -548,7 +548,7 @@ export function PlaygroundAuthorizationFormCard({
                 />
             )}
 
-            <FernCollapse isOpen={isOpen.value}>
+            <FernCollapse open={isOpen.value}>
                 <div className="pt-4">
                     <div className="fern-dropdown max-h-full">
                         <PlaygroundAuthorizationForm auth={auth} closeContainer={isOpen.setFalse} disabled={disabled} />

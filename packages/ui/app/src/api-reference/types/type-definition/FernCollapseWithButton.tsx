@@ -1,5 +1,4 @@
-import { FernButton, FernButtonProps } from "@fern-ui/components";
-import * as Collapsible from "@radix-ui/react-collapsible";
+import { FernButton, FernButtonProps, FernCollapse } from "@fern-ui/components";
 import cn from "clsx";
 import { Xmark } from "iconoir-react";
 import { FC, PropsWithChildren, ReactNode } from "react";
@@ -27,8 +26,8 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
     const text = !isOpen ? showText : hideText;
 
     return (
-        <Collapsible.Root
-            className="fern-collapse-card"
+        <FernCollapse
+            className="fern-collapsible-card"
             open={isOpen}
             onOpenChange={(open) => {
                 if (open) {
@@ -37,8 +36,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
                     onClose?.();
                 }
             }}
-        >
-            <Collapsible.Trigger asChild>
+            trigger={
                 <FernButton
                     {...buttonProps}
                     className={cn("fern-collapse-trigger text-left", buttonProps?.className)}
@@ -60,8 +58,9 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
                 >
                     {text}
                 </FernButton>
-            </Collapsible.Trigger>
-            <Collapsible.Content className="fern-collapse-card-content">{children}</Collapsible.Content>
-        </Collapsible.Root>
+            }
+        >
+            {children}
+        </FernCollapse>
     );
 };

@@ -1,5 +1,5 @@
 @layer components {
-    .fern-collapse-card {
+    .fern-collapsible-card {
         @apply border border-default max-md:rounded-xl rounded-lg overflow-clip;
 
         .fern-collapse-trigger {
@@ -14,16 +14,8 @@
             @apply w-fit max-sm:w-full;
         }
 
-        .fern-collapse-card-content {
-            @apply border-default border-t;
-        }
-
-        .fern-collapse-card-content[data-state="open"] {
-            animation: slide-down 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94) none;
-        }
-
-        .fern-collapse-card-content[data-state="closed"] {
-            animation: slide-up 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        .fern-collapsible-card-content {
+            @apply border-default border-t fern-collapsible;
         }
     }
 }
