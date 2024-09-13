@@ -2,18 +2,9 @@ name: Vercel Production Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
-  ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
-  ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
-  NEXT_PUBLIC_POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
-  FONTAWESOME_CDN_HOST: https://icons.ferndocs.com
-  WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
-  WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
-  JWT_SECRET_KEY: ${{ secrets.PROD_JWT_SECRET_KEY }}
-  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
   SEGMENT_API_KEY: ${{ secrets.SEGMENT_API_KEY }}
 on:
   push:
