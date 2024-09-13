@@ -1,5 +1,5 @@
 import { isPlainObject } from "@fern-ui/core-utils";
-import jp from "jsonpath";
+import { query as jpquery } from "jsonpath";
 import { captureSentryError } from "../../analytics/sentry";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
@@ -17,7 +17,7 @@ export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start 
     let results: unknown[] = [];
 
     try {
-        results = jp.query(json, query);
+        results = jpquery(json, query);
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
