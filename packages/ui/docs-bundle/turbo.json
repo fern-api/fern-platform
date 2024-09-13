@@ -3,9 +3,11 @@
   "extends": ["//"],
   "tasks": {
     "build:fern-prod": {
+      "outputs": [".next/**", "!.next/cache/**"],
       "dependsOn": ["^build", "^compile"]
     },
     "build:fern-dev": {
+      "outputs": [".next/**", "!.next/cache/**"],
       "dependsOn": ["^build", "^compile"]
     },
     "dev:fern-prod": {
