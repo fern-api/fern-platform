@@ -117,60 +117,62 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
     }, [chunkedEntries.length, page]);
 
     return (
-        <div className="flex justify-between px-4 md:px-6 lg:px-8">
-            <div className={clsx("w-full min-w-0", { "pt-12 lg:pt-24": fullWidth, "pt-8": !fullWidth })}>
-                <main className={clsx("mx-auto max-w-screen-lg break-words", { "lg:ml-8": !fullWidth })}>
-                    <section className="flex pb-8">
+        <div
+            className={clsx("fern-changelog", {
+                "full-width": fullWidth,
+            })}
+        >
+            <main>
+                <section className="fern-changelog-entry">
+                    <ChangelogContentLayout>
+                        <PageHeader
+                            title={content.node.title}
+                            breadcrumbs={content.breadcrumbs}
+                            subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
+                        />
+                        <Markdown mdx={overview} />
+                    </ChangelogContentLayout>
+                </section>
+
+                {entries.map((entry) => {
+                    const page = content.pages[entry.pageId];
+                    const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
+                    return (
+                        <Fragment key={entry.id}>
+                            <hr />
+                            <article id={entry.date} className="fern-changelog-entry">
+                                <ChangelogContentLayout
+                                    stickyContent={<FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>}
+                                >
+                                    <Markdown
+                                        title={
+                                            title != null ? (
+                                                <h2>
+                                                    <FernLink href={toHref(entry.slug)} className="not-prose">
+                                                        {title}
+                                                    </FernLink>
+                                                </h2>
+                                            ) : undefined
+                                        }
+                                        mdx={page}
+                                    />
+                                </ChangelogContentLayout>
+                            </article>
+                        </Fragment>
+                    );
+                })}
+
+                {(prev != null || next != null) && (
+                    <div className="flex">
                         <ChangelogContentLayout>
-                            <PageHeader
-                                title={content.node.title}
-                                breadcrumbs={content.breadcrumbs}
-                                subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
-                            />
-                            <Markdown mdx={overview} />
+                            <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
                         </ChangelogContentLayout>
-                    </section>
+                    </div>
+                )}
 
-                    {entries.map((entry) => {
-                        const page = content.pages[entry.pageId];
-                        const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
-                        return (
-                            <Fragment key={entry.id}>
-                                <hr />
-                                <article id={entry.date} className="flex items-stretch py-8 lg:py-16">
-                                    <ChangelogContentLayout
-                                        stickyContent={<FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>}
-                                    >
-                                        <Markdown
-                                            title={
-                                                title != null ? (
-                                                    <h2>
-                                                        <FernLink href={toHref(entry.slug)} className="not-prose">
-                                                            {title}
-                                                        </FernLink>
-                                                    </h2>
-                                                ) : undefined
-                                            }
-                                            mdx={page}
-                                        />
-                                    </ChangelogContentLayout>
-                                </article>
-                            </Fragment>
-                        );
-                    })}
-
-                    {(prev != null || next != null) && (
-                        <div className="flex">
-                            <ChangelogContentLayout>
-                                <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
-                            </ChangelogContentLayout>
-                        </div>
-                    )}
-
-                    <div className="h-48" />
-                    <BuiltWithFern className="w-fit mx-auto my-8" />
-                </main>
-            </div>
+                <div className="h-48" />
+                <BuiltWithFern className="w-fit mx-auto my-8" />
+            </main>
         </div>
     );
 }

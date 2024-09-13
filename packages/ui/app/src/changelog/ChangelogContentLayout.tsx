@@ -9,29 +9,22 @@ interface ChangelogContentLayoutProps {
 
 export function ChangelogContentLayout({ children, stickyContent }: ChangelogContentLayoutProps): ReactElement {
     const fullWidth = useAtomValue(SIDEBAR_ROOT_NODE_ATOM) == null;
+    const asideContent = stickyContent != null && <div className="fern-changelog-date">{stickyContent}</div>;
     return fullWidth ? (
         <>
-            <div className="hidden lg:block flex-initial w-64 shrink-0">
-                {stickyContent != null && (
-                    <div className="sticky top-header-offset-padded t-muted text-base mb-8">{stickyContent}</div>
-                )}
-            </div>
-            <div className="mx-auto relative max-w-content-width min-w-0 shrink flex-auto">
-                {stickyContent != null && <div className="t-muted text-base mb-8 lg:hidden">{stickyContent}</div>}
+            <aside>{asideContent}</aside>
+            <div className="fern-changelog-content">
+                {asideContent}
                 {children}
             </div>
         </>
     ) : (
         <>
-            <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-auto">
-                {stickyContent != null && <div className="t-muted text-base mb-8 xl:hidden">{stickyContent}</div>}
+            <div className="fern-changelog-content">
+                {asideContent}
                 {children}
             </div>
-            {stickyContent != null && (
-                <div className="-mt-2 w-72 pl-4 text-right hidden xl:block">
-                    <span className="t-muted text-base sticky top-header-offset-padded">{stickyContent}</span>
-                </div>
-            )}
+            <aside>{asideContent}</aside>
         </>
     );
 }
