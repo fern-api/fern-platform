@@ -32,7 +32,7 @@ import {
     type ResolvedEndpointDefinition,
     type ResolvedWebSocketChannel,
 } from "../resolver/types";
-import { APIS_ATOM, FLATTENED_APIS_ATOM, useFlattenedApi } from "./apis";
+import { FLATTENED_APIS_ATOM, useFlattenedApi } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { HEADER_HEIGHT_ATOM } from "./layout";
@@ -44,10 +44,7 @@ import { IS_MOBILE_SCREEN_ATOM } from "./viewport";
 const PLAYGROUND_IS_OPEN_ATOM = atom(false);
 PLAYGROUND_IS_OPEN_ATOM.debugLabel = "PLAYGROUND_IS_OPEN_ATOM";
 
-export const HAS_PLAYGROUND_ATOM = atom(
-    (get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled && Object.keys(get(APIS_ATOM)).length > 0,
-);
-HAS_PLAYGROUND_ATOM.debugLabel = "HAS_PLAYGROUND_ATOM";
+export const IS_PLAYGROUND_ENABLED_ATOM = atom((get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled);
 
 export const MAX_PLAYGROUND_HEIGHT_ATOM = atom((get) => {
     const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM);
@@ -115,10 +112,6 @@ PLAYGROUND_NODE.debugLabel = "PLAYGROUND_NODE";
 
 export const PREV_PLAYGROUND_NODE_ID = atom<FernNavigation.NodeId | undefined>(undefined);
 PREV_PLAYGROUND_NODE_ID.debugLabel = "PREV_PLAYGROUND_NODE_ID";
-
-export function useHasPlayground(): boolean {
-    return useAtomValue(HAS_PLAYGROUND_ATOM);
-}
 
 export function usePlaygroundNodeId(): FernNavigation.NodeId | undefined {
     return useAtomValue(PLAYGROUND_NODE_ID);
@@ -360,3 +353,8 @@ export function usePlaygroundWebsocketFormState(
         ),
     ];
 }
+
+export const PLAYGROUND_REQUEST_TYPE_ATOM = atomWithStorage<"curl" | "typescript" | "python">(
+    "api-playground-atom-alpha",
+    "curl",
+);

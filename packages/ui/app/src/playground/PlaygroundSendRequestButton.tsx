@@ -1,8 +1,9 @@
 import { FernButton } from "@fern-ui/components";
+import clsx from "clsx";
 import { FC, ReactNode } from "react";
 
 interface PlaygroundSendRequestButtonProps {
-    sendRequest: () => void;
+    sendRequest?: () => void;
 
     sendRequestButtonLabel?: string;
     sendRequestIcon?: ReactNode;
@@ -15,12 +16,16 @@ export const PlaygroundSendRequestButton: FC<PlaygroundSendRequestButtonProps> =
 }) => {
     return (
         <FernButton
-            className="group relative overflow-hidden font-semibold after:absolute after:inset-y-0 after:w-8 after:animate-shine after:bg-white/50 after:blur after:content-['']"
+            className={clsx("group relative overflow-hidden font-semibold", {
+                "after:absolute after:inset-y-0 after:w-8 after:animate-shine after:bg-white/50 after:blur after:content-['']":
+                    !!sendRequest,
+            })}
             rightIcon={sendRequestIcon}
             onClick={sendRequest}
             intent="primary"
             rounded
             size="large"
+            skeleton={!sendRequest}
         >
             {sendRequestButtonLabel ?? "Send Request"}
         </FernButton>

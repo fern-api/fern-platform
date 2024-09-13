@@ -2,9 +2,9 @@ import { useBooleanState, useResizeObserver } from "@fern-ui/react-commons";
 import cn from "clsx";
 import dynamic from "next/dynamic";
 import { ReactElement, useRef, useState } from "react";
-import { ResolvedEndpointDefinition } from "../resolver/types";
+import { ResolvedEndpointDefinition } from "../../resolver/types";
 
-const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), {
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 
