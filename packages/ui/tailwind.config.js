@@ -285,22 +285,6 @@ module.exports = {
                     "33%": { opacity: "0.6", transform: "translateX(300px) skewX(-15deg)" },
                     "100%": { opacity: "0.6", transform: "translateX(300px) skewX(-15deg)" },
                 },
-                "slide-down-accordion": {
-                    from: { height: 0, opacity: 0 },
-                    to: { height: "var(--radix-accordion-content-height)", opacity: 1 },
-                },
-                "slide-up-accordion": {
-                    from: { height: "var(--radix-accordion-content-height)", opacity: 1 },
-                    to: { height: 0, opacity: 0 },
-                },
-                "slide-down-collapsible": {
-                    from: { height: 0, opacity: 0 },
-                    to: { height: "var(--radix-collapsible-content-height)", opacity: 1 },
-                },
-                "slide-up-collapsible": {
-                    from: { height: "var(--radix-collapsible-content-height)", opacity: 1 },
-                    to: { height: 0, opacity: 0 },
-                },
                 "thumb-rock": {
                     "0%": {
                         transform: "rotate(0deg)",
@@ -338,7 +322,6 @@ module.exports = {
             },
             transitionTimingFunction: {
                 shift: "cubic-bezier(0.16, 1, 0.3, 1)",
-                collapse: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
             },
             animation: {
                 "slide-down-and-fade": "slide-down-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
