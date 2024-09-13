@@ -1,6 +1,5 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "remoteCache": { "signature": true },
   "tasks": {
     "build": {
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
