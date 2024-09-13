@@ -3,9 +3,9 @@ import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import { ArrowUpRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
-import { CURRENT_NODE_ATOM, useClosePlayground } from "../atoms";
-import { FernLink } from "../components/FernLink";
-import { ResolvedEndpointDefinition } from "../resolver/types";
+import { CURRENT_NODE_ATOM, useClosePlayground } from "../../atoms";
+import { FernLink } from "../../components/FernLink";
+import { ResolvedEndpointDefinition } from "../../resolver/types";
 
 interface PlaygroundEndpointFormButtonsProps {
     endpoint: ResolvedEndpointDefinition;

@@ -6,13 +6,13 @@ import cn from "clsx";
 import { Xmark } from "iconoir-react";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
-import { useAllEnvironmentIds } from "../atoms/environment";
-import { HttpMethodTag } from "../components/HttpMethodTag";
-import { MaybeEnvironmentDropdown } from "../components/MaybeEnvironmentDropdown";
-import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../resolver/types";
-import { PlaygroundSendRequestButton } from "./PlaygroundSendRequestButton";
-import { PlaygroundRequestFormState } from "./types";
-import { buildRequestUrl, unknownToString } from "./utils";
+import { useAllEnvironmentIds } from "../../atoms/environment";
+import { HttpMethodTag } from "../../components/HttpMethodTag";
+import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
+import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../../resolver/types";
+import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
+import { PlaygroundRequestFormState } from "../types";
+import { buildRequestUrl, unknownToString } from "../utils";
 
 interface PlaygroundEndpointPathProps {
     method: APIV1Read.HttpMethod | undefined;

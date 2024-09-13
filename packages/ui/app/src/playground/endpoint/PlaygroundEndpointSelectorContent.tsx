@@ -5,12 +5,12 @@ import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { useSetAndOpenPlayground } from "../atoms";
-import { HttpMethodTag } from "../components/HttpMethodTag";
-import { type ResolvedApiEndpointWithPackage } from "../resolver/types";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
+import { useSetAndOpenPlayground } from "../../atoms";
+import { HttpMethodTag } from "../../components/HttpMethodTag";
+import { type ResolvedApiEndpointWithPackage } from "../../resolver/types";
+import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
 
-const Markdown = dynamic(() => import("../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
 export interface PlaygroundEndpointSelectorContentProps {
     apiGroups: ApiGroup[];

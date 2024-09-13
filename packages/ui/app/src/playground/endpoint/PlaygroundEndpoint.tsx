@@ -5,7 +5,7 @@ import { useSetAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { captureSentryError } from "../analytics/sentry";
+import { captureSentryError } from "../../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
@@ -13,19 +13,17 @@ import {
     useBasePath,
     useFeatureFlags,
     usePlaygroundEndpointFormState,
-} from "../atoms";
-import { useSelectedEnvironmentId } from "../atoms/environment";
-import { useApiRoute } from "../hooks/useApiRoute";
-import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
-import { getAppBuildwithfernCom } from "../hooks/useStandardProxyEnvironment";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition, resolveEnvironment } from "../resolver/types";
-import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
-import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
-import { executeProxyFile } from "./fetch-utils/executeProxyFile";
-import { executeProxyRest } from "./fetch-utils/executeProxyRest";
-import { executeProxyStream } from "./fetch-utils/executeProxyStream";
-import type { ProxyRequest } from "./types";
-import { PlaygroundResponse } from "./types/playgroundResponse";
+} from "../../atoms";
+import { useSelectedEnvironmentId } from "../../atoms/environment";
+import { useApiRoute } from "../../hooks/useApiRoute";
+import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
+import { getAppBuildwithfernCom } from "../../hooks/useStandardProxyEnvironment";
+import { ResolvedEndpointDefinition, ResolvedTypeDefinition, resolveEnvironment } from "../../resolver/types";
+import { executeProxyFile } from "../fetch-utils/executeProxyFile";
+import { executeProxyRest } from "../fetch-utils/executeProxyRest";
+import { executeProxyStream } from "../fetch-utils/executeProxyStream";
+import type { ProxyRequest } from "../types";
+import { PlaygroundResponse } from "../types/playgroundResponse";
 import {
     buildAuthHeaders,
     buildEndpointUrl,
@@ -33,7 +31,9 @@ import {
     getInitialEndpointRequestFormStateWithExample,
     serializeFormStateBody,
     unknownToString,
-} from "./utils";
+} from "../utils";
+import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
+import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
 interface PlaygroundEndpointProps {
     endpoint: ResolvedEndpointDefinition;
@@ -67,7 +67,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
         }
         setResponse(loading());
         try {
-            const { capturePosthogEvent } = await import("../analytics/posthog");
+            const { capturePosthogEvent } = await import("../../analytics/posthog");
             capturePosthogEvent("api_playground_request_sent", {
                 endpointId: endpoint.id,
                 endpointName: endpoint.title,
