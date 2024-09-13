@@ -31,6 +31,15 @@
     },
     "test-ete": {
       "dependsOn": ["compile"]
+    },
+    "dev": {
+      "persistent": true
+    },
+    "dev:fern-prod": {
+      "persistent": true
+    },
+    "dev:fern-dev": {
+      "persistent": true
     }
   },
   "globalDependencies": [".eslintrc.js", ".prettierrc.json"]

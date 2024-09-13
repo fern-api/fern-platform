@@ -16,7 +16,6 @@
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -26,17 +25,16 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "build": "pnpm compile",
     "env:fern-dev": "env-cmd -r .env-cmdrc.cjs -e fern-dev",
     "env:fern-prod": "env-cmd -r .env-cmdrc.cjs -e fern-prod",
-    "dev:fern-dev": "pnpm turbo build && NODE_OPTIONS='--inspect' pnpm env:fern-dev next dev",
-    "dev:fern-prod": "pnpm turbo build && NODE_OPTIONS='--inspect' pnpm env:fern-prod next dev",
-    "build:fern-dev": "pnpm turbo build && pnpm env:fern-dev next build",
-    "build:fern-prod": "pnpm turbo build && pnpm env:fern-prod next build",
-    "start:fern-dev": "pnpm turbo build && pnpm env:fern-dev next start",
-    "start:fern-prod": "pnpm turbo build && pnpm env:fern-prod next start",
-    "lint:fern-dev": "pnpm turbo build && pnpm env:fern-dev next lint",
-    "lint:fern-prod": "pnpm turbo build && pnpm env:fern-prod next lint"
+    "dev:fern-dev": "NODE_OPTIONS='--inspect' pnpm env:fern-dev next dev",
+    "dev:fern-prod": "NODE_OPTIONS='--inspect' pnpm env:fern-prod next dev",
+    "build:fern-dev": "pnpm env:fern-dev next build",
+    "build:fern-prod": "pnpm env:fern-prod next build",
+    "start:fern-dev": "pnpm env:fern-dev next start",
+    "start:fern-prod": "pnpm env:fern-prod next start",
+    "lint:fern-dev": "pnpm env:fern-dev next lint",
+    "lint:fern-prod": "pnpm env:fern-prod next lint"
   },
   "dependencies": {
     "@algolia/requester-fetch": "^4.24.0",

@@ -8,6 +8,7 @@
   "source": "src/index.ts",
   "module": "src/index.ts",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",
@@ -56,6 +57,9 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
-    "test": "vitest --run"
+    "test": "vitest --run",
+    "dev": "tsc --watch",
+    "dev:fern-prod": "pnpm dev",
+    "dev:fern-dev": "pnpm dev"
   }
 }
