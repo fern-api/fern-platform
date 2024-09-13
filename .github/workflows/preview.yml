@@ -4,7 +4,7 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-on: pull_request
+on: deployment_status
 
 # Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
 concurrency:
@@ -12,52 +12,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  pr-preview:
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview - app.buildwithfern.com'
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - name: Comment in PR
-        uses: thollander/actions-comment-pull-request@v2.4.3
-        with:
-          message: |
-            ## PR Preview
-            Building...
-          comment_tag: pr_preview
-
-      - uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.4.0
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: pnpm
-
-      - name: Install Vercel CLI
-        run: pnpm install --global vercel@latest
-
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Build Project Artifacts
-        run: VERSION="$(scripts/git-version.sh)" ENABLE_SOURCE_MAPS=true vercel build --debug --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Comment in PR
-        uses: thollander/actions-comment-pull-request@v2.4.3
-        with:
-          message: |
-            ## PR Preview
-            Deploying...
-          comment_tag: pr_preview
-
       - name: Deploy Project Artifacts to Vercel
+        env:
+          DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
         run: |
-          DEPLOYMENT_URL="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
           echo "Deployment URL: $DEPLOYMENT_URL"
           echo "$DEPLOYMENT_URL" > deployment-url.txt
 
@@ -92,7 +55,7 @@ jobs:
           path: deployment-url.txt
 
   playwright-tests:
-    needs: deploy
+    needs: pr-preview
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
