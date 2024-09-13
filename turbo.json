@@ -35,6 +35,12 @@
     "dev": {
       "persistent": true
     },
+    "build:fern-dev": {
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "build:fern-prod": {
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
     "dev:fern-prod": {
       "persistent": true
     },
