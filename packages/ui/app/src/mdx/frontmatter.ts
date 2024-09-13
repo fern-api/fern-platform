@@ -60,6 +60,11 @@ export interface FernDocsFrontmatter extends DocsV1Read.MetadataConfig {
     title?: string;
 
     /**
+     * The SEO title of the page. If not set, the title will inherit what's set in the sidebar.
+     */
+    headline?: string;
+
+    /**
      * The description of the page. This is used for the <meta name="description"> tag in the HTML.
      */
     description?: string;

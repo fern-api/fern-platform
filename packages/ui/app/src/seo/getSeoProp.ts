@@ -96,7 +96,7 @@ export function getSeoProps(
 
             seoTitleFromMarkdownH1 = extractHeadline(content);
 
-            seo.title ??= seoTitleFromMarkdownH1 ?? frontmatter.title;
+            seo.title ??= frontmatter.headline ?? seoTitleFromMarkdownH1 ?? frontmatter.title;
             seo.description ??= frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
         }
     }
