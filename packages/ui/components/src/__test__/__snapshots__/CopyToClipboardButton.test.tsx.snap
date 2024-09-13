@@ -6,7 +6,6 @@ exports[`CopyToClipboardButton > renders correctly 1`] = `
   className="group fern-copy-button fern-button minimal normal rounded square"
   data-state="closed"
   data-testid="copy-btn"
-  disabled={false}
   onBlur={[Function]}
   onClick={[Function]}
   onClickCapture={[Function]}
