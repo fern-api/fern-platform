@@ -123,16 +123,14 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
             })}
         >
             <main>
-                <section className="fern-changelog-entry">
-                    <ChangelogContentLayout>
-                        <PageHeader
-                            title={content.node.title}
-                            breadcrumbs={content.breadcrumbs}
-                            subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
-                        />
-                        <Markdown mdx={overview} />
-                    </ChangelogContentLayout>
-                </section>
+                <ChangelogContentLayout as="section" className="pb-8">
+                    <PageHeader
+                        title={content.node.title}
+                        breadcrumbs={content.breadcrumbs}
+                        subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
+                    />
+                    <Markdown mdx={overview} />
+                </ChangelogContentLayout>
 
                 {entries.map((entry) => {
                     const page = content.pages[entry.pageId];
@@ -140,34 +138,32 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                     return (
                         <Fragment key={entry.id}>
                             <hr />
-                            <article id={entry.date} className="fern-changelog-entry">
-                                <ChangelogContentLayout
-                                    stickyContent={<FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>}
-                                >
-                                    <Markdown
-                                        title={
-                                            title != null ? (
-                                                <h2>
-                                                    <FernLink href={toHref(entry.slug)} className="not-prose">
-                                                        {title}
-                                                    </FernLink>
-                                                </h2>
-                                            ) : undefined
-                                        }
-                                        mdx={page}
-                                    />
-                                </ChangelogContentLayout>
-                            </article>
+                            <ChangelogContentLayout
+                                as="article"
+                                id={entry.date}
+                                stickyContent={<FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>}
+                            >
+                                <Markdown
+                                    title={
+                                        title != null ? (
+                                            <h2>
+                                                <FernLink href={toHref(entry.slug)} className="not-prose">
+                                                    {title}
+                                                </FernLink>
+                                            </h2>
+                                        ) : undefined
+                                    }
+                                    mdx={page}
+                                />
+                            </ChangelogContentLayout>
                         </Fragment>
                     );
                 })}
 
                 {(prev != null || next != null) && (
-                    <div className="flex">
-                        <ChangelogContentLayout>
-                            <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
-                        </ChangelogContentLayout>
-                    </div>
+                    <ChangelogContentLayout as="div">
+                        <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
+                    </ChangelogContentLayout>
                 )}
 
                 <div className="h-48" />

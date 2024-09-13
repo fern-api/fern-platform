@@ -8,7 +8,11 @@
     }
 
     .fern-changelog-entry {
-        @apply flex items-stretch py-8 lg:py-16;
+        @apply flex items-stretch;
+
+        &:is(article) {
+            @apply py-8 lg:py-16;
+        }
     }
 
     .fern-changelog.full-width {
@@ -36,6 +40,10 @@
 
         > main {
             @apply lg:ml-8;
+        }
+
+        .fern-changelog-entry {
+            @apply flex-row-reverse;
         }
 
         .fern-changelog-content {

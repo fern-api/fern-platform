@@ -1,30 +1,26 @@
-import { useAtomValue } from "jotai";
-import { ReactElement, ReactNode } from "react";
-import { SIDEBAR_ROOT_NODE_ATOM } from "../atoms";
+import clsx from "clsx";
+import { ComponentPropsWithoutRef, ReactElement, ReactNode } from "react";
 
-interface ChangelogContentLayoutProps {
+interface ChangelogContentLayoutProps extends ComponentPropsWithoutRef<"div"> {
+    as: "div" | "section" | "article";
     stickyContent?: ReactNode;
     children: ReactNode;
 }
 
-export function ChangelogContentLayout({ children, stickyContent }: ChangelogContentLayoutProps): ReactElement {
-    const fullWidth = useAtomValue(SIDEBAR_ROOT_NODE_ATOM) == null;
+export function ChangelogContentLayout({
+    as: Component,
+    children,
+    stickyContent,
+    ...props
+}: ChangelogContentLayoutProps): ReactElement {
     const asideContent = stickyContent != null && <div className="fern-changelog-date">{stickyContent}</div>;
-    return fullWidth ? (
-        <>
+    return (
+        <Component {...props} className={clsx("fern-changelog-entry", props.className)}>
             <aside>{asideContent}</aside>
             <div className="fern-changelog-content">
                 {asideContent}
                 {children}
             </div>
-        </>
-    ) : (
-        <>
-            <div className="fern-changelog-content">
-                {asideContent}
-                {children}
-            </div>
-            <aside>{asideContent}</aside>
-        </>
+        </Component>
     );
 }
