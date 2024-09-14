@@ -1,5 +1,11 @@
 name: Fern Dashboard - Vercel Production Deployment
 env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  SEGMENT_API_KEY: ${{ secrets.SEGMENT_API_KEY }}
+  # TODO: move to env vars in vercel
   AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
   AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
   VENUS_ORIGIN: ${{ secrets.VENUS_ORIGIN }}
@@ -32,8 +38,7 @@ jobs:
         run: pnpm install --global vercel@latest
 
       - name: Build & Deploy to Vercel
-        working-directory: packages/ui/fern-dashboard
         run: |
           vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-          VERSION="$(scripts/git-version.sh)" ENABLE_SOURCE_MAPS=true vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
           vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
