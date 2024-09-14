@@ -23,8 +23,6 @@ jobs:
         env:
           DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
         run: |
-          echo "${{ toJson(github) }}"
-
           echo "Deployment URL: $DEPLOYMENT_URL"
           echo "$DEPLOYMENT_URL" > deployment-url.txt
 
