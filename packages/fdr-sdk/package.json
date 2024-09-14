@@ -12,14 +12,17 @@
   "types": "dist/index.d.ts",
   "exports": {
     "./navigation": {
+      "import": "./src/navigation/index.ts",
       "types": "./dist/navigation/index.d.ts",
       "default": "./dist/navigation/index.js"
     },
     "./client/types": {
+      "import": "./src/client/types.ts",
       "types": "./dist/client/types.d.ts",
-      "import": "./dist/client/types.js"
+      "default": "./dist/client/types.js"
     },
     ".": {
+      "import": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
