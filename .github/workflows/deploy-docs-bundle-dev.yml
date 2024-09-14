@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: app-dev.buildwithfern.com-${{ github.event_name}}
+  group: app-dev.buildwithfern.com-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:

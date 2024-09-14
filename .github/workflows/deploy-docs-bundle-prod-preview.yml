@@ -13,14 +13,15 @@ on:
       - main
 
 concurrency:
-  group: app.buildwithfern.com-preview--${{ github.event.pull_request.number || github.ref }}
+  group: app.buildwithfern.com-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
       name: Preview - app.buildwithfern.com
-      url: ${{ steps.deploy.outputs.deployment_url }}
+      url: ${{ outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
