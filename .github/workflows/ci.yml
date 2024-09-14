@@ -23,10 +23,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Codegen
-        run: |
-          npm install -g fern-api
-
       - name: Compile and build
         run: pnpm turbo compile codegen build
         env:
