@@ -1,4 +1,4 @@
-name: Vercel Production Deployment
+name: Deploy @fern-ui/docs-bundle#prod to Vercel (Production)
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
