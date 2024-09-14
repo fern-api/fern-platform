@@ -12,7 +12,17 @@ function retrieveDomainsUri(since) {
 }
 
 async function main() {
-    const domains = [];
+    const deploymentUrl = process.env.DEPLOYMENT_URL;
+
+    if (!deploymentUrl) {
+        console.error("DEPLOYMENT_URL is not set");
+        process.exit(1);
+    }
+
+    const domains = [
+        "buildwithfern.com", // buildwithfern.com/learn
+        "octo.ai", // octo.ai/docs/
+    ];
 
     let next;
 
@@ -23,7 +33,7 @@ async function main() {
 
         let body = await res.json();
         body.domains.map((domain) => {
-            if (!DENY_LIST.includes(domain.name)) {
+            if (!DENY_LIST.includes(domain.name) && !domain.name.endsWith("vercel.app")) {
                 domains.push(domain.name);
             }
         });
@@ -31,6 +41,10 @@ async function main() {
     } while (next);
 
     fs.writeFileSync("domains.txt", domains.join("\n"));
+    fs.writeFileSync(
+        "preview.txt",
+        `## PR Preview\n\n${domains.map((d) => `- [ ] [${d}](${deploymentUrl}/api/fern-docs/preview?host=${d})`).join("\n")}`,
+    );
 }
 
 main();

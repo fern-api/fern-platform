@@ -20,18 +20,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           echo "Deployment URL: $DEPLOYMENT_URL"
-
-          echo "## PR Preview" > preview.txt
-
           node scripts/fetch-domains.js
-          DOMAINS=$(cat domains.txt)
-
-          for DOMAIN in ${ALIAS_DOMAINS[@]}; do
-            echo "Handling domain: $DOMAIN"
-            if [[ "$DOMAIN" != *"buildwithfern.com"* ]] && [[ "$DOMAIN" != *"vercel.app"* ]]; then
-              echo "- [ ] [$DOMAIN]($DEPLOYMENT_URL/api/fern-docs/preview?host=$DOMAIN)" >> preview.txt
-            fi
-          done
 
       - name: Get PR number
         id: get-pr
