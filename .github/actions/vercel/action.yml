@@ -71,7 +71,7 @@ runs:
     - name: Build Vercel Production
       shell: bash
       if: ${{ inputs.environment == 'production' }}
-      run: vercel build --yes --prod --token=${{ inputs.token }} --archive=tgz
+      run: vercel build --yes --prod --token=${{ inputs.token }}
 
     - name: Deploy Vercel Production
       shell: bash
