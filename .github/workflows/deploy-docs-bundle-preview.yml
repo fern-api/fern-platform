@@ -23,6 +23,7 @@ jobs:
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    permissions: write-all
     steps:
       - uses: actions/checkout@v4
         with:
