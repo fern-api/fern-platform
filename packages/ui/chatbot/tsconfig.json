@@ -1,14 +1,9 @@
 {
+  "extends": "@fern-platform/configs/tsconfig/react-library.json",
   "compilerOptions": {
-    "composite": true
+    "outDir": "./dist",
+    "rootDir": "./src"
   },
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+  "include": ["./src/**/*"],
+  "references": [{ "path": "../../commons/react/react-commons" }, { "path": "../components" }]
 }
