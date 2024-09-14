@@ -28,14 +28,6 @@ jobs:
           echo "Deployment URL: $DEPLOYMENT_URL"
           node scripts/fetch-domains.js
 
-      - name: Check if branch is main
-        id: get-branch
-        run: |
-          BRANCH_NAMES=$(git branch --contains ${{ github.sha }} --format='%(refname:short)')
-          MAIN_BRANCH=$(echo $BRANCH_NAMES | grep -o 'main')
-          echo "::set-output name=branch::$MAIN_BRANCH"
-
-      # skip if branch is main
       - name: Get PR number
         id: pr
         env:
