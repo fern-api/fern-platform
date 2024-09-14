@@ -18,7 +18,7 @@ const ADDITIONAL_DOMAINS = [
 
 async function fetchDomainsPage(project, since) {
     let uri = `${BASE_URL}/v9/projects/${project}/domains?limit=50&teamId=${TEAM_ID}&withGitRepoInfo=false&production=true&redirects=false&order=ASC`;
-    uri = since ? `${params}&since=${since + 1}` : uri;
+    uri = since ? `${uri}&since=${since + 1}` : uri;
 
     const res = await fetch(uri, {
         headers: { Authorization: "Bearer " + process.env.VERCEL_TOKEN },
