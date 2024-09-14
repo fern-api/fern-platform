@@ -4,9 +4,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "lib": ["DOM", "ESNext"],
-    "composite": false,
-    "incremental": false
+    "lib": ["DOM", "ESNext"]
   },
   "include": ["./src/**/*"]
 }
