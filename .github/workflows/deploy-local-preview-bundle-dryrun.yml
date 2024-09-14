@@ -1,4 +1,4 @@
-name: Dry-run local preview deploy
+name: Deploy @fern-ui/local-preview-bundle (Dry Run)
 
 on:
   pull_request:

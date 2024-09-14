@@ -56,10 +56,19 @@ const nextConfig = {
 
         /**
          * Monorepo packages that are not transpiled by default.
+         *
+         * pnpm list --filter=@fern-ui/docs-bundle --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
          */
-        "@fern-ui/core-utils",
         "@fern-api/fdr-sdk",
+        "@fern-api/template-resolver",
+        "@fern-ui/chatbot",
         "@fern-ui/components",
+        "@fern-ui/core-utils",
+        "@fern-ui/fdr-utils",
+        "@fern-ui/loadable",
+        "@fern-ui/next-seo",
+        "@fern-ui/react-commons",
+        "@fern-ui/search-utils",
         "@fern-ui/ui",
     ],
     productionBrowserSourceMaps: isTruthy(process.env.ENABLE_SOURCE_MAPS),

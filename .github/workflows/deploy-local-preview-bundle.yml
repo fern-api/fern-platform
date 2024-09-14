@@ -1,4 +1,4 @@
-name: Deploy local preview
+name: Deploy @fern-ui/local-preview-bundle
 
 on:
   workflow_dispatch: {}

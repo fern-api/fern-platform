@@ -1,4 +1,4 @@
-name: Fern Dashboard - Vercel Production Deployment
+name: Deploy @fern-ui/dashboard#prod (Production)
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_59B94Hus48Nbb0XrqFYZSALYmYTw

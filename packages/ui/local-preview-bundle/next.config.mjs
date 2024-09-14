@@ -3,7 +3,27 @@ import process from "node:process";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    transpilePackages: ["next-mdx-remote"],
+    transpilePackages: [
+        "next-mdx-remote",
+        "lodash-es",
+
+        /**
+         * Monorepo packages that are not transpiled by default.
+         *
+         * pnpm list --filter=@fern-ui/local-preview-bundle --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
+         */
+        "@fern-api/fdr-sdk",
+        "@fern-api/template-resolver",
+        "@fern-ui/chatbot",
+        "@fern-ui/components",
+        "@fern-ui/core-utils",
+        "@fern-ui/fdr-utils",
+        "@fern-ui/loadable",
+        "@fern-ui/next-seo",
+        "@fern-ui/react-commons",
+        "@fern-ui/search-utils",
+        "@fern-ui/ui",
+    ],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     reactProductionProfiling: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
