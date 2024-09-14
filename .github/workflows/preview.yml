@@ -8,23 +8,17 @@ env:
 on:
   deployment_status:
 
-# Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
-concurrency:
-  group: ${{ github.workflow }}-${{ gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json number --jq '.[0].number' }}
-  cancel-in-progress: true
-
 jobs:
   pr-preview:
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && startsWith(github.event.deployment_status.environment, 'Preview') && endsWith(github.event.deployment_status.environment, 'app.buildwithfern.com')
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - name: Deploy Project Artifacts to Vercel
+      - name: Generate Preview URLs
         env:
           DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
         run: |
           echo "Deployment URL: $DEPLOYMENT_URL"
-          echo "$DEPLOYMENT_URL" > deployment-url.txt
 
           DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v9/projects/app.buildwithfern.com/domains?limit=50&teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H  "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
           ALIAS_DOMAINS=$(jq -r '.domains[].name' <<< $DEPLOYMENT_INFO)
@@ -38,24 +32,24 @@ jobs:
             fi
           done
 
+      - name: Get PR number
+        id: get-pr
+        run: |
+          PR_NUMBER=$(gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json number --jq '.[0].number')
+          echo "::set-output name=pr_number::$PR_NUMBER"
+
       - name: Comment URL in PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           filePath: preview.txt
           comment_tag: pr_preview
-          pr_number: ${{ gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json number --jq '.[0].number' }}
+          pr_number: ${{ steps.get-pr.outputs.pr_number }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: preview
           path: preview.txt
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: deployment-url
-          path: deployment-url.txt
 
   playwright-tests:
     needs: pr-preview
@@ -80,12 +74,6 @@ jobs:
           name: preview
           path: .
 
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: deployment-url
-          path: .
-
       - name: pnpm install
         run: pnpm install
 
@@ -93,6 +81,8 @@ jobs:
         run: pnpm exec playwright install --with-deps
 
       - name: Run Playwright tests
+        env:
+          DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
         run: pnpm exec playwright test playwright/smoke --workers 6
 
       - uses: actions/upload-artifact@v4
