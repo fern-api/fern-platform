@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: 📥 Install
-        uses: .github/actions/install
+        uses: ./.github/actions/install
 
       - name: 🧪 Build CJS and test
         run: pnpm --filter=${{ env.PACKAGE_NAME }} compile:cjs

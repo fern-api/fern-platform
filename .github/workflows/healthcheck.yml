@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
 
       - name: 📥 Install
-        uses: .github/actions/install
+        uses: ./.github/actions/install
 
       - name: 🧪 Build Healthchecks CLI
         run: |

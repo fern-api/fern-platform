@@ -26,7 +26,7 @@ env:
 
 jobs:
   sdk:
-    uses: .github/workflows/publish-fdr-sdk.yml
+    uses: ./.github/workflows/publish-fdr-sdk.yml
     secrets: inherit
 
   deploy_dev:
@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: 📥 Install
-        uses: .github/actions/install
+        uses: ./.github/actions/install
 
       - name: 🔎 Has changed
         id: has-changed

@@ -32,7 +32,7 @@ runs:
   steps:
     - name: Install
       if: $(command -v pnpm) == ""
-      uses: .github/actions/install
+      uses: ./.github/actions/install
       with:
         run_install: false # install is handled by vercel build
 

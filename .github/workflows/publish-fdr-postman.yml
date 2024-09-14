@@ -17,7 +17,7 @@ jobs:
           ref: ${{ github.event.inputs.branch }}
 
       - name: 📥 Install
-        uses: .github/actions/install
+        uses: ./.github/actions/install
 
       - name: Install Fern
         run: npm install -g fern-api
