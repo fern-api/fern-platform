@@ -28,7 +28,7 @@
     "docs:dev": "NODE_OPTIONS='--inspect' next dev",
     "docs:build": "next build",
     "docs:start": "next start",
-    "lint": "next lint"
+    "lint": "pnpm lint:eslint && pnpm lint:style"
   },
   "dependencies": {
     "@algolia/requester-fetch": "^4.24.0",
