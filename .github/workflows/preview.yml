@@ -33,11 +33,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          BRANCHES=${gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json headRefName --jq '.[].headRefName'}
-          MAIN_BRANCH=${echo $BRANCH_NAMES | grep -o 'main'}
+          BRANCHES=$(gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json headRefName --jq '.[].headRefName')
+          MAIN_BRANCH=$(echo $BRANCH_NAMES | grep -o 'main')
           echo "::set-output name=branch::$MAIN_BRANCH"
 
-          PR_NUMBER=${gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json number --jq '.[0].number'}
+          PR_NUMBER=$(gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json number --jq '.[0].number')
           echo "::set-output name=pr_number::$PR_NUMBER"
 
       # skip if branch is main
