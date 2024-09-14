@@ -67,7 +67,7 @@ async function main() {
     /**
      * Write the preview markdown to a file, if DEPLOYMENT_URL is set
      */
-    if (process.env.PR_PREVIEW &^ process.env.PR_PREVIEW !== "false") {
+    if (process.env.PR_PREVIEW && process.env.PR_PREVIEW !== "false") {
         fs.writeFileSync(
             "preview.txt",
             `## PR Preview\n\n${domains.map((d) => `- [ ] [${d}](${deploymentUrl}/api/fern-docs/preview?host=${d})`).join("\n")}`,
