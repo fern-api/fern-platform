@@ -36,10 +36,12 @@
       "persistent": true
     },
     "dev:fern-prod": {
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["^build", "^compile"]
     },
     "dev:fern-dev": {
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["^build", "^compile"]
     }
   },
   "globalDependencies": [".eslintrc.js", ".prettierrc.json"]
