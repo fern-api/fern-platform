@@ -27,7 +27,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
       - name: Build local preview bundle
         run: |
           pnpm compile
@@ -48,7 +48,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
       - name: Build local preview bundle
         run: |
           pnpm compile

@@ -22,7 +22,7 @@ jobs:
           ref: ${{ github.event.inputs.branch }}
 
       - name: 📥 Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
 
       - name: Install Fern
         run: npm install -g fern-api
@@ -43,7 +43,7 @@ jobs:
           ref: ${{ github.event.inputs.branch }}
 
       - name: 📥 Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
 
       - name: 🧪 Build and test
         run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}

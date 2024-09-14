@@ -39,7 +39,7 @@ jobs:
           fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
 
       - name: Install Docker Compose
         run: |

@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
 
       - name: Compile and build
         run: pnpm turbo compile codegen build
@@ -44,7 +44,7 @@ jobs:
           fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
 
       - name: Lint style
         run: pnpm turbo lint:style
@@ -61,7 +61,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
 
       - name: Run Chromatic
         uses: chromaui/action@latest
@@ -79,7 +79,7 @@ jobs:
           fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -103,7 +103,7 @@ jobs:
           fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
 
       - name: 🧪 Build generator-cli
         run: pnpm turbo --filter=@fern-api/generator-cli compile
@@ -132,7 +132,7 @@ jobs:
           fetch-depth: 2 # This helps turbo resolve changes faster
 
       - name: Install
-        uses: ./.github/actions/install
+        uses: .github/actions/install
 
       - name: Check release blockers
         run: pnpm check-docs-release-blockers
