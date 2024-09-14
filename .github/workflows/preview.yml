@@ -37,22 +37,25 @@ jobs:
 
       # skip if branch is main
       - name: Get PR number
-        id: get-pr
-        if: steps.get-branch.outputs.branch != 'main'
+        id: pr
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          BRANCHES=$(gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json headRefName --jq '.[].headRefName')
+          MAIN_BRANCH=$(echo $BRANCH_NAMES | grep -o 'main')
+          echo "::set-output name=branch::$MAIN_BRANCH"
+
           PR_NUMBER=$(gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json number --jq '.[0].number')
           echo "::set-output name=pr_number::$PR_NUMBER"
 
       # skip if branch is main
       - name: Comment PR Preview
         uses: thollander/actions-comment-pull-request@v2
-        if: steps.get-branch.outputs.branch != 'main'
+        if: steps.pr.outputs.branch != 'main'
         with:
           filePath: preview.txt
           comment_tag: pr_preview
-          pr_number: ${{ steps.get-pr.outputs.pr_number }}
+          pr_number: ${{ steps.pr.outputs.pr_number }}
 
       - name: Upload domains.txt for playwright tests
         uses: actions/upload-artifact@v3
