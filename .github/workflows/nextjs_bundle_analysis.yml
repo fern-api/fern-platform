@@ -45,7 +45,7 @@ jobs:
           vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Analyze bundle
-        run: pnpx -p nextjs-bundle-analysis report
+        run: pnpx nextjs-bundle-analysis report
 
       - name: Upload analysis
         uses: actions/upload-artifact@v4
