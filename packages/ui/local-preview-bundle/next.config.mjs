@@ -1,7 +1,8 @@
 import createWithBundleAnalyzer from "@next/bundle-analyzer";
-import type { NextConfig } from "next/types";
+import process from "node:process";
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
     transpilePackages: ["next-mdx-remote"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     reactProductionProfiling: process.env.ENABLE_SOURCE_MAPS === "true",

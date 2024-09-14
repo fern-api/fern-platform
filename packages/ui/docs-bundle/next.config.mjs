@@ -1,11 +1,10 @@
 import createWithBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
-import type { RemotePattern } from "next/dist/shared/lib/image-config";
-import type { NextConfig } from "next/types";
+import process from "node:process";
 
 const cdnUri = process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI) : undefined;
 
-const DOCS_FILES_ALLOWLIST: RemotePattern[] = [
+const DOCS_FILES_ALLOWLIST = [
     {
         protocol: "https",
         hostname: "fdr-prod-docs-files.s3.us-east-1.amazonaws.com",
@@ -28,7 +27,7 @@ const DOCS_FILES_ALLOWLIST: RemotePattern[] = [
     },
 ];
 
-function isTruthy(value: string | undefined) {
+function isTruthy(value) {
     if (value == null) {
         return false;
     } else if (typeof value === "string") {
@@ -47,7 +46,8 @@ if (isTruthy(process.env.TRAILING_SLASH)) {
     SENTRY_TUNNEL_ROUTE += "/";
 }
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
     reactStrictMode: true,
     transpilePackages: [
         "next-mdx-remote",

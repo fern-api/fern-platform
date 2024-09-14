@@ -1,7 +1,7 @@
 import createWithBundleAnalyzer from "@next/bundle-analyzer";
-import type { NextConfig } from "next";
+import process from "node:process";
 
-const nextConfig: NextConfig = {};
+const nextConfig = {};
 
 const withBundleAnalyzer = createWithBundleAnalyzer({
     enabled: process.env.ANALYZE === "1",
