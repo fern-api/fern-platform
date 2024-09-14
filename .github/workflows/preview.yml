@@ -34,7 +34,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           BRANCHES=$(gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json headRefName --jq '.[].headRefName')
-          MAIN_BRANCH=$(echo $BRANCHES | grep -o 'main')
+          MAIN_BRANCH=$(echo $BRANCHES | grep -o 'main' || true)
           echo "::set-output name=branch::$MAIN_BRANCH"
 
           PR_NUMBER=$(gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json number --jq '.[0].number')
