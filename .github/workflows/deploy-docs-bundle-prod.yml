@@ -26,6 +26,8 @@ jobs:
       VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel
@@ -47,6 +49,8 @@ jobs:
       VERCEL_PROJECT_ID: prj_SfgTTzw7KefTMuVWsL5uhY8Y4BIt
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel
@@ -68,6 +72,8 @@ jobs:
       VERCEL_PROJECT_ID: prj_GGc6CEzrWNyUK0hq1UK7KmbgUmZn
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel

@@ -1,14 +1,9 @@
-name: Fern Dashboard - Vercel Preview Deployment
+name: Fern Dashboard - Vercel Production Deployment
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  VERCEL_PROJECT_ID: prj_pxVBPOeLKJLEUkQXXMHKWq8h6Z0f
+  VERCEL_PROJECT_ID: prj_MO0ayWSAeIoBYh8Cd13oigkd9knl
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  # TODO: move to env vars in vercel
-  AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-  AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-  VENUS_ORIGIN: ${{ secrets.VENUS_ORIGIN }}
-  VENUS_AUDIENCE: ${{ secrets.VENUS_AUDIENCE }}
 
 on:
   push:
@@ -17,14 +12,14 @@ on:
 
 # Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
 concurrency:
-  group: dashboard-dev.buildwithfern.com
+  group: icons.ferndocs.com
   cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: Preview - dashboard.buildwithfern.com
+      name: Production - icons.ferndocs.com
       url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
       - uses: actions/checkout@v4
@@ -36,5 +31,8 @@ jobs:
         id: deploy
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/dashboard"
-          environment: preview
+          package: "@fern-ui/fontawesome-cdn"
+          environment: production
+
+      - name: Promote Deployment
+        run: vercel promote ${{ steps.deploy.outputs.deployment_url }} --token ${{ secrets.VERCEL_TOKEN }}
