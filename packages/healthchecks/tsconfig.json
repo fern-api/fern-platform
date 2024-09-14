@@ -1,6 +1,19 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "dist", "rootDir": "." },
-  "include": ["./src/**/*"],
-  "references": [{ "path": "../fdr-sdk" }, { "path": "../commons/core-utils" }]
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "."
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../commons/core-utils"
+    },
+    {
+      "path": "../fdr-sdk"
+    }
+  ]
 }

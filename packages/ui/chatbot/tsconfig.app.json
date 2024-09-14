@@ -23,6 +23,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
-  "references": [{ "path": "../../commons/react/react-commons" }, { "path": "../components" }]
+  "include": ["src"]
 }

@@ -1,6 +1,15 @@
 {
   "extends": "@fern-platform/configs/tsconfig/library.json",
-  "compilerOptions": { "outDir": "./dist", "rootDir": "./src" },
-  "include": ["./src/**/*"],
-  "references": [{ "path": "../../fdr-sdk" }]
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../fdr-sdk"
+    }
+  ]
 }

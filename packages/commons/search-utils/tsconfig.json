@@ -1,7 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@fern-platform/configs/tsconfig/react-library.json",
-  "compilerOptions": { "outDir": "./dist", "rootDir": "./src" },
-  "include": ["./src/**/*"],
-  "references": [{ "path": "../core-utils" }, { "path": "../fdr-utils" }, { "path": "../../fdr-sdk" }]
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../fdr-sdk"
+    },
+    {
+      "path": "../core-utils"
+    }
+  ]
 }

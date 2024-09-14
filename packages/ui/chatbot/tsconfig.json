@@ -2,10 +2,11 @@
   "files": [],
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "../../commons/react/react-commons"
     },
     {
-      "path": "./tsconfig.node.json"
+      "path": "../components"
     }
-  ]
+  ],
+  "compilerOptions": {}
 }

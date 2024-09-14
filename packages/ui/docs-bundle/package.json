@@ -10,12 +10,13 @@
   "files": [
     "dist"
   ],
+  "type": "module",
   "source": "src/index.ts",
   "module": "src/index.ts",
   "main": "src/index.ts",
+  "types": "src/index.ts",
   "sideEffects": false,
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",

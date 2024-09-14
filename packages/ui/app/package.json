@@ -14,15 +14,19 @@
   "source": "src/index.ts",
   "module": "src/index.ts",
   "main": "src/index.ts",
+  "types": "src/index.ts",
   "exports": {
     "./bundlers": {
-      "default": "./src/mdx/bundlers/index.ts"
+      "default": "./src/mdx/bundlers/index.ts",
+      "types": "./src/mdx/bundlers/index.ts"
     },
     "./auth": {
-      "default": "./src/auth/index.ts"
+      "default": "./src/auth/index.ts",
+      "types": "./src/auth/index.ts"
     },
     ".": {
-      "default": "./src/index.ts"
+      "default": "./src/index.ts",
+      "types": "./src/index.ts"
     }
   },
   "sideEffects": [
