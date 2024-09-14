@@ -1,4 +1,4 @@
-name: Preview app.buildwithfern.com
+name: Preview @fern-ui/docs-bundle
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: Preview - app.buildwithfern.com
-      url: ${{ outputs.deployment_url }}
+      url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:

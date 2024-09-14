@@ -1,4 +1,4 @@
-name: Deploy app-dev.buildwithfern.com
+name: Deploy @fern-ui/docs-bundle (dev)
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_QnsiTm1ijJP6cS23K5da6lL02wbp
