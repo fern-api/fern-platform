@@ -22,7 +22,7 @@ jobs:
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
-      skip: ${{ steps.deploy.outputs.skip }}
+      exit_code: ${{ steps.deploy.outputs.exit_code }}
     env:
       VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
     steps:
@@ -46,7 +46,7 @@ jobs:
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
-      skip: ${{ steps.deploy.outputs.skip }}
+      exit_code: ${{ steps.deploy.outputs.exit_code }}
     env:
       VERCEL_PROJECT_ID: prj_SfgTTzw7KefTMuVWsL5uhY8Y4BIt
     steps:
@@ -70,7 +70,7 @@ jobs:
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
-      skip: ${{ steps.deploy.outputs.skip }}
+      exit_code: ${{ steps.deploy.outputs.exit_code }}
     env:
       VERCEL_PROJECT_ID: prj_GGc6CEzrWNyUK0hq1UK7KmbgUmZn
     steps:
@@ -88,7 +88,7 @@ jobs:
 
   ete:
     needs: deploy_app_buildwithfern_com
-    if: needs.deploy_app_buildwithfern_com.outputs.skip == 'false'
+    if: needs.deploy_app_buildwithfern_com.outputs.exit_code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -116,7 +116,7 @@ jobs:
           - ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
           - ${{ needs.deploy_app_ferndocs_com.outputs.deployment_url }}
           - ${{ needs.deploy_app-slash_ferndocs_com.outputs.deployment_url }}
-    if: needs.deploy_app_buildwithfern_com.outputs.skip == 'false' && needs.deploy_app_ferndocs_com.outputs.skip == 'false' && needs.deploy_app-slash_ferndocs_com.outputs.skip == 'false'
+    if: needs.deploy_app_buildwithfern_com.outputs.exit_code && needs.deploy_app_ferndocs_com.outputs.exit_code && needs.deploy_app-slash_ferndocs_com.outputs.exit_code
     steps:
       - uses: actions/checkout@v4
 
