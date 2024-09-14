@@ -13,17 +13,14 @@
   "exports": {
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",
-      "require": "./dist/navigation/index.cjs",
       "default": "./dist/navigation/index.js"
     },
     "./client/types": {
       "types": "./dist/client/types.d.ts",
-      "require": "./dist/client/types.cjs",
       "import": "./dist/client/types.js"
     },
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     }
   },
@@ -52,18 +49,17 @@
     "@types/title": "^3.4.3",
     "eslint": "^8.56.0",
     "prettier": "^3.3.2",
-    "tsup": "^8.0.2",
     "typescript": "5.4.3",
     "vitest": "^1.5.0"
   },
   "scripts": {
-    "compile": "tsup",
+    "compile": "tsc --build",
     "clean": "rm -rf ./dist && tsc --build --clean",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
     "test": "vitest --run",
-    "dev": "tsup --watch",
+    "dev": "tsc --watch",
     "dev:fern-prod": "pnpm dev",
     "dev:fern-dev": "pnpm dev"
   }
