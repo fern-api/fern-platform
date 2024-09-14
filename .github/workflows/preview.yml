@@ -10,6 +10,8 @@ on:
 
 jobs:
   pr-preview:
+    # Expected format: Preview - app.buildwithfern.com
+    # This deployment should be triggered by Vercel on both PR branches as well as the main branch, where the main branch is the staging environment
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && startsWith(github.event.deployment_status.environment, 'Preview') && endsWith(github.event.deployment_status.environment, 'app.buildwithfern.com')
     runs-on: ubuntu-latest
     permissions: write-all
@@ -17,7 +19,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate Preview URLs
+      # this script generates domains.txt and preview.txt
+      - name: Generate preview URLs
         env:
           DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -25,25 +28,36 @@ jobs:
           echo "Deployment URL: $DEPLOYMENT_URL"
           node scripts/fetch-domains.js
 
+      - name: Check if branch is main
+        id: get-branch
+        run: |
+          BRANCH_NAMES=$(git branch --contains ${{ github.sha }} --format='%(refname:short)')
+          MAIN_BRANCH=$(echo $BRANCH_NAMES | grep -o 'main')
+          echo "::set-output name=branch::$MAIN_BRANCH"
+
+      # skip if branch is main
       - name: Get PR number
         id: get-pr
+        if: steps.get-branch.outputs.branch != 'main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           PR_NUMBER=$(gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json number --jq '.[0].number')
           echo "::set-output name=pr_number::$PR_NUMBER"
 
-      - name: Comment URL in PR
+      # skip if branch is main
+      - name: Comment PR Preview
         uses: thollander/actions-comment-pull-request@v2
+        if: steps.get-branch.outputs.branch != 'main'
         with:
           filePath: preview.txt
           comment_tag: pr_preview
           pr_number: ${{ steps.get-pr.outputs.pr_number }}
 
-      - name: Upload artifact
+      - name: Upload domains.txt for playwright tests
         uses: actions/upload-artifact@v3
         with:
-          name: preview
+          name: domains
           path: domains.txt
 
   playwright-tests:
@@ -52,25 +66,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.4.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: pnpm
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: preview
           path: .
-
-      - name: pnpm install
-        run: pnpm install
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps

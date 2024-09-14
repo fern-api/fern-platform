@@ -1,0 +1,37 @@
+name: Revalidate All
+
+on:
+  workflow_call:
+    inputs:
+      deployment_url:
+        type: string
+        description: "The deployment URL to revalidate"
+        required: true
+        default: "app.buildwithfern.com"
+  workflow_dispatch:
+    inputs:
+      deployment_url:
+        type: string
+        description: "The deployment URL to revalidate"
+        required: false
+        default: "app.buildwithfern.com"
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
+jobs:
+  revalidate-all:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        if: github.event_name == 'workflow_call'
+
+      - name: Revalidate all
+        env:
+          DEPLOYMENT_URL: ${{ inputs.deployment_url || 'app.buildwithfern.com' }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          node scripts/revalidate-all.js

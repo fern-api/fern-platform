@@ -4,37 +4,32 @@ env:
   AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
   VENUS_ORIGIN: ${{ secrets.VENUS_ORIGIN }}
   VENUS_AUDIENCE: ${{ secrets.VENUS_AUDIENCE }}
+
 on:
   push:
     tags:
-      - "**"
+      - dashboard@*
 
 # Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: dashboard.buildwithfern.com
   cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref_type == 'tag' && github.event_name == 'push'  && startsWith(github.ref, 'refs/tags/dashboard@')
+    if: github.ref_type == 'tag' && github.event_name == 'push'
     permissions: write-all
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Install
+        uses: ./.github/actions/install
         with:
-          version: 9.4.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: pnpm
+          install: false
 
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: pnpm install --global vercel@latest
 
       - name: Build & Deploy to Vercel
         working-directory: packages/ui/fern-dashboard
