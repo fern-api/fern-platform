@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 if [ "$VERCEL_ENV" == "preview" ]; then
   PATH=$(pnpm list --filter=@fern-ui/docs-bundle --depth -1 --json | jq -r '.[].path')
 
@@ -7,14 +9,9 @@ if [ "$VERCEL_ENV" == "preview" ]; then
 
   DEPS=$(pnpm list --filter=@fern-ui/docs-bundle --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .path] | unique | .[]')
 
-  if [ -n "$DEPS" ]; then
-    for DEP in $DEPS; do
-      if [ "$(git diff --quiet HEAD^ HEAD -- $DEP)" ]; then
-        exit 1
-      fi
-    done
+  if [ "$(git diff --quiet HEAD^ HEAD -- $PATH)" ]; then
+    exit 1
   fi
-
-else
-  exit 0
 fi
+
+exit 0
