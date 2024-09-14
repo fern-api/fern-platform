@@ -57,3 +57,6 @@ lerna-debug.log*
 #ide
 .idea/
 *.cookie
+
+# script outputs
+domains.txt

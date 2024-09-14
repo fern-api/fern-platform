@@ -17,13 +17,14 @@ jobs:
       - name: Generate Preview URLs
         env:
           DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           echo "Deployment URL: $DEPLOYMENT_URL"
 
-          DEPLOYMENT_INFO=$(curl -s -X GET "https://api.vercel.com/v9/projects/app.buildwithfern.com/domains?limit=50&teamId=team_6FKOM5nw037hv8g2mTk3gaH7&withGitRepoInfo=false" -H  "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
-          ALIAS_DOMAINS=$(jq -r '.domains[].name' <<< $DEPLOYMENT_INFO)
-
           echo "## PR Preview" > preview.txt
+
+          node scripts/fetch-domains.js
+          DOMAINS=$(cat domains.txt)
 
           for DOMAIN in ${ALIAS_DOMAINS[@]}; do
             echo "Handling domain: $DOMAIN"
@@ -49,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: preview
-          path: preview.txt
+          path: domains.txt
 
   playwright-tests:
     needs: pr-preview
