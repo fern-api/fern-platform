@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/dashboard#dev (Production)
+name: Deploy dashboard-dev.buildwithfern.com
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_pxVBPOeLKJLEUkQXXMHKWq8h6Z0f
@@ -38,6 +38,4 @@ jobs:
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/dashboard"
           environment: production
-
-      - name: Promote Deployment
-        run: vercel promote ${{ steps.deploy.outputs.deployment_url }} --token ${{ secrets.VERCEL_TOKEN }}
+          promote: true

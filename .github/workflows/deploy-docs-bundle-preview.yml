@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/docs-bundle#prod (Preview)
+name: Preview app.buildwithfern.com
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
@@ -6,14 +6,14 @@ env:
   TURBO_TEAM: "buildwithfern"
 
 on:
-  workflow_dispatch:
   pull_request:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 concurrency:
-  group: app.buildwithfern.com-preview-${{ github.event.pull_request.number || github.ref }}
+  group: app.buildwithfern.com-preview-${{ github.event.pull_request.number || github.ref_name || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -46,7 +46,7 @@ jobs:
           name: domains
           path: domains.txt
 
-  fetch-domains:
+  ete:
     needs: deploy
     runs-on: ubuntu-latest
     permissions: write-all
@@ -71,13 +71,7 @@ jobs:
           filePath: preview.txt
           comment_tag: pr_preview
 
-      - name: Upload domains.txt for playwright tests
-        uses: actions/upload-artifact@v3
+      - name: Run E2E tests
+        uses: ./.github/actions/ete-docs-bundle
         with:
-          name: domains
-          path: domains.txt
-
-  ete-tests:
-    needs: fetch-domains
-    uses: ./.github/workflows/ete-docs-bundle.yml
-    secrets: inherit
+          deployment_url: ${{ needs.deploy.outputs.deployment_url }}

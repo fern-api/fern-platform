@@ -20,6 +20,10 @@ inputs:
     description: Skip deployment
     required: false
     default: "false"
+  promote:
+    description: Promote the production deployment
+    required: false
+    default: "false"
 
 outputs:
   deployment_url:
@@ -79,9 +83,14 @@ runs:
       id: deploy-production
       run: |
         DEPLOYMENT_URL="$(vercel deploy --yes --prebuilt --prod --skip-domain --token=${{ inputs.token }}) --archive=tgz"
-        echo "::set-output name=deployment_url::$DEPLOYMENT_URL"
+        echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
 
     - name: Wait for Deployment
       shell: bash
       if: ${{ inputs.skip_deploy == 'false' }}
       run: vercel inspect ${{ steps.deploy-preview.outputs.deployment_url || steps.deploy-production.outputs.deployment_url }} --token=${{ inputs.token }} --wait
+
+    - name: Promote Vercel Production
+      shell: bash
+      if: ${{ inputs.environment == 'production' && inputs.skip_deploy == 'false' && inputs.promote == 'true' }}
+      run: vercel promote ${{ steps.deploy-production.outputs.deployment_url }} --token=${{ inputs.token }}

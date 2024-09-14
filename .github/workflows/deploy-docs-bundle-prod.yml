@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/docs-bundle#prod (Production)
+name: Deploy app.buildwithfern.com
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -83,7 +83,7 @@ jobs:
           package: "@fern-ui/docs-bundle"
           environment: production
 
-  fetch-domains:
+  ete:
     needs: deploy_app_buildwithfern_com
     runs-on: ubuntu-latest
     steps:
@@ -95,26 +95,16 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: node scripts/fetch-domains.js
 
-      - name: Upload domains.txt for playwright tests
-        uses: actions/upload-artifact@v3
+      - uses: ./github/actions/ete-docs-bundle
         with:
-          name: domains
-          path: domains.txt
-
-  ete-tests:
-    needs:
-      - fetch-domains
-      - deploy_app_buildwithfern_com
-    uses: ./.github/workflows/ete-docs-bundle.yml
-    secrets:
-      DEPLOYMENT_URL: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
+          deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
 
   promote:
     needs:
       - deploy_app_buildwithfern_com
       - deploy_app_ferndocs_com
       - deploy_app-slash_ferndocs_com
-      - ete-tests # Ensure that the E2E tests are run successful before promoting
+      - ete # Ensure that the E2E tests are run successful before promoting
     runs-on: ubuntu-latest
     strategy:
       matrix:
