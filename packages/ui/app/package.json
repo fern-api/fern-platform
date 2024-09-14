@@ -16,15 +16,12 @@
   "main": "src/index.ts",
   "exports": {
     "./bundlers": {
-      "types": "./src/mdx/bundlers/index.ts",
       "default": "./src/mdx/bundlers/index.ts"
     },
     "./auth": {
-      "types": "./src/auth/index.ts",
       "default": "./src/auth/index.ts"
     },
     ".": {
-      "types": "./src/index.ts",
       "default": "./src/index.ts"
     }
   },
