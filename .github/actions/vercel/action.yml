@@ -38,6 +38,7 @@ runs:
     - name: Ignore Build Step
       shell: bash
       if: ${{ inputs.force == 'false' }}
+      continue-on-error: true
       run: |
         pnpx turbo-ignore ${{ inputs.package }} --fallback=HEAD^1
         EXIT_CODE=$?
