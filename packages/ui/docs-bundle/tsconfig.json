@@ -4,14 +4,9 @@
     "outDir": "./dist",
     "rootDir": "."
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "./src/**/*",
-    ".next/types/**/*.ts",
-    "__mocks__"
-  ],
+  "exclude": ["node_modules"],
+  "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__"],
+  "files": ["./next.config.ts"],
   "references": [
     {
       "path": "../../commons/core-utils"

@@ -1,5 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import createWithBundleAnalyzer from "@next/bundle-analyzer";
+import type { NextConfig } from "next/types";
+
+const nextConfig: NextConfig = {
     transpilePackages: ["next-mdx-remote"],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     reactProductionProfiling: process.env.ENABLE_SOURCE_MAPS === "true",
@@ -14,8 +16,8 @@ const nextConfig = {
     output: "export",
 };
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-    enabled: process.env.ANALYZE === "true",
+const withBundleAnalyzer = createWithBundleAnalyzer({
+    enabled: process.env.ANALYZE === "1",
 });
 
-module.exports = withBundleAnalyzer(nextConfig);
+export default withBundleAnalyzer(nextConfig);

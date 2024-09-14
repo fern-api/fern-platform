@@ -6,7 +6,15 @@
     },
     {
       "path": "../components"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
     }
   ],
-  "compilerOptions": {}
+  "compilerOptions": {
+    "composite": true
+  }
 }

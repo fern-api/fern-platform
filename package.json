@@ -36,8 +36,7 @@
     "docs:start:fern-prod": "turbo start:fern-prod",
     "docs:start:fern-dev": "turbo start:fern-dev",
     "fdr:generate": "pnpm fern generate --api fdr --local && pnpm --filter=@fern-api/fdr-sdk compile",
-    "navigation:generate": "pnpm fern generate --api navigation --local",
-    "postinstall": "update-ts-references"
+    "navigation:generate": "pnpm fern generate --api navigation --local"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
@@ -89,7 +88,6 @@
     "turbo": "^2.1.2",
     "typescript": "5.4.3",
     "typescript-plugin-css-modules": "^5.1.0",
-    "update-ts-references": "^3.3.0",
     "vitest": "^1.6.0"
   },
   "resolutions": {
