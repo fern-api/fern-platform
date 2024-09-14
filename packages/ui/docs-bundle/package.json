@@ -25,16 +25,10 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "env:fern-dev": "env-cmd -r .env-cmdrc.cjs -e fern-dev",
-    "env:fern-prod": "env-cmd -r .env-cmdrc.cjs -e fern-prod",
-    "dev:fern-dev": "NODE_OPTIONS='--inspect' pnpm env:fern-dev next dev",
-    "dev:fern-prod": "NODE_OPTIONS='--inspect' pnpm env:fern-prod next dev",
-    "build:fern-dev": "pnpm env:fern-dev next build",
-    "build:fern-prod": "pnpm env:fern-prod next build",
-    "start:fern-dev": "pnpm env:fern-dev next start",
-    "start:fern-prod": "pnpm env:fern-prod next start",
-    "lint:fern-dev": "pnpm env:fern-dev next lint",
-    "lint:fern-prod": "pnpm env:fern-prod next lint"
+    "docs:dev": "NODE_OPTIONS='--inspect' next dev",
+    "docs:build": "next build",
+    "docs:start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@algolia/requester-fetch": "^4.24.0",
@@ -82,7 +76,6 @@
     "@types/uuid": "^9.0.1",
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.3",
-    "env-cmd": "toddbluhm/env-cmd",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
     "postcss": "^8.4.33",

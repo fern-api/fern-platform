@@ -69,8 +69,8 @@ runs:
       if: ${{ inputs.environment == 'preview' && inputs.skip_deploy == 'false' }}
       id: deploy-preview
       run: |
-        DEPLOYMENT_URL="$(vercel deploy --yes --prebuilt --token=${{ inputs.token }}) --archive=tgz"
-        echo "::set-output name=deployment_url::$DEPLOYMENT_URL"
+        DEPLOYMENT_URL="$(vercel deploy --yes --prebuilt --token=${{ inputs.token }} --archive=tgz)"
+        echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
 
     - name: Build Vercel Production
       shell: bash
@@ -82,7 +82,7 @@ runs:
       if: ${{ inputs.environment == 'production' && inputs.skip_deploy == 'false' }}
       id: deploy-production
       run: |
-        DEPLOYMENT_URL="$(vercel deploy --yes --prebuilt --prod --skip-domain --token=${{ inputs.token }}) --archive=tgz"
+        DEPLOYMENT_URL="$(vercel deploy --yes --prebuilt --prod --skip-domain --token=${{ inputs.token }} --archive=tgz)"
         echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
 
     - name: Wait for Deployment
