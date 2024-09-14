@@ -13,11 +13,12 @@
   "type": "module",
   "source": "src/index.ts",
   "module": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -26,7 +27,9 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev"
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
