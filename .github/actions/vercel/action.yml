@@ -31,7 +31,6 @@ runs:
 
   steps:
     - name: Install
-      if: $(command -v pnpm) == ""
       uses: ./.github/actions/install
       with:
         run_install: false # install is handled by vercel build
@@ -47,9 +46,7 @@ runs:
           exit 0
         fi
 
-    # install if not already installed
     - name: Install Vercel CLI
-      if: $(command -v vercel) == ""
       shell: bash
       run: pnpm install --global vercel@latest
 
