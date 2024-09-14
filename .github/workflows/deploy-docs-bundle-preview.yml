@@ -106,9 +106,7 @@ jobs:
           DEPLOYMENT_URL: ${{ needs.deploy.outputs.deployment_url }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           PR_PREVIEW: ${{ github.event_name == 'pull_request' }}
-        run: |
-          echo "Deployment URL: $DEPLOYMENT_URL"
-          node scripts/fetch-domains.js
+        run: node scripts/fetch-domains.js
 
       - name: Comment PR Preview
         uses: thollander/actions-comment-pull-request@v2
