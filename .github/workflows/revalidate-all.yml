@@ -17,10 +17,8 @@ on:
         default: "app.buildwithfern.com"
 
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
 
 jobs:
   revalidate-all:

@@ -5,13 +5,18 @@ if (!process.env.VERCEL_TOKEN) {
     process.exit(1);
 }
 
+if (!process.env.VERCEL_ORG_ID) {
+    console.error("VERCEL_ORG_ID is required");
+    process.exit(1);
+}
+
 const BASE_URL = "https://api.vercel.com";
-const TEAM_ID = "team_6FKOM5nw037hv8g2mTk3gaH7";
+
 const PROJECT = "app.buildwithfern.com";
 const DENY_LIST = [PROJECT, "fdr-ete-test.buildwithfern.com"];
 
 async function fetchDomainsPage(since) {
-    let uri = `${BASE_URL}/v9/projects/${PROJECT}/domains?limit=50&teamId=${TEAM_ID}&withGitRepoInfo=false&production=true&redirects=false&order=ASC`;
+    let uri = `${BASE_URL}/v9/projects/${PROJECT}/domains?limit=50&teamId=${process.env.VERCEL_ORG_ID}&withGitRepoInfo=false&production=true&redirects=false&order=ASC`;
     uri = since ? `${params}&since=${since + 1}` : uri;
 
     const res = await fetch(uri, {

@@ -1,0 +1,40 @@
+name: Vercel Preview Deployment
+env:
+  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
+  VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
+on:
+  workflow_call:
+
+jobs:
+  ete-tests:
+    needs: pr-preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: domains
+          path: .
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run Playwright tests
+        env:
+          DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
+        run: pnpm exec playwright test playwright/smoke --workers 6
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

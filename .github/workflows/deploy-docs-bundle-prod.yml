@@ -1,7 +1,6 @@
 name: Vercel Production Deployment
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
+  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
 
@@ -12,33 +11,80 @@ on:
 
 concurrency:
   group: app.buildwithfern.com
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  deploy_app_buildwithfern_com:
     runs-on: ubuntu-latest
     if: github.ref_type == 'tag' && github.event_name == 'push'
-    environment: Production - app.buildwithfern.com
+    environment:
+      name: Production - app.buildwithfern.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    env:
+      VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
+      - name: Build & Deploy to Vercel
+        uses: ./.github/actions/vercel
+        id: deploy
         with:
-          install: false
+          package: "@fern-ui/docs-bundle"
+          environment: production
+
+  deploy_app_ferndocs_com:
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' && github.event_name == 'push'
+    environment:
+      name: Production - app.ferndocs.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    env:
+      VERCEL_PROJECT_ID: prj_SfgTTzw7KefTMuVWsL5uhY8Y4BIt
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Build & Deploy to Vercel
+        uses: ./.github/actions/vercel
         id: deploy
-        run: |
-          pnpm install --global vercel@latest
-          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-          DEPLOYMENT_URL="$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})"
-          echo "::set-output name=deployment_url::$DEPLOYMENT_URL"
-
-      - name: Revalidate all
-        uses: ./.github/workflows/revalidate-all
         with:
-          deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+          package: "@fern-ui/docs-bundle"
+          environment: production
+
+  deploy_app-slash_ferndocs_com:
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' && github.event_name == 'push'
+    environment:
+      name: Production - app-slash.ferndocs.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    env:
+      VERCEL_PROJECT_ID: prj_GGc6CEzrWNyUK0hq1UK7KmbgUmZn
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build & Deploy to Vercel
+        uses: ./.github/actions/vercel
+        id: deploy
+        with:
+          package: "@fern-ui/docs-bundle"
+          environment: production
+
+  fetch-domains:
+    needs: deploy_app_buildwithfern_com
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # this script generates domains.txt and preview.txt
+      - name: Fetch domains
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: node scripts/fetch-domains.js
 
       - name: Upload domains.txt for playwright tests
         uses: actions/upload-artifact@v3
@@ -46,8 +92,44 @@ jobs:
           name: domains
           path: domains.txt
 
+  ete-tests:
+    needs:
+      - fetch-domains
+      - deploy_app_buildwithfern_com
+    uses: ./.github/workflows/ete-docs-bundle.yml
+    secrets:
+      DEPLOYMENT_URL: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
+
+  promote:
+    needs:
+      - deploy_app_buildwithfern_com
+      - deploy_app_ferndocs_com
+      - deploy_app-slash_ferndocs_com
+      - ete-tests # Ensure that the E2E tests are run successful before promoting
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        deployment_url:
+          - ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
+          - ${{ needs.deploy_app_ferndocs_com.outputs.deployment_url }}
+          - ${{ needs.deploy_app-slash_ferndocs_com.outputs.deployment_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Promote Deployment
+        run: vercel promote ${{ matrix.deployment_url }} --token ${{ secrets.VERCEL_TOKEN }}
+
+  revalidate-all:
+    needs: promote # Ensure that the deployment is promoted before revalidating
+    uses: ./.github/workflows/revalidate-all.yml
+    with:
+      deployment_url: https://app.buildwithfern.com
+
   smoke-test:
-    needs: deploy
+    needs: promote # Ensure that the deployment is promoted before running smoke tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -70,6 +152,6 @@ jobs:
           fi
 
   healthchecks:
-    needs: deploy
+    needs: promote # Ensure that the deployment is promoted before running healthchecks
     uses: ./.github/workflows/healthcheck.yml
     secrets: inherit

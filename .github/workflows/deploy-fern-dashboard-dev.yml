@@ -1,7 +1,7 @@
-name: Fern Dashboard - Vercel Production Deployment
+name: Fern Dashboard - Vercel Development Deployment
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  VERCEL_PROJECT_ID: prj_59B94Hus48Nbb0XrqFYZSALYmYTw
+  VERCEL_PROJECT_ID: prj_pxVBPOeLKJLEUkQXXMHKWq8h6Z0f
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
   # TODO: move to env vars in vercel
@@ -12,20 +12,19 @@ env:
 
 on:
   push:
-    tags:
-      - dashboard@*
+    branches:
+      - main
 
 # Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
 concurrency:
-  group: dashboard.buildwithfern.com
+  group: dashboard-dev.buildwithfern.com
   cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref_type == 'tag' && github.event_name == 'push'
     environment:
-      name: Production - dashboard.buildwithfern.com
+      name: Production - dashboard-dev.buildwithfern.com
       url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
       - uses: actions/checkout@v4

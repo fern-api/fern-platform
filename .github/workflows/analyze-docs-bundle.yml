@@ -3,7 +3,7 @@
 
 name: "Next.js Bundle Analysis"
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
@@ -34,18 +34,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install
-        uses: ./.github/actions/install
-        with:
-          install: false
-
-      - name: Build Docs Bundle with Analyze
+      - name: Build & Deploy to Vercel
+        uses: ./.github/actions/vercel
+        id: deploy
         env:
           ANALYZE: 1
-        run: |
-          pnpm install --global vercel@latest
-          vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
-          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        with:
+          package: "@fern-ui/docs-bundle"
+          environment: production
+          skip_deploy: true
 
       - name: Analyze bundle
         run: pnpm --package=nextjs-bundle-analysis dlx report

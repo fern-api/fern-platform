@@ -1,0 +1,86 @@
+name: Build & Deploy to Vercel
+description: Build and deploy a Vercel project using CI/CD
+
+inputs:
+  package:
+    description: The workspace package to deploy, which is used for turbo-ignore
+    required: true
+  environment:
+    description: production | preview
+    required: false
+    default: "preview"
+  force:
+    description: Force deployment even if there are no changes (skips turbo-ignore)
+    required: false
+    default: "false"
+  skip_deploy:
+    description: Skip deployment
+    required: false
+    default: "false"
+
+outputs:
+  deployment_url:
+    description: The URL of the deployment
+    value: ${{ steps.deploy-preview.outputs.deployment_url || steps.deploy-production.outputs.deployment_url }}
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install
+      if: $(command -v pnpm) == ""
+      uses: ./.github/actions/install
+      with:
+        run_install: false # install is handled by vercel build
+
+    - name: Ignore Build Step
+      shell: bash
+      if: ${{ inputs.force == 'false' }}
+      run: |
+        pnpx turbo-ignore ${{ inputs.package }} --fallback=HEAD^1
+        EXIT_CODE=$?
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "No changes detected in ${{ inputs.package }} since last deployment. Skipping deployment."
+          exit 0
+        fi
+
+    # install if not already installed
+    - name: Install Vercel CLI
+      if: $(command -v vercel) == ""
+      shell: bash
+      run: pnpm install --global vercel@latest
+
+    - name: Pull Vercel Environment
+      shell: bash
+      run: vercel pull --yes --environment=${{ inputs.environment }} --token=${{ secrets.VERCEL_TOKEN }}
+
+    - name: Build Vercel Preview
+      shell: bash
+      if: ${{ inputs.environment == 'preview' }}
+      run: vercel build --yes --token=${{ secrets.VERCEL_TOKEN }}
+
+    - name: Deploy Vercel Preview
+      shell: bash
+      if: ${{ inputs.environment == 'preview' && inputs.skip_deploy == 'false' }}
+      id: deploy-preview
+      run: |
+        DEPLOYMENT_URL="$(vercel deploy --yes --prebuilt --token=${{ secrets.VERCEL_TOKEN }}) --archive=tgz"
+        echo "::set-output name=deployment_url::$DEPLOYMENT_URL"
+
+    - name: Build Vercel Production
+      shell: bash
+      if: ${{ inputs.environment == 'production' }}
+      run: vercel build --yes --prod --token=${{ secrets.VERCEL_TOKEN }} --archive=tgz
+
+    - name: Deploy Vercel Production
+      shell: bash
+      if: ${{ inputs.environment == 'production' && inputs.skip_deploy == 'false' }}
+      id: deploy-production
+      run: |
+        DEPLOYMENT_URL="$(vercel deploy --yes --prebuilt --prod --skip-domain --token=${{ secrets.VERCEL_TOKEN }}) --archive=tgz"
+        echo "::set-output name=deployment_url::$DEPLOYMENT_URL"
+
+    - name: Wait for Deployment
+      shell: bash
+      if: ${{ inputs.skip_deploy == 'false' }}
+      run: vercel inspect ${{ steps.deploy-preview.outputs.deployment_url || steps.deploy-production.outputs.deployment_url }} --token=${{ secrets.VERCEL_TOKEN }} --wait

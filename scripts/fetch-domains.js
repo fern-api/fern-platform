@@ -5,8 +5,12 @@ if (!process.env.VERCEL_TOKEN) {
     process.exit(1);
 }
 
+if (!process.env.VERCEL_ORG_ID) {
+    console.error("VERCEL_ORG_ID is required");
+    process.exit(1);
+}
+
 const BASE_URL = "https://api.vercel.com";
-const TEAM_ID = "team_6FKOM5nw037hv8g2mTk3gaH7";
 
 const PROJECTS = ["app.buildwithfern.com", "app.ferndocs.com", "app-slash.ferndocs.com"];
 const DENY_LIST = [...PROJECTS, "fdr-ete-test.buildwithfern.com"];
@@ -17,7 +21,7 @@ const ADDITIONAL_DOMAINS = [
 ];
 
 async function fetchDomainsPage(project, since) {
-    let uri = `${BASE_URL}/v9/projects/${project}/domains?limit=50&teamId=${TEAM_ID}&withGitRepoInfo=false&production=true&redirects=false&order=ASC`;
+    let uri = `${BASE_URL}/v9/projects/${project}/domains?limit=50&teamId=${process.env.VERCEL_ORG_ID}&withGitRepoInfo=false&production=true&redirects=false&order=ASC`;
     uri = since ? `${uri}&since=${since + 1}` : uri;
 
     const res = await fetch(uri, {
@@ -63,8 +67,7 @@ async function main() {
     /**
      * Write the preview markdown to a file, if DEPLOYMENT_URL is set
      */
-    const deploymentUrl = process.env.DEPLOYMENT_URL;
-    if (deploymentUrl) {
+    if (process.env.PR_PREVIEW &^ process.env.PR_PREVIEW !== "false") {
         fs.writeFileSync(
             "preview.txt",
             `## PR Preview\n\n${domains.map((d) => `- [ ] [${d}](${deploymentUrl}/api/fern-docs/preview?host=${d})`).join("\n")}`,

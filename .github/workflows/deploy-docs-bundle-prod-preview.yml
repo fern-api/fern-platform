@@ -1,0 +1,80 @@
+name: Vercel Preview Deployment
+env:
+  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
+  VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: app.buildwithfern.com-preview--${{ github.event.pull_request.number || github.ref }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    environment:
+      name: Preview - app.buildwithfern.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build & Deploy to Vercel
+        uses: ./.github/actions/vercel
+        id: deploy
+        with:
+          package: "@fern-ui/docs-bundle"
+          environment: preview
+
+      - name: Fetch domains
+        run: node ./scripts/fetch-domains.js
+
+      - name: Upload domains.txt for playwright tests
+        uses: actions/upload-artifact@v3
+        with:
+          name: domains
+          path: domains.txt
+
+  fetch-domains:
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # this script generates domains.txt and preview.txt
+      - name: Generate preview URLs
+        env:
+          DEPLOYMENT_URL: ${{ needs.deploy.outputs.deployment_url }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          PR_PREVIEW: ${{ github.event_name == 'pull_request' }}
+        run: |
+          echo "Deployment URL: $DEPLOYMENT_URL"
+          node scripts/fetch-domains.js
+
+      - name: Comment PR Preview
+        uses: thollander/actions-comment-pull-request@v2
+        if: github.event_name == 'pull_request'
+        with:
+          filePath: preview.txt
+          comment_tag: pr_preview
+
+      - name: Upload domains.txt for playwright tests
+        uses: actions/upload-artifact@v3
+        with:
+          name: domains
+          path: domains.txt
+
+  ete-tests:
+    needs: fetch-domains
+    uses: ./.github/workflows/ete-docs-bundle.yml
+    secrets: inherit
