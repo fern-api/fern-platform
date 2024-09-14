@@ -26,11 +26,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         id: pnpm-install
@@ -38,52 +33,45 @@ jobs:
           version: 9.4.0
           run_install: true
 
-      - name: Restore next build
-        uses: actions/cache@v3
-        id: restore-build-cache
-        env:
-          cache-name: cache-next-build
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          # if you use a custom build directory, replace all instances of `.next` in this file with your build directory
-          # ex: if your app builds to `dist`, replace `.next` with `dist`
-          path: packages/ui/docs-bundle/.next/cache
-          # change this if you prefer a more strict cache
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          node-version: 18
+          cache: pnpm
+
+      # - name: Restore next build
+      #   uses: actions/cache@v3
+      #   id: restore-build-cache
+      #   env:
+      #     cache-name: cache-next-build
+      #   with:
+      #     # if you use a custom build directory, replace all instances of `.next` in this file with your build directory
+      #     # ex: if your app builds to `dist`, replace `.next` with `dist`
+      #     path: packages/ui/docs-bundle/.next/cache
+      #     # change this if you prefer a more strict cache
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}
 
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: pnpm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
-        run: ANALYZE=true pnpm docs:build
+        env:
+          ANALYZE: 1
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle
       - name: Analyze bundle
-        run: npx -p nextjs-bundle-analysis report
+        run: pnpx -p nextjs-bundle-analysis report
 
-      - name: Upload bundle
+      - name: Upload analysis
         uses: actions/upload-artifact@v4
         with:
-          name: bundle
-          path: packages/ui/docs-bundle/.next/analyze/__bundle_analysis.json
-
-      - name: Upload nodejs.html
-        uses: actions/upload-artifact@v4
-        with:
-          name: nodejs.html
-          path: packages/ui/docs-bundle/.next/analyze/nodejs.html
-
-      - name: Upload edge.html
-        uses: actions/upload-artifact@v4
-        with:
-          name: edge.html
-          path: packages/ui/docs-bundle/.next/analyze/edge.html
-
-      - name: Upload client.html
-        uses: actions/upload-artifact@v4
-        with:
-          name: client.html
-          path: packages/ui/docs-bundle/.next/analyze/client.html
+          name: analyze
+          path: packages/ui/docs-bundle/.next/analyze/
 
       - name: Download base branch bundle stats
         uses: dawidd6/action-download-artifact@v2
