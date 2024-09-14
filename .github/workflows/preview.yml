@@ -27,6 +27,8 @@ jobs:
 
       - name: Get PR number
         id: get-pr
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           PR_NUMBER=$(gh pr list --repo "${{ github.repository }}" --search "${{ github.sha }}" --json number --jq '.[0].number')
           echo "::set-output name=pr_number::$PR_NUMBER"
