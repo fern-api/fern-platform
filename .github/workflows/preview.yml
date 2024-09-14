@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   pr-preview:
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview - app.buildwithfern.com'
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
