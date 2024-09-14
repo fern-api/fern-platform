@@ -6,10 +6,11 @@ env:
   TURBO_TEAM: "buildwithfern"
 on:
   deployment_status:
+    types: [success]
 
 # Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -22,6 +23,8 @@ jobs:
         env:
           DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
         run: |
+          echo "${{ toJson(github.event) }}"
+
           echo "Deployment URL: $DEPLOYMENT_URL"
           echo "$DEPLOYMENT_URL" > deployment-url.txt
 
