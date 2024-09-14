@@ -67,7 +67,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: preview
+          name: domains
           path: .
 
       - name: Install Playwright Browsers
