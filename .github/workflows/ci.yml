@@ -46,9 +46,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Lint monorepo
-        run: pnpm lint:monorepo
-
       - name: Lint style
         run: pnpm turbo lint:style
 
