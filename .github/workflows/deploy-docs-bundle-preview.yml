@@ -39,15 +39,6 @@ jobs:
           package: "@fern-ui/docs-bundle"
           environment: preview
 
-      - name: Fetch domains
-        run: node ./scripts/fetch-domains.js
-
-      - name: Upload domains.txt for playwright tests
-        uses: actions/upload-artifact@v3
-        with:
-          name: domains
-          path: domains.txt
-
   deploy-dev:
     needs: deploy # this will run after the deploy job to leverage turbo's build cache
     runs-on: ubuntu-latest
@@ -72,15 +63,6 @@ jobs:
           package: "@fern-ui/docs-bundle"
           environment: preview
 
-      - name: Fetch domains
-        run: node ./scripts/fetch-domains.js
-
-      - name: Upload domains.txt for playwright tests
-        uses: actions/upload-artifact@v3
-        with:
-          name: domains
-          path: domains.txt
-
       - name: Analyze bundle
         run: pnpm --package=nextjs-bundle-analysis dlx report
 
@@ -103,7 +85,7 @@ jobs:
         if: success() && github.event.number
         run: ls -laR packages/ui/docs-bundle/.next/analyze/base && pnpm --package=nextjs-bundle-analysis dlx compare
 
-      - name: Comment PR Preview
+      - name: Comment PR Bundle Analysis
         if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v2
         with:
