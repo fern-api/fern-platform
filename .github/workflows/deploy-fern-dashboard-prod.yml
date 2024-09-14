@@ -1,10 +1,9 @@
 name: Fern Dashboard - Vercel Production Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
+  VERCEL_PROJECT_ID: prj_59B94Hus48Nbb0XrqFYZSALYmYTw
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  SEGMENT_API_KEY: ${{ secrets.SEGMENT_API_KEY }}
   # TODO: move to env vars in vercel
   AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
   AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
@@ -25,7 +24,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: github.ref_type == 'tag' && github.event_name == 'push'
-    permissions: write-all
+    environment: Production - dashboard.buildwithfern.com
     steps:
       - uses: actions/checkout@v4
 
@@ -34,11 +33,9 @@ jobs:
         with:
           install: false
 
-      - name: Install Vercel CLI
-        run: pnpm install --global vercel@latest
-
       - name: Build & Deploy to Vercel
         run: |
+          pnpm install --global vercel@latest
           vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
           vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
           vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

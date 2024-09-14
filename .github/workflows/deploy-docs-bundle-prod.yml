@@ -4,7 +4,6 @@ env:
   VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  SEGMENT_API_KEY: ${{ secrets.SEGMENT_API_KEY }}
 
 on:
   push:
