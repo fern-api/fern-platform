@@ -5,9 +5,7 @@
     "rootDir": "./src",
     "isolatedModules": false,
     "paths": {
-      "@prisma/client": [
-        "../prisma/client"
-      ]
+      "@prisma/client": ["../prisma/client"]
     },
     "sourceMap": true,
     "inlineSources": true,
@@ -16,9 +14,7 @@
     // This improves issue grouping in Sentry.
     "sourceRoot": "/"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../packages/commons/github"
