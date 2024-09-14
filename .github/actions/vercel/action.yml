@@ -46,7 +46,7 @@ runs:
       continue-on-error: true
       run: |
         pnpx turbo-ignore ${{ inputs.package }} --fallback=HEAD^1
-        export "exit_code=$?" >> $GITHUB_OUTPUT
+        echo "exit_code=$?" >> $GITHUB_OUTPUT
 
     - name: Install Vercel CLI
       if: steps.ignore-build.outputs.exit_code || inputs.force == 'true'
