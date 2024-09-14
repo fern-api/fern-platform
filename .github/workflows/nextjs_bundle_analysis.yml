@@ -67,7 +67,7 @@ jobs:
       # https://infrequently.org/2021/03/the-performance-inequality-gap/
       - name: Compare with base branch bundle
         if: success() && github.event.number
-        run: ls -laR packages/ui/docs-bundle/.next/analyze/base && npx -p nextjs-bundle-analysis compare
+        run: ls -laR packages/ui/docs-bundle/.next/analyze/base && pnpx --package=nextjs-bundle-analysis dlx compare
 
       - name: Comment PR Preview
         uses: thollander/actions-comment-pull-request@v2
