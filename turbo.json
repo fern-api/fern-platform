@@ -35,11 +35,7 @@
     "dev": {
       "persistent": true
     },
-    "dev:fern-prod": {
-      "persistent": true,
-      "dependsOn": ["^build", "^compile"]
-    },
-    "dev:fern-dev": {
+    "docs:dev": {
       "persistent": true,
       "dependsOn": ["^build", "^compile"]
     }

@@ -2,30 +2,16 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "tasks": {
-    "build:fern-prod": {
-      "outputs": [".next/**", "!.next/cache/**"],
+    "docs:build": {
       "dependsOn": ["^build", "^compile"]
     },
-    "build:fern-dev": {
-      "outputs": [".next/**", "!.next/cache/**"],
+    "docs:dev": {
       "dependsOn": ["^build", "^compile"]
     },
-    "dev:fern-prod": {
-      "dependsOn": ["^build", "^compile"]
+    "docs:start": {
+      "dependsOn": ["docs:build"]
     },
-    "dev:fern-dev": {
-      "dependsOn": ["^build", "^compile"]
-    },
-    "start:fern-prod": {
-      "dependsOn": ["build:fern-prod"]
-    },
-    "start:fern-dev": {
-      "dependsOn": ["build:fern-dev"]
-    },
-    "lint:fern-prod": {
-      "dependsOn": ["^build", "^compile"]
-    },
-    "lint:fern-dev": {
+    "docs:lint": {
       "dependsOn": ["^build", "^compile"]
     }
   }

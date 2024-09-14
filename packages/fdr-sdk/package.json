@@ -60,7 +60,6 @@
     "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
     "test": "vitest --run",
     "dev": "tsc --watch",
-    "dev:fern-prod": "pnpm dev",
-    "dev:fern-dev": "pnpm dev"
+    "docs:dev": "pnpm dev"
   }
 }
