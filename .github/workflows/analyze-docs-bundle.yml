@@ -36,7 +36,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Build & Deploy to Vercel
+      - name: Build bundle analysis
         uses: ./.github/actions/vercel
         id: deploy
         env:
