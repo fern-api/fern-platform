@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   pr-preview:
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && startsWith(github.event.deployment_status.environment, 'Preview') && endsWith(github.event.deployment_status.environment, 'app.buildwithfern.com')
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -23,7 +23,7 @@ jobs:
         env:
           DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
         run: |
-          echo "${{ toJson(github.event) }}"
+          echo "${{ toJson(github) }}"
 
           echo "Deployment URL: $DEPLOYMENT_URL"
           echo "$DEPLOYMENT_URL" > deployment-url.txt
@@ -41,10 +41,11 @@ jobs:
           done
 
       - name: Comment URL in PR
-        uses: thollander/actions-comment-pull-request@v2.4.3
+        uses: thollander/actions-comment-pull-request@v2
         with:
           filePath: preview.txt
           comment_tag: pr_preview
+          pr_number: ${{ github.event.deployment_status.deployment.pr_number }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
