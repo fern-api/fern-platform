@@ -23,7 +23,6 @@ jobs:
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
-      exit_code: ${{ steps.deploy.outputs.exit_code }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,7 +42,7 @@ jobs:
 
   deploy-dev:
     needs: deploy # this will run after the deploy job to leverage turbo's build cache
-    if: needs.deploy.outputs.exit_code
+    if: needs.deploy.outputs.deployment_url
     runs-on: ubuntu-latest
     environment:
       name: Preview - app-dev.buildwithfern.com
@@ -97,7 +96,7 @@ jobs:
 
   ete:
     needs: deploy
-    if: needs.deploy.outputs.exit_code
+    if: needs.deploy.outputs.deployment_url
     runs-on: ubuntu-latest
     permissions: write-all
     steps:

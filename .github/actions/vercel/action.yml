@@ -29,9 +29,6 @@ outputs:
   deployment_url:
     description: The URL of the deployment
     value: ${{ steps.deploy-preview.outputs.deployment_url || steps.deploy-production.outputs.deployment_url }}
-  exit_code:
-    description: Skip the deployment
-    value: ${{ steps.ignore-build.outputs.exit_code || inputs.force == 'true' }}
 
 runs:
   using: "composite"
