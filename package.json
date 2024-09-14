@@ -32,7 +32,6 @@
     "docs:dev": "[ \"$FDR_ENVIRONMENT\" == \"dev2\" ] && pnpm docs:dev:fern-dev || pnpm docs:dev:fern-prod",
     "docs:build": "[ \"$FDR_ENVIRONMENT\" == \"dev2\" ] && pnpm docs:build:fern-dev || pnpm docs:build:fern-prod",
     "docs:start": "[ \"$FDR_ENVIRONMENT\" == \"dev2\" ] && pnpm docs:start:fern-dev || pnpm docs:start:fern-prod",
-    "docs:ignore": "./scripts/ignore-docs-bundle-build.sh",
     "docs:dev:fern-prod": "turbo dev:fern-prod",
     "docs:dev:fern-dev": "turbo dev:fern-dev",
     "docs:build:fern-prod": "turbo build:fern-prod",

@@ -3,5 +3,5 @@
   "installCommand": "pnpm install",
   "buildCommand": "pnpm -w docs:build",
   "devCommand": "pnpm -w docs:dev",
-  "ignoreCommand": "pnpm -w docs:ignore"
+  "ignoreCommand": "pnpx turbo-ignore --fallback=HEAD^1"
 }
