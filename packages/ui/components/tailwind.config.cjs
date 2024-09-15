@@ -1,7 +1,10 @@
-const baseConfig = require("../tailwind.config.js");
+const baseConfig = require("../tailwind.config.cjs");
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
     ...baseConfig,
-    content: ["./src/**/*.{ts,tsx}", "../tailwind.config.js"]
+    content: ["./src/**/*.{ts,tsx}"],
+    corePlugins: {
+        preflight: false
+    }
 };

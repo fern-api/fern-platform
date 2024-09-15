@@ -2,6 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Base",
   "compilerOptions": {
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "composite": true,
     "esModuleInterop": true,
@@ -24,7 +25,9 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "types": ["vitest/globals"]
-  },
-  "exclude": ["node_modules"]
+    "types": ["vitest/globals"],
+    "moduleResolution": "bundler",
+    "sourceMap": true,
+    "moduleDetection": "force"
+  }
 }

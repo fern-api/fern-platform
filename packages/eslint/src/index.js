@@ -98,7 +98,7 @@ module.exports = {
         "import/no-internal-modules": [
             "error",
             {
-                forbid: ["@fern-ui/*/**"],
+                forbid: ["@fern-ui/*/src/**"],
             },
         ],
         eqeqeq: [

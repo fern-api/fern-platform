@@ -1,5 +1,3 @@
-import typography from "@tailwindcss/typography";
-
 /** @type {import('tailwindcss').Config} */
 export default {
     content: ["./src/**/*.{html,ts,tsx}", "../components/src/FernScrollArea.tsx"],
@@ -46,7 +44,7 @@ export default {
         },
         extend: {},
     },
-    plugins: [typography],
+    plugins: [require("@tailwindcss/typography")],
     future: {
         hoverOnlyWhenSupported: true,
     },

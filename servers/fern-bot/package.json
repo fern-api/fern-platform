@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "compile": "tsc --build",
+    "dev": "tsc --watch",
     "package": "sls package",
     "release": "sls deploy",
     "invoke": "sls invoke",

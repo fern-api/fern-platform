@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities";
 
 @import "./base";
-@import "@fern-ui/components/src/index";
+@import "~@fern-ui/components/src/index.scss";
 
 @layer base {
     * {

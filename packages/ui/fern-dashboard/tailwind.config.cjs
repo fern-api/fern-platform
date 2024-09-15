@@ -1,15 +1,10 @@
-const baseConfig = require("../tailwind.config.js");
-const path = require("path");
+const baseConfig = require("../tailwind.config.cjs");
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
     ...baseConfig,
     darkMode: ["class"],
-    content: [
-        "./src/**/*.{ts,tsx}",
-        "../tailwind.config.cjs",
-        path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}")
-    ],
+    content: ["./src/**/*.{ts,tsx}", "./node_modules/@fern-ui/components/src/**/*.{ts,tsx}"],
     theme: {
         ...baseConfig.theme,
         extend: {

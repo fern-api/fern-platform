@@ -21,6 +21,7 @@
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
+    "dev": "tsc --watch",
     "test": "vitest run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",

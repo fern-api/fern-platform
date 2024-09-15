@@ -11,9 +11,12 @@
     "dist"
   ],
   "type": "commonjs",
-  "source": "src/cdk.ts",
-  "main": "dist/cdk.js",
-  "types": "dist/cdk.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/cdk.ts",
+      "default": "./dist/cdk.js"
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "cdk": "cdk",

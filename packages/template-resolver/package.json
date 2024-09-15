@@ -5,18 +5,15 @@
     "dist"
   ],
   "type": "module",
-  "module": "src/index.ts",
-  "source": "src/index.ts",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./src/index.ts",
       "default": "./dist/index.js"
     }
   },
   "scripts": {
     "compile": "tsc --build",
+    "dev": "tsc --watch",
     "compile:cjs": "tsc --build -f tsconfig.cjs.json",
     "clean": "rm -rf ./dist && tsc --build --clean",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",

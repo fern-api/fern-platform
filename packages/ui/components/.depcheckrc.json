@@ -14,8 +14,6 @@
     "@tailwindcss/forms",
     "tailwindcss",
     "cssnano",
-    "unist-util-visit",
-    "@shikijs/transformers",
     "@chromatic-com/storybook",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
@@ -24,8 +22,7 @@
     "@storybook/blocks",
     "@storybook/test",
     "@emotion/is-prop-valid",
-    "sass",
-    "copyfiles"
+    "sass"
   ],
   "ignore-patterns": ["dist"]
 }

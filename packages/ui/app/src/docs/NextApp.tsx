@@ -7,7 +7,7 @@ import { SWRConfig } from "swr";
 import { DocsProps, HydrateAtoms, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LocalPreviewContextProvider } from "../contexts/local-preview";
-import "../css/globals.scss";
+// import "../css/globals.scss";
 import { NextNProgress } from "../header/NProgress";
 import { useInterceptNextDataHref } from "../hooks/useInterceptNextDataHref";
 import { ThemeScript } from "../themes/ThemeScript";

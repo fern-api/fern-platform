@@ -6,24 +6,17 @@
   ],
   "type": "module",
   "sideEffects": false,
-  "source": "src/index.ts",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     "./navigation": {
-      "import": "./src/navigation/index.ts",
-      "types": "./dist/navigation/index.d.ts",
+      "types": "./src/navigation/index.ts",
       "default": "./dist/navigation/index.js"
     },
     "./client/types": {
-      "import": "./src/client/types.ts",
-      "types": "./dist/client/types.d.ts",
+      "types": "./src/client/types.ts",
       "default": "./dist/client/types.js"
     },
     ".": {
-      "import": "./src/index.ts",
-      "types": "./dist/index.d.ts",
+      "types": "./src/index.ts",
       "default": "./dist/index.js"
     }
   },
@@ -57,12 +50,12 @@
   },
   "scripts": {
     "compile": "tsc --build",
+    "dev": "tsc --watch",
     "clean": "rm -rf ./dist && tsc --build --clean",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
     "test": "vitest --run",
-    "dev": "tsc --watch",
     "docs:dev": "pnpm dev"
   }
 }

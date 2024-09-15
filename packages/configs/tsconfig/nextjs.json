@@ -4,14 +4,11 @@
   "extends": "./base.json",
   "compilerOptions": {
     "noEmit": true,
-    "allowJs": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
     "sourceMap": true,
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["node", "next", "vitest/globals"],
     "plugins": [{ "name": "next" }],
-    "noUncheckedIndexedAccess": true
   }
 }

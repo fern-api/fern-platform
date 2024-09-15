@@ -2,6 +2,8 @@ import createWithBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
 import process from "node:process";
 
+// const __dirname = dirname(fileURLToPath(import.meta.url));
+
 const cdnUri = process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI) : undefined;
 
 const DOCS_FILES_ALLOWLIST = [

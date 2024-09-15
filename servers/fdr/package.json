@@ -76,6 +76,7 @@
   },
   "scripts": {
     "compile": "tsc --build",
+    "dev": "tsc --watch",
     "codegen": "prisma generate",
     "db:migrate:dev": "dotenv -e .env.dev -- prisma migrate deploy",
     "db:migrate:local": "dotenv -e .env.migrate -- prisma migrate dev",

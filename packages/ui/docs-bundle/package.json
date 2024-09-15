@@ -10,11 +10,6 @@
   "files": [
     "dist"
   ],
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "sideEffects": false,
   "scripts": {
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
@@ -56,8 +51,8 @@
     "next": "npm:@fern-api/next@14.2.9-fork.0",
     "node-fetch": "2.7.0",
     "postcss-import": "^16.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "sharp": "^0.33.3",
     "ts-essentials": "^10.0.1",
     "url-join": "5.0.0",
@@ -71,8 +66,8 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^18.7.18",
     "@types/node-fetch": "2.6.9",
-    "@types/react": "^18.0.20",
-    "@types/react-dom": "^18.2.18",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
     "@types/uuid": "^9.0.1",
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.3",

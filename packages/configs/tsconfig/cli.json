@@ -3,7 +3,7 @@
   "display": "CLI",
   "extends": "./base.json",
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext"
   }
 }

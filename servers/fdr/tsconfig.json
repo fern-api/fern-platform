@@ -1,8 +1,8 @@
 {
   "extends": "@fern-platform/configs/tsconfig/server.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "src",
+    "outDir": "dist",
     "isolatedModules": false,
     "paths": {
       "@prisma/client": ["../prisma/client"]
@@ -14,7 +14,7 @@
     // This improves issue grouping in Sentry.
     "sourceRoot": "/"
   },
-  "include": ["./src/**/*"],
+  "include": ["src"],
   "references": [
     {
       "path": "../../packages/commons/github"

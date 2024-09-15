@@ -20,7 +20,7 @@ const generateScale = (name) => {
 };
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
     darkMode: "class",
     theme: {
         extend: {
@@ -95,7 +95,7 @@ module.exports = {
                 "accent-aaa": withOpacity("--accent-aaa"),
                 "accent-tinted": "var(--accent-10)",
                 "accent-contrast": withOpacity("--accent-contrast"),
-                "accent-muted": `var(--accent-6)`,
+                "accent-muted": "var(--accent-6)",
                 "accent-highlight": "var(--accent-3)",
                 "accent-highlight-faded": "var(--accent-2)",
                 background: withOpacity("--background"),
