@@ -33,6 +33,8 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
             <Posthog customerConfig={config.posthog} />
             <IntercomScript config={config.intercom} />
             <FullstoryScript config={config.fullstory} />
+
+            {/* renders Google Analytics 4 or Google Tag Manager using @next/third-parties */}
             {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}
             {gtm != null && <GoogleTagManager gtmId={gtm.tagId} />}
         </>
