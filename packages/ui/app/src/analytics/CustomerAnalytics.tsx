@@ -11,7 +11,7 @@ import { renderSegmentSnippet } from "./segment";
 const IntercomScript = dynamic(() => import("./IntercomScript").then((mod) => mod.IntercomScript));
 const FullstoryScript = dynamic(() => import("./FullstoryScript").then((mod) => mod.FullstoryScript));
 const GoogleAnalytics = dynamic(() => import("@next/third-parties/google").then((mod) => mod.GoogleAnalytics));
-const GoogleTagManager = dynamic(() => import("./GoogleTagManager").then((mod) => mod.GoogleTagManager));
+const GoogleTagManager = dynamic(() => import("@next/third-parties/google").then((mod) => mod.GoogleTagManager));
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
 const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConfig ?? {}, isEqual);
@@ -34,7 +34,7 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
             <IntercomScript config={config.intercom} />
             <FullstoryScript config={config.fullstory} />
             {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}
-            {gtm != null && <GoogleTagManager {...gtm} />}
+            {gtm != null && <GoogleTagManager gtmId={gtm.tagId} />}
         </>
     );
 });

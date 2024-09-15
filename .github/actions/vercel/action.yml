@@ -53,26 +53,28 @@ runs:
       if: inputs.force == 'false'
       continue-on-error: true
       run: |
-        pnpx turbo-ignore ${{ inputs.package }} --fallback=HEAD^1 || echo "skip=false" >> $GITHUB_OUTPUT
+        set +e
+        pnpx turbo-ignore ${{ inputs.package }} --fallback=HEAD^1
+        echo "exit_code=$?" >> $GITHUB_OUTPUT
 
     - name: Install Vercel CLI
-      if: steps.ignore-build.outputs.skip == 'false' || inputs.force == 'true'
+      if: steps.ignore-build.outputs.exit_code == '1' || inputs.force == 'true'
       shell: bash
       run: pnpm install --global vercel@latest
 
     - name: Pull Vercel Environment
-      if: steps.ignore-build.outputs.skip == 'false' || inputs.force == 'true'
+      if: steps.ignore-build.outputs.exit_code == '1' || inputs.force == 'true'
       shell: bash
       run: vercel pull --yes --environment=${{ inputs.environment }} --token=${{ inputs.token }}
 
     - name: Build Vercel Preview
       shell: bash
-      if: (steps.ignore-build.outputs.skip == 'false' || inputs.force == 'true') && inputs.environment == 'preview'
+      if: (steps.ignore-build.outputs.exit_code == '1' || inputs.force == 'true') && inputs.environment == 'preview'
       run: vercel build --yes --token=${{ inputs.token }}
 
     - name: Deploy Vercel Preview
       shell: bash
-      if: (steps.ignore-build.outputs.skip == 'false' || inputs.force == 'true') && inputs.environment == 'preview' && inputs.skip_deploy == 'false'
+      if: (steps.ignore-build.outputs.exit_code == '1' || inputs.force == 'true') && inputs.environment == 'preview' && inputs.skip_deploy == 'false'
       id: deploy-preview
       run: |
         DEPLOYMENT_URL="$(vercel deploy --yes --prebuilt --token=${{ inputs.token }} --archive=tgz)"
@@ -80,12 +82,12 @@ runs:
 
     - name: Build Vercel Production
       shell: bash
-      if: (steps.ignore-build.outputs.skip == 'false' || inputs.force == 'true') && inputs.environment == 'production'
+      if: (steps.ignore-build.outputs.exit_code == '1' || inputs.force == 'true') && inputs.environment == 'production'
       run: vercel build --yes --prod --token=${{ inputs.token }}
 
     - name: Deploy Vercel Production
       shell: bash
-      if: (steps.ignore-build.outputs.skip == 'false' || inputs.force == 'true') && inputs.environment == 'production' && inputs.skip_deploy == 'false'
+      if: (steps.ignore-build.outputs.exit_code == '1' || inputs.force == 'true') && inputs.environment == 'production' && inputs.skip_deploy == 'false'
       id: deploy-production
       run: |
         DEPLOYMENT_URL="$(vercel deploy --yes --prebuilt --prod --skip-domain --token=${{ inputs.token }} --archive=tgz)"
@@ -93,10 +95,10 @@ runs:
 
     - name: Wait for Deployment
       shell: bash
-      if: (steps.ignore-build.outputs.skip == 'false' || inputs.force == 'true') && inputs.skip_deploy == 'false'
+      if: (steps.ignore-build.outputs.exit_code == '1' || inputs.force == 'true') && inputs.skip_deploy == 'false'
       run: vercel inspect ${{ steps.deploy-preview.outputs.deployment_url || steps.deploy-production.outputs.deployment_url }} --token=${{ inputs.token }} --wait
 
     - name: Promote Vercel Production
       shell: bash
-      if: (steps.ignore-build.outputs.skip == 'false' || inputs.force == 'true') && inputs.environment == 'production' && inputs.skip_deploy == 'false' && inputs.promote == 'true'
+      if: (steps.ignore-build.outputs.exit_code == '1' || inputs.force == 'true') && inputs.environment == 'production' && inputs.skip_deploy == 'false' && inputs.promote == 'true'
       run: vercel promote ${{ steps.deploy-production.outputs.deployment_url }} --token=${{ inputs.token }}
