@@ -25,6 +25,7 @@ jobs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     permissions: write-all
     steps:
+      - uses: actions/checkout@v4
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel
         id: deploy
@@ -79,6 +80,7 @@ jobs:
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
+      - uses: actions/checkout@v4
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel
         id: deploy
@@ -96,8 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       # this script generates domains.txt and preview.txt
       - name: Generate preview URLs

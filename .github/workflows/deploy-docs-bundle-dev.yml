@@ -25,6 +25,7 @@ jobs:
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
+      - uses: actions/checkout@v4
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel
         id: deploy
