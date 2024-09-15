@@ -1,6 +1,14 @@
 {
   "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "dist", "rootDir": "." },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "."
+  },
   "include": ["./src/**/*"],
-  "references": [{ "path": "../../packages/commons/github" }]
+  "references": [
+    {
+      "path": "../../packages/commons/github"
+    }
+  ]
 }

@@ -8,13 +8,35 @@
   },
   "include": ["./src/**/*"],
   "references": [
-    { "path": "../../commons/core-utils" },
-    { "path": "../../commons/loadable" },
-    { "path": "../components" },
-    { "path": "../../commons/react/react-commons" },
-    { "path": "../../template-resolver" },
-    { "path": "../../fdr-sdk" },
-    { "path": "../../commons/fdr-utils" },
-    { "path": "../../commons/next-seo" }
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../commons/fdr-utils"
+    },
+    {
+      "path": "../../commons/loadable"
+    },
+    {
+      "path": "../../commons/next-seo"
+    },
+    {
+      "path": "../../commons/react/react-commons"
+    },
+    {
+      "path": "../../commons/search-utils"
+    },
+    {
+      "path": "../../fdr-sdk"
+    },
+    {
+      "path": "../../template-resolver"
+    },
+    {
+      "path": "../chatbot"
+    },
+    {
+      "path": "../components"
+    }
   ]
 }

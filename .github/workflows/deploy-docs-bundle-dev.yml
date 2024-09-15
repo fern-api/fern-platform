@@ -1,0 +1,37 @@
+name: Deploy @fern-ui/docs-bundle (dev)
+env:
+  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
+  VERCEL_PROJECT_ID: prj_QnsiTm1ijJP6cS23K5da6lL02wbp
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: app-dev.buildwithfern.com
+  cancel-in-progress: ${{ github.event_name == 'push' }}
+
+jobs:
+  deploy:
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    environment:
+      name: Production - app-dev.buildwithfern.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build & Deploy to Vercel
+        uses: ./.github/actions/vercel
+        id: deploy
+        with:
+          ref: ${{ github.ref_name || github.ref }}
+          token: ${{ secrets.VERCEL_TOKEN }}
+          package: "@fern-ui/docs-bundle"
+          environment: production
+          promote: true

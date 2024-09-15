@@ -11,6 +11,7 @@
 @layer components {
     .icon-2xl {
         @apply size-8 shrink-0;
+
         stroke-width: 1.5;
     }
 }
@@ -30,7 +31,7 @@
 :root {
     color-scheme: light dark;
     font-synthesis: none;
-    text-rendering: optimizeLegibility;
+    text-rendering: optimizelegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
