@@ -31,4 +31,5 @@ jobs:
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/fontawesome-cdn"
           environment: production
+          force: true
           promote: true

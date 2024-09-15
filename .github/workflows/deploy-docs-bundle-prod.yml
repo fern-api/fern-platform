@@ -33,6 +33,7 @@ jobs:
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/docs-bundle"
           environment: production
+          force: true
 
   deploy_app_ferndocs_com:
     runs-on: ubuntu-latest
@@ -53,6 +54,7 @@ jobs:
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/docs-bundle"
           environment: production
+          force: true
 
   deploy_app-slash_ferndocs_com:
     runs-on: ubuntu-latest
@@ -73,6 +75,7 @@ jobs:
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/docs-bundle"
           environment: production
+          force: true
 
   ete:
     needs: deploy_app_buildwithfern_com

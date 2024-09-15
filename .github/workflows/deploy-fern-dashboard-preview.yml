@@ -18,7 +18,7 @@ on:
 # Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
 concurrency:
   group: dashboard-dev.buildwithfern.com
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:

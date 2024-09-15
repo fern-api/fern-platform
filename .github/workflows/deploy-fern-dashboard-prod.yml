@@ -37,4 +37,5 @@ jobs:
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/dashboard"
           environment: production
+          force: true
           promote: true
