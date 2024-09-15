@@ -25,11 +25,6 @@ jobs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     permissions: write-all
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
-
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel
         id: deploy
@@ -37,6 +32,7 @@ jobs:
           ANALYZE: 1
           VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
         with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/docs-bundle"
           environment: preview
@@ -83,16 +79,13 @@ jobs:
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel
         id: deploy
         env:
           VERCEL_PROJECT_ID: prj_QnsiTm1ijJP6cS23K5da6lL02wbp
         with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/docs-bundle"
           environment: preview

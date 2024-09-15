@@ -22,17 +22,12 @@ jobs:
       name: Production - icons.ferndocs.com
       url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel
         id: deploy
         with:
+          ref: ${{ github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/fontawesome-cdn"
           environment: production
-
-      - name: Promote Deployment
-        run: vercel promote ${{ steps.deploy.outputs.deployment_url }} --token ${{ secrets.VERCEL_TOKEN }}
+          promote: true

@@ -25,15 +25,11 @@ jobs:
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-          ref: ${{ github.ref_name || github.ref }}
-
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel
         id: deploy
         with:
+          ref: ${{ github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/docs-bundle"
           environment: production
