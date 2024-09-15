@@ -68,9 +68,14 @@ async function main() {
      * Write the preview markdown to a file, if DEPLOYMENT_URL is set
      */
     if (process.env.PR_PREVIEW && process.env.PR_PREVIEW !== "false") {
+        if (!process.env.DEPLOYMENT_URL) {
+            console.error("DEPLOYMENT_URL is required for PR preview");
+            process.exit(1);
+        }
+
         fs.writeFileSync(
             "preview.txt",
-            `## PR Preview\n\n${domains.map((d) => `- [ ] [${d}](${deploymentUrl}/api/fern-docs/preview?host=${d})`).join("\n")}`,
+            `## PR Preview\n\n${domains.map((d) => `- [ ] [${d}](${process.env.DEPLOYMENT_URL}/api/fern-docs/preview?host=${d})`).join("\n")}`,
         );
     }
 }
