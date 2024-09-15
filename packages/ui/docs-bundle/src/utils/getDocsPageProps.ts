@@ -1,4 +1,3 @@
-/* eslint-disable import/no-internal-modules */
 import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";

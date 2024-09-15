@@ -1,4 +1,3 @@
-/* eslint-disable import/no-internal-modules */
 import {
     APIKeyInjectionConfig,
     OAuth2Client,

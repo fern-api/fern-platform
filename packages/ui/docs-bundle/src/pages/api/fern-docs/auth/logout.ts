@@ -1,4 +1,3 @@
-/* eslint-disable import/no-internal-modules */
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { getXFernHostEdge } from "../../../../utils/xFernHost";
