@@ -159,10 +159,6 @@ export class Versions {
      *
      * @example
      *     await fernRegistry.generators.versions.upsertGeneratorRelease({
-     *         generatorId: "string",
-     *         irVersion: 1,
-     *         migration: "string",
-     *         customConfigSchema: "string",
      *         version: "string",
      *         createdAt: "2023-01-15",
      *         isYanked: {
@@ -171,6 +167,9 @@ export class Versions {
      *         changelogEntry: [{
      *                 type: FernRegistry.generators.ChangelogEntryType.Fix,
      *                 summary: "string",
+     *                 pullRequestUrl: {
+     *                     "key": "value"
+     *                 },
      *                 upgradeNotes: {
      *                     "key": "value"
      *                 },
@@ -189,7 +188,12 @@ export class Versions {
      *                 fixed: {
      *                     "key": "value"
      *                 }
-     *             }]
+     *             }],
+     *         generatorId: "string",
+     *         irVersion: 1,
+     *         migration: "string",
+     *         customConfigSchema: "string",
+     *         tags: ["string"]
      *     })
      */
     public async upsertGeneratorRelease(

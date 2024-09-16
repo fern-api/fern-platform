@@ -203,6 +203,7 @@ model GeneratorRelease {
   customConfigSchema String?
 
   releaseType ReleaseType
+  tags String[]  @default([])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -222,6 +223,7 @@ model CliRelease {
   changelogEntry Bytes?
 
   releaseType ReleaseType
+  tags String[]  @default([])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
