@@ -1,4 +1,5 @@
 const baseConfig = require("../tailwind.config.cjs");
+const path = require("path");
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -6,8 +7,8 @@ export default {
     content: [
         "./src/pages/**/*.{ts,tsx}",
         "./src/components/**/*.{ts,tsx}",
-        "./node_modules/@fern-ui/ui/src/**/*.{ts,tsx}",
-        "./node_modules/@fern-ui/components/src/**/*.{ts,tsx}",
-        "./node_modules/@fern-ui/chatbot/src/**/*.{ts,tsx}"
+        path.join(path.dirname(require.resolve("@fern-ui/docs-fe")), "**/*.{ts,tsx}"),
+        path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}"),
+        path.join(path.dirname(require.resolve("@fern-ui/chatbot")), "**/*.{ts,tsx}")
     ]
 };

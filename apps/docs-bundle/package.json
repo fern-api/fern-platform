@@ -15,7 +15,6 @@
     "docs:build": "next build",
     "docs:dev": "NODE_OPTIONS='--inspect' next dev",
     "docs:start": "next start",
-    "lint": "pnpm lint:eslint && pnpm lint:style",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "test": "vitest --run --passWithNoTests --globals"
   },

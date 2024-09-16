@@ -7,14 +7,14 @@ module.exports = {
         "selector-pseudo-class-no-unknown": [
             true,
             {
-                ignorePseudoClasses: ["global", "export"]
-            }
+                ignorePseudoClasses: ["global", "export"],
+            },
         ],
         "property-no-unknown": [
             true,
             {
-                ignoreSelectors: [":export"]
-            }
+                ignoreSelectors: [":export"],
+            },
         ],
         "font-family-no-missing-generic-family-keyword": null,
         "color-function-notation": null,
@@ -23,8 +23,8 @@ module.exports = {
         "scss/at-rule-no-unknown": [
             true,
             {
-                ignoreAtRules: ["tailwind"]
-            }
-        ]
-    }
+                ignoreAtRules: ["tailwind"],
+            },
+        ],
+    },
 };

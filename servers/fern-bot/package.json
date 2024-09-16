@@ -10,8 +10,6 @@
     "compile": "tsc --build",
     "dev": "tsc --watch",
     "invoke": "sls invoke",
-    "lint": "eslint --max-warnings 0 src --ext .ts",
-    "lint:fix": "pnpm lint --fix",
     "package": "sls package",
     "proxy": "smee -u https://smee.io/3DXoSvCO2NH87w8e",
     "release": "sls deploy",

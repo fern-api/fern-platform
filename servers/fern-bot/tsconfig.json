@@ -7,8 +7,8 @@
       "@libs/*": ["src/libs/*"]
     },
     "lib": ["ESNext", "DOM"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,

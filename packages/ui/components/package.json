@@ -33,11 +33,6 @@
     "storybook": "storybook dev -p 6006",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept"
   },
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
-  },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.2",
     "@fern-ui/react-utils": "workspace:*",
@@ -85,7 +80,6 @@
     "autoprefixer": "^10.4.16",
     "chromatic": "^11.3.0",
     "depcheck": "^1.4.3",
-    "eslint-plugin-storybook": "^0.8.0",
     "jsdom": "^24.0.0",
     "organize-imports-cli": "^0.10.0",
     "postcss-import": "^16.0.1",

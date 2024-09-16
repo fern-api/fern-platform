@@ -8,12 +8,12 @@ export default {
             white: "#ffffff",
             black: "#000000",
             tag: {
-                default: "var(--tag-default)"
+                default: "var(--tag-default)",
             },
             border: {
                 accent: {
-                    muted: "var(--border-accent-muted)"
-                }
+                    muted: "var(--border-accent-muted)",
+                },
             },
             grayscale: {
                 1: "var(--gray-1)",
@@ -39,14 +39,14 @@ export default {
                 a9: "var(--gray-a9)",
                 a10: "var(--gray-a10)",
                 a11: "var(--gray-a11)",
-                a12: "var(--gray-a12)"
-            }
+                a12: "var(--gray-a12)",
+            },
         },
-        extend: {}
+        extend: {},
     },
     plugins: [require("@tailwindcss/typography")],
     future: {
-        hoverOnlyWhenSupported: true
+        hoverOnlyWhenSupported: true,
     },
-    darkMode: "class"
+    darkMode: "class",
 };

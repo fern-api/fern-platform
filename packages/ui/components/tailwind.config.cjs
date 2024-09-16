@@ -5,6 +5,6 @@ export default {
     ...baseConfig,
     content: ["./src/**/*.{ts,tsx}"],
     corePlugins: {
-        preflight: false
-    }
+        preflight: false,
+    },
 };

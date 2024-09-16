@@ -30,7 +30,6 @@
     "compile": "tsc --build",
     "dev": "tsc --watch",
     "docs:dev": "pnpm dev",
-    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
     "test": "vitest --run"
   },
   "dependencies": {

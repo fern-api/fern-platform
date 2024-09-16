@@ -34,11 +34,6 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "storybook": "storybook dev -p 6006"
   },
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
-  },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.2",
     "@fern-api/fdr-sdk": "workspace:*",
@@ -161,7 +156,6 @@
     "chromatic": "^11.3.0",
     "cohere-ai": "^7.9.5",
     "depcheck": "^1.4.3",
-    "eslint-plugin-storybook": "^0.8.0",
     "jsdom": "^24.0.0",
     "next-router-mock": "^0.9.13",
     "organize-imports-cli": "^0.10.0",

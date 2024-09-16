@@ -11,9 +11,10 @@ module.exports = {
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
-        "plugin:@next/next/recommended"
+        "plugin:@next/next/recommended",
+        "plugin:storybook/recommended"
     ],
-    plugins: ["deprecation", "import", "tailwindcss", "vitest"], // "react-refresh"
+    plugins: ["deprecation", "import", "tailwindcss", "vitest"], // "react-refresh",
     env: {
         browser: true,
         es2021: true
@@ -38,6 +39,7 @@ module.exports = {
         tsconfigRootDir: __dirname
     },
     rules: {
+        "import/no-default-export": "off",
         "@typescript-eslint/no-unused-vars": [
             "error",
             {
@@ -144,6 +146,15 @@ module.exports = {
                 "@typescript-eslint/no-unused-vars": "off",
                 "@typescript-eslint/explicit-module-boundary-types": "off",
                 "react/display-name": "off",
+                "@typescript-eslint/no-require-imports": "off"
+            }
+        },
+        {
+            files: ["**/*.cjs"],
+            env: {
+                node: true
+            },
+            rules: {
                 "@typescript-eslint/no-require-imports": "off"
             }
         }
