@@ -11,12 +11,18 @@ interface MaybeEnvironmentDropdownProps {
     protocolTextStyle?: string;
     small?: boolean;
     environmentFilters?: APIV1Read.EnvironmentId[];
+    trailingPath?: boolean;
 }
-export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): ReactElement | null {
+export function MaybeEnvironmentDropdown({
+    selectedEnvironment,
+    urlTextStyle,
+    protocolTextStyle,
+    small,
+    environmentFilters,
+    trailingPath,
+}: MaybeEnvironmentDropdownProps): ReactElement | null {
     const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
-
-    const { selectedEnvironment, urlTextStyle, protocolTextStyle, small, environmentFilters } = props;
 
     const environmentIds = environmentFilters
         ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
@@ -28,38 +34,41 @@ export function MaybeEnvironmentDropdown(props: MaybeEnvironmentDropdownProps): 
     const url = selectedEnvironment?.baseUrl && parse(selectedEnvironment?.baseUrl);
 
     return (
-        <span>
-            {environmentIds && environmentIds.length > 1 ? (
-                <FernDropdown
-                    key="selectedEnvironment-selector"
-                    options={environmentIds.map((env) => ({
-                        value: env,
-                        label: env,
-                        type: "value",
-                    }))}
-                    onValueChange={(value) => {
-                        setSelectedEnvironmentId(value);
-                    }}
-                    value={selectedEnvironmentId ?? selectedEnvironment?.id}
-                >
-                    <FernButton
-                        text={
-                            <span key="protocol" className="whitespace-nowrap max-sm:hidden">
-                                <span className={protocolTextStyle}>{`${url && url.protocol}//`}</span>
-                                <span className={urlTextStyle}>{(url && url.host) ?? selectedEnvironmentId}</span>
-                            </span>
-                        }
-                        size={small ? "small" : "normal"}
-                        variant="outlined"
-                        mono={true}
-                    />
-                </FernDropdown>
-            ) : (
-                <span key="protocol" className="whitespace-nowrap max-sm:hidden">
-                    <span className={protocolTextStyle}>{`${url && url.protocol}//`}</span>
-                    <span className={urlTextStyle}>{(url && url.host) ?? selectedEnvironmentId}</span>
-                </span>
-            )}
-        </span>
+        <>
+            <span>
+                {environmentIds && environmentIds.length > 1 ? (
+                    <FernDropdown
+                        key="selectedEnvironment-selector"
+                        options={environmentIds.map((env) => ({
+                            value: env,
+                            label: env,
+                            type: "value",
+                        }))}
+                        onValueChange={(value) => {
+                            setSelectedEnvironmentId(value);
+                        }}
+                        value={selectedEnvironmentId ?? selectedEnvironment?.id}
+                    >
+                        <FernButton
+                            text={
+                                <span key="protocol" className="whitespace-nowrap max-sm:hidden">
+                                    <span className={protocolTextStyle}>{`${url && url.protocol}//`}</span>
+                                    <span className={urlTextStyle}>{(url && url.host) ?? selectedEnvironmentId}</span>
+                                </span>
+                            }
+                            size={small ? "small" : "normal"}
+                            variant="outlined"
+                            mono={true}
+                        />
+                    </FernDropdown>
+                ) : (
+                    <span key="protocol" className="whitespace-nowrap max-sm:hidden">
+                        <span className={protocolTextStyle}>{`${url && url.protocol}//`}</span>
+                        <span className={urlTextStyle}>{(url && url.host) ?? selectedEnvironmentId}</span>
+                    </span>
+                )}
+            </span>
+            {trailingPath && url && url.pathname !== "/" && <span>{url.pathname}</span>}
+        </>
     );
 }

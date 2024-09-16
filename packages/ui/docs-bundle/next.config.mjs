@@ -1,3 +1,7 @@
+import createWithBundleAnalyzer from "@next/bundle-analyzer";
+import { withSentryConfig } from "@sentry/nextjs";
+import process from "node:process";
+
 const cdnUri = process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI) : undefined;
 
 const DOCS_FILES_ALLOWLIST = [
@@ -52,10 +56,19 @@ const nextConfig = {
 
         /**
          * Monorepo packages that are not transpiled by default.
+         *
+         * pnpm list --filter=@fern-ui/docs-bundle --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
          */
-        "@fern-ui/core-utils",
         "@fern-api/fdr-sdk",
+        "@fern-api/template-resolver",
+        "@fern-ui/chatbot",
         "@fern-ui/components",
+        "@fern-ui/core-utils",
+        "@fern-ui/fdr-utils",
+        "@fern-ui/loadable",
+        "@fern-ui/next-seo",
+        "@fern-ui/react-commons",
+        "@fern-ui/search-utils",
         "@fern-ui/ui",
     ],
     productionBrowserSourceMaps: isTruthy(process.env.ENABLE_SOURCE_MAPS),
@@ -147,18 +160,14 @@ const nextConfig = {
     },
 };
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
+const withBundleAnalyzer = createWithBundleAnalyzer({
     enabled: isTruthy(process.env.ANALYZE),
 });
 
-module.exports = withBundleAnalyzer(nextConfig);
-
 // Injected content via Sentry wizard below
 
-const { withSentryConfig } = require("@sentry/nextjs");
-
-module.exports = withSentryConfig(
-    module.exports,
+export default withSentryConfig(
+    withBundleAnalyzer(nextConfig),
     {
         // For all available options, see:
         // https://github.com/getsentry/sentry-webpack-plugin#options

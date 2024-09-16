@@ -14,14 +14,14 @@
   "source": "src/index.ts",
   "module": "src/index.ts",
   "main": "src/index.ts",
+  "types": "src/index.ts",
   "sideEffects": [
     "*.css",
     "*.scss"
   ],
   "scripts": {
-    "clean": "rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "compile": "tsc --build",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",

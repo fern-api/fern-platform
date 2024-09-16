@@ -23,10 +23,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Codegen
-        run: |
-          npm install -g fern-api
-
       - name: Compile and build
         run: pnpm turbo compile codegen build
         env:
@@ -49,9 +45,6 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
-
-      - name: Lint monorepo
-        run: pnpm lint:monorepo
 
       - name: Lint style
         run: pnpm turbo lint:style
@@ -113,9 +106,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: 🧪 Build generator-cli
-        run: |
-          pnpm turbo compile
-          pnpm --filter=@fern-api/generator-cli dist:cli
+        run: pnpm turbo --filter=@fern-api/generator-cli compile
 
       - name: Run tests
         run: pnpm test
@@ -129,9 +120,7 @@ jobs:
           docker-compose --version
 
       - name: Run tests against local FDR
-        run: |
-          cd servers/fdr
-          pnpm test:local
+        run: pnpm --filter=@fern-platform/fdr test:local
         env:
           CI: true
 

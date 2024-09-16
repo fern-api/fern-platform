@@ -1,3 +1,6 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "ignoreCommand": "exit 0"
 }

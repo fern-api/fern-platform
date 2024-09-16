@@ -1,0 +1,35 @@
+name: Deploy @fern-ui/fontawesome-cdn
+env:
+  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
+  VERCEL_PROJECT_ID: prj_MO0ayWSAeIoBYh8Cd13oigkd9knl
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
+on:
+  push:
+    branches:
+      - main
+
+# Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
+concurrency:
+  group: icons.ferndocs.com
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: Production - icons.ferndocs.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build & Deploy to Vercel
+        uses: ./.github/actions/vercel
+        id: deploy
+        with:
+          ref: ${{ github.ref_name || github.ref }}
+          token: ${{ secrets.VERCEL_TOKEN }}
+          package: "@fern-ui/fontawesome-cdn"
+          environment: production
+          force: true
+          promote: true
