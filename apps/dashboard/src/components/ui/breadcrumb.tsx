@@ -2,7 +2,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { ChevronRight, MoreHorizontal } from "lucide-react";
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { clsx } from "@/lib/utils";
 
 const Breadcrumb = React.forwardRef<
     HTMLElement,
@@ -17,7 +17,7 @@ const BreadcrumbList = React.forwardRef<HTMLOListElement, React.ComponentPropsWi
         <ol
             ref={ref}
             className={clsx(
-                "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+                "text-muted-foreground flex flex-wrap items-center gap-1.5 break-words text-sm sm:gap-2.5",
                 className,
             )}
             {...props}
@@ -41,7 +41,7 @@ const BreadcrumbLink = React.forwardRef<
 >(({ asChild, className, ...props }, ref) => {
     const Comp = asChild ? Slot : "a";
 
-    return <Comp ref={ref} className={clsx("transition-colors hover:text-foreground", className)} {...props} />;
+    return <Comp ref={ref} className={clsx("hover:text-foreground transition-colors", className)} {...props} />;
 });
 BreadcrumbLink.displayName = "BreadcrumbLink";
 

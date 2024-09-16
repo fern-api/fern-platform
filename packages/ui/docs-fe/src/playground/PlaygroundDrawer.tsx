@@ -126,8 +126,8 @@ export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): Rea
         ) : isLoading ? (
             <PlaygroundEndpointSkeleton />
         ) : (
-            <div className="size-full flex flex-col items-center justify-center">
-                <ArrowLeft className="size-8 mb-2 t-muted" />
+            <div className="flex size-full flex-col items-center justify-center">
+                <ArrowLeft className="t-muted mb-2 size-8" />
                 <h6 className="t-muted">Select an endpoint to get started</h6>
             </div>
         );
@@ -162,7 +162,7 @@ export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): Rea
             <Dialog.Root open={isPlaygroundOpen} onOpenChange={togglePlayground} modal={false}>
                 <Dialog.Portal>
                     <Dialog.Content
-                        className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
+                        className="data-[state=open]:animate-content-show-from-bottom bg-background-translucent border-default fixed inset-x-0 bottom-0 border-t shadow-xl backdrop-blur-2xl max-sm:h-full"
                         onInteractOutside={(e) => {
                             e.preventDefault();
                         }}
@@ -181,7 +181,7 @@ export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): Rea
                             {!isMobileScreen ? (
                                 <>
                                     <div
-                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-2 after:z-50 after:h-4 after:content-[''] touch-none"
+                                        className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize touch-none after:absolute after:inset-x-0 after:-top-2 after:z-50 after:h-4 after:content-['']"
                                         onMouseDown={resizeY.onMouseDown}
                                         onTouchStart={resizeY.onTouchStart}
                                     >

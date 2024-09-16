@@ -39,9 +39,9 @@ const Login: React.FC = () => {
     }
 
     return (
-        <div className="h-full w-full text-center items-center content-center overflow-hidden bg-background">
-            <div className="flex flex-col w-[60%] max-h-[75%] h-fit bg-foreground text-white rounded-2xl m-auto pt-8 px-8">
-                <div className="flex flex-col w-[30%] gap-y-10 self-center">
+        <div className="bg-background h-full w-full content-center items-center overflow-hidden text-center">
+            <div className="bg-foreground m-auto flex h-fit max-h-[75%] w-[60%] flex-col rounded-2xl px-8 pt-8 text-white">
+                <div className="flex w-[30%] flex-col gap-y-10 self-center">
                     <h2 className="text-muted">Log in to manage your APIs.</h2>
                     <FernButton
                         onClick={() => auth.loginWithRedirect()}
@@ -52,7 +52,7 @@ const Login: React.FC = () => {
                                 darkModeColor="black"
                             />
                         }
-                        className="!bg-white !hover:bg-white/20 w-fit border border-gray-300 !shadow-[0px_0px_15px_0px_#1EA32A] self-center"
+                        className="!hover:bg-white/20 w-fit self-center border border-gray-300 !bg-white !shadow-[0px_0px_15px_0px_#1EA32A]"
                         full={false}
                     >
                         Continue with GitHub
@@ -64,8 +64,8 @@ const Login: React.FC = () => {
                         <span className="text-muted">Input OpenAPI. Output SDKs and Docs.</span>
                         <h1 className="text-white">Welcome to</h1>
                     </div>
-                    <div className="pointer-events-none relative overflow-hidden bottom-0">
-                        <div className="aspect-[6/1.75] z-100" />
+                    <div className="pointer-events-none relative bottom-0 overflow-hidden">
+                        <div className="z-100 aspect-[6/1.75]" />
                         <FernLogo className="absolute -bottom-5 z-0" fill={FernLogoFill.Air} />
                     </div>
                 </div>

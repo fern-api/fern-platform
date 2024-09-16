@@ -39,14 +39,14 @@ export function PageLayout({
     return (
         <main className="fern-page-layout">
             <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
-            <div className="max-w-full fern-prose">{children}</div>
+            <div className="fern-prose max-w-full">{children}</div>
             {(!hideFeedback || editThisPageUrl != null) && (
                 <footer className="mt-12">
-                    <div className="flex sm:justify-between max-sm:flex-col gap-4">
+                    <div className="flex gap-4 max-sm:flex-col sm:justify-between">
                         <div>{!hideFeedback && <Feedback />}</div>
                         <EditThisPageButton editThisPageUrl={editThisPageUrl} />
                     </div>
-                    <BuiltWithFern className="w-fit mx-auto my-8" />
+                    <BuiltWithFern className="mx-auto my-8 w-fit" />
                 </footer>
             )}
         </main>

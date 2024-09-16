@@ -51,13 +51,13 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                 className={clsx(
                     "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto md:grid md:grid-cols-2 md:gap-8 lg:gap-12",
                     {
-                        "border-default border-b mb-px pb-20": !hideBottomSeparator,
+                        "border-default mb-px border-b pb-20": !hideBottomSeparator,
                     },
                 )}
                 ref={ref}
                 id={useHref(webhook.slug)}
             >
-                <div className="flex min-w-0 max-w-content-width flex-1 flex-col">
+                <div className="max-w-content-width flex min-w-0 flex-1 flex-col">
                     <div className="space-y-1 py-8">
                         <FernBreadcrumbs breadcrumbs={webhook.breadcrumbs} />
                         <h1 className="my-0 inline-block leading-tight">{webhook.title}</h1>
@@ -117,7 +117,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                 <div
                     className={clsx(
                         "max-w-content-width",
-                        "flex-1 sticky self-start top-header-offset",
+                        "top-header-offset sticky flex-1 self-start",
                         // the py-10 is the same as the 40px below
                         "pb-10 pt-8",
                         // the 4rem is the same as the h-10 as the Header

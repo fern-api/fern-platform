@@ -56,7 +56,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     <span key={`separator-base-${i}`} className="text-faded">
                         {"/"}
                     </span>,
-                    <span key={`part-base-${i}`} className="whitespace-nowrap text-faded">
+                    <span key={`part-base-${i}`} className="text-faded whitespace-nowrap">
                         {part}
                     </span>,
                 );
@@ -74,7 +74,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                             );
                         } else {
                             elements.push(
-                                <span key={`part-${i}-${j}`} className="whitespace-nowrap text-faded">
+                                <span key={`part-${i}-${j}`} className="text-faded whitespace-nowrap">
                                     {value}
                                 </span>,
                             );
@@ -85,7 +85,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                     elements.push(
                         <span
                             key={`part-${i}`}
-                            className="whitespace-nowrap text-accent bg-accent-highlight rounded px-1"
+                            className="text-accent bg-accent-highlight whitespace-nowrap rounded px-1"
                         >
                             :{pathParameter.key}
                         </span>,
@@ -103,7 +103,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
 
             <div className={clsx("flex items-center")}>
                 <span
-                    className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} py-0.5 px-1 rounded-md cursor-default`}
+                    className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} cursor-default rounded-md px-1 py-0.5`}
                 >
                     {showEnvironment && allEnvironmentIds.length > 1 && (
                         <MaybeEnvironmentDropdown

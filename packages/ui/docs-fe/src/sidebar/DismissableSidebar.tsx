@@ -47,7 +47,7 @@ export function DismissableSidebar({ className }: { className?: string }): React
         <AnimatePresence>
             {showSidebar && (
                 <motion.div
-                    className="inset-0 fixed bg-background/50 z-20 lg:hidden"
+                    className="bg-background/50 fixed inset-0 z-20 lg:hidden"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}

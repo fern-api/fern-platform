@@ -128,7 +128,7 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
 
             <div
                 className={clsx("flex", {
-                    "flex-1 shrink min-w-0": !isBoolean,
+                    "min-w-0 flex-1 shrink": !isBoolean,
                 })}
             >
                 {children}

@@ -45,17 +45,17 @@ export function ReferenceLayout({
     return (
         <main className="fern-reference-layout">
             <div className="z-10 w-full min-w-0 pt-8">
-                <article className="mx-auto w-full lg:ml-0 xl:mx-auto pb-20 max-w-content-width md:max-w-endpoint-width">
+                <article className="max-w-content-width md:max-w-endpoint-width mx-auto w-full pb-20 lg:ml-0 xl:mx-auto">
                     <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
                     <div
-                        className={clsx("max-w-full prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0", {
-                            "md:grid md:grid-cols-2 md:gap-8 lg:gap-12 max-md:space-y-12": isValidElement(aside),
+                        className={clsx("prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full", {
+                            "max-md:space-y-12 md:grid md:grid-cols-2 md:gap-8 lg:gap-12": isValidElement(aside),
                         })}
                     >
                         <div className="fern-prose">{children}</div>
                         {isValidElement(aside) && (
                             <aside className="relative">
-                                <div className="md:top-header-offset md:sticky md:py-8 md:-my-8 fern-prose">
+                                <div className="md:top-header-offset fern-prose md:sticky md:-my-8 md:py-8">
                                     {aside}
                                 </div>
                             </aside>
@@ -63,11 +63,11 @@ export function ReferenceLayout({
                     </div>
                     {(!hideFeedback || editThisPageUrl != null) && (
                         <footer className="mt-12">
-                            <div className="flex sm:justify-between max-sm:flex-col gap-4">
+                            <div className="flex gap-4 max-sm:flex-col sm:justify-between">
                                 <div>{!hideFeedback && <Feedback />}</div>
                                 <EditThisPageButton editThisPageUrl={editThisPageUrl} />
                             </div>
-                            {!isApiPage && <BuiltWithFern className="w-fit mx-auto my-8" />}
+                            {!isApiPage && <BuiltWithFern className="mx-auto my-8 w-fit" />}
                         </footer>
                     )}
                 </article>

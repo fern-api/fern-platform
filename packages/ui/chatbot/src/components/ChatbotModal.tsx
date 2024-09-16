@@ -109,16 +109,16 @@ export const ChatbotModal = forwardRef<ChatbotModalRef, ChatbotModalProps>(
             <section className={clsx("flex flex-col", className)}>
                 <div className="px-4 py-2">
                     {shouldShowConversation && (
-                        <div className="flex justify-between items-center">
-                            <span className="text-sm text-grayscale-a11">Ask Cohere</span>
-                            <button className="text-xs text-grayscale-a11 hover:text-grayscale-a12" onClick={reset}>
+                        <div className="flex items-center justify-between">
+                            <span className="text-grayscale-a11 text-sm">Ask Cohere</span>
+                            <button className="text-grayscale-a11 hover:text-grayscale-a12 text-xs" onClick={reset}>
                                 Clear Chat
                             </button>
                         </div>
                     )}
                 </div>
                 {shouldShowConversation && (
-                    <FernScrollArea scrollbars="vertical" className="px-4 py-6 mask-grad-y-6" ref={scrollRef}>
+                    <FernScrollArea scrollbars="vertical" className="mask-grad-y-6 px-4 py-6" ref={scrollRef}>
                         <ChatConversation messages={chatHistory.messages} components={components}>
                             <ResponseMessageWithCitations
                                 isStreaming={isStreaming}

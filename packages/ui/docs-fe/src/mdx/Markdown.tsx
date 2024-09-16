@@ -26,7 +26,7 @@ export const Markdown = memo<Markdown.Props>(({ title, mdx, className, size, fal
 
     return (
         <div
-            className={clsx(className, "break-words max-w-none prose dark:prose-invert", {
+            className={clsx(className, "prose dark:prose-invert max-w-none break-words", {
                 "whitespace-pre-wrap": typeof mdx === "string",
                 "prose-base": size == null,
                 "prose-sm dark:prose-invert-sm !text-xs": size === "xs",

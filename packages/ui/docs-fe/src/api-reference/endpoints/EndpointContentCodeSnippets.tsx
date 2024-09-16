@@ -124,7 +124,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             {successTitle}
         </ErrorExampleSelect>
     ) : (
-        <span className="text-sm t-muted">{successTitle}</span>
+        <span className="t-muted text-sm">{successTitle}</span>
     );
 
     const selectedEnvironmentId = useSelectedEnvironmentId();

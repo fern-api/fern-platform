@@ -168,7 +168,7 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                     )}
 
                     <div className="h-48" />
-                    <BuiltWithFern className="w-fit mx-auto my-8" />
+                    <BuiltWithFern className="mx-auto my-8 w-fit" />
                 </main>
             </div>
         </div>

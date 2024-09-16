@@ -114,7 +114,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
             id={href}
             className={clsx("scroll-mt-content-padded fern-api-property", {
                 "px-3": !contextValue.isRootTypeDefinition,
-                "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
+                "outline-accent rounded-sm outline outline-1 outline-offset-4": isActive,
             })}
         >
             <div className="fern-api-property-header">

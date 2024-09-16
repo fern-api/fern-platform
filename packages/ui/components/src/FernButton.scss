@@ -2,7 +2,7 @@
     .fern-button {
         @apply transition-colors hover:transition-none;
         @apply inline-flex items-center justify-center;
-        @apply rounded-lg px-3 py-1 text-sm h-10 sm:h-8;
+        @apply h-10 rounded-lg px-3 py-1 text-sm sm:h-8;
         @apply cursor-pointer;
 
         &.multiline,
@@ -25,8 +25,8 @@
         }
 
         > .fern-button-content {
-            @apply items-center inline-flex shrink min-w-0;
-            @apply gap-1.5 h-6;
+            @apply inline-flex min-w-0 shrink items-center;
+            @apply h-6 gap-1.5;
 
             > .fa-icon,
             > svg {
@@ -34,7 +34,7 @@
             }
 
             .fern-button-text {
-                @apply shrink min-w-0;
+                @apply min-w-0 shrink;
             }
         }
 
@@ -45,11 +45,11 @@
         }
 
         &:not(.text-left, .text-right) > .fern-button-content {
-            @apply text-center justify-center;
+            @apply justify-center text-center;
         }
 
         &.text-left > .fern-button-content {
-            @apply justify-start flex-1;
+            @apply flex-1 justify-start;
 
             .fern-button-text {
                 @apply flex-1;
@@ -65,7 +65,7 @@
         }
 
         &.small {
-            @apply px-2 py-1 text-xs h-7 sm:h-6;
+            @apply h-7 px-2 py-1 text-xs sm:h-6;
 
             &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
             &:not(.square):has(> .fern-button-content > svg:first-child) {
@@ -78,7 +78,7 @@
             }
 
             > .fern-button-content {
-                @apply gap-1.5 h-4;
+                @apply h-4 gap-1.5;
 
                 > .fa-icon,
                 > svg {
@@ -96,7 +96,7 @@
         }
 
         &.large {
-            @apply px-3 lg:px-4 py-2 text-base h-11 sm:h-10;
+            @apply h-11 px-3 py-2 text-base sm:h-10 lg:px-4;
 
             &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
             &:not(.square):has(> .fern-button-content > svg:first-child) {
@@ -109,7 +109,7 @@
             }
 
             > .fern-button-content {
-                @apply gap-2 h-6;
+                @apply h-6 gap-2;
 
                 > .fa-icon,
                 > svg {
@@ -127,20 +127,20 @@
         }
 
         &[disabled] {
-            @apply cursor-not-allowed bg-black/20 text-text-default/40 hover:text-text-default/40;
-            @apply dark:bg-white/10 dark:text-text-default/50 dark:hover:text-text-default/50;
+            @apply text-text-default/40 hover:text-text-default/40 cursor-not-allowed bg-black/20;
+            @apply dark:text-text-default/50 dark:hover:text-text-default/50 dark:bg-white/10;
         }
 
         &:not([disabled]) {
             &.minimal {
-                @apply bg-transparent t-muted;
+                @apply t-muted bg-transparent;
 
                 &:hover {
                     @apply t-default;
                 }
 
                 // @apply t-muted hover:t-default;
-                @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default  data-[selected=true]:bg-tag-default;
+                @apply hover:bg-tag-default data-[state=on]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default data-[selected=true]:bg-tag-default;
 
                 .fa-icon {
                     @apply bg-text-default/60;
@@ -162,7 +162,7 @@
 
                 &.primary {
                     @apply t-accent hover:t-accent;
-                    @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary  data-[selected=true]:bg-tag-primary;
+                    @apply hover:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary data-[selected=true]:bg-tag-primary;
 
                     .fa-icon {
                         @apply bg-accent-aa;
@@ -175,7 +175,7 @@
 
                 &.success {
                     @apply t-success hover:t-success;
-                    @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success  data-[selected=true]:bg-tag-success;
+                    @apply hover:bg-tag-success data-[state=on]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success data-[selected=true]:bg-tag-success;
 
                     .fa-icon {
                         @apply bg-intent-success;
@@ -188,7 +188,7 @@
 
                 &.warning {
                     @apply t-warning hover:t-warning;
-                    @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning  data-[selected=true]:bg-tag-warning;
+                    @apply hover:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning data-[selected=true]:bg-tag-warning;
 
                     .fa-icon {
                         @apply bg-intent-warning;
@@ -201,7 +201,7 @@
 
                 &.danger {
                     @apply t-danger hover:t-danger;
-                    @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger  data-[selected=true]:bg-tag-danger;
+                    @apply hover:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger data-[selected=true]:bg-tag-danger;
 
                     .fa-icon {
                         @apply bg-intent-danger;
@@ -302,7 +302,7 @@
             }
 
             &.outlined {
-                @apply ring-1 transition-[box-shadow,background] hover:transition-none ring-inset;
+                @apply ring-1 ring-inset transition-[box-shadow,background] hover:transition-none;
                 @apply ring-default t-default;
 
                 &:hover,

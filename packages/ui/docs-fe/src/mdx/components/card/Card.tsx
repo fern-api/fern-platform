@@ -45,8 +45,8 @@ export const Card: React.FC<Card.Props> = ({
             )}
             <div
                 className={clsx("flex items-start", {
-                    "space-y-3 flex-col": iconPosition === "top",
-                    "space-x-3 flex-row": iconPosition === "left",
+                    "flex-col space-y-3": iconPosition === "top",
+                    "flex-row space-x-3": iconPosition === "left",
                 })}
             >
                 {typeof icon === "string" ? (

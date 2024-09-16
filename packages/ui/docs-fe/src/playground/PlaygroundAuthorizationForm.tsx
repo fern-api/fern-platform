@@ -189,7 +189,7 @@ function FoundOAuthReferencedEndpointForm({
     ];
 
     return value.isLoggingIn ? (
-        <li className="-mx-4 space-y-2 p-4 pt-8 flex flex-1 items-center justify-center">Loading...</li>
+        <li className="-mx-4 flex flex-1 items-center justify-center space-y-2 p-4 pt-8">Loading...</li>
     ) : (
         <>
             <li className="-mx-4 space-y-2 p-4 pb-2">
@@ -227,10 +227,10 @@ function FoundOAuthReferencedEndpointForm({
                             <FernTooltipProvider>
                                 <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2">
                                     <label className="inline-flex items-baseline gap-2 truncate">
-                                        <span className="font-mono text-sm inline-flex">
+                                        <span className="inline-flex font-mono text-sm">
                                             Generated OAuth Token
                                             <FernTooltip content="This bearer token was generated from an OAuth API call, and as a result cannot be edited">
-                                                <HelpCircle className="t-muted size-4 self-center ml-2" />
+                                                <HelpCircle className="t-muted ml-2 size-4 self-center" />
                                             </FernTooltip>
                                         </span>
                                     </label>
@@ -432,11 +432,11 @@ export function PlaygroundAuthorizationFormCard({
         <div>
             {apiKeyInjection.enabled && apiKey == null && (
                 <>
-                    <FernCard className="rounded-xl p-4 shadow-sm mb-2">
+                    <FernCard className="mb-2 rounded-xl p-4 shadow-sm">
                         {loginError && <Callout intent="error">{loginError}</Callout>}
 
                         <h5 className="t-muted m-0">Login to send a real request</h5>
-                        <div className="flex justify-center my-5 gap-2">
+                        <div className="my-5 flex justify-center gap-2">
                             <FernButton
                                 size="normal"
                                 intent="primary"
@@ -458,9 +458,9 @@ export function PlaygroundAuthorizationFormCard({
             )}
             {apiKeyInjection.enabled && apiKey != null && (
                 <>
-                    <FernCard className="rounded-xl p-4 shadow-sm mb-3" title="Login to send a real request">
+                    <FernCard className="mb-3 rounded-xl p-4 shadow-sm" title="Login to send a real request">
                         <FernButton
-                            className="w-full text-left pointer-events-none"
+                            className="pointer-events-none w-full text-left"
                             size="large"
                             intent="success"
                             variant="outlined"
@@ -476,7 +476,7 @@ export function PlaygroundAuthorizationFormCard({
                             />
                         </div>
                         {
-                            <div className="flex justify-end  gap-2">
+                            <div className="flex justify-end gap-2">
                                 {apiKey !== authState?.bearerAuth?.token && apiKey && (
                                     <FernButton
                                         text="Reset token to default"
@@ -522,7 +522,7 @@ export function PlaygroundAuthorizationFormCard({
                     text={authButtonCopy}
                     icon={<Key />}
                     rightIcon={
-                        <span className="flex items-center rounded-[4px] bg-tag-success p-1 font-mono text-xs uppercase leading-none text-intent-success">
+                        <span className="bg-tag-success text-intent-success flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
                             Authenticated
                         </span>
                     }
@@ -539,7 +539,7 @@ export function PlaygroundAuthorizationFormCard({
                     text={authButtonCopy}
                     icon={<Key />}
                     rightIcon={
-                        <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
+                        <span className="bg-tag-danger text-intent-danger flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
                             Not Authenticated
                         </span>
                     }
@@ -553,7 +553,7 @@ export function PlaygroundAuthorizationFormCard({
                     <div className="fern-dropdown max-h-full">
                         <PlaygroundAuthorizationForm auth={auth} closeContainer={isOpen.setFalse} disabled={disabled} />
 
-                        <div className="flex justify-end p-4 pt-2 gap-2">
+                        <div className="flex justify-end gap-2 p-4 pt-2">
                             {auth.type !== "oAuth" && (
                                 <FernButton text="Done" intent="primary" onClick={isOpen.setFalse} />
                             )}

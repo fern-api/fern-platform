@@ -25,7 +25,7 @@ export function SidebarNavigationChild({ node, depth, root }: SidebarNavigationC
             <SidebarSectionNode
                 node={section}
                 depth={depth}
-                className={clsx({ "font-semibold !text-text-default": root })}
+                className={clsx({ "!text-text-default font-semibold": root })}
             />
         ),
         page: (page) => <SidebarPageNode node={page} depth={depth} />,

@@ -16,7 +16,7 @@ export const ParamField: React.FC<
     const name =
         "query" in props ? props.query : "path" in props ? props.path : "body" in props ? props.body : props.header;
     return (
-        <div className="fern-api-property border-b border-default">
+        <div className="fern-api-property border-default border-b">
             <div className="fern-api-property-header">
                 <div className="fern-api-property-key">{name}</div>
                 <div className="fern-api-property-meta">

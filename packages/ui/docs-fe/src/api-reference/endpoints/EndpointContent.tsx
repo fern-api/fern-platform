@@ -249,7 +249,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         >
             <div
                 className={clsx("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-12": !hideBottomSeparator,
+                    "border-default mb-px border-b pb-12": !hideBottomSeparator,
                 })}
             >
                 <EndpointContentHeader
@@ -262,7 +262,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                 />
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
-                        className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
+                        className="max-w-content-width flex min-w-0 flex-1 flex-col pt-8 md:py-8"
                         style={{
                             // TODO: do we still need to set minHeight here?
                             minHeight: `${minHeight}px`,

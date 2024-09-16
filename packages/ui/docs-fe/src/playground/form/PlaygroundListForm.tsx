@@ -51,12 +51,12 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
                             key={idx}
                             className={clsx("min-h-12 w-full space-y-2", {
                                 "py-2": renderInline,
-                                "pt-2 pb-4": !renderInline,
+                                "pb-4 pt-2": !renderInline,
                             })}
                         >
                             <div className="flex min-w-0 shrink items-center justify-between gap-2">
                                 <label className="inline-flex flex-wrap items-baseline">
-                                    <span className="t-muted min-w-6 rounded-xl bg-tag-default p-1 text-center text-xs font-semibold uppercase">
+                                    <span className="t-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
                                         {idx + 1}
                                     </span>
                                 </label>

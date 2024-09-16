@@ -8,7 +8,7 @@ module.exports = {
     extends: [
         ...DEFAULT_CONFIG.extends.filter((extended) => !extended.startsWith(`plugin:${TYPESCRIPT_ESLINT}/`)),
         // needed to disable recommended eslint rules that don't apply
-        "plugin:@typescript-eslint/eslint-recommended"
+        "plugin:@typescript-eslint/eslint-recommended",
     ],
     parserOptions: Object.entries(DEFAULT_CONFIG.parserOptions).reduce(
         (newParserOptions, [parserOptionKey, parserOption]) => {
@@ -17,7 +17,7 @@ module.exports = {
             }
             return newParserOptions;
         },
-        {}
+        {},
     ),
     rules: Object.entries(DEFAULT_CONFIG.rules).reduce(
         (newRules, [ruleId, rule]) => {
@@ -27,9 +27,9 @@ module.exports = {
             return newRules;
         },
         {
-            "no-unused-vars": "off"
-        }
-    )
+            "no-unused-vars": "off",
+        },
+    ),
 };
 
 function doesRuleRequireTypeInformation(ruleId) {

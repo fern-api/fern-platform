@@ -15,9 +15,9 @@ export const CodeBlockWithClipboardButton: React.FC<PropsWithChildren<CodeBlockW
     return (
         <div
             className={clsx(
-                "not-prose group/cb-container bg-card relative mb-6 mt-4 flex w-full rounded-lg shadow-sm ring-card-border ring-1 ring-inset",
+                "not-prose group/cb-container bg-card ring-card-border relative mb-6 mt-4 flex w-full rounded-lg shadow-sm ring-1 ring-inset",
                 {
-                    "dark bg-card-solid": isDarkCodeEnabled,
+                    "bg-card-solid dark": isDarkCodeEnabled,
                 },
             )}
         >
@@ -25,7 +25,7 @@ export const CodeBlockWithClipboardButton: React.FC<PropsWithChildren<CodeBlockW
             <CopyToClipboardButton
                 className={clsx(
                     "absolute z-20",
-                    "transition opacity-0 group-hover/cb-container:opacity-100 z-10",
+                    "z-10 opacity-0 transition group-hover/cb-container:opacity-100",
                     "right-1 top-1",
                 )}
                 content={code}

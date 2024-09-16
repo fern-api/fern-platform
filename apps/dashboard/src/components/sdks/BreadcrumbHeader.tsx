@@ -48,8 +48,8 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
     const { logout } = useAuth0();
 
     return (
-        <nav className="flex flex-row contents-center items-center gap-x-4 fixed inset-x-0 top-0 z-50 bg-background shadow-sm translate-y-0 md:translate-y-0/2 dark:bg-gray-950 p-6 h-16 justify-between">
-            <div className="flex flex-row gap-x-3 items-center">
+        <nav className="contents-center bg-background md:translate-y-0/2 fixed inset-x-0 top-0 z-50 flex h-16 translate-y-0 flex-row items-center justify-between gap-x-4 p-6 shadow-sm dark:bg-gray-950">
+            <div className="flex flex-row items-center gap-x-3">
                 <Link to="/">
                     <FernLogo className="-mt-0.5 h-7 transition" fill={FernLogoFill.Ground} />
                 </Link>
@@ -74,7 +74,7 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
                                                                 size={3}
                                                             />
                                                         }
-                                                        className="w-full text-left gap-x-4 !p-0 !bg-background font-bold"
+                                                        className="!bg-background w-full gap-x-4 !p-0 text-left font-bold"
                                                         variant="outlined"
                                                         size="large"
                                                     />
@@ -109,7 +109,7 @@ export const BreadcrumbHeader: React.FC<BreadcrumbHeaderProps> = ({ entries }) =
                                                         size={3}
                                                     />
                                                 }
-                                                className="w-full text-left gap-x-4 !p-0 !pl-1 !bg-background"
+                                                className="!bg-background w-full gap-x-4 !p-0 !pl-1 text-left"
                                                 variant="outlined"
                                                 size="large"
                                             />

@@ -7,5 +7,5 @@ export declare namespace TypeComponentSeparator {
 }
 
 export const TypeComponentSeparator: React.FC<TypeComponentSeparator.Props> = ({ className }) => {
-    return <div className={clsx(className, "h-px bg-border-default")} />;
+    return <div className={clsx(className, "bg-border-default h-px")} />;
 };

@@ -25,15 +25,15 @@ export interface ActivityLogProps {
 
 const ActivityLogEntry = (props: ActivityLogDataEntry) => {
     return (
-        <div className="flex flex-row w-full justify-between">
-            <div className="w-full flex flex-row gap-x-2">
-                <div className="w-6 h-6 relative">
-                    <div className="h-4 w-4 rounded-full bg-black top-1/2 left-1/2 absolute -translate-x-1/2 -translate-y-1/2" />
-                    <div className="h-1.5 w-1.5 rounded-full bg-white  top-1/2 left-1/2 absolute -translate-x-1/2 -translate-y-1/2" />
+        <div className="flex w-full flex-row justify-between">
+            <div className="flex w-full flex-row gap-x-2">
+                <div className="relative h-6 w-6">
+                    <div className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black" />
+                    <div className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white" />
                 </div>
                 <div className="flex flex-col gap-y-2">
                     <div>{props.title}</div>
-                    <div className="text-gray-500 text-sm">by {props.author}</div>
+                    <div className="text-sm text-gray-500">by {props.author}</div>
                 </div>
             </div>
             <SdkActivityStack sdks={props.impactedSdks} />

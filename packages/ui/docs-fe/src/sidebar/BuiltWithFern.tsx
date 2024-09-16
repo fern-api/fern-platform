@@ -31,7 +31,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
                             className={"inline-flex items-baseline gap-1"}
                             {...containerCallbacks}
                         >
-                            <span className={clsx("text-xs t-muted whitespace-nowrap")}>Built with</span>
+                            <span className={clsx("t-muted whitespace-nowrap text-xs")}>Built with</span>
                             <FernLogo
                                 fill={isHovering ? FernLogoFill.Default : FernLogoFill.Muted}
                                 className="-mt-0.5 h-3.5 transition"

@@ -34,7 +34,7 @@ export const AskCohereHit: React.FC<SearchHit.Props> = ({
     return (
         <a
             ref={(elem) => setRef?.(elem)}
-            className={clsx("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 cursor-pointer", {
+            className={clsx("flex w-full cursor-pointer items-center space-x-4 space-y-1 rounded-md px-3 py-2", {
                 "bg-accent-highlight": isHovered,
             })}
             onMouseEnter={onMouseEnter}
@@ -47,11 +47,11 @@ export const AskCohereHit: React.FC<SearchHit.Props> = ({
         >
             <div className="flex w-full items-center gap-3">
                 <CohereIcon className="size-6" />
-                <div className="flex flex-col w-full">
-                    <div className="text-sm text-left">
+                <div className="flex w-full flex-col">
+                    <div className="text-left text-sm">
                         Can you tell me about <span className="t-accent-aaa font-bold">{message}</span>?
                     </div>
-                    <div className="text-xs text-faded text-left">Ask Cohere</div>
+                    <div className="text-faded text-left text-xs">Ask Cohere</div>
                 </div>
                 <NavArrowRight
                     className={clsx("size-6", {

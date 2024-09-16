@@ -114,10 +114,10 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
             return (
                 <li key={apiGroup.id}>
                     {apiGroup.breadcrumbs.length > 0 && (
-                        <div className="flex h-[30px] items-center px-3 py-1 truncate">
+                        <div className="flex h-[30px] items-center truncate px-3 py-1">
                             {apiGroup.breadcrumbs.map((breadcrumb, idx) => (
                                 <Fragment key={idx}>
-                                    {idx > 0 && <Slash className="mx-0.5 size-icon-sm text-faded" />}
+                                    {idx > 0 && <Slash className="size-icon-sm text-faded mx-0.5" />}
                                     <span className="t-accent shrink truncate whitespace-nowrap text-xs">
                                         {breadcrumb}
                                     </span>
@@ -199,8 +199,8 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
         const renderedListItems = apiGroups.map((group) => renderApiDefinitionPackage(group)).filter(isNonNullish);
         return (
             <FernTooltipProvider>
-                <div className={clsx("flex flex-col size-full relative", className)} ref={scrollRef}>
-                    <div className={clsx("relative z-20 px-3 pt-3 pb-0")}>
+                <div className={clsx("relative flex size-full flex-col", className)} ref={scrollRef}>
+                    <div className={clsx("relative z-20 px-3 pb-0 pt-3")}>
                         <FernInput
                             leftIcon={<Search className="size-icon" />}
                             data-1p-ignore="true"
@@ -217,15 +217,15 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                     </div>
                     <FernScrollArea
                         rootClassName="min-h-0 flex-1 shrink w-full"
-                        className="mask-grad-y-6 w-full !flex"
+                        className="mask-grad-y-6 !flex w-full"
                         scrollbars="vertical"
                         asChild
                         ref={ref}
                     >
-                        <ul className="list-none p-3 flex flex-col gap-4 w-full h-fit">{renderedListItems}</ul>
+                        <ul className="flex h-fit w-full list-none flex-col gap-4 p-3">{renderedListItems}</ul>
                         <div className="!h-6"></div>
                     </FernScrollArea>
-                    <BuiltWithFern className="border-t border-default py-4 px-6 bg-background" />
+                    <BuiltWithFern className="border-default bg-background border-t px-6 py-4" />
                 </div>
             </FernTooltipProvider>
         );

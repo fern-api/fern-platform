@@ -27,7 +27,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
     return (
         <div
             className={clsx(
-                "p-4 mt-4 first:mt-0 mb-6 rounded-lg", // pb-0 to compensate for the ::after margin
+                "mb-6 mt-4 rounded-lg p-4 first:mt-0", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
                     warning: () => "callout-outlined-warning",
@@ -74,7 +74,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
 
                 <div
                     className={clsx(
-                        "flex-1 prose-sm prose dark:prose-invert overflow-x-auto -my-4 after:block after:mt-4 before:block before:mb-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
+                        "prose-sm prose dark:prose-invert -my-4 flex-1 overflow-x-auto before:mb-4 before:block after:mt-4 after:block", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
                     )}
                 >
                     <div

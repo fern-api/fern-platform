@@ -17,7 +17,7 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <div
-                    className={clsx("line-clamp-1 flex gap-1 items-center text-sm text-start", {
+                    className={clsx("line-clamp-1 flex items-center gap-1 text-start text-sm", {
                         "t-muted": !isHovered,
                         "t-accent-aaa": isHovered,
                     })}
@@ -41,7 +41,7 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
                                     pathParameter: (part) => (
                                         <span
                                             className={clsx(
-                                                "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-sm",
+                                                "mx-0.5 items-center justify-center rounded px-1 py-0.5 text-sm",
                                                 {
                                                     "bg-tag-default": !isHovered,
                                                     "bg-white/20 dark:bg-black/20": isHovered,

@@ -3,7 +3,7 @@
         @apply flex flex-col;
 
         .fern-collapse-trigger {
-            @apply ease-shift data-[state=open]:rounded-b-none data-[state=opening]:rounded-b-none data-[state=closing]:rounded-b-none;
+            @apply ease-shift data-[state=closing]:rounded-b-none data-[state=open]:rounded-b-none data-[state=opening]:rounded-b-none;
         }
     }
 }

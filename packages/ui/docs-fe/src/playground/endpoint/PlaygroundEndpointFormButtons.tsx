@@ -22,7 +22,7 @@ export function PlaygroundEndpointFormButtons({
     const apiReferenceId = FernNavigation.utils.getApiReferenceId(activeNavigatable);
     const closePlayground = useClosePlayground();
     return (
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
             <FernButtonGroup>
                 <FernButton onClick={resetWithExample} size="small" variant="minimal">
                     Use example
@@ -35,7 +35,7 @@ export function PlaygroundEndpointFormButtons({
             <FernLink
                 href={`/${endpoint.slug}`}
                 shallow={apiReferenceId === endpoint.apiDefinitionId}
-                className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
+                className="t-muted hover:t-accent inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:decoration-2"
                 onClick={closePlayground}
             >
                 <span>View in API Reference</span>

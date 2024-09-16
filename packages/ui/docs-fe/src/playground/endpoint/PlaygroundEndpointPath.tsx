@@ -41,7 +41,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 
     return (
         <div className="playground-endpoint">
-            <div className="flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg bg-tag-default px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px] items-center">
+            <div className="bg-tag-default flex h-10 min-w-0 flex-1 shrink items-center gap-2 rounded-lg px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
                 {method != null && <HttpMethodTag method={method} className="playground-endpoint-method" />}
                 <span
                     className={
@@ -70,7 +70,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                                     <span
                                         key={idx}
                                         className={clsx({
-                                            "bg-accent-highlight t-accent px-1 rounded before:content-[':']":
+                                            "bg-accent-highlight t-accent rounded px-1 before:content-[':']":
                                                 stateValue.length === 0,
                                             "t-accent font-semibold": stateValue.length > 0,
                                         })}

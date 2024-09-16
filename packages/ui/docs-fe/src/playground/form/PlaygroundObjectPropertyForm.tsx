@@ -142,7 +142,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
 
     return (
         <div
-            className={clsx("flex-1 shrink min-w-0", {
+            className={clsx("min-w-0 flex-1 shrink", {
                 "border-border-default-soft border-l pl-4": indent,
             })}
         >

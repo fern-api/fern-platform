@@ -102,7 +102,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
     return (
         <>
             {tableOfContents.length > 0 && (
-                <div className="m-0 mb-3 text-sm font-medium text-grayscale-a11">On this page</div>
+                <div className="text-grayscale-a11 m-0 mb-3 text-sm font-medium">On this page</div>
             )}
             {tableOfContents.length > 0 && (
                 <ul

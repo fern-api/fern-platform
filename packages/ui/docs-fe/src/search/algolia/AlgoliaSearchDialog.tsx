@@ -39,10 +39,10 @@ export function AlgoliaSearchDialog(): ReactElement | null {
     return (
         <Dialog.Root open={isSearchDialogOpen} onOpenChange={setSearchDialogState}>
             <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm max-sm:hidden" />
+                <Dialog.Overlay className="bg-background/50 fixed inset-0 z-0 backdrop-blur-sm max-sm:hidden" />
                 <Dialog.Content
                     className={clsx(
-                        "fixed md:max-w-content-width my-[10vh] top-0 inset-x-0 z-10 mx-6 max-h-[80vh] md:mx-auto flex flex-col",
+                        "md:max-w-content-width fixed inset-x-0 top-0 z-10 mx-6 my-[10vh] flex max-h-[80vh] flex-col md:mx-auto",
                         { "mt-4": fromHeader },
                     )}
                 >

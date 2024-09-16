@@ -15,13 +15,13 @@ export function ChangelogEntryPage({ content }: { content: DocsContent.Changelog
             <div className="w-full min-w-0 pt-8">
                 <article className="mx-auto break-words lg:ml-0 xl:mx-auto">
                     <section id={content.date} className="flex items-stretch justify-between">
-                        <div className="max-xl:hidden w-sidebar-width" />
-                        <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-1 max-xl:mx-auto">
+                        <div className="w-sidebar-width max-xl:hidden" />
+                        <div className="max-w-content-width relative mr-6 min-w-0 flex-1 shrink max-xl:mx-auto">
                             <header className="mb-8">
                                 <div className="space-y-1">
                                     <div className="not-prose">
                                         <FernLink href={useHref(content.changelogSlug)}>
-                                            <span className="t-accent shrink truncate whitespace-nowrap text-sm font-semibold inline-flex gap-1 items-center">
+                                            <span className="t-accent inline-flex shrink items-center gap-1 truncate whitespace-nowrap text-sm font-semibold">
                                                 <ArrowLeft className="size-icon" />
                                                 Back to {content.changelogTitle}
                                             </span>
@@ -31,7 +31,7 @@ export function ChangelogEntryPage({ content }: { content: DocsContent.Changelog
                                     <h1 className="my-0 inline-block leading-tight">{title ?? content.title}</h1>
                                 </div>
 
-                                <Markdown mdx={excerpt} size="lg" className="mt-2 leading-7 prose-p:t-muted" />
+                                <Markdown mdx={excerpt} size="lg" className="prose-p:t-muted mt-2 leading-7" />
                             </header>
 
                             {/* TODO: alert if the page is null */}

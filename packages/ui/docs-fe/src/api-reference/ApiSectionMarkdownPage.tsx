@@ -18,7 +18,7 @@ const ApiSectionMarkdownContent = ({ page, hideBottomSeparator }: ApiSectionMark
     return (
         <div
             className={clsx("scroll-mt-content", {
-                "border-default border-b mb-px": !hideBottomSeparator,
+                "border-default mb-px border-b": !hideBottomSeparator,
             })}
             ref={ref}
             id={useHref(page.slug)}

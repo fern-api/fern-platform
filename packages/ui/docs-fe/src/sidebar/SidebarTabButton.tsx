@@ -18,7 +18,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
             <FernLink
                 className={clsx(
                     "min-h-[32px] lg:min-h-[36px]",
-                    "text-base lg:text-sm flex flex-1 py-2 lg:px-3 group/tab-button group-hover/tab-button:transition rounded-lg justify-start items-center select-none min-w-0 hover:t-accent",
+                    "group/tab-button hover:t-accent flex min-w-0 flex-1 select-none items-center justify-start rounded-lg py-2 text-base group-hover/tab-button:transition lg:px-3 lg:text-sm",
                     "data-[state=active]:t-accent data-[state=inactive]:t-muted",
                 )}
                 href={useSidebarTabHref(tab)}
@@ -26,9 +26,9 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
             >
                 <div className="flex min-w-0 items-center justify-start space-x-4">
                     <div className="min-w-fit">
-                        <div className="flex size-6 items-center ring-1 shadow-sm ring-border-default justify-center rounded-md group-hover/tab-button:bg-tag-primary group-hover/tab-button:ring-accent/70 bg-card-surface group-data-[state=active]/tab-button:bg-accent group-data-[state=active]/tab-button:ring-0 group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent">
+                        <div className="ring-border-default group-hover/tab-button:bg-tag-primary group-hover/tab-button:ring-accent/70 bg-card-surface group-data-[state=active]/tab-button:bg-accent group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent flex size-6 items-center justify-center rounded-md shadow-sm ring-1 group-data-[state=active]/tab-button:ring-0">
                             <RemoteFontAwesomeIcon
-                                className="size-4 bg-faded group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background"
+                                className="bg-faded group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background size-4"
                                 // TODO: Should we validate that the icon is not undefined in sidebar mode
                                 icon={tab.icon ?? "book-open"}
                             />

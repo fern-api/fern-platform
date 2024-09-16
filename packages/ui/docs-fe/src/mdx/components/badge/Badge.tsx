@@ -20,11 +20,11 @@ export function Badge({
     return (
         <span
             className={clsx(
-                "rounded-full text-xs px-1.5 py-0.5",
+                "rounded-full px-1.5 py-0.5 text-xs",
                 {
                     "ring-1 ring-inset": outlined,
                     "text-white dark:text-black": !minimal && intent !== "primary",
-                    "dark:ring-white/30 ring-black/30": outlined,
+                    "ring-black/30 dark:ring-white/30": outlined,
                     "bg-intent-default": intent === "none",
                     "bg-accent text-accent-contrast": intent === "primary" && !minimal,
                     "bg-intent-success": intent === "success" && !minimal,

@@ -54,7 +54,7 @@ export function FernErrorTag({
     if (showError || showMarkdownError) {
         return (
             <div className={clsx(className ?? "my-4")}>
-                <span className="t-danger inline-flex items-center gap-2 rounded-full bg-tag-danger px-2">
+                <span className="t-danger bg-tag-danger inline-flex items-center gap-2 rounded-full px-2">
                     <WarningTriangle />
                     <span>{stringifyError(error)}</span>
                     {reset != null && (

@@ -25,7 +25,7 @@ export function CohereChatButton(): ReactElement | null {
         <Dialog.Root open={enabled} onOpenChange={setEnabled}>
             {createPortal(
                 <Dialog.Trigger asChild>
-                    <button className="fixed bottom-6 right-6 bg-background px-5 py-3 rounded-full border border-default inline-flex gap-2 items-center">
+                    <button className="bg-background border-default fixed bottom-6 right-6 inline-flex items-center gap-2 rounded-full border px-5 py-3">
                         <CohereIcon />
                         <span>Ask Cohere</span>
                     </button>
@@ -33,8 +33,8 @@ export function CohereChatButton(): ReactElement | null {
                 document.body,
             )}
             <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm" />
-                <Dialog.Content className="fixed md:max-w-content-width my-[10vh] top-0 inset-x-0 mx-6 max-h-[80vh] md:mx-auto flex flex-col">
+                <Dialog.Overlay className="bg-background/50 fixed inset-0 z-0 backdrop-blur-sm" />
+                <Dialog.Content className="md:max-w-content-width fixed inset-x-0 top-0 mx-6 my-[10vh] flex max-h-[80vh] flex-col md:mx-auto">
                     <CohereChatbotModal className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg" />
                 </Dialog.Content>
             </Dialog.Portal>

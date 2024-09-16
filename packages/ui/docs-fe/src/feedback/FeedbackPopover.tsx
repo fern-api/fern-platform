@@ -168,9 +168,9 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                         transition={{ type: "spring", duration: 0.4, bounce: 0 }}
                         sideOffset={8}
                         className={clsx(
-                            "z-50 rounded-lg border border-default bg-white/50 backdrop-blur-xl dark:bg-background/50 p-1 shadow-xl",
+                            "border-default dark:bg-background/50 z-50 rounded-lg border bg-white/50 p-1 shadow-xl backdrop-blur-xl",
                             {
-                                "p-2 space-y-2 min-w-80": isHelpful !== undefined,
+                                "min-w-80 space-y-2 p-2": isHelpful !== undefined,
                             },
                         )}
                     >
@@ -197,14 +197,14 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                                 >
                                     <motion.div
                                         layoutId="icon-container"
-                                        className="bg-tag-primary t-accent size-8 mx-auto rounded-md flex items-center justify-center"
+                                        className="bg-tag-primary t-accent mx-auto flex size-8 items-center justify-center rounded-md"
                                     >
                                         <Check />
                                     </motion.div>
-                                    <motion.p layoutId="success-title" className="text-md font-semibold text-center">
+                                    <motion.p layoutId="success-title" className="text-md text-center font-semibold">
                                         Feedback received!
                                     </motion.p>
-                                    <motion.p layoutId="success-description" className="t-muted text-sm text-center">
+                                    <motion.p layoutId="success-description" className="t-muted text-center text-sm">
                                         Thank you for improving the docs.
                                     </motion.p>
                                 </motion.div>

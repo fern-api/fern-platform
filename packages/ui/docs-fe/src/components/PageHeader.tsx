@@ -24,7 +24,7 @@ export const PageHeader = ({ breadcrumbs, title, subtitle }: PageHeaderProps): R
                 mdx={isBundledMDX(subtitle) ? subtitle : undefined}
                 fallback={!isBundledMDX(subtitle) ? subtitle : undefined}
                 size="lg"
-                className="mt-2 leading-7 prose-p:t-muted"
+                className="prose-p:t-muted mt-2 leading-7"
             />
         </header>
     );

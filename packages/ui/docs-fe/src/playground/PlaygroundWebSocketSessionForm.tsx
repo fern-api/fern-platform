@@ -105,7 +105,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                 <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
                     <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
                         <span className="t-muted text-xs uppercase">Messages</span>
-                        <div className="items-center flex gap-2">
+                        <div className="flex items-center gap-2">
                             {messages.length > 0 && (
                                 <FernButton text="Clear" variant="minimal" size="small" onClick={clearMessages} />
                             )}

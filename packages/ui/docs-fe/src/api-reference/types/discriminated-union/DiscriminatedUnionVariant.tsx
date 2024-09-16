@@ -81,7 +81,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 
     return (
         <div
-            className={clsx("flex flex-col py-3 gap-2", {
+            className={clsx("flex flex-col gap-2 py-3", {
                 "px-3": !isRootTypeDefinition,
             })}
         >

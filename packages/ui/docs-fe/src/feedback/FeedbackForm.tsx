@@ -132,7 +132,7 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({ isHelpful, onSubmit, layou
 
             {layoutDensity === "verbose" && (
                 <>
-                    <hr className="my-4 border-border-concealed" />
+                    <hr className="border-border-concealed my-4" />
 
                     <div className="mt-4">
                         <FernCheckbox

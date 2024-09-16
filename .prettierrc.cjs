@@ -8,15 +8,15 @@ module.exports = {
         {
             files: "**/*.{yml,yaml,json,md,mdx}",
             options: {
-                tabWidth: 2
-            }
+                tabWidth: 2,
+            },
         },
         {
             files: "**/*.{json}",
             options: {
-                trailingComma: "none"
-            }
-        }
+                trailingComma: "none",
+            },
+        },
     ],
-    plugins: ["prettier-plugin-packagejson", "prettier-plugin-tailwindcss"]
+    plugins: ["prettier-plugin-packagejson", "prettier-plugin-tailwindcss"],
 };

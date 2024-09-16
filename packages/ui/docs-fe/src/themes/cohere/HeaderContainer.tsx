@@ -17,7 +17,7 @@ export const HeaderContainer = memo(function HeaderContainer({ className }: Head
         <header id="fern-header" className={className}>
             <div className="fern-header-container width-before-scroll-bar">
                 <div className="fern-header">
-                    <Header className="mx-auto max-w-page-width" />
+                    <Header className="max-w-page-width mx-auto" />
                 </div>
                 {showHeaderTabs && (
                     <nav aria-label="tabs" className="fern-header-tabs">

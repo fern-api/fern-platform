@@ -62,7 +62,7 @@
     }
 
     .description-mask {
-        @apply overflow-hidden line-clamp-3;
+        @apply line-clamp-3 overflow-hidden;
 
         text-overflow: -o-ellipsis-lastline;
     }
@@ -108,6 +108,6 @@
     }
 
     .m-mdx {
-        @apply mt-4 mb-6 first:mt-0;
+        @apply mb-6 mt-4 first:mt-0;
     }
 }

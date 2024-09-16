@@ -1,13 +1,13 @@
 @layer components {
     .fern-tag {
-        @apply font-mono inline-flex justify-center items-center leading-none;
+        @apply inline-flex items-center justify-center font-mono leading-none;
 
         &.small {
-            @apply h-[16px] text-[10px] px-1.5 rounded-md;
+            @apply h-[16px] rounded-md px-1.5 text-[10px];
         }
 
         &.large {
-            @apply py-1 px-2 h-6 text-xs rounded-lg;
+            @apply h-6 rounded-lg px-2 py-1 text-xs;
         }
 
         &.gray-subtle {

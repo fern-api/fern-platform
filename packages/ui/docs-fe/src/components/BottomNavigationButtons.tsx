@@ -16,7 +16,7 @@ export const BottomNavigationButtons: FC<BottomNavigationButtonsProps> = ({ prev
         <div
             className={
                 (prev != null && next != null) || alwaysShowGrid
-                    ? "not-prose grid gap-6 md:gap-8 lg:gap-12 grid-cols-2"
+                    ? "not-prose grid grid-cols-2 gap-6 md:gap-8 lg:gap-12"
                     : "not-prose grid grid-cols-1"
             }
         >

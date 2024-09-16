@@ -88,8 +88,8 @@ const UserRow: React.FC<{
     );
 
     return (
-        <div className="flex flex-row justify-between p-6 border-b last:border-b-0">
-            <div className="flex flex-row gap-x-3 items-center">
+        <div className="flex flex-row justify-between border-b p-6 last:border-b-0">
+            <div className="flex flex-row items-center gap-x-3">
                 <Avatar className="h-9 w-9">
                     <AvatarImage src={user.pictureUrl} />
                     <AvatarFallback>{user.displayName.charAt(0)?.toUpperCase()}</AvatarFallback>
@@ -146,11 +146,11 @@ const EmailPopover: React.FC<{
                     <span className="text-white">Add team member</span>
                 </FernButton>
             </PopoverTrigger>
-            <PopoverContent className="w-80 mr-10">
+            <PopoverContent className="mr-10 w-80">
                 <div className="flex flex-col gap-4">
                     <div className="space-y-2">
                         <h4 className="font-medium leading-none">Send Invite</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                             Enter the email of the team member you'd like to invite
                         </p>
                     </div>
@@ -244,18 +244,18 @@ const TeamPage: React.FC = () => {
                             : []
                     }
                 />
-                <div className="h-[calc(100vh-4rem)] relative top-16">
-                    <div className="flex flex-col gap-y-6 overflow-hidden h-[calc(100vh-4rem)] p-10">
-                        <div className="flex flex-row justify-between items-center">
-                            <div className="flex flex-row gap-x-2 items-center">
+                <div className="relative top-16 h-[calc(100vh-4rem)]">
+                    <div className="flex h-[calc(100vh-4rem)] flex-col gap-y-6 overflow-hidden p-10">
+                        <div className="flex flex-row items-center justify-between">
+                            <div className="flex flex-row items-center gap-x-2">
                                 <h2>Your Team</h2>
                                 <span className="text-muted-foreground">@ {maybeCurrentOrg.displayName}</span>
                             </div>
                             <EmailPopover currentOrganization={maybeCurrentOrg} token={token} />
                         </div>
                         <Separator decorative />
-                        <ScrollArea className="flex flex-col flex-grow shrink px-6 gap-y-6" type="auto">
-                            <div className="border rounded-md max-w-[80rem] self-center align-center mx-auto">
+                        <ScrollArea className="flex shrink flex-grow flex-col gap-y-6 px-6" type="auto">
+                            <div className="align-center mx-auto max-w-[80rem] self-center rounded-md border">
                                 {maybeCurrentOrg.users.map((user, index) => (
                                     <UserRow key={index} user={user} token={token} organization={maybeCurrentOrg} />
                                 ))}

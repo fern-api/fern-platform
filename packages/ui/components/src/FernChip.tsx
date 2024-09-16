@@ -34,10 +34,10 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
             <button
                 ref={ref}
                 className={clsx(
-                    "font-mono inline-flex justify-center items-center leading-none cursor-default",
+                    "inline-flex cursor-default items-center justify-center font-mono leading-none",
                     {
-                        "h-[18px] min-w-[18px] text-[10px] px-1.5": size === "sm",
-                        "py-1 px-2 h-6 min-w-6 text-xs": size === "lg",
+                        "h-[18px] min-w-[18px] px-1.5 text-[10px]": size === "sm",
+                        "h-6 min-w-6 px-2 py-1 text-xs": size === "lg",
                         "rounded-md": size === "sm" && !rounded,
                         "rounded-lg": size === "lg" && !rounded,
                         "rounded-full": rounded,

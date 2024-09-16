@@ -104,7 +104,7 @@ export const FernDropdown = forwardRef<HTMLButtonElement, PropsWithChildren<Fern
                                         container={container}
                                     />
                                 ) : (
-                                    <DropdownMenu.Separator key={idx} className="mx-2 my-1 h-px bg-border-default" />
+                                    <DropdownMenu.Separator key={idx} className="bg-border-default mx-2 my-1 h-px" />
                                 ),
                             )}
                         </DropdownMenu.RadioGroup>
@@ -180,7 +180,7 @@ function FernDropdownItemValue({
                 </div>
 
                 {option.helperText != null && (
-                    <div className="mt-0.5 ml-5 text-xs opacity-60 text-start leading-snug" ref={helperTextRef}>
+                    <div className="ml-5 mt-0.5 text-start text-xs leading-snug opacity-60" ref={helperTextRef}>
                         {option.helperText}
                     </div>
                 )}

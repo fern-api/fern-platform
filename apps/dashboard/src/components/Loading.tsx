@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { clsx } from "@/lib/utils";
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 
 interface LoadingProps {
@@ -7,7 +7,7 @@ interface LoadingProps {
 
 export const Loading: React.FC<LoadingProps> = ({ fullPage = false }: LoadingProps) => {
     return (
-        <div className={clsx("bg-background text-center content-center", fullPage ? "w-full h-full" : "w-fit")}>
+        <div className={clsx("bg-background content-center text-center", fullPage ? "h-full w-full" : "w-fit")}>
             <RemoteFontAwesomeIcon
                 icon="fa-solid fa-spinner-third"
                 className="animate-spin text-black"

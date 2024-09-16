@@ -33,7 +33,7 @@ export function PlaygroundResponseCard({ response, sendRequest }: PlaygroundResp
                 {response.type === "loaded" && (
                     <div className="flex items-center gap-2 text-xs">
                         <span
-                            className={clsx("font-mono flex items-center py-1 px-1.5 rounded-md h-5", {
+                            className={clsx("flex h-5 items-center rounded-md px-1.5 py-1 font-mono", {
                                 ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
                                     response.value.response.status >= 200 && response.value.response.status < 300,
                                 ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
@@ -42,11 +42,11 @@ export function PlaygroundResponseCard({ response, sendRequest }: PlaygroundResp
                         >
                             status: {response.value.response.status}
                         </span>
-                        <span className={"flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"}>
+                        <span className={"bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"}>
                             time: {round(response.value.time, 2)}ms
                         </span>
                         {response.value.type === "json" && !isEmpty(response.value.size) && (
-                            <span className={"flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"}>
+                            <span className={"bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"}>
                                 size: {response.value.size}b
                             </span>
                         )}
@@ -85,7 +85,7 @@ export function PlaygroundResponseCard({ response, sendRequest }: PlaygroundResp
                             />
                         ),
                     failed: () => (
-                        <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
+                        <span className="bg-tag-danger text-intent-danger flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
                             Failed
                         </span>
                     ),

@@ -31,8 +31,8 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
     return (
         <div
             className={clsx(
-                "fern-collapse-with-button data-[state=opening]:overflow-hidden data-[state=closing]:overflow-hidden",
-                "ring-default flex flex-col max-md:rounded-xl rounded-lg ring-1 m-px",
+                "fern-collapse-with-button data-[state=closing]:overflow-hidden data-[state=opening]:overflow-hidden",
+                "ring-default m-px flex flex-col rounded-lg ring-1 max-md:rounded-xl",
                 {
                     "w-full": isFullWidth,
                     "w-fit max-sm:w-full": !isFullWidth,

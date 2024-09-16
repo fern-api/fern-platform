@@ -26,10 +26,10 @@ export const Chip = ({ name, description = undefined, small }: ChipProps): React
         >
             <span
                 className={clsx(
-                    "t-default bg-tag-default hover:bg-tag-default-hover cursor-default font-mono text-xs flex items-center",
+                    "t-default bg-tag-default hover:bg-tag-default-hover flex cursor-default items-center font-mono text-xs",
                     {
-                        ["py-1 px-1.5 rounded-md h-5"]: small,
-                        ["py-1 px-2 rounded-lg h-6"]: !small,
+                        ["h-5 rounded-md px-1.5 py-1"]: small,
+                        ["h-6 rounded-lg px-2 py-1"]: !small,
                     },
                 )}
                 style={{

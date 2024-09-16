@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { clsx } from "@/lib/utils";
 import { FernButton, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import pluralize from "pluralize";
 import { Separator } from "../ui/separator";
@@ -154,9 +154,9 @@ export const SdkContextCard: React.FC<DummySdkContextCardProps> = (props) => {
     const publishStatusContent = getPublishStatusContent(randomStatus);
 
     return (
-        <div className="flex flex-col border rounded-md">
+        <div className="flex flex-col rounded-md border">
             <div className="flex flex-row justify-between p-4">
-                <div className="flex flex-row gap-x-4 items-center">
+                <div className="flex flex-row items-center gap-x-4">
                     {icon}
                     <div className="flex flex-col gap-y-1">
                         <div className="flex flex-row gap-x-1">
@@ -179,19 +179,19 @@ export const SdkContextCard: React.FC<DummySdkContextCardProps> = (props) => {
                 </FernButton>
                 {/* </div> */}
             </div>
-            <div className="border-t flex flex-row px-4 py-3 justify-between">
+            <div className="flex flex-row justify-between border-t px-4 py-3">
                 <div className="flex flex-row gap-x-5">
-                    <div className="flex flex-row gap-x-2 items-center">
+                    <div className="flex flex-row items-center gap-x-2">
                         <span>Generator version</span>
                         <span>{props.sdk.generatorVersion}</span>
                     </div>
                     <Separator orientation="vertical" decorative className="min-h-6" />
-                    <div className="flex flex-row gap-x-2 items-center">
+                    <div className="flex flex-row items-center gap-x-2">
                         <RemoteFontAwesomeIcon icon={checkContent.icon} className={checkContent.color} />
                         <span>{checkContent.text}</span>
                     </div>
                     <Separator orientation="vertical" decorative className="min-h-6" />
-                    <div className="flex flex-row gap-x-2 items-center">
+                    <div className="flex flex-row items-center gap-x-2">
                         <RemoteFontAwesomeIcon icon="fa-regular circle-dot" className={issuesIconColor} />
                         <span>{issuesText}</span>
                     </div>

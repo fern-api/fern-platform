@@ -111,7 +111,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
         <div className={"fern-endpoint-content"} ref={ref} id={useHref(websocket.slug)}>
             <article
                 className={clsx("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": !isLastInApi,
+                    "border-default mb-px border-b pb-20": !isLastInApi,
                 })}
             >
                 <header className="space-y-1 pt-8">
@@ -119,7 +119,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                     <div>
                         <h1 className="fern-page-heading">{websocket.title}</h1>
                         {websocket.availability != null && (
-                            <span className="inline-block ml-2 align-text-bottom">
+                            <span className="ml-2 inline-block align-text-bottom">
                                 <EndpointAvailabilityTag availability={websocket.availability} minimal={true} />
                             </span>
                         )}
@@ -135,7 +135,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                 title={
                                     <span className="inline-flex items-center gap-2">
                                         {"Handshake"}
-                                        <span className="inline-block rounded-full bg-tag-default p-1">
+                                        <span className="bg-tag-default inline-block rounded-full p-1">
                                             <Wifi className="t-muted size-icon" strokeWidth={1.5} />
                                         </span>
                                     </span>
@@ -238,7 +238,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     title={
                                         <span className="inline-flex items-center gap-2">
                                             {"Send"}
-                                            <span className="t-success inline-block rounded-full bg-tag-success p-1">
+                                            <span className="t-success bg-tag-success inline-block rounded-full p-1">
                                                 <ArrowUp className="size-icon" />
                                             </span>
                                         </span>
@@ -270,7 +270,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                     title={
                                         <span className="inline-flex items-center gap-2">
                                             {"Receive"}
-                                            <span className="t-accent-aaa inline-block rounded-full bg-tag-primary p-1">
+                                            <span className="t-accent-aaa bg-tag-primary inline-block rounded-full p-1">
                                                 <ArrowDown className="size-icon" />
                                             </span>
                                         </span>
@@ -301,7 +301,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                     </section>
                     <aside className="max-w-content-width">
                         {
-                            <div className="sticky top-header-offset flex max-h-content scroll-mt-content flex-col gap-6 py-8">
+                            <div className="top-header-offset max-h-content scroll-mt-content sticky flex flex-col gap-6 py-8">
                                 <TitledExample
                                     title={"Handshake"}
                                     actions={node != null ? <PlaygroundButton state={node} /> : undefined}
@@ -363,7 +363,7 @@ function CardedSection({
     const href = useHref(slug, getSlugFromChildren(title));
     return (
         <section {...props} id={href} className="border-default divide-default -mx-4 divide-y rounded-xl border">
-            <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
+            <div className="bg-tag-default-soft space-y-4 rounded-t-[inherit] p-4 last:rounded-b-[inherit]">
                 <FernAnchor href={href}>
                     <h2 className="relative mt-0 flex items-center">{title}</h2>
                 </FernAnchor>

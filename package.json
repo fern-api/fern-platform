@@ -21,7 +21,7 @@
     "lint:eslint:fix": "eslint --fix",
     "lint:fix": "pnpm root-package:fix && pnpm lint:eslint:fix && pnpm lint:style:fix && pnpm lint:prettier:fix",
     "lint:prettier": "prettier --check --ignore-unknown --ignore-path .prettierignore \"**\"",
-    "lint:prettier:fix": "prettier --write --ignore-unknown --ignore-path .prettierignore \"**\"",
+    "lint:prettier:fix": "prettier --write --ignore-unknown --ignore-path .prettierignore \"**\" --log-level warn",
     "lint:style": "turbo lint:style",
     "lint:style:fix": "turbo lint:style:fix",
     "navigation:generate": "pnpm fern generate --api navigation --local",

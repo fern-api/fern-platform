@@ -25,8 +25,8 @@ expressApp.post("/v2/registry/docs/load-with-url", async (_, res) => {
         method: "POST",
         body: JSON.stringify({ url: "fern.docs.buildwithfern.com" }),
         headers: {
-            "Content-Type": "application/json"
-        }
+            "Content-Type": "application/json",
+        },
     });
 
     res.json(await response.json());
@@ -61,15 +61,15 @@ setInterval(() => {
         ws.send(
             JSON.stringify({
                 version: 1,
-                type: "startReload"
-            })
+                type: "startReload",
+            }),
         );
         setTimeout(() => {
             ws.send(
                 JSON.stringify({
                     version: 1,
-                    type: "finishReload"
-                })
+                    type: "finishReload",
+                }),
             );
         }, 1_000);
     });

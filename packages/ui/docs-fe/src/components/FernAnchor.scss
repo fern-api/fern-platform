@@ -1,6 +1,6 @@
 @layer components {
     a.fern-anchor {
-        @apply flex items-center border-0 relative size-6 rounded-md;
+        @apply relative flex size-6 items-center rounded-md border-0;
     }
 
     .fern-anchor-icon {
@@ -12,7 +12,7 @@
     }
 
     .fern-anchor-icon:not(.copied) {
-        @apply bg-card t-muted ring-1 backdrop-blur ring-card-border;
+        @apply bg-card t-muted ring-card-border ring-1 backdrop-blur;
     }
 
     .fern-anchor-icon.copied {

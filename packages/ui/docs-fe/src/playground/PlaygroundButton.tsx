@@ -22,7 +22,7 @@ export const PlaygroundButton: FC<{
             <FernTooltip
                 content={
                     <span>
-                        Customize and run in <span className="font-semibold t-accent">API Playground</span>
+                        Customize and run in <span className="t-accent font-semibold">API Playground</span>
                     </span>
                 }
             >

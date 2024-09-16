@@ -32,11 +32,11 @@ export const Strong: FC<ComponentProps<"strong">> = ({ className, ...rest }) => 
 };
 
 export const Ol: FC<ComponentProps<"ol">> = ({ className, ...rest }) => {
-    return <ol {...rest} className={clsx(className, "list-outside list-decimal space-y-2 mb-3")} />;
+    return <ol {...rest} className={clsx(className, "mb-3 list-outside list-decimal space-y-2")} />;
 };
 
 export const Ul: FC<ComponentProps<"ul">> = ({ className, ...rest }) => {
-    return <ul {...rest} className={clsx(className, "list-outside list-disc space-y-2 mb-3")} />;
+    return <ul {...rest} className={clsx(className, "mb-3 list-outside list-disc space-y-2")} />;
 };
 
 export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {

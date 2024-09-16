@@ -78,7 +78,7 @@ export const FernTag = forwardRef<HTMLSpanElement, FernTagProps>(
                     className,
                 )}
             >
-                {skeleton ? <span className="contents invisible">{children}</span> : children}
+                {skeleton ? <span className="invisible contents">{children}</span> : children}
             </span>
         );
     },

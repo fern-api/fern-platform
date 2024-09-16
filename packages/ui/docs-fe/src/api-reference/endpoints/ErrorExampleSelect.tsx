@@ -50,7 +50,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                     : selectedError.name ?? getMessageForStatus(selectedError.statusCode)
             }`;
             return (
-                <span className={clsx("inline-flex gap-2 items-center")}>
+                <span className={clsx("inline-flex items-center gap-2")}>
                     <StatusCodeTag statusCode={selectedError.statusCode} />
                     <span className={`text-intent-${statusCodeToIntent(selectedError.statusCode)}`}>
                         {selectedErrorExample?.name ?? content}
@@ -79,8 +79,8 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                 </FernButton>
             </Select.Trigger>
             <Select.Portal>
-                <Select.Content className="overflow-hidden rounded-md bg-card backdrop-blur shadow-2xl ring-default ring-inset ring-1 z-50">
-                    <Select.ScrollUpButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
+                <Select.Content className="bg-card ring-default z-50 overflow-hidden rounded-md shadow-2xl ring-1 ring-inset backdrop-blur">
+                    <Select.ScrollUpButton className="t-accent bg-card flex h-8 cursor-default items-center justify-center">
                         <NavArrowUp className="size-icon" />
                     </Select.ScrollUpButton>
                     <Select.Viewport className="p-[5px]">
@@ -97,7 +97,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                                             key={j}
                                             intent={statusCodeToIntent(error.statusCode)}
                                         >
-                                            <span className="inline-flex gap-2 items-center">
+                                            <span className="inline-flex items-center gap-2">
                                                 <StatusCodeTag statusCode={error.statusCode} />
                                                 <span className={`text-intent-${statusCodeToIntent(error.statusCode)}`}>
                                                     {example.name ??
@@ -110,7 +110,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                                     ))}
                                     {error.examples.length === 0 && (
                                         <FernSelectItem value={`${i}:-1`} intent={statusCodeToIntent(error.statusCode)}>
-                                            <span className="inline-flex gap-2 items-center">
+                                            <span className="inline-flex items-center gap-2">
                                                 <StatusCodeTag statusCode={error.statusCode} />
                                                 <span
                                                     className={`text-intent-${statusCodeToIntent(error.statusCode)}`}
@@ -122,7 +122,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                             </Fragment>
                         ))}
                     </Select.Viewport>
-                    <Select.ScrollDownButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
+                    <Select.ScrollDownButton className="t-accent bg-card flex h-8 cursor-default items-center justify-center">
                         <NavArrowDown className="size-icon" />
                     </Select.ScrollDownButton>
                 </Select.Content>

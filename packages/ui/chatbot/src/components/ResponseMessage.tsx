@@ -64,7 +64,7 @@ export const ResponseMessageWithCitations = ({
             <div className="flex-shrink-0">
                 <FernAvatar />
             </div>
-            <div className="flex flex-col gap-4 min-w-0 shrink pr-4">
+            <div className="flex min-w-0 shrink flex-col gap-4 pr-4">
                 <MarkdownContent terminator={isStreaming} components={components}>
                     {messageWithCitations}
                 </MarkdownContent>

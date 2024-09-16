@@ -1,9 +1,9 @@
 @layer components {
     .fern-card {
-        @apply border-card-border t-default hover:t-default border bg-card transition-all hover:transition-none;
+        @apply border-card-border t-default hover:t-default bg-card border transition-all hover:transition-none;
 
         &.interactive {
-            @apply cursor-pointer shadow-card;
+            @apply shadow-card cursor-pointer;
             @apply hover:shadow-card-elevated hover:border-accent;
             @apply active:shadow-card-elevated active:border-primary;
 

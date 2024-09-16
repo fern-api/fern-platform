@@ -38,7 +38,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
                 <FernAnchor href={href}>
                     {createElement(headerType, { className: "relative mt-0 flex items-center mb-3" }, title)}
                 </FernAnchor>
-                <Markdown className="text-base mb-2" mdx={description} />
+                <Markdown className="mb-2 text-base" mdx={description} />
                 {children}
             </div>
         </FernErrorBoundary>

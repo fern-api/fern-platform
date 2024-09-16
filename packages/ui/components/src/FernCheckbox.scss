@@ -4,7 +4,7 @@
     }
 
     .fern-checkbox-item {
-        @apply ring-default relative mt-0.5 inline-block size-4 ring-1 rounded-sm ring-inset;
+        @apply ring-default relative mt-0.5 inline-block size-4 rounded-sm ring-1 ring-inset;
     }
 
     .fern-checkbox-item:hover {
@@ -12,10 +12,10 @@
     }
 
     .fern-checkbox-item:focus {
-        @apply outline outline-4 outline-offset-0 outline-tag-primary;
+        @apply outline-tag-primary outline outline-4 outline-offset-0;
     }
 
     .fern-checkbox-indicator {
-        @apply size-4 bg-accent flex items-center justify-center text-accent-contrast rounded-sm;
+        @apply bg-accent text-accent-contrast flex size-4 items-center justify-center rounded-sm;
     }
 }

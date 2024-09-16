@@ -15,7 +15,7 @@ export const PageRecordV3: React.FC<PageRecordV3.Props> = ({ hit, isHovered }) =
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <span
-                    className={clsx("line-clamp-1 text-sm text-start", {
+                    className={clsx("line-clamp-1 text-start text-sm", {
                         "t-default": !isHovered,
                         "t-accent-aaa": isHovered,
                     })}

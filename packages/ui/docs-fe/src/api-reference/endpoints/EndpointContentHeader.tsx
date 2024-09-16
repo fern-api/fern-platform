@@ -19,7 +19,7 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoin
                 <span>
                     <h1 className="fern-page-heading">{endpoint.title}</h1>
                     {endpoint.availability != null && (
-                        <span className="inline-block ml-2 align-text-bottom">
+                        <span className="ml-2 inline-block align-text-bottom">
                             <EndpointAvailabilityTag availability={endpoint.availability} minimal={true} />
                         </span>
                     )}

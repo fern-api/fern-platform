@@ -7,6 +7,6 @@ export default {
     content: [
         "./src/pages/**/*.{ts,tsx}",
         path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}"),
-        path.join(path.dirname(require.resolve("@fern-ui/docs-fe")), "**/*.{ts,tsx}")
-    ]
+        path.join(path.dirname(require.resolve("@fern-ui/docs-fe")), "**/*.{ts,tsx}"),
+    ],
 };

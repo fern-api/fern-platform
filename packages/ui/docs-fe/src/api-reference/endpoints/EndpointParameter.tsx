@@ -96,7 +96,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
             ref={ref}
             id={href}
             className={clsx("scroll-mt-content-padded relative flex flex-col gap-2 py-3", {
-                "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
+                "outline-accent rounded-sm outline outline-1 outline-offset-4": isActive,
             })}
         >
             <FernAnchor href={href} sideOffset={6}>

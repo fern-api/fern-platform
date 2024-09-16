@@ -97,7 +97,7 @@ export function CohereChatbotModal({ className }: { className?: string }): React
                 },
             }}
             belowInput={
-                <div className="mt-4 px-5 text-grayscale-a10 flex justify-between items-center gap-2">
+                <div className="text-grayscale-a10 mt-4 flex items-center justify-between gap-2 px-5">
                     <FernLink href="https://cohere.com/" className="text-xs font-medium">
                         Powered by Cohere (command-r-plus)
                     </FernLink>
