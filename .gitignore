@@ -4,19 +4,12 @@
 node_modules
 
 # production
-packages/**/build
-packages/**/lib
+build
+lib
 !packages/**/fern-dashboard/src/lib
-packages/**/dist
-packages/**/tsconfig*tsbuildinfo
-packages/**/out
-servers/**/build
-servers/**/lib
-servers/**/dist
-servers/**/tsconfig*tsbuildinfo
-servers/**/out
-clis/**/dist
-docker/build
+dist
+tsconfig*tsbuildinfo
+out
 
 # next
 .next
