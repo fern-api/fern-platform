@@ -1,4 +1,4 @@
-name: Snippets TypeScript SDK 
+name: Snippets TypeScript SDK
 
 on:
   workflow_dispatch:
@@ -13,10 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
 
       - name: Download Fern
         run: npm install -g fern-api

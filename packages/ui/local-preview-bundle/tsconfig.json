@@ -7,10 +7,20 @@
   "exclude": ["node_modules"],
   "include": ["./src/**/*", ".next/types/**/*.ts"],
   "references": [
-    { "path": "../app" },
-    { "path": "../components" },
-    { "path": "../../fdr-sdk" },
-    { "path": "../../commons/fdr-utils" },
-    { "path": "../../commons/react/react-commons" }
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../commons/fdr-utils"
+    },
+    {
+      "path": "../../fdr-sdk"
+    },
+    {
+      "path": "../app"
+    },
+    {
+      "path": "../components"
+    }
   ]
 }

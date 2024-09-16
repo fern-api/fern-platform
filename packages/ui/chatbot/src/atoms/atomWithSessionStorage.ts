@@ -54,7 +54,7 @@ export function atomWithSessionStorage<Value>(
                     if (event.newValue === null) {
                         callback(initialValue);
                     } else {
-                        return initialValue;
+                        callback(JSON.parse(event.newValue));
                     }
                 }
             };

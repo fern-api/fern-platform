@@ -13,10 +13,9 @@
   "source": "src/index.ts",
   "module": "src/index.ts",
   "main": "src/index.ts",
+  "types": "src/index.ts",
   "sideEffects": false,
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -26,17 +25,10 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "build": "pnpm compile",
-    "env:fern-dev": "env-cmd -r .env-cmdrc.cjs -e fern-dev",
-    "env:fern-prod": "env-cmd -r .env-cmdrc.cjs -e fern-prod",
-    "dev:fern-dev": "pnpm turbo build && NODE_OPTIONS='--inspect' pnpm env:fern-dev next dev",
-    "dev:fern-prod": "pnpm turbo build && NODE_OPTIONS='--inspect' pnpm env:fern-prod next dev",
-    "build:fern-dev": "pnpm turbo build && pnpm env:fern-dev next build",
-    "build:fern-prod": "pnpm turbo build && pnpm env:fern-prod next build",
-    "start:fern-dev": "pnpm turbo build && pnpm env:fern-dev next start",
-    "start:fern-prod": "pnpm turbo build && pnpm env:fern-prod next start",
-    "lint:fern-dev": "pnpm turbo build && pnpm env:fern-dev next lint",
-    "lint:fern-prod": "pnpm turbo build && pnpm env:fern-prod next lint"
+    "docs:dev": "NODE_OPTIONS='--inspect' next dev",
+    "docs:build": "next build",
+    "docs:start": "next start",
+    "lint": "pnpm lint:eslint && pnpm lint:style"
   },
   "dependencies": {
     "@algolia/requester-fetch": "^4.24.0",
@@ -50,7 +42,7 @@
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
-    "@sentry/nextjs": "^7.112.2",
+    "@sentry/nextjs": "^7.105.0",
     "@vercel/edge-config": "^1.1.0",
     "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^6.1.0",
@@ -61,7 +53,7 @@
     "feed": "^4.2.2",
     "form-data": "4.0.0",
     "jsonpath": "^1.1.1",
-    "next": "^14.2.4",
+    "next": "npm:@fern-api/next@14.2.9-fork.0",
     "node-fetch": "2.7.0",
     "postcss-import": "^16.0.1",
     "react": "^18.2.0",
@@ -74,7 +66,7 @@
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@next/bundle-analyzer": "^14.0.3",
+    "@next/bundle-analyzer": "14.2.9",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^18.7.18",
@@ -84,7 +76,6 @@
     "@types/uuid": "^9.0.1",
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.3",
-    "env-cmd": "toddbluhm/env-cmd",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
     "postcss": "^8.4.33",
@@ -94,5 +85,11 @@
     "tailwindcss": "^3.4.3",
     "typescript": "5.4.3",
     "vitest": "^1.5.0"
+  },
+  "optionalDependencies": {
+    "@next/swc-linux-x64-gnu": "14.2.9",
+    "@next/swc-win32-x64-msvc": "14.2.9",
+    "@next/swc-darwin-x64": "14.2.9",
+    "@next/swc-darwin-arm64": "14.2.9"
   }
 }

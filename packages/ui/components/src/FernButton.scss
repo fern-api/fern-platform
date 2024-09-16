@@ -126,12 +126,12 @@
             }
         }
 
-        &.disabled {
+        &[disabled] {
             @apply cursor-not-allowed bg-black/20 text-text-default/40 hover:text-text-default/40;
             @apply dark:bg-white/10 dark:text-text-default/50 dark:hover:text-text-default/50;
         }
 
-        &:not(.disabled) {
+        &:not([disabled]) {
             &.minimal {
                 @apply bg-transparent t-muted;
 

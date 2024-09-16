@@ -20,6 +20,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
     if (versions.length <= 1) {
         return null;
     }
+
     return (
         <div className="flex max-w-32">
             <FernLinkDropdown

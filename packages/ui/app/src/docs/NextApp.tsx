@@ -1,9 +1,10 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
+import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import { ReactElement } from "react";
 import { SWRConfig } from "swr";
-import { DocsProps, HydrateAtoms } from "../atoms";
+import { DocsProps, HydrateAtoms, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LocalPreviewContextProvider } from "../contexts/local-preview";
 import "../css/globals.scss";
@@ -17,36 +18,39 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
     useInterceptNextDataHref({
         router,
         basePath: pageProps?.baseUrl?.basePath,
-        host: pageProps?.baseUrl?.domain,
     });
 
     return (
-        <HydrateAtoms pageProps={pageProps}>
-            <ThemeScript colors={pageProps?.colors} />
-            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-            <Toaster />
-            <FernTooltipProvider>
-                <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
-                    <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                        <Component {...pageProps} />
-                    </FernErrorBoundary>
-                </SWRConfig>
-            </FernTooltipProvider>
-        </HydrateAtoms>
+        <JotaiProvider store={store}>
+            <HydrateAtoms pageProps={pageProps}>
+                <ThemeScript colors={pageProps?.colors} />
+                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                <Toaster />
+                <FernTooltipProvider>
+                    <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
+                        <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+                            <Component {...pageProps} />
+                        </FernErrorBoundary>
+                    </SWRConfig>
+                </FernTooltipProvider>
+            </HydrateAtoms>
+        </JotaiProvider>
     );
 }
 
 // local preview doesn't use getServerSideProps, so pageProps is always undefined
 export function LocalPreviewNextApp({ Component }: AppProps): ReactElement {
     return (
-        <LocalPreviewContextProvider>
-            <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
-            <Toaster />
-            <FernTooltipProvider>
-                <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                    <Component />
-                </FernErrorBoundary>
-            </FernTooltipProvider>
-        </LocalPreviewContextProvider>
+        <JotaiProvider store={store}>
+            <LocalPreviewContextProvider>
+                <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
+                <Toaster />
+                <FernTooltipProvider>
+                    <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
+                        <Component />
+                    </FernErrorBoundary>
+                </FernTooltipProvider>
+            </LocalPreviewContextProvider>
+        </JotaiProvider>
     );
 }

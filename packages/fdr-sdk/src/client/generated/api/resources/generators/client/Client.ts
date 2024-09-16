@@ -37,6 +37,7 @@ export class Generators {
      * @example
      *     await fernRegistry.generators.upsertGenerator({
      *         id: "string",
+     *         displayName: "string",
      *         generatorType: {
      *             type: "sdk"
      *         },

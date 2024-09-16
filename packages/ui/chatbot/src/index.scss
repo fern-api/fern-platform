@@ -1,6 +1,7 @@
 @layer components {
     .fern-chatbot-terminator {
         @apply bg-black dark:bg-white;
+
         display: inline-block;
         width: 10px;
         height: 10px;

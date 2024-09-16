@@ -1,14 +1,9 @@
-import * as fs from "fs";
-
-let previewDeploymentUrl: string | null = null;
+// let previewDeploymentUrl: string | null = null;
 export const getPreviewDeploymentUrl = (): string => {
-    if (previewDeploymentUrl != null) {
-        return previewDeploymentUrl;
+    if (!process.env.DEPLOYMENT_URL) {
+        throw new Error("DEPLOYMENT_URL environment variable is not set.");
     }
-
-    // TODO: use an environment variable instead of a file
-    previewDeploymentUrl = fs.readFileSync("deployment-url.txt", "utf-8").trim();
-    return previewDeploymentUrl;
+    return process.env.DEPLOYMENT_URL;
 };
 
 export interface PreviewContext {

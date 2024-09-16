@@ -5,19 +5,24 @@
     "dist"
   ],
   "type": "module",
+  "sideEffects": false,
   "source": "src/index.ts",
-  "module": "src/index.ts",
+  "module": "dist/index.js",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     "./navigation": {
+      "import": "./src/navigation/index.ts",
       "types": "./dist/navigation/index.d.ts",
       "default": "./dist/navigation/index.js"
     },
     "./client/types": {
+      "import": "./src/client/types.ts",
       "types": "./dist/client/types.d.ts",
       "default": "./dist/client/types.js"
     },
     ".": {
+      "import": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
@@ -56,6 +61,8 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
-    "test": "vitest --run"
+    "test": "vitest --run",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev"
   }
 }

@@ -4,7 +4,7 @@ import memoize from "lodash-es/memoize";
 import { useCallback, useEffect, useState } from "react";
 import {
     bundledLanguages,
-    getHighlighter,
+    getSingletonHighlighter,
     type BundledLanguage,
     type BundledTheme,
     type Highlighter,
@@ -12,7 +12,6 @@ import {
 } from "shiki";
 import { additionalLanguages } from "./syntaxes";
 
-let highlighterPromise: Promise<Highlighter>;
 let highlighter: Highlighter;
 
 // only call this once per language
@@ -25,14 +24,11 @@ export const getHighlighterInstance: (language: string) => Promise<Highlighter> 
             console.debug("Loading language:", lang);
         }
 
-        if (highlighterPromise == null) {
-            highlighterPromise = getHighlighter({
-                langs: [additionalLanguages[lang] ?? lang],
-                themes: [LIGHT_THEME, DARK_THEME],
-            });
+        if (highlighter == null) {
+            highlighter = await getSingletonHighlighter();
         }
 
-        highlighter = await highlighterPromise;
+        await highlighter.loadTheme(LIGHT_THEME, DARK_THEME);
 
         if (!highlighter.getLoadedLanguages().includes(lang)) {
             try {

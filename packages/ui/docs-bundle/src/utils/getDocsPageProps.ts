@@ -19,7 +19,7 @@ import {
     serializeMdx,
     setMdxBundler,
 } from "@fern-ui/ui";
-import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWT } from "@fern-ui/ui/auth";
+import { FernUser, getAPIKeyInjectionConfigNode, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import type { GetServerSidePropsResult, GetStaticPropsResult, Redirect } from "next";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
@@ -31,7 +31,7 @@ import { getCustomerAnalytics } from "./analytics";
 import { getAuthorizationUrl } from "./auth";
 import { convertStaticToServerSidePropsResult } from "./convertStaticToServerSidePropsResult";
 import { getSeoDisabled } from "./disabledSeo";
-import { isTrailingSlashEnabled } from "./trailingSlash";
+import { conformTrailingSlash, isTrailingSlashEnabled } from "./trailingSlash";
 
 type GetStaticDocsPagePropsResult = GetStaticPropsResult<ComponentProps<typeof DocsPage>>;
 type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;
@@ -57,19 +57,7 @@ export async function getDocsPageProps(
     slug: string[],
 ): Promise<GetStaticDocsPagePropsResult> {
     if (xFernHost == null || Array.isArray(xFernHost)) {
-        return { notFound: true };
-    }
-
-    const config = await getAuthEdgeConfig(xFernHost);
-    if (config != null && config.type === "basic_token_verification") {
-        const destination = new URL(config.redirect);
-        destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
-        return {
-            redirect: {
-                destination: destination.toString(),
-                permanent: false,
-            },
-        };
+        return { notFound: true, revalidate: true };
     }
 
     const pathname = decodeURI(slug != null ? slug.join("/") : "");
@@ -83,9 +71,9 @@ export async function getDocsPageProps(
     console.log(`[getDocsPageProps] Fetch completed in ${end - start}ms for ${url}`);
     if (!docs.ok) {
         if ((docs.error as any).content.statusCode === 401) {
-            return { redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`) };
+            return { redirect: await getUnauthenticatedRedirect(xFernHost, `/${slug.join("/")}`), revalidate: true };
         } else if ((docs.error as any).content.statusCode === 404) {
-            return { notFound: true };
+            return { notFound: true, revalidate: true };
         }
 
         // eslint-disable-next-line no-console
@@ -115,27 +103,7 @@ export async function getDynamicDocsPageProps(
 
     try {
         const config = await getAuthEdgeConfig(xFernHost);
-        let user: FernUser | undefined = undefined;
-
-        // using custom auth (e.g. qlty, propexo, etc)
-        if (config?.type === "basic_token_verification") {
-            try {
-                user = await verifyFernJWT(cookies.fern_token, config.secret, config.issuer);
-            } catch (error) {
-                // eslint-disable-next-line no-console
-                console.error(error);
-                const destination = new URL(config.redirect);
-                destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, `/${slug.join("/")}`));
-                return {
-                    redirect: {
-                        destination: destination.toString(),
-                        permanent: false,
-                    },
-                };
-            }
-        } else {
-            user = await verifyFernJWT(cookies.fern_token);
-        }
+        const user: FernUser | undefined = await verifyFernJWTConfig(cookies.fern_token, config);
 
         // SSO
         if (user.partner === "workos") {
@@ -220,9 +188,10 @@ async function convertDocsToDocsPageProps({
     if (redirect != null) {
         return {
             redirect: {
-                destination: redirect.destination,
+                destination: conformTrailingSlash(redirect.destination),
                 permanent: redirect.permanent ?? false,
             },
+            revalidate: true,
         };
     }
 
@@ -240,6 +209,7 @@ async function convertDocsToDocsPageProps({
                 destination: encodeURI(urljoin("/", root.slug)),
                 permanent: false,
             },
+            revalidate: true,
         };
     }
 
@@ -261,10 +231,11 @@ async function convertDocsToDocsPageProps({
                     destination: encodeURI(urljoin("/", node.redirect) || "/"),
                     permanent: false,
                 },
+                revalidate: true,
             };
         }
 
-        return { notFound: true };
+        return { notFound: true, revalidate: true };
     }
 
     if (node.type === "redirect") {
@@ -273,6 +244,7 @@ async function convertDocsToDocsPageProps({
                 destination: encodeURI(urljoin("/", node.redirect)),
                 permanent: false,
             },
+            revalidate: true,
         };
     }
 
@@ -292,7 +264,7 @@ async function convertDocsToDocsPageProps({
     if (content == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${url}`);
-        return { notFound: true };
+        return { notFound: true, revalidate: true };
     }
 
     const colors = {

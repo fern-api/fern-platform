@@ -1,6 +1,6 @@
 import { ArrowLeft } from "iconoir-react";
 import { ReactElement } from "react";
-import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
+import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
@@ -37,7 +37,7 @@ export function ChangelogEntryPage({ content }: { content: DocsContent.Changelog
                             {/* TODO: alert if the page is null */}
                             <Markdown mdx={page} />
 
-                            <BottomNavigationButtons />
+                            <BottomNavigationNeighbors neighbors={content.neighbors} />
                         </div>
                         <div className="-mt-2 w-72 pl-4 text-right max-xl:hidden" />
                     </section>

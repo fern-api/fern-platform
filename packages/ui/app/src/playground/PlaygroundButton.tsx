@@ -3,17 +3,17 @@ import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/component
 import { PlaySolid } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { FC } from "react";
-import { HAS_PLAYGROUND_ATOM, useSetAndOpenPlayground } from "../atoms";
+import { IS_PLAYGROUND_ENABLED_ATOM, useSetAndOpenPlayground } from "../atoms";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 
 export const PlaygroundButton: FC<{
     state: FernNavigation.NavigationNodeApiLeaf;
 }> = ({ state }) => {
     const openPlayground = useSetAndOpenPlayground();
-    const hasPlayground = useAtomValue(HAS_PLAYGROUND_ATOM);
+    const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
     const settings = usePlaygroundSettings(state.id);
 
-    if (!hasPlayground) {
+    if (!isPlaygroundEnabled) {
         return null;
     }
 

@@ -23,9 +23,6 @@ Sentry.init({
     spotlight: process.env.NODE_ENV === "development",
 
     beforeSend: (event: Sentry.Event, _: Sentry.EventHint): Sentry.Event | null => {
-        if ((event.type as string) === "csp" || (event as any)?.csp != null) {
-            return null;
-        }
         // Filter out events from privategpt
         if (event.request?.url?.includes("privategpt")) {
             return null;
