@@ -7,5 +7,7 @@
   },
   "compilerOptions": {
     "noEmit": true
-  }
+  },
+  "include": ["apps/**/*", "packages/**/*", "clis/**/*", "servers/**/*", "scripts/**/*"],
+  "exclude": ["node_modules"]
 }
