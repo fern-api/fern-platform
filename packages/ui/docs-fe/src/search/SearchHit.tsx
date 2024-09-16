@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-platform/core-utils";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import Link from "next/link";
 import { ReactElement, useMemo } from "react";
 import { useBasePath, useCloseMobileSidebar, useCloseSearchDialog } from "../atoms";
@@ -54,7 +54,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
     return (
         <Link
             ref={(elem) => setRef?.(elem)}
-            className={cn("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
+            className={clsx("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 !no-underline", {
                 "bg-accent-highlight": isHovered,
             })}
             href={useHref(slug)}

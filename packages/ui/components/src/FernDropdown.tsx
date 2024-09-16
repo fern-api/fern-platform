@@ -212,14 +212,14 @@ function FernDropdownItemValue({
                         {
                             ref: option.value === value ? activeRef : undefined,
                             href: option.href,
-                            className: cn("fern-dropdown-item", option.className),
+                            className: clsx("fern-dropdown-item", option.className),
                         },
                         renderButtonContent(),
                     )
                 ) : (
                     <button
                         ref={option.value === value ? activeRef : undefined}
-                        className={cn("fern-dropdown-item", option.className)}
+                        className={clsx("fern-dropdown-item", option.className)}
                     >
                         {renderButtonContent()}
                     </button>

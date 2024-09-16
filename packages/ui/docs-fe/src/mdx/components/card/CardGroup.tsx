@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { FC, type PropsWithChildren } from "react";
 
 export declare namespace CardGroup {
@@ -10,7 +10,7 @@ export declare namespace CardGroup {
 export const CardGroup: FC<PropsWithChildren<CardGroup.Props>> = ({ children, cols = 2 }) => {
     return (
         <div
-            className={cn("grid gap-4 sm:gap-6 my-6 first:mt-0", {
+            className={clsx("grid gap-4 sm:gap-6 my-6 first:mt-0", {
                 "grid-cols-1": cols <= 1,
                 "grid-cols-1 sm:grid-cols-2": cols === 2,
                 "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3": cols === 3,

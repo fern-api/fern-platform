@@ -1,6 +1,6 @@
 import { CopyToClipboardButton, Intent } from "@fern-ui/components";
-import cn from "clsx";
-import { forwardRef, MouseEventHandler, PropsWithChildren, ReactElement, ReactNode } from "react";
+import clsx from "clsx";
+import { MouseEventHandler, PropsWithChildren, ReactElement, ReactNode, forwardRef } from "react";
 
 export declare namespace TitledExample {
     export interface Props {
@@ -22,7 +22,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
 ) {
     return (
         <div
-            className={cn(
+            className={clsx(
                 "rounded-xl overflow-hidden flex flex-col bg-card after:ring-card-border after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:content-[''] relative shadow-sm",
                 "max-md:max-h-content-padded",
                 className,
@@ -31,7 +31,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
             ref={ref}
         >
             <div
-                className={cn("rounded-t-xl h-10", {
+                className={clsx("rounded-t-xl h-10", {
                     "bg-tag-default-soft": intent === "none" || intent === "primary",
                     "bg-tag-warning-soft": intent === "warning",
                     "bg-tag-success-soft": intent === "success",
@@ -41,7 +41,7 @@ export const TitledExample = forwardRef<HTMLDivElement, PropsWithChildren<Titled
                 <div className="mx-px flex min-h-10 items-center justify-between rounded-t-xl px-2 shadow-[inset_0_-1px_0_0] shadow-card-border">
                     {typeof title === "string" ? (
                         <div
-                            className={cn("text-sm px-1", {
+                            className={clsx("text-sm px-1", {
                                 "t-muted": intent === "none" || intent === "primary",
                                 "t-warning": intent === "warning",
                                 "t-success": intent === "success",

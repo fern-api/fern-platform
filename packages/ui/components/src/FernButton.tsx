@@ -103,7 +103,7 @@ export const FernButtonGroup = forwardRef<HTMLSpanElement, ComponentProps<"div">
 ) {
     return (
         <FernTooltipProvider>
-            <span ref={ref} className={cn(className, "fern-button-group")} {...props}>
+            <span ref={ref} className={clsx(className, "fern-button-group")} {...props}>
                 {children}
             </span>
         </FernTooltipProvider>
@@ -130,7 +130,7 @@ export function ButtonContent({
             {children && (
                 <span
                     ref={buttonTextRef}
-                    className={cn("fern-button-text", {
+                    className={clsx("fern-button-text", {
                         "font-mono tracking-tight": mono,
                     })}
                 >
@@ -157,7 +157,7 @@ export function getButtonClassName({
     children,
 }: PropsWithChildren<FernButtonSharedProps>): string {
     children = children ?? text;
-    return cn(className, "fern-button", variant, size, {
+    return clsx(className, "fern-button", variant, size, {
         [intent]: intent !== "none",
         disabled,
         active,

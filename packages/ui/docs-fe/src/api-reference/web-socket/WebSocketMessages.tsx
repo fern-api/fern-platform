@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton } from "@fern-ui/components";
 import * as Accordion from "@radix-ui/react-accordion";
-import cn from "clsx";
+import clsx from "clsx";
 import { ArrowDown, ArrowUp, NavArrowDown } from "iconoir-react";
 import { FC } from "react";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
@@ -32,9 +32,9 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
             )}
             {messages.map((message, index) => {
                 return (
-                    <Accordion.Item value={index.toString()} key={index} className={cn("group relative")}>
+                    <Accordion.Item value={index.toString()} key={index} className={clsx("group relative")}>
                         <Accordion.Trigger
-                            className={cn("fern-web-socket-trigger", {
+                            className={clsx("fern-web-socket-trigger", {
                                 "data-[state=open]:bg-tag-success":
                                     message.origin === APIV1Read.WebSocketMessageOrigin.Client,
                                 "data-[state=open]:bg-tag-primary":
@@ -80,7 +80,7 @@ export const WebSocketMessages: FC<WebSocketMessagesProps> = ({ messages }) => {
                             </div>
                         </Accordion.Content>
                         <div
-                            className={cn(
+                            className={clsx(
                                 "mx-px group-focus-within:ring-1 ring-transparent ring-inset absolute inset-0 pointer-events-none z-auto rounded-[inherit]",
                                 {
                                     "group-focus-within:ring-border-success":

@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useRef } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
@@ -48,7 +48,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
     return (
         <div className={"fern-endpoint-content"}>
             <div
-                className={cn(
+                className={clsx(
                     "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto md:grid md:grid-cols-2 md:gap-8 lg:gap-12",
                     {
                         "border-default border-b mb-px pb-20": !hideBottomSeparator,
@@ -115,7 +115,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                     </div>
                 </div>
                 <div
-                    className={cn(
+                    className={clsx(
                         "max-w-content-width",
                         "flex-1 sticky self-start top-header-offset",
                         // the py-10 is the same as the 40px below

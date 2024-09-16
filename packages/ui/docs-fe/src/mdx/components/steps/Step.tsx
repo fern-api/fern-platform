@@ -1,5 +1,5 @@
 import { useCopyToClipboard } from "@fern-ui/react-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Link } from "iconoir-react";
 import { ComponentProps, ReactElement, useState } from "react";
@@ -16,7 +16,7 @@ export function Step({ children, className, title, id, index, ...props }: StepPr
     const [hover, setHover] = useState(false);
 
     return (
-        <div className={cn("fern-step scroll-mt-content-padded", className)} id={id} {...props}>
+        <div className={clsx("fern-step scroll-mt-content-padded", className)} id={id} {...props}>
             <FernLink
                 className="fern-anchor"
                 href={href}

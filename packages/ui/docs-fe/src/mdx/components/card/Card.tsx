@@ -1,5 +1,5 @@
 import { FernCard, RemoteFontAwesomeIcon } from "@fern-ui/components";
-import cn from "clsx";
+import clsx from "clsx";
 import { isValidElement } from "react";
 import { FernLinkCard } from "../../../components/FernLinkCard";
 import { Badge } from "../badge";
@@ -34,7 +34,7 @@ export const Card: React.FC<Card.Props> = ({
     href,
     badge,
 }) => {
-    const className = cn("text-base border p-6 not-prose rounded-xl relative block");
+    const className = clsx("text-base border p-6 not-prose rounded-xl relative block");
 
     const content = (
         <>
@@ -44,7 +44,7 @@ export const Card: React.FC<Card.Props> = ({
                 </Badge>
             )}
             <div
-                className={cn("flex items-start", {
+                className={clsx("flex items-start", {
                     "space-y-3 flex-col": iconPosition === "top",
                     "space-x-3 flex-row": iconPosition === "left",
                 })}

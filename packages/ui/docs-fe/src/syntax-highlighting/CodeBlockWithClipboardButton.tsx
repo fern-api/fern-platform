@@ -23,7 +23,7 @@ export const CodeBlockWithClipboardButton: React.FC<PropsWithChildren<CodeBlockW
         >
             {children}
             <CopyToClipboardButton
-                className={cn(
+                className={clsx(
                     "absolute z-20",
                     "transition opacity-0 group-hover/cb-container:opacity-100 z-10",
                     "right-1 top-1",

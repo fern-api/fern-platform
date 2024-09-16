@@ -200,7 +200,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
         return (
             <FernTooltipProvider>
                 <div className={clsx("flex flex-col size-full relative", className)} ref={scrollRef}>
-                    <div className={cn("relative z-20 px-3 pt-3 pb-0")}>
+                    <div className={clsx("relative z-20 px-3 pt-3 pb-0")}>
                         <FernInput
                             leftIcon={<Search className="size-icon" />}
                             data-1p-ignore="true"

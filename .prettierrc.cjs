@@ -3,6 +3,7 @@ module.exports = {
     printWidth: 120,
     tabWidth: 4,
     useTabs: false,
+    trailingComma: "all",
     overrides: [
         {
             files: "**/*.{yml,yaml,json,md,mdx}",
@@ -11,7 +12,7 @@ module.exports = {
             }
         },
         {
-            files: "**/*.{json,cjs}",
+            files: "**/*.{json}",
             options: {
                 trailingComma: "none"
             }

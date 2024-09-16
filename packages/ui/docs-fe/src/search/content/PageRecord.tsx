@@ -1,5 +1,5 @@
 import type { SearchRecord } from "@fern-ui/search-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { Page } from "iconoir-react";
 import { Snippet } from "react-instantsearch";
 
@@ -14,13 +14,13 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
     return (
         <>
             <div
-                className={cn("flex flex-col items-center justify-center rounded-md border p-1", {
+                className={clsx("flex flex-col items-center justify-center rounded-md border p-1", {
                     "border-default": !isHovered,
                     "border-white dark:border-black bg-white dark:bg-black text-black": isHovered,
                 })}
             >
                 <Page
-                    className={cn("size-4", {
+                    className={clsx("size-4", {
                         "!t-muted": !isHovered,
                         "!t-accent": isHovered,
                     })}
@@ -30,7 +30,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
             <div className="flex w-full flex-col space-y-1.5">
                 <div className="flex justify-between">
                     <Snippet
-                        className={cn("line-clamp-1 text-start", {
+                        className={clsx("line-clamp-1 text-start", {
                             "t-default": !isHovered,
                             "text-white dark:text-black": isHovered,
                         })}
@@ -39,7 +39,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                         hit={hit}
                     />
                     <div
-                        className={cn("text-sm uppercase tracking-widest", {
+                        className={clsx("text-sm uppercase tracking-widest", {
                             "text-text-disabled": !isHovered,
                             "text-white dark:text-black": isHovered,
                         })}
@@ -49,7 +49,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
                 </div>
                 <div className="flex flex-col items-start">
                     <Snippet
-                        className={cn("line-clamp-1 text-start", {
+                        className={clsx("line-clamp-1 text-start", {
                             "text-white dark:text-black": isHovered,
                             "t-muted": !isHovered,
                         })}

@@ -22,7 +22,6 @@
     "build": "next build",
     "depcheck": "depcheck",
     "dev": "next dev",
-    "lint": "next lint",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "start": "next start",
     "test": "vitest --run --passWithNoTests --globals"

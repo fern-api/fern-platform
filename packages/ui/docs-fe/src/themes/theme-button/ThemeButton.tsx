@@ -1,7 +1,7 @@
 import { FernButton, FernButtonProps } from "@fern-ui/components";
 import { useMounted } from "@fern-ui/react-utils";
 import * as Popover from "@radix-ui/react-popover";
-import cn from "clsx";
+import clsx from "clsx";
 import { memo, useState } from "react";
 import { Monitor, Moon, Sun } from "react-feather";
 import { useSetSystemTheme, useTheme, useToggleTheme } from "../../atoms";
@@ -33,7 +33,7 @@ export const ThemeButton = memo(({ className, ...props }: ThemeButton.Props) => 
             <Popover.Trigger asChild>
                 <FernButton
                     {...props}
-                    className={cn("fern-theme-button", className)}
+                    className={clsx("fern-theme-button", className)}
                     onClick={toggleTheme}
                     onContextMenu={(e) => {
                         e.preventDefault();

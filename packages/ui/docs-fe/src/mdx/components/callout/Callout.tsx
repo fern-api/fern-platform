@@ -1,6 +1,6 @@
-import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-platform/core-utils";
-import cn from "clsx";
+import { RemoteFontAwesomeIcon } from "@fern-ui/components";
+import clsx from "clsx";
 import { Bell, Check, CheckCircle, InfoCircle, Pin, Rocket, Star, WarningTriangle } from "iconoir-react";
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 
@@ -26,7 +26,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
     const intent = parseIntent(intentRaw);
     return (
         <div
-            className={cn(
+            className={clsx(
                 "p-4 mt-4 first:mt-0 mb-6 rounded-lg", // pb-0 to compensate for the ::after margin
                 visitDiscriminatedUnion({ intent }, "intent")._visit({
                     info: () => "callout-outlined",
@@ -45,7 +45,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                 <div className="mt-0.5 w-4">
                     {typeof icon === "string" ? (
                         <RemoteFontAwesomeIcon
-                            className={cn("card-icon size-icon-md", {
+                            className={clsx("card-icon size-icon-md", {
                                 "bg-intent-default": intent === "info",
                                 "bg-intent-warning": intent === "warning",
                                 "bg-intent-success": intent === "success",
@@ -73,7 +73,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
                 </div>
 
                 <div
-                    className={cn(
+                    className={clsx(
                         "flex-1 prose-sm prose dark:prose-invert overflow-x-auto -my-4 after:block after:mt-4 before:block before:mb-4", // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
                     )}
                 >

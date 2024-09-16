@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { Search } from "iconoir-react";
 import { memo } from "react";
 import { useOpenSearchDialog } from "../atoms";
@@ -21,7 +21,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
     return (
         <button
             onClick={openSearchDialog}
-            className={cn("fern-search-bar", className)}
+            className={clsx("fern-search-bar", className)}
             disabled={!searchService.isAvailable}
         >
             <span className="search-placeholder">

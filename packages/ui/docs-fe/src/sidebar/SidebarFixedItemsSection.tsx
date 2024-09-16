@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 import { DOCS_LAYOUT_ATOM, SEARCHBAR_PLACEMENT_ATOM, THEME_SWITCH_ENABLED_ATOM } from "../atoms";
@@ -40,7 +40,7 @@ export const SidebarFixedItemsSection: React.FC<SidebarFixedItemsSection.Props> 
 
     return (
         <div
-            className={cn("flex flex-col px-4", { "lg:pt-4": !header }, className)}
+            className={clsx("flex flex-col px-4", { "lg:pt-4": !header }, className)}
             data-border={showBorder ? "show" : "hide"}
         >
             {header}

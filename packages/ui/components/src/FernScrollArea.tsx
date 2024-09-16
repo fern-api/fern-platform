@@ -1,5 +1,5 @@
 import * as ScrollArea from "@radix-ui/react-scroll-area";
-import cn from "clsx";
+import clsx from "clsx";
 import { forwardRef, PropsWithChildren, RefObject } from "react";
 
 export declare namespace FernScrollArea {
@@ -27,7 +27,7 @@ export const FernScrollArea = forwardRef<HTMLDivElement, FernScrollArea.Props>((
     } = props;
     return (
         <ScrollArea.Root
-            className={cn("fern-scroll-area", rootClassName)}
+            className={clsx("fern-scroll-area", rootClassName)}
             ref={rootRef}
             type={type}
             dir={dir}
@@ -35,7 +35,7 @@ export const FernScrollArea = forwardRef<HTMLDivElement, FernScrollArea.Props>((
         >
             <ScrollArea.Viewport
                 ref={ref}
-                className={cn("fern-scroll-area-viewport", className)}
+                className={clsx("fern-scroll-area-viewport", className)}
                 data-scrollbars={scrollbars}
                 {...viewportProps}
             >

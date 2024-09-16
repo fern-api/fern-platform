@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { useInView } from "framer-motion";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
@@ -248,7 +248,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             id={useHref(endpoint.slug)}
         >
             <div
-                className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
+                className={clsx("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
             >

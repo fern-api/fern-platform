@@ -13,9 +13,9 @@
       "dependsOn": ["^compile"]
     },
     "lint": {},
+    "lint:eslint": {},
     "lint:style": {},
-    "lint:eslint:fix": {},
-    "lint:style:fix": {},
+    "lint:prettier": {},
     "format:check": {},
     "depcheck": {},
     "clean": {

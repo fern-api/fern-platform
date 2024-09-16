@@ -1,5 +1,5 @@
 import { useEventCallback } from "@fern-ui/react-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { Minus, Plus } from "iconoir-react";
 import {
     ComponentProps,
@@ -91,7 +91,7 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
     }, []);
 
     return (
-        <div className={cn("fern-numeric-input-group", className)}>
+        <div className={clsx("fern-numeric-input-group", className)}>
             {onValueChange && (
                 <FernButton
                     className="fern-numeric-input-step"
@@ -110,7 +110,7 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
             <input
                 ref={inputRef}
                 type="number"
-                className={cn("fern-input", inputClassName)}
+                className={clsx("fern-input", inputClassName)}
                 value={internalValue ?? value}
                 onChange={(e) => {
                     onChange?.(e);

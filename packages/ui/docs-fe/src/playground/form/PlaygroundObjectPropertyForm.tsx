@@ -1,6 +1,6 @@
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { PlusCircle } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
@@ -142,7 +142,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
 
     return (
         <div
-            className={cn("flex-1 shrink min-w-0", {
+            className={clsx("flex-1 shrink min-w-0", {
                 "border-border-default-soft border-l pl-4": indent,
             })}
         >

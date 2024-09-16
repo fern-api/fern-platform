@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-platform/core-utils";
 import type { EndpointSearchRecordV2 } from "@fern-ui/search-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
 import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
 
@@ -16,13 +16,13 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <div
-                    className={cn("line-clamp-1 flex space-x-1 items-center text-sm text-start", {
+                    className={clsx("line-clamp-1 flex space-x-1 items-center text-sm text-start", {
                         "t-muted": !isHovered,
                         "t-accent": isHovered,
                     })}
                 >
                     <div
-                        className={cn(
+                        className={clsx(
                             "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-sm uppercase",
                             {
                                 "bg-tag-default": !isHovered,
@@ -44,7 +44,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                                     literal: (part) => <span key={idx}>{part.value}</span>,
                                     pathParameter: (part) => (
                                         <span
-                                            className={cn(
+                                            className={clsx(
                                                 "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-sm",
                                                 {
                                                     "bg-tag-default": !isHovered,
@@ -66,7 +66,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                     </div>
                 </div>
                 <div
-                    className={cn("text-sm tracking-wide", {
+                    className={clsx("text-sm tracking-wide", {
                         "t-muted": !isHovered,
                         "t-accent-aaa": isHovered,
                     })}
@@ -76,7 +76,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
             </div>
             <div className="flex items-center justify-between">
                 <span
-                    className={cn("line-clamp-1 text-start text-xs", {
+                    className={clsx("line-clamp-1 text-start text-xs", {
                         "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}
@@ -85,7 +85,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({ hit, isHove
                 </span>
 
                 <LongArrowDownLeft
-                    className={cn("size-4", {
+                    className={clsx("size-4", {
                         "t-accent-aaa": isHovered,
                         "t-muted": !isHovered,
                     })}

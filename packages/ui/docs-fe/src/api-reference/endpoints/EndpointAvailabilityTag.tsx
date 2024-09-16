@@ -25,7 +25,7 @@ export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(funct
 }) {
     // return (
     //     <span
-    //         className={cn(
+    //         className={clsx(
     //             "rounded-full text-xs",
     //             {
     //                 "border px-1.5 py-0.5": !minimal,

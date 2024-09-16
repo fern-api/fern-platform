@@ -1,6 +1,6 @@
 import { FernLogo, FernLogoFill, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { useIsHovering } from "@fern-ui/react-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { useDomain, useFeatureFlags } from "../atoms";
 import { FernLink } from "../components/FernLink";
 
@@ -31,7 +31,7 @@ export const BuiltWithFern: React.FC<BuiltWithFern.Props> = ({ className }) => {
                             className={"inline-flex items-baseline gap-1"}
                             {...containerCallbacks}
                         >
-                            <span className={cn("text-xs t-muted whitespace-nowrap")}>Built with</span>
+                            <span className={clsx("text-xs t-muted whitespace-nowrap")}>Built with</span>
                             <FernLogo
                                 fill={isHovering ? FernLogoFill.Default : FernLogoFill.Muted}
                                 className="-mt-0.5 h-3.5 transition"

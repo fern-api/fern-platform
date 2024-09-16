@@ -1,5 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import cn from "clsx";
+import clsx from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
@@ -112,7 +112,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
         <div
             ref={ref}
             id={href}
-            className={cn("scroll-mt-content-padded fern-api-property", {
+            className={clsx("scroll-mt-content-padded fern-api-property", {
                 "px-3": !contextValue.isRootTypeDefinition,
                 "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}

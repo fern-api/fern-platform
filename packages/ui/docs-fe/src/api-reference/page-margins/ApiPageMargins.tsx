@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { type MouseEventHandler, type PropsWithChildren } from "react";
 
 export declare namespace ApiPageMargins {
@@ -10,7 +10,7 @@ export declare namespace ApiPageMargins {
 
 export const ApiPageMargins: React.FC<PropsWithChildren<ApiPageMargins.Props>> = ({ children, className, onClick }) => {
     return (
-        <div className={cn("px-[5vw]", className)} onClick={onClick}>
+        <div className={clsx("px-[5vw]", className)} onClick={onClick}>
             {children}
         </div>
     );

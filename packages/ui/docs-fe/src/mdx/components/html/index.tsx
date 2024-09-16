@@ -1,5 +1,5 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
-import cn from "clsx";
+import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import {
     AnchorHTMLAttributes,
@@ -28,23 +28,23 @@ export const P: FC<{ variant: "api" | "markdown" } & ComponentProps<"p">> = ({ v
 };
 
 export const Strong: FC<ComponentProps<"strong">> = ({ className, ...rest }) => {
-    return <strong {...rest} className={cn(className, "font-semibold")} />;
+    return <strong {...rest} className={clsx(className, "font-semibold")} />;
 };
 
 export const Ol: FC<ComponentProps<"ol">> = ({ className, ...rest }) => {
-    return <ol {...rest} className={cn(className, "list-outside list-decimal space-y-2 mb-3")} />;
+    return <ol {...rest} className={clsx(className, "list-outside list-decimal space-y-2 mb-3")} />;
 };
 
 export const Ul: FC<ComponentProps<"ul">> = ({ className, ...rest }) => {
-    return <ul {...rest} className={cn(className, "list-outside list-disc space-y-2 mb-3")} />;
+    return <ul {...rest} className={clsx(className, "list-outside list-disc space-y-2 mb-3")} />;
 };
 
 export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
-    return <li {...rest} className={cn(className)} />;
+    return <li {...rest} className={clsx(className)} />;
 };
 
 export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ className, children, href, ...rest }) => {
-    const cnCombined = cn("fern-mdx-link", className);
+    const cnCombined = clsx("fern-mdx-link", className);
     const hideExternalLinkIcon = isValidElement(children) && (children.type === "img" || children.type === Image);
 
     return (

@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-platform/core-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { Fragment, ReactNode } from "react";
 import { Markdown } from "../../mdx/Markdown";
 import type { BundledMDX } from "../../mdx/types";
@@ -39,7 +39,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
         <div className="flex flex-col">
             <Markdown
                 size="sm"
-                className={cn("t-muted pb-5 leading-6", {
+                className={clsx("t-muted pb-5 leading-6", {
                     "border-default border-b": requestBody.shape.type !== "formData",
                 })}
                 mdx={requestBody.description}

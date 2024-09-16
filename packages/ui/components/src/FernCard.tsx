@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { ComponentProps, forwardRef } from "react";
 
 export interface FernCardProps {
@@ -11,7 +11,7 @@ export const FernCard = forwardRef<HTMLDivElement, ComponentProps<"div">>(functi
 ) {
     return (
         <div
-            className={cn(
+            className={clsx(
                 "fern-card",
                 {
                     interactive: props.onClick != null || props.onClickCapture != null,

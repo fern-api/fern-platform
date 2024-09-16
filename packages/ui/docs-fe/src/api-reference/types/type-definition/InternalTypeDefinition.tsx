@@ -1,8 +1,8 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { FernTooltipProvider } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-platform/core-utils";
+import { FernTooltipProvider } from "@fern-ui/components";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { ReactElement, memo, useCallback, useMemo } from "react";
 import { useRouteListener } from "../../../atoms";
 import { Chip } from "../../../components/Chip";
@@ -174,7 +174,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
 
     const renderContent = () => (
         <div
-            className={cn(
+            className={clsx(
                 "text-sm internal-type-definition-container",
                 collapsableContent.elementNameSingular === "enum value" ? "enum-container" : undefined,
             )}

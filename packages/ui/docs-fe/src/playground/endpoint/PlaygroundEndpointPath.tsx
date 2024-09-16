@@ -1,8 +1,8 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-platform/core-utils";
+import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import * as Dialog from "@radix-ui/react-dialog";
-import cn from "clsx";
+import clsx from "clsx";
 import { Xmark } from "iconoir-react";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
@@ -69,7 +69,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                                 return (
                                     <span
                                         key={idx}
-                                        className={cn({
+                                        className={clsx({
                                             "bg-accent-highlight t-accent px-1 rounded before:content-[':']":
                                                 stateValue.length === 0,
                                             "t-accent font-semibold": stateValue.length > 0,

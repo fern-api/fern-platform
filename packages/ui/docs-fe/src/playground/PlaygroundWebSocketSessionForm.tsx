@@ -1,6 +1,6 @@
-import { FernButton, FernCard, FernScrollArea } from "@fern-ui/components";
 import { titleCase } from "@fern-platform/core-utils";
-import cn from "clsx";
+import { FernButton, FernCard, FernScrollArea } from "@fern-ui/components";
+import clsx from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { WebSocketMessage, WebSocketMessages } from "../api-reference/web-socket/WebSocketMessages";
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
@@ -111,7 +111,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                             )}
 
                             <span
-                                className={cn("-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5", {
+                                className={clsx("-mr-1 inline-flex items-center gap-2 rounded-lg px-2 py-0.5", {
                                     "bg-tag-primary t-accent": connected,
                                     "bg-tag-danger text-intent-danger": !connected,
                                 })}
@@ -121,7 +121,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                                         <span className="bg-accent absolute inline-flex size-full animate-ping rounded-full opacity-75" />
                                     )}
                                     <span
-                                        className={cn("relative inline-flex size-2 rounded-full", {
+                                        className={clsx("relative inline-flex size-2 rounded-full", {
                                             "bg-accent": connected,
                                             "bg-border-danger": !connected,
                                         })}

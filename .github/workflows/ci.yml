@@ -34,7 +34,7 @@ jobs:
         run: pnpm depcheck
 
       - name: Check format
-        run: pnpm format:check
+        run: pnpm lint:prettier
 
   lint:
     runs-on: CLI

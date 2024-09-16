@@ -1,5 +1,5 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-ui/components";
-import cn from "clsx";
+import clsx from "clsx";
 import { Page, PagePlusIn, Xmark } from "iconoir-react";
 import { uniqBy } from "lodash-es";
 import numeral from "numeral";
@@ -104,7 +104,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     multiple={type === "fileArray"}
                 />
                 <FernCard
-                    className={cn("w-full rounded-lg", {
+                    className={clsx("w-full rounded-lg", {
                         elevated: drag,
                     })}
                     onDragOver={dragOver}

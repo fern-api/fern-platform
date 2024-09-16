@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import React, { ReactElement } from "react";
 
 export declare namespace Badge {
@@ -19,7 +19,7 @@ export function Badge({
 }: Badge.Props): ReactElement {
     return (
         <span
-            className={cn(
+            className={clsx(
                 "rounded-full text-xs px-1.5 py-0.5",
                 {
                     "ring-1 ring-inset": outlined,

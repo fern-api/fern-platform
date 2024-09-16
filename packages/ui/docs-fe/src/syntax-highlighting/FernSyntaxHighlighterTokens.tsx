@@ -1,5 +1,5 @@
 import { FernScrollArea } from "@fern-ui/components";
-import cn from "clsx";
+import clsx from "clsx";
 import type { Element } from "hast";
 import { isEqual } from "lodash-es";
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
@@ -119,14 +119,14 @@ export const FernSyntaxHighlighterTokens = memo(
 
         return (
             <pre
-                className={cn("code-block-root not-prose", className)}
+                className={clsx("code-block-root not-prose", className)}
                 style={{ ...style, ...preStyle }}
                 ref={ref}
                 tabIndex={0}
             >
                 <FernScrollArea ref={scrollAreaRef} style={{ maxHeight: getMaxHeight(fontSize, maxLines) }}>
                     <code
-                        className={cn("code-block", {
+                        className={clsx("code-block", {
                             "text-xs": fontSize === "sm",
                             "text-sm": fontSize === "base",
                             "text-base": fontSize === "lg",
@@ -134,7 +134,7 @@ export const FernSyntaxHighlighterTokens = memo(
                     >
                         <div className="code-block-inner">
                             <table
-                                className={cn("code-block-line-group", {
+                                className={clsx("code-block-line-group", {
                                     "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
                                     "word-wrap": wordWrap,
                                 })}
@@ -148,7 +148,7 @@ export const FernSyntaxHighlighterTokens = memo(
                                 <tbody>
                                     {lines.map((line, lineNumber) => (
                                         <tr
-                                            className={cn("code-block-line", {
+                                            className={clsx("code-block-line", {
                                                 highlight: highlightedLines.includes(lineNumber),
                                             })}
                                             key={lineNumber}

@@ -1,5 +1,5 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
-import cn from "clsx";
+import clsx from "clsx";
 import { forwardRef } from "react";
 import { FernDropdown } from "./FernDropdown";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
@@ -12,7 +12,7 @@ interface FernRadioGroupProps extends RadioGroup.RadioGroupProps {
 
 export const FernRadioGroup = forwardRef<HTMLDivElement, FernRadioGroupProps>(
     ({ options, className, compact, container, ...props }, ref) => (
-        <RadioGroup.Root className={cn("fern-radio-group", { compact }, className)} {...props} ref={ref}>
+        <RadioGroup.Root className={clsx("fern-radio-group", { compact }, className)} {...props} ref={ref}>
             <FernTooltipProvider>
                 {options.map(
                     (item) =>
@@ -23,7 +23,7 @@ export const FernRadioGroup = forwardRef<HTMLDivElement, FernRadioGroupProps>(
                                         <RadioGroup.Indicator className="fern-radio-indicator" />
                                     </RadioGroup.Item>
                                     <div className="ml-2 flex-1">
-                                        <div className={cn("text-sm font-semibold", item.labelClassName)}>
+                                        <div className={clsx("text-sm font-semibold", item.labelClassName)}>
                                             {item.label}
                                         </div>
                                         {item.helperText && <p className="t-muted mb-0 text-sm">{item.helperText}</p>}

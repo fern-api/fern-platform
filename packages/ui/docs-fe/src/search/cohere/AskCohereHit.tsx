@@ -34,7 +34,7 @@ export const AskCohereHit: React.FC<SearchHit.Props> = ({
     return (
         <a
             ref={(elem) => setRef?.(elem)}
-            className={cn("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 cursor-pointer", {
+            className={clsx("flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 cursor-pointer", {
                 "bg-accent-highlight": isHovered,
             })}
             onMouseEnter={onMouseEnter}

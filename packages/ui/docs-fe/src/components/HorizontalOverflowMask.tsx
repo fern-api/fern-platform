@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import fastdom from "fastdom";
 import React, { PropsWithChildren, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { noop } from "ts-essentials";
@@ -45,7 +45,7 @@ export const HorizontalOverflowMask = React.forwardRef<HTMLDivElement, PropsWith
         return (
             <div
                 ref={ref}
-                className={cn(
+                className={clsx(
                     "fern-x-overflow",
                     {
                         ["left-mask"]: showLeftMask,

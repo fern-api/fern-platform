@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { ComponentProps, forwardRef, PropsWithChildren } from "react";
 
 export declare namespace MonospaceText {
@@ -12,7 +12,7 @@ export const MonospaceText = forwardRef<HTMLSpanElement, ComponentProps<"span">>
     ref,
 ) {
     return (
-        <span ref={ref} className={cn(className, "font-mono")} {...props}>
+        <span ref={ref} className={clsx(className, "font-mono")} {...props}>
             {children}
         </span>
     );

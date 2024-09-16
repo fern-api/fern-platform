@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { MonospaceText } from "../../../components/MonospaceText";
 import { Markdown } from "../../../mdx/Markdown";
 import { ResolvedEnumValue } from "../../../resolver/types";
@@ -15,7 +15,7 @@ export const EnumValue: React.FC<EnumValue.Props> = ({ enumValue }) => {
 
     return (
         <div
-            className={cn("flex flex-col gap-2 py-2", {
+            className={clsx("flex flex-col gap-2 py-2", {
                 "px-2": !isRootTypeDefinition,
             })}
         >

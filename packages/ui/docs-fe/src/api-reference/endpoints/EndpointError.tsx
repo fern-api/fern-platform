@@ -1,8 +1,8 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernCollapse } from "@fern-ui/components";
 import { titleCase, visitDiscriminatedUnion } from "@fern-platform/core-utils";
-import cn from "clsx";
+import { FernCollapse } from "@fern-ui/components";
+import clsx from "clsx";
 import { MouseEventHandler, memo } from "react";
 import {
     ResolvedError,
@@ -46,7 +46,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
 }) {
     return (
         <button
-            className={cn(
+            className={clsx(
                 "space flex flex-col items-start px-3 hover:bg-tag-default-soft transition-colors py-3",
                 {
                     "bg-tag-default-soft": isSelected,

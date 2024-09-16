@@ -1,5 +1,5 @@
 import { FernButton, FernTooltip } from "@fern-ui/components";
-import cn from "clsx";
+import clsx from "clsx";
 import { HelpCircle, Xmark } from "iconoir-react";
 import { FC, PropsWithChildren } from "react";
 import { EndpointAvailabilityTag } from "../api-reference/endpoints/EndpointAvailabilityTag";
@@ -83,14 +83,14 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
 }) => {
     return (
         <div
-            className={cn({
+            className={clsx({
                 "flex gap-2 max-sm:flex-col": renderInline,
                 "space-y-2": !renderInline,
             })}
         >
             <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2">
                 <label className="inline-flex items-baseline gap-2 truncate" htmlFor={htmlFor}>
-                    <span className={cn("font-mono text-sm")}>{propertyKey}</span>
+                    <span className={clsx("font-mono text-sm")}>{propertyKey}</span>
 
                     {description != null && (
                         <FernTooltip content={<Markdown mdx={description} size="xs" />} delayDuration={0}>
@@ -127,7 +127,7 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
             </div>
 
             <div
-                className={cn("flex", {
+                className={clsx("flex", {
                     "flex-1 shrink min-w-0": !isBoolean,
                 })}
             >

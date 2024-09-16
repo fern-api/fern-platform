@@ -1,5 +1,5 @@
 import { FernButton } from "@fern-ui/components";
-import cn from "clsx";
+import clsx from "clsx";
 import { Plus, Xmark } from "iconoir-react";
 import { memo, useCallback } from "react";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
@@ -49,7 +49,7 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
                     {valueAsList.map((item, idx) => (
                         <li
                             key={idx}
-                            className={cn("min-h-12 w-full space-y-2", {
+                            className={clsx("min-h-12 w-full space-y-2", {
                                 "py-2": renderInline,
                                 "pt-2 pb-4": !renderInline,
                             })}

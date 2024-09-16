@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { ArrowRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
@@ -14,7 +14,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
     }
     return (
         <div
-            className={cn("border-concealed list-none -mx-4 border-t p-4 mt-4", {
+            className={clsx("border-concealed list-none -mx-4 border-t p-4 mt-4", {
                 "lg:hidden": layout?.disableHeader !== true,
             })}
         >
@@ -33,7 +33,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
                                 <ArrowRight className="!size-icon" />
                             ) : undefined)
                         }
-                        className={cn("w-full", {
+                        className={clsx("w-full", {
                             "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
                         })}
                         variant={

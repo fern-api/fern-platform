@@ -1,6 +1,6 @@
 import { FernTooltip } from "@fern-ui/components";
 import { useCopyToClipboard } from "@fern-ui/react-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { ReactElement } from "react";
 import { Markdown } from "../mdx/Markdown";
 import type { BundledMDX } from "../mdx/types";
@@ -25,7 +25,7 @@ export const Chip = ({ name, description = undefined, small }: ChipProps): React
             }
         >
             <span
-                className={cn(
+                className={clsx(
                     "t-default bg-tag-default hover:bg-tag-default-hover cursor-default font-mono text-xs flex items-center",
                     {
                         ["py-1 px-1.5 rounded-md h-5"]: small,

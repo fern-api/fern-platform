@@ -1,7 +1,7 @@
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
-import cn from "clsx";
+import clsx from "clsx";
 import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
 import { useNavigationNodes } from "../../atoms";
@@ -110,7 +110,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
     return (
         <div className={"fern-endpoint-content"} ref={ref} id={useHref(websocket.slug)}>
             <article
-                className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
+                className={clsx("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi,
                 })}
             >

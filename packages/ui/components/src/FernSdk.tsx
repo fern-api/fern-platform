@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { arrayIncludes, objectKeys } from "ts-extras";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
 import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
@@ -123,7 +123,7 @@ export const FernSdk: React.FC<{
                         const { icon, name, color } = languageProps[lang];
                         return (
                             <button
-                                className={cn(
+                                className={clsx(
                                     "py-2 w-16 flex flex-col items-center gap-2 text-center border-b-2",
                                     activeLanguage === lang ? "border-primary" : "border-transparent",
                                 )}

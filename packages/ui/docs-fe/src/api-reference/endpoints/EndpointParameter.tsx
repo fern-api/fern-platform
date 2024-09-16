@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import cn from "clsx";
+import clsx from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";
@@ -95,7 +95,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
         <div
             ref={ref}
             id={href}
-            className={cn("scroll-mt-content-padded relative flex flex-col gap-2 py-3", {
+            className={clsx("scroll-mt-content-padded relative flex flex-col gap-2 py-3", {
                 "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >

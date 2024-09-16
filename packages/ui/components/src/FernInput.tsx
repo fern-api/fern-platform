@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { ComponentProps, forwardRef } from "react";
 
 export interface FernInputProps extends ComponentProps<"input"> {
@@ -14,11 +14,11 @@ export const FernInput = forwardRef<HTMLInputElement, FernInputProps>(function F
     ref,
 ) {
     return (
-        <div className={cn("fern-input-group", className)}>
+        <div className={clsx("fern-input-group", className)}>
             {leftIcon && <span className="fern-input-icon">{leftIcon}</span>}
             <input
                 ref={ref}
-                className={cn("fern-input", inputClassName)}
+                className={clsx("fern-input", inputClassName)}
                 value={value}
                 onChange={(e) => {
                     onChange?.(e);

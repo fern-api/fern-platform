@@ -1,5 +1,5 @@
 import { useBooleanState, useResizeObserver } from "@fern-ui/react-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { ReactElement, useRef, useState } from "react";
 import { ResolvedEndpointDefinition } from "../../resolver/types";
@@ -26,7 +26,7 @@ export function PlaygroundEndpointDescription({ endpoint }: PlaygroundEndpointDe
     return (
         <section className="callout-soft mt-4 hidden rounded-xl p-4" onClick={toggleShowFullDescription}>
             <div
-                className={cn({
+                className={clsx({
                     ["description-mask"]: !showFullDescription,
                 })}
                 ref={descriptionRef}

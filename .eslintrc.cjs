@@ -12,31 +12,32 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:@next/next/recommended",
-        "plugin:storybook/recommended"
+        "plugin:storybook/recommended",
+        "turbo",
     ],
     plugins: ["deprecation", "import", "tailwindcss", "vitest"], // "react-refresh",
     env: {
         browser: true,
-        es2021: true
+        es2021: true,
     },
     settings: {
         react: {
-            version: "^18.3.1"
+            version: "^18.3.1",
         },
         next: {
-            rootDir: ["apps/docs-bundle/", "apps/local-preview-bundle", "apps/icons-cdn/"]
-        }
+            rootDir: ["apps/docs-bundle/", "apps/local-preview-bundle", "apps/icons-cdn/"],
+        },
     },
     parser: "@typescript-eslint/parser",
     parserOptions: {
         project: "./**/tsconfig.json",
         ecmaFeatures: {
-            jsx: true
+            jsx: true,
         },
         ecmaVersion: 12,
         sourceType: "module",
         allowAutomaticSingleRunInference: true,
-        tsconfigRootDir: __dirname
+        tsconfigRootDir: __dirname,
     },
     rules: {
         "import/no-default-export": "off",
@@ -45,27 +46,27 @@ module.exports = {
             {
                 varsIgnorePattern: "^_",
                 argsIgnorePattern: "^_",
-                ignoreRestSiblings: true
-            }
+                ignoreRestSiblings: true,
+            },
         ],
         "@typescript-eslint/no-namespace": [
             "error",
             {
-                allowDeclarations: true
-            }
+                allowDeclarations: true,
+            },
         ],
         "@typescript-eslint/explicit-module-boundary-types": [
             "error",
             {
-                allowHigherOrderFunctions: false
-            }
+                allowHigherOrderFunctions: false,
+            },
         ],
         "@typescript-eslint/no-floating-promises": ["error"],
         "@typescript-eslint/no-empty-function": [
             "error",
             {
-                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"]
-            }
+                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
+            },
         ],
         "@typescript-eslint/await-thenable": "error",
         "@typescript-eslint/no-base-to-string": "error",
@@ -78,8 +79,8 @@ module.exports = {
         "no-empty": [
             "error",
             {
-                allowEmptyCatch: true
-            }
+                allowEmptyCatch: true,
+            },
         ],
         "no-unused-vars": "off",
         "tailwindcss/classnames-order": "off",
@@ -87,8 +88,8 @@ module.exports = {
             "error",
             "double",
             {
-                avoidEscape: true
-            }
+                avoidEscape: true,
+            },
         ],
         semi: ["error", "always"],
         indent: "off",
@@ -98,8 +99,8 @@ module.exports = {
             "error",
             "always",
             {
-                null: "never"
-            }
+                null: "never",
+            },
         ],
         curly: "error",
         "react/react-in-jsx-scope": "off",
@@ -107,7 +108,7 @@ module.exports = {
         "tailwindcss/no-custom-classname": "off",
         "@next/next/no-html-link-for-pages": "off",
         "@next/next/no-img-element": "off",
-        "react/display-name": "off"
+        "react/display-name": "off",
         // "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     },
     overrides: [
@@ -118,22 +119,22 @@ module.exports = {
                 "@typescript-eslint/no-explicit-any": "off",
                 "@typescript-eslint/no-unused-vars": "off",
                 "@typescript-eslint/no-floating-promises": "off",
-                "@typescript-eslint/no-base-to-string": "off"
-            }
+                "@typescript-eslint/no-base-to-string": "off",
+            },
         },
         {
             files: ["servers/fdr/**/*", "servers/fern-bot/**/*"],
             rules: {
                 eqeqeq: "off",
-                "no-console": "off"
-            }
+                "no-console": "off",
+            },
         },
         {
             files: ["packages/ui/**/*"],
             rules: {
                 "@typescript-eslint/no-explicit-any": "off",
-                "@typescript-eslint/no-empty-object-type": "off"
-            }
+                "@typescript-eslint/no-empty-object-type": "off",
+            },
         },
         {
             files: ["**/__test__/**/*"],
@@ -146,17 +147,17 @@ module.exports = {
                 "@typescript-eslint/no-unused-vars": "off",
                 "@typescript-eslint/explicit-module-boundary-types": "off",
                 "react/display-name": "off",
-                "@typescript-eslint/no-require-imports": "off"
-            }
+                "@typescript-eslint/no-require-imports": "off",
+            },
         },
         {
             files: ["**/*.cjs"],
             env: {
-                node: true
+                node: true,
             },
             rules: {
-                "@typescript-eslint/no-require-imports": "off"
-            }
-        }
-    ]
+                "@typescript-eslint/no-require-imports": "off",
+            },
+        },
+    ],
 };

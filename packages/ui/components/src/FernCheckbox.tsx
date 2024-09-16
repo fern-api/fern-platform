@@ -1,5 +1,5 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
-import cn from "clsx";
+import clsx from "clsx";
 import { Check } from "iconoir-react";
 import { FC, ReactNode } from "react";
 
@@ -19,7 +19,7 @@ export const FernCheckbox: FC<FernCheckboxProps> = ({
     compact,
     ...props
 }) => (
-    <label className={cn("fern-checkbox-label", { compact })}>
+    <label className={clsx("fern-checkbox-label", { compact })}>
         <Checkbox.Root className="fern-checkbox-item" {...props}>
             <Checkbox.Indicator className="fern-checkbox-indicator">
                 <Check />
@@ -27,7 +27,7 @@ export const FernCheckbox: FC<FernCheckboxProps> = ({
         </Checkbox.Root>
 
         <div className="ml-2 flex-1">
-            <div className={cn("text-sm font-semibold", labelClassName)}>{label}</div>
+            <div className={clsx("text-sm font-semibold", labelClassName)}>{label}</div>
             {helperText && <p className="t-muted mb-0 text-xs">{helperText}</p>}
             {children}
         </div>

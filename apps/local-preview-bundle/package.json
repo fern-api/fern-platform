@@ -23,7 +23,6 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "depcheck": "depcheck",
     "dev": "next dev",
-    "lint": "next lint",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "start": "node server.js",
     "test": "vitest --run --passWithNoTests --globals"

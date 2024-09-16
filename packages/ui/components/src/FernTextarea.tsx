@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { ComponentProps, forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 
 interface FernTextareaProps extends ComponentProps<"textarea"> {
@@ -20,7 +20,7 @@ export const FernTextarea = forwardRef<HTMLTextAreaElement, FernTextareaProps>(f
     };
     useAutosizeTextArea(inputRef.current, props.value ?? "", minLines);
     return (
-        <div className={cn("fern-textarea-group", className)}>
+        <div className={clsx("fern-textarea-group", className)}>
             <textarea {...props} ref={inputRef} className="fern-textarea" onChange={handleChange} />
         </div>
     );

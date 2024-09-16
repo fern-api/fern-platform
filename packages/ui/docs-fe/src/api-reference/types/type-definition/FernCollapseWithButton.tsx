@@ -1,5 +1,5 @@
 import { FernButton, FernButtonProps, FernCollapse } from "@fern-ui/components";
-import cn from "clsx";
+import clsx from "clsx";
 import { Xmark } from "iconoir-react";
 import { FC, PropsWithChildren, ReactNode, useState } from "react";
 
@@ -30,7 +30,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
 
     return (
         <div
-            className={cn(
+            className={clsx(
                 "fern-collapse-with-button data-[state=opening]:overflow-hidden data-[state=closing]:overflow-hidden",
                 "ring-default flex flex-col max-md:rounded-xl rounded-lg ring-1 m-px",
                 {
@@ -42,7 +42,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
         >
             <FernButton
                 {...buttonProps}
-                className={cn("fern-collapse-trigger text-left", buttonProps?.className)}
+                className={clsx("fern-collapse-trigger text-left", buttonProps?.className)}
                 onClick={(e) => {
                     toggleIsOpen();
                     e.stopPropagation();
@@ -51,7 +51,7 @@ export const FernCollapseWithButton: FC<PropsWithChildren<FernCollapseWithButton
                 icon={
                     typeof text === "string" ? (
                         <Xmark
-                            className={cn("transition", {
+                            className={clsx("transition", {
                                 "rotate-45": !isOpen,
                             })}
                         />

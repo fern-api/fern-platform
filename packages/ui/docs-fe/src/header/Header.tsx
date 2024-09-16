@@ -1,6 +1,6 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import cn from "clsx";
+import clsx from "clsx";
 import { ArrowRight, Search } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { isEqual } from "lodash-es";
@@ -80,12 +80,12 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const githubRepo = githubLink && getGitHubRepo(githubLink.url);
 
     return (
-        <nav aria-label="primary" className={cn("fern-header-content", className)} ref={ref} style={style}>
+        <nav aria-label="primary" className={clsx("fern-header-content", className)} ref={ref} style={style}>
             <HeaderLogoSection />
 
             {showSearchBar && (
                 <div
-                    className={cn("fern-header-searchbar", {
+                    className={clsx("fern-header-searchbar", {
                         invisible: isSearchBoxMounted,
                     })}
                 >
@@ -94,7 +94,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             )}
 
             <div
-                className={cn("fern-header-right-menu", {
+                className={clsx("fern-header-right-menu", {
                     "flex-1": showSearchBar,
                 })}
             >

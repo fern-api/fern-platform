@@ -1,5 +1,5 @@
 import { FernScrollArea } from "@fern-ui/components";
-import cn from "clsx";
+import clsx from "clsx";
 import type { Element } from "hast";
 import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
@@ -31,7 +31,7 @@ const CodeBlockTable = forwardRef<HTMLTableElement, FernScrollArea.Props & { con
 
         return (
             <code
-                className={cn("code-block", {
+                className={clsx("code-block", {
                     "text-xs": fontSize === "sm",
                     "text-sm": fontSize === "base",
                     "text-base": fontSize === "lg",
@@ -39,7 +39,7 @@ const CodeBlockTable = forwardRef<HTMLTableElement, FernScrollArea.Props & { con
             >
                 <div className="code-block-inner">
                     <table
-                        className={cn("code-block-line-group", {
+                        className={clsx("code-block-line-group", {
                             "highlight-focus": highlightStyle === "focus" && highlightedLines.length > 0,
                             "word-wrap": context?.wordWrap,
                         })}
@@ -67,7 +67,7 @@ const CodeBlockTableRow = forwardRef<HTMLTableRowElement, ItemProps<Element> & {
         <tr
             {...props}
             ref={ref}
-            className={cn("code-block-line", {
+            className={clsx("code-block-line", {
                 highlight: context?.highlightedLines.includes(props["data-index"]),
             })}
         />
@@ -178,7 +178,7 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
 
         return (
             <pre
-                className={cn("code-block-root not-prose", className)}
+                className={clsx("code-block-root not-prose", className)}
                 style={{ ...style, ...preStyle }}
                 ref={ref}
                 tabIndex={0}

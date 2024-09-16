@@ -88,7 +88,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
     }
 
     const renderLink = (child: ReactElement) => {
-        const linkClassName = cn(linkClassNameProp, "fern-sidebar-link", { "opacity-50": hidden });
+        const linkClassName = clsx(linkClassNameProp, "fern-sidebar-link", { "opacity-50": hidden });
 
         return href != null ? (
             <FernLink
@@ -138,7 +138,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
             data-state={showIndicator ? "active" : "inactive"}
         >
             <NavArrowDown
-                className={cn("size-icon-md lg:size-icon", {
+                className={clsx("size-icon-md lg:size-icon", {
                     "-rotate-90": !expanded,
                     "rotate-0": expanded,
                 })}
@@ -149,7 +149,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
     return (
         <div
             ref={ref}
-            className={cn("fern-sidebar-link-container", className)}
+            className={clsx("fern-sidebar-link-container", className)}
             data-state={selected ? "active" : "inactive"}
         >
             {withTooltip(

@@ -10,7 +10,7 @@ interface SdkActivityStackProps {
 const SdkStackIcon: React.FC<{ sdk: SdkLanguage; idx: number; total: number }> = ({ sdk, idx, total }) => {
     return (
         <div
-            className={cn(
+            className={clsx(
                 "w-10 h-10 rounded-full bg-gray-200 absolute content-center text-center border-2 border-white leading-[normal]",
                 {
                     "z-30 group-hover:-translate-x-14 -left-7": idx === 0 && total >= 3,

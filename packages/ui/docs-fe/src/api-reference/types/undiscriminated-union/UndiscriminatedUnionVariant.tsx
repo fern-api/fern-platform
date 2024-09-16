@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-platform/core-utils";
-import cn from "clsx";
+import clsx from "clsx";
 import { ReactElement, useCallback } from "react";
 import { Markdown } from "../../../mdx/Markdown";
 import {
@@ -108,7 +108,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
 
     return (
         <div
-            className={cn("flex flex-col py-3", {
+            className={clsx("flex flex-col py-3", {
                 "px-3": !isRootTypeDefinition,
             })}
         >

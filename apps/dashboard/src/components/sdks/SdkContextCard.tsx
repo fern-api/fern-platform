@@ -170,7 +170,7 @@ export const SdkContextCard: React.FC<DummySdkContextCardProps> = (props) => {
                 <FernButton
                     icon={publishStatusContent.icon}
                     variant="outlined"
-                    className={cn(publishStatusContent.color, {
+                    className={clsx(publishStatusContent.color, {
                         "shadow-[0px_0px_5px_0px_#4C1EC0AA]": publishStatusContent.buttonStatus === "PRIMARY",
                     })}
                     disabled

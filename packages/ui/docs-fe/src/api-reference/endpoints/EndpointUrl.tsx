@@ -1,7 +1,7 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { CopyToClipboardButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-platform/core-utils";
-import cn from "clsx";
+import { CopyToClipboardButton } from "@fern-ui/components";
+import clsx from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { noop } from "ts-essentials";
 import { parse } from "url";
@@ -98,10 +98,10 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     }, [path, selectedEnvironment, showEnvironment, allEnvironmentIds]);
 
     return (
-        <div ref={ref} className={cn("flex h-8 items-center gap-1 pr-2", className)}>
+        <div ref={ref} className={clsx("flex h-8 items-center gap-1 pr-2", className)}>
             <HttpMethodTag method={method} />
 
-            <div className={cn("flex items-center")}>
+            <div className={clsx("flex items-center")}>
                 <span
                     className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} py-0.5 px-1 rounded-md cursor-default`}
                 >
@@ -120,7 +120,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                 onMouseLeave={() => setIsHovered(false)}
                             >
                                 <span
-                                    className={cn("font-mono", {
+                                    className={clsx("font-mono", {
                                         "text-xs": !large,
                                         "text-sm": large,
                                     })}

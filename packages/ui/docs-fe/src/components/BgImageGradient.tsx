@@ -1,4 +1,4 @@
-import cn from "clsx";
+import clsx from "clsx";
 import { FC } from "react";
 import { useColors } from "../atoms";
 
@@ -17,7 +17,7 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({ className }) => {
 
     return (
         <div
-            className={cn(className, "fern-background", {
+            className={clsx(className, "fern-background", {
                 "from-accent/10 bg-gradient-to-b to-transparent":
                     lightBackground?.type === "gradient" && lightBackgroundImage == null,
                 "dark:from-accent/10 dark:bg-gradient-to-b dark:to-transparent":
