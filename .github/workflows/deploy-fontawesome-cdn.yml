@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/fontawesome-cdn
+name: Deploy @fern-platform/icons-cdn
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_MO0ayWSAeIoBYh8Cd13oigkd9knl
@@ -29,7 +29,7 @@ jobs:
         with:
           ref: ${{ github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/fontawesome-cdn"
+          package: "@fern-platform/icons-cdn"
           environment: production
           force: true
           promote: true

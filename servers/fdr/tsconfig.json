@@ -1,5 +1,5 @@
 {
-  "extends": "@fern-platform/configs/tsconfig/server.json",
+  "extends": "@fern-platform/tsconfig/server.json",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",

@@ -1,0 +1,63 @@
+{
+  "name": "@fern-platform/icons-cdn",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "apps/icons-cdn"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "next build",
+    "depcheck": "depcheck",
+    "dev": "next dev",
+    "lint": "next lint",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "start": "next start",
+    "test": "vitest --run --passWithNoTests --globals"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/pro-duotone-svg-icons": "^6.5.2",
+    "@fortawesome/pro-light-svg-icons": "^6.5.2",
+    "@fortawesome/pro-regular-svg-icons": "^6.5.2",
+    "@fortawesome/pro-solid-svg-icons": "^6.5.2",
+    "@fortawesome/pro-thin-svg-icons": "^6.5.2",
+    "@fortawesome/sharp-light-svg-icons": "^6.5.2",
+    "@fortawesome/sharp-regular-svg-icons": "^6.5.2",
+    "@fortawesome/sharp-solid-svg-icons": "^6.5.2",
+    "@fortawesome/sharp-thin-svg-icons": "^6.5.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@fern-platform/tsconfig": "workspace:*",
+    "@next/bundle-analyzer": "14.2.9",
+    "@types/node": "^18.7.18",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "depcheck": "^1.4.3",
+    "next": "npm:@fern-api/next@14.2.9-fork.0",
+    "organize-imports-cli": "^0.10.0",
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
+  },
+  "optionalDependencies": {
+    "@next/swc-darwin-arm64": "14.2.9",
+    "@next/swc-darwin-x64": "14.2.9",
+    "@next/swc-linux-x64-gnu": "14.2.9",
+    "@next/swc-win32-x64-msvc": "14.2.9"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@fern-platform/configs/tsconfig/react-library.json",
+  "extends": "@fern-platform/tsconfig/react-library.json",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist"

@@ -1,4 +1,4 @@
-import { useResizeObserver } from "@fern-ui/react-commons";
+import { useResizeObserver } from "@fern-ui/react-utils";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import cn, { clsx } from "clsx";
 import { Check, InfoCircle } from "iconoir-react";

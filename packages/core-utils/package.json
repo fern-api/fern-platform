@@ -1,0 +1,44 @@
+{
+  "name": "@fern-platform/core-utils",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/core-utils"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "test": "vitest --run --passWithNoTests --globals"
+  },
+  "dependencies": {
+    "strip-ansi": "^7.1.0",
+    "title": "^3.5.3",
+    "ua-parser-js": "^1.0.35"
+  },
+  "devDependencies": {
+    "@fern-platform/tsconfig": "workspace:*",
+    "@types/node": "^18.7.18",
+    "@types/title": "^3.4.3",
+    "@types/ua-parser-js": "^0.7.39",
+    "depcheck": "^1.4.3",
+    "organize-imports-cli": "^0.10.0",
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
+  }
+}

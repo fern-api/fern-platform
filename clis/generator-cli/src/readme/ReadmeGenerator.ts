@@ -1,4 +1,4 @@
-import { cloneRepository } from "@fern-api/github";
+import { cloneRepository } from "@fern-platform/github";
 import fs from "fs";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernGeneratorCli } from "../configuration/generated";

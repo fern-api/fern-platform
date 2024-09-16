@@ -1,0 +1,4 @@
+{
+  "ignores": ["@fern-platform/tsconfig", "@types/node", "vite", "@types/react"],
+  "ignore-patterns": ["dist"]
+}

@@ -1,5 +1,5 @@
 {
-  "extends": "@fern-platform/configs/tsconfig/cli.json",
+  "extends": "@fern-platform/tsconfig/cli.json",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist"
@@ -8,7 +8,7 @@
   "exclude": ["node_modules"],
   "references": [
     {
-      "path": "../../packages/commons/github"
+      "path": "../../packages/github"
     }
   ]
 }

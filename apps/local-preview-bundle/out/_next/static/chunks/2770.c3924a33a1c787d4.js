@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[2770],{52770:function(t,e,n){n.d(e,{formatSnippet:function(){return a}});var r=n(17422),i=n(35897),u=n(27004);async function a(t){if("typescript"===t.type){let e=await u.WU(t.client,{tabWidth:4,parser:"babel",plugins:[r.Z,i]});return{...t,client:e}}return t}}}]);

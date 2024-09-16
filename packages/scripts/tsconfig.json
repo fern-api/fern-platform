@@ -1,5 +1,5 @@
 {
-  "extends": "@fern-platform/configs/tsconfig/cli.json",
+  "extends": "@fern-platform/tsconfig/cli.json",
   "compilerOptions": {
     "isolatedModules": false,
     "rootDir": "src",

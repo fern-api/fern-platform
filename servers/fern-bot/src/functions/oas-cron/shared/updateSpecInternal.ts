@@ -1,4 +1,4 @@
-import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
+import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-platform/github";
 import { generateChangelog, generateCommitMessage } from "@libs/cohere";
 import { execFernCli } from "@libs/fern";
 import { DEFAULT_REMOTE_NAME, Repository, cloneRepo, configureGit } from "@libs/github";

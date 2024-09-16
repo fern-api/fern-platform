@@ -1,4 +1,4 @@
-import { useEventCallback } from "@fern-ui/react-commons";
+import { useEventCallback } from "@fern-ui/react-utils";
 import cn from "clsx";
 import { Minus, Plus } from "iconoir-react";
 import {

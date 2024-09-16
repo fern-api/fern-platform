@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { DocsConfiguration, NavigationItem } from "@fern-fern/docs-config/api";
 import * as serializer from "@fern-fern/docs-config/serialization";
-import { titleCase } from "@fern-ui/core-utils";
+import { titleCase } from "@fern-platform/core-utils";
 import fs from "fs";
 import grayMatter from "gray-matter";
 import jsyaml from "js-yaml";

@@ -1,12 +1,16 @@
 {
   "name": "@fern-ui/chatbot",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fern-api/fern-platform.git",
     "directory": "packages/ui/chatbot"
   },
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "type": "module",
   "exports": {
     "./src/index.scss": "./src/index.scss",
@@ -15,20 +19,12 @@
   "files": [
     "src"
   ],
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ],
   "scripts": {
-    "test": "vitest --run --passWithNoTests --globals",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
-    "lint:eslint:fix": "pnpm lint:eslint --fix",
-    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "depcheck": "depcheck",
+    "lint:style": "stylelint 'src/**/*.{css,scss}' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
     "@fern-ui/components": "workspace:*",
@@ -42,31 +38,26 @@
     "remark-gfm": "^4.0.0",
     "uuid": "^9.0.0"
   },
-  "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
   "devDependencies": {
-    "@fern-platform/configs": "workspace:*",
+    "@fern-platform/stylelint-config": "workspace:*",
+    "@fern-platform/tsconfig": "workspace:*",
     "@tailwindcss/typography": "^0.5.10",
     "@types/hast": "^3.0.4",
     "@types/lodash-es": "^4.17.12",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@types/uuid": "^9.0.1",
-    "@typescript-eslint/eslint-plugin": "^7.15.0",
-    "@typescript-eslint/parser": "^7.15.0",
     "depcheck": "^1.4.3",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.7",
     "organize-imports-cli": "^0.10.0",
-    "prettier": "^3.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "stylelint": "^16.1.0",
     "tailwindcss": "^3.4.3",
     "typescript": "5.4.3",
     "vitest": "^2.1.1"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

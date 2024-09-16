@@ -1,4 +1,4 @@
-name: Preview @fern-ui/dashboard (dev)
+name: Preview @fern-platform/dashboard (dev)
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_pxVBPOeLKJLEUkQXXMHKWq8h6Z0f
@@ -34,5 +34,5 @@ jobs:
         with:
           ref: ${{ github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/dashboard"
+          package: "@fern-platform/dashboard"
           environment: preview

@@ -1,0 +1,49 @@
+{
+  "name": "@fern-ui/next-seo",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/ui/next-seo"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "test": "vitest --run --passWithNoTests --globals"
+  },
+  "dependencies": {
+    "next": "npm:@fern-api/next@14.2.9-fork.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@fern-platform/tsconfig": "workspace:*",
+    "@types/node": "^18.7.18",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "depcheck": "^1.4.3",
+    "organize-imports-cli": "^0.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

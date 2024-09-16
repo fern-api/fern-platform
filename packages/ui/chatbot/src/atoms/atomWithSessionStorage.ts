@@ -1,5 +1,6 @@
 import { atomWithStorage, RESET } from "jotai/utils";
 import type { WritableAtom } from "jotai/vanilla";
+import { noop } from "lodash-es";
 
 export function atomWithSessionStorage<Value>(
     key: string,
@@ -18,6 +19,7 @@ export function atomWithSessionStorage<Value>(
                 }
                 return JSON.parse(stored);
             } catch (e) {
+                // eslint-disable-next-line no-console
                 console.error(e);
             }
             return initialValue;
@@ -30,6 +32,7 @@ export function atomWithSessionStorage<Value>(
             try {
                 window.sessionStorage.setItem(key, JSON.stringify(newValue));
             } catch (e) {
+                // eslint-disable-next-line no-console
                 console.error(e);
             }
         },
@@ -41,17 +44,18 @@ export function atomWithSessionStorage<Value>(
             try {
                 window.sessionStorage.removeItem(key);
             } catch (e) {
+                // eslint-disable-next-line no-console
                 console.error(e);
             }
         },
         subscribe: (key, callback) => {
             if (typeof window === "undefined") {
-                return () => {};
+                return noop;
             }
 
             const listener = (event: StorageEvent) => {
                 if (event.key === key && event.storageArea === window.sessionStorage) {
-                    if (event.newValue === null) {
+                    if (event.newValue == null) {
                         callback(initialValue);
                     } else {
                         callback(JSON.parse(event.newValue));

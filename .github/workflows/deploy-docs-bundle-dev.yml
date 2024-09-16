@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/docs-bundle (dev)
+name: Deploy @fern-platform/docs-bundle (dev)
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_QnsiTm1ijJP6cS23K5da6lL02wbp
@@ -32,6 +32,6 @@ jobs:
         with:
           ref: ${{ github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/docs-bundle"
+          package: "@fern-platform/docs-bundle"
           environment: production
           promote: true

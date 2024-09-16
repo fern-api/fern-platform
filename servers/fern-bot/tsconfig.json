@@ -1,14 +1,14 @@
 {
-  "extends": "@fern-platform/configs/tsconfig/base.json",
+  "extends": "@fern-platform/tsconfig/base.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@functions/*": ["src/functions/*"],
       "@libs/*": ["src/libs/*"]
     },
     "lib": ["ESNext", "DOM"],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
@@ -33,7 +33,7 @@
   },
   "references": [
     {
-      "path": "../../packages/commons/github"
+      "path": "../../packages/github"
     }
   ]
 }

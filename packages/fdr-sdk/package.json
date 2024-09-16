@@ -1,11 +1,13 @@
 {
   "name": "@fern-api/fdr-sdk",
   "version": "0.0.0",
-  "files": [
-    "dist"
-  ],
-  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/fdr-sdk"
+  },
   "sideEffects": false,
+  "type": "module",
   "exports": {
     "./navigation": {
       "types": "./src/navigation/index.ts",
@@ -19,6 +21,17 @@
       "types": "./src/index.ts",
       "default": "./dist/index.js"
     }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./dist && tsc --build --clean",
+    "compile": "tsc --build",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev",
+    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
+    "test": "vitest --run"
   },
   "dependencies": {
     "dayjs": "^1.11.11",
@@ -37,25 +50,12 @@
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.24.3",
     "@babel/preset-typescript": "^7.24.1",
-    "@fern-api/eslint-config": "workspace:*",
-    "@fern-platform/configs": "workspace:*",
+    "@fern-platform/tsconfig": "workspace:*",
     "@types/node-fetch": "2.6.9",
     "@types/qs": "6.9.14",
     "@types/tinycolor2": "^1.4.6",
     "@types/title": "^3.4.3",
-    "eslint": "^8.56.0",
-    "prettier": "^3.3.2",
     "typescript": "5.4.3",
     "vitest": "^1.5.0"
-  },
-  "scripts": {
-    "compile": "tsc --build",
-    "dev": "tsc --watch",
-    "clean": "rm -rf ./dist && tsc --build --clean",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
-    "test": "vitest --run",
-    "docs:dev": "pnpm dev"
   }
 }

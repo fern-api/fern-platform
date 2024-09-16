@@ -1,0 +1,28 @@
+{
+  "extends": "@fern-platform/tsconfig/nextjs.json",
+  "include": ["src", ".next/types", "__mocks__", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
+  "references": [
+    {
+      "path": "../../packages/core-utils"
+    },
+    {
+      "path": "../../packages/fdr-utils"
+    },
+    {
+      "path": "../../packages/ui/search-utils"
+    },
+    {
+      "path": "../../packages/fdr-sdk"
+    },
+    {
+      "path": "../../packages/ui/docs-fe"
+    },
+    {
+      "path": "../../packages/ui/chatbot"
+    },
+    {
+      "path": "../../packages/ui/components"
+    }
+  ]
+}

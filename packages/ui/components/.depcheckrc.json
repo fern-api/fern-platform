@@ -1,6 +1,6 @@
 {
   "ignores": [
-    "@fern-platform/configs",
+    "@fern-platform/tsconfig",
     "@types/node",
     "vite",
     "@types/react",

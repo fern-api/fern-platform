@@ -9,6 +9,6 @@
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["node", "next", "vitest/globals"],
-    "plugins": [{ "name": "next" }],
+    "plugins": [{ "name": "next" }]
   }
 }

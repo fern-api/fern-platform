@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/dashboard
+name: Deploy @fern-platform/dashboard
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_59B94Hus48Nbb0XrqFYZSALYmYTw
@@ -35,7 +35,7 @@ jobs:
         with:
           ref: ${{ github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/dashboard"
+          package: "@fern-platform/dashboard"
           environment: production
           force: true
           promote: true

@@ -1,4 +1,4 @@
-import { useCopyToClipboard } from "@fern-ui/react-commons";
+import { useCopyToClipboard } from "@fern-ui/react-utils";
 import cn from "clsx";
 import { Check, Copy } from "iconoir-react";
 import { FernButton } from "./FernButton";

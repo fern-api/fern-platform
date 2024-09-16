@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/docs-bundle
+name: Deploy @fern-platform/docs-bundle
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -31,7 +31,7 @@ jobs:
         id: deploy
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/docs-bundle"
+          package: "@fern-platform/docs-bundle"
           environment: production
           force: true
 
@@ -52,7 +52,7 @@ jobs:
         id: deploy
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/docs-bundle"
+          package: "@fern-platform/docs-bundle"
           environment: production
           force: true
 
@@ -73,7 +73,7 @@ jobs:
         id: deploy
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/docs-bundle"
+          package: "@fern-platform/docs-bundle"
           environment: production
           force: true
 

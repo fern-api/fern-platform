@@ -1,0 +1,22 @@
+{
+  "extends": "@fern-platform/tsconfig/nextjs.json",
+  "include": ["src", ".next/types", "next-env.d.ts"],
+  "exclude": ["node_modules"],
+  "references": [
+    {
+      "path": "../../packages/core-utils"
+    },
+    {
+      "path": "../../packages/fdr-utils"
+    },
+    {
+      "path": "../../packages/fdr-sdk"
+    },
+    {
+      "path": "../../packages/ui/docs-fe"
+    },
+    {
+      "path": "../../packages/ui/components"
+    }
+  ]
+}

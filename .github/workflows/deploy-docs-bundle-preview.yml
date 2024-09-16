@@ -1,4 +1,4 @@
-name: Preview @fern-ui/docs-bundle
+name: Preview @fern-platform/docs-bundle
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -35,7 +35,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/docs-bundle"
+          package: "@fern-platform/docs-bundle"
           environment: preview
           force: ${{ github.event_name == 'workflow_dispatch' }}
 
@@ -87,7 +87,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/docs-bundle"
+          package: "@fern-platform/docs-bundle"
           environment: preview
 
   ete:

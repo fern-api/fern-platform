@@ -7,3 +7,4 @@ generated
 bundle.c?js
 .pnp*
 **/generated
+node_modules

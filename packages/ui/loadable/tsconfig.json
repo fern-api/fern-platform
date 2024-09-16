@@ -1,0 +1,10 @@
+{
+  "extends": "@fern-platform/tsconfig/react-library.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"],
+  "references": [{ "path": "../../core-utils" }]
+}

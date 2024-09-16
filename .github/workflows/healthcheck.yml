@@ -28,7 +28,7 @@ jobs:
       - name: 🧪 Build Healthchecks CLI
         run: |
           pnpm turbo compile
-          pnpm --filter=@fern-api/healthchecks compile
+          pnpm --filter=@fern-platform/healthchecks compile
 
       - name: Run Healthchecks
         run: |

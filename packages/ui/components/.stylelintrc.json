@@ -1,1 +1,1 @@
-{ "extends": ["../../../shared/stylelintrc.shared.json"] }
+{ "extends": ["@fern-platform/stylelint-config"] }

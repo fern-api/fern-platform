@@ -1,7 +1,7 @@
-import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import { ChangelogResponse } from "@fern-fern/generators-sdk/api/resources/generators";
+import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-platform/github";
 import { execFernCli } from "@libs/fern";
 import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit, type Repository } from "@libs/github/utilities";
 import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService";
@@ -147,7 +147,7 @@ export async function updateVersionInternal(
     try {
         maybeOrganization = cleanStdout((await execFernCli("organization", fullRepoPath)).stdout);
         console.log(`Found organization ID: ${maybeOrganization}`);
-    } catch (error) {
+    } catch (_error) {
         console.error(
             "Could not determine the repo owner, continuing to upgrade CLI, but will fail generator upgrades.",
         );

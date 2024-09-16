@@ -1,5 +1,5 @@
-name: E2E @fern-ui/docs-bundle
-description: Run Playwright tests on the @fern-ui/docs-bundle package
+name: E2E @fern-platform/docs-bundle
+description: Run Playwright tests on the @fern-platform/docs-bundle package
 
 inputs:
   deployment_url:

@@ -1,3 +1,3 @@
-# `@fern-platform/configs`
+# `@fern-platform/tsconfig`
 
 Shared `tsconfig.json`s.

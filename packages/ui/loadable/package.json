@@ -1,0 +1,40 @@
+{
+  "name": "@fern-ui/loadable",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/ui/loadable"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "test": "vitest --run --passWithNoTests --globals"
+  },
+  "dependencies": {
+    "@fern-platform/core-utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@fern-platform/tsconfig": "workspace:*",
+    "@types/node": "^18.7.18",
+    "depcheck": "^1.4.3",
+    "organize-imports-cli": "^0.10.0",
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
+  }
+}

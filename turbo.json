@@ -13,7 +13,6 @@
       "dependsOn": ["^compile"]
     },
     "lint": {},
-    "lint:eslint": {},
     "lint:style": {},
     "lint:eslint:fix": {},
     "lint:style:fix": {},
@@ -40,5 +39,5 @@
       "dependsOn": ["^build", "^compile"]
     }
   },
-  "globalDependencies": [".eslintrc.js", ".prettierrc.json"]
+  "globalDependencies": [".eslintrc.cjs", ".prettierrc.cjs"]
 }

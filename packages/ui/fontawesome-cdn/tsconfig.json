@@ -1,8 +1,0 @@
-{
-  "extends": "@fern-platform/configs/tsconfig/nextjs.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "include": ["src", "next-env.d.ts", ".next/types"],
-  "exclude": ["node_modules"]
-}

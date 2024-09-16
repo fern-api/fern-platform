@@ -61,6 +61,8 @@ beforeEach(async () => {
 
 it(
     "happy path fern-bot upgrade",
+    // 30s timeout
+    { timeout: 300000 },
     async () => {
         const env = evaluateEnv();
         const app: App = setupGithubApp(env);
@@ -160,6 +162,4 @@ it(
             expect(upgradedJavaVersion).not.toBe(javaVersion);
         });
     },
-    // 30s timeout
-    { timeout: 300000 },
 );

@@ -1,9 +1,11 @@
 {
   "name": "@fern-api/template-resolver",
   "version": "0.0.0",
-  "files": [
-    "dist"
-  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/template-resolver"
+  },
   "type": "module",
   "exports": {
     ".": {
@@ -11,30 +13,26 @@
       "default": "./dist/index.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "compile": "tsc --build",
-    "dev": "tsc --watch",
-    "compile:cjs": "tsc --build -f tsconfig.cjs.json",
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
-    "lint:eslint:fix": "pnpm lint:eslint --fix",
-    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
-    "lint:style:fix": "pnpm lint:style --fix",
+    "compile": "tsc --build",
+    "compile:cjs": "tsc --build -f tsconfig.cjs.json",
+    "dev": "tsc --watch",
     "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
-    "prettier": "^3.3.2",
-    "@fern-api/fdr-sdk": "workspace:*"
+    "@fern-api/fdr-sdk": "workspace:*",
+    "prettier": "^3.3.2"
   },
   "devDependencies": {
-    "@fern-platform/configs": "workspace:*",
+    "@fern-platform/tsconfig": "workspace:*",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
-    "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "typescript": "5.4.3"

@@ -1,0 +1,17 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "./rmiz";
+@import "./base";
+@import "@fern-ui/components/src/index";
+@import "@fern-ui/chatbot/src/index";
+@import "./components";
+@import "../syntax-highlighting/FernSyntaxHighlighter";
+@import "../api-reference";
+@import "../playground";
+@import "../components";
+@import "../mdx/components";
+@import "./utilities";
+@import "../themes";
+@import "../header";
+@import "../sidebar";

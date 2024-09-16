@@ -1,0 +1,22 @@
+{
+  "extends": "@fern-platform/tsconfig/react-library.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": ["node", "next", "vitest/globals"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "**/__mocks__"],
+  "references": [
+    { "path": "../../core-utils" },
+    { "path": "../../fdr-utils" },
+    { "path": "../loadable" },
+    { "path": "../next-seo" },
+    { "path": "../react-utils" },
+    { "path": "../search-utils" },
+    { "path": "../../fdr-sdk" },
+    { "path": "../../template-resolver" },
+    { "path": "../chatbot" },
+    { "path": "../components" }
+  ]
+}
