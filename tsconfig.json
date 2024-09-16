@@ -16,7 +16,8 @@
     "scripts/**/*",
     ".eslintrc.cjs",
     ".eslintrc.lint-staged.cjs",
-    "lint-staged.config.cjs"
+    "lint-staged.config.cjs",
+    "tailwind.config.cjs"
   ],
   "exclude": ["node_modules"]
 }
