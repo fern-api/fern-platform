@@ -1,6 +1,7 @@
 name: Preview @fern-ui/docs-bundle
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
 
@@ -34,7 +35,6 @@ jobs:
           VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
-          token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/docs-bundle"
           environment: preview
           force: ${{ github.event_name == 'workflow_dispatch' }}
@@ -86,7 +86,6 @@ jobs:
           VERCEL_PROJECT_ID: prj_QnsiTm1ijJP6cS23K5da6lL02wbp
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
-          token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/docs-bundle"
           environment: preview
 
@@ -102,7 +101,6 @@ jobs:
       - name: Generate preview URLs
         env:
           DEPLOYMENT_URL: ${{ needs.deploy.outputs.deployment_url }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           PR_PREVIEW: ${{ github.event_name == 'pull_request' }}
         run: node scripts/fetch-domains.js
 

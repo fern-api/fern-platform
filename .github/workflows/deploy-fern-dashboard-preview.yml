@@ -2,6 +2,7 @@ name: Preview @fern-ui/dashboard (dev)
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_pxVBPOeLKJLEUkQXXMHKWq8h6Z0f
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
   # TODO: move to env vars in vercel
@@ -33,6 +34,5 @@ jobs:
         id: deploy
         with:
           ref: ${{ github.ref_name || github.ref }}
-          token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/dashboard"
           environment: preview

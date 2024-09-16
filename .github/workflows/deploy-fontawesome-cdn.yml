@@ -2,6 +2,7 @@ name: Deploy @fern-ui/fontawesome-cdn
 env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_MO0ayWSAeIoBYh8Cd13oigkd9knl
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
 
@@ -28,7 +29,6 @@ jobs:
         id: deploy
         with:
           ref: ${{ github.ref_name || github.ref }}
-          token: ${{ secrets.VERCEL_TOKEN }}
           package: "@fern-ui/fontawesome-cdn"
           environment: production
           force: true
