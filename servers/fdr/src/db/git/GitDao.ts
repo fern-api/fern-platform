@@ -40,10 +40,14 @@ export interface GitDao {
     listRepository({
         page,
         pageSize,
+        repositoryOwner,
+        repositoryName,
         organizationId,
     }: {
-        page: number | undefined;
-        pageSize: number | undefined;
+        page?: number | undefined;
+        pageSize?: number | undefined;
+        repositoryOwner: string | undefined;
+        repositoryName: string | undefined;
         organizationId: string | undefined;
     }): Promise<ListRepositoriesResponse>;
 
@@ -56,7 +60,7 @@ export interface GitDao {
     }: {
         repositoryOwner: string;
         repositoryName: string;
-        pullRequestNumber: string;
+        pullRequestNumber: number;
     }): Promise<PullRequest | undefined>;
 
     listPullRequests({
@@ -66,8 +70,8 @@ export interface GitDao {
         repositoryName,
         organizationId,
     }: {
-        page: number | undefined;
-        pageSize: number | undefined;
+        page?: number | undefined;
+        pageSize?: number | undefined;
         repositoryOwner: string | undefined;
         repositoryName: string | undefined;
         organizationId: string | undefined;
@@ -82,7 +86,7 @@ export interface GitDao {
     }: {
         repositoryOwner: string;
         repositoryName: string;
-        pullRequestNumber: string;
+        pullRequestNumber: number;
     }): Promise<void>;
 }
 
@@ -95,20 +99,20 @@ export class GitDaoImpl implements GitDao {
         repositoryName,
         organizationId,
     }: {
-        page: number | undefined;
-        pageSize: number | undefined;
+        page?: number | undefined;
+        pageSize?: number | undefined;
         repositoryOwner: string | undefined;
         repositoryName: string | undefined;
         organizationId: string | undefined;
     }): Promise<ListPullRequestsResponse> {
-        let where: Record<string, unknown> = {};
-        if (repositoryOwner) {
+        const where: Record<string, unknown> = {};
+        if (repositoryOwner != null) {
             where["repositoryOwner"] = repositoryOwner;
         }
-        if (repositoryName) {
+        if (repositoryName != null) {
             where["repositoryName"] = repositoryName;
         }
-        if (organizationId) {
+        if (organizationId != null) {
             where["repository"] = {
                 repositoryOwnerOrganizationId: organizationId,
             };
@@ -117,6 +121,9 @@ export class GitDaoImpl implements GitDao {
             skip: page * pageSize,
             take: pageSize,
             where,
+            orderBy: {
+                createdAt: "desc",
+            },
         });
 
         return { pullRequests: pull.map(convertPrismaPullRequest).filter((g): g is PullRequest => g != null) };
@@ -131,7 +138,7 @@ export class GitDaoImpl implements GitDao {
             reviewers: writeBuffer(pullRequest.reviewers),
             checks: writeBuffer(pullRequest.checks),
             title: pullRequest.title,
-            link: pullRequest.link,
+            url: pullRequest.url,
             state: pullRequest.state,
             createdAt: new Date(pullRequest.createdAt),
             updatedAt: pullRequest.updatedAt ? new Date(pullRequest.updatedAt) : null,
@@ -159,7 +166,7 @@ export class GitDaoImpl implements GitDao {
     }: {
         repositoryOwner: string;
         repositoryName: string;
-        pullRequestNumber: string;
+        pullRequestNumber: number;
     }): Promise<void> {
         this.prisma.pullRequest.delete({
             where: {
@@ -179,7 +186,7 @@ export class GitDaoImpl implements GitDao {
     }: {
         repositoryOwner: string;
         repositoryName: string;
-        pullRequestNumber: string;
+        pullRequestNumber: number;
     }): Promise<PullRequest | undefined> {
         return convertPrismaPullRequest(
             await this.prisma.pullRequest.findUnique({
@@ -221,20 +228,33 @@ export class GitDaoImpl implements GitDao {
     async listRepository({
         page = 0,
         pageSize = 20,
+        repositoryOwner,
+        repositoryName,
         organizationId,
     }: {
-        page: number | undefined;
-        pageSize: number | undefined;
+        page?: number | undefined;
+        pageSize?: number | undefined;
+        repositoryOwner: string | undefined;
+        repositoryName: string | undefined;
         organizationId: string | undefined;
     }): Promise<ListRepositoriesResponse> {
-        let where: Record<string, string> = {};
-        if (organizationId) {
+        const where: Record<string, string> = {};
+        if (repositoryOwner != null) {
+            where["repositoryOwner"] = repositoryOwner;
+        }
+        if (repositoryName != null) {
+            where["repositoryName"] = repositoryName;
+        }
+        if (organizationId != null) {
             where["repositoryOwnerOrganizationId"] = organizationId;
         }
         const repos = await this.prisma.repository.findMany({
             skip: page * pageSize,
             take: pageSize,
             where,
+            orderBy: {
+                fullName: "asc",
+            },
         });
 
         return { repositories: repos.map(convertPrismaRepo).filter((g): g is FernRepository => g != null) };
@@ -280,7 +300,7 @@ function convertPrismaPullRequest(maybePR: prisma.PullRequest | null): PullReque
         reviewers: readBuffer(maybePR.reviewers) as PullRequestReviewer[],
         checks: readBuffer(maybePR.checks) as CheckRun[],
         title: maybePR.title,
-        link: maybePR.link,
+        url: maybePR.url,
         state: maybePR.state,
         createdAt: maybePR.createdAt.toISOString(),
         updatedAt: maybePR.updatedAt?.toISOString(),

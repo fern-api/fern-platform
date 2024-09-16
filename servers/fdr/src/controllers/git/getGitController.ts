@@ -31,6 +31,8 @@ export function getGitController(app: FdrApplication): GitService {
             const repos = await app.dao.git().listRepository({
                 page: req.query.page,
                 pageSize: req.query.pageSize,
+                repositoryName: req.query.repositoryName,
+                repositoryOwner: req.query.repositoryOwner,
                 organizationId: req.query.organizationId,
             });
 
@@ -77,13 +79,11 @@ export function getGitController(app: FdrApplication): GitService {
         async deletePullRequest(req, res) {
             await checkIsFernUser(req.headers.authorization);
 
-            await app.dao
-                .git()
-                .deletePullRequest({
-                    repositoryName: req.params.repositoryName,
-                    repositoryOwner: req.params.repositoryOwner,
-                    pullRequestNumber: req.params.pullRequestNumber,
-                });
+            await app.dao.git().deletePullRequest({
+                repositoryName: req.params.repositoryName,
+                repositoryOwner: req.params.repositoryOwner,
+                pullRequestNumber: req.params.pullRequestNumber,
+            });
         },
     });
 }

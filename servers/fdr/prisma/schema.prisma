@@ -234,7 +234,7 @@ enum PullRequestState {
 
 model PullRequest {
   @@id([pullRequestNumber, repositoryOwner, repositoryName])
-  pullRequestNumber String
+  pullRequestNumber Int
   // PRs coming from GitHub do not seem to contain the repo ID, but rather the owner and repo name, so let's use that
   // instead of always performing a look up to get ID from name and owner.
   repositoryOwner   String
@@ -246,7 +246,7 @@ model PullRequest {
   checks       Bytes
 
   title        String
-  link         String
+  url         String
   state        PullRequestState
 
   createdAt    DateTime

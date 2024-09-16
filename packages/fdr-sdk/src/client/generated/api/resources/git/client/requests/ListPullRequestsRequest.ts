@@ -10,17 +10,17 @@ import * as FernRegistry from "../../../../index";
  *         page: 1,
  *         pageSize: 1,
  *         repositoryName: "string",
- *         repositorOwner: "string",
+ *         repositoryOwner: "string",
  *         organizationId: "string"
  *     }
  */
 export interface ListPullRequestsRequest {
     /**
-     * The page integer to retrieve. Defaults to 0.
+     * The page number to retrieve. Defaults to 0.
      */
     page?: number;
     /**
-     * The integer of items to retrieve per page. Defaults to 20.
+     * The number of items to retrieve per page. Defaults to 20.
      */
     pageSize?: number;
     /**
@@ -30,7 +30,7 @@ export interface ListPullRequestsRequest {
     /**
      * The organization name of the repository owner to filter pull requests by (ex: fern-api).
      */
-    repositorOwner?: string;
+    repositoryOwner?: string;
     /**
      * The Fern organization ID to filter repositories by.
      */

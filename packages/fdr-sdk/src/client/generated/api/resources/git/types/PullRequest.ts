@@ -5,13 +5,13 @@
 import * as FernRegistry from "../../../index";
 
 export interface PullRequest {
-    pullRequestNumber: string;
+    pullRequestNumber: number;
     repositoryName: string;
     repositoryOwner: string;
     author: FernRegistry.GithubUser;
     reviewers: FernRegistry.PullRequestReviewer[];
     title: string;
-    link: string;
+    url: string;
     checks: FernRegistry.CheckRun[];
     state: FernRegistry.PullRequestState;
     createdAt: string;

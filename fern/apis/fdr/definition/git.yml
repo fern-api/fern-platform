@@ -6,7 +6,12 @@ imports:
   commons: ./commons.yml
 
 types:
-  # TODO: We may want these tracked in a separate table within the DB
+  # Soon to add to our data model:
+  #   - Orgs (internal)
+  #   - Products (internal)
+  #   - Features (internal)
+  #   - Checks (internal, within their own table)
+
   CheckRun:
     properties:
       checkId: string
@@ -24,10 +29,6 @@ types:
 
       rawCheckRun: unknown
 
-  # Soon to add to our data model:
-  #   - Orgs (internal)
-  #   - Products (internal)
-  #   - Features (internal)
   GithubRepositoryId:
     properties:
       id: string
@@ -91,13 +92,13 @@ types:
 
   PullRequest:
     properties:
-      pullRequestNumber: string
+      pullRequestNumber: integer
       repositoryName: string
       repositoryOwner: string
       author: GithubUser
       reviewers: list<PullRequestReviewer>
       title: string
-      link: string
+      url: string
       checks: list<CheckRun>
       state: PullRequestState
       createdAt: datetime
@@ -121,7 +122,7 @@ types:
   PullRequestNotFound:
     extends: RepositoryNotFound
     properties:
-      pullRequestNumber: string
+      pullRequestNumber: integer
 
 service:
   audiences:
@@ -150,13 +151,21 @@ service:
         query-parameters:
           page:
             type: optional<integer>
-            docs: The page integer to retrieve. Defaults to 0.
+            docs: The page number to retrieve. Defaults to 0.
           pageSize:
             type: optional<integer>
-            docs: The integer of items to retrieve per page. Defaults to 20.
+            docs: The number of items to retrieve per page. Defaults to 20.
           organizationId:
             type: optional<commons.OrgId>
             docs: The Fern organization ID to filter repositories by.
+          repositoryName:
+            type: optional<string>
+            docs: |
+              The name of the repository to filter pull requests by (ex: full-platform).
+          repositoryOwner:
+            type: optional<string>
+            docs: |
+              The organization name of the repository owner to filter pull requests by (ex: fern-api).
       response: ListRepositoriesResponse
 
     upsertRepository:
@@ -172,7 +181,7 @@ service:
       path-parameters:
         repositoryOwner: string
         repositoryName: string
-        pullRequestNumber: string
+        pullRequestNumber: integer
       response: PullRequest
 
     listPullRequests:
@@ -187,15 +196,15 @@ service:
         query-parameters:
           page:
             type: optional<integer>
-            docs: The page integer to retrieve. Defaults to 0.
+            docs: The page number to retrieve. Defaults to 0.
           pageSize:
             type: optional<integer>
-            docs: The integer of items to retrieve per page. Defaults to 20.
+            docs: The number of items to retrieve per page. Defaults to 20.
           repositoryName:
             type: optional<string>
             docs: |
               The name of the repository to filter pull requests by (ex: full-platform).
-          repositorOwner:
+          repositoryOwner:
             type: optional<string>
             docs: |
               The organization name of the repository owner to filter pull requests by (ex: fern-api).
@@ -217,7 +226,7 @@ service:
       path-parameters:
         repositoryOwner: string
         repositoryName: string
-        pullRequestNumber: string
+        pullRequestNumber: integer
 
 errors:
   PullRequestNotFoundError:

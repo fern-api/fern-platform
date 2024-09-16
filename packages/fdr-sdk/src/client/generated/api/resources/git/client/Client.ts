@@ -83,14 +83,16 @@ export class Git {
      *     await fernRegistry.git.listRepositories({
      *         page: 1,
      *         pageSize: 1,
-     *         organizationId: "string"
+     *         organizationId: "string",
+     *         repositoryName: "string",
+     *         repositoryOwner: "string"
      *     })
      */
     public async listRepositories(
         request: FernRegistry.ListRepositoriesRequest = {},
         requestOptions?: Git.RequestOptions
     ): Promise<core.APIResponse<FernRegistry.ListRepositoriesResponse, FernRegistry.git.listRepositories.Error>> {
-        const { page, pageSize, organizationId } = request;
+        const { page, pageSize, organizationId, repositoryName, repositoryOwner } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
@@ -102,6 +104,14 @@ export class Git {
 
         if (organizationId != null) {
             _queryParams["organizationId"] = organizationId;
+        }
+
+        if (repositoryName != null) {
+            _queryParams["repositoryName"] = repositoryName;
+        }
+
+        if (repositoryOwner != null) {
+            _queryParams["repositoryOwner"] = repositoryOwner;
         }
 
         const _response = await core.fetcher({
@@ -211,16 +221,16 @@ export class Git {
      *
      * @param {string} repositoryOwner
      * @param {string} repositoryName
-     * @param {string} pullRequestNumber
+     * @param {number} pullRequestNumber
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.getPullRequest("string", "string", "string")
+     *     await fernRegistry.git.getPullRequest("string", "string", 1)
      */
     public async getPullRequest(
         repositoryOwner: string,
         repositoryName: string,
-        pullRequestNumber: string,
+        pullRequestNumber: number,
         requestOptions?: Git.RequestOptions
     ): Promise<core.APIResponse<FernRegistry.PullRequest, FernRegistry.git.getPullRequest.Error>> {
         const _response = await core.fetcher({
@@ -266,7 +276,7 @@ export class Git {
      *         page: 1,
      *         pageSize: 1,
      *         repositoryName: "string",
-     *         repositorOwner: "string",
+     *         repositoryOwner: "string",
      *         organizationId: "string"
      *     })
      */
@@ -274,7 +284,7 @@ export class Git {
         request: FernRegistry.ListPullRequestsRequest = {},
         requestOptions?: Git.RequestOptions
     ): Promise<core.APIResponse<FernRegistry.ListPullRequestsResponse, FernRegistry.git.listPullRequests.Error>> {
-        const { page, pageSize, repositoryName, repositorOwner, organizationId } = request;
+        const { page, pageSize, repositoryName, repositoryOwner, organizationId } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
@@ -288,8 +298,8 @@ export class Git {
             _queryParams["repositoryName"] = repositoryName;
         }
 
-        if (repositorOwner != null) {
-            _queryParams["repositorOwner"] = repositorOwner;
+        if (repositoryOwner != null) {
+            _queryParams["repositoryOwner"] = repositoryOwner;
         }
 
         if (organizationId != null) {
@@ -335,7 +345,7 @@ export class Git {
      *
      * @example
      *     await fernRegistry.git.upsertPullRequest({
-     *         pullRequestNumber: "string",
+     *         pullRequestNumber: 1,
      *         repositoryName: "string",
      *         repositoryOwner: "string",
      *         author: {
@@ -350,7 +360,7 @@ export class Git {
      *                 username: "string"
      *             }],
      *         title: "string",
-     *         link: "string",
+     *         url: "string",
      *         checks: [{
      *                 checkId: "string",
      *                 repositoryOwner: "string",
@@ -413,16 +423,16 @@ export class Git {
      *
      * @param {string} repositoryOwner
      * @param {string} repositoryName
-     * @param {string} pullRequestNumber
+     * @param {number} pullRequestNumber
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.deletePullRequest("string", "string", "string")
+     *     await fernRegistry.git.deletePullRequest("string", "string", 1)
      */
     public async deletePullRequest(
         repositoryOwner: string,
         repositoryName: string,
-        pullRequestNumber: string,
+        pullRequestNumber: number,
         requestOptions?: Git.RequestOptions
     ): Promise<core.APIResponse<void, FernRegistry.git.deletePullRequest.Error>> {
         const _response = await core.fetcher({

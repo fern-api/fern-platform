@@ -3,5 +3,5 @@
  */
 import * as FernRegistry from "../../../index";
 export interface PullRequestNotFound extends FernRegistry.RepositoryNotFound {
-    pullRequestNumber: string;
+    pullRequestNumber: number;
 }

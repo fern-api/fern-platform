@@ -16,6 +16,8 @@ export interface GitServiceMethods {
         page?: number;
         pageSize?: number;
         organizationId?: FernRegistry.OrgId;
+        repositoryName?: string;
+        repositoryOwner?: string;
     }>, res: {
         send: (responseBody: FernRegistry.ListRepositoriesResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -29,7 +31,7 @@ export interface GitServiceMethods {
     getPullRequest(req: express.Request<{
         repositoryOwner: string;
         repositoryName: string;
-        pullRequestNumber: string;
+        pullRequestNumber: number;
     }, FernRegistry.PullRequest, never, never>, res: {
         send: (responseBody: FernRegistry.PullRequest) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -39,7 +41,7 @@ export interface GitServiceMethods {
         page?: number;
         pageSize?: number;
         repositoryName?: string;
-        repositorOwner?: string;
+        repositoryOwner?: string;
         organizationId?: FernRegistry.OrgId;
     }>, res: {
         send: (responseBody: FernRegistry.ListPullRequestsResponse) => Promise<void>;
@@ -54,7 +56,7 @@ export interface GitServiceMethods {
     deletePullRequest(req: express.Request<{
         repositoryOwner: string;
         repositoryName: string;
-        pullRequestNumber: string;
+        pullRequestNumber: number;
     }, never, never, never>, res: {
         send: () => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
