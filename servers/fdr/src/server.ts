@@ -17,6 +17,7 @@ import { getDocsWriteV2Service } from "./controllers/docs/v2/getDocsWriteV2Servi
 import { getGeneratorsCliController } from "./controllers/generators/getGeneratorsCliController";
 import { getGeneratorsRootController } from "./controllers/generators/getGeneratorsRootController";
 import { getGeneratorsVersionsController } from "./controllers/generators/getGeneratorsVersionsController";
+import { getGitController } from "./controllers/git/getGitController";
 import { getVersionsService } from "./controllers/sdk/getVersionsService";
 import { getSnippetsFactoryService } from "./controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "./controllers/snippets/getSnippetsService";
@@ -124,6 +125,7 @@ async function startServer(): Promise<void> {
                 versions: getGeneratorsVersionsController(app),
             },
             tokens: getTokensService(app),
+            git: getGitController(app),
         });
         registerBackgroundTasks(app);
         app.logger.info(`Listening for requests on port ${PORT}`);

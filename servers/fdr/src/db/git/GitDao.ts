@@ -1,0 +1,290 @@
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import * as prisma from "@prisma/client";
+import {
+    CheckRun,
+    FernRepository,
+    GithubUser,
+    ListPullRequestsResponse,
+    ListRepositoriesResponse,
+    PullRequest,
+    PullRequestReviewer,
+} from "../../api/generated/api";
+import { readBuffer, writeBuffer } from "../../util";
+
+export interface LoadSnippetAPIRequest {
+    orgId: string;
+    apiName: string;
+}
+
+export interface LoadSnippetAPIsRequest {
+    orgIds: string[];
+    apiName: string | undefined;
+}
+
+export type SnippetTemplatesByEndpoint = Record<
+    FdrAPI.EndpointPath,
+    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+>;
+
+export type SnippetTemplatesByEndpointIdentifier = Record<string, APIV1Read.EndpointSnippetTemplates>;
+
+export interface GitDao {
+    getRepository({
+        repositoryOwner,
+        repositoryName,
+    }: {
+        repositoryOwner: string;
+        repositoryName: string;
+    }): Promise<FernRepository | undefined>;
+
+    listRepository({
+        page,
+        pageSize,
+        organizationId,
+    }: {
+        page: number | undefined;
+        pageSize: number | undefined;
+        organizationId: string | undefined;
+    }): Promise<ListRepositoriesResponse>;
+
+    upsertRepository({ repository }: { repository: FernRepository }): Promise<void>;
+
+    getPullRequest({
+        repositoryOwner,
+        repositoryName,
+        pullRequestNumber,
+    }: {
+        repositoryOwner: string;
+        repositoryName: string;
+        pullRequestNumber: string;
+    }): Promise<PullRequest | undefined>;
+
+    listPullRequests({
+        page,
+        pageSize,
+        repositoryOwner,
+        repositoryName,
+        organizationId,
+    }: {
+        page: number | undefined;
+        pageSize: number | undefined;
+        repositoryOwner: string | undefined;
+        repositoryName: string | undefined;
+        organizationId: string | undefined;
+    }): Promise<ListPullRequestsResponse>;
+
+    upsertPullRequest({ pullRequest }: { pullRequest: PullRequest }): Promise<void>;
+
+    deletePullRequest({
+        repositoryOwner,
+        repositoryName,
+        pullRequestNumber,
+    }: {
+        repositoryOwner: string;
+        repositoryName: string;
+        pullRequestNumber: string;
+    }): Promise<void>;
+}
+
+export class GitDaoImpl implements GitDao {
+    constructor(private readonly prisma: prisma.PrismaClient) {}
+    async listPullRequests({
+        page = 0,
+        pageSize = 20,
+        repositoryOwner,
+        repositoryName,
+        organizationId,
+    }: {
+        page: number | undefined;
+        pageSize: number | undefined;
+        repositoryOwner: string | undefined;
+        repositoryName: string | undefined;
+        organizationId: string | undefined;
+    }): Promise<ListPullRequestsResponse> {
+        let where: Record<string, unknown> = {};
+        if (repositoryOwner) {
+            where["repositoryOwner"] = repositoryOwner;
+        }
+        if (repositoryName) {
+            where["repositoryName"] = repositoryName;
+        }
+        if (organizationId) {
+            where["repository"] = {
+                repositoryOwnerOrganizationId: organizationId,
+            };
+        }
+        const pull = await this.prisma.pullRequest.findMany({
+            skip: page * pageSize,
+            take: pageSize,
+            where,
+        });
+
+        return { pullRequests: pull.map(convertPrismaPullRequest).filter((g): g is PullRequest => g != null) };
+    }
+
+    async upsertPullRequest({ pullRequest }: { pullRequest: PullRequest }): Promise<void> {
+        const data: prisma.PullRequest = {
+            pullRequestNumber: pullRequest.pullRequestNumber,
+            repositoryOwner: pullRequest.repositoryOwner,
+            repositoryName: pullRequest.repositoryName,
+            author: writeBuffer(pullRequest.author),
+            reviewers: writeBuffer(pullRequest.reviewers),
+            checks: writeBuffer(pullRequest.checks),
+            title: pullRequest.title,
+            link: pullRequest.link,
+            state: pullRequest.state,
+            createdAt: new Date(pullRequest.createdAt),
+            updatedAt: pullRequest.updatedAt ? new Date(pullRequest.updatedAt) : null,
+            closedAt: pullRequest.closedAt ? new Date(pullRequest.closedAt) : null,
+            mergedAt: pullRequest.mergedAt ? new Date(pullRequest.mergedAt) : null,
+        };
+
+        await this.prisma.pullRequest.upsert({
+            where: {
+                pullRequestNumber_repositoryOwner_repositoryName: {
+                    pullRequestNumber: pullRequest.pullRequestNumber,
+                    repositoryOwner: pullRequest.repositoryOwner,
+                    repositoryName: pullRequest.repositoryName,
+                },
+            },
+            update: data,
+            create: data,
+        });
+    }
+
+    async deletePullRequest({
+        repositoryOwner,
+        repositoryName,
+        pullRequestNumber,
+    }: {
+        repositoryOwner: string;
+        repositoryName: string;
+        pullRequestNumber: string;
+    }): Promise<void> {
+        this.prisma.pullRequest.delete({
+            where: {
+                pullRequestNumber_repositoryOwner_repositoryName: {
+                    pullRequestNumber,
+                    repositoryOwner,
+                    repositoryName,
+                },
+            },
+        });
+    }
+
+    async getPullRequest({
+        repositoryOwner,
+        repositoryName,
+        pullRequestNumber,
+    }: {
+        repositoryOwner: string;
+        repositoryName: string;
+        pullRequestNumber: string;
+    }): Promise<PullRequest | undefined> {
+        return convertPrismaPullRequest(
+            await this.prisma.pullRequest.findUnique({
+                where: {
+                    pullRequestNumber_repositoryOwner_repositoryName: {
+                        pullRequestNumber,
+                        repositoryOwner,
+                        repositoryName,
+                    },
+                },
+            }),
+        );
+    }
+
+    async upsertRepository({ repository }: { repository: FernRepository }): Promise<void> {
+        const data: prisma.Repository = {
+            id: repository.id.id,
+            name: repository.name,
+            owner: repository.owner,
+            fullName: repository.fullName,
+            url: repository.url,
+            repositoryOwnerOrganizationId: repository.repositoryOwnerOrganizationId,
+            defaultBranchChecks: writeBuffer(repository.defaultBranchChecks),
+            contentType: repository.type,
+            systemType: repository.id.type,
+
+            rawRepository: writeBuffer(repository),
+        };
+
+        await this.prisma.repository.upsert({
+            where: {
+                id: repository.id.id,
+            },
+            update: data,
+            create: data,
+        });
+    }
+
+    async listRepository({
+        page = 0,
+        pageSize = 20,
+        organizationId,
+    }: {
+        page: number | undefined;
+        pageSize: number | undefined;
+        organizationId: string | undefined;
+    }): Promise<ListRepositoriesResponse> {
+        let where: Record<string, string> = {};
+        if (organizationId) {
+            where["repositoryOwnerOrganizationId"] = organizationId;
+        }
+        const repos = await this.prisma.repository.findMany({
+            skip: page * pageSize,
+            take: pageSize,
+            where,
+        });
+
+        return { repositories: repos.map(convertPrismaRepo).filter((g): g is FernRepository => g != null) };
+    }
+
+    async getRepository({
+        repositoryOwner,
+        repositoryName,
+    }: {
+        repositoryOwner: string;
+        repositoryName: string;
+    }): Promise<FernRepository | undefined> {
+        const maybeRepo = await this.prisma.repository.findUnique({
+            where: {
+                owner_name: {
+                    owner: repositoryOwner,
+                    name: repositoryName,
+                },
+            },
+        });
+        return convertPrismaRepo(maybeRepo);
+    }
+}
+
+function convertPrismaRepo(maybeRepo: prisma.Repository | null): FernRepository | undefined {
+    if (!maybeRepo) {
+        return undefined;
+    }
+
+    return readBuffer(maybeRepo.rawRepository) as FernRepository;
+}
+
+function convertPrismaPullRequest(maybePR: prisma.PullRequest | null): PullRequest | undefined {
+    if (!maybePR) {
+        return undefined;
+    }
+
+    return {
+        pullRequestNumber: maybePR.pullRequestNumber,
+        repositoryName: maybePR.repositoryName,
+        repositoryOwner: maybePR.repositoryOwner,
+        author: readBuffer(maybePR.author) as GithubUser,
+        reviewers: readBuffer(maybePR.reviewers) as PullRequestReviewer[],
+        checks: readBuffer(maybePR.checks) as CheckRun[],
+        title: maybePR.title,
+        link: maybePR.link,
+        state: maybePR.state,
+        createdAt: maybePR.createdAt.toISOString(),
+        updatedAt: maybePR.updatedAt?.toISOString(),
+        closedAt: maybePR.closedAt?.toISOString(),
+        mergedAt: maybePR.mergedAt?.toISOString(),
+    };
+}
