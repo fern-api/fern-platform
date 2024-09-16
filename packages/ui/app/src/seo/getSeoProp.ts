@@ -59,6 +59,7 @@ export function getSeoProps(
 
     let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? {};
     let seoTitleFromMarkdownH1;
+    let frontmatterHeadline;
 
     if (pageId != null) {
         const page = pages[pageId];
@@ -95,8 +96,9 @@ export function getSeoProps(
             }
 
             seoTitleFromMarkdownH1 = extractHeadline(content);
+            frontmatterHeadline = frontmatter.headline;
 
-            seo.title ??= frontmatter.headline ?? seoTitleFromMarkdownH1 ?? frontmatter.title;
+            seo.title ??= frontmatterHeadline ?? seoTitleFromMarkdownH1 ?? frontmatter.title;
             seo.description ??= frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
         }
     }
@@ -200,7 +202,7 @@ export function getSeoProps(
     seo.title ??= node.title;
     openGraph.siteName ??= title;
     if (title != null) {
-        seo.titleTemplate ??= seoTitleFromMarkdownH1 ?? `%s — ${title}`;
+        seo.titleTemplate ??= frontmatterHeadline ?? seoTitleFromMarkdownH1 ?? `%s — ${title}`;
     }
 
     if (favicon != null && files[favicon] != null) {
