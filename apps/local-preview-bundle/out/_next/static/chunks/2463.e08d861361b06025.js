@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[2463],{82463:function(n,e,u){u.r(e),u.d(e,{Blob:function(){return t},File:function(){return i},FormData:function(){return f}});var{FormData:f,Blob:t,File:i}="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:window}}]);

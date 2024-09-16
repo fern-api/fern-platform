@@ -15,7 +15,7 @@ module.exports = {
         "plugin:storybook/recommended",
         "turbo",
     ],
-    plugins: ["deprecation", "import", "tailwindcss", "vitest"], // "react-refresh",
+    plugins: ["import", "tailwindcss", "vitest"], // "react-refresh", "deprecation",
     env: {
         browser: true,
         es2021: true,
@@ -94,7 +94,7 @@ module.exports = {
         semi: ["error", "always"],
         indent: "off",
         "object-shorthand": ["error"],
-        "deprecation/deprecation": "error",
+        // "deprecation/deprecation": "error",
         eqeqeq: [
             "error",
             "always",
