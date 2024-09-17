@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@fern-fern/fern-docs-sdk": "0.0.5",
-    "@fern-fern/vercel": "0.0.4607",
+    "@fern-fern/vercel": "0.0.4650",
     "ts-essentials": "^10.0.1"
   }
 }

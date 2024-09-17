@@ -2,9 +2,13 @@ import { VercelClient } from "@fern-fern/vercel";
 import { writeFileSync } from "fs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import { promoteCommand } from "./commands/promote.js";
+import { revalidateAllCommand } from "./commands/revalidate-all.js";
 import { cwd } from "./cwd.js";
+import { cleanDeploymentId } from "./utils/clean-id.js";
 import { VercelDeployer } from "./utils/deployer.js";
-import { DocsRevalidator } from "./utils/revalidator.js";
+import { FernDocsRevalidator } from "./utils/revalidator.js";
+import { safeCommand } from "./utils/safeCommand.js";
 
 function isValidEnvironment(environment: string): environment is "preview" | "production" {
     return environment === "preview" || environment === "production";
@@ -49,13 +53,12 @@ void yargs(hideBin(process.argv))
                     choices: ["preview" as const, "production" as const],
                 })
                 .option("skip-deploy", { type: "boolean", description: "Skip the deploy step" })
-                .option("force", { type: "boolean", description: "Always deploy, even if the project is up-to-date" })
                 .option("output", {
                     type: "string",
                     description: "The output file to write the preview URLs to",
                     default: "deployment-url.txt",
                 }),
-        async ({ project, environment, token, teamName, teamId, output, skipDeploy, force }) => {
+        async ({ project, environment, token, teamName, teamId, output, skipDeploy }) => {
             if (!isValidEnvironment(environment)) {
                 throw new Error(`Invalid environment: ${environment}`);
             }
@@ -71,13 +74,10 @@ void yargs(hideBin(process.argv))
                 cwd: cwd(),
             });
 
-            const result = await cli.buildAndDeployToVercel(project, { skipDeploy, force });
+            const result = await cli.buildAndDeployToVercel(project, { skipDeploy });
 
             if (result) {
-                // eslint-disable-next-line no-console
-                console.log("Deployed to:", result.deploymentUrl);
-
-                writeFileSync(output, result.deploymentUrl);
+                writeFileSync(output, result.url);
             }
 
             process.exit(0);
@@ -91,46 +91,15 @@ void yargs(hideBin(process.argv))
                 type: "boolean",
                 description: "Revalidate the deployment (if it's fern docs)",
             }),
-        async ({ deploymentUrl, token, teamId, revalidateAll }) => {
-            const deployment = await new VercelClient({ token }).deployments.getDeployment(
-                deploymentUrl.replace("https://", ""),
-                { teamId, withGitRepoInfo: "false" },
-            );
-
-            if (deployment.target !== "production") {
-                // eslint-disable-next-line no-console
-                console.error("Deployment is not a production deployment");
-                process.exit(1);
-            } else if (deployment.readySubstate !== "STAGED") {
-                // eslint-disable-next-line no-console
-                console.error("Deployment is not staged");
-                process.exit(1);
-            } else if (!deployment.project) {
-                // eslint-disable-next-line no-console
-                console.error("Deployment does not have a project");
-                process.exit(1);
-            }
-
-            if (revalidateAll) {
-                const revalidator = new DocsRevalidator({ token, project: deployment.project.name, teamId });
-
-                await revalidator.revalidateAll();
-            }
-
-            process.exit(0);
-        },
+        async ({ deploymentUrl, token, teamId, revalidateAll }) =>
+            safeCommand(() => promoteCommand({ deploymentIdOrUrl: deploymentUrl, token, teamId, revalidateAll })),
     )
     .command(
         "revalidate-all <deploymentUrl>",
         "Revalidate all docs for a deployment",
         (argv) => argv.positional("deploymentUrl", { type: "string", demandOption: true }),
-        async ({ deploymentUrl, token, teamId }) => {
-            const revalidator = new DocsRevalidator({ token, project: deploymentUrl, teamId });
-
-            await revalidator.revalidateAll();
-
-            process.exit(0);
-        },
+        async ({ deploymentUrl, token, teamId }) =>
+            safeCommand(() => revalidateAllCommand({ token, teamId, deploymentIdOrUrl: deploymentUrl })),
     )
     .command(
         "preview.txt <deploymentUrl>",
@@ -143,7 +112,7 @@ void yargs(hideBin(process.argv))
             }),
         async ({ deploymentUrl, token, teamId, output }) => {
             const deployment = await new VercelClient({ token }).deployments.getDeployment(
-                deploymentUrl.replace("https://", ""),
+                cleanDeploymentId(deploymentUrl),
                 { teamId, withGitRepoInfo: "false" },
             );
 
@@ -151,7 +120,7 @@ void yargs(hideBin(process.argv))
                 throw new Error("Deployment does not have a project");
             }
 
-            const revalidator = new DocsRevalidator({ token, project: deployment.project.name, teamId });
+            const revalidator = new FernDocsRevalidator({ token, project: deployment.project.name, teamId });
 
             const urls = await revalidator.getPreviewUrls(deploymentUrl);
 
@@ -171,7 +140,7 @@ void yargs(hideBin(process.argv))
             }),
         async ({ deploymentUrl, token, teamId, output }) => {
             const deployment = await new VercelClient({ token }).deployments.getDeployment(
-                deploymentUrl.replace("https://", ""),
+                cleanDeploymentId(deploymentUrl),
                 { teamId, withGitRepoInfo: "false" },
             );
 
@@ -179,7 +148,7 @@ void yargs(hideBin(process.argv))
                 throw new Error("Deployment does not have a project");
             }
 
-            const revalidator = new DocsRevalidator({ token, project: deployment.project.name, teamId });
+            const revalidator = new FernDocsRevalidator({ token, project: deployment.project.name, teamId });
 
             const urls = await revalidator.getDomains();
 
