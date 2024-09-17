@@ -26,7 +26,12 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Ignore unchanged files
+        id: ignore
+        run: set +e; pnpx turbo-ignore @fern-ui/docs-bundle --fallback=HEAD^1; echo "continue=$?" >> $GITHUB_OUTPUT
+
       - name: Build & Deploy to Vercel
+        if: steps.ignore.outputs.continue == 1
         id: deploy
         run: |
           pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
@@ -92,7 +97,7 @@ jobs:
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy app-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --force
+          pnpm vercel-scripts deploy app-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
           echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   ete:

@@ -34,5 +34,5 @@ jobs:
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy dashboard-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production --force
+          pnpm vercel-scripts deploy dashboard-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
           echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT

@@ -44,17 +44,6 @@ export class VercelDeployer {
         }
     }
 
-    private shouldIgnoreBuild(pkg: string): boolean {
-        try {
-            exec("turbo-ignore", `pnpx turbo-ignore ${pkg} --fallback=HEAD^1`, { cwd: this.cwd });
-        } catch (err) {
-            if (typeof err === "object" && err && "status" in err && err.status === 1) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private env(projectId: string): Record<string, string> {
         return {
             TURBO_TOKEN: this.token,
@@ -107,13 +96,7 @@ export class VercelDeployer {
 
     public async buildAndDeployToVercel(
         project: string,
-        {
-            force = false,
-            skipDeploy = false,
-        }: {
-            force?: boolean;
-            skipDeploy?: boolean;
-        } = {},
+        { skipDeploy = false }: { skipDeploy?: boolean } = {},
     ): Promise<
         | {
               deploymentUrl: string;
@@ -122,13 +105,6 @@ export class VercelDeployer {
         | undefined
     > {
         const prj = await this.vercel.projects.getProject(project, { teamId: this.teamId });
-        const rootDir = join(this.cwd, prj.rootDirectory ?? "");
-        const packageJson: { name: string } = JSON.parse(String(readFileSync(join(rootDir, "package.json"))));
-        const subpackage = packageJson.name;
-
-        if (!force && this.shouldIgnoreBuild(subpackage)) {
-            return;
-        }
 
         this.pull(prj);
 

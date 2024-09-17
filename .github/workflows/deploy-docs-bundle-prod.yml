@@ -21,8 +21,6 @@ jobs:
     steps:
       # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 # used for turbo-ignore
 
       - name: Install
         uses: ./.github/actions/install
@@ -30,7 +28,7 @@ jobs:
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production --force
+          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
           echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   deploy_app_ferndocs_com:
@@ -51,7 +49,7 @@ jobs:
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy app.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production --force
+          pnpm vercel-scripts deploy app.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
           echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   deploy_app-slash_ferndocs_com:
@@ -65,8 +63,6 @@ jobs:
     steps:
       # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 # used for turbo-ignore
 
       - name: Install
         uses: ./.github/actions/install
@@ -74,7 +70,7 @@ jobs:
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy app-slash.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production --force
+          pnpm vercel-scripts deploy app-slash.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
           echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   ete:

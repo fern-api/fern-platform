@@ -26,6 +26,10 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Ignore unchanged files
+        id: ignore
+        run: set +e; pnpx turbo-ignore @fern-ui/fontawesome-cdn --fallback=HEAD^1; echo "continue=$?" >> $GITHUB_OUTPUT
+
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
