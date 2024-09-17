@@ -1,0 +1,761 @@
+types:
+  GetEdgeConfigsResponseTransfer:
+    docs: >-
+      Keeps track of the current state of the Edge Config while it gets
+      transferred.
+    properties:
+      fromAccountId: string
+      startedAt: double
+      doneAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetEdgeConfigsResponsePurpose:
+    properties:
+      type: literal<"flags">
+      projectId: string
+    source:
+      openapi: openapi.json
+  GetEdgeConfigsResponse:
+    docs: List of all edge configs.
+    properties:
+      id: optional<string>
+      createdAt: optional<double>
+      ownerId: optional<string>
+      slug:
+        type: optional<string>
+        docs: >-
+          Name for the Edge Config Names are not unique. Must start with an
+          alphabetic character and can contain only alphanumeric characters and
+          underscores).
+      updatedAt: optional<double>
+      digest: optional<string>
+      transfer:
+        type: optional<GetEdgeConfigsResponseTransfer>
+        docs: >-
+          Keeps track of the current state of the Edge Config while it gets
+          transferred.
+      schema: optional<map<string, unknown>>
+      purpose: optional<GetEdgeConfigsResponsePurpose>
+      sizeInBytes: double
+      itemCount: double
+    source:
+      openapi: openapi.json
+  CreateEdgeConfigRequestItemsValueZero:
+    discriminated: false
+    union:
+      - string
+      - double
+      - boolean
+      - map<string, unknown>
+    source:
+      openapi: openapi.json
+  CreateEdgeConfigRequestItemsValueItem:
+    discriminated: false
+    union:
+      - string
+      - double
+      - boolean
+      - map<string, unknown>
+    source:
+      openapi: openapi.json
+  CreateEdgeConfigRequestItemsValue:
+    discriminated: false
+    union:
+      - optional<CreateEdgeConfigRequestItemsValueZero>
+      - list<optional<CreateEdgeConfigRequestItemsValueItem>>
+    source:
+      openapi: openapi.json
+  CreateEdgeConfigResponseTransfer:
+    docs: >-
+      Keeps track of the current state of the Edge Config while it gets
+      transferred.
+    properties:
+      fromAccountId: string
+      startedAt: double
+      doneAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateEdgeConfigResponsePurpose:
+    properties:
+      type: literal<"flags">
+      projectId: string
+    source:
+      openapi: openapi.json
+  CreateEdgeConfigResponse:
+    docs: An Edge Config
+    properties:
+      createdAt: optional<double>
+      updatedAt: optional<double>
+      id: optional<string>
+      slug:
+        type: optional<string>
+        docs: >-
+          Name for the Edge Config Names are not unique. Must start with an
+          alphabetic character and can contain only alphanumeric characters and
+          underscores).
+      ownerId: optional<string>
+      digest: optional<string>
+      transfer:
+        type: optional<CreateEdgeConfigResponseTransfer>
+        docs: >-
+          Keeps track of the current state of the Edge Config while it gets
+          transferred.
+      schema: optional<map<string, unknown>>
+      purpose: optional<CreateEdgeConfigResponsePurpose>
+      sizeInBytes: double
+      itemCount: double
+    source:
+      openapi: openapi.json
+  GetEdgeConfigResponseTransfer:
+    docs: >-
+      Keeps track of the current state of the Edge Config while it gets
+      transferred.
+    properties:
+      fromAccountId: string
+      startedAt: double
+      doneAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetEdgeConfigResponsePurpose:
+    properties:
+      type: literal<"flags">
+      projectId: string
+    source:
+      openapi: openapi.json
+  GetEdgeConfigResponse:
+    docs: The EdgeConfig.
+    properties:
+      createdAt: optional<double>
+      updatedAt: optional<double>
+      id: optional<string>
+      slug:
+        type: optional<string>
+        docs: >-
+          Name for the Edge Config Names are not unique. Must start with an
+          alphabetic character and can contain only alphanumeric characters and
+          underscores).
+      ownerId: optional<string>
+      digest: optional<string>
+      transfer:
+        type: optional<GetEdgeConfigResponseTransfer>
+        docs: >-
+          Keeps track of the current state of the Edge Config while it gets
+          transferred.
+      schema: optional<map<string, unknown>>
+      purpose: optional<GetEdgeConfigResponsePurpose>
+      sizeInBytes: double
+      itemCount: double
+    source:
+      openapi: openapi.json
+  UpdateEdgeConfigResponseTransfer:
+    docs: >-
+      Keeps track of the current state of the Edge Config while it gets
+      transferred.
+    properties:
+      fromAccountId: string
+      startedAt: double
+      doneAt: optional<double>
+    source:
+      openapi: openapi.json
+  UpdateEdgeConfigResponsePurpose:
+    properties:
+      type: literal<"flags">
+      projectId: string
+    source:
+      openapi: openapi.json
+  UpdateEdgeConfigResponse:
+    docs: An Edge Config
+    properties:
+      createdAt: optional<double>
+      updatedAt: optional<double>
+      id: optional<string>
+      slug:
+        type: optional<string>
+        docs: >-
+          Name for the Edge Config Names are not unique. Must start with an
+          alphabetic character and can contain only alphanumeric characters and
+          underscores).
+      ownerId: optional<string>
+      digest: optional<string>
+      transfer:
+        type: optional<UpdateEdgeConfigResponseTransfer>
+        docs: >-
+          Keeps track of the current state of the Edge Config while it gets
+          transferred.
+      schema: optional<map<string, unknown>>
+      purpose: optional<UpdateEdgeConfigResponsePurpose>
+      sizeInBytes: double
+      itemCount: double
+    source:
+      openapi: openapi.json
+  PatchEdgeConfigItemsRequestItemsItemZero:
+    properties:
+      operation: unknown
+    source:
+      openapi: openapi.json
+  PatchEdgeConfigItemsRequestItemsItemOneOperation:
+    enum:
+      - update
+      - upsert
+    source:
+      openapi: openapi.json
+  PatchEdgeConfigItemsRequestItemsItemOne:
+    properties:
+      operation: PatchEdgeConfigItemsRequestItemsItemOneOperation
+    source:
+      openapi: openapi.json
+  PatchEdgeConfigItemsRequestItemsItemTwoOperation:
+    enum:
+      - update
+      - upsert
+    source:
+      openapi: openapi.json
+  PatchEdgeConfigItemsRequestItemsItemTwo:
+    properties:
+      operation: PatchEdgeConfigItemsRequestItemsItemTwoOperation
+    source:
+      openapi: openapi.json
+  PatchEdgeConfigItemsRequestItemsItemThree:
+    properties:
+      operation: literal<"delete">
+    source:
+      openapi: openapi.json
+  PatchEdgeConfigItemsRequestItemsItem:
+    discriminated: false
+    union:
+      - PatchEdgeConfigItemsRequestItemsItemZero
+      - PatchEdgeConfigItemsRequestItemsItemOne
+      - PatchEdgeConfigItemsRequestItemsItemTwo
+      - PatchEdgeConfigItemsRequestItemsItemThree
+    source:
+      openapi: openapi.json
+  PatchEdgeConfigItemsResponse:
+    properties:
+      status: string
+    source:
+      openapi: openapi.json
+  CreateEdgeConfigTokenResponse:
+    properties:
+      token: string
+      id: string
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getEdgeConfigs:
+      path: /v1/edge-config
+      method: GET
+      auth: true
+      docs: Returns all Edge Configs.
+      display-name: Get Edge Configs
+      request:
+        name: GetEdgeConfigsRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: List of all edge configs.
+        type: GetEdgeConfigsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - response:
+            body:
+              id: id
+              createdAt: 1.1
+              ownerId: ownerId
+              slug: slug
+              updatedAt: 1.1
+              digest: digest
+              transfer:
+                fromAccountId: fromAccountId
+                startedAt: 1.1
+                doneAt: 1.1
+              schema:
+                key: value
+              purpose:
+                type: flags
+                projectId: projectId
+              sizeInBytes: 1.1
+              itemCount: 1.1
+    createEdgeConfig:
+      path: /v1/edge-config
+      method: POST
+      auth: true
+      docs: Creates an Edge Config.
+      display-name: Create an Edge Config
+      request:
+        name: CreateEdgeConfigRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            slug:
+              type: string
+              name: createEdgeConfigRequestSlug
+            items: optional<map<string, CreateEdgeConfigRequestItemsValue>>
+      response:
+        docs: ''
+        type: CreateEdgeConfigResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+      examples:
+        - request:
+            slug: slug
+          response:
+            body:
+              createdAt: 1.1
+              updatedAt: 1.1
+              id: id
+              slug: slug
+              ownerId: ownerId
+              digest: digest
+              transfer:
+                fromAccountId: fromAccountId
+                startedAt: 1.1
+                doneAt: 1.1
+              schema:
+                key: value
+              purpose:
+                type: flags
+                projectId: projectId
+              sizeInBytes: 1.1
+              itemCount: 1.1
+    getEdgeConfig:
+      path: /v1/edge-config/{edgeConfigId}
+      method: GET
+      auth: true
+      docs: Returns an Edge Config.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Get an Edge Config
+      request:
+        name: GetEdgeConfigRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The EdgeConfig.
+        type: GetEdgeConfigResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            edgeConfigId: edgeConfigId
+          response:
+            body:
+              createdAt: 1.1
+              updatedAt: 1.1
+              id: id
+              slug: slug
+              ownerId: ownerId
+              digest: digest
+              transfer:
+                fromAccountId: fromAccountId
+                startedAt: 1.1
+                doneAt: 1.1
+              schema:
+                key: value
+              purpose:
+                type: flags
+                projectId: projectId
+              sizeInBytes: 1.1
+              itemCount: 1.1
+    updateEdgeConfig:
+      path: /v1/edge-config/{edgeConfigId}
+      method: PUT
+      auth: true
+      docs: Updates an Edge Config.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Update an Edge Config
+      request:
+        name: UpdateEdgeConfigRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            slug:
+              type: string
+              name: updateEdgeConfigRequestSlug
+      response:
+        docs: ''
+        type: UpdateEdgeConfigResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            edgeConfigId: edgeConfigId
+          request:
+            slug: slug
+          response:
+            body:
+              createdAt: 1.1
+              updatedAt: 1.1
+              id: id
+              slug: slug
+              ownerId: ownerId
+              digest: digest
+              transfer:
+                fromAccountId: fromAccountId
+                startedAt: 1.1
+                doneAt: 1.1
+              schema:
+                key: value
+              purpose:
+                type: flags
+                projectId: projectId
+              sizeInBytes: 1.1
+              itemCount: 1.1
+    deleteEdgeConfig:
+      path: /v1/edge-config/{edgeConfigId}
+      method: DELETE
+      auth: true
+      docs: Delete an Edge Config by id.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Delete an Edge Config
+      request:
+        name: DeleteEdgeConfigRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            edgeConfigId: edgeConfigId
+    patchEdgeConfigItems:
+      path: /v1/edge-config/{edgeConfigId}/items
+      method: PATCH
+      auth: true
+      docs: Update multiple Edge Config Items in batch.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Update Edge Config items in batch
+      request:
+        name: PatchEdgeConfigItemsRequest
+        query-parameters:
+          edgeConfigId: string
+          dryRun: optional<string>
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            items: list<PatchEdgeConfigItemsRequestItemsItem>
+            definition: unknown
+      response:
+        docs: ''
+        type: PatchEdgeConfigItemsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+    getEdgeConfigSchema:
+      path: /v1/edge-config/{edgeConfigId}/schema
+      method: GET
+      auth: true
+      docs: Returns the schema of an Edge Config.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Get Edge Config schema
+      request:
+        name: GetEdgeConfigSchemaRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The EdgeConfig.
+        type: optional<map<string, unknown>>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            edgeConfigId: edgeConfigId
+          response:
+            body:
+              key: value
+    patchEdgeConfigSchema:
+      path: /v1/edge-config/{edgeConfigId}/schema
+      method: POST
+      auth: true
+      docs: Update an Edge Config's schema.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Update Edge Config schema
+      request:
+        name: PatchEdgeConfigSchemaRequest
+        query-parameters:
+          dryRun: optional<string>
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            definition: unknown
+      response:
+        docs: ''
+        type: optional<map<string, unknown>>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+    deleteEdgeConfigSchema:
+      path: /v1/edge-config/{edgeConfigId}/schema
+      method: DELETE
+      auth: true
+      docs: Deletes the schema of existing Edge Config.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Delete an Edge Config's schema
+      request:
+        name: DeleteEdgeConfigSchemaRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            edgeConfigId: edgeConfigId
+    getEdgeConfigItem:
+      path: /v1/edge-config/{edgeConfigId}/item/{edgeConfigItemKey}
+      method: GET
+      auth: true
+      docs: Returns a specific Edge Config Item.
+      path-parameters:
+        edgeConfigId: string
+        edgeConfigItemKey: string
+      display-name: Get an Edge Config item
+      request:
+        name: GetEdgeConfigItemRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The EdgeConfig.
+        type: unknown
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+    getEdgeConfigTokens:
+      path: /v1/edge-config/{edgeConfigId}/tokens
+      method: GET
+      auth: true
+      docs: Returns all tokens of an Edge Config.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Get all tokens of an Edge Config
+      request:
+        name: GetEdgeConfigTokensRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The EdgeConfig.
+        type: root.EdgeConfigToken
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            edgeConfigId: edgeConfigId
+          response:
+            body:
+              token: token
+              label: label
+              id: id
+              edgeConfigId: edgeConfigId
+              createdAt: 1.1
+    deleteEdgeConfigTokens:
+      path: /v1/edge-config/{edgeConfigId}/tokens
+      method: DELETE
+      auth: true
+      docs: Deletes one or more tokens of an existing Edge Config.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Delete one or more Edge Config tokens
+      request:
+        name: DeleteEdgeConfigTokensRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            tokens: list<string>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            edgeConfigId: edgeConfigId
+          request:
+            tokens:
+              - tokens
+    getEdgeConfigToken:
+      path: /v1/edge-config/{edgeConfigId}/token/{token}
+      method: GET
+      auth: true
+      docs: Return meta data about an Edge Config token.
+      path-parameters:
+        edgeConfigId: string
+        token: string
+      display-name: Get Edge Config token meta data
+      request:
+        name: GetEdgeConfigTokenRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The EdgeConfig.
+        type: root.EdgeConfigToken
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            edgeConfigId: edgeConfigId
+            token: token
+          response:
+            body:
+              token: token
+              label: label
+              id: id
+              edgeConfigId: edgeConfigId
+              createdAt: 1.1
+    createEdgeConfigToken:
+      path: /v1/edge-config/{edgeConfigId}/token
+      method: POST
+      auth: true
+      docs: Adds a token to an existing Edge Config.
+      path-parameters:
+        edgeConfigId: string
+      display-name: Create an Edge Config token
+      request:
+        name: CreateEdgeConfigTokenRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            label:
+              type: string
+              validation:
+                maxLength: 52
+      response:
+        docs: ''
+        type: CreateEdgeConfigTokenResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            edgeConfigId: edgeConfigId
+          request:
+            label: label
+          response:
+            body:
+              token: token
+              id: id
+  source:
+    openapi: openapi.json

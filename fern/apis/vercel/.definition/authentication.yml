@@ -1,0 +1,211 @@
+imports:
+  root: __package__.yml
+types:
+  ListAuthTokensResponse:
+    properties:
+      tokens: list<root.AuthToken>
+      testingToken: optional<root.AuthToken>
+      pagination: root.Pagination
+    source:
+      openapi: openapi.json
+  CreateAuthTokenResponse:
+    docs: Successful response.
+    properties:
+      token: root.AuthToken
+      bearerToken:
+        type: string
+        docs: >-
+          The authentication token's actual value. This token is only provided
+          in this response, and can never be retrieved again in the future. Be
+          sure to save it somewhere safe!
+    source:
+      openapi: openapi.json
+  GetAuthTokenResponse:
+    docs: Successful response.
+    properties:
+      token: root.AuthToken
+    source:
+      openapi: openapi.json
+  DeleteAuthTokenResponse:
+    docs: Authentication token successfully deleted.
+    properties:
+      tokenId:
+        type: string
+        docs: The unique identifier of the token that was deleted.
+    source:
+      openapi: openapi.json
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listAuthTokens:
+      path: /v5/user/tokens
+      method: GET
+      auth: true
+      docs: Retrieve a list of the current User's authentication tokens.
+      display-name: List Auth Tokens
+      response:
+        docs: ''
+        type: ListAuthTokensResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - response:
+            body:
+              tokens:
+                - id: >-
+                    5d9f2ebd38ddca62e5d51e9c1704c72530bdc8bfdd41e782a6687c48399e8391
+                  name: name
+                  type: oauth2-token
+                  origin: github
+                  scopes:
+                    - type: team
+                      teamId: scopes
+                      origin: saml
+                      createdAt: 1.1
+                  expiresAt: 1632816536002
+                  activeAt: 1632816536002
+                  createdAt: 1632816536002
+              testingToken:
+                id: >-
+                  5d9f2ebd38ddca62e5d51e9c1704c72530bdc8bfdd41e782a6687c48399e8391
+                name: name
+                type: oauth2-token
+                origin: github
+                scopes:
+                  - type: team
+                    teamId: scopes
+                    origin: saml
+                    createdAt: 1.1
+                expiresAt: 1632816536002
+                activeAt: 1632816536002
+                createdAt: 1632816536002
+              pagination:
+                count: 20
+                next: 1540095775951
+                prev: 1540095775951
+    createAuthToken:
+      path: /v3/user/tokens
+      method: POST
+      auth: true
+      docs: >-
+        Creates and returns a new authentication token for the currently
+        authenticated User. The `bearerToken` property is only provided once, in
+        the response body, so be sure to save it on the client for use with API
+        requests.
+      display-name: Create an Auth Token
+      request:
+        name: CreateAuthTokenRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            name: string
+            expiresAt: optional<double>
+      response:
+        docs: Successful response.
+        type: CreateAuthTokenResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - request:
+            name: name
+          response:
+            body:
+              token:
+                id: >-
+                  5d9f2ebd38ddca62e5d51e9c1704c72530bdc8bfdd41e782a6687c48399e8391
+                name: name
+                type: oauth2-token
+                origin: github
+                scopes:
+                  - type: team
+                    teamId: scopes
+                    origin: saml
+                    createdAt: 1.1
+                expiresAt: 1632816536002
+                activeAt: 1632816536002
+                createdAt: 1632816536002
+              bearerToken: uRKJSTt0L4RaSkiMj41QTkxM
+    getAuthToken:
+      path: /v5/user/tokens/{tokenId}
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve metadata about an authentication token belonging to the
+        currently authenticated User.
+      path-parameters:
+        tokenId:
+          type: string
+          docs: >-
+            The identifier of the token to retrieve. The special value
+            \"current\" may be supplied, which returns the metadata for the
+            token that the current HTTP request is authenticated with.
+      display-name: Get Auth Token Metadata
+      response:
+        docs: Successful response.
+        type: GetAuthTokenResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            tokenId: 5d9f2ebd38ddca62e5d51e9c1704c72530bdc8bfdd41e782a6687c48399e8391
+          response:
+            body:
+              token:
+                id: >-
+                  5d9f2ebd38ddca62e5d51e9c1704c72530bdc8bfdd41e782a6687c48399e8391
+                name: name
+                type: oauth2-token
+                origin: github
+                scopes:
+                  - type: team
+                    teamId: scopes
+                    origin: saml
+                    createdAt: 1.1
+                expiresAt: 1632816536002
+                activeAt: 1632816536002
+                createdAt: 1632816536002
+    deleteAuthToken:
+      path: /v3/user/tokens/{tokenId}
+      method: DELETE
+      auth: true
+      docs: >-
+        Invalidate an authentication token, such that it will no longer be valid
+        for future HTTP requests.
+      path-parameters:
+        tokenId:
+          type: string
+          docs: >-
+            The identifier of the token to invalidate. The special value
+            \"current\" may be supplied, which invalidates the token that the
+            HTTP request was authenticated with.
+      display-name: Delete an authentication token
+      response:
+        docs: Authentication token successfully deleted.
+        type: DeleteAuthTokenResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            tokenId: 5d9f2ebd38ddca62e5d51e9c1704c72530bdc8bfdd41e782a6687c48399e8391
+          response:
+            body:
+              tokenId: 5d9f2ebd38ddca62e5d51e9c1704c72530bdc8bfdd41e782a6687c48399e8391
+  source:
+    openapi: openapi.json

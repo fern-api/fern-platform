@@ -1,0 +1,254 @@
+types:
+  RecordEventsRequestBodyItemSource:
+    enum:
+      - LOCAL
+      - REMOTE
+    docs: >-
+      One of `LOCAL` or `REMOTE`. `LOCAL` specifies that the cache event was
+      from the user's filesystem cache. `REMOTE` specifies that the cache event
+      is from a remote cache.
+    source:
+      openapi: openapi.json
+  RecordEventsRequestBodyItemEvent:
+    enum:
+      - HIT
+      - MISS
+    docs: >-
+      One of `HIT` or `MISS`. `HIT` specifies that a cached artifact for `hash`
+      was found in the cache. `MISS` specifies that a cached artifact with
+      `hash` was not found.
+    source:
+      openapi: openapi.json
+  RecordEventsRequestBodyItem:
+    properties:
+      sessionId:
+        type: string
+        docs: >-
+          A UUID (universally unique identifer) for the session that generated
+          this event.
+      source:
+        type: RecordEventsRequestBodyItemSource
+        docs: >-
+          One of `LOCAL` or `REMOTE`. `LOCAL` specifies that the cache event was
+          from the user's filesystem cache. `REMOTE` specifies that the cache
+          event is from a remote cache.
+      event:
+        type: RecordEventsRequestBodyItemEvent
+        docs: >-
+          One of `HIT` or `MISS`. `HIT` specifies that a cached artifact for
+          `hash` was found in the cache. `MISS` specifies that a cached artifact
+          with `hash` was not found.
+      hash:
+        type: string
+        docs: The artifact hash
+      duration:
+        type: optional<double>
+        docs: >-
+          The time taken to generate the artifact. This should be sent as a body
+          parameter on `HIT` events.
+    source:
+      openapi: openapi.json
+  StatusResponseStatus:
+    enum:
+      - disabled
+      - enabled
+      - over_limit
+      - paused
+    source:
+      openapi: openapi.json
+  StatusResponse:
+    properties:
+      status: StatusResponseStatus
+    source:
+      openapi: openapi.json
+  ArtifactQueryResponseValueSize:
+    properties:
+      size: double
+      taskDurationMs: double
+      tag: optional<string>
+    source:
+      openapi: openapi.json
+  ArtifactQueryResponseValueErrorError:
+    properties:
+      message: string
+    source:
+      openapi: openapi.json
+  ArtifactQueryResponseValueError:
+    properties:
+      error: ArtifactQueryResponseValueErrorError
+    source:
+      openapi: openapi.json
+  ArtifactQueryResponseValue:
+    discriminated: false
+    union:
+      - ArtifactQueryResponseValueSize
+      - ArtifactQueryResponseValueError
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    recordEvents:
+      path: /v8/artifacts/events
+      method: POST
+      auth: true
+      docs: >-
+        Records an artifacts cache usage event. The body of this request is an
+        array of cache usage events. The supported event types are `HIT` and
+        `MISS`. The source is either `LOCAL` the cache event was on the users
+        filesystem cache or `REMOTE` if the cache event is for a remote cache.
+        When the event is a `HIT` the request also accepts a number `duration`
+        which is the time taken to generate the artifact in the cache.
+      display-name: Record an artifacts cache usage event
+      request:
+        body: list<RecordEventsRequestBodyItem>
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        headers:
+          x-artifact-client-ci:
+            type: optional<string>
+            name: artifactClientCi
+            docs: >-
+              The continuous integration or delivery environment where this
+              artifact is downloaded.
+          x-artifact-client-interactive:
+            type: optional<integer>
+            name: artifactClientInteractive
+            docs: 1 if the client is an interactive shell. Otherwise 0
+        name: RecordEventsRequest
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+      examples:
+        - headers:
+            x-artifact-client-ci: VERCEL
+            x-artifact-client-interactive: 0
+          request:
+            - sessionId: sessionId
+              source: LOCAL
+              event: HIT
+              hash: 12HKQaOmR5t5Uy6vdcQsNIiZgHGB
+    status:
+      path: /v8/artifacts/status
+      method: GET
+      auth: true
+      docs: >-
+        Check the status of Remote Caching for this principal. Returns a
+        JSON-encoded status indicating if Remote Caching is enabled, disabled,
+        or disabled due to usage limits.
+      display-name: Get status of Remote Caching for this principal
+      request:
+        name: StatusRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: StatusResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+      examples:
+        - response:
+            body:
+              status: disabled
+    downloadArtifact:
+      path: /v8/artifacts/{hash}
+      method: GET
+      auth: true
+      docs: >-
+        Downloads a cache artifact indentified by its `hash` specified on the
+        request path. The artifact is downloaded as an octet-stream. The client
+        should verify the content-length header and response body.
+      path-parameters:
+        hash:
+          type: string
+          docs: The artifact hash
+      display-name: Download a cache artifact
+      request:
+        name: DownloadArtifactRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        headers:
+          x-artifact-client-ci:
+            type: optional<string>
+            name: artifactClientCi
+            docs: >-
+              The continuous integration or delivery environment where this
+              artifact is downloaded.
+          x-artifact-client-interactive:
+            type: optional<integer>
+            name: artifactClientInteractive
+            docs: 1 if the client is an interactive shell. Otherwise 0
+      response:
+        docs: >-
+          The artifact was found and is downloaded as a stream. Content-Length
+          should be verified.
+        type: file
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+    artifactQuery:
+      path: /v8/artifacts
+      method: POST
+      auth: true
+      docs: Query information about an array of artifacts.
+      display-name: Query information about an artifact
+      request:
+        name: ArtifactQueryRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            hashes:
+              docs: artifact hashes
+              type: list<string>
+      response:
+        docs: ''
+        type: map<string, optional<ArtifactQueryResponseValue>>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+      examples:
+        - request:
+            hashes:
+              - hashes
+          response:
+            body:
+              key:
+                size: 1.1
+                taskDurationMs: 1.1
+                tag: tag
+  source:
+    openapi: openapi.json

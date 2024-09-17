@@ -1,0 +1,1732 @@
+types:
+  UpdateAttackChallengeModeResponse:
+    properties:
+      attackModeEnabled: boolean
+      attackModeUpdatedAt: double
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestManagedRulesOwasp:
+    properties:
+      active: boolean
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestManagedRules:
+    properties:
+      owasp: PutFirewallConfigRequestManagedRulesOwasp
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsSdAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsSd:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsSdAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsMaAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsMa:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsMaAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsLfiAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsLfi:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsLfiAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsRfiAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsRfi:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsRfiAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsRceAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsRce:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsRceAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsPhpAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsPhp:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsPhpAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsGenAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsGen:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsGenAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsXssAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsXss:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsXssAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsSqliAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsSqli:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsSqliAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsSfAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsSf:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsSfAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsJavaAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrsJava:
+    properties:
+      active: boolean
+      action: PutFirewallConfigRequestCrsJavaAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestCrs:
+    properties:
+      sd: optional<PutFirewallConfigRequestCrsSd>
+      ma: optional<PutFirewallConfigRequestCrsMa>
+      lfi: optional<PutFirewallConfigRequestCrsLfi>
+      rfi: optional<PutFirewallConfigRequestCrsRfi>
+      rce: optional<PutFirewallConfigRequestCrsRce>
+      php: optional<PutFirewallConfigRequestCrsPhp>
+      gen: optional<PutFirewallConfigRequestCrsGen>
+      xss: optional<PutFirewallConfigRequestCrsXss>
+      sqli: optional<PutFirewallConfigRequestCrsSqli>
+      sf: optional<PutFirewallConfigRequestCrsSf>
+      java: optional<PutFirewallConfigRequestCrsJava>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemConditionGroupItemConditionsItemType:
+    enum:
+      - host
+      - path
+      - method
+      - header
+      - query
+      - cookie
+      - target_path
+      - ip_address
+      - region
+      - protocol
+      - scheme
+      - environment
+      - user_agent
+      - geo_continent
+      - geo_country
+      - geo_country_region
+      - geo_city
+      - geo_as_number
+      - ja4_digest
+      - ja3_digest
+      - rate_limit_api_id
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemConditionGroupItemConditionsItemOp:
+    enum:
+      - re
+      - eq
+      - neq
+      - ex
+      - nex
+      - inc
+      - ninc
+      - pre
+      - suf
+      - sub
+      - gt
+      - gte
+      - lt
+      - lte
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemConditionGroupItemConditionsItemValue:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - double
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemConditionGroupItemConditionsItem:
+    properties:
+      type: PutFirewallConfigRequestRulesItemConditionGroupItemConditionsItemType
+      op: PutFirewallConfigRequestRulesItemConditionGroupItemConditionsItemOp
+      neg: optional<boolean>
+      key: optional<string>
+      value: >-
+        optional<PutFirewallConfigRequestRulesItemConditionGroupItemConditionsItemValue>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemConditionGroupItem:
+    properties:
+      conditions: list<PutFirewallConfigRequestRulesItemConditionGroupItemConditionsItem>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemActionMitigateAction:
+    enum:
+      - log
+      - challenge
+      - deny
+      - bypass
+      - rate_limit
+      - redirect
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemActionMitigateRateLimitAlgo:
+    enum:
+      - fixed_window
+      - token_bucket
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemActionMitigateRateLimitAction:
+    enum:
+      - log
+      - challenge
+      - deny
+      - rate_limit
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemActionMitigateRateLimit:
+    properties:
+      algo: PutFirewallConfigRequestRulesItemActionMitigateRateLimitAlgo
+      window: double
+      limit: double
+      keys: list<string>
+      action: optional<PutFirewallConfigRequestRulesItemActionMitigateRateLimitAction>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemActionMitigateRedirect:
+    properties:
+      location: string
+      permanent: boolean
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemActionMitigate:
+    properties:
+      action: PutFirewallConfigRequestRulesItemActionMitigateAction
+      rateLimit: optional<PutFirewallConfigRequestRulesItemActionMitigateRateLimit>
+      redirect: optional<PutFirewallConfigRequestRulesItemActionMitigateRedirect>
+      actionDuration: optional<string>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItemAction:
+    properties:
+      mitigate: optional<PutFirewallConfigRequestRulesItemActionMitigate>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestRulesItem:
+    properties:
+      id: optional<string>
+      name:
+        type: string
+        validation:
+          maxLength: 160
+      description:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      active: boolean
+      conditionGroup: list<PutFirewallConfigRequestRulesItemConditionGroupItem>
+      action: PutFirewallConfigRequestRulesItemAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestIpsItemAction:
+    enum:
+      - deny
+      - challenge
+      - log
+      - bypass
+    source:
+      openapi: openapi.json
+  PutFirewallConfigRequestIpsItem:
+    properties:
+      id: optional<string>
+      hostname: string
+      ip: string
+      notes: optional<string>
+      action: PutFirewallConfigRequestIpsItemAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsSdAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsSd:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsSdAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsMaAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsMa:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsMaAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsLfiAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsLfi:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsLfiAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsRfiAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsRfi:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsRfiAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsRceAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsRce:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsRceAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsPhpAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsPhp:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsPhpAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsGenAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsGen:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsGenAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsXssAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsXss:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsXssAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsSqliAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsSqli:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsSqliAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsSfAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsSf:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsSfAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsJavaAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrsJava:
+    properties:
+      active: boolean
+      action: PutFirewallConfigResponseActiveCrsJavaAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveCrs:
+    properties:
+      sd: PutFirewallConfigResponseActiveCrsSd
+      ma: PutFirewallConfigResponseActiveCrsMa
+      lfi: PutFirewallConfigResponseActiveCrsLfi
+      rfi: PutFirewallConfigResponseActiveCrsRfi
+      rce: PutFirewallConfigResponseActiveCrsRce
+      php: PutFirewallConfigResponseActiveCrsPhp
+      gen: PutFirewallConfigResponseActiveCrsGen
+      xss: PutFirewallConfigResponseActiveCrsXss
+      sqli: PutFirewallConfigResponseActiveCrsSqli
+      sf: PutFirewallConfigResponseActiveCrsSf
+      java: PutFirewallConfigResponseActiveCrsJava
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemConditionGroupItemConditionsItemType:
+    enum:
+      - host
+      - path
+      - method
+      - header
+      - query
+      - cookie
+      - target_path
+      - ip_address
+      - protocol
+      - region
+      - scheme
+      - environment
+      - user_agent
+      - geo_continent
+      - geo_country
+      - geo_country_region
+      - geo_city
+      - geo_as_number
+      - ja4_digest
+      - ja3_digest
+      - rate_limit_api_id
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemConditionGroupItemConditionsItemOp:
+    enum:
+      - re
+      - eq
+      - ex
+      - inc
+      - pre
+      - suf
+      - sub
+      - gt
+      - gte
+      - lt
+      - lte
+      - nex
+      - ninc
+      - neq
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemConditionGroupItemConditionsItemValue:
+    discriminated: false
+    union:
+      - string
+      - double
+      - list<string>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemConditionGroupItemConditionsItem:
+    properties:
+      type: >-
+        PutFirewallConfigResponseActiveRulesItemConditionGroupItemConditionsItemType
+      op: >-
+        PutFirewallConfigResponseActiveRulesItemConditionGroupItemConditionsItemOp
+      neg: optional<boolean>
+      key: optional<string>
+      value: >-
+        optional<PutFirewallConfigResponseActiveRulesItemConditionGroupItemConditionsItemValue>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemConditionGroupItem:
+    properties:
+      conditions: >-
+        list<PutFirewallConfigResponseActiveRulesItemConditionGroupItemConditionsItem>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemActionMitigateAction:
+    enum:
+      - deny
+      - log
+      - challenge
+      - bypass
+      - rate_limit
+      - redirect
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemActionMitigateRateLimitAlgo:
+    enum:
+      - fixed_window
+      - token_bucket
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemActionMitigateRateLimitAction:
+    enum:
+      - deny
+      - log
+      - challenge
+      - rate_limit
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemActionMitigateRateLimit:
+    properties:
+      algo: PutFirewallConfigResponseActiveRulesItemActionMitigateRateLimitAlgo
+      window: double
+      limit: double
+      keys: list<string>
+      action: >-
+        optional<PutFirewallConfigResponseActiveRulesItemActionMitigateRateLimitAction>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemActionMitigateRedirect:
+    properties:
+      location: string
+      permanent: boolean
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemActionMitigate:
+    properties:
+      action: PutFirewallConfigResponseActiveRulesItemActionMitigateAction
+      rateLimit: >-
+        optional<PutFirewallConfigResponseActiveRulesItemActionMitigateRateLimit>
+      redirect: optional<PutFirewallConfigResponseActiveRulesItemActionMitigateRedirect>
+      actionDuration: optional<string>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItemAction:
+    properties:
+      mitigate: optional<PutFirewallConfigResponseActiveRulesItemActionMitigate>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveRulesItem:
+    properties:
+      id: string
+      name: string
+      description: optional<string>
+      active: boolean
+      conditionGroup: list<PutFirewallConfigResponseActiveRulesItemConditionGroupItem>
+      action: PutFirewallConfigResponseActiveRulesItemAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveIpsItemAction:
+    enum:
+      - deny
+      - log
+      - challenge
+      - bypass
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveIpsItem:
+    properties:
+      id: string
+      hostname: string
+      ip: string
+      notes: optional<string>
+      action: PutFirewallConfigResponseActiveIpsItemAction
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveManagedRulesOwasp:
+    properties:
+      active: boolean
+      updatedAt: optional<string>
+      userId: optional<string>
+      username: optional<string>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveManagedRulesVerifiedBotsBypass:
+    properties:
+      active: boolean
+      updatedAt: optional<string>
+      userId: optional<string>
+      username: optional<string>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActiveManagedRules:
+    properties:
+      owasp: optional<PutFirewallConfigResponseActiveManagedRulesOwasp>
+      verifiedBotsBypass: optional<PutFirewallConfigResponseActiveManagedRulesVerifiedBotsBypass>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponseActive:
+    properties:
+      ownerId: string
+      projectKey: string
+      id: string
+      version: double
+      updatedAt: string
+      firewallEnabled: boolean
+      crs: PutFirewallConfigResponseActiveCrs
+      rules: list<PutFirewallConfigResponseActiveRulesItem>
+      ips: list<PutFirewallConfigResponseActiveIpsItem>
+      changes: list<map<string, unknown>>
+      managedRules: optional<PutFirewallConfigResponseActiveManagedRules>
+    source:
+      openapi: openapi.json
+  PutFirewallConfigResponse:
+    properties:
+      active: PutFirewallConfigResponseActive
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyFirewallEnabled:
+    docs: Enable Firewall
+    properties:
+      id: optional<string>
+      value: boolean
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItemConditionsItemType:
+    enum:
+      - host
+      - path
+      - method
+      - header
+      - query
+      - cookie
+      - target_path
+      - ip_address
+      - region
+      - protocol
+      - scheme
+      - environment
+      - user_agent
+      - geo_continent
+      - geo_country
+      - geo_country_region
+      - geo_city
+      - geo_as_number
+      - ja4_digest
+      - ja3_digest
+      - rate_limit_api_id
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItemConditionsItemOp:
+    enum:
+      - re
+      - eq
+      - neq
+      - ex
+      - nex
+      - inc
+      - ninc
+      - pre
+      - suf
+      - sub
+      - gt
+      - gte
+      - lt
+      - lte
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItemConditionsItemValue:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - double
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItemConditionsItem:
+    properties:
+      type: >-
+        UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItemConditionsItemType
+      op: >-
+        UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItemConditionsItemOp
+      neg: optional<boolean>
+      key: optional<string>
+      value: >-
+        optional<UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItemConditionsItemValue>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItem:
+    properties:
+      conditions: >-
+        list<UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItemConditionsItem>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateAction:
+    enum:
+      - log
+      - challenge
+      - deny
+      - bypass
+      - rate_limit
+      - redirect
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateRateLimitAlgo:
+    enum:
+      - fixed_window
+      - token_bucket
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateRateLimitAction:
+    enum:
+      - log
+      - challenge
+      - deny
+      - rate_limit
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateRateLimit:
+    properties:
+      algo: >-
+        UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateRateLimitAlgo
+      window: double
+      limit: double
+      keys: list<string>
+      action: >-
+        optional<UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateRateLimitAction>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateRedirect:
+    properties:
+      location: string
+      permanent: boolean
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigate:
+    properties:
+      action: UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateAction
+      rateLimit: >-
+        optional<UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateRateLimit>
+      redirect: >-
+        optional<UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigateRedirect>
+      actionDuration: optional<string>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValueAction:
+    properties:
+      mitigate: optional<UpdateFirewallConfigRequestBodyRulesInsertValueActionMitigate>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsertValue:
+    properties:
+      name:
+        type: string
+        validation:
+          maxLength: 160
+      description:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      active: boolean
+      conditionGroup: list<UpdateFirewallConfigRequestBodyRulesInsertValueConditionGroupItem>
+      action: UpdateFirewallConfigRequestBodyRulesInsertValueAction
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesInsert:
+    docs: Add a custom rule
+    properties:
+      id: optional<string>
+      value: UpdateFirewallConfigRequestBodyRulesInsertValue
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItemConditionsItemType:
+    enum:
+      - host
+      - path
+      - method
+      - header
+      - query
+      - cookie
+      - target_path
+      - ip_address
+      - region
+      - protocol
+      - scheme
+      - environment
+      - user_agent
+      - geo_continent
+      - geo_country
+      - geo_country_region
+      - geo_city
+      - geo_as_number
+      - ja4_digest
+      - ja3_digest
+      - rate_limit_api_id
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItemConditionsItemOp:
+    enum:
+      - re
+      - eq
+      - neq
+      - ex
+      - nex
+      - inc
+      - ninc
+      - pre
+      - suf
+      - sub
+      - gt
+      - gte
+      - lt
+      - lte
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItemConditionsItemValue:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - double
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItemConditionsItem:
+    properties:
+      type: >-
+        UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItemConditionsItemType
+      op: >-
+        UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItemConditionsItemOp
+      neg: optional<boolean>
+      key: optional<string>
+      value: >-
+        optional<UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItemConditionsItemValue>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItem:
+    properties:
+      conditions: >-
+        list<UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItemConditionsItem>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateAction:
+    enum:
+      - log
+      - challenge
+      - deny
+      - bypass
+      - rate_limit
+      - redirect
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateRateLimitAlgo:
+    enum:
+      - fixed_window
+      - token_bucket
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateRateLimitAction:
+    enum:
+      - log
+      - challenge
+      - deny
+      - rate_limit
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateRateLimit:
+    properties:
+      algo: >-
+        UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateRateLimitAlgo
+      window: double
+      limit: double
+      keys: list<string>
+      action: >-
+        optional<UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateRateLimitAction>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateRedirect:
+    properties:
+      location: string
+      permanent: boolean
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigate:
+    properties:
+      action: UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateAction
+      rateLimit: >-
+        optional<UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateRateLimit>
+      redirect: >-
+        optional<UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigateRedirect>
+      actionDuration: optional<string>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValueAction:
+    properties:
+      mitigate: optional<UpdateFirewallConfigRequestBodyRulesUpdateValueActionMitigate>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdateValue:
+    properties:
+      name:
+        type: string
+        validation:
+          maxLength: 160
+      description:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      active: boolean
+      conditionGroup: list<UpdateFirewallConfigRequestBodyRulesUpdateValueConditionGroupItem>
+      action: UpdateFirewallConfigRequestBodyRulesUpdateValueAction
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesUpdate:
+    docs: Update a custom rule
+    properties:
+      id: string
+      value: UpdateFirewallConfigRequestBodyRulesUpdateValue
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesRemove:
+    docs: Remove a custom rule
+    properties:
+      id: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyRulesPriority:
+    docs: Reorder a custom rule
+    properties:
+      id: string
+      value: double
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyCrsUpdateId:
+    enum:
+      - sd
+      - ma
+      - lfi
+      - rfi
+      - rce
+      - php
+      - gen
+      - xss
+      - sqli
+      - sf
+      - java
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyCrsUpdateValueAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyCrsUpdateValue:
+    properties:
+      active: boolean
+      action: UpdateFirewallConfigRequestBodyCrsUpdateValueAction
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyCrsUpdate:
+    docs: Enable a managed rule
+    properties:
+      id: UpdateFirewallConfigRequestBodyCrsUpdateId
+      value: UpdateFirewallConfigRequestBodyCrsUpdateValue
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyCrsDisable:
+    docs: Disable a managed rule
+    properties:
+      id: optional<string>
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyIpInsertValueAction:
+    enum:
+      - deny
+      - challenge
+      - log
+      - bypass
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyIpInsertValue:
+    properties:
+      hostname: string
+      ip: string
+      notes: optional<string>
+      action: UpdateFirewallConfigRequestBodyIpInsertValueAction
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyIpInsert:
+    docs: Add an IP Blocking rule
+    properties:
+      id: optional<string>
+      value: UpdateFirewallConfigRequestBodyIpInsertValue
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyIpUpdateValueAction:
+    enum:
+      - deny
+      - challenge
+      - log
+      - bypass
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyIpUpdateValue:
+    properties:
+      hostname: string
+      ip: string
+      notes: optional<string>
+      action: UpdateFirewallConfigRequestBodyIpUpdateValueAction
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyIpUpdate:
+    docs: Update an IP Blocking rule
+    properties:
+      id: string
+      value: UpdateFirewallConfigRequestBodyIpUpdateValue
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyIpRemove:
+    docs: Remove an IP Blocking rule
+    properties:
+      id: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyManagedRulesUpdateValue:
+    properties:
+      active: boolean
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBodyManagedRulesUpdate:
+    docs: Update a managed ruleset
+    properties:
+      id: literal<"owasp">
+      value: UpdateFirewallConfigRequestBodyManagedRulesUpdateValue
+    source:
+      openapi: openapi.json
+  UpdateFirewallConfigRequestBody:
+    discriminant: action
+    base-properties: {}
+    union:
+      firewallEnabled:
+        type: UpdateFirewallConfigRequestBodyFirewallEnabled
+        docs: Enable Firewall
+      rules.insert:
+        type: UpdateFirewallConfigRequestBodyRulesInsert
+        docs: Add a custom rule
+      rules.update:
+        type: UpdateFirewallConfigRequestBodyRulesUpdate
+        docs: Update a custom rule
+      rules.remove:
+        type: UpdateFirewallConfigRequestBodyRulesRemove
+        docs: Remove a custom rule
+      rules.priority:
+        type: UpdateFirewallConfigRequestBodyRulesPriority
+        docs: Reorder a custom rule
+      crs.update:
+        type: UpdateFirewallConfigRequestBodyCrsUpdate
+        docs: Enable a managed rule
+      crs.disable:
+        type: UpdateFirewallConfigRequestBodyCrsDisable
+        docs: Disable a managed rule
+      ip.insert:
+        type: UpdateFirewallConfigRequestBodyIpInsert
+        docs: Add an IP Blocking rule
+      ip.update:
+        type: UpdateFirewallConfigRequestBodyIpUpdate
+        docs: Update an IP Blocking rule
+      ip.remove:
+        type: UpdateFirewallConfigRequestBodyIpRemove
+        docs: Remove an IP Blocking rule
+      managedRules.update:
+        type: UpdateFirewallConfigRequestBodyManagedRulesUpdate
+        docs: Update a managed ruleset
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsSdAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsSd:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsSdAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsMaAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsMa:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsMaAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsLfiAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsLfi:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsLfiAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsRfiAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsRfi:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsRfiAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsRceAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsRce:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsRceAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsPhpAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsPhp:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsPhpAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsGenAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsGen:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsGenAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsXssAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsXss:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsXssAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsSqliAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsSqli:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsSqliAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsSfAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsSf:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsSfAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsJavaAction:
+    enum:
+      - deny
+      - log
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrsJava:
+    properties:
+      active: boolean
+      action: GetFirewallConfigResponseCrsJavaAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseCrs:
+    properties:
+      sd: GetFirewallConfigResponseCrsSd
+      ma: GetFirewallConfigResponseCrsMa
+      lfi: GetFirewallConfigResponseCrsLfi
+      rfi: GetFirewallConfigResponseCrsRfi
+      rce: GetFirewallConfigResponseCrsRce
+      php: GetFirewallConfigResponseCrsPhp
+      gen: GetFirewallConfigResponseCrsGen
+      xss: GetFirewallConfigResponseCrsXss
+      sqli: GetFirewallConfigResponseCrsSqli
+      sf: GetFirewallConfigResponseCrsSf
+      java: GetFirewallConfigResponseCrsJava
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemConditionGroupItemConditionsItemType:
+    enum:
+      - host
+      - path
+      - method
+      - header
+      - query
+      - cookie
+      - target_path
+      - ip_address
+      - protocol
+      - region
+      - scheme
+      - environment
+      - user_agent
+      - geo_continent
+      - geo_country
+      - geo_country_region
+      - geo_city
+      - geo_as_number
+      - ja4_digest
+      - ja3_digest
+      - rate_limit_api_id
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemConditionGroupItemConditionsItemOp:
+    enum:
+      - re
+      - eq
+      - ex
+      - inc
+      - pre
+      - suf
+      - sub
+      - gt
+      - gte
+      - lt
+      - lte
+      - nex
+      - ninc
+      - neq
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemConditionGroupItemConditionsItemValue:
+    discriminated: false
+    union:
+      - string
+      - double
+      - list<string>
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemConditionGroupItemConditionsItem:
+    properties:
+      type: GetFirewallConfigResponseRulesItemConditionGroupItemConditionsItemType
+      op: GetFirewallConfigResponseRulesItemConditionGroupItemConditionsItemOp
+      neg: optional<boolean>
+      key: optional<string>
+      value: >-
+        optional<GetFirewallConfigResponseRulesItemConditionGroupItemConditionsItemValue>
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemConditionGroupItem:
+    properties:
+      conditions: list<GetFirewallConfigResponseRulesItemConditionGroupItemConditionsItem>
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemActionMitigateAction:
+    enum:
+      - deny
+      - log
+      - challenge
+      - bypass
+      - rate_limit
+      - redirect
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemActionMitigateRateLimitAlgo:
+    enum:
+      - fixed_window
+      - token_bucket
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemActionMitigateRateLimitAction:
+    enum:
+      - deny
+      - log
+      - challenge
+      - rate_limit
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemActionMitigateRateLimit:
+    properties:
+      algo: GetFirewallConfigResponseRulesItemActionMitigateRateLimitAlgo
+      window: double
+      limit: double
+      keys: list<string>
+      action: >-
+        optional<GetFirewallConfigResponseRulesItemActionMitigateRateLimitAction>
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemActionMitigateRedirect:
+    properties:
+      location: string
+      permanent: boolean
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemActionMitigate:
+    properties:
+      action: GetFirewallConfigResponseRulesItemActionMitigateAction
+      rateLimit: optional<GetFirewallConfigResponseRulesItemActionMitigateRateLimit>
+      redirect: optional<GetFirewallConfigResponseRulesItemActionMitigateRedirect>
+      actionDuration: optional<string>
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItemAction:
+    properties:
+      mitigate: optional<GetFirewallConfigResponseRulesItemActionMitigate>
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseRulesItem:
+    properties:
+      id: string
+      name: string
+      description: optional<string>
+      active: boolean
+      conditionGroup: list<GetFirewallConfigResponseRulesItemConditionGroupItem>
+      action: GetFirewallConfigResponseRulesItemAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseIpsItemAction:
+    enum:
+      - deny
+      - log
+      - challenge
+      - bypass
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseIpsItem:
+    properties:
+      id: string
+      hostname: string
+      ip: string
+      notes: optional<string>
+      action: GetFirewallConfigResponseIpsItemAction
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseManagedRulesOwasp:
+    properties:
+      active: boolean
+      updatedAt: optional<string>
+      userId: optional<string>
+      username: optional<string>
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseManagedRulesVerifiedBotsBypass:
+    properties:
+      active: boolean
+      updatedAt: optional<string>
+      userId: optional<string>
+      username: optional<string>
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponseManagedRules:
+    properties:
+      owasp: optional<GetFirewallConfigResponseManagedRulesOwasp>
+      verifiedBotsBypass: optional<GetFirewallConfigResponseManagedRulesVerifiedBotsBypass>
+    source:
+      openapi: openapi.json
+  GetFirewallConfigResponse:
+    properties:
+      ownerId: string
+      projectKey: string
+      id: string
+      version: double
+      updatedAt: string
+      firewallEnabled: boolean
+      crs: GetFirewallConfigResponseCrs
+      rules: list<GetFirewallConfigResponseRulesItem>
+      ips: list<GetFirewallConfigResponseIpsItem>
+      changes: list<map<string, unknown>>
+      managedRules: optional<GetFirewallConfigResponseManagedRules>
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    updateAttackChallengeMode:
+      path: /v1/security/attack-mode
+      method: POST
+      auth: true
+      docs: >-
+        Update the setting for determining if the project has Attack Challenge
+        mode enabled.
+      display-name: Update Attack Challenge mode
+      request:
+        name: UpdateAttackChallengeModeRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            projectId: string
+            attackModeEnabled: boolean
+            attackModeActiveUntil: optional<double>
+      response:
+        docs: ''
+        type: UpdateAttackChallengeModeResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - request:
+            projectId: projectId
+            attackModeEnabled: true
+          response:
+            body:
+              attackModeEnabled: true
+              attackModeUpdatedAt: 1.1
+    putFirewallConfig:
+      path: /v1/security/firewall/config
+      method: PUT
+      auth: true
+      docs: >-
+        Set the firewall configuration to provided rules and settings. Creates
+        or overwrite the existing firewall configuration.
+      display-name: Put Firewall Configuration
+      request:
+        name: PutFirewallConfigRequest
+        query-parameters:
+          projectId: string
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            firewallEnabled: boolean
+            managedRules: optional<PutFirewallConfigRequestManagedRules>
+            crs: optional<PutFirewallConfigRequestCrs>
+            rules: optional<list<PutFirewallConfigRequestRulesItem>>
+            ips: optional<list<PutFirewallConfigRequestIpsItem>>
+      response:
+        docs: ''
+        type: PutFirewallConfigResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - query-parameters:
+            projectId: projectId
+          request:
+            firewallEnabled: true
+          response:
+            body:
+              active:
+                ownerId: ownerId
+                projectKey: projectKey
+                id: id
+                version: 1.1
+                updatedAt: updatedAt
+                firewallEnabled: true
+                crs:
+                  sd:
+                    active: true
+                    action: deny
+                  ma:
+                    active: true
+                    action: deny
+                  lfi:
+                    active: true
+                    action: deny
+                  rfi:
+                    active: true
+                    action: deny
+                  rce:
+                    active: true
+                    action: deny
+                  php:
+                    active: true
+                    action: deny
+                  gen:
+                    active: true
+                    action: deny
+                  xss:
+                    active: true
+                    action: deny
+                  sqli:
+                    active: true
+                    action: deny
+                  sf:
+                    active: true
+                    action: deny
+                  java:
+                    active: true
+                    action: deny
+                rules:
+                  - id: id
+                    name: name
+                    active: true
+                    conditionGroup:
+                      - conditions:
+                          - type: host
+                            op: re
+                    action: {}
+                ips:
+                  - id: id
+                    hostname: hostname
+                    ip: ip
+                    action: deny
+                changes:
+                  - key: value
+                managedRules:
+                  owasp:
+                    active: true
+                  verifiedBotsBypass:
+                    active: true
+    updateFirewallConfig:
+      path: /v1/security/firewall/config
+      method: PATCH
+      auth: true
+      docs: Process updates to modify the existing firewall config for a project
+      display-name: Update Firewall Configuration
+      request:
+        body: UpdateFirewallConfigRequestBody
+        query-parameters:
+          projectId: string
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        name: UpdateFirewallConfigRequest
+      response:
+        docs: ''
+        type: map<string, unknown>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - query-parameters:
+            projectId: projectId
+          request:
+            action: managedRules.update
+            id: owasp
+            value:
+              active: true
+          response:
+            body:
+              key: value
+    getFirewallConfig:
+      path: /v1/security/firewall/config/{configVersion}
+      method: GET
+      auth: true
+      docs: >-
+        Retreive the specified firewall configuration for a project. The
+        deployed configVersion will be `active`
+      path-parameters:
+        configVersion: optional<string>
+      display-name: Read Firewall Configuration
+      request:
+        name: GetFirewallConfigRequest
+        query-parameters:
+          projectId: string
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: GetFirewallConfigResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - query-parameters:
+            projectId: projectId
+          response:
+            body:
+              ownerId: ownerId
+              projectKey: projectKey
+              id: id
+              version: 1.1
+              updatedAt: updatedAt
+              firewallEnabled: true
+              crs:
+                sd:
+                  active: true
+                  action: deny
+                ma:
+                  active: true
+                  action: deny
+                lfi:
+                  active: true
+                  action: deny
+                rfi:
+                  active: true
+                  action: deny
+                rce:
+                  active: true
+                  action: deny
+                php:
+                  active: true
+                  action: deny
+                gen:
+                  active: true
+                  action: deny
+                xss:
+                  active: true
+                  action: deny
+                sqli:
+                  active: true
+                  action: deny
+                sf:
+                  active: true
+                  action: deny
+                java:
+                  active: true
+                  action: deny
+              rules:
+                - id: id
+                  name: name
+                  description: description
+                  active: true
+                  conditionGroup:
+                    - conditions:
+                        - type: host
+                          op: re
+                  action: {}
+              ips:
+                - id: id
+                  hostname: hostname
+                  ip: ip
+                  notes: notes
+                  action: deny
+              changes:
+                - key: value
+              managedRules:
+                owasp:
+                  active: true
+                  updatedAt: updatedAt
+                  userId: userId
+                  username: username
+                verifiedBotsBypass:
+                  active: true
+                  updatedAt: updatedAt
+                  userId: userId
+                  username: username
+  source:
+    openapi: openapi.json

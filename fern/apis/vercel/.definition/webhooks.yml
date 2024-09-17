@@ -1,0 +1,353 @@
+types:
+  CreateWebhookRequestEventsItem:
+    enum:
+      - value: budget.reached
+        name: BudgetReached
+      - value: budget.reset
+        name: BudgetReset
+      - value: domain.created
+        name: DomainCreated
+      - value: deployment.created
+        name: DeploymentCreated
+      - value: deployment.error
+        name: DeploymentError
+      - value: deployment.canceled
+        name: DeploymentCanceled
+      - value: deployment.succeeded
+        name: DeploymentSucceeded
+      - value: deployment.ready
+        name: DeploymentReady
+      - value: deployment.check-rerequested
+        name: DeploymentCheckRerequested
+      - value: deployment.promoted
+        name: DeploymentPromoted
+      - value: edge-config.created
+        name: EdgeConfigCreated
+      - value: edge-config.deleted
+        name: EdgeConfigDeleted
+      - value: edge-config.items.updated
+        name: EdgeConfigItemsUpdated
+      - value: integration-configuration.permission-upgraded
+        name: IntegrationConfigurationPermissionUpgraded
+      - value: integration-configuration.removed
+        name: IntegrationConfigurationRemoved
+      - value: integration-configuration.scope-change-confirmed
+        name: IntegrationConfigurationScopeChangeConfirmed
+      - value: project.created
+        name: ProjectCreated
+      - value: project.removed
+        name: ProjectRemoved
+      - value: deployment-checks-completed
+        name: DeploymentChecksCompleted
+      - value: deployment-prepared
+        name: DeploymentPrepared
+      - deployment
+      - value: integration-configuration-permission-updated
+        name: IntegrationConfigurationPermissionUpdated
+      - value: marketplace.invoice.created
+        name: MarketplaceInvoiceCreated
+      - value: marketplace.invoice.paid
+        name: MarketplaceInvoicePaid
+      - value: marketplace.invoice.notpaid
+        name: MarketplaceInvoiceNotpaid
+      - value: marketplace.invoice.refunded
+        name: MarketplaceInvoiceRefunded
+      - value: test-webhook
+        name: TestWebhook
+    source:
+      openapi: openapi.json
+  CreateWebhookResponseEventsItem:
+    enum:
+      - value: budget.reached
+        name: BudgetReached
+      - value: budget.reset
+        name: BudgetReset
+      - value: domain.created
+        name: DomainCreated
+      - value: deployment.created
+        name: DeploymentCreated
+      - value: deployment.error
+        name: DeploymentError
+      - value: deployment.canceled
+        name: DeploymentCanceled
+      - value: deployment.succeeded
+        name: DeploymentSucceeded
+      - value: deployment.ready
+        name: DeploymentReady
+      - value: deployment.check-rerequested
+        name: DeploymentCheckRerequested
+      - value: deployment.promoted
+        name: DeploymentPromoted
+      - value: edge-config.created
+        name: EdgeConfigCreated
+      - value: edge-config.deleted
+        name: EdgeConfigDeleted
+      - value: edge-config.items.updated
+        name: EdgeConfigItemsUpdated
+      - value: integration-configuration.permission-upgraded
+        name: IntegrationConfigurationPermissionUpgraded
+      - value: integration-configuration.removed
+        name: IntegrationConfigurationRemoved
+      - value: integration-configuration.scope-change-confirmed
+        name: IntegrationConfigurationScopeChangeConfirmed
+      - value: project.created
+        name: ProjectCreated
+      - value: project.removed
+        name: ProjectRemoved
+      - value: deployment-checks-completed
+        name: DeploymentChecksCompleted
+      - value: deployment-prepared
+        name: DeploymentPrepared
+      - deployment
+      - value: integration-configuration-permission-updated
+        name: IntegrationConfigurationPermissionUpdated
+      - value: marketplace.invoice.created
+        name: MarketplaceInvoiceCreated
+      - value: marketplace.invoice.paid
+        name: MarketplaceInvoicePaid
+      - value: marketplace.invoice.notpaid
+        name: MarketplaceInvoiceNotpaid
+      - value: marketplace.invoice.refunded
+        name: MarketplaceInvoiceRefunded
+      - value: test-webhook
+        name: TestWebhook
+    docs: The webhooks events
+    source:
+      openapi: openapi.json
+  CreateWebhookResponse:
+    properties:
+      secret:
+        type: string
+        docs: The webhook secret used to sign the payload
+      events:
+        docs: The webhooks events
+        type: list<CreateWebhookResponseEventsItem>
+      id:
+        type: string
+        docs: The webhook id
+      url:
+        type: string
+        docs: A string with the URL of the webhook
+      ownerId:
+        type: string
+        docs: The unique ID of the team the webhook belongs to
+      createdAt:
+        type: double
+        docs: >-
+          A number containing the date when the webhook was created in in
+          milliseconds
+      updatedAt:
+        type: double
+        docs: >-
+          A number containing the date when the webhook was updated in in
+          milliseconds
+      projectIds:
+        type: optional<list<string>>
+        docs: The ID of the projects the webhook is associated with
+    source:
+      openapi: openapi.json
+  GetWebhookResponseEventsItem:
+    enum:
+      - value: budget.reached
+        name: BudgetReached
+      - value: budget.reset
+        name: BudgetReset
+      - value: domain.created
+        name: DomainCreated
+      - value: deployment.created
+        name: DeploymentCreated
+      - value: deployment.error
+        name: DeploymentError
+      - value: deployment.canceled
+        name: DeploymentCanceled
+      - value: deployment.succeeded
+        name: DeploymentSucceeded
+      - value: deployment.ready
+        name: DeploymentReady
+      - value: deployment.check-rerequested
+        name: DeploymentCheckRerequested
+      - value: deployment.promoted
+        name: DeploymentPromoted
+      - value: edge-config.created
+        name: EdgeConfigCreated
+      - value: edge-config.deleted
+        name: EdgeConfigDeleted
+      - value: edge-config.items.updated
+        name: EdgeConfigItemsUpdated
+      - value: integration-configuration.permission-upgraded
+        name: IntegrationConfigurationPermissionUpgraded
+      - value: integration-configuration.removed
+        name: IntegrationConfigurationRemoved
+      - value: integration-configuration.scope-change-confirmed
+        name: IntegrationConfigurationScopeChangeConfirmed
+      - value: project.created
+        name: ProjectCreated
+      - value: project.removed
+        name: ProjectRemoved
+      - value: deployment-checks-completed
+        name: DeploymentChecksCompleted
+      - value: deployment-prepared
+        name: DeploymentPrepared
+      - deployment
+      - value: integration-configuration-permission-updated
+        name: IntegrationConfigurationPermissionUpdated
+      - value: marketplace.invoice.created
+        name: MarketplaceInvoiceCreated
+      - value: marketplace.invoice.paid
+        name: MarketplaceInvoicePaid
+      - value: marketplace.invoice.notpaid
+        name: MarketplaceInvoiceNotpaid
+      - value: marketplace.invoice.refunded
+        name: MarketplaceInvoiceRefunded
+      - value: test-webhook
+        name: TestWebhook
+    docs: The webhooks events
+    source:
+      openapi: openapi.json
+  GetWebhookResponse:
+    properties:
+      events:
+        docs: The webhooks events
+        type: list<GetWebhookResponseEventsItem>
+      id:
+        type: string
+        docs: The webhook id
+      url:
+        type: string
+        docs: A string with the URL of the webhook
+      ownerId:
+        type: string
+        docs: The unique ID of the team the webhook belongs to
+      createdAt:
+        type: double
+        docs: >-
+          A number containing the date when the webhook was created in in
+          milliseconds
+      updatedAt:
+        type: double
+        docs: >-
+          A number containing the date when the webhook was updated in in
+          milliseconds
+      projectIds:
+        type: optional<list<string>>
+        docs: The ID of the projects the webhook is associated with
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createWebhook:
+      path: /v1/webhooks
+      method: POST
+      auth: true
+      docs: Creates a webhook
+      display-name: Creates a webhook
+      request:
+        name: CreateWebhookRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            url:
+              type: string
+              validation:
+                format: uri
+                pattern: ^https?://
+            events: list<CreateWebhookRequestEventsItem>
+            projectIds: optional<list<string>>
+      response:
+        docs: ''
+        type: CreateWebhookResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - request:
+            url: url
+            events:
+              - budget.reached
+          response:
+            body:
+              secret: secret
+              events:
+                - budget.reached
+              id: account_hook_GflD6EYyo7F4ViYS
+              url: https://my-webhook.com
+              ownerId: ZspSRT4ljIEEmMHgoDwKWDei
+              createdAt: 1567024758130
+              updatedAt: 1567024758130
+              projectIds:
+                - prj_12HKQaOmR5t5Uy6vdcQsNIiZgHGB
+    getWebhook:
+      path: /v1/webhooks/{id}
+      method: GET
+      auth: true
+      docs: Get a webhook
+      path-parameters:
+        id: string
+      display-name: Get a webhook
+      request:
+        name: GetWebhookRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: GetWebhookResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              events:
+                - budget.reached
+              id: account_hook_GflD6EYyo7F4ViYS
+              url: https://my-webhook.com
+              ownerId: ZspSRT4ljIEEmMHgoDwKWDei
+              createdAt: 1567024758130
+              updatedAt: 1567024758130
+              projectIds:
+                - prj_12HKQaOmR5t5Uy6vdcQsNIiZgHGB
+    deleteWebhook:
+      path: /v1/webhooks/{id}
+      method: DELETE
+      auth: true
+      docs: Deletes a webhook
+      path-parameters:
+        id: string
+      display-name: Deletes a webhook
+      request:
+        name: DeleteWebhookRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - path-parameters:
+            id: id
+  source:
+    openapi: openapi.json

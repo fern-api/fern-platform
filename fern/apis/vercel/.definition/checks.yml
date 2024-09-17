@@ -1,0 +1,783 @@
+types:
+  GetAllChecksResponseChecksItemConclusion:
+    enum:
+      - canceled
+      - failed
+      - neutral
+      - succeeded
+      - skipped
+      - stale
+    source:
+      openapi: openapi.json
+  GetAllChecksResponseChecksItemOutputMetricsFcp:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetAllChecksResponseChecksItemOutputMetricsLcp:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetAllChecksResponseChecksItemOutputMetricsCls:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetAllChecksResponseChecksItemOutputMetricsTbt:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetAllChecksResponseChecksItemOutputMetricsVirtualExperienceScore:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetAllChecksResponseChecksItemOutputMetrics:
+    properties:
+      FCP: GetAllChecksResponseChecksItemOutputMetricsFcp
+      LCP: GetAllChecksResponseChecksItemOutputMetricsLcp
+      CLS: GetAllChecksResponseChecksItemOutputMetricsCls
+      TBT: GetAllChecksResponseChecksItemOutputMetricsTbt
+      virtualExperienceScore: >-
+        optional<GetAllChecksResponseChecksItemOutputMetricsVirtualExperienceScore>
+    source:
+      openapi: openapi.json
+  GetAllChecksResponseChecksItemOutput:
+    properties:
+      metrics: optional<GetAllChecksResponseChecksItemOutputMetrics>
+    source:
+      openapi: openapi.json
+  GetAllChecksResponseChecksItemStatus:
+    enum:
+      - registered
+      - running
+      - completed
+    source:
+      openapi: openapi.json
+  GetAllChecksResponseChecksItem:
+    properties:
+      completedAt: optional<double>
+      conclusion: optional<GetAllChecksResponseChecksItemConclusion>
+      createdAt: double
+      detailsUrl: optional<string>
+      id: string
+      integrationId: string
+      name: string
+      output: optional<GetAllChecksResponseChecksItemOutput>
+      path: optional<string>
+      rerequestable: boolean
+      startedAt: optional<double>
+      status: GetAllChecksResponseChecksItemStatus
+      updatedAt: double
+    source:
+      openapi: openapi.json
+  GetAllChecksResponse:
+    properties:
+      checks: list<GetAllChecksResponseChecksItem>
+    source:
+      openapi: openapi.json
+  CreateCheckResponseStatus:
+    enum:
+      - registered
+      - running
+      - completed
+    source:
+      openapi: openapi.json
+  CreateCheckResponseConclusion:
+    enum:
+      - canceled
+      - failed
+      - neutral
+      - succeeded
+      - skipped
+      - stale
+    source:
+      openapi: openapi.json
+  CreateCheckResponseOutputMetricsFcp:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  CreateCheckResponseOutputMetricsLcp:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  CreateCheckResponseOutputMetricsCls:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  CreateCheckResponseOutputMetricsTbt:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  CreateCheckResponseOutputMetricsVirtualExperienceScore:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  CreateCheckResponseOutputMetrics:
+    properties:
+      FCP: CreateCheckResponseOutputMetricsFcp
+      LCP: CreateCheckResponseOutputMetricsLcp
+      CLS: CreateCheckResponseOutputMetricsCls
+      TBT: CreateCheckResponseOutputMetricsTbt
+      virtualExperienceScore: optional<CreateCheckResponseOutputMetricsVirtualExperienceScore>
+    source:
+      openapi: openapi.json
+  CreateCheckResponseOutput:
+    properties:
+      metrics: optional<CreateCheckResponseOutputMetrics>
+    source:
+      openapi: openapi.json
+  CreateCheckResponse:
+    properties:
+      id: string
+      name: string
+      path: optional<string>
+      status: CreateCheckResponseStatus
+      conclusion: optional<CreateCheckResponseConclusion>
+      blocking: boolean
+      output: optional<CreateCheckResponseOutput>
+      detailsUrl: optional<string>
+      integrationId: string
+      deploymentId: string
+      externalId: optional<string>
+      createdAt: double
+      updatedAt: double
+      startedAt: optional<double>
+      completedAt: optional<double>
+      rerequestable: optional<boolean>
+    source:
+      openapi: openapi.json
+  GetCheckResponseStatus:
+    enum:
+      - registered
+      - running
+      - completed
+    source:
+      openapi: openapi.json
+  GetCheckResponseConclusion:
+    enum:
+      - canceled
+      - failed
+      - neutral
+      - succeeded
+      - skipped
+      - stale
+    source:
+      openapi: openapi.json
+  GetCheckResponseOutputMetricsFcp:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetCheckResponseOutputMetricsLcp:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetCheckResponseOutputMetricsCls:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetCheckResponseOutputMetricsTbt:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetCheckResponseOutputMetricsVirtualExperienceScore:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  GetCheckResponseOutputMetrics:
+    properties:
+      FCP: GetCheckResponseOutputMetricsFcp
+      LCP: GetCheckResponseOutputMetricsLcp
+      CLS: GetCheckResponseOutputMetricsCls
+      TBT: GetCheckResponseOutputMetricsTbt
+      virtualExperienceScore: optional<GetCheckResponseOutputMetricsVirtualExperienceScore>
+    source:
+      openapi: openapi.json
+  GetCheckResponseOutput:
+    properties:
+      metrics: optional<GetCheckResponseOutputMetrics>
+    source:
+      openapi: openapi.json
+  GetCheckResponse:
+    properties:
+      id: string
+      name: string
+      path: optional<string>
+      status: GetCheckResponseStatus
+      conclusion: optional<GetCheckResponseConclusion>
+      blocking: boolean
+      output: optional<GetCheckResponseOutput>
+      detailsUrl: optional<string>
+      integrationId: string
+      deploymentId: string
+      externalId: optional<string>
+      createdAt: double
+      updatedAt: double
+      startedAt: optional<double>
+      completedAt: optional<double>
+      rerequestable: optional<boolean>
+    source:
+      openapi: openapi.json
+  UpdateCheckRequestStatus:
+    enum:
+      - running
+      - completed
+    docs: The current status of the check
+    source:
+      openapi: openapi.json
+  UpdateCheckRequestConclusion:
+    enum:
+      - canceled
+      - failed
+      - neutral
+      - succeeded
+      - skipped
+    docs: The result of the check being run
+    source:
+      openapi: openapi.json
+  UpdateCheckRequestOutputMetricsFcp:
+    properties:
+      value:
+        type: optional<double>
+        docs: First Contentful Paint value
+      previousValue:
+        type: optional<double>
+        docs: Previous First Contentful Paint value to display a delta
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckRequestOutputMetricsLcp:
+    properties:
+      value:
+        type: optional<double>
+        docs: Largest Contentful Paint value
+      previousValue:
+        type: optional<double>
+        docs: Previous Largest Contentful Paint value to display a delta
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckRequestOutputMetricsCls:
+    properties:
+      value:
+        type: optional<double>
+        docs: Cumulative Layout Shift value
+      previousValue:
+        type: optional<double>
+        docs: Previous Cumulative Layout Shift value to display a delta
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckRequestOutputMetricsTbt:
+    properties:
+      value:
+        type: optional<double>
+        docs: Total Blocking Time value
+      previousValue:
+        type: optional<double>
+        docs: Previous Total Blocking Time value to display a delta
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckRequestOutputMetricsVirtualExperienceScore:
+    properties:
+      value:
+        type: optional<integer>
+        docs: The calculated Virtual Experience Score value, between 0 and 100
+        validation:
+          min: 0
+          max: 100
+      previousValue:
+        type: optional<integer>
+        docs: >-
+          A previous Virtual Experience Score value to display a delta, between
+          0 and 100
+        validation:
+          min: 0
+          max: 100
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckRequestOutputMetrics:
+    docs: Metrics about the page
+    properties:
+      FCP: UpdateCheckRequestOutputMetricsFcp
+      LCP: UpdateCheckRequestOutputMetricsLcp
+      CLS: UpdateCheckRequestOutputMetricsCls
+      TBT: UpdateCheckRequestOutputMetricsTbt
+      virtualExperienceScore: optional<UpdateCheckRequestOutputMetricsVirtualExperienceScore>
+    source:
+      openapi: openapi.json
+  UpdateCheckRequestOutput:
+    docs: The results of the check Run
+    properties:
+      metrics:
+        type: optional<UpdateCheckRequestOutputMetrics>
+        docs: Metrics about the page
+    source:
+      openapi: openapi.json
+  UpdateCheckResponseStatus:
+    enum:
+      - registered
+      - running
+      - completed
+    source:
+      openapi: openapi.json
+  UpdateCheckResponseConclusion:
+    enum:
+      - canceled
+      - failed
+      - neutral
+      - succeeded
+      - skipped
+      - stale
+    source:
+      openapi: openapi.json
+  UpdateCheckResponseOutputMetricsFcp:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckResponseOutputMetricsLcp:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckResponseOutputMetricsCls:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckResponseOutputMetricsTbt:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckResponseOutputMetricsVirtualExperienceScore:
+    properties:
+      value: optional<double>
+      previousValue: optional<double>
+      source: literal<"web-vitals">
+    source:
+      openapi: openapi.json
+  UpdateCheckResponseOutputMetrics:
+    properties:
+      FCP: UpdateCheckResponseOutputMetricsFcp
+      LCP: UpdateCheckResponseOutputMetricsLcp
+      CLS: UpdateCheckResponseOutputMetricsCls
+      TBT: UpdateCheckResponseOutputMetricsTbt
+      virtualExperienceScore: optional<UpdateCheckResponseOutputMetricsVirtualExperienceScore>
+    source:
+      openapi: openapi.json
+  UpdateCheckResponseOutput:
+    properties:
+      metrics: optional<UpdateCheckResponseOutputMetrics>
+    source:
+      openapi: openapi.json
+  UpdateCheckResponse:
+    properties:
+      id: string
+      name: string
+      path: optional<string>
+      status: UpdateCheckResponseStatus
+      conclusion: optional<UpdateCheckResponseConclusion>
+      blocking: boolean
+      output: optional<UpdateCheckResponseOutput>
+      detailsUrl: optional<string>
+      integrationId: string
+      deploymentId: string
+      externalId: optional<string>
+      createdAt: double
+      updatedAt: double
+      startedAt: optional<double>
+      completedAt: optional<double>
+      rerequestable: optional<boolean>
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getAllChecks:
+      path: /v1/deployments/{deploymentId}/checks
+      method: GET
+      auth: true
+      docs: List all of the checks created for a deployment.
+      path-parameters:
+        deploymentId:
+          type: string
+          docs: The deployment to get all checks for
+      display-name: Retrieve a list of all checks
+      request:
+        name: GetAllChecksRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: GetAllChecksResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            deploymentId: dpl_2qn7PZrx89yxY34vEZPD31Y9XVj6
+          response:
+            body:
+              checks:
+                - completedAt: 1.1
+                  conclusion: canceled
+                  createdAt: 1.1
+                  detailsUrl: detailsUrl
+                  id: id
+                  integrationId: integrationId
+                  name: name
+                  path: path
+                  rerequestable: true
+                  startedAt: 1.1
+                  status: registered
+                  updatedAt: 1.1
+    createCheck:
+      path: /v1/deployments/{deploymentId}/checks
+      method: POST
+      auth: true
+      docs: >-
+        Creates a new check. This endpoint must be called with an OAuth2 or it
+        will produce a 400 error.
+      path-parameters:
+        deploymentId:
+          type: string
+          docs: The deployment to create the check for.
+      display-name: Creates a new Check
+      request:
+        name: CreateCheckRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            name:
+              type: string
+              docs: The name of the check being created
+              validation:
+                maxLength: 100
+            path:
+              type: optional<string>
+              docs: Path of the page that is being checked
+              validation:
+                maxLength: 255
+            blocking:
+              type: boolean
+              docs: Whether the check should block a deployment from succeeding
+            detailsUrl:
+              type: optional<string>
+              docs: URL to display for further details
+            externalId:
+              type: optional<string>
+              docs: An identifier that can be used as an external reference
+            rerequestable:
+              type: optional<boolean>
+              docs: >-
+                Whether a user should be able to request for the check to be
+                rerun if it fails
+      response:
+        docs: ''
+        type: CreateCheckResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            deploymentId: dpl_2qn7PZrx89yxY34vEZPD31Y9XVj6
+          request:
+            name: Performance Check
+            blocking: true
+          response:
+            body:
+              id: id
+              name: name
+              path: path
+              status: registered
+              conclusion: canceled
+              blocking: true
+              output:
+                metrics:
+                  FCP:
+                    source: web-vitals
+                  LCP:
+                    source: web-vitals
+                  CLS:
+                    source: web-vitals
+                  TBT:
+                    source: web-vitals
+                  virtualExperienceScore:
+                    source: web-vitals
+              detailsUrl: detailsUrl
+              integrationId: integrationId
+              deploymentId: deploymentId
+              externalId: externalId
+              createdAt: 1.1
+              updatedAt: 1.1
+              startedAt: 1.1
+              completedAt: 1.1
+              rerequestable: true
+    getCheck:
+      path: /v1/deployments/{deploymentId}/checks/{checkId}
+      method: GET
+      auth: true
+      docs: Return a detailed response for a single check.
+      path-parameters:
+        deploymentId:
+          type: string
+          docs: The deployment to get the check for.
+        checkId:
+          type: string
+          docs: The check to fetch
+      display-name: Get a single check
+      request:
+        name: GetCheckRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: GetCheckResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            deploymentId: dpl_2qn7PZrx89yxY34vEZPD31Y9XVj6
+            checkId: check_2qn7PZrx89yxY34vEZPD31Y9XVj6
+          response:
+            body:
+              id: id
+              name: name
+              path: path
+              status: registered
+              conclusion: canceled
+              blocking: true
+              output:
+                metrics:
+                  FCP:
+                    source: web-vitals
+                  LCP:
+                    source: web-vitals
+                  CLS:
+                    source: web-vitals
+                  TBT:
+                    source: web-vitals
+                  virtualExperienceScore:
+                    source: web-vitals
+              detailsUrl: detailsUrl
+              integrationId: integrationId
+              deploymentId: deploymentId
+              externalId: externalId
+              createdAt: 1.1
+              updatedAt: 1.1
+              startedAt: 1.1
+              completedAt: 1.1
+              rerequestable: true
+    updateCheck:
+      path: /v1/deployments/{deploymentId}/checks/{checkId}
+      method: PATCH
+      auth: true
+      docs: >-
+        Update an existing check. This endpoint must be called with an OAuth2 or
+        it will produce a 400 error.
+      path-parameters:
+        deploymentId:
+          type: string
+          docs: The deployment to update the check for.
+        checkId:
+          type: string
+          docs: The check being updated
+      display-name: Update a check
+      request:
+        name: UpdateCheckRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            name:
+              type: optional<string>
+              docs: The name of the check being created
+              validation:
+                maxLength: 100
+            path:
+              type: optional<string>
+              docs: Path of the page that is being checked
+              validation:
+                maxLength: 255
+            status:
+              type: optional<UpdateCheckRequestStatus>
+              docs: The current status of the check
+            conclusion:
+              type: optional<UpdateCheckRequestConclusion>
+              docs: The result of the check being run
+            detailsUrl:
+              type: optional<string>
+              docs: A URL a user may visit to see more information about the check
+            output:
+              type: optional<UpdateCheckRequestOutput>
+              docs: The results of the check Run
+            externalId:
+              type: optional<string>
+              docs: An identifier that can be used as an external reference
+      response:
+        docs: ''
+        type: UpdateCheckResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ContentTooLargeError
+      examples:
+        - path-parameters:
+            deploymentId: dpl_2qn7PZrx89yxY34vEZPD31Y9XVj6
+            checkId: check_2qn7PZrx89yxY34vEZPD31Y9XVj6
+          request: {}
+          response:
+            body:
+              id: id
+              name: name
+              path: path
+              status: registered
+              conclusion: canceled
+              blocking: true
+              output:
+                metrics:
+                  FCP:
+                    source: web-vitals
+                  LCP:
+                    source: web-vitals
+                  CLS:
+                    source: web-vitals
+                  TBT:
+                    source: web-vitals
+                  virtualExperienceScore:
+                    source: web-vitals
+              detailsUrl: detailsUrl
+              integrationId: integrationId
+              deploymentId: deploymentId
+              externalId: externalId
+              createdAt: 1.1
+              updatedAt: 1.1
+              startedAt: 1.1
+              completedAt: 1.1
+              rerequestable: true
+    rerequestCheck:
+      path: /v1/deployments/{deploymentId}/checks/{checkId}/rerequest
+      method: POST
+      auth: true
+      docs: Rerequest a selected check that has failed.
+      path-parameters:
+        deploymentId:
+          type: string
+          docs: The deployment to rerun the check for.
+        checkId:
+          type: string
+          docs: The check to rerun
+      display-name: Rerequest a check
+      request:
+        name: RerequestCheckRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: map<string, unknown>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            deploymentId: dpl_2qn7PZrx89yxY34vEZPD31Y9XVj6
+            checkId: check_2qn7PZrx89yxY34vEZPD31Y9XVj6
+          response:
+            body:
+              key: value
+  source:
+    openapi: openapi.json

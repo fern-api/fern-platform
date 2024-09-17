@@ -1,0 +1,2633 @@
+errors:
+  BadRequestError:
+    status-code: 400
+    type: unknown
+    docs: One of the provided values in the request query is invalid.
+  UnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: ''
+  ForbiddenError:
+    status-code: 403
+    type: unknown
+    docs: You do not have permission to access this resource.
+  NotFoundError:
+    status-code: 404
+    type: unknown
+    docs: ''
+  PaymentRequiredError:
+    status-code: 402
+    type: unknown
+    docs: |-
+      The account was soft-blocked for an unhandled reason.
+      The account is missing a payment so payment method must be updated
+  ContentTooLargeError:
+    status-code: 413
+    type: unknown
+    docs: The output provided is too large
+  InternalServerError:
+    status-code: 500
+    type: unknown
+    docs: ''
+  ConflictError:
+    status-code: 409
+    type: unknown
+    docs: The deployment project is being transferred
+  TooManyRequestsError:
+    status-code: 429
+    type: unknown
+    docs: ''
+  PreconditionError:
+    status-code: 428
+    type: unknown
+    docs: |-
+      Owner does not have protection add-on
+      Advanced Deployment Protection is not available for the user plan
+  ServiceUnavailableError:
+    status-code: 503
+    type: unknown
+    docs: ''
+  RetryWithError:
+    status-code: 449
+    type: unknown
+    docs: ''
+  GoneError:
+    status-code: 410
+    type: unknown
+    docs: Invalid API version.
+  UnprocessableEntityError:
+    status-code: 422
+    type: unknown
+    docs: ''
+types:
+  GetDeploymentsDeploymentIdBuildsResponseBuildsItemReadyState:
+    enum:
+      - INITIALIZING
+      - BUILDING
+      - UPLOADING
+      - DEPLOYING
+      - READY
+      - ARCHIVED
+      - ERROR
+      - QUEUED
+      - CANCELED
+    docs: >-
+      The state of the deployment depending on the process of deploying, or if
+      it is ready or in an error state
+    source:
+      openapi: openapi.json
+  GetDeploymentsDeploymentIdBuildsResponseBuildsItemConfig:
+    docs: An object that contains the Build's configuration
+    properties:
+      distDir: optional<string>
+      forceBuildIn: optional<string>
+      reuseWorkPathFrom: optional<string>
+      zeroConfig: optional<boolean>
+    source:
+      openapi: openapi.json
+  GetDeploymentsDeploymentIdBuildsResponseBuildsItemOutputItemType:
+    enum:
+      - lambda
+      - file
+      - edge
+    docs: The type of the output
+    source:
+      openapi: openapi.json
+  GetDeploymentsDeploymentIdBuildsResponseBuildsItemOutputItemLambda:
+    docs: >-
+      If the output is a Serverless Function, an object containing the name,
+      location and memory size of the function
+    properties:
+      functionName: string
+      deployedTo: list<string>
+      memorySize: optional<double>
+      timeout: optional<double>
+      layers: optional<list<string>>
+    source:
+      openapi: openapi.json
+  GetDeploymentsDeploymentIdBuildsResponseBuildsItemOutputItemEdge:
+    docs: Exists if the output is an edge function.
+    properties:
+      regions:
+        type: optional<list<string>>
+        docs: >-
+          The regions where the edge function will be invoked. Only exists if
+          the edge function as a regional edge function, see:
+          https://vercel.com/docs/concepts/edge-network/regions#setting-edge-function-regions
+    source:
+      openapi: openapi.json
+  GetDeploymentsDeploymentIdBuildsResponseBuildsItemOutputItem:
+    docs: >-
+      A list of outputs for the Build that can be either Serverless Functions or
+      static files
+    properties:
+      type:
+        type: >-
+          optional<GetDeploymentsDeploymentIdBuildsResponseBuildsItemOutputItemType>
+        docs: The type of the output
+      path:
+        type: string
+        docs: The absolute path of the file or Serverless Function
+      digest:
+        type: string
+        docs: The SHA1 of the file
+      mode:
+        type: double
+        docs: The POSIX file permissions
+      size:
+        type: optional<double>
+        docs: The size of the file in bytes
+      lambda:
+        type: >-
+          optional<GetDeploymentsDeploymentIdBuildsResponseBuildsItemOutputItemLambda>
+        docs: >-
+          If the output is a Serverless Function, an object containing the name,
+          location and memory size of the function
+      edge:
+        type: >-
+          optional<GetDeploymentsDeploymentIdBuildsResponseBuildsItemOutputItemEdge>
+        docs: Exists if the output is an edge function.
+    source:
+      openapi: openapi.json
+  GetDeploymentsDeploymentIdBuildsResponseBuildsItem:
+    docs: An object representing a Build on Vercel
+    properties:
+      id:
+        type: string
+        docs: The unique identifier of the Build
+      deploymentId:
+        type: string
+        docs: The unique identifier of the deployment
+      entrypoint:
+        type: string
+        docs: The entrypoint of the deployment
+      readyState:
+        type: GetDeploymentsDeploymentIdBuildsResponseBuildsItemReadyState
+        docs: >-
+          The state of the deployment depending on the process of deploying, or
+          if it is ready or in an error state
+      readyStateAt:
+        type: optional<double>
+        docs: The time at which the Build state was last modified
+      scheduledAt:
+        type: optional<double>
+        docs: The time at which the Build was scheduled to be built
+      createdAt:
+        type: optional<double>
+        docs: The time at which the Build was created
+      deployedAt:
+        type: optional<double>
+        docs: The time at which the Build was deployed
+      createdIn:
+        type: optional<string>
+        docs: The region where the Build was first created
+      use:
+        type: optional<string>
+        docs: The Runtime the Build used to generate the output
+      config:
+        type: optional<GetDeploymentsDeploymentIdBuildsResponseBuildsItemConfig>
+        docs: An object that contains the Build's configuration
+      output:
+        docs: >-
+          A list of outputs for the Build that can be either Serverless
+          Functions or static files
+        type: list<GetDeploymentsDeploymentIdBuildsResponseBuildsItemOutputItem>
+      fingerprint:
+        type: optional<string>
+        docs: >-
+          If the Build uses the `@vercel/static` Runtime, it contains a hashed
+          string of all outputs
+      copiedFrom: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentsDeploymentIdBuildsResponse:
+    properties:
+      builds: list<GetDeploymentsDeploymentIdBuildsResponseBuildsItem>
+    source:
+      openapi: openapi.json
+  PatchDataCacheBillingSettingsResponse:
+    properties:
+      excessBillingEnabled: optional<boolean>
+    source:
+      openapi: openapi.json
+  AccessGroup:
+    docs: Represents an Access Group.
+    properties:
+      name:
+        type: string
+        docs: The name of this access group.
+      createdAt:
+        type: string
+        docs: Timestamp in milliseconds when the access group was created.
+      teamId:
+        type: string
+        docs: ID of the team that this access group belongs to.
+      updatedAt:
+        type: string
+        docs: Timestamp in milliseconds when the access group was last updated.
+      accessGroupId:
+        type: string
+        docs: ID of the access group.
+      membersCount:
+        type: double
+        docs: Number of members in the access group.
+      projectsCount:
+        type: double
+        docs: Number of projects in the access group.
+    source:
+      openapi: openapi.json
+  AclAction:
+    enum:
+      - create
+      - delete
+      - read
+      - update
+      - list
+    docs: >-
+      Enum containing the actions that can be performed against a resource.
+      Group operations are included.
+    source:
+      openapi: openapi.json
+  Pagination:
+    docs: >-
+      This object contains information related to the pagination of the current
+      request, including the necessary parameters to get the next or previous
+      page of data.
+    properties:
+      count:
+        type: double
+        docs: Amount of items in the current page.
+      next:
+        type: optional<double>
+        docs: Timestamp that must be used to request the next page.
+      prev:
+        type: optional<double>
+        docs: Timestamp that must be used to request the previous page.
+    source:
+      openapi: openapi.json
+  EdgeConfigToken:
+    docs: The EdgeConfig.
+    properties:
+      token: string
+      label: string
+      id:
+        type: string
+        docs: >-
+          This is not the token itself, but rather an id to identify the token
+          by
+      edgeConfigId: string
+      createdAt: double
+    source:
+      openapi: openapi.json
+  UserEventEntitiesItemType:
+    enum:
+      - author
+      - bitbucket_login
+      - bold
+      - deployment_host
+      - dns_record
+      - git_link
+      - github_login
+      - gitlab_login
+      - hook_name
+      - integration
+      - value: edge-config
+        name: EdgeConfig
+      - flag
+      - value: flags-segment
+        name: FlagsSegment
+      - value: flags-settings
+        name: FlagsSettings
+      - link
+      - project_name
+      - scaling_rules
+      - env_var_name
+      - target
+      - store
+      - system
+    docs: The type of entity.
+    source:
+      openapi: openapi.json
+  UserEventEntitiesItem:
+    docs: >-
+      A list of "entities" within the event `text`. Useful for enhancing the
+      displayed text with additional styling and links.
+    properties:
+      type:
+        type: UserEventEntitiesItemType
+        docs: The type of entity.
+      start:
+        type: double
+        docs: The index of where the entity begins within the `text` (inclusive).
+      end:
+        type: double
+        docs: The index of where the entity ends within the `text` (non-inclusive).
+    source:
+      openapi: openapi.json
+  UserEventUser:
+    docs: Metadata for the User who generated the event.
+    properties:
+      avatar: string
+      email: string
+      slug: optional<string>
+      uid: string
+      username: string
+    source:
+      openapi: openapi.json
+  UserEvent:
+    docs: Array of events generated by the User.
+    properties:
+      id:
+        type: string
+        docs: The unique identifier of the Event.
+      text:
+        type: string
+        docs: The human-readable text of the Event.
+      entities:
+        docs: >-
+          A list of "entities" within the event `text`. Useful for enhancing the
+          displayed text with additional styling and links.
+        type: list<UserEventEntitiesItem>
+      createdAt:
+        type: double
+        docs: Timestamp (in milliseconds) of when the event was generated.
+      user:
+        type: optional<UserEventUser>
+        docs: Metadata for the User who generated the event.
+      userId:
+        type: string
+        docs: The unique identifier of the User who generated the event.
+    source:
+      openapi: openapi.json
+  Team:
+    type: map<string, unknown>
+    docs: Data representing a Team.
+  TeamLimitedSamlConnection:
+    docs: Information for the SAML Single Sign-On configuration.
+    properties:
+      type:
+        type: string
+        docs: The Identity Provider "type", for example Okta.
+      status:
+        type: string
+        docs: Current status of the connection.
+      state:
+        type: string
+        docs: Current state of the connection.
+      connectedAt:
+        type: double
+        docs: Timestamp (in milliseconds) of when the configuration was connected.
+      lastReceivedWebhookEvent:
+        type: optional<double>
+        docs: >-
+          Timestamp (in milliseconds) of when the last webhook event was
+          received from WorkOS.
+    source:
+      openapi: openapi.json
+  TeamLimitedSamlDirectory:
+    docs: Information for the Directory Sync configuration.
+    properties:
+      type:
+        type: string
+        docs: The Identity Provider "type", for example Okta.
+      state:
+        type: string
+        docs: Current state of the connection.
+      connectedAt:
+        type: double
+        docs: Timestamp (in milliseconds) of when the configuration was connected.
+      lastReceivedWebhookEvent:
+        type: optional<double>
+        docs: >-
+          Timestamp (in milliseconds) of when the last webhook event was
+          received from WorkOS.
+    source:
+      openapi: openapi.json
+  TeamLimitedSaml:
+    docs: >-
+      When "Single Sign-On (SAML)" is configured, this object contains
+      information that allows the client-side to identify whether or not this
+      Team has SAML enforced.
+    properties:
+      connection:
+        type: optional<TeamLimitedSamlConnection>
+        docs: Information for the SAML Single Sign-On configuration.
+      directory:
+        type: optional<TeamLimitedSamlDirectory>
+        docs: Information for the Directory Sync configuration.
+      enforced:
+        type: boolean
+        docs: >-
+          When `true`, interactions with the Team **must** be done with an
+          authentication token that has been authenticated with the Team's SAML
+          Single Sign-On provider.
+    source:
+      openapi: openapi.json
+  TeamLimitedMembershipRole:
+    enum:
+      - OWNER
+      - MEMBER
+      - DEVELOPER
+      - BILLING
+      - VIEWER
+      - CONTRIBUTOR
+    source:
+      openapi: openapi.json
+  TeamLimitedMembershipJoinedFromOrigin:
+    enum:
+      - link
+      - saml
+      - mail
+      - import
+      - teams
+      - github
+      - gitlab
+      - bitbucket
+      - dsync
+      - feedback
+      - value: organization-teams
+        name: OrganizationTeams
+    source:
+      openapi: openapi.json
+  TeamLimitedMembershipJoinedFromGitUserId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  TeamLimitedMembershipJoinedFrom:
+    properties:
+      origin: TeamLimitedMembershipJoinedFromOrigin
+      commitId: optional<string>
+      repoId: optional<string>
+      repoPath: optional<string>
+      gitUserId: optional<TeamLimitedMembershipJoinedFromGitUserId>
+      gitUserLogin: optional<string>
+      ssoUserId: optional<string>
+      ssoConnectedAt: optional<double>
+      idpUserId: optional<string>
+      dsyncUserId: optional<string>
+      dsyncConnectedAt: optional<double>
+    source:
+      openapi: openapi.json
+  TeamLimitedMembership:
+    docs: The membership of the authenticated User in relation to the Team.
+    properties:
+      confirmed: optional<boolean>
+      confirmedAt: optional<double>
+      accessRequestedAt: optional<double>
+      role: optional<TeamLimitedMembershipRole>
+      teamId: optional<string>
+      createdAt: optional<double>
+      created: optional<double>
+      joinedFrom: optional<TeamLimitedMembershipJoinedFrom>
+      uid: optional<string>
+    source:
+      openapi: openapi.json
+  TeamLimited:
+    docs: >-
+      A limited form of data representing a Team, due to the authentication
+      token missing privileges to read the full Team data.
+    properties:
+      limited:
+        type: boolean
+        docs: >-
+          Property indicating that this Team data contains only limited
+          information, due to the authentication token missing privileges to
+          read the full Team data. Re-login with the Team's configured SAML
+          Single Sign-On provider in order to upgrade the authentication token
+          with the necessary privileges.
+      saml:
+        type: optional<TeamLimitedSaml>
+        docs: >-
+          When "Single Sign-On (SAML)" is configured, this object contains
+          information that allows the client-side to identify whether or not
+          this Team has SAML enforced.
+      id:
+        type: string
+        docs: The Team's unique identifier.
+      slug:
+        type: string
+        docs: The Team's slug, which is unique across the Vercel platform.
+      name:
+        type: optional<string>
+        docs: >-
+          Name associated with the Team account, or `null` if none has been
+          provided.
+      avatar:
+        type: optional<string>
+        docs: The ID of the file used as avatar for this Team.
+      membership:
+        type: TeamLimitedMembership
+        docs: The membership of the authenticated User in relation to the Team.
+      created:
+        type: string
+        docs: Will remain undocumented. Remove in v3 API.
+      createdAt:
+        type: double
+        docs: UNIX timestamp (in milliseconds) when the Team was created.
+    source:
+      openapi: openapi.json
+  AuthUserSoftBlockReason:
+    enum:
+      - SUBSCRIPTION_CANCELED
+      - SUBSCRIPTION_EXPIRED
+      - UNPAID_INVOICE
+      - ENTERPRISE_TRIAL_ENDED
+      - FAIR_USE_LIMITS_EXCEEDED
+      - BLOCKED_FOR_PLATFORM_ABUSE
+    source:
+      openapi: openapi.json
+  AuthUserSoftBlockBlockedDueToOverageType:
+    enum:
+      - analyticsUsage
+      - artifacts
+      - bandwidth
+      - blobStores
+      - blobTotalAdvancedRequests
+      - blobTotalAvgSizeInBytes
+      - blobTotalGetResponseObjectSizeInBytes
+      - blobTotalSimpleRequests
+      - buildMinute
+      - dataCacheRead
+      - dataCacheRevalidation
+      - dataCacheWrite
+      - edgeConfigRead
+      - edgeConfigWrite
+      - edgeFunctionExecutionUnits
+      - edgeMiddlewareInvocations
+      - edgeRequest
+      - edgeRequestAdditionalCpuDuration
+      - fastDataTransfer
+      - fastOriginTransfer
+      - functionDuration
+      - functionInvocation
+      - logDrainsVolume
+      - monitoringMetric
+      - postgresComputeTime
+      - postgresDataStorage
+      - postgresDataTransfer
+      - postgresDatabase
+      - postgresWrittenData
+      - serverlessFunctionExecution
+      - sourceImages
+      - storageRedisTotalBandwidthInBytes
+      - storageRedisTotalCommands
+      - storageRedisTotalDailyAvgStorageInBytes
+      - storageRedisTotalDatabases
+      - wafOwaspExcessBytes
+      - wafOwaspRequests
+      - wafRateLimitRequest
+      - webAnalyticsEvent
+    source:
+      openapi: openapi.json
+  AuthUserSoftBlock:
+    docs: >-
+      When the User account has been "soft blocked", this property will contain
+      the date when the restriction was enacted, and the identifier for why.
+    properties:
+      blockedAt: double
+      reason: AuthUserSoftBlockReason
+      blockedDueToOverageType: optional<AuthUserSoftBlockBlockedDueToOverageType>
+    source:
+      openapi: openapi.json
+  AuthUserBillingCurrency:
+    enum:
+      - usd
+      - eur
+    source:
+      openapi: openapi.json
+  AuthUserBillingPeriod:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingContract:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingPlan:
+    enum:
+      - pro
+      - enterprise
+      - hobby
+    source:
+      openapi: openapi.json
+  AuthUserBillingPlatform:
+    enum:
+      - stripe
+      - stripeTestMode
+    source:
+      openapi: openapi.json
+  AuthUserBillingProgramType:
+    enum:
+      - startup
+      - agency
+    source:
+      openapi: openapi.json
+  AuthUserBillingTrial:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingTax:
+    properties:
+      type: string
+      id: string
+    source:
+      openapi: openapi.json
+  AuthUserBillingAddress:
+    properties:
+      line1: optional<string>
+      line2: optional<string>
+      postalCode: optional<string>
+      city: optional<string>
+      country: optional<string>
+      state: optional<string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsConcurrentBuildsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsConcurrentBuilds:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsConcurrentBuildsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWebAnalyticsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWebAnalytics:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsWebAnalyticsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsProFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPro:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsProFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEnterpriseFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEnterprise:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsEnterpriseFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsAnalyticsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsAnalytics:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsAnalyticsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsDeveloperExperiencePlatformFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsDeveloperExperiencePlatform:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: >-
+        optional<AuthUserBillingInvoiceItemsDeveloperExperiencePlatformFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEnhancedConcurrentBuildsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEnhancedConcurrentBuilds:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsEnhancedConcurrentBuildsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsIncludedAllocationMiuFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsIncludedAllocationMiu:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsIncludedAllocationMiuFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsManagedInfrastructureCommitmentFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsManagedInfrastructureCommitment:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: >-
+        optional<AuthUserBillingInvoiceItemsManagedInfrastructureCommitmentFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsMonitoringFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsMonitoring:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsMonitoringFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPasswordProtectionFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPasswordProtection:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsPasswordProtectionFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPreviewDeploymentSuffix:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsSamlFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsSaml:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsSamlFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsTeamSeatsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsTeamSeats:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsTeamSeatsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsVercelMarketplaceFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsVercelMarketplace:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<AuthUserBillingInvoiceItemsVercelMarketplaceFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsAnalyticsUsageMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsAnalyticsUsage:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsAnalyticsUsageMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsArtifactsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsArtifacts:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsArtifactsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBandwidthMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBandwidth:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsBandwidthMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobStoresMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobStores:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsBlobStoresMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobTotalAdvancedRequestsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobTotalAdvancedRequests:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsBlobTotalAdvancedRequestsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobTotalAvgSizeInBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobTotalAvgSizeInBytes:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsBlobTotalAvgSizeInBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytes:
+    properties:
+      matrix: >-
+        optional<AuthUserBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobTotalSimpleRequestsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBlobTotalSimpleRequests:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsBlobTotalSimpleRequestsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBuildMinuteMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsBuildMinute:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsBuildMinuteMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsDataCacheReadMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsDataCacheRead:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsDataCacheReadMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsDataCacheRevalidationMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsDataCacheRevalidation:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsDataCacheRevalidationMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsDataCacheWriteMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsDataCacheWrite:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsDataCacheWriteMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeConfigReadMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeConfigRead:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsEdgeConfigReadMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeConfigWriteMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeConfigWrite:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsEdgeConfigWriteMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeRequestMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeRequest:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsEdgeRequestMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeRequestAdditionalCpuDurationMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsEdgeRequestAdditionalCpuDuration:
+    properties:
+      matrix: >-
+        optional<AuthUserBillingInvoiceItemsEdgeRequestAdditionalCpuDurationMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsFastDataTransferMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsFastDataTransfer:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsFastDataTransferMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsFastOriginTransferMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsFastOriginTransfer:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsFastOriginTransferMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsFunctionDurationMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsFunctionDuration:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsFunctionDurationMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsFunctionInvocationMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsFunctionInvocation:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsFunctionInvocationMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsLogDrainsVolumeMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsLogDrainsVolume:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsLogDrainsVolumeMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsMonitoringMetricMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsMonitoringMetric:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsMonitoringMetricMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresComputeTimeMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresComputeTime:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsPostgresComputeTimeMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresDataStorageMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresDataStorage:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsPostgresDataStorageMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresDataTransferMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresDataTransfer:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsPostgresDataTransferMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresDatabaseMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresDatabase:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsPostgresDatabaseMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresWrittenDataMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsPostgresWrittenData:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsPostgresWrittenDataMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsServerlessFunctionExecutionMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsServerlessFunctionExecution:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsServerlessFunctionExecutionMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsSourceImagesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsSourceImages:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsSourceImagesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes:
+    properties:
+      matrix: >-
+        optional<AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsStorageRedisTotalCommandsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsStorageRedisTotalCommands:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsStorageRedisTotalCommandsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes:
+    properties:
+      matrix: >-
+        optional<AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsStorageRedisTotalDatabasesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsStorageRedisTotalDatabases:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsStorageRedisTotalDatabasesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWafOwaspExcessBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWafOwaspExcessBytes:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsWafOwaspExcessBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWafOwaspRequestsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWafOwaspRequests:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsWafOwaspRequestsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWafRateLimitRequestMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWafRateLimitRequest:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsWafRateLimitRequestMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWebAnalyticsEventMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItemsWebAnalyticsEvent:
+    properties:
+      matrix: optional<AuthUserBillingInvoiceItemsWebAnalyticsEventMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceItems:
+    properties:
+      concurrentBuilds:
+        type: optional<AuthUserBillingInvoiceItemsConcurrentBuilds>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      webAnalytics:
+        type: optional<AuthUserBillingInvoiceItemsWebAnalytics>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      pro:
+        type: optional<AuthUserBillingInvoiceItemsPro>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      enterprise:
+        type: optional<AuthUserBillingInvoiceItemsEnterprise>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      analytics:
+        type: optional<AuthUserBillingInvoiceItemsAnalytics>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      developerExperiencePlatform:
+        type: optional<AuthUserBillingInvoiceItemsDeveloperExperiencePlatform>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      enhancedConcurrentBuilds:
+        type: optional<AuthUserBillingInvoiceItemsEnhancedConcurrentBuilds>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      includedAllocationMiu:
+        type: optional<AuthUserBillingInvoiceItemsIncludedAllocationMiu>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      managedInfrastructureCommitment:
+        type: optional<AuthUserBillingInvoiceItemsManagedInfrastructureCommitment>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      monitoring:
+        type: optional<AuthUserBillingInvoiceItemsMonitoring>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      passwordProtection:
+        type: optional<AuthUserBillingInvoiceItemsPasswordProtection>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      previewDeploymentSuffix:
+        type: optional<AuthUserBillingInvoiceItemsPreviewDeploymentSuffix>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      saml:
+        type: optional<AuthUserBillingInvoiceItemsSaml>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      teamSeats:
+        type: optional<AuthUserBillingInvoiceItemsTeamSeats>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      vercelMarketplace:
+        type: optional<AuthUserBillingInvoiceItemsVercelMarketplace>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      analyticsUsage: optional<AuthUserBillingInvoiceItemsAnalyticsUsage>
+      artifacts: optional<AuthUserBillingInvoiceItemsArtifacts>
+      bandwidth: optional<AuthUserBillingInvoiceItemsBandwidth>
+      blobStores: optional<AuthUserBillingInvoiceItemsBlobStores>
+      blobTotalAdvancedRequests: optional<AuthUserBillingInvoiceItemsBlobTotalAdvancedRequests>
+      blobTotalAvgSizeInBytes: optional<AuthUserBillingInvoiceItemsBlobTotalAvgSizeInBytes>
+      blobTotalGetResponseObjectSizeInBytes: >-
+        optional<AuthUserBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytes>
+      blobTotalSimpleRequests: optional<AuthUserBillingInvoiceItemsBlobTotalSimpleRequests>
+      buildMinute: optional<AuthUserBillingInvoiceItemsBuildMinute>
+      dataCacheRead: optional<AuthUserBillingInvoiceItemsDataCacheRead>
+      dataCacheRevalidation: optional<AuthUserBillingInvoiceItemsDataCacheRevalidation>
+      dataCacheWrite: optional<AuthUserBillingInvoiceItemsDataCacheWrite>
+      edgeConfigRead: optional<AuthUserBillingInvoiceItemsEdgeConfigRead>
+      edgeConfigWrite: optional<AuthUserBillingInvoiceItemsEdgeConfigWrite>
+      edgeFunctionExecutionUnits: optional<AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits>
+      edgeMiddlewareInvocations: optional<AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations>
+      edgeRequest: optional<AuthUserBillingInvoiceItemsEdgeRequest>
+      edgeRequestAdditionalCpuDuration: optional<AuthUserBillingInvoiceItemsEdgeRequestAdditionalCpuDuration>
+      fastDataTransfer: optional<AuthUserBillingInvoiceItemsFastDataTransfer>
+      fastOriginTransfer: optional<AuthUserBillingInvoiceItemsFastOriginTransfer>
+      functionDuration: optional<AuthUserBillingInvoiceItemsFunctionDuration>
+      functionInvocation: optional<AuthUserBillingInvoiceItemsFunctionInvocation>
+      logDrainsVolume: optional<AuthUserBillingInvoiceItemsLogDrainsVolume>
+      monitoringMetric: optional<AuthUserBillingInvoiceItemsMonitoringMetric>
+      postgresComputeTime: optional<AuthUserBillingInvoiceItemsPostgresComputeTime>
+      postgresDataStorage: optional<AuthUserBillingInvoiceItemsPostgresDataStorage>
+      postgresDataTransfer: optional<AuthUserBillingInvoiceItemsPostgresDataTransfer>
+      postgresDatabase: optional<AuthUserBillingInvoiceItemsPostgresDatabase>
+      postgresWrittenData: optional<AuthUserBillingInvoiceItemsPostgresWrittenData>
+      serverlessFunctionExecution: optional<AuthUserBillingInvoiceItemsServerlessFunctionExecution>
+      sourceImages: optional<AuthUserBillingInvoiceItemsSourceImages>
+      storageRedisTotalBandwidthInBytes: optional<AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes>
+      storageRedisTotalCommands: optional<AuthUserBillingInvoiceItemsStorageRedisTotalCommands>
+      storageRedisTotalDailyAvgStorageInBytes: >-
+        optional<AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes>
+      storageRedisTotalDatabases: optional<AuthUserBillingInvoiceItemsStorageRedisTotalDatabases>
+      wafOwaspExcessBytes: optional<AuthUserBillingInvoiceItemsWafOwaspExcessBytes>
+      wafOwaspRequests: optional<AuthUserBillingInvoiceItemsWafOwaspRequests>
+      wafRateLimitRequest: optional<AuthUserBillingInvoiceItemsWafRateLimitRequest>
+      webAnalyticsEvent: optional<AuthUserBillingInvoiceItemsWebAnalyticsEvent>
+    source:
+      openapi: openapi.json
+  AuthUserBillingInvoiceSettings:
+    properties:
+      footer: optional<string>
+    source:
+      openapi: openapi.json
+  AuthUserBillingSubscriptionsItemTrial:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingSubscriptionsItemPeriod:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingSubscriptionsItemFrequencyInterval:
+    enum:
+      - month
+      - day
+      - week
+      - year
+    source:
+      openapi: openapi.json
+  AuthUserBillingSubscriptionsItemFrequency:
+    properties:
+      interval: AuthUserBillingSubscriptionsItemFrequencyInterval
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingSubscriptionsItemDiscountCouponDuration:
+    enum:
+      - forever
+      - repeating
+      - once
+    source:
+      openapi: openapi.json
+  AuthUserBillingSubscriptionsItemDiscountCoupon:
+    properties:
+      id: string
+      name: optional<string>
+      amountOff: optional<double>
+      percentageOff: optional<double>
+      durationInMonths: optional<double>
+      duration: AuthUserBillingSubscriptionsItemDiscountCouponDuration
+    source:
+      openapi: openapi.json
+  AuthUserBillingSubscriptionsItemDiscount:
+    properties:
+      id: string
+      coupon: AuthUserBillingSubscriptionsItemDiscountCoupon
+    source:
+      openapi: openapi.json
+  AuthUserBillingSubscriptionsItemItemsItem:
+    properties:
+      id: string
+      priceId: string
+      productId: string
+      amount: double
+      quantity: double
+    source:
+      openapi: openapi.json
+  AuthUserBillingSubscriptionsItem:
+    properties:
+      id: string
+      trial: optional<AuthUserBillingSubscriptionsItemTrial>
+      period: AuthUserBillingSubscriptionsItemPeriod
+      frequency: AuthUserBillingSubscriptionsItemFrequency
+      discount: optional<AuthUserBillingSubscriptionsItemDiscount>
+      items: list<AuthUserBillingSubscriptionsItemItemsItem>
+    source:
+      openapi: openapi.json
+  AuthUserBillingControls:
+    properties:
+      analyticsSampleRateInPercent: optional<double>
+      analyticsSpendLimitInDollars: optional<double>
+    source:
+      openapi: openapi.json
+  AuthUserBillingStatus:
+    enum:
+      - active
+      - trialing
+      - overdue
+      - expired
+      - canceled
+    source:
+      openapi: openapi.json
+  AuthUserBillingAwsMarketplace:
+    properties:
+      productCode: string
+      offerId: optional<string>
+      customerId: string
+    source:
+      openapi: openapi.json
+  AuthUserBilling:
+    docs: An object containing billing infomation associated with the User account.
+    properties:
+      currency: optional<AuthUserBillingCurrency>
+      cancelation: optional<double>
+      period: optional<AuthUserBillingPeriod>
+      contract: optional<AuthUserBillingContract>
+      plan: AuthUserBillingPlan
+      planIteration: optional<string>
+      platform: optional<AuthUserBillingPlatform>
+      orbCustomerId: optional<string>
+      syncedAt: optional<double>
+      programType: optional<AuthUserBillingProgramType>
+      trial: optional<AuthUserBillingTrial>
+      email: optional<string>
+      tax: optional<AuthUserBillingTax>
+      language: optional<string>
+      address: optional<AuthUserBillingAddress>
+      name: optional<string>
+      invoiceItems: optional<AuthUserBillingInvoiceItems>
+      invoiceSettings: optional<AuthUserBillingInvoiceSettings>
+      subscriptions: optional<list<AuthUserBillingSubscriptionsItem>>
+      controls: optional<AuthUserBillingControls>
+      purchaseOrder: optional<string>
+      status: optional<AuthUserBillingStatus>
+      pricingExperiment: optional<literal<"august-2022">>
+      orbMigrationScheduledAt: optional<double>
+      forceOrbMigration: optional<boolean>
+      awsMarketplace: optional<AuthUserBillingAwsMarketplace>
+      reseller: optional<string>
+    source:
+      openapi: openapi.json
+  AuthUserResourceConfig:
+    docs: >-
+      An object containing infomation related to the amount of platform
+      resources may be allocated to the User account.
+    properties:
+      blobStores:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      nodeType:
+        type: optional<string>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      concurrentBuilds:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      awsAccountType:
+        type: optional<string>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      awsAccountIds:
+        type: optional<list<string>>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      cfZoneName:
+        type: optional<string>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      imageOptimizationType:
+        type: optional<string>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      edgeConfigs:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      edgeConfigSize:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      edgeFunctionMaxSizeBytes:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      edgeFunctionExecutionTimeoutMs:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      serverlessFunctionDefaultMaxExecutionTime:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      kvDatabases:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      postgresDatabases:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      integrationStores:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      cronJobs:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      cronJobsPerProject:
+        type: optional<double>
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+    source:
+      openapi: openapi.json
+  AuthUserActiveDashboardViewsItemViewPreference:
+    enum:
+      - list
+      - cards
+    source:
+      openapi: openapi.json
+  AuthUserActiveDashboardViewsItemFavoritesViewPreference:
+    enum:
+      - open
+      - closed
+    source:
+      openapi: openapi.json
+  AuthUserActiveDashboardViewsItemRecentsViewPreference:
+    enum:
+      - open
+      - closed
+    source:
+      openapi: openapi.json
+  AuthUserActiveDashboardViewsItem:
+    docs: set of dashboard view preferences (cards or list) per scopeId
+    properties:
+      scopeId: string
+      viewPreference: optional<AuthUserActiveDashboardViewsItemViewPreference>
+      favoritesViewPreference: optional<AuthUserActiveDashboardViewsItemFavoritesViewPreference>
+      recentsViewPreference: optional<AuthUserActiveDashboardViewsItemRecentsViewPreference>
+    source:
+      openapi: openapi.json
+  AuthUserImportFlowGitNamespace:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  AuthUserImportFlowGitNamespaceId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  AuthUserImportFlowGitProvider:
+    enum:
+      - github
+      - gitlab
+      - bitbucket
+    source:
+      openapi: openapi.json
+  AuthUserPreferredScopesAndGitNamespacesItemGitNamespaceId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  AuthUserPreferredScopesAndGitNamespacesItem:
+    properties:
+      scopeId: string
+      gitNamespaceId: optional<AuthUserPreferredScopesAndGitNamespacesItemGitNamespaceId>
+    source:
+      openapi: openapi.json
+  AuthUserDismissedToastsItemDismissalsItem:
+    properties:
+      scopeId: string
+      createdAt: double
+    source:
+      openapi: openapi.json
+  AuthUserDismissedToastsItem:
+    docs: A record of when, under a certain scopeId, a toast was dismissed
+    properties:
+      name: string
+      dismissals: list<AuthUserDismissedToastsItemDismissalsItem>
+    source:
+      openapi: openapi.json
+  AuthUserFavoriteProjectsAndSpacesItemProjectId:
+    docs: >-
+      A list of projects and spaces across teams that a user has marked as a
+      favorite.
+    properties:
+      projectId: string
+      scopeSlug: string
+      scopeId: string
+    source:
+      openapi: openapi.json
+  AuthUserFavoriteProjectsAndSpacesItemSpaceId:
+    docs: >-
+      A list of projects and spaces across teams that a user has marked as a
+      favorite.
+    properties:
+      spaceId: string
+      scopeSlug: string
+      scopeId: string
+    source:
+      openapi: openapi.json
+  AuthUserFavoriteProjectsAndSpacesItem:
+    discriminated: false
+    union:
+      - type: AuthUserFavoriteProjectsAndSpacesItemProjectId
+        docs: >-
+          A list of projects and spaces across teams that a user has marked as a
+          favorite.
+      - type: AuthUserFavoriteProjectsAndSpacesItemSpaceId
+        docs: >-
+          A list of projects and spaces across teams that a user has marked as a
+          favorite.
+    source:
+      openapi: openapi.json
+  AuthUserRemoteCaching:
+    docs: remote caching settings
+    properties:
+      enabled: optional<boolean>
+    source:
+      openapi: openapi.json
+  AuthUserDataCache:
+    docs: data cache settings
+    properties:
+      excessBillingEnabled: optional<boolean>
+    source:
+      openapi: openapi.json
+  AuthUserFeatureBlocksWebAnalytics:
+    properties:
+      blockedFrom: optional<double>
+      blockedUntil: optional<double>
+      isCurrentlyBlocked: boolean
+    source:
+      openapi: openapi.json
+  AuthUserFeatureBlocks:
+    docs: Feature blocks for the user
+    properties:
+      webAnalytics: optional<AuthUserFeatureBlocksWebAnalytics>
+    source:
+      openapi: openapi.json
+  AuthUserNorthstarMigration:
+    properties:
+      teamId:
+        type: string
+        docs: The ID of the team we created for this user.
+      projects:
+        type: double
+        docs: The number of projects migrated for this user.
+      stores:
+        type: double
+        docs: The number of stores migrated for this user.
+      integrationConfigurations:
+        type: double
+        docs: The number of integration configurations migrated for this user.
+      integrationClients:
+        type: double
+        docs: The number of integration clients migrated for this user.
+      startTime:
+        type: double
+        docs: The migration start time timestamp for this user.
+      endTime:
+        type: double
+        docs: The migration end time timestamp for this user.
+    source:
+      openapi: openapi.json
+  AuthUser:
+    docs: Data for the currently authenticated User.
+    properties:
+      createdAt:
+        type: double
+        docs: UNIX timestamp (in milliseconds) when the User account was created.
+      softBlock:
+        type: optional<AuthUserSoftBlock>
+        docs: >-
+          When the User account has been "soft blocked", this property will
+          contain the date when the restriction was enacted, and the identifier
+          for why.
+      billing:
+        type: optional<AuthUserBilling>
+        docs: >-
+          An object containing billing infomation associated with the User
+          account.
+      resourceConfig:
+        type: AuthUserResourceConfig
+        docs: >-
+          An object containing infomation related to the amount of platform
+          resources may be allocated to the User account.
+      stagingPrefix:
+        type: string
+        docs: >-
+          Prefix that will be used in the URL of "Preview" deployments created
+          by the User account.
+      activeDashboardViews:
+        type: optional<list<AuthUserActiveDashboardViewsItem>>
+        docs: set of dashboard view preferences (cards or list) per scopeId
+      importFlowGitNamespace: optional<AuthUserImportFlowGitNamespace>
+      importFlowGitNamespaceId: optional<AuthUserImportFlowGitNamespaceId>
+      importFlowGitProvider: optional<AuthUserImportFlowGitProvider>
+      preferredScopesAndGitNamespaces: optional<list<AuthUserPreferredScopesAndGitNamespacesItem>>
+      dismissedToasts:
+        type: optional<list<AuthUserDismissedToastsItem>>
+        docs: A record of when, under a certain scopeId, a toast was dismissed
+      favoriteProjectsAndSpaces:
+        type: optional<list<AuthUserFavoriteProjectsAndSpacesItem>>
+        docs: >-
+          A list of projects and spaces across teams that a user has marked as a
+          favorite.
+      hasTrialAvailable:
+        type: boolean
+        docs: Whether the user has a trial available for a paid plan subscription.
+      remoteCaching:
+        type: optional<AuthUserRemoteCaching>
+        docs: remote caching settings
+      dataCache:
+        type: optional<AuthUserDataCache>
+        docs: data cache settings
+      featureBlocks:
+        type: optional<AuthUserFeatureBlocks>
+        docs: Feature blocks for the user
+      northstarMigration: optional<AuthUserNorthstarMigration>
+      id:
+        type: string
+        docs: The User's unique identifier.
+      email:
+        type: string
+        docs: Email address associated with the User account.
+      name:
+        type: optional<string>
+        docs: >-
+          Name associated with the User account, or `null` if none has been
+          provided.
+      username:
+        type: string
+        docs: Unique username associated with the User account.
+      avatar:
+        type: optional<string>
+        docs: >-
+          SHA1 hash of the avatar for the User account. Can be used in
+          conjuction with the ... endpoint to retrieve the avatar image.
+      defaultTeamId:
+        type: optional<string>
+        docs: >-
+          The user's default team. Only applies if the user's `version` is
+          `'northstar'`.
+      version:
+        type: optional<literal<"northstar">>
+        docs: The user's version. Will either be unset or `northstar`.
+    source:
+      openapi: openapi.json
+  AuthUserLimited:
+    docs: >-
+      A limited form of data for the currently authenticated User, due to the
+      authentication token missing privileges to read the full User data.
+    properties:
+      limited:
+        type: boolean
+        docs: >-
+          Property indicating that this User data contains only limited
+          information, due to the authentication token missing privileges to
+          read the full User data. Re-login with email, GitHub, GitLab or
+          Bitbucket in order to upgrade the authentication token with the
+          necessary privileges.
+      id:
+        type: string
+        docs: The User's unique identifier.
+      email:
+        type: string
+        docs: Email address associated with the User account.
+      name:
+        type: optional<string>
+        docs: >-
+          Name associated with the User account, or `null` if none has been
+          provided.
+      username:
+        type: string
+        docs: Unique username associated with the User account.
+      avatar:
+        type: optional<string>
+        docs: >-
+          SHA1 hash of the avatar for the User account. Can be used in
+          conjuction with the ... endpoint to retrieve the avatar image.
+      defaultTeamId:
+        type: optional<string>
+        docs: >-
+          The user's default team. Only applies if the user's `version` is
+          `'northstar'`.
+      version:
+        type: optional<literal<"northstar">>
+        docs: The user's version. Will either be unset or `northstar`.
+    source:
+      openapi: openapi.json
+  AuthTokenScopesItemUserOrigin:
+    enum:
+      - saml
+      - github
+      - gitlab
+      - bitbucket
+      - email
+      - manual
+      - passkey
+    source:
+      openapi: openapi.json
+  AuthTokenScopesItemUser:
+    docs: The access scopes granted to the token.
+    properties:
+      origin: AuthTokenScopesItemUserOrigin
+      createdAt: double
+      expiresAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthTokenScopesItemTeamOrigin:
+    enum:
+      - saml
+      - github
+      - gitlab
+      - bitbucket
+      - email
+      - manual
+      - passkey
+    source:
+      openapi: openapi.json
+  AuthTokenScopesItemTeam:
+    docs: The access scopes granted to the token.
+    properties:
+      teamId: string
+      origin: AuthTokenScopesItemTeamOrigin
+      createdAt: double
+      expiresAt: optional<double>
+    source:
+      openapi: openapi.json
+  AuthTokenScopesItem:
+    discriminant: type
+    base-properties: {}
+    union:
+      user:
+        type: AuthTokenScopesItemUser
+        docs: The access scopes granted to the token.
+      team:
+        type: AuthTokenScopesItemTeam
+        docs: The access scopes granted to the token.
+    source:
+      openapi: openapi.json
+  AuthToken:
+    docs: Authentication token metadata.
+    properties:
+      id:
+        type: string
+        docs: The unique identifier of the token.
+      name:
+        type: string
+        docs: The human-readable name of the token.
+      type:
+        type: string
+        docs: The type of the token.
+      origin:
+        type: optional<string>
+        docs: The origin of how the token was created.
+      scopes:
+        type: optional<list<AuthTokenScopesItem>>
+        docs: The access scopes granted to the token.
+      expiresAt:
+        type: optional<double>
+        docs: Timestamp (in milliseconds) of when the token expires.
+      activeAt:
+        type: double
+        docs: Timestamp (in milliseconds) of when the token was most recently used.
+      createdAt:
+        type: double
+        docs: Timestamp (in milliseconds) of when the token was created.
+    source:
+      openapi: openapi.json
+  FileTreeType:
+    enum:
+      - directory
+      - file
+      - symlink
+      - lambda
+      - middleware
+      - invalid
+    docs: String indicating the type of file tree entry.
+    source:
+      openapi: openapi.json
+  FileTree:
+    docs: A deployment file tree entry
+    properties:
+      name:
+        type: string
+        docs: The name of the file tree entry
+      type:
+        type: FileTreeType
+        docs: String indicating the type of file tree entry.
+      uid:
+        type: optional<string>
+        docs: The unique identifier of the file (only valid for the `file` type)
+      children:
+        type: optional<list<FileTree>>
+        docs: >-
+          The list of children files of the directory (only valid for the
+          `directory` type)
+      contentType:
+        type: optional<string>
+        docs: The content-type of the file (only valid for the `file` type)
+      mode:
+        type: double
+        docs: The file "mode" indicating file type and permissions.
+      symlink:
+        type: optional<string>
+        docs: Not currently used. See `file-list-to-tree.ts`.
+    source:
+      openapi: openapi.json
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getDeploymentsDeploymentIdBuilds:
+      path: /deployments/{deploymentId}/builds
+      method: GET
+      auth: false
+      docs: >-
+        Retrieves the list of builds given their deployment's unique identifier.
+        No longer listed as public API as of May 2023.
+      path-parameters:
+        deploymentId:
+          type: string
+          docs: The deployment unique identifier
+      response:
+        docs: ''
+        type: GetDeploymentsDeploymentIdBuildsResponse
+      errors:
+        - BadRequestError
+        - UnauthorizedError
+        - ForbiddenError
+        - NotFoundError
+      examples:
+        - path-parameters:
+            deploymentId: deploymentId
+          response:
+            body:
+              builds:
+                - id: id
+                  deploymentId: deploymentId
+                  entrypoint: entrypoint
+                  readyState: INITIALIZING
+                  readyStateAt: 1.1
+                  scheduledAt: 1.1
+                  createdAt: 1.1
+                  deployedAt: 1.1
+                  createdIn: createdIn
+                  use: use
+                  output:
+                    - path: path
+                      digest: digest
+                      mode: 1.1
+                  fingerprint: fingerprint
+                  copiedFrom: copiedFrom
+    deleteDataCachePurgeAll:
+      path: /data-cache/purge-all
+      method: DELETE
+      auth: false
+      docs: ''
+      request:
+        name: DeleteDataCachePurgeAllRequest
+        query-parameters:
+          projectIdOrName: string
+      errors:
+        - BadRequestError
+        - UnauthorizedError
+        - ForbiddenError
+        - NotFoundError
+      examples:
+        - query-parameters:
+            projectIdOrName: projectIdOrName
+    patchDataCacheBillingSettings:
+      path: /data-cache/billing-settings
+      method: PATCH
+      auth: false
+      docs: ''
+      request:
+        name: PatchDataCacheBillingSettingsRequest
+        body:
+          properties:
+            excessBillingEnabled: optional<boolean>
+      response:
+        docs: ''
+        type: PatchDataCacheBillingSettingsResponse
+      errors:
+        - BadRequestError
+        - UnauthorizedError
+        - ForbiddenError
+        - NotFoundError
+      examples:
+        - request: {}
+          response:
+            body:
+              excessBillingEnabled: true
+  source:
+    openapi: openapi.json

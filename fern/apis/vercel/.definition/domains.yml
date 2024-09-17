@@ -1,0 +1,1104 @@
+types:
+  BuyDomainResponseDomain:
+    properties:
+      uid: string
+      ns: list<string>
+      verified: boolean
+      created: double
+      pending: boolean
+    source:
+      openapi: openapi.json
+  BuyDomainResponse:
+    properties:
+      domain: BuyDomainResponseDomain
+    source:
+      openapi: openapi.json
+  CheckDomainPriceRequestType:
+    enum:
+      - new
+      - renewal
+      - transfer
+    docs: In which status of the domain the price needs to be checked.
+    source:
+      openapi: openapi.json
+  CheckDomainPriceResponse:
+    docs: Successful response which returns the price of the domain and the period.
+    properties:
+      price:
+        type: double
+        docs: The domain price in USD.
+      period:
+        type: double
+        docs: The number of years the domain could be held before paying again.
+    source:
+      openapi: openapi.json
+  CheckDomainStatusResponse:
+    properties:
+      available: boolean
+    source:
+      openapi: openapi.json
+  GetDomainTransferResponseTransferPolicy:
+    enum:
+      - value: charge-and-renew
+        name: ChargeAndRenew
+      - value: no-charge-no-change
+        name: NoChargeNoChange
+      - value: no-change
+        name: NoChange
+      - value: new-term
+        name: NewTerm
+      - value: not-supported
+        name: NotSupported
+    docs: >-
+      The domain's transfer policy (depends on TLD requirements).
+      `charge-and-renew`: transfer will charge for renewal and will renew the
+      existing domain's registration. `no-charge-no-change`: transfer will have
+      no change to registration period and does not require charge. `no-change`:
+      transfer charge is required, but no change in registration period.
+      `new-term`: transfer charge is required and a new registry term is set
+      based on the transfer date. `not-supported`: transfers are not supported
+      for this domain or TLD. `null`: This TLD is not supported by Vercel's
+      Registrar.
+    source:
+      openapi: openapi.json
+  GetDomainTransferResponseStatus:
+    enum:
+      - pending_owner
+      - pending_admin
+      - pending_registry
+      - completed
+      - cancelled
+      - undef
+      - unknown
+    docs: >-
+      The current state of an ongoing transfer. `pending_owner`: Awaiting
+      approval by domain's admin contact (every transfer begins with this
+      status). If approval is not given within five days, the transfer is
+      cancelled. `pending_admin`: Waiting for approval by Vercel Registrar
+      admin. `pending_registry`: Awaiting registry approval (the transfer
+      completes after 7 days unless it is declined by the current registrar).
+      `completed`: The transfer completed successfully. `cancelled`: The
+      transfer was cancelled. `undef`: No transfer exists for this domain.
+      `unknown`: This TLD is not supported by Vercel's Registrar.
+    source:
+      openapi: openapi.json
+  GetDomainTransferResponse:
+    properties:
+      transferable:
+        type: boolean
+        docs: Whether or not the domain is transferable
+      transferPolicy:
+        type: optional<GetDomainTransferResponseTransferPolicy>
+        docs: >-
+          The domain's transfer policy (depends on TLD requirements).
+          `charge-and-renew`: transfer will charge for renewal and will renew
+          the existing domain's registration. `no-charge-no-change`: transfer
+          will have no change to registration period and does not require
+          charge. `no-change`: transfer charge is required, but no change in
+          registration period. `new-term`: transfer charge is required and a new
+          registry term is set based on the transfer date. `not-supported`:
+          transfers are not supported for this domain or TLD. `null`: This TLD
+          is not supported by Vercel's Registrar.
+      reason:
+        type: string
+        docs: Description associated with transferable state.
+      status:
+        type: GetDomainTransferResponseStatus
+        docs: >-
+          The current state of an ongoing transfer. `pending_owner`: Awaiting
+          approval by domain's admin contact (every transfer begins with this
+          status). If approval is not given within five days, the transfer is
+          cancelled. `pending_admin`: Waiting for approval by Vercel Registrar
+          admin. `pending_registry`: Awaiting registry approval (the transfer
+          completes after 7 days unless it is declined by the current
+          registrar). `completed`: The transfer completed successfully.
+          `cancelled`: The transfer was cancelled. `undef`: No transfer exists
+          for this domain. `unknown`: This TLD is not supported by Vercel's
+          Registrar.
+    source:
+      openapi: openapi.json
+  GetDomainConfigRequestStrict:
+    enum:
+      - 'true'
+      - 'false'
+    docs: >-
+      When true, the response will only include the nameservers assigned
+      directly to the specified domain. When false and there are no nameservers
+      assigned directly to the specified domain, the response will include the
+      nameservers of the domain's parent zone.
+    source:
+      openapi: openapi.json
+  GetDomainConfigResponseConfiguredBy:
+    enum:
+      - CNAME
+      - A
+      - http
+      - value: dns-01
+        name: Dns01
+    docs: >-
+      How we see the domain's configuration. - `CNAME`: Domain has a CNAME
+      pointing to Vercel. - `A`: Domain's A record is resolving to Vercel. -
+      `http`: Domain is resolving to Vercel but may be behind a Proxy. -
+      `dns-01`: Domain is not resolving to Vercel but dns-01 challenge is
+      enabled. - `null`: Domain is not resolving to Vercel.
+    source:
+      openapi: openapi.json
+  GetDomainConfigResponseAcceptedChallengesItem:
+    enum:
+      - value: dns-01
+        name: Dns01
+      - value: http-01
+        name: Http01
+    docs: Which challenge types the domain can use for issuing certs.
+    source:
+      openapi: openapi.json
+  GetDomainConfigResponse:
+    properties:
+      configuredBy:
+        type: optional<GetDomainConfigResponseConfiguredBy>
+        docs: >-
+          How we see the domain's configuration. - `CNAME`: Domain has a CNAME
+          pointing to Vercel. - `A`: Domain's A record is resolving to Vercel. -
+          `http`: Domain is resolving to Vercel but may be behind a Proxy. -
+          `dns-01`: Domain is not resolving to Vercel but dns-01 challenge is
+          enabled. - `null`: Domain is not resolving to Vercel.
+      acceptedChallenges:
+        type: optional<list<GetDomainConfigResponseAcceptedChallengesItem>>
+        docs: Which challenge types the domain can use for issuing certs.
+      misconfigured:
+        type: boolean
+        docs: >-
+          Whether or not the domain is configured AND we can automatically
+          generate a TLS certificate.
+    source:
+      openapi: openapi.json
+  GetDomainResponseDomainCreator:
+    docs: >-
+      An object containing information of the domain creator, including the
+      user's id, username, and email.
+    properties:
+      username: string
+      email: string
+      customerId: optional<string>
+      isDomainReseller: optional<boolean>
+      id: string
+    source:
+      openapi: openapi.json
+  GetDomainResponseDomainServiceType:
+    enum:
+      - value: zeit.world
+        name: ZeitWorld
+      - external
+      - na
+    docs: >-
+      The type of service the domain is handled by. `external` if the DNS is
+      externally handled, `zeit.world` if handled with Vercel, or `na` if the
+      service is not available.
+    source:
+      openapi: openapi.json
+  GetDomainResponseDomain:
+    properties:
+      suffix: boolean
+      verified:
+        type: boolean
+        docs: If the domain has the ownership verified.
+      nameservers:
+        docs: A list of the current nameservers of the domain.
+        type: list<string>
+      intendedNameservers:
+        docs: >-
+          A list of the intended nameservers for the domain to point to Vercel
+          DNS.
+        type: list<string>
+      customNameservers:
+        type: optional<list<string>>
+        docs: >-
+          A list of custom nameservers for the domain to point to. Only applies
+          to domains purchased with Vercel.
+      creator:
+        type: GetDomainResponseDomainCreator
+        docs: >-
+          An object containing information of the domain creator, including the
+          user's id, username, and email.
+      teamId: optional<string>
+      userId: string
+      boughtAt:
+        type: optional<double>
+        docs: >-
+          If it was purchased through Vercel, the timestamp in milliseconds when
+          it was purchased.
+      createdAt:
+        type: double
+        docs: Timestamp in milliseconds when the domain was created in the registry.
+      expiresAt:
+        type: optional<double>
+        docs: >-
+          Timestamp in milliseconds at which the domain is set to expire. `null`
+          if not bought with Vercel.
+      id:
+        type: string
+        docs: The unique identifier of the domain.
+      name:
+        type: string
+        docs: The domain name.
+      orderedAt:
+        type: optional<double>
+        docs: Timestamp in milliseconds at which the domain was ordered.
+      renew:
+        type: optional<boolean>
+        docs: Indicates whether the domain is set to automatically renew.
+      serviceType:
+        type: GetDomainResponseDomainServiceType
+        docs: >-
+          The type of service the domain is handled by. `external` if the DNS is
+          externally handled, `zeit.world` if handled with Vercel, or `na` if
+          the service is not available.
+      transferredAt:
+        type: optional<double>
+        docs: >-
+          Timestamp in milliseconds at which the domain was successfully
+          transferred into Vercel. `null` if the transfer is still processing or
+          was never transferred in.
+      transferStartedAt:
+        type: optional<double>
+        docs: >-
+          If transferred into Vercel, timestamp in milliseconds when the domain
+          transfer was initiated.
+    source:
+      openapi: openapi.json
+  GetDomainResponse:
+    properties:
+      domain: GetDomainResponseDomain
+    source:
+      openapi: openapi.json
+  GetDomainsResponseDomainsItemCreator:
+    docs: >-
+      An object containing information of the domain creator, including the
+      user's id, username, and email.
+    properties:
+      username: string
+      email: string
+      customerId: optional<string>
+      isDomainReseller: optional<boolean>
+      id: string
+    source:
+      openapi: openapi.json
+  GetDomainsResponseDomainsItemServiceType:
+    enum:
+      - value: zeit.world
+        name: ZeitWorld
+      - external
+      - na
+    docs: >-
+      The type of service the domain is handled by. `external` if the DNS is
+      externally handled, `zeit.world` if handled with Vercel, or `na` if the
+      service is not available.
+    source:
+      openapi: openapi.json
+  GetDomainsResponseDomainsItem:
+    properties:
+      verified:
+        type: boolean
+        docs: If the domain has the ownership verified.
+      nameservers:
+        docs: A list of the current nameservers of the domain.
+        type: list<string>
+      intendedNameservers:
+        docs: >-
+          A list of the intended nameservers for the domain to point to Vercel
+          DNS.
+        type: list<string>
+      customNameservers:
+        type: optional<list<string>>
+        docs: >-
+          A list of custom nameservers for the domain to point to. Only applies
+          to domains purchased with Vercel.
+      creator:
+        type: GetDomainsResponseDomainsItemCreator
+        docs: >-
+          An object containing information of the domain creator, including the
+          user's id, username, and email.
+      teamId: optional<string>
+      createdAt:
+        type: double
+        docs: Timestamp in milliseconds when the domain was created in the registry.
+      boughtAt:
+        type: optional<double>
+        docs: >-
+          If it was purchased through Vercel, the timestamp in milliseconds when
+          it was purchased.
+      expiresAt:
+        type: optional<double>
+        docs: >-
+          Timestamp in milliseconds at which the domain is set to expire. `null`
+          if not bought with Vercel.
+      id:
+        type: string
+        docs: The unique identifier of the domain.
+      name:
+        type: string
+        docs: The domain name.
+      orderedAt:
+        type: optional<double>
+        docs: Timestamp in milliseconds at which the domain was ordered.
+      renew:
+        type: optional<boolean>
+        docs: Indicates whether the domain is set to automatically renew.
+      serviceType:
+        type: GetDomainsResponseDomainsItemServiceType
+        docs: >-
+          The type of service the domain is handled by. `external` if the DNS is
+          externally handled, `zeit.world` if handled with Vercel, or `na` if
+          the service is not available.
+      transferredAt:
+        type: optional<double>
+        docs: >-
+          Timestamp in milliseconds at which the domain was successfully
+          transferred into Vercel. `null` if the transfer is still processing or
+          was never transferred in.
+      transferStartedAt:
+        type: optional<double>
+        docs: >-
+          If transferred into Vercel, timestamp in milliseconds when the domain
+          transfer was initiated.
+      userId: string
+    source:
+      openapi: openapi.json
+  GetDomainsResponse:
+    properties:
+      domains: list<GetDomainsResponseDomainsItem>
+      pagination: root.Pagination
+    source:
+      openapi: openapi.json
+  CreateOrTransferDomainRequestBodyCdnEnabled:
+    docs: add
+    properties:
+      name:
+        type: string
+        docs: The domain name you want to add.
+      cdnEnabled:
+        type: optional<boolean>
+        docs: Whether the domain has the Vercel Edge Network enabled or not.
+      zone: optional<boolean>
+      method:
+        type: optional<string>
+        docs: The domain operation to perform.
+    source:
+      openapi: openapi.json
+  CreateOrTransferDomainRequestBodyToken:
+    docs: move-in
+    properties:
+      name:
+        type: string
+        docs: The domain name you want to add.
+      method:
+        type: string
+        docs: The domain operation to perform.
+      token:
+        type: optional<string>
+        docs: The move-in token from Move Requested email.
+    source:
+      openapi: openapi.json
+  CreateOrTransferDomainRequestBodyAuthCode:
+    docs: transfer-in
+    properties:
+      name:
+        type: string
+        docs: The domain name you want to add.
+      method:
+        type: string
+        docs: The domain operation to perform.
+      authCode:
+        type: optional<string>
+        docs: The authorization code assigned to the domain.
+      expectedPrice:
+        type: optional<double>
+        docs: The price you expect to be charged for the required 1 year renewal.
+    source:
+      openapi: openapi.json
+  CreateOrTransferDomainRequestBody:
+    discriminated: false
+    union:
+      - type: CreateOrTransferDomainRequestBodyCdnEnabled
+        docs: add
+      - type: CreateOrTransferDomainRequestBodyToken
+        docs: move-in
+      - type: CreateOrTransferDomainRequestBodyAuthCode
+        docs: transfer-in
+    source:
+      openapi: openapi.json
+  CreateOrTransferDomainResponseDomainCreator:
+    docs: >-
+      An object containing information of the domain creator, including the
+      user's id, username, and email.
+    properties:
+      username: string
+      email: string
+      customerId: optional<string>
+      isDomainReseller: optional<boolean>
+      id: string
+    source:
+      openapi: openapi.json
+  CreateOrTransferDomainResponseDomainServiceType:
+    enum:
+      - value: zeit.world
+        name: ZeitWorld
+      - external
+      - na
+    docs: >-
+      The type of service the domain is handled by. `external` if the DNS is
+      externally handled, `zeit.world` if handled with Vercel, or `na` if the
+      service is not available.
+    source:
+      openapi: openapi.json
+  CreateOrTransferDomainResponseDomain:
+    properties:
+      verified:
+        type: boolean
+        docs: If the domain has the ownership verified.
+      nameservers:
+        docs: A list of the current nameservers of the domain.
+        type: list<string>
+      intendedNameservers:
+        docs: >-
+          A list of the intended nameservers for the domain to point to Vercel
+          DNS.
+        type: list<string>
+      customNameservers:
+        type: optional<list<string>>
+        docs: >-
+          A list of custom nameservers for the domain to point to. Only applies
+          to domains purchased with Vercel.
+      creator:
+        type: CreateOrTransferDomainResponseDomainCreator
+        docs: >-
+          An object containing information of the domain creator, including the
+          user's id, username, and email.
+      name:
+        type: string
+        docs: The domain name.
+      boughtAt:
+        type: optional<double>
+        docs: >-
+          If it was purchased through Vercel, the timestamp in milliseconds when
+          it was purchased.
+      createdAt:
+        type: double
+        docs: Timestamp in milliseconds when the domain was created in the registry.
+      expiresAt:
+        type: optional<double>
+        docs: >-
+          Timestamp in milliseconds at which the domain is set to expire. `null`
+          if not bought with Vercel.
+      id:
+        type: string
+        docs: The unique identifier of the domain.
+      orderedAt:
+        type: optional<double>
+        docs: Timestamp in milliseconds at which the domain was ordered.
+      renew:
+        type: optional<boolean>
+        docs: Indicates whether the domain is set to automatically renew.
+      serviceType:
+        type: CreateOrTransferDomainResponseDomainServiceType
+        docs: >-
+          The type of service the domain is handled by. `external` if the DNS is
+          externally handled, `zeit.world` if handled with Vercel, or `na` if
+          the service is not available.
+      transferredAt:
+        type: optional<double>
+        docs: >-
+          Timestamp in milliseconds at which the domain was successfully
+          transferred into Vercel. `null` if the transfer is still processing or
+          was never transferred in.
+      transferStartedAt:
+        type: optional<double>
+        docs: >-
+          If transferred into Vercel, timestamp in milliseconds when the domain
+          transfer was initiated.
+      userId: string
+      teamId: optional<string>
+    source:
+      openapi: openapi.json
+  CreateOrTransferDomainResponse:
+    properties:
+      domain: CreateOrTransferDomainResponseDomain
+    source:
+      openapi: openapi.json
+  PatchDomainRequestBodyCustomNameservers:
+    docs: update
+    properties:
+      op: optional<string>
+      renew:
+        type: optional<boolean>
+        docs: Specifies whether domain should be renewed.
+      customNameservers:
+        type: optional<list<string>>
+        docs: The custom nameservers for this project.
+      zone:
+        type: optional<boolean>
+        docs: >-
+          Specifies whether this is a DNS zone that intends to use Vercel's
+          nameservers.
+    source:
+      openapi: openapi.json
+  PatchDomainRequestBodyDestination:
+    docs: move-out
+    properties:
+      op: optional<string>
+      destination:
+        type: optional<string>
+        docs: User or team to move domain to
+    source:
+      openapi: openapi.json
+  PatchDomainRequestBody:
+    discriminated: false
+    union:
+      - type: PatchDomainRequestBodyCustomNameservers
+        docs: update
+      - type: PatchDomainRequestBodyDestination
+        docs: move-out
+    source:
+      openapi: openapi.json
+  PatchDomainResponseZero:
+    properties:
+      moved: boolean
+    source:
+      openapi: openapi.json
+  PatchDomainResponseToken:
+    properties:
+      moved: boolean
+      token: string
+    source:
+      openapi: openapi.json
+  PatchDomainResponseCustomNameservers:
+    properties:
+      renew: optional<boolean>
+      customNameservers: optional<list<string>>
+      zone: optional<boolean>
+    source:
+      openapi: openapi.json
+  PatchDomainResponse:
+    discriminated: false
+    union:
+      - PatchDomainResponseZero
+      - PatchDomainResponseToken
+      - PatchDomainResponseCustomNameservers
+    source:
+      openapi: openapi.json
+  DeleteDomainResponse:
+    properties:
+      uid:
+        type: string
+        docs: The id of the newly created DNS record
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    buyDomain:
+      path: /v5/domains/buy
+      method: POST
+      auth: true
+      docs: Allows to purchase the specified domain.
+      display-name: Purchase a domain
+      request:
+        name: BuyDomainRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            name:
+              type: string
+              docs: The domain name to purchase.
+            expectedPrice:
+              type: optional<double>
+              docs: The price you expect to be charged for the purchase.
+            renew:
+              type: optional<boolean>
+              docs: Indicates whether the domain should be automatically renewed.
+            country:
+              type: string
+              docs: The country of the domain registrant
+            orgName:
+              type: optional<string>
+              docs: The company name of the domain registrant
+            firstName:
+              type: string
+              docs: The first name of the domain registrant
+            lastName:
+              type: string
+              docs: The last name of the domain registrant
+            address1:
+              type: string
+              docs: The street address of the domain registrant
+            city:
+              type: string
+              docs: The city of the domain registrant
+            state:
+              type: string
+              docs: The state of the domain registrant
+            postalCode:
+              type: string
+              docs: The postal code of the domain registrant
+            phone:
+              type: string
+              docs: The phone number of the domain registrant
+            email:
+              type: string
+              docs: The email of the domain registrant
+      response:
+        docs: ''
+        type: BuyDomainResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.ConflictError
+        - root.TooManyRequestsError
+      examples:
+        - request:
+            name: example.com
+            country: US
+            firstName: Jane
+            lastName: Doe
+            address1: 340 S Lemon Ave Suite 4133
+            city: San Francisco
+            state: CA
+            postalCode: '91789'
+            phone: '+1.4158551452'
+            email: jane.doe@someplace.com
+          response:
+            body:
+              domain:
+                uid: uid
+                ns:
+                  - ns
+                verified: true
+                created: 1.1
+                pending: true
+    checkDomainPrice:
+      path: /v4/domains/price
+      method: GET
+      auth: true
+      docs: >-
+        Check the price to purchase a domain and how long a single purchase
+        period is.
+      display-name: Check the price for a domain
+      request:
+        name: CheckDomainPriceRequest
+        query-parameters:
+          name:
+            type: string
+            docs: The name of the domain for which the price needs to be checked.
+          type:
+            type: optional<CheckDomainPriceRequestType>
+            docs: In which status of the domain the price needs to be checked.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: >-
+          Successful response which returns the price of the domain and the
+          period.
+        type: CheckDomainPriceResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - query-parameters:
+            name: example.com
+          response:
+            body:
+              price: 20
+              period: 1
+    checkDomainStatus:
+      path: /v4/domains/status
+      method: GET
+      auth: true
+      docs: Check if a domain name is available for purchase.
+      display-name: Check a Domain Availability
+      request:
+        name: CheckDomainStatusRequest
+        query-parameters:
+          name:
+            type: string
+            docs: >-
+              The name of the domain for which we would like to check the
+              status.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: Successful response checking if a Domain's name is available.
+        type: CheckDomainStatusResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - query-parameters:
+            name: example.com
+          response:
+            body:
+              available: true
+    getDomainTransfer:
+      path: /v1/domains/{domain}/registry
+      method: GET
+      auth: true
+      docs: >-
+        Fetch domain transfer availability or transfer status if a transfer is
+        in progress.
+      path-parameters:
+        domain: string
+      display-name: Get domain transfer info.
+      request:
+        name: GetDomainTransferRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: GetDomainTransferResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - path-parameters:
+            domain: example.com
+          response:
+            body:
+              transferable: true
+              transferPolicy: charge-and-renew
+              reason: reason
+              status: pending_owner
+    getDomainConfig:
+      path: /v6/domains/{domain}/config
+      method: GET
+      auth: true
+      docs: Get a Domain's configuration.
+      path-parameters:
+        domain:
+          type: string
+          docs: The name of the domain.
+      display-name: Get a Domain's configuration
+      request:
+        name: GetDomainConfigRequest
+        query-parameters:
+          strict:
+            type: optional<GetDomainConfigRequestStrict>
+            docs: >-
+              When true, the response will only include the nameservers assigned
+              directly to the specified domain. When false and there are no
+              nameservers assigned directly to the specified domain, the
+              response will include the nameservers of the domain's parent zone.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: GetDomainConfigResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - path-parameters:
+            domain: example.com
+          response:
+            body:
+              configuredBy: CNAME
+              acceptedChallenges:
+                - dns-01
+              misconfigured: true
+    getDomain:
+      path: /v5/domains/{domain}
+      method: GET
+      auth: true
+      docs: Get information for a single domain in an account or team.
+      path-parameters:
+        domain:
+          type: string
+          docs: The name of the domain.
+      display-name: Get Information for a Single Domain
+      request:
+        name: GetDomainRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: Successful response retrieving an information for a specific domains.
+        type: GetDomainResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            domain: example.com
+          response:
+            body:
+              domain:
+                suffix: true
+                verified: true
+                nameservers:
+                  - ns1.nameserver.net
+                  - ns2.nameserver.net
+                intendedNameservers:
+                  - ns1.vercel-dns.com
+                  - ns2.vercel-dns.com
+                customNameservers:
+                  - ns1.nameserver.net
+                  - ns2.nameserver.net
+                creator:
+                  username: vercel_user
+                  email: demo@example.com
+                  customerId: customerId
+                  isDomainReseller: true
+                  id: ZspSRT4ljIEEmMHgoDwKWDei
+                teamId: teamId
+                userId: userId
+                boughtAt: 1613602938882
+                createdAt: 1613602938882
+                expiresAt: 1613602938882
+                id: EmTbe5CEJyTk2yVAHBUWy4A3sRusca3GCwRjTC1bpeVnt1
+                name: example.com
+                orderedAt: 1613602938882
+                renew: true
+                serviceType: zeit.world
+                transferredAt: 1613602938882
+                transferStartedAt: 1613602938882
+    getDomains:
+      path: /v5/domains
+      method: GET
+      auth: true
+      docs: >-
+        Retrieves a list of domains registered for the authenticated user or
+        team. By default it returns the last 20 domains if no limit is provided.
+      display-name: List all the domains
+      request:
+        name: GetDomainsRequest
+        query-parameters:
+          limit:
+            type: optional<double>
+            docs: Maximum number of domains to list from a request.
+          since:
+            type: optional<double>
+            docs: Get domains created after this JavaScript timestamp.
+          until:
+            type: optional<double>
+            docs: Get domains created before this JavaScript timestamp.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: Successful response retrieving a list of domains.
+        type: GetDomainsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.ConflictError
+      examples:
+        - query-parameters:
+            limit: 20
+            since: 1609499532000
+            until: 1612264332000
+          response:
+            body:
+              domains:
+                - verified: true
+                  nameservers:
+                    - ns1.nameserver.net
+                    - ns2.nameserver.net
+                  intendedNameservers:
+                    - ns1.vercel-dns.com
+                    - ns2.vercel-dns.com
+                  customNameservers:
+                    - ns1.nameserver.net
+                    - ns2.nameserver.net
+                  creator:
+                    username: vercel_user
+                    email: demo@example.com
+                    id: ZspSRT4ljIEEmMHgoDwKWDei
+                  teamId: teamId
+                  createdAt: 1613602938882
+                  boughtAt: 1613602938882
+                  expiresAt: 1613602938882
+                  id: EmTbe5CEJyTk2yVAHBUWy4A3sRusca3GCwRjTC1bpeVnt1
+                  name: example.com
+                  orderedAt: 1613602938882
+                  renew: true
+                  serviceType: zeit.world
+                  transferredAt: 1613602938882
+                  transferStartedAt: 1613602938882
+                  userId: userId
+              pagination:
+                count: 20
+                next: 1540095775951
+                prev: 1540095775951
+    createOrTransferDomain:
+      path: /v5/domains
+      method: POST
+      auth: true
+      docs: >-
+        This endpoint is used for adding a new apex domain name with Vercel for
+        the authenticating user. Can also be used for initiating a domain
+        transfer request from an external Registrar to Vercel.
+      display-name: Register or transfer-in a new Domain
+      request:
+        body: CreateOrTransferDomainRequestBody
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        name: CreateOrTransferDomainRequest
+      response:
+        docs: ''
+        type: CreateOrTransferDomainResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+        - root.InternalServerError
+      examples:
+        - request:
+            name: example.com
+          response:
+            body:
+              domain:
+                verified: true
+                nameservers:
+                  - ns1.nameserver.net
+                  - ns2.nameserver.net
+                intendedNameservers:
+                  - ns1.vercel-dns.com
+                  - ns2.vercel-dns.com
+                customNameservers:
+                  - ns1.nameserver.net
+                  - ns2.nameserver.net
+                creator:
+                  username: vercel_user
+                  email: demo@example.com
+                  customerId: customerId
+                  isDomainReseller: true
+                  id: ZspSRT4ljIEEmMHgoDwKWDei
+                name: example.com
+                boughtAt: 1613602938882
+                createdAt: 1613602938882
+                expiresAt: 1613602938882
+                id: EmTbe5CEJyTk2yVAHBUWy4A3sRusca3GCwRjTC1bpeVnt1
+                orderedAt: 1613602938882
+                renew: true
+                serviceType: zeit.world
+                transferredAt: 1613602938882
+                transferStartedAt: 1613602938882
+                userId: userId
+                teamId: teamId
+    patchDomain:
+      path: /v3/domains/{domain}
+      method: PATCH
+      auth: true
+      docs: Update or move apex domain.
+      path-parameters:
+        domain: optional<string>
+      display-name: Update or move apex domain
+      request:
+        body: PatchDomainRequestBody
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        name: PatchDomainRequest
+      response:
+        docs: ''
+        type: PatchDomainResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+      examples:
+        - request: {}
+          response:
+            body:
+              moved: true
+    deleteDomain:
+      path: /v6/domains/{domain}
+      method: DELETE
+      auth: true
+      docs: >-
+        Delete a previously registered domain name from Vercel. Deleting a
+        domain will automatically remove any associated aliases.
+      path-parameters:
+        domain:
+          type: string
+          docs: The name of the domain.
+      display-name: Remove a domain by name
+      request:
+        name: DeleteDomainRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: Successful response removing a domain.
+        type: DeleteDomainResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+      examples:
+        - path-parameters:
+            domain: example.com
+          response:
+            body:
+              uid: rec_V0fra8eEgQwEpFhYG2vTzC3K
+  source:
+    openapi: openapi.json

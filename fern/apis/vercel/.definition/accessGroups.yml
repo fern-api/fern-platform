@@ -1,0 +1,526 @@
+types:
+  ReadAccessGroupResponse:
+    properties:
+      isDsyncManaged: boolean
+      name:
+        type: string
+        docs: The name of this access group.
+      createdAt:
+        type: string
+        docs: Timestamp in milliseconds when the access group was created.
+      teamId:
+        type: string
+        docs: ID of the team that this access group belongs to.
+      updatedAt:
+        type: string
+        docs: Timestamp in milliseconds when the access group was last updated.
+      accessGroupId:
+        type: string
+        docs: ID of the access group.
+      membersCount:
+        type: double
+        docs: Number of members in the access group.
+      projectsCount:
+        type: double
+        docs: Number of projects in the access group.
+    source:
+      openapi: openapi.json
+  UpdateAccessGroupRequestProjectsItem:
+    properties:
+      projectId:
+        type: string
+        docs: The ID of the project.
+        validation:
+          maxLength: 256
+      role:
+        type: optional<string>
+        docs: >-
+          The project role that will be added to this Access Group. \"null\"
+          will remove this project level role.
+    source:
+      openapi: openapi.json
+  ListAccessGroupMembersResponseMembersItemTeamRole:
+    enum:
+      - OWNER
+      - MEMBER
+      - DEVELOPER
+      - BILLING
+      - VIEWER
+      - CONTRIBUTOR
+    source:
+      openapi: openapi.json
+  ListAccessGroupMembersResponseMembersItem:
+    properties:
+      avatar: optional<string>
+      email: string
+      uid: string
+      username: string
+      name: optional<string>
+      createdAt: optional<string>
+      teamRole: ListAccessGroupMembersResponseMembersItemTeamRole
+    source:
+      openapi: openapi.json
+  ListAccessGroupMembersResponsePagination:
+    properties:
+      count: double
+      next: optional<string>
+    source:
+      openapi: openapi.json
+  ListAccessGroupMembersResponse:
+    properties:
+      members: list<ListAccessGroupMembersResponseMembersItem>
+      pagination: ListAccessGroupMembersResponsePagination
+    source:
+      openapi: openapi.json
+  ListAccessGroupsResponseAccessGroupsAccessGroupsItem:
+    properties:
+      members: optional<list<string>>
+      projects: optional<list<string>>
+      isDsyncManaged: boolean
+      name:
+        type: string
+        docs: The name of this access group.
+      createdAt:
+        type: string
+        docs: Timestamp in milliseconds when the access group was created.
+      teamId:
+        type: string
+        docs: ID of the team that this access group belongs to.
+      updatedAt:
+        type: string
+        docs: Timestamp in milliseconds when the access group was last updated.
+      accessGroupId:
+        type: string
+        docs: ID of the access group.
+      membersCount:
+        type: double
+        docs: Number of members in the access group.
+      projectsCount:
+        type: double
+        docs: Number of projects in the access group.
+    source:
+      openapi: openapi.json
+  ListAccessGroupsResponseAccessGroupsPagination:
+    properties:
+      count: double
+      next: optional<string>
+    source:
+      openapi: openapi.json
+  ListAccessGroupsResponseAccessGroups:
+    properties:
+      accessGroups: list<ListAccessGroupsResponseAccessGroupsAccessGroupsItem>
+      pagination: ListAccessGroupsResponseAccessGroupsPagination
+    source:
+      openapi: openapi.json
+  ListAccessGroupsResponse:
+    discriminated: false
+    union:
+      - map<string, unknown>
+      - ListAccessGroupsResponseAccessGroups
+    source:
+      openapi: openapi.json
+  CreateAccessGroupRequestProjectsItemRole:
+    enum:
+      - ADMIN
+      - PROJECT_VIEWER
+      - PROJECT_DEVELOPER
+    docs: >-
+      The project role that will be added to this Access Group. \"null\" will
+      remove this project level role.
+    source:
+      openapi: openapi.json
+  CreateAccessGroupRequestProjectsItem:
+    properties:
+      projectId:
+        type: string
+        docs: The ID of the project.
+        validation:
+          maxLength: 256
+      role:
+        type: optional<CreateAccessGroupRequestProjectsItemRole>
+        docs: >-
+          The project role that will be added to this Access Group. \"null\"
+          will remove this project level role.
+    source:
+      openapi: openapi.json
+  CreateAccessGroupResponse:
+    properties:
+      membersCount: double
+      projectsCount: double
+      name:
+        type: string
+        docs: The name of this access group.
+      createdAt:
+        type: string
+        docs: Timestamp in milliseconds when the access group was created.
+      teamId:
+        type: string
+        docs: ID of the team that this access group belongs to.
+      updatedAt:
+        type: string
+        docs: Timestamp in milliseconds when the access group was last updated.
+      accessGroupId:
+        type: string
+        docs: ID of the access group.
+    source:
+      openapi: openapi.json
+  ListAccessGroupProjectsResponseProjectsItemRole:
+    enum:
+      - ADMIN
+      - PROJECT_DEVELOPER
+      - PROJECT_VIEWER
+    source:
+      openapi: openapi.json
+  ListAccessGroupProjectsResponseProjectsItemProject:
+    properties:
+      name: optional<string>
+      framework: optional<string>
+      latestDeploymentId: optional<string>
+    source:
+      openapi: openapi.json
+  ListAccessGroupProjectsResponseProjectsItem:
+    properties:
+      projectId: string
+      role: ListAccessGroupProjectsResponseProjectsItemRole
+      createdAt: string
+      updatedAt: string
+      project: ListAccessGroupProjectsResponseProjectsItemProject
+    source:
+      openapi: openapi.json
+  ListAccessGroupProjectsResponsePagination:
+    properties:
+      count: double
+      next: optional<string>
+    source:
+      openapi: openapi.json
+  ListAccessGroupProjectsResponse:
+    properties:
+      projects: list<ListAccessGroupProjectsResponseProjectsItem>
+      pagination: ListAccessGroupProjectsResponsePagination
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    readAccessGroup:
+      path: /v1/access-groups/{idOrName}
+      method: GET
+      auth: true
+      docs: Allows to read an access group
+      path-parameters:
+        idOrName: string
+      display-name: Reads an access group
+      request:
+        name: ReadAccessGroupRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: ReadAccessGroupResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            idOrName: idOrName
+          response:
+            body:
+              isDsyncManaged: true
+              name: my-access-group
+              createdAt: createdAt
+              teamId: team_123a6c5209bc3778245d011443644c8d27dc2c50
+              updatedAt: updatedAt
+              accessGroupId: ag_123a6c5209bc3778245d011443644c8d27dc2c50
+              membersCount: 5
+              projectsCount: 2
+    updateAccessGroup:
+      path: /v1/access-groups/{idOrName}
+      method: POST
+      auth: true
+      docs: Allows to update an access group metadata
+      path-parameters:
+        idOrName: string
+      display-name: Update an access group
+      request:
+        name: UpdateAccessGroupRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            name:
+              type: optional<string>
+              docs: The name of the access group
+              validation:
+                pattern: ^[A-z0-9_ -]+$
+                maxLength: 50
+            projects: optional<list<UpdateAccessGroupRequestProjectsItem>>
+            membersToAdd:
+              type: optional<list<string>>
+              docs: List of members to add to the access group.
+            membersToRemove:
+              type: optional<list<string>>
+              docs: List of members to remove from the access group.
+      response:
+        docs: ''
+        type: root.AccessGroup
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            idOrName: idOrName
+          request: {}
+          response:
+            body:
+              name: my-access-group
+              createdAt: createdAt
+              teamId: team_123a6c5209bc3778245d011443644c8d27dc2c50
+              updatedAt: updatedAt
+              accessGroupId: ag_123a6c5209bc3778245d011443644c8d27dc2c50
+              membersCount: 5
+              projectsCount: 2
+    deleteAccessGroup:
+      path: /v1/access-groups/{idOrName}
+      method: DELETE
+      auth: true
+      docs: Allows to delete an access group
+      path-parameters:
+        idOrName: string
+      display-name: Deletes an access group
+      request:
+        name: DeleteAccessGroupRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            idOrName: idOrName
+    listAccessGroupMembers:
+      path: /v1/access-groups/{idOrName}/members
+      method: GET
+      auth: true
+      docs: List members of an access group
+      path-parameters:
+        idOrName:
+          type: string
+          docs: The ID or name of the Access Group.
+      display-name: List members of an access group
+      request:
+        name: ListAccessGroupMembersRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: Limit how many access group members should be returned.
+          next:
+            type: optional<string>
+            docs: Continuation cursor to retrieve the next page of results.
+          search:
+            type: optional<string>
+            docs: Search project members by their name, username, and email.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: ListAccessGroupMembersResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            idOrName: ag_pavWOn1iLObbXLRiwVvzmPrTWyTf
+          query-parameters:
+            limit: 20
+          response:
+            body:
+              members:
+                - avatar: avatar
+                  email: email
+                  uid: uid
+                  username: username
+                  name: name
+                  createdAt: createdAt
+                  teamRole: OWNER
+              pagination:
+                count: 1.1
+                next: next
+    listAccessGroups:
+      path: /v1/access-groups
+      method: GET
+      auth: true
+      docs: List access groups
+      display-name: List access groups for a team, project or member
+      request:
+        name: ListAccessGroupsRequest
+        query-parameters:
+          projectId:
+            type: optional<string>
+            docs: Filter access groups by project.
+          search:
+            type: optional<string>
+            docs: Search for access groups by name.
+          membersLimit:
+            type: optional<integer>
+            docs: Number of members to include in the response.
+          projectsLimit:
+            type: optional<integer>
+            docs: Number of projects to include in the response.
+          limit:
+            type: optional<integer>
+            docs: Limit how many access group should be returned.
+          next:
+            type: optional<string>
+            docs: Continuation cursor to retrieve the next page of results.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: ListAccessGroupsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - query-parameters:
+            projectId: prj_pavWOn1iLObbx3RowVvzmPrTWyTf
+            search: example
+            membersLimit: 20
+            projectsLimit: 20
+            limit: 20
+          response:
+            body:
+              key: value
+    createAccessGroup:
+      path: /v1/access-groups
+      method: POST
+      auth: true
+      docs: Allows to create an access group
+      display-name: Creates an access group
+      request:
+        name: CreateAccessGroupRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            name:
+              type: string
+              docs: The name of the access group
+              validation:
+                pattern: ^[A-z0-9_ -]+$
+                maxLength: 50
+            projects: optional<list<CreateAccessGroupRequestProjectsItem>>
+            membersToAdd:
+              type: optional<list<string>>
+              docs: List of members to add to the access group.
+      response:
+        docs: ''
+        type: CreateAccessGroupResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - request:
+            name: My access group
+          response:
+            body:
+              membersCount: 1.1
+              projectsCount: 1.1
+              name: my-access-group
+              createdAt: createdAt
+              teamId: team_123a6c5209bc3778245d011443644c8d27dc2c50
+              updatedAt: updatedAt
+              accessGroupId: ag_123a6c5209bc3778245d011443644c8d27dc2c50
+    listAccessGroupProjects:
+      path: /v1/access-groups/{idOrName}/projects
+      method: GET
+      auth: true
+      docs: List projects of an access group
+      path-parameters:
+        idOrName:
+          type: string
+          docs: The ID or name of the Access Group.
+      display-name: List projects of an access group
+      request:
+        name: ListAccessGroupProjectsRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: Limit how many access group projects should be returned.
+          next:
+            type: optional<string>
+            docs: Continuation cursor to retrieve the next page of results.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: ListAccessGroupProjectsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            idOrName: ag_pavWOn1iLObbXLRiwVvzmPrTWyTf
+          query-parameters:
+            limit: 20
+          response:
+            body:
+              projects:
+                - projectId: projectId
+                  role: ADMIN
+                  createdAt: createdAt
+                  updatedAt: updatedAt
+                  project: {}
+              pagination:
+                count: 1.1
+                next: next
+  source:
+    openapi: openapi.json

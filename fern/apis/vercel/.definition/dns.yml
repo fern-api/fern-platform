@@ -1,0 +1,672 @@
+types:
+  GetRecordsResponseOneRecordsItemType:
+    enum:
+      - A
+      - AAAA
+      - ALIAS
+      - CAA
+      - CNAME
+      - HTTPS
+      - MX
+      - SRV
+      - TXT
+      - NS
+    source:
+      openapi: openapi.json
+  GetRecordsResponseOneRecordsItem:
+    properties:
+      id: string
+      slug: string
+      name: string
+      type: GetRecordsResponseOneRecordsItemType
+      value: string
+      mxPriority: optional<double>
+      priority: optional<double>
+      creator: string
+      created: optional<double>
+      updated: optional<double>
+      createdAt: optional<double>
+      updatedAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetRecordsResponseOne:
+    properties:
+      records: list<GetRecordsResponseOneRecordsItem>
+    source:
+      openapi: openapi.json
+  GetRecordsResponsePaginationRecordsItemType:
+    enum:
+      - A
+      - AAAA
+      - ALIAS
+      - CAA
+      - CNAME
+      - HTTPS
+      - MX
+      - SRV
+      - TXT
+      - NS
+    source:
+      openapi: openapi.json
+  GetRecordsResponsePaginationRecordsItem:
+    properties:
+      id: string
+      slug: string
+      name: string
+      type: GetRecordsResponsePaginationRecordsItemType
+      value: string
+      mxPriority: optional<double>
+      priority: optional<double>
+      creator: string
+      created: optional<double>
+      updated: optional<double>
+      createdAt: optional<double>
+      updatedAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetRecordsResponsePagination:
+    docs: Successful response retrieving a list of paginated DNS records.
+    properties:
+      records: list<GetRecordsResponsePaginationRecordsItem>
+      pagination: root.Pagination
+    source:
+      openapi: openapi.json
+  GetRecordsResponse:
+    discriminated: false
+    union:
+      - string
+      - GetRecordsResponseOne
+      - type: GetRecordsResponsePagination
+        docs: Successful response retrieving a list of paginated DNS records.
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyA:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name or an empty string for the root domain.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      value:
+        type: string
+        docs: The record value must be a valid IPv4 address.
+        validation:
+          format: ipv4
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyAaaa:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name or an empty string for the root domain.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      value:
+        type: string
+        docs: An AAAA record pointing to an IPv6 address.
+        validation:
+          format: ipv6
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyAlias:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name or an empty string for the root domain.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      value:
+        type: string
+        docs: >-
+          An ALIAS virtual record pointing to a hostname resolved to an A record
+          on server side.
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyCaa:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name or an empty string for the root domain.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      value:
+        type: string
+        docs: >-
+          A CAA record to specify which Certificate Authorities (CAs) are
+          allowed to issue certificates for the domain.
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyCname:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name or an empty string for the root domain.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      value:
+        type: optional<string>
+        docs: A CNAME record mapping to another domain name.
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyMx:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name or an empty string for the root domain.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      value:
+        type: string
+        docs: >-
+          An MX record specifying the mail server responsible for accepting
+          messages on behalf of the domain name.
+      mxPriority:
+        type: double
+        validation:
+          min: 0
+          max: 65535
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodySrvSrv:
+    properties:
+      priority:
+        type: optional<double>
+        validation:
+          min: 0
+          max: 65535
+      weight:
+        type: optional<double>
+        validation:
+          min: 0
+          max: 65535
+      port:
+        type: optional<double>
+        validation:
+          min: 0
+          max: 65535
+      target: string
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodySrv:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name or an empty string for the root domain.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      srv: CreateRecordRequestBodySrvSrv
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyTxt:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name or an empty string for the root domain.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      value:
+        type: string
+        docs: A TXT record containing arbitrary text.
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyNs:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      value:
+        type: optional<string>
+        docs: An NS domain value.
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyHttpsHttps:
+    properties:
+      priority:
+        type: optional<double>
+        validation:
+          min: 0
+          max: 65535
+      target: string
+      params: optional<string>
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBodyHttps:
+    properties:
+      name:
+        type: string
+        docs: A subdomain name or an empty string for the root domain.
+      ttl:
+        type: optional<double>
+        docs: >-
+          The TTL value. Must be a number between 60 and 2147483647. Default
+          value is 60.
+        validation:
+          min: 60
+          max: 2147483647
+      https: CreateRecordRequestBodyHttpsHttps
+      comment:
+        type: optional<string>
+        docs: A comment to add context on what this DNS record is for
+        validation:
+          maxLength: 500
+    source:
+      openapi: openapi.json
+  CreateRecordRequestBody:
+    discriminant: type
+    base-properties: {}
+    union:
+      A: CreateRecordRequestBodyA
+      AAAA: CreateRecordRequestBodyAaaa
+      ALIAS: CreateRecordRequestBodyAlias
+      CAA: CreateRecordRequestBodyCaa
+      CNAME: CreateRecordRequestBodyCname
+      MX: CreateRecordRequestBodyMx
+      SRV: CreateRecordRequestBodySrv
+      TXT: CreateRecordRequestBodyTxt
+      NS: CreateRecordRequestBodyNs
+      HTTPS: CreateRecordRequestBodyHttps
+    source:
+      openapi: openapi.json
+  CreateRecordResponseUpdated:
+    properties:
+      uid: string
+      updated: double
+    source:
+      openapi: openapi.json
+  CreateRecordResponseOne:
+    properties:
+      uid:
+        type: string
+        docs: The id of the newly created DNS record
+    source:
+      openapi: openapi.json
+  CreateRecordResponse:
+    discriminated: false
+    union:
+      - CreateRecordResponseUpdated
+      - CreateRecordResponseOne
+    source:
+      openapi: openapi.json
+  UpdateRecordRequestType:
+    enum:
+      - A
+      - AAAA
+      - ALIAS
+      - CAA
+      - CNAME
+      - HTTPS
+      - MX
+      - SRV
+      - TXT
+      - NS
+    docs: The type of the DNS record
+    source:
+      openapi: openapi.json
+  UpdateRecordRequestSrv:
+    properties:
+      target:
+        type: optional<string>
+        docs: ''
+        validation:
+          maxLength: 255
+      weight:
+        type: optional<integer>
+        docs: ''
+      port:
+        type: optional<integer>
+        docs: ''
+      priority:
+        type: optional<integer>
+        docs: ''
+    source:
+      openapi: openapi.json
+  UpdateRecordRequestHttps:
+    properties:
+      priority:
+        type: optional<integer>
+        docs: ''
+      target:
+        type: optional<string>
+        docs: ''
+        validation:
+          maxLength: 255
+      params:
+        type: optional<string>
+        docs: ''
+    source:
+      openapi: openapi.json
+  UpdateRecordResponseRecordType:
+    enum:
+      - A
+      - AAAA
+      - ALIAS
+      - CAA
+      - CNAME
+      - HTTPS
+      - MX
+      - SRV
+      - TXT
+      - NS
+    source:
+      openapi: openapi.json
+  UpdateRecordResponseType:
+    enum:
+      - record
+      - value: record-sys
+        name: RecordSys
+    source:
+      openapi: openapi.json
+  UpdateRecordResponse:
+    properties:
+      createdAt: optional<double>
+      creator: string
+      domain: string
+      id: string
+      name: string
+      recordType: UpdateRecordResponseRecordType
+      ttl: optional<double>
+      type: UpdateRecordResponseType
+      value: string
+      comment: optional<string>
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getRecords:
+      path: /v4/domains/{domain}/records
+      method: GET
+      auth: true
+      docs: >-
+        Retrieves a list of DNS records created for a domain name. By default it
+        returns 20 records if no limit is provided. The rest can be retrieved
+        using the pagination options.
+      path-parameters:
+        domain: string
+      display-name: List existing DNS records
+      request:
+        name: GetRecordsRequest
+        query-parameters:
+          limit:
+            type: optional<string>
+            docs: Maximum number of records to list from a request.
+          since:
+            type: optional<string>
+            docs: Get records created after this JavaScript timestamp.
+          until:
+            type: optional<string>
+            docs: Get records created before this JavaScript timestamp.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: Successful response retrieving a list of paginated DNS records.
+        type: GetRecordsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            domain: example.com
+          response:
+            body: string
+    createRecord:
+      path: /v2/domains/{domain}/records
+      method: POST
+      auth: true
+      docs: Creates a DNS record for a domain.
+      path-parameters:
+        domain:
+          type: string
+          docs: The domain used to create the DNS record.
+      display-name: Create a DNS record
+      request:
+        body: CreateRecordRequestBody
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        name: CreateRecordRequest
+      response:
+        docs: Successful response showing the uid of the newly created DNS record.
+        type: CreateRecordResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+      examples:
+        - path-parameters:
+            domain: example.com
+          request:
+            type: HTTPS
+            name: string
+            ttl: 60
+            https:
+              target: host.example.com
+            comment: used to verify ownership of domain
+          response:
+            body:
+              uid: uid
+              updated: 1.1
+    updateRecord:
+      path: /v1/domains/records/{recordId}
+      method: PATCH
+      auth: true
+      docs: Updates an existing DNS record for a domain name.
+      path-parameters:
+        recordId:
+          type: string
+          docs: The id of the DNS record
+      display-name: Update an existing DNS record
+      request:
+        name: UpdateRecordRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            name:
+              type: optional<string>
+              docs: The name of the DNS record
+            value:
+              type: optional<string>
+              docs: The value of the DNS record
+            type:
+              type: optional<UpdateRecordRequestType>
+              docs: The type of the DNS record
+            ttl:
+              type: optional<integer>
+              docs: The Time to live (TTL) value of the DNS record
+              validation:
+                min: 60
+                max: 2147483647
+            mxPriority:
+              type: optional<integer>
+              docs: The MX priority value of the DNS record
+            srv: optional<UpdateRecordRequestSrv>
+            https: optional<UpdateRecordRequestHttps>
+            comment:
+              type: optional<string>
+              docs: A comment to add context on what this DNS record is for
+              validation:
+                maxLength: 500
+      response:
+        docs: ''
+        type: UpdateRecordResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+      examples:
+        - path-parameters:
+            recordId: rec_2qn7pzrx89yxy34vezpd31y9
+          request: {}
+          response:
+            body:
+              createdAt: 1.1
+              creator: creator
+              domain: domain
+              id: id
+              name: name
+              recordType: A
+              ttl: 1.1
+              type: record
+              value: value
+              comment: comment
+    removeRecord:
+      path: /v2/domains/{domain}/records/{recordId}
+      method: DELETE
+      auth: true
+      docs: Removes an existing DNS record from a domain name.
+      path-parameters:
+        domain: string
+        recordId: string
+      display-name: Delete a DNS record
+      request:
+        name: RemoveRecordRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: Successful response by removing the specified DNS record.
+        type: map<string, unknown>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            domain: example.com
+            recordId: rec_V0fra8eEgQwEpFhYG2vTzC3K
+          response:
+            body:
+              key: value
+  source:
+    openapi: openapi.json

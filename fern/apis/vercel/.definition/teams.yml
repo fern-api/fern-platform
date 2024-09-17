@@ -1,0 +1,3090 @@
+types:
+  GetTeamMembersRequestRole:
+    enum:
+      - OWNER
+      - MEMBER
+      - DEVELOPER
+      - VIEWER
+      - BILLING
+      - CONTRIBUTOR
+    docs: Only return members with the specified team role.
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItemGithub:
+    docs: Information about the GitHub account for this user.
+    properties:
+      login: optional<string>
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItemGitlab:
+    docs: Information about the GitLab account of this user.
+    properties:
+      login: optional<string>
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItemBitbucket:
+    docs: Information about the Bitbucket account of this user.
+    properties:
+      login: optional<string>
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItemRole:
+    enum:
+      - OWNER
+      - MEMBER
+      - DEVELOPER
+      - VIEWER
+      - BILLING
+      - CONTRIBUTOR
+    docs: Role of this user in the team.
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItemJoinedFromOrigin:
+    enum:
+      - teams
+      - link
+      - mail
+      - import
+      - github
+      - gitlab
+      - bitbucket
+      - saml
+      - dsync
+      - feedback
+      - value: organization-teams
+        name: OrganizationTeams
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItemJoinedFromGitUserId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItemJoinedFrom:
+    docs: >-
+      Map with information about the members origin if they joined by requesting
+      access.
+    properties:
+      origin: GetTeamMembersResponseMembersItemJoinedFromOrigin
+      commitId: optional<string>
+      repoId: optional<string>
+      repoPath: optional<string>
+      gitUserId: optional<GetTeamMembersResponseMembersItemJoinedFromGitUserId>
+      gitUserLogin: optional<string>
+      ssoUserId: optional<string>
+      ssoConnectedAt: optional<double>
+      idpUserId: optional<string>
+      dsyncUserId: optional<string>
+      dsyncConnectedAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItemProjectsItemRole:
+    enum:
+      - ADMIN
+      - PROJECT_DEVELOPER
+      - PROJECT_VIEWER
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItemProjectsItem:
+    docs: Array of project memberships
+    properties:
+      name: optional<string>
+      id: optional<string>
+      role: optional<GetTeamMembersResponseMembersItemProjectsItemRole>
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseMembersItem:
+    properties:
+      avatar:
+        type: optional<string>
+        docs: ID of the file for the Avatar of this member.
+      confirmed:
+        type: boolean
+        docs: Boolean that indicates if this member was confirmed by an owner.
+      email:
+        type: string
+        docs: The email of this member.
+      github:
+        type: optional<GetTeamMembersResponseMembersItemGithub>
+        docs: Information about the GitHub account for this user.
+      gitlab:
+        type: optional<GetTeamMembersResponseMembersItemGitlab>
+        docs: Information about the GitLab account of this user.
+      bitbucket:
+        type: optional<GetTeamMembersResponseMembersItemBitbucket>
+        docs: Information about the Bitbucket account of this user.
+      role:
+        type: GetTeamMembersResponseMembersItemRole
+        docs: Role of this user in the team.
+      uid:
+        type: string
+        docs: The ID of this user.
+      username:
+        type: string
+        docs: The unique username of this user.
+      name:
+        type: optional<string>
+        docs: The name of this user.
+      createdAt:
+        type: double
+        docs: Timestamp in milliseconds when this member was added.
+      accessRequestedAt:
+        type: optional<double>
+        docs: >-
+          Timestamp in milliseconds for when this team member was accepted by an
+          owner.
+      joinedFrom:
+        type: optional<GetTeamMembersResponseMembersItemJoinedFrom>
+        docs: >-
+          Map with information about the members origin if they joined by
+          requesting access.
+      projects:
+        type: optional<list<GetTeamMembersResponseMembersItemProjectsItem>>
+        docs: Array of project memberships
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseEmailInviteCodesItemRole:
+    enum:
+      - OWNER
+      - MEMBER
+      - DEVELOPER
+      - VIEWER
+      - BILLING
+      - CONTRIBUTOR
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseEmailInviteCodesItemProjectsValue:
+    enum:
+      - ADMIN
+      - PROJECT_DEVELOPER
+      - PROJECT_VIEWER
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponseEmailInviteCodesItem:
+    properties:
+      accessGroups: optional<list<string>>
+      id: string
+      email: optional<string>
+      role: optional<GetTeamMembersResponseEmailInviteCodesItemRole>
+      isDSyncUser: boolean
+      createdAt: optional<double>
+      expired: optional<boolean>
+      projects: >-
+        optional<map<string,
+        GetTeamMembersResponseEmailInviteCodesItemProjectsValue>>
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponsePagination:
+    properties:
+      hasNext: boolean
+      count:
+        type: double
+        docs: Amount of items in the current page.
+      next:
+        type: optional<double>
+        docs: Timestamp that must be used to request the next page.
+      prev:
+        type: optional<double>
+        docs: Timestamp that must be used to request the previous page.
+    source:
+      openapi: openapi.json
+  GetTeamMembersResponse:
+    properties:
+      members: list<GetTeamMembersResponseMembersItem>
+      emailInviteCodes: optional<list<GetTeamMembersResponseEmailInviteCodesItem>>
+      pagination: GetTeamMembersResponsePagination
+    source:
+      openapi: openapi.json
+  InviteUserToTeamRequestRole:
+    enum:
+      - OWNER
+      - MEMBER
+      - DEVELOPER
+      - BILLING
+      - VIEWER
+      - CONTRIBUTOR
+    docs: The role of the user to invite
+    source:
+      openapi: openapi.json
+  InviteUserToTeamRequestProjectsItemRole:
+    enum:
+      - ADMIN
+      - PROJECT_VIEWER
+      - PROJECT_DEVELOPER
+    docs: Sets the project roles for the invited user
+    source:
+      openapi: openapi.json
+  InviteUserToTeamRequestProjectsItem:
+    properties:
+      projectId:
+        type: string
+        docs: The ID of the project.
+        validation:
+          maxLength: 64
+      role:
+        type: InviteUserToTeamRequestProjectsItemRole
+        docs: Sets the project roles for the invited user
+    source:
+      openapi: openapi.json
+  InviteUserToTeamResponseEmailRole:
+    enum:
+      - OWNER
+      - MEMBER
+      - DEVELOPER
+      - BILLING
+      - VIEWER
+      - CONTRIBUTOR
+    docs: The role used for the invitation
+    source:
+      openapi: openapi.json
+  InviteUserToTeamResponseEmail:
+    docs: The member was successfully added to the team
+    properties:
+      uid:
+        type: string
+        docs: The ID of the invited user
+      username:
+        type: string
+        docs: The username of the invited user
+      email:
+        type: optional<string>
+        docs: >-
+          The email of the invited user. Not included if the user was invited
+          via their UID.
+      role:
+        type: InviteUserToTeamResponseEmailRole
+        docs: The role used for the invitation
+    source:
+      openapi: openapi.json
+  InviteUserToTeamResponseOneRole:
+    enum:
+      - OWNER
+      - MEMBER
+      - DEVELOPER
+      - BILLING
+      - VIEWER
+      - CONTRIBUTOR
+    source:
+      openapi: openapi.json
+  InviteUserToTeamResponseOne:
+    properties:
+      uid: string
+      username: string
+      role: InviteUserToTeamResponseOneRole
+    source:
+      openapi: openapi.json
+  InviteUserToTeamResponse:
+    discriminated: false
+    union:
+      - type: InviteUserToTeamResponseEmail
+        docs: The member was successfully added to the team
+      - InviteUserToTeamResponseOne
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamRequestJoinedFromOrigin:
+    enum:
+      - import
+      - teams
+      - github
+      - gitlab
+      - bitbucket
+      - feedback
+      - value: organization-teams
+        name: OrganizationTeams
+    docs: The origin of the request.
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamRequestJoinedFromGitUserId:
+    discriminated: false
+    docs: The ID of the Git account of the user who requests access.
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamRequestJoinedFrom:
+    properties:
+      origin:
+        type: RequestAccessToTeamRequestJoinedFromOrigin
+        docs: The origin of the request.
+      commitId:
+        type: optional<string>
+        docs: The commit sha if the origin is a git provider.
+      repoId:
+        type: optional<string>
+        docs: The ID of the repository for the given Git provider.
+      repoPath:
+        type: optional<string>
+        docs: The path to the repository for the given Git provider.
+      gitUserId:
+        type: optional<RequestAccessToTeamRequestJoinedFromGitUserId>
+        docs: The ID of the Git account of the user who requests access.
+      gitUserLogin:
+        type: optional<string>
+        docs: The login name for the Git account of the user who requests access.
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamResponseJoinedFromOrigin:
+    enum:
+      - import
+      - teams
+      - github
+      - gitlab
+      - bitbucket
+      - feedback
+      - value: organization-teams
+        name: OrganizationTeams
+      - mail
+      - link
+      - saml
+      - dsync
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamResponseJoinedFromGitUserId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamResponseJoinedFrom:
+    properties:
+      origin: RequestAccessToTeamResponseJoinedFromOrigin
+      commitId: optional<string>
+      repoId: optional<string>
+      repoPath: optional<string>
+      gitUserId: optional<RequestAccessToTeamResponseJoinedFromGitUserId>
+      gitUserLogin: optional<string>
+      ssoUserId: optional<string>
+      ssoConnectedAt: optional<double>
+      idpUserId: optional<string>
+      dsyncUserId: optional<string>
+      dsyncConnectedAt: optional<double>
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamResponseGithub:
+    properties:
+      login: optional<string>
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamResponseGitlab:
+    properties:
+      login: optional<string>
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamResponseBitbucket:
+    properties:
+      login: optional<string>
+    source:
+      openapi: openapi.json
+  RequestAccessToTeamResponse:
+    properties:
+      teamSlug: string
+      teamName: string
+      confirmed: optional<boolean>
+      joinedFrom: optional<RequestAccessToTeamResponseJoinedFrom>
+      accessRequestedAt: optional<double>
+      github: optional<RequestAccessToTeamResponseGithub>
+      gitlab: optional<RequestAccessToTeamResponseGitlab>
+      bitbucket: optional<RequestAccessToTeamResponseBitbucket>
+    source:
+      openapi: openapi.json
+  GetTeamAccessRequestResponseJoinedFromOrigin:
+    enum:
+      - mail
+      - link
+      - import
+      - teams
+      - github
+      - gitlab
+      - bitbucket
+      - saml
+      - dsync
+      - feedback
+      - value: organization-teams
+        name: OrganizationTeams
+    source:
+      openapi: openapi.json
+  GetTeamAccessRequestResponseJoinedFromGitUserId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  GetTeamAccessRequestResponseJoinedFrom:
+    docs: A map that describes the origin from where the user joined.
+    properties:
+      origin: GetTeamAccessRequestResponseJoinedFromOrigin
+      commitId: optional<string>
+      repoId: optional<string>
+      repoPath: optional<string>
+      gitUserId: optional<GetTeamAccessRequestResponseJoinedFromGitUserId>
+      gitUserLogin: optional<string>
+      ssoUserId: optional<string>
+      ssoConnectedAt: optional<double>
+      idpUserId: optional<string>
+      dsyncUserId: optional<string>
+      dsyncConnectedAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetTeamAccessRequestResponseGithub:
+    docs: Map of the connected GitHub account.
+    properties:
+      login: optional<string>
+    source:
+      openapi: openapi.json
+  GetTeamAccessRequestResponseGitlab:
+    docs: Map of the connected GitLab account.
+    properties:
+      login: optional<string>
+    source:
+      openapi: openapi.json
+  GetTeamAccessRequestResponseBitbucket:
+    docs: Map of the connected Bitbucket account.
+    properties:
+      login: optional<string>
+    source:
+      openapi: openapi.json
+  GetTeamAccessRequestResponse:
+    properties:
+      teamSlug:
+        type: string
+        docs: The slug of the team.
+      teamName:
+        type: string
+        docs: The name of the team.
+      confirmed:
+        type: boolean
+        docs: >-
+          Current status of the membership. Will be `true` if confirmed, if
+          pending it'll be `false`.
+      joinedFrom:
+        type: GetTeamAccessRequestResponseJoinedFrom
+        docs: A map that describes the origin from where the user joined.
+      accessRequestedAt:
+        type: double
+        docs: Timestamp in milliseconds when the user requested access to the team.
+      github:
+        type: optional<GetTeamAccessRequestResponseGithub>
+        docs: Map of the connected GitHub account.
+      gitlab:
+        type: optional<GetTeamAccessRequestResponseGitlab>
+        docs: Map of the connected GitLab account.
+      bitbucket:
+        type: optional<GetTeamAccessRequestResponseBitbucket>
+        docs: Map of the connected Bitbucket account.
+    source:
+      openapi: openapi.json
+  JoinTeamResponse:
+    docs: Successfully joined a team.
+    properties:
+      teamId:
+        type: string
+        docs: The ID of the team the user joined.
+      slug:
+        type: string
+        docs: The slug of the team the user joined.
+      name:
+        type: string
+        docs: The name of the team the user joined.
+      from:
+        type: string
+        docs: The origin of how the user joined.
+    source:
+      openapi: openapi.json
+  RemoveTeamMemberResponse:
+    properties:
+      id:
+        type: string
+        docs: ID of the team.
+    source:
+      openapi: openapi.json
+  UpdateTeamMemberRequestProjectsItem:
+    properties:
+      projectId:
+        type: string
+        docs: The ID of the project.
+        validation:
+          maxLength: 256
+      role:
+        type: optional<string>
+        docs: >-
+          The project role of the member that will be added. \"null\" will
+          remove this project level role.
+    source:
+      openapi: openapi.json
+  UpdateTeamMemberRequestJoinedFrom:
+    properties:
+      ssoUserId: optional<string>
+    source:
+      openapi: openapi.json
+  UpdateTeamMemberResponse:
+    properties:
+      id:
+        type: string
+        docs: ID of the team.
+    source:
+      openapi: openapi.json
+  PatchTeamRequestSamlRolesValueAccessGroupId:
+    properties:
+      accessGroupId:
+        type: string
+        validation:
+          pattern: ^ag_[A-z0-9_ -]+$
+    source:
+      openapi: openapi.json
+  PatchTeamRequestSamlRolesValue:
+    discriminated: false
+    union:
+      - literal<"OWNER">
+      - literal<"MEMBER">
+      - literal<"DEVELOPER">
+      - literal<"BILLING">
+      - literal<"VIEWER">
+      - literal<"CONTRIBUTOR">
+      - PatchTeamRequestSamlRolesValueAccessGroupId
+    source:
+      openapi: openapi.json
+  PatchTeamRequestSaml:
+    properties:
+      enforced:
+        type: optional<boolean>
+        docs: Require that members of the team use SAML Single Sign-On.
+      roles:
+        type: optional<map<string, PatchTeamRequestSamlRolesValue>>
+        docs: Directory groups to role or access group mappings.
+    source:
+      openapi: openapi.json
+  PatchTeamRequestRemoteCaching:
+    docs: Whether or not remote caching is enabled for the team
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: Enable or disable remote caching for the team.
+    source:
+      openapi: openapi.json
+  GetTeamsResponseTeamsItem:
+    discriminated: false
+    union:
+      - root.Team
+      - root.TeamLimited
+    source:
+      openapi: openapi.json
+  GetTeamsResponse:
+    docs: A paginated list of teams.
+    properties:
+      teams: list<GetTeamsResponseTeamsItem>
+      pagination: root.Pagination
+    source:
+      openapi: openapi.json
+  CreateTeamRequestAttributionUtm:
+    properties:
+      utmSource:
+        type: optional<string>
+        docs: UTM source
+      utmMedium:
+        type: optional<string>
+        docs: UTM medium
+      utmCampaign:
+        type: optional<string>
+        docs: UTM campaign
+      utmTerm:
+        type: optional<string>
+        docs: UTM term
+    source:
+      openapi: openapi.json
+  CreateTeamRequestAttribution:
+    docs: Attribution information for the session or current page
+    properties:
+      sessionReferrer:
+        type: optional<string>
+        docs: Session referrer
+      landingPage:
+        type: optional<string>
+        docs: Session landing page
+      pageBeforeConversionPage:
+        type: optional<string>
+        docs: Referrer to the signup page
+      utm: optional<CreateTeamRequestAttributionUtm>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingCurrency:
+    enum:
+      - usd
+      - eur
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingPeriod:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingContract:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingPlan:
+    enum:
+      - pro
+      - enterprise
+      - hobby
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingPlatform:
+    enum:
+      - stripe
+      - stripeTestMode
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingProgramType:
+    enum:
+      - startup
+      - agency
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingTrial:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingTax:
+    properties:
+      type: string
+      id: string
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingAddress:
+    properties:
+      line1: optional<string>
+      line2: optional<string>
+      postalCode: optional<string>
+      city: optional<string>
+      country: optional<string>
+      state: optional<string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsProFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPro:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<CreateTeamResponseBillingInvoiceItemsProFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEnterpriseFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEnterprise:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<CreateTeamResponseBillingInvoiceItemsEnterpriseFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsAnalyticsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsAnalytics:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<CreateTeamResponseBillingInvoiceItemsAnalyticsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsConcurrentBuildsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsConcurrentBuilds:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<CreateTeamResponseBillingInvoiceItemsConcurrentBuildsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsDeveloperExperiencePlatformFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsDeveloperExperiencePlatform:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: >-
+        optional<CreateTeamResponseBillingInvoiceItemsDeveloperExperiencePlatformFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEnhancedConcurrentBuildsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEnhancedConcurrentBuilds:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: >-
+        optional<CreateTeamResponseBillingInvoiceItemsEnhancedConcurrentBuildsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsIncludedAllocationMiuFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsIncludedAllocationMiu:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: >-
+        optional<CreateTeamResponseBillingInvoiceItemsIncludedAllocationMiuFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsManagedInfrastructureCommitmentFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsManagedInfrastructureCommitment:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: >-
+        optional<CreateTeamResponseBillingInvoiceItemsManagedInfrastructureCommitmentFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsMonitoringFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsMonitoring:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<CreateTeamResponseBillingInvoiceItemsMonitoringFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPasswordProtectionFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPasswordProtection:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: >-
+        optional<CreateTeamResponseBillingInvoiceItemsPasswordProtectionFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPreviewDeploymentSuffixFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPreviewDeploymentSuffix:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: >-
+        optional<CreateTeamResponseBillingInvoiceItemsPreviewDeploymentSuffixFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsSamlFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsSaml:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<CreateTeamResponseBillingInvoiceItemsSamlFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsTeamSeatsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsTeamSeats:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<CreateTeamResponseBillingInvoiceItemsTeamSeatsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsVercelMarketplaceFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsVercelMarketplace:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: >-
+        optional<CreateTeamResponseBillingInvoiceItemsVercelMarketplaceFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWebAnalyticsFrequency:
+    properties:
+      interval: literal<"month">
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWebAnalytics:
+    docs: >-
+      Will be used to create an invoice item. The price must be in cents: 2000
+      for $20.
+    properties:
+      tier: optional<double>
+      price: double
+      quantity: double
+      highestQuantity:
+        type: optional<double>
+        docs: >-
+          The highest quantity in the current period. Used to render the correct
+          enable/disable UI for add-ons.
+      name: optional<string>
+      hidden: boolean
+      createdAt: optional<double>
+      disabledAt: optional<double>
+      frequency: optional<CreateTeamResponseBillingInvoiceItemsWebAnalyticsFrequency>
+      maxQuantity: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsAnalyticsUsageMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsAnalyticsUsage:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsAnalyticsUsageMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsArtifactsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsArtifacts:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsArtifactsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBandwidthMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBandwidth:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsBandwidthMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobStoresMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobStores:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsBlobStoresMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobTotalAdvancedRequestsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobTotalAdvancedRequests:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsBlobTotalAdvancedRequestsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobTotalAvgSizeInBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobTotalAvgSizeInBytes:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsBlobTotalAvgSizeInBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytes:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobTotalSimpleRequestsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBlobTotalSimpleRequests:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsBlobTotalSimpleRequestsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBuildMinuteMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsBuildMinute:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsBuildMinuteMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsDataCacheReadMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsDataCacheRead:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsDataCacheReadMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsDataCacheRevalidationMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsDataCacheRevalidation:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsDataCacheRevalidationMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsDataCacheWriteMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsDataCacheWrite:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsDataCacheWriteMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeConfigReadMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeConfigRead:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsEdgeConfigReadMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeConfigWriteMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeConfigWrite:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsEdgeConfigWriteMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeFunctionExecutionUnits:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeMiddlewareInvocations:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeRequestMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeRequest:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsEdgeRequestMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeRequestAdditionalCpuDurationMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsEdgeRequestAdditionalCpuDuration:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsEdgeRequestAdditionalCpuDurationMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsFastDataTransferMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsFastDataTransfer:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsFastDataTransferMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsFastOriginTransferMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsFastOriginTransfer:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsFastOriginTransferMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsFunctionDurationMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsFunctionDuration:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsFunctionDurationMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsFunctionInvocationMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsFunctionInvocation:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsFunctionInvocationMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsLogDrainsVolumeMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsLogDrainsVolume:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsLogDrainsVolumeMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsMonitoringMetricMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsMonitoringMetric:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsMonitoringMetricMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresComputeTimeMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresComputeTime:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsPostgresComputeTimeMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresDataStorageMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresDataStorage:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsPostgresDataStorageMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresDataTransferMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresDataTransfer:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsPostgresDataTransferMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresDatabaseMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresDatabase:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsPostgresDatabaseMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresWrittenDataMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsPostgresWrittenData:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsPostgresWrittenDataMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsServerlessFunctionExecutionMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsServerlessFunctionExecution:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsServerlessFunctionExecutionMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsSourceImagesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsSourceImages:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsSourceImagesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsStorageRedisTotalBandwidthInBytes:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsStorageRedisTotalCommandsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsStorageRedisTotalCommands:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsStorageRedisTotalCommandsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsStorageRedisTotalDatabasesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsStorageRedisTotalDatabases:
+    properties:
+      matrix: >-
+        optional<CreateTeamResponseBillingInvoiceItemsStorageRedisTotalDatabasesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWafOwaspExcessBytesMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWafOwaspExcessBytes:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsWafOwaspExcessBytesMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWafOwaspRequestsMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWafOwaspRequests:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsWafOwaspRequestsMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWafRateLimitRequestMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWafRateLimitRequest:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsWafRateLimitRequestMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWebAnalyticsEventMatrix:
+    properties:
+      defaultUnitPrice: string
+      dimensionPrices: map<string, string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItemsWebAnalyticsEvent:
+    properties:
+      matrix: optional<CreateTeamResponseBillingInvoiceItemsWebAnalyticsEventMatrix>
+      tier: optional<double>
+      price: double
+      batch: double
+      threshold: double
+      name: optional<string>
+      hidden: boolean
+      disabledAt: optional<double>
+      enabledAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceItems:
+    properties:
+      pro:
+        type: optional<CreateTeamResponseBillingInvoiceItemsPro>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      enterprise:
+        type: optional<CreateTeamResponseBillingInvoiceItemsEnterprise>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      analytics:
+        type: optional<CreateTeamResponseBillingInvoiceItemsAnalytics>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      concurrentBuilds:
+        type: optional<CreateTeamResponseBillingInvoiceItemsConcurrentBuilds>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      developerExperiencePlatform:
+        type: >-
+          optional<CreateTeamResponseBillingInvoiceItemsDeveloperExperiencePlatform>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      enhancedConcurrentBuilds:
+        type: >-
+          optional<CreateTeamResponseBillingInvoiceItemsEnhancedConcurrentBuilds>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      includedAllocationMiu:
+        type: optional<CreateTeamResponseBillingInvoiceItemsIncludedAllocationMiu>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      managedInfrastructureCommitment:
+        type: >-
+          optional<CreateTeamResponseBillingInvoiceItemsManagedInfrastructureCommitment>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      monitoring:
+        type: optional<CreateTeamResponseBillingInvoiceItemsMonitoring>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      passwordProtection:
+        type: optional<CreateTeamResponseBillingInvoiceItemsPasswordProtection>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      previewDeploymentSuffix:
+        type: optional<CreateTeamResponseBillingInvoiceItemsPreviewDeploymentSuffix>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      saml:
+        type: optional<CreateTeamResponseBillingInvoiceItemsSaml>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      teamSeats:
+        type: optional<CreateTeamResponseBillingInvoiceItemsTeamSeats>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      vercelMarketplace:
+        type: optional<CreateTeamResponseBillingInvoiceItemsVercelMarketplace>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      webAnalytics:
+        type: optional<CreateTeamResponseBillingInvoiceItemsWebAnalytics>
+        docs: >-
+          Will be used to create an invoice item. The price must be in cents:
+          2000 for $20.
+      analyticsUsage: optional<CreateTeamResponseBillingInvoiceItemsAnalyticsUsage>
+      artifacts: optional<CreateTeamResponseBillingInvoiceItemsArtifacts>
+      bandwidth: optional<CreateTeamResponseBillingInvoiceItemsBandwidth>
+      blobStores: optional<CreateTeamResponseBillingInvoiceItemsBlobStores>
+      blobTotalAdvancedRequests: optional<CreateTeamResponseBillingInvoiceItemsBlobTotalAdvancedRequests>
+      blobTotalAvgSizeInBytes: optional<CreateTeamResponseBillingInvoiceItemsBlobTotalAvgSizeInBytes>
+      blobTotalGetResponseObjectSizeInBytes: >-
+        optional<CreateTeamResponseBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytes>
+      blobTotalSimpleRequests: optional<CreateTeamResponseBillingInvoiceItemsBlobTotalSimpleRequests>
+      buildMinute: optional<CreateTeamResponseBillingInvoiceItemsBuildMinute>
+      dataCacheRead: optional<CreateTeamResponseBillingInvoiceItemsDataCacheRead>
+      dataCacheRevalidation: optional<CreateTeamResponseBillingInvoiceItemsDataCacheRevalidation>
+      dataCacheWrite: optional<CreateTeamResponseBillingInvoiceItemsDataCacheWrite>
+      edgeConfigRead: optional<CreateTeamResponseBillingInvoiceItemsEdgeConfigRead>
+      edgeConfigWrite: optional<CreateTeamResponseBillingInvoiceItemsEdgeConfigWrite>
+      edgeFunctionExecutionUnits: >-
+        optional<CreateTeamResponseBillingInvoiceItemsEdgeFunctionExecutionUnits>
+      edgeMiddlewareInvocations: optional<CreateTeamResponseBillingInvoiceItemsEdgeMiddlewareInvocations>
+      edgeRequest: optional<CreateTeamResponseBillingInvoiceItemsEdgeRequest>
+      edgeRequestAdditionalCpuDuration: >-
+        optional<CreateTeamResponseBillingInvoiceItemsEdgeRequestAdditionalCpuDuration>
+      fastDataTransfer: optional<CreateTeamResponseBillingInvoiceItemsFastDataTransfer>
+      fastOriginTransfer: optional<CreateTeamResponseBillingInvoiceItemsFastOriginTransfer>
+      functionDuration: optional<CreateTeamResponseBillingInvoiceItemsFunctionDuration>
+      functionInvocation: optional<CreateTeamResponseBillingInvoiceItemsFunctionInvocation>
+      logDrainsVolume: optional<CreateTeamResponseBillingInvoiceItemsLogDrainsVolume>
+      monitoringMetric: optional<CreateTeamResponseBillingInvoiceItemsMonitoringMetric>
+      postgresComputeTime: optional<CreateTeamResponseBillingInvoiceItemsPostgresComputeTime>
+      postgresDataStorage: optional<CreateTeamResponseBillingInvoiceItemsPostgresDataStorage>
+      postgresDataTransfer: optional<CreateTeamResponseBillingInvoiceItemsPostgresDataTransfer>
+      postgresDatabase: optional<CreateTeamResponseBillingInvoiceItemsPostgresDatabase>
+      postgresWrittenData: optional<CreateTeamResponseBillingInvoiceItemsPostgresWrittenData>
+      serverlessFunctionExecution: >-
+        optional<CreateTeamResponseBillingInvoiceItemsServerlessFunctionExecution>
+      sourceImages: optional<CreateTeamResponseBillingInvoiceItemsSourceImages>
+      storageRedisTotalBandwidthInBytes: >-
+        optional<CreateTeamResponseBillingInvoiceItemsStorageRedisTotalBandwidthInBytes>
+      storageRedisTotalCommands: optional<CreateTeamResponseBillingInvoiceItemsStorageRedisTotalCommands>
+      storageRedisTotalDailyAvgStorageInBytes: >-
+        optional<CreateTeamResponseBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes>
+      storageRedisTotalDatabases: >-
+        optional<CreateTeamResponseBillingInvoiceItemsStorageRedisTotalDatabases>
+      wafOwaspExcessBytes: optional<CreateTeamResponseBillingInvoiceItemsWafOwaspExcessBytes>
+      wafOwaspRequests: optional<CreateTeamResponseBillingInvoiceItemsWafOwaspRequests>
+      wafRateLimitRequest: optional<CreateTeamResponseBillingInvoiceItemsWafRateLimitRequest>
+      webAnalyticsEvent: optional<CreateTeamResponseBillingInvoiceItemsWebAnalyticsEvent>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingInvoiceSettings:
+    properties:
+      footer: optional<string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingSubscriptionsItemTrial:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingSubscriptionsItemPeriod:
+    properties:
+      start: double
+      end: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingSubscriptionsItemFrequencyInterval:
+    enum:
+      - month
+      - day
+      - week
+      - year
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingSubscriptionsItemFrequency:
+    properties:
+      interval: CreateTeamResponseBillingSubscriptionsItemFrequencyInterval
+      intervalCount: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingSubscriptionsItemDiscountCouponDuration:
+    enum:
+      - forever
+      - repeating
+      - once
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingSubscriptionsItemDiscountCoupon:
+    properties:
+      id: string
+      name: optional<string>
+      amountOff: optional<double>
+      percentageOff: optional<double>
+      durationInMonths: optional<double>
+      duration: CreateTeamResponseBillingSubscriptionsItemDiscountCouponDuration
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingSubscriptionsItemDiscount:
+    properties:
+      id: string
+      coupon: CreateTeamResponseBillingSubscriptionsItemDiscountCoupon
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingSubscriptionsItemItemsItem:
+    properties:
+      id: string
+      priceId: string
+      productId: string
+      amount: double
+      quantity: double
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingSubscriptionsItem:
+    properties:
+      id: string
+      trial: optional<CreateTeamResponseBillingSubscriptionsItemTrial>
+      period: CreateTeamResponseBillingSubscriptionsItemPeriod
+      frequency: CreateTeamResponseBillingSubscriptionsItemFrequency
+      discount: optional<CreateTeamResponseBillingSubscriptionsItemDiscount>
+      items: list<CreateTeamResponseBillingSubscriptionsItemItemsItem>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingControls:
+    properties:
+      analyticsSampleRateInPercent: optional<double>
+      analyticsSpendLimitInDollars: optional<double>
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingStatus:
+    enum:
+      - active
+      - trialing
+      - overdue
+      - expired
+      - canceled
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBillingAwsMarketplace:
+    properties:
+      productCode: string
+      offerId: optional<string>
+      customerId: string
+    source:
+      openapi: openapi.json
+  CreateTeamResponseBilling:
+    docs: >-
+      IMPORTANT: If extending Billing, particularly with optional fields, make
+      sure you also update `sync-orb-subscription-to-owner.ts` to handle the
+      items when the object is recreated.
+    properties:
+      currency: optional<CreateTeamResponseBillingCurrency>
+      cancelation: optional<double>
+      period: optional<CreateTeamResponseBillingPeriod>
+      contract: optional<CreateTeamResponseBillingContract>
+      plan: CreateTeamResponseBillingPlan
+      planIteration: optional<string>
+      platform: optional<CreateTeamResponseBillingPlatform>
+      orbCustomerId: optional<string>
+      syncedAt: optional<double>
+      programType: optional<CreateTeamResponseBillingProgramType>
+      trial: optional<CreateTeamResponseBillingTrial>
+      email: optional<string>
+      tax: optional<CreateTeamResponseBillingTax>
+      language: optional<string>
+      address: optional<CreateTeamResponseBillingAddress>
+      name: optional<string>
+      invoiceItems: optional<CreateTeamResponseBillingInvoiceItems>
+      invoiceSettings: optional<CreateTeamResponseBillingInvoiceSettings>
+      subscriptions: optional<list<CreateTeamResponseBillingSubscriptionsItem>>
+      controls: optional<CreateTeamResponseBillingControls>
+      purchaseOrder: optional<string>
+      status: optional<CreateTeamResponseBillingStatus>
+      pricingExperiment: optional<literal<"august-2022">>
+      orbMigrationScheduledAt: optional<double>
+      forceOrbMigration: optional<boolean>
+      awsMarketplace: optional<CreateTeamResponseBillingAwsMarketplace>
+      reseller: optional<string>
+    source:
+      openapi: openapi.json
+  CreateTeamResponse:
+    docs: The team was created successfully
+    properties:
+      id:
+        type: string
+        docs: Id of the created team
+      slug: string
+      billing:
+        type: CreateTeamResponseBilling
+        docs: >-
+          IMPORTANT: If extending Billing, particularly with optional fields,
+          make sure you also update `sync-orb-subscription-to-owner.ts` to
+          handle the items when the object is recreated.
+    source:
+      openapi: openapi.json
+  DeleteTeamRequestReasonsItem:
+    docs: An object describing the reason why the team is being deleted.
+    properties:
+      slug:
+        type: string
+        docs: Idenitifier slug of the reason why the team is being deleted.
+      description:
+        type: string
+        docs: Description of the reason why the team is being deleted.
+    source:
+      openapi: openapi.json
+  DeleteTeamResponse:
+    docs: The Team was successfully deleted
+    properties:
+      id:
+        type: string
+        docs: The ID of the deleted Team
+      newDefaultTeamIdError:
+        type: optional<boolean>
+        docs: >-
+          Signifies whether the default team update has failed, when
+          newDefaultTeamId is provided in request query.
+    source:
+      openapi: openapi.json
+  DeleteTeamInviteCodeResponse:
+    properties:
+      id:
+        type: string
+        docs: ID of the team.
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getTeamMembers:
+      path: /v2/teams/{teamId}/members
+      method: GET
+      auth: true
+      docs: Get a paginated list of team members for the provided team.
+      path-parameters:
+        teamId:
+          type: optional<string>
+          docs: The Team identifier to perform the request on behalf of.
+      display-name: List team members
+      request:
+        name: GetTeamMembersRequest
+        query-parameters:
+          limit:
+            type: optional<double>
+            docs: Limit how many teams should be returned
+          since:
+            type: optional<double>
+            docs: >-
+              Timestamp in milliseconds to only include members added since
+              then.
+          until:
+            type: optional<double>
+            docs: >-
+              Timestamp in milliseconds to only include members added until
+              then.
+          search:
+            type: optional<string>
+            docs: Search team members by their name, username, and email.
+          role:
+            type: optional<GetTeamMembersRequestRole>
+            docs: Only return members with the specified team role.
+          excludeProject:
+            type: optional<string>
+            docs: Exclude members who belong to the specified project.
+          eligibleMembersForProjectId:
+            type: optional<string>
+            docs: >-
+              Include team members who are eligible to be members of the
+              specified project.
+      response:
+        docs: ''
+        type: GetTeamMembersResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - query-parameters:
+            limit: 20
+            since: 1540095775951
+            until: 1540095775951
+          response:
+            body:
+              members:
+                - avatar: 123a6c5209bc3778245d011443644c8d27dc2c50
+                  confirmed: true
+                  email: jane.doe@example.com
+                  role: OWNER
+                  uid: zTuNVUXEAvvnNN3IaqinkyMw
+                  username: jane-doe
+                  name: Jane Doe
+                  createdAt: 1588720733602
+                  accessRequestedAt: 1588820733602
+                  joinedFrom:
+                    origin: teams
+                  projects:
+                    - {}
+              emailInviteCodes:
+                - accessGroups:
+                    - accessGroups
+                  id: id
+                  email: email
+                  role: OWNER
+                  isDSyncUser: true
+                  createdAt: 1.1
+                  expired: true
+                  projects:
+                    key: ADMIN
+              pagination:
+                hasNext: true
+                count: 20
+                next: 1540095775951
+                prev: 1540095775951
+    inviteUserToTeam:
+      path: /v1/teams/{teamId}/members
+      method: POST
+      auth: true
+      docs: >-
+        Invite a user to join the team specified in the URL. The authenticated
+        user needs to be an `OWNER` in order to successfully invoke this
+        endpoint. The user can be specified with an email or an ID. If both
+        email and ID are provided, ID will take priority.
+      path-parameters:
+        teamId:
+          type: optional<string>
+          docs: The Team identifier to perform the request on behalf of.
+      display-name: Invite a user
+      request:
+        name: InviteUserToTeamRequest
+        body:
+          properties:
+            uid:
+              type: optional<string>
+              docs: The id of the user to invite
+            email:
+              type: optional<string>
+              docs: The email address of the user to invite
+              validation:
+                format: email
+            role:
+              type: optional<InviteUserToTeamRequestRole>
+              docs: The role of the user to invite
+            projects: optional<list<InviteUserToTeamRequestProjectsItem>>
+      response:
+        docs: The member was successfully added to the team
+        type: InviteUserToTeamResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ServiceUnavailableError
+      examples:
+        - request: {}
+          response:
+            body:
+              uid: kr1PsOIzqEL5Xg6M4VZcZosf
+              username: john-doe
+              email: john@user.co
+              role: OWNER
+    requestAccessToTeam:
+      path: /v1/teams/{teamId}/request
+      method: POST
+      auth: true
+      docs: >-
+        Request access to a team as a member. An owner has to approve the
+        request. Only 10 users can request access to a team at the same time.
+      path-parameters:
+        teamId:
+          type: optional<string>
+          docs: The Team identifier to perform the request on behalf of.
+      display-name: Request access to a team
+      request:
+        name: RequestAccessToTeamRequest
+        body:
+          properties:
+            joinedFrom: RequestAccessToTeamRequestJoinedFrom
+      response:
+        docs: Successfuly requested access to the team.
+        type: RequestAccessToTeamResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ServiceUnavailableError
+      examples:
+        - request:
+            joinedFrom:
+              origin: import
+          response:
+            body:
+              teamSlug: teamSlug
+              teamName: teamName
+              confirmed: true
+              joinedFrom:
+                origin: import
+                commitId: commitId
+                repoId: repoId
+                repoPath: repoPath
+                gitUserId: gitUserId
+                gitUserLogin: gitUserLogin
+                ssoUserId: ssoUserId
+                ssoConnectedAt: 1.1
+                idpUserId: idpUserId
+                dsyncUserId: dsyncUserId
+                dsyncConnectedAt: 1.1
+              accessRequestedAt: 1.1
+              github:
+                login: login
+              gitlab:
+                login: login
+              bitbucket:
+                login: login
+    getTeamAccessRequest:
+      path: /v1/teams/{teamId}/request/{userId}
+      method: GET
+      auth: true
+      docs: >-
+        Check the status of a join request. It'll respond with a 404 if the
+        request has been declined. If no `userId` path segment was provided,
+        this endpoint will instead return the status of the authenticated user.
+      path-parameters:
+        teamId:
+          type: optional<string>
+          docs: The Team identifier to perform the request on behalf of.
+        userId: optional<string>
+      display-name: Get access request status
+      response:
+        docs: Successfully
+        type: GetTeamAccessRequestResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - response:
+            body:
+              teamSlug: my-team
+              teamName: My Team
+              confirmed: false
+              joinedFrom:
+                origin: mail
+                commitId: commitId
+                repoId: repoId
+                repoPath: repoPath
+                gitUserId: gitUserId
+                gitUserLogin: gitUserLogin
+                ssoUserId: ssoUserId
+                ssoConnectedAt: 1.1
+                idpUserId: idpUserId
+                dsyncUserId: dsyncUserId
+                dsyncConnectedAt: 1.1
+              accessRequestedAt: 1588720733602
+              github:
+                login: login
+              gitlab:
+                login: login
+              bitbucket:
+                login: login
+    joinTeam:
+      path: /v1/teams/{teamId}/members/teams/join
+      method: POST
+      auth: true
+      docs: Join a team with a provided invite code or team ID.
+      path-parameters:
+        teamId:
+          type: optional<string>
+          docs: The Team identifier to perform the request on behalf of.
+      display-name: Join a team
+      request:
+        name: JoinTeamRequest
+        body:
+          properties:
+            inviteCode:
+              type: optional<string>
+              docs: The invite code to join the team.
+      response:
+        docs: Successfully joined a team.
+        type: JoinTeamResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - request: {}
+          response:
+            body:
+              teamId: team_LLHUOMOoDlqOp8wPE4kFo9pE
+              slug: my-team
+              name: My Team
+              from: email
+    removeTeamMember:
+      path: /v1/teams/{teamId}/members/{uid}
+      method: DELETE
+      auth: true
+      docs: >-
+        Remove a Team Member from the Team, or dismiss a user that requested
+        access, or leave a team.
+      path-parameters:
+        teamId:
+          type: optional<string>
+          docs: The Team identifier to perform the request on behalf of.
+        uid:
+          type: string
+          docs: The user ID of the member.
+      display-name: Remove a Team Member
+      request:
+        name: RemoveTeamMemberRequest
+        query-parameters:
+          newDefaultTeamId:
+            type: optional<string>
+            docs: >-
+              The ID of the team to set as the new default team for the
+              Northstar user.
+      response:
+        docs: Successfully removed a member of the team.
+        type: RemoveTeamMemberResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ServiceUnavailableError
+      examples:
+        - path-parameters:
+            uid: ndlgr43fadlPyCtREAqxxdyFK
+          query-parameters:
+            newDefaultTeamId: team_nllPyCtREAqxxdyFKbbMDlxd
+          response:
+            body:
+              id: id
+    updateTeamMember:
+      path: /v1/teams/{teamId}/members/{uid}
+      method: PATCH
+      auth: true
+      docs: >-
+        Update the membership of a Team Member on the Team specified by
+        `teamId`, such as changing the _role_ of the member, or confirming a
+        request to join the Team for an unconfirmed member. The authenticated
+        user must be an `OWNER` of the Team.
+      path-parameters:
+        teamId:
+          type: optional<string>
+          docs: The Team identifier to perform the request on behalf of.
+        uid:
+          type: string
+          docs: The ID of the member.
+      display-name: Update a Team Member
+      request:
+        name: UpdateTeamMemberRequest
+        body:
+          properties:
+            confirmed:
+              type: optional<boolean>
+              docs: Accept a user who requested access to the team.
+            role:
+              type: optional<string>
+              docs: The role in the team of the member.
+            projects: optional<list<UpdateTeamMemberRequestProjectsItem>>
+            joinedFrom: optional<UpdateTeamMemberRequestJoinedFrom>
+      response:
+        docs: Successfully updated the membership.
+        type: UpdateTeamMemberResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            uid: ndfasllgPyCtREAqxxdyFKb
+          request: {}
+          response:
+            body:
+              id: id
+    getTeam:
+      path: /v2/teams/{teamId}
+      method: GET
+      auth: true
+      docs: Get information for the Team specified by the `teamId` parameter.
+      path-parameters:
+        teamId:
+          type: optional<string>
+          docs: The Team identifier to perform the request on behalf of.
+      display-name: Get a Team
+      request:
+        name: GetTeamRequest
+        query-parameters:
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The requested team
+        type: root.Team
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - response:
+            body:
+              key: value
+    patchTeam:
+      path: /v2/teams/{teamId}
+      method: PATCH
+      auth: true
+      docs: >-
+        Update the information of a Team specified by the `teamId` parameter.
+        The request body should contain the information that will be updated on
+        the Team.
+      path-parameters:
+        teamId:
+          type: string
+          docs: The Team identifier to perform the request on behalf of.
+      display-name: Update a Team
+      request:
+        name: PatchTeamRequest
+        query-parameters:
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            avatar:
+              type: optional<string>
+              docs: The hash value of an uploaded image.
+            description:
+              type: optional<string>
+              docs: A short text that describes the team.
+              validation:
+                maxLength: 140
+            emailDomain: optional<string>
+            name:
+              type: optional<string>
+              docs: The name of the team.
+              validation:
+                maxLength: 256
+            previewDeploymentSuffix:
+              type: optional<string>
+              docs: Suffix that will be used for all preview deployments.
+              validation:
+                format: hostname
+            regenerateInviteCode:
+              type: optional<boolean>
+              docs: Create a new invite code and replace the current one.
+            saml: optional<PatchTeamRequestSaml>
+            slug:
+              type: optional<string>
+              docs: A new slug for the team.
+              name: patchTeamRequestSlug
+            enablePreviewFeedback:
+              type: optional<string>
+              docs: 'Enable preview toolbar: one of on, off or default.'
+            enableProductionFeedback:
+              type: optional<string>
+              docs: 'Enable production toolbar: one of on, off or default.'
+            sensitiveEnvironmentVariablePolicy:
+              type: optional<string>
+              docs: >-
+                Sensitive environment variable policy: one of on, off or
+                default.
+            remoteCaching:
+              type: optional<PatchTeamRequestRemoteCaching>
+              docs: Whether or not remote caching is enabled for the team
+            hideIpAddresses:
+              type: optional<boolean>
+              docs: Display or hide IP addresses in Monitoring queries.
+      response:
+        docs: ''
+        type: root.Team
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            teamId: teamId
+          request: {}
+          response:
+            body:
+              key: value
+    getTeams:
+      path: /v2/teams
+      method: GET
+      auth: true
+      docs: >-
+        Get a paginated list of all the Teams the authenticated User is a member
+        of.
+      display-name: List all teams
+      request:
+        name: GetTeamsRequest
+        query-parameters:
+          limit:
+            type: optional<double>
+            docs: Maximum number of Teams which may be returned.
+          since:
+            type: optional<double>
+            docs: >-
+              Timestamp (in milliseconds) to only include Teams created since
+              then.
+          until:
+            type: optional<double>
+            docs: >-
+              Timestamp (in milliseconds) to only include Teams created until
+              then.
+      response:
+        docs: A paginated list of teams.
+        type: GetTeamsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - query-parameters:
+            limit: 20
+            since: 1540095775951
+            until: 1540095775951
+          response:
+            body:
+              teams:
+                - key: value
+              pagination:
+                count: 20
+                next: 1540095775951
+                prev: 1540095775951
+    createTeam:
+      path: /v1/teams
+      method: POST
+      auth: true
+      docs: >-
+        Create a new Team under your account. You need to send a POST request
+        with the desired Team slug, and optionally the Team name.
+      display-name: Create a Team
+      request:
+        name: CreateTeamRequest
+        body:
+          properties:
+            slug:
+              type: string
+              docs: The desired slug for the Team
+              validation:
+                maxLength: 48
+            name:
+              type: optional<string>
+              docs: >-
+                The desired name for the Team. It will be generated from the
+                provided slug if nothing is provided
+              validation:
+                maxLength: 256
+            attribution:
+              type: optional<CreateTeamRequestAttribution>
+              docs: Attribution information for the session or current page
+      response:
+        docs: The team was created successfully
+        type: CreateTeamResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - request:
+            slug: a-random-team
+          response:
+            body:
+              id: team_nLlpyC6RE1qxqglFKbrMxlud
+              slug: slug
+              billing:
+                currency: usd
+                cancelation: 1.1
+                period:
+                  start: 1.1
+                  end: 1.1
+                contract:
+                  start: 1.1
+                  end: 1.1
+                plan: pro
+                planIteration: planIteration
+                platform: stripe
+                orbCustomerId: orbCustomerId
+                syncedAt: 1.1
+                programType: startup
+                trial:
+                  start: 1.1
+                  end: 1.1
+                email: email
+                tax:
+                  type: type
+                  id: id
+                language: language
+                address:
+                  line1: line1
+                  line2: line2
+                  postalCode: postalCode
+                  city: city
+                  country: country
+                  state: state
+                name: name
+                invoiceItems:
+                  pro:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  enterprise:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  analytics:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  concurrentBuilds:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  developerExperiencePlatform:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  enhancedConcurrentBuilds:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  includedAllocationMiu:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  managedInfrastructureCommitment:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  monitoring:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  passwordProtection:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  previewDeploymentSuffix:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  saml:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  teamSeats:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  vercelMarketplace:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  webAnalytics:
+                    price: 1.1
+                    quantity: 1.1
+                    hidden: true
+                  analyticsUsage:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  artifacts:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  bandwidth:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  blobStores:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  blobTotalAdvancedRequests:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  blobTotalAvgSizeInBytes:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  blobTotalGetResponseObjectSizeInBytes:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  blobTotalSimpleRequests:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  buildMinute:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  dataCacheRead:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  dataCacheRevalidation:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  dataCacheWrite:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  edgeConfigRead:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  edgeConfigWrite:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  edgeFunctionExecutionUnits:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  edgeMiddlewareInvocations:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  edgeRequest:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  edgeRequestAdditionalCpuDuration:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  fastDataTransfer:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  fastOriginTransfer:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  functionDuration:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  functionInvocation:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  logDrainsVolume:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  monitoringMetric:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  postgresComputeTime:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  postgresDataStorage:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  postgresDataTransfer:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  postgresDatabase:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  postgresWrittenData:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  serverlessFunctionExecution:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  sourceImages:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  storageRedisTotalBandwidthInBytes:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  storageRedisTotalCommands:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  storageRedisTotalDailyAvgStorageInBytes:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  storageRedisTotalDatabases:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  wafOwaspExcessBytes:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  wafOwaspRequests:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  wafRateLimitRequest:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                  webAnalyticsEvent:
+                    price: 1.1
+                    batch: 1.1
+                    threshold: 1.1
+                    hidden: true
+                invoiceSettings:
+                  footer: footer
+                subscriptions:
+                  - id: id
+                    period:
+                      start: 1.1
+                      end: 1.1
+                    frequency:
+                      interval: month
+                      intervalCount: 1.1
+                    items:
+                      - id: id
+                        priceId: priceId
+                        productId: productId
+                        amount: 1.1
+                        quantity: 1.1
+                controls:
+                  analyticsSampleRateInPercent: 1.1
+                  analyticsSpendLimitInDollars: 1.1
+                purchaseOrder: purchaseOrder
+                status: active
+                pricingExperiment: august-2022
+                orbMigrationScheduledAt: 1.1
+                forceOrbMigration: true
+                awsMarketplace:
+                  productCode: productCode
+                  offerId: offerId
+                  customerId: customerId
+                reseller: reseller
+    deleteTeam:
+      path: /v1/teams/{teamId}
+      method: DELETE
+      auth: true
+      docs: >-
+        Delete a team under your account. You need to send a `DELETE` request
+        with the desired team `id`. An optional array of reasons for deletion
+        may also be sent.
+      path-parameters:
+        teamId:
+          type: string
+          docs: The Team identifier to perform the request on behalf of.
+      display-name: Delete a Team
+      request:
+        name: DeleteTeamRequest
+        query-parameters:
+          newDefaultTeamId:
+            type: optional<string>
+            docs: Id of the team to be set as the new default team
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            reasons:
+              type: optional<list<DeleteTeamRequestReasonsItem>>
+              docs: >-
+                Optional array of objects that describe the reason why the team
+                is being deleted.
+      response:
+        docs: The Team was successfully deleted
+        type: DeleteTeamResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+      examples:
+        - path-parameters:
+            teamId: teamId
+          query-parameters:
+            newDefaultTeamId: team_LLHUOMOoDlqOp8wPE4kFo9pE
+          request: {}
+          response:
+            body:
+              id: team_LLHUOMOoDlqOp8wPE4kFo9pE
+              newDefaultTeamIdError: true
+    deleteTeamInviteCode:
+      path: /v1/teams/{teamId}/invites/{inviteId}
+      method: DELETE
+      auth: true
+      docs: Delete an active Team invite code.
+      path-parameters:
+        teamId:
+          type: optional<string>
+          docs: The Team identifier to perform the request on behalf of.
+        inviteId:
+          type: string
+          docs: The Team invite code ID.
+      display-name: Delete a Team invite code
+      response:
+        docs: Successfully deleted Team invite code.
+        type: DeleteTeamInviteCodeResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            inviteId: 2wn2hudbr4chb1ecywo9dvzo7g9sscs6mzcz8htdde0txyom4l
+          response:
+            body:
+              id: id
+  source:
+    openapi: openapi.json

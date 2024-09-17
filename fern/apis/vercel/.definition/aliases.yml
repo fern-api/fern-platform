@@ -1,0 +1,694 @@
+types:
+  ListAliasesResponseAliasesItemCreator:
+    docs: Information of the user who created the alias
+    properties:
+      uid:
+        type: string
+        docs: ID of the user who created the alias
+      email:
+        type: string
+        docs: Email of the user who created the alias
+      username:
+        type: string
+        docs: Username of the user who created the alias
+    source:
+      openapi: openapi.json
+  ListAliasesResponseAliasesItemDeployment:
+    docs: A map with the deployment ID, URL and metadata
+    properties:
+      id:
+        type: string
+        docs: The deployment unique identifier
+      url:
+        type: string
+        docs: The deployment unique URL
+      meta:
+        type: optional<string>
+        docs: The deployment metadata
+    source:
+      openapi: openapi.json
+  ListAliasesResponseAliasesItemProtectionBypassValueShareableLink:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      createdBy: string
+    source:
+      openapi: openapi.json
+  ListAliasesResponseAliasesItemProtectionBypassValueUserAccess:
+    enum:
+      - requested
+      - granted
+    source:
+      openapi: openapi.json
+  ListAliasesResponseAliasesItemProtectionBypassValueUser:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      lastUpdatedAt: double
+      lastUpdatedBy: string
+      access: ListAliasesResponseAliasesItemProtectionBypassValueUserAccess
+    source:
+      openapi: openapi.json
+  ListAliasesResponseAliasesItemProtectionBypassValueAliasProtectionOverride:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      createdBy: string
+    source:
+      openapi: openapi.json
+  ListAliasesResponseAliasesItemProtectionBypassValueEmailInvite:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      lastUpdatedAt: double
+      lastUpdatedBy: string
+    source:
+      openapi: openapi.json
+  ListAliasesResponseAliasesItemProtectionBypassValue:
+    discriminant: scope
+    base-properties: {}
+    union:
+      shareable-link:
+        type: ListAliasesResponseAliasesItemProtectionBypassValueShareableLink
+        docs: The protection bypass for the alias
+      user:
+        type: ListAliasesResponseAliasesItemProtectionBypassValueUser
+        docs: The protection bypass for the alias
+      alias-protection-override:
+        type: >-
+          ListAliasesResponseAliasesItemProtectionBypassValueAliasProtectionOverride
+        docs: The protection bypass for the alias
+      email_invite:
+        type: ListAliasesResponseAliasesItemProtectionBypassValueEmailInvite
+        docs: The protection bypass for the alias
+    source:
+      openapi: openapi.json
+  ListAliasesResponseAliasesItem:
+    properties:
+      alias:
+        type: string
+        docs: >-
+          The alias name, it could be a `.vercel.app` subdomain or a custom
+          domain
+      created:
+        type: datetime
+        docs: The date when the alias was created
+      createdAt:
+        type: optional<double>
+        docs: >-
+          The date when the alias was created in milliseconds since the UNIX
+          epoch
+      creator:
+        type: optional<ListAliasesResponseAliasesItemCreator>
+        docs: Information of the user who created the alias
+      deletedAt:
+        type: optional<double>
+        docs: >-
+          The date when the alias was deleted in milliseconds since the UNIX
+          epoch
+      deployment:
+        type: optional<ListAliasesResponseAliasesItemDeployment>
+        docs: A map with the deployment ID, URL and metadata
+      deploymentId:
+        type: optional<string>
+        docs: The deployment ID
+      projectId:
+        type: optional<string>
+        docs: The unique identifier of the project
+      redirect:
+        type: optional<string>
+        docs: Target destination domain for redirect when the alias is a redirect
+      redirectStatusCode:
+        type: optional<double>
+        docs: Status code to be used on redirect
+      uid:
+        type: string
+        docs: The unique identifier of the alias
+      updatedAt:
+        type: optional<double>
+        docs: >-
+          The date when the alias was updated in milliseconds since the UNIX
+          epoch
+      protectionBypass:
+        type: >-
+          optional<map<string,
+          ListAliasesResponseAliasesItemProtectionBypassValue>>
+        docs: The protection bypass for the alias
+    source:
+      openapi: openapi.json
+  ListAliasesResponse:
+    properties:
+      aliases: list<ListAliasesResponseAliasesItem>
+      pagination: root.Pagination
+    source:
+      openapi: openapi.json
+  GetAliasResponseItemCreator:
+    docs: Information of the user who created the alias
+    properties:
+      uid:
+        type: string
+        docs: ID of the user who created the alias
+      email:
+        type: string
+        docs: Email of the user who created the alias
+      username:
+        type: string
+        docs: Username of the user who created the alias
+    source:
+      openapi: openapi.json
+  GetAliasResponseItemDeployment:
+    docs: A map with the deployment ID, URL and metadata
+    properties:
+      id:
+        type: string
+        docs: The deployment unique identifier
+      url:
+        type: string
+        docs: The deployment unique URL
+      meta:
+        type: optional<string>
+        docs: The deployment metadata
+    source:
+      openapi: openapi.json
+  GetAliasResponseItemProtectionBypassValueShareableLink:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      createdBy: string
+    source:
+      openapi: openapi.json
+  GetAliasResponseItemProtectionBypassValueUserAccess:
+    enum:
+      - requested
+      - granted
+    source:
+      openapi: openapi.json
+  GetAliasResponseItemProtectionBypassValueUser:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      lastUpdatedAt: double
+      lastUpdatedBy: string
+      access: GetAliasResponseItemProtectionBypassValueUserAccess
+    source:
+      openapi: openapi.json
+  GetAliasResponseItemProtectionBypassValueAliasProtectionOverride:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      createdBy: string
+    source:
+      openapi: openapi.json
+  GetAliasResponseItemProtectionBypassValueEmailInvite:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      lastUpdatedAt: double
+      lastUpdatedBy: string
+    source:
+      openapi: openapi.json
+  GetAliasResponseItemProtectionBypassValue:
+    discriminant: scope
+    base-properties: {}
+    union:
+      shareable-link:
+        type: GetAliasResponseItemProtectionBypassValueShareableLink
+        docs: The protection bypass for the alias
+      user:
+        type: GetAliasResponseItemProtectionBypassValueUser
+        docs: The protection bypass for the alias
+      alias-protection-override:
+        type: GetAliasResponseItemProtectionBypassValueAliasProtectionOverride
+        docs: The protection bypass for the alias
+      email_invite:
+        type: GetAliasResponseItemProtectionBypassValueEmailInvite
+        docs: The protection bypass for the alias
+    source:
+      openapi: openapi.json
+  GetAliasResponseItem:
+    properties:
+      alias:
+        type: string
+        docs: >-
+          The alias name, it could be a `.vercel.app` subdomain or a custom
+          domain
+      created:
+        type: datetime
+        docs: The date when the alias was created
+      createdAt:
+        type: optional<double>
+        docs: >-
+          The date when the alias was created in milliseconds since the UNIX
+          epoch
+      creator:
+        type: optional<GetAliasResponseItemCreator>
+        docs: Information of the user who created the alias
+      deletedAt:
+        type: optional<double>
+        docs: >-
+          The date when the alias was deleted in milliseconds since the UNIX
+          epoch
+      deployment:
+        type: optional<GetAliasResponseItemDeployment>
+        docs: A map with the deployment ID, URL and metadata
+      deploymentId:
+        type: optional<string>
+        docs: The deployment ID
+      projectId:
+        type: optional<string>
+        docs: The unique identifier of the project
+      redirect:
+        type: optional<string>
+        docs: Target destination domain for redirect when the alias is a redirect
+      redirectStatusCode:
+        type: optional<double>
+        docs: Status code to be used on redirect
+      uid:
+        type: string
+        docs: The unique identifier of the alias
+      updatedAt:
+        type: optional<double>
+        docs: >-
+          The date when the alias was updated in milliseconds since the UNIX
+          epoch
+      protectionBypass:
+        type: optional<map<string, GetAliasResponseItemProtectionBypassValue>>
+        docs: The protection bypass for the alias
+    source:
+      openapi: openapi.json
+  DeleteAliasResponse:
+    properties:
+      status: literal<"SUCCESS">
+    source:
+      openapi: openapi.json
+  ListDeploymentAliasesResponseAliasesItemProtectionBypassValueShareableLink:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      createdBy: string
+    source:
+      openapi: openapi.json
+  ListDeploymentAliasesResponseAliasesItemProtectionBypassValueUserAccess:
+    enum:
+      - requested
+      - granted
+    source:
+      openapi: openapi.json
+  ListDeploymentAliasesResponseAliasesItemProtectionBypassValueUser:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      lastUpdatedAt: double
+      lastUpdatedBy: string
+      access: ListDeploymentAliasesResponseAliasesItemProtectionBypassValueUserAccess
+    source:
+      openapi: openapi.json
+  ListDeploymentAliasesResponseAliasesItemProtectionBypassValueAliasProtectionOverride:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      createdBy: string
+    source:
+      openapi: openapi.json
+  ListDeploymentAliasesResponseAliasesItemProtectionBypassValueEmailInvite:
+    docs: The protection bypass for the alias
+    properties:
+      createdAt: double
+      lastUpdatedAt: double
+      lastUpdatedBy: string
+    source:
+      openapi: openapi.json
+  ListDeploymentAliasesResponseAliasesItemProtectionBypassValue:
+    discriminant: scope
+    base-properties: {}
+    union:
+      shareable-link:
+        type: >-
+          ListDeploymentAliasesResponseAliasesItemProtectionBypassValueShareableLink
+        docs: The protection bypass for the alias
+      user:
+        type: ListDeploymentAliasesResponseAliasesItemProtectionBypassValueUser
+        docs: The protection bypass for the alias
+      alias-protection-override:
+        type: >-
+          ListDeploymentAliasesResponseAliasesItemProtectionBypassValueAliasProtectionOverride
+        docs: The protection bypass for the alias
+      email_invite:
+        type: >-
+          ListDeploymentAliasesResponseAliasesItemProtectionBypassValueEmailInvite
+        docs: The protection bypass for the alias
+    source:
+      openapi: openapi.json
+  ListDeploymentAliasesResponseAliasesItem:
+    docs: A list of the aliases assigned to the deployment
+    properties:
+      uid:
+        type: string
+        docs: The unique identifier of the alias
+      alias:
+        type: string
+        docs: >-
+          The alias name, it could be a `.vercel.app` subdomain or a custom
+          domain
+      created:
+        type: datetime
+        docs: The date when the alias was created
+      redirect:
+        type: optional<string>
+        docs: Target destination domain for redirect when the alias is a redirect
+      protectionBypass:
+        type: >-
+          optional<map<string,
+          ListDeploymentAliasesResponseAliasesItemProtectionBypassValue>>
+        docs: The protection bypass for the alias
+    source:
+      openapi: openapi.json
+  ListDeploymentAliasesResponse:
+    properties:
+      aliases:
+        docs: A list of the aliases assigned to the deployment
+        type: list<ListDeploymentAliasesResponseAliasesItem>
+    source:
+      openapi: openapi.json
+  AssignAliasResponse:
+    properties:
+      uid:
+        type: string
+        docs: The unique identifier of the alias
+      alias:
+        type: string
+        docs: The assigned alias name
+      created:
+        type: datetime
+        docs: The date when the alias was created
+      oldDeploymentId:
+        type: optional<string>
+        docs: >-
+          The unique identifier of the previously aliased deployment, only
+          received when the alias was used before
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listAliases:
+      path: /v4/aliases
+      method: GET
+      auth: true
+      docs: >-
+        Retrieves a list of aliases for the authenticated User or Team. When
+        `domain` is provided, only aliases for that domain will be returned.
+        When `projectId` is provided, it will only return the given project
+        aliases.
+      display-name: List aliases
+      request:
+        name: ListAliasesRequest
+        query-parameters:
+          domain:
+            type: optional<string>
+            allow-multiple: true
+            docs: Get only aliases of the given domain name
+          from:
+            type: optional<double>
+            docs: Get only aliases created after the provided timestamp
+          limit:
+            type: optional<double>
+            docs: Maximum number of aliases to list from a request
+          projectId:
+            type: optional<string>
+            docs: Filter aliases from the given `projectId`
+          since:
+            type: optional<double>
+            docs: Get aliases created after this JavaScript timestamp
+          until:
+            type: optional<double>
+            docs: Get aliases created before this JavaScript timestamp
+          rollbackDeploymentId:
+            type: optional<string>
+            docs: Get aliases that would be rolled back for the given deployment
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The paginated list of aliases
+        type: ListAliasesResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - query-parameters:
+            from: 1540095775951
+            limit: 10
+            projectId: prj_12HKQaOmR5t5Uy6vdcQsNIiZgHGB
+            since: 1540095775941
+            until: 1540095775951
+            rollbackDeploymentId: dpl_XXX
+          response:
+            body:
+              aliases:
+                - alias: my-alias.vercel.app
+                  created: '2017-04-26T23:00:34Z'
+                  createdAt: 1540095775941
+                  creator:
+                    uid: 96SnxkFiMyVKsK3pnoHfx3Hz
+                    email: john-doe@gmail.com
+                    username: john-doe
+                  deletedAt: 1540095775941
+                  deployment:
+                    id: dpl_5m8CQaRBm3FnWRW1od3wKTpaECPx
+                    url: my-instant-deployment-3ij3cxz9qr.now.sh
+                  deploymentId: dpl_5m8CQaRBm3FnWRW1od3wKTpaECPx
+                  projectId: prj_12HKQaOmR5t5Uy6vdcQsNIiZgHGB
+                  redirect: redirect
+                  redirectStatusCode: 1.1
+                  uid: uid
+                  updatedAt: 1540095775941
+                  protectionBypass:
+                    key:
+                      scope: email_invite
+                      createdAt: 1.1
+                      lastUpdatedAt: 1.1
+                      lastUpdatedBy: value
+              pagination:
+                count: 20
+                next: 1540095775951
+                prev: 1540095775951
+    getAlias:
+      path: /v4/aliases/{idOrAlias}
+      method: GET
+      auth: true
+      docs: Retrieves an Alias for the given host name or alias ID.
+      path-parameters:
+        idOrAlias:
+          type: string
+          docs: The alias or alias ID to be retrieved
+      display-name: Get an Alias
+      request:
+        name: GetAliasRequest
+        query-parameters:
+          from:
+            type: optional<double>
+            docs: Get the alias only if it was created after the provided timestamp
+          projectId:
+            type: optional<string>
+            docs: Get the alias only if it is assigned to the provided project ID
+          since:
+            type: optional<double>
+            docs: >-
+              Get the alias only if it was created after this JavaScript
+              timestamp
+          until:
+            type: optional<double>
+            docs: >-
+              Get the alias only if it was created before this JavaScript
+              timestamp
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The alias information
+        type: list<GetAliasResponseItem>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            idOrAlias: example.vercel.app
+          query-parameters:
+            from: 1540095775951
+            projectId: prj_12HKQaOmR5t5Uy6vdcQsNIiZgHGB
+            since: 1540095775941
+            until: 1540095775951
+          response:
+            body:
+              - alias: my-alias.vercel.app
+                created: '2017-04-26T23:00:34Z'
+                createdAt: 1540095775941
+                creator:
+                  uid: 96SnxkFiMyVKsK3pnoHfx3Hz
+                  email: john-doe@gmail.com
+                  username: john-doe
+                deletedAt: 1540095775941
+                deployment:
+                  id: dpl_5m8CQaRBm3FnWRW1od3wKTpaECPx
+                  url: my-instant-deployment-3ij3cxz9qr.now.sh
+                  meta: meta
+                deploymentId: dpl_5m8CQaRBm3FnWRW1od3wKTpaECPx
+                projectId: prj_12HKQaOmR5t5Uy6vdcQsNIiZgHGB
+                redirect: redirect
+                redirectStatusCode: 1.1
+                uid: uid
+                updatedAt: 1540095775941
+                protectionBypass:
+                  key:
+                    scope: email_invite
+                    createdAt: 1.1
+                    lastUpdatedAt: 1.1
+                    lastUpdatedBy: value
+    deleteAlias:
+      path: /v2/aliases/{aliasId}
+      method: DELETE
+      auth: true
+      docs: Delete an Alias with the specified ID.
+      path-parameters:
+        aliasId:
+          type: string
+          docs: The ID or alias that will be removed
+      display-name: Delete an Alias
+      request:
+        name: DeleteAliasRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The alias was successfully removed
+        type: DeleteAliasResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            aliasId: aliasId
+          response:
+            body:
+              status: SUCCESS
+    listDeploymentAliases:
+      path: /v2/deployments/{id}/aliases
+      method: GET
+      auth: true
+      docs: >-
+        Retrieves all Aliases for the Deployment with the given ID. The
+        authenticated user or team must own the deployment.
+      path-parameters:
+        id:
+          type: string
+          docs: The ID of the deployment the aliases should be listed for
+      display-name: List Deployment Aliases
+      request:
+        name: ListDeploymentAliasesRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The list of aliases assigned to the deployment
+        type: ListDeploymentAliasesResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: dpl_FjvFJncQHQcZMznrUm9EoB8sFuPa
+          response:
+            body:
+              aliases:
+                - uid: 2WjyKQmM8ZnGcJsPWMrHRHrE
+                  alias: my-alias.vercel.app
+                  created: '2017-04-26T23:00:34Z'
+                  redirect: redirect
+                  protectionBypass:
+                    key:
+                      scope: email_invite
+                      createdAt: 1.1
+                      lastUpdatedAt: 1.1
+                      lastUpdatedBy: value
+    assignAlias:
+      path: /v2/deployments/{id}/aliases
+      method: POST
+      auth: true
+      docs: >-
+        Creates a new alias for the deployment with the given deployment ID. The
+        authenticated user or team must own this deployment. If the desired
+        alias is already assigned to another deployment, then it will be removed
+        from the old deployment and assigned to the new one.
+      path-parameters:
+        id:
+          type: string
+          docs: The ID of the deployment the aliases should be listed for
+      display-name: Assign an Alias
+      request:
+        name: AssignAliasRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            alias:
+              type: optional<string>
+              docs: The alias we want to assign to the deployment defined in the URL
+            redirect:
+              type: optional<string>
+              docs: >-
+                The redirect property will take precedence over the deployment
+                id from the URL and consists of a hostname (like test.com) to
+                which the alias should redirect using status code 307
+      response:
+        docs: The alias was successfully assigned to the deployment
+        type: AssignAliasResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+          response:
+            body:
+              uid: 2WjyKQmM8ZnGcJsPWMrHRHrE
+              alias: my-alias.vercel.app
+              created: '2017-04-26T23:00:34Z'
+              oldDeploymentId: dpl_FjvFJncQHQcZMznrUm9EoB8sFuPa
+  source:
+    openapi: openapi.json

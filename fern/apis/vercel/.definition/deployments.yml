@@ -1,0 +1,4566 @@
+types:
+  GetDeploymentEventsRequestDirection:
+    enum:
+      - backward
+      - forward
+    docs: Order of the returned events based on the timestamp.
+    default: forward
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtAliasAssignedAt:
+    discriminated: false
+    union:
+      - double
+      - boolean
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtBuild:
+    properties:
+      env: list<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtProjectSettingsFramework:
+    enum:
+      - blitzjs
+      - nextjs
+      - gatsby
+      - remix
+      - astro
+      - hexo
+      - eleventy
+      - value: docusaurus-2
+        name: Docusaurus2
+      - docusaurus
+      - preact
+      - value: solidstart-1
+        name: Solidstart1
+      - solidstart
+      - dojo
+      - ember
+      - vue
+      - scully
+      - value: ionic-angular
+        name: IonicAngular
+      - angular
+      - polymer
+      - svelte
+      - sveltekit
+      - value: sveltekit-1
+        name: Sveltekit1
+      - value: ionic-react
+        name: IonicReact
+      - value: create-react-app
+        name: CreateReactApp
+      - gridsome
+      - umijs
+      - sapper
+      - saber
+      - stencil
+      - nuxtjs
+      - redwoodjs
+      - hugo
+      - jekyll
+      - brunch
+      - middleman
+      - zola
+      - hydrogen
+      - vite
+      - vitepress
+      - vuepress
+      - parcel
+      - fasthtml
+      - value: sanity-v3
+        name: SanityV3
+      - sanity
+      - storybook
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtProjectSettingsSpeedInsights:
+    properties:
+      id: string
+      enabledAt: optional<double>
+      disabledAt: optional<double>
+      canceledAt: optional<double>
+      hasData: optional<boolean>
+      paidAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtProjectSettingsWebAnalytics:
+    properties:
+      id: string
+      disabledAt: optional<double>
+      canceledAt: optional<double>
+      enabledAt: optional<double>
+      hasData: optional<boolean>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtProjectSettings:
+    properties:
+      buildCommand: optional<string>
+      devCommand: optional<string>
+      framework: optional<GetDeploymentResponseAliasAssignedAtProjectSettingsFramework>
+      commandForIgnoringBuildStep: optional<string>
+      installCommand: optional<string>
+      outputDirectory: optional<string>
+      speedInsights: >-
+        optional<GetDeploymentResponseAliasAssignedAtProjectSettingsSpeedInsights>
+      webAnalytics: >-
+        optional<GetDeploymentResponseAliasAssignedAtProjectSettingsWebAnalytics>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCreator:
+    properties:
+      uid: string
+      username: optional<string>
+      avatar: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtLambdasItemReadyState:
+    enum:
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - READY
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtLambdasItemOutputItem:
+    properties:
+      path: string
+      functionName: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtLambdasItem:
+    docs: A partial representation of a Build used by the deployment endpoint.
+    properties:
+      id: optional<string>
+      createdAt: optional<double>
+      entrypoint: optional<string>
+      readyState: optional<GetDeploymentResponseAliasAssignedAtLambdasItemReadyState>
+      readyStateAt: optional<double>
+      output: list<GetDeploymentResponseAliasAssignedAtLambdasItemOutputItem>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtStatus:
+    enum:
+      - QUEUED
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - READY
+      - CANCELED
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtTeam:
+    properties:
+      id: string
+      name: string
+      slug: string
+      avatar: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherType:
+    enum:
+      - production
+      - preview
+      - development
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherBranchMatcherType:
+    enum:
+      - startsWith
+      - equals
+      - endsWith
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherBranchMatcher:
+    properties:
+      type: >-
+        GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherBranchMatcherType
+      pattern: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherDomainsItemVerificationItem:
+    docs: >-
+      A list of verification challenges, one of which must be completed to
+      verify the domain for use on the project. After the challenge is complete
+      `POST /projects/:idOrName/domains/:domain/verify` to verify the domain.
+      Possible challenges: - If `verification.type = TXT` the
+      `verification.domain` will be checked for a TXT record matching
+      `verification.value`.
+    properties:
+      type: string
+      domain: string
+      value: string
+      reason: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherDomainsItem:
+    properties:
+      name: string
+      apexName: string
+      projectId: string
+      redirect: optional<string>
+      redirectStatusCode: optional<double>
+      gitBranch: optional<string>
+      customEnvironmentId: optional<string>
+      updatedAt: optional<double>
+      createdAt: optional<double>
+      verified:
+        type: boolean
+        docs: >-
+          `true` if the domain is verified for use with the project. If `false`
+          it will not be used as an alias on this project until the challenge in
+          `verification` is completed.
+      verification:
+        type: >-
+          optional<list<GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherDomainsItemVerificationItem>>
+        docs: >-
+          A list of verification challenges, one of which must be completed to
+          verify the domain for use on the project. After the challenge is
+          complete `POST /projects/:idOrName/domains/:domain/verify` to verify
+          the domain. Possible challenges: - If `verification.type = TXT` the
+          `verification.domain` will be checked for a TXT record matching
+          `verification.value`.
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcher:
+    properties:
+      id: string
+      name: string
+      slug: string
+      type: GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherType
+      description: optional<string>
+      branchMatcher: >-
+        optional<GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherBranchMatcher>
+      createdAt: double
+      updatedAt: double
+      domains: >-
+        optional<list<GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcherDomainsItem>>
+      currentDeploymentAliases: optional<list<string>>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCustomEnvironmentOne:
+    properties:
+      id: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCustomEnvironment:
+    discriminated: false
+    union:
+      - GetDeploymentResponseAliasAssignedAtCustomEnvironmentBranchMatcher
+      - GetDeploymentResponseAliasAssignedAtCustomEnvironmentOne
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtAliasWarning:
+    properties:
+      code: string
+      message: string
+      link: optional<string>
+      action: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtReadyState:
+    enum:
+      - QUEUED
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - READY
+      - CANCELED
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtAliasError:
+    properties:
+      code: string
+      message: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtChecksState:
+    enum:
+      - registered
+      - running
+      - completed
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtChecksConclusion:
+    enum:
+      - succeeded
+      - failed
+      - skipped
+      - canceled
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceZeroRepoId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceZero:
+    properties:
+      type: literal<"github">
+      repoId: GetDeploymentResponseAliasAssignedAtGitSourceZeroRepoId
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceOne:
+    properties:
+      type: literal<"github">
+      org: string
+      repo: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceTwoProjectId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceTwo:
+    properties:
+      type: literal<"gitlab">
+      projectId: GetDeploymentResponseAliasAssignedAtGitSourceTwoProjectId
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceThree:
+    properties:
+      type: literal<"bitbucket">
+      workspaceUuid: optional<string>
+      repoUuid: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourcePrId:
+    properties:
+      type: literal<"bitbucket">
+      owner: string
+      slug: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceGitUrl:
+    properties:
+      type: literal<"custom">
+      ref: string
+      sha: string
+      gitUrl: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceSix:
+    properties:
+      type: literal<"github">
+      ref: string
+      sha: string
+      repoId: double
+      org: optional<string>
+      repo: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceSeven:
+    properties:
+      type: literal<"gitlab">
+      ref: string
+      sha: string
+      projectId: double
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSourceRef:
+    properties:
+      type: literal<"bitbucket">
+      ref: string
+      sha: string
+      owner: optional<string>
+      slug: optional<string>
+      workspaceUuid: string
+      repoUuid: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitSource:
+    discriminated: false
+    union:
+      - GetDeploymentResponseAliasAssignedAtGitSourceZero
+      - GetDeploymentResponseAliasAssignedAtGitSourceOne
+      - GetDeploymentResponseAliasAssignedAtGitSourceTwo
+      - GetDeploymentResponseAliasAssignedAtGitSourceThree
+      - GetDeploymentResponseAliasAssignedAtGitSourcePrId
+      - GetDeploymentResponseAliasAssignedAtGitSourceGitUrl
+      - GetDeploymentResponseAliasAssignedAtGitSourceSix
+      - GetDeploymentResponseAliasAssignedAtGitSourceSeven
+      - GetDeploymentResponseAliasAssignedAtGitSourceRef
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtProject:
+    properties:
+      id: string
+      name: string
+      framework: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtReadySubstate:
+    enum:
+      - STAGED
+      - PROMOTED
+    docs: >-
+      Since June 2023 Substate of deployment when readyState is 'READY' Tracks
+      whether or not deployment has seen production traffic: - STAGED: never
+      seen production traffic - PROMOTED: has seen production traffic
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtSource:
+    enum:
+      - value: api-trigger-git-deploy
+        name: ApiTriggerGitDeploy
+      - cli
+      - value: clone/repo
+        name: CloneRepo
+      - git
+      - import
+      - value: import/repo
+        name: ImportRepo
+      - redeploy
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtTarget:
+    enum:
+      - staging
+      - production
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtOidcTokenClaims:
+    properties:
+      sub: string
+      scope: string
+      aud: string
+      owner: string
+      owner_id: string
+      project: string
+      project_id: string
+      environment: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtPlan:
+    enum:
+      - pro
+      - enterprise
+      - hobby
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtCronsItem:
+    properties:
+      schedule: string
+      path: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtFunctionsValue:
+    properties:
+      memory: optional<double>
+      maxDuration: optional<double>
+      runtime: optional<string>
+      includeFiles: optional<string>
+      excludeFiles: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveHasItemZero:
+    properties:
+      type: literal<"host">
+      value: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveHasItemKeyType:
+    enum:
+      - header
+      - cookie
+      - query
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveHasItemKey:
+    properties:
+      type: >-
+        GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveHasItemKeyType
+      key: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveHasItem:
+    discriminated: false
+    union:
+      - GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveHasItemZero
+      - GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveHasItemKey
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveMissingItemZero:
+    properties:
+      type: literal<"host">
+      value: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveMissingItemKeyType:
+    enum:
+      - header
+      - cookie
+      - query
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveMissingItemKey:
+    properties:
+      type: >-
+        GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveMissingItemKeyType
+      key: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveMissingItem:
+    discriminated: false
+    union:
+      - >-
+        GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveMissingItemZero
+      - >-
+        GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveMissingItemKey
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveLocale:
+    properties:
+      redirect: optional<map<string, string>>
+      cookie: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitive:
+    properties:
+      src: string
+      dest: optional<string>
+      headers: optional<map<string, string>>
+      methods: optional<list<string>>
+      continue: optional<boolean>
+      override: optional<boolean>
+      caseSensitive: optional<boolean>
+      check: optional<boolean>
+      important: optional<boolean>
+      status: optional<double>
+      has: >-
+        optional<list<GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveHasItem>>
+      missing: >-
+        optional<list<GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveMissingItem>>
+      locale: >-
+        optional<GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitiveLocale>
+      middlewarePath:
+        type: optional<string>
+        docs: >-
+          A middleware key within the `output` key under the build result.
+          Overrides a `middleware` definition.
+      middlewareRawSrc:
+        type: optional<list<string>>
+        docs: The original middleware matchers.
+      middleware:
+        type: optional<double>
+        docs: A middleware index in the `middleware` key under the build result
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemHandleHandle:
+    enum:
+      - error
+      - filesystem
+      - hit
+      - miss
+      - rewrite
+      - resource
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemHandle:
+    properties:
+      handle: GetDeploymentResponseAliasAssignedAtRoutesItemHandleHandle
+      src: optional<string>
+      dest: optional<string>
+      status: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItemSrc:
+    properties:
+      src: string
+      continue: boolean
+      middleware: double
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtRoutesItem:
+    discriminated: false
+    union:
+      - GetDeploymentResponseAliasAssignedAtRoutesItemCaseSensitive
+      - GetDeploymentResponseAliasAssignedAtRoutesItemHandle
+      - GetDeploymentResponseAliasAssignedAtRoutesItemSrc
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitRepoGitlabOwnerType:
+    enum:
+      - team
+      - user
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitRepoGitlab:
+    properties:
+      namespace: string
+      projectId: double
+      url: string
+      path: string
+      defaultBranch: string
+      name: string
+      private: boolean
+      ownerType: GetDeploymentResponseAliasAssignedAtGitRepoGitlabOwnerType
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitRepoGithubOwnerType:
+    enum:
+      - team
+      - user
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitRepoGithub:
+    properties:
+      org: string
+      repo: string
+      repoId: double
+      repoOwnerId: double
+      path: string
+      defaultBranch: string
+      name: string
+      private: boolean
+      ownerType: GetDeploymentResponseAliasAssignedAtGitRepoGithubOwnerType
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitRepoBitbucketOwnerType:
+    enum:
+      - team
+      - user
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitRepoBitbucket:
+    properties:
+      owner: string
+      repoUuid: string
+      slug: string
+      workspaceUuid: string
+      path: string
+      defaultBranch: string
+      name: string
+      private: boolean
+      ownerType: GetDeploymentResponseAliasAssignedAtGitRepoBitbucketOwnerType
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtGitRepo:
+    discriminant: type
+    base-properties: {}
+    union:
+      gitlab: GetDeploymentResponseAliasAssignedAtGitRepoGitlab
+      github: GetDeploymentResponseAliasAssignedAtGitRepoGithub
+      bitbucket: GetDeploymentResponseAliasAssignedAtGitRepoBitbucket
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtFlagsDefinitionsDefinitionsValueOptionsItem:
+    properties:
+      label: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtFlagsDefinitionsDefinitionsValue:
+    properties:
+      options: >-
+        optional<list<GetDeploymentResponseAliasAssignedAtFlagsDefinitionsDefinitionsValueOptionsItem>>
+      url: optional<string>
+      description: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtFlagsDefinitions:
+    docs: >-
+      Flags defined in the Build Output API, used by this deployment. Primarily
+      used by the Toolbar to know about the used flags.
+    properties:
+      definitions: >-
+        map<string,
+        GetDeploymentResponseAliasAssignedAtFlagsDefinitionsDefinitionsValue>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAtFlags:
+    discriminated: false
+    union:
+      - type: GetDeploymentResponseAliasAssignedAtFlagsDefinitions
+        docs: >-
+          Flags defined in the Build Output API, used by this deployment.
+          Primarily used by the Toolbar to know about the used flags.
+      - docs: >-
+          Flags defined in the Build Output API, used by this deployment.
+          Primarily used by the Toolbar to know about the used flags.
+        type: list<map<string, unknown>>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseAliasAssignedAt:
+    docs: The deployment including both public and private information
+    properties:
+      aliasAssignedAt: optional<GetDeploymentResponseAliasAssignedAtAliasAssignedAt>
+      alwaysRefuseToBuild: optional<boolean>
+      build: GetDeploymentResponseAliasAssignedAtBuild
+      buildArtifactUrls: optional<list<string>>
+      builds: optional<list<map<string, unknown>>>
+      env: list<string>
+      inspectorUrl: optional<string>
+      isInConcurrentBuildsQueue: boolean
+      projectSettings: GetDeploymentResponseAliasAssignedAtProjectSettings
+      readyStateReason: optional<string>
+      alias: optional<list<string>>
+      aliasAssigned: boolean
+      bootedAt: double
+      buildingAt: double
+      buildSkipped: boolean
+      creator: GetDeploymentResponseAliasAssignedAtCreator
+      initReadyAt: optional<double>
+      isFirstBranchDeployment: optional<boolean>
+      lambdas: optional<list<GetDeploymentResponseAliasAssignedAtLambdasItem>>
+      public: boolean
+      ready: optional<double>
+      status: GetDeploymentResponseAliasAssignedAtStatus
+      team: optional<GetDeploymentResponseAliasAssignedAtTeam>
+      userAliases: optional<list<string>>
+      previewCommentsEnabled: optional<boolean>
+      ttyBuildLogs: optional<boolean>
+      customEnvironment: optional<GetDeploymentResponseAliasAssignedAtCustomEnvironment>
+      aliasWarning: optional<GetDeploymentResponseAliasAssignedAtAliasWarning>
+      id: string
+      type: literal<"LAMBDAS">
+      createdAt: double
+      name: string
+      readyState: GetDeploymentResponseAliasAssignedAtReadyState
+      aliasError: optional<GetDeploymentResponseAliasAssignedAtAliasError>
+      aliasFinal: optional<string>
+      autoAssignCustomDomains:
+        type: optional<boolean>
+        docs: applies to custom domains only, defaults to `true`
+      automaticAliases: optional<list<string>>
+      buildErrorAt: optional<double>
+      checksState: optional<GetDeploymentResponseAliasAssignedAtChecksState>
+      checksConclusion: optional<GetDeploymentResponseAliasAssignedAtChecksConclusion>
+      deletedAt: optional<double>
+      canceledAt: optional<double>
+      errorCode: optional<string>
+      errorLink: optional<string>
+      errorMessage: optional<string>
+      errorStep: optional<string>
+      passiveRegions:
+        type: optional<list<string>>
+        docs: >-
+          Since November 2023 this field defines a set of regions that we will
+          deploy the lambda to passively Lambdas will be deployed to these
+          regions but only invoked if all of the primary `regions` are marked as
+          out of service
+      gitSource: optional<GetDeploymentResponseAliasAssignedAtGitSource>
+      meta: map<string, string>
+      project: optional<GetDeploymentResponseAliasAssignedAtProject>
+      readySubstate:
+        type: optional<GetDeploymentResponseAliasAssignedAtReadySubstate>
+        docs: >-
+          Since June 2023 Substate of deployment when readyState is 'READY'
+          Tracks whether or not deployment has seen production traffic: -
+          STAGED: never seen production traffic - PROMOTED: has seen production
+          traffic
+      regions: list<string>
+      softDeletedByRetention: optional<boolean>
+      source: optional<GetDeploymentResponseAliasAssignedAtSource>
+      target: optional<GetDeploymentResponseAliasAssignedAtTarget>
+      undeletedAt: optional<double>
+      url: string
+      version: double
+      oidcTokenClaims: optional<GetDeploymentResponseAliasAssignedAtOidcTokenClaims>
+      projectId: string
+      plan: GetDeploymentResponseAliasAssignedAtPlan
+      connectBuildsEnabled: optional<boolean>
+      connectConfigurationId: optional<string>
+      createdIn: string
+      crons: optional<list<GetDeploymentResponseAliasAssignedAtCronsItem>>
+      functions: >-
+        optional<map<string,
+        optional<GetDeploymentResponseAliasAssignedAtFunctionsValue>>>
+      monorepoManager: optional<string>
+      ownerId: string
+      passiveConnectConfigurationId:
+        type: optional<string>
+        docs: >-
+          Since November 2023 this field defines a connect configuration that
+          will only be used to deploy passive lambdas to (as in passiveRegions)
+      routes: optional<list<GetDeploymentResponseAliasAssignedAtRoutesItem>>
+      gitRepo: optional<GetDeploymentResponseAliasAssignedAtGitRepo>
+      flags: optional<GetDeploymentResponseAliasAssignedAtFlags>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneCreator:
+    properties:
+      uid: string
+      username: optional<string>
+      avatar: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneLambdasItemReadyState:
+    enum:
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - READY
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneLambdasItemOutputItem:
+    properties:
+      path: string
+      functionName: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneLambdasItem:
+    docs: A partial representation of a Build used by the deployment endpoint.
+    properties:
+      id: optional<string>
+      createdAt: optional<double>
+      entrypoint: optional<string>
+      readyState: optional<GetDeploymentResponseOneLambdasItemReadyState>
+      readyStateAt: optional<double>
+      output: list<GetDeploymentResponseOneLambdasItemOutputItem>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneStatus:
+    enum:
+      - QUEUED
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - READY
+      - CANCELED
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneTeam:
+    properties:
+      id: string
+      name: string
+      slug: string
+      avatar: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneCustomEnvironmentBranchMatcherType:
+    enum:
+      - production
+      - preview
+      - development
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneCustomEnvironmentBranchMatcherBranchMatcherType:
+    enum:
+      - startsWith
+      - equals
+      - endsWith
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneCustomEnvironmentBranchMatcherBranchMatcher:
+    properties:
+      type: GetDeploymentResponseOneCustomEnvironmentBranchMatcherBranchMatcherType
+      pattern: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneCustomEnvironmentBranchMatcherDomainsItemVerificationItem:
+    docs: >-
+      A list of verification challenges, one of which must be completed to
+      verify the domain for use on the project. After the challenge is complete
+      `POST /projects/:idOrName/domains/:domain/verify` to verify the domain.
+      Possible challenges: - If `verification.type = TXT` the
+      `verification.domain` will be checked for a TXT record matching
+      `verification.value`.
+    properties:
+      type: string
+      domain: string
+      value: string
+      reason: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneCustomEnvironmentBranchMatcherDomainsItem:
+    properties:
+      name: string
+      apexName: string
+      projectId: string
+      redirect: optional<string>
+      redirectStatusCode: optional<double>
+      gitBranch: optional<string>
+      customEnvironmentId: optional<string>
+      updatedAt: optional<double>
+      createdAt: optional<double>
+      verified:
+        type: boolean
+        docs: >-
+          `true` if the domain is verified for use with the project. If `false`
+          it will not be used as an alias on this project until the challenge in
+          `verification` is completed.
+      verification:
+        type: >-
+          optional<list<GetDeploymentResponseOneCustomEnvironmentBranchMatcherDomainsItemVerificationItem>>
+        docs: >-
+          A list of verification challenges, one of which must be completed to
+          verify the domain for use on the project. After the challenge is
+          complete `POST /projects/:idOrName/domains/:domain/verify` to verify
+          the domain. Possible challenges: - If `verification.type = TXT` the
+          `verification.domain` will be checked for a TXT record matching
+          `verification.value`.
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneCustomEnvironmentBranchMatcher:
+    properties:
+      id: string
+      name: string
+      slug: string
+      type: GetDeploymentResponseOneCustomEnvironmentBranchMatcherType
+      description: optional<string>
+      branchMatcher: >-
+        optional<GetDeploymentResponseOneCustomEnvironmentBranchMatcherBranchMatcher>
+      createdAt: double
+      updatedAt: double
+      domains: >-
+        optional<list<GetDeploymentResponseOneCustomEnvironmentBranchMatcherDomainsItem>>
+      currentDeploymentAliases: optional<list<string>>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneCustomEnvironmentOne:
+    properties:
+      id: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneCustomEnvironment:
+    discriminated: false
+    union:
+      - GetDeploymentResponseOneCustomEnvironmentBranchMatcher
+      - GetDeploymentResponseOneCustomEnvironmentOne
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneAliasWarning:
+    properties:
+      code: string
+      message: string
+      link: optional<string>
+      action: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneReadyState:
+    enum:
+      - QUEUED
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - READY
+      - CANCELED
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneAliasError:
+    properties:
+      code: string
+      message: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneChecksState:
+    enum:
+      - registered
+      - running
+      - completed
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneChecksConclusion:
+    enum:
+      - succeeded
+      - failed
+      - skipped
+      - canceled
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceZeroRepoId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceZero:
+    properties:
+      type: literal<"github">
+      repoId: GetDeploymentResponseOneGitSourceZeroRepoId
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceOne:
+    properties:
+      type: literal<"github">
+      org: string
+      repo: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceTwoProjectId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceTwo:
+    properties:
+      type: literal<"gitlab">
+      projectId: GetDeploymentResponseOneGitSourceTwoProjectId
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceThree:
+    properties:
+      type: literal<"bitbucket">
+      workspaceUuid: optional<string>
+      repoUuid: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourcePrId:
+    properties:
+      type: literal<"bitbucket">
+      owner: string
+      slug: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceGitUrl:
+    properties:
+      type: literal<"custom">
+      ref: string
+      sha: string
+      gitUrl: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceSix:
+    properties:
+      type: literal<"github">
+      ref: string
+      sha: string
+      repoId: double
+      org: optional<string>
+      repo: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceSeven:
+    properties:
+      type: literal<"gitlab">
+      ref: string
+      sha: string
+      projectId: double
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSourceRef:
+    properties:
+      type: literal<"bitbucket">
+      ref: string
+      sha: string
+      owner: optional<string>
+      slug: optional<string>
+      workspaceUuid: string
+      repoUuid: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneGitSource:
+    discriminated: false
+    union:
+      - GetDeploymentResponseOneGitSourceZero
+      - GetDeploymentResponseOneGitSourceOne
+      - GetDeploymentResponseOneGitSourceTwo
+      - GetDeploymentResponseOneGitSourceThree
+      - GetDeploymentResponseOneGitSourcePrId
+      - GetDeploymentResponseOneGitSourceGitUrl
+      - GetDeploymentResponseOneGitSourceSix
+      - GetDeploymentResponseOneGitSourceSeven
+      - GetDeploymentResponseOneGitSourceRef
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneProject:
+    properties:
+      id: string
+      name: string
+      framework: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneReadySubstate:
+    enum:
+      - STAGED
+      - PROMOTED
+    docs: >-
+      Since June 2023 Substate of deployment when readyState is 'READY' Tracks
+      whether or not deployment has seen production traffic: - STAGED: never
+      seen production traffic - PROMOTED: has seen production traffic
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneSource:
+    enum:
+      - value: api-trigger-git-deploy
+        name: ApiTriggerGitDeploy
+      - cli
+      - value: clone/repo
+        name: CloneRepo
+      - git
+      - import
+      - value: import/repo
+        name: ImportRepo
+      - redeploy
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneTarget:
+    enum:
+      - staging
+      - production
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOneOidcTokenClaims:
+    properties:
+      sub: string
+      scope: string
+      aud: string
+      owner: string
+      owner_id: string
+      project: string
+      project_id: string
+      environment: string
+    source:
+      openapi: openapi.json
+  GetDeploymentResponseOne:
+    docs: The deployment including only public information
+    properties:
+      alias: optional<list<string>>
+      aliasAssigned: boolean
+      bootedAt: double
+      buildingAt: double
+      buildSkipped: boolean
+      creator: GetDeploymentResponseOneCreator
+      initReadyAt: optional<double>
+      isFirstBranchDeployment: optional<boolean>
+      lambdas: optional<list<GetDeploymentResponseOneLambdasItem>>
+      public: boolean
+      ready: optional<double>
+      status: GetDeploymentResponseOneStatus
+      team: optional<GetDeploymentResponseOneTeam>
+      userAliases: optional<list<string>>
+      previewCommentsEnabled: optional<boolean>
+      ttyBuildLogs: optional<boolean>
+      customEnvironment: optional<GetDeploymentResponseOneCustomEnvironment>
+      aliasWarning: optional<GetDeploymentResponseOneAliasWarning>
+      id: string
+      type: literal<"LAMBDAS">
+      createdAt: double
+      name: string
+      readyState: GetDeploymentResponseOneReadyState
+      aliasError: optional<GetDeploymentResponseOneAliasError>
+      aliasFinal: optional<string>
+      autoAssignCustomDomains:
+        type: optional<boolean>
+        docs: applies to custom domains only, defaults to `true`
+      automaticAliases: optional<list<string>>
+      buildErrorAt: optional<double>
+      checksState: optional<GetDeploymentResponseOneChecksState>
+      checksConclusion: optional<GetDeploymentResponseOneChecksConclusion>
+      deletedAt: optional<double>
+      canceledAt: optional<double>
+      errorCode: optional<string>
+      errorLink: optional<string>
+      errorMessage: optional<string>
+      errorStep: optional<string>
+      passiveRegions:
+        type: optional<list<string>>
+        docs: >-
+          Since November 2023 this field defines a set of regions that we will
+          deploy the lambda to passively Lambdas will be deployed to these
+          regions but only invoked if all of the primary `regions` are marked as
+          out of service
+      gitSource: optional<GetDeploymentResponseOneGitSource>
+      meta: map<string, string>
+      project: optional<GetDeploymentResponseOneProject>
+      readySubstate:
+        type: optional<GetDeploymentResponseOneReadySubstate>
+        docs: >-
+          Since June 2023 Substate of deployment when readyState is 'READY'
+          Tracks whether or not deployment has seen production traffic: -
+          STAGED: never seen production traffic - PROMOTED: has seen production
+          traffic
+      regions: list<string>
+      softDeletedByRetention: optional<boolean>
+      source: optional<GetDeploymentResponseOneSource>
+      target: optional<GetDeploymentResponseOneTarget>
+      undeletedAt: optional<double>
+      url: string
+      version: double
+      oidcTokenClaims: optional<GetDeploymentResponseOneOidcTokenClaims>
+    source:
+      openapi: openapi.json
+  GetDeploymentResponse:
+    discriminated: false
+    union:
+      - type: GetDeploymentResponseAliasAssignedAt
+        docs: The deployment including both public and private information
+      - type: GetDeploymentResponseOne
+        docs: The deployment including only public information
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestForceNew:
+    enum:
+      - value: '0'
+        name: Zero
+      - value: '1'
+        name: One
+    docs: Forces a new deployment even if there is a previous similar deployment
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestSkipAutoDetectionConfirmation:
+    enum:
+      - value: '0'
+        name: Zero
+      - value: '1'
+        name: One
+    docs: >-
+      Allows to skip framework detection so the API would not fail to ask for
+      confirmation
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestFilesItemDataEncoding:
+    enum:
+      - base64
+      - value: utf-8
+        name: Utf8
+    docs: >-
+      The file content encoding, it could be either a base64 (useful for images,
+      etc.) of the files or the plain text for source code.
+    source:
+      openapi: openapi.json
+  InlinedFile:
+    docs: Used in the case you want to inline a file inside the request
+    properties:
+      data:
+        type: string
+        docs: >-
+          The file content, it could be either a `base64` (useful for images,
+          etc.) of the files or the plain content for source code
+      encoding:
+        type: optional<CreateDeploymentRequestFilesItemDataEncoding>
+        docs: >-
+          The file content encoding, it could be either a base64 (useful for
+          images, etc.) of the files or the plain text for source code.
+        display-name: InlinedFile
+      file:
+        type: string
+        docs: The file name including the whole path
+    source:
+      openapi: openapi.json
+  UploadedFile:
+    docs: Used in the case you want to reference a file that was already uploaded
+    properties:
+      file:
+        type: string
+        docs: The file path relative to the project root
+      sha:
+        type: optional<string>
+        docs: The file contents hashed with SHA1, used to check the integrity
+        display-name: UploadedFile
+      size:
+        type: optional<integer>
+        docs: The file size in bytes
+        display-name: UploadedFile
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestFilesItem:
+    discriminated: false
+    union:
+      - display-name: InlinedFile
+        type: InlinedFile
+        docs: Used in the case you want to inline a file inside the request
+      - display-name: UploadedFile
+        type: UploadedFile
+        docs: >-
+          Used in the case you want to reference a file that was already
+          uploaded
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestGitMetadata:
+    docs: Populates initial git metadata for different git providers.
+    properties:
+      remoteUrl:
+        type: optional<string>
+        docs: The git repository's remote origin url
+      commitAuthorName:
+        type: optional<string>
+        docs: The name of the author of the commit
+      commitMessage:
+        type: optional<string>
+        docs: The commit message
+      commitRef:
+        type: optional<string>
+        docs: The branch on which the commit was made
+      commitSha:
+        type: optional<string>
+        docs: The hash of the commit
+      dirty:
+        type: optional<boolean>
+        docs: >-
+          Whether or not there have been modifications to the working tree since
+          the latest commit
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestGitSourceRepoIdRepoId:
+    discriminated: false
+    union:
+      - double
+      - string
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestGitSourceRepoId:
+    properties:
+      ref: string
+      repoId: CreateDeploymentRequestGitSourceRepoIdRepoId
+      sha: optional<string>
+      type: literal<"github">
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestGitSourceOrg:
+    properties:
+      org: string
+      ref: string
+      repo: string
+      sha: optional<string>
+      type: literal<"github">
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestGitSourceProjectIdProjectId:
+    discriminated: false
+    union:
+      - double
+      - string
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestGitSourceProjectId:
+    properties:
+      projectId: CreateDeploymentRequestGitSourceProjectIdProjectId
+      ref: string
+      sha: optional<string>
+      type: literal<"gitlab">
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestGitSourceRepoUuid:
+    properties:
+      ref: string
+      repoUuid: string
+      sha: optional<string>
+      type: literal<"bitbucket">
+      workspaceUuid: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestGitSourceOwner:
+    properties:
+      owner: string
+      ref: string
+      sha: optional<string>
+      slug: string
+      type: literal<"bitbucket">
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestGitSource:
+    discriminated: false
+    docs: >-
+      Defines the Git Repository source to be deployed. This property can not be
+      used in combination with `files`.
+    union:
+      - CreateDeploymentRequestGitSourceRepoId
+      - CreateDeploymentRequestGitSourceOrg
+      - CreateDeploymentRequestGitSourceProjectId
+      - CreateDeploymentRequestGitSourceRepoUuid
+      - CreateDeploymentRequestGitSourceOwner
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestProjectSettingsNodeVersion:
+    enum:
+      - value: 20.x
+        name: TwentyX
+      - value: 18.x
+        name: EighteenX
+      - value: 16.x
+        name: SixteenX
+    docs: Override the Node.js version that should be used for this deployment
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestProjectSettings:
+    docs: >-
+      Project settings that will be applied to the deployment. It is required
+      for the first deployment of a project and will be saved for any following
+      deployments
+    properties:
+      buildCommand:
+        type: optional<string>
+        docs: >-
+          The build command for this project. When `null` is used this value
+          will be automatically detected
+        validation:
+          maxLength: 256
+      commandForIgnoringBuildStep:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      devCommand:
+        type: optional<string>
+        docs: >-
+          The dev command for this project. When `null` is used this value will
+          be automatically detected
+        validation:
+          maxLength: 256
+      framework:
+        type: optional<string>
+        docs: >-
+          The framework that is being used for this project. When `null` is used
+          no framework is selected
+      installCommand:
+        type: optional<string>
+        docs: >-
+          The install command for this project. When `null` is used this value
+          will be automatically detected
+        validation:
+          maxLength: 256
+      nodeVersion:
+        type: optional<CreateDeploymentRequestProjectSettingsNodeVersion>
+        docs: Override the Node.js version that should be used for this deployment
+      outputDirectory:
+        type: optional<string>
+        docs: >-
+          The output directory of the project. When `null` is used this value
+          will be automatically detected
+        validation:
+          maxLength: 256
+      rootDirectory:
+        type: optional<string>
+        docs: >-
+          The name of a directory or relative path to the source code of your
+          project. When `null` is used it will default to the project root
+        validation:
+          maxLength: 256
+      serverlessFunctionRegion:
+        type: optional<string>
+        docs: The region to deploy Serverless Functions in this project
+        validation:
+          maxLength: 4
+      skipGitConnectDuringLink:
+        type: optional<boolean>
+        docs: >-
+          Opts-out of the message prompting a CLI user to connect a Git
+          repository in `vercel link`.
+        availability: deprecated
+      sourceFilesOutsideRootDirectory:
+        type: optional<boolean>
+        docs: >-
+          Indicates if there are source files outside of the root directory,
+          typically used for monorepos
+    source:
+      openapi: openapi.json
+  CreateDeploymentRequestTarget:
+    enum:
+      - staging
+      - production
+    docs: >-
+      Either not defined, `staging`, or `production`. If `staging`, a staging
+      alias in the format `<project>-<team>.vercel.app` will be assigned. If
+      `production`, any aliases defined in `alias` will be assigned. If omitted,
+      the target will be `preview`
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseAliasAssignedAt:
+    discriminated: false
+    union:
+      - double
+      - boolean
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseBuild:
+    properties:
+      env: list<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseProjectSettingsFramework:
+    enum:
+      - blitzjs
+      - nextjs
+      - gatsby
+      - remix
+      - astro
+      - hexo
+      - eleventy
+      - value: docusaurus-2
+        name: Docusaurus2
+      - docusaurus
+      - preact
+      - value: solidstart-1
+        name: Solidstart1
+      - solidstart
+      - dojo
+      - ember
+      - vue
+      - scully
+      - value: ionic-angular
+        name: IonicAngular
+      - angular
+      - polymer
+      - svelte
+      - sveltekit
+      - value: sveltekit-1
+        name: Sveltekit1
+      - value: ionic-react
+        name: IonicReact
+      - value: create-react-app
+        name: CreateReactApp
+      - gridsome
+      - umijs
+      - sapper
+      - saber
+      - stencil
+      - nuxtjs
+      - redwoodjs
+      - hugo
+      - jekyll
+      - brunch
+      - middleman
+      - zola
+      - hydrogen
+      - vite
+      - vitepress
+      - vuepress
+      - parcel
+      - fasthtml
+      - value: sanity-v3
+        name: SanityV3
+      - sanity
+      - storybook
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseProjectSettingsSpeedInsights:
+    properties:
+      id: string
+      enabledAt: optional<double>
+      disabledAt: optional<double>
+      canceledAt: optional<double>
+      hasData: optional<boolean>
+      paidAt: optional<double>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseProjectSettingsWebAnalytics:
+    properties:
+      id: string
+      disabledAt: optional<double>
+      canceledAt: optional<double>
+      enabledAt: optional<double>
+      hasData: optional<boolean>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseProjectSettings:
+    properties:
+      buildCommand: optional<string>
+      commandForIgnoringBuildStep: optional<string>
+      devCommand: optional<string>
+      framework: optional<CreateDeploymentResponseProjectSettingsFramework>
+      installCommand: optional<string>
+      outputDirectory: optional<string>
+      speedInsights: optional<CreateDeploymentResponseProjectSettingsSpeedInsights>
+      webAnalytics: optional<CreateDeploymentResponseProjectSettingsWebAnalytics>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCreator:
+    properties:
+      uid: string
+      username: optional<string>
+      avatar: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseLambdasItemReadyState:
+    enum:
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - READY
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseLambdasItemOutputItem:
+    properties:
+      path: string
+      functionName: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseLambdasItem:
+    docs: A partial representation of a Build used by the deployment endpoint.
+    properties:
+      id: optional<string>
+      createdAt: optional<double>
+      entrypoint: optional<string>
+      readyState: optional<CreateDeploymentResponseLambdasItemReadyState>
+      readyStateAt: optional<double>
+      output: list<CreateDeploymentResponseLambdasItemOutputItem>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseStatus:
+    enum:
+      - CANCELED
+      - ERROR
+      - QUEUED
+      - BUILDING
+      - INITIALIZING
+      - READY
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseTeam:
+    properties:
+      name: string
+      id: string
+      slug: string
+      avatar: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCustomEnvironmentBranchMatcherType:
+    enum:
+      - production
+      - preview
+      - development
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCustomEnvironmentBranchMatcherBranchMatcherType:
+    enum:
+      - startsWith
+      - equals
+      - endsWith
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCustomEnvironmentBranchMatcherBranchMatcher:
+    properties:
+      type: CreateDeploymentResponseCustomEnvironmentBranchMatcherBranchMatcherType
+      pattern: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCustomEnvironmentBranchMatcherDomainsItemVerificationItem:
+    docs: >-
+      A list of verification challenges, one of which must be completed to
+      verify the domain for use on the project. After the challenge is complete
+      `POST /projects/:idOrName/domains/:domain/verify` to verify the domain.
+      Possible challenges: - If `verification.type = TXT` the
+      `verification.domain` will be checked for a TXT record matching
+      `verification.value`.
+    properties:
+      type: string
+      domain: string
+      value: string
+      reason: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCustomEnvironmentBranchMatcherDomainsItem:
+    properties:
+      name: string
+      apexName: string
+      projectId: string
+      redirect: optional<string>
+      redirectStatusCode: optional<double>
+      gitBranch: optional<string>
+      customEnvironmentId: optional<string>
+      updatedAt: optional<double>
+      createdAt: optional<double>
+      verified:
+        type: boolean
+        docs: >-
+          `true` if the domain is verified for use with the project. If `false`
+          it will not be used as an alias on this project until the challenge in
+          `verification` is completed.
+      verification:
+        type: >-
+          optional<list<CreateDeploymentResponseCustomEnvironmentBranchMatcherDomainsItemVerificationItem>>
+        docs: >-
+          A list of verification challenges, one of which must be completed to
+          verify the domain for use on the project. After the challenge is
+          complete `POST /projects/:idOrName/domains/:domain/verify` to verify
+          the domain. Possible challenges: - If `verification.type = TXT` the
+          `verification.domain` will be checked for a TXT record matching
+          `verification.value`.
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCustomEnvironmentBranchMatcher:
+    properties:
+      id: string
+      name: string
+      slug: string
+      type: CreateDeploymentResponseCustomEnvironmentBranchMatcherType
+      description: optional<string>
+      branchMatcher: >-
+        optional<CreateDeploymentResponseCustomEnvironmentBranchMatcherBranchMatcher>
+      createdAt: double
+      updatedAt: double
+      domains: >-
+        optional<list<CreateDeploymentResponseCustomEnvironmentBranchMatcherDomainsItem>>
+      currentDeploymentAliases: optional<list<string>>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCustomEnvironmentOne:
+    properties:
+      id: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCustomEnvironment:
+    discriminated: false
+    union:
+      - CreateDeploymentResponseCustomEnvironmentBranchMatcher
+      - CreateDeploymentResponseCustomEnvironmentOne
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceZeroRepoId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceZero:
+    properties:
+      type: literal<"github">
+      repoId: CreateDeploymentResponseGitSourceZeroRepoId
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceOne:
+    properties:
+      type: literal<"github">
+      org: string
+      repo: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceTwoProjectId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceTwo:
+    properties:
+      type: literal<"gitlab">
+      projectId: CreateDeploymentResponseGitSourceTwoProjectId
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceThree:
+    properties:
+      type: literal<"bitbucket">
+      workspaceUuid: optional<string>
+      repoUuid: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourcePrId:
+    properties:
+      type: literal<"bitbucket">
+      owner: string
+      slug: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceGitUrl:
+    properties:
+      type: literal<"custom">
+      ref: string
+      sha: string
+      gitUrl: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceSix:
+    properties:
+      type: literal<"github">
+      ref: string
+      sha: string
+      repoId: double
+      org: optional<string>
+      repo: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceSeven:
+    properties:
+      type: literal<"gitlab">
+      ref: string
+      sha: string
+      projectId: double
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSourceRef:
+    properties:
+      type: literal<"bitbucket">
+      ref: string
+      sha: string
+      owner: optional<string>
+      slug: optional<string>
+      workspaceUuid: string
+      repoUuid: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitSource:
+    discriminated: false
+    union:
+      - CreateDeploymentResponseGitSourceZero
+      - CreateDeploymentResponseGitSourceOne
+      - CreateDeploymentResponseGitSourceTwo
+      - CreateDeploymentResponseGitSourceThree
+      - CreateDeploymentResponseGitSourcePrId
+      - CreateDeploymentResponseGitSourceGitUrl
+      - CreateDeploymentResponseGitSourceSix
+      - CreateDeploymentResponseGitSourceSeven
+      - CreateDeploymentResponseGitSourceRef
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseProject:
+    properties:
+      id: string
+      name: string
+      framework: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseReadyState:
+    enum:
+      - CANCELED
+      - ERROR
+      - QUEUED
+      - BUILDING
+      - INITIALIZING
+      - READY
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseSource:
+    enum:
+      - cli
+      - git
+      - import
+      - value: import/repo
+        name: ImportRepo
+      - value: clone/repo
+        name: CloneRepo
+      - value: api-trigger-git-deploy
+        name: ApiTriggerGitDeploy
+      - redeploy
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseTarget:
+    enum:
+      - staging
+      - production
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseAliasWarning:
+    properties:
+      code: string
+      message: string
+      link: optional<string>
+      action: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseAliasError:
+    properties:
+      code: string
+      message: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseChecksState:
+    enum:
+      - registered
+      - running
+      - completed
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseChecksConclusion:
+    enum:
+      - succeeded
+      - failed
+      - skipped
+      - canceled
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseReadySubstate:
+    enum:
+      - STAGED
+      - PROMOTED
+    docs: >-
+      Since June 2023 Substate of deployment when readyState is 'READY' Tracks
+      whether or not deployment has seen production traffic: - STAGED: never
+      seen production traffic - PROMOTED: has seen production traffic
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseOidcTokenClaims:
+    properties:
+      sub: string
+      scope: string
+      aud: string
+      owner: string
+      owner_id: string
+      project: string
+      project_id: string
+      environment: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseFunctionsValue:
+    properties:
+      memory: optional<double>
+      maxDuration: optional<double>
+      runtime: optional<string>
+      includeFiles: optional<string>
+      excludeFiles: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitiveHasItemZero:
+    properties:
+      type: literal<"host">
+      value: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitiveHasItemKeyType:
+    enum:
+      - header
+      - cookie
+      - query
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitiveHasItemKey:
+    properties:
+      type: CreateDeploymentResponseRoutesItemCaseSensitiveHasItemKeyType
+      key: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitiveHasItem:
+    discriminated: false
+    union:
+      - CreateDeploymentResponseRoutesItemCaseSensitiveHasItemZero
+      - CreateDeploymentResponseRoutesItemCaseSensitiveHasItemKey
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitiveMissingItemZero:
+    properties:
+      type: literal<"host">
+      value: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitiveMissingItemKeyType:
+    enum:
+      - header
+      - cookie
+      - query
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitiveMissingItemKey:
+    properties:
+      type: CreateDeploymentResponseRoutesItemCaseSensitiveMissingItemKeyType
+      key: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitiveMissingItem:
+    discriminated: false
+    union:
+      - CreateDeploymentResponseRoutesItemCaseSensitiveMissingItemZero
+      - CreateDeploymentResponseRoutesItemCaseSensitiveMissingItemKey
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitiveLocale:
+    properties:
+      redirect: optional<map<string, string>>
+      cookie: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemCaseSensitive:
+    properties:
+      src: string
+      dest: optional<string>
+      headers: optional<map<string, string>>
+      methods: optional<list<string>>
+      continue: optional<boolean>
+      override: optional<boolean>
+      caseSensitive: optional<boolean>
+      check: optional<boolean>
+      important: optional<boolean>
+      status: optional<double>
+      has: optional<list<CreateDeploymentResponseRoutesItemCaseSensitiveHasItem>>
+      missing: >-
+        optional<list<CreateDeploymentResponseRoutesItemCaseSensitiveMissingItem>>
+      locale: optional<CreateDeploymentResponseRoutesItemCaseSensitiveLocale>
+      middlewarePath:
+        type: optional<string>
+        docs: >-
+          A middleware key within the `output` key under the build result.
+          Overrides a `middleware` definition.
+      middlewareRawSrc:
+        type: optional<list<string>>
+        docs: The original middleware matchers.
+      middleware:
+        type: optional<double>
+        docs: A middleware index in the `middleware` key under the build result
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemHandleHandle:
+    enum:
+      - error
+      - filesystem
+      - hit
+      - miss
+      - rewrite
+      - resource
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemHandle:
+    properties:
+      handle: CreateDeploymentResponseRoutesItemHandleHandle
+      src: optional<string>
+      dest: optional<string>
+      status: optional<double>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItemSrc:
+    properties:
+      src: string
+      continue: boolean
+      middleware: double
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseRoutesItem:
+    discriminated: false
+    union:
+      - CreateDeploymentResponseRoutesItemCaseSensitive
+      - CreateDeploymentResponseRoutesItemHandle
+      - CreateDeploymentResponseRoutesItemSrc
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseCronsItem:
+    properties:
+      schedule: string
+      path: string
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponsePlan:
+    enum:
+      - pro
+      - enterprise
+      - hobby
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitRepoGitlabOwnerType:
+    enum:
+      - team
+      - user
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitRepoGitlab:
+    properties:
+      namespace: string
+      projectId: double
+      url: string
+      path: string
+      defaultBranch: string
+      name: string
+      private: boolean
+      ownerType: CreateDeploymentResponseGitRepoGitlabOwnerType
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitRepoGithubOwnerType:
+    enum:
+      - team
+      - user
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitRepoGithub:
+    properties:
+      org: string
+      repo: string
+      repoId: double
+      repoOwnerId: double
+      path: string
+      defaultBranch: string
+      name: string
+      private: boolean
+      ownerType: CreateDeploymentResponseGitRepoGithubOwnerType
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitRepoBitbucketOwnerType:
+    enum:
+      - team
+      - user
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitRepoBitbucket:
+    properties:
+      owner: string
+      repoUuid: string
+      slug: string
+      workspaceUuid: string
+      path: string
+      defaultBranch: string
+      name: string
+      private: boolean
+      ownerType: CreateDeploymentResponseGitRepoBitbucketOwnerType
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseGitRepo:
+    discriminant: type
+    base-properties: {}
+    union:
+      gitlab: CreateDeploymentResponseGitRepoGitlab
+      github: CreateDeploymentResponseGitRepoGithub
+      bitbucket: CreateDeploymentResponseGitRepoBitbucket
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseFlagsDefinitionsDefinitionsValueOptionsItem:
+    properties:
+      label: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseFlagsDefinitionsDefinitionsValue:
+    properties:
+      options: >-
+        optional<list<CreateDeploymentResponseFlagsDefinitionsDefinitionsValueOptionsItem>>
+      url: optional<string>
+      description: optional<string>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseFlagsDefinitions:
+    docs: >-
+      Flags defined in the Build Output API, used by this deployment. Primarily
+      used by the Toolbar to know about the used flags.
+    properties:
+      definitions: map<string, CreateDeploymentResponseFlagsDefinitionsDefinitionsValue>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponseFlags:
+    discriminated: false
+    union:
+      - type: CreateDeploymentResponseFlagsDefinitions
+        docs: >-
+          Flags defined in the Build Output API, used by this deployment.
+          Primarily used by the Toolbar to know about the used flags.
+      - docs: >-
+          Flags defined in the Build Output API, used by this deployment.
+          Primarily used by the Toolbar to know about the used flags.
+        type: list<map<string, unknown>>
+    source:
+      openapi: openapi.json
+  CreateDeploymentResponse:
+    docs: The successfully created deployment
+    properties:
+      aliasAssignedAt: optional<CreateDeploymentResponseAliasAssignedAt>
+      alwaysRefuseToBuild: optional<boolean>
+      build: CreateDeploymentResponseBuild
+      buildArtifactUrls: optional<list<string>>
+      builds: optional<list<map<string, unknown>>>
+      env: list<string>
+      inspectorUrl: optional<string>
+      isInConcurrentBuildsQueue: boolean
+      projectSettings: CreateDeploymentResponseProjectSettings
+      readyStateReason: optional<string>
+      alias: optional<list<string>>
+      aliasAssigned: boolean
+      bootedAt: double
+      buildingAt: double
+      buildSkipped: boolean
+      creator: CreateDeploymentResponseCreator
+      initReadyAt: optional<double>
+      isFirstBranchDeployment: optional<boolean>
+      lambdas: optional<list<CreateDeploymentResponseLambdasItem>>
+      public: boolean
+      ready: optional<double>
+      status: CreateDeploymentResponseStatus
+      team: optional<CreateDeploymentResponseTeam>
+      userAliases: optional<list<string>>
+      previewCommentsEnabled: optional<boolean>
+      ttyBuildLogs: optional<boolean>
+      customEnvironment: optional<CreateDeploymentResponseCustomEnvironment>
+      type: literal<"LAMBDAS">
+      createdAt: double
+      name: string
+      deletedAt: optional<double>
+      id: string
+      version: double
+      autoAssignCustomDomains:
+        type: optional<boolean>
+        docs: applies to custom domains only, defaults to `true`
+      gitSource: optional<CreateDeploymentResponseGitSource>
+      meta: map<string, string>
+      project: optional<CreateDeploymentResponseProject>
+      readyState: CreateDeploymentResponseReadyState
+      source: optional<CreateDeploymentResponseSource>
+      target: optional<CreateDeploymentResponseTarget>
+      passiveRegions:
+        type: optional<list<string>>
+        docs: >-
+          Since November 2023 this field defines a set of regions that we will
+          deploy the lambda to passively Lambdas will be deployed to these
+          regions but only invoked if all of the primary `regions` are marked as
+          out of service
+      regions: list<string>
+      errorMessage: optional<string>
+      aliasWarning: optional<CreateDeploymentResponseAliasWarning>
+      aliasError: optional<CreateDeploymentResponseAliasError>
+      aliasFinal: optional<string>
+      automaticAliases: optional<list<string>>
+      buildErrorAt: optional<double>
+      checksState: optional<CreateDeploymentResponseChecksState>
+      checksConclusion: optional<CreateDeploymentResponseChecksConclusion>
+      canceledAt: optional<double>
+      errorCode: optional<string>
+      errorLink: optional<string>
+      errorStep: optional<string>
+      readySubstate:
+        type: optional<CreateDeploymentResponseReadySubstate>
+        docs: >-
+          Since June 2023 Substate of deployment when readyState is 'READY'
+          Tracks whether or not deployment has seen production traffic: -
+          STAGED: never seen production traffic - PROMOTED: has seen production
+          traffic
+      softDeletedByRetention: optional<boolean>
+      undeletedAt: optional<double>
+      url: string
+      oidcTokenClaims: optional<CreateDeploymentResponseOidcTokenClaims>
+      projectId: string
+      ownerId: string
+      monorepoManager: optional<string>
+      functions: optional<map<string, optional<CreateDeploymentResponseFunctionsValue>>>
+      routes: optional<list<CreateDeploymentResponseRoutesItem>>
+      crons: optional<list<CreateDeploymentResponseCronsItem>>
+      plan: CreateDeploymentResponsePlan
+      connectBuildsEnabled: optional<boolean>
+      connectConfigurationId: optional<string>
+      createdIn: string
+      passiveConnectConfigurationId:
+        type: optional<string>
+        docs: >-
+          Since November 2023 this field defines a connect configuration that
+          will only be used to deploy passive lambdas to (as in passiveRegions)
+      gitRepo: optional<CreateDeploymentResponseGitRepo>
+      flags: optional<CreateDeploymentResponseFlags>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseAliasAssignedAt:
+    discriminated: false
+    union:
+      - double
+      - boolean
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseBuild:
+    properties:
+      env: list<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseProjectSettingsFramework:
+    enum:
+      - blitzjs
+      - nextjs
+      - gatsby
+      - remix
+      - astro
+      - hexo
+      - eleventy
+      - value: docusaurus-2
+        name: Docusaurus2
+      - docusaurus
+      - preact
+      - value: solidstart-1
+        name: Solidstart1
+      - solidstart
+      - dojo
+      - ember
+      - vue
+      - scully
+      - value: ionic-angular
+        name: IonicAngular
+      - angular
+      - polymer
+      - svelte
+      - sveltekit
+      - value: sveltekit-1
+        name: Sveltekit1
+      - value: ionic-react
+        name: IonicReact
+      - value: create-react-app
+        name: CreateReactApp
+      - gridsome
+      - umijs
+      - sapper
+      - saber
+      - stencil
+      - nuxtjs
+      - redwoodjs
+      - hugo
+      - jekyll
+      - brunch
+      - middleman
+      - zola
+      - hydrogen
+      - vite
+      - vitepress
+      - vuepress
+      - parcel
+      - fasthtml
+      - value: sanity-v3
+        name: SanityV3
+      - sanity
+      - storybook
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseProjectSettingsSpeedInsights:
+    properties:
+      id: string
+      enabledAt: optional<double>
+      disabledAt: optional<double>
+      canceledAt: optional<double>
+      hasData: optional<boolean>
+      paidAt: optional<double>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseProjectSettingsWebAnalytics:
+    properties:
+      id: string
+      disabledAt: optional<double>
+      canceledAt: optional<double>
+      enabledAt: optional<double>
+      hasData: optional<boolean>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseProjectSettings:
+    properties:
+      buildCommand: optional<string>
+      devCommand: optional<string>
+      framework: optional<CancelDeploymentResponseProjectSettingsFramework>
+      commandForIgnoringBuildStep: optional<string>
+      installCommand: optional<string>
+      outputDirectory: optional<string>
+      speedInsights: optional<CancelDeploymentResponseProjectSettingsSpeedInsights>
+      webAnalytics: optional<CancelDeploymentResponseProjectSettingsWebAnalytics>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCreator:
+    properties:
+      uid: string
+      username: optional<string>
+      avatar: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseLambdasItemReadyState:
+    enum:
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - READY
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseLambdasItemOutputItem:
+    properties:
+      path: string
+      functionName: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseLambdasItem:
+    docs: A partial representation of a Build used by the deployment endpoint.
+    properties:
+      id: optional<string>
+      createdAt: optional<double>
+      entrypoint: optional<string>
+      readyState: optional<CancelDeploymentResponseLambdasItemReadyState>
+      readyStateAt: optional<double>
+      output: list<CancelDeploymentResponseLambdasItemOutputItem>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseStatus:
+    enum:
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - QUEUED
+      - READY
+      - CANCELED
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseTeam:
+    properties:
+      id: string
+      name: string
+      avatar: optional<string>
+      slug: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCustomEnvironmentBranchMatcherType:
+    enum:
+      - production
+      - preview
+      - development
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCustomEnvironmentBranchMatcherBranchMatcherType:
+    enum:
+      - startsWith
+      - equals
+      - endsWith
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCustomEnvironmentBranchMatcherBranchMatcher:
+    properties:
+      type: CancelDeploymentResponseCustomEnvironmentBranchMatcherBranchMatcherType
+      pattern: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCustomEnvironmentBranchMatcherDomainsItemVerificationItem:
+    docs: >-
+      A list of verification challenges, one of which must be completed to
+      verify the domain for use on the project. After the challenge is complete
+      `POST /projects/:idOrName/domains/:domain/verify` to verify the domain.
+      Possible challenges: - If `verification.type = TXT` the
+      `verification.domain` will be checked for a TXT record matching
+      `verification.value`.
+    properties:
+      type: string
+      domain: string
+      value: string
+      reason: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCustomEnvironmentBranchMatcherDomainsItem:
+    properties:
+      name: string
+      apexName: string
+      projectId: string
+      redirect: optional<string>
+      redirectStatusCode: optional<double>
+      gitBranch: optional<string>
+      customEnvironmentId: optional<string>
+      updatedAt: optional<double>
+      createdAt: optional<double>
+      verified:
+        type: boolean
+        docs: >-
+          `true` if the domain is verified for use with the project. If `false`
+          it will not be used as an alias on this project until the challenge in
+          `verification` is completed.
+      verification:
+        type: >-
+          optional<list<CancelDeploymentResponseCustomEnvironmentBranchMatcherDomainsItemVerificationItem>>
+        docs: >-
+          A list of verification challenges, one of which must be completed to
+          verify the domain for use on the project. After the challenge is
+          complete `POST /projects/:idOrName/domains/:domain/verify` to verify
+          the domain. Possible challenges: - If `verification.type = TXT` the
+          `verification.domain` will be checked for a TXT record matching
+          `verification.value`.
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCustomEnvironmentBranchMatcher:
+    properties:
+      id: string
+      name: string
+      slug: string
+      type: CancelDeploymentResponseCustomEnvironmentBranchMatcherType
+      description: optional<string>
+      branchMatcher: >-
+        optional<CancelDeploymentResponseCustomEnvironmentBranchMatcherBranchMatcher>
+      createdAt: double
+      updatedAt: double
+      domains: >-
+        optional<list<CancelDeploymentResponseCustomEnvironmentBranchMatcherDomainsItem>>
+      currentDeploymentAliases: optional<list<string>>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCustomEnvironmentOne:
+    properties:
+      id: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCustomEnvironment:
+    discriminated: false
+    union:
+      - CancelDeploymentResponseCustomEnvironmentBranchMatcher
+      - CancelDeploymentResponseCustomEnvironmentOne
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseAliasError:
+    properties:
+      code: string
+      message: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseAliasWarning:
+    properties:
+      code: string
+      message: string
+      link: optional<string>
+      action: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseChecksState:
+    enum:
+      - registered
+      - running
+      - completed
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseChecksConclusion:
+    enum:
+      - succeeded
+      - failed
+      - skipped
+      - canceled
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceZeroRepoId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceZero:
+    properties:
+      type: literal<"github">
+      repoId: CancelDeploymentResponseGitSourceZeroRepoId
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceOne:
+    properties:
+      type: literal<"github">
+      org: string
+      repo: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceTwoProjectId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceTwo:
+    properties:
+      type: literal<"gitlab">
+      projectId: CancelDeploymentResponseGitSourceTwoProjectId
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceThree:
+    properties:
+      type: literal<"bitbucket">
+      workspaceUuid: optional<string>
+      repoUuid: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourcePrId:
+    properties:
+      type: literal<"bitbucket">
+      owner: string
+      slug: string
+      ref: optional<string>
+      sha: optional<string>
+      prId: optional<double>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceGitUrl:
+    properties:
+      type: literal<"custom">
+      ref: string
+      sha: string
+      gitUrl: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceSix:
+    properties:
+      type: literal<"github">
+      ref: string
+      sha: string
+      repoId: double
+      org: optional<string>
+      repo: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceSeven:
+    properties:
+      type: literal<"gitlab">
+      ref: string
+      sha: string
+      projectId: double
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSourceRef:
+    properties:
+      type: literal<"bitbucket">
+      ref: string
+      sha: string
+      owner: optional<string>
+      slug: optional<string>
+      workspaceUuid: string
+      repoUuid: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitSource:
+    discriminated: false
+    union:
+      - CancelDeploymentResponseGitSourceZero
+      - CancelDeploymentResponseGitSourceOne
+      - CancelDeploymentResponseGitSourceTwo
+      - CancelDeploymentResponseGitSourceThree
+      - CancelDeploymentResponseGitSourcePrId
+      - CancelDeploymentResponseGitSourceGitUrl
+      - CancelDeploymentResponseGitSourceSix
+      - CancelDeploymentResponseGitSourceSeven
+      - CancelDeploymentResponseGitSourceRef
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseProject:
+    properties:
+      id: string
+      name: string
+      framework: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseReadyState:
+    enum:
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - QUEUED
+      - READY
+      - CANCELED
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseReadySubstate:
+    enum:
+      - STAGED
+      - PROMOTED
+    docs: >-
+      Since June 2023 Substate of deployment when readyState is 'READY' Tracks
+      whether or not deployment has seen production traffic: - STAGED: never
+      seen production traffic - PROMOTED: has seen production traffic
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseSource:
+    enum:
+      - value: api-trigger-git-deploy
+        name: ApiTriggerGitDeploy
+      - cli
+      - value: clone/repo
+        name: CloneRepo
+      - git
+      - import
+      - value: import/repo
+        name: ImportRepo
+      - redeploy
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseTarget:
+    enum:
+      - staging
+      - production
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseOidcTokenClaims:
+    properties:
+      sub: string
+      scope: string
+      aud: string
+      owner: string
+      owner_id: string
+      project: string
+      project_id: string
+      environment: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseCronsItem:
+    properties:
+      schedule: string
+      path: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseFunctionsValue:
+    properties:
+      memory: optional<double>
+      maxDuration: optional<double>
+      runtime: optional<string>
+      includeFiles: optional<string>
+      excludeFiles: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponsePlan:
+    enum:
+      - pro
+      - enterprise
+      - hobby
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitiveHasItemZero:
+    properties:
+      type: literal<"host">
+      value: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitiveHasItemKeyType:
+    enum:
+      - header
+      - cookie
+      - query
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitiveHasItemKey:
+    properties:
+      type: CancelDeploymentResponseRoutesItemCaseSensitiveHasItemKeyType
+      key: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitiveHasItem:
+    discriminated: false
+    union:
+      - CancelDeploymentResponseRoutesItemCaseSensitiveHasItemZero
+      - CancelDeploymentResponseRoutesItemCaseSensitiveHasItemKey
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitiveMissingItemZero:
+    properties:
+      type: literal<"host">
+      value: string
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitiveMissingItemKeyType:
+    enum:
+      - header
+      - cookie
+      - query
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitiveMissingItemKey:
+    properties:
+      type: CancelDeploymentResponseRoutesItemCaseSensitiveMissingItemKeyType
+      key: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitiveMissingItem:
+    discriminated: false
+    union:
+      - CancelDeploymentResponseRoutesItemCaseSensitiveMissingItemZero
+      - CancelDeploymentResponseRoutesItemCaseSensitiveMissingItemKey
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitiveLocale:
+    properties:
+      redirect: optional<map<string, string>>
+      cookie: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemCaseSensitive:
+    properties:
+      src: string
+      dest: optional<string>
+      headers: optional<map<string, string>>
+      methods: optional<list<string>>
+      continue: optional<boolean>
+      override: optional<boolean>
+      caseSensitive: optional<boolean>
+      check: optional<boolean>
+      important: optional<boolean>
+      status: optional<double>
+      has: optional<list<CancelDeploymentResponseRoutesItemCaseSensitiveHasItem>>
+      missing: >-
+        optional<list<CancelDeploymentResponseRoutesItemCaseSensitiveMissingItem>>
+      locale: optional<CancelDeploymentResponseRoutesItemCaseSensitiveLocale>
+      middlewarePath:
+        type: optional<string>
+        docs: >-
+          A middleware key within the `output` key under the build result.
+          Overrides a `middleware` definition.
+      middlewareRawSrc:
+        type: optional<list<string>>
+        docs: The original middleware matchers.
+      middleware:
+        type: optional<double>
+        docs: A middleware index in the `middleware` key under the build result
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemHandleHandle:
+    enum:
+      - error
+      - filesystem
+      - hit
+      - miss
+      - rewrite
+      - resource
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemHandle:
+    properties:
+      handle: CancelDeploymentResponseRoutesItemHandleHandle
+      src: optional<string>
+      dest: optional<string>
+      status: optional<double>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItemSrc:
+    properties:
+      src: string
+      continue: boolean
+      middleware: double
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseRoutesItem:
+    discriminated: false
+    union:
+      - CancelDeploymentResponseRoutesItemCaseSensitive
+      - CancelDeploymentResponseRoutesItemHandle
+      - CancelDeploymentResponseRoutesItemSrc
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitRepoGitlabOwnerType:
+    enum:
+      - team
+      - user
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitRepoGitlab:
+    properties:
+      namespace: string
+      projectId: double
+      url: string
+      path: string
+      defaultBranch: string
+      name: string
+      private: boolean
+      ownerType: CancelDeploymentResponseGitRepoGitlabOwnerType
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitRepoGithubOwnerType:
+    enum:
+      - team
+      - user
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitRepoGithub:
+    properties:
+      org: string
+      repo: string
+      repoId: double
+      repoOwnerId: double
+      path: string
+      defaultBranch: string
+      name: string
+      private: boolean
+      ownerType: CancelDeploymentResponseGitRepoGithubOwnerType
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitRepoBitbucketOwnerType:
+    enum:
+      - team
+      - user
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitRepoBitbucket:
+    properties:
+      owner: string
+      repoUuid: string
+      slug: string
+      workspaceUuid: string
+      path: string
+      defaultBranch: string
+      name: string
+      private: boolean
+      ownerType: CancelDeploymentResponseGitRepoBitbucketOwnerType
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseGitRepo:
+    discriminant: type
+    base-properties: {}
+    union:
+      gitlab: CancelDeploymentResponseGitRepoGitlab
+      github: CancelDeploymentResponseGitRepoGithub
+      bitbucket: CancelDeploymentResponseGitRepoBitbucket
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseFlagsDefinitionsDefinitionsValueOptionsItem:
+    properties:
+      label: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseFlagsDefinitionsDefinitionsValue:
+    properties:
+      options: >-
+        optional<list<CancelDeploymentResponseFlagsDefinitionsDefinitionsValueOptionsItem>>
+      url: optional<string>
+      description: optional<string>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseFlagsDefinitions:
+    docs: >-
+      Flags defined in the Build Output API, used by this deployment. Primarily
+      used by the Toolbar to know about the used flags.
+    properties:
+      definitions: map<string, CancelDeploymentResponseFlagsDefinitionsDefinitionsValue>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponseFlags:
+    discriminated: false
+    union:
+      - type: CancelDeploymentResponseFlagsDefinitions
+        docs: >-
+          Flags defined in the Build Output API, used by this deployment.
+          Primarily used by the Toolbar to know about the used flags.
+      - docs: >-
+          Flags defined in the Build Output API, used by this deployment.
+          Primarily used by the Toolbar to know about the used flags.
+        type: list<map<string, unknown>>
+    source:
+      openapi: openapi.json
+  CancelDeploymentResponse:
+    docs: The private deployment representation of a Deployment.
+    properties:
+      aliasAssignedAt: optional<CancelDeploymentResponseAliasAssignedAt>
+      alwaysRefuseToBuild: optional<boolean>
+      build: CancelDeploymentResponseBuild
+      buildArtifactUrls: optional<list<string>>
+      builds: optional<list<map<string, unknown>>>
+      env: list<string>
+      inspectorUrl: optional<string>
+      isInConcurrentBuildsQueue: boolean
+      projectSettings: CancelDeploymentResponseProjectSettings
+      readyStateReason: optional<string>
+      alias: optional<list<string>>
+      aliasAssigned: boolean
+      bootedAt: double
+      buildingAt: double
+      buildSkipped: boolean
+      creator: CancelDeploymentResponseCreator
+      initReadyAt: optional<double>
+      isFirstBranchDeployment: optional<boolean>
+      lambdas: optional<list<CancelDeploymentResponseLambdasItem>>
+      public: boolean
+      ready: optional<double>
+      status: CancelDeploymentResponseStatus
+      team: optional<CancelDeploymentResponseTeam>
+      userAliases: optional<list<string>>
+      previewCommentsEnabled: optional<boolean>
+      ttyBuildLogs: optional<boolean>
+      customEnvironment: optional<CancelDeploymentResponseCustomEnvironment>
+      id: string
+      aliasError: optional<CancelDeploymentResponseAliasError>
+      aliasFinal: optional<string>
+      aliasWarning: optional<CancelDeploymentResponseAliasWarning>
+      autoAssignCustomDomains:
+        type: optional<boolean>
+        docs: applies to custom domains only, defaults to `true`
+      automaticAliases: optional<list<string>>
+      buildErrorAt: optional<double>
+      checksState: optional<CancelDeploymentResponseChecksState>
+      checksConclusion: optional<CancelDeploymentResponseChecksConclusion>
+      createdAt: double
+      deletedAt: optional<double>
+      canceledAt: optional<double>
+      errorCode: optional<string>
+      errorLink: optional<string>
+      errorMessage: optional<string>
+      errorStep: optional<string>
+      passiveRegions:
+        type: optional<list<string>>
+        docs: >-
+          Since November 2023 this field defines a set of regions that we will
+          deploy the lambda to passively Lambdas will be deployed to these
+          regions but only invoked if all of the primary `regions` are marked as
+          out of service
+      gitSource: optional<CancelDeploymentResponseGitSource>
+      name: string
+      meta: map<string, string>
+      project: optional<CancelDeploymentResponseProject>
+      readyState: CancelDeploymentResponseReadyState
+      readySubstate:
+        type: optional<CancelDeploymentResponseReadySubstate>
+        docs: >-
+          Since June 2023 Substate of deployment when readyState is 'READY'
+          Tracks whether or not deployment has seen production traffic: -
+          STAGED: never seen production traffic - PROMOTED: has seen production
+          traffic
+      regions: list<string>
+      softDeletedByRetention: optional<boolean>
+      source: optional<CancelDeploymentResponseSource>
+      target: optional<CancelDeploymentResponseTarget>
+      type: literal<"LAMBDAS">
+      undeletedAt: optional<double>
+      url: string
+      version: double
+      oidcTokenClaims: optional<CancelDeploymentResponseOidcTokenClaims>
+      connectBuildsEnabled: optional<boolean>
+      connectConfigurationId: optional<string>
+      createdIn: string
+      crons: optional<list<CancelDeploymentResponseCronsItem>>
+      functions: optional<map<string, optional<CancelDeploymentResponseFunctionsValue>>>
+      monorepoManager: optional<string>
+      ownerId: string
+      passiveConnectConfigurationId:
+        type: optional<string>
+        docs: >-
+          Since November 2023 this field defines a connect configuration that
+          will only be used to deploy passive lambdas to (as in passiveRegions)
+      plan: CancelDeploymentResponsePlan
+      projectId: string
+      routes: optional<list<CancelDeploymentResponseRoutesItem>>
+      gitRepo: optional<CancelDeploymentResponseGitRepo>
+      flags: optional<CancelDeploymentResponseFlags>
+    source:
+      openapi: openapi.json
+  UploadFileResponseUrls:
+    properties:
+      urls:
+        docs: Array of URLs where the file was updated
+        type: list<string>
+    source:
+      openapi: openapi.json
+  UploadFileResponse:
+    discriminated: false
+    union:
+      - UploadFileResponseUrls
+      - map<string, unknown>
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemSource:
+    enum:
+      - value: api-trigger-git-deploy
+        name: ApiTriggerGitDeploy
+      - cli
+      - value: clone/repo
+        name: CloneRepo
+      - git
+      - import
+      - value: import/repo
+        name: ImportRepo
+      - redeploy
+    docs: The source of the deployment.
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemState:
+    enum:
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - QUEUED
+      - READY
+      - CANCELED
+      - DELETED
+    docs: In which state is the deployment.
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemReadyState:
+    enum:
+      - BUILDING
+      - ERROR
+      - INITIALIZING
+      - QUEUED
+      - READY
+      - CANCELED
+      - DELETED
+    docs: In which state is the deployment.
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemCreator:
+    docs: Metadata information of the user who created the deployment.
+    properties:
+      uid:
+        type: string
+        docs: The unique identifier of the user.
+      email:
+        type: optional<string>
+        docs: The email address of the user.
+      username:
+        type: optional<string>
+        docs: The username of the user.
+      githubLogin:
+        type: optional<string>
+        docs: The GitHub login of the user.
+      gitlabLogin:
+        type: optional<string>
+        docs: The GitLab login of the user.
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemTarget:
+    enum:
+      - production
+      - staging
+    docs: On which environment has the deployment been deployed to.
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemAliasError:
+    docs: An error object in case aliasing of the deployment failed.
+    properties:
+      code: string
+      message: string
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemAliasAssigned:
+    discriminated: false
+    union:
+      - double
+      - boolean
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemReadySubstate:
+    enum:
+      - STAGED
+      - PROMOTED
+    docs: >-
+      Since June 2023 Substate of deployment when readyState is 'READY' Tracks
+      whether or not deployment has seen production traffic: - STAGED: never
+      seen production traffic - PROMOTED: has seen production traffic
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemChecksState:
+    enum:
+      - registered
+      - running
+      - completed
+    docs: State of all registered checks
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemChecksConclusion:
+    enum:
+      - succeeded
+      - failed
+      - skipped
+      - canceled
+    docs: Conclusion for checks
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemProjectSettingsFramework:
+    enum:
+      - blitzjs
+      - nextjs
+      - gatsby
+      - remix
+      - astro
+      - hexo
+      - eleventy
+      - value: docusaurus-2
+        name: Docusaurus2
+      - docusaurus
+      - preact
+      - value: solidstart-1
+        name: Solidstart1
+      - solidstart
+      - dojo
+      - ember
+      - vue
+      - scully
+      - value: ionic-angular
+        name: IonicAngular
+      - angular
+      - polymer
+      - svelte
+      - sveltekit
+      - value: sveltekit-1
+        name: Sveltekit1
+      - value: ionic-react
+        name: IonicReact
+      - value: create-react-app
+        name: CreateReactApp
+      - gridsome
+      - umijs
+      - sapper
+      - saber
+      - stencil
+      - nuxtjs
+      - redwoodjs
+      - hugo
+      - jekyll
+      - brunch
+      - middleman
+      - zola
+      - hydrogen
+      - vite
+      - vitepress
+      - vuepress
+      - parcel
+      - fasthtml
+      - value: sanity-v3
+        name: SanityV3
+      - sanity
+      - storybook
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemProjectSettingsNodeVersion:
+    enum:
+      - value: 20.x
+        name: TwentyX
+      - value: 18.x
+        name: EighteenX
+      - value: 16.x
+        name: SixteenX
+      - value: 14.x
+        name: FourteenX
+      - value: 12.x
+        name: TwelveX
+      - value: 10.x
+        name: TenX
+      - value: 8.10.x
+        name: Eight10X
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemProjectSettingsSpeedInsights:
+    properties:
+      id: string
+      enabledAt: optional<double>
+      disabledAt: optional<double>
+      canceledAt: optional<double>
+      hasData: optional<boolean>
+      paidAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemProjectSettingsWebAnalytics:
+    properties:
+      id: string
+      disabledAt: optional<double>
+      canceledAt: optional<double>
+      enabledAt: optional<double>
+      hasData: optional<boolean>
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemProjectSettingsGitComments:
+    docs: Since June '23
+    properties:
+      onPullRequest:
+        type: boolean
+        docs: Whether the Vercel bot should comment on PRs
+      onCommit:
+        type: boolean
+        docs: Whether the Vercel bot should comment on commits
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemProjectSettings:
+    docs: The project settings which was used for this deployment
+    properties:
+      framework: optional<GetDeploymentsResponseDeploymentsItemProjectSettingsFramework>
+      gitForkProtection: optional<boolean>
+      customerSupportCodeVisibility: optional<boolean>
+      gitLFS: optional<boolean>
+      devCommand: optional<string>
+      installCommand: optional<string>
+      buildCommand: optional<string>
+      nodeVersion: >-
+        optional<GetDeploymentsResponseDeploymentsItemProjectSettingsNodeVersion>
+      outputDirectory: optional<string>
+      publicSource: optional<boolean>
+      rootDirectory: optional<string>
+      serverlessFunctionRegion: optional<string>
+      sourceFilesOutsideRootDirectory: optional<boolean>
+      commandForIgnoringBuildStep: optional<string>
+      createdAt: optional<double>
+      speedInsights: >-
+        optional<GetDeploymentsResponseDeploymentsItemProjectSettingsSpeedInsights>
+      webAnalytics: >-
+        optional<GetDeploymentsResponseDeploymentsItemProjectSettingsWebAnalytics>
+      skipGitConnectDuringLink: optional<boolean>
+      gitComments:
+        type: >-
+          optional<GetDeploymentsResponseDeploymentsItemProjectSettingsGitComments>
+        docs: Since June '23
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItemCustomEnvironment:
+    docs: The custom environment used for this deployment, if any
+    properties:
+      id: string
+      name: optional<string>
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponseDeploymentsItem:
+    properties:
+      uid:
+        type: string
+        docs: The unique identifier of the deployment.
+      name:
+        type: string
+        docs: The name of the deployment.
+      url:
+        type: string
+        docs: The URL of the deployment.
+      created:
+        type: double
+        docs: Timestamp of when the deployment got created.
+      deleted:
+        type: optional<double>
+        docs: Timestamp of when the deployment got deleted.
+      undeleted:
+        type: optional<double>
+        docs: Timestamp of when the deployment was undeleted.
+      softDeletedByRetention:
+        type: optional<boolean>
+        docs: >-
+          Optional flag to indicate if the deployment was soft deleted by
+          retention policy.
+      source:
+        type: optional<GetDeploymentsResponseDeploymentsItemSource>
+        docs: The source of the deployment.
+      state:
+        type: optional<GetDeploymentsResponseDeploymentsItemState>
+        docs: In which state is the deployment.
+      readyState:
+        type: optional<GetDeploymentsResponseDeploymentsItemReadyState>
+        docs: In which state is the deployment.
+      type:
+        type: literal<"LAMBDAS">
+        docs: The type of the deployment.
+      creator:
+        type: GetDeploymentsResponseDeploymentsItemCreator
+        docs: Metadata information of the user who created the deployment.
+      meta:
+        type: optional<map<string, string>>
+        docs: Metadata information from the Git provider.
+      target:
+        type: optional<GetDeploymentsResponseDeploymentsItemTarget>
+        docs: On which environment has the deployment been deployed to.
+      aliasError:
+        type: optional<GetDeploymentsResponseDeploymentsItemAliasError>
+        docs: An error object in case aliasing of the deployment failed.
+      aliasAssigned: optional<GetDeploymentsResponseDeploymentsItemAliasAssigned>
+      createdAt:
+        type: optional<double>
+        docs: Timestamp of when the deployment got created.
+      buildingAt:
+        type: optional<double>
+        docs: Timestamp of when the deployment started building at.
+      ready:
+        type: optional<double>
+        docs: Timestamp of when the deployment got ready.
+      readySubstate:
+        type: optional<GetDeploymentsResponseDeploymentsItemReadySubstate>
+        docs: >-
+          Since June 2023 Substate of deployment when readyState is 'READY'
+          Tracks whether or not deployment has seen production traffic: -
+          STAGED: never seen production traffic - PROMOTED: has seen production
+          traffic
+      checksState:
+        type: optional<GetDeploymentsResponseDeploymentsItemChecksState>
+        docs: State of all registered checks
+      checksConclusion:
+        type: optional<GetDeploymentsResponseDeploymentsItemChecksConclusion>
+        docs: Conclusion for checks
+      inspectorUrl:
+        type: optional<string>
+        docs: Vercel URL to inspect the deployment.
+      isRollbackCandidate:
+        type: optional<boolean>
+        docs: Deployment can be used for instant rollback
+      projectSettings:
+        type: optional<GetDeploymentsResponseDeploymentsItemProjectSettings>
+        docs: The project settings which was used for this deployment
+      connectBuildsEnabled:
+        type: optional<boolean>
+        docs: The flag saying if Vercel Connect configuration is used for builds
+      connectConfigurationId:
+        type: optional<string>
+        docs: The ID of Vercel Connect configuration used for this deployment
+      passiveConnectConfigurationId:
+        type: optional<string>
+        docs: >-
+          The ID of Vercel Connect configuration used for this deployment's
+          passive functions
+      expiration:
+        type: optional<double>
+        docs: The expiration configured by the project retention policy
+      proposedExpiration:
+        type: optional<double>
+        docs: The expiration proposed to replace the existing expiration
+      customEnvironment:
+        type: optional<GetDeploymentsResponseDeploymentsItemCustomEnvironment>
+        docs: The custom environment used for this deployment, if any
+    source:
+      openapi: openapi.json
+  GetDeploymentsResponse:
+    properties:
+      pagination: root.Pagination
+      deployments: list<GetDeploymentsResponseDeploymentsItem>
+    source:
+      openapi: openapi.json
+  DeleteDeploymentResponse:
+    properties:
+      uid:
+        type: string
+        docs: The removed deployment ID.
+      state:
+        type: literal<"DELETED">
+        docs: A constant with the final state of the deployment.
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getDeploymentEvents:
+      path: /v3/deployments/{idOrUrl}/events
+      method: GET
+      auth: true
+      docs: >-
+        Get the build logs of a deployment by deployment ID and build ID. It can
+        work as an infinite stream of logs or as a JSON endpoint depending on
+        the input parameters.
+      path-parameters:
+        idOrUrl:
+          type: string
+          docs: The unique identifier or hostname of the deployment.
+      display-name: Get deployment events
+      request:
+        name: GetDeploymentEventsRequest
+        query-parameters:
+          direction:
+            type: optional<GetDeploymentEventsRequestDirection>
+            docs: Order of the returned events based on the timestamp.
+          follow:
+            type: optional<double>
+            docs: >-
+              When enabled, this endpoint will return live events as they
+              happen.
+          limit:
+            type: optional<double>
+            docs: >-
+              Maximum number of events to return. Provide `-1` to return all
+              available logs.
+          name:
+            type: optional<string>
+            docs: Deployment build ID.
+          since:
+            type: optional<double>
+            docs: Timestamp for when build logs should be pulled from.
+          until:
+            type: optional<double>
+            docs: Timestamp for when the build logs should be pulled up until.
+          statusCode:
+            type: optional<double>
+            docs: HTTP status code range to filter events by.
+          delimiter: optional<double>
+          builds: optional<double>
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            idOrUrl: dpl_5WJWYSyB7BpgTj3EuwF37WMRBXBtPQ2iTMJHJBJyRfd
+          query-parameters:
+            follow: 1
+            limit: 100
+            name: bld_cotnkcr76
+            since: 1540095775941
+            until: 1540106318643
+            delimiter: 1
+            builds: 1
+    getDeployment:
+      path: /v13/deployments/{idOrUrl}
+      method: GET
+      auth: true
+      docs: >-
+        Retrieves information for a deployment either by supplying its ID (`id`
+        property) or Hostname (`url` property). Additional details will be
+        included when the authenticated user or team is an owner of the
+        deployment.
+      path-parameters:
+        idOrUrl:
+          type: string
+          docs: The unique identifier or hostname of the deployment.
+      display-name: Get a deployment by ID or URL
+      request:
+        name: GetDeploymentRequest
+        query-parameters:
+          withGitRepoInfo:
+            type: optional<string>
+            docs: Whether to add in gitRepo information.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: |-
+          The deployment including only public information
+          The deployment including both public and private information
+        type: GetDeploymentResponse
+      errors:
+        - root.BadRequestError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            idOrUrl: dpl_89qyp1cskzkLrVicDaZoDbjyHuDJ
+          query-parameters:
+            withGitRepoInfo: 'true'
+          response:
+            body:
+              aliasAssignedAt: 1.1
+              alwaysRefuseToBuild: true
+              build:
+                env:
+                  - env
+              buildArtifactUrls:
+                - buildArtifactUrls
+              builds:
+                - key: value
+              env:
+                - env
+              inspectorUrl: inspectorUrl
+              isInConcurrentBuildsQueue: true
+              projectSettings:
+                buildCommand: buildCommand
+                devCommand: devCommand
+                framework: blitzjs
+                commandForIgnoringBuildStep: commandForIgnoringBuildStep
+                installCommand: installCommand
+                outputDirectory: outputDirectory
+                speedInsights:
+                  id: id
+                  enabledAt: 1.1
+                  disabledAt: 1.1
+                  canceledAt: 1.1
+                  hasData: true
+                  paidAt: 1.1
+                webAnalytics:
+                  id: id
+                  disabledAt: 1.1
+                  canceledAt: 1.1
+                  enabledAt: 1.1
+                  hasData: true
+              readyStateReason: readyStateReason
+              alias:
+                - alias
+              aliasAssigned: true
+              bootedAt: 1.1
+              buildingAt: 1.1
+              buildSkipped: true
+              creator:
+                uid: uid
+                username: username
+                avatar: avatar
+              initReadyAt: 1.1
+              isFirstBranchDeployment: true
+              lambdas:
+                - id: id
+                  createdAt: 1.1
+                  entrypoint: entrypoint
+                  readyState: BUILDING
+                  readyStateAt: 1.1
+                  output:
+                    - path: path
+                      functionName: functionName
+              public: true
+              ready: 1.1
+              status: QUEUED
+              team:
+                id: id
+                name: name
+                slug: slug
+                avatar: avatar
+              userAliases:
+                - userAliases
+              previewCommentsEnabled: true
+              ttyBuildLogs: true
+              customEnvironment:
+                id: id
+                name: name
+                slug: slug
+                type: production
+                description: description
+                branchMatcher:
+                  type: startsWith
+                  pattern: pattern
+                createdAt: 1.1
+                updatedAt: 1.1
+                domains:
+                  - name: name
+                    apexName: apexName
+                    projectId: projectId
+                    verified: true
+                currentDeploymentAliases:
+                  - currentDeploymentAliases
+              aliasWarning:
+                code: code
+                message: message
+                link: link
+                action: action
+              id: id
+              type: LAMBDAS
+              createdAt: 1.1
+              name: name
+              readyState: QUEUED
+              aliasError:
+                code: code
+                message: message
+              aliasFinal: aliasFinal
+              autoAssignCustomDomains: true
+              automaticAliases:
+                - automaticAliases
+              buildErrorAt: 1.1
+              checksState: registered
+              checksConclusion: succeeded
+              deletedAt: 1.1
+              canceledAt: 1.1
+              errorCode: errorCode
+              errorLink: errorLink
+              errorMessage: errorMessage
+              errorStep: errorStep
+              passiveRegions:
+                - passiveRegions
+              gitSource:
+                type: github
+                repoId: repoId
+                ref: ref
+                sha: sha
+                prId: 1.1
+              meta:
+                key: value
+              project:
+                id: id
+                name: name
+                framework: framework
+              readySubstate: STAGED
+              regions:
+                - regions
+              softDeletedByRetention: true
+              source: api-trigger-git-deploy
+              target: staging
+              undeletedAt: 1.1
+              url: url
+              version: 1.1
+              oidcTokenClaims:
+                sub: sub
+                scope: scope
+                aud: aud
+                owner: owner
+                owner_id: owner_id
+                project: project
+                project_id: project_id
+                environment: environment
+              projectId: projectId
+              plan: pro
+              connectBuildsEnabled: true
+              connectConfigurationId: connectConfigurationId
+              createdIn: createdIn
+              crons:
+                - schedule: schedule
+                  path: path
+              functions:
+                key:
+                  memory: 1.1
+                  maxDuration: 1.1
+                  runtime: runtime
+                  includeFiles: includeFiles
+                  excludeFiles: excludeFiles
+              monorepoManager: monorepoManager
+              ownerId: ownerId
+              passiveConnectConfigurationId: passiveConnectConfigurationId
+              routes:
+                - src: src
+                  dest: dest
+                  headers:
+                    key: value
+                  methods:
+                    - methods
+                  continue: true
+                  override: true
+                  caseSensitive: true
+                  check: true
+                  important: true
+                  status: 1.1
+                  has:
+                    - type: host
+                      value: value
+                  missing:
+                    - type: host
+                      value: value
+                  middlewarePath: middlewarePath
+                  middlewareRawSrc:
+                    - middlewareRawSrc
+                  middleware: 1.1
+              gitRepo:
+                type: bitbucket
+                owner: gitRepo
+                repoUuid: gitRepo
+                slug: gitRepo
+                workspaceUuid: gitRepo
+                path: gitRepo
+                defaultBranch: gitRepo
+                name: gitRepo
+                private: true
+                ownerType: team
+              flags:
+                definitions:
+                  key: {}
+    createDeployment:
+      path: /v13/deployments
+      method: POST
+      auth: true
+      docs: >-
+        Create a new deployment with all the required and intended data. If the
+        deployment is not a git deployment, all files must be provided with the
+        request, either referenced or inlined. Additionally, a deployment id can
+        be specified to redeploy a previous deployment.
+      display-name: Create a new deployment
+      request:
+        name: CreateDeploymentRequest
+        query-parameters:
+          forceNew:
+            type: optional<CreateDeploymentRequestForceNew>
+            docs: >-
+              Forces a new deployment even if there is a previous similar
+              deployment
+          skipAutoDetectionConfirmation:
+            type: optional<CreateDeploymentRequestSkipAutoDetectionConfirmation>
+            docs: >-
+              Allows to skip framework detection so the API would not fail to
+              ask for confirmation
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            deploymentId:
+              type: optional<string>
+              docs: An deployment id for an existing deployment to redeploy
+            files:
+              type: optional<list<CreateDeploymentRequestFilesItem>>
+              docs: A list of objects with the files to be deployed
+            gitMetadata:
+              type: optional<CreateDeploymentRequestGitMetadata>
+              docs: Populates initial git metadata for different git providers.
+            gitSource:
+              type: optional<CreateDeploymentRequestGitSource>
+              docs: >-
+                Defines the Git Repository source to be deployed. This property
+                can not be used in combination with `files`.
+            meta:
+              type: optional<map<string, string>>
+              docs: >-
+                An object containing the deployment's metadata. Multiple
+                key-value pairs can be attached to a deployment
+            monorepoManager:
+              type: optional<string>
+              docs: >-
+                The monorepo manager that is being used for this deployment.
+                When `null` is used no monorepo manager is selected
+            name:
+              type: string
+              docs: A string with the project name used in the deployment URL
+            project:
+              type: optional<string>
+              docs: >-
+                The target project identifier in which the deployment will be
+                created. When defined, this parameter overrides name
+            projectSettings:
+              type: optional<CreateDeploymentRequestProjectSettings>
+              docs: >-
+                Project settings that will be applied to the deployment. It is
+                required for the first deployment of a project and will be saved
+                for any following deployments
+            target:
+              type: optional<CreateDeploymentRequestTarget>
+              docs: >-
+                Either not defined, `staging`, or `production`. If `staging`, a
+                staging alias in the format `<project>-<team>.vercel.app` will
+                be assigned. If `production`, any aliases defined in `alias`
+                will be assigned. If omitted, the target will be `preview`
+            withLatestCommit:
+              type: optional<boolean>
+              docs: >-
+                When `true` and `deploymentId` is passed in, the sha from the
+                previous deployment's `gitSource` is removed forcing the latest
+                commit to be used.
+      response:
+        docs: The successfully created deployment
+        type: CreateDeploymentResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.ConflictError
+      examples:
+        - request:
+            name: my-instant-deployment
+          response:
+            body:
+              aliasAssignedAt: 1.1
+              alwaysRefuseToBuild: true
+              build:
+                env:
+                  - env
+              buildArtifactUrls:
+                - buildArtifactUrls
+              builds:
+                - key: value
+              env:
+                - env
+              inspectorUrl: inspectorUrl
+              isInConcurrentBuildsQueue: true
+              projectSettings:
+                buildCommand: buildCommand
+                commandForIgnoringBuildStep: commandForIgnoringBuildStep
+                devCommand: devCommand
+                framework: blitzjs
+                installCommand: installCommand
+                outputDirectory: outputDirectory
+                speedInsights:
+                  id: id
+                  enabledAt: 1.1
+                  disabledAt: 1.1
+                  canceledAt: 1.1
+                  hasData: true
+                  paidAt: 1.1
+                webAnalytics:
+                  id: id
+                  disabledAt: 1.1
+                  canceledAt: 1.1
+                  enabledAt: 1.1
+                  hasData: true
+              readyStateReason: readyStateReason
+              alias:
+                - alias
+              aliasAssigned: true
+              bootedAt: 1.1
+              buildingAt: 1.1
+              buildSkipped: true
+              creator:
+                uid: uid
+                username: username
+                avatar: avatar
+              initReadyAt: 1.1
+              isFirstBranchDeployment: true
+              lambdas:
+                - id: id
+                  createdAt: 1.1
+                  entrypoint: entrypoint
+                  readyState: BUILDING
+                  readyStateAt: 1.1
+                  output:
+                    - path: path
+                      functionName: functionName
+              public: true
+              ready: 1.1
+              status: CANCELED
+              team:
+                name: name
+                id: id
+                slug: slug
+                avatar: avatar
+              userAliases:
+                - userAliases
+              previewCommentsEnabled: true
+              ttyBuildLogs: true
+              customEnvironment:
+                id: id
+                name: name
+                slug: slug
+                type: production
+                description: description
+                branchMatcher:
+                  type: startsWith
+                  pattern: pattern
+                createdAt: 1.1
+                updatedAt: 1.1
+                domains:
+                  - name: name
+                    apexName: apexName
+                    projectId: projectId
+                    verified: true
+                currentDeploymentAliases:
+                  - currentDeploymentAliases
+              type: LAMBDAS
+              createdAt: 1.1
+              name: name
+              deletedAt: 1.1
+              id: id
+              version: 1.1
+              autoAssignCustomDomains: true
+              gitSource:
+                type: github
+                repoId: repoId
+                ref: ref
+                sha: sha
+                prId: 1.1
+              meta:
+                key: value
+              project:
+                id: id
+                name: name
+                framework: framework
+              readyState: CANCELED
+              source: cli
+              target: staging
+              passiveRegions:
+                - passiveRegions
+              regions:
+                - regions
+              errorMessage: errorMessage
+              aliasWarning:
+                code: code
+                message: message
+                link: link
+                action: action
+              aliasError:
+                code: code
+                message: message
+              aliasFinal: aliasFinal
+              automaticAliases:
+                - automaticAliases
+              buildErrorAt: 1.1
+              checksState: registered
+              checksConclusion: succeeded
+              canceledAt: 1.1
+              errorCode: errorCode
+              errorLink: errorLink
+              errorStep: errorStep
+              readySubstate: STAGED
+              softDeletedByRetention: true
+              undeletedAt: 1.1
+              url: url
+              oidcTokenClaims:
+                sub: sub
+                scope: scope
+                aud: aud
+                owner: owner
+                owner_id: owner_id
+                project: project
+                project_id: project_id
+                environment: environment
+              projectId: projectId
+              ownerId: ownerId
+              monorepoManager: monorepoManager
+              functions:
+                key:
+                  memory: 1.1
+                  maxDuration: 1.1
+                  runtime: runtime
+                  includeFiles: includeFiles
+                  excludeFiles: excludeFiles
+              routes:
+                - src: src
+                  dest: dest
+                  headers:
+                    key: value
+                  methods:
+                    - methods
+                  continue: true
+                  override: true
+                  caseSensitive: true
+                  check: true
+                  important: true
+                  status: 1.1
+                  has:
+                    - type: host
+                      value: value
+                  missing:
+                    - type: host
+                      value: value
+                  middlewarePath: middlewarePath
+                  middlewareRawSrc:
+                    - middlewareRawSrc
+                  middleware: 1.1
+              crons:
+                - schedule: schedule
+                  path: path
+              plan: pro
+              connectBuildsEnabled: true
+              connectConfigurationId: connectConfigurationId
+              createdIn: createdIn
+              passiveConnectConfigurationId: passiveConnectConfigurationId
+              gitRepo:
+                type: bitbucket
+                owner: gitRepo
+                repoUuid: gitRepo
+                slug: gitRepo
+                workspaceUuid: gitRepo
+                path: gitRepo
+                defaultBranch: gitRepo
+                name: gitRepo
+                private: true
+                ownerType: team
+              flags:
+                definitions:
+                  key: {}
+    cancelDeployment:
+      path: /v12/deployments/{id}/cancel
+      method: PATCH
+      auth: true
+      docs: >-
+        This endpoint allows you to cancel a deployment which is currently
+        building, by supplying its `id` in the URL.
+      path-parameters:
+        id:
+          type: string
+          docs: The unique identifier of the deployment.
+      display-name: Cancel a deployment
+      request:
+        name: CancelDeploymentRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: CancelDeploymentResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: dpl_5WJWYSyB7BpgTj3EuwF37WMRBXBtPQ2iTMJHJBJyRfd
+          response:
+            body:
+              aliasAssignedAt: 1.1
+              alwaysRefuseToBuild: true
+              build:
+                env:
+                  - env
+              buildArtifactUrls:
+                - buildArtifactUrls
+              builds:
+                - key: value
+              env:
+                - env
+              inspectorUrl: inspectorUrl
+              isInConcurrentBuildsQueue: true
+              projectSettings:
+                buildCommand: buildCommand
+                devCommand: devCommand
+                framework: blitzjs
+                commandForIgnoringBuildStep: commandForIgnoringBuildStep
+                installCommand: installCommand
+                outputDirectory: outputDirectory
+                speedInsights:
+                  id: id
+                  enabledAt: 1.1
+                  disabledAt: 1.1
+                  canceledAt: 1.1
+                  hasData: true
+                  paidAt: 1.1
+                webAnalytics:
+                  id: id
+                  disabledAt: 1.1
+                  canceledAt: 1.1
+                  enabledAt: 1.1
+                  hasData: true
+              readyStateReason: readyStateReason
+              alias:
+                - alias
+              aliasAssigned: true
+              bootedAt: 1.1
+              buildingAt: 1.1
+              buildSkipped: true
+              creator:
+                uid: uid
+                username: username
+                avatar: avatar
+              initReadyAt: 1.1
+              isFirstBranchDeployment: true
+              lambdas:
+                - id: id
+                  createdAt: 1.1
+                  entrypoint: entrypoint
+                  readyState: BUILDING
+                  readyStateAt: 1.1
+                  output:
+                    - path: path
+                      functionName: functionName
+              public: true
+              ready: 1.1
+              status: BUILDING
+              team:
+                id: id
+                name: name
+                avatar: avatar
+                slug: slug
+              userAliases:
+                - userAliases
+              previewCommentsEnabled: true
+              ttyBuildLogs: true
+              customEnvironment:
+                id: id
+                name: name
+                slug: slug
+                type: production
+                description: description
+                branchMatcher:
+                  type: startsWith
+                  pattern: pattern
+                createdAt: 1.1
+                updatedAt: 1.1
+                domains:
+                  - name: name
+                    apexName: apexName
+                    projectId: projectId
+                    verified: true
+                currentDeploymentAliases:
+                  - currentDeploymentAliases
+              id: id
+              aliasError:
+                code: code
+                message: message
+              aliasFinal: aliasFinal
+              aliasWarning:
+                code: code
+                message: message
+                link: link
+                action: action
+              autoAssignCustomDomains: true
+              automaticAliases:
+                - automaticAliases
+              buildErrorAt: 1.1
+              checksState: registered
+              checksConclusion: succeeded
+              createdAt: 1.1
+              deletedAt: 1.1
+              canceledAt: 1.1
+              errorCode: errorCode
+              errorLink: errorLink
+              errorMessage: errorMessage
+              errorStep: errorStep
+              passiveRegions:
+                - passiveRegions
+              gitSource:
+                type: github
+                repoId: repoId
+                ref: ref
+                sha: sha
+                prId: 1.1
+              name: name
+              meta:
+                key: value
+              project:
+                id: id
+                name: name
+                framework: framework
+              readyState: BUILDING
+              readySubstate: STAGED
+              regions:
+                - regions
+              softDeletedByRetention: true
+              source: api-trigger-git-deploy
+              target: staging
+              type: LAMBDAS
+              undeletedAt: 1.1
+              url: url
+              version: 1.1
+              oidcTokenClaims:
+                sub: sub
+                scope: scope
+                aud: aud
+                owner: owner
+                owner_id: owner_id
+                project: project
+                project_id: project_id
+                environment: environment
+              connectBuildsEnabled: true
+              connectConfigurationId: connectConfigurationId
+              createdIn: createdIn
+              crons:
+                - schedule: schedule
+                  path: path
+              functions:
+                key:
+                  memory: 1.1
+                  maxDuration: 1.1
+                  runtime: runtime
+                  includeFiles: includeFiles
+                  excludeFiles: excludeFiles
+              monorepoManager: monorepoManager
+              ownerId: ownerId
+              passiveConnectConfigurationId: passiveConnectConfigurationId
+              plan: pro
+              projectId: projectId
+              routes:
+                - src: src
+                  dest: dest
+                  headers:
+                    key: value
+                  methods:
+                    - methods
+                  continue: true
+                  override: true
+                  caseSensitive: true
+                  check: true
+                  important: true
+                  status: 1.1
+                  has:
+                    - type: host
+                      value: value
+                  missing:
+                    - type: host
+                      value: value
+                  middlewarePath: middlewarePath
+                  middlewareRawSrc:
+                    - middlewareRawSrc
+                  middleware: 1.1
+              gitRepo:
+                type: bitbucket
+                owner: gitRepo
+                repoUuid: gitRepo
+                slug: gitRepo
+                workspaceUuid: gitRepo
+                path: gitRepo
+                defaultBranch: gitRepo
+                name: gitRepo
+                private: true
+                ownerType: team
+              flags:
+                definitions:
+                  key: {}
+    uploadFile:
+      path: /v2/files
+      method: POST
+      auth: true
+      docs: >-
+        Before you create a deployment you need to upload the required files for
+        that deployment. To do it, you need to first upload each file to this
+        endpoint. Once that's completed, you can create a new deployment with
+        the uploaded files. The file content must be placed inside the body of
+        the request. In the case of a successful response you'll receive a
+        status code 200 with an empty body.
+      display-name: Upload Deployment Files
+      request:
+        name: UploadFileRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        headers:
+          x-vercel-digest:
+            type: optional<string>
+            name: vercelDigest
+            docs: The file SHA1 used to check the integrity
+          x-now-digest:
+            type: optional<string>
+            name: nowDigest
+            docs: The file SHA1 used to check the integrity
+          x-now-size:
+            type: optional<double>
+            name: nowSize
+            docs: The file size as an alternative to `Content-Length`
+      response:
+        docs: |-
+          File already uploaded
+          File successfully uploaded
+        type: UploadFileResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - response:
+            body:
+              urls:
+                - example-upload.aws.com
+    listDeploymentFiles:
+      path: /v6/deployments/{id}/files
+      method: GET
+      auth: true
+      docs: >-
+        Allows to retrieve the file structure of a deployment by supplying the
+        deployment unique identifier.
+      path-parameters:
+        id:
+          type: string
+          docs: The unique deployment identifier
+      display-name: List Deployment Files
+      request:
+        name: ListDeploymentFilesRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: Retrieved the file tree successfully
+        type: list<root.FileTree>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              - name: my-file.json
+                type: directory
+                uid: 2d4aad419917f15b1146e9e03ddc9bb31747e4d0
+                contentType: application/json
+                mode: 1.1
+                symlink: symlink
+    getDeploymentFileContents:
+      path: /v7/deployments/{id}/files/{fileId}
+      method: GET
+      auth: true
+      docs: >-
+        Allows to retrieve the content of a file by supplying the file
+        identifier and the deployment unique identifier. The response body will
+        contain a JSON response containing the contents of the file encoded as
+        base64.
+      path-parameters:
+        id:
+          type: string
+          docs: The unique deployment identifier
+        fileId:
+          type: string
+          docs: The unique file identifier
+      display-name: Get Deployment File Contents
+      request:
+        name: GetDeploymentFileContentsRequest
+        query-parameters:
+          path:
+            type: optional<string>
+            docs: Path to the file to fetch (only for Git deployments)
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.GoneError
+      examples:
+        - path-parameters:
+            id: id
+            fileId: fileId
+    getDeployments:
+      path: /v6/deployments
+      method: GET
+      auth: true
+      docs: >-
+        List deployments under the authenticated user or team. If a deployment
+        hasn't finished uploading (is incomplete), the `url` property will have
+        a value of `null`.
+      display-name: List deployments
+      request:
+        name: GetDeploymentsRequest
+        query-parameters:
+          app:
+            type: optional<string>
+            docs: Name of the deployment.
+          from:
+            type: optional<double>
+            docs: >-
+              Gets the deployment created after this Date timestamp. (default:
+              current time)
+          limit:
+            type: optional<double>
+            docs: Maximum number of deployments to list from a request.
+          projectId:
+            type: optional<string>
+            docs: Filter deployments from the given ID or name.
+          target:
+            type: optional<string>
+            docs: Filter deployments based on the environment.
+          to:
+            type: optional<double>
+            docs: >-
+              Gets the deployment created before this Date timestamp. (default:
+              current time)
+          users:
+            type: optional<string>
+            docs: >-
+              Filter out deployments based on users who have created the
+              deployment.
+          since:
+            type: optional<double>
+            docs: Get Deployments created after this JavaScript timestamp.
+          until:
+            type: optional<double>
+            docs: Get Deployments created before this JavaScript timestamp.
+          state:
+            type: optional<string>
+            docs: >-
+              Filter deployments based on their state (`BUILDING`, `ERROR`,
+              `INITIALIZING`, `QUEUED`, `READY`, `CANCELED`)
+          rollbackCandidate:
+            type: optional<boolean>
+            docs: Filter deployments based on their rollback candidacy
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: GetDeploymentsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.UnprocessableEntityError
+      examples:
+        - query-parameters:
+            app: docs
+            from: 1612948664566
+            limit: 10
+            projectId: QmXGTs7mvAMMC7WW5ebrM33qKG32QK3h4vmQMjmY
+            target: production
+            to: 1612948664566
+            users: kr1PsOIzqEL5Xg6M4VZcZosf,K4amb7K9dAt5R2vBJWF32bmY
+            since: 1540095775941
+            until: 1540095775951
+            state: BUILDING,READY
+          response:
+            body:
+              pagination:
+                count: 20
+                next: 1540095775951
+                prev: 1540095775951
+              deployments:
+                - uid: dpl_2euZBFqxYdDMDG1jTrHFnNZ2eUVa
+                  name: docs
+                  url: docs-9jaeg38me.vercel.app
+                  created: 1609492210000
+                  deleted: 1609492210000
+                  undeleted: 1609492210000
+                  softDeletedByRetention: true
+                  source: api-trigger-git-deploy
+                  state: BUILDING
+                  readyState: BUILDING
+                  type: LAMBDAS
+                  creator:
+                    uid: eLrCnEgbKhsHyfbiNR7E8496
+                    email: example@example.com
+                    username: johndoe
+                    githubLogin: johndoe
+                    gitlabLogin: johndoe
+                  meta:
+                    key: value
+                  target: production
+                  aliasError:
+                    code: code
+                    message: message
+                  aliasAssigned: 1.1
+                  createdAt: 1609492210000
+                  buildingAt: 1609492210000
+                  ready: 1609492210000
+                  readySubstate: STAGED
+                  checksState: registered
+                  checksConclusion: succeeded
+                  inspectorUrl: https://vercel.com/acme/nextjs/J1hXN00qjUeoYfpEEf7dnDtpSiVq
+                  isRollbackCandidate: true
+                  connectBuildsEnabled: true
+                  connectConfigurationId: connectConfigurationId
+                  passiveConnectConfigurationId: passiveConnectConfigurationId
+                  expiration: 1.1
+                  proposedExpiration: 1.1
+                  customEnvironment:
+                    id: id
+    deleteDeployment:
+      path: /v13/deployments/{id}
+      method: DELETE
+      auth: true
+      docs: >-
+        This API allows you to delete a deployment, either by supplying its `id`
+        in the URL or the `url` of the deployment as a query parameter. You can
+        obtain the ID, for example, by listing all deployments.
+      path-parameters:
+        id:
+          type: string
+          docs: The ID of the deployment to be deleted
+      display-name: Delete a Deployment
+      request:
+        name: DeleteDeploymentRequest
+        query-parameters:
+          url:
+            type: optional<string>
+            docs: >-
+              A Deployment or Alias URL. In case it is passed, the ID will be
+              ignored
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The deployment was successfully deleted
+        type: DeleteDeploymentResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: dpl_5WJWYSyB7BpgTj3EuwF37WMRBXBtPQ2iTMJHJBJyRfd
+          query-parameters:
+            url: https://files-orcin-xi.vercel.app/
+          response:
+            body:
+              uid: dpl_5WJWYSyB7BpgTj3EuwF37WMRBXBtPQ2iTMJHJBJyRfd
+              state: DELETED
+  source:
+    openapi: openapi.json

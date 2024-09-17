@@ -1,0 +1,852 @@
+types:
+  GetConfigurationResponseBillingPlanBillingPlanType:
+    enum:
+      - prepayment
+      - subscription
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanBillingPlanScope:
+    enum:
+      - installation
+      - resource
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanBillingPlanDetailsItem:
+    properties:
+      label: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanBillingPlanHeightlightedDetailsItem:
+    properties:
+      label: string
+      value: optional<string>
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanBillingPlanQuoteItem:
+    properties:
+      line: string
+      amount: string
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanBillingPlan:
+    properties:
+      id: string
+      type: GetConfigurationResponseBillingPlanBillingPlanType
+      name: string
+      scope: optional<GetConfigurationResponseBillingPlanBillingPlanScope>
+      description: string
+      paymentMethodRequired: optional<boolean>
+      cost: optional<string>
+      details: >-
+        optional<list<GetConfigurationResponseBillingPlanBillingPlanDetailsItem>>
+      heightlightedDetails: >-
+        optional<list<GetConfigurationResponseBillingPlanBillingPlanHeightlightedDetailsItem>>
+      quote: optional<list<GetConfigurationResponseBillingPlanBillingPlanQuoteItem>>
+      effectiveDate: optional<string>
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanSource:
+    enum:
+      - marketplace
+      - value: deploy-button
+        name: DeployButton
+      - external
+    docs: >-
+      Source defines where the configuration was installed from. It is used to
+      analyze user engagement for integration installations in product metrics.
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanScopesQueueItemScopesAddedItem:
+    enum:
+      - value: read:integration-configuration
+        name: ReadIntegrationConfiguration
+      - value: read-write:integration-configuration
+        name: ReadWriteIntegrationConfiguration
+      - value: read:deployment
+        name: ReadDeployment
+      - value: read-write:deployment
+        name: ReadWriteDeployment
+      - value: read-write:deployment-check
+        name: ReadWriteDeploymentCheck
+      - value: read:project
+        name: ReadProject
+      - value: read-write:project
+        name: ReadWriteProject
+      - value: read-write:project-env-vars
+        name: ReadWriteProjectEnvVars
+      - value: read-write:global-project-env-vars
+        name: ReadWriteGlobalProjectEnvVars
+      - value: read:team
+        name: ReadTeam
+      - value: read:user
+        name: ReadUser
+      - value: read-write:log-drain
+        name: ReadWriteLogDrain
+      - value: read:domain
+        name: ReadDomain
+      - value: read-write:domain
+        name: ReadWriteDomain
+      - value: read-write:edge-config
+        name: ReadWriteEdgeConfig
+      - value: read-write:otel-endpoint
+        name: ReadWriteOtelEndpoint
+      - value: read:monitoring
+        name: ReadMonitoring
+      - value: read-write:integration-resource
+        name: ReadWriteIntegrationResource
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanScopesQueueItemScopesUpgradedItem:
+    enum:
+      - value: read:integration-configuration
+        name: ReadIntegrationConfiguration
+      - value: read-write:integration-configuration
+        name: ReadWriteIntegrationConfiguration
+      - value: read:deployment
+        name: ReadDeployment
+      - value: read-write:deployment
+        name: ReadWriteDeployment
+      - value: read-write:deployment-check
+        name: ReadWriteDeploymentCheck
+      - value: read:project
+        name: ReadProject
+      - value: read-write:project
+        name: ReadWriteProject
+      - value: read-write:project-env-vars
+        name: ReadWriteProjectEnvVars
+      - value: read-write:global-project-env-vars
+        name: ReadWriteGlobalProjectEnvVars
+      - value: read:team
+        name: ReadTeam
+      - value: read:user
+        name: ReadUser
+      - value: read-write:log-drain
+        name: ReadWriteLogDrain
+      - value: read:domain
+        name: ReadDomain
+      - value: read-write:domain
+        name: ReadWriteDomain
+      - value: read-write:edge-config
+        name: ReadWriteEdgeConfig
+      - value: read-write:otel-endpoint
+        name: ReadWriteOtelEndpoint
+      - value: read:monitoring
+        name: ReadMonitoring
+      - value: read-write:integration-resource
+        name: ReadWriteIntegrationResource
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanScopesQueueItemScopes:
+    properties:
+      added: list<GetConfigurationResponseBillingPlanScopesQueueItemScopesAddedItem>
+      upgraded: >-
+        list<GetConfigurationResponseBillingPlanScopesQueueItemScopesUpgradedItem>
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanScopesQueueItem:
+    properties:
+      scopes: GetConfigurationResponseBillingPlanScopesQueueItemScopes
+      note: string
+      requestedAt: double
+      confirmedAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanDisabledReason:
+    enum:
+      - value: disabled-by-owner
+        name: DisabledByOwner
+      - value: feature-not-available
+        name: FeatureNotAvailable
+      - value: disabled-by-admin
+        name: DisabledByAdmin
+      - value: original-owner-left-the-team
+        name: OriginalOwnerLeftTheTeam
+      - value: account-plan-downgrade
+        name: AccountPlanDowngrade
+      - value: original-owner-role-downgraded
+        name: OriginalOwnerRoleDowngraded
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlanInstallationType:
+    enum:
+      - marketplace
+      - external
+    docs: >-
+      Defines the installation type. - 'external' integrations are installed via
+      the existing integrations flow - 'marketplace' integrations are natively
+      installed: - when accepting the TOS of a partner during the store creation
+      process - if undefined, assume 'external'
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseBillingPlan:
+    docs: The configuration with the provided id
+    properties:
+      billingPlan: optional<GetConfigurationResponseBillingPlanBillingPlan>
+      billingTotal: optional<string>
+      periodStart: optional<string>
+      periodEnd: optional<string>
+      completedAt:
+        type: optional<double>
+        docs: >-
+          A timestamp that tells you when the configuration was installed
+          successfully
+      createdAt:
+        type: double
+        docs: A timestamp that tells you when the configuration was created
+      id:
+        type: string
+        docs: The unique identifier of the configuration
+      integrationId:
+        type: string
+        docs: The unique identifier of the app the configuration was created for
+      ownerId:
+        type: string
+        docs: The user or team ID that owns the configuration
+      projects:
+        type: optional<list<string>>
+        docs: >-
+          When a configuration is limited to access certain projects, this will
+          contain each of the project ID it is allowed to access. If it is not
+          defined, the configuration has full access.
+      source:
+        type: optional<GetConfigurationResponseBillingPlanSource>
+        docs: >-
+          Source defines where the configuration was installed from. It is used
+          to analyze user engagement for integration installations in product
+          metrics.
+      removedLogDrainsAt: optional<double>
+      removedProjectEnvsAt: optional<double>
+      removedTokensAt: optional<double>
+      removedWebhooksAt: optional<double>
+      slug:
+        type: string
+        docs: The slug of the integration the configuration is created for.
+      teamId:
+        type: optional<string>
+        docs: >-
+          When the configuration was created for a team, this will show the ID
+          of the team.
+      type: literal<"integration-configuration">
+      updatedAt:
+        type: double
+        docs: A timestamp that tells you when the configuration was updated.
+      userId:
+        type: string
+        docs: The ID of the user that created the configuration.
+      scopes:
+        docs: The resources that are allowed to be accessed by the configuration.
+        type: list<string>
+      scopesQueue: optional<list<GetConfigurationResponseBillingPlanScopesQueueItem>>
+      disabledAt:
+        type: optional<double>
+        docs: >-
+          A timestamp that tells you when the configuration was disabled. Note:
+          Configurations can be disabled when the associated user loses access
+          to a team. They do not function during this time until the
+          configuration is 'transferred', meaning the associated user is changed
+          to one with access to the team.
+      deletedAt:
+        type: optional<double>
+        docs: A timestamp that tells you when the configuration was deleted.
+      deleteRequestedAt:
+        type: optional<double>
+        docs: >-
+          A timestamp that tells you when the configuration deletion has been
+          started for cases when the deletion needs to be settled/approved by
+          partners, such as when marketplace invoices have been paid.
+      disabledReason: optional<GetConfigurationResponseBillingPlanDisabledReason>
+      northstarMigratedAt:
+        type: optional<double>
+        docs: >-
+          A timestamp that tells you when the configuration was migrated as part
+          of the Northstar migration. In the future, if we allow integration
+          configurations to be transferred between teams, this field should be
+          cleared upon transfer.
+      installationType:
+        type: optional<GetConfigurationResponseBillingPlanInstallationType>
+        docs: >-
+          Defines the installation type. - 'external' integrations are installed
+          via the existing integrations flow - 'marketplace' integrations are
+          natively installed: - when accepting the TOS of a partner during the
+          store creation process - if undefined, assume 'external'
+      adminRoleAssignments: optional<list<string>>
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseCanConfigureOpenTelemetryProjectSelection:
+    enum:
+      - selected
+      - all
+    docs: >-
+      A string representing the permission for projects. Possible values are
+      `all` or `selected`.
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseCanConfigureOpenTelemetrySource:
+    enum:
+      - marketplace
+      - value: deploy-button
+        name: DeployButton
+      - external
+    docs: >-
+      Source defines where the configuration was installed from. It is used to
+      analyze user engagement for integration installations in product metrics.
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseCanConfigureOpenTelemetryScopesQueueItemScopesAddedItem:
+    enum:
+      - value: read:integration-configuration
+        name: ReadIntegrationConfiguration
+      - value: read-write:integration-configuration
+        name: ReadWriteIntegrationConfiguration
+      - value: read:deployment
+        name: ReadDeployment
+      - value: read-write:deployment
+        name: ReadWriteDeployment
+      - value: read-write:deployment-check
+        name: ReadWriteDeploymentCheck
+      - value: read:project
+        name: ReadProject
+      - value: read-write:project
+        name: ReadWriteProject
+      - value: read-write:project-env-vars
+        name: ReadWriteProjectEnvVars
+      - value: read-write:global-project-env-vars
+        name: ReadWriteGlobalProjectEnvVars
+      - value: read:team
+        name: ReadTeam
+      - value: read:user
+        name: ReadUser
+      - value: read-write:log-drain
+        name: ReadWriteLogDrain
+      - value: read:domain
+        name: ReadDomain
+      - value: read-write:domain
+        name: ReadWriteDomain
+      - value: read-write:edge-config
+        name: ReadWriteEdgeConfig
+      - value: read-write:otel-endpoint
+        name: ReadWriteOtelEndpoint
+      - value: read:monitoring
+        name: ReadMonitoring
+      - value: read-write:integration-resource
+        name: ReadWriteIntegrationResource
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseCanConfigureOpenTelemetryScopesQueueItemScopesUpgradedItem:
+    enum:
+      - value: read:integration-configuration
+        name: ReadIntegrationConfiguration
+      - value: read-write:integration-configuration
+        name: ReadWriteIntegrationConfiguration
+      - value: read:deployment
+        name: ReadDeployment
+      - value: read-write:deployment
+        name: ReadWriteDeployment
+      - value: read-write:deployment-check
+        name: ReadWriteDeploymentCheck
+      - value: read:project
+        name: ReadProject
+      - value: read-write:project
+        name: ReadWriteProject
+      - value: read-write:project-env-vars
+        name: ReadWriteProjectEnvVars
+      - value: read-write:global-project-env-vars
+        name: ReadWriteGlobalProjectEnvVars
+      - value: read:team
+        name: ReadTeam
+      - value: read:user
+        name: ReadUser
+      - value: read-write:log-drain
+        name: ReadWriteLogDrain
+      - value: read:domain
+        name: ReadDomain
+      - value: read-write:domain
+        name: ReadWriteDomain
+      - value: read-write:edge-config
+        name: ReadWriteEdgeConfig
+      - value: read-write:otel-endpoint
+        name: ReadWriteOtelEndpoint
+      - value: read:monitoring
+        name: ReadMonitoring
+      - value: read-write:integration-resource
+        name: ReadWriteIntegrationResource
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseCanConfigureOpenTelemetryScopesQueueItemScopes:
+    properties:
+      added: >-
+        list<GetConfigurationResponseCanConfigureOpenTelemetryScopesQueueItemScopesAddedItem>
+      upgraded: >-
+        list<GetConfigurationResponseCanConfigureOpenTelemetryScopesQueueItemScopesUpgradedItem>
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseCanConfigureOpenTelemetryScopesQueueItem:
+    properties:
+      scopes: GetConfigurationResponseCanConfigureOpenTelemetryScopesQueueItemScopes
+      note: string
+      requestedAt: double
+      confirmedAt: optional<double>
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseCanConfigureOpenTelemetryDisabledReason:
+    enum:
+      - value: disabled-by-owner
+        name: DisabledByOwner
+      - value: feature-not-available
+        name: FeatureNotAvailable
+      - value: disabled-by-admin
+        name: DisabledByAdmin
+      - value: original-owner-left-the-team
+        name: OriginalOwnerLeftTheTeam
+      - value: account-plan-downgrade
+        name: AccountPlanDowngrade
+      - value: original-owner-role-downgraded
+        name: OriginalOwnerRoleDowngraded
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseCanConfigureOpenTelemetryInstallationType:
+    enum:
+      - marketplace
+      - external
+    docs: >-
+      Defines the installation type. - 'external' integrations are installed via
+      the existing integrations flow - 'marketplace' integrations are natively
+      installed: - when accepting the TOS of a partner during the store creation
+      process - if undefined, assume 'external'
+    source:
+      openapi: openapi.json
+  GetConfigurationResponseCanConfigureOpenTelemetry:
+    properties:
+      projectSelection:
+        type: GetConfigurationResponseCanConfigureOpenTelemetryProjectSelection
+        docs: >-
+          A string representing the permission for projects. Possible values are
+          `all` or `selected`.
+      projects:
+        type: optional<list<string>>
+        docs: >-
+          When a configuration is limited to access certain projects, this will
+          contain each of the project ID it is allowed to access. If it is not
+          defined, the configuration has full access.
+      completedAt:
+        type: optional<double>
+        docs: >-
+          A timestamp that tells you when the configuration was installed
+          successfully
+      createdAt:
+        type: double
+        docs: A timestamp that tells you when the configuration was created
+      id:
+        type: string
+        docs: The unique identifier of the configuration
+      integrationId:
+        type: string
+        docs: The unique identifier of the app the configuration was created for
+      ownerId:
+        type: string
+        docs: The user or team ID that owns the configuration
+      source:
+        type: optional<GetConfigurationResponseCanConfigureOpenTelemetrySource>
+        docs: >-
+          Source defines where the configuration was installed from. It is used
+          to analyze user engagement for integration installations in product
+          metrics.
+      removedLogDrainsAt: optional<double>
+      removedProjectEnvsAt: optional<double>
+      removedTokensAt: optional<double>
+      removedWebhooksAt: optional<double>
+      slug:
+        type: string
+        docs: The slug of the integration the configuration is created for.
+      teamId:
+        type: optional<string>
+        docs: >-
+          When the configuration was created for a team, this will show the ID
+          of the team.
+      type: literal<"integration-configuration">
+      updatedAt:
+        type: double
+        docs: A timestamp that tells you when the configuration was updated.
+      userId:
+        type: string
+        docs: The ID of the user that created the configuration.
+      scopes:
+        docs: The resources that are allowed to be accessed by the configuration.
+        type: list<string>
+      scopesQueue: >-
+        optional<list<GetConfigurationResponseCanConfigureOpenTelemetryScopesQueueItem>>
+      disabledAt:
+        type: optional<double>
+        docs: >-
+          A timestamp that tells you when the configuration was disabled. Note:
+          Configurations can be disabled when the associated user loses access
+          to a team. They do not function during this time until the
+          configuration is 'transferred', meaning the associated user is changed
+          to one with access to the team.
+      deletedAt:
+        type: optional<double>
+        docs: A timestamp that tells you when the configuration was deleted.
+      deleteRequestedAt:
+        type: optional<double>
+        docs: >-
+          A timestamp that tells you when the configuration deletion has been
+          started for cases when the deletion needs to be settled/approved by
+          partners, such as when marketplace invoices have been paid.
+      disabledReason: >-
+        optional<GetConfigurationResponseCanConfigureOpenTelemetryDisabledReason>
+      northstarMigratedAt:
+        type: optional<double>
+        docs: >-
+          A timestamp that tells you when the configuration was migrated as part
+          of the Northstar migration. In the future, if we allow integration
+          configurations to be transferred between teams, this field should be
+          cleared upon transfer.
+      installationType:
+        type: >-
+          optional<GetConfigurationResponseCanConfigureOpenTelemetryInstallationType>
+        docs: >-
+          Defines the installation type. - 'external' integrations are installed
+          via the existing integrations flow - 'marketplace' integrations are
+          natively installed: - when accepting the TOS of a partner during the
+          store creation process - if undefined, assume 'external'
+      adminRoleAssignments: optional<list<string>>
+      canConfigureOpenTelemetry: optional<boolean>
+    source:
+      openapi: openapi.json
+  GetConfigurationResponse:
+    discriminated: false
+    union:
+      - type: GetConfigurationResponseBillingPlan
+        docs: The configuration with the provided id
+      - GetConfigurationResponseCanConfigureOpenTelemetry
+    source:
+      openapi: openapi.json
+  GitNamespacesRequestProvider:
+    enum:
+      - github
+      - value: github-custom-host
+        name: GithubCustomHost
+      - gitlab
+      - bitbucket
+    source:
+      openapi: openapi.json
+  GitNamespacesResponseItemId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  GitNamespacesResponseItem:
+    properties:
+      provider: string
+      slug: string
+      id: GitNamespacesResponseItemId
+      ownerType: string
+      name: optional<string>
+      isAccessRestricted: optional<boolean>
+      installationId: optional<double>
+      requireReauth: optional<boolean>
+    source:
+      openapi: openapi.json
+  SearchRepoRequestProvider:
+    enum:
+      - github
+      - value: github-custom-host
+        name: GithubCustomHost
+      - gitlab
+      - bitbucket
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccountGitAccountProvider:
+    enum:
+      - github
+      - value: github-custom-host
+        name: GithubCustomHost
+      - gitlab
+      - bitbucket
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccountGitAccountNamespaceId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccountGitAccount:
+    properties:
+      provider: SearchRepoResponseGitAccountGitAccountProvider
+      namespaceId: optional<SearchRepoResponseGitAccountGitAccountNamespaceId>
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccountReposItemId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccountReposItemProvider:
+    enum:
+      - github
+      - value: github-custom-host
+        name: GithubCustomHost
+      - gitlab
+      - bitbucket
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccountReposItemOwnerId:
+    discriminated: false
+    union:
+      - string
+      - double
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccountReposItemOwner:
+    properties:
+      id: SearchRepoResponseGitAccountReposItemOwnerId
+      name: string
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccountReposItemOwnerType:
+    enum:
+      - user
+      - team
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccountReposItem:
+    properties:
+      id: SearchRepoResponseGitAccountReposItemId
+      provider: SearchRepoResponseGitAccountReposItemProvider
+      url: string
+      name: string
+      slug: string
+      namespace: string
+      owner: SearchRepoResponseGitAccountReposItemOwner
+      ownerType: SearchRepoResponseGitAccountReposItemOwnerType
+      private: boolean
+      defaultBranch: string
+      updatedAt: double
+    source:
+      openapi: openapi.json
+  SearchRepoResponseGitAccount:
+    properties:
+      gitAccount: SearchRepoResponseGitAccountGitAccount
+      repos: list<SearchRepoResponseGitAccountReposItem>
+    source:
+      openapi: openapi.json
+  SearchRepoResponse:
+    discriminated: false
+    union:
+      - map<string, unknown>
+      - SearchRepoResponseGitAccount
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getConfiguration:
+      path: /v1/integrations/configuration/{id}
+      method: GET
+      auth: true
+      docs: >-
+        Allows to retrieve a the configuration with the provided id in case it
+        exists. The authenticated user or team must be the owner of the config
+        in order to access it.
+      path-parameters:
+        id:
+          type: string
+          docs: ID of the configuration to check
+      display-name: Retrieve an integration configuration
+      request:
+        name: GetConfigurationRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: The configuration with the provided id
+        type: GetConfigurationResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: icfg_cuwj0AdCdH3BwWT4LPijCC7t
+          response:
+            body:
+              billingPlan:
+                id: id
+                type: prepayment
+                name: name
+                scope: installation
+                description: description
+                paymentMethodRequired: true
+                cost: cost
+                details:
+                  - label: label
+                heightlightedDetails:
+                  - label: label
+                quote:
+                  - line: line
+                    amount: amount
+                effectiveDate: effectiveDate
+              billingTotal: billingTotal
+              periodStart: periodStart
+              periodEnd: periodEnd
+              completedAt: 1558531915505
+              createdAt: 1558531915505
+              id: icfg_3bwCLgxL8qt5kjRLcv2Dit7F
+              integrationId: oac_xzpVzcUOgcB1nrVlirtKhbWV
+              ownerId: kr1PsOIzqEL5Xg6M4VZcZosf
+              projects:
+                - prj_xQxbutw1HpL6HLYPAzt5h75m8NjO
+              source: marketplace
+              removedLogDrainsAt: 1.1
+              removedProjectEnvsAt: 1.1
+              removedTokensAt: 1.1
+              removedWebhooksAt: 1.1
+              slug: slack
+              teamId: team_nLlpyC6RE1qxydlFKbrxDlud
+              type: integration-configuration
+              updatedAt: 1558531915505
+              userId: kr1PsOIzqEL5Xg6M4VZcZosf
+              scopes:
+                - read:project
+                - read-write:log-drain
+              scopesQueue:
+                - scopes:
+                    added:
+                      - read:integration-configuration
+                    upgraded:
+                      - read:integration-configuration
+                  note: note
+                  requestedAt: 1.1
+                  confirmedAt: 1.1
+              disabledAt: 1558531915505
+              deletedAt: 1558531915505
+              deleteRequestedAt: 1558531915505
+              disabledReason: disabled-by-owner
+              northstarMigratedAt: 1.1
+              installationType: marketplace
+              adminRoleAssignments:
+                - adminRoleAssignments
+    deleteConfiguration:
+      path: /v1/integrations/configuration/{id}
+      method: DELETE
+      auth: true
+      docs: >-
+        Allows to remove the configuration with the `id` provided in the
+        parameters. The configuration and all of its resources will be removed.
+        This includes Webhooks, LogDrains and Project Env variables.
+      path-parameters:
+        id: string
+      display-name: Delete an integration configuration
+      request:
+        name: DeleteConfigurationRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: id
+    gitNamespaces:
+      path: /v1/integrations/git-namespaces
+      method: GET
+      auth: true
+      docs: >-
+        Lists git namespaces for a supported provider. Supported providers are
+        `github`, `gitlab` and `bitbucket`. If the provider is not provided, it
+        will try to obtain it from the user that authenticated the request.
+      display-name: List git namespaces by provider
+      request:
+        name: GitNamespacesRequest
+        query-parameters:
+          host:
+            type: optional<string>
+            docs: >-
+              The custom Git host if using a custom Git provider, like GitHub
+              Enterprise Server
+          provider: optional<GitNamespacesRequestProvider>
+      response:
+        docs: ''
+        type: list<GitNamespacesResponseItem>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - query-parameters:
+            host: ghes-test.now.systems
+          response:
+            body:
+              - provider: provider
+                slug: slug
+                id: id
+                ownerType: ownerType
+                name: name
+                isAccessRestricted: true
+                installationId: 1.1
+                requireReauth: true
+    searchRepo:
+      path: /v1/integrations/search-repo
+      method: GET
+      auth: true
+      docs: >-
+        Lists git repositories linked to a namespace `id` for a supported
+        provider. A specific namespace `id` can be obtained via the
+        `git-namespaces`  endpoint. Supported providers are `github`, `gitlab`
+        and `bitbucket`. If the provider or namespace is not provided, it will
+        try to obtain it from the user that authenticated the request.
+      display-name: List git repositories linked to namespace by provider
+      request:
+        name: SearchRepoRequest
+        query-parameters:
+          query: optional<string>
+          namespaceId: optional<string>
+          provider: optional<SearchRepoRequestProvider>
+          installationId: optional<string>
+          host:
+            type: optional<string>
+            docs: >-
+              The custom Git host if using a custom Git provider, like GitHub
+              Enterprise Server
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: SearchRepoResponse
+      errors:
+        - root.BadRequestError
+        - root.ForbiddenError
+      examples:
+        - query-parameters:
+            host: ghes-test.now.systems
+          response:
+            body:
+              key: value
+  source:
+    openapi: openapi.json

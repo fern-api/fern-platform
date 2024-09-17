@@ -1,0 +1,223 @@
+types:
+  GetProjectMembersResponseMembersMembersItemRole:
+    enum:
+      - ADMIN
+      - PROJECT_DEVELOPER
+      - PROJECT_VIEWER
+    docs: Role of this user in the project.
+    source:
+      openapi: openapi.json
+  GetProjectMembersResponseMembersMembersItemComputedProjectRole:
+    enum:
+      - ADMIN
+      - PROJECT_DEVELOPER
+      - PROJECT_VIEWER
+    docs: Role of this user in the project.
+    source:
+      openapi: openapi.json
+  GetProjectMembersResponseMembersMembersItemTeamRole:
+    enum:
+      - OWNER
+      - MEMBER
+      - DEVELOPER
+      - BILLING
+      - VIEWER
+      - CONTRIBUTOR
+    docs: The role of this user in the team.
+    source:
+      openapi: openapi.json
+  GetProjectMembersResponseMembersMembersItem:
+    properties:
+      avatar:
+        type: optional<string>
+        docs: ID of the file for the Avatar of this member.
+      email:
+        type: string
+        docs: The email of this member.
+      role:
+        type: GetProjectMembersResponseMembersMembersItemRole
+        docs: Role of this user in the project.
+      computedProjectRole:
+        type: GetProjectMembersResponseMembersMembersItemComputedProjectRole
+        docs: Role of this user in the project.
+      uid:
+        type: string
+        docs: The ID of this user.
+      username:
+        type: string
+        docs: The unique username of this user.
+      name:
+        type: optional<string>
+        docs: The name of this user.
+      createdAt:
+        type: double
+        docs: Timestamp in milliseconds when this member was added.
+      teamRole:
+        type: GetProjectMembersResponseMembersMembersItemTeamRole
+        docs: The role of this user in the team.
+    source:
+      openapi: openapi.json
+  GetProjectMembersResponseMembersPagination:
+    properties:
+      hasNext: boolean
+      count:
+        type: double
+        docs: Amount of items in the current page.
+      next:
+        type: optional<double>
+        docs: Timestamp that must be used to request the next page.
+      prev:
+        type: optional<double>
+        docs: Timestamp that must be used to request the previous page.
+    source:
+      openapi: openapi.json
+  GetProjectMembersResponseMembers:
+    docs: Paginated list of members for the project.
+    properties:
+      members: list<GetProjectMembersResponseMembersMembersItem>
+      pagination: GetProjectMembersResponseMembersPagination
+    source:
+      openapi: openapi.json
+  GetProjectMembersResponse:
+    discriminated: false
+    union:
+      - map<string, unknown>
+      - type: GetProjectMembersResponseMembers
+        docs: Paginated list of members for the project.
+    source:
+      openapi: openapi.json
+  AddProjectMemberResponse:
+    docs: Responds with the project ID on success.
+    properties:
+      id: string
+    source:
+      openapi: openapi.json
+  RemoveProjectMemberResponse:
+    properties:
+      id: string
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getProjectMembers:
+      path: /v1/projects/{idOrName}/members
+      method: GET
+      auth: true
+      docs: Lists all members of a project.
+      path-parameters:
+        idOrName:
+          type: string
+          docs: The ID or name of the Project.
+      display-name: List project members
+      request:
+        name: GetProjectMembersRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: Limit how many project members should be returned
+          since:
+            type: optional<integer>
+            docs: >-
+              Timestamp in milliseconds to only include members added since
+              then.
+          until:
+            type: optional<integer>
+            docs: >-
+              Timestamp in milliseconds to only include members added until
+              then.
+          search:
+            type: optional<string>
+            docs: Search project members by their name, username, and email.
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: Paginated list of members for the project.
+        type: GetProjectMembersResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - path-parameters:
+            idOrName: prj_pavWOn1iLObbXLRiwVvzmPrTWyTf
+          query-parameters:
+            limit: 20
+            since: 1540095775951
+            until: 1540095775951
+          response:
+            body:
+              key: value
+    addProjectMember:
+      path: /v1/projects/{idOrName}/members
+      method: POST
+      auth: true
+      docs: Adds a new member to the project.
+      path-parameters:
+        idOrName:
+          type: string
+          docs: The ID or name of the Project.
+      display-name: Adds a new member to a project.
+      request:
+        body: unknown
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        name: AddProjectMemberRequest
+      response:
+        docs: Responds with the project ID on success.
+        type: AddProjectMemberResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.InternalServerError
+    removeProjectMember:
+      path: /v1/projects/{idOrName}/members/{uid}
+      method: DELETE
+      auth: true
+      docs: Remove a member from a specific project
+      path-parameters:
+        idOrName:
+          type: string
+          docs: The ID or name of the Project.
+        uid:
+          type: string
+          docs: The user ID of the member.
+      display-name: Remove a Project Member
+      request:
+        name: RemoveProjectMemberRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: RemoveProjectMemberResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+      examples:
+        - path-parameters:
+            idOrName: prj_pavWOn1iLObbXLRiwVvzmPrTWyTf
+            uid: ndlgr43fadlPyCtREAqxxdyFK
+          response:
+            body:
+              id: id
+  source:
+    openapi: openapi.json

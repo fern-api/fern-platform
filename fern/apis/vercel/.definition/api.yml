@@ -1,0 +1,11 @@
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: Vercel API
+environments:
+  Default: https://api.vercel.com
+default-environment: Default
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+auth: BearerAuthScheme

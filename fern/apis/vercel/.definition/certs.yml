@@ -1,0 +1,198 @@
+types:
+  GetCertByIdResponse:
+    properties:
+      id: string
+      createdAt: double
+      expiresAt: double
+      autoRenew: boolean
+      cns: list<string>
+    source:
+      openapi: openapi.json
+  IssueCertResponse:
+    properties:
+      id: string
+      createdAt: double
+      expiresAt: double
+      autoRenew: boolean
+      cns: list<string>
+    source:
+      openapi: openapi.json
+  UploadCertResponse:
+    properties:
+      id: string
+      createdAt: double
+      expiresAt: double
+      autoRenew: boolean
+      cns: list<string>
+    source:
+      openapi: openapi.json
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getCertById:
+      path: /v7/certs/{id}
+      method: GET
+      auth: true
+      docs: Get cert by id
+      path-parameters:
+        id:
+          type: string
+          docs: The cert id
+      display-name: Get cert by id
+      request:
+        name: GetCertByIdRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: GetCertByIdResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: id
+              createdAt: 1.1
+              expiresAt: 1.1
+              autoRenew: true
+              cns:
+                - cns
+    removeCert:
+      path: /v7/certs/{id}
+      method: DELETE
+      auth: true
+      docs: Remove cert
+      path-parameters:
+        id:
+          type: string
+          docs: The cert id to remove
+      display-name: Remove cert
+      request:
+        name: RemoveCertRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+      response:
+        docs: ''
+        type: map<string, unknown>
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              key: value
+    issueCert:
+      path: /v7/certs
+      method: POST
+      auth: true
+      docs: Issue a new cert
+      display-name: Issue a new cert
+      request:
+        name: IssueCertRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            cns:
+              type: optional<list<string>>
+              docs: The common names the cert should be issued for
+      response:
+        docs: ''
+        type: IssueCertResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.RetryWithError
+        - root.InternalServerError
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              createdAt: 1.1
+              expiresAt: 1.1
+              autoRenew: true
+              cns:
+                - cns
+    uploadCert:
+      path: /v7/certs
+      method: PUT
+      auth: true
+      docs: Upload a cert
+      display-name: Upload a cert
+      request:
+        name: UploadCertRequest
+        query-parameters:
+          teamId:
+            type: optional<string>
+            docs: The Team identifier to perform the request on behalf of.
+          slug:
+            type: optional<string>
+            docs: The Team slug to perform the request on behalf of.
+        body:
+          properties:
+            ca:
+              type: string
+              docs: The certificate authority
+            key:
+              type: string
+              docs: The certificate key
+            cert:
+              type: string
+              docs: The certificate
+            skipValidation:
+              type: optional<boolean>
+              docs: Skip validation of the certificate
+      response:
+        docs: ''
+        type: UploadCertResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.PaymentRequiredError
+        - root.ForbiddenError
+      examples:
+        - request:
+            ca: ca
+            key: key
+            cert: cert
+          response:
+            body:
+              id: id
+              createdAt: 1.1
+              expiresAt: 1.1
+              autoRenew: true
+              cns:
+                - cns
+  source:
+    openapi: openapi.json
