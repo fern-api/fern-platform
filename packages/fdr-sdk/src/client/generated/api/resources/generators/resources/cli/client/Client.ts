@@ -209,7 +209,7 @@ export class Cli {
      *         changelogEntry: [{
      *                 type: FernRegistry.generators.ChangelogEntryType.Fix,
      *                 summary: "string",
-     *                 pullRequestUrl: {
+     *                 links: {
      *                     "key": "value"
      *                 },
      *                 upgradeNotes: {

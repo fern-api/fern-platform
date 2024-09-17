@@ -9,11 +9,12 @@ export interface ChangelogEntry {
     type: FernRegistry.generators.ChangelogEntryType;
     summary: string;
     /**
-     * The URL to the pull request that introduced this change. This is optional for backcompat.
+     * Any URLs that are relevant to the change, such as a PR or issue. This is optional for backcompat.
+     *
      * You do not always need to specify the URL as the CLI can fill it in with the current PR, but given you can choose to not
      * release within the same PR as the change is introduced, this should be specified for divorcing the two.
      */
-    pullRequestUrl?: string;
+    links?: string[];
     upgradeNotes?: string;
     added?: string[];
     changed?: string[];

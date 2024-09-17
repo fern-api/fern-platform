@@ -6,30 +6,13 @@ imports:
   commons: ./commons.yml
 
 types:
-  CliReleaseTagEnum:
-    enum:
-      - name: fern_definition
-        value: "Fern Definition"
-      - name: openapi
-        value: "OpenAPI"
-      - name: asyncapi
-        value: "AsyncAPI"
-      - name: grpc
-        value: "gRPC"
-
-  CliReleaseTag:
-    discriminated: false
-    union:
-      - string
-      - CliReleaseTagEnum
-
   BaseCliRelease:
     properties:
       irVersion:
         type: integer
         docs: The major version of the IR that this CLI exposes.
       tags:
-        type: optional<list<CliReleaseTag>>
+        type: optional<list<string>>
         docs: Tags to categorize the CLI release.
 
   CliReleaseRequest:
