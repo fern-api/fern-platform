@@ -39,7 +39,7 @@ export class DocsRevalidator {
                 verified: "true",
                 limit: 50,
                 order: "ASC",
-                since: cursor,
+                since: cursor ? cursor + 1 : undefined,
             });
 
             yield* res.domains.filter((domain) => !BANNED_DOMAINS.includes(domain.apexName));
@@ -52,7 +52,7 @@ export class DocsRevalidator {
         for await (const domain of this.getProductionDomains()) {
             domains.push(domain.name);
         }
-        return domains;
+        return domains.sort();
     }
 
     async getPreviewUrls(deploymentUrl: string): Promise<{ url: string; name: string }[]> {
@@ -65,7 +65,7 @@ export class DocsRevalidator {
             urls.push({ url: url.toString(), name: domain.name });
         }
 
-        return urls;
+        return urls.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     async revalidateAll(): Promise<void> {

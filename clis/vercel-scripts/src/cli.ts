@@ -92,7 +92,10 @@ void yargs(hideBin(process.argv))
                 description: "Revalidate the deployment (if it's fern docs)",
             }),
         async ({ deploymentUrl, token, teamId, revalidateAll }) => {
-            const deployment = await new VercelClient({ token }).deployments.getDeployment(deploymentUrl);
+            const deployment = await new VercelClient({ token }).deployments.getDeployment(
+                deploymentUrl.replace("https://", ""),
+                { teamId, withGitRepoInfo: "false" },
+            );
 
             if (deployment.target !== "production") {
                 // eslint-disable-next-line no-console
@@ -139,7 +142,10 @@ void yargs(hideBin(process.argv))
                 default: "preview.txt",
             }),
         async ({ deploymentUrl, token, teamId, output }) => {
-            const deployment = await new VercelClient({ token }).deployments.getDeployment(deploymentUrl);
+            const deployment = await new VercelClient({ token }).deployments.getDeployment(
+                deploymentUrl.replace("https://", ""),
+                { teamId, withGitRepoInfo: "false" },
+            );
 
             if (!deployment.project) {
                 throw new Error("Deployment does not have a project");
@@ -164,7 +170,10 @@ void yargs(hideBin(process.argv))
                 default: "domains.txt",
             }),
         async ({ deploymentUrl, token, teamId, output }) => {
-            const deployment = await new VercelClient({ token }).deployments.getDeployment(deploymentUrl);
+            const deployment = await new VercelClient({ token }).deployments.getDeployment(
+                deploymentUrl.replace("https://", ""),
+                { teamId, withGitRepoInfo: "false" },
+            );
 
             if (!deployment.project) {
                 throw new Error("Deployment does not have a project");
