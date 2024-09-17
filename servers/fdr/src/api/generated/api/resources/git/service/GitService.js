@@ -99,6 +99,30 @@ export class GitService {
                 next(error);
             }
         }));
+        this.router.delete("/repository/:repositoryOwner/:repositoryName", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.methods.deleteRepository(req, {
+                    send: () => __awaiter(this, void 0, void 0, function* () {
+                        res.sendStatus(204);
+                    }),
+                    cookie: res.cookie.bind(res),
+                    locals: res.locals,
+                }, next);
+                next();
+            }
+            catch (error) {
+                if (error instanceof errors.FernRegistryError) {
+                    console.warn(`Endpoint 'deleteRepository' unexpectedly threw ${error.constructor.name}.` +
+                        ` If this was intentional, please add ${error.constructor.name} to` +
+                        " the endpoint's errors list in your Fern Definition.");
+                    yield error.send(res);
+                }
+                else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        }));
         this.router.get("/pull-request/:repositoryOwner/:repositoryName/:pullRequestNumber", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getPullRequest(req, {

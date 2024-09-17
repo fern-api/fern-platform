@@ -53,6 +53,14 @@ export interface GitDao {
 
     upsertRepository({ repository }: { repository: FernRepository }): Promise<void>;
 
+    deleteRepository({
+        repositoryOwner,
+        repositoryName,
+    }: {
+        repositoryOwner: string;
+        repositoryName: string;
+    }): Promise<void>;
+
     getPullRequest({
         repositoryOwner,
         repositoryName,
@@ -168,7 +176,7 @@ export class GitDaoImpl implements GitDao {
         repositoryName: string;
         pullRequestNumber: number;
     }): Promise<void> {
-        this.prisma.pullRequest.delete({
+        await this.prisma.pullRequest.delete({
             where: {
                 pullRequestNumber_repositoryOwner_repositoryName: {
                     pullRequestNumber,
@@ -276,6 +284,23 @@ export class GitDaoImpl implements GitDao {
             },
         });
         return convertPrismaRepo(maybeRepo);
+    }
+
+    async deleteRepository({
+        repositoryOwner,
+        repositoryName,
+    }: {
+        repositoryOwner: string;
+        repositoryName: string;
+    }): Promise<void> {
+        await this.prisma.repository.delete({
+            where: {
+                owner_name: {
+                    owner: repositoryOwner,
+                    name: repositoryName,
+                },
+            },
+        });
     }
 }
 

@@ -217,6 +217,53 @@ export class Git {
     }
 
     /**
+     * Delete specified repository.
+     *
+     * @param {string} repositoryOwner
+     * @param {string} repositoryName
+     * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fernRegistry.git.deleteRepository("string", "string")
+     */
+    public async deleteRepository(
+        repositoryOwner: string,
+        repositoryName: string,
+        requestOptions?: Git.RequestOptions
+    ): Promise<core.APIResponse<void, FernRegistry.git.deleteRepository.Error>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                `/generators/github/repository/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(
+                    repositoryName
+                )}`
+            ),
+            method: "DELETE",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: undefined,
+            };
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.git.deleteRepository.Error._unknown(_response.error),
+        };
+    }
+
+    /**
      * Get a pull request by its ID.
      *
      * @param {string} repositoryOwner

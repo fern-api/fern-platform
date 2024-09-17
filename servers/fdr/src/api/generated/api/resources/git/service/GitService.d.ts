@@ -28,6 +28,14 @@ export interface GitServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }, next: express.NextFunction): void | Promise<void>;
+    deleteRepository(req: express.Request<{
+        repositoryOwner: string;
+        repositoryName: string;
+    }, never, never, never>, res: {
+        send: () => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }, next: express.NextFunction): void | Promise<void>;
     getPullRequest(req: express.Request<{
         repositoryOwner: string;
         repositoryName: string;

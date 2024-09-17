@@ -43,6 +43,14 @@ export function getGitController(app: FdrApplication): GitService {
 
             await app.dao.git().upsertRepository({ repository: req.body });
         },
+        deleteRepository: async (req, res) => {
+            await checkIsFernUser(req.headers.authorization);
+
+            await app.dao.git().deleteRepository({
+                repositoryName: req.params.repositoryName,
+                repositoryOwner: req.params.repositoryOwner,
+            });
+        },
         getPullRequest: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
 
@@ -58,7 +66,7 @@ export function getGitController(app: FdrApplication): GitService {
 
             res.send(maybePull);
         },
-        async listPullRequests(req, res) {
+        listPullRequests: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
 
             const repos = await app.dao.git().listPullRequests({
@@ -71,12 +79,12 @@ export function getGitController(app: FdrApplication): GitService {
 
             res.send(repos);
         },
-        async upsertPullRequest(req, res) {
+        upsertPullRequest: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
 
             await app.dao.git().upsertPullRequest({ pullRequest: req.body });
         },
-        async deletePullRequest(req, res) {
+        deletePullRequest: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
 
             await app.dao.git().deletePullRequest({
