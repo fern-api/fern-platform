@@ -4,60 +4,56 @@ service:
   auth: false
   base-path: /api/fern-docs
   endpoints:
-    revalidateAllV2:
-      path: /revalidate-all/v2
-      docs: Revalidates a docs website
-      display-name: Revalidate a docs instance
-      method: POST
-      request:
-        name: CreateRevalidateAllV2Request
-        headers:
-          x-fern-host:
-            type: string
-            docs: |
-              The host you want to revalidate the docs for.
-        query-parameters:
-          basePath:
-            type: string
-            docs: |
-              The base path of the docs you want to revalidate.
-        body:
-          properties:
-            host:
-              type: string
-              docs: |
-                The host you want to revalidate the docs for.
-      response: RevalidateAllV2Response
     revalidateAllV3:
       path: /revalidate-all/v3
       docs: Revalidates a docs website
       display-name: Revalidate a docs instance
       method: GET
+      response: RevalidateAllV3Response
+
+    revalidateAllV4:
+      path: /revalidate-all/v4
+      docs: Revalidates a docs website in a paginated manner
+      display-name: Revalidate a docs instance
+      method: GET
+      pagination:
+        offset: $request.offset
+        results: $response.results
       request:
-        name: CreateRevalidateAllV3Request
-        headers:
-          x-fern-host:
-            type: string
-            docs: |
-              The host you want to revalidate the docs for.
+        name: RevalidateAllV4Request
         query-parameters:
-          host:
-            type: string
-            docs: |
-              The host you want to revalidate the docs for.
-          basePath:
-            type: string
-            docs: |
-              The base path of the docs you want to revalidate.
-      response: RevalidateAllV2Response
+          offset:
+            type: optional<integer>
+            default: 0
+          limit:
+            type: optional<integer>
+            default: 100
+      response: RevalidateAllV4Response
 
 types:
-  RevalidateAllV2Response:
+  RevalidateAllV3Response:
     properties:
-      successfulRevalidations: list<SuccessfulRevalidations>
-      failedRevalidations: list<unknown>
+      successfulRevalidations: list<SuccessfulRevalidation>
+      failedRevalidations: list<FailedRevalidation>
 
-  SuccessfulRevalidations:
+  RevalidateAllV4Response:
     properties:
-      success: boolean
+      total: integer
+      results: list<RevalidationResult>
+
+  RevalidationResult:
+    discriminated: false
+    union:
+      - SuccessfulRevalidation
+      - FailedRevalidation
+
+  SuccessfulRevalidation:
+    properties:
+      success: literal<true>
       url: string
+
+  FailedRevalidation:
+    properties:
+      success: literal<false>
+      url: string
+      error: string

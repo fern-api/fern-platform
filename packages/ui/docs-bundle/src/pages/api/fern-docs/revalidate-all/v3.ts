@@ -1,11 +1,9 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import { buildUrl } from "@fern-ui/fdr-utils";
+import { provideRegistryService } from "@fern-ui/ui";
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";
-import { loadWithUrl } from "../../../../utils/loadWithUrl";
-import { toValidPathname } from "../../../../utils/toValidPathname";
 import { conformTrailingSlash } from "../../../../utils/trailingSlash";
 import { getXFernHostNode } from "../../../../utils/xFernHost";
 
@@ -43,11 +41,12 @@ const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<RevalidatedPaths>,
 ): Promise<unknown> => {
-    try {
-        // when we call res.revalidate() nextjs uses
-        // req.headers.host to make the network request
-        const xFernHost = getXFernHostNode(req, true);
+    // when we call res.revalidate() nextjs uses
+    // req.headers.host to make the network request
+    const xFernHost = getXFernHostNode(req, true);
+    req.headers.host = xFernHost;
 
+    try {
         const authConfig = await getAuthEdgeConfig(xFernHost);
 
         /**
@@ -60,31 +59,20 @@ const handler: NextApiHandler = async (
             return res.status(200).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
 
-        const url = buildUrl({
-            host: xFernHost,
-            pathname: toValidPathname(req.query.basePath),
-        });
-        // eslint-disable-next-line no-console
-        console.log("[revalidate-all/v2] Loading docs for", url);
-        const docs = await loadWithUrl(url);
+        const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url: xFernHost });
 
-        if (docs == null) {
-            // return notFoundResponse();
-            return res.status(404).json({ successfulRevalidations: [], failedRevalidations: [] });
+        if (!docs.ok) {
+            /**
+             * If the error is UnauthorizedError, we don't need to revalidate, since all the routes require SSR.
+             */
+            return res
+                .status(docs.error.error === "UnauthorizedError" ? 200 : 404)
+                .json({ successfulRevalidations: [], failedRevalidations: [] });
         }
 
-        const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+        const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
         const slugCollector = NodeCollector.collect(node);
         const urls = slugCollector.getPageSlugs().map((slug) => conformTrailingSlash(urljoin(xFernHost, slug)));
-
-        // when we call res.revalidate() nextjs uses
-        // req.headers.host to make the network request
-        if (
-            docs.baseUrl.domain.includes(".docs.buildwithfern.com") ||
-            docs.baseUrl.domain.includes(".docs.dev.buildwithfern.com")
-        ) {
-            req.headers.host = xFernHost;
-        }
 
         const results: RevalidatePathResult[] = [];
 

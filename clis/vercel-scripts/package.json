@@ -24,6 +24,7 @@
     "yargs": "^17.4.1"
   },
   "dependencies": {
+    "@fern-fern/revalidation-sdk": "0.0.12",
     "@fern-fern/vercel": "0.0.4607",
     "ts-essentials": "^10.0.1"
   }

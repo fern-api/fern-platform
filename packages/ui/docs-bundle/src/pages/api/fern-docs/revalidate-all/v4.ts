@@ -1,11 +1,9 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import { buildUrl } from "@fern-ui/fdr-utils";
 import { provideRegistryService } from "@fern-ui/ui";
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";
-import { toValidPathname } from "../../../../utils/toValidPathname";
 import { conformTrailingSlash } from "../../../../utils/trailingSlash";
 import { getXFernHostNode } from "../../../../utils/xFernHost";
 
@@ -79,12 +77,7 @@ const handler: NextApiHandler = async (
         return res.status(500).json({ total: 0, data: [] });
     }
 
-    const url = buildUrl({
-        host: xFernHost,
-        pathname: toValidPathname(req.query.basePath),
-    });
-
-    const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url });
+    const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url: xFernHost });
 
     if (!docs.ok) {
         /**

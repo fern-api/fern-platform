@@ -16,7 +16,7 @@
     "@fern-api/github": "workspace:*",
     "@fern-api/template-resolver": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.6.2-1-gbbd1ac5",
-    "@fern-fern/revalidation-sdk": "0.0.9",
+    "@fern-fern/revalidation-sdk": "0.0.12",
     "@prisma/client": "5.13.0",
     "@sentry/cli": "^2.31.0",
     "@sentry/node": "^7.112.2",

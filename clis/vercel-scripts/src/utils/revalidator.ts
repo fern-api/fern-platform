@@ -1,24 +1,8 @@
+import { FernRevalidationClient } from "@fern-fern/revalidation-sdk";
 import { Vercel, VercelClient } from "@fern-fern/vercel";
+import { logCommand } from "./exec.js";
 
 const BANNED_DOMAINS = ["vercel.app", "buildwithfern.com", "ferndocs.com"];
-
-type RevalidatePathResult = RevalidatePathSuccessResult | RevalidatePathErrorResult;
-
-interface RevalidatePathSuccessResult {
-    success: true;
-    url: string;
-}
-
-interface RevalidatePathErrorResult {
-    success: false;
-    url: string;
-    message: string;
-}
-
-type RevalidateAllResponse = {
-    total: number;
-    data: RevalidatePathResult[];
-};
 
 export class DocsRevalidator {
     private vercel: VercelClient;
@@ -69,44 +53,36 @@ export class DocsRevalidator {
     }
 
     async revalidateAll(): Promise<void> {
+        const summary: Record<string, { success: number; failed: number }> = {};
+
         for await (const domain of this.getProductionDomains()) {
             // eslint-disable-next-line no-console
             console.log(`Revalidating ${domain.name}...`);
 
-            const url = new URL(`https://${domain.name}/api/fern-docs/revalidate-all/v4`);
-            url.searchParams.set("limit", "50");
+            const client = new FernRevalidationClient({
+                // TODO: handle docs with basepath
+                environment: `https://${domain.name}`,
+            });
 
-            let total: number | undefined;
-            let offset = 0;
+            const revalidationSummary = { success: 0, failed: 0 };
+            const results = await client.revalidateAllV4({ limit: 50 });
 
-            do {
-                url.searchParams.set("offset", String(offset));
-                const res = (await (await fetch(url)).json()) as RevalidateAllResponse;
-                if (res.total === 0) {
-                    break;
-                }
-
-                if (total === undefined) {
-                    total = res.total;
-                } else if (total !== res.total) {
+            for await (const result of results) {
+                if (!result.success) {
                     // eslint-disable-next-line no-console
-                    console.warn(
-                        `[${domain.name}] Total changed while revalidating from ${total} to ${res.total}. This is probably due to a docs regeneration. Skipping...`,
-                    );
+                    console.warn(`[${domain.name}] Failed to revalidate ${result.url}: ${result.error}`);
+                    revalidationSummary.failed++;
+                } else {
+                    revalidationSummary.success++;
                 }
-
-                offset += res.data.length;
-
-                res.data.forEach((result) => {
-                    if (!result.success) {
-                        // eslint-disable-next-line no-console
-                        console.warn(`[${domain.name}] Failed to revalidate ${result.url}: ${result.message}`);
-                    }
-                });
-
-                // eslint-disable-next-line no-console
-                console.log(`[${domain.name}] Revalidated ${offset}/${total} paths...`);
-            } while (offset < total);
+            }
         }
+
+        // eslint-disable-next-line no-console
+        logCommand("Revalidation summary");
+        Object.entries(summary).forEach(([domain, { success, failed }]) => {
+            // eslint-disable-next-line no-console
+            console.log(`- ${domain}: ${success} successful, ${failed} failed`);
+        });
     }
 }

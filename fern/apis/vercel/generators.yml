@@ -8,6 +8,6 @@ groups:
           location: npm
           url: npm.buildwithfern.com
           package-name: "@fern-fern/vercel"
-        config: 
+        config:
           skipResponseValidation: true
           namespaceExport: Vercel
