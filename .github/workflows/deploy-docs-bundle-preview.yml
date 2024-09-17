@@ -33,10 +33,10 @@ jobs:
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --force
           if [ -f deployment-url.txt ]; then
             pnpm vercel-scripts preview.txt $(cat deployment-url.txt) --token=${{ secrets.VERCEL_TOKEN }}
-            echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
+            echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
           fi
 
       - name: Comment PR Preview
@@ -97,7 +97,7 @@ jobs:
         id: deploy
         run: |
           pnpm vercel-scripts deploy app-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --force
-          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   ete:
     needs: deploy # only runs on fern-prod

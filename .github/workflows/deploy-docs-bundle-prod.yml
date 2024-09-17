@@ -31,7 +31,7 @@ jobs:
         id: deploy
         run: |
           pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production --force
-          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   deploy_app_ferndocs_com:
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
         id: deploy
         run: |
           pnpm vercel-scripts deploy app.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production --force
-          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   deploy_app-slash_ferndocs_com:
     runs-on: ubuntu-latest
@@ -75,7 +75,7 @@ jobs:
         id: deploy
         run: |
           pnpm vercel-scripts deploy app-slash.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production --force
-          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   ete:
     needs: deploy_app_buildwithfern_com

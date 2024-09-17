@@ -31,4 +31,4 @@ jobs:
         run: |
           pnpm vercel-scripts deploy icons.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
           echo "Deployed to $(cat deployment-url.txt) but NOT promoted. Please promote manually."
-          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
