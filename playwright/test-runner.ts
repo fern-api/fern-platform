@@ -13,7 +13,8 @@ export function getPlaywrightTestUrls(type: string): string[] {
     const testUrls: string[] = fs
         .readFileSync("domains.txt", "utf-8")
         .split(/\r?\n/)
-        .filter((domain) => testInclusions.has(domain));
+        .filter((domain) => testInclusions.has(domain))
+        .map((domain) => `https://${domain}`);
 
     if (testUrls.length === 0) {
         throw new Error("No URLs found in domains.txt");

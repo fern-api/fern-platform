@@ -1,9 +1,4 @@
 name: Deploy @fern-ui/docs-bundle
-env:
-  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
 
 on:
   push:
@@ -23,17 +18,18 @@ jobs:
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
-    env:
-      VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
     steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
         id: deploy
-        with:
-          package: "@fern-ui/docs-bundle"
-          environment: production
-          force: true
+        run: |
+          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   deploy_app_ferndocs_com:
     runs-on: ubuntu-latest
@@ -43,17 +39,18 @@ jobs:
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
-    env:
-      VERCEL_PROJECT_ID: prj_SfgTTzw7KefTMuVWsL5uhY8Y4BIt
     steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
         id: deploy
-        with:
-          package: "@fern-ui/docs-bundle"
-          environment: production
-          force: true
+        run: |
+          pnpm vercel-scripts deploy app.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   deploy_app-slash_ferndocs_com:
     runs-on: ubuntu-latest
@@ -63,17 +60,18 @@ jobs:
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
-    env:
-      VERCEL_PROJECT_ID: prj_GGc6CEzrWNyUK0hq1UK7KmbgUmZn
     steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
         id: deploy
-        with:
-          package: "@fern-ui/docs-bundle"
-          environment: production
-          force: true
+        run: |
+          pnpm vercel-scripts deploy app-slash.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   ete:
     needs: deploy_app_buildwithfern_com
@@ -82,9 +80,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # this script generates domains.txt and preview.txt
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Fetch domains
-        run: node scripts/fetch-domains.js
+        run: pnpm vercel-scripts domains.txt app.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
 
       - uses: ./github/actions/ete-docs-bundle
         with:
@@ -106,17 +106,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Vercel CLI
-        run: npm install -g vercel
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Promote Deployment
-        run: vercel promote ${{ matrix.deployment_url }} --token $VERCEL_TOKEN
-
-  revalidate-all:
-    needs: promote # Ensure that the deployment is promoted before revalidating
-    uses: ./.github/workflows/revalidate-all.yml
-    with:
-      deployment_url: https://app.buildwithfern.com
+        run: pnpm vercel-scripts promote ${{ matrix.deployment_url }} --token ${{ secrets.VERCEL_TOKEN }}
 
   smoke-test:
     needs: promote # Ensure that the deployment is promoted before running smoke tests

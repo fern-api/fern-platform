@@ -1,10 +1,4 @@
 name: Deploy @fern-ui/docs-bundle (dev)
-env:
-  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  VERCEL_PROJECT_ID: prj_QnsiTm1ijJP6cS23K5da6lL02wbp
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
 
 on:
   push:
@@ -14,11 +8,30 @@ on:
 
 concurrency:
   group: app-dev.buildwithfern.com
-  cancel-in-progress: ${{ github.event_name == 'push' }}
+  cancel-in-progress: true
 
 jobs:
+  ignore:
+    runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.ignore.outputs.continue }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # used for turbo-ignore
+
+      - name: Install
+        uses: ./.github/actions/install
+        with:
+          run_install: false
+
+      - name: Ignore unchanged files
+        id: ignore
+        run: set +e; pnpx turbo-ignore @fern-ui/docs-bundle --fallback=HEAD^1; echo "continue=$?" >> $GITHUB_OUTPUT
+
   deploy:
-    if: github.ref_name == 'main'
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
     runs-on: ubuntu-latest
     environment:
       name: Production - app-dev.buildwithfern.com
@@ -26,12 +39,16 @@ jobs:
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-      - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
-        id: deploy
         with:
           ref: ${{ github.ref_name || github.ref }}
-          package: "@fern-ui/docs-bundle"
-          environment: production
-          promote: true
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy app-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production --force
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT

@@ -1,0 +1,11 @@
+{
+  "extends": "@fern-platform/configs/tsconfig/cli.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "composite": false,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src"]
+}

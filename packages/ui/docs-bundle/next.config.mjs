@@ -1,4 +1,4 @@
-import createWithBundleAnalyzer from "@next/bundle-analyzer";
+import NextBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
 import process from "node:process";
 
@@ -160,8 +160,8 @@ const nextConfig = {
     },
 };
 
-const withBundleAnalyzer = createWithBundleAnalyzer({
-    enabled: isTruthy(process.env.ANALYZE),
+const withBundleAnalyzer = NextBundleAnalyzer({
+    enabled: true,
 });
 
 // Injected content via Sentry wizard below

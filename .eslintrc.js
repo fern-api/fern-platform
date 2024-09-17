@@ -97,12 +97,7 @@ module.exports = {
         indent: "off",
         "object-shorthand": ["error"],
         "deprecation/deprecation": "error",
-        "import/no-internal-modules": [
-            "error",
-            {
-                forbid: ["@fern-ui/*/**"],
-            },
-        ],
+        // "import/no-internal-modules": ["error"],
         eqeqeq: [
             "error",
             "always",
