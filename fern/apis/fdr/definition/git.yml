@@ -1,0 +1,246 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+docs: Produces an internal schema to easily track and view pull requests across Fern-managed repositories. This API is named `git` to allow for flexibility in adding other git providers down the line (e.g. gitlab).
+
+imports:
+  commons: ./commons.yml
+
+types:
+  # Soon to add to our data model:
+  #   - Orgs (internal)
+  #   - Products (internal)
+  #   - Features (internal)
+  #   - Checks (internal, within their own table)
+
+  CheckRun:
+    properties:
+      checkId: string
+
+      repositoryOwner: string
+      repositoryName: string
+      ref: string
+
+      name: string
+      status: string
+      conclusion: string
+      checkRunUrl: string
+      createdAt: datetime
+      completedAt: optional<datetime>
+
+      rawCheckRun: unknown
+
+  GithubRepositoryId:
+    properties:
+      id: string
+
+  RepositoryId:
+    union:
+      github: GithubRepositoryId
+
+  BaseRepository:
+    properties:
+      id: RepositoryId
+      name: string
+      owner:
+        type: string
+        docs: The organization name within Github, e.g. fern-api.
+      fullName:
+        type: string
+        docs: The full name of the repository, e.g. fern-api/fern. It includes the owner, as well as the name of the repository.
+      url: string
+      repositoryOwnerOrganizationId:
+        type: commons.OrgId
+        docs: The Fern organization ID of the repository owner.
+      defaultBranchChecks: list<CheckRun>
+
+  # TODO: We may want to add the concept consumer repos, e.g. customers of customers, people actually using the SDKs.
+  SdkRepository:
+    extends: BaseRepository
+    properties:
+      sdkLanguage: string
+
+  FernConfigRepository:
+    extends: BaseRepository
+
+  FernRepository:
+    union:
+      sdk: SdkRepository
+      config: FernConfigRepository
+
+  GithubUser:
+    properties:
+      name: string
+      email: string
+      username: string
+
+  GithubTeam:
+    properties:
+      name: string
+      teamId: string
+
+  PullRequestReviewer:
+    union:
+      user: GithubUser
+      team: GithubTeam
+
+  PullRequestState:
+    enum:
+      - open
+      - closed
+      # Technically Github's API only returns open or closed, and merged_at indicates the merge, but we'll add it here for querying convenience.
+      - merged
+
+  PullRequest:
+    properties:
+      pullRequestNumber: integer
+      repositoryName: string
+      repositoryOwner: string
+      author: GithubUser
+      reviewers: list<PullRequestReviewer>
+      title: string
+      url: string
+      checks: list<CheckRun>
+      state: PullRequestState
+      createdAt: datetime
+      updatedAt: optional<datetime>
+      mergedAt: optional<datetime>
+      closedAt: optional<datetime>
+
+  ListRepositoriesResponse:
+    properties:
+      repositories: list<FernRepository>
+
+  ListPullRequestsResponse:
+    properties:
+      pullRequests: list<PullRequest>
+
+  RepositoryNotFound:
+    properties:
+      repositoryName: string
+      repositoryOwner: string
+
+  PullRequestNotFound:
+    extends: RepositoryNotFound
+    properties:
+      pullRequestNumber: integer
+
+service:
+  audiences:
+    - generators
+  base-path: /generators/github
+  auth: true
+  endpoints:
+    getRepository:
+      docs: Get a repository by its name (mirroring the Github API, this is the main get request).
+      method: GET
+      path: /repository/{repositoryOwner}/{repositoryName}
+      path-parameters:
+        repositoryOwner: string
+        repositoryName: string
+      response: FernRepository
+
+    listRepositories:
+      docs: Get all repositories.
+      method: GET
+      path: "/repository"
+      pagination:
+        offset: $request.page
+        results: $response.repositories
+      request:
+        name: ListRepositoriesRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page number to retrieve. Defaults to 0.
+          pageSize:
+            type: optional<integer>
+            docs: The number of items to retrieve per page. Defaults to 20.
+          organizationId:
+            type: optional<commons.OrgId>
+            docs: The Fern organization ID to filter repositories by.
+          repositoryName:
+            type: optional<string>
+            docs: |
+              The name of the repository to filter pull requests by (ex: full-platform).
+          repositoryOwner:
+            type: optional<string>
+            docs: |
+              The organization name of the repository owner to filter pull requests by (ex: fern-api).
+      response: ListRepositoriesResponse
+
+    upsertRepository:
+      docs: Update or create the specified repository.
+      method: PUT
+      path: /repository
+      request: FernRepository
+
+    deleteRepository:
+      docs: Delete specified repository.
+      method: DELETE
+      path: /repository/{repositoryOwner}/{repositoryName}
+      path-parameters:
+        repositoryOwner: string
+        repositoryName: string
+
+    getPullRequest:
+      docs: Get a pull request by its ID.
+      method: GET
+      path: /pull-request/{repositoryOwner}/{repositoryName}/{pullRequestNumber}
+      path-parameters:
+        repositoryOwner: string
+        repositoryName: string
+        pullRequestNumber: integer
+      response: PullRequest
+
+    listPullRequests:
+      docs: Get all pull requests.
+      method: GET
+      path: "/pull-request"
+      pagination:
+        offset: $request.page
+        results: $response.pullRequests
+      request:
+        name: ListPullRequestsRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: The page number to retrieve. Defaults to 0.
+          pageSize:
+            type: optional<integer>
+            docs: The number of items to retrieve per page. Defaults to 20.
+          repositoryName:
+            type: optional<string>
+            docs: |
+              The name of the repository to filter pull requests by (ex: full-platform).
+          repositoryOwner:
+            type: optional<string>
+            docs: |
+              The organization name of the repository owner to filter pull requests by (ex: fern-api).
+          organizationId:
+            type: optional<commons.OrgId>
+            docs: The Fern organization ID to filter repositories by.
+      response: ListPullRequestsResponse
+
+    upsertPullRequest:
+      docs: Update or create the specified pull request.
+      method: PUT
+      path: /pull-request
+      request: PullRequest
+
+    deletePullRequest:
+      docs: Delete specified pull request.
+      method: DELETE
+      path: /pull-request/{repositoryOwner}/{repositoryName}/{pullRequestNumber}
+      path-parameters:
+        repositoryOwner: string
+        repositoryName: string
+        pullRequestNumber: integer
+
+errors:
+  PullRequestNotFoundError:
+    status-code: 404
+    type: PullRequestNotFound
+
+  RepositoryNotFoundError:
+    status-code: 404
+    type: RepositoryNotFound

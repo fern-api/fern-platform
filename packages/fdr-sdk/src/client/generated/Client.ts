@@ -9,6 +9,7 @@ import { Docs } from "./api/resources/docs/client/Client";
 import { Generators } from "./api/resources/generators/client/Client";
 import { Diff } from "./api/resources/diff/client/Client";
 import { DocsCache } from "./api/resources/docsCache/client/Client";
+import { Git } from "./api/resources/git/client/Client";
 import { Sdks } from "./api/resources/sdks/client/Client";
 import { SnippetsFactory } from "./api/resources/snippetsFactory/client/Client";
 import { Snippets } from "./api/resources/snippets/client/Client";
@@ -59,6 +60,12 @@ export class FernRegistryClient {
 
     public get docsCache(): DocsCache {
         return (this._docsCache ??= new DocsCache(this._options));
+    }
+
+    protected _git: Git | undefined;
+
+    public get git(): Git {
+        return (this._git ??= new Git(this._options));
     }
 
     protected _sdks: Sdks | undefined;
