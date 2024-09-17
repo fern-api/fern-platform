@@ -43,3 +43,10 @@ export async function execFernCli(
         throw error;
     }
 }
+
+// We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
+// Exported to leverage in tests
+export function cleanFernStdout(stdout: string): string {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return stdout.split("╭─")[0]!.split("\n")[0]!.trim();
+}

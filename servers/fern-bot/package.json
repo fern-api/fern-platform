@@ -22,7 +22,7 @@
     "@fern-api/core-utils": "0.15.0-rc63",
     "@fern-api/github": "workspace:*",
     "@fern-api/venus-api-sdk": "0.8.1-1-gd6d1a5b",
-    "@fern-fern/generators-sdk": "0.109.0-21be2e5be",
+    "@fern-fern/generators-sdk": "0.110.0-b3ce9a23a",
     "@octokit/openapi-types": "^22.1.0",
     "@slack/web-api": "^6.9.0",
     "cohere-ai": "^7.9.5",

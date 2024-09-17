@@ -28,6 +28,8 @@ provider:
     FERNIE_SLACK_APP_TOKEN: ${env:FERNIE_SLACK_APP_TOKEN, 'placeholder'}
     CUSTOMER_ALERTS_SLACK_CHANNEL: ${env:CUSTOMER_ALERTS_SLACK_CHANNEL, 'placeholder'}
     REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
+    FERN_TOKEN: ${env:FERN_TOKEN, 'OMIT'}
+
   # Roles for the lambda functions
   iam:
     role:
