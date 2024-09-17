@@ -34,8 +34,10 @@ jobs:
         id: deploy
         run: |
           pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
-          pnpm vercel-scripts preview.txt $(cat deployment-url.txt) --token=${{ secrets.VERCEL_TOKEN }}
-          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
+          if [ -f deployment-url.txt ]; then
+            pnpm vercel-scripts preview.txt $(cat deployment-url.txt) --token=${{ secrets.VERCEL_TOKEN }}
+            echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
+          fi
 
       - name: Comment PR Preview
         uses: thollander/actions-comment-pull-request@v2
