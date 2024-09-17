@@ -136,6 +136,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             changelogEntry: cliRelease.changelogEntry != null ? writeBuffer(cliRelease.changelogEntry) : null,
             isYanked: cliRelease.isYanked != null ? writeBuffer(cliRelease.isYanked) : null,
             createdAt: cliRelease.createdAt != null ? new Date(cliRelease.createdAt) : undefined,
+            tags: cliRelease.tags,
         };
 
         await this.prisma.cliRelease.upsert({
@@ -199,6 +200,7 @@ function convertPrismaCliRelease(cliRelease: prisma.CliRelease | null): CliRelea
 
     return {
         version: cliRelease.version,
+        tags: cliRelease.tags,
         irVersion: cliRelease.irVersion,
         releaseType: convertPrismaReleaseType(cliRelease.releaseType),
         changelogEntry:
