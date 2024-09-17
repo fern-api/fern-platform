@@ -3,7 +3,6 @@ import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { provideRegistryService } from "@fern-ui/ui";
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
-import { chunk } from "lodash-es";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { Revalidator } from "../../../../utils/revalidator";
 import { getXFernHostNode } from "../../../../utils/xFernHost";
@@ -21,6 +20,10 @@ function isSuccessResult(result: FernDocs.RevalidationResult): result is FernDoc
 
 function isFailureResult(result: FernDocs.RevalidationResult): result is FernDocs.FailedRevalidation {
     return !result.success;
+}
+
+function chunk<T>(arr: T[], size: number): T[][] {
+    return arr.reduce((acc, _, i) => (i % size ? acc : [...acc, arr.slice(i, i + size)]), [] as T[][]);
 }
 
 const handler: NextApiHandler = async (
