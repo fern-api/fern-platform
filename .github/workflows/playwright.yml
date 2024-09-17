@@ -41,11 +41,9 @@ jobs:
           npm install -g @fern-api/fern-api-dev
 
       - name: Run Playwright tests
-        run: pnpm exec playwright test playwright/fixtures
+        run: PLAYWRIGHT_JSON_OUTPUT_NAME=results.json pnpm exec playwright test playwright/fixtures --reporter json
 
-      - uses: actions/upload-artifact@v4
+      - uses: daun/playwright-report-summary@v3
         if: always()
         with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+          report-file: results.json
