@@ -1,7 +1,5 @@
 name: Preview @fern-ui/dashboard (dev)
 env:
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
   # TODO: move to env vars in vercel
   AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
   AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}

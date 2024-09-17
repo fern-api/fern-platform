@@ -1,7 +1,4 @@
 name: Deploy @fern-ui/docs-bundle (dev)
-env:
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
 
 on:
   push:

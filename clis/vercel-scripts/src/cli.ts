@@ -25,6 +25,12 @@ void yargs(hideBin(process.argv))
         demandOption: false,
         default: process.env.VERCEL_ORG_ID ?? "team_6FKOM5nw037hv8g2mTk3gaH7",
     })
+    .options("teamName", {
+        type: "string",
+        description: "The Vercel team name",
+        demandOption: false,
+        default: "buildwithfern",
+    })
     .command(
         "deploy <project>",
         "Deploy a project to Vercel",
@@ -49,7 +55,7 @@ void yargs(hideBin(process.argv))
                     description: "The output file to write the preview URLs to",
                     default: "deployment-url.txt",
                 }),
-        async ({ project, environment, token, teamId, output, skipDeploy, force }) => {
+        async ({ project, environment, token, teamName, teamId, output, skipDeploy, force }) => {
             if (!isValidEnvironment(environment)) {
                 throw new Error(`Invalid environment: ${environment}`);
             }
@@ -59,6 +65,7 @@ void yargs(hideBin(process.argv))
 
             const cli = new VercelDeployer({
                 token,
+                teamName,
                 teamId,
                 environment,
                 cwd: cwd(),

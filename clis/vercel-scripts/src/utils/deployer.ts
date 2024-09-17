@@ -6,22 +6,26 @@ import { exec } from "./exec.js";
 
 export class VercelDeployer {
     private token: string;
+    private teamName: string;
     private teamId: string;
     private environment: "preview" | "production";
     private cwd: string;
     private vercel: VercelClient;
     constructor({
         token,
+        teamName,
         teamId,
         environment,
         cwd,
     }: {
         token: string;
+        teamName: string;
         teamId: string;
         environment: "preview" | "production";
         cwd: string;
     }) {
         this.token = token;
+        this.teamName = teamName;
         this.teamId = teamId;
         this.environment = environment;
         this.cwd = cwd;
@@ -51,11 +55,20 @@ export class VercelDeployer {
         return true;
     }
 
+    private env(projectId: string): Record<string, string> {
+        return {
+            TURBO_TOKEN: this.token,
+            TURBO_TEAM: this.teamName,
+            VERCEL_ORG_ID: this.teamId,
+            VERCEL_PROJECT_ID: projectId,
+        };
+    }
+
     private pull(project: { id: string; name: string }): void {
         exec(
             `[${this.environmentName}] Pull ${project.name} from Vercel (${project.id})`,
             `pnpx vercel pull --yes --environment=${this.environment} --token=${this.token}`,
-            { env: { VERCEL_PROJECT_ID: project.id, VERCEL_ORG_ID: this.teamId }, cwd: this.cwd },
+            { env: this.env(project.id), cwd: this.cwd },
         );
     }
 
@@ -65,7 +78,7 @@ export class VercelDeployer {
             command += " --prod";
         }
         exec(`[${this.environmentName}] Build bundle for ${project.name}`, command, {
-            env: { VERCEL_PROJECT_ID: project.id, VERCEL_ORG_ID: this.teamId },
+            env: this.env(project.id),
             cwd: this.cwd,
         });
     }
@@ -77,7 +90,7 @@ export class VercelDeployer {
         }
         return exec(`[${this.environmentName}] Deploy bundle for ${project.name} to Vercel`, command, {
             stdio: "pipe",
-            env: { VERCEL_PROJECT_ID: project.id, VERCEL_ORG_ID: this.teamId },
+            env: this.env(project.id),
             cwd: this.cwd,
         }).trim();
     }

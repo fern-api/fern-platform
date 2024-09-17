@@ -1,8 +1,4 @@
 name: Preview @fern-ui/docs-bundle
-env:
-  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
 
 on:
   pull_request:
@@ -112,6 +108,11 @@ jobs:
     permissions: write-all
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+        with:
+          run_install: false
 
       - name: Fetch domains
         run: pnpm vercel-scripts domains.txt ${{ needs.deploy.outputs.deployment_url }} --token=${{ secrets.VERCEL_TOKEN }}

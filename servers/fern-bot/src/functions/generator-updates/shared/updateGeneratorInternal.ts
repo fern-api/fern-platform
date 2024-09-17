@@ -8,7 +8,7 @@ import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import SemVer from "semver";
-import { SimpleGit } from "simple-git";
+import { CleanOptions, SimpleGit } from "simple-git";
 
 async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
     const client = new FernVenusApiClient({ environment: venusUrl });
@@ -289,6 +289,15 @@ async function handleSingleUpgrade({
     // Checkout an upgrade branch, if one exists, update it, otherwise create it
     const originDefaultBranch = `${DEFAULT_REMOTE_NAME}/${repository.default_branch}`;
     await getOrUpdateBranch(git, originDefaultBranch, branchName);
+
+    // Force reset the branch to the default branch
+    // This is mostly meant to allow repeating migrations (e.g. we ship a faulty CLI version + migration, if we did not reset the branch
+    // we'd never rerun the upgrade, now we reset everything and rerun the upgrade, thus rerunning the migration)
+    await git.fetch([DEFAULT_REMOTE_NAME]);
+    await git.reset(["--hard", originDefaultBranch]);
+    await git.clean(CleanOptions.FORCE, ["-d"]);
+    // Note we don't do this for API spec PRs as those invite users to update their API overrides file to match the API spec changes
+    // so we'd be blowing away their work if we reset the branch. CLI + generator upgrades should be safe to reset.
 
     // Perform the upgrade and get the new version you just upgraded to
     console.log(`Upgrading entity to latest version, from version: ${fromVersion}`);

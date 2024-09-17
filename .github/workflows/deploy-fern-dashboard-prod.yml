@@ -1,9 +1,5 @@
 name: Deploy @fern-ui/dashboard
 env:
-  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  VERCEL_PROJECT_ID: prj_59B94Hus48Nbb0XrqFYZSALYmYTw
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
   # TODO: move to env vars in vercel
   AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
   AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
