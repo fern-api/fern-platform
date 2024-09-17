@@ -94,6 +94,8 @@ jobs:
           comment_tag: bundle_analysis
 
   deploy-dev:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
     runs-on: ubuntu-latest
     environment:
       name: Preview - app-dev.buildwithfern.com
