@@ -37,7 +37,7 @@ jobs:
 
       - name: Comment PR Preview
         uses: thollander/actions-comment-pull-request@v2
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && steps.deploy.outputs.deployment_url
         with:
           filePath: preview.txt
           comment_tag: pr_preview
