@@ -1,7 +1,5 @@
 name: Preview @fern-ui/dashboard (dev)
 env:
-  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  VERCEL_PROJECT_ID: prj_pxVBPOeLKJLEUkQXXMHKWq8h6Z0f
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
   # TODO: move to env vars in vercel
@@ -11,9 +9,11 @@ env:
   VENUS_AUDIENCE: ${{ secrets.VENUS_AUDIENCE }}
 
 on:
+  pull_request:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 # Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
 concurrency:
@@ -27,12 +27,19 @@ jobs:
       name: Preview - dashboard.buildwithfern.com
       url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-      - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
-        id: deploy
         with:
-          ref: ${{ github.ref_name || github.ref }}
-          token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/dashboard"
-          environment: preview
+          fetch-depth: 2 # used for turbo-ignore
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+
+      - name: Install
+        uses: ./.github/actions/install
+        with:
+          run_install: false # install is handled by vercel build
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy dashboard.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV

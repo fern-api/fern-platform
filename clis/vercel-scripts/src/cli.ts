@@ -42,12 +42,14 @@ void yargs(hideBin(process.argv))
                     default: "preview",
                     choices: ["preview" as const, "production" as const],
                 })
+                .option("skip-deploy", { type: "boolean", description: "Skip the deploy step" })
+                .option("force", { type: "boolean", description: "Always deploy, even if the project is up-to-date" })
                 .option("output", {
                     type: "string",
                     description: "The output file to write the preview URLs to",
-                    default: "deployment.txt",
+                    default: "deployment-url.txt",
                 }),
-        async ({ project, environment, token, teamId }) => {
+        async ({ project, environment, token, teamId, output, skipDeploy, force }) => {
             if (!isValidEnvironment(environment)) {
                 throw new Error(`Invalid environment: ${environment}`);
             }
@@ -62,13 +64,13 @@ void yargs(hideBin(process.argv))
                 cwd: cwd(),
             });
 
-            const result = await cli.buildAndDeployToVercel(project);
+            const result = await cli.buildAndDeployToVercel(project, { skipDeploy, force });
 
             if (result) {
                 // eslint-disable-next-line no-console
-                console.log("Deployment successful");
+                console.log("Deployed to:", result.deploymentUrl);
 
-                writeFileSync("deployment-url.txt", result.deploymentUrl);
+                writeFileSync(output, result.deploymentUrl);
             }
 
             process.exit(0);
@@ -77,19 +79,43 @@ void yargs(hideBin(process.argv))
     .command(
         "promote <deploymentUrl>",
         "Promote a deployment to production",
-        (argv) => argv.positional("deploymentUrl", { type: "string", demandOption: true }),
-        async ({ deploymentUrl, token, teamId }) => {
+        (argv) =>
+            argv.positional("deploymentUrl", { type: "string", demandOption: true }).option("revalidate-all", {
+                type: "boolean",
+                description: "Revalidate the deployment (if it's fern docs)",
+            }),
+        async ({ deploymentUrl, token, teamId, revalidateAll }) => {
             const deployment = await new VercelClient({ token }).deployments.getDeployment(deploymentUrl);
 
             if (deployment.target !== "production") {
-                throw new Error("Deployment is not a production deployment");
+                // eslint-disable-next-line no-console
+                console.error("Deployment is not a production deployment");
+                process.exit(1);
             } else if (deployment.readySubstate !== "STAGED") {
-                throw new Error("Deployment is not staged");
+                // eslint-disable-next-line no-console
+                console.error("Deployment is not staged");
+                process.exit(1);
             } else if (!deployment.project) {
-                throw new Error("Deployment does not have a project");
+                // eslint-disable-next-line no-console
+                console.error("Deployment does not have a project");
+                process.exit(1);
             }
 
-            const revalidator = new DocsRevalidator({ token, project: deployment.project.name, teamId });
+            if (revalidateAll) {
+                const revalidator = new DocsRevalidator({ token, project: deployment.project.name, teamId });
+
+                await revalidator.revalidateAll();
+            }
+
+            process.exit(0);
+        },
+    )
+    .command(
+        "revalidate-all <deploymentUrl>",
+        "Revalidate all docs for a deployment",
+        (argv) => argv.positional("deploymentUrl", { type: "string", demandOption: true }),
+        async ({ deploymentUrl, token, teamId }) => {
+            const revalidator = new DocsRevalidator({ token, project: deploymentUrl, teamId });
 
             await revalidator.revalidateAll();
 

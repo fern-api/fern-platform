@@ -25,19 +25,30 @@ jobs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     permissions: write-all
     steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-      - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
-        id: deploy
-        env:
-          ANALYZE: 1
-          VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
         with:
+          fetch-depth: 2 # used for turbo-ignore
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
-          token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/docs-bundle"
-          environment: preview
-          force: ${{ github.event_name == 'workflow_dispatch' }}
+
+      - name: Install
+        uses: ./.github/actions/install
+        with:
+          run_install: false # install is handled by vercel build
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+          pnpm vercel-scripts preview.txt $(cat deployment-url.txt) --token=${{ secrets.VERCEL_TOKEN }}
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
+
+      - name: Comment PR Preview
+        uses: thollander/actions-comment-pull-request@v2
+        if: github.event_name == 'pull_request'
+        with:
+          filePath: preview.txt
+          comment_tag: pr_preview
 
       - name: Analyze bundle
         if: steps.deploy.outputs.deployment_url
@@ -78,17 +89,21 @@ jobs:
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-      - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
-        id: deploy
-        env:
-          VERCEL_PROJECT_ID: prj_QnsiTm1ijJP6cS23K5da6lL02wbp
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
-          token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/docs-bundle"
-          environment: preview
+
+      - name: Install
+        uses: ./.github/actions/install
+        with:
+          run_install: false # install is handled by vercel build
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy app-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --force
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
 
   ete:
     needs: deploy # only runs on fern-prod
@@ -98,20 +113,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # this script generates domains.txt and preview.txt
-      - name: Generate preview URLs
-        env:
-          DEPLOYMENT_URL: ${{ needs.deploy.outputs.deployment_url }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          PR_PREVIEW: ${{ github.event_name == 'pull_request' }}
-        run: node scripts/fetch-domains.js
-
-      - name: Comment PR Preview
-        uses: thollander/actions-comment-pull-request@v2
-        if: github.event_name == 'pull_request'
-        with:
-          filePath: preview.txt
-          comment_tag: pr_preview
+      - name: Fetch domains
+        run: pnpm vercel-scripts domains.txt ${{ needs.deploy.outputs.deployment_url }} --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Run E2E tests
         uses: ./.github/actions/ete-docs-bundle

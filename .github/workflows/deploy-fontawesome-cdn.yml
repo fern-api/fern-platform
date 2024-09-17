@@ -22,14 +22,20 @@ jobs:
       name: Production - icons.ferndocs.com
       url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-      - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
-        id: deploy
         with:
-          ref: ${{ github.ref_name || github.ref }}
-          token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/fontawesome-cdn"
-          environment: production
-          force: true
-          promote: true
+          fetch-depth: 2 # used for turbo-ignore
+          ref: main
+
+      - name: Install
+        uses: ./.github/actions/install
+        with:
+          run_install: false # install is handled by vercel build
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy icons.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          echo "Deployed to $(cat deployment-url.txt) but NOT promoted. Please promote manually."
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_ENV
