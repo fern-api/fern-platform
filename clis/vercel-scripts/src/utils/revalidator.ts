@@ -4,7 +4,7 @@ import { logCommand } from "./exec.js";
 
 const BANNED_DOMAINS = ["vercel.app", "buildwithfern.com", "ferndocs.com"];
 
-export class DocsRevalidator {
+export class FernDocsRevalidator {
     private vercel: VercelClient;
     private project: string;
     private teamId: string;
@@ -53,6 +53,8 @@ export class DocsRevalidator {
     }
 
     async revalidateAll(): Promise<void> {
+        logCommand("Revalidating all docs");
+
         const summary: Record<string, { success: number; failed: number }> = {};
 
         for await (const domain of this.getProductionDomains()) {

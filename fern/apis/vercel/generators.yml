@@ -1,3 +1,4 @@
+openapi: ./openapi.json
 default-group: sdk
 groups:
   sdk:

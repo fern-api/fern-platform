@@ -300,8 +300,8 @@ importers:
         specifier: 0.0.5
         version: 0.0.5
       '@fern-fern/vercel':
-        specifier: 0.0.4607
-        version: 0.0.4607
+        specifier: 0.0.4650
+        version: 0.0.4650
       ts-essentials:
         specifier: ^10.0.1
         version: 10.0.1(typescript@4.9.5)
@@ -4006,8 +4006,8 @@ packages:
   '@fern-fern/generators-sdk@0.109.0-21be2e5be':
     resolution: {integrity: sha512-McFSFWNqfZBC7E0gUQfhj45tTl8Eu+6bahqD6FHf0fQm+TXI/oQf8mhPJw/TVqzAGxP/2kOzSYNqkDg1DwkIFQ==}
 
-  '@fern-fern/vercel@0.0.4607':
-    resolution: {integrity: sha512-cATse2PXRMTe6O+FHdVtN+/33UwT3YHjIanfnEwlJQCG/3r7a3/CQct5LvIa+81UOwsCEPReBfJjMt//9jlatw==}
+  '@fern-fern/vercel@0.0.4650':
+    resolution: {integrity: sha512-gsbr84KmAIEWCxjMAZ0f57NrthEp1keAApEOK37r5Q/haATb3zR2JLM4FEeVsMclwF3u2N05eODyWBkSQAcaUw==}
 
   '@fern-fern/vercel@0.0.7':
     resolution: {integrity: sha512-k3ioiJifaX1WYJzbEHHdtg/aIfBVTz5eMOtHoyvl7+qY/IdmYczDtpa+NSYzdfxOM5uAAoVxTGWCvAlagVv+Fg==}
@@ -18206,14 +18206,12 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/vercel@0.0.4607':
+  '@fern-fern/vercel@0.0.4650':
     dependencies:
       form-data: 4.0.0
-      formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.11.2
-      readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
