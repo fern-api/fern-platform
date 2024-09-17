@@ -1,50 +1,38 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import type { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { provideRegistryService } from "@fern-ui/ui";
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
+import { chunk } from "lodash-es";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import urljoin from "url-join";
-import { conformTrailingSlash } from "../../../../utils/trailingSlash";
+import { Revalidator } from "../../../../utils/revalidator";
 import { getXFernHostNode } from "../../../../utils/xFernHost";
 
 export const config = {
     maxDuration: 300,
 };
 
-type RevalidatePathResult = RevalidatePathSuccessResult | RevalidatePathErrorResult;
+// reduce concurrency per domain
+const DEFAULT_BATCH_SIZE = 100;
 
-interface RevalidatePathSuccessResult {
-    success: true;
-    url: string;
-}
-
-function isSuccessResult(result: RevalidatePathResult): result is RevalidatePathSuccessResult {
+function isSuccessResult(result: FernDocs.RevalidationResult): result is FernDocs.SuccessfulRevalidation {
     return result.success;
 }
 
-interface RevalidatePathErrorResult {
-    success: false;
-    url: string;
-    message: string;
-}
-
-function isFailureResult(result: RevalidatePathResult): result is RevalidatePathErrorResult {
+function isFailureResult(result: FernDocs.RevalidationResult): result is FernDocs.FailedRevalidation {
     return !result.success;
 }
 
-type RevalidatedPaths = {
-    successfulRevalidations: RevalidatePathSuccessResult[];
-    failedRevalidations: RevalidatePathErrorResult[];
-};
-
 const handler: NextApiHandler = async (
     req: NextApiRequest,
-    res: NextApiResponse<RevalidatedPaths>,
+    res: NextApiResponse<FernDocs.RevalidateAllV3Response>,
 ): Promise<unknown> => {
     // when we call res.revalidate() nextjs uses
     // req.headers.host to make the network request
     const xFernHost = getXFernHostNode(req, true);
     req.headers.host = xFernHost;
+
+    const revalidate = new Revalidator(res, xFernHost);
 
     try {
         const authConfig = await getAuthEdgeConfig(xFernHost);
@@ -72,29 +60,11 @@ const handler: NextApiHandler = async (
 
         const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
         const slugCollector = NodeCollector.collect(node);
-        const urls = slugCollector.getPageSlugs().map((slug) => conformTrailingSlash(urljoin(xFernHost, slug)));
+        const slugs = slugCollector.getPageSlugs();
 
-        const results: RevalidatePathResult[] = [];
-
-        const batchSize = 100; // reduce concurrency per domain
-        for (let i = 0; i < urls.length; i += batchSize) {
-            const batch = urls.slice(i, i + batchSize);
-            results.push(
-                ...(await Promise.all(
-                    batch.map(async (url): Promise<RevalidatePathResult> => {
-                        // eslint-disable-next-line no-console
-                        console.log(`Revalidating ${url}`);
-                        try {
-                            await res.revalidate(`/static/${encodeURI(url)}`);
-                            return { success: true, url };
-                        } catch (e) {
-                            // eslint-disable-next-line no-console
-                            console.error(e);
-                            return { success: false, url, message: e instanceof Error ? e.message : "Unknown error." };
-                        }
-                    }),
-                )),
-            );
+        const results: FernDocs.RevalidationResult[] = [];
+        for (const batch of chunk(slugs, DEFAULT_BATCH_SIZE)) {
+            results.push(...(await revalidate.batch(batch)));
         }
 
         const successfulRevalidations = results.filter(isSuccessResult);

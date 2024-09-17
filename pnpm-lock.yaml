@@ -296,9 +296,9 @@ importers:
 
   clis/vercel-scripts:
     dependencies:
-      '@fern-fern/revalidation-sdk':
-        specifier: 0.0.12
-        version: 0.0.12
+      '@fern-fern/fern-docs-sdk':
+        specifier: 0.0.5
+        version: 0.0.5
       '@fern-fern/vercel':
         specifier: 0.0.4607
         version: 0.0.4607
@@ -1785,6 +1785,9 @@ importers:
       '@fern-api/venus-api-sdk':
         specifier: ^0.1.0
         version: 0.1.1
+      '@fern-fern/fern-docs-sdk':
+        specifier: 0.0.5
+        version: 0.0.5
       '@fern-ui/chatbot':
         specifier: workspace:*
         version: link:../chatbot
@@ -2341,9 +2344,9 @@ importers:
       '@fern-api/venus-api-sdk':
         specifier: ^0.6.2-1-gbbd1ac5
         version: 0.6.2-1-gbbd1ac5
-      '@fern-fern/revalidation-sdk':
-        specifier: 0.0.12
-        version: 0.0.12
+      '@fern-fern/fern-docs-sdk':
+        specifier: 0.0.5
+        version: 0.0.5
       '@prisma/client':
         specifier: 5.13.0
         version: 5.13.0(prisma@5.13.0)
@@ -3997,11 +4000,11 @@ packages:
   '@fern-fern/fern-cloud-sdk@0.0.257':
     resolution: {integrity: sha512-JwlE6Qk84VAGrTYR1EMgwQlneKDIQ3ZRlHTu3O/L56bLtIbhdMTzLSGqSxf4/KFXfhH/RukhRuTsM4/DRmgJ/A==}
 
+  '@fern-fern/fern-docs-sdk@0.0.5':
+    resolution: {integrity: sha512-x6kfRboXiG1J3fpON2lXtD9qCub2UXvNuscvCsIY3ACYvSvLHHlHvc84rIDv+ZlP/anlEvtTyfNh72Hmi0nffw==}
+
   '@fern-fern/generators-sdk@0.109.0-21be2e5be':
     resolution: {integrity: sha512-McFSFWNqfZBC7E0gUQfhj45tTl8Eu+6bahqD6FHf0fQm+TXI/oQf8mhPJw/TVqzAGxP/2kOzSYNqkDg1DwkIFQ==}
-
-  '@fern-fern/revalidation-sdk@0.0.12':
-    resolution: {integrity: sha512-LqzxWLwpaf1RCWKy9vryu7bzjdo7+3umq8nt0a+h5rsvDCsoWokg4l31aHzeDwRQVGY33n8eth7OLfALmmmi3Q==}
 
   '@fern-fern/vercel@0.0.4607':
     resolution: {integrity: sha512-cATse2PXRMTe6O+FHdVtN+/33UwT3YHjIanfnEwlJQCG/3r7a3/CQct5LvIa+81UOwsCEPReBfJjMt//9jlatw==}
@@ -18181,6 +18184,17 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@fern-fern/fern-docs-sdk@0.0.5':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      readable-stream: 4.5.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
   '@fern-fern/generators-sdk@0.109.0-21be2e5be':
     dependencies:
       form-data: 4.0.0
@@ -18188,17 +18202,6 @@ snapshots:
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/revalidation-sdk@0.0.12':
-    dependencies:
-      form-data: 4.0.0
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding

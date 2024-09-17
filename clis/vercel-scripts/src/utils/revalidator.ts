@@ -1,4 +1,4 @@
-import { FernRevalidationClient } from "@fern-fern/revalidation-sdk";
+import { FernDocsClient } from "@fern-fern/fern-docs-sdk";
 import { Vercel, VercelClient } from "@fern-fern/vercel";
 import { logCommand } from "./exec.js";
 
@@ -59,13 +59,13 @@ export class DocsRevalidator {
             // eslint-disable-next-line no-console
             console.log(`Revalidating ${domain.name}...`);
 
-            const client = new FernRevalidationClient({
+            const client = new FernDocsClient({
                 // TODO: handle docs with basepath
                 environment: `https://${domain.name}`,
             });
 
             const revalidationSummary = { success: 0, failed: 0 };
-            const results = await client.revalidateAllV4({ limit: 50 });
+            const results = await client.revalidation.revalidateAllV4({ limit: 50 });
 
             for await (const result of results) {
                 if (!result.success) {

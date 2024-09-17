@@ -1,12 +1,12 @@
-import { FernRevalidation, FernRevalidationClient } from "@fern-fern/revalidation-sdk";
+import { FernDocs, FernDocsClient } from "@fern-fern/fern-docs-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { FdrApplication } from "../../app";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
 
 export type RevalidatedPathsResponse = {
-    successful: FernRevalidation.SuccessfulRevalidation[];
-    failed: FernRevalidation.FailedRevalidation[];
+    successful: FernDocs.SuccessfulRevalidation[];
+    failed: FernDocs.FailedRevalidation[];
     revalidationFailed: boolean;
 };
 
@@ -47,14 +47,14 @@ export class RevalidatorServiceImpl implements RevalidatorService {
     }): Promise<RevalidatedPathsResponse> {
         let revalidationFailed = false;
         try {
-            const client = new FernRevalidationClient({
+            const client = new FernDocsClient({
                 environment: baseUrl.toURL().toString(),
             });
             app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
-            const page = await client.revalidateAllV4();
+            const page = await client.revalidation.revalidateAllV4();
 
-            const successful: FernRevalidation.SuccessfulRevalidation[] = [];
-            const failed: FernRevalidation.FailedRevalidation[] = [];
+            const successful: FernDocs.SuccessfulRevalidation[] = [];
+            const failed: FernDocs.FailedRevalidation[] = [];
 
             for await (const result of page) {
                 if (!result.success) {
