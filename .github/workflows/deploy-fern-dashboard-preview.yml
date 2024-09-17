@@ -14,7 +14,27 @@ on:
   workflow_dispatch:
 
 jobs:
+  ignore:
+    runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.ignore.outputs.continue }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # used for turbo-ignore
+
+      - name: Install
+        uses: ./.github/actions/install
+        with:
+          run_install: false
+
+      - name: Ignore unchanged files
+        id: ignore
+        run: set +e; pnpx turbo-ignore @fern-ui/dashboard --fallback=HEAD^1; echo "continue=$?" >> $GITHUB_OUTPUT
+
   deploy:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
     runs-on: ubuntu-latest
     environment:
       name: Preview - dashboard.buildwithfern.com
@@ -23,18 +43,12 @@ jobs:
       # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2 # used for turbo-ignore
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
 
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Ignore unchanged files
-        id: ignore
-        run: set +e; pnpx turbo-ignore @fern-ui/dashboard --fallback=HEAD^1; echo "continue=$?" >> $GITHUB_OUTPUT
-
       - name: Build & Deploy to Vercel
-        if: steps.ignore.outputs.continue == 1
         id: deploy
         run: |
           pnpm vercel-scripts deploy dashboard.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
