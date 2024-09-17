@@ -3,14 +3,13 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { getFrontmatter } from "@fern-ui/ui";
+import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
+import * as Sentry from "@sentry/nextjs";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";
 import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
 import { getXFernHostNode } from "../../../utils/xFernHost";
-// eslint-disable-next-line import/no-internal-modules
-import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
-import * as Sentry from "@sentry/nextjs";
 
 export const revalidate = 60 * 60 * 24;
 

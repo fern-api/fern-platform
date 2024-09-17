@@ -1,7 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { buildUrl } from "@fern-ui/fdr-utils";
-// eslint-disable-next-line import/no-internal-modules
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";

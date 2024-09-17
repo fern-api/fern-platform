@@ -66,6 +66,7 @@ async function main() {
      * Write the domains to a file
      */
     fs.writeFileSync("domains.txt", domains.join("\n"));
+    w;
 }
 
 main();

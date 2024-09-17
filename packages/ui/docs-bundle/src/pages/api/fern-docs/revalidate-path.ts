@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-internal-modules
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import urljoin from "url-join";
 import { getXFernHostNode } from "../../../utils/xFernHost";
