@@ -31,7 +31,7 @@ it("cli release with tags and URLs", async () => {
                 type: "feat",
                 summary: "added a new feature",
                 added: ["added a new feature"],
-                pullRequestUrl: "https://123.com",
+                links: ["https://123.com"],
             },
         ],
     };
@@ -43,7 +43,7 @@ it("cli release with tags and URLs", async () => {
     const dbRelease = await fdrApplication.dao.cliVersions().getCliRelease({ cliVersion: "0.1.2-rc13" });
     expect(dbRelease).not.toBeUndefined();
     expect(dbRelease?.tags).toEqual(release.tags);
-    expect(dbRelease?.changelogEntry?.[0]?.pullRequestUrl).toEqual(release.changelogEntry?.[0]?.pullRequestUrl);
+    expect(dbRelease?.changelogEntry?.[0]?.links).toEqual(release.changelogEntry?.[0]?.links);
 });
 
 it("cli version get latest respects semver, not time", async () => {
