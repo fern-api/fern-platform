@@ -27,7 +27,7 @@ jobs:
           WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
 
       - name: Build next bundle
-        run: cd packages/ui/local-preview-bundle; pnpm next build
+        run: cd packages/ui/local-preview-bundle; pnpm turbo build
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
