@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: app-dev.buildwithfern.com
-  cancel-in-progress: ${{ github.event_name == 'push' }}
+  cancel-in-progress: true
 
 jobs:
   deploy:

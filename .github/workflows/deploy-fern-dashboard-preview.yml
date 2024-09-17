@@ -13,11 +13,6 @@ on:
       - main
   workflow_dispatch:
 
-# Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
-concurrency:
-  group: dashboard-dev.buildwithfern.com
-  cancel-in-progress: false
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
