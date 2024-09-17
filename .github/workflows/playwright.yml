@@ -13,6 +13,7 @@ jobs:
   test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    permissions: write-all # required for the playwright-report-summary action
     steps:
       - uses: actions/checkout@v4
 

@@ -15,7 +15,7 @@ jobs:
       url: ${{ steps.deploy.outputs.deployment_url }}
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
-    permissions: write-all
+    permissions: write-all # required for the pr-preview comment
     steps:
       # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
@@ -104,7 +104,7 @@ jobs:
     needs: deploy # only runs on fern-prod
     if: needs.deploy.outputs.deployment_url
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions: write-all # required for the playwright-report-summary action
     steps:
       - uses: actions/checkout@v4
 
