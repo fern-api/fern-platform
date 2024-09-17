@@ -29,8 +29,6 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
-        with:
-          run_install: false # install is handled by vercel build
 
       - name: Build & Deploy to Vercel
         id: deploy
@@ -92,8 +90,6 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
-        with:
-          run_install: false # install is handled by vercel build
 
       - name: Build & Deploy to Vercel
         id: deploy
@@ -111,8 +107,6 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
-        with:
-          run_install: false
 
       - name: Fetch domains
         run: pnpm vercel-scripts domains.txt ${{ needs.deploy.outputs.deployment_url }} --token=${{ secrets.VERCEL_TOKEN }}

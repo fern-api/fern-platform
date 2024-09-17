@@ -30,8 +30,6 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
-        with:
-          run_install: false # install is handled by vercel build
 
       - name: Build & Deploy to Vercel
         id: deploy
