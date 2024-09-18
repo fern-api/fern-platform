@@ -132,10 +132,8 @@ jobs:
     permissions: write-all # required for the playwright-report-summary action
     steps:
       # if the job is ignored, skip the ETE test and exit 0 so that the this job can be used for merge protection
-      - run: |
-          if [ -z "${{ needs.ignore.outputs.continue }}" ]; then
-            exit 0
-          fi
+      - run: exit 0
+        if: needs.ignore.outputs.continue != 1
 
       - uses: actions/checkout@v4
 
