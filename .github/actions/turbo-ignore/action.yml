@@ -2,6 +2,9 @@ name: Turbo Ignore
 description: Ignore unchanged files in a Vercel deployment
 
 inputs:
+  token:
+    description: "The Vercel token to use for the deployment"
+    required: true
   project:
     description: "The project to check for changes"
     required: true
@@ -43,9 +46,9 @@ runs:
         # if ${{ inputs.branch }} is present, then we change the script to --branch=${{ inputs.branch }}
 
         if [ -n "${{ inputs.branch }}" ]; then
-          pnpm vercel-scripts last-deploy.txt ${{ inputs.project }} --token=${{ secrets.VERCEL_TOKEN }} --environment=${{ inputs.environment }} --branch=${{ inputs.branch }}
+          pnpm vercel-scripts last-deploy.txt ${{ inputs.project }} --token=${{ inputs.token }} --environment=${{ inputs.environment }} --branch=${{ inputs.branch }}
         else
-          pnpm vercel-scripts last-deploy.txt ${{ inputs.project }} --token=${{ secrets.VERCEL_TOKEN }} --environment=${{ inputs.environment }}
+          pnpm vercel-scripts last-deploy.txt ${{ inputs.project }} --token=${{ inputs.token }} --environment=${{ inputs.environment }}
         fi
 
         if [ ! -f last-deploy.txt ]; then

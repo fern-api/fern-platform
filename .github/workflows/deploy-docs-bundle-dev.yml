@@ -21,6 +21,7 @@ jobs:
         id: ignore
         uses: ./.github/actions/turbo-ignore
         with:
+          token: ${{ secrets.VERCEL_TOKEN }}
           project: "app-dev.buildwithfern.com"
           package: "@fern-ui/docs-bundle"
           environment: "production"

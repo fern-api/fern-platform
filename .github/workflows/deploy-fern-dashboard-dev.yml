@@ -27,6 +27,7 @@ jobs:
         id: ignore
         uses: ./.github/actions/turbo-ignore
         with:
+          token: ${{ secrets.VERCEL_TOKEN }}
           project: "dashboard-dev.buildwithfern.com"
           package: "@fern-ui/dashboard"
           environment: "production"
