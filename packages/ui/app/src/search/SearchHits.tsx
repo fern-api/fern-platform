@@ -151,7 +151,6 @@ export const SearchHits: React.FC = () => {
 
     const { endpointHits, pageHits, fieldHits } = filterHits(hits);
 
-    console.log(hits);
     return (
         <FernScrollArea
             rootClassName="border-default min-h-0 flex-1 shrink border-t"
