@@ -1,0 +1,102 @@
+imports:
+  commons: ../../commons.yml
+
+service:
+  auth: true
+  base-path: /api/encounter-providers/v2
+  availability: in-development
+  endpoints:
+    update_referring_provider:
+      method: PATCH
+      path: "/{encounter_id}"
+      path-parameters:
+        encounter_id: commons.EncounterId
+      request: ReferringProviderUpdate
+      response: ReferringProvider
+      errors:
+        - error: commons.UnprocessableEntityError
+          docs: Cannot set first/last name without also unsetting organization_name.
+
+types:
+  EncounterProviderBase:
+    properties:
+      first_name:
+        type: optional<string>
+        docs: >
+          If the provider is an individual, this should be set instead of
+          organization name
+      last_name:
+        type: optional<string>
+        docs: >
+          If the provider is an individual, this should be set instead of
+          organization name
+      organization_name:
+        type: optional<string>
+        docs: >
+          If the provider is an organization, this should be set instead of
+          first + last name
+
+  RenderingProvider:
+    extends: EncounterProviderBase
+    properties:
+      address: optional<commons.StreetAddressLongZip>
+      npi:
+        type: string
+        docs: |
+          A National Provider Identifier is a unique 10-digit identification
+          number issued to health care providers in the United States
+      taxonomy_code: optional<string>
+
+  ReferringProvider:
+    extends: EncounterProviderBase
+    properties:
+      npi:
+        type: string
+        docs: |
+          A National Provider Identifier is a unique 10-digit identification
+          number issued to health care providers in the United States
+      taxonomy_code: optional<string>
+      address: optional<commons.StreetAddressLongZip>
+
+  ReferringProviderUpdate:
+    extends: EncounterProviderBase
+    properties:
+      npi:
+        type: optional<string>
+        docs: |
+          A National Provider Identifier is a unique 10-digit identification
+          number issued to health care providers in the United States
+      taxonomy_code: optional<string>
+      address: optional<commons.StreetAddressLongZip>
+
+  BillingProvider:
+    docs: |
+      The billing provider is the provider or business entity submitting the claim.
+      Billing provider may be, but is not necessarily, the same person/NPI as the rendering provider.
+      From a payer's perspective, this represents the person or entity being reimbursed.
+      When a contract exists with the target payer, the billing provider should be the entity contracted with the payer.
+      In some circumstances, this will be an individual provider. In that case, submit that provider's NPI and the
+      tax ID (TIN) that the provider gave to the payer during contracting.
+      In other cases, the billing entity will be a medical group. If so, submit the group NPI and the group's tax ID.
+      Box 33 on the CMS-1500 claim form.
+    extends: EncounterProviderBase
+    properties:
+      address: commons.StreetAddressLongZip
+      tax_id:
+        type: string
+        docs: >
+          If the provider has a contract with insurance, this must be the same tax
+          ID given to the payer on an IRS W-9 form completed during contracting.
+      npi: string
+      taxonomy_code: optional<string>
+
+  ProviderId: uuid
+
+  EncounterProvider:
+    extends: EncounterProviderBase
+    properties:
+      provider_id: ProviderId
+      address: commons.StreetAddressLongZip
+      tax_id: optional<string>
+      npi: string
+      taxonomy_code: optional<string>

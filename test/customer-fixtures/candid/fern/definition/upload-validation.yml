@@ -1,0 +1,35 @@
+types:
+  FailedValidationResultType:
+    enum:
+      - name: UNSPECIFIED
+        value: UNSPECIFIED
+        docs: The validation failed with an unspecified type of failure.
+      - name: VALIDATION
+        value: VALIDATION
+        docs: The validation failed because the data is not complete.
+      - name: DUPLICATE
+        value: DUPLICATE
+        docs: The validation failed because the item was a duplicate.
+
+  FailedValidationResult:
+    properties:
+      rowNumber: integer
+      id: optional<string>
+      type: FailedValidationResultType
+      message: optional<string>
+
+  ValidationResults:
+    properties:
+      totalProcessed: integer
+      totalSuccessful: integer
+      failedResults: list<FailedValidationResult>
+
+  IngestResults:
+    properties:
+      ingestedIds: list<string>
+      failedToIngestIds: list<string>
+
+  UploadResults:
+    properties:
+      validationResults: ValidationResults
+      ingestResults: IngestResults

@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  paymentMethod: payment-method-types.yml
+
+service:
+  auth: true
+  base-path: "/paymentMethod"
+  endpoints:
+    getAll:
+      audiences:
+        - external
+      path: /schema
+      method: GET
+      display-name: Get all custom payment method schemas
+      docs: Get all custom payment method schemas
+      response: list<paymentMethod.PaymentMethodSchemaResponse>
+
+    create:
+      audiences:
+        - external
+      path: /schema
+      method: POST
+      display-name: Create custom payment method schema
+      docs: Create custom payment method schema
+      request: paymentMethod.PaymentMethodSchemaRequest
+      response: paymentMethod.PaymentMethodSchemaResponse
+
+    update:
+      audiences:
+        - external
+      path: /schema/{schemaId}
+      method: POST
+      display-name: Update custom payment method schema
+      docs: Update custom payment method schema
+      path-parameters:
+        schemaId: paymentMethod.PaymentMethodSchemaId
+      request: paymentMethod.PaymentMethodSchemaRequest
+      response: paymentMethod.PaymentMethodSchemaResponse
+
+    get:
+      audiences:
+        - external
+      path: /schema/{schemaId}
+      method: GET
+      display-name: Get custom payment method schema
+      docs: Get custom payment method schema
+      path-parameters:
+        schemaId: paymentMethod.PaymentMethodSchemaId
+      response: paymentMethod.PaymentMethodSchemaResponse
+
+    delete:
+      audiences:
+        - external
+      path: /schema/{schemaId}
+      method: DELETE
+      display-name: Delete custom payment method schema
+      docs: Delete custom payment method schema. Schema that have been used in an invoice cannot be deleted.
+      path-parameters:
+        schemaId: paymentMethod.PaymentMethodSchemaId

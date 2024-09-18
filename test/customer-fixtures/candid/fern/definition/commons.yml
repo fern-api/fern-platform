@@ -1,0 +1,1841 @@
+types:
+  EncounterId: uuid
+  OrganizationId: uuid
+  ClaimId: uuid
+  ServiceLineId: uuid
+  AdjustmentId: uuid
+  PatientExternalId: string
+  EncounterExternalId: string
+  Auth0Id: string
+  ClaimSubmissionId: uuid
+  RaRunId: uuid
+  Npi: string
+  # NOTE(thomas): This is a string because some WorkQueues are defined statically across orgs, and we prefer this to generating UUIDs.
+  WorkQueueId: string
+  UserId: uuid
+  TaskId: uuid
+
+  LinkUrl: string
+  ContentDownloadUrl: string
+
+  ContentDownloadUrlWithExpiration:
+    properties:
+      url: ContentDownloadUrl
+      expiration_time_seconds: integer
+
+  PageToken: string
+
+  SortDirection:
+    enum:
+      - asc
+      - desc
+
+  Date:
+    type: string
+    docs: ISO 8601 date; formatted YYYY-MM-DD (i.e. 2012-02-01)
+
+  DateRangeRequiredEnd:
+    properties:
+      start_date: Date
+      end_date: Date
+
+  DateRangeOptionalEnd:
+    properties:
+      start_date: Date
+      end_date: optional<Date>
+
+  Decimal:
+    type: string
+    docs: String representation of a Decimal that can be parsed by most libraries.
+
+  RemovableDateRangeOptionalEnd:
+    union:
+      date_range: DateRangeOptionalEnd
+      remove: {}
+
+  ResourcePage:
+    properties:
+      prev_page_token: optional<PageToken>
+      next_page_token: optional<PageToken>
+
+  StreetAddressBase:
+    properties:
+      address1: string
+      address2: optional<string>
+      city: string
+      state: State
+      zip_code:
+        type: string
+        docs: 5-digit zip code
+
+  StreetAddressShortZip:
+    extends: StreetAddressBase
+    properties:
+      zip_plus_four_code:
+        type: optional<string>
+        docs: 4-digit zip add-on code https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4
+
+  StreetAddressLongZip:
+    extends: StreetAddressBase
+    properties:
+      zip_plus_four_code:
+        type: string
+        docs: 4-digit zip add-on code https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4
+
+  Regions:
+    union:
+      states: RegionStates
+      national: RegionNational
+
+  RegionStates:
+    properties:
+      states: list<State>
+
+  RegionNational:
+    properties: {}
+
+  State:
+    enum:
+      - AA
+      - AE
+      - AP
+      - AL
+      - AK
+      - AZ
+      - AR
+      - CA
+      - CO
+      - CT
+      - DC
+      - DE
+      - FL
+      - GA
+      - HI
+      - ID
+      - IL
+      - IN
+      - IA
+      - KS
+      - KY
+      - LA
+      - ME
+      - MD
+      - MA
+      - MI
+      - MN
+      - MS
+      - MO
+      - MT
+      - NE
+      - NV
+      - NH
+      - NJ
+      - NM
+      - NY
+      - NC
+      - ND
+      - OH
+      - OK
+      - OR
+      - PA
+      - PR
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UT
+      - VT
+      - VA
+      - WA
+      - WV
+      - WI
+      - WY
+
+  SourceOfPaymentCode:
+    enum:
+      - name: SELF_PAY
+        value: "09"
+        docs: Self-pay
+      - name: OTHER_NON_FEDERAL_PROGRAMS
+        value: "11"
+        docs: Other Non-Federal Programs
+      - name: PPO
+        value: "12"
+        docs: Preferred Provider Organization (PPO)
+      - name: POS
+        value: "13"
+        docs: Point of Service (POS)
+      - name: EPO
+        value: "14"
+        docs: Exclusive Provider Organization (EPO)
+      - name: INDEMNITY_INSURANCE
+        value: "15"
+        docs: Indemnity Insurance
+      - name: HMO_MEDICARE_RISK
+        value: "16"
+        docs: Health Maintenance Organization (HMO) Medicare Risk
+      - name: DMO
+        value: "17"
+        docs: Dental Maintenance Organization
+      - name: AUTO
+        value: "AM"
+        docs: Automobile Medical
+      - name: BLUE_CROSS_BLUE_SHIELD
+        value: "BL"
+        docs: Blue Cross/Blue Shield
+      - name: CHAMPUS
+        value: "CH"
+        docs: CHAMPUS
+      - name: COMMERCIAL_INSURANCE_CO
+        value: "CI"
+        docs: Commercial Insurance Co.
+      - name: DISABILITY
+        value: "DS"
+        docs: Disability
+      - name: FEDERAL_EMPLOYEES
+        value: "FI"
+        docs: Federal Employees Program
+      - name: HMO
+        value: "HM"
+        docs: Health Maintenance Organization (HMO)
+      - name: LIABILITY
+        value: "LM"
+        docs: Liability Medical
+      - name: MEDICARE_PART_A
+        value: "MA"
+        docs: Medicare Part A
+      - name: MEDICARE_PART_B
+        value: "MB"
+        docs: Medicare Part B
+      - name: MEDICAID
+        value: "MC"
+        docs: Medicaid
+      - name: OTHER_FEDERAL_PROGRAM
+        value: "OF"
+        docs: Other Federal Program
+      - name: TITLE_V
+        value: "TV"
+        docs: Title V
+      - name: VETERANS_AFFAIRS_PLAN
+        value: "VA"
+        docs: Veterans Affairs Plan
+      - name: WORKERS_COMP_HEALTH_CLAIM
+        value: "WC"
+        docs: Workers' Compensation Health Claim
+
+  FacilityTypeCode:
+    docs: |
+      Box 24B on the CMS-1500 claim form. Line-level place of service is not currently supported.
+      02 for telemedicine, 11 for in-person. Full list here:
+      https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set
+    enum:
+      - name: PHARMACY
+        value: "01"
+      - name: TELEHEALTH
+        value: "02"
+      - name: SCHOOL
+        value: "03"
+      - name: HOMELESS_SHELTER
+        value: "04"
+      - name: INDIAN_HEALTH_SERVICE_FREE_STANDING
+        value: "05"
+      - name: INDIAN_HEALTH_SERVICE_PROVIDER_BASED
+        value: "06"
+      - name: TRIBAL_FREE_STANDING
+        value: "07"
+      - name: TRIBAL_PROVIDER_BASED
+        value: "08"
+      - name: PRISON_OR_CORRECTIONAL_FACILITY
+        value: "09"
+      - name: TELEHEALTH_PATIENT_HOME
+        value: "10"
+      - name: OFFICE
+        value: "11"
+      - name: HOME
+        value: "12"
+      - name: ASSISTED_LIVING_FACILITY
+        value: "13"
+      - name: GROUP_HOME
+        value: "14"
+      - name: MOBILE_UNIT
+        value: "15"
+      - name: TEMPORARY_LODGING
+        value: "16"
+      - name: WALK_IN_RETAIL_HEALTH_CLINIC
+        value: "17"
+      - name: PLACE_OF_EMPLOYMENT_WORKSITE
+        value: "18"
+      - name: OFF_CAMPUS_OUTPATIENT_HOSPITAL
+        value: "19"
+      - name: URGENT_CARE_FACILITY
+        value: "20"
+      - name: INPATIENT_HOSPITAL
+        value: "21"
+      - name: OUTPATIENT_HOSPITAL
+        value: "22"
+      - name: EMERGENCY_ROOM_HOSPITAL
+        value: "23"
+      - name: AMBULATORY_SURGICAL_CENTER
+        value: "24"
+      - name: BIRTHING_CENTER
+        value: "25"
+      - name: MILITARY_TREATMENT_FACILITY
+        value: "26"
+      - name: SKILLED_NURSING_FACILITY
+        value: "31"
+      - name: NURSING_FACILITY
+        value: "32"
+      - name: CUSTODIAL_CARE_FACILITY
+        value: "33"
+      - name: HOSPICE
+        value: "34"
+      - name: AMBULANCE_LAND
+        value: "41"
+      - name: AMBULANCE_AIR_OR_WATER
+        value: "42"
+      - name: INDEPENDENT_CLINIC
+        value: "49"
+      - name: FEDERALLY_QUALIFIED_HEALTH_CENTER
+        value: "50"
+      - name: INPATIENT_PSYCHIATRIC_FACILITY
+        value: "51"
+      - name: PSYCHIATRIC_FACILITY_PARTIAL_HOSPITALIZATION
+        value: "52"
+      - name: COMMUNITY_MENTAL_HEALTH_CENTER
+        value: "53"
+      - name: INTERMEDIATE_CARE_FACILITY_MENTALLY_RETARDED
+        value: "54"
+      - name: RESIDENTIAL_SUBSTANCE_ABUSE_TREATMENT_FACILITY
+        value: "55"
+      - name: PSYCHIATRIC_RESIDENTIAL_TREATMENT_CENTER
+        value: "56"
+      - name: NON_RESIDENTIAL_SUBSTANCE_ABUSE_TREATMENT_FACILITY
+        value: "57"
+      - name: NON_RESIDENTIAL_OPIOID_TREATMENT_FACILITY
+        value: "58"
+      - name: MASS_IMMUNIZATION_CENTER
+        value: "60"
+      - name: COMPREHENSIVE_INPATIENT_REHABILITATION_FACILITY
+        value: "61"
+      - name: COMPREHENSIVE_OUTPATIENT_REHABILITATION_FACILITY
+        value: "62"
+      - name: END_STAGE_RENAL_DISEASE_TREATMENT_FACILITY
+        value: "65"
+      - name: STATE_OR_LOCAL_PUBLIC_HEALTH_CLINIC
+        value: "71"
+      - name: RURAL_HEALTH_CLINIC
+        value: "72"
+      - name: INDEPENDENT_LABORATORY
+        value: "81"
+      - name: OTHER_UNLISTED_FACILITY
+        value: "99"
+
+  PatientRelationshipToInsuredCodeAll:
+    enum:
+      - name: SPOUSE
+        value: "01"
+      - name: GRANDPARENT
+        value: "04"
+      - name: GRANDCHILD
+        value: "05"
+      - name: NIECE_NEPHEW
+        value: "07"
+      - name: FOSTER_CHILD
+        value: "10"
+      - name: WARD_OF_THE_COURT
+        value: "15"
+      - name: STEPCHILD
+        value: "17"
+      - name: SELF
+        value: "18"
+      - name: CHILD
+        value: "19"
+      - name: EMPLOYEE
+        value: "20"
+      - name: UNKNOWN
+        value: "21"
+      - name: HANDICAPPED_DEPENDENT
+        value: "22"
+      - name: SPONSORED_DEPENDENT
+        value: "23"
+      - name: DEPENDENT_OF_MINOR_DEPENDENT
+        value: "24"
+      - name: SIGNIFICANT_OTHER
+        value: "29"
+      - name: MOTHER
+        value: "32"
+      - name: FATHER
+        value: "33"
+      - name: EMANCIPATED_MINOR
+        value: "36"
+      - name: ORGAN_DONOR
+        value: "39"
+      - name: CADAVER_DONOR
+        value: "40"
+      - name: INJURED_PLAINTIFF
+        value: "41"
+      - name: CHILD_NO_FINANCIAL_RESPONSIBILITY
+        value: "43"
+      - name: LIFE_PARTNER
+        value: "53"
+      - name: OTHER_RELATIONSHIP
+        value: "G8"
+
+  ProcedureModifier:
+    enum:
+      - value: "22"
+        name: TWENTY_TWO
+        docs: Increased Procedural Services
+      - value: "23"
+        name: TWENTY_THREE
+        docs: Unusual Anesthesia
+      - value: "24"
+        name: TWENTY_FOUR
+        docs: Unrelated Evaluation and Management Service by the Same Physician or Other Qualified Health Care Professional During a Postoperative Period
+      - value: "25"
+        name: TWENTY_FIVE
+        docs: Significant, Separately Identifiable Evaluation and Management Service by the Same Physician or Other Qualified Health Care Professional on the Same Day of the Procedure or Other Service
+      - value: "26"
+        name: TWENTY_SIX
+        docs: Professional Component
+      - value: "27"
+        name: TWENTY_SEVEN
+        docs: Multiple Outpatient Hospital E/M Encounters on the Same Date
+      - value: "32"
+        name: THIRTY_TWO
+        docs: Mandated Services
+      - value: "33"
+        name: THIRTY_THREE
+        docs: Preventive Services
+      - value: "47"
+        name: FORTY_SEVEN
+        docs: Anesthesia by Surgeon
+      - value: "50"
+        name: FIFTY
+        docs: Bilateral Procedure
+      - value: "51"
+        name: FIFTY_ONE
+        docs: Multiple Procedures
+      - value: "52"
+        name: FIFTY_TWO
+        docs: Reduced Services
+      - value: "53"
+        name: FIFTY_THREE
+        docs: Discontinued Procedure
+      - value: "54"
+        name: FIFTY_FOUR
+        docs: Surgical Care Only
+      - value: "55"
+        name: FIFTY_FIVE
+        docs: Postoperative Management Only
+      - value: "56"
+        name: FIFTY_SIX
+        docs: Preoperative Management Only
+      - value: "57"
+        name: FIFTY_SEVEN
+        docs: Decision for Surgery
+      - value: "58"
+        name: FIFTY_EIGHT
+        docs: Staged or Related Procedure or Service by the Same Physician or Other Qualified Health Care Professional During the Postoperative Period
+      - value: "59"
+        name: FIFTY_NINE
+        docs: Distinct Procedural Service
+      - value: "62"
+        name: SIXTY_TWO
+        docs: Two Surgeons
+      - value: "63"
+        name: SIXTY_THREE
+        docs: Procedure Performed on Infants less than 4 kg
+      - value: "66"
+        name: SIXTY_SIX
+        docs: Surgical Team
+      - value: "74"
+        name: SEVENTY_FOUR
+        docs: Discontinued Outpatient Hospital/Ambulatory Surgery Center (ASC) Procedure After Administration of Anesthesia
+      - value: "76"
+        name: SEVENTY_SIX
+        docs: Repeat Procedure or Service by Same Physician or Other Qualified Health Care Professional
+      - value: "77"
+        name: SEVENTY_SEVEN
+        docs: Repeat Procedure by Another Physician or Other Qualified Health Care Professional
+      - value: "78"
+        name: SEVENTY_EIGHT
+        docs: Unplanned Return to the Operating/Procedure Room by the Same Physician or Other Qualified Health Care Professional Following Initial Procedure for a Related Procedure During the Postoperative Period
+      - value: "79"
+        name: SEVENTY_NINE
+        docs: Unrelated Procedure or Service by the Same Physician or Other Qualified Health Care Professional During the Postoperative Period
+      - value: "80"
+        name: EIGHTY
+        docs: Assistant Surgeon
+      - value: "81"
+        name: EIGHTY_ONE
+        docs: Minimum Assistant Surgeon
+      - value: "82"
+        name: EIGHTY_TWO
+        docs: Assistant Surgeon (when qualified resident surgeon not available)
+      - value: "90"
+        name: NINETY
+        docs: Reference (Outside) Laboratory
+      - value: "91"
+        name: NINETY_ONE
+        docs: Repeat Clinical Diagnostic Laboratory Test
+      - value: "92"
+        name: NINETY_TWO
+        docs: Alternative Laboratory Platform Testing
+      - value: "93"
+        name: NINETY_THREE
+        docs: Synchronous Telemedicine Service Rendered Via Telephone or Other Real-Time Interactive Audio-Only Telecommunications System
+      - value: "95"
+        name: NINETY_FIVE
+        docs: Synchronous Telemedicine Service Rendered via a Real-Time Interactive Audio and Video Telecommunications System
+      - value: "96"
+        name: NINETY_SIX
+        docs: Habilitative Services
+      - value: "97"
+        name: NINETY_SEVEN
+        docs: Rehabilitative Services
+      - value: "99"
+        name: NINETY_NINE
+        docs: Multiple Modifiers
+      - value: "A1"
+        name: A1
+        docs: Dressing for one wound
+      - value: "A2"
+        name: A2
+        docs: Dressing for two wounds
+      - value: "A3"
+        name: A3
+        docs: Dressing for three wounds
+      - value: "A4"
+        name: A4
+        docs: Dressing for four wounds
+      - value: "A5"
+        name: A5
+        docs: Dressing for five wounds
+      - value: "A6"
+        name: A6
+        docs: Dressing for six wounds
+      - value: "A7"
+        name: A7
+        docs: Dressing for seven wounds
+      - value: "A8"
+        name: A8
+        docs: Dressing for eight wounds
+      - value: "A9"
+        name: A9
+        docs: Dressing for nine wounds
+      - value: "AA"
+        name: AA
+        docs: Anesthesia services performed personally by anesthesiologist
+      - value: "AB"
+        name: AB
+        docs: >
+          Audiology service furnished personally by an audiologist without a physician/npp order for non-acute hearing assessment ...
+      - value: "AD"
+        name: AD
+        docs: >
+          Medical supervision by a physician: more than four concurrent anesthesia procedures
+      - value: "AE"
+        name: AE
+        docs: Registered dietician
+      - value: "AF"
+        name: AF
+        docs: Specialty physician
+      - value: "AG"
+        name: AG
+        docs: Primary physician
+      - value: "AH"
+        name: AH
+        docs: Clinical psychologist
+      - value: "AI"
+        name: AI
+        docs: Principal physician of record
+      - value: "AJ"
+        name: AJ
+        docs: Clinical social worker
+      - value: "AK"
+        name: AK
+        docs: Non participating physician
+      - value: "AM"
+        name: AM
+        docs: Physician, team member service
+      - value: "AO"
+        name: AO
+        docs: Alternate payment method declined by provider of service
+      - value: "AP"
+        name: AP
+        docs: Determination of refractive state was not performed in the course of diagnostic ophthalmological examination
+      - value: "AQ"
+        name: AQ
+        docs: Physician providing a service in an unlisted health professional shortage area (hpsa)
+      - value: "AR"
+        name: AR
+        docs: Physician provider services in a physician scarcity area
+      - value: "AS"
+        name: AS
+        docs: Physician assistant, nurse practitioner, or clinical nurse specialist services for assistant at surgery
+      - value: "AT"
+        name: AT
+        docs: Acute treatment
+      - value: "AZ"
+        name: AZ
+        docs: Physician providing a service in a dental health professional shortage area for the purpose of an EHR incentive payment
+      - value: "BA"
+        name: BA
+        docs: Item furnished in conjunction with parenteral enteral nutrition (pen) services
+      - value: "BL"
+        name: BL
+        docs: Special acquisition of blood and blood products
+      - value: "BO"
+        name: BO
+        docs: Orally administered nutrition, not by feeding tube
+      - value: "BP"
+        name: BP
+        docs: The beneficiary has been informed of the purchase and rental options and has elected to purchase the item
+      - value: "BR"
+        name: BR
+        docs: The beneficiary has been informed of the purchase and rental options and has elected to rent the item
+      - value: "BU"
+        name: BU
+        docs: The beneficiary has been informed of the purchase and rental options and after 30 days has not informed the supplier
+      - value: "CA"
+        name: CA
+        docs: Procedure payable only in the inpatient setting when performed emergently on an outpatient who expires prior to admission
+      - value: "CB"
+        name: CB
+        docs: Service ordered by a renal dialysis facility (rdf) physician as part of the ESRD beneficiary's dialysis benefit
+      - value: "CC"
+        name: CC
+        docs: Procedure code change
+      - value: "CD"
+        name: CD
+        docs: Amcc test has been ordered by an ESRD facility or MCP physician that is not separately billable
+      - value: "CE"
+        name: CE
+        docs: Amcc test has been ordered by an esrd facility or mcp physician that is beyond the normal frequency covered
+      - value: "CF"
+        name: CF
+        docs: Amcc test has been ordered by an esrd facility or mcp physician that is separately billable
+      - value: "CG"
+        name: CG
+        docs: Policy criteria applied
+      - value: "CH"
+        name: CH
+        docs: 0 percent impaired, limited or restricted
+      - value: "CI"
+        name: CI
+        docs: At least 1 percent but less than 20 percent impaired, limited or restricted
+      - value: "CJ"
+        name: CJ
+        docs: At least 20 percent but less than 40 percent impaired, limited or restricted
+      - value: "CK"
+        name: CK
+        docs: At least 40 percent but less than 60 percent impaired, limited or restricted
+      - value: "CL"
+        name: CL
+        docs: At least 60 percent but less than 80 percent impaired, limited or restricted
+      - value: "CM"
+        name: CM
+        docs: At least 80 percent but less than 100 percent impaired, limited or restricted
+      - value: "CN"
+        name: CN
+        docs: 100 percent impaired, limited or restricted
+      - value: "CR"
+        name: CR
+        docs: Catastrophe/disaster related
+      - value: "CS"
+        name: CS
+        docs: Cost sharing for COVID-19 testing
+      - value: "CT"
+        name: CT
+        docs: Computed tomography services furnished using equipment that does not meet xr-29-2013 standard
+      - value: "CO"
+        name: CO
+        docs: Outpatient physical therapy services furnished in whole or in part by a occupational therapist assistant
+      - value: "CQ"
+        name: CQ
+        docs: Outpatient physical therapy services furnished in whole or in part by a physical therapist assistant
+      - value: "E1"
+        name: E1
+        docs: Upper left, eyelid
+      - value: "E2"
+        name: E2
+        docs: Lower left, eyelid
+      - value: "E3"
+        name: E3
+        docs: Upper right, eyelid
+      - value: "E4"
+        name: E4
+        docs: Lower right, eyelid
+      - value: "EA"
+        name: EA
+        docs: Erythropoetic stimulating agent (esa) administered to treat anemia due to anti-cancer chemotherapy
+      - value: "EB"
+        name: EB
+        docs: Erythropoetic stimulating agent (esa) administered to treat anemia due to anti-cancer radiotherapy
+      - value: "EC"
+        name: EC
+        docs: Erythropoetic stimulating agent (esa) administered to treat anemia not due to anti-cancer radiotherapy or chemotherapy
+      - value: "ED"
+        name: ED
+        docs: Hematocrit level has exceeded 39% (or hemoglobin level has exceeded 13.0 g/dl) for 3 or more consecutive billing cycles
+      - value: "EE"
+        name: EE
+        docs: Hematocrit level has not exceeded 39% (or hemoglobin level has not exceeded 13.0 g/dl) for 3 or more billing cycles
+      - value: "EJ"
+        name: EJ
+        docs: Subsequent claims for a defined course of therapy, e.g., epo, sodium hyaluronate, infliximab
+      - value: "EM"
+        name: EM
+        docs: Emergency reserve supply (for esrd benefit only)
+      - value: "EP"
+        name: EP
+        docs: Service provided as part of medicaid early periodic screening diagnosis and treatment (epsdt) program
+      - value: "ER"
+        name: ER
+        docs: Items and services furnished by a provider-based, off-campus emergency department
+      - value: "ET"
+        name: ET
+        docs: Emergency services
+      - value: "EX"
+        name: EX
+        docs: Expatriate beneficiary
+      - value: "EY"
+        name: EY
+        docs: No physician or other licensed health care provider order for this item or service
+      - value: "F1"
+        name: F1
+        docs: Left hand, second digit
+      - value: "F2"
+        name: F2
+        docs: Left hand, third digit
+      - value: "F3"
+        name: F3
+        docs: Left hand, fourth digit
+      - value: "F4"
+        name: F4
+        docs: Left hand, fifth digit
+      - value: "F5"
+        name: F5
+        docs: Right hand, thumb
+      - value: "F6"
+        name: F6
+        docs: Right hand, second digit
+      - value: "F7"
+        name: F7
+        docs: Right hand, third digit
+      - value: "F8"
+        name: F8
+        docs: Right hand, fourth digit
+      - value: "F9"
+        name: F9
+        docs: Right hand, fifth digit
+      - value: "FA"
+        name: FA
+        docs: Right hand, thumb
+      - value: "FB"
+        name: FB
+        docs: Item provided without cost to provider, supplier or practitioner, or full credit received for replaced device
+      - value: "FC"
+        name: FC
+        docs: Partial credit received for replaced device
+      - value: "FP"
+        name: FP
+        docs: Service provided as part of family planning program
+      - value: "FQ"
+        name: FQ
+        docs: Telehealth service furnished using real-time audio-only communication technology.
+      - value: "FR"
+        name: FR
+        docs: A supervising practitioner was present through a real-time two-way, audio/video communication technology.
+      - value: "FS"
+        name: FS
+        docs: Split (or shared) evaluation and management visit.
+      - value: "FT"
+        name: FT
+        docs: Unrelated evaluation and management (e/m) visit on the same day as another e/m visit or during a global procedure
+      - value: "FX"
+        name: FX
+        docs: X-ray taken using film
+      - value: "FY"
+        name: FY
+        docs: X-ray taken using computed radiography technology/cassette-based imaging
+      - value: "G0"
+        name: G0
+        docs: Telehealth Services For Diagnosis, Evaluation, Or Treatment, Of Symptoms Of An Acute Stroke
+      - value: "G1"
+        name: G1
+        docs: Most recent urr reading of less than 60
+      - value: "G2"
+        name: G2
+        docs: Most recent urr reading of 60 to 64.9
+      - value: "G3"
+        name: G3
+        docs: Most recent urr reading of 65 to 69.9
+      - value: "G4"
+        name: G4
+        docs: Most recent urr reading of 70 to 74.9
+      - value: "G5"
+        name: G5
+        docs: Most recent urr reading of 75 or greater
+      - value: "G6"
+        name: G6
+        docs: ESRD patient for whom less than six dialysis sessions have been provided in a month
+      - value: "G7"
+        name: G7
+        docs: Pregnancy resulted from rape or incest or pregnancy certified by physician as life threatening
+      - value: "G8"
+        name: G8
+        docs: Monitored anesthesia care (mac) for deep complex, complicated, or markedly invasive surgical procedure
+      - value: "G9"
+        name: G9
+        docs: Monitored anesthesia care for patient who has history of severe cardio-pulmonary condition
+      - value: "GA"
+        name: GA
+        docs: Waiver of liability statement issued as required by payer policy, individual case
+      - value: "GB"
+        name: GB
+        docs: Claim being re-submitted for payment because it is no longer covered under a global payment demonstration
+      - value: "GC"
+        name: GC
+        docs: This service has been performed in part by a resident under the direction of a teaching physician
+      - value: "GE"
+        name: GE
+        docs: This service has been performed by a resident without the presence of a teaching physician under the primary care exception
+      - value: "GF"
+        name: GF
+        docs: Non-physician (e.g. nurse practitioner (np), certified registered nurse anesthetist (crna), certified registered nurse (crn), clinical nurse specialist (cns), physician assistant (pa)) services in a critical access hospital
+      - value: "GG"
+        name: GG
+        docs: Performance and payment of a screening mammogram and diagnostic mammogram on the same patient, same day
+      - value: "GH"
+        name: GH
+        docs: Diagnostic mammogram converted from screening mammogram on same day
+      - value: "GJ"
+        name: GJ
+        docs: opt out physician or practitioner emergency or urgent service
+      - value: "GK"
+        name: GK
+        docs: Reasonable and necessary item/service associated with a ga or gz modifier
+      - value: "GL"
+        name: GL
+        docs: Medically unnecessary upgrade provided instead of non-upgraded item, no charge, no advance beneficiary notice (abn)
+      - value: "GM"
+        name: GM
+        docs: Multiple patients on one ambulance trip
+      - value: "GN"
+        name: GN
+        docs: Services delivered under an outpatient speech-language pathology plan of care
+      - value: "GO"
+        name: GO
+        docs: Service delivered personally by an occupational therapist or under an outpatient occupational therapy plan of care
+      - value: "GP"
+        name: GP
+        docs: Service delivered personally by a physical therapist or under an outpatient physical therapy plan of care
+      - value: "GQ"
+        name: GQ
+        docs: Services provided via an asynchronous telecommunications system
+      - value: "GR"
+        name: GR
+        docs: This service was performed in whole or in part by a resident in a department of veterans affairs medical center or clinic, supervised in accordance with va policy
+      - value: "GS"
+        name: GS
+        docs: Dosage of erythropoietin stimulating agent has been reduced and maintained in response to hematocrit or hemoglobin level
+      - value: "GT"
+        name: GT
+        docs: Services took place via an interactive audio and video telecommunications system
+      - value: "GU"
+        name: GU
+        docs: Waiver of liability statement issued as required by payer policy, routine notice
+      - value: "GV"
+        name: GV
+        docs: Attending physician not employed or paid under arrangement by the patient's hospice provider
+      - value: "GW"
+        name: GW
+        docs: Service not related to the hospice patient's terminal condition
+      - value: "GX"
+        name: GX
+        docs: Notice of liability issued, voluntary under payer policy
+      - value: "GY"
+        name: GY
+        docs: Not a covered benefit
+      - value: "GZ"
+        name: GZ
+        docs: Item or service expected to be denied as not reasonable and necessary
+      - value: "HA"
+        name: HA
+        docs: Child/adolescent program
+      - value: "HB"
+        name: HB
+        docs: Adult program, non geriatric
+      - value: "HC"
+        name: HC
+        docs: Adult program, geriatric
+      - value: "HD"
+        name: HD
+        docs: Pregnant/parenting women's program
+      - value: "HE"
+        name: HE
+        docs: Mental health program
+      - value: "HF"
+        name: HF
+        docs: Substance abuse program
+      - value: "HG"
+        name: HG
+        docs: Opioid addiction treatment program
+      - value: "HH"
+        name: HH
+        docs: Integrated mental health/substance abuse program
+      - value: "HI"
+        name: HI
+        docs: Integrated mental health and intellectual disability/developmental disabilities program
+      - value: "HJ"
+        name: HJ
+        docs: Employee assistance program
+      - value: "HK"
+        name: HK
+        docs: Specialized mental health programs for high-risk populations
+      - value: "HL"
+        name: HL
+        docs: Intern
+      - value: "HM"
+        name: HM
+        docs: The rendering provider has a highest educational attainment of less than a bachelor's degree
+      - value: "HN"
+        name: HN
+        docs: The rendering provider has a highest educational attainment of a bachelor's degree
+      - value: "HO"
+        name: HO
+        docs: The rendering provider has a highest educational attainment of a master's degree
+      - value: "HP"
+        name: HP
+        docs: The rendering provider has a highest educational attainment of a doctoral degree
+      - value: "HQ"
+        name: HQ
+        docs: Group setting
+      - value: "HR"
+        name: HR
+        docs: Family/couple with client present
+      - value: "HS"
+        name: HS
+        docs: Family/couple without client present
+      - value: "HT"
+        name: HT
+        docs: Multi-disciplinary team
+      - value: "HU"
+        name: HU
+        docs: Funded by child welfare agency
+      - value: "HV"
+        name: HV
+        docs: Funded by state addictions agency
+      - value: "HW"
+        name: HW
+        docs: Funded by state mental health agency
+      - value: "HX"
+        name: HX
+        docs: Funded by county/local agency
+      - value: "HY"
+        name: HY
+        docs: Funded by juvenile justice agency
+      - value: "HZ"
+        name: HZ
+        docs: Funded by criminal justice agency
+      - value: "J1"
+        name: J1
+        docs: Competitive acquisition program no-pay submission for a prescription number
+      - value: "J2"
+        name: J2
+        docs: Competitive acquisition program, restocking of emergency drugs after emergency administration
+      - value: "J3"
+        name: J3
+        docs: Competitive acquisition program (cap) reimbursed under average sales price methodology
+      - value: "J4"
+        name: J4
+        docs: DMEPOS item subject to DMEPOS competitive bidding program that is furnished by a hospital upon discharge
+      - value: "J5"
+        name: J5
+        docs: Off-the-shelf orthotic subject to DMEPOS competitive bidding program
+      - value: "JA"
+        name: JA
+        docs: Administered intravenously
+      - value: "JB"
+        name: JB
+        docs: Administered subcutaneously
+      - value: "JC"
+        name: JC
+        docs: Skin substitute used as a graft
+      - value: "JD"
+        name: JD
+        docs: Skin substitute not used as a graft
+      - value: "JE"
+        name: JE
+        docs: Administered via dialysate
+      - value: "JG"
+        name: JG
+        docs: Drug or biological acquired with 340b drug pricing program discount
+      - value: "JW"
+        name: JW
+        docs: Drug amount discarded/not administered to any patient
+      - value: "JZ"
+        name: JZ
+        docs: Zero drug amount discarded/not administered to any patient
+      - value: "K0"
+        name: K0
+        docs: Lower extremity prosthesis functional level 0
+      - value: "K1"
+        name: K1
+        docs: Lower extremity prosthesis functional level 1
+      - value: "K2"
+        name: K2
+        docs: Lower extremity prosthesis functional level 2
+      - value: "K3"
+        name: K3
+        docs: Lower extremity prosthesis functional level 3
+      - value: "K4"
+        name: K4
+        docs: Lower extremity prosthesis functional level 4
+      - value: "KA"
+        name: KA
+        docs: Add on option/accessory for wheelchair
+      - value: "KB"
+        name: KB
+        docs: Beneficiary requested upgrade for abn, more than 4 modifiers identified on claim
+      - value: "KC"
+        name: KC
+        docs: Replacement of special power wheelchair interface
+      - value: "KD"
+        name: KD
+        docs: Drug or biological infused through DME
+      - value: "KE"
+        name: KE
+        docs: Bid under round one of the DMEPOS competitive bidding program
+      - value: "KF"
+        name: KF
+        docs: Item designated by FDA as class III device
+      - value: "KG"
+        name: KG
+        docs: DMEPOS item subject to DMEPOS competitive bidding program number 1
+      - value: "KH"
+        name: KH
+        docs: DMEPOS item, initial claim, purchase or first month rental
+      - value: "KI"
+        name: KI
+        docs: DMEPOS item, second or third month rental
+      - value: "KJ"
+        name: KJ
+        docs: DMEPOS item, parenteral enteral nutrition (pen) pump or capped rental, months four to fifteen
+      - value: "KK"
+        name: KK
+        docs: DMEPOS item subject to DMEPOS competitive bidding program number 2
+      - value: "KL"
+        name: KL
+        docs: DMEPOS item delivered via mail
+      - value: "KM"
+        name: KM
+        docs: Replacement of facial prosthesis including new impression/moulage
+      - value: "KN"
+        name: KN
+        docs: Replacement of facial prosthesis using previous master model
+      - value: "KO"
+        name: KO
+        docs: Single drug unit dose formulation
+      - value: "KP"
+        name: KP
+        docs: First drug of a multiple drug unit dose formulation
+      - value: "KQ"
+        name: KQ
+        docs: Second or subsequent drug of a multiple drug unit dose formulation
+      - value: "KR"
+        name: KR
+        docs: Rental item, billing for partial month
+      - value: "KS"
+        name: KS
+        docs: Glucose monitor supply for diabetic beneficiary not treated with insulin
+      - value: "KT"
+        name: KT
+        docs: Beneficiary resides in a competitive bidding area and travels outside that competitive bidding area
+      - value: "KU"
+        name: KU
+        docs: DMEPOS item subject to DMEPOS competitive bidding program number 3
+      - value: "KV"
+        name: KV
+        docs: DMEPOS item subject to DMEPOS competitive bidding program that is furnished as part of a professional service
+      - value: "KW"
+        name: KW
+        docs: DMEPOS item subject to DMEPOS competitive bidding program number 4
+      - value: "KX"
+        name: KX
+        docs: Requirements specified in the medical policy have been met
+      - value: "KY"
+        name: KY
+        docs: DMEPOS item subject to DMEPOS competitive bidding program number 5
+      - value: "KZ"
+        name: KZ
+        docs: New coverage not implemented by managed care
+      - value: "LC"
+        name: LC
+        docs: Left circumflex coronary artery
+      - value: "LD"
+        name: LD
+        docs: Left anterior descending coronary artery
+      - value: "LL"
+        name: LL
+        docs: Lease/rental
+      - value: "LM"
+        name: LM
+        docs: Left main coronary artery
+      - value: "LR"
+        name: LR
+        docs: Laboratory round trip
+      - value: "LS"
+        name: LS
+        docs: FDA-monitored intraocular lens implant
+      - value: "LT"
+        name: LT
+        docs: Left side (used to identify procedures performed on the left side of the body)
+      - value: "LU"
+        name: LU
+        docs: Fractionated payment of CAR-T therapy
+      - value: "M2"
+        name: M2
+        docs: Medicare secondary payer
+      - value: "MA"
+        name: MA
+        docs: Not required to consult clinical decision support... for patient with a suspected or confirmed emergency medical condition
+      - value: "MB"
+        name: MB
+        docs: Not required to consult clinical decision support mechanism due to insufficient internet access
+      - value: "MC"
+        name: MC
+        docs: Not required to consult clinical decision support mechanism due to electronic health record vendor issues
+      - value: "MD"
+        name: MD
+        docs: Not required to consult clinical decision support mechanism due to extreme/uncontrollable circumstances
+      - value: "ME"
+        name: ME
+        docs: Adheres to appropriate use criteria in the clinical decision support mechanism consulted by the ordering professional
+      - value: "MF"
+        name: MF
+        docs: Does not adhere to the criteria in the clinical decision support mechanism consulted by the ordering professional
+      - value: "MG"
+        name: MG
+        docs: Does not have appropriate use criteria in the clinical decision support mechanism consulted by the ordering professional
+      - value: "MH"
+        name: MH
+        docs: Unknown if ordering professional consulted a clinical decision support mechanism for this service
+      - value: "MS"
+        name: MS
+        docs: Six month maintenance and servicing fee for parts and labor, not covered under any manufacturer or supplier warranty
+      - value: "N1"
+        name: N1
+        docs: Group 1 oxygen coverage criteria met
+      - value: "N2"
+        name: N2
+        docs: Group 2 oxygen coverage criteria met
+      - value: "N3"
+        name: N3
+        docs: Group 3 oxygen coverage criteria met
+      - value: "NB"
+        name: NB
+        docs: Nebulizer system, any type, FDA-cleared for use with specific drug
+      - value: "NR"
+        name: NR
+        docs: New when rented
+      - value: "NU"
+        name: NU
+        docs: New durable medical equipment purchase
+      - value: "P1"
+        name: P1
+        docs: A normal healthy patient
+      - value: "P2"
+        name: P2
+        docs: A patient with a mild systemic disease
+      - value: "P3"
+        name: P3
+        docs: A patient with severe systemic disease
+      - value: "P4"
+        name: P4
+        docs: A patient with severe systemic disease that is a constant threat to life
+      - value: "P5"
+        name: P5
+        docs: A moribund patient who is not expected to survive without the operation
+      - value: "P6"
+        name: P6
+        docs: A declared brain-dead patient whose organs are being removed for donor purposes
+      - value: "PA"
+        name: PA
+        docs: Surgical or other invasive procedure on wrong body part
+      - value: "PB"
+        name: PB
+        docs: Surgical or other invasive procedure on wrong patient
+      - value: "PC"
+        name: PC
+        docs: Wrong surgery or other invasive procedure on patient
+      - value: "PD"
+        name: PD
+        docs: Diagnostic or related non diagnostic item or service provided in a wholly owned or operated entity to a patient who is admitted as an inpatient within 3 days
+      - value: "PI"
+        name: PI
+        docs: Positron emission tomography (PET) or PET/computed tomography (CT)
+      - value: "PL"
+        name: PL
+        docs: Progressive addition lenses
+      - value: "PM"
+        name: PM
+        docs: Post-mortem
+      - value: "PN"
+        name: PN
+        docs: Non-excepted service provided at an off-campus, outpatient, provider-based department of a hospital
+      - value: "PO"
+        name: PO
+        docs: Excepted service provided at an off-campus, outpatient, provider-based department of a hospital
+      - value: "PS"
+        name: PS
+        docs: Positron emission tomography (PET) or pet/computed tomography (CT) to inform the treatment strategy of cancerous tumors
+      - value: "PT"
+        name: PT
+        docs: Colorectal cancer screening test; converted to diagnostic test or other procedure
+      - value: "Q0"
+        name: Q0
+        docs: Investigational clinical service provided in a clinical research study that is in an approved clinical research study
+      - value: "Q1"
+        name: Q1
+        docs: Routine clinical service provided in a clinical research study that is in an approved clinical research study
+      - value: "Q2"
+        name: Q2
+        docs: Demonstration procedure/service
+      - value: "Q3"
+        name: Q3
+        docs: Live kidney donor surgery and related services
+      - value: "Q4"
+        name: Q4
+        docs: Service for ordering/referring physician qualifies as a service exemption
+      - value: "Q5"
+        name: Q5
+        docs: Service furnished under a reciprocal billing arrangement by a substitute physician; or by a substitute physical therapist furnishing outpatient physical therapy services in a health professional shortage area, a medically underserved area, or a rural area
+      - value: "Q6"
+        name: Q6
+        docs: Service furnished under a fee-for-time compensation arrangement by a substitute physician; or by a substitute physical therapist furnishing outpatient physical therapy services in a health professional shortage area, a medically underserved area, or a rural area
+      - value: "Q7"
+        name: Q7
+        docs: One Class A finding
+      - value: "Q8"
+        name: Q8
+        docs: Two Class A findings
+      - value: "Q9"
+        name: Q9
+        docs: One Class B and two Class C findings
+      - value: "QA"
+        name: QA
+        docs: Prescribed amounts of stationary oxygen for daytime use differ ... <1 liter per minute
+      - value: "QB"
+        name: QB
+        docs: Prescribed amounts of stationary oxygen for daytime use differ ... >4 liters per minute
+      - value: "QC"
+        name: QC
+        docs: Single channel monitoring
+      - value: "QD"
+        name: QD
+        docs: Recording and storage in solid state memory by a digital recorder
+      - value: "QE"
+        name: QE
+        docs: Prescribed amount of stationary oxygen while at rest is less than 1 liter per minute (lpm)
+      - value: "QF"
+        name: QF
+        docs: Prescribed amount of stationary oxygen while at rest exceeds 4 liters per minute (lpm) and portable oxygen is prescribed
+      - value: "QG"
+        name: QG
+        docs: Prescribed amount of stationary oxygen while at rest is greater than 4 liters per minute (lpm)
+      - value: "QH"
+        name: QH
+        docs: Oxygen conserving device is being used with an oxygen delivery system
+      - value: "QJ"
+        name: QJ
+        docs: Services/items provided to a prisoner or patient in state or local custody, however the state or local government, as applicable, meets the requirements in 42 cfr 411.4 (b)
+      - value: "QK"
+        name: QK
+        docs: Medical direction of two, three, or four concurrent anesthesia procedure involving qualified individuals
+      - value: "QL"
+        name: QL
+        docs: Patient pronounced dead after ambulance called
+      - value: "QM"
+        name: QM
+        docs: Ambulance service provided under arrangement by a provider of services
+      - value: "QN"
+        name: QN
+        docs: Ambulance service furnished directly by a provider of services
+      - value: "QP"
+        name: QP
+        docs: Laboratory test(s) was ordered individually or ordered as a cpt-recognized panel other than automated profile codes
+      - value: "QQ"
+        name: QQ
+        docs: Ordering professional consulted a qualified clinical decision support mechanism for this service
+      - value: "QR"
+        name: QR
+        docs: Amounts of stationary oxygen for daytime use and nighttime use differ; average of the amounts >4 liters per minute
+      - value: "QS"
+        name: QS
+        docs: Monitored anesthesia care service
+      - value: "QT"
+        name: QT
+        docs: Recording and storage on tape by an analog tape recorder
+      - value: "QW"
+        name: QW
+        docs: CLIA waived
+      - value: "QX"
+        name: QX
+        docs: >
+          CRNA service: with medical direction by a physician
+      - value: "QY"
+        name: QY
+        docs: Medical direction of one certified registered nurse anesthetist (CRNA) by an anesthesiologist
+      - value: "QZ"
+        name: QZ
+        docs: >
+          CRNA service: without medical direction by a physician
+      - value: "RA"
+        name: RA
+        docs: Replacement of a DME, orthotic or prosthetic item
+      - value: "RB"
+        name: RB
+        docs: Replacement of a part of a DME, orthotic or prosthetic item
+      - value: "RC"
+        name: RC
+        docs: Right coronary artery
+      - value: "RD"
+        name: RD
+        docs: Drug provided to beneficiary, but not administered 'incident-to'
+      - value: "RE"
+        name: RE
+        docs: Furnished in full compliance with FDA-mandated risk evaluation and mitigation strategy (REMS)
+      - value: "RI"
+        name: RI
+        docs: Ramus intermedius coronary artery
+      - value: "RR"
+        name: RR
+        docs: Rental (Use this ‘RR' modifier when DME is to be rented)
+      - value: "RT"
+        name: RT
+        docs: Right side (used to identify procedures performed on the right side of the body)
+      - value: "SA"
+        name: SA
+        docs: Physician assistant, nurse practitioner, or clinical nurse specialist services for non-surgical services
+      - value: "SB"
+        name: SB
+        docs: Nurse midwife
+      - value: "SC"
+        name: SC
+        docs: Medically necessary service or supply
+      - value: "SD"
+        name: SD
+        docs: Services provided by registered nurse with specialized, highly technical home infusion training
+      - value: "SE"
+        name: SE
+        docs: State- and/or federally-funded programs/services
+      - value: "SF"
+        name: SF
+        docs: Second opinion ordered by a professional review organization (PRO) per section 9401, p.l. 99-272
+      - value: "SG"
+        name: SG
+        docs: Ambulatory surgical center (ASC) facility service
+      - value: "SH"
+        name: SH
+        docs: Second concurrently administered infusion therapy
+      - value: "SJ"
+        name: SJ
+        docs: Third or more concurrently administered infusion therapy
+      - value: "SL"
+        name: SL
+        docs: Addresses reimbursement guidelines for vaccines provided at no cost to the provider by a state or federal agency
+      - value: "SM"
+        name: SM
+        docs: Second surgical opinion
+      - value: "SN"
+        name: SN
+        docs: Third surgical opinion
+      - value: "SQ"
+        name: SQ
+        docs: Item ordered by home health
+      - value: "SS"
+        name: SS
+        docs: Home infusion services provided in the infusion suite of the IV therapy provider
+      - value: "ST"
+        name: ST
+        docs: Related to trauma or injury
+      - value: "SU"
+        name: SU
+        docs: Procedure performed in physician's office (to denote use of facility and equipment)
+      - value: "SV"
+        name: SV
+        docs: Pharamceuticals delivered to patient's home but not utilized
+      - value: "SW"
+        name: SW
+        docs: Services provided by a certified diabetic educator
+      - value: "SY"
+        name: SY
+        docs: Persons who are in close contact with member of high-risk population (use only with codes for immunization)
+      - value: "T1"
+        name: T1
+        docs: Left foot, second digit
+      - value: "T2"
+        name: T2
+        docs: Left foot, third digit
+      - value: "T3"
+        name: T3
+        docs: Left foot, fourth digit
+      - value: "T4"
+        name: T4
+        docs: Left foot, fifth digit
+      - value: "T5"
+        name: T5
+        docs: Right foot, great toe
+      - value: "T6"
+        name: T6
+        docs: Right foot, second digit
+      - value: "T7"
+        name: T7
+        docs: Right foot, third digit
+      - value: "T8"
+        name: T8
+        docs: Right foot, fourth digit
+      - value: "T9"
+        name: T9
+        docs: Right foot, fifth digit
+      - value: "TA"
+        name: TA
+        docs: Left foot, great toe
+      - value: "TB"
+        name: TB
+        docs: Drug or biological acquired with 340b drug pricing program discount, reported for informational purposes
+      - value: "TC"
+        name: TC
+        docs: Technical Component
+      - value: "TD"
+        name: TD
+        docs: Registered nurse (RN)
+      - value: "TE"
+        name: TE
+        docs: Licensed vocational nurse (LVN) or licensed practical nurse (LPN)
+      - value: "TF"
+        name: TF
+        docs: Intermediate level of care
+      - value: "TG"
+        name: TG
+        docs: Complex/high tech level of care
+      - value: "TH"
+        name: TH
+        docs: Obstetrical treatment/services, prenatal or postpart
+      - value: "TJ"
+        name: TJ
+        docs: Program group, child and/or adolescent
+      - value: "TK"
+        name: TK
+        docs: Extra patient or passenger, non-ambulance
+      - value: "TL"
+        name: TL
+        docs: Early Intervention/Individualized Family Service Plan
+      - value: "TM"
+        name: TM
+        docs: Individualized education program (IEP)
+      - value: "TN"
+        name: TN
+        docs: Rural/outside providers' customary service area
+      - value: "TP"
+        name: TP
+        docs: Medical transport, unloaded vehicle
+      - value: "TQ"
+        name: TQ
+        docs: Basic life support transport by a volunteer ambulance provider
+      - value: "TR"
+        name: TR
+        docs: School-based individualized education program (IEP) services provided outside the public school district
+      - value: "TS"
+        name: TS
+        docs: Follow-up service
+      - value: "TT"
+        name: TT
+        docs: Individualized service provided to more than one patient in same setting
+      - value: "TU"
+        name: TU
+        docs: Special payment rate, overtime
+      - value: "TV"
+        name: TV
+        docs: Special payment rates, holidays/weekends
+      - value: "TW"
+        name: TW
+        docs: Back-up equipment
+      - value: "U1"
+        name: U1
+        docs: Medicaid level of care 1, as defined by each state
+      - value: "U2"
+        name: U2
+        docs: Medicaid level of care 2, as defined by each state
+      - value: "U3"
+        name: U3
+        docs: Medicaid level of care 3, as defined by each state
+      - value: "U4"
+        name: U4
+        docs: Medicaid level of care 4, as defined by each state
+      - value: "U5"
+        name: U5
+        docs: Medicaid level of care 5, as defined by each state
+      - value: "U6"
+        name: U6
+        docs: Medicaid level of care 6, as defined by each state
+      - value: "U7"
+        name: U7
+        docs: Medicaid level of care 7, as defined by each state
+      - value: "U8"
+        name: U8
+        docs: Medicaid level of care 8, as defined by each state
+      - value: "U9"
+        name: U9
+        docs: Medicaid level of care 9, as defined by each state
+      - value: "UA"
+        name: UA
+        docs: Medicaid level of care 10, as defined by each state
+      - value: "UB"
+        name: UB
+        docs: Medicaid level of care 11, as defined by each state
+      - value: "UC"
+        name: UC
+        docs: Medicaid level of care 12, as defined by each state
+      - value: "UD"
+        name: UD
+        docs: Medicaid level of care 13, as defined by each state
+      - value: "UE"
+        name: UE
+        docs: Used durable medical equipment
+      - value: "UF"
+        name: UF
+        docs: Services provided in the morning
+      - value: "UG"
+        name: UG
+        docs: Services provided in the afternoon
+      - value: "UH"
+        name: UH
+        docs: Services provided in the evening
+      - value: "UJ"
+        name: UJ
+        docs: Services provided at night
+      - value: "UK"
+        name: UK
+        docs: Services provided on behalf of the client to someone other than the client (collateral relationship)
+      - value: "UN"
+        name: UN
+        docs: Two patients served
+      - value: "UP"
+        name: UP
+        docs: Three patients served
+      - value: "UQ"
+        name: UQ
+        docs: Four patients served
+      - value: "UR"
+        name: UR
+        docs: Five patients served
+      - value: "US"
+        name: US
+        docs: Six patients served
+      - value: "V1"
+        name: V1
+        docs: One patient visit in a month
+      - value: "V2"
+        name: V2
+        docs: Two patient visits in a month
+      - value: "V3"
+        name: V3
+        docs: Three patient visits in a month
+
+  ServiceLineUnits:
+    enum:
+      - MJ
+      - UN
+
+  InsuranceTypeCode:
+    docs: Code identifying the type of insurance policy within a specific insurance program (X12 008020 Element 1336)
+    enum:
+      - value: "01"
+        name: C01
+        docs: Short Term Insurance
+      - value: "12"
+        name: C12
+        docs: Medicare Secondary Working Aged Beneficiary or Spouse with Employer Group Health Plan
+      - value: "13"
+        name: C13
+        docs: Medicare Secondary End-Stage Renal Disease Beneficiary in the Mandated Coordination Period with an Employer's Group Health Plan
+      - value: "14"
+        name: C14
+        docs: Medicare Secondary, No-fault Insurance including Auto is Primary
+      - value: "15"
+        name: C15
+        docs: Medicare Secondary Worker's Compensation
+      - value: "16"
+        name: C16
+        docs: Medicare Secondary Public Health Service (PHS) or Other Federal Agency
+      - value: "17"
+        name: C17
+        docs: Dental
+      - value: "18"
+        name: C18
+        docs: Vision
+      - value: "19"
+        name: C19
+        docs: Prescription Drugs
+      - value: "41"
+        name: C41
+        docs: Medicare Secondary Black Lung
+      - value: "42"
+        name: C42
+        docs: Medicare Secondary Veteran's Administration
+      - value: "43"
+        name: C43
+        docs: Medicare Secondary Disabled Beneficiary Under Age 65 with Large Group Health Plan (LGHP)
+      - value: "47"
+        name: C47
+        docs: Medicare Secondary, Other Liability Insurance is Primary
+      - value: "AP"
+        name: CAP
+        docs: Auto Insurance Policy
+      - value: "C1"
+        name: CC1
+        docs: Commercial
+      - value: "CO"
+        name: CCO
+        docs: Consolidated Omnibus Budget Reconciliation Act (COBRA)
+      - value: "CP"
+        name: CCP
+        docs: Medicare Conditionally Primary
+      - value: "D"
+        name: CD
+        docs: Disability - Provides periodic payments to replace income when an insured person is unable to work as a result of illness, injury or disease
+      - value: "DB"
+        name: CDB
+        docs: Disability Benefits
+      - value: "E"
+        name: CE
+        docs: Medicare - Point of Service (POS)
+      - value: "EP"
+        name: CEP
+        docs: Exclusive Provider Organization - Gives subscriber a choice of providers from an approved/contracted payer list; there are fixed dollar co-payments for most covered services in return for using plan providers
+      - value: "FF"
+        name: CFF
+        docs: Family or Friends
+      - value: "GP"
+        name: CGP
+        docs: Group Policy - Two or more people who are part of complete unit who enter into an insurance contract with an insurance company
+      - value: "HA"
+        name: CHA
+        docs: Health Insurance Exchange (HIX) Silver
+      - value: "HB"
+        name: CHB
+        docs: Health Insurance Exchange (HIX) Bronze
+      - value: "HD"
+        name: CHD
+        docs: High Deductible Health Plan
+      - value: "HG"
+        name: CHG
+        docs: Health Insurance Exchange (HIX) Gold
+      - value: "HM"
+        name: CHM
+        docs: Health Maintenance Organization (HMO)
+      - value: "HN"
+        name: CHN
+        docs: Health Maintenance Organization (HMO) - Medicare Risk
+      - value: "HP"
+        name: CHP
+        docs: Health Insurance Exchange (HIX) Platinum
+      - value: "HS"
+        name: CHS
+        docs: Special Low Income Medicare Beneficiary - An individual eligible for Medicare for whom Medicaid pays only Medicare premiums
+      - value: "IN"
+        name: CIN
+        docs: Indemnity - Gives a subscriber the choice to select any provider.  Payment is fixed percentage of the cost for covered care after satisfying an annual deductible
+      - value: "IP"
+        name: CIP
+        docs: Individual Policy
+      - value: "LC"
+        name: CLC
+        docs: Long Term Care - Coverage designed to help pay for some or all long term care costs, reducing the risk that a policy-holder would need to deplete all of his or her assets to pay for long term care
+      - value: "LD"
+        name: CLD
+        docs: Long Term Policy
+      - value: "LI"
+        name: CLI
+        docs: Life Insurance
+      - value: "LT"
+        name: CLT
+        docs: Litigation
+      - value: "M"
+        name: CM
+        docs: Medicare Advantage Point of Service (POS) Plan that excludes Part D coverage
+      - value: "MA"
+        name: CMA
+        docs: Medicare Part A
+      - value: "MB"
+        name: CMB
+        docs: Medicare Part B
+      - value: "MC"
+        name: CMC
+        docs: Medicaid - Program of health care services made available to medically indigent and other needy persons, regardless of age, under terms of a 1965 amendment to the U.S. Social Security Act
+      - value: "MD"
+        name: CMD
+        docs: Medicare Part D
+      - value: "ME"
+        name: CME
+        docs: Medicare Advantage Preferred Provider Organization (PPO) Plan that excludes Part D Coverage
+      - value: "MF"
+        name: CMF
+        docs: Medicare Advantage Private Fee for Service
+      - value: "MH"
+        name: CMH
+        docs: Medigap Part A - Health insurance policy intended to cover the non-covered portion of expenses eligible for Medicare Part A reimbursement which must be paid by a Medicare beneficiary for health care services and/or supplies received
+      - value: "MI"
+        name: CMI
+        docs: Medigap Part B - Health insurance policy intended to cover the non-covered portion of expenses eligible for Medicare Part B reimbursement which must be paid by a Medicare beneficiary for health care services and/or supplies received
+      - value: "MJ"
+        name: CMJ
+        docs: Medicare Advantage Health Maintenance Organization (HMO) Plan that includes Part D Coverage
+      - value: "MK"
+        name: CMK
+        docs: Medicare Advantage Health Maintenance Organization (HMO) Risk Plan that includes Part D Coverage
+      - value: "ML"
+        name: CML
+        docs: Medicare Advantage Indemnity Plan that includes Part D Coverage
+      - value: "MM"
+        name: CMM
+        docs: Medicare Advantage Preferred Provider Organization (PPO) Plan that includes Part D Coverage
+      - value: "MN"
+        name: CMN
+        docs: Medicare Advantage Indemnity Plan that excludes Part D coverage
+      - value: "MO"
+        name: CMO
+        docs: Medicare Advantage Point of Service (POS) Plan that includes Part D Coverage
+      - value: "MP"
+        name: CMP
+        docs: Medicare Primary - Medicare has the primary responsibility to pay for health care services and/or supplies received by a covered beneficiary (a person entitled to Medicare benefits)
+      - value: "MR"
+        name: CMR
+        docs: Medicare Advantage Health Maintenance Organization (HMO) Risk Plan that excludes Part D coverage
+      - value: "MT"
+        name: CMT
+        docs: Medicare Advantage Health Maintenance Organization (HMO) Plan that excludes Part D coverage
+      - value: "MV"
+        name: CMV
+        docs: Medicare Advantage
+      - value: "OA"
+        name: COA
+        docs: Open Access Point of Service Plan
+      - value: "OT"
+        name: COT
+        docs: Other
+      - value: "PE"
+        name: CPE
+        docs: Property Insurance - Personal
+      - value: "PL"
+        name: CPL
+        docs: Personal
+      - value: "PP"
+        name: CPP
+        docs: Personal Payment (Cash - No Insurance)
+      - value: "PR"
+        name: CPR
+        docs: Preferred Provider Organization (PPO)
+      - value: "PS"
+        name: CPS
+        docs: Point of Service (POS)
+      - value: "QM"
+        name: CQM
+        docs: Qualified Medicare Beneficiary - Coverage for a Medicare eligible individual for whom Medicaid pays only for Medicare premiums, co-insurance, and deductibles
+      - value: "RP"
+        name: CRP
+        docs: Property Insurance - Real
+      - value: "SP"
+        name: CSP
+        docs: Supplemental Policy - An insurance policy intended to cover non-covered charges of another insurance policy
+      - value: "TF"
+        name: CTF
+        docs: Tax Equity Fiscal Responsibility Act (TEFRA)
+      - value: "U"
+        name: CU
+        docs: Multiple Options Health Plan
+      - value: "WC"
+        name: CWC
+        docs: Workers Compensation - Coverage provides medical treatment, rehabilitation, lost wages and related expenses arising from a job related injury or disease
+      - value: "WU"
+        name: CWU
+        docs: Wrap Up Policy - A Workers Compensation Policy written for a specific job site, which will include or cover more than one insured
+
+  ClaimAdjustmentGroupCodes:
+    enum:
+      - CO
+      - CR
+      - DE
+      - MA
+      - OA
+      - PI
+      - PR
+      - RR
+      - NC
+
+  ClaimSubmissionPayerResponsibilityType:
+    enum:
+      - primary
+      - secondary
+
+  EmrPayerCrosswalk:
+    enum:
+      - HEALTHIE
+      - CANVAS
+
+  ErrorMessage: string
+
+  EntityNotFoundErrorMessage:
+    properties:
+      id: string
+  UnauthorizedErrorMessage:
+    properties:
+      message: optional<string>
+  EntityConflictErrorMessage:
+    properties:
+      entity_name: string
+  UnprocessableEntityErrorMessage:
+    properties:
+      message: optional<string>
+  RequestValidationError:
+    properties:
+      fieldName: string
+      humanReadableMessage: optional<string>
+
+  PhoneNumber:
+    properties:
+      number: string
+      type: PhoneNumberType
+
+  PhoneNumberType:
+    enum:
+      - Home
+      - Mobile
+      - Work
+
+  Email: string
+
+errors:
+  EntityNotFoundError:
+    status-code: 404
+    type: EntityNotFoundErrorMessage
+  UnauthorizedError:
+    status-code: 403
+    type: UnauthorizedErrorMessage
+  EntityConflictError:
+    status-code: 409
+    type: EntityConflictErrorMessage
+  UnprocessableEntityError:
+    status-code: 422
+    type: UnprocessableEntityErrorMessage
+  HttpRequestValidationError:
+    status-code: 422
+    type: RequestValidationError
+  HttpRequestValidationsError:
+    status-code: 422
+    type: list<RequestValidationError>

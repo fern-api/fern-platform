@@ -1,0 +1,54 @@
+Any document that you want to query against should be uploaded ahead
+of time at [https://app.vellum.ai/document-indexes](https://app.vellum.ai/document-indexes).
+
+## What is a Document Index?
+
+Document indexes act as a collection of documents grouped together
+for performing searches against for a specific use case. For example,
+if you are creating a chatbot to query against OpenAI’s help center
+documents, the text files of each article in the help center would be
+stored in one index. Here's how it looks in Vellum's UI:
+
+![Document Details](https://storage.googleapis.com/vellum-public/help-docs/document_details.png)
+
+## How to upload documents?
+
+You can manually upload files through the UI
+or via [API](https://docs.vellum.ai/api-reference/documents/upload).
+
+![Upload Documents](https://storage.googleapis.com/vellum-public/help-docs/document_index.png)
+
+Each document has a `Name` and an `External ID` which are
+initially populated with the name of the file that you upload.
+
+**Name** - Human readable text which is how the document will be visible in Vellum's UI (in documents tab)
+
+**External ID** - As the contents of a document change and the old documents becomes out of date, you can submit the updated document for reindexing re-uploading it and specifying the same `External ID`.
+
+### Supported File Types
+
+In addition to sending plain strings via API, Vellum also supports uploading files of the following types:
+
+- .txt
+- .pdf
+- .docx
+- .png
+- .xlsx
+
+For all but .txt files, we will apply an [OCR](https://en.wikipedia.org/wiki/Optical_character_recognition) process to convert the file to a text representation. If you need another file type, please reach out!
+
+### Document Size Limits
+
+Each document can be up to 20MB and 2.5M characters
+
+## Out-of-box Chunking Strategy
+
+Vellum currently uses a static chunking strategy.
+
+**Chunking strategy:** Overlapping windows w/ sentence splitting
+
+**Min overlap:** 50%
+
+**Max characters:** 1000
+
+This configuration has proven to work well for most use cases. These settings will become configurable in future updates. Please reach out to support@vellum.ai if this chunking strategy doesn’t work for you and we can work on a solution for you.

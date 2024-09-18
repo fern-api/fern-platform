@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+# This file is for testing Fern behavior. None of the types/services should be exposed externally.
+types:
+  ParentPatch:
+    properties:
+      child_patch: optional<ChildPatch>
+
+  UnionParentPatch:
+    union:
+      child: ChildPatch
+
+  ChildPatch:
+    properties:
+      field_a: optional<string>
+      field_b: optional<integer>

@@ -1,0 +1,150 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /auth
+  endpoints:
+    createAccessToken:
+      audiences:
+        - internal
+      path: ""
+      method: POST
+      display-name: Create an access token
+      docs: >-
+        Exchange credentials for an access token. Credentials can be a Client ID
+        and Secret or an Email and Password
+      request: Credentials
+      response: commons.AccessToken
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    getAccessToken:
+      audiences:
+        - internal
+      availability: deprecated
+      path: /access-token
+      method: POST
+      display-name: Authenticate with secret and clientId
+      docs: Authenticate with secret and clientId
+      request: ApiCredentials
+      response: commons.AccessToken
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    getApiKeys:
+      audiences:
+        - public
+      path: /api-keys
+      method: GET
+      display-name: Obtain the API keys for a specific environment
+      request:
+        name: GetApiKeysRequest
+        query-parameters:
+          environmentId:
+            docs: ID of environment to search
+            type: commons.EnvironmentId
+      response: ApiKeysResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    createNewApiKey:
+      audiences:
+        - public
+      path: /api-key
+      method: POST
+      display-name: Create a new API key of the specified type for the given environment
+      request:
+        name: CreateNewApiKeyRequest
+        query-parameters:
+          environmentId:
+            docs: ID of environment to search
+            type: string
+          type:
+            docs: API key type (SECRET or PUBLISHABLE)
+            type: ApiKeyType
+      response: ApiKeysResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    deleteApiKey:
+      audiences:
+        - public
+      path: /api-key
+      method: DELETE
+      display-name: Delete the specified API key
+      request:
+        name: DeleteApiKeyRequest
+        query-parameters:
+          environmentId:
+            docs: ID of environment to search
+            type: string
+          key:
+            docs: The API key to delete
+            type: string
+      response: commons.Success
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+types:
+  ApiCredentials:
+    docs: Client ID and secret used to retrieve an access token
+    properties:
+      clientId: string
+      secret: string
+    examples:
+      - value:
+          clientId: 3ceda940-43b6-4369-ad67-1df8ef328bd6
+          secret: d89b0719-b379-4247-a7f0-a3202dd28274
+
+  ApiKeysResponse:
+    properties:
+      data: list<ApiKey>
+
+  ApiKeyType:
+    enum:
+      - PUBLISHABLE
+      - SECRET
+
+  ApiKeyOperation:
+    properties:
+      path: string
+      method: string
+
+  ApiKey:
+    docs: API Key used for authenticating against our APIs
+    properties:
+      id: string
+      rawKey: optional<string>
+      type: ApiKeyType
+      environmentId: optional<commons.EnvironmentId>
+      accountId: optional<commons.AccountId>
+      operations: list<ApiKeyOperation>
+      createdAt: datetime
+      updatedAt: optional<datetime>
+      deletedAt: optional<datetime>
+      secret: optional<string>
+
+  Credentials:
+    docs: Credentials to authenticate an user
+    union:
+      userCredentials: UserCredentials
+      apiCredentials: ApiCredentials
+
+  UserCredentials:
+    docs: Email and password used to retrieve an access token
+    properties:
+      email:
+        docs: Email
+        type: string
+        availability: deprecated
+      password:
+        docs: Password
+        type: string

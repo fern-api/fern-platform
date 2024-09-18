@@ -1,0 +1,312 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  versions: versions.yml
+
+service:
+  auth: true
+  base-path: /sheets/{sheetId}
+  audiences:
+    - public
+  path-parameters:
+    sheetId:
+      docs: ID of sheet
+      type: commons.SheetId
+  endpoints:
+    get:
+      path: /records
+      method: GET
+      docs: Returns records from a sheet in a workbook
+      display-name: Get records
+      request:
+        name: GetRecordsRequest
+        query-parameters:
+          versionId: optional<string>
+          sinceVersionId: optional<commons.VersionId>
+          sortField:
+            type: optional<commons.SortField>
+          sortDirection:
+            type: optional<commons.SortDirection>
+          filter:
+            type: optional<commons.Filter>
+          filterField:
+            docs: Name of field by which to filter records
+            type: optional<commons.FilterField>
+          searchValue:
+            type: optional<commons.SearchValue>
+          searchField:
+            type: optional<commons.SearchField>
+          ids:
+            type: optional<commons.RecordId>
+            allow-multiple: true
+            docs: >
+              The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records. Maximum of 100 allowed.
+          pageSize:
+            docs: >-
+              Number of records to return in a page (default 1000 if pageNumber
+              included)
+            type: optional<integer>
+          pageNumber:
+            docs: Based on pageSize, which page of records to return
+            type: optional<integer>
+          includeCounts:
+            docs: >-
+              Include counts for the total records, valid records and records
+              with errors
+            type: optional<boolean>
+          includeLinks:
+            type: optional<boolean>
+            docs: If true, linked records will be included in the results. Defaults to false.
+          includeMessages:
+            type: optional<boolean>
+            docs: Include error messages, defaults to false.
+          for:
+            type: optional<commons.EventId>
+            docs: >-
+              if "for" is provided, the query parameters will be pulled from the event payload
+          q:
+            type: optional<string>
+            docs: >-
+              An FFQL query used to filter the result set
+      response: GetRecordsResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    update:
+      path: /records
+      method: PUT
+      docs: Updates existing records in a workbook sheet
+      display-name: Update records
+      request: Records
+      response: versions.VersionResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    insert:
+      path: /records
+      method: POST
+      docs: Adds records to a workbook sheet
+      display-name: Insert records
+      request: list<RecordData>
+      response:
+        type: RecordsResponse
+        # The create workbook request returns a 201 status code, but Fern
+        # doesn't support non-200 status codes yet.
+        # https://github.com/fern-api/fern/issues/1583
+        # status-code: 201
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    delete:
+      path: /records
+      method: DELETE
+      docs: Deletes records from a workbook sheet
+      display-name: Delete records
+      request:
+        name: DeleteRecordsRequest
+        query-parameters:
+          ids:
+            type: optional<commons.RecordId>
+            allow-multiple: true
+            docs: >
+              The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+      response: commons.Success
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    findAndReplaceDeprecated:
+      path: /replace
+      method: PUT
+      availability: deprecated
+      docs: >-
+        Searches for the given searchValue in a field and replaces all instances
+        of that value with replaceValue
+      display-name: |
+        Finds and replaces field values matching search criteria
+      request:
+        name: FindAndReplaceRecordRequestDeprecated
+        query-parameters:
+          fieldKey:
+            docs: A unique key used to identify a field in a sheet
+            type: string
+          searchValue:
+            docs: A value to find for a given field in a sheet. Wrap the value in "" for exact match
+            type: string
+          filter:
+            type: optional<commons.Filter>
+          pageSize:
+            docs: >-
+              Number of records to return in a page (default 1000 if pageNumber
+              included)
+            type: optional<integer>
+          pageNumber:
+            docs: Based on pageSize, which page of records to return
+            type: optional<integer>
+        body:
+          properties:
+            replace:
+              type: unknown
+              docs: The value to replace found values with
+      response: RecordsResponse
+
+    findAndReplace:
+      path: /find-replace
+      method: PUT
+      docs: >-
+        Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (""). Returns a versionId for the updated records
+      display-name: |
+        Finds and replaces field values matching search criteria
+      request:
+        name: FindAndReplaceRecordRequest
+        query-parameters:
+          filter:
+            type: optional<commons.Filter>
+          filterField:
+            docs: Name of field by which to filter records
+            type: optional<commons.FilterField>
+          searchValue:
+            type: optional<commons.SearchValue>
+          searchField:
+            type: optional<commons.SearchField>
+          ids:
+            type: optional<commons.RecordId>
+            allow-multiple: true
+            docs: >
+              The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+        body:
+          properties:
+            find:
+              type: optional<CellValueUnion>
+              docs: A value to find for a given field in a sheet. Wrap the value in "" for exact match
+            replace:
+              type: optional<CellValueUnion>
+              docs: The value to replace found values with
+            fieldKey:
+              type: string
+              docs: The value to replace found values with
+      response: versions.VersionResponse
+
+types:
+  RecordsResponse:
+    properties:
+      data: RecordsResponseData
+
+  RecordsResponseData:
+    extends:
+      - commons.SuccessData
+    properties:
+      records: optional<RecordsWithLinks>
+      counts: optional<RecordCounts>
+      versionId: optional<commons.VersionId>
+
+  GetRecordsResponse:
+    properties:
+      data: GetRecordsResponseData
+
+  GetRecordsResponseData:
+    docs: A list of records with optional record counts
+    extends:
+      - commons.SuccessData
+    properties:
+      records: RecordsWithLinks
+      counts: optional<RecordCounts>
+      versionId: optional<commons.VersionId>
+
+  RecordCounts:
+    properties:
+      total: integer
+      valid: integer
+      error: integer
+      errorsByField: optional<map<string, integer>>
+
+  RecordsWithLinks:
+    docs: List of Record objects, including links to related rows
+    type: list<RecordWithLinks>
+
+  RecordWithLinks:
+    docs: A single row of data in a Sheet, including links to related rows
+    properties:
+      id: commons.RecordId
+      values: RecordDataWithLinks
+      valid: optional<boolean>
+      messages: optional<list<ValidationMessage>>
+      metadata: optional<map<string, unknown>>
+
+  RecordDataWithLinks:
+    docs: A single row of data in a Sheet, including links to related rows
+    type: map<string, CellValueWithLinks>
+
+  CellValueWithLinks:
+    extends:
+      - CellValue
+    properties:
+      links: optional<Records>
+
+  Records:
+    docs: List of Record objects
+    type: list<Record>
+
+  Record:
+    docs: A single row of data in a Sheet
+    properties:
+      versionId: optional<commons.VersionId>
+      id: commons.RecordId
+      values: RecordData
+      valid: optional<boolean>
+      messages: optional<list<ValidationMessage>>
+      metadata: optional<map<string, unknown>>
+
+  RecordData:
+    docs: A single row of data in a Sheet
+    type: map<string, CellValue>
+
+  CellValue:
+    properties:
+      valid: optional<boolean>
+      messages: optional<list<ValidationMessage>>
+      value: optional<CellValueUnion>
+      layer: optional<string>
+      updatedAt: optional<datetime>
+
+  CellValueUnion:
+    discriminated: false
+    union:
+      - string
+      - integer
+      - long
+      - double
+      - boolean
+      - date
+      - datetime
+
+  ValidationMessage:
+    docs: Record data validation messages
+    properties:
+      type: optional<ValidationType>
+      source: optional<ValidationSource>
+      message: optional<string>
+
+  ValidationType:
+    enum:
+      - error
+      - warn
+      - info
+
+  ValidationSource:
+    enum:
+      - value: required-constraint
+        name: required_constraint
+      - value: unique-constraint
+        name: unique_constraint
+      - value: custom-logic
+        name: custom_logic
+      - unlinked
+      - value: invalid-option
+        name: invalid_option
+      - value: is-artifact
+        name: is_artifact

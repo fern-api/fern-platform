@@ -1,10 +1,10 @@
+import { loadWithUrl } from "@/server/loadWithUrl";
+import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
 import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 

@@ -1,0 +1,152 @@
+imports:
+  commons: commons.yml
+  configurable-rules-types: configurable-rules-types.yml
+  pipeline-commons: pipeline-commons.yml
+
+service:
+  auth: true
+  base-path: /api/configurable-rules-variables/v1
+  availability: in-development
+  audiences:
+    - configurable-rules
+  endpoints:
+    create:
+      path: ""
+      method: POST
+      request:
+        name: VariableCreate
+        body:
+          properties:
+            name: string
+            description: optional<string>
+            type: configurable-rules-types.FieldType
+            value: configurable-rules-types.FieldValue
+      response: Variable
+      errors:
+        - TypeDoesNotMatchValueHttpError
+        - VariableWithNameAlreadyExistsHttpError
+
+    getAllVariableSummaries:
+      path: /summaries
+      method: GET
+      response: list<VariableSummary>
+
+    get:
+      path: /{variable_id}
+      method: GET
+      path-parameters:
+        variable_id: configurable-rules-types.VariableId
+      response: Variable
+      errors:
+        - VariableNotFoundHttpError
+
+    update:
+      path: /{variable_id}
+      method: PATCH
+      path-parameters:
+        variable_id: configurable-rules-types.VariableId
+      request:
+        name: VariableUpdate
+        body:
+          properties:
+            name: optional<string>
+            description: optional<string>
+            type: optional<configurable-rules-types.FieldType>
+            value: optional<configurable-rules-types.FieldValue>
+      response: Variable
+      errors:
+        - TypeDoesNotMatchValueHttpError
+        - VariableNotFoundHttpError
+        - VariableTypeChangeNotAllowedHttpError
+        - VariableWithNameAlreadyExistsHttpError
+
+    delete:
+      path: /{variable_id}
+      method: DELETE
+      path-parameters:
+        variable_id: configurable-rules-types.VariableId
+      errors:
+        - VariableInUseHttpError
+        - VariableNotFoundHttpError
+
+    getAllVariablesPaged:
+      path: ""
+      method: GET
+      request:
+        name: GetAllVariablesRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: Defaults to 100
+          page_token: optional<commons.PageToken>
+      response: VariablesPage
+
+types:
+  Variable:
+    properties:
+      variable_id: configurable-rules-types.VariableId
+      name: string
+      description: optional<string>
+      type: configurable-rules-types.FieldType
+      value: configurable-rules-types.FieldValue
+      rules_used_in: set<pipeline-commons.ConfigurableRuleId>
+
+  VariablesPage:
+    extends: commons.ResourcePage
+    properties:
+      items: list<Variable>
+
+  VariableSummary:
+    docs: A Variable payload small enough to fetch all at once. In practice, Variable sans value.
+    properties:
+      variable_id: configurable-rules-types.VariableId
+      name: string
+      description: optional<string>
+      type: configurable-rules-types.FieldType
+      rules_used_in: set<pipeline-commons.ConfigurableRuleId>
+
+  TypeDoesNotMatchValueError:
+    properties:
+      provided_type: configurable-rules-types.FieldType
+      provided_value: configurable-rules-types.FieldValue
+
+  VariableInUseError:
+    properties:
+      variable_id: configurable-rules-types.VariableId
+      rules_used_in: set<pipeline-commons.ConfigurableRuleId>
+
+  VariableNotFoundError:
+    properties:
+      variable_id: configurable-rules-types.VariableId
+
+  VariableTypeChangeNotAllowedError:
+    docs: Variable types cannot change if they are actively used in rules.
+    properties:
+      existing_type: configurable-rules-types.FieldType
+      new_type: configurable-rules-types.FieldType
+      rules_used_in: set<pipeline-commons.ConfigurableRuleId>
+
+  VariableWithNameAlreadyExistsError:
+    properties:
+      name: string
+
+errors:
+  TypeDoesNotMatchValueHttpError:
+    status-code: 422
+    type: TypeDoesNotMatchValueError
+
+  VariableInUseHttpError:
+    status-code: 422
+    type: VariableInUseError
+
+  VariableNotFoundHttpError:
+    status-code: 404
+    type: VariableNotFoundError
+
+  VariableTypeChangeNotAllowedHttpError:
+    status-code: 422
+    type: VariableTypeChangeNotAllowedError
+
+  VariableWithNameAlreadyExistsHttpError:
+    status-code: 409
+    type: VariableWithNameAlreadyExistsError

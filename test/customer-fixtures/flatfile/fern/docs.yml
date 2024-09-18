@@ -1,0 +1,41 @@
+instances:
+  - url: test-flatfile.docs.dev.buildwithfern.com
+
+title: Flatfile | API Reference
+navigation:
+  - section: Overview
+    contents:
+      - page: Introduction
+        path: ./mdx/intro.mdx
+      - section: Nested 1
+        contents:
+          - section: Nested 2
+            contents:
+              - page: Nested 3
+                path: ./mdx/intro.mdx
+          - page: Nested 4
+            path: ./mdx/intro.mdx
+          - page: Nested 5
+            path: ./mdx/intro.mdx
+  - api: API Reference
+    audiences:
+      - public
+logo:
+  dark: logo/dark.png
+  light: logo/light.png
+colors:
+  accentPrimary:
+    dark: "#c4cafb"
+    light: "#6673FF"
+  background:
+    dark: "#0f1117"
+    light: "#ffffff"
+favicon: favicon.jpg
+background-image: assets/background.png
+navbar-links:
+  - type: secondary
+    text: Create Account
+    url: https://platform.flatfile.com/account/sign-up
+  - type: primary
+    text: Sign in
+    url: https://platform.flatfile.com

@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  entity: ../entity-types.yml
+
+service:
+  auth: true
+  base-path: /entity/{entityId}
+  path-parameters:
+    entityId: entity.EntityId
+  endpoints:
+    getAll:
+      audiences:
+        - external
+      path: /notification-policies
+      method: GET
+      docs: Retrieve all notification policies associated with this entity
+      display-name: Get all notification policies associated with this entity
+      response: list<entity.NotificationPolicyResponse>
+
+    get:
+      audiences:
+        - external
+      path: /notification-policy/{notificationType}
+      path-parameters:
+        notificationType: entity.NotificationType
+      method: GET
+      docs: Retrieve notification policy associated with this entity
+      display-name: Retrieve notification policy associated with this entity
+      response: entity.NotificationPolicyResponse
+
+    update:
+      audiences:
+        - external
+      path: /notification-policy/{notificationType}
+      path-parameters:
+        notificationType: entity.NotificationType
+      method: POST
+      docs: Update notification policy associated with this entity
+      display-name: Update notification policy associated with this entity
+      request: entity.NotificationPolicyRequest
+      response: entity.NotificationPolicyResponse

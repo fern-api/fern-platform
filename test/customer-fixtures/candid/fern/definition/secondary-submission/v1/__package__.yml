@@ -1,0 +1,60 @@
+imports:
+  commons: ../../commons.yml
+  rules_engine_types: ../../rules_engine_types.yml
+
+service:
+  auth: true
+  base-path: /api/secondary-submission/v1
+  availability: in-development
+  endpoints:
+    create:
+      path: /{encounter_id}
+      method: POST
+      path-parameters:
+        encounter_id: commons.EncounterId
+      request: SecondarySubmissionCreate
+      response: SecondarySubmissionResponse
+      errors:
+        - commons.EntityNotFoundError
+    validate:
+      path: /{encounter_id}/validate
+      method: POST
+      path-parameters:
+        encounter_id: commons.EncounterId
+      response: SecondarySubmissionCheckResponse
+      errors:
+        - commons.EntityNotFoundError
+    prepopulate:
+      path: /{encounter_id}/pre-populate
+      method: GET
+      path-parameters:
+        encounter_id: commons.EncounterId
+      response: optional<OtherPayerAdjudicationDetails>
+      errors:
+        - commons.EntityNotFoundError
+
+types:
+  ServiceAdjustment:
+    properties:
+      adjustment_group_code: commons.ClaimAdjustmentGroupCodes
+      adjustment_reason_code: optional<string>
+      adjustment_amount_cents: integer
+
+  OtherPayerAdjudicationDetails:
+    properties:
+      service_adjustments: list<ServiceAdjustment>
+      paid_amount_cents: integer
+      patient_responsibility_cents: integer
+      check_date: commons.Date
+
+  SecondarySubmissionCreate:
+    properties:
+      other_payer_adjudication_details: OtherPayerAdjudicationDetails
+
+  SecondarySubmissionResponse:
+    properties:
+      result: rules_engine_types.RulesEngineProcessResult
+
+  SecondarySubmissionCheckResponse:
+    properties:
+      response: rules_engine_types.RulesEngineCheckResponse

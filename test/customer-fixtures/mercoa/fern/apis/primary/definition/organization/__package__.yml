@@ -1,0 +1,63 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+imports:
+  entity: ../entity-types.yml
+  paymentMethod: ../payment-method-types.yml
+  organization: ../organization-types.yml
+
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    get:
+      audiences:
+        - external
+      path: /organization
+      method: GET
+      request:
+        name: GetOrganizationRequest
+        query-parameters:
+          paymentMethods:
+            docs: include supported payment methods in response
+            type: optional<boolean>
+          emailProvider:
+            docs: include email provider info in response
+            type: optional<boolean>
+          colorScheme:
+            docs: include color scheme info in response
+            type: optional<boolean>
+          payeeOnboardingOptions:
+            docs: include payee onboarding options in response
+            type: optional<boolean>
+          payorOnboardingOptions:
+            docs: include payor onboarding options in response
+            type: optional<boolean>
+          metadataSchema:
+            docs: include metadata schema in response
+            type: optional<boolean>
+      display-name: Get current organization information
+      docs: Get current organization information
+      response: organization.OrganizationResponse
+
+    update:
+      audiences:
+        - external
+      path: /organization
+      method: POST
+      display-name: Update current organization
+      docs: Update current organization
+      request: organization.OrganizationRequest
+      response: organization.OrganizationResponse
+
+    emailLog:
+      audiences:
+        - external
+      path: /organization/emailLog
+      method: GET
+      display-name: Get log of all emails
+      docs: Get log of all emails sent to this organization. Content format subject to change.
+      request:
+        name: GetEmailLogRequest
+        query-parameters:
+          startDate: optional<datetime>
+          endDate: optional<datetime>
+      response: list<organization.EmailLogResponse>

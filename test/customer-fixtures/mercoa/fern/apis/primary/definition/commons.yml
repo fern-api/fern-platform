@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  FullName:
+    properties:
+      firstName: string
+      middleName: optional<string>
+      lastName: string
+      suffix: optional<string>
+
+  BirthDate:
+    properties:
+      day: optional<string>
+      month: optional<string>
+      year: optional<string>
+
+  Address:
+    properties:
+      addressLine1: string
+      addressLine2: optional<string>
+      city: string
+      stateOrProvince: string
+      postalCode: string
+      country: optional<string>
+
+  PhoneNumber:
+    properties:
+      countryCode: string
+      number: string
+
+  IndividualGovernmentID:
+    properties:
+      ssn: optional<SSN>
+      itin: optional<ITIN>
+
+  SSN:
+    properties:
+      full: optional<string>
+      lastFour: string
+
+  ITIN:
+    properties:
+      full: optional<string>
+      lastFour: string
+
+  OrderDirection:
+    enum:
+      - ASC
+      - DESC
+
+errors:
+  AuthHeaderMissingError:
+    status-code: 400
+
+  AuthHeaderMalformedError:
+    status-code: 400
+    type: string
+
+  Unauthorized:
+    status-code: 401
+    type: string
+
+  InvalidPostalCode:
+    status-code: 400
+    type: string
+
+  InvalidStateOrProvince:
+    status-code: 400
+    type: string

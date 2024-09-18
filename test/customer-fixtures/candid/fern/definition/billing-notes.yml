@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /api/billing_notes/v2
+  endpoints:
+    create:
+      display-name: Create billing note
+      method: POST
+      path: ""
+      request:
+        name: StandaloneBillingNoteCreate
+        body:
+          extends: BillingNoteBase
+          properties:
+            encounter_id: commons.EncounterId
+      response: BillingNote
+      audiences:
+        - external
+
+    delete:
+      method: DELETE
+      path: /{billing_note_id}
+      path-parameters:
+        billing_note_id: BillingNoteId
+
+types:
+  BillingNoteId: uuid
+
+  BillingNoteBase:
+    properties:
+      text:
+        type: string
+        docs: Empty string not allowed.
+
+  BillingNote:
+    extends: BillingNoteBase
+    properties:
+      billing_note_id: BillingNoteId
+      encounter_id: commons.EncounterId
+      created_at: datetime
+      author_auth0_id: optional<string>
+      author_name: optional<string>

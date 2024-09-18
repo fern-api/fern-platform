@@ -1,0 +1,52 @@
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /api/payers/v3
+  audiences:
+    - external
+  endpoints:
+    get:
+      display-name: Get payer
+      method: GET
+      path: /{payer_uuid}
+      path-parameters:
+        payer_uuid: PayerUuid
+      response: Payer
+
+    getAll:
+      display-name: Get all payers
+      method: GET
+      path: ""
+      response: PayerPage
+      request:
+        name: GetAllPayersRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: Defaults to 100
+          search_term: optional<string>
+          page_token: optional<commons.PageToken>
+
+types:
+  PayerUuid: uuid
+  PayerId: string
+  PayerName: string
+
+  PayerPage:
+    extends: commons.ResourcePage
+    properties:
+      items: list<Payer>
+
+  Payer:
+    properties:
+      payer_uuid:
+        type: PayerUuid
+        docs: Auto-generated ID set on creation
+      payer_id:
+        type: string
+        docs: The primary national payer ID of the payer
+      payer_name:
+        type: string
+        docs: The primary display name of the payer

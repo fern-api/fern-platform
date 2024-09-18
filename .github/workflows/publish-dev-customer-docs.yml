@@ -19,6 +19,6 @@ jobs:
       - name: Generate Customer Docs
         run: |
           export FERN_TOKEN="${{ secrets.FERN_ORG_TOKEN_DEV }}"
-          cd tests/${{ matrix.customer }}
+          cd test/customer-fixtures/${{ matrix.customer }}
           fern-dev generate --docs --log-level debug
           echo "Generated docs for ${{ matrix.customer }}!"

@@ -1,0 +1,40 @@
+The Webhook evaluation metric offers ultimate flexibility with how to evaluate the output of an LLM.
+
+It’s intended to be used when you have some bespoke business logic that’s capable of determining whether an LLM’s output is “good” or “bad”.
+
+It works like this:
+
+1. You stand up an unauthenticated API that Vellum can make an HTTP POST request to with the following JSON payload:
+
+```tsx
+{
+    "input_variables": {       // Key/value pairs for each variable in the Test Suite / Prompt
+        "var_1": "var_1_value",
+        "var_2": "var_2_value",
+        ...
+    },
+    "target": string | null,   // An optionally specified target value
+    "output": string           // The LLM's output
+}
+```
+
+And responds with a JSON payload that conforms to the following schema:
+
+```tsx
+{
+    "score": number            // A raw numerical representation of the output quality.
+    "normalized_score": number  // A numerical representation of quality between 0 and 1, 0 being "bad" and 1 being "good"
+}
+```
+
+<Callout intent="info">
+  Vellum will soon support authenticated endpoints and the specification of auth headers and signing signatures.
+</Callout>
+
+2. You encode business logic behind your API that interprets the provided inputs and output and produces some numerical score representing the quality of the output.
+3. You select the “Webhook” evaluation metric within Vellum’s UI and provide the url to your webhook.
+4. Upon evaluation, Vellum will send the above payload to your webhook and expect the above response, rendering UI elements based on the response data accordingly.
+
+If you want to test the Webhook evaluation metric without standing up your own endpoint, you can use this endpoint as an example. It’ll generate random numerical scores.
+
+[https://api.vellum.ai/v1/webhooks/eval-metric-examples/rng](https://api.vellum.ai/v1/webhooks/eval-metric-examples/rng)

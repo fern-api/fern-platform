@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+imports:
+  commons: ../../commons.yml
+
+types:
+  GetExportsResponse:
+    properties:
+      name:
+        type: string
+        docs: "Report name; contains date strings representing the start and end date of the export."
+      created_at: datetime
+      authenticated_download_url:
+        type: string
+        docs: "Authenticated URL where a customer's report can be retrieved."
+      authenticated_download_url_expiration:
+        type: datetime
+        docs: "Expiration datetime of the authenticated URL. URLs expire after 2 minutes."
+
+service:
+  auth: true
+  base-path: "/api/exports/v3"
+  availability: in-development
+  endpoints:
+    get_exports:
+      method: GET
+      path: ""
+      request:
+        name: GetExportsRequest
+        query-parameters:
+          start_date:
+            type: date
+            docs: |
+              Beginning date of claim versions returned in the export, ISO 8601 date e.g. 2019-08-24.
+              Must be at least 1 calendar day in the past. Cannot be earlier than 2022-10-07.
+          end_date:
+            type: date
+            docs: |
+              Ending date of claim versions returned in the export, ISO 8601 date; e.g. 2019-08-24.
+              Must be within 30 days of start_date.
+      response: GetExportsResponse
+      errors:
+        - commons.HttpRequestValidationsError
+        - ExportFilesUnavailableError
+        - MissingDailyIncrementalExportFileError
+        - ExportNotYetAvailableError
+        - ExportDateTooEarlyError
+
+errors:
+  ExportFilesUnavailableError:
+    status-code: 503
+    type: commons.ErrorMessage
+  MissingDailyIncrementalExportFileError:
+    status-code: 503
+    type: commons.ErrorMessage
+  ExportDateTooEarlyError:
+    status-code: 422
+    type: commons.ErrorMessage
+  ExportNotYetAvailableError:
+    status-code: 422
+    type: commons.ErrorMessage

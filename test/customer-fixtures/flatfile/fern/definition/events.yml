@@ -1,0 +1,435 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  spaces: spaces/__package__.yml
+
+service:
+  auth: true
+  base-path: ""
+  audiences:
+    - public
+  endpoints:
+    list:
+      path: /events
+      method: GET
+      docs: Event topics that the Flatfile Platform emits.
+      display-name: List events
+      request:
+        name: ListEventsRequest
+        query-parameters:
+          environmentId:
+            docs: Filter by environment
+            type: optional<commons.EnvironmentId>
+          spaceId:
+            docs: Filter by space
+            type: optional<commons.SpaceId>
+          domain:
+            docs: Filter by event domain
+            type: optional<string>
+          topic:
+            docs: Filter by event topic
+            type: optional<string>
+          since:
+            docs: Filter by event timestamp
+            type: optional<datetime>
+          pageSize:
+            docs: Number of results to return in a page (default 10)
+            type: optional<integer>
+          pageNumber:
+            docs: Based on pageSize, which page of results to return
+            type: optional<integer>
+          includeAcknowledged:
+            docs: Include acknowledged events
+            type: optional<boolean>
+      response: ListAllEventsResponse
+
+    create:
+      path: /events
+      method: POST
+      audiences:
+        - deprecated
+      display-name: Create an event
+      request: CreateEventConfig
+      response: EventResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    get:
+      path: /events/{eventId}
+      method: GET
+      display-name: Get an event
+      path-parameters:
+        eventId:
+          docs: The event id
+          type: commons.EventId
+      response: EventResponse
+
+    ack:
+      path: /events/{eventId}/ack
+      method: POST
+      display-name: Acknowledge an event
+      path-parameters:
+        eventId:
+          docs: The event id
+          type: commons.EventId
+      response: commons.Success
+
+    getEventToken:
+      path: /subscription
+      method: GET
+      docs: Get a token which can be used to subscribe to events for this space
+      display-name: Get subscription credentials
+      request:
+        name: GetEventTokenRequest
+        query-parameters:
+          spaceId:
+            availability: deprecated
+            docs: The space id
+            type: optional<commons.SpaceId>
+          scope:
+            docs: The scope of the event stream (space or environment id)
+            type: optional<string>
+      response: spaces.EventTokenResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+types:
+  ListAllEventsResponse:
+    properties:
+      data: list<Event>
+
+  CreateEventConfig:
+    extends: BaseEvent
+    docs: Properties used to create a new event
+    properties:
+      topic: EventTopic
+      payload: map<string, unknown>
+
+  EventResponse:
+    properties:
+      data: Event
+
+  Event:
+    docs: An event that tracks an activity within an environment
+    discriminant: topic
+    # Event topics can be found at https://github.com/FlatFilers/Platform/blob/main/apps/platform/src/events/topics.ts
+    union:
+      # Emitted by /agents
+      agent:created:
+        name: agentCreated
+        type: GenericEvent
+      agent:updated:
+        name: agentUpdated
+        type: GenericEvent
+      agent:deleted:
+        name: agentDeleted
+        type: GenericEvent
+      # Emtted by /spaces
+      space:created:
+        name: spaceCreated
+        type: GenericEvent
+      space:updated:
+        name: spaceUpdated
+        type: GenericEvent
+      space:deleted:
+        name: spaceDeleted
+        type: GenericEvent
+      # Emitted by /spaces/documents
+      document:created:
+        name: documentCreated
+        type: GenericEvent
+      document:updated:
+        name: documentUpdated
+        type: GenericEvent
+      document:deleted:
+        name: documentDeleted
+        type: GenericEvent
+      # Emitted by /workbooks
+      workbook:created:
+        name: workbookCreated
+        type: GenericEvent
+      workbook:updated:
+        name: workbookUpdated
+        type: GenericEvent
+      workbook:deleted:
+        name: workbookDeleted
+        type: GenericEvent
+      # Emitted by /sheets
+      sheet:created:
+        name: sheetCreated
+        type: GenericEvent
+      sheet:updated:
+        name: sheetUpdated
+        type: GenericEvent
+      sheet:deleted:
+        name: sheetDeleted
+        type: GenericEvent
+      # Emitted by /records
+      records:created:
+        name: recordsCreated
+        type: GenericEvent
+      records:updated:
+        name: recordsUpdated
+        type: GenericEvent
+      records:deleted:
+        name: recordsDeleted
+        type: GenericEvent
+      # Emitted by /files
+      file:created:
+        name: fileCreated
+        type: GenericEvent
+      file:updated:
+        name: fileUpdated
+        type: GenericEvent
+      file:deleted:
+        name: fileDeleted
+        type: GenericEvent
+      # Emitted by /jobs
+      job:created:
+        name: jobCreated
+        type: GenericEvent
+      job:updated:
+        name: jobUpdated
+        type: GenericEvent
+      job:deleted:
+        name: jobDeleted
+        type: GenericEvent
+      job:failed:
+        name: jobFailed
+        type: GenericEvent
+      job:completed:
+        name: jobCompleted
+        type: GenericEvent
+      job:ready:
+        name: jobReady
+        type: GenericEvent
+      job:scheduled:
+        name: jobScheduled
+        type: GenericEvent
+      "job:outcome-acknowledged":
+        name: jobOutcomeAcknowledged
+        type: GenericEvent
+      # Commit events
+      commit:created:
+        name: commitCreated
+        type: GenericEvent
+      commit:updated:
+        name: commitUpdated
+        type: GenericEvent
+      # Layer events
+      layer:created:
+        name: layerCreated
+        type: GenericEvent
+
+  GenericEvent:
+    extends: BaseEvent
+    properties:
+      id: commons.EventId
+      createdAt:
+        docs: Date the event was created
+        type: datetime
+      deletedAt:
+        docs: Date the event was deleted
+        type: optional<datetime>
+      acknowledgedAt:
+        docs: Date the event was acknowledged
+        type: optional<datetime>
+      acknowledgedBy:
+        docs: The actor (user or system) who acknowledged the event
+        type: optional<string>
+      payload: map<string, unknown>
+
+  BaseEvent:
+    properties:
+      domain:
+        docs: The domain of the event
+        type: Domain
+      context:
+        docs: The context of the event
+        type: Context
+      attributes:
+        docs: The attributes of the event
+        type: optional<EventAttributes>
+      callbackUrl:
+        docs: The callback url to acknowledge the event
+        type: optional<string>
+      dataUrl:
+        docs: The url to retrieve the data associated with the event
+        type: optional<string>
+      target:
+        type: optional<string>
+      origin:
+        type: optional<Origin>
+      namespaces:
+        type: optional<list<string>>
+
+  EventTopic:
+    docs: The topic of the event
+    # Event topics can be found at https://github.com/FlatFilers/Platform/blob/main/apps/platform/src/events/topics.ts
+    enum:
+      # Emitted by /agents
+      - value: agent:created
+        name: agent_created
+      - value: agent:updated
+        name: agent_updated
+      - value: agent:deleted
+        name: agent_deleted
+      # Emitted by /spaces
+      - value: space:created
+        name: space_created
+      - value: space:updated
+        name: space_updated
+      - value: space:deleted
+        name: space_deleted
+      # Emitted by /spaces/documents
+      - value: document:created
+        name: document_created
+      - value: document:updated
+        name: document_updated
+      - value: document:deleted
+        name: document_deleted
+      # Emitted by /workbooks
+      - value: workbook:created
+        name: workbook_created
+      - value: workbook:updated
+        name: workbook_updated
+      - value: workbook:deleted
+        name: workbook_deleted
+      # Emitted by /sheets
+      - value: sheet:created
+        name: sheet_created
+      - value: sheet:updated
+        name: sheet_updated
+      - value: sheet:deleted
+        name: sheet_deleted
+      # Emitted by /records
+      - value: records:created
+        name: records_created
+      - value: records:updated
+        name: records_updated
+      - value: records:deleted
+        name: records_deleted
+      # Emitted by /files
+      - value: file:created
+        name: file_created
+      - value: file:updated
+        name: file_updated
+      - value: file:deleted
+        name: file_deleted
+      # Emitted by jobs
+      - value: job:created
+        name: job_created
+      - value: job:updated
+        name: job_updated
+      - value: job:deleted
+        name: job_deleted
+      - value: job:completed
+        name: job_completed
+      - value: job:ready
+        name: job_ready
+      - value: job:scheduled
+        name: job_scheduled
+      - value: job:outcome-acknowledged
+        name: job_outcome_acknowledged
+      - value: job:failed
+        name: job_failed
+      # Emitted by /versions
+      - value: commit:created
+        name: commit_created
+      - value: commit:updated
+        name: commit_updated
+      - value: layer:created
+        name: layer_created
+    examples:
+      - name: Example0
+        value: file:created
+
+  Domain:
+    docs: The domain of the event
+    enum:
+      - file
+      - space
+      - workbook
+      - job
+      - document
+      - sheet
+    examples:
+      - name: Example0
+        value: job
+
+  Context:
+    docs: The context of the event
+    properties:
+      namespaces:
+        type: optional<list<string>>
+        docs: The namespaces of the event
+      slugs:
+        type: optional<EventContextSlugs>
+        docs: The slugs of related resources
+      actionName: optional<ActionName>
+      accountId: commons.AccountId
+      environmentId: commons.EnvironmentId
+      spaceId: optional<commons.SpaceId>
+      workbookId: optional<commons.WorkbookId>
+      sheetId: optional<commons.SheetId>
+      sheetSlug: optional<SheetSlug>
+      versionId: optional<commons.VersionId>
+      jobId: optional<commons.JobId>
+      fileId: optional<commons.FileId>
+      documentId: optional<commons.DocumentId>
+      precedingEventId: optional<commons.EventId>
+      actorId:
+        type: optional<string>
+        docs: Can be a UserId, GuestId, or AgentId
+
+  EventContextSlugs:
+    properties:
+      space:
+        type: optional<string>
+        docs: The slug of the space
+      workbook:
+        type: optional<string>
+        docs: The slug of the workbook
+      sheet:
+        type: optional<string>
+        docs: The slug of the sheet
+
+  ActionName:
+    docs: Name of an action
+    type: string
+
+  Progress:
+    docs: The progress of the event within a collection of iterable events
+    properties:
+      current:
+        docs: The current progress of the event
+        type: optional<integer>
+      total:
+        docs: The total number of events in this group
+        type: optional<integer>
+      percent:
+        docs: The percent complete of the event group
+        type: optional<integer>
+
+  EventAttributes:
+    docs: The attributes of the event
+    properties:
+      targetUpdatedAt:
+        docs: Date the related entity was last updated
+        type: optional<datetime>
+      progress:
+        docs: The progress of the event within a collection of iterable events
+        type: optional<Progress>
+
+  SheetSlug:
+    docs: Sheet Slug
+    type: string
+
+  Origin:
+    docs: The origin resource of the event
+    properties:
+      id: optional<string>
+      slug: optional<string>

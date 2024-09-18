@@ -1,0 +1,33 @@
+### Encounters
+
+Candid's primary entry point for submitting encounter information is the [Encounters](../api-reference/encounters) endpoint. Candid uses
+the information sent to this endpoint to submit claims.
+
+### Testing components
+
+<EndpointRequestSnippet endpoint="POST /api/auth/v2/token" />
+
+<EndpointResponseSnippet endpoint="POST /api/auth/v2/token" />
+
+### Eligibility
+
+Candid's [Eligibility](https://app.joincandidhealth.com/docs#tag/Eligibility) endpoint can be used to run real-time
+eligibility checks on patients to confirm active medical coverage and to understand the patient's benefits (co-pays, deductibles, etc).
+
+### Exports
+
+Candid's [Exports](https://app.joincandidhealth.com/docs#tag/Exports) endpoints are used to programmatically download CSV
+exports of changes to a claim's status and associated metadata (e.g., service line amounts, patient and subscriber info, provider info).
+
+### Tasks
+
+Candid's [Tasks](../api-reference/tasks) endpoint can be used to embed Candid's Tasks in another system, like your integrated
+EMR partner. Find information about the legacy Tasks implementation [here](https://app.joincandidhealth.com/docs#tag/Tasks).
+
+### Example workflow using Candid's products
+
+1. When a patient signs up or schedules an appointment, [Eligibility](https://app.joincandidhealth.com/docs#tag/Eligibility) is used to run a real-time eligibility check to confirm the patient's medical coverage.
+2. A day before the patient's appointment, [Eligibility](https://app.joincandidhealth.com/docs#tag/Eligibility) is used again to re-confirm the patient's coverage. It may have lapsed since they scheduled the appointment.
+3. After visit has been completed, an [Encounter](../api-reference/encounters) is submitted to Candid. This either happens in real-time immediately when the visit is completed and/or signed, or in a batch job at the end of the day.
+4. [Exports](https://app.joincandidhealth.com/docs#tag/Exports) are downloaded and processed daily. Patient payments are sent to collect the balance owed on finalized adjudicated claims based on this data.
+5. [Tasks](../api-reference/tasks) are synchronized with your system if you are not working them directly in the Candid app.

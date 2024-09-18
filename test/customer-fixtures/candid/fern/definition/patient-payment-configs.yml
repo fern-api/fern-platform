@@ -1,0 +1,137 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /api/patient_payment_configs/v1
+  endpoints:
+    get:
+      docs: |
+        Returns PatientPaymentConfig identified by the id.
+        If the given id is not found, then 404 response will be returned.
+        If the authenticated user does not have permission to view the PatientPaymentConfig
+        identified by the id, then 403 response will be returned
+      method: GET
+      path: /{id}
+      path-parameters:
+        id:
+          type: PatientPaymentConfigId
+          docs: PatientPaymentConfigId to be returned
+      response: PatientPaymentConfig
+      errors:
+        - commons.EntityNotFoundError
+        - commons.UnauthorizedError
+    search:
+      docs: Returns all PatientPaymentConfig for the authenticated user's organization
+      method: GET
+      path: ""
+      request:
+        name: SearchPatientPaymentConfigRequest
+        query-parameters:
+          patient_external_id:
+            type: optional<commons.PatientExternalId>
+            docs: limit the PatientPaymentConfig to those belonging to the
+              patient_external_id
+          limit:
+            type: optional<integer>
+            docs: Defaults to 100
+          sort:
+            type: optional<PatientPaymentConfigSortField>
+            docs: Defaults to patient_external_id
+          sort_direction:
+            type: commons.SortDirection
+            docs: Sort direction
+          page_token: optional<commons.PageToken>
+      response: PagedPatientPaymentConfig
+    create:
+      docs: |
+        Creates the given PatientPaymentConfig, and returns the newly created PatientPaymentConfig.
+      method: POST
+      path: ""
+      request: PatientPaymentConfigCreate
+      response: PatientPaymentConfig
+      errors:
+        - commons.EntityConflictError
+    patch:
+      docs: |
+        Patch PatientPaymentConfig identified the id.
+        If PatientPaymentConfig is not found by the provided id, then 404 will be returned.
+        If the authenticated user does not have the permission to update the PatientPaymentConfig identified.
+      method: PATCH
+      path: /{id}
+      path-parameters:
+        id:
+          type: PatientPaymentConfigId
+          docs: PatientPaymentConfigId to be patched
+      request: PatientPaymentConfigPatch
+      response: PatientPaymentConfig
+      errors:
+        - commons.EntityNotFoundError
+        - commons.UnauthorizedError
+    delete:
+      docs: |
+        Deletes the PatientPaymentConfigId identified by the id.
+        If PatientPaymentConfigId is not found by the provided id, then 404 will be returned.
+        If the authenticated user does not have the permission to update the PatientPaymentConfig identified
+        by the id, then 403 will be returned
+      method: DELETE
+      path: /{id}
+      path-parameters:
+        id:
+          type: PatientPaymentConfigId
+          docs: PatientPaymentConfigId to be deleted
+      errors:
+        - commons.EntityNotFoundError
+        - commons.UnauthorizedError
+
+types:
+  PatientPaymentConfigId: uuid
+
+  PagedPatientPaymentConfig:
+    extends: commons.ResourcePage
+    properties:
+      items: list<PatientPaymentConfig>
+
+  PatientPaymentConfigSortField:
+    enum:
+      - patient_external_id
+      - auto_collect
+      - auto_collect_threshold_cents
+      - auto_invoice
+      - days_until_due
+
+  PatientPaymentConfigFilter:
+    properties:
+      patient_external_id: optional<commons.PatientExternalId>
+      limit: optional<integer>
+      sort: optional<PatientPaymentConfigSortField>
+      sort_direction: commons.SortDirection
+      page_token: optional<commons.PageToken>
+
+  PatientPaymentConfig:
+    properties:
+      id: PatientPaymentConfigId
+      organization_id: commons.OrganizationId
+      patient_external_id: commons.PatientExternalId
+      auto_collect: boolean
+      auto_collect_threshold_cents: integer
+      auto_invoice: boolean
+      days_until_due: integer
+
+  PatientPaymentConfigCreate:
+    properties:
+      patient_external_id: commons.PatientExternalId
+      auto_collect: boolean
+      auto_collect_threshold_cents: integer
+      auto_invoice: boolean
+      days_until_due: integer
+
+  PatientPaymentConfigPatch:
+    properties:
+      patient_external_id: optional<commons.PatientExternalId>
+      auto_collect: optional<boolean>
+      auto_collect_threshold_cents: optional<integer>
+      auto_invoice: optional<boolean>
+      days_until_due: optional<integer>

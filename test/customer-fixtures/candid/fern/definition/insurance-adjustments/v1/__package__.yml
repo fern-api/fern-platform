@@ -1,0 +1,232 @@
+imports:
+  commons: ../../commons.yml
+  x12: ../../x12/v1/__package__.yml
+  payers: ../../payers.yml
+  serviceLines: ../../service-lines/v2/__package__.yml
+
+types:
+  InsuranceAdjustmentId: uuid
+
+  # TODO(sankruth): Rename these API variables to something like `ServiceAdjustment` or `ClaimAdjustment`
+  ClaimAdjustmentReasonCode:
+    properties:
+      group_code: commons.ClaimAdjustmentGroupCodes
+      reason_code: x12.Carc
+      amount_cents: integer
+
+  RemittanceAdviceRemarkCode:
+    properties:
+      reason_code: x12.Rarc
+
+  InsuranceAdjustmentAttachmentId: uuid
+
+  InsuranceAdjustmentAttachmentResponse:
+    properties:
+      signed_download_url: commons.ContentDownloadUrl
+
+  ServiceLineAdjustmentRequest:
+    properties:
+      denial_reason:
+        type: optional<serviceLines.DenialReasonContent>
+        docs: Will be treated as a denial if present
+      insurance_allowed_amount_cents: optional<integer>
+      insurance_paid_amount_cents: optional<integer>
+      deductible_amount_cents: optional<integer>
+      coinsurance_amount_cents: optional<integer>
+      copay_amount_cents: optional<integer>
+      carcs: list<ClaimAdjustmentReasonCode>
+      rarcs: list<RemittanceAdviceRemarkCode>
+
+  ValidateInsuranceAdjustmentRequest:
+    properties:
+      service_lines: map<commons.ServiceLineId, ServiceLineAdjustmentRequest>
+
+  ValidateServiceLineAdjustmentResponse:
+    properties:
+      insurance_adjustment_cents: integer
+      other_patient_responsibility_cents: integer
+
+  ValidateInsuranceAdjustmentResponse:
+    properties:
+      service_lines: map<commons.ServiceLineId, ValidateServiceLineAdjustmentResponse>
+
+  CreateInsuranceAdjustmentRequest:
+    properties:
+      payer_uuid: payers.PayerUuid
+      post_date:
+        type: optional<date>
+        docs: Defaults to today
+      payer_claim_number: string
+      check_number: optional<string>
+      check_date: date
+      note: optional<string>
+      service_lines: map<commons.ServiceLineId, ServiceLineAdjustmentRequest>
+
+  CreateInsuranceAdjustmentResponse:
+    properties:
+      adjustment_id: InsuranceAdjustmentId
+
+  # note(suskin): We have all of these error shapes here because we want first-class
+  # specialized FE handling for each of these errors.
+  # There are many business-logic errors that can occur when creating an insurance adjustment.
+  # The union pattern is used heavily for exhaustiveness and forward-compatibility so that
+  # there will not be breaks when we want to introduce new types of validations as well.
+
+  OtherFieldError:
+    docs: A generic error that can be displayed on the targeted field with a user-facing description.
+    properties:
+      human_readable_description: string
+
+  CarcGroupCodeError:
+    union:
+      other: OtherFieldError
+
+  CarcReasonCodeError:
+    union:
+      only_denied_carc_code_on_denied_service_line: {}
+      denial_code_used_without_denial_reason: {}
+      other: OtherFieldError
+
+  CarcAmountError:
+    union:
+      other: OtherFieldError
+
+  CarcPropertyFieldError:
+    union:
+      group_code_error: CarcGroupCodeError
+      reason_code_error: CarcReasonCodeError
+      amount_error: CarcAmountError
+
+  RarcReasonCodeError:
+    union:
+      at_least_one_carc_required: {}
+      other: OtherFieldError
+
+  RarcPropertyFieldError:
+    union:
+      reason_code_error: RarcReasonCodeError
+
+  DenialReasonFieldError:
+    union:
+      at_least_one_denial_carc_required: {}
+      other: OtherFieldError
+  InsuranceAllowedFieldError:
+    union:
+      other: OtherFieldError
+  InsurancePaidFieldError:
+    union:
+      other: OtherFieldError
+  DeductibleFieldError:
+    union:
+      other: OtherFieldError
+  CoinsuranceFieldError:
+    union:
+      other: OtherFieldError
+  CopayFieldError:
+    union:
+      other: OtherFieldError
+  CarcFieldError:
+    properties:
+      index: integer
+      property_error: CarcPropertyFieldError
+
+  RarcFieldError:
+    properties:
+      index: integer
+      property_error: RarcPropertyFieldError
+
+  InvalidDeniedAdjustmentAmountError:
+    union:
+      denial_amount_is_not_equal_to_billed_amount: {}
+      other: OtherFieldError
+
+  ValidateInsuranceAdjustmentFieldError:
+    union:
+      carc_error: CarcFieldError
+      rarc_error: RarcFieldError
+      denial_reason_error: DenialReasonFieldError
+      invalid_denied_adjustment_amount_error: InvalidDeniedAdjustmentAmountError
+      insurance_adjustment_amount_is_greater_than_allowed_amount: {}
+
+  ValidateInsuranceAdjustmentFieldsErrorsType:
+    properties:
+      errors: map<commons.ServiceLineId, list<ValidateInsuranceAdjustmentFieldError>>
+
+  CreateInsuranceAdjustmentFieldError:
+    union:
+      denial_reason_error: DenialReasonFieldError
+      insurance_allowed_error: InsuranceAllowedFieldError
+      insurance_paid_error: InsurancePaidFieldError
+      deductible_error: DeductibleFieldError
+      coinsurance_error: CoinsuranceFieldError
+      copay_error: CopayFieldError
+      carc_error: CarcFieldError
+      rarc_error: RarcFieldError
+      invalid_denied_adjustment_amount_error: InvalidDeniedAdjustmentAmountError
+      insurance_adjustment_amount_is_greater_than_allowed_amount: {}
+
+  CreateInsuranceAdjustmentFieldsErrorsType:
+    properties:
+      errors: map<commons.ServiceLineId, list<CreateInsuranceAdjustmentFieldError>>
+
+service:
+  auth: true
+  base-path: /api/insurance-adjustments/v1
+  availability: in-development
+  endpoints:
+    validate_insurance_adjustment:
+      docs: >
+        Validate an insurance adjustment before creating it. This endpoint also instructs the
+        client on what the adjustment and other PR amounts should be.
+      method: POST
+      path: "/{encounter_id}/validate"
+      path-parameters:
+        encounter_id: commons.EncounterId
+      request: ValidateInsuranceAdjustmentRequest
+      response: ValidateInsuranceAdjustmentResponse
+      errors:
+        - ValidateInsuranceAdjustmentFieldsError
+
+    create_insurance_adjustment:
+      method: POST
+      path: "/{encounter_id}/create"
+      path-parameters:
+        encounter_id: commons.EncounterId
+      request: CreateInsuranceAdjustmentRequest
+      response: CreateInsuranceAdjustmentResponse
+      errors:
+        - CreateInsuranceAdjustmentFieldsError
+
+    # NOTE(sankruth): Fern does not explicitly support a `File` type. We can still define a Fern API
+    # and add the File Upload behavior in the endpoint implementation. Notice that the
+    # audiences are marked internal, so this endpoint wouldn't be surfaced in any SDK. I understand
+    # it's a little weird definition but this is the best way for us to leverage Fern behavior for
+    # uploading files.
+
+    # Below is a mocked upload attachment endpoint, that we can potentially just
+    # uncomment once Fern supports file upload (07/18/23)
+    #    UploadAttachmentRequest:
+    #      attachment_upload: File
+
+    upload_attachment:
+      docs: >
+        Upload an attachment to an insurance adjustment. This endpoint should remain internal only until
+        Fern can support file uploads
+      method: PUT
+      path: "/{encounter_id}/attachments/{insurance_adjustment_id}"
+      path-parameters:
+        encounter_id: commons.EncounterId
+        insurance_adjustment_id: InsuranceAdjustmentId
+      response: InsuranceAdjustmentAttachmentId
+      #      request: UploadAttachmentRequest
+      errors:
+        - error: commons.EntityNotFoundError
+          docs: raised when the insurance adjustment is not found
+
+errors:
+  ValidateInsuranceAdjustmentFieldsError:
+    status-code: 422
+    type: ValidateInsuranceAdjustmentFieldsErrorsType
+  CreateInsuranceAdjustmentFieldsError:
+    status-code: 422
+    type: CreateInsuranceAdjustmentFieldsErrorsType

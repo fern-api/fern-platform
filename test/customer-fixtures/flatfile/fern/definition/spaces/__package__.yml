@@ -1,0 +1,284 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: ../commons.yml
+  environments: ../environments.yml
+
+service:
+  auth: true
+  base-path: /spaces
+  endpoints:
+    list:
+      path: ''
+      method: GET
+      audiences:
+        - public
+      docs: Returns all spaces for an account or environment
+      display-name: List spaces
+      request:
+        name: ListSpacesRequest
+        query-parameters:
+          environmentId: optional<commons.EnvironmentId>
+          pageSize:
+            docs: Number of spaces to return in a page (default 10)
+            type: optional<integer>
+          pageNumber:
+            docs: Based on pageSize, which page of records to return
+            type: optional<integer>
+          search: optional<string>
+          archived: optional<boolean>
+          sortField: optional<GetSpacesSortField>
+          sortDirection: optional<commons.SortDirection>
+          isCollaborative: optional<boolean>
+      response: ListSpacesResponse
+      errors:
+        - commons.BadRequestError
+
+    create:
+      path: ''
+      method: POST
+      audiences:
+        - public
+      docs: Creates a new space based on an existing Space Config
+      display-name: Create a space
+      request: SpaceConfig
+      response: SpaceResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    get:
+      path: /{spaceId}
+      method: GET
+      audiences:
+        - public
+      docs: Returns a single space
+      display-name: Get a space
+      path-parameters:
+        spaceId:
+          docs: ID of space to return
+          type: commons.SpaceId
+      response: SpaceResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    delete:
+      path: /{spaceId}
+      method: DELETE
+      audiences:
+        - public
+      docs: Delete a space
+      display-name: Delete a space
+      path-parameters:
+        spaceId:
+          docs: ID of space to delete
+          type: commons.SpaceId
+      response: commons.Success
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    update:
+      path: /{spaceId}
+      method: PATCH
+      audiences:
+        - public
+      docs: Update a space, to change the name for example
+      display-name: Update a space
+      path-parameters:
+        spaceId:
+          docs: ID of space to update
+          type: commons.SpaceId
+      request: SpaceConfig
+      response: SpaceResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    getEventTokenDeprecated:
+      path: /{spaceId}/subscription
+      method: GET
+      availability: deprecated
+      docs: Get a token which can be used to subscribe to events for this space
+      display-name: Get subscription credentials
+      path-parameters:
+        spaceId:
+          docs: ID of space to return
+          type: commons.SpaceId
+      response: EventTokenResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    getAuth:
+      path: /{spaceId}/auth
+      method: GET
+      display-name: Generates a new access token scoped to only this space
+      docs: Returns an access token for this space
+      path-parameters:
+        spaceId:
+          docs: ID of space to update
+          type: commons.SpaceId
+      response: AccessTokenResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    archiveSpace:
+      path: /{spaceId}/archive
+      method: POST
+      audiences:
+        - public
+      display-name: Archives a space
+      docs: Sets archivedAt timestamp on a space
+      path-parameters:
+        spaceId:
+          docs: ID of space to archive
+          type: commons.SpaceId
+      response: commons.Success
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    upgrade:
+      path: /{spaceId}/upgrade
+      method: POST
+      audiences:
+        - internal
+      path-parameters:
+        spaceId:
+          docs: ID of space to update
+          type: commons.SpaceId
+      request: UpgradeSpaceConfig
+      response: SpaceResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+types:
+  ListSpacesResponse:
+    docs: List of Space objects
+    properties:
+      pagination: optional<commons.Pagination>
+      data: list<Space>
+
+  SpaceResponse:
+    properties:
+      data: Space
+
+  Space:
+    docs: A place to store your workbooks
+    extends: InternalSpaceConfigBase
+    properties:
+      id: commons.SpaceId
+      workbooksCount:
+        type: optional<integer>
+        docs: Amount of workbooks in the space
+      filesCount:
+        type: optional<integer>
+        docs: Amount of files in the space
+      createdByUserId: optional<commons.UserId>
+      createdByUserName:
+        type: optional<string>
+        docs: User name who created space
+      createdAt:
+        type: datetime
+        docs: Date when space was created
+      updatedAt:
+        type: datetime
+        docs: Date when space was updated
+      archivedAt:
+        type: optional<datetime>
+        docs: Date when space was archived
+      guestLink:
+        type: optional<string>
+        docs: Guest link to the space
+      name:
+        docs: The name of the space
+        type: string
+      displayOrder:
+        docs: The display order
+        type: optional<integer>
+      accessToken: optional<string>
+      isCollaborative: optional<boolean>
+      size: optional<SpaceSize>
+      upgradedAt: optional<datetime>
+      guestAuthentication: list<environments.GuestAuthenticationEnum>
+
+  SpaceSize:
+    docs: The size of a space
+    properties:
+      name: string
+      id: string
+      numUsers: integer
+      pdv: integer
+      numFiles: integer
+
+  SpaceConfig:
+    docs: Properties used to create a new Space
+    extends: InternalSpaceConfigBase
+    properties:
+      name:
+        docs: The name of the space
+        type: optional<string>
+      displayOrder:
+        docs: The display order
+        type: optional<integer>
+      guestAuthentication: optional<list<environments.GuestAuthenticationEnum>>
+
+  InternalSpaceConfigBase:
+    properties:
+      spaceConfigId: optional<commons.SpaceConfigId>
+      environmentId: optional<commons.EnvironmentId>
+      primaryWorkbookId: optional<commons.WorkbookId>
+      metadata:
+        docs: Metadata for the space
+        type: optional<unknown>
+      actions: optional<list<commons.Action>>
+      access: optional<list<SpaceAccess>>
+      autoConfigure: optional<boolean>
+      namespace: optional<string>
+      labels: optional<list<string>>
+
+  UpgradeSpaceConfig:
+    docs: Properties used to upgrade a space
+    audiences:
+      - internal
+    properties:
+      id: string
+
+  EventTokenResponse:
+    properties:
+      data: EventToken
+
+  EventToken:
+    docs: Properties used to allow users to connect to the event bus
+    properties:
+      accountId: optional<commons.AccountId>
+      subscribeKey:
+        docs: The id of the event bus to subscribe to
+        type: optional<string>
+      ttl:
+        docs: Time to live in minutes
+        type: optional<double>
+      token: optional<string>
+
+  GetSpacesSortField:
+    enum:
+      - name
+      - workbooksCount
+      - filesCount
+      - environmentId
+      - createdByUserName
+      - createdAt
+
+  AccessTokenResponse:
+    properties:
+      data: commons.AccessToken
+
+  SpaceAccess:
+    enum:
+      - value: '*'
+        name: ALL
+      - upload

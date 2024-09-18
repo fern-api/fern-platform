@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  entity: ../entity-types.yml
+
+service:
+  auth: true
+  base-path: /entity/{entityId}
+  path-parameters:
+    entityId: entity.EntityId
+  endpoints:
+    getAll:
+      audiences:
+        - external
+      path: /metadata
+      method: GET
+      docs: Retrieve all metadata options associated with this entity
+      display-name: Retrieve all metadata options associated with this entity
+      response: list<entity.EntityMetadataResponse>
+
+    get:
+      audiences:
+        - external
+      path: /metadata/{key}
+      path-parameters:
+        key: string
+      method: GET
+      docs: Retrieve metadata associated with a specific key
+      display-name: Retrieve metadata associated with a specific key
+      response: list<string>
+
+    update:
+      audiences:
+        - external
+      path: /metadata/{key}
+      path-parameters:
+        key: string
+      method: POST
+      docs: Update metadata associated with a specific key
+      display-name: Update metadata associated with a specific key
+      request: list<string>
+      response: list<string>

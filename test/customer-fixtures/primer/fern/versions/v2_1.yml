@@ -1,0 +1,16 @@
+navigation:
+  - section: Introduction
+    contents:
+      - page: Getting Started
+        path: ../introduction/getting-started.md
+      - page: Authentication
+        path: ../introduction/authentication.md
+      - page: API Responses
+        path: ../introduction/responses.md
+      - page: Idempotency Key
+        path: ../introduction/idempotency-key.md
+      - page: Loyalty Transactions
+        path: ../introduction/loyalty-transactions.md
+  - api-name: v2.1
+    api: Primer API
+    display-errors: true

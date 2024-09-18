@@ -1,12 +1,12 @@
+import { buildUrlFromApiEdge } from "@/server/buildUrlFromApi";
+import { loadWithUrl } from "@/server/loadWithUrl";
+import { conformTrailingSlash } from "@/server/trailingSlash";
+import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 import urljoin from "url-join";
-import { buildUrlFromApiEdge } from "../../../utils/buildUrlFromApi";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { conformTrailingSlash } from "../../../utils/trailingSlash";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 export const revalidate = 60 * 60 * 24;

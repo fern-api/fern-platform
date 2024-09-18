@@ -1,0 +1,260 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: ../../commons.yml
+
+service:
+  auth: true
+  base-path: /api/organization_providers/v2
+  endpoints:
+    get:
+      method: GET
+      path: /{organization_provider_id}
+      path-parameters:
+        organization_provider_id: OrganizationProviderId
+      response: OrganizationProvider
+
+    getAll:
+      method: GET
+      path: ""
+      response: OrganizationProviderPage
+      request:
+        name: GetAllOrganizationProvidersRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: Limit the number of results returned. Defaults to 100.
+          search_term:
+            type: optional<string>
+            docs: Filter to a name or a part of a name
+          npi:
+            type: optional<string>
+            docs: Filter to a specific NPI
+          is_rendering:
+            type: optional<boolean>
+            docs: Filter to only rendering providers
+          is_billing:
+            type: optional<boolean>
+            docs: Filter to only billing providers
+          page_token:
+            type: optional<commons.PageToken>
+            docs: The page token to continue paging through a previous request
+          sort:
+            type: optional<OrganizationProviderSortOptions>
+            docs: Defaults to PROVIDER_NAME_ASC
+
+    create:
+      path: ""
+      method: POST
+      request:
+        name: OrganizationProviderCreate
+        body:
+          extends: OrganizationProviderBase
+          properties:
+            employment_status:
+              type: optional<EmploymentStatus>
+              docs: The employment status for the provider.
+      response: OrganizationProvider
+
+    update:
+      path: /{organization_provider_id}
+      method: PATCH
+      path-parameters:
+        organization_provider_id: OrganizationProviderId
+      request:
+        name: OrganizationProviderUpdate
+        body:
+          properties:
+            npi:
+              type: optional<string>
+              docs: The NPI of the provider. This must be all digits [0-9] and exactly 10
+                characters long.
+            is_rendering:
+              type: optional<boolean>
+              docs: Whether the provider can be used to render services.
+            is_billing:
+              type: optional<boolean>
+              docs: Whether the provider can be used to bill services.
+            first_name:
+              type: optional<string>
+              docs: The first name of the provider, if the provider is an individual.
+            last_name:
+              type: optional<string>
+              docs: The last name of the provider, if the provider is an individual.
+            organization_name:
+              type: optional<string>
+              docs: The name of the provider, if the provider is an organization.
+            provider_type:
+              type: optional<ProviderType>
+              docs: >
+                Whether the provider is an individual (NPPES Type 1) or organization
+                (NPPES Type 2) provider.
+            tax_id:
+              type: optional<string>
+              docs: >
+                If the provider has a contract with insurance, this must be the same tax
+                ID given to the payer on an IRS W-9 form completed during
+                contracting.
+            taxonomy_code:
+              type: optional<string>
+              docs: A code designating classification and specialization.
+            license_type:
+              type: optional<LicenseType>
+              docs: The type of license that the provider holds.
+            ptan:
+              type: optional<string>
+              docs: The Provider Transaction Access Number for the provider.
+            medicaid_provider_id:
+              type: optional<string>
+              docs: The medicaid provider ID for the provider.
+            addresses:
+              type: optional<list<OrganizationProviderAddress>>
+              docs: The addresses associated with this provider.
+      response: OrganizationProvider
+
+    delete:
+      path: /{organization_provider_id}
+      method: DELETE
+      path-parameters:
+        organization_provider_id: OrganizationProviderId
+
+types:
+  OrganizationProviderId: uuid
+
+  OrganizationProviderBase:
+    properties:
+      npi:
+        type: string
+        docs: The NPI of the provider. This must be all digits [0-9] and exactly 10
+          characters long.
+      is_rendering:
+        type: boolean
+        docs: Whether the provider can be used to render services.
+      is_billing:
+        type: boolean
+        docs: Whether the provider can be used to bill services.
+      first_name:
+        type: optional<string>
+        docs: The first name of the provider, if the provider is an individual.
+      last_name:
+        type: optional<string>
+        docs: The last name of the provider, if the provider is an individual.
+      organization_name:
+        type: optional<string>
+        docs: The name of the provider, if the provider is an organization.
+      provider_type:
+        type: ProviderType
+        docs: >
+          Whether the provider is an individual (NPPES Type 1) or organization
+          (NPPES Type 2) provider.
+      tax_id:
+        type: optional<string>
+        docs: >
+          If the provider has a contract with insurance, this must be the same tax
+          ID given to the payer on an IRS W-9 form completed during contracting.
+      taxonomy_code:
+        type: optional<string>
+        docs: A code designating classification and specialization.
+      license_type:
+        type: LicenseType
+        docs: The type of license that the provider holds.
+      ptan:
+        type: optional<string>
+        docs: The Provider Transaction Access Number for the provider.
+      medicaid_provider_id:
+        type: optional<string>
+        docs: The medicaid provider ID for the provider.
+      addresses:
+        type: optional<list<OrganizationProviderAddress>>
+        docs: The addresses associated with this provider.
+
+  OrganizationProvider:
+    extends: OrganizationProviderBase
+    properties:
+      organization_provider_id:
+        type: OrganizationProviderId
+        docs: Auto-generated ID set on creation
+      employment_status:
+        type: EmploymentStatus
+        docs: The employment status for the provider.
+      employment_start_date:
+        type: optional<commons.Date>
+        docs: The employment start date for the provider.
+      employment_termination_date:
+        type: optional<commons.Date>
+        docs: The employment termination date for the provider.
+
+  OrganizationProviderPage:
+    extends: commons.ResourcePage
+    properties:
+      items: list<OrganizationProvider>
+
+  OrganizationProviderSortOptions:
+    enum:
+      - name: PROVIDER_NAME_ASC
+        value: provider_name:asc
+      - name: PROVIDER_NAME_DESC
+        value: provider_name:desc
+      - name: NPI_ASC
+        value: npi:asc
+      - name: NPI_DESC
+        value: npi:desc
+
+  ProviderType:
+    enum:
+      - INDIVIDUAL
+      - ORGANIZATION
+
+  LicenseType:
+    enum:
+      - MD
+      - NP
+      - PA
+      - LMFT
+      - LCPC
+      - LCSW
+      - PMHNP
+      - FNP
+      - LPCC
+      - DO
+      - RD
+      - SLP
+      - APRN
+      - LPC
+      - PHD
+      - PSYD
+      - LMSW
+      - LMHC
+      - OTHER_MASTERS
+      - BCBA
+      - UNKNOWN
+      - RPH
+      - PHT
+      - LAC
+      - LMT
+      - DC
+      - ND
+      - MA
+      - PT
+      - IBCLC
+      - RN
+      - DPT
+      - LCMHC
+
+  EmploymentStatus:
+    enum:
+      - ACTIVE
+      - TERMINATED
+
+  OrganizationProviderAddress:
+    properties:
+      address:
+        type: commons.StreetAddressLongZip
+        docs: The address of the provider
+      address_type:
+        type: AddressType
+        docs: The address type of the provider
+
+  AddressType:
+    enum:
+      - DEFAULT

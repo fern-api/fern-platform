@@ -1,0 +1,106 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /api/adjustments/v1
+  endpoints:
+    getAll:
+      docs: |
+        Returns all adjustments satisfying the search_terms AND whose organization_id matches
+        the current organization_id of the authenticated user
+      method: GET
+      path: ""
+      response: AdjustmentsPage
+      request:
+        name: GetAllAdustmentsRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: Defaults to 100
+          patient_external_id: optional<commons.PatientExternalId>
+          encounter_id: optional<commons.EncounterId>
+          service_line_id: optional<commons.ServiceLineId>
+          source: optional<AdjustmentSource>
+          sort:
+            type: optional<AdjustmentSortOptions>
+            docs: Defaults to adjustment_timestamp_desc
+          page_token: optional<commons.PageToken>
+
+    get:
+      docs: |
+        Returns the adjustment for the provided adjustment_id.
+        If the adjustment's organization_id does not match the current organization_id of the
+        authenticated user, then response code of 403 will be returned
+      method: GET
+      path: /{adjustment_id}
+      path-parameters:
+        adjustment_id: commons.AdjustmentId
+      response: Adjustment
+
+    create:
+      docs: |
+        Creates a new adjustment record and returns the newly created Adjustment object.
+        It is expected that the organization_id of the input adjustment object will match
+        the current organization_id of the auathenticated user. Otherwise, response code of 400 will be returned.
+      method: POST
+      path: ""
+      request: AdjustmentCreate
+      response: Adjustment
+
+    update:
+      docs: |
+        Updates the adjustment record matching the provided adjustment_id.
+        If the matching record's organization_id does not match the authenticated user's
+        current organization_id, then a response code of `403` will be returned.
+      method: PATCH
+      path: /{adjustment_id}
+      path-parameters:
+        adjustment_id: commons.AdjustmentId
+      request: AdjustmentUpdate
+      response: Adjustment
+
+    delete:
+      docs: |
+        Deletes the adjustment record matching the provided adjustment_id.
+        If the matching record's organization_id does not match the authenticated user's
+        current organization_id, then a response code of `403` will be returned.
+      method: DELETE
+      path: /{adjustment_id}
+      path-parameters:
+        adjustment_id: commons.AdjustmentId
+
+types:
+  AdjustmentSortOptions:
+    enum:
+      - adjustment_timestamp_asc
+      - adjustment_timestamp_desc
+
+  AdjustmentSource:
+    enum:
+      - ERA
+      - MANUAL
+
+  AdjustmentCreate:
+    properties:
+      service_line_id: commons.ServiceLineId
+      amount_cents: integer
+      adjustment_note: optional<string>
+      source: AdjustmentSource
+
+  AdjustmentUpdate:
+    properties:
+      amount_cents: optional<integer>
+      adjustment_note: optional<string>
+
+  Adjustment:
+    extends: AdjustmentCreate
+    properties:
+      adjustment_id: commons.AdjustmentId
+
+  AdjustmentsPage:
+    extends: commons.ResourcePage
+    properties:
+      items: list<Adjustment>

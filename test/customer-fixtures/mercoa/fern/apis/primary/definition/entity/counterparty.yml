@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  entity: ../entity-types.yml
+
+service:
+  auth: true
+  base-path: /entity/{entityId}
+  path-parameters:
+    entityId: entity.EntityId
+  endpoints:
+    find:
+      audiences:
+        - external
+      path: /counterparties
+      method: GET
+      docs: Find counterparties
+      display-name: Find counterparties
+      request:
+        name: FindCounterpartiesRequest
+        query-parameters:
+          paymentMethods:
+            docs: include payment method information in response
+            type: optional<boolean>
+          counterpartyId:
+            docs: filter by counterparty ids
+            type: optional<entity.EntityId>
+            allow-multiple: true
+      response: entity.FindCounterpartiesResponse

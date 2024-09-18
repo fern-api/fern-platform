@@ -1,0 +1,6 @@
+instances:
+  - url: test-nginx-proxy.docs.dev.buildwithfern.com/subpath
+
+navigation:
+  - page: Testing
+    path: ./page.mdx

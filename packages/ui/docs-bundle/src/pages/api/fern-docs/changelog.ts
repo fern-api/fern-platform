@@ -1,3 +1,6 @@
+import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
+import { loadWithUrl } from "@/server/loadWithUrl";
+import { getXFernHostNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
@@ -7,9 +10,6 @@ import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import * as Sentry from "@sentry/nextjs";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";
-import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { getXFernHostNode } from "../../../utils/xFernHost";
 
 export const revalidate = 60 * 60 * 24;
 

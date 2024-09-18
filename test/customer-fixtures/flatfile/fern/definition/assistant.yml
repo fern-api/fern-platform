@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  property: property.yml
+
+service:
+  auth: true
+  base-path: /assistant
+  audiences:
+    - internal
+  endpoints:
+    generate-mutation:
+      path: "/generate-mutation"
+      method: POST
+      display-name: Generate Mutation
+      request: GenerateMutationConfig
+      response: GeneratedMutation
+
+    generate-query:
+      path: "/generate-query"
+      method: POST
+      display-name: Generate Query
+      request: GenerateQueryConfig
+      response: GeneratedQuery
+
+types:
+  GenerateMutationConfig:
+    properties:
+      sheetId: commons.SheetId
+      command: string
+      model: optional<string>
+      modelParams: optional<map<string, unknown>>
+      templateVariables: optional<map<string, unknown>>
+
+  GeneratedMutation:
+    properties:
+      mutateRecord: string
+      metadata: GeneratedMutationMetadata
+      mutationId: string
+
+  GeneratedMutationMetadata:
+    properties:
+      explain: string
+
+  GenerateQueryConfig:
+    properties:
+      sheetId: commons.SheetId
+      command: string
+      model: optional<string>
+      modelParams: optional<map<string, unknown>>
+      queryType: optional<string>
+      templateVariables: optional<map<string, unknown>>
+
+  GeneratedQuery:
+    properties:
+      query: string
+      queryType: string
+      queryId: string
+      metadata: GeneratedQueryMetadata
+
+  GeneratedQueryMetadata:
+    properties:
+      explain: string

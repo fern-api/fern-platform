@@ -1,0 +1,115 @@
+imports:
+  commons: commons.yml
+  insurance-card: insurance-card.yml
+
+service:
+  auth: true
+  base-path: /api/individuals/v2
+  endpoints:
+    update:
+      path: /{individual_id}
+      method: PATCH
+      path-parameters:
+        individual_id: IndividualId
+      request:
+        name: IndividualUpdate
+        body:
+          properties:
+            first_name: optional<string>
+            last_name: optional<string>
+            external_id: optional<string>
+            date_of_birth: optional<commons.Date>
+            gender: optional<Gender>
+            patient_relationship_to_subscriber_code: optional<commons.PatientRelationshipToInsuredCodeAll>
+            address: optional<commons.StreetAddressShortZip>
+            phone_numbers: optional<list<commons.PhoneNumber>>
+            phone_consent: optional<boolean>
+            email: optional<commons.Email>
+            email_consent: optional<boolean>
+      response: Individual
+
+types:
+  IndividualId: uuid
+
+  IndividualBase:
+    properties:
+      first_name: string
+      last_name: string
+      gender: Gender
+
+  Individual:
+    extends: IndividualBase
+    properties:
+      individual_id: IndividualId
+      external_id:
+        type: optional<string>
+        docs: >
+          Another ID you want to associate with this patient. For example, your
+          internal patient ID or a Dr. Chrono patient ID.
+      patient_relationship_to_subscriber_code: optional<commons.PatientRelationshipToInsuredCodeAll>
+      address: optional<commons.StreetAddressShortZip>
+      date_of_birth: optional<commons.Date>
+
+  SubscriberBase:
+    extends: IndividualBase
+    properties:
+      patient_relationship_to_subscriber_code: commons.PatientRelationshipToInsuredCodeAll
+      date_of_birth: optional<commons.Date>
+      address: optional<commons.StreetAddressShortZip>
+
+  SubscriberCreate:
+    extends: SubscriberBase
+    properties:
+      insurance_card: insurance-card.InsuranceCardCreate
+
+  Subscriber:
+    extends: SubscriberBase
+    properties:
+      individual_id: IndividualId
+      insurance_card: insurance-card.InsuranceCard
+
+  PatientCreate:
+    extends: PatientBase
+    properties:
+      phone_numbers: optional<list<commons.PhoneNumber>>
+      phone_consent:
+        type: optional<boolean>
+        docs: Defaults to false
+      email: optional<commons.Email>
+      email_consent:
+        type: optional<boolean>
+        docs: Defaults to false
+
+  PatientBase:
+    extends:
+      - IndividualBase
+    properties:
+      external_id:
+        type: string
+        docs: |
+          Another ID you want to associate with this patient.
+          For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the CMS-1500 claim form
+      date_of_birth:
+        type: commons.Date
+        docs: Box 3 on the CMS-1500 claim form. The date format should be in ISO 8601
+          date; formatted YYYY-MM-DD (i.e. 2012-02-01)
+      address:
+        type: commons.StreetAddressShortZip
+        docs: Box 5 on the CMS-1500 claim form.
+
+  Patient:
+    extends: PatientBase
+    properties:
+      individual_id: IndividualId
+      phone_numbers: list<commons.PhoneNumber>
+      phone_consent: boolean
+      email: optional<commons.Email>
+      email_consent: boolean
+
+  Gender:
+    enum:
+      - male
+      - female
+      - other
+      - not_given
+      - unknown

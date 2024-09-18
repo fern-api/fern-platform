@@ -1,0 +1,41 @@
+imports:
+  cms-1500: cms-1500.yml
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /api/claim-submission/v1
+  availability: in-development
+  endpoints:
+    get:
+      path: /{claim_submission_id}
+      method: GET
+      path-parameters:
+        claim_submission_id: commons.ClaimSubmissionId
+      response: ClaimSubmission
+      errors:
+        - commons.EntityNotFoundError
+        - commons.UnauthorizedError
+
+types:
+  ClaimSubmission:
+    properties:
+      content: cms-1500.CMS1500Content
+
+  ClaimSubmissionStatus:
+    enum:
+      - SUBMITTED
+      - PENDING_SUBMISSION
+      - REJECTED
+      - ERROR
+
+  ClaimFrequencyTypeCode:
+    enum:
+      - name: ORIGINAL
+        value: "1"
+      - name: CORRECTED
+        value: "6"
+      - name: REPLACEMENT
+        value: "7"
+      - name: VOID
+        value: "8"

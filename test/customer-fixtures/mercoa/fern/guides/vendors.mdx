@@ -1,0 +1,42 @@
+# Vendor Network
+
+Entities in Mercoa have access to a vendor network, which is accessible for each entity using the [counterparty](/api-reference/counterparty/find-counterparty) endpoint.
+
+There are three levels of network:
+
+| Network Level | Description                                                                           |
+| ------------- | ------------------------------------------------------------------------------------- |
+| `Entity`      | Vendors who have been paid by the entity before or explicitly linked to the entity.   |
+| `Platform`    | Vendors who have been paid by any entity in your organization                         |
+| `Mercoa`      | Vendors who have been verified by Mercoa and shared with all Mercoa partner platforms |
+
+# Creating Vendors
+
+If you are using the [API](/home/api-quick-start) or need to import vendors from an existing system, you need to create the vendor [entity](/concepts/entities) and link them to the appropriate payer or payers.
+
+## Creating the Vendor Entity
+
+Using the [create entity](/api-reference/entity/create-entity) endpoint, create a new entity, and make sure the following are set
+
+```ts
+{
+  isPayee: true; // This marks the entity as able to receive funds
+  isPayor: false; // This marks the entity as unable to pay funds
+  ownedByOrg: false; // This indicated that you don't have a direct relationship with this entity (aka, they are your customer's vendor)
+}
+```
+
+This will automatically add the entity to the `platform` network.
+
+## Capturing Vendor Details
+
+If you don't have the vendor's details, you can use the [generate onboarding link](/api-reference/entity/generate-onboarding-link) endpoint to create a link that the vendor can use to provide their details. This link will be valid for 24 hours. You can also use the [send onboarding link](/api-reference/entity/send-onboarding-link) endpoint to send the link to the vendor via email. This link will be valid for 7 days, and will be emailed to the entity email.
+
+You can configure what details are required for the vendor using the [dashboard](https://mercoa.com/dashboard/developers#branding) or [api](/api-reference/organization/update-current-organization).
+
+## Explicitly adding the vendor to the entity network
+
+When a vendor is paid by a entity, they are automatically added to the `entity` network.
+However, you can explicitly link the vendor to any entity using the [add payees](/api-reference/entity/add-payees) endpoint.
+
+If an entity is creating a vendor to pay later, you will **almost always** want to use the [add payees](/api-reference/entity/add-payees) endpoint to create the payer/vendor relationship.

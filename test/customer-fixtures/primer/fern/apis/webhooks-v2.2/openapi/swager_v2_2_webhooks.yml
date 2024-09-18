@@ -1,0 +1,1783 @@
+openapi: 3.0.2
+info:
+  x-logo:
+    url: https://apidocs.primer.io/docs/assets/images/primer-logo.svg
+  title: Primer Webhooks
+  version: "2.2"
+
+paths:
+  /payment-status:
+    post:
+      x-fern-webhook: true
+      tags:
+        - Payment Webhooks
+      summary: Payment Status Update
+      description: |
+        Primer notifies you with a `PAYMENT.STATUS` webhook when a payment's status has been updated. This is especially useful for asyncronous processor Connections, which do not respond with an upfront authorization.
+        The webhook events will arrive in the order that the payment status changes, for example you should expect a status of `PENDING`, then `AUTHORIZED`, then `SETTLED` (depending on how your workflow is set up).
+        The webhook body contains the full payment object.
+
+        Learn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).
+
+      operationId: payment_status_webhook_event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Request
+              allOf:
+                - $ref: "#/components/schemas/PaymentStatusWebhookPayload"
+      parameters:
+        - in: header
+          name: X-Signature-Primary
+          schema:
+            type: string
+          required: true
+          description: An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.
+        - in: header
+          name: X-Signature-Secondary
+          schema:
+            type: string
+          required: true
+          description: A secondary signature that is added when you have rotated your secret within the past 24 hours.
+      responses:
+        "200":
+          description: Return a 200 status to indicate that the data was received successfully
+
+  /payment-refund:
+    post:
+      x-fern-webhook: true
+      tags:
+        - Payment Webhooks
+      summary: Payment Refund
+      description: |
+        Primer notifies you with a `PAYMENT.REFUND` Webhook when a refund request has been fully processed by a payment processor and the refund has reached a final state.
+
+        Check the transaction with the most recent `transactionType: "REFUND"` in the `transactions` array:
+        - if `processorStatus` is `SETTLED`, the refund was successful and the funds have been returned to the customer
+        - if `processorStatus` is `FAILED`, the refund was unsuccessful
+
+        Learn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).
+
+      operationId: payment_refund_webhook_event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Request
+              allOf:
+                - $ref: "#/components/schemas/PaymentRefundWebhookPayload"
+      parameters:
+        - in: header
+          name: X-Signature-Primary
+          schema:
+            type: string
+          required: true
+          description: An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.
+        - in: header
+          name: X-Signature-Secondary
+          schema:
+            type: string
+          required: true
+          description: A secondary signature that is added when you have rotated your secret within the past 24 hours.
+      responses:
+        "200":
+          description: Return a 200 status to indicate that the data was received successfully
+
+  /dispute-opened:
+    post:
+      x-fern-webhook: true
+      tags:
+        - Dispute & Chargebacks Webhooks
+      summary: Dispute Open
+      description: |
+        Primer notifies you with a `DISPUTE.OPEN` webhook on newly opened disputes or chargebacks. This notification is unified across all processors.
+
+        Learn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).
+
+      operationId: dispute_open_webhook_event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Request
+              allOf:
+                - $ref: "#/components/schemas/DisputeOpenWebhookPayload"
+      parameters:
+        - in: header
+          name: X-Signature-Primary
+          schema:
+            type: string
+          required: true
+          description: An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.
+        - in: header
+          name: X-Signature-Secondary
+          schema:
+            type: string
+          required: true
+          description: A secondary signature that is added when you have rotated your secret within the past 24 hours.
+      responses:
+        "200":
+          description: Return a 200 status to indicate that the data was received successfully
+
+  /dispute-status:
+    post:
+      x-fern-webhook: true
+      tags:
+        - Dispute & Chargebacks Webhooks
+      summary: Dispute Status
+      description: |
+        Primer notifies you with a `DISPUTE.STATUS` webhook that will provide information on retrievals, disputes (also known as chargebacks), and preabritration filings.
+
+        This notification is unified across all processors.
+
+        The `DISPUTE.STATUS` event can be used to proactively communicate with customers, issue refunds, send disputes to risk tools, or to proactively defend disputes.
+
+        The `DISPUTE.STATUS` event is currently in an open beta stage, as we continue to add more processors.
+
+        Learn more about [managing disputes at Primer](https://primer.io/docs/accept-payments/manage-disputes).
+
+      operationId: dispute_status_webhook_event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Request
+              allOf:
+                - $ref: "#/components/schemas/DisputeStatusWebhookPayload"
+      parameters:
+        - in: header
+          name: X-Signature-Primary
+          schema:
+            type: string
+          required: true
+          description: An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.
+        - in: header
+          name: X-Signature-Secondary
+          schema:
+            type: string
+          required: true
+          description: A secondary signature that is added when you have rotated your secret within the past 24 hours.
+      responses:
+        "200":
+          description: Return a 200 status to indicate that the data was received successfully
+
+components:
+  schemas:
+    AccountFundingTypeEnum:
+      title: AccountFundingTypeEnum
+      enum:
+        - CREDIT
+        - DEBIT
+        - PREPAID
+        - CHARGE
+        - DEFERRED_DEBIT
+        - UNKNOWN
+      type: string
+      description: An enumeration.
+
+    ApayaCustomerTokenAPISchema:
+      title: ApayaCustomerTokenAPISchema
+      required:
+        - mx
+      type: object
+      properties:
+        mx:
+          title: Mx
+          type: string
+        mnc:
+          title: Mnc
+          type: integer
+        mcc:
+          title: Mcc
+          type: integer
+
+    BinDataAPISchema:
+      title: BinDataAPISchema
+      required:
+        - network
+        - regionalRestriction
+        - accountNumberType
+        - accountFundingType
+        - prepaidReloadableIndicator
+        - productUsageType
+        - productCode
+        - productName
+      type: object
+      properties:
+        network:
+          $ref: "#/components/schemas/CardNetworkEnum"
+        issuerCountryCode:
+          $ref: "#/components/schemas/CountryCodeEnum"
+        issuerName:
+          title: Issuername
+          type: string
+        issuerCurrencyCode:
+          $ref: "#/components/schemas/Currency"
+        regionalRestriction:
+          $ref: "#/components/schemas/CardRegionRestrictionEnum"
+        accountNumberType:
+          $ref: "#/components/schemas/CardAccountNumberTypeEnum"
+        accountFundingType:
+          $ref: "#/components/schemas/AccountFundingTypeEnum"
+        prepaidReloadableIndicator:
+          $ref: "#/components/schemas/PrepaidReloadableEnum"
+        productUsageType:
+          $ref: "#/components/schemas/CardProductTypeEnum"
+        productCode:
+          title: Productcode
+          type: string
+        productName:
+          title: Productname
+          type: string
+
+    CardAccountNumberTypeEnum:
+      title: CardAccountNumberTypeEnum
+      enum:
+        - PRIMARY_ACCOUNT_NUMBER
+        - NETWORK_TOKEN
+        - UNKNOWN
+      type: string
+      description: An enumeration.
+
+    CardNetworkEnum:
+      title: CardNetworkEnum
+      type: string
+      description: |
+        [The list of available card networks and their `CARD_NETWORK_TYPE` can be found here.](https://www.notion.so/primerio/Payment-Method-Types-2b971a8c54c3452cae0b2fffe9167d72)
+
+    CardProductTypeEnum:
+      title: CardProductTypeEnum
+      enum:
+        - CONSUMER
+        - BUSINESS
+        - GOVERNMENT
+        - UNKNOWN
+      type: string
+      description: An enumeration.
+
+    CardRegionRestrictionEnum:
+      title: CardRegionRestrictionEnum
+      enum:
+        - DOMESTIC_USE_ONLY
+        - NONE
+        - UNKNOWN
+      type: string
+      description: An enumeration.
+
+    PaymentResponsePaymentMethodOptionsAPISchema:
+      title: PaymentResponsePaymentMethodOptionsAPISchema
+      type: object
+      properties:
+        descriptor:
+          title: Payment descriptor
+          type: string
+          description: The description of the payment, as it would typically appear
+            on a bank statement.
+        paymentType:
+          allOf:
+            - $ref: "#/components/schemas/RecurringPaymentTypeSchema"
+        paymentMethodToken:
+          title: Payment Method Token
+          type: string
+          description: The payment method token used to authorize the transaction.
+        vaultedPaymentMethodToken:
+          title: Vaulted Payment Method Token
+          type: string
+          description: If the payment method token was vaulted, this is the new token. Use this token for recurring payments.
+        analyticsId:
+          title: Unique analytics ID
+          type: string
+          description: Unique analytics identifier corresponding to a payment method
+        paymentMethodType:
+          title: Payment method type
+          allOf:
+            - $ref: "#/components/schemas/PaymentMethodTypeEnum"
+          description: Payment method type
+        paymentMethodData:
+          title: Payment method data
+          anyOf:
+            - $ref: "#/components/schemas/PaymentCardTokenAPISchema"
+            - $ref: "#/components/schemas/PayPalOrderTokenAPISchema"
+            - $ref: "#/components/schemas/PayPalBillingAgreementAPISchema"
+            - $ref: "#/components/schemas/GoCardlessMandateAPISchema"
+            - $ref: "#/components/schemas/KlarnaPaymentSessionAPISchema"
+            - $ref: "#/components/schemas/KlarnaCustomerTokenAPISchema"
+            - $ref: "#/components/schemas/IdealPayNLTokenAPISchema"
+            - $ref: "#/components/schemas/ApayaCustomerTokenAPISchema"
+          description: Payment method data
+        threeDSecureAuthentication:
+          title: Threedsecureauthentication
+          allOf:
+            - $ref: "#/components/schemas/ThreeDSecureAuthenticationAPISchema"
+          default:
+            response_code: NOT_PERFORMED
+
+    CountryCodeEnum:
+      title: CountryCodeEnum
+      enum:
+        - AW
+        - AF
+        - AO
+        - AI
+        - AX
+        - AL
+        - AD
+        - AE
+        - AR
+        - AM
+        - AS
+        - AQ
+        - TF
+        - AG
+        - AU
+        - AT
+        - AZ
+        - BI
+        - BE
+        - BJ
+        - BQ
+        - BF
+        - BD
+        - BG
+        - BH
+        - BS
+        - BA
+        - BL
+        - BY
+        - BZ
+        - BM
+        - BO
+        - BR
+        - BB
+        - BN
+        - BT
+        - BV
+        - BW
+        - CF
+        - CA
+        - CC
+        - CH
+        - CL
+        - CN
+        - CI
+        - CM
+        - CD
+        - CG
+        - CK
+        - CO
+        - KM
+        - CV
+        - CR
+        - CU
+        - CW
+        - CX
+        - KY
+        - CY
+        - CZ
+        - DE
+        - DJ
+        - DM
+        - DK
+        - DO
+        - DZ
+        - EC
+        - EG
+        - ER
+        - EH
+        - ES
+        - EE
+        - ET
+        - FI
+        - FJ
+        - FK
+        - FR
+        - FO
+        - FM
+        - GA
+        - GB
+        - GE
+        - GG
+        - GH
+        - GI
+        - GN
+        - GP
+        - GM
+        - GW
+        - GQ
+        - GR
+        - GD
+        - GL
+        - GT
+        - GF
+        - GU
+        - GY
+        - HK
+        - HM
+        - HN
+        - HR
+        - HT
+        - HU
+        - ID
+        - IM
+        - IN
+        - IO
+        - IE
+        - IR
+        - IQ
+        - IS
+        - IL
+        - IT
+        - JM
+        - JE
+        - JO
+        - JP
+        - KZ
+        - KE
+        - KG
+        - KH
+        - KI
+        - KN
+        - KR
+        - KW
+        - LA
+        - LB
+        - LR
+        - LY
+        - LC
+        - LI
+        - LK
+        - LS
+        - LT
+        - LU
+        - LV
+        - MO
+        - MF
+        - MA
+        - MC
+        - MD
+        - MG
+        - MV
+        - MX
+        - MH
+        - MK
+        - ML
+        - MT
+        - MM
+        - ME
+        - MN
+        - MP
+        - MZ
+        - MR
+        - MS
+        - MQ
+        - MU
+        - MW
+        - MY
+        - YT
+        - NA
+        - NC
+        - NE
+        - NF
+        - NG
+        - NI
+        - NU
+        - NL
+        - "NO"
+        - NP
+        - NR
+        - NZ
+        - OM
+        - PK
+        - PA
+        - PN
+        - PE
+        - PH
+        - PW
+        - PG
+        - PL
+        - PR
+        - KP
+        - PT
+        - PY
+        - PS
+        - PF
+        - QA
+        - RE
+        - RO
+        - RU
+        - RW
+        - SA
+        - SD
+        - SN
+        - SG
+        - GS
+        - SH
+        - SJ
+        - SB
+        - SL
+        - SV
+        - SM
+        - SO
+        - PM
+        - RS
+        - SS
+        - ST
+        - SR
+        - SK
+        - SI
+        - SE
+        - SZ
+        - SX
+        - SC
+        - SY
+        - TC
+        - TD
+        - TG
+        - TH
+        - TJ
+        - TK
+        - TM
+        - TL
+        - TO
+        - TT
+        - TN
+        - TR
+        - TV
+        - TW
+        - TZ
+        - UG
+        - UA
+        - UM
+        - UY
+        - US
+        - UZ
+        - VA
+        - VC
+        - VE
+        - VG
+        - VI
+        - VN
+        - VU
+        - WF
+        - WS
+        - YE
+        - ZA
+        - ZM
+        - ZW
+      description: An enumeration.
+
+    Currency:
+      title: Currency
+      enum:
+        - AED
+        - AFN
+        - ALL
+        - AMD
+        - ANG
+        - AOA
+        - ARS
+        - AUD
+        - AWG
+        - AZN
+        - BAM
+        - BBD
+        - BDT
+        - BGN
+        - BHD
+        - BIF
+        - BMD
+        - BND
+        - BOB
+        - BOV
+        - BRL
+        - BSD
+        - BTN
+        - BWP
+        - BYR
+        - BYN
+        - BZD
+        - CAD
+        - CDF
+        - CHE
+        - CHF
+        - CHW
+        - CLF
+        - CLP
+        - CNY
+        - COP
+        - COU
+        - CRC
+        - CUC
+        - CUP
+        - CVE
+        - CZK
+        - DJF
+        - DKK
+        - DOP
+        - DZD
+        - EGP
+        - ERN
+        - ETB
+        - EUR
+        - FJD
+        - FKP
+        - GBP
+        - GEL
+        - GHS
+        - GIP
+        - GMD
+        - GNF
+        - GTQ
+        - GYD
+        - HKD
+        - HNL
+        - HRK
+        - HTG
+        - HUF
+        - IDR
+        - ILS
+        - INR
+        - IQD
+        - IRR
+        - ISK
+        - JMD
+        - JOD
+        - JPY
+        - KES
+        - KGS
+        - KHR
+        - KMF
+        - KPW
+        - KRW
+        - KWD
+        - KYD
+        - KZT
+        - LAK
+        - LBP
+        - LKR
+        - LRD
+        - LSL
+        - LTL
+        - LVL
+        - LYD
+        - MAD
+        - MDL
+        - MGA
+        - MKD
+        - MMK
+        - MNT
+        - MOP
+        - MRO
+        - MUR
+        - MVR
+        - MWK
+        - MXN
+        - MXV
+        - MYR
+        - MZN
+        - NAD
+        - NGN
+        - NIO
+        - NOK
+        - NPR
+        - NZD
+        - OMR
+        - PAB
+        - PEN
+        - PGK
+        - PHP
+        - PKR
+        - PLN
+        - PYG
+        - QAR
+        - RON
+        - RSD
+        - RUB
+        - RWF
+        - SAR
+        - SBD
+        - SCR
+        - SDG
+        - SEK
+        - SGD
+        - SHP
+        - SLL
+        - SOS
+        - SRD
+        - SSP
+        - STD
+        - SVC
+        - SYP
+        - SZL
+        - THB
+        - TJS
+        - TMT
+        - TND
+        - TOP
+        - TRY
+        - TTD
+        - TWD
+        - TZS
+        - UAH
+        - UGX
+        - USD
+        - USN
+        - USS
+        - UYI
+        - UYU
+        - UZS
+        - VEF
+        - VND
+        - VUV
+        - WST
+        - XAF
+        - XAG
+        - XAU
+        - XBA
+        - XBB
+        - XBC
+        - XBD
+        - XCD
+        - XDR
+        - XFU
+        - XOF
+        - XPD
+        - XPF
+        - XPT
+        - XSU
+        - XTS
+        - XUA
+        - YER
+        - ZAR
+        - ZMW
+        - ZWL
+      description: Enumerates all supported currencies
+
+    PaymentResponseProcessorAPISchema:
+      title: PaymentResponseProcessorAPISchema
+      type: object
+      properties:
+        name:
+          title: Processor Name
+          type: string
+          description: The payment processor used for this payment.
+        processorMerchantId:
+          title: Processor Merchant ID
+          type: string
+          description: The merchant ID registered at the payment processor used for this payment.
+        amountCaptured:
+          title: Amount captured
+          type: integer
+          description: |
+            If no capture was performed, this value will be set to `0`.
+
+            If one or more partial captures were performed, this value will be a sum
+            of all partial capture amounts.
+        amountRefunded:
+          title: Amount refunded
+          type: integer
+          description: |
+            If no refund was performed, this value will be set to `0`.
+
+            If one or more partial refunds were performed, this value will be a sum
+            of all partial refund amounts.
+
+    GoCardlessMandateAPISchema:
+      title: GoCardlessMandateAPISchema
+      required:
+        - gocardlessMandateId
+      type: object
+      properties:
+        gocardlessMandateId:
+          title: Mandate agreement ID
+          type: string
+          description: Unique identifier of a GoCardless mandate agreement
+    IdealPayNLTokenAPISchema:
+      title: IdealPayNLTokenAPISchema
+      required:
+        - paymentMethodConfigId
+      type: object
+      properties:
+        paymentMethodConfigId:
+          title: Paymentmethodconfigid
+          type: string
+          format: uuid
+    KlarnaAddressAPISchema:
+      title: KlarnaAddressAPISchema
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+        firstName:
+          title: Firstname
+          type: string
+        lastName:
+          title: Lastname
+          type: string
+        email:
+          title: Email
+          type: string
+        phoneNumber:
+          title: Phonenumber
+          type: string
+        addressLine1:
+          title: Addressline1
+          type: string
+        addressLine2:
+          title: Addressline2
+          type: string
+        addressLine3:
+          title: Addressline3
+          type: string
+        city:
+          title: City
+          type: string
+        state:
+          title: State
+          type: string
+        countryCode:
+          $ref: "#/components/schemas/CountryCodeEnum"
+        postalCode:
+          title: Postalcode
+          type: string
+    KlarnaCustomerTokenAPISchema:
+      title: KlarnaCustomerTokenAPISchema
+      required:
+        - klarnaCustomerToken
+        - sessionData
+      type: object
+      properties:
+        klarnaCustomerToken:
+          title: Klarnacustomertoken
+          type: string
+        sessionData:
+          $ref: "#/components/schemas/KlarnaSessionDetailsAPISchema"
+    KlarnaPaymentSessionAPISchema:
+      title: KlarnaPaymentSessionAPISchema
+      required:
+        - klarnaAuthorizationToken
+        - sessionData
+      type: object
+      properties:
+        klarnaAuthorizationToken:
+          title: Klarnaauthorizationtoken
+          type: string
+        sessionData:
+          $ref: "#/components/schemas/KlarnaSessionDetailsAPISchema"
+    KlarnaSessionDetailsAPISchema:
+      title: KlarnaSessionDetailsAPISchema
+      required:
+        - billingAddress
+        - purchaseCountry
+        - purchaseCurrency
+        - locale
+        - orderLines
+      type: object
+      properties:
+        recurringDescription:
+          title: Recurringdescription
+          type: string
+        billingAddress:
+          $ref: "#/components/schemas/KlarnaAddressAPISchema"
+        shippingAddress:
+          $ref: "#/components/schemas/KlarnaAddressAPISchema"
+        purchaseCountry:
+          title: Purchasecountry
+          type: string
+        purchaseCurrency:
+          title: Purchasecurrency
+          type: string
+        locale:
+          title: Locale
+          type: string
+        orderLines:
+          title: Orderlines
+          type: array
+          items: {}
+        tokenDetails:
+          $ref: "#/components/schemas/KlarnaTokenDetails"
+    KlarnaTokenDetails:
+      title: KlarnaTokenDetails
+      required:
+        - type
+      type: object
+      properties:
+        type:
+          title: Type
+          type: string
+        brand:
+          title: Brand
+          type: string
+        masked_number:
+          title: Masked Number
+          type: string
+        expiry_date:
+          title: Expiry Date
+          type: string
+    PayPalBillingAgreementAPISchema:
+      title: PayPalBillingAgreementAPISchema
+      required:
+        - paypalBillingAgreementId
+      type: object
+      properties:
+        paypalBillingAgreementId:
+          title: Paypalbillingagreementid
+          type: string
+        externalPayerInfo:
+          title: Payer Info
+          allOf:
+            - $ref: "#/components/schemas/PayPalExternalPayerInfoAPISchema"
+          description: Information about the PayPal customer
+        shippingAddress:
+          title: Shipping address
+          allOf:
+            - $ref: "#/components/schemas/AddressAPISchema"
+          description: The PayPal customer's shipping address
+        paypalStatus:
+          title: PayPal order status
+          type: string
+    PayPalExternalPayerInfoAPISchema:
+      title: PayPalExternalPayerInfoAPISchema
+      type: object
+      properties:
+        externalPayerId:
+          title: Externalpayerid
+          type: string
+        email:
+          title: Email
+          type: string
+        firstName:
+          title: Firstname
+          type: string
+        lastName:
+          title: Lastname
+          type: string
+    PayPalOrderTokenAPISchema:
+      title: PayPalOrderTokenAPISchema
+      required:
+        - paypalOrderId
+      type: object
+      properties:
+        paypalOrderId:
+          title: PayPal order identifier
+          type: string
+        externalPayerInfo:
+          title: Payer Info
+          allOf:
+            - $ref: "#/components/schemas/PayPalExternalPayerInfoAPISchema"
+          description: Information about the PayPal customer
+        paypalStatus:
+          title: PayPal order status
+          type: string
+
+    PaymentStatusWebhookPayload:
+      title: PaymentStatusWebhookPayload
+      type: object
+      properties:
+        eventType:
+          title: Event Type
+          type: string
+          description: The type of the webhook raised. `PAYMENT.STATUS` in this case.
+        date:
+          title: Date
+          type: string
+          description: The date-time that the webhook was sent.
+          format: date-time
+        notificationConfig:
+          title: Notification Config
+          type: object
+          description: The notification configuration details.
+          properties:
+            id:
+              title: ID
+              type: string
+              description: The notification configuration ID.
+              format: uuid
+            description:
+              title: Description
+              type: string
+              description: The notification configuration description.
+        version:
+          title: Version
+          type: string
+          description: The payload version
+          example: "2.2"
+        payment:
+          title: Payment Details
+          type: object
+          properties:
+            id:
+              title: Payment identifier
+              type: string
+              description: |
+                The unique payment ID.
+
+                You can use this ID to retrieve the payment details, or perform downstream operations.
+            date:
+              title: Payment date
+              type: string
+              description: The date and time at which the payment was created in UTC format.
+              format: date-time
+            status:
+              title: Current status
+              allOf:
+                - $ref: "#/components/schemas/PaymentStatus"
+              description: See the payment [status table](../docs#payment-status)
+                for more information.
+            orderId:
+              title: Order ID
+              type: string
+              description: Your reference for the payment.
+            currencyCode:
+              title: Currency
+              type: string
+              description: |
+                The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes).
+                e.g. use `USD` for US dollars.
+            amount:
+              title: Payment amount
+              minimum: 0.0
+              type: integer
+              description: The amount you charged the customer, in minor units.
+            customerId:
+              title: The ID of the customer using the checkout
+              type: string
+              description: The unique identifier for your customer.
+            metadata:
+              title: Payment Metadata
+              type: object
+              description: |
+                Additional data to be used throughout the payment lifecycle.
+            paymentMethod:
+              title: Payment Method Options
+              allOf:
+                - $ref: "#/components/schemas/PaymentResponsePaymentMethodOptionsAPISchema"
+              description: The payment method options provided in the request, as well as the token used to process the payment.
+            processor:
+              title: Processor Information
+              allOf:
+                - $ref: "#/components/schemas/PaymentResponseProcessorAPISchema"
+              description: More information associated with the payment processor, including the processor name.
+            statusReason:
+              title: Status Reason
+              allOf:
+                - $ref: "#/components/schemas/StatusReasonAPISchema"
+              description: |
+                Check this field for more information regarding the payment's status. This is especially useful when the status is `DECLINED` or `FAILED`.
+            transactions:
+              title: Transactions
+              type: array
+              items:
+                $ref: "#/components/schemas/TransactionOverviewAPISchema"
+              description: "A list summarizing the transactions that occurred while processing
+                the payment.
+
+                Note: a refund is a separate transaction and so will appear in
+                this `transactions` list if a refund was performed."
+            riskData:
+              $ref: "#/components/schemas/RiskDataAPISchema"
+              title: Risk Data
+
+    PaymentRefundWebhookPayload:
+      title: PaymentRefundWebhookPayload
+      type: object
+      properties:
+        eventType:
+          title: Event Type
+          type: string
+          description: The type of the webhook raised. `PAYMENT.REFUND` in this case.
+        date:
+          title: Date
+          type: string
+          description: The date-time that the webhook was sent.
+          format: date-time
+        notificationConfig:
+          title: Notification Config
+          type: object
+          description: The notification configuration details.
+          properties:
+            id:
+              title: ID
+              type: string
+              description: The notification configuration ID.
+              format: uuid
+            description:
+              title: Description
+              type: string
+              description: The notification configuration description.
+        version:
+          title: Version
+          type: string
+          description: The payload version
+          example: "2.2"
+        payment:
+          title: Payment Details
+          type: object
+          properties:
+            id:
+              title: Payment identifier
+              type: string
+              description: |
+                The unique payment ID.
+
+                You can use this ID to retrieve the payment details, or perform downstream operations.
+            date:
+              title: Payment date
+              type: string
+              description: The date and time at which the payment was created in UTC format.
+              format: date-time
+            status:
+              title: Current status
+              allOf:
+                - $ref: "#/components/schemas/PaymentStatus"
+              description: See the payment [status table](../docs#payment-status)
+                for more information.
+            orderId:
+              title: Order ID
+              type: string
+              description: Your reference for the payment.
+            currencyCode:
+              title: Currency
+              type: string
+              description: |
+                The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes).
+                e.g. use `USD` for US dollars.
+            amount:
+              title: Payment amount
+              minimum: 0.0
+              type: integer
+              description: The amount you charged the customer, in minor units.
+            customerId:
+              title: The ID of the customer using the checkout
+              type: string
+              description: The unique identifier for your customer.
+            metadata:
+              title: Payment Metadata
+              type: object
+              description: |
+                Additional data to be used throughout the payment lifecycle.
+            paymentMethod:
+              title: Payment Method Options
+              allOf:
+                - $ref: "#/components/schemas/PaymentResponsePaymentMethodOptionsAPISchema"
+              description: The payment method options provided in the request, as well as the token used to process the payment.
+            processor:
+              title: Processor Information
+              allOf:
+                - $ref: "#/components/schemas/PaymentResponseProcessorAPISchema"
+              description: More information associated with the payment processor, including the processor name.
+            statusReason:
+              title: Status Reason
+              allOf:
+                - $ref: "#/components/schemas/StatusReasonAPISchema"
+              description: |
+                Check this field for more information regarding the payment's status. This is especially useful when the status is `DECLINED` or `FAILED`.
+            transactions:
+              title: Transactions
+              type: array
+              items:
+                $ref: "#/components/schemas/TransactionOverviewAPISchema"
+              description: "A list summarizing the transactions that occurred while processing
+                the payment.
+
+                Note: a refund is a separate transaction and so will appear in
+                this `transactions` list if a refund was performed."
+            riskData:
+              $ref: "#/components/schemas/RiskDataAPISchema"
+              title: Risk Data
+
+    DisputeOpenWebhookPayload:
+      title: DisputeOpenWebhookPayload
+      type: object
+      properties:
+        eventType:
+          title: Event Type
+          type: string
+          description: The type of the webhook raised. `DISPUTE.OPEN` in this case.
+        processorId:
+          title: Processor ID
+          type: string
+          description: The name of the processor that generated the dispute.
+        processorDisputeId:
+          title: Processor Dispute ID
+          type: string
+          description: A unique identifier for the corresponding connection dispute.
+        paymentId:
+          title: Payment ID
+          type: string
+          description: A unique identifier for the Primer payment corresponding to this dispute.
+        transactionId:
+          title: Transaction ID
+          type: string
+          description: A unique identifier for the Primer transaction corresponding to this dispute.
+        orderId:
+          title: Order ID
+          type: string
+          description: Your reference for the sale transaction that the dispute relates to.
+        primerAccountId:
+          title: Primer Account ID
+          type: string
+          description: A unique identifier for your Primer merchant account.
+
+    DisputeStatusWebhookPayload:
+      title: DisputeStatusWebhookPayload
+      type: object
+      properties:
+        eventType:
+          title: Event Type
+          type: string
+          description: |
+            The type of event that triggered the webhook. This will have the value `DISPUTE.STATUS`. This indicates that a dispute notification was issued through a configured connection.
+
+            Use these notifications to proactively communicate with your customer, issue refunds, or submit evidence to challenge disputes.
+        version:
+          title: Version
+          type: string
+          description: The payload version
+          example: "2.2"
+        type:
+          title: Type
+          type: string
+          enum:
+            - RETRIEVAL
+            - DISPUTE
+            - PREARBITRATION
+          description: |
+            The type of dispute event. More information on what the `type` field represents can be found in [Manage disputes](https://primer.io/docs/accept-payments/manage-disputes)
+        status:
+          title: Status
+          type: string
+          enum:
+            - OPEN
+            - ACCEPTED
+            - CHALLENGED
+            - EXPIRED
+            - CANCELLED
+            - WON
+            - LOST
+          description: |
+            To see which statuses are applicable for a dispute `type`, and how we map `status`, please see [Manage disputes](https://primer.io/docs/accept-payments/manage-disputes).
+        primerAccountId:
+          title: Primer Account ID
+          type: string
+          description: A unique identifier for your Primer merchant account.
+        transactionId:
+          title: Transaction ID
+          type: string
+          description: A unique identifier for the Primer transaction corresponding to this dispute.
+        orderId:
+          title: Order ID
+          type: string
+          description: Your reference for the sale transaction that the dispute relates to.
+        paymentId:
+          title: Payment ID
+          type: string
+          description: A unique identifier for the Primer payment corresponding to this dispute.
+        paymentMethod:
+          title: Payment Method Information
+          description: The payment method information for the payment that is now disputed.
+          type: object
+          properties:
+            paymentMethodType:
+              $ref: "#/components/schemas/PaymentMethodTypeEnum"
+            paymentMethodData:
+              title: Payment method data
+              type: object
+              properties:
+                network:
+                  $ref: "#/components/schemas/CardNetworkEnum"
+        processor:
+          title: Processor
+          type: string
+          enum:
+            - ADYEN
+            - BRAINTREE
+          description: The payment processor that you submitted a payment to, and received a dispute notification from.
+        processorDisputeId:
+          title: Processor Dispute ID
+          type: string
+          description: |
+            An identifier for this dispute provided by the processor. This is shared across multiple dispute `type` and `status` relating to the same payment.
+
+            e.g. as an `open` dispute that is later challenged will share a `proccessorDisputeId`.
+        receivedAt:
+          title: Received date
+          type: string
+          format: date-time
+          description: Date and time at which Primer received the processor's dispute event. Provided as an ISO timestamp in UTC.
+        challengeRequiredBy:
+          title: Challenge Required date
+          type: string
+          format: date-time
+          description: Time by which the merchant must challenge a dispute. This is provided by the processor, where available.
+        reason:
+          title: Reason
+          type: string
+          description: Primer’s unified reason that explains why the dispute was raised. This should not vary across processors for the same dispute `reasonCode`, unlike the `processorReason`.
+        reasonCode:
+          title: Reason Code
+          type: string
+          description: The dispute reason code for a dispute. This will be the same code provided by the card schemes.
+        processorReason:
+          title: Processor Reason
+          type: string
+          description: The dispute reason provided by the processor. This can vary across processors for the same dispute `reasonCode`, which is why we provide a unified field - `reason`.
+        amount:
+          title: Amount
+          type: integer
+          description: |
+            The disputed amount. Note: this is not always the same as the payment amount.
+
+            This will be displayed in minor units.
+
+            e.g. for $7, use `700`. Some currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for ¥100, use `100`.
+        currency:
+          title: Currency
+          type: string
+          description: |
+            The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes).
+            e.g. use `USD` for US dollars.
+        merchantId:
+          title: Merchant ID
+          type: string
+          description: The merchant ID registered at the payment processor used for this dispute.
+
+    PaymentCardTokenAPISchema:
+      title: PaymentCardTokenAPISchema
+      required:
+        - last4Digits
+        - expirationMonth
+        - expirationYear
+      type: object
+      properties:
+        first6Digits:
+          title: Payment card's first six digits
+          maxLength: 6
+          minLength: 6
+          type: string
+        last4Digits:
+          title: Payment card's last four digits
+          maxLength: 4
+          minLength: 4
+          type: string
+        expirationMonth:
+          title: Expiration month
+          maxLength: 2
+          minLength: 2
+          type: string
+        expirationYear:
+          title: Expiration year
+          maxLength: 4
+          minLength: 4
+          type: string
+        cardholderName:
+          title: Cardholder's name
+          type: string
+        network:
+          title: Card network
+          type: string
+        isNetworkTokenized:
+          title: Is represented by a digital PAN
+          type: boolean
+          default: false
+        binData:
+          $ref: "#/components/schemas/BinDataAPISchema"
+
+    StatusReasonAPISchema:
+      title: StatusReasonAPISchema
+      required:
+        - type
+      type: object
+      properties:
+        type:
+          title: Payment status type
+          allOf:
+            - $ref: "#/components/schemas/PaymentStatusTypeEnum"
+          description: Type of the status.
+        declineType:
+          title: Decline Type
+          allOf:
+            - $ref: "#/components/schemas/DeclineTypeEnum"
+          description: |
+            If the error is of type `ISSUER_DECLINED` this will be returned.
+
+            Declines of type `SOFT_DECLINE` may be retried,
+            whereas declines of type `HARD_DECLINE` should not be retried.
+        code:
+          title: Payment status code
+          allOf:
+            - $ref: "#/components/schemas/TransactionDeclineReasonV2Enum"
+          description: If the error is of type `ISSUER_DECLINED`, this will be returned.
+        message:
+          title: Processor message
+          type: string
+          description: In case of an error on the processor's part, we will return
+            the message returned by the processor. This is usually a human readable
+            error.
+
+    RiskDataAPISchema:
+      title: RiskDataAPISchema
+      description: |
+        Risk data associated with this payment.
+      type: object
+      properties:
+        fraudCheck:
+          title: Fraud Check
+          $ref: "#/components/schemas/FraudCheckAPISchema"
+
+    FraudCheckAPISchema:
+      title: FraudCheckAPISchema
+      description: |
+        Results of the pre-authorization and post-authorization fraud checks.
+      type: object
+      properties:
+        source:
+          type: string
+          example: "FRAUD_PROVIDER"
+        preAuthorizationResult:
+          $ref: "#/components/schemas/FraudDecisionTypeEnum"
+          example: THREE_DS
+        postAuthorizationResult:
+          $ref: "#/components/schemas/FraudDecisionTypeEnum"
+          example: ACCEPT
+
+    FraudDecisionTypeEnum:
+      title: FraudDecisionTypeEnum
+      enum:
+        - ACCEPT
+        - REFUSE
+        - FAILED
+        - THREE_DS
+      type: string
+      description: Possible fraud check outcomes.
+
+    PaymentMethodTypeEnum:
+      title: PaymentMethodTypeEnum
+
+      type: string
+      description: |
+        [The list of available payment methods and their `PAYMENT_METHOD_TYPE` can be found here.](https://www.notion.so/primerio/Payment-Method-Types-2b971a8c54c3452cae0b2fffe9167d72)
+
+    PrepaidReloadableEnum:
+      title: PrepaidReloadableEnum
+      enum:
+        - RELOADABLE
+        - NON_RELOADABLE
+        - NOT_APPLICABLE
+        - UNKNOWN
+      type: string
+      description: An enumeration.
+
+    ThreeDSecureAuthResponseCodeEnum:
+      title: ThreeDSecureAuthResponseCodeEnum
+      enum:
+        - NOT_PERFORMED
+        - SKIPPED
+        - AUTH_SUCCESS
+        - AUTH_FAILED
+        - CHALLENGE
+        - METHOD
+      type: string
+      description: An enumeration.
+
+    ThreeDSecureAuthenticationAPISchema:
+      title: ThreeDSecureAuthenticationAPISchema
+      required:
+        - responseCode
+      type: object
+      properties:
+        responseCode:
+          $ref: "#/components/schemas/ThreeDSecureAuthResponseCodeEnum"
+        reasonCode:
+          title: Reasoncode
+          anyOf:
+            - $ref: "#/components/schemas/ThreeDSecureSkippedReasonCodeEnum"
+            - $ref: "#/components/schemas/ThreeDSecureFailedReasonCodeEnum"
+        reasonText:
+          title: Reasontext
+          type: string
+        protocolVersion:
+          title: Protocolversion
+          type: string
+        challengeIssued:
+          title: Challengeissued
+          type: boolean
+
+    ThreeDSecureFailedReasonCodeEnum:
+      title: ThreeDSecureFailedReasonCodeEnum
+      enum:
+        - UNKNOWN
+        - REJECTED_BY_ISSUER
+        - CARD_AUTHENTICATION_FAILED
+        - UNKNOWN_DEVICE
+        - UNSUPPORTED_DEVICE
+        - EXCEEDS_AUTHENTICATION_FREQUENCY_LIMIT
+        - EXPIRED_CARD
+        - INVALID_CARD_NUMBER
+        - INVALID_TRANSACTION
+        - NO_CARD_RECORD
+        - SECURITY_FAILURE
+        - STOLEN_CARD
+        - SUSPECTED_FRAUD
+        - TRANSACTION_NOT_PERMITTED_TO_CARDHOLDER
+        - CARDHOLDER_NOT_ENROLLED_IN_SERVICE
+        - TRANSACTION_TIMED_OUT_AT_THE_ACS
+        - LOW_CONFIDENCE
+        - MEDIUM_CONFIDENCE
+        - HIGH_CONFIDENCE
+        - VERY_HIGH_CONFIDENCE
+        - EXCEEDS_ACS_MAXIMUM_CHALLENGES
+        - NON_PAYMENT_NOT_SUPPORTED
+        - THREE_RI_NOT_SUPPORTED
+        - ACS_TECHNICAL_ISSUE
+        - DECOUPLED_REQUIRED_BY_ACS
+        - DECOUPLED_MAX_EXPIRY_EXCEEDED
+        - DECOUPLED_AUTHENTICATION_INSUFFICIENT_TIME
+        - AUTHENTICATION_ATTEMPTED_BUT_NOT_PERFORMED_BY_CARDHOLDER
+        - ACS_TIMED_OUT
+        - INVALID_ACS_RESPONSE
+        - ACS_SYSTEM_ERROR_RESPONSE
+        - ERROR_GENERATING_CAVV
+        - PROTOCOL_VERSION_NOT_SUPPORTED
+        - TRANSACTION_EXCLUDED_FROM_ATTEMPTS_PROCESSING
+        - REQUESTED_PROGRAM_NOT_SUPPORTED
+      type: string
+      description: "This enum is derived from the `transStatusReason` on page 218
+        of the
+
+        [EMV Co 3DS protocol specification](https://www.emvco.com/terms-of-use/?u=/wp-content/uploads/documents/EMVCo_3DS_Spec_v220_122018.pdf)
+
+
+        | Code | Description                             |
+
+        |------|-----------------------------------------|
+
+        | 01   | Card authentication failed              |
+
+        | 02   | Unknown Device                          |
+
+        | 03   | Unsupported Device                      |
+
+        | 04   | Exceeds authentication frequency limit  |
+
+        | 05   | Expired card                            |
+
+        | 06   | Invalid card number                     |
+
+        | 07   | Invalid transaction                     |
+
+        | 08   | No Card record                          |
+
+        | 09   | Security failure                        |
+
+        | 10   | Stolen card                             |
+
+        | 11   | Suspected fraud                         |
+
+        | 12   | Transaction not permitted to cardholder |
+
+        | 13   | Cardholder not enrolled in service      |
+
+        | 14   | Transaction timed out at the ACS        |
+
+        | 15   | Low confidence                          |
+
+        | 16   | Medium confidence                       |"
+
+    ThreeDSecureSkippedReasonCodeEnum:
+      title: ThreeDSecureSkippedReasonCodeEnum
+      enum:
+        - GATEWAY_UNAVAILABLE
+        - DISABLED_BY_MERCHANT
+        - NOT_SUPPORTED_BY_ISSUER
+        - FAILED_TO_NEGOTIATE
+        - UNKNOWN_ACS_RESPONSE
+        - 3DS_SERVER_ERROR
+        - ACQUIRER_NOT_CONFIGURED
+        - ACQUIRER_NOT_PARTICIPATING
+      type: string
+      description: An enumeration.
+
+    DeclineTypeEnum:
+      title: DeclineTypeEnum
+      enum:
+        - SOFT_DECLINE
+        - HARD_DECLINE
+      type: string
+      description: An enumeration.
+
+    TransactionDeclineReasonV2Enum:
+      title: TransactionDeclineReasonV2Enum
+      enum:
+        - ERROR
+        - INVALID_CARD_NUMBER
+        - EXPIRED_CARD
+        - LOST_OR_STOLEN_CARD
+        - SUSPECTED_FRAUD
+        - UNKNOWN
+        - DECLINED
+        - REFER_TO_CARD_ISSUER
+        - DO_NOT_HONOR
+        - INSUFFICIENT_FUNDS
+        - WITHDRAWAL_LIMIT_EXCEEDED
+        - ISSUER_TEMPORARILY_UNAVAILABLE
+        - AUTHENTICATION_REQUIRED
+      type: string
+      description: An enumeration.
+
+    TransactionOverviewAPISchema:
+      title: TransactionOverviewAPISchema
+      required:
+        - id
+        - processor
+        - processorMerchantId
+        - type
+        - status
+      type: object
+      properties:
+        transactionType:
+          title: Transaction type
+          allOf:
+            - $ref: "#/components/schemas/TransactionTypeEnum"
+        processorTransactionId:
+          title: Processor's transaction ID
+          type: string
+          description: Processor's unique identifier for the transaction
+        processorName:
+          title: Processor Name
+          type: string
+          description: An identifier of a processor.
+        processorMerchantId:
+          title: Processor master account identifier
+          type: string
+          description: |
+            Processor's main account identifier.
+
+            * Adyen: Account code
+            * Braintree: Merchant ID
+            * Stripe: Account ID"
+        processorStatus:
+          title: Processor Transaction status
+          allOf:
+            - $ref: "#/components/schemas/PaymentStatus"
+          description: Transaction status, please refer to the [Transaction Status
+            Codes](#section/API-Usage-Guide/Payment-Status) table for more information
+        processorStatusReason:
+          title: Payment error
+          allOf:
+            - $ref: "#/components/schemas/StatusReasonAPISchema"
+          description: |
+            If the transaction has a declined or failed status.
+
+            Only if the status is `DECLINED` or `FAILED`, otherwise `null`.
+
+    PaymentStatus:
+      title: PaymentStatus
+      enum:
+        - PENDING
+        - FAILED
+        - AUTHORIZED
+        - SETTLING
+        - PARTIALLY_SETTLED
+        - SETTLED
+        - DECLINED
+        - CANCELLED
+      type: string
+      description: An enumeration.
+
+    PaymentStatusTypeEnum:
+      title: PaymentStatusTypeEnum
+      enum:
+        - APPLICATION_ERROR
+        - GATEWAY_REJECTED
+        - ISSUER_DECLINED
+      type: string
+      description: An enumeration.
+
+    TransactionTypeEnum:
+      title: TransactionTypeEnum
+      enum:
+        - SALE
+        - REFUND
+      type: string
+      description: An enumeration.
+
+    AddressAPISchema:
+      title: AddressAPISchema
+      required:
+        - addressLine1
+        - city
+        - countryCode
+      type: object
+      properties:
+        firstName:
+          title: First Name
+          type: string
+        lastName:
+          title: Last Name
+          type: string
+        addressLine1:
+          title: Address Line 1
+          type: string
+          description: Street name, Company name or PO Box
+        addressLine2:
+          title: Address Line 2
+          type: string
+          description: Apartment, Unit or Building number
+        city:
+          title: City
+          type: string
+          description: Name of the city, district, town or village
+        state:
+          title: State
+          type: string
+          description: State, County or Province
+        countryCode:
+          title: Country Code
+          allOf:
+            - $ref: "#/components/schemas/CountryCodeEnum"
+          description: Two letter ISO country code
+        postalCode:
+          title: Postal Code
+          type: string
+          description: Postal or ZIP code
+
+    RecurringTransactionTypeEnum:
+      title: RecurringTransactionTypeEnum
+      enum:
+        - FIRST_PAYMENT
+        - ECOMMERCE
+        - SUBSCRIPTION
+        - UNSCHEDULED
+      type: string
+      description: An enumeration.
+
+    RecurringPaymentTypeSchema:
+      title: Recurring Payment Type
+      allOf:
+        - $ref: "#/components/schemas/RecurringTransactionTypeEnum"
+      description: "Payment types, primarily to be used for recurring payments.
+
+        Note: If you successfully vault a `SINGLE_USE` token on payment
+        creation, then there's no need to set a value for this field and it will
+        be flagged as `FIRST_PAYMENT`. Otherwise, see the table below for all
+        possible values.
+
+
+        | paymentType | Use case |
+
+        | --- | --- |
+
+        | `FIRST_PAYMENT` | a customer-initiated payment which is the first in
+        a series of recurring payments or subscription, or a card on file scenario.
+
+        | `ECOMMERCE` | a customer-initiated payment using stored payment details
+        where the cardholder is present.
+
+        | `SUBSCRIPTION` | a merchant-initiated payment as part of a series of
+        payments on a fixed schedule and a set amount.
+
+        | `UNSCHEDULED` | a merchant-initiated payment using stored payment details
+        with no fixed schedule or amount."

@@ -1,0 +1,192 @@
+The Templating Node supports [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/templates/) syntax and is a flexible way of performing light-weight data transformations as part of your Workflow. Here are some common data manipulations you may want to make in a Workflow and how you define them via Templating Nodes.
+
+# String Manipulation
+
+### Output Only the First n Characters
+
+Useful if you want to ensure that you’re not providing too much context to a prompt.
+
+![String Manipulation](https://storage.googleapis.com/vellum-public/help-docs/template_string_manipulation.png)
+
+<CodeBlock title="Template">
+    ```jinja2
+    {{ user_input[:10] }}
+    ```
+</CodeBlock>
+
+<CodeBlock title="Example">
+    ```
+    Inputs:
+    -------
+    user_input = "Hello, world!"
+
+    Output:
+    -------
+    "Hello, wor"
+    ```
+
+</CodeBlock>
+
+# JSON Manipulation
+
+### Checking LLM Output for Valid
+
+If you’re trying to extract structured JSON from unstructed text using a prompt, or if you want to use OpenAI’s function-calling functionality, it’s likely you’ll need to check whether an LLM’s response is valid JSON and if so, convert the output string as proper JSON.
+
+Here’s how to do it:
+
+![JSON Manipulation](https://storage.googleapis.com/vellum-public/help-docs/template_json_manipulation.png)
+
+<CodeBlock title="Template">
+    ```jinja2
+    {% if maybe_json|is_valid_json_string %}
+        {{ maybe_json }}
+    {% else %}
+        {{ {} }}
+    {% endif %}
+    ```
+</CodeBlock>
+
+<CodeBlocks>
+    <CodeBlock title="Example 1: Valid JSON">
+        ```
+        Inputs:
+        -------
+        maybe_json = '{"key": "value"}'
+
+        Output:
+        -------
+        {"key": "value"}
+        ```
+    </CodeBlock>
+    <CodeBlock title="Example 2: Invalid JSON">
+        ```
+        Inputs:
+        -------
+        maybe_json = 'not valid json'
+
+        Output:
+        -------
+        {}
+        ```
+    </CodeBlock>
+
+</CodeBlocks>
+
+# Chat History Manipulation
+
+### Output the Most Recent n Messages in Chat History
+
+If you’re building a chatbot and conversations can be long-lived, you may find that your chat histories are too long to fit within the context window of a prompt.
+
+Once simple solution is to only ever include the most recent `n` messages from the conversation. Here’s how you can do this:
+
+![Chat History Manipulation](https://storage.googleapis.com/vellum-public/help-docs/template_chat_history_manipulation.png)
+
+<CodeBlock title="Template">
+    ```jinja2
+    {{ chat_history[-2:]|to_json }}
+    ```
+</CodeBlock>
+
+<CodeBlock title="Example">
+    ```
+    Inputs:
+    -------
+    chat_history = [
+        {"role": "USER", "text": "What color is the sky?"},
+        {"role": "ASSISTANT", "text": "Blue"},
+        {"role": "USER", "text": "But why"}
+    ]
+
+    Output:
+    -------
+    [
+        {"role": "ASSISTANT", "text": "Blue"},
+        {"role": "USER", "text": "But why"}
+    ]
+    ```
+
+</CodeBlock>
+
+# Search Result Manipulation
+
+### Citing Sources via Chunk Concatenation Customization
+
+Search Nodes make it easy to query a vector store for text that’s semantically similar to some input. By default, the chunks of text that are returned are concatenated together into a single string using a configurable separator (e.g. `\n\n#####\n\n`). The flattened string can then be fed directly to Prompt Nodes as an input variable and referenced within your prompt template.
+
+However, if you want your Prompt to cite its sources and say where it got the info it used to generate its response, then you’ll need more than just the chunk text. You need the name/id/url/etc of the document each chunk came from and you need to provide this info to your Prompt in a consumable form. This is where Templating Nodes come in.
+
+The template below takes in the raw search results and performs custom chunk concatenation, but also pulls in info from the document associated with each chunk.
+
+![Search Result Manipulation](https://storage.googleapis.com/vellum-public/help-docs/template_search_results_manipulation.png)
+
+<CodeBlock title="Template">
+    ```jinja2
+    {% for result in search_results -%}
+    Source:
+    {{ result.document.label }}
+
+    Content:
+    {{ result.text }}
+    {% if not loop.last %}
+
+    #####
+
+    {% endif %}
+    {% endfor %}
+    ```
+
+</CodeBlock>
+
+<CodeBlock title="Example">
+    ```
+    Inputs:
+    -------
+    search_results = [
+        {
+            "text": "Hello, world!",
+            "score": 0.015,
+            "keywords": ["hello", "world”],
+            "document": {
+                "id": "22df06cf-c876-45ef-a162-4836c410e37b",
+                "label": "introduction.txt",
+                "external_id": "introduction.txt"
+            }
+        },
+        {
+            "text": "The sky is blue.",
+            "score": 0.005,
+            "keywords": ["sky", "blue”],
+            "document": {
+                "id": "d9655f5f-885e-400e-b000-00b605a03a99",
+                "label": "description.txt",
+                "external_id": "description.txt"
+            }
+        }
+    ]
+
+    Output:
+    -------
+    Source:
+    introduction.txt
+
+    Content:
+    Hello, world!
+
+
+    #####
+
+
+    Source:
+    description.txt
+
+    Content:
+    The sky is blue.
+    ```
+
+</CodeBlock>
+
+# Need Help?
+
+Templating nodes are flexible and powerful, but admittedly not the most intuitive. If you’d like to see additional examples here, or have ideas for custom filters that we should add (like the `is_valid_json_string` filter [used above](/help-center/workflows/common-data-transforms#checking-llm-output-for-valid)), please don’t hesitate to [reach out to us on discord](https://discord.gg/6NqSBUxF78)!

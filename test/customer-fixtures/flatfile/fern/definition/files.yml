@@ -1,0 +1,175 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /files
+  audiences:
+    - public
+  endpoints:
+    list:
+      path: ""
+      method: GET
+      display-name: List files
+      request:
+        name: ListFilesRequest
+        query-parameters:
+          spaceId: optional<string>
+          pageSize:
+            docs: Number of jobs to return in a page (default 20)
+            type: optional<integer>
+          pageNumber:
+            docs: Based on pageSize, which page of jobs to return
+            type: optional<integer>
+          mode:
+            docs: The storage mode of file to fetch, defaults to "import"
+            type: optional<Mode>
+      response: ListFilesResponse
+
+    upload:
+      path: ""
+      method: POST
+      display-name: Upload a file
+      request:
+        name: CreateFileRequest
+        body:
+          properties:
+            spaceId: commons.SpaceId
+            environmentId: commons.EnvironmentId
+            mode:
+              type: optional<Mode>
+              docs: The storage mode of file to insert, defaults to "import"
+            file:
+              type: file
+              docs: A binary payload containing the file contents
+      response: FileResponse
+      errors:
+        - commons.BadRequestError
+
+    get:
+      path: /{fileId}
+      method: GET
+      display-name: Get a file
+      path-parameters:
+        fileId: string
+      response: FileResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    delete:
+      path: /{fileId}
+      method: DELETE
+      display-name: Delete a file
+      path-parameters:
+        fileId: string
+      response: commons.Success
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    update:
+      path: /{fileId}
+      method: PATCH
+      docs: Update a file, to change the workbook id for example
+      display-name: Update a file
+      path-parameters:
+        fileId:
+          docs: ID of file to update
+          type: string
+      request:
+        name: UpdateFileRequest
+        body:
+          properties:
+            workbookId: optional<commons.WorkbookId>
+            name:
+              type: optional<string>
+              docs: The name of the file
+            mode:
+              type: optional<Mode>
+              docs: The storage mode of file to update
+            status:
+              type: optional<ModelFileStatusEnum>
+              docs: Status of the file
+            actions:
+              type: optional<list<commons.Action>>
+              docs: The actions attached to the file
+      response: FileResponse
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+    download:
+      path: /{fileId}/download
+      method: GET
+      display-name: Download a file
+      path-parameters:
+        fileId: commons.FileId
+      response: file
+      errors:
+        - commons.BadRequestError
+        - commons.NotFoundError
+
+types:
+  ListFilesResponse:
+    properties:
+      pagination: optional<commons.Pagination>
+      data: list<File>
+
+  FileResponse:
+    properties:
+      data: File
+
+  File:
+    docs: Any uploaded file of any type
+    properties:
+      id: commons.FileId
+      name:
+        docs: Original filename
+        type: string
+      ext:
+        docs: Extension of the file
+        type: string
+      mimetype:
+        docs: MIME Type of the file
+        type: string
+      encoding:
+        docs: Text encoding of the file
+        type: string
+      status:
+        docs: Status of the file
+        type: ModelFileStatusEnum
+      mode:
+        docs: The storage mode of file
+        type: optional<Mode>
+      size:
+        docs: Size of file in bytes
+        type: integer
+      bytesReceived:
+        docs: Number of bytes that have been uploaded so far (useful for progress tracking)
+        type: integer
+      createdAt:
+        docs: Date the file was created
+        type: datetime
+      updatedAt:
+        docs: Date the file was last updated
+        type: datetime
+      spaceId: commons.SpaceId
+      workbookId: optional<commons.WorkbookId>
+      sheetId: optional<commons.SheetId>
+      actions: optional<list<commons.Action>>
+
+  ModelFileStatusEnum:
+    enum:
+      - partial
+      - complete
+      - archived
+      - purged
+      - failed
+
+  Mode:
+    enum:
+      - import
+      - export

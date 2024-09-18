@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    find:
+      audiences:
+        - external
+      path: "/bankLookup"
+      method: GET
+      display-name: Find bank account details
+      docs: Find bank account details
+      request:
+        name: BankLookupRequest
+        query-parameters:
+          routingNumber:
+            docs: Routing number to validate
+            type: string
+      response: BankLookupResponse
+
+types:
+  BankAddress:
+    properties:
+      address: string
+      city: string
+      state: string
+      postalCode: string
+      postalCodeExtension: string
+
+  BankLookupResponse:
+    properties:
+      bankName: string
+      bankAddress: BankAddress
