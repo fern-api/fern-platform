@@ -25,11 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        if: github.event_name == 'workflow_call'
+
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Revalidate all
-        env:
-          DEPLOYMENT_URL: ${{ inputs.deployment_url || 'app.buildwithfern.com' }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          node scripts/revalidate-all.js
+        run: pnpm vercel-scripts revalidate-all ${{ inputs.deployment_url || 'app.buildwithfern.com' }} --token ${{ secrets.VERCEL_TOKEN }}

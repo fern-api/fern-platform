@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-internal-modules
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";

@@ -1,0 +1,14 @@
+default-group: sdk
+groups:
+  sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.40.4
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/fern-docs-sdk"
+        config:
+          skipResponseValidation: true
+          includeUtilsOnUnionMembers: true
+          namespaceExport: FernDocs

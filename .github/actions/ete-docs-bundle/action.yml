@@ -5,10 +5,19 @@ inputs:
   deployment_url:
     description: "The URL of the deployment to test"
     required: true
+  token:
+    description: "The Vercel token to use for the deployment"
+    required: true
 
 runs:
   using: "composite"
   steps:
+    - uses: ./.github/actions/install
+
+    - shell: bash
+      name: Fetch domains
+      run: pnpm vercel-scripts domains.txt ${{ inputs.deployment_url }} --token=${{ inputs.token }}
+
     - name: Install Playwright Browsers
       shell: bash
       run: pnpm exec playwright install --with-deps
@@ -17,11 +26,10 @@ runs:
       shell: bash
       env:
         DEPLOYMENT_URL: ${{ inputs.deployment_url }}
-      run: pnpm exec playwright test playwright/smoke --workers 6
+        PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
+      run: pnpm exec playwright test playwright/smoke --workers 6 --reporter json
 
-    - uses: actions/upload-artifact@v4
+    - uses: daun/playwright-report-summary@v3
       if: always()
       with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+        report-file: results.json

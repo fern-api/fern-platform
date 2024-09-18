@@ -1,13 +1,12 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 import urljoin from "url-join";
 import { buildUrlFromApiEdge } from "../../../utils/buildUrlFromApi";
 import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
-// eslint-disable-next-line import/no-internal-modules
-import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
 import { conformTrailingSlash } from "../../../utils/trailingSlash";
+import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 export const revalidate = 60 * 60 * 24;

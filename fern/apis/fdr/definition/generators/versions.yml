@@ -7,8 +7,7 @@ imports:
   root: ./__package__.yml
 
 types:
-  GeneratorReleaseRequest:
-    extends: commons.ReleaseRequest
+  BaseGeneratorRelease:
     properties:
       generatorId: root.GeneratorId
       irVersion:
@@ -20,20 +19,19 @@ types:
       customConfigSchema:
         type: optional<string>
         docs: The JSON schema (stringified) for the custom config that this generator version supports.
+      tags:
+        type: optional<list<string>>
+        docs: Tags to categorize the Generator release.
+
+  GeneratorReleaseRequest:
+    extends:
+      - commons.ReleaseRequest
+      - BaseGeneratorRelease
 
   GeneratorRelease:
-    extends: commons.Release
-    properties:
-      generatorId: root.GeneratorId
-      irVersion:
-        type: integer
-        docs: The major version of the IR that this generator version consumes.
-      migration:
-        type: optional<string>
-        docs: The TypeScript file for the migration to run when upgrading to this version.
-      customConfigSchema:
-        type: optional<string>
-        docs: The JSON schema (stringified) for the custom config that this generator version supports.
+    extends:
+      - commons.Release
+      - BaseGeneratorRelease
 
   ListGeneratorReleasesResponse:
     properties:

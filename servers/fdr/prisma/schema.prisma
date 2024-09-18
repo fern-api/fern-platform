@@ -203,6 +203,7 @@ model GeneratorRelease {
   customConfigSchema String?
 
   releaseType ReleaseType
+  tags String[]  @default([])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -222,7 +223,67 @@ model CliRelease {
   changelogEntry Bytes?
 
   releaseType ReleaseType
+  tags String[]  @default([])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum PullRequestState {
+  open
+  closed
+  merged
+}
+
+model PullRequest {
+  @@id([pullRequestNumber, repositoryOwner, repositoryName])
+  pullRequestNumber Int
+  // PRs coming from GitHub do not seem to contain the repo ID, but rather the owner and repo name, so let's use that
+  // instead of always performing a look up to get ID from name and owner.
+  repositoryOwner   String
+  repositoryName    String
+  repository        Repository @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], onDelete: Cascade)
+  
+  author            Bytes?
+  reviewers         Bytes
+  checks       Bytes
+
+  title        String
+  url         String
+  state        PullRequestState
+
+  createdAt    DateTime
+  updatedAt    DateTime?
+  mergedAt     DateTime?
+  closedAt     DateTime?
+}
+
+enum RepositorySystemType {
+  github
+}
+
+enum RepositoryContentType {
+  sdk
+  config
+}
+
+model Repository {
+  @@unique([owner, name])
+
+  id              String @id
+  name            String
+  owner           String
+  fullName        String @unique
+  url             String
+  repositoryOwnerOrganizationId String
+
+  pulls PullRequest[]
+  defaultBranchChecks Bytes
+
+  contentType    RepositoryContentType
+  systemType     RepositorySystemType
+
+  // Allows us to maintain the full union object, but also querying by the base
+  // properties with the columns above
+  rawRepository   Bytes
 }

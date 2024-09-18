@@ -1,8 +1,0 @@
-name: vercel
-auth: bearer
-default-environment: Prod
-environments:
-  Prod: https://api.vercel.com
-error-discrimination:
-  strategy: property
-  property-name: error

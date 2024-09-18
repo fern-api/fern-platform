@@ -6,19 +6,24 @@ imports:
   commons: ./commons.yml
 
 types:
-  CliReleaseRequest:
-    extends: commons.ReleaseRequest
+  BaseCliRelease:
     properties:
       irVersion:
         type: integer
         docs: The major version of the IR that this CLI exposes.
+      tags:
+        type: optional<list<string>>
+        docs: Tags to categorize the CLI release.
+
+  CliReleaseRequest:
+    extends:
+      - commons.ReleaseRequest
+      - BaseCliRelease
 
   CliRelease:
-    extends: commons.Release
-    properties:
-      irVersion:
-        type: integer
-        docs: The major version of the IR that this CLI exposes.
+    extends:
+      - commons.Release
+      - BaseCliRelease
 
   ListCliReleasesResponse:
     properties:
