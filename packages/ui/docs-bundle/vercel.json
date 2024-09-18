@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --filter=@fern-ui/docs-bundle",
   "buildCommand": "pnpm turbo docs:build",
   "devCommand": "pnpm turbo docs:dev",
   "git": {
