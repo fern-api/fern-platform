@@ -13,6 +13,7 @@ jobs:
     outputs:
       continue: ${{ steps.ignore.outputs.continue }}
     steps:
+      - uses: actions/checkout@v4
       - name: Ignore unchanged files
         id: ignore
         uses: ./.github/actions/turbo-ignore
