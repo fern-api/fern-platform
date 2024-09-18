@@ -147,7 +147,6 @@ export const SearchHits: React.FC = () => {
         return null;
     }
 
-    console.log(hits);
     const { endpointHits, pageHits, fieldHits } = filterHits(hits);
 
     return (
