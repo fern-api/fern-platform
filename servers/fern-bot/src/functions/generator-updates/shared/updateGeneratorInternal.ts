@@ -10,6 +10,8 @@ import { Octokit } from "octokit";
 import SemVer from "semver";
 import { CleanOptions, SimpleGit } from "simple-git";
 
+const PR_BODY_LIMIT = 65000;
+
 async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
     const client = new FernVenusApiClient({ environment: venusUrl });
 
@@ -89,11 +91,17 @@ function formatChangelogResponses(previousVersion: string, changelogs: Changelog
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const prBodyTitle = `## Upgrading from \`${previousVersion}\` to \`${changelogs[0]!.version}\` - Changelog\n\n<dl>\n<dd>\n<ul>`;
-    let prBody = "";
+    let prBody = prBodyTitle;
+    const terminalString = "</ul>\n</dd>\n</dl>";
 
     // Get the first 5 changelogs
     for (const changelog of changelogs.slice(0, 5)) {
-        prBody += formatChangelogEntry(changelog);
+        const entry = formatChangelogEntry(changelog);
+        const terminate = terminateChangelog(prBody, entry, terminalString);
+        if (terminate != null) {
+            return terminate;
+        }
+        prBody += entry;
     }
 
     if (changelogs.length > 5) {
@@ -101,12 +109,25 @@ function formatChangelogResponses(previousVersion: string, changelogs: Changelog
         prBody += `<details>\n\t<summary><strong>${numChangelogsLeft} additional update${numChangelogsLeft > 1 ? "s" : ""}</strong>, see more</summary>\n\n<br/>\n\n`;
 
         for (const changelog of changelogs.slice(5)) {
-            prBody += "\t";
-            prBody += formatChangelogEntry(changelog);
+            let entry = "\t";
+            entry += formatChangelogEntry(changelog);
+
+            const terminate = terminateChangelog(prBody, entry, "</details>" + terminalString);
+            if (terminate != null) {
+                return terminate;
+            }
+            prBody += entry;
         }
         prBody += "</details>";
     }
-    return prBodyTitle + prBody + "</ul>\n</dd>\n</dl>";
+    return prBody + terminalString;
+}
+
+function terminateChangelog(prBody: string, newEntry: string, terminalString: string): string | undefined {
+    if (prBody.length + newEntry.length > PR_BODY_LIMIT) {
+        return prBody + terminalString;
+    }
+    return undefined;
 }
 
 // This type is meant to mirror the data model for the `generator list` command
