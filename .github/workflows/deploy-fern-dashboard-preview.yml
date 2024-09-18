@@ -19,25 +19,21 @@ jobs:
     outputs:
       continue: ${{ steps.ignore.outputs.continue }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 # used for turbo-ignore
-
-      - name: Install
-        uses: ./.github/actions/install
-        with:
-          run_install: false
-
       - name: Ignore unchanged files
         id: ignore
-        run: set +e; pnpx turbo-ignore @fern-ui/dashboard --fallback=HEAD^1; echo "continue=$?" >> $GITHUB_OUTPUT
+        uses: ./.github/actions/turbo-ignore
+        with:
+          project: "dashboard-dev.buildwithfern.com"
+          package: "@fern-ui/dashboard"
+          environment: "preview"
+          branch: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
 
   deploy:
     needs: ignore
     if: needs.ignore.outputs.continue == 1
     runs-on: ubuntu-latest
     environment:
-      name: Preview - dashboard.buildwithfern.com
+      name: Preview - dashboard-dev.buildwithfern.com
       url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
       # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
@@ -47,9 +43,13 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
+        with:
+          run_install: false
+
+      - run: pnpm vercel-scripts:install
 
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy dashboard.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+          pnpm vercel-scripts deploy dashboard-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
           echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT

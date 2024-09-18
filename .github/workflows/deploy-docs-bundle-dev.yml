@@ -16,18 +16,14 @@ jobs:
     outputs:
       continue: ${{ steps.ignore.outputs.continue }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 # used for turbo-ignore
-
-      - name: Install
-        uses: ./.github/actions/install
-        with:
-          run_install: false
-
       - name: Ignore unchanged files
         id: ignore
-        run: set +e; pnpx turbo-ignore @fern-ui/docs-bundle --fallback=HEAD^1; echo "continue=$?" >> $GITHUB_OUTPUT
+        uses: ./.github/actions/turbo-ignore
+        with:
+          project: "app-dev.buildwithfern.com"
+          package: "@fern-ui/docs-bundle"
+          environment: "production"
+          branch: main
 
   deploy:
     needs: ignore
@@ -50,5 +46,5 @@ jobs:
       - name: Build & Deploy to Vercel
         id: deploy
         run: |
-          pnpm vercel-scripts deploy app-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production --force
+          pnpm vercel-scripts deploy app-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
           echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT

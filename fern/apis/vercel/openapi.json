@@ -47705,6 +47705,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "branch",
+            "schema": {
+              "type": "string"
+            }
           }
         ]
       }

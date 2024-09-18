@@ -16,18 +16,14 @@ jobs:
     outputs:
       continue: ${{ steps.ignore.outputs.continue }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 # used for turbo-ignore
-
-      - name: Install
-        uses: ./.github/actions/install
-        with:
-          run_install: false
-
       - name: Ignore unchanged files
         id: ignore
-        run: set +e; pnpx turbo-ignore @fern-ui/fontawesome-cdn --fallback=HEAD^1; echo "continue=$?" >> $GITHUB_OUTPUT
+        uses: ./.github/actions/turbo-ignore
+        with:
+          project: "icons.ferndocs.com"
+          package: "@fern-ui/fontawesome-cdn"
+          environment: "production"
+          branch: main
 
   deploy:
     needs: ignore
@@ -44,6 +40,10 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
+        with:
+          run_install: false
+
+      - run: pnpm vercel-scripts:install
 
       - name: Build & Deploy to Vercel
         id: deploy

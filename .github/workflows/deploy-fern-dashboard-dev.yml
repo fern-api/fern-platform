@@ -17,7 +17,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  ignore:
+    runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.ignore.outputs.continue }}
+    steps:
+      - name: Ignore unchanged files
+        id: ignore
+        uses: ./.github/actions/turbo-ignore
+        with:
+          project: "dashboard-dev.buildwithfern.com"
+          package: "@fern-ui/dashboard"
+          environment: "production"
+          branch: main
+
   deploy:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
     runs-on: ubuntu-latest
     environment:
       name: Production - dashboard-dev.buildwithfern.com
@@ -30,6 +46,10 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
+        with:
+          run_install: false
+
+      - run: pnpm vercel-scripts:install
 
       - name: Build & Deploy to Vercel
         id: deploy

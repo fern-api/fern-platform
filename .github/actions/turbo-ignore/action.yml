@@ -1,0 +1,57 @@
+name: Turbo Ignore
+description: Ignore unchanged files in a Vercel deployment
+
+inputs:
+  project:
+    description: "The project to check for changes"
+    required: true
+  environment:
+    description: "The environment that turbo-ignore is checking against"
+    default: "preview"
+  package:
+    description: "The package to check for changes"
+    required: true
+  branch:
+    description: "The branch to check for changes"
+    required: false
+
+outputs:
+  continue:
+    value: ${{ steps.ignore.outputs.continue }}
+    description: "Whether to continue with the deployment or not"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.branch }}
+
+    - name: Install
+      uses: ./.github/actions/install
+      with:
+        run_install: false
+
+    - shell: bash
+      run: pnpm vercel-scripts:install
+
+    - name: Ignore unchanged files
+      shell: bash
+      id: ignore
+      run: |
+        # if ${{ inputs.branch }} is present, then we change the script to --branch=${{ inputs.branch }}
+
+        if [ -n "${{ inputs.branch }}" ]; then
+          pnpm vercel-scripts last-deploy.txt ${{ inputs.project }} --token=${{ secrets.VERCEL_TOKEN }} --environment=${{ inputs.environment }} --branch=${{ inputs.branch }}
+        else
+          pnpm vercel-scripts last-deploy.txt ${{ inputs.project }} --token=${{ secrets.VERCEL_TOKEN }} --environment=${{ inputs.environment }}
+        fi
+
+        if [ ! -f last-deploy.txt ]; then
+          echo "continue=1" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        set +e
+        pnpx turbo-ignore ${{ inputs.package }} --fallback=$(cat last-deploy.txt)
+        echo "continue=$?" >> $GITHUB_OUTPUT

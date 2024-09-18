@@ -2,17 +2,12 @@ import { VercelClient } from "@fern-fern/vercel";
 import { writeFileSync } from "fs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import { deployCommand } from "./commands/deploy.js";
+import { getLastDeployCommand } from "./commands/last-deploy.js";
 import { promoteCommand } from "./commands/promote.js";
 import { revalidateAllCommand } from "./commands/revalidate-all.js";
-import { cwd } from "./cwd.js";
 import { cleanDeploymentId } from "./utils/clean-id.js";
-import { VercelDeployer } from "./utils/deployer.js";
 import { FernDocsRevalidator } from "./utils/revalidator.js";
-import { safeCommand } from "./utils/safeCommand.js";
-
-function isValidEnvironment(environment: string): environment is "preview" | "production" {
-    return environment === "preview" || environment === "production";
-}
 
 void yargs(hideBin(process.argv))
     .scriptName("vercel-scripts")
@@ -59,26 +54,7 @@ void yargs(hideBin(process.argv))
                     default: "deployment-url.txt",
                 }),
         async ({ project, environment, token, teamName, teamId, output, skipDeploy }) => {
-            if (!isValidEnvironment(environment)) {
-                throw new Error(`Invalid environment: ${environment}`);
-            }
-
-            // eslint-disable-next-line no-console
-            console.log(`Deploying project ${project} to ${environment} environment`);
-
-            const cli = new VercelDeployer({
-                token,
-                teamName,
-                teamId,
-                environment,
-                cwd: cwd(),
-            });
-
-            const result = await cli.buildAndDeployToVercel(project, { skipDeploy });
-
-            if (result) {
-                writeFileSync(output, result.url);
-            }
+            await deployCommand({ project, environment, token, teamName, teamId, output, skipDeploy });
 
             process.exit(0);
         },
@@ -91,15 +67,19 @@ void yargs(hideBin(process.argv))
                 type: "boolean",
                 description: "Revalidate the deployment (if it's fern docs)",
             }),
-        async ({ deploymentUrl, token, teamId, revalidateAll }) =>
-            safeCommand(() => promoteCommand({ deploymentIdOrUrl: deploymentUrl, token, teamId, revalidateAll })),
+        async ({ deploymentUrl, token, teamId, revalidateAll }) => {
+            await promoteCommand({ deploymentIdOrUrl: deploymentUrl, token, teamId, revalidateAll });
+            process.exit(0);
+        },
     )
     .command(
         "revalidate-all <deploymentUrl>",
         "Revalidate all docs for a deployment",
         (argv) => argv.positional("deploymentUrl", { type: "string", demandOption: true }),
-        async ({ deploymentUrl, token, teamId }) =>
-            safeCommand(() => revalidateAllCommand({ token, teamId, deploymentIdOrUrl: deploymentUrl })),
+        async ({ deploymentUrl, token, teamId }) => {
+            await revalidateAllCommand({ token, teamId, deploymentIdOrUrl: deploymentUrl });
+            process.exit(0);
+        },
     )
     .command(
         "preview.txt <deploymentUrl>",
@@ -157,4 +137,32 @@ void yargs(hideBin(process.argv))
             process.exit(0);
         },
     )
+    .command(
+        "last-deploy.txt <project>",
+        "Get the last deployment",
+        (argv) =>
+            argv
+                .positional("project", { type: "string", demandOption: true })
+                .option("branch", {
+                    type: "string",
+                    description: "The branch to get the last deployment for",
+                })
+                .options("environment", {
+                    type: "string",
+                    description: "The environment to deploy to",
+                    demandOption: true,
+                    default: "preview",
+                    choices: ["preview" as const, "production" as const],
+                })
+                .option("output", {
+                    type: "string",
+                    description: "The output file to write the preview URLs to",
+                    default: "last-deploy.txt",
+                }),
+        async ({ project, token, branch, output, environment }) => {
+            await getLastDeployCommand({ project, token, branch, output, environment });
+            process.exit(0);
+        },
+    )
+    .showHelpOnFail(false)
     .parse();

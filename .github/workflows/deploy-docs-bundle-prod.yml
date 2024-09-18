@@ -24,6 +24,10 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
+        with:
+          run_install: false
+
+      - run: pnpm vercel-scripts:install
 
       - name: Build & Deploy to Vercel
         id: deploy
@@ -45,6 +49,10 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
+        with:
+          run_install: false
+
+      - run: pnpm vercel-scripts:install
 
       - name: Build & Deploy to Vercel
         id: deploy
@@ -66,6 +74,10 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
+        with:
+          run_install: false
+
+      - run: pnpm vercel-scripts:install
 
       - name: Build & Deploy to Vercel
         id: deploy
