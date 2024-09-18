@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { generatePreviewContext } from "../utils";
+import { addPreviewCookie, generatePreviewContext } from "../utils";
 
 /**
  * This test will run on a sample of urls from customer docs using versions.
@@ -38,9 +38,9 @@ const samples = [
 ].map(generatePreviewContext);
 
 samples.forEach((sample) => {
-    test(`Check if ${sample.url} is online`, async ({ page }) => {
+    test(`Check if ${sample.originalUrl} is online`, async ({ page, context }) => {
         // 1. set the preview cookie
-        await page.goto(sample.previewCookieApiRoute);
+        await addPreviewCookie(context, sample);
 
         // 2. navigate to the page and check if it is online
         const response = await page.goto(sample.previewUrl, { waitUntil: "domcontentloaded" });
