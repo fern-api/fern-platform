@@ -147,6 +147,7 @@ jobs:
         if: needs.deploy-dev.outputs.deployment_url
 
       - uses: ./.github/actions/install
+        if: needs.deploy-dev.outputs.deployment_url
 
       - name: Run E2E tests
         if: needs.deploy-dev.outputs.deployment_url
