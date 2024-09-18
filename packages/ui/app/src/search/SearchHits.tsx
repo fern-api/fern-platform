@@ -2,6 +2,8 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
+import * as Accordion from "@radix-ui/react-accordion";
+import { AccordionTrigger } from "@radix-ui/react-accordion";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
@@ -149,6 +151,7 @@ export const SearchHits: React.FC = () => {
 
     const { endpointHits, pageHits, fieldHits } = filterHits(hits);
 
+    console.log(hits);
     return (
         <FernScrollArea
             rootClassName="border-default min-h-0 flex-1 shrink border-t"
@@ -167,42 +170,49 @@ export const SearchHits: React.FC = () => {
                     onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
                 />
             )}
-            {endpointHits.length > 0 && (
-                <>
-                    <h3 className="text-lg font-semibold my-4 pl-0.5">Endpoints</h3>
-                    {endpointHits.map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                            isHovered={hoveredSearchHitId === hit.objectID}
-                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                        />
-                    ))}
-                </>
-            )}
-            {pageHits.length > 0 && (
-                <>
-                    <h3 className="text-lg font-semibold my-4 pl-0.5">Pages</h3>
-                    {pageHits.map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                            isHovered={hoveredSearchHitId === hit.objectID}
-                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                        />
-                    ))}
-                </>
-            )}
+            <Accordion.Root type="single" defaultValue="endpoints" collapsible>
+                {endpointHits.length > 0 && (
+                    <Accordion.Item className="fern-search-accordion" value="endpoints">
+                        <AccordionTrigger>Endpoints</AccordionTrigger>
+                        <Accordion.Content>
+                            {endpointHits.map((hit) => (
+                                <SearchHit
+                                    setRef={(elem) => {
+                                        if (elem != null) {
+                                            refs.current.set(hit.objectID, elem);
+                                        }
+                                    }}
+                                    key={hit.objectID}
+                                    hit={hit}
+                                    isHovered={hoveredSearchHitId === hit.objectID}
+                                    onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                                />
+                            ))}
+                        </Accordion.Content>
+                    </Accordion.Item>
+                )}
+                {pageHits.length > 0 && (
+                    <Accordion.Item className="fern-search-accordion" value="pages">
+                        <AccordionTrigger>Pages</AccordionTrigger>
+                        <Accordion.AccordionContent>
+                            {pageHits.map((hit) => (
+                                <SearchHit
+                                    setRef={(elem) => {
+                                        if (elem != null) {
+                                            refs.current.set(hit.objectID, elem);
+                                        }
+                                    }}
+                                    key={hit.objectID}
+                                    hit={hit}
+                                    isHovered={hoveredSearchHitId === hit.objectID}
+                                    onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                                />
+                            ))}
+                        </Accordion.AccordionContent>
+                    </Accordion.Item>
+                )}
+            </Accordion.Root>
+
             {fieldHits.length > 0 && (
                 <>
                     <h3 className="text-lg font-semibold my-4 pl-0.5">Fields</h3>
