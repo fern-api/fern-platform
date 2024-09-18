@@ -1,5 +1,4 @@
-import { writeFileSync } from "fs";
-import { cwd } from "../cwd.js";
+import { cwd, writefs } from "../cwd.js";
 import { VercelDeployer } from "../utils/deployer.js";
 import { assertValidEnvironment } from "../utils/valid-env.js";
 
@@ -38,6 +37,6 @@ export async function deployCommand({
     const result = await cli.buildAndDeployToVercel(project, { skipDeploy });
 
     if (result) {
-        writeFileSync(output, result.url);
+        writefs(output, `https://${result.url}`);
     }
 }

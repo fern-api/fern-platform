@@ -1,11 +1,11 @@
 import { VercelClient } from "@fern-fern/vercel";
-import { writeFileSync } from "fs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { deployCommand } from "./commands/deploy.js";
 import { getLastDeployCommand } from "./commands/last-deploy.js";
 import { promoteCommand } from "./commands/promote.js";
 import { revalidateAllCommand } from "./commands/revalidate-all.js";
+import { writefs } from "./cwd.js";
 import { cleanDeploymentId } from "./utils/clean-id.js";
 import { FernDocsRevalidator } from "./utils/revalidator.js";
 
@@ -104,7 +104,7 @@ void yargs(hideBin(process.argv))
 
             const urls = await revalidator.getPreviewUrls(deploymentUrl);
 
-            writeFileSync(output, `## PR Preview\n\n${urls.map((d) => `- [ ] [${d.name}](${d.url})`).join("\n")}`);
+            writefs(output, `## PR Preview\n\n${urls.map((d) => `- [ ] [${d.name}](${d.url})`).join("\n")}`);
 
             process.exit(0);
         },
@@ -132,7 +132,7 @@ void yargs(hideBin(process.argv))
 
             const urls = await revalidator.getDomains();
 
-            writeFileSync(output, urls.join("\n"));
+            writefs(output, urls.join("\n"));
 
             process.exit(0);
         },

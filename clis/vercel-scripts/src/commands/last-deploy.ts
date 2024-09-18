@@ -1,5 +1,5 @@
 import { VercelClient } from "@fern-fern/vercel";
-import { writeFileSync } from "fs";
+import { writefs } from "../cwd.js";
 import { assertValidEnvironment } from "../utils/valid-env.js";
 
 interface LastDeployArgs {
@@ -39,7 +39,7 @@ export async function getLastDeployCommand({
     if (sha) {
         // eslint-disable-next-line no-console
         console.log(`Last deploy ref: ${sha} (${ref ?? branch})`, deployments[0]);
-        writeFileSync(output, sha);
+        writefs(output, sha);
     } else {
         // eslint-disable-next-line no-console
         console.error(
