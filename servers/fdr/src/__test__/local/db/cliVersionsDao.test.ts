@@ -21,6 +21,31 @@ it("cli verion not semver", async () => {
     }).rejects.toThrow(new InvalidVersionError({ providedVersion: "abc.1.2" }));
 });
 
+it("cli release with tags and URLs", async () => {
+    const release: CliReleaseRequest = {
+        version: "0.1.2-rc13",
+        irVersion: 0,
+        tags: ["OpenAPI", "Fern Definition"],
+        changelogEntry: [
+            {
+                type: "feat",
+                summary: "added a new feature",
+                added: ["added a new feature"],
+                links: ["https://123.com"],
+            },
+        ],
+    };
+
+    await fdrApplication.dao.cliVersions().upsertCliRelease({
+        cliRelease: release,
+    });
+
+    const dbRelease = await fdrApplication.dao.cliVersions().getCliRelease({ cliVersion: "0.1.2-rc13" });
+    expect(dbRelease).not.toBeUndefined();
+    expect(dbRelease?.tags).toEqual(release.tags);
+    expect(dbRelease?.changelogEntry?.[0]?.links).toEqual(release.changelogEntry?.[0]?.links);
+});
+
 it("cli version get latest respects semver, not time", async () => {
     // create some versions and sleep between them to ensure the timestamps are different
     await fdrApplication.dao.cliVersions().upsertCliRelease({

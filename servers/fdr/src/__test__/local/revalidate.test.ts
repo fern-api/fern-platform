@@ -10,7 +10,7 @@ it.skip("revalidates a custom docs domain", async () => {
 
     expect(revalidationResult.revalidationFailed).toEqual(false);
 
-    expect(revalidationResult.response?.failedRevalidations.length).toEqual(0);
+    expect(revalidationResult.failed.length).toEqual(0);
 
-    expect(revalidationResult.response?.successfulRevalidations.length).toBeGreaterThan(0);
+    expect(revalidationResult.successful.length).toBeGreaterThan(0);
 });

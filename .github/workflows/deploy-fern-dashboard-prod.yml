@@ -1,9 +1,5 @@
 name: Deploy @fern-ui/dashboard
 env:
-  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  VERCEL_PROJECT_ID: prj_59B94Hus48Nbb0XrqFYZSALYmYTw
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
   # TODO: move to env vars in vercel
   AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
   AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
@@ -28,14 +24,13 @@ jobs:
       name: Production - dashboard.buildwithfern.com
       url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/install
+
       - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
         id: deploy
-        with:
-          ref: ${{ github.ref_name || github.ref }}
-          token: ${{ secrets.VERCEL_TOKEN }}
-          package: "@fern-ui/dashboard"
-          environment: production
-          force: true
-          promote: true
+        run: |
+          pnpm vercel-scripts deploy dashboard.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT

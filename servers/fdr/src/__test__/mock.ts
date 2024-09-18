@@ -108,10 +108,8 @@ class MockSlackService implements SlackService {
 class MockRevalidatorService implements RevalidatorService {
     async revalidate(_params: { baseUrl: ParsedBaseUrl }): Promise<RevalidatedPathsResponse> {
         return {
-            response: {
-                successfulRevalidations: [],
-                failedRevalidations: [],
-            },
+            successful: [],
+            failed: [],
             revalidationFailed: false,
         };
     }

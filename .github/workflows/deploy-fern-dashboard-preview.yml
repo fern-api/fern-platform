@@ -1,9 +1,5 @@
 name: Preview @fern-ui/dashboard (dev)
 env:
-  VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
-  VERCEL_PROJECT_ID: prj_pxVBPOeLKJLEUkQXXMHKWq8h6Z0f
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
   # TODO: move to env vars in vercel
   AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
   AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
@@ -11,28 +7,50 @@ env:
   VENUS_AUDIENCE: ${{ secrets.VENUS_AUDIENCE }}
 
 on:
+  pull_request:
   push:
     branches:
       - main
+  workflow_dispatch:
 
-# Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
 concurrency:
-  group: dashboard-dev.buildwithfern.com
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  ignore:
     runs-on: ubuntu-latest
-    environment:
-      name: Preview - dashboard.buildwithfern.com
-      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      continue: ${{ steps.ignore.outputs.continue }}
     steps:
       - uses: actions/checkout@v4
-      - name: Build & Deploy to Vercel
-        uses: ./.github/actions/vercel
-        id: deploy
+      - name: Ignore unchanged files
+        id: ignore
+        uses: ./.github/actions/turbo-ignore
         with:
-          ref: ${{ github.ref_name || github.ref }}
           token: ${{ secrets.VERCEL_TOKEN }}
+          project: "dashboard-dev.buildwithfern.com"
           package: "@fern-ui/dashboard"
-          environment: preview
+          environment: "preview"
+          branch: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+
+  deploy:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
+    runs-on: ubuntu-latest
+    environment:
+      name: Preview - dashboard-dev.buildwithfern.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+
+      - uses: ./.github/actions/install
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy dashboard-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT

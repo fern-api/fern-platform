@@ -168,24 +168,11 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                  */
                 const urls = [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls];
 
-                // const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
-                // if (stagingUrl != null) {
-                //     // revalidation needs to occur separately for staging
-                //     urls.push(stagingUrl);
-                // }
-
-                // revalidate all custom urls
                 await Promise.all(
                     urls.map(async (baseUrl) => {
                         const results = await app.services.revalidator.revalidate({ baseUrl, app });
-                        if (
-                            results.response != null &&
-                            results.response.failedRevalidations.length === 0 &&
-                            !results.revalidationFailed
-                        ) {
-                            app.logger.info(
-                                `Successfully revalidated ${results.response.successfulRevalidations.length} paths.`,
-                            );
+                        if (results.failed.length === 0 && !results.revalidationFailed) {
+                            app.logger.info(`Successfully revalidated ${results.successful.length} paths.`);
                         } else {
                             await app.services.slack.notifyFailedToRevalidatePaths({
                                 domain: baseUrl.getFullUrl(),

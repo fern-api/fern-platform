@@ -16,6 +16,7 @@ import { getDocsWriteV2Service } from "../../controllers/docs/v2/getDocsWriteV2S
 import { getGeneratorsCliController } from "../../controllers/generators/getGeneratorsCliController";
 import { getGeneratorsRootController } from "../../controllers/generators/getGeneratorsRootController";
 import { getGeneratorsVersionsController } from "../../controllers/generators/getGeneratorsVersionsController";
+import { getGitController } from "../../controllers/git/getGitController";
 import { getVersionsService } from "../../controllers/sdk/getVersionsService";
 import { getSnippetsFactoryService } from "../../controllers/snippets/getSnippetsFactoryService";
 import { getSnippetsService } from "../../controllers/snippets/getSnippetsService";
@@ -116,6 +117,7 @@ async function runMockFdr(port: number): Promise<MockFdr.Instance> {
             versions: getGeneratorsVersionsController(fdrApplication),
         },
         tokens: getTokensService(fdrApplication),
+        git: getGitController(fdrApplication),
     });
     const server = app.listen(port);
     console.log(`Mock FDR server running on http://localhost:${port}/`);
