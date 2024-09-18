@@ -21,6 +21,7 @@
   ],
   "scripts": {
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "check-types": "tsc --noEmit",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",

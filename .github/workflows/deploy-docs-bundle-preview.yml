@@ -135,3 +135,22 @@ jobs:
         with:
           deployment_url: ${{ needs.deploy.outputs.deployment_url }}
           token: ${{ secrets.VERCEL_TOKEN }}
+
+  ete-dev:
+    needs:
+      - ignore
+      - deploy-dev # only runs on fern-dev
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        if: needs.deploy-dev.outputs.deployment_url
+
+      - uses: ./.github/actions/install
+
+      - name: Run E2E tests
+        if: needs.deploy-dev.outputs.deployment_url
+        env:
+          DEPLOYMENT_URL: ${{ needs.deploy-dev.outputs.deployment_url }}
+        run: |
+          pnpm vitest fern-dev-e2e

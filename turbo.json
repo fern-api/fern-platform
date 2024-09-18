@@ -1,16 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
+    "check-types": {},
     "build": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^build", "^compile", "codegen"]
+      "dependsOn": ["^build", "^compile", "^check-types", "codegen"]
     },
     "codegen": {
       "cache": false
     },
     "compile": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^compile"]
+      "dependsOn": ["^compile", "^check-types"]
     },
     "lint": {},
     "lint:eslint": {},

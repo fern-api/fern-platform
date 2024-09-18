@@ -4,7 +4,7 @@ import { createProxyMiddleware } from "http-proxy-middleware";
 import { chromium } from "playwright";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
-const origin = "http://localhost:3000";
+const origin = process.env.DEPLOYMENT_URL ?? "https://app-dev.buildwithfern.com";
 const target = "https://test-nginx-proxy.docs.dev.buildwithfern.com/subpath";
 const proxy = "http://localhost:5050/subpath";
 
