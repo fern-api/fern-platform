@@ -147,6 +147,8 @@ export const SearchHits: React.FC = () => {
         return null;
     }
 
+    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
+
     return (
         <FernScrollArea
             rootClassName="border-default min-h-0 flex-1 shrink border-t"
@@ -165,7 +167,61 @@ export const SearchHits: React.FC = () => {
                     onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
                 />
             )}
-            {hits.map((hit) => (
+            {endpointHits.length > 0 && (
+                <>
+                    <h3 className="text-lg font-semibold my-4 pl-0.5">Endpoints</h3>
+                    {endpointHits.map((hit) => (
+                        <SearchHit
+                            setRef={(elem) => {
+                                if (elem != null) {
+                                    refs.current.set(hit.objectID, elem);
+                                }
+                            }}
+                            key={hit.objectID}
+                            hit={hit}
+                            isHovered={hoveredSearchHitId === hit.objectID}
+                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                        />
+                    ))}
+                </>
+            )}
+            {pageHits.length > 0 && (
+                <>
+                    <h3 className="text-lg font-semibold my-4 pl-0.5">Pages</h3>
+                    {pageHits.map((hit) => (
+                        <SearchHit
+                            setRef={(elem) => {
+                                if (elem != null) {
+                                    refs.current.set(hit.objectID, elem);
+                                }
+                            }}
+                            key={hit.objectID}
+                            hit={hit}
+                            isHovered={hoveredSearchHitId === hit.objectID}
+                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                        />
+                    ))}
+                </>
+            )}
+            {fieldHits.length > 0 && (
+                <>
+                    <h3 className="text-lg font-semibold my-4 pl-0.5">Fields</h3>
+                    {fieldHits.map((hit) => (
+                        <SearchHit
+                            setRef={(elem) => {
+                                if (elem != null) {
+                                    refs.current.set(hit.objectID, elem);
+                                }
+                            }}
+                            key={hit.objectID}
+                            hit={hit}
+                            isHovered={hoveredSearchHitId === hit.objectID}
+                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                        />
+                    ))}
+                </>
+            )}
+            {/* {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {
                         if (elem != null) {
@@ -177,7 +233,7 @@ export const SearchHits: React.FC = () => {
                     isHovered={hoveredSearchHitId === hit.objectID}
                     onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
                 />
-            ))}
+            ))} */}
         </FernScrollArea>
     );
 };
@@ -198,6 +254,8 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
         return <div className="justify t-muted flex w-full flex-col hits-center py-3">No results found</div>;
     }
 
+    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
+
     return (
         <FernScrollArea rootClassName="min-h-[80vh]" className="mask-grad-top-4 px-2 pt-4">
             {isAiChatbotEnabledInPreview && (
@@ -211,17 +269,56 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                     isHovered={true}
                 />
             )}
-            {hits.map((hit) => (
-                <SearchHit
-                    setRef={(elem) => {
-                        if (elem != null) {
-                            refs.current.set(hit.objectID, elem);
-                        }
-                    }}
-                    key={hit.objectID}
-                    hit={hit}
-                />
-            ))}
+            {endpointHits.length > 0 &&
+                endpointHits.map((hit) => (
+                    <SearchHit
+                        setRef={(elem) => {
+                            if (elem != null) {
+                                refs.current.set(hit.objectID, elem);
+                            }
+                        }}
+                        key={hit.objectID}
+                        hit={hit}
+                    />
+                ))}
+            {pageHits.length > 0 &&
+                pageHits.map((hit) => (
+                    <SearchHit
+                        setRef={(elem) => {
+                            if (elem != null) {
+                                refs.current.set(hit.objectID, elem);
+                            }
+                        }}
+                        key={hit.objectID}
+                        hit={hit}
+                    />
+                ))}
+            {fieldHits.length > 0 &&
+                fieldHits.map((hit) => (
+                    <SearchHit
+                        setRef={(elem) => {
+                            if (elem != null) {
+                                refs.current.set(hit.objectID, elem);
+                            }
+                        }}
+                        key={hit.objectID}
+                        hit={hit}
+                    />
+                ))}
         </FernScrollArea>
     );
 };
+
+function filterHits(hits: SearchRecord[]) {
+    const hitTypeMap = {
+        endpoints: new Set(["endpoint", "endpoint-v2", "endpoint-v3", "webhook-v3", "websocket-v3"]),
+        pages: new Set(["page", "page-v2", "page-v3"]),
+        fields: new Set(["field"]),
+    };
+
+    const endpointHits = hits.filter((hit) => hitTypeMap["endpoints"].has(hit.type));
+    const pageHits = hits.filter((hit) => hitTypeMap["pages"].has(hit.type));
+    const fieldHits = hits.filter((hit) => hitTypeMap["fields"].has(hit.type));
+
+    return { endpointHits, pageHits, fieldHits };
+}
