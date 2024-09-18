@@ -31,13 +31,7 @@ runs:
         ref: ${{ inputs.branch }}
         fetch-depth: 10
 
-    - name: Install
-      uses: ./.github/actions/install
-      with:
-        run_install: false
-
-    - shell: bash
-      run: pnpm vercel-scripts:install
+    - uses: ./.github/actions/install
 
     - name: Ignore unchanged files
       shell: bash

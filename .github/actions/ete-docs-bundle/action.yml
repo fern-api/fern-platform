@@ -12,13 +12,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install
-      uses: ./.github/actions/install
-      with:
-        run_install: false
-
-    - shell: bash
-      run: pnpm vercel-scripts:install
+    - uses: ./.github/actions/install
 
     - shell: bash
       name: Fetch domains

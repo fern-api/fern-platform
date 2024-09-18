@@ -47,12 +47,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
 
-      - name: Install
-        uses: ./.github/actions/install
-        with:
-          run_install: false
-
-      - run: pnpm vercel-scripts:install
+      - uses: ./.github/actions/install
 
       - name: Build & Deploy to Vercel
         id: deploy
