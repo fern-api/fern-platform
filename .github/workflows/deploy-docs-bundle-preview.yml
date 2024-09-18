@@ -127,11 +127,11 @@ jobs:
     steps:
       # if the job is ignored, skip the ETE test and exit 0 so that the this job can be used for merge protection
       - uses: actions/checkout@v4
-        if: needs.ignore.outputs.continue == 0
+        if: needs.deploy.outputs.deployment_url
 
       - name: Run E2E tests
         uses: ./.github/actions/ete-docs-bundle
-        if: needs.ignore.outputs.continue == 0
+        if: needs.deploy.outputs.deployment_url
         with:
           deployment_url: ${{ needs.deploy.outputs.deployment_url }}
           token: ${{ secrets.VERCEL_TOKEN }}
