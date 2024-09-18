@@ -136,22 +136,11 @@ jobs:
     permissions: write-all # required for the playwright-report-summary action
     steps:
       # if the job is ignored, skip the ETE test and exit 0 so that the this job can be used for merge protection
-      - run: exit 0
-        if: needs.ignore.outputs.continue != 1
-
       - uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-        with:
-          run_install: false
-
-      - run: pnpm vercel-scripts:install
-
-      - name: Fetch domains
-        run: pnpm vercel-scripts domains.txt ${{ needs.deploy.outputs.deployment_url }} --token=${{ secrets.VERCEL_TOKEN }}
+        if: needs.ignore.outputs.continue != 1
 
       - name: Run E2E tests
         uses: ./.github/actions/ete-docs-bundle
+        if: needs.ignore.outputs.continue != 1
         with:
           deployment_url: ${{ needs.deploy.outputs.deployment_url }}

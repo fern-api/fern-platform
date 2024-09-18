@@ -91,17 +91,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-        with:
-          run_install: false
-
-      - run: pnpm vercel-scripts:install
-
-      - name: Fetch domains
-        run: pnpm vercel-scripts domains.txt app.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
-
       - uses: ./github/actions/ete-docs-bundle
         with:
           deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}

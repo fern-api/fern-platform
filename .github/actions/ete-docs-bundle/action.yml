@@ -9,6 +9,18 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Install
+      uses: ./.github/actions/install
+      with:
+        run_install: false
+
+    - shell: bash
+      run: pnpm vercel-scripts:install
+
+    - shell: bash
+      name: Fetch domains
+      run: pnpm vercel-scripts domains.txt ${{ inputs.deployment_url }} --token=${{ secrets.VERCEL_TOKEN }}
+
     - name: Install Playwright Browsers
       shell: bash
       run: pnpm exec playwright install --with-deps
