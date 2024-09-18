@@ -60,3 +60,9 @@ lerna-debug.log*
 
 # script outputs
 domains.txt
+preview.txt
+last-deploy.txt
+deployment-url.txt
+
+# next.js analysis
+analyze
