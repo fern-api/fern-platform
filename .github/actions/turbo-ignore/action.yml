@@ -27,9 +27,9 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v4
-      if: ${{ inputs.branch }}
       with:
         ref: ${{ inputs.branch }}
+        fetch-depth: 0
 
     - name: Install
       uses: ./.github/actions/install
