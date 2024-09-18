@@ -1,13 +1,14 @@
+openapi: ./openapi.json
 default-group: sdk
 groups:
   sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.12.8-rc0
+        version: 0.40.3
         output:
           location: npm
           url: npm.buildwithfern.com
           package-name: "@fern-fern/vercel"
-        config: 
+        config:
           skipResponseValidation: true
           namespaceExport: Vercel

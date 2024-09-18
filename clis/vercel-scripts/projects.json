@@ -1,0 +1,28 @@
+{
+  "$schema": "./projects.schema.json",
+  "projects": {
+    "app.buildwithfern.com": {
+      "rootDirectory": "packages/ui/docs-bundle"
+    },
+    "app.ferndocs.com": {
+      "rootDirectory": "packages/ui/docs-bundle"
+    },
+    "app-slash.ferndocs.com": {
+      "rootDirectory": "packages/ui/docs-bundle"
+    },
+    "app-dev.buildwithfern.com": {
+      "rootDirectory": "packages/ui/docs-bundle",
+      "dev": true
+    },
+    "icons.ferndocs.com": {
+      "rootDirectory": "packages/ui/fontawesome-cdn"
+    },
+    "dashboard.buildwithfern.com": {
+      "rootDirectory": "packages/ui/fern-dashboard"
+    },
+    "dashboard-dev.buildwithfern.com": {
+      "rootDirectory": "packages/ui/fern-dashboard",
+      "dev": true
+    }
+  }
+}

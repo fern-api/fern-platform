@@ -1,7 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "pnpm install",
+  "name": "fern-docs",
+  "framework": "nextjs",
+  "installCommand": "pnpm --filter=@fern-ui/docs-bundle install",
   "buildCommand": "pnpm turbo docs:build",
   "devCommand": "pnpm turbo docs:dev",
-  "ignoreCommand": "exit 0"
+  "ignoreCommand": "exit 0",
+  "git": { "exclusivity": { "teams": ["team_6FKOM5nw037hv8g2mTk3gaH7"] } }
 }

@@ -1,6 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "name": "fern-docs",
   "framework": "vite",
   "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-  "ignoreCommand": "exit 0"
+  "installCommand": "pnpm --filter=@fern-ui/dashboard install",
+  "buildCommand": "pnpm turbo build",
+  "devCommand": "pnpm turbo dev",
+  "ignoreCommand": "exit 0",
+  "git": { "exclusivity": { "teams": ["team_6FKOM5nw037hv8g2mTk3gaH7"] } }
 }

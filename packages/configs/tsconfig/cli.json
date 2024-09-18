@@ -4,6 +4,6 @@
   "extends": "./base.json",
   "compilerOptions": {
     "module": "CommonJS",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "node"
   }
 }

@@ -1,0 +1,28 @@
+{
+  "$ref": "#/definitions/VercelProjects",
+  "definitions": {
+    "VercelProjects": {
+      "type": "object",
+      "properties": {
+        "$schema": { "type": "string", "description": "./projects.schema.json" },
+        "projects": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "rootDirectory": { "type": "string", "description": "i.e. 'packages/ui/docs-bundle'" },
+              "dev": { "type": "boolean", "description": "Whether the project targets fdr-dev", "default": false }
+            },
+            "required": ["rootDirectory"],
+            "additionalProperties": false
+          },
+          "propertyNames": { "pattern": "^[a-z0-9.-]+$" },
+          "description": "Project settings keyed by project name (which is used as the Vercel app name and domain)"
+        }
+      },
+      "required": ["$schema", "projects"],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@fern-platform/configs/tsconfig/cli.json",
+  "compilerOptions": {
+    "module": "Preserve",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "paths": {
+      "@/projects.json": ["./projects.json"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["./src/**/*"],
+  "files": ["./projects.json"]
+}

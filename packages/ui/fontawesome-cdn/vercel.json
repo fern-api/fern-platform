@@ -1,4 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "ignoreCommand": "exit 0"
+  "name": "fern-docs",
+  "framework": "nextjs",
+  "installCommand": "pnpm --@fern-ui/fontawesome-cdn install",
+  "buildCommand": "pnpm turbo build",
+  "devCommand": "pnpm turbo dev",
+  "ignoreCommand": "exit 0",
+  "git": { "exclusivity": { "teams": ["team_6FKOM5nw037hv8g2mTk3gaH7"] } }
 }
