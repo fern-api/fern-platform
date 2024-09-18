@@ -91,7 +91,7 @@ export class VercelDeployer {
 
         const deployment = await this.vercel.deployments.getDeployment(cleanDeploymentId(deploymentUrl));
 
-        logCommand(`[${this.environmentName}] Deployment URL: ${deployment.url}`);
+        logCommand(`[${this.environmentName}] Deployment URL: https://${deployment.url}`);
 
         if ("inspectorUrl" in deployment) {
             logCommand(`[${this.environmentName}] Inspector URL: ${deployment.inspectorUrl}`);
