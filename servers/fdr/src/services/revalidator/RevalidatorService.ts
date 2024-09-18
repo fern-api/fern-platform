@@ -51,7 +51,7 @@ export class RevalidatorServiceImpl implements RevalidatorService {
                 environment: baseUrl.toURL().toString(),
             });
             app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
-            const page = await client.revalidation.revalidateAllV4();
+            const page = await client.revalidation.revalidateAllV4({ limit: 100 });
 
             const successful: FernDocs.SuccessfulRevalidation[] = [];
             const failed: FernDocs.FailedRevalidation[] = [];

@@ -67,7 +67,7 @@ export class FernDocsRevalidator {
             });
 
             const revalidationSummary = { success: 0, failed: 0 };
-            const results = await client.revalidation.revalidateAllV4({ limit: 50 });
+            const results = await client.revalidation.revalidateAllV4({ limit: 100 });
 
             for await (const result of results) {
                 if (!result.success) {

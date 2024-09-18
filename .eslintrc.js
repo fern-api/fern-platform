@@ -57,12 +57,7 @@ module.exports = {
                 allowDeclarations: true,
             },
         ],
-        "@typescript-eslint/explicit-module-boundary-types": [
-            "error",
-            {
-                allowHigherOrderFunctions: false,
-            },
-        ],
+        "@typescript-eslint/explicit-module-boundary-types": ["off"],
         "@typescript-eslint/no-floating-promises": ["error"],
         "@typescript-eslint/no-empty-function": [
             "error",
@@ -113,6 +108,18 @@ module.exports = {
         "@next/next/no-img-element": "off",
     },
     overrides: [
+        {
+            // enable the rule specifically for TypeScript files
+            files: ["*.ts", "*.mts", "*.cts", "*.tsx"],
+            rules: {
+                "@typescript-eslint/explicit-module-boundary-types": [
+                    "error",
+                    {
+                        allowHigherOrderFunctions: false,
+                    },
+                ],
+            },
+        },
         {
             files: ["packages/fdr-sdk/**/*", "servers/fdr-deploy/**/*", "servers/fdr/**/*"],
             rules: {
