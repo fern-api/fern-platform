@@ -172,7 +172,11 @@ export const SearchHits: React.FC = () => {
             {/* <Accordion.Root type="single" defaultValue="endpoints" collapsible>
                 {endpointHits.length > 0 && (
                     <Accordion.Item className="fern-search-accordion" value="endpoints">
-                        <AccordionTrigger>Endpoints</AccordionTrigger>
+                        <AccordionTrigger>
+                            <p className="text-normal font-semibold mt-4 pl-0.5">Endpoints</p>
+                            <PlusCircle />
+                            
+                        </AccordionTrigger>
                         <Accordion.Content>
                             {endpointHits.map((hit) => (
                                 <SearchHit
@@ -192,7 +196,11 @@ export const SearchHits: React.FC = () => {
                 )}
                 {pageHits.length > 0 && (
                     <Accordion.Item className="fern-search-accordion" value="pages">
-                        <AccordionTrigger>Pages</AccordionTrigger>
+                        <AccordionTrigger>
+                            <p className="text-normal font-semibold mt-4 pl-0.5">Pages</p>
+                            <PlusCircle />
+                            
+                        </AccordionTrigger>
                         <Accordion.AccordionContent>
                             {pageHits.map((hit) => (
                                 <SearchHit
@@ -211,11 +219,12 @@ export const SearchHits: React.FC = () => {
                     </Accordion.Item>
                 )}
             </Accordion.Root> */}
+
             {endpointHits.length > 0 && (
                 <>
-                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Endpoints</h3>
-                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {endpointHits.map((hit) => (
+                    <p className="text-normal font-semibold mb-2 pl-0.5">Endpoints</p>
+
+                    {endpointHits.slice(0, 8).map((hit) => (
                         <SearchHit
                             setRef={(elem) => {
                                 if (elem != null) {
@@ -232,9 +241,8 @@ export const SearchHits: React.FC = () => {
             )}
             {pageHits.length > 0 && (
                 <>
-                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Pages</h3>
-                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {pageHits.map((hit) => (
+                    <p className="text-normal font-semibold mb-2 pl-0.5">Pages</p>
+                    {pageHits.slice(0, 8).map((hit) => (
                         <SearchHit
                             setRef={(elem) => {
                                 if (elem != null) {
@@ -250,24 +258,6 @@ export const SearchHits: React.FC = () => {
                 </>
             )}
 
-            {/* {fieldHits.length > 0 && (
-                <>
-                    <h3 className="text-lg font-semibold my-4 pl-0.5">Fields</h3>
-                    {fieldHits.map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                            isHovered={hoveredSearchHitId === hit.objectID}
-                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                        />
-                    ))}
-                </>
-            )} */}
             {/* {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {

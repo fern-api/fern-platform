@@ -1179,37 +1179,45 @@ export function getFrontmatter(content: string): Frontmatter {
 
 type Header = {
     level: number;
-    text: string;
+    heading?: string;
+    content: string;
+    children: Header[];
 };
 
 function extractHeadersFromMarkdownContent(markdown: string): Header[] {
-    const headers: Header[] = [];
     const lines: string[] = markdown.split("\n");
     let insideCodeBlock = false;
+    const startingNode: Header = { level: 0, heading: "", content: "", children: [] };
+    const collectedNodes = [startingNode];
 
     for (const line of lines) {
         const trimmedLine = line.trim();
 
         if (trimmedLine.startsWith("```") || trimmedLine.startsWith("~~~")) {
             insideCodeBlock = !insideCodeBlock;
-            continue;
         }
 
-        if (insideCodeBlock) {
-            continue;
-        }
-
-        if (trimmedLine.startsWith("##")) {
+        let currentNode = collectedNodes.pop();
+        if (!insideCodeBlock && trimmedLine.startsWith("##")) {
             const headerMatch = trimmedLine.match(/^(#{2,6})\s+(.*)$/);
             if (headerMatch) {
                 const level = headerMatch[1]?.length;
-                const text = headerMatch[2]?.trim();
-                if (level != null && text != null) {
-                    headers.push({ level, text });
+                const heading = headerMatch[2]?.trim();
+                if (currentNode != null && level != null && heading != null) {
+                    const newNode = { level, heading, content: "", children: [] };
+                    collectedNodes.push(newNode);
+                    while (currentNode && currentNode.level <= level) {
+                        currentNode = collectedNodes.pop();
+                    }
                 }
             }
         }
+
+        if (currentNode) {
+            currentNode.content += line + "\n";
+            collectedNodes.push(currentNode);
+        }
     }
 
-    return headers;
+    return collectedNodes;
 }
