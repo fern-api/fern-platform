@@ -154,6 +154,10 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken ${{ secrets.YARN_NPM_AUTH_TOKEN }}
           pnpm install -g @fern-api/fern-api-dev --prefix=$HOME/.local
 
+      - name: Install Playwright Browsers
+        shell: bash
+        run: pnpm exec playwright install --with-deps
+
       - name: Run E2E tests
         if: needs.deploy-dev.outputs.deployment_url
         env:

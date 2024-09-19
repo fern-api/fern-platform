@@ -14,7 +14,7 @@ describe("nginx-proxy", () => {
 
     beforeAll(async () => {
         // requires FERN_TOKEN
-        const result = exec("fern-dev generate --docs", { cwd: __dirname });
+        const result = exec("fern-dev generate --docs", { cwd: __dirname, env: process.env });
         expect(result).toContain(`Published docs to ${target}`);
 
         const proxyMiddleware = createProxyMiddleware({
