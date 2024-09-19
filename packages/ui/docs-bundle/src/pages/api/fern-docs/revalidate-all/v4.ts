@@ -74,7 +74,8 @@ const handler: NextApiHandler = async (
     const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
     const slugs = NodeCollector.collect(node).getPageSlugs();
     const total = slugs.length;
-    const batch = slugs.slice(offset, offset + limit);
+    const start = offset * limit;
+    const batch = slugs.slice(start, start + limit);
 
     const revalidate = new Revalidator(res, xFernHost);
     const results = await revalidate.batch(batch);
