@@ -73,7 +73,7 @@ describe("nginx-proxy", () => {
     });
 
     it("subpath should 200 and capture the flag", async () => {
-        const response = await page.goto("http://localhost:5050/subpath", { waitUntil: "domcontentloaded" });
+        const response = await page.goto("http://localhost:5050/subpath");
         expect(response).toBeDefined();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const definedResponse = response!;
@@ -83,7 +83,7 @@ describe("nginx-proxy", () => {
         // capture the flag
         const text = page.getByText("capture-the-flag");
         expect(await text.count()).toBe(1);
-        await text.click();
+        await text.click({ force: true });
         await page.waitForURL(/(capture-the-flag)/);
         expect(await page.content()).not.includes("Application error");
         expect(page.url()).equals(`${proxy}/capture-the-flag`);

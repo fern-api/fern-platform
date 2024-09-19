@@ -16,6 +16,16 @@ export const middleware: NextMiddleware = async (request) => {
     const headers = new Headers(request.headers);
 
     /**
+     * Do not rewrite 404 and 500 pages
+     */
+    if (
+        removeTrailingSlash(request.nextUrl.pathname) === "/404" ||
+        removeTrailingSlash(request.nextUrl.pathname) === "/500"
+    ) {
+        return NextResponse.next();
+    }
+
+    /**
      * Add x-fern-host header to the request
      */
     if (!headers.has("x-fern-host")) {
@@ -127,13 +137,6 @@ export const middleware: NextMiddleware = async (request) => {
     }
 
     /**
-     * Do not rewrite 404 and 500 pages
-     */
-    if (removeTrailingSlash(pathname) === "/404" || removeTrailingSlash(pathname) === "/500") {
-        return NextResponse.next({ request: { headers } });
-    }
-
-    /**
      * Rewrite all other requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]]
      */
 
@@ -155,7 +158,7 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
+        "/((?!api/fern-docs|_next/static|_next/image|_next/data/:buildId/404.json|_next/data/:buildId/500.json|_vercel|favicon.ico).*)",
     ],
 };
 
