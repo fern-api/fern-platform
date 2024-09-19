@@ -38,7 +38,6 @@ const nextConfig = {
     reactStrictMode: true,
     productionBrowserSourceMaps: isPreview,
     trailingSlash: isTrailingSlashEnabled,
-    generateBuildId: () => process.env.VERCEL_GIT_COMMIT_SHA ?? null,
     transpilePackages: [
         "next-mdx-remote",
         "esbuild",
