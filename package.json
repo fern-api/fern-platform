@@ -74,7 +74,6 @@
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
     "organize-imports-cli": "^0.10.0",
-    "playwright": "^1.47.1",
     "prettier": "^3.3.2",
     "react": "^18.2.0",
     "styled-jsx": "^5.1.2",

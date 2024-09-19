@@ -137,9 +137,6 @@ importers:
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
-      playwright:
-        specifier: ^1.47.1
-        version: 1.47.1
       prettier:
         specifier: ^3.3.2
         version: 3.3.2
