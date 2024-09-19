@@ -149,6 +149,11 @@ jobs:
       - uses: ./.github/actions/install
         if: needs.deploy-dev.outputs.deployment_url
 
+      - name: Install fern-dev CLI
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.YARN_NPM_AUTH_TOKEN }}
+          pnpm install -g @fern-api/fern-api-dev --prefix=$HOME/.local
+
       - name: Run E2E tests
         if: needs.deploy-dev.outputs.deployment_url
         env:
