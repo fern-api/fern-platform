@@ -29,7 +29,7 @@ export async function updateSpecInternal(
         // Add + commit files
         const commitDiff = await git.diff();
         await git.add(["-A"]);
-        await git.commit(await generateCommitMessage(commitDiff));
+        await git.commit(await generateCommitMessage(commitDiff, "chore: update API specification"));
 
         // Push the changes
         await git.push([
@@ -45,7 +45,7 @@ export async function updateSpecInternal(
             {
                 title: ":herb: :sparkles: [Scheduled] Update API Spec",
                 base: "main",
-                body: await generateChangelog(fullDiff),
+                body: await generateChangelog(fullDiff, "This PR updates your API Definition to the latest version."),
             },
             repository.full_name,
             repository.full_name,
