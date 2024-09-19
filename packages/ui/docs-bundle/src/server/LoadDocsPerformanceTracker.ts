@@ -35,8 +35,8 @@ export class LoadDocsPerformanceTracker {
 
     private initialPropsDurationMs: number | undefined;
     async trackInitialPropsPromise(
-        promise: Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>> | undefined>,
-    ): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>> | undefined> {
+        promise: Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>>,
+    ): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
         const start = Date.now();
         const result = await promise;
         const end = Date.now();

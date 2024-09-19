@@ -39,7 +39,7 @@ export async function withInitialProps({
     slug: slugArray,
     xFernHost,
     auth,
-}: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>> | undefined> {
+}: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     if (!docsResponse.ok) {
         return handleLoadDocsError(xFernHost, slugArray, docsResponse.error);
     }

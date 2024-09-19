@@ -17,7 +17,7 @@ describe("nginx-proxy", () => {
     let browser: Awaited<ReturnType<typeof chromium.launch>>;
 
     beforeAll(async () => {
-        const result = exec("pnpm fern generate --docs", { cwd: __dirname });
+        const result = exec("fern generate --docs", { cwd: __dirname });
         expect(result).toContain(`Published docs to ${target}`);
 
         const headers: Record<string, string> = {

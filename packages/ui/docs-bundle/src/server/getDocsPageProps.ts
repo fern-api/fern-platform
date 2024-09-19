@@ -40,11 +40,5 @@ export async function getDocsPageProps(
      */
     await performance.track();
 
-    if (initialProps == null) {
-        // eslint-disable-next-line no-console
-        console.error(`Failed to load initial props for docs page: https://${xFernHost}/${slug.join("/")}`);
-        return { notFound: true };
-    }
-
     return initialProps;
 }
