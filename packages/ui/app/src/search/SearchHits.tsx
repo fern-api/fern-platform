@@ -2,13 +2,13 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
-import * as Accordion from "@radix-ui/react-accordion";
-import { AccordionTrigger } from "@radix-ui/react-accordion";
+
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
 import { COHERE_ASK_AI, COHERE_INITIAL_MESSAGE, useBasePath, useCloseSearchDialog, useFeatureFlags } from "../atoms";
+import { Separator } from "../components/Separator";
 import { useToHref } from "../hooks/useHref";
 import { SearchHit } from "./SearchHit";
 import { AskCohereHit } from "./cohere/AskCohereHit";
@@ -149,7 +149,7 @@ export const SearchHits: React.FC = () => {
         return null;
     }
 
-    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
+    const { endpointHits, pageHits } = filterHits(hits);
 
     return (
         <FernScrollArea
@@ -169,7 +169,7 @@ export const SearchHits: React.FC = () => {
                     onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
                 />
             )}
-            <Accordion.Root type="single" defaultValue="endpoints" collapsible>
+            {/* <Accordion.Root type="single" defaultValue="endpoints" collapsible>
                 {endpointHits.length > 0 && (
                     <Accordion.Item className="fern-search-accordion" value="endpoints">
                         <AccordionTrigger>Endpoints</AccordionTrigger>
@@ -210,9 +210,47 @@ export const SearchHits: React.FC = () => {
                         </Accordion.AccordionContent>
                     </Accordion.Item>
                 )}
-            </Accordion.Root>
+            </Accordion.Root> */}
+            {endpointHits.length > 0 && (
+                <>
+                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Endpoints</h3>
+                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+                    {endpointHits.map((hit) => (
+                        <SearchHit
+                            setRef={(elem) => {
+                                if (elem != null) {
+                                    refs.current.set(hit.objectID, elem);
+                                }
+                            }}
+                            key={hit.objectID}
+                            hit={hit}
+                            isHovered={hoveredSearchHitId === hit.objectID}
+                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                        />
+                    ))}
+                </>
+            )}
+            {pageHits.length > 0 && (
+                <>
+                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Pages</h3>
+                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+                    {pageHits.map((hit) => (
+                        <SearchHit
+                            setRef={(elem) => {
+                                if (elem != null) {
+                                    refs.current.set(hit.objectID, elem);
+                                }
+                            }}
+                            key={hit.objectID}
+                            hit={hit}
+                            isHovered={hoveredSearchHitId === hit.objectID}
+                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                        />
+                    ))}
+                </>
+            )}
 
-            {fieldHits.length > 0 && (
+            {/* {fieldHits.length > 0 && (
                 <>
                     <h3 className="text-lg font-semibold my-4 pl-0.5">Fields</h3>
                     {fieldHits.map((hit) => (
@@ -229,7 +267,7 @@ export const SearchHits: React.FC = () => {
                         />
                     ))}
                 </>
-            )}
+            )} */}
             {/* {hits.map((hit) => (
                 <SearchHit
                     setRef={(elem) => {
@@ -263,7 +301,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
         return <div className="justify t-muted flex w-full flex-col hits-center py-3">No results found</div>;
     }
 
-    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
+    const { endpointHits, pageHits } = filterHits(hits);
 
     return (
         <FernScrollArea rootClassName="min-h-[80vh]" className="mask-grad-top-4 px-2 pt-4">
@@ -278,42 +316,41 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                     isHovered={true}
                 />
             )}
-            {endpointHits.length > 0 &&
-                endpointHits.map((hit) => (
-                    <SearchHit
-                        setRef={(elem) => {
-                            if (elem != null) {
-                                refs.current.set(hit.objectID, elem);
-                            }
-                        }}
-                        key={hit.objectID}
-                        hit={hit}
-                    />
-                ))}
-            {pageHits.length > 0 &&
-                pageHits.map((hit) => (
-                    <SearchHit
-                        setRef={(elem) => {
-                            if (elem != null) {
-                                refs.current.set(hit.objectID, elem);
-                            }
-                        }}
-                        key={hit.objectID}
-                        hit={hit}
-                    />
-                ))}
-            {fieldHits.length > 0 &&
-                fieldHits.map((hit) => (
-                    <SearchHit
-                        setRef={(elem) => {
-                            if (elem != null) {
-                                refs.current.set(hit.objectID, elem);
-                            }
-                        }}
-                        key={hit.objectID}
-                        hit={hit}
-                    />
-                ))}
+            {endpointHits.length > 0 && (
+                <>
+                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Endpoints</h3>
+                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+                    {endpointHits.map((hit) => (
+                        <SearchHit
+                            setRef={(elem) => {
+                                if (elem != null) {
+                                    refs.current.set(hit.objectID, elem);
+                                }
+                            }}
+                            key={hit.objectID}
+                            hit={hit}
+                        />
+                    ))}
+                </>
+            )}
+
+            {pageHits.length > 0 && (
+                <>
+                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Pages</h3>
+                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+                    {pageHits.map((hit) => (
+                        <SearchHit
+                            setRef={(elem) => {
+                                if (elem != null) {
+                                    refs.current.set(hit.objectID, elem);
+                                }
+                            }}
+                            key={hit.objectID}
+                            hit={hit}
+                        />
+                    ))}
+                </>
+            )}
         </FernScrollArea>
     );
 };
