@@ -22,9 +22,21 @@ describe("nginx-proxy", () => {
             headers: { "x-fern-host": new URL(target).hostname },
             changeOrigin: true,
             followRedirects: true,
+            autoRewrite: true,
         });
 
-        server.use(["/subpath", "/subpath/*"], proxyMiddleware);
+        // redirect to /subpath/capture-the-flag
+        server.use("/subpath/test-capture-the-flag", (_req, res) => {
+            res.redirect(302, "/subpath/capture-the-flag");
+        });
+
+        server.use((req, res, next) => {
+            if (req.url.startsWith("/subpath")) {
+                return proxyMiddleware(req, res, next);
+            } else {
+                return next();
+            }
+        });
 
         server.use((_req, res) => {
             res.status(404).send("PROXY_NOT_FOUND_ERROR");
@@ -60,13 +72,39 @@ describe("nginx-proxy", () => {
         expect(await definedResponse.text()).toBe("PROXY_NOT_FOUND_ERROR");
     });
 
-    it("subpath should 200", async () => {
-        const response = await page.goto("http://localhost:5050/subpath");
+    it("subpath should 200 and capture the flag", async () => {
+        const response = await page.goto("http://localhost:5050/subpath", { waitUntil: "domcontentloaded" });
         expect(response).toBeDefined();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const definedResponse = response!;
         expect(definedResponse.status()).toBe(200);
         expect(await definedResponse.text()).toContain("Hello world!");
+
+        // capture the flag
+        const text = page.getByText("capture-the-flag");
+        expect(await text.count()).toBe(1);
+        await text.click();
+        await page.waitForURL(/(capture-the-flag)/);
+        expect(await page.content()).not.includes("Application error");
+        expect(page.url()).equals(`${proxy}/capture-the-flag`);
+        expect(await page.screenshot()).toContain("capture_the_flag");
+    });
+
+    it("subpath/test-capture-the-flag should redirect to subpath/capture-the-flag", async () => {
+        const response = await page.goto("http://localhost:5050/subpath/test-capture-the-flag");
+        expect(response).toBeDefined();
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const definedResponse = response!;
+        expect(definedResponse.status()).toBe(200);
+        expect(definedResponse.url()).toContain("/subpath/capture-the-flag");
+    });
+
+    it("subpath/test-3 should be 404", async () => {
+        const response = await page.goto("http://localhost:5050/subpath/test-3");
+        expect(response).toBeDefined();
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const definedResponse = response!;
+        expect(definedResponse.status()).toBe(404);
     });
 
     it("sitemap.xml should match snapshot", async () => {
@@ -79,7 +117,9 @@ describe("nginx-proxy", () => {
     });
 
     it("revalidate-all/v3 all should work", async () => {
-        const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v3");
+        const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v3", {
+            timeout: 10_000,
+        });
         expect(response).toBeDefined();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const definedResponse = response!;
@@ -87,12 +127,14 @@ describe("nginx-proxy", () => {
 
         const results = await definedResponse.json();
 
-        expect(results.successfulRevalidations).toHaveLength(1);
+        expect(results.successfulRevalidations).toHaveLength(2);
         expect(results.failedRevalidations).toHaveLength(0);
-    });
+    }, 10_000);
 
     it("revalidate-all/v3 should work with trailing slash", async () => {
-        const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v3/");
+        const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v3/", {
+            timeout: 10_000,
+        });
         expect(response).toBeDefined();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const definedResponse = response!;
@@ -100,12 +142,14 @@ describe("nginx-proxy", () => {
 
         const results = await definedResponse.json();
 
-        expect(results.successfulRevalidations).toHaveLength(1);
+        expect(results.successfulRevalidations).toHaveLength(2);
         expect(results.failedRevalidations).toHaveLength(0);
-    });
+    }, 10_000);
 
     it("revalidate-all/v4 should work", async () => {
-        const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v4");
+        const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v4", {
+            timeout: 10_000,
+        });
         expect(response).toBeDefined();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const definedResponse = response!;
@@ -113,13 +157,15 @@ describe("nginx-proxy", () => {
 
         const results = await definedResponse.json();
 
-        expect(results.total).toBe(1);
-        expect(results.results).toHaveLength(1);
-        expect(results.results[0].success).toBeTruthy();
-    });
+        expect(results.total).toBe(2);
+        expect(results.results).toHaveLength(2);
+        expect((results.results as object[]).map((r) => "success" in r && r.success)).toEqual([true, true]);
+    }, 10_000);
 
     it("revalidate-all/v4 should work with trailing slash", async () => {
-        const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v4/");
+        const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v4/", {
+            timeout: 10_000,
+        });
         expect(response).toBeDefined();
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const definedResponse = response!;
@@ -127,11 +173,11 @@ describe("nginx-proxy", () => {
 
         const results = await definedResponse.json();
 
-        expect(results.total).toBe(1);
-        expect(results.results).toHaveLength(1);
-        expect(results.results[0].success).toBeTruthy();
+        expect(results.total).toBe(2);
+        expect(results.results).toHaveLength(2);
+        expect((results.results as object[]).map((r) => "success" in r && r.success)).toEqual([true, true]);
     });
-});
+}, 10_000);
 
 function exec(command: string | string[], opts?: ExecSyncOptions): string {
     const cmd = (Array.isArray(command) ? command : command.split(" ")).filter((c) => c.trim().length > 0);

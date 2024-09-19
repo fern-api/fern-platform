@@ -4,8 +4,8 @@ export default defineWorkspace([
     "packages/*",
     {
         test: {
-            include: ["test/fern-dev-e2e/**/*.test.{ts,js}"],
-            name: "fern-dev-e2e",
+            include: ["test/docs-dev-e2e/**/*.test.{ts,js}"],
+            name: "docs-dev-e2e",
         },
     },
 ]);

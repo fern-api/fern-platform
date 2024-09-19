@@ -153,5 +153,5 @@ jobs:
         if: needs.deploy-dev.outputs.deployment_url
         env:
           DEPLOYMENT_URL: ${{ needs.deploy-dev.outputs.deployment_url }}
-        run: |
-          pnpm vitest fern-dev-e2e
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: pnpm docs:e2e
