@@ -177,7 +177,7 @@ service:
     deleteRepository:
       docs: Delete specified repository.
       method: DELETE
-      path: /repository/{repositoryOwner}/{repositoryName}
+      path: /repository/{repositoryOwner}/{repositoryName}/delete
       path-parameters:
         repositoryOwner: string
         repositoryName: string
@@ -230,7 +230,7 @@ service:
     deletePullRequest:
       docs: Delete specified pull request.
       method: DELETE
-      path: /pull-request/{repositoryOwner}/{repositoryName}/{pullRequestNumber}
+      path: /pull-request/{repositoryOwner}/{repositoryName}/{pullRequestNumber}/delete
       path-parameters:
         repositoryOwner: string
         repositoryName: string

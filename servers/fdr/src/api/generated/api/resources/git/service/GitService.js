@@ -99,7 +99,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.delete("/repository/:repositoryOwner/:repositoryName", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.delete("/repository/:repositoryOwner/:repositoryName/delete", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.deleteRepository(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {
@@ -195,7 +195,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.delete("/pull-request/:repositoryOwner/:repositoryName/:pullRequestNumber", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.delete("/pull-request/:repositoryOwner/:repositoryName/:pullRequestNumber/delete", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.deletePullRequest(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {

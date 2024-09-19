@@ -236,7 +236,7 @@ export class Git {
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 `/generators/github/repository/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(
                     repositoryName
-                )}`
+                )}/delete`
             ),
             method: "DELETE",
             headers: {
@@ -487,7 +487,7 @@ export class Git {
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 `/generators/github/pull-request/${encodeURIComponent(repositoryOwner)}/${encodeURIComponent(
                     repositoryName
-                )}/${encodeURIComponent(pullRequestNumber)}`
+                )}/${encodeURIComponent(pullRequestNumber)}/delete`
             ),
             method: "DELETE",
             headers: {

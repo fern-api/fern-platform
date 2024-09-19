@@ -23,7 +23,7 @@ export function getGitController(app: FdrApplication): GitService {
                 throw new RepositoryNotFoundError(nameAndOwner);
             }
 
-            res.send(maybeRepo);
+            return res.send(maybeRepo);
         },
         listRepositories: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
@@ -36,13 +36,13 @@ export function getGitController(app: FdrApplication): GitService {
                 organizationId: req.query.organizationId,
             });
 
-            res.send(repos);
+            return res.send(repos);
         },
         upsertRepository: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
 
             await app.dao.git().upsertRepository({ repository: req.body });
-            res.send();
+            return res.send();
         },
         deleteRepository: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
@@ -51,7 +51,7 @@ export function getGitController(app: FdrApplication): GitService {
                 repositoryName: req.params.repositoryName,
                 repositoryOwner: req.params.repositoryOwner,
             });
-            res.send();
+            return res.send();
         },
         getPullRequest: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
@@ -66,7 +66,7 @@ export function getGitController(app: FdrApplication): GitService {
                 throw new PullRequestNotFoundError(nameAndOwner);
             }
 
-            res.send(maybePull);
+            return res.send(maybePull);
         },
         listPullRequests: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
@@ -79,13 +79,13 @@ export function getGitController(app: FdrApplication): GitService {
                 organizationId: req.query.organizationId,
             });
 
-            res.send(repos);
+            return res.send(repos);
         },
         upsertPullRequest: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
 
             await app.dao.git().upsertPullRequest({ pullRequest: req.body });
-            res.send();
+            return res.send();
         },
         deletePullRequest: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
@@ -95,7 +95,7 @@ export function getGitController(app: FdrApplication): GitService {
                 repositoryOwner: req.params.repositoryOwner,
                 pullRequestNumber: req.params.pullRequestNumber,
             });
-            res.send();
+            return res.send();
         },
     });
 }
