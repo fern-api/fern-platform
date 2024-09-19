@@ -30,10 +30,7 @@ const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidateAllV3Response>,
 ): Promise<unknown> => {
-    // when we call res.revalidate() nextjs uses
-    // req.headers.host to make the network request
     const xFernHost = getXFernHostNode(req, true);
-    req.headers.host = xFernHost;
 
     const revalidate = new Revalidator(res, xFernHost);
 

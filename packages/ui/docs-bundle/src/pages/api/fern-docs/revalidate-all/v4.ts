@@ -18,10 +18,7 @@ const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidateAllV4Response>,
 ): Promise<unknown> => {
-    // when we call res.revalidate() nextjs uses
-    // req.headers.host to make the network request
     const xFernHost = getXFernHostNode(req, true);
-    req.headers.host = xFernHost;
 
     /**
      * Limit the number of paths to revalidate to max of 100.
