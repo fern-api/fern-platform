@@ -1,5 +1,5 @@
 instances:
-  - url: test-nginx-proxy.docs.dev.buildwithfern.com/subpath
+  - url: test-nginx-proxy.docs.buildwithfern.com/subpath
 
 navigation:
   - page: Testing 1

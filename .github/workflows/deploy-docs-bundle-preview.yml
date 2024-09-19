@@ -135,32 +135,4 @@ jobs:
         with:
           deployment_url: ${{ needs.deploy.outputs.deployment_url }}
           token: ${{ secrets.VERCEL_TOKEN }}
-
-  ete-dev:
-    needs:
-      - ignore
-      - deploy-dev # only runs on fern-dev
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        if: needs.deploy-dev.outputs.deployment_url
-
-      - uses: ./.github/actions/install
-        if: needs.deploy-dev.outputs.deployment_url
-
-      - name: Install fern-dev CLI
-        run: |
-          npm config set //registry.npmjs.org/:_authToken ${{ secrets.YARN_NPM_AUTH_TOKEN }}
-          pnpm install -g @fern-api/fern-api-dev --prefix=$HOME/.local
-
-      - name: Install Playwright Browsers
-        shell: bash
-        run: pnpm exec playwright install --with-deps
-
-      - name: Run E2E tests
-        if: needs.deploy-dev.outputs.deployment_url
-        env:
-          DEPLOYMENT_URL: ${{ needs.deploy-dev.outputs.deployment_url }}
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        run: pnpm docs:e2e
+          fern_token: ${{ secrets.FERN_TOKEN }}

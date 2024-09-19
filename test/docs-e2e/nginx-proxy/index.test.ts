@@ -4,8 +4,12 @@ import { createProxyMiddleware } from "http-proxy-middleware";
 import { chromium } from "playwright";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
-const origin = process.env.DEPLOYMENT_URL ?? "https://app-dev.buildwithfern.com";
-const target = "https://test-nginx-proxy.docs.dev.buildwithfern.com/subpath";
+let origin = process.env.DEPLOYMENT_URL ?? "https://app-staging.buildwithfern.com";
+if (!origin.startsWith("http")) {
+    origin = `https://${origin}`;
+}
+
+const target = "https://test-nginx-proxy.docs.buildwithfern.com/subpath";
 const proxy = "http://localhost:5050/subpath";
 
 describe("nginx-proxy", () => {
@@ -13,13 +17,20 @@ describe("nginx-proxy", () => {
     let browser: Awaited<ReturnType<typeof chromium.launch>>;
 
     beforeAll(async () => {
-        // requires FERN_TOKEN
-        const result = exec("fern-dev generate --docs", { cwd: __dirname, env: process.env });
+        const result = exec("pnpm fern generate --docs", { cwd: __dirname });
         expect(result).toContain(`Published docs to ${target}`);
+
+        const headers: Record<string, string> = {
+            "x-fern-host": new URL(target).hostname,
+        };
+
+        if (process.env.APP_BUILDWITHFERN_COM_PROTECTION_BYPASS) {
+            headers["x-vercel-protection-bypass"] = process.env.APP_BUILDWITHFERN_COM_PROTECTION_BYPASS;
+        }
 
         const proxyMiddleware = createProxyMiddleware({
             target: origin,
-            headers: { "x-fern-host": new URL(target).hostname },
+            headers,
             changeOrigin: true,
             followRedirects: true,
             autoRewrite: true,
@@ -51,7 +62,7 @@ describe("nginx-proxy", () => {
     });
 
     afterAll(async () => {
-        await browser.close();
+        await browser?.close();
     });
 
     let page: Awaited<ReturnType<typeof browser.newPage>>;
@@ -87,7 +98,7 @@ describe("nginx-proxy", () => {
         await page.waitForURL(/(capture-the-flag)/);
         expect(await page.content()).not.includes("Application error");
         expect(page.url()).equals(`${proxy}/capture-the-flag`);
-        expect(await page.screenshot()).toContain("capture_the_flag");
+        expect(await page.content()).toContain("capture_the_flag");
     }, 20_000);
 
     it("subpath/test-capture-the-flag should redirect to subpath/capture-the-flag", async () => {
