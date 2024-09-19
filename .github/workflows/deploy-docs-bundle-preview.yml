@@ -7,6 +7,10 @@ on:
       - main
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ignore:
     runs-on: ubuntu-latest
@@ -14,17 +18,15 @@ jobs:
       continue: ${{ steps.ignore.outputs.continue }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 # used for turbo-ignore
-
-      - name: Install
-        uses: ./.github/actions/install
-        with:
-          run_install: false
-
       - name: Ignore unchanged files
         id: ignore
-        run: set +e; pnpx turbo-ignore @fern-ui/docs-bundle --fallback=HEAD^1; echo "continue=$?" >> $GITHUB_OUTPUT
+        uses: ./.github/actions/turbo-ignore
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          project: "app.buildwithfern.com"
+          package: "@fern-ui/docs-bundle"
+          environment: "preview"
+          branch: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
 
   deploy:
     needs: ignore
@@ -43,8 +45,7 @@ jobs:
           fetch-depth: 2 # used for turbo-ignore
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
 
-      - name: Install
-        uses: ./.github/actions/install
+      - uses: ./.github/actions/install
 
       - name: Build & Deploy to Vercel
         id: deploy
@@ -108,8 +109,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
 
-      - name: Install
-        uses: ./.github/actions/install
+      - uses: ./.github/actions/install
 
       - name: Build & Deploy to Vercel
         id: deploy
@@ -118,20 +118,21 @@ jobs:
           echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
 
   ete:
-    needs: deploy # only runs on fern-prod
-    if: needs.deploy.outputs.deployment_url
+    needs:
+      - ignore
+      - deploy # only runs on fern-prod
+    if: always()
     runs-on: ubuntu-latest
     permissions: write-all # required for the playwright-report-summary action
     steps:
+      # if the job is ignored, skip the ETE test and exit 0 so that the this job can be used for merge protection
       - uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Fetch domains
-        run: pnpm vercel-scripts domains.txt ${{ needs.deploy.outputs.deployment_url }} --token=${{ secrets.VERCEL_TOKEN }}
+        if: needs.deploy.outputs.deployment_url
 
       - name: Run E2E tests
         uses: ./.github/actions/ete-docs-bundle
+        if: needs.deploy.outputs.deployment_url
         with:
           deployment_url: ${{ needs.deploy.outputs.deployment_url }}
+          token: ${{ secrets.VERCEL_TOKEN }}
+          fern_token: ${{ secrets.FERN_TOKEN }}

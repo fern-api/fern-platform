@@ -19,11 +19,8 @@ jobs:
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
-      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
+      - uses: ./.github/actions/install
 
       - name: Build & Deploy to Vercel
         id: deploy
@@ -40,11 +37,8 @@ jobs:
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
-      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
+      - uses: ./.github/actions/install
 
       - name: Build & Deploy to Vercel
         id: deploy
@@ -61,11 +55,9 @@ jobs:
     outputs:
       deployment_url: ${{ steps.deploy.outputs.deployment_url }}
     steps:
-      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
+      - uses: ./.github/actions/install
 
       - name: Build & Deploy to Vercel
         id: deploy
@@ -79,16 +71,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Fetch domains
-        run: pnpm vercel-scripts domains.txt app.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
-
-      - uses: ./github/actions/ete-docs-bundle
+      - uses: ./.github/actions/ete-docs-bundle
         with:
           deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
+          token: ${{ secrets.VERCEL_TOKEN }}
+          fern_token: ${{ secrets.FERN_TOKEN }}
 
   promote:
     needs:
@@ -106,8 +93,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
+      - uses: ./.github/actions/install
 
       - name: Promote Deployment
         run: pnpm vercel-scripts promote ${{ matrix.deployment_url }} --token ${{ secrets.VERCEL_TOKEN }}

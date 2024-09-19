@@ -47,7 +47,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Lint style
-        run: pnpm turbo lint:style
+        run: pnpm lint:style
 
       - name: eslint
         run: pnpm lint:eslint

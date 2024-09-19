@@ -69,8 +69,8 @@ types:
 
   GithubUser:
     properties:
-      name: string
-      email: string
+      name: optional<string>
+      email: optional<string>
       username: string
 
   GithubTeam:
@@ -95,7 +95,7 @@ types:
       pullRequestNumber: integer
       repositoryName: string
       repositoryOwner: string
-      author: GithubUser
+      author: optional<GithubUser>
       reviewers: list<PullRequestReviewer>
       title: string
       url: string

@@ -6,7 +6,7 @@ export interface PullRequest {
     pullRequestNumber: number;
     repositoryName: string;
     repositoryOwner: string;
-    author: FernRegistry.GithubUser;
+    author?: FernRegistry.GithubUser;
     reviewers: FernRegistry.PullRequestReviewer[];
     title: string;
     url: string;

@@ -1,8 +1,10 @@
-import { VercelClient } from "@fern-fern/vercel";
+import { Vercel, VercelClient } from "@fern-fern/vercel";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { UnreachableCaseError } from "ts-essentials";
-import { exec } from "./exec.js";
+import { cleanDeploymentId } from "./clean-id.js";
+import { exec, logCommand } from "./exec.js";
+import { requestPromote } from "./promoter.js";
 
 export class VercelDeployer {
     private token: string;
@@ -10,7 +12,7 @@ export class VercelDeployer {
     private teamId: string;
     private environment: "preview" | "production";
     private cwd: string;
-    private vercel: VercelClient;
+    public vercel: VercelClient;
     constructor({
         token,
         teamName,
@@ -72,38 +74,49 @@ export class VercelDeployer {
         });
     }
 
-    private deploy(project: { id: string; name: string }): string {
+    private async deploy(project: { id: string; name: string }): Promise<Vercel.GetDeploymentResponse> {
         let command = `pnpx vercel deploy --yes --prebuilt --token=${this.token} --archive=tgz`;
         if (this.environment === "production") {
             command += " --prod --skip-domain";
         }
-        return exec(`[${this.environmentName}] Deploy bundle for ${project.name} to Vercel`, command, {
+        const deploymentUrl = exec(`[${this.environmentName}] Deploy bundle for ${project.name} to Vercel`, command, {
             stdio: "pipe",
             env: this.env(project.id),
             cwd: this.cwd,
         }).trim();
+
+        if (!deploymentUrl) {
+            throw new Error("Deployment failed: no deployment URL returned");
+        }
+
+        const deployment = await this.vercel.deployments.getDeployment(cleanDeploymentId(deploymentUrl));
+
+        logCommand(`[${this.environmentName}] Deployment URL: https://${deployment.url}`);
+
+        if ("inspectorUrl" in deployment) {
+            logCommand(`[${this.environmentName}] Inspector URL: ${deployment.inspectorUrl}`);
+        }
+
+        // eslint-disable-next-line no-console
+        console.log("Deployment Source:", deployment.source);
+
+        return deployment;
     }
 
-    public promote(deploymentUrl: string): void {
+    private async promote(deployment: Vercel.GetDeploymentResponse): Promise<void> {
         if (this.environment === "production") {
-            exec(
-                `[${this.environmentName}] Promote ${deploymentUrl}`,
-                `pnpx vercel promote ${deploymentUrl} --token=${this.token}`,
-                { cwd: this.cwd },
-            );
+            const isDev2 = this.loadEnvFile().includes("registry-dev2.buildwithfern.com");
+            if (!isDev2) {
+                return;
+            }
+            await requestPromote(this.token, deployment);
         }
     }
 
     public async buildAndDeployToVercel(
         project: string,
         { skipDeploy = false }: { skipDeploy?: boolean } = {},
-    ): Promise<
-        | {
-              deploymentUrl: string;
-              canPromote: boolean;
-          }
-        | undefined
-    > {
+    ): Promise<Vercel.GetDeploymentResponse | undefined> {
         const prj = await this.vercel.projects.getProject(project, { teamId: this.teamId });
 
         this.pull(prj);
@@ -114,31 +127,11 @@ export class VercelDeployer {
             return;
         }
 
-        const deploymentUrl = this.deploy(prj);
+        const deployment = await this.deploy(prj);
 
-        if (!deploymentUrl) {
-            throw new Error("Deployment failed: no deployment URL returned");
-        }
+        await this.promote(deployment);
 
-        let canPromote = this.environment === "production";
-
-        if (canPromote) {
-            /**
-             * If the deployment is to the dev2 registry, we should automatically promote it
-             * and not allow manual promotion.
-             */
-            const isDev2 = this.loadEnvFile().includes("registry-dev2.buildwithfern.com");
-
-            if (isDev2) {
-                this.promote(deploymentUrl);
-                canPromote = false;
-            }
-        }
-
-        return {
-            deploymentUrl,
-            canPromote,
-        };
+        return deployment;
     }
 
     private loadEnvFile(): string {

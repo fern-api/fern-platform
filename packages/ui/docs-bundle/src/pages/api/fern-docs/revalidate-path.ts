@@ -1,7 +1,7 @@
+import { Revalidator } from "@/server/revalidator";
+import { getXFernHostNode } from "@/server/xfernhost/node";
 import { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { Revalidator } from "../../../utils/revalidator";
-import { getXFernHostNode } from "../../../utils/xFernHost";
 
 export const config = {
     maxDuration: 300,

@@ -7,31 +7,17 @@
     "directory": "packages/ui/app"
   },
   "private": true,
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
   "exports": {
-    "./bundlers": {
-      "default": "./src/mdx/bundlers/index.ts"
-    },
-    "./auth": {
-      "default": "./src/auth/index.ts"
-    },
-    ".": {
-      "default": "./src/index.ts"
-    }
+    "./bundlers": "./src/mdx/bundlers/index.ts",
+    "./auth": "./src/auth/index.ts",
+    ".": "./src/index.ts"
   },
   "sideEffects": [
     "*.css",
     "*.scss"
   ],
   "scripts": {
-    "clean": "rm -rf ./dist && tsc --build --clean",
-    "build": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -65,11 +51,12 @@
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@radix-ui/react-visually-hidden": "^1.1.0",
     "@segment/snippet": "^5.2.1",
-    "@sentry/nextjs": "^7.105.0",
+    "@sentry/nextjs": "^8.30.0",
     "@shikijs/transformers": "^1.2.2",
     "@types/nprogress": "^0.2.3",
     "@vercel/edge-config": "^1.1.0",

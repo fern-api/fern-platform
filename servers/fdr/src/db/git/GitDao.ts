@@ -321,7 +321,7 @@ function convertPrismaPullRequest(maybePR: prisma.PullRequest | null): PullReque
         pullRequestNumber: maybePR.pullRequestNumber,
         repositoryName: maybePR.repositoryName,
         repositoryOwner: maybePR.repositoryOwner,
-        author: readBuffer(maybePR.author) as GithubUser,
+        author: maybePR.author != null ? (readBuffer(maybePR.author) as GithubUser) : undefined,
         reviewers: readBuffer(maybePR.reviewers) as PullRequestReviewer[],
         checks: readBuffer(maybePR.checks) as CheckRun[],
         title: maybePR.title,

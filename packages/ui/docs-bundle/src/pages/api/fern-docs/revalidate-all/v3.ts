@@ -1,11 +1,12 @@
+import { DocsKVCache } from "@/server/DocsCache";
+import { Revalidator } from "@/server/revalidator";
+import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { provideRegistryService } from "@fern-ui/ui";
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { Revalidator } from "../../../../utils/revalidator";
-import { getXFernHostNode } from "../../../../utils/xFernHost";
 
 export const config = {
     maxDuration: 300,
@@ -30,10 +31,7 @@ const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidateAllV3Response>,
 ): Promise<unknown> => {
-    // when we call res.revalidate() nextjs uses
-    // req.headers.host to make the network request
     const xFernHost = getXFernHostNode(req, true);
-    req.headers.host = xFernHost;
 
     const revalidate = new Revalidator(res, xFernHost);
 
@@ -65,10 +63,16 @@ const handler: NextApiHandler = async (
         const slugCollector = NodeCollector.collect(node);
         const slugs = slugCollector.getPageSlugs();
 
+        const cache = DocsKVCache.getInstance(xFernHost);
+        const previouslyVisitedSlugs = (await cache.getVisitedSlugs()).filter((slug) => !slugs.includes(slug));
+
         const results: FernDocs.RevalidationResult[] = [];
         for (const batch of chunk(slugs, DEFAULT_BATCH_SIZE)) {
             results.push(...(await revalidate.batch(batch)));
         }
+
+        // Revalidate previously visited slugs
+        await revalidate.batch(previouslyVisitedSlugs);
 
         const successfulRevalidations = results.filter(isSuccessResult);
         const failedRevalidations = results.filter(isFailureResult);

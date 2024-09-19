@@ -1,14 +1,14 @@
 import { VercelClient } from "@fern-fern/vercel";
-import { writeFileSync } from "fs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { cwd } from "./cwd.js";
-import { VercelDeployer } from "./utils/deployer.js";
-import { DocsRevalidator } from "./utils/revalidator.js";
-
-function isValidEnvironment(environment: string): environment is "preview" | "production" {
-    return environment === "preview" || environment === "production";
-}
+import { deployCommand } from "./commands/deploy.js";
+import { getLastDeployCommand } from "./commands/last-deploy.js";
+import { promoteCommand } from "./commands/promote.js";
+import { revalidateAllCommand } from "./commands/revalidate-all.js";
+import { writefs } from "./cwd.js";
+import { cleanDeploymentId } from "./utils/clean-id.js";
+import { getVercelTokenFromGlobalConfig } from "./utils/global-config.js";
+import { FernDocsRevalidator } from "./utils/revalidator.js";
 
 void yargs(hideBin(process.argv))
     .scriptName("vercel-scripts")
@@ -17,7 +17,7 @@ void yargs(hideBin(process.argv))
         type: "string",
         description: "The Vercel API token",
         demandOption: true,
-        default: process.env.VERCEL_TOKEN,
+        default: process.env.VERCEL_TOKEN ?? getVercelTokenFromGlobalConfig(),
     })
     .options("teamId", {
         type: "string",
@@ -49,36 +49,13 @@ void yargs(hideBin(process.argv))
                     choices: ["preview" as const, "production" as const],
                 })
                 .option("skip-deploy", { type: "boolean", description: "Skip the deploy step" })
-                .option("force", { type: "boolean", description: "Always deploy, even if the project is up-to-date" })
                 .option("output", {
                     type: "string",
                     description: "The output file to write the preview URLs to",
                     default: "deployment-url.txt",
                 }),
-        async ({ project, environment, token, teamName, teamId, output, skipDeploy, force }) => {
-            if (!isValidEnvironment(environment)) {
-                throw new Error(`Invalid environment: ${environment}`);
-            }
-
-            // eslint-disable-next-line no-console
-            console.log(`Deploying project ${project} to ${environment} environment`);
-
-            const cli = new VercelDeployer({
-                token,
-                teamName,
-                teamId,
-                environment,
-                cwd: cwd(),
-            });
-
-            const result = await cli.buildAndDeployToVercel(project, { skipDeploy, force });
-
-            if (result) {
-                // eslint-disable-next-line no-console
-                console.log("Deployed to:", result.deploymentUrl);
-
-                writeFileSync(output, result.deploymentUrl);
-            }
+        async ({ project, environment, token, teamName, teamId, output, skipDeploy }) => {
+            await deployCommand({ project, environment, token, teamName, teamId, output, skipDeploy });
 
             process.exit(0);
         },
@@ -92,31 +69,7 @@ void yargs(hideBin(process.argv))
                 description: "Revalidate the deployment (if it's fern docs)",
             }),
         async ({ deploymentUrl, token, teamId, revalidateAll }) => {
-            const deployment = await new VercelClient({ token }).deployments.getDeployment(
-                deploymentUrl.replace("https://", ""),
-                { teamId, withGitRepoInfo: "false" },
-            );
-
-            if (deployment.target !== "production") {
-                // eslint-disable-next-line no-console
-                console.error("Deployment is not a production deployment");
-                process.exit(1);
-            } else if (deployment.readySubstate !== "STAGED") {
-                // eslint-disable-next-line no-console
-                console.error("Deployment is not staged");
-                process.exit(1);
-            } else if (!deployment.project) {
-                // eslint-disable-next-line no-console
-                console.error("Deployment does not have a project");
-                process.exit(1);
-            }
-
-            if (revalidateAll) {
-                const revalidator = new DocsRevalidator({ token, project: deployment.project.name, teamId });
-
-                await revalidator.revalidateAll();
-            }
-
+            await promoteCommand({ deploymentIdOrUrl: deploymentUrl, token, teamId, revalidateAll });
             process.exit(0);
         },
     )
@@ -125,10 +78,7 @@ void yargs(hideBin(process.argv))
         "Revalidate all docs for a deployment",
         (argv) => argv.positional("deploymentUrl", { type: "string", demandOption: true }),
         async ({ deploymentUrl, token, teamId }) => {
-            const revalidator = new DocsRevalidator({ token, project: deploymentUrl, teamId });
-
-            await revalidator.revalidateAll();
-
+            await revalidateAllCommand({ token, teamId, deploymentIdOrUrl: deploymentUrl });
             process.exit(0);
         },
     )
@@ -143,7 +93,7 @@ void yargs(hideBin(process.argv))
             }),
         async ({ deploymentUrl, token, teamId, output }) => {
             const deployment = await new VercelClient({ token }).deployments.getDeployment(
-                deploymentUrl.replace("https://", ""),
+                cleanDeploymentId(deploymentUrl),
                 { teamId, withGitRepoInfo: "false" },
             );
 
@@ -151,11 +101,11 @@ void yargs(hideBin(process.argv))
                 throw new Error("Deployment does not have a project");
             }
 
-            const revalidator = new DocsRevalidator({ token, project: deployment.project.name, teamId });
+            const revalidator = new FernDocsRevalidator({ token, project: deployment.project.name, teamId });
 
             const urls = await revalidator.getPreviewUrls(deploymentUrl);
 
-            writeFileSync(output, `## PR Preview\n\n${urls.map((d) => `- [ ] [${d.name}](${d.url})`).join("\n")}`);
+            writefs(output, `## PR Preview\n\n${urls.map((d) => `- [ ] [${d.name}](${d.url})`).join("\n")}`);
 
             process.exit(0);
         },
@@ -171,7 +121,7 @@ void yargs(hideBin(process.argv))
             }),
         async ({ deploymentUrl, token, teamId, output }) => {
             const deployment = await new VercelClient({ token }).deployments.getDeployment(
-                deploymentUrl.replace("https://", ""),
+                cleanDeploymentId(deploymentUrl),
                 { teamId, withGitRepoInfo: "false" },
             );
 
@@ -179,13 +129,57 @@ void yargs(hideBin(process.argv))
                 throw new Error("Deployment does not have a project");
             }
 
-            const revalidator = new DocsRevalidator({ token, project: deployment.project.name, teamId });
+            const revalidator = new FernDocsRevalidator({ token, project: deployment.project.name, teamId });
 
             const urls = await revalidator.getDomains();
 
-            writeFileSync(output, urls.join("\n"));
+            writefs(output, urls.join("\n"));
 
             process.exit(0);
         },
     )
+    .command(
+        "last-deploy.txt <project>",
+        "Get the last deployment",
+        (argv) =>
+            argv
+                .positional("project", { type: "string", demandOption: true })
+                .option("branch", {
+                    type: "string",
+                    description: "The branch to get the last deployment for",
+                })
+                .options("environment", {
+                    type: "string",
+                    description: "The environment to deploy to",
+                    demandOption: true,
+                    default: "preview",
+                    choices: ["preview" as const, "production" as const],
+                })
+                .option("output", {
+                    type: "string",
+                    description: "The output file to write the preview URLs to",
+                    default: "last-deploy.txt",
+                }),
+        async ({ project, token, branch, output, environment }) => {
+            await getLastDeployCommand({ project, token, branch, output, environment });
+            process.exit(0);
+        },
+    )
+    .command(
+        "get-deployment <deploymentId>",
+        "Get a deployment",
+        (argv) => argv.positional("deploymentId", { type: "string", demandOption: true }),
+        async ({ deploymentId, token, teamId }) => {
+            const deployment = await new VercelClient({ token }).deployments.getDeployment(deploymentId, {
+                teamId,
+                withGitRepoInfo: "false",
+            });
+
+            // eslint-disable-next-line no-console
+            console.log(JSON.stringify(deployment, null, 2));
+
+            process.exit(0);
+        },
+    )
+    .showHelpOnFail(false)
     .parse();

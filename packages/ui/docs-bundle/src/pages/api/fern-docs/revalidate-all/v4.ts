@@ -1,11 +1,12 @@
+import { DocsKVCache } from "@/server/DocsCache";
+import { Revalidator } from "@/server/revalidator";
+import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { provideRegistryService } from "@fern-ui/ui";
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { Revalidator } from "../../../../utils/revalidator";
-import { getXFernHostNode } from "../../../../utils/xFernHost";
 
 export const config = {
     maxDuration: 300,
@@ -18,10 +19,7 @@ const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidateAllV4Response>,
 ): Promise<unknown> => {
-    // when we call res.revalidate() nextjs uses
-    // req.headers.host to make the network request
     const xFernHost = getXFernHostNode(req, true);
-    req.headers.host = xFernHost;
 
     /**
      * Limit the number of paths to revalidate to max of 100.
@@ -73,10 +71,20 @@ const handler: NextApiHandler = async (
 
     const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
     const slugs = NodeCollector.collect(node).getPageSlugs();
-    const total = slugs.length;
-    const batch = slugs.slice(offset, offset + limit);
-
     const revalidate = new Revalidator(res, xFernHost);
+
+    if (offset === 0) {
+        const cache = DocsKVCache.getInstance(xFernHost);
+        const previouslyVisitedSlugs = (await cache.getVisitedSlugs()).filter((slug) => !slugs.includes(slug));
+
+        // Revalidate previously visited slugs
+        await revalidate.batch(previouslyVisitedSlugs);
+    }
+
+    const total = slugs.length;
+    const start = offset * limit;
+    const batch = slugs.slice(start, start + limit);
+
     const results = await revalidate.batch(batch);
 
     return res.status(200).json({ total, results });

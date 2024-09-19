@@ -26,11 +26,8 @@ jobs:
     steps:
       # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
       - uses: actions/checkout@v4
-        with:
-          ref: main
 
-      - name: Install
-        uses: ./.github/actions/install
+      - uses: ./.github/actions/install
 
       - name: Build & Deploy to Vercel
         id: deploy

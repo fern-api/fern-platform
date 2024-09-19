@@ -7,20 +7,19 @@
     "url": "git+https://github.com/fern-api/fern-platform.git",
     "directory": "packages/ui/chatbot"
   },
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./src/index.scss": "./src/index.scss"
+  },
+  "files": [
+    "src"
+  ],
   "sideEffects": [
     "*.css",
     "*.scss"
   ],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",

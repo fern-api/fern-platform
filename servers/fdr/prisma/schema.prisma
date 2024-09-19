@@ -244,7 +244,7 @@ model PullRequest {
   repositoryName    String
   repository        Repository @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], onDelete: Cascade)
   
-  author            Bytes
+  author            Bytes?
   reviewers         Bytes
   checks       Bytes
 
