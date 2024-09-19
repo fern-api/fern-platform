@@ -142,7 +142,7 @@ service:
     listRepositories:
       docs: Get all repositories.
       method: GET
-      path: "/repository"
+      path: "/repository/list"
       pagination:
         offset: $request.page
         results: $response.repositories
@@ -171,7 +171,7 @@ service:
     upsertRepository:
       docs: Update or create the specified repository.
       method: PUT
-      path: /repository
+      path: /repository/upsert
       request: FernRepository
 
     deleteRepository:
@@ -195,7 +195,7 @@ service:
     listPullRequests:
       docs: Get all pull requests.
       method: GET
-      path: "/pull-request"
+      path: "/pull-request/list"
       pagination:
         offset: $request.page
         results: $response.pullRequests
@@ -224,7 +224,7 @@ service:
     upsertPullRequest:
       docs: Update or create the specified pull request.
       method: PUT
-      path: /pull-request
+      path: /pull-request/upsert
       request: PullRequest
 
     deletePullRequest:

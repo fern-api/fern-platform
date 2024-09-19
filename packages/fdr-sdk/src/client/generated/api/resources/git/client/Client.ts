@@ -117,7 +117,7 @@ export class Git {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/github/repository"
+                "/generators/github/repository/list"
             ),
             method: "GET",
             headers: {
@@ -188,7 +188,7 @@ export class Git {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/github/repository"
+                "/generators/github/repository/upsert"
             ),
             method: "PUT",
             headers: {
@@ -356,7 +356,7 @@ export class Git {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/github/pull-request"
+                "/generators/github/pull-request/list"
             ),
             method: "GET",
             headers: {
@@ -437,7 +437,7 @@ export class Git {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                "/generators/github/pull-request"
+                "/generators/github/pull-request/upsert"
             ),
             method: "PUT",
             headers: {

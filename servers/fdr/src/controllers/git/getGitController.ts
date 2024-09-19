@@ -42,6 +42,7 @@ export function getGitController(app: FdrApplication): GitService {
             await checkIsFernUser(req.headers.authorization);
 
             await app.dao.git().upsertRepository({ repository: req.body });
+            res.send();
         },
         deleteRepository: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
@@ -50,6 +51,7 @@ export function getGitController(app: FdrApplication): GitService {
                 repositoryName: req.params.repositoryName,
                 repositoryOwner: req.params.repositoryOwner,
             });
+            res.send();
         },
         getPullRequest: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
@@ -83,6 +85,7 @@ export function getGitController(app: FdrApplication): GitService {
             await checkIsFernUser(req.headers.authorization);
 
             await app.dao.git().upsertPullRequest({ pullRequest: req.body });
+            res.send();
         },
         deletePullRequest: async (req, res) => {
             await checkIsFernUser(req.headers.authorization);
@@ -92,6 +95,7 @@ export function getGitController(app: FdrApplication): GitService {
                 repositoryOwner: req.params.repositoryOwner,
                 pullRequestNumber: req.params.pullRequestNumber,
             });
+            res.send();
         },
     });
 }
