@@ -77,6 +77,8 @@ export function getGitController(app: FdrApplication): GitService {
                 repositoryName: req.query.repositoryName,
                 repositoryOwner: req.query.repositoryOwner,
                 organizationId: req.query.organizationId,
+                state: req.query.state,
+                author: req.query.author,
             });
 
             return res.send(repos);
