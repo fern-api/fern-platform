@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./github/actions/ete-docs-bundle
+      - uses: ./.github/actions/ete-docs-bundle
         with:
           deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
           token: ${{ secrets.VERCEL_TOKEN }}

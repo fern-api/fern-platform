@@ -7,6 +7,7 @@ import { promoteCommand } from "./commands/promote.js";
 import { revalidateAllCommand } from "./commands/revalidate-all.js";
 import { writefs } from "./cwd.js";
 import { cleanDeploymentId } from "./utils/clean-id.js";
+import { getVercelTokenFromGlobalConfig } from "./utils/global-config.js";
 import { FernDocsRevalidator } from "./utils/revalidator.js";
 
 void yargs(hideBin(process.argv))
@@ -16,7 +17,7 @@ void yargs(hideBin(process.argv))
         type: "string",
         description: "The Vercel API token",
         demandOption: true,
-        default: process.env.VERCEL_TOKEN,
+        default: process.env.VERCEL_TOKEN ?? getVercelTokenFromGlobalConfig(),
     })
     .options("teamId", {
         type: "string",
@@ -161,6 +162,22 @@ void yargs(hideBin(process.argv))
                 }),
         async ({ project, token, branch, output, environment }) => {
             await getLastDeployCommand({ project, token, branch, output, environment });
+            process.exit(0);
+        },
+    )
+    .command(
+        "get-deployment <deploymentId>",
+        "Get a deployment",
+        (argv) => argv.positional("deploymentId", { type: "string", demandOption: true }),
+        async ({ deploymentId, token, teamId }) => {
+            const deployment = await new VercelClient({ token }).deployments.getDeployment(deploymentId, {
+                teamId,
+                withGitRepoInfo: "false",
+            });
+
+            // eslint-disable-next-line no-console
+            console.log(JSON.stringify(deployment, null, 2));
+
             process.exit(0);
         },
     )

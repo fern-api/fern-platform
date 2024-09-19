@@ -18,10 +18,7 @@ const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidateAllV4Response>,
 ): Promise<unknown> => {
-    // when we call res.revalidate() nextjs uses
-    // req.headers.host to make the network request
     const xFernHost = getXFernHostNode(req, true);
-    req.headers.host = xFernHost;
 
     /**
      * Limit the number of paths to revalidate to max of 100.
@@ -74,7 +71,8 @@ const handler: NextApiHandler = async (
     const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
     const slugs = NodeCollector.collect(node).getPageSlugs();
     const total = slugs.length;
-    const batch = slugs.slice(offset, offset + limit);
+    const start = offset * limit;
+    const batch = slugs.slice(start, start + limit);
 
     const revalidate = new Revalidator(res, xFernHost);
     const results = await revalidate.batch(batch);

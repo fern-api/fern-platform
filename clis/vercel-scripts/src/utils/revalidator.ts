@@ -14,7 +14,7 @@ export class FernDocsRevalidator {
         this.teamId = teamId;
     }
 
-    private async *getProductionDomains(): AsyncGenerator<Vercel.GetProjectDomainsResponseDomainsItem> {
+    private async *getProductionDomains(): AsyncGenerator<Vercel.GetProjectDomainsResponseDomainsItem, void, unknown> {
         let cursor: number | undefined = undefined;
         do {
             const res = await this.vercel.projects.getProjectDomains(this.project, {
@@ -26,7 +26,9 @@ export class FernDocsRevalidator {
                 since: cursor ? cursor + 1 : undefined,
             });
 
-            yield* res.domains.filter((domain) => !BANNED_DOMAINS.includes(domain.apexName));
+            for (const domain of res.domains.filter((domain) => !BANNED_DOMAINS.includes(domain.apexName))) {
+                yield domain;
+            }
             cursor = res.pagination.next;
         } while (cursor);
     }
@@ -56,6 +58,7 @@ export class FernDocsRevalidator {
         logCommand("Revalidating all docs");
 
         const summary: Record<string, { success: number; failed: number }> = {};
+        const failedDomains: string[] = [];
 
         for await (const domain of this.getProductionDomains()) {
             // eslint-disable-next-line no-console
@@ -66,17 +69,24 @@ export class FernDocsRevalidator {
                 environment: `https://${domain.name}`,
             });
 
-            const revalidationSummary = { success: 0, failed: 0 };
-            const results = await client.revalidation.revalidateAllV4({ limit: 50 });
+            try {
+                const results = await client.revalidation.revalidateAllV4({ limit: 100 });
 
-            for await (const result of results) {
-                if (!result.success) {
-                    // eslint-disable-next-line no-console
-                    console.warn(`[${domain.name}] Failed to revalidate ${result.url}: ${result.error}`);
-                    revalidationSummary.failed++;
-                } else {
-                    revalidationSummary.success++;
+                const revalidationSummary = (summary[domain.name] = { success: 0, failed: 0 });
+                for await (const result of results) {
+                    if (!result.success) {
+                        // eslint-disable-next-line no-console
+                        console.warn(`[${domain.name}] Failed to revalidate ${result.url}: ${result.error}`);
+                        revalidationSummary.failed++;
+                    } else {
+                        revalidationSummary.success++;
+                    }
                 }
+                summary[domain.name] = revalidationSummary;
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error(`Failed to revalidate ${domain.name}: ${error}`);
+                failedDomains.push(domain.name);
             }
         }
 
@@ -85,6 +95,10 @@ export class FernDocsRevalidator {
         Object.entries(summary).forEach(([domain, { success, failed }]) => {
             // eslint-disable-next-line no-console
             console.log(`- ${domain}: ${success} successful, ${failed} failed`);
+        });
+        failedDomains.forEach((domain) => {
+            // eslint-disable-next-line no-console
+            console.error(`- ${domain}: Failed to revalidate`);
         });
     }
 }
