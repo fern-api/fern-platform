@@ -4,7 +4,7 @@ import { setupGithubApp } from "@libs/github";
 import { App, Octokit } from "octokit";
 import { readFile } from "fs/promises";
 import { Repository, PullRequest } from "@libs/github";
-
+import tmp from "tmp-promise";
 import { cleanFernStdout, execFernCli, getGenerators, NO_API_FALLBACK_KEY } from "@libs/fern";
 import { cloneRepo, configureGit } from "@libs/github/utilities";
 import { RepoData } from "@libs/schemas";
@@ -12,22 +12,26 @@ import { PullRequestReviewer, PullRequestState } from "@fern-fern/generators-sdk
 
 // Note given we're making requests to FDR, this could take time, so we're parallelizing this function with a Map step in
 // the step function, as we do for all the other actions.
-export async function updateFDRRepoDataInternal(env: Env, repoData: RepoData): Promise<void> {
+export async function updateFDRRepoDataInternal(env: Env, repoData: RepoData | undefined): Promise<void> {
     const app: App = setupGithubApp(env);
 
     // Get repo data for the given repo
     await app.eachRepository(async (installation) => {
-        if (installation.repository.full_name === repoData.full_name) {
-            await updateRepoDb(
-                app,
-                installation.repository,
-                installation.octokit,
-                env.GITHUB_APP_LOGIN_NAME,
-                env.GITHUB_APP_LOGIN_ID,
-                env.DEFAULT_FDR_ORIGIN,
-                env.FERN_TOKEN,
-            );
+        if (
+            (repoData && installation.repository.full_name !== repoData.full_name) ||
+            installation.repository.full_name === "fern-api/fern-platform"
+        ) {
+            return;
         }
+        await updateRepoDb(
+            app,
+            installation.repository,
+            installation.octokit,
+            env.GITHUB_APP_LOGIN_NAME,
+            env.GITHUB_APP_LOGIN_ID,
+            env.DEFAULT_FDR_ORIGIN,
+            env.FERN_TOKEN,
+        );
     });
 }
 
@@ -40,6 +44,7 @@ async function updateRepoDb(
     fdrUrl: string,
     fernToken: string,
 ): Promise<void> {
+    console.log(`Updating repo data at  ${fdrUrl} with token ${fernToken}`);
     const client = new FernRegistryClient({ environment: fdrUrl, token: fernToken });
 
     const [git, fullRepoPath] = await configureGit(repository);
@@ -52,7 +57,8 @@ async function updateRepoDb(
         const organizationId = cleanFernStdout((await execFernCli("organization", fullRepoPath)).stdout);
 
         // Update config repo in FDR
-        await client.git.upsertRepository({
+        console.log("trying upsertRepository");
+        const upsertResponse = await client.git.upsertRepository({
             type: "config",
             id: {
                 type: "github",
@@ -62,18 +68,22 @@ async function updateRepoDb(
             owner: repository.owner.login,
             fullName: repository.full_name,
             url: repository.html_url,
-            // TODO: How can we get this for SDK repos? Can we start without SDK repos?
             repositoryOwnerOrganizationId: organizationId,
             // TODO(FER-2517): actually track and action checks
             defaultBranchChecks: [],
         });
 
+        if (!upsertResponse.ok) {
+            console.log(`Failed to upsert configuration repo, bailing out: ${JSON.stringify(upsertResponse.error)}`);
+            return;
+        }
         await getAndUpsertPulls(client, octokit, repository);
 
         for (const [apiName, api] of Object.entries(generatorsList)) {
             for (const [groupName, group] of Object.entries(api)) {
                 for (const generator of group) {
-                    const repoJsonFileName = `${repository.id.toString()}.json`;
+                    const tmpDir = await tmp.dir();
+                    const repoJsonFileName = `${tmpDir.path}/${repository.id.toString()}.json`;
                     let command = `generator get --repository --language --generator ${generator} --group ${groupName} -o ${repoJsonFileName}`;
                     if (apiName !== NO_API_FALLBACK_KEY) {
                         command += ` --api ${apiName}`;
