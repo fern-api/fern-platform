@@ -135,3 +135,4 @@ jobs:
         with:
           deployment_url: ${{ needs.deploy.outputs.deployment_url }}
           token: ${{ secrets.VERCEL_TOKEN }}
+          fern_token: ${{ secrets.FERN_TOKEN }}

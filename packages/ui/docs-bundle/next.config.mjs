@@ -1,8 +1,14 @@
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
 import process from "node:process";
 
 const cdnUri = process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI) : undefined;
+const isPreview = process.env.NEXT_PUBLIC_VERCEL_ENV === "preview";
+const isProd = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+const isTrailingSlashEnabled = process.env.TRAILING_SLASH === "1" || process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
+const trailingSlash = isTrailingSlashEnabled ? "/" : "";
+const sentryTunnelRoute = `/api/fern-docs/monitoring${trailingSlash}`;
 
 const DOCS_FILES_ALLOWLIST = [
     {
@@ -27,28 +33,11 @@ const DOCS_FILES_ALLOWLIST = [
     },
 ];
 
-function isTruthy(value) {
-    if (value == null) {
-        return false;
-    } else if (typeof value === "string") {
-        return value.toLowerCase() === "true" || value === "1";
-    } else if (typeof value === "boolean") {
-        return value;
-    } else if (typeof value === "number") {
-        return value > 0;
-    }
-    return false;
-}
-
-let SENTRY_TUNNEL_ROUTE = "/api/fern-docs/monitoring";
-
-if (isTruthy(process.env.TRAILING_SLASH)) {
-    SENTRY_TUNNEL_ROUTE += "/";
-}
-
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
+    productionBrowserSourceMaps: isPreview,
+    trailingSlash: isTrailingSlashEnabled,
     transpilePackages: [
         "next-mdx-remote",
         "esbuild",
@@ -71,7 +60,6 @@ const nextConfig = {
         "@fern-ui/search-utils",
         "@fern-ui/ui",
     ],
-    productionBrowserSourceMaps: isTruthy(process.env.ENABLE_SOURCE_MAPS),
     experimental: {
         scrollRestoration: true,
         optimizePackageImports: ["@fern-ui/ui"],
@@ -86,7 +74,6 @@ const nextConfig = {
          */
         externalMiddlewareRewritesResolve: true,
     },
-    trailingSlash: isTruthy(process.env.TRAILING_SLASH),
 
     /**
      * This is required for posthog. See https://posthog.com/docs/advanced/proxy/nextjs-middleware
@@ -139,7 +126,7 @@ const nextConfig = {
              * to work across origins (i.e. subpath routing)
              */
             {
-                source: SENTRY_TUNNEL_ROUTE,
+                source: sentryTunnelRoute,
                 headers: [
                     { key: "Access-Control-Allow-Origin", value: "*" },
                     { key: "Access-Control-Allow-Headers", value: "sentry-trace, baggage" },
@@ -160,55 +147,59 @@ const nextConfig = {
     },
 };
 
-const withBundleAnalyzer = NextBundleAnalyzer({
-    enabled: true,
-});
-
-// Injected content via Sentry wizard below
-
-export default withSentryConfig(withBundleAnalyzer(nextConfig), {
-    // For all available options, see:
-    // https://github.com/getsentry/sentry-webpack-plugin#options
-
-    // Suppresses source map uploading logs during build
-    silent: true,
-    org: "buildwithfern",
-    project: "docs-frontend",
+/** @type {import("next").NextConfig} */
+export default (phase) => {
+    const isDev = phase === PHASE_DEVELOPMENT_SERVER;
 
     /**
-     * application key is used to filter out events from third party js.
+     * Do not enable sentry or bundle analysis for local development.
      */
-    unstable_sentryWebpackPluginOptions: {
-        applicationKey: "fern-docs",
-    },
+    if (isDev) {
+        return nextConfig;
+    }
 
-    // For all available options, see:
-    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+    const withBundleAnalyzer = NextBundleAnalyzer({
+        enabled: isPreview,
+    });
 
-    // Upload a larger set of source maps for prettier stack traces (increases build time)
-    widenClientFileUpload: true,
+    return withSentryConfig(withBundleAnalyzer(nextConfig), {
+        // For all available options, see:
+        // https://github.com/getsentry/sentry-webpack-plugin#options
 
-    // Transpiles SDK to be compatible with IE11 (increases bundle size)
-    transpileClientSDK: true,
+        // Suppresses source map uploading logs during build
+        silent: true,
+        org: "buildwithfern",
+        project: "docs-frontend",
+        authToken: process.env.SENTRY_AUTH_TOKEN,
 
-    // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-    // This can increase your server load as well as your hosting bill.
-    // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-    // side errors will fail.
-    tunnelRoute: SENTRY_TUNNEL_ROUTE,
+        // For all available options, see:
+        // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
-    // Hides source maps from generated client bundles
-    hideSourceMaps: !isTruthy(process.env.ENABLE_SOURCE_MAPS),
+        // Upload a larger set of source maps for prettier stack traces (increases build time)
+        widenClientFileUpload: true,
 
-    // Automatically tree-shake Sentry logger statements to reduce bundle size
-    disableLogger: true,
+        // Transpiles SDK to be compatible with IE11 (increases bundle size)
+        transpileClientSDK: true,
 
-    // Enables automatic instrumentation of Vercel Cron Monitors.
-    // See the following for more information:
-    // https://docs.sentry.io/product/crons/
-    // https://vercel.com/docs/cron-jobs
-    automaticVercelMonitors: true,
-    autoInstrumentServerFunctions: false,
-    autoInstrumentMiddleware: false,
-    autoInstrumentAppDirectory: false,
-});
+        // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
+        // This can increase your server load as well as your hosting bill.
+        // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
+        // side errors will fail.
+        tunnelRoute: sentryTunnelRoute,
+
+        // Hides source maps from generated client bundles
+        hideSourceMaps: isProd,
+
+        // Automatically tree-shake Sentry logger statements to reduce bundle size
+        disableLogger: true,
+
+        // Enables automatic instrumentation of Vercel Cron Monitors.
+        // See the following for more information:
+        // https://docs.sentry.io/product/crons/
+        // https://vercel.com/docs/cron-jobs
+        automaticVercelMonitors: true,
+        autoInstrumentServerFunctions: false,
+        autoInstrumentMiddleware: false,
+        autoInstrumentAppDirectory: false,
+    });
+};

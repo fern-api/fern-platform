@@ -1,11 +1,11 @@
+import { Revalidator } from "@/server/revalidator";
+import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { provideRegistryService } from "@fern-ui/ui";
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { Revalidator } from "../../../../utils/revalidator";
-import { getXFernHostNode } from "../../../../utils/xFernHost";
 
 export const config = {
     maxDuration: 300,

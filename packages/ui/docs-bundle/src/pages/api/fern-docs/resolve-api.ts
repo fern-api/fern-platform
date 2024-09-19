@@ -1,3 +1,5 @@
+import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
+import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
 import {
@@ -10,8 +12,6 @@ import {
 import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
-import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
-import { getXFernHostNode } from "../../../utils/xFernHost";
 import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";

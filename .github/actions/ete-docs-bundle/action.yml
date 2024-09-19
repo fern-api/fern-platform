@@ -8,6 +8,9 @@ inputs:
   token:
     description: "The Vercel token to use for the deployment"
     required: true
+  fern_token:
+    description: "The token to use for the Fern API"
+    required: true
 
 runs:
   using: "composite"
@@ -28,6 +31,13 @@ runs:
         DEPLOYMENT_URL: ${{ inputs.deployment_url }}
         PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
       run: pnpm exec playwright test playwright/smoke --workers 6 --reporter json
+
+    - name: Run E2E tests
+      shell: bash
+      env:
+        DEPLOYMENT_URL: ${{ inputs.deployment_url }}
+        FERN_TOKEN: ${{ inputs.fern_token }}
+      run: pnpm i -g fern-api@latest; pnpm docs:e2e
 
     - uses: daun/playwright-report-summary@v3
       if: always()
