@@ -8,6 +8,7 @@ import {
     ListRepositoriesResponse,
     PullRequest,
     PullRequestReviewer,
+    PullRequestState,
 } from "../../api/generated/api";
 import { readBuffer, writeBuffer } from "../../util";
 
@@ -77,12 +78,16 @@ export interface GitDao {
         repositoryOwner,
         repositoryName,
         organizationId,
+        state,
+        author,
     }: {
         page?: number | undefined;
         pageSize?: number | undefined;
         repositoryOwner: string | undefined;
         repositoryName: string | undefined;
         organizationId: string | undefined;
+        state: PullRequestState[] | undefined;
+        author: string[] | undefined;
     }): Promise<ListPullRequestsResponse>;
 
     upsertPullRequest({ pullRequest }: { pullRequest: PullRequest }): Promise<void>;
@@ -106,12 +111,16 @@ export class GitDaoImpl implements GitDao {
         repositoryOwner,
         repositoryName,
         organizationId,
+        state,
+        author,
     }: {
         page?: number | undefined;
         pageSize?: number | undefined;
         repositoryOwner: string | undefined;
         repositoryName: string | undefined;
         organizationId: string | undefined;
+        state: PullRequestState[] | undefined;
+        author: string[] | undefined;
     }): Promise<ListPullRequestsResponse> {
         const where: Record<string, unknown> = {};
         if (repositoryOwner != null) {
@@ -123,6 +132,16 @@ export class GitDaoImpl implements GitDao {
         if (organizationId != null) {
             where["repository"] = {
                 repositoryOwnerOrganizationId: organizationId,
+            };
+        }
+        if (state != null) {
+            where["state"] = {
+                in: state,
+            };
+        }
+        if (author != null) {
+            where["authorLogin"] = {
+                in: author,
             };
         }
         const pull = await this.prisma.pullRequest.findMany({
@@ -143,6 +162,7 @@ export class GitDaoImpl implements GitDao {
             repositoryOwner: pullRequest.repositoryOwner,
             repositoryName: pullRequest.repositoryName,
             author: writeBuffer(pullRequest.author),
+            authorLogin: pullRequest.author?.username,
             reviewers: writeBuffer(pullRequest.reviewers),
             checks: writeBuffer(pullRequest.checks),
             title: pullRequest.title,
