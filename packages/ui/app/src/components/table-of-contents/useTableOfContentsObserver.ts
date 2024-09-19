@@ -11,11 +11,10 @@ function toIdQuerySelector(id: string): string {
     }
 
     /**
-     * If the id starts with a number, escape it with a backslash
+     * Escape leading digits with `\3` + trailing space to prevent it from being interpreted as a CSS escape sequence.
+     * https://mathiasbynens.be/notes/css-escapes
      */
-    if (id.match(/^\d-/)) {
-        return `#\\3${id}`;
-    } else if (id.match(/^\d/)) {
+    if (id.match(/^\d/)) {
         return `#\\3${id[0]} ${id.slice(1)}`;
     }
 
