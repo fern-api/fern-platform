@@ -5,7 +5,7 @@ import { withDefaultProtocol } from "@fern-ui/core-utils";
  */
 export function getNextPublicDocsDomain(): string | undefined {
     try {
-        const domain = "mermaid-test.docs.dev.buildwithfern.com";
+        const domain = process.env.NEXT_PUBLIC_DOCS_DOMAIN;
 
         if (domain == null) {
             return undefined;
