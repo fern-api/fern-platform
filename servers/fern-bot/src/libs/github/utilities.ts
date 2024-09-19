@@ -8,6 +8,7 @@ import tmp from "tmp-promise";
 
 export const DEFAULT_REMOTE_NAME = "origin";
 export type Repository = components["schemas"]["repository"];
+export type PullRequest = components["schemas"]["pull-request"];
 
 export async function configureGit(repository: Repository): Promise<[SimpleGit, string]> {
     const tmpDir = await tmp.dir();
