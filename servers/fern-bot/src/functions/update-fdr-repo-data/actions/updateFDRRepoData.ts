@@ -57,7 +57,6 @@ async function updateRepoDb(
         const organizationId = cleanFernStdout((await execFernCli("organization", fullRepoPath)).stdout);
 
         // Update config repo in FDR
-        console.log("trying upsertRepository");
         const upsertResponse = await client.git.upsertRepository({
             type: "config",
             id: {

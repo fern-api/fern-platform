@@ -2599,8 +2599,8 @@ importers:
         specifier: 0.8.1-1-gd6d1a5b
         version: 0.8.1-1-gd6d1a5b
       '@fern-fern/generators-sdk':
-        specifier: 0.110.0-ba7050020
-        version: 0.110.0-ba7050020
+        specifier: 0.110.0-a6864cd4c
+        version: 0.110.0-a6864cd4c
       '@octokit/openapi-types':
         specifier: ^22.1.0
         version: 22.2.0
@@ -4036,8 +4036,8 @@ packages:
   '@fern-fern/fern-docs-sdk@0.0.5':
     resolution: {integrity: sha512-x6kfRboXiG1J3fpON2lXtD9qCub2UXvNuscvCsIY3ACYvSvLHHlHvc84rIDv+ZlP/anlEvtTyfNh72Hmi0nffw==}
 
-  '@fern-fern/generators-sdk@0.110.0-ba7050020':
-    resolution: {integrity: sha512-0nFfw+ha1Q7WTM9QjGEAm3+IzBp4kCg/vJGVyC3ANdJ4fgdS3D/SCMb8nas06Y33TrXt8ybHmbK/W+ndFYAN4A==}
+  '@fern-fern/generators-sdk@0.110.0-a6864cd4c':
+    resolution: {integrity: sha512-KOKrnl0bDHPXfQX4xqgMBeBGsYFw29CVRo4cCmQJJ4xReUGph9U3ZBYRf/rQmGQp03XpJ+JnBD/Hn9r5fuhPAw==}
 
   '@fern-fern/vercel@0.0.4655':
     resolution: {integrity: sha512-twz/gFcQo9Gk38byYLFsJDbHnvvBsOHfofdef15vzIeFCIr1yPsTWYmNoPllBeRLc4RjMel6T06afFZJMc8JSg==}
@@ -18732,7 +18732,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generators-sdk@0.110.0-ba7050020':
+  '@fern-fern/generators-sdk@0.110.0-a6864cd4c':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
