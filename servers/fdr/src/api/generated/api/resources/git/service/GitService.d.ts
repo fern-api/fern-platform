@@ -51,6 +51,7 @@ export interface GitServiceMethods {
         repositoryName?: string;
         repositoryOwner?: string;
         organizationId?: FernRegistry.OrgId;
+        status?: FernRegistry.PullRequestState;
     }>, res: {
         send: (responseBody: FernRegistry.ListPullRequestsResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

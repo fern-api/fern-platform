@@ -11,7 +11,8 @@ import * as FernRegistry from "../../../../index";
  *         pageSize: 1,
  *         repositoryName: "string",
  *         repositoryOwner: "string",
- *         organizationId: "string"
+ *         organizationId: "string",
+ *         status: FernRegistry.PullRequestState.Open
  *     }
  */
 export interface ListPullRequestsRequest {
@@ -35,4 +36,8 @@ export interface ListPullRequestsRequest {
      * The Fern organization ID to filter repositories by.
      */
     organizationId?: FernRegistry.OrgId;
+    /**
+     * The status of the pull request to filter by.
+     */
+    status?: FernRegistry.PullRequestState;
 }
