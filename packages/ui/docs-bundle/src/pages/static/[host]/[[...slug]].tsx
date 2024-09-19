@@ -1,5 +1,7 @@
+import { DocsKVCache } from "@/server/DocsCache";
 import { getDocsPageProps } from "@/server/getDocsPageProps";
 import { withSSGProps } from "@/server/withSSGProps";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { DocsPage } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ComponentProps } from "react";
@@ -11,7 +13,18 @@ export const getStaticProps: GetStaticProps<ComponentProps<typeof DocsPage>> = a
     const xFernHost = params.host as string;
     const slugArray = params.slug == null ? [] : Array.isArray(params.slug) ? params.slug : [params.slug];
 
-    return withSSGProps(getDocsPageProps(xFernHost, slugArray));
+    const props = await withSSGProps(getDocsPageProps(xFernHost, slugArray));
+
+    const cache = DocsKVCache.getInstance(xFernHost);
+    const slug = FernNavigation.utils.slugjoin(...slugArray);
+
+    if ("props" in props) {
+        cache.addVisitedSlugs(slug);
+    } else if ("notFound" in props || "redirect" in props) {
+        cache.removeVisitedSlugs(slug);
+    }
+
+    return props;
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
