@@ -32,12 +32,26 @@ Sentry.init({
     autoSessionTracking: true,
 
     // You can remove this option if you're not planning to use the Sentry Session Replay feature:
-    integrations: [Sentry.replayIntegration()],
+    integrations: [
+        Sentry.replayIntegration(),
+        Sentry.thirdPartyErrorFilterIntegration({
+            // Specify the application keys that you specified in the Sentry bundler plugin
+            filterKeys: ["your-custom-application-key"],
+
+            // Defines how to handle errors that contain third party stack frames.
+            // Possible values are:
+            // - 'drop-error-if-contains-third-party-frames'
+            // - 'drop-error-if-exclusively-contains-third-party-frames'
+            // - 'apply-tag-if-contains-third-party-frames'
+            // - 'apply-tag-if-exclusively-contains-third-party-frames'
+            behaviour: "drop-error-if-contains-third-party-frames",
+        }),
+    ],
 
     // This option is required for capturing headers and cookies.
     sendDefaultPii: true,
 
-    beforeSend: (event: Sentry.Event, _: Sentry.EventHint): Sentry.Event | null => {
+    beforeSend: (event: Sentry.ErrorEvent, _: Sentry.EventHint): Sentry.ErrorEvent | null => {
         // Filter out events from privategpt
         if (event.request?.url?.includes("privategpt")) {
             return null;

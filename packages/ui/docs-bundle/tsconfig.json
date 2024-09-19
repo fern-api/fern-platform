@@ -5,7 +5,7 @@
     "rootDir": "."
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__", "instrumentation.ts"],
+  "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__", "instrumentation.ts", "sentry.*.config.ts"],
   "references": [
     {
       "path": "../../commons/core-utils"
