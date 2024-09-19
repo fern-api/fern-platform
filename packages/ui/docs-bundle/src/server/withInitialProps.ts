@@ -25,7 +25,7 @@ import { getSeoDisabled } from "./disabledSeo";
 import { getCustomerAnalytics } from "./getCustomerAnalytics";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
-import { conformTrailingSlash, isTrailingSlashEnabled } from "./trailingSlash";
+import { isTrailingSlashEnabled } from "./trailingSlash";
 
 interface WithInitialProps {
     docs: LoadWithUrlResponse;
@@ -49,14 +49,14 @@ export async function withInitialProps({
     const docsConfig = docsDefinition.config;
 
     const slug = FernNavigation.utils.slugjoin(...slugArray);
-    const currentPath = urlJoin("/", slug);
 
-    const redirect = getRedirectForPath(currentPath, docs.baseUrl, docsConfig.redirects);
+    const redirect = getRedirectForPath(urlJoin("/", slug), docs.baseUrl, docsConfig.redirects);
 
     if (redirect != null) {
         return {
             redirect: {
-                destination: conformTrailingSlash(redirect.destination),
+                // Do NOT conform trailing slash here because this relies on the user's direct configuration
+                destination: redirect.destination,
                 permanent: redirect.permanent ?? false,
             },
         };
