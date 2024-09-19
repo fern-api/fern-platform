@@ -62,7 +62,7 @@ const nextConfig = {
     ],
     experimental: {
         scrollRestoration: true,
-        optimizePackageImports: ["@fern-ui/ui"],
+        optimizePackageImports: ["@fern-ui/ui", "iconoir-react", "httpsnippet-lite"],
 
         /**
          * If the rewrite comes from another nextjs middleware,
@@ -144,6 +144,11 @@ const nextConfig = {
             config.externals.push("esbuild");
         }
         return config;
+    },
+    compiler: {
+        removeConsole: {
+            exclude: ["error"],
+        },
     },
 };
 
