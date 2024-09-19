@@ -278,7 +278,7 @@ export const FORCE_ENABLE_SIDEBAR_ATOM = atom((get) => {
 
     // sidebar is always enabled if the header is disabled
     if (layout?.disableHeader) {
-        return false;
+        return true;
     }
 
     // sidebar is always enabled if vertical tabs are enabled
