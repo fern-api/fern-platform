@@ -2,7 +2,25 @@ import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
 import { useEffect, useRef } from "react";
 import { useCallbackOne } from "use-memo-one";
+import { captureSentryError } from "../../analytics/sentry";
 import { SCROLL_BODY_ATOM } from "../../atoms";
+
+function toIdQuerySelector(id: string): string {
+    if (id.startsWith("#")) {
+        return id;
+    }
+
+    /**
+     * If the id starts with a number, escape it with a backslash
+     */
+    if (id.match(/^\d-/)) {
+        return `#\\3${id}`;
+    } else if (id.match(/^\d/)) {
+        return `#\\3${id[0]} ${id.slice(1)}`;
+    }
+
+    return `#${id}`;
+}
 
 /**
  *
@@ -81,12 +99,16 @@ export function useTableOfContentsObserver(ids: string[], setActiveId: (id: stri
         fastdom.measure(() => {
             const scrollY = root instanceof Document ? window.scrollY : root.scrollTop;
             const top = root instanceof Document ? 0 : root.getBoundingClientRect().top;
-            idToYRef.current = Array.from(document.querySelectorAll(ids.map((id) => `#${id}`).join(", "))).reduce<
-                Record<string, number>
-            >((prev, curr) => {
-                prev[curr.id] = curr.getBoundingClientRect().top + scrollY - top;
-                return prev;
-            }, {});
+            try {
+                idToYRef.current = Array.from(document.querySelectorAll(ids.map(toIdQuerySelector).join(", "))).reduce<
+                    Record<string, number>
+                >((prev, curr) => {
+                    prev[curr.id] = curr.getBoundingClientRect().top + scrollY - top;
+                    return prev;
+                }, {});
+            } catch (e) {
+                captureSentryError(e, { errorDescription: "Error measuring table of contents" });
+            }
         });
 
         take();
