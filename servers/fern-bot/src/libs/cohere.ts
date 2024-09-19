@@ -26,7 +26,7 @@ export async function generateCommitMessage(diff: string, fallbackMessage: strin
     \`\`\`
     `;
     try {
-        return coChat(prompt);
+        return await coChat(prompt);
     } catch (error) {
         console.error(
             `Call to Cohere failed generating commit message, with error: ${(error as Error).message}, using fallback message: ${fallbackMessage}`,
