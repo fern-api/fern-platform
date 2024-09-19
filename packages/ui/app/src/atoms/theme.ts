@@ -125,7 +125,7 @@ const getAvailableThemes = (colors: Partial<ColorsConfig> = {}): AvailableThemes
 };
 
 const getSystemTheme = (e?: MediaQueryList | MediaQueryListEvent) => {
-    if (!e) {
+    if (!e && typeof window !== "undefined") {
         e = window.matchMedia(MEDIA);
     }
     const isDark = e.matches;

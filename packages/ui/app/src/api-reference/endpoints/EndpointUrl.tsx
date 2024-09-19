@@ -4,12 +4,12 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { noop } from "ts-essentials";
-import { parse } from "url";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { buildRequestUrl } from "../../playground/utils";
 import { ResolvedEndpointPathParts } from "../../resolver/types";
+import { parseURL } from "../../util/parseURL";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
@@ -37,7 +37,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     const pathParts = useMemo(() => {
         const elements: (ReactElement | null)[] = [];
         if (selectedEnvironment != null) {
-            const url = parse(selectedEnvironment?.baseUrl);
+            const url = parseURL(selectedEnvironment?.baseUrl);
             if (showEnvironment) {
                 if (allEnvironmentIds.length < 2) {
                     elements.push(

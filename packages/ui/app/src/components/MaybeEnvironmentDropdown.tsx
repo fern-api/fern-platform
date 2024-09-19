@@ -2,8 +2,8 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { useAtom } from "jotai";
 import { ReactElement } from "react";
-import { parse } from "url";
 import { ALL_ENVIRONMENTS_ATOM, SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
+import { parseURL } from "../util/parseURL";
 
 interface MaybeEnvironmentDropdownProps {
     selectedEnvironment: APIV1Read.Environment | undefined;
@@ -31,7 +31,7 @@ export function MaybeEnvironmentDropdown({
     if (environmentFilters && selectedEnvironment && !environmentFilters.includes(selectedEnvironment.id)) {
         setSelectedEnvironmentId(environmentIds[0]);
     }
-    const url = selectedEnvironment?.baseUrl && parse(selectedEnvironment?.baseUrl);
+    const url = parseURL(selectedEnvironment?.baseUrl);
 
     return (
         <>

@@ -1,0 +1,9 @@
+instances:
+  - url: https://mermaid-test.docs.dev.buildwithfern.com
+landing-page:
+  page: Mermaid
+  path: ./mermaid.mdx
+navigation: []
+colors:
+  accentPrimary: "#ffffff"
+  background: "#000000"

@@ -1,6 +1,6 @@
-import { parse } from "url";
 import urljoin from "url-join";
 import { ResolvedEndpointDefinition, ResolvedEndpointPathParts, ResolvedWithApiDefinition } from "../resolver/types";
+import { parseURL } from "./parseURL";
 
 export function findEndpoint({
     api,
@@ -45,7 +45,7 @@ export function getMatchablePermutationsForEndpoint(
         possiblePaths.add(fullUrl1);
         possiblePaths.add(fullUrl2);
 
-        const basePath = parse(env.baseUrl).path;
+        const basePath = parseURL(env.baseUrl).pathname;
         if (basePath != null) {
             const urlWithBasePath1 = urljoin(basePath, path1);
             const urlWithBasePath2 = urljoin(basePath, path2);

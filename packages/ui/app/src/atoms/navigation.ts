@@ -2,13 +2,18 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { atom, useAtomValue } from "jotai";
-import { selectAtom } from "jotai/utils";
+import { atomWithDefault, selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import { DocsContent } from "../resolver/DocsContent";
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 
-export const DOMAIN_ATOM = atom<string>((get) => get(DOCS_ATOM).baseUrl.domain);
+export const DOMAIN_ATOM = atomWithDefault<string>((get) => get(DOCS_ATOM).baseUrl.domain);
+DOMAIN_ATOM.onMount = (set) => {
+    if (typeof window !== "undefined") {
+        set(window.location.host);
+    }
+};
 DOMAIN_ATOM.debugLabel = "DOMAIN_ATOM";
 
 export const BASEPATH_ATOM = atom<string | undefined>((get) => get(DOCS_ATOM).baseUrl.basePath);
