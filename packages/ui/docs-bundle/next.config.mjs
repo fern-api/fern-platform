@@ -166,43 +166,49 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 
 // Injected content via Sentry wizard below
 
-export default withSentryConfig(
-    withBundleAnalyzer(nextConfig),
-    {
-        // For all available options, see:
-        // https://github.com/getsentry/sentry-webpack-plugin#options
+export default withSentryConfig(withBundleAnalyzer(nextConfig), {
+    // For all available options, see:
+    // https://github.com/getsentry/sentry-webpack-plugin#options
 
-        // Suppresses source map uploading logs during build
-        silent: true,
-        org: "buildwithfern",
-        project: "docs-frontend",
+    // Suppresses source map uploading logs during build
+    silent: true,
+    org: "buildwithfern",
+    project: "docs-frontend",
+
+    /**
+     * application key is used to filter out events from third party js.
+     */
+    unstable_sentryWebpackPluginOptions: {
+        applicationKey: "fern-docs",
     },
-    {
-        // For all available options, see:
-        // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
-        // Upload a larger set of source maps for prettier stack traces (increases build time)
-        widenClientFileUpload: true,
+    // For all available options, see:
+    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
-        // Transpiles SDK to be compatible with IE11 (increases bundle size)
-        transpileClientSDK: true,
+    // Upload a larger set of source maps for prettier stack traces (increases build time)
+    widenClientFileUpload: true,
 
-        // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-        // This can increase your server load as well as your hosting bill.
-        // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-        // side errors will fail.
-        tunnelRoute: SENTRY_TUNNEL_ROUTE,
+    // Transpiles SDK to be compatible with IE11 (increases bundle size)
+    transpileClientSDK: true,
 
-        // Hides source maps from generated client bundles
-        hideSourceMaps: !isTruthy(process.env.ENABLE_SOURCE_MAPS),
+    // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
+    // This can increase your server load as well as your hosting bill.
+    // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
+    // side errors will fail.
+    tunnelRoute: SENTRY_TUNNEL_ROUTE,
 
-        // Automatically tree-shake Sentry logger statements to reduce bundle size
-        disableLogger: true,
+    // Hides source maps from generated client bundles
+    hideSourceMaps: !isTruthy(process.env.ENABLE_SOURCE_MAPS),
 
-        // Enables automatic instrumentation of Vercel Cron Monitors.
-        // See the following for more information:
-        // https://docs.sentry.io/product/crons/
-        // https://vercel.com/docs/cron-jobs
-        automaticVercelMonitors: true,
-    },
-);
+    // Automatically tree-shake Sentry logger statements to reduce bundle size
+    disableLogger: true,
+
+    // Enables automatic instrumentation of Vercel Cron Monitors.
+    // See the following for more information:
+    // https://docs.sentry.io/product/crons/
+    // https://vercel.com/docs/cron-jobs
+    automaticVercelMonitors: true,
+    autoInstrumentServerFunctions: false,
+    autoInstrumentMiddleware: false,
+    autoInstrumentAppDirectory: false,
+});
