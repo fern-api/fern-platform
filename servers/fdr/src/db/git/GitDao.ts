@@ -162,7 +162,7 @@ export class GitDaoImpl implements GitDao {
             repositoryOwner: pullRequest.repositoryOwner,
             repositoryName: pullRequest.repositoryName,
             author: writeBuffer(pullRequest.author),
-            authorLogin: pullRequest.author?.username,
+            authorLogin: pullRequest.author?.username ? pullRequest.author?.username : null,
             reviewers: writeBuffer(pullRequest.reviewers),
             checks: writeBuffer(pullRequest.checks),
             title: pullRequest.title,
