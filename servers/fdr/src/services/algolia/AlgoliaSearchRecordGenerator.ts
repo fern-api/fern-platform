@@ -232,6 +232,7 @@ export class AlgoliaSearchRecordGenerator {
                           urlSlug: page.urlSlug,
                       });
             const processedContent = convertMarkdownToText(pageContent.markdown);
+            const anchorHeaders = extractHeadersFromMarkdownContent(pageContent.markdown);
             const { indexSegment } = context;
             return [
                 compact({
@@ -252,6 +253,7 @@ export class AlgoliaSearchRecordGenerator {
                               }
                             : undefined,
                     indexSegmentId: indexSegment.id,
+                    anchorHeaders,
                 }),
             ];
         } else if (item.type === "link") {
@@ -751,7 +753,7 @@ export class AlgoliaSearchRecordGenerator {
             anchorIdParts?: string[];
         }[],
         types: Record<string, APIV1Read.TypeDefinition>,
-        fields: string[] = [],
+        fields: string[],
     ): string {
         let referencedTypes: ReferencedTypes = {};
         const anchorIdPartsMap: Record<string, string[] | undefined> = {};
@@ -928,6 +930,7 @@ export class AlgoliaSearchRecordGenerator {
 
             if (changelogPageContent != null) {
                 const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                const anchorHeaders = extractHeadersFromMarkdownContent(changelogPageContent.markdown);
                 const { indexSegment } = context;
                 const pageContext = context.withPathPart({
                     // TODO: parse from frontmatter?
@@ -953,6 +956,7 @@ export class AlgoliaSearchRecordGenerator {
                                   }
                                 : undefined,
                         indexSegmentId: indexSegment.id,
+                        anchorHeaders,
                     }),
                 );
             }
@@ -966,6 +970,7 @@ export class AlgoliaSearchRecordGenerator {
                 const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
                 if (changelogPageContent != null) {
                     const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                    const anchorHeaders = extractHeadersFromMarkdownContent(changelogPageContent.markdown);
                     const { indexSegment } = context;
 
                     records.push(
@@ -988,6 +993,7 @@ export class AlgoliaSearchRecordGenerator {
                                       }
                                     : undefined,
                             indexSegmentId: indexSegment.id,
+                            anchorHeaders,
                         }),
                     );
                 }
