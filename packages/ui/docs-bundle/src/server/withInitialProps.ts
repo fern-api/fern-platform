@@ -7,7 +7,6 @@ import {
     getApiRouteSupplier,
     getGitHubInfo,
     getGitHubRepo,
-    getRedirectForPath,
     getSeoProps,
     provideRegistryService,
     renderThemeStylesheet,
@@ -23,6 +22,7 @@ import urlJoin from "url-join";
 import type { AuthProps } from "./authProps";
 import { getSeoDisabled } from "./disabledSeo";
 import { getCustomerAnalytics } from "./getCustomerAnalytics";
+import { getRedirectForPath } from "./getRedirectForPath";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
@@ -53,13 +53,7 @@ export async function withInitialProps({
     const redirect = getRedirectForPath(urlJoin("/", slug), docs.baseUrl, docsConfig.redirects);
 
     if (redirect != null) {
-        return {
-            redirect: {
-                // Do NOT conform trailing slash here because this relies on the user's direct configuration
-                destination: redirect.destination,
-                permanent: redirect.permanent ?? false,
-            },
-        };
+        return redirect;
     }
 
     const featureFlags = await getFeatureFlags(xFernHost);
