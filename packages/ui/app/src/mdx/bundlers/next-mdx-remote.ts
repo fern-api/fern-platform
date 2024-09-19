@@ -1,5 +1,6 @@
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
+import rehypeMermaid from "rehype-mermaid";
 import rehypeSlug from "rehype-slug";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
@@ -50,6 +51,7 @@ function withDefaultMdxOptions({
         rehypeSqueezeParagraphs,
         rehypeSlug,
         rehypeKatex,
+        rehypeMermaid,
         rehypeFernCode,
         rehypeFernComponents,
     ];
