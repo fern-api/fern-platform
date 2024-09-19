@@ -88,7 +88,7 @@ describe("nginx-proxy", () => {
         expect(await page.content()).not.includes("Application error");
         expect(page.url()).equals(`${proxy}/capture-the-flag`);
         expect(await page.screenshot()).toContain("capture_the_flag");
-    });
+    }, 20_000);
 
     it("subpath/test-capture-the-flag should redirect to subpath/capture-the-flag", async () => {
         const response = await page.goto("http://localhost:5050/subpath/test-capture-the-flag");

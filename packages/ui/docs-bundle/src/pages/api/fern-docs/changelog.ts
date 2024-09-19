@@ -38,11 +38,11 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
     const url = buildUrlFromApiNode(xFernHost, req);
     const docs = await loadWithUrl(url);
 
-    if (docs == null) {
+    if (!docs.ok) {
         return res.status(404).end();
     }
 
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
     const collector = NodeCollector.collect(root);
 
     const slug = FernNavigation.utils.slugjoin(decodeURIComponent(path));
@@ -66,7 +66,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         year.children.forEach((month) => {
             month.children.forEach((entry) => {
                 try {
-                    feed.addItem(toFeedItem(entry, xFernHost, docs.definition.pages, docs.definition.files));
+                    feed.addItem(toFeedItem(entry, xFernHost, docs.body.definition.pages, docs.body.definition.files));
                 } catch (e) {
                     // eslint-disable-next-line no-console
                     console.error(e);

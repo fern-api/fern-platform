@@ -1,5 +1,5 @@
 import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
-import { DocsV2Read, FernNavigation, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
+import { FernNavigation, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
 import {
@@ -20,26 +20,31 @@ import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
-import { trackPromise } from "./analytics/track-promise";
 import type { AuthProps } from "./authProps";
-import { TRACK_CONVERT_PAGE_PROPS } from "./constants";
 import { getSeoDisabled } from "./disabledSeo";
-import { getCustomerAnalytics } from "./edge-config/customer-analytics";
+import { getCustomerAnalytics } from "./getCustomerAnalytics";
+import { handleLoadDocsError } from "./handleLoadDocsError";
+import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { conformTrailingSlash, isTrailingSlashEnabled } from "./trailingSlash";
 
 interface WithInitialProps {
-    docs: DocsV2Read.LoadDocsForUrlResponse;
+    docs: LoadWithUrlResponse;
     slug: string[];
     xFernHost: string;
     auth?: AuthProps;
 }
 
-async function withInitialProps({
-    docs,
+export async function withInitialProps({
+    docs: docsResponse,
     slug: slugArray,
     xFernHost,
     auth,
-}: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
+}: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>> | undefined> {
+    if (!docsResponse.ok) {
+        return handleLoadDocsError(xFernHost, slugArray, docsResponse.error);
+    }
+
+    const docs = docsResponse.body;
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
 
@@ -265,15 +270,4 @@ async function withInitialProps({
     return {
         props: JSON.parse(JSON.stringify(props)), // remove all undefineds
     };
-}
-
-export function withInitialPropsAndTrack(
-    args: WithInitialProps,
-): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
-    return trackPromise({
-        promise: withInitialProps(args),
-        key: TRACK_CONVERT_PAGE_PROPS,
-        host: args.xFernHost,
-        slug: args.slug,
-    });
 }

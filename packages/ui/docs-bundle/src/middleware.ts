@@ -3,6 +3,7 @@ import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/page
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
+import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 
@@ -123,6 +124,13 @@ export const middleware: NextMiddleware = async (request) => {
         response.headers.set("x-matched-path", getPageRouteMatch(!isDynamic, buildId));
 
         return response;
+    }
+
+    /**
+     * Do not rewrite 404 and 500 pages
+     */
+    if (removeTrailingSlash(pathname) === "/404" || removeTrailingSlash(pathname) === "/500") {
+        return NextResponse.next({ request: { headers } });
     }
 
     /**

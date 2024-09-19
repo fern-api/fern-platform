@@ -23,13 +23,13 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
 
         const docs = await loadWithUrl(domain);
 
-        if (docs == null) {
+        if (!docs.ok) {
             // eslint-disable-next-line no-console
             console.error("Failed to load docs for domain", domain);
             return NextResponse.json({ isAvailable: false }, { status: 503 });
         }
 
-        const searchInfo = docs.definition.search;
+        const searchInfo = docs.body.definition.search;
         const config = await getSearchConfig(provideRegistryService(), domain, searchInfo);
         return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
     } catch (e) {

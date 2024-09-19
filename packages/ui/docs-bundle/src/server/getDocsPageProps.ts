@@ -1,11 +1,11 @@
-import type { DocsPage } from "@fern-ui/ui";
+import { type DocsPage } from "@fern-ui/ui";
 import type { FernUser } from "@fern-ui/ui/auth";
 import type { GetServerSidePropsResult } from "next";
 import type { ComponentProps } from "react";
+import { LoadDocsPerformanceTracker } from "./LoadDocsPerformanceTracker";
 import type { AuthProps } from "./authProps";
-import { getUnauthenticatedRedirect } from "./getUnauthenticatedRedirect";
-import { loadDocsAndTrack } from "./loadDocsAndTrack";
-import { withInitialPropsAndTrack } from "./withInitialProps";
+import { loadWithUrl } from "./loadWithUrl";
+import { withInitialProps } from "./withInitialProps";
 
 type SSGDocsPageProps = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;
 
@@ -23,18 +23,26 @@ export async function getDocsPageProps(
         return { notFound: true };
     }
 
-    const docs = await loadDocsAndTrack(xFernHost, slug, auth);
+    const performance = LoadDocsPerformanceTracker.init({ host: xFernHost, slug, auth: auth?.user.partner });
 
-    if (!docs.ok) {
-        if (docs.error.error === "UnauthorizedError") {
-            const redirect = await getUnauthenticatedRedirect(xFernHost, encodeURI(slug.join("/")));
-            return { redirect };
-        } else if (docs.error.error === "DomainNotRegisteredError") {
-            return { notFound: true };
-        }
+    /**
+     * Load the docs for the given URL.
+     */
+    const docs = await performance.trackLoadDocsPromise(loadWithUrl(xFernHost, auth));
 
-        throw new Error("Failed to fetch docs", { cause: docs.error });
+    /**
+     * Convert the docs into initial props for the page.
+     */
+    const initialProps = await performance.trackInitialPropsPromise(withInitialProps({ docs, slug, xFernHost, auth }));
+
+    /**
+     * Send performance data to Vercel Analytics.
+     */
+    await performance.track();
+
+    if (initialProps == null) {
+        throw new Error(`Failed to load initial props for docs page: https://${xFernHost}/${slug.join("/")}`);
     }
 
-    return withInitialPropsAndTrack({ docs: docs.body, slug, xFernHost });
+    return initialProps;
 }

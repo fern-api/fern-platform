@@ -28,11 +28,11 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const url = buildUrlFromApiEdge(xFernHost, req);
     const docs = await loadWithUrl(url);
 
-    if (docs == null) {
+    if (!docs.ok) {
         return new NextResponse(null, { status: 404 });
     }
 
-    const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
     const slugCollector = NodeCollector.collect(node);
     const urls = slugCollector.getIndexablePageSlugs().map((slug) => urljoin(xFernHost, slug));
 
