@@ -226,7 +226,10 @@ export class GitDaoImpl implements GitDao {
 
         await this.prisma.repository.upsert({
             where: {
-                id: repository.id.id,
+                owner_name: {
+                    name: repository.name,
+                    owner: repository.owner,
+                },
             },
             update: data,
             create: data,
