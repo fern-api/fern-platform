@@ -1,3 +1,4 @@
+import { DocsKVCache } from "@/server/DocsCache";
 import { Revalidator } from "@/server/revalidator";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -62,10 +63,16 @@ const handler: NextApiHandler = async (
         const slugCollector = NodeCollector.collect(node);
         const slugs = slugCollector.getPageSlugs();
 
+        const cache = DocsKVCache.getInstance(xFernHost);
+        const previouslyVisitedSlugs = (await cache.getVisitedSlugs()).filter((slug) => !slugs.includes(slug));
+
         const results: FernDocs.RevalidationResult[] = [];
         for (const batch of chunk(slugs, DEFAULT_BATCH_SIZE)) {
             results.push(...(await revalidate.batch(batch)));
         }
+
+        // Revalidate previously visited slugs
+        await revalidate.batch(previouslyVisitedSlugs);
 
         const successfulRevalidations = results.filter(isSuccessResult);
         const failedRevalidations = results.filter(isFailureResult);
