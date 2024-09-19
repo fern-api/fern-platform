@@ -61,10 +61,7 @@ export const NO_API_FALLBACK_KEY = "NO_API_FALLBACK";
 export async function getGenerators(fullRepoPath: string): Promise<GeneratorList> {
     const tmpDir = await tmp.dir();
     const outputPath = `${tmpDir.path}/gen_list.yml`;
-    const out = await execFernCli(
-        `generator list --api-fallback ${NO_API_FALLBACK_KEY} -o ${outputPath}`,
-        fullRepoPath,
-    );
+    await execFernCli(`generator list --api-fallback ${NO_API_FALLBACK_KEY} -o ${outputPath}`, fullRepoPath);
 
     const data = await readFile(outputPath, "utf-8");
 
