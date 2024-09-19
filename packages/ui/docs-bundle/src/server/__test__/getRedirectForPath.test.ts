@@ -85,4 +85,23 @@ describe("getRedirectForPath", () => {
             redirect: { destination: "/baz/123/456", permanent: false },
         });
     });
+
+    it("should encode the destination", () => {
+        expect(getRedirectForPath("/bar", MOCK_BASE_URL_0, [{ source: "/bar", destination: "/baz?foo=bar" }])).toEqual({
+            redirect: { destination: "/baz?foo=bar", permanent: false },
+        });
+        expect(getRedirectForPath("/bar", MOCK_BASE_URL_0, [{ source: "/bar", destination: "/a%b" }])).toEqual({
+            redirect: { destination: "/a%25b", permanent: false },
+        });
+    });
+
+    it("should not try to redirect to a bad destination", () => {
+        expect(getRedirectForPath("/bar", MOCK_BASE_URL_0, [{ source: "/bar", destination: "https://n" }])).toEqual({
+            redirect: { destination: "https://n", permanent: false },
+        });
+        expect(getRedirectForPath("/bar", MOCK_BASE_URL_0, [{ source: "/bar", destination: "x/b/c" }])).toBeUndefined();
+        expect(
+            getRedirectForPath("/bar", MOCK_BASE_URL_0, [{ source: "/bar", destination: "absolutely" }]),
+        ).toBeUndefined();
+    });
 });
