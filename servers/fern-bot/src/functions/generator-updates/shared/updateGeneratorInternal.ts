@@ -2,10 +2,9 @@ import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import { ChangelogResponse } from "@fern-fern/generators-sdk/api/resources/generators";
-import { execFernCli } from "@libs/fern";
+import { execFernCli, getGenerators, NO_API_FALLBACK_KEY } from "@libs/fern";
 import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit, type Repository } from "@libs/github/utilities";
 import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService";
-import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import SemVer from "semver";
 import { CleanOptions, SimpleGit } from "simple-git";
@@ -107,17 +106,6 @@ function formatChangelogResponses(previousVersion: string, changelogs: Changelog
         prBody += "</details>";
     }
     return prBodyTitle + prBody + "</ul>\n</dd>\n</dl>";
-}
-
-// This type is meant to mirror the data model for the `generator list` command
-// defined in the OSS repo.
-type GeneratorList = Record<string, Record<string, string[]>>;
-const NO_API_FALLBACK_KEY = "NO_API_FALLBACK";
-async function getGenerators(fullRepoPath: string): Promise<GeneratorList> {
-    // Note since this is multi-line, we do not call `cleanStdout` on it, but it should be parsed ok.
-    const response = await execFernCli(`generator list --api-fallback ${NO_API_FALLBACK_KEY}`, fullRepoPath);
-
-    return yaml.load(response.stdout) as GeneratorList;
 }
 
 // We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
