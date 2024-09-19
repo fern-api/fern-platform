@@ -37,7 +37,7 @@ runs:
       env:
         DEPLOYMENT_URL: ${{ inputs.deployment_url }}
         FERN_TOKEN: ${{ inputs.fern_token }}
-      run: pnpm docs:e2e
+      run: pnpm i -g fern-api@latest; pnpm docs:e2e
 
     - uses: daun/playwright-report-summary@v3
       if: always()
