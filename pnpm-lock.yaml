@@ -4,6 +4,10 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  postcss: 8.4.31
+  esbuild: 0.20.2
+
 importers:
 
   .:
@@ -2595,8 +2599,11 @@ importers:
         specifier: 0.8.1-1-gd6d1a5b
         version: 0.8.1-1-gd6d1a5b
       '@fern-fern/generators-sdk':
-        specifier: 0.110.0-a6864cd4c
-        version: 0.110.0-a6864cd4c
+        specifier: 0.110.0-8f5b3cd3c
+        version: 0.110.0-8f5b3cd3c
+      '@fern-fern/paged-generators-sdk':
+        specifier: 0.0.5702
+        version: 0.0.5702
       '@octokit/openapi-types':
         specifier: ^22.1.0
         version: 22.2.0
@@ -2685,12 +2692,6 @@ importers:
       vitest:
         specifier: ^1.5.0
         version: 1.6.0(@edge-runtime/vm@3.2.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
-
-  servers/fern-bot/.esbuild/.build:
-    dependencies:
-      fern-api:
-        specifier: ^0.21.0
-        version: 0.21.0
 
 packages:
 
@@ -4038,8 +4039,11 @@ packages:
   '@fern-fern/fern-docs-sdk@0.0.5':
     resolution: {integrity: sha512-x6kfRboXiG1J3fpON2lXtD9qCub2UXvNuscvCsIY3ACYvSvLHHlHvc84rIDv+ZlP/anlEvtTyfNh72Hmi0nffw==}
 
-  '@fern-fern/generators-sdk@0.110.0-a6864cd4c':
-    resolution: {integrity: sha512-KOKrnl0bDHPXfQX4xqgMBeBGsYFw29CVRo4cCmQJJ4xReUGph9U3ZBYRf/rQmGQp03XpJ+JnBD/Hn9r5fuhPAw==}
+  '@fern-fern/generators-sdk@0.110.0-8f5b3cd3c':
+    resolution: {integrity: sha512-xKMpQjghJK5HQJ+hjMoo2sxJj2zGvBc3BZSim0VmndhrM1Lw7G2Mn3elEOV6rgVpghVDA2BQVoLG2m4kBlcLBg==}
+
+  '@fern-fern/paged-generators-sdk@0.0.5702':
+    resolution: {integrity: sha512-Gn3EvneNeRRrT+5VKkGbUiUcHZy4JGchFbiH5LqwTItzrBY8OBQ8vUz+FDpT7tHgUk1PjFzirIH8XX1+I1CsHA==}
 
   '@fern-fern/vercel@0.0.4655':
     resolution: {integrity: sha512-twz/gFcQo9Gk38byYLFsJDbHnvvBsOHfofdef15vzIeFCIr1yPsTWYmNoPllBeRLc4RjMel6T06afFZJMc8JSg==}
@@ -18734,13 +18738,25 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generators-sdk@0.110.0-a6864cd4c':
+  '@fern-fern/generators-sdk@0.110.0-8f5b3cd3c':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.11.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/paged-generators-sdk@0.0.5702':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding

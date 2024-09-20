@@ -1,11 +1,15 @@
 import { Env } from "@libs/env";
-import { FernRegistryClient } from "@fern-fern/generators-sdk";
+import { FernRegistryClient } from "@fern-fern/paged-generators-sdk";
+import { PullRequestState } from "@fern-fern/generators-sdk/api";
 
 // Note given we're making requests to FDR, this could take time, so we're parallelizing this function with a Map step in
 // the step function, as we do for all the other actions.
 export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
     const client = new FernRegistryClient({ environment: env.DEFAULT_FDR_ORIGIN, token: env.FERN_TOKEN });
-    const pulls = await client.git.listPullRequests({});
+    const pulls = await client.git.listPullRequests({
+        author: Array.from(FERN_TEAM.values()),
+        status: [PullRequestState.Open, PullRequestState.Closed],
+    });
 
     // Notify on stale upgrade PRs to CUSTOMER_ALERTS_SLACK_CHANNEL
 
@@ -24,12 +28,10 @@ const FERN_TEAM = new Set<string>([
     "chdeskur",
     "dannysheridan",
 ]);
-function isFernOrgMember(login: string) {
-    return FERN_TEAM.has(login.toLowerCase());
-}
 
 // The below seems to not be possible with installation auth/a github app, so we'd need to use a personal access token
-// which feels a bit jank right now, so just hardcoding a list instead.
+// which feels a bit jank right now, so just hardcoding the list above instead.
+//
 // Logins for fern team members, this is effectively a cache so we're not making requests to Github for every author
 // const FERN_TEAM = new Set<string>();
 // async function isFernOrgMember(login: string, app: App) {

@@ -75,7 +75,7 @@ groups:
       - generators
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.38.6
+        version: 0.40.5
         output:
           location: npm
           url: npm.buildwithfern.com
@@ -85,6 +85,22 @@ groups:
           skipResponseValidation: true
           outputSourceFiles: true
           neverThrowErrors: true
+          timeoutInSeconds: infinity
+
+  paged-generators-sdk:
+    audiences:
+      - generators
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.40.5
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/paged-generators-sdk"
+        config:
+          noSerdeLayer: false
+          skipResponseValidation: true
+          outputSourceFiles: true
           timeoutInSeconds: infinity
 
   internal-snippets-sdks:
