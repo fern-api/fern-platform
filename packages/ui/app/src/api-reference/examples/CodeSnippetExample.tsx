@@ -7,7 +7,7 @@ import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighl
 import { ScrollToHandle } from "../../syntax-highlighting/FernSyntaxHighlighterTokens";
 import { JsonPropertyPath } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
-import { useHighlightJsonLines } from "./getJsonLineNumbers";
+import { useHighlightJsonLines } from "./useHighlightJsonLines";
 
 export declare namespace CodeSnippetExample {
     export interface Props extends Omit<TitledExample.Props, "copyToClipboardText"> {
