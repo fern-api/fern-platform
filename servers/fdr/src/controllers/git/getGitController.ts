@@ -29,11 +29,11 @@ export function getGitController(app: FdrApplication): GitService {
             await checkIsFernUser(req.headers.authorization);
 
             const repos = await app.dao.git().listRepository({
-                page: req.query.page,
-                pageSize: req.query.pageSize,
-                repositoryName: req.query.repositoryName,
-                repositoryOwner: req.query.repositoryOwner,
-                organizationId: req.query.organizationId,
+                page: req.body.page,
+                pageSize: req.body.pageSize,
+                repositoryName: req.body.repositoryName,
+                repositoryOwner: req.body.repositoryOwner,
+                organizationId: req.body.organizationId,
             });
 
             return res.send(repos);
@@ -72,13 +72,13 @@ export function getGitController(app: FdrApplication): GitService {
             await checkIsFernUser(req.headers.authorization);
 
             const repos = await app.dao.git().listPullRequests({
-                page: req.query.page,
-                pageSize: req.query.pageSize,
-                repositoryName: req.query.repositoryName,
-                repositoryOwner: req.query.repositoryOwner,
-                organizationId: req.query.organizationId,
-                state: req.query.state,
-                author: req.query.author,
+                page: req.body.page,
+                pageSize: req.body.pageSize,
+                repositoryName: req.body.repositoryName,
+                repositoryOwner: req.body.repositoryOwner,
+                organizationId: req.body.organizationId,
+                state: req.body.state,
+                author: req.body.author,
             });
 
             return res.send(repos);
