@@ -92,34 +92,12 @@ export class Git {
         request: FernRegistry.ListRepositoriesRequest = {},
         requestOptions?: Git.RequestOptions
     ): Promise<core.APIResponse<FernRegistry.ListRepositoriesResponse, FernRegistry.git.listRepositories.Error>> {
-        const { page, pageSize, organizationId, repositoryName, repositoryOwner } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (page != null) {
-            _queryParams["page"] = page.toString();
-        }
-
-        if (pageSize != null) {
-            _queryParams["pageSize"] = pageSize.toString();
-        }
-
-        if (organizationId != null) {
-            _queryParams["organizationId"] = organizationId;
-        }
-
-        if (repositoryName != null) {
-            _queryParams["repositoryName"] = repositoryName;
-        }
-
-        if (repositoryOwner != null) {
-            _queryParams["repositoryOwner"] = repositoryOwner;
-        }
-
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/generators/github/repository/list"
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
@@ -127,7 +105,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -333,42 +311,12 @@ export class Git {
         request: FernRegistry.ListPullRequestsRequest = {},
         requestOptions?: Git.RequestOptions
     ): Promise<core.APIResponse<FernRegistry.ListPullRequestsResponse, FernRegistry.git.listPullRequests.Error>> {
-        const { page, pageSize, repositoryName, repositoryOwner, organizationId, state, author } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (page != null) {
-            _queryParams["page"] = page.toString();
-        }
-
-        if (pageSize != null) {
-            _queryParams["pageSize"] = pageSize.toString();
-        }
-
-        if (repositoryName != null) {
-            _queryParams["repositoryName"] = repositoryName;
-        }
-
-        if (repositoryOwner != null) {
-            _queryParams["repositoryOwner"] = repositoryOwner;
-        }
-
-        if (organizationId != null) {
-            _queryParams["organizationId"] = organizationId;
-        }
-
-        if (state != null) {
-            _queryParams["state"] = JSON.stringify(state);
-        }
-
-        if (author != null) {
-            _queryParams["author"] = JSON.stringify(author);
-        }
-
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
                 "/generators/github/pull-request/list"
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
@@ -376,7 +324,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

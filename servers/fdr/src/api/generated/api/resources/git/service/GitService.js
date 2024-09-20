@@ -51,7 +51,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.get("/repository/list", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/repository/list", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.listRepositories(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
@@ -147,7 +147,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.get("/pull-request/list", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/pull-request/list", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.listPullRequests(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {

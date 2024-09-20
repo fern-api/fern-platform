@@ -12,13 +12,7 @@ export interface GitServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }, next: express.NextFunction): void | Promise<void>;
-    listRepositories(req: express.Request<never, FernRegistry.ListRepositoriesResponse, never, {
-        page?: number;
-        pageSize?: number;
-        organizationId?: FernRegistry.OrgId;
-        repositoryName?: string;
-        repositoryOwner?: string;
-    }>, res: {
+    listRepositories(req: express.Request<never, FernRegistry.ListRepositoriesResponse, FernRegistry.ListRepositoriesRequest, never>, res: {
         send: (responseBody: FernRegistry.ListRepositoriesResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
@@ -45,15 +39,7 @@ export interface GitServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }, next: express.NextFunction): void | Promise<void>;
-    listPullRequests(req: express.Request<never, FernRegistry.ListPullRequestsResponse, never, {
-        page?: number;
-        pageSize?: number;
-        repositoryName?: string;
-        repositoryOwner?: string;
-        organizationId?: FernRegistry.OrgId;
-        state?: FernRegistry.PullRequestState[];
-        author?: string[];
-    }>, res: {
+    listPullRequests(req: express.Request<never, FernRegistry.ListPullRequestsResponse, FernRegistry.ListPullRequestsRequest, never>, res: {
         send: (responseBody: FernRegistry.ListPullRequestsResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
