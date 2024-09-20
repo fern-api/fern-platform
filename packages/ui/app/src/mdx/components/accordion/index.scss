@@ -24,6 +24,6 @@
     }
 
     .fern-accordion-content {
-        @apply overflow-hidden data-[state=closed]:animate-slide-up data-[state=open]:animate-slide-down;
+        @apply overflow-hidden fern-collapsible;
     }
 }

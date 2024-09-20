@@ -1,7 +1,6 @@
 import { APIV1Read, Snippets } from "@fern-api/fdr-sdk/client/types";
 import { assertNever, isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { decodeJwt } from "jose";
-import jp from "jsonpath";
 import { compact, mapValues } from "lodash-es";
 import {
     ResolvedEndpointDefinition,
@@ -591,11 +590,13 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     };
     const res = await executeProxyRest(proxyEnvironment, req);
 
+    const jpquery = await import("jsonpath").then((jsonpath) => jsonpath.query);
+
     visitDiscriminatedUnion(res, "type")._visit({
         json: (jsonRes) => {
             if (jsonRes.response.ok) {
                 try {
-                    const accessToken = jp.query(
+                    const accessToken = jpquery(
                         jsonRes.response,
                         oAuthClientCredentialsReferencedEndpoint.accessTokenLocator,
                     )?.[0];
