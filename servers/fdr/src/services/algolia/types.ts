@@ -1,4 +1,5 @@
-import { Algolia, DocsV1Db } from "../../api";
+import { APIV1Read, Algolia, DocsV1Db } from "../../api";
+import { AlgoliaRecordVersionV3 } from "../../api/generated/api";
 import type { DocsVersion } from "../../types";
 
 export type IndexSegment =
@@ -22,3 +23,12 @@ type WithObjectId<T> = {
 } & T;
 
 export type AlgoliaSearchRecord = WithObjectId<Algolia.AlgoliaRecord>;
+
+export type TypeReferenceWithMetadata = {
+    reference: APIV1Read.TypeReference;
+    anchorIdParts: string[];
+    breadcrumbs: string[];
+    slugPrefix: string;
+    version: AlgoliaRecordVersionV3 | undefined;
+    indexSegmentId: string;
+};

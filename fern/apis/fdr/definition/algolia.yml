@@ -16,10 +16,16 @@ types:
     audiences:
       - read
     union:
+      page-v4: AlgoliaPageRecordV4
+      endpoint-v4: AlgoliaEndpointRecordV4
+      websocket-v4: AlgoliaWebSocketRecordV4
+      webhook-v4: AlgoliaWebhookRecordV4
       page-v3: AlgoliaPageRecordV3
       endpoint-v3: AlgoliaEndpointRecordV3
       websocket-v3: AlgoliaWebSocketRecordV3
       webhook-v3: AlgoliaWebhookRecordV3
+      markdown-section-v1: AlgoliaMarkdownSectionRecordV1
+      field-v1: AlgoliaFieldRecordV1
       # deprecated
       endpoint: AlgoliaEndpointRecord
       page: AlgoliaPageRecord
@@ -31,6 +37,15 @@ types:
       id: commons.VersionId
       slug: navigation.Slug
 
+  AlgoliaPageRecordV4:
+    properties:
+      title: string
+      description: optional<string>
+      breadcrumbs: Breadcrumbs
+      slug: navigation.Slug
+      version: optional<AlgoliaRecordVersionV3>
+      indexSegmentId: IndexSegmentId
+
   AlgoliaPageRecordV3:
     properties:
       title: string
@@ -40,6 +55,13 @@ types:
       version: optional<AlgoliaRecordVersionV3>
       indexSegmentId: IndexSegmentId
 
+  AlgoliaEndpointRecordV4:
+    extends: AlgoliaPageRecordV4
+    properties:
+      method: apiReadV1Endpoint.HttpMethod
+      endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
+      isResponseStream: optional<boolean>
+
   AlgoliaEndpointRecordV3:
     extends: AlgoliaPageRecordV3
     properties:
@@ -47,9 +69,20 @@ types:
       endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
       isResponseStream: optional<boolean>
 
+  AlgoliaWebSocketRecordV4:
+    extends: AlgoliaPageRecordV4
+    properties:
+      endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
+
   AlgoliaWebSocketRecordV3:
     extends: AlgoliaPageRecordV3
     properties:
+      endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
+
+  AlgoliaWebhookRecordV4:
+    extends: AlgoliaPageRecordV4
+    properties:
+      method: apiReadV1Endpoint.HttpMethod
       endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
 
   AlgoliaWebhookRecordV3:
@@ -57,6 +90,25 @@ types:
     properties:
       method: apiReadV1Endpoint.HttpMethod
       endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
+
+  AlgoliaMarkdownSectionRecordV1:
+    properties:
+      title: string
+      content: string
+      breadcrumbs: Breadcrumbs
+      indexSegmentId: IndexSegmentId
+      slug: navigation.Slug
+
+  AlgoliaFieldRecordV1:
+    properties:
+      name: optional<string>
+      description: optional<string>
+      availability: optional<string>
+      breadcrumbs: Breadcrumbs
+      slug: navigation.Slug
+      version: optional<AlgoliaRecordVersionV3>
+      indexSegmentId: IndexSegmentId
+      extends: optional<list<string>>
 
   IndexSegment:
     properties:

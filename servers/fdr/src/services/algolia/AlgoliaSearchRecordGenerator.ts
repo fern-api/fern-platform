@@ -7,6 +7,7 @@ import {
     visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
+import { WebSocketNode, WebhookNode } from "@fern-api/fdr-sdk/src/navigation";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
@@ -15,7 +16,7 @@ import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
 import { ReferencedTypes, getAllReferencedTypes } from "./getAllReferencedTypes";
-import type { AlgoliaSearchRecord, IndexSegment } from "./types";
+import type { AlgoliaSearchRecord, IndexSegment, TypeReferenceWithMetadata } from "./types";
 
 class NavigationContext {
     #indexSegment: IndexSegment;
@@ -128,12 +129,21 @@ export class AlgoliaSearchRecordGenerator {
                             ),
                         );
                     case "changelog":
+                        // TODO(rohin): Remove this once all search is migrated to new version
                         return this.generateAlgoliaSearchRecordsForChangelogSection(
                             tab,
                             context.withPathPart({
                                 name: tab.title ?? "Changelog",
                                 urlSlug: tab.urlSlug,
                             }),
+                        ).concat(
+                            this.generateAlgoliaSearchRecordsForChangelogSectionV2(
+                                tab,
+                                context.withPathPart({
+                                    name: tab.title ?? "Changelog",
+                                    urlSlug: tab.urlSlug,
+                                }),
+                            ),
                         );
                     default:
                         return [];
@@ -232,7 +242,6 @@ export class AlgoliaSearchRecordGenerator {
                           urlSlug: page.urlSlug,
                       });
             const processedContent = convertMarkdownToText(pageContent.markdown);
-            const anchorHeaders = extractHeadersFromMarkdownContent(pageContent.markdown);
             const { indexSegment } = context;
             return [
                 compact({
@@ -253,7 +262,6 @@ export class AlgoliaSearchRecordGenerator {
                               }
                             : undefined,
                     indexSegmentId: indexSegment.id,
-                    anchorHeaders,
                 }),
             ];
         } else if (item.type === "link") {
@@ -266,9 +274,15 @@ export class AlgoliaSearchRecordGenerator {
                 context,
             );
         } else if (item.type === "apiV2") {
+            // TODO(rohin): Remove this once all search is migrated to new version
             return this.generateAlgoliaSearchRecordsForApiReferenceNode(
                 item.node as FernNavigation.ApiReferenceNode,
                 context,
+            ).concat(
+                this.generateAlgoliaSearchRecordsForApiReferenceNodeV2(
+                    item.node as FernNavigation.ApiReferenceNode,
+                    context,
+                ),
             );
         }
         assertNever(item);
@@ -335,55 +349,36 @@ export class AlgoliaSearchRecordGenerator {
                         // this needs to be rewritten as a template, with proper markdown formatting + snapshot testing.
                         // also, the content is potentially trimmed to 10kb.
                         const contents = [endpoint.description ?? ""];
-                        const fields: string[] = [];
 
-                        const typeReferences: {
-                            reference: APIV1Read.TypeReference;
-                            anchorIdParts?: string[];
-                        }[] = [];
+                        const typeReferences: APIV1Read.TypeReference[] = [];
 
                         if (endpoint.headers != null && endpoint.headers.length > 0) {
                             contents.push("## Headers\n");
                             endpoint.headers.forEach((header) => {
-                                const anchorIdParts = ["request", "header", header.key];
-                                typeReferences.push({
-                                    reference: header.type,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(header.type);
                                 contents.push(
                                     `- ${header.key}=${this.stringifyTypeRef(header.type)} ${header.description ?? ""}`,
                                 );
-                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
                         if (endpoint.path.pathParameters.length > 0) {
                             contents.push("## Path Parameters\n");
                             endpoint.path.pathParameters.forEach((param) => {
-                                const anchorIdParts = ["request", "path", param.key];
-                                typeReferences.push({
-                                    reference: param.type,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(param.type);
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
-                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
                         if (endpoint.queryParameters.length > 0) {
                             contents.push("## Query Parameters\n");
                             endpoint.queryParameters.forEach((param) => {
-                                const anchorIdParts = ["request", "query", param.key];
-                                typeReferences.push({
-                                    reference: param.type,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(param.type);
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
-                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
@@ -396,26 +391,17 @@ export class AlgoliaSearchRecordGenerator {
                             contents.push("### Body\n");
 
                             if (endpoint.request.type.type === "reference") {
-                                const anchorIdParts = ["request", "body"];
-                                typeReferences.push({
-                                    reference: endpoint.request.type.value,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(endpoint.request.type.value);
                                 contents.push(
                                     `${this.stringifyTypeRef(endpoint.request.type.value)}: ${endpoint.request.description ?? ""}`,
                                 );
                             } else if (endpoint.request.type.type === "formData") {
                                 endpoint.request.type.properties.forEach((property) => {
                                     if (property.type === "bodyProperty") {
-                                        const anchorIdParts = ["request", "body", property.key];
-                                        typeReferences.push({
-                                            reference: property.valueType,
-                                            anchorIdParts,
-                                        });
+                                        typeReferences.push(property.valueType);
                                         contents.push(
                                             `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                         );
-                                        fields.push(anchorIdParts.join("."));
                                     }
                                 });
                             } else if (endpoint.request.type.type === "object") {
@@ -423,15 +409,10 @@ export class AlgoliaSearchRecordGenerator {
                                     contents.push(`- ${extend}`);
                                 });
                                 endpoint.request.type.properties.forEach((property) => {
-                                    const anchorIdParts = ["request", "body", property.key];
-                                    typeReferences.push({
-                                        reference: property.valueType,
-                                        anchorIdParts,
-                                    });
+                                    typeReferences.push(property.valueType);
                                     contents.push(
                                         `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                     );
-                                    fields.push(anchorIdParts.join("."));
                                 });
                             }
                         }
@@ -445,11 +426,7 @@ export class AlgoliaSearchRecordGenerator {
                             contents.push("### Body\n");
 
                             if (endpoint.response.type.type === "reference") {
-                                const anchorIdParts = ["response", "body"];
-                                typeReferences.push({
-                                    reference: endpoint.response.type.value,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(endpoint.response.type.value);
                                 contents.push(
                                     `${this.stringifyTypeRef(endpoint.response.type.value)}: ${endpoint.response.description ?? ""}`,
                                 );
@@ -458,22 +435,15 @@ export class AlgoliaSearchRecordGenerator {
                                     contents.push(`- ${extend}`);
                                 });
                                 endpoint.response.type.properties.forEach((property) => {
-                                    const anchorIdParts = ["response", "body", property.key];
-                                    typeReferences.push({
-                                        reference: property.valueType,
-                                        anchorIdParts,
-                                    });
+                                    typeReferences.push(property.valueType);
                                     contents.push(
                                         `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                     );
-                                    fields.push(anchorIdParts.join("."));
                                 });
                             }
                         }
 
-                        contents.push(
-                            this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}, fields),
-                        );
+                        contents.push(this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}));
 
                         records.push(
                             compact({
@@ -488,7 +458,6 @@ export class AlgoliaSearchRecordGenerator {
                                 method: endpoint.method,
                                 endpointPath: endpoint.path.parts,
                                 isResponseStream: node.isResponseStream,
-                                fields,
                             }),
                         );
                     },
@@ -500,55 +469,36 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         const contents = [ws.description ?? ""];
-                        const typeReferences: {
-                            reference: APIV1Read.TypeReference;
-                            anchorIdParts?: string[];
-                        }[] = [];
 
-                        const fields: string[] = [];
+                        const typeReferences: APIV1Read.TypeReference[] = [];
 
                         if (ws.headers.length > 0) {
                             contents.push("## Headers\n");
                             ws.headers.forEach((param) => {
-                                const anchorIdParts = ["request", "header", param.key];
-                                typeReferences.push({
-                                    reference: param.type,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(param.type);
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
-                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
                         if (ws.path.pathParameters.length > 0) {
                             contents.push("## Path Parameters\n");
                             ws.path.pathParameters.forEach((param) => {
-                                const anchorIdParts = ["request", "path", param.key];
-                                typeReferences.push({
-                                    reference: param.type,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(param.type);
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
-                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
                         if (ws.queryParameters.length > 0) {
                             contents.push("## Query Parameters\n");
                             ws.queryParameters.forEach((param) => {
-                                const anchorIdParts = ["request", "query", param.key];
-                                typeReferences.push({
-                                    reference: param.type,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(param.type);
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
-                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
@@ -566,29 +516,17 @@ export class AlgoliaSearchRecordGenerator {
                                     if (message.displayName != null) {
                                         anchorIdParts.push(message.displayName);
                                     }
-                                    typeReferences.push({
-                                        reference: message.body.value,
-                                        anchorIdParts,
-                                    });
+                                    typeReferences.push(message.body.value);
                                     contents.push(`- ${this.stringifyTypeRef(message.body.value)}`);
                                 } else if (message.body.type === "object") {
                                     message.body.extends.forEach((extend) => {
                                         contents.push(`- ${extend}`);
                                     });
                                     message.body.properties.forEach((property) => {
-                                        const anchorIdParts = [message.origin === "server" ? "receive" : "send"];
-                                        if (message.displayName != null) {
-                                            anchorIdParts.push(message.displayName);
-                                        }
-                                        typeReferences.push({
-                                            reference: property.valueType,
-                                            anchorIdParts,
-                                        });
-                                        anchorIdParts.push(property.key);
+                                        typeReferences.push(property.valueType);
                                         contents.push(
                                             `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                         );
-                                        fields.push(anchorIdParts.join("."));
                                     });
                                 } else {
                                     assertNever(message.body);
@@ -596,9 +534,7 @@ export class AlgoliaSearchRecordGenerator {
                             });
                         }
 
-                        contents.push(
-                            this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}, fields),
-                        );
+                        contents.push(this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}));
 
                         records.push(
                             compact({
@@ -611,7 +547,6 @@ export class AlgoliaSearchRecordGenerator {
                                 version,
                                 indexSegmentId: context.indexSegment.id,
                                 endpointPath: ws.path.parts,
-                                fields,
                             }),
                         );
                     },
@@ -623,20 +558,12 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         const contents = [webhook.description ?? ""];
-                        const typeReferences: {
-                            reference: APIV1Read.TypeReference;
-                            anchorIdParts?: string[];
-                        }[] = [];
-                        const fields: string[] = [];
+                        const typeReferences: APIV1Read.TypeReference[] = [];
 
                         if (webhook.headers.length > 0) {
                             contents.push("## Headers\n");
                             webhook.headers.forEach((header) => {
-                                const anchorIdParts = ["request", "header", header.key];
-                                typeReferences.push({
-                                    reference: header.type,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(header.type);
                                 contents.push(
                                     `- ${header.key}=${this.stringifyTypeRef(header.type)} ${header.description ?? ""}`,
                                 );
@@ -650,37 +577,25 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         if (webhook.payload.type.type === "reference") {
-                            const anchorIdParts = ["request", "body"];
-                            typeReferences.push({
-                                reference: webhook.payload.type.value,
-                                anchorIdParts,
-                            });
+                            typeReferences.push(webhook.payload.type.value);
                             contents.push(
                                 `${this.stringifyTypeRef(webhook.payload.type.value)}: ${webhook.payload.description ?? ""}`,
                             );
-                            fields.push(anchorIdParts.join("."));
                         } else if (webhook.payload.type.type === "object") {
                             webhook.payload.type.extends.forEach((extend) => {
                                 contents.push(`- ${extend}`);
                             });
                             webhook.payload.type.properties.forEach((property) => {
-                                const anchorIdParts = ["request", "body", property.key];
-                                typeReferences.push({
-                                    reference: property.valueType,
-                                    anchorIdParts,
-                                });
+                                typeReferences.push(property.valueType);
                                 contents.push(
                                     `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                 );
-                                fields.push(anchorIdParts.join("."));
                             });
                         } else {
                             assertNever(webhook.payload.type);
                         }
 
-                        contents.push(
-                            this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}, fields),
-                        );
+                        contents.push(this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}));
 
                         records.push(
                             compact({
@@ -694,7 +609,6 @@ export class AlgoliaSearchRecordGenerator {
                                 indexSegmentId: context.indexSegment.id,
                                 method: webhook.method,
                                 endpointPath: webhook.path.map((path) => ({ type: "literal", value: path })),
-                                fields,
                             }),
                         );
                     },
@@ -712,7 +626,6 @@ export class AlgoliaSearchRecordGenerator {
                 }
 
                 const frontmatter = getFrontmatter(md);
-                const anchorHeaders = extractHeadersFromMarkdownContent(md);
 
                 records.push(
                     compact({
@@ -724,9 +637,638 @@ export class AlgoliaSearchRecordGenerator {
                         slug: node.slug,
                         version,
                         indexSegmentId: context.indexSegment.id,
-                        anchorHeaders,
                     }),
                 );
+            }
+            return;
+        });
+
+        return records;
+    }
+
+    private generateAlgoliaSearchRecordsForApiReferenceNodeV2(
+        root: FernNavigation.ApiReferenceNode,
+        context: NavigationContext,
+    ): AlgoliaSearchRecord[] {
+        const api = this.config.apiDefinitionsById.get(root.apiDefinitionId);
+        if (api == null) {
+            LOGGER.error("Failed to find API definition for API reference node. id=", root.apiDefinitionId);
+        }
+        const holder =
+            api != null ? FernNavigation.ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
+        const records: AlgoliaSearchRecord[] = [];
+
+        const breadcrumbs = context.pathParts.map((part) => part.name);
+
+        const version =
+            context.indexSegment.type === "versioned"
+                ? {
+                      id: context.indexSegment.version.id,
+                      slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                  }
+                : undefined;
+
+        function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): string[] {
+            return [
+                ...breadcrumbs,
+                ...parents
+                    .filter(FernNavigation.hasMetadata)
+                    .filter((parent) =>
+                        parent.type === "apiReference"
+                            ? parent.hideTitle !== true
+                            : parent.type === "changelogMonth" || parent.type === "changelogYear"
+                              ? false
+                              : true,
+                    )
+                    .map((parent) => parent.title),
+            ];
+        }
+
+        function anchorIdToSlug(
+            node: FernNavigation.EndpointNode | WebSocketNode | WebhookNode,
+            anchorIdParts: string[],
+        ) {
+            return `${node.slug}#${anchorIdParts.join(".")}`;
+        }
+
+        FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
+            if (!FernNavigation.hasMetadata(node)) {
+                return;
+            }
+
+            if (node.hidden) {
+                return "skip";
+            }
+
+            if (FernNavigation.isApiLeaf(node)) {
+                const indexSegmentId = context.indexSegment.id;
+                const breadcrumbs = toBreadcrumbs(parents);
+                visitDiscriminatedUnion(node)._visit({
+                    endpoint: (node) => {
+                        const endpoint = holder?.endpoints.get(node.endpointId);
+                        if (endpoint == null) {
+                            LOGGER.error("Failed to find endpoint for API reference node.", node);
+                            return;
+                        }
+
+                        // this is a hack to include the endpoint request/response json in the search index
+                        // and potentially use it for conversational AI in the future.
+                        // this needs to be rewritten as a template, with proper markdown formatting + snapshot testing.
+                        // also, the content is potentially trimmed to 10kb.
+                        const fields: AlgoliaSearchRecord[] = [];
+
+                        const typeReferences: TypeReferenceWithMetadata[] = [];
+
+                        if (endpoint.headers != null && endpoint.headers.length > 0) {
+                            endpoint.headers.forEach((header) => {
+                                const anchorIdParts = ["request", "header", header.key];
+                                const slug = anchorIdToSlug(node, anchorIdParts);
+                                fields.push({
+                                    type: "field-v1",
+                                    name: header.key,
+                                    objectID: uuid(),
+                                    description: header.description,
+                                    availability: header.availability,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                                typeReferences.push({
+                                    reference: header.type,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                            });
+                        }
+
+                        if (endpoint.path.pathParameters.length > 0) {
+                            endpoint.path.pathParameters.forEach((param) => {
+                                const anchorIdParts = ["request", "path", param.key];
+                                const slug = anchorIdToSlug(node, anchorIdParts);
+                                fields.push({
+                                    type: "field-v1",
+                                    name: param.key,
+                                    objectID: uuid(),
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                            });
+                        }
+
+                        if (endpoint.queryParameters.length > 0) {
+                            endpoint.queryParameters.forEach((param) => {
+                                const anchorIdParts = ["request", "query", param.key];
+                                const slug = anchorIdToSlug(node, anchorIdParts);
+                                fields.push({
+                                    type: "field-v1",
+                                    name: param.key,
+                                    objectID: uuid(),
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                            });
+                        }
+
+                        if (endpoint.request != null) {
+                            if (endpoint.request.description != null) {
+                                fields.push({
+                                    type: "field-v1",
+                                    objectID: uuid(),
+                                    description: endpoint.request.description,
+                                    availability: endpoint.availability,
+                                    breadcrumbs: toBreadcrumbs(parents).concat(["request"]),
+                                    slug: anchorIdToSlug(node, ["request"]),
+                                    version,
+                                    indexSegmentId: context.indexSegment.id,
+                                    extends:
+                                        endpoint.request.type.type === "object"
+                                            ? endpoint.request.type.extends
+                                            : undefined,
+                                });
+                            }
+
+                            if (endpoint.request.type.type === "reference") {
+                                const anchorIdParts = ["request", "body"];
+                                typeReferences.push({
+                                    reference: endpoint.request.type.value,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: anchorIdToSlug(node, anchorIdParts),
+                                    version,
+                                    indexSegmentId,
+                                });
+                            } else if (endpoint.request.type.type === "formData") {
+                                endpoint.request.type.properties.forEach((property) => {
+                                    if (property.type === "bodyProperty") {
+                                        const anchorIdParts = ["request", "body", property.key];
+                                        const slug = anchorIdToSlug(node, anchorIdParts);
+                                        fields.push({
+                                            type: "field-v1",
+                                            name: property.key,
+                                            objectID: uuid(),
+                                            description: property.description,
+                                            availability: property.availability,
+                                            breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                            slug,
+                                            version,
+                                            indexSegmentId,
+                                        });
+                                        typeReferences.push({
+                                            reference: property.valueType,
+                                            anchorIdParts,
+                                            breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                            slugPrefix: slug,
+                                            version,
+                                            indexSegmentId,
+                                        });
+                                    }
+                                });
+                            } else if (endpoint.request.type.type === "object") {
+                                endpoint.request.type.properties.forEach((property) => {
+                                    const anchorIdParts = ["request", "body", property.key];
+                                    const slug = anchorIdToSlug(node, anchorIdParts);
+                                    fields.push({
+                                        type: "field-v1",
+                                        name: property.key,
+                                        objectID: uuid(),
+                                        description: property.description,
+                                        availability: property.availability,
+                                        breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                        slug,
+                                        version,
+                                        indexSegmentId,
+                                    });
+                                    typeReferences.push({
+                                        reference: property.valueType,
+                                        anchorIdParts,
+                                        breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                        slugPrefix: slug,
+                                        version,
+                                        indexSegmentId,
+                                    });
+                                });
+                            }
+                        }
+
+                        if (endpoint.response != null) {
+                            fields.push({
+                                type: "field-v1",
+                                objectID: uuid(),
+                                description: endpoint.response.description,
+                                availability: endpoint.availability,
+                                breadcrumbs: toBreadcrumbs(parents).concat(["request"]),
+                                slug: anchorIdToSlug(node, ["request"]),
+                                version,
+                                indexSegmentId: context.indexSegment.id,
+                                extends:
+                                    endpoint.response.type.type === "object"
+                                        ? endpoint.response.type.extends
+                                        : undefined,
+                            });
+
+                            if (endpoint.response.type.type === "reference") {
+                                const anchorIdParts = ["response", "body"];
+                                typeReferences.push({
+                                    reference: endpoint.response.type.value,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: anchorIdToSlug(node, anchorIdParts),
+                                    version,
+                                    indexSegmentId,
+                                });
+                            } else if (endpoint.response.type.type === "object") {
+                                endpoint.response.type.properties.forEach((property) => {
+                                    const anchorIdParts = ["response", "body", property.key];
+                                    const slug = anchorIdToSlug(node, anchorIdParts);
+                                    fields.push({
+                                        type: "field-v1",
+                                        name: property.key,
+                                        objectID: uuid(),
+                                        description: property.description,
+                                        availability: property.availability,
+                                        breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                        slug,
+                                        version,
+                                        indexSegmentId,
+                                    });
+                                    typeReferences.push({
+                                        reference: property.valueType,
+                                        anchorIdParts,
+                                        breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                        slugPrefix: slug,
+                                        version,
+                                        indexSegmentId,
+                                    });
+                                });
+                            }
+                        }
+
+                        records.push(...fields.map(compact));
+                        records.push(
+                            ...this.collectReferencedTypesToContentV2(typeReferences, holder?.api.types ?? {}).map(
+                                compact,
+                            ),
+                        );
+                        records.push(
+                            compact({
+                                type: "endpoint-v4",
+                                objectID: uuid(),
+                                title: node.title,
+                                description: endpoint.description,
+                                breadcrumbs: toBreadcrumbs(parents),
+                                slug: node.slug,
+                                version,
+                                indexSegmentId: context.indexSegment.id,
+                                method: endpoint.method,
+                                endpointPath: endpoint.path.parts,
+                                isResponseStream: node.isResponseStream,
+                            }),
+                        );
+                    },
+                    webSocket: (node) => {
+                        const ws = holder?.webSockets.get(node.webSocketId);
+                        if (ws == null) {
+                            LOGGER.error("Failed to find websocket for API reference node.", node);
+                            return;
+                        }
+
+                        const typeReferences: TypeReferenceWithMetadata[] = [];
+
+                        const fields: AlgoliaSearchRecord[] = [];
+
+                        if (ws.headers.length > 0) {
+                            ws.headers.forEach((param) => {
+                                const anchorIdParts = ["request", "header", param.key];
+                                const slug = anchorIdToSlug(node, anchorIdParts);
+                                fields.push({
+                                    type: "field-v1",
+                                    name: param.key,
+                                    objectID: uuid(),
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                            });
+                        }
+
+                        if (ws.path.pathParameters.length > 0) {
+                            ws.path.pathParameters.forEach((param) => {
+                                const anchorIdParts = ["request", "path", param.key];
+                                const slug = anchorIdToSlug(node, anchorIdParts);
+                                fields.push({
+                                    type: "field-v1",
+                                    name: param.key,
+                                    objectID: uuid(),
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                            });
+                        }
+
+                        if (ws.queryParameters.length > 0) {
+                            ws.queryParameters.forEach((param) => {
+                                const anchorIdParts = ["request", "query", param.key];
+                                const slug = anchorIdToSlug(node, anchorIdParts);
+                                fields.push({
+                                    type: "field-v1",
+                                    name: param.key,
+                                    objectID: uuid(),
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                            });
+                        }
+
+                        if (ws.messages.length > 0) {
+                            ws.messages.forEach((message) => {
+                                fields.push({
+                                    type: "field-v1",
+                                    objectID: uuid(),
+                                    description: message.description,
+                                    availability: message.availability,
+                                    breadcrumbs: toBreadcrumbs(parents).concat([
+                                        message.origin === "server" ? "receive" : "send",
+                                    ]),
+                                    slug: anchorIdToSlug(node, [message.origin === "server" ? "receive" : "send"]),
+                                    version,
+                                    indexSegmentId,
+                                    extends: message.body.type === "object" ? message.body.extends : undefined,
+                                });
+                                if (message.body.type === "reference") {
+                                    const anchorIdParts = [message.origin === "server" ? "receive" : "send"];
+                                    if (message.displayName != null) {
+                                        anchorIdParts.push(message.displayName);
+                                    }
+                                    typeReferences.push({
+                                        reference: message.body.value,
+                                        anchorIdParts,
+                                        breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                        slugPrefix: anchorIdToSlug(node, anchorIdParts),
+                                        version,
+                                        indexSegmentId,
+                                    });
+                                } else if (message.body.type === "object") {
+                                    message.body.properties.forEach((property) => {
+                                        const anchorIdParts = [message.origin === "server" ? "receive" : "send"];
+                                        if (message.displayName != null) {
+                                            anchorIdParts.push(message.displayName);
+                                        }
+                                        anchorIdParts.push(property.key);
+                                        const slug = anchorIdToSlug(node, anchorIdParts);
+                                        fields.push({
+                                            type: "field-v1",
+                                            name: property.key,
+                                            objectID: uuid(),
+                                            description: property.description,
+                                            availability: property.availability,
+                                            breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                            slug,
+                                            version,
+                                            indexSegmentId,
+                                        });
+                                        typeReferences.push({
+                                            reference: property.valueType,
+                                            anchorIdParts,
+                                            breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                            slugPrefix: anchorIdToSlug(node, anchorIdParts),
+                                            version,
+                                            indexSegmentId,
+                                        });
+                                    });
+                                } else {
+                                    assertNever(message.body);
+                                }
+                            });
+                        }
+
+                        records.push(...fields.map(compact));
+                        records.push(
+                            ...this.collectReferencedTypesToContentV2(typeReferences, holder?.api.types ?? {}).map(
+                                compact,
+                            ),
+                        );
+                        records.push(
+                            compact({
+                                type: "websocket-v4",
+                                objectID: uuid(),
+                                title: node.title,
+                                description: ws.description,
+                                breadcrumbs: toBreadcrumbs(parents),
+                                slug: node.slug,
+                                version,
+                                indexSegmentId: context.indexSegment.id,
+                                endpointPath: ws.path.parts,
+                            }),
+                        );
+                    },
+                    webhook: (node) => {
+                        const webhook = holder?.webhooks.get(node.webhookId);
+                        if (webhook == null) {
+                            LOGGER.error("Failed to find webhook for API reference node.", node);
+                            return;
+                        }
+
+                        const contents = webhook.description;
+                        const typeReferences: TypeReferenceWithMetadata[] = [];
+                        const fields: AlgoliaSearchRecord[] = [];
+
+                        if (webhook.headers.length > 0) {
+                            //TODO(rohin): check webhook anchor ids
+                            webhook.headers.forEach((header) => {
+                                const anchorIdParts = ["request", "header", header.key];
+                                const slug = anchorIdToSlug(node, anchorIdParts);
+                                fields.push({
+                                    type: "field-v1",
+                                    name: header.key,
+                                    objectID: uuid(),
+                                    description: header.description,
+                                    availability: header.availability,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                                typeReferences.push({
+                                    reference: header.type,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                            });
+                        }
+
+                        fields.push({
+                            type: "field-v1",
+                            name: webhook.name,
+                            objectID: uuid(),
+                            description: webhook.payload.description,
+                            breadcrumbs: webhook.name
+                                ? toBreadcrumbs(parents).concat([webhook.name])
+                                : toBreadcrumbs(parents),
+                            slug: webhook.urlSlug,
+                            version,
+                            indexSegmentId: context.indexSegment.id,
+                        });
+
+                        if (webhook.payload.type.type === "reference") {
+                            const anchorIdParts = ["request", "body"];
+                            typeReferences.push({
+                                reference: webhook.payload.type.value,
+                                anchorIdParts,
+                                breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                slugPrefix: anchorIdToSlug(node, anchorIdParts),
+                                version,
+                                indexSegmentId,
+                            });
+                        } else if (webhook.payload.type.type === "object") {
+                            webhook.payload.type.properties.forEach((property) => {
+                                const anchorIdParts = ["request", "body", property.key];
+                                const slug = anchorIdToSlug(node, anchorIdParts);
+                                fields.push({
+                                    type: "field-v1",
+                                    name: property.key,
+                                    objectID: uuid(),
+                                    description: property.description,
+                                    availability: property.availability,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slug,
+                                    version,
+                                    indexSegmentId: context.indexSegment.id,
+                                });
+                                typeReferences.push({
+                                    reference: property.valueType,
+                                    anchorIdParts,
+                                    breadcrumbs: breadcrumbs.concat(anchorIdParts),
+                                    slugPrefix: slug,
+                                    version,
+                                    indexSegmentId,
+                                });
+                            });
+                        } else {
+                            assertNever(webhook.payload.type);
+                        }
+
+                        records.push(...fields.map(compact));
+                        records.push(
+                            ...this.collectReferencedTypesToContentV2(typeReferences, holder?.api.types ?? {}).map(
+                                compact,
+                            ),
+                        );
+                        records.push(
+                            compact({
+                                type: "webhook-v4",
+                                objectID: uuid(),
+                                title: node.title,
+                                description: webhook.description,
+                                breadcrumbs: toBreadcrumbs(parents),
+                                slug: node.slug,
+                                version,
+                                indexSegmentId: context.indexSegment.id,
+                                method: webhook.method,
+                                endpointPath: webhook.path.map((path) => ({ type: "literal", value: path })),
+                            }),
+                        );
+                    },
+                });
+            } else if (FernNavigation.hasMarkdown(node)) {
+                const pageId = FernNavigation.utils.getPageId(node);
+                if (pageId == null) {
+                    return;
+                }
+
+                const md = this.config.docsDefinition.pages[pageId]?.markdown;
+                if (md == null) {
+                    LOGGER.error("Failed to find markdown for node", node);
+                    return;
+                }
+
+                const frontmatter = getFrontmatter(md);
+                const markdownTree = getMarkdownSectionTree(md);
+                const markdownSections = getMarkdownSections(
+                    markdownTree,
+                    toBreadcrumbs(parents),
+                    context.indexSegment.id,
+                    node.slug,
+                );
+
+                records.push(
+                    compact({
+                        type: "page-v4",
+                        objectID: uuid(),
+                        title: frontmatter.title ?? node.title,
+                        description: markdownTree.content,
+                        breadcrumbs: toBreadcrumbs(parents),
+                        slug: node.slug,
+                        version,
+                        indexSegmentId: context.indexSegment.id,
+                    }),
+                );
+                records.push(...markdownSections);
             }
             return;
         });
@@ -748,28 +1290,20 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private collectReferencedTypesToContent(
-        typeReferences: {
-            reference: APIV1Read.TypeReference;
-            anchorIdParts?: string[];
-        }[],
+        typeReferences: APIV1Read.TypeReference[],
         types: Record<string, APIV1Read.TypeDefinition>,
-        fields: string[],
     ): string {
         let referencedTypes: ReferencedTypes = {};
-        const anchorIdPartsMap: Record<string, string[] | undefined> = {};
 
         typeReferences.forEach((typeReference) => {
             const allReferencedTypes = getAllReferencedTypes({
-                reference: typeReference.reference,
+                reference: typeReference,
                 types,
             });
             referencedTypes = {
                 ...referencedTypes,
                 ...allReferencedTypes,
             };
-            Object.keys(allReferencedTypes).forEach((key) => {
-                anchorIdPartsMap[key] = typeReference.anchorIdParts;
-            });
         });
 
         const contents = [];
@@ -791,10 +1325,6 @@ export class AlgoliaSearchRecordGenerator {
                             contents.push(
                                 `- ${property.key}: ${this.stringifyTypeRef(property.valueType)} - ${property.description ?? ""}`,
                             );
-                            const anchorIdPrefix = anchorIdPartsMap[key];
-                            if (anchorIdPrefix != null) {
-                                fields.push([...anchorIdPrefix, value.name, property.key].join("."));
-                            }
                         });
                     },
                     alias: noop,
@@ -828,10 +1358,6 @@ export class AlgoliaSearchRecordGenerator {
                                 contents.push(
                                     `- ${property.key}: ${this.stringifyTypeRef(property.valueType)} - ${property.description ?? ""}`,
                                 );
-                                const anchorIdPrefix = anchorIdPartsMap[key];
-                                if (anchorIdPrefix != null) {
-                                    fields.push([...anchorIdPrefix, variant.displayName, property.key].join("."));
-                                }
                             });
                         });
                     },
@@ -840,6 +1366,130 @@ export class AlgoliaSearchRecordGenerator {
         }
 
         return contents.join("\n");
+    }
+
+    private collectReferencedTypesToContentV2(
+        typeReferencesWithMetadata: TypeReferenceWithMetadata[],
+        types: Record<string, APIV1Read.TypeDefinition>,
+    ): AlgoliaSearchRecord[] {
+        const fields: AlgoliaSearchRecord[] = [];
+        let referencedTypes: ReferencedTypes = {};
+        const metadataMap: Record<string, TypeReferenceWithMetadata | undefined> = {};
+
+        typeReferencesWithMetadata.forEach((typeReferenceWithMetadata) => {
+            const allReferencedTypes = getAllReferencedTypes({
+                reference: typeReferenceWithMetadata.reference,
+                types,
+            });
+            referencedTypes = {
+                ...referencedTypes,
+                ...allReferencedTypes,
+            };
+            Object.keys(allReferencedTypes).forEach((key) => {
+                metadataMap[key] = typeReferenceWithMetadata;
+            });
+        });
+
+        if (Object.keys(referencedTypes).length > 0) {
+            Object.entries(referencedTypes).forEach(([key, value]) => {
+                const metadata = metadataMap[key];
+                if (metadata != null) {
+                    fields.push({
+                        type: "field-v1",
+                        objectID: uuid(),
+                        name: key,
+                        description: value.description,
+                        availability: value.availability,
+                        breadcrumbs: metadata.breadcrumbs,
+                        slug: `${metadata.slugPrefix}.${key}`,
+                        version: metadata.version,
+                        indexSegmentId: metadata.indexSegmentId,
+                    });
+                }
+
+                visitDiscriminatedUnion(value.shape)._visit({
+                    object: (object) => {
+                        object.properties.forEach((property) => {
+                            if (metadata != null) {
+                                fields.push({
+                                    type: "field-v1",
+                                    objectID: uuid(),
+                                    name: property.key,
+                                    description: property.description,
+                                    availability: property.availability,
+                                    breadcrumbs: metadata.breadcrumbs.concat(property.key),
+                                    slug: `${metadata.slugPrefix}.${key}.${property.key}`,
+                                    version: metadata.version,
+                                    indexSegmentId: metadata.indexSegmentId,
+                                    extends: object.extends,
+                                });
+                            }
+                        });
+                    },
+                    alias: noop,
+                    enum: (enum_) => {
+                        enum_.values.forEach((value) => {
+                            if (metadata != null) {
+                                fields.push({
+                                    type: "field-v1",
+                                    objectID: uuid(),
+                                    name: value.value,
+                                    availability: value.availability,
+                                    description: value.description,
+                                    breadcrumbs: metadata.breadcrumbs.concat(value.value),
+                                    slug: `${metadata.slugPrefix}.${key}.${value.value}`,
+                                    version: metadata.version,
+                                    indexSegmentId: metadata.indexSegmentId,
+                                });
+                            }
+                        });
+                    },
+                    undiscriminatedUnion: (value) => {
+                        value.variants.forEach((variant) => {
+                            const name =
+                                variant.displayName != null
+                                    ? variant.displayName
+                                    : variant.type.type === "id"
+                                      ? variant.type.value
+                                      : undefined;
+                            if (metadata != null && name != null) {
+                                fields.push({
+                                    type: "field-v1",
+                                    objectID: uuid(),
+                                    name,
+                                    description: variant.description,
+                                    availability: variant.availability,
+                                    breadcrumbs: metadata.breadcrumbs.concat(name),
+                                    slug: `${metadata.slugPrefix}.${key}.${name}`,
+                                    version: metadata.version,
+                                    indexSegmentId: metadata.indexSegmentId,
+                                });
+                            }
+                        });
+                    },
+                    discriminatedUnion: (value) => {
+                        value.variants.forEach((variant) => {
+                            const name = variant.displayName ?? titleCase(variant.discriminantValue);
+                            if (metadata != null) {
+                                fields.push({
+                                    type: "field-v1",
+                                    objectID: uuid(),
+                                    name,
+                                    description: variant.description,
+                                    availability: variant.availability,
+                                    breadcrumbs: metadata.breadcrumbs.concat(name),
+                                    slug: `${metadata.slugPrefix}.${key}.${name}`,
+                                    version: metadata.version,
+                                    indexSegmentId: metadata.indexSegmentId,
+                                });
+                            }
+                        });
+                    },
+                });
+            });
+        }
+
+        return fields;
     }
 
     private generateAlgoliaSearchRecordsForChangelogNode(
@@ -930,7 +1580,6 @@ export class AlgoliaSearchRecordGenerator {
 
             if (changelogPageContent != null) {
                 const processedContent = convertMarkdownToText(changelogPageContent.markdown);
-                const anchorHeaders = extractHeadersFromMarkdownContent(changelogPageContent.markdown);
                 const { indexSegment } = context;
                 const pageContext = context.withPathPart({
                     // TODO: parse from frontmatter?
@@ -956,7 +1605,6 @@ export class AlgoliaSearchRecordGenerator {
                                   }
                                 : undefined,
                         indexSegmentId: indexSegment.id,
-                        anchorHeaders,
                     }),
                 );
             }
@@ -970,7 +1618,6 @@ export class AlgoliaSearchRecordGenerator {
                 const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
                 if (changelogPageContent != null) {
                     const processedContent = convertMarkdownToText(changelogPageContent.markdown);
-                    const anchorHeaders = extractHeadersFromMarkdownContent(changelogPageContent.markdown);
                     const { indexSegment } = context;
 
                     records.push(
@@ -993,7 +1640,92 @@ export class AlgoliaSearchRecordGenerator {
                                       }
                                     : undefined,
                             indexSegmentId: indexSegment.id,
-                            anchorHeaders,
+                        }),
+                    );
+                }
+            });
+        }
+
+        return records;
+    }
+
+    private generateAlgoliaSearchRecordsForChangelogSectionV2(
+        changelog: DocsV1Read.ChangelogSection,
+        context: NavigationContext,
+        fallbackTitle: string = "Changelog",
+    ): AlgoliaSearchRecord[] {
+        if (changelog.hidden) {
+            return [];
+        }
+        const records: AlgoliaSearchRecord[] = [];
+        if (changelog.pageId != null) {
+            const changelogPageContent = this.config.docsDefinition.pages[changelog.pageId];
+            const urlSlug = changelog.urlSlug;
+            const title = changelog.title ?? fallbackTitle;
+
+            if (changelogPageContent != null) {
+                const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                const { indexSegment } = context;
+                const markdownTree = getMarkdownSectionTree(changelogPageContent.markdown);
+                const markdownSections = getMarkdownSections(markdownTree, [], indexSegment.id, urlSlug);
+                const pageContext = context.withPathPart({
+                    // TODO: parse from frontmatter?
+                    name: title,
+                    urlSlug,
+                });
+                records.push(
+                    compact({
+                        type: "page-v4",
+                        objectID: uuid(),
+                        title,
+                        description: markdownTree.content,
+                        breadcrumbs: [markdownTree.heading],
+                        slug: urlSlug,
+                        version:
+                            indexSegment.type === "versioned"
+                                ? {
+                                      id: indexSegment.version.id,
+                                      slug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                  }
+                                : undefined,
+                        indexSegmentId: indexSegment.id,
+                    }),
+                );
+                records.push(...markdownSections);
+            }
+
+            changelog.items.forEach((changelogItem) => {
+                const changelogItemContext = context.withPathPart({
+                    name: `${title} - ${changelogItem.date}`,
+                    urlSlug, // changelogs are all under the same page
+                });
+
+                const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
+                if (changelogPageContent != null) {
+                    const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                    const { indexSegment } = context;
+
+                    const markdownTree = getMarkdownSectionTree(changelogPageContent.markdown);
+                    const markdownSections = getMarkdownSections(markdownTree, [], indexSegment.id, urlSlug);
+
+                    records.push(
+                        compact({
+                            type: "page-v4",
+                            objectID: uuid(),
+                            title: `${title} - ${changelogItem.date}`,
+                            // TODO: Set to something more than 10kb on prod
+                            // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
+                            description: markdownTree.content,
+                            breadcrumbs: [markdownTree.heading],
+                            slug: urlSlug,
+                            version:
+                                indexSegment.type === "versioned"
+                                    ? {
+                                          id: indexSegment.version.id,
+                                          slug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                      }
+                                    : undefined,
+                            indexSegmentId: indexSegment.id,
                         }),
                     );
                 }
@@ -1179,16 +1911,16 @@ export function getFrontmatter(content: string): Frontmatter {
 
 type Header = {
     level: number;
-    heading?: string;
+    heading: string;
     content: string;
     children: Header[];
 };
 
-function extractHeadersFromMarkdownContent(markdown: string): Header[] {
+export function getMarkdownSectionTree(markdown: string): Header {
     const lines: string[] = markdown.split("\n");
     let insideCodeBlock = false;
-    const startingNode: Header = { level: 0, heading: "", content: "", children: [] };
-    const collectedNodes = [startingNode];
+    const root: Header = { level: 0, heading: "", content: "", children: [] };
+    const collectedNodes = [root];
 
     for (const line of lines) {
         const trimmedLine = line.trim();
@@ -1198,26 +1930,61 @@ function extractHeadersFromMarkdownContent(markdown: string): Header[] {
         }
 
         let currentNode = collectedNodes.pop();
-        if (!insideCodeBlock && trimmedLine.startsWith("##")) {
-            const headerMatch = trimmedLine.match(/^(#{2,6})\s+(.*)$/);
+        if (!insideCodeBlock && trimmedLine.startsWith("#")) {
+            const headerMatch = trimmedLine.match(/^(#{1,6})\s+(.*)$/);
             if (headerMatch) {
                 const level = headerMatch[1]?.length;
                 const heading = headerMatch[2]?.trim();
                 if (currentNode != null && level != null && heading != null) {
-                    const newNode = { level, heading, content: "", children: [] };
-                    collectedNodes.push(newNode);
-                    while (currentNode && currentNode.level <= level) {
+                    while (currentNode != null && currentNode.level >= level) {
                         currentNode = collectedNodes.pop();
                     }
+                    const newNode = { level, heading, content: "", children: [] };
+                    if (currentNode != null && currentNode.level < level) {
+                        currentNode.children.push(newNode);
+                    }
+
+                    if (currentNode) {
+                        collectedNodes.push(currentNode);
+                        collectedNodes.push(newNode);
+                    }
+                    continue;
                 }
             }
         }
 
         if (currentNode) {
-            currentNode.content += line + "\n";
+            currentNode.content += trimmedLine + "\n";
             collectedNodes.push(currentNode);
         }
     }
 
-    return collectedNodes;
+    return root;
+}
+
+export function getMarkdownSections(
+    markdownSection: Header,
+    breadcrumbs: string[],
+    indexSegmentId: string,
+    slug: string,
+): AlgoliaSearchRecord[] {
+    const sectionBreadcrumbs = markdownSection.heading
+        ? breadcrumbs.concat([markdownSection.heading])
+        : breadcrumbs.slice(0);
+    const records: AlgoliaSearchRecord[] = [
+        compact({
+            type: "markdown-section-v1",
+            objectID: uuid(),
+            title: markdownSection.heading,
+            content: markdownSection.content,
+            breadcrumbs: sectionBreadcrumbs,
+            indexSegmentId,
+            slug,
+        }),
+    ];
+    return records.concat(
+        markdownSection.children.reduce((acc: AlgoliaSearchRecord[], markdownSectionChild: Header) => {
+            return acc.concat(getMarkdownSections(markdownSectionChild, sectionBreadcrumbs, slug, indexSegmentId));
+        }, []),
+    );
 }
