@@ -5,6 +5,7 @@ import { deployCommand } from "./commands/deploy.js";
 import { getLastDeployCommand } from "./commands/last-deploy.js";
 import { promoteCommand } from "./commands/promote.js";
 import { revalidateAllCommand } from "./commands/revalidate-all.js";
+import { rollbackCommand } from "./commands/rollback.js";
 import { writefs } from "./cwd.js";
 import { cleanDeploymentId } from "./utils/clean-id.js";
 import { getVercelTokenFromGlobalConfig } from "./utils/global-config.js";
@@ -70,6 +71,15 @@ void yargs(hideBin(process.argv))
             }),
         async ({ deploymentUrl, token, teamId, revalidateAll }) => {
             await promoteCommand({ deploymentIdOrUrl: deploymentUrl, token, teamId, revalidateAll });
+            process.exit(0);
+        },
+    )
+    .command(
+        "rollback <projectId>",
+        "Rollback to the previous deployment",
+        (argv) => argv.positional("projectId", { type: "string", demandOption: true }),
+        async ({ projectId, token }) => {
+            await rollbackCommand({ projectId, token });
             process.exit(0);
         },
     )
