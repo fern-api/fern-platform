@@ -3,8 +3,7 @@ import { FernRegistryClient } from "@fern-fern/paged-generators-sdk";
 import { PullRequest, PullRequestState } from "@fern-fern/paged-generators-sdk/api";
 import { SlackService } from "@libs/slack/SlackService";
 
-// const STALE_IN_DAYS = 7;
-const STALE_IN_DAYS = 0;
+const STALE_IN_DAYS = 7;
 const STALE_IN_MS = STALE_IN_DAYS * 24 * 60 * 60 * 1000;
 const VERBOSE_MESSAGE_THRESHOLD = 5;
 const FERN_TEAM = new Set<string>([
@@ -19,8 +18,7 @@ const FERN_TEAM = new Set<string>([
     "fern-bot",
 ]);
 // We don't care about notifying for our own orgs
-// const EXCLUDE_ORGS = new Set<string>(["fern-api", "fern-demo"]);
-const EXCLUDE_ORGS = new Set<string>(["fern-demo"]);
+const EXCLUDE_ORGS = new Set<string>(["fern-api", "fern-demo"]);
 
 export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
     const client = new FernRegistryClient({ environment: env.DEFAULT_FDR_ORIGIN, token: env.FERN_TOKEN });
