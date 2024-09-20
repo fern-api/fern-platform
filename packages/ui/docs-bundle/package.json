@@ -1,27 +1,27 @@
 {
   "name": "@fern-ui/docs-bundle",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/ui/docs-bundle"
   },
-  "private": true,
   "sideEffects": false,
   "scripts": {
-    "test": "vitest --run --passWithNoTests --globals",
+    "depcheck": "depcheck",
+    "docs:build": "next build",
+    "docs:dev": "NODE_OPTIONS='--inspect' next dev",
+    "docs:start": "next start",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "lint": "pnpm lint:eslint && pnpm lint:style",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck",
-    "docs:dev": "NODE_OPTIONS='--inspect' next dev",
-    "docs:build": "next build",
-    "docs:start": "next start",
-    "lint": "pnpm lint:eslint && pnpm lint:style"
+    "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
     "@algolia/requester-fetch": "^4.24.0",

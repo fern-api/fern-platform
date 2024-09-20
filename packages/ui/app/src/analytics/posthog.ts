@@ -53,7 +53,7 @@ export async function initializePosthog(api_host: string, customerConfig?: DocsV
             // api_host may change because of useApiRoute
             posthog.set_config({ api_host });
         }
-    } else {
+    } else if (apiKey.length > 0) {
         /**
          * Initialize the global posthog instance.
          * Events will be tunneled through the /api/fern-docs/analytics/posthog route.

@@ -28,6 +28,7 @@ export const JavascriptProvider = memo(() => {
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
             <CustomerAnalytics />
+            <Script id="mermaid" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.1/dist/mermaid.min.js" />
         </>
     );
 });

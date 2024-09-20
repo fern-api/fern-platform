@@ -14,5 +14,6 @@
         "trailingComma": "none"
       }
     }
-  ]
+  ],
+  "plugins": ["prettier-plugin-packagejson"]
 }

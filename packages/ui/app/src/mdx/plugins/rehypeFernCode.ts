@@ -73,6 +73,17 @@ export function rehypeFernCode(): (tree: Root) => void {
                     }
 
                     const meta = parseBlockMetaString(head, "plaintext");
+
+                    if (meta.lang === "mermaid") {
+                        parent?.children.splice(index, 1, {
+                            type: "element",
+                            tagName: "pre",
+                            properties: { class: "mermaid" },
+                            children: [{ type: "text", value: code }],
+                        });
+                        return;
+                    }
+
                     const props: FernSyntaxHighlighterProps = {
                         code,
                         language: meta.lang,

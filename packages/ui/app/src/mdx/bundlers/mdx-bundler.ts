@@ -3,7 +3,6 @@ import { mapKeys } from "lodash-es";
 import { bundleMDX } from "mdx-bundler";
 import path, { dirname } from "path";
 import rehypeKatex from "rehype-katex";
-import rehypeMermaid from "rehype-mermaid";
 import rehypeSlug from "rehype-slug";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
@@ -95,7 +94,6 @@ export async function serializeMdx(
                     rehypeSqueezeParagraphs,
                     rehypeSlug,
                     rehypeKatex,
-                    rehypeMermaid,
                     rehypeFernCode,
                     rehypeFernComponents,
                 ];

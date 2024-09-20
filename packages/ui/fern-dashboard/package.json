@@ -1,14 +1,14 @@
 {
   "name": "@fern-ui/dashboard",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
-    "install-dashboard": "pnpm --filter=@fern-ui/dashboard install",
+    "build": "vite build",
+    "dev": "vite",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "dev": "vite",
-    "build": "vite build",
+    "install-dashboard": "pnpm --filter=@fern-ui/dashboard install",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "preview": "vite preview"

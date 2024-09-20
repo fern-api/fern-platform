@@ -28,7 +28,7 @@ const nextConfig = {
     reactProductionProfiling: process.env.ENABLE_SOURCE_MAPS === "true",
     experimental: {
         scrollRestoration: true,
-        optimizePackageImports: ["@fern-ui/ui", "iconoir-react", "httpsnippet-lite"],
+        optimizePackageImports: ["@fern-ui/ui", "iconoir-react", "httpsnippet-lite", "mermaid-isomorphic"],
     },
     reactStrictMode: true,
     images: {

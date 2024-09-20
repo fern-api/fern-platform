@@ -1,36 +1,36 @@
 {
   "name": "@fern-ui/local-preview-bundle",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/ui/local-preview-bundle"
   },
-  "private": true,
+  "sideEffects": false,
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "source": "src/index.ts",
+  "types": "src/index.ts",
   "files": [
     "dist"
   ],
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "sideEffects": false,
   "scripts": {
+    "build": "next build",
+    "build:sourcemaps": "ENABLE_SOURCE_MAPS=true next build",
     "clean": "rm -rf ./lib && tsc --build --clean",
-    "test": "vitest --run --passWithNoTests --globals",
+    "depcheck": "depcheck",
+    "dev": "next dev",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "lint": "next lint",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck",
-    "dev": "next dev",
-    "build": "next build",
-    "build:sourcemaps": "ENABLE_SOURCE_MAPS=true next build",
     "start": "node server.js",
-    "lint": "next lint"
+    "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.2",
@@ -75,9 +75,9 @@
     "ws": "^8.16.0"
   },
   "optionalDependencies": {
-    "@next/swc-linux-x64-gnu": "14.2.9",
-    "@next/swc-win32-x64-msvc": "14.2.9",
+    "@next/swc-darwin-arm64": "14.2.9",
     "@next/swc-darwin-x64": "14.2.9",
-    "@next/swc-darwin-arm64": "14.2.9"
+    "@next/swc-linux-x64-gnu": "14.2.9",
+    "@next/swc-win32-x64-msvc": "14.2.9"
   }
 }

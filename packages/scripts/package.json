@@ -1,33 +1,33 @@
 {
   "name": "@fern-ui/scripts",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/scripts"
   },
-  "private": true,
-  "files": [
-    "dist"
-  ],
-  "type": "module",
-  "source": "src/index.ts",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "sideEffects": false,
+  "type": "module",
+  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "bin": {
     "fern-scripts": "./dist/bundle.cjs"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest run --passWithNoTests --globals",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
-    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "depcheck": "depcheck",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "test": "vitest run --passWithNoTests --globals"
   },
   "dependencies": {
     "chalk": "^5.3.0",
