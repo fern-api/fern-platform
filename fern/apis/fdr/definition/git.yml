@@ -142,7 +142,7 @@ service:
     listRepositories:
       docs: Get all repositories.
       method: GET
-      path: "/repository"
+      path: "/repository/list"
       pagination:
         offset: $request.page
         results: $response.repositories
@@ -171,13 +171,13 @@ service:
     upsertRepository:
       docs: Update or create the specified repository.
       method: PUT
-      path: /repository
+      path: /repository/upsert
       request: FernRepository
 
     deleteRepository:
       docs: Delete specified repository.
       method: DELETE
-      path: /repository/{repositoryOwner}/{repositoryName}
+      path: /repository/{repositoryOwner}/{repositoryName}/delete
       path-parameters:
         repositoryOwner: string
         repositoryName: string
@@ -195,7 +195,7 @@ service:
     listPullRequests:
       docs: Get all pull requests.
       method: GET
-      path: "/pull-request"
+      path: "/pull-request/list"
       pagination:
         offset: $request.page
         results: $response.pullRequests
@@ -219,7 +219,7 @@ service:
           organizationId:
             type: optional<commons.OrgId>
             docs: The Fern organization ID to filter repositories by.
-          status:
+          state:
             type: optional<list<PullRequestState>>
             docs: The status(es) of the pull request to filter by.
           author:
@@ -230,13 +230,13 @@ service:
     upsertPullRequest:
       docs: Update or create the specified pull request.
       method: PUT
-      path: /pull-request
+      path: /pull-request/upsert
       request: PullRequest
 
     deletePullRequest:
       docs: Delete specified pull request.
       method: DELETE
-      path: /pull-request/{repositoryOwner}/{repositoryName}/{pullRequestNumber}
+      path: /pull-request/{repositoryOwner}/{repositoryName}/{pullRequestNumber}/delete
       path-parameters:
         repositoryOwner: string
         repositoryName: string

@@ -2,13 +2,13 @@ import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab } from "@fern-ui/fdr-utils";
+import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import {
     DEFAULT_FEATURE_FLAGS,
     DocsPage,
     FeatureFlags,
     getGitHubInfo,
     getGitHubRepo,
-    getRedirectForPath,
     getSeoProps,
     renderThemeStylesheet,
     resolveDocsContent,
@@ -29,12 +29,7 @@ export async function getDocsPageProps(
     // compute manual redirects
     const redirect = getRedirectForPath(`/${slug}`, docs.baseUrl, docs.definition.config.redirects);
     if (redirect != null) {
-        return {
-            redirect: {
-                destination: redirect.destination,
-                permanent: false,
-            },
-        };
+        return redirect;
     }
 
     // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404

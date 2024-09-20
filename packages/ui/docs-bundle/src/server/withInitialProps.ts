@@ -1,13 +1,13 @@
 import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
 import { FernNavigation, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import { SidebarTab } from "@fern-ui/fdr-utils";
+import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
     getApiRouteSupplier,
     getGitHubInfo,
     getGitHubRepo,
-    getRedirectForPath,
     getSeoProps,
     provideRegistryService,
     renderThemeStylesheet,
@@ -25,7 +25,7 @@ import { getSeoDisabled } from "./disabledSeo";
 import { getCustomerAnalytics } from "./getCustomerAnalytics";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
-import { conformTrailingSlash, isTrailingSlashEnabled } from "./trailingSlash";
+import { isTrailingSlashEnabled } from "./trailingSlash";
 
 interface WithInitialProps {
     docs: LoadWithUrlResponse;
@@ -49,17 +49,11 @@ export async function withInitialProps({
     const docsConfig = docsDefinition.config;
 
     const slug = FernNavigation.utils.slugjoin(...slugArray);
-    const currentPath = urlJoin("/", slug);
 
-    const redirect = getRedirectForPath(currentPath, docs.baseUrl, docsConfig.redirects);
+    const redirect = getRedirectForPath(urlJoin("/", slug), docs.baseUrl, docsConfig.redirects);
 
     if (redirect != null) {
-        return {
-            redirect: {
-                destination: conformTrailingSlash(redirect.destination),
-                permanent: redirect.permanent ?? false,
-            },
-        };
+        return redirect;
     }
 
     const featureFlags = await getFeatureFlags(xFernHost);

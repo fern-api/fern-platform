@@ -32,6 +32,7 @@ export function getGeneratorsVersionsController(app: FdrApplication): VersionsSe
             });
 
             await app.dao.generatorVersions().upsertGeneratorRelease({ generatorRelease: req.body });
+            return res.send();
         },
         getGeneratorRelease: async (req, res) => {
             const maybeRelease = await app.dao
