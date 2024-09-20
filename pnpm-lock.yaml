@@ -1818,6 +1818,9 @@ importers:
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
+      '@fern-ui/fern-docs-utils':
+        specifier: workspace:*
+        version: link:../fern-docs-utils
       '@fern-ui/search-utils':
         specifier: workspace:*
         version: link:../../commons/search-utils
@@ -2125,6 +2128,49 @@ importers:
         specifier: ^5.2.0
         version: 5.2.11(@types/node@20.12.12)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
 
+  packages/ui/fern-docs-utils:
+    dependencies:
+      '@fern-api/fdr-sdk':
+        specifier: workspace:*
+        version: link:../../fdr-sdk
+      next:
+        specifier: npm:@fern-api/next@14.2.9-fork.0
+        version: '@fern-api/next@14.2.9-fork.0(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      path-to-regexp:
+        specifier: ^7.1.0
+        version: 7.1.0
+      url-join:
+        specifier: 5.0.0
+        version: 5.0.0
+    devDependencies:
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.19.33
+      depcheck:
+        specifier: ^1.4.3
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^3.3.2
+        version: 3.3.2
+      stylelint:
+        specifier: ^16.1.0
+        version: 16.5.0(typescript@5.4.3)
+      typescript:
+        specifier: 5.4.3
+        version: 5.4.3
+      vitest:
+        specifier: ^1.5.0
+        version: 1.6.0(@edge-runtime/vm@3.2.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
+
   packages/ui/fontawesome-cdn:
     dependencies:
       '@fortawesome/fontawesome-svg-core':
@@ -2234,6 +2280,9 @@ importers:
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
+      '@fern-ui/fern-docs-utils':
+        specifier: workspace:*
+        version: link:../fern-docs-utils
       '@fern-ui/ui':
         specifier: workspace:*
         version: link:../app

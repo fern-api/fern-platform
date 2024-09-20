@@ -1,5 +1,4 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
-import * as Sentry from "@sentry/nextjs";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import type { Redirect } from "next/types";
 import { compile, match } from "path-to-regexp";
@@ -14,7 +13,6 @@ function safeMatch(source: string, path: string): ReturnType<ReturnType<typeof m
     } catch (e) {
         // eslint-disable-next-line no-console
         console.debug(e, { source, path });
-        Sentry.captureException(e, { level: "warning" });
         return false;
     }
 }
@@ -28,7 +26,6 @@ function safeCompile(
     } catch (e) {
         // eslint-disable-next-line no-console
         console.debug(e, { match, destination });
-        Sentry.captureException(e, { level: "warning" });
         return destination;
     }
 }

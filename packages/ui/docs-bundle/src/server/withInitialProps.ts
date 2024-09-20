@@ -1,6 +1,7 @@
 import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
 import { FernNavigation, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import { SidebarTab } from "@fern-ui/fdr-utils";
+import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
@@ -22,7 +23,6 @@ import urlJoin from "url-join";
 import type { AuthProps } from "./authProps";
 import { getSeoDisabled } from "./disabledSeo";
 import { getCustomerAnalytics } from "./getCustomerAnalytics";
-import { getRedirectForPath } from "./getRedirectForPath";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
