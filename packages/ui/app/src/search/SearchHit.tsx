@@ -47,6 +47,15 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
             "websocket-v3": (hit) => <EndpointRecordV3 hit={hit} isHovered={isHovered} />,
             "webhook-v3": (hit) => <EndpointRecordV3 hit={hit} isHovered={isHovered} />,
             "page-v3": (hit) => <PageRecordV3 hit={hit} isHovered={isHovered} />,
+
+            // TODO(rohin): Implement these
+            "endpoint-v4": () => null,
+            "websocket-v4": () => null,
+            "webhook-v4": () => null,
+            "page-v4": () => null,
+            "field-v1": () => null,
+            "markdown-section-v1": () => null,
+
             _other: () => null,
         });
     }, [hit, isHovered]);
