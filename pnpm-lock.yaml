@@ -1869,9 +1869,6 @@ importers:
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
-      path-to-regexp:
-        specifier: ^7.1.0
-        version: 7.1.0
       postcss-import:
         specifier: ^16.0.1
         version: 16.1.0(postcss@8.4.31)
