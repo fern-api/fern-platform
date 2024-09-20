@@ -151,16 +151,30 @@ describe("algolia utils", () => {
                 objectID: undefined,
                 title: "A",
                 content: "this is line A\n",
-                breadcrumbs: ["A"],
-                indexSegmentId: "/v1/someslug",
-                slug: "testindex",
+                breadcrumbs: [
+                    {
+                        slug: "/v1/someslug#A",
+                        title: "A",
+                    },
+                ],
+                indexSegmentId: "testindex",
+                slug: "/v1/someslug",
             },
             {
                 type: "markdown-section-v1",
                 objectID: undefined,
                 title: "B",
                 content: "this is line b\n```\n## somecrap\nfasdfafafdadf\n```\n",
-                breadcrumbs: ["A", "B"],
+                breadcrumbs: [
+                    {
+                        slug: "/v1/someslug#A",
+                        title: "A",
+                    },
+                    {
+                        slug: "/v1/someslug#B",
+                        title: "B",
+                    },
+                ],
                 indexSegmentId: "testindex",
                 slug: "/v1/someslug",
             },
@@ -169,25 +183,60 @@ describe("algolia utils", () => {
                 objectID: undefined,
                 title: "C",
                 content: "this is line c\n\nthis is line c.2\n\n",
-                breadcrumbs: ["A", "B", "C"],
-                indexSegmentId: "/v1/someslug",
-                slug: "testindex",
+                breadcrumbs: [
+                    {
+                        slug: "/v1/someslug#A",
+                        title: "A",
+                    },
+                    {
+                        slug: "/v1/someslug#B",
+                        title: "B",
+                    },
+                    {
+                        slug: "/v1/someslug#C",
+                        title: "C",
+                    },
+                ],
+                indexSegmentId: "testindex",
+                slug: "/v1/someslug",
             },
             {
                 type: "markdown-section-v1",
                 objectID: undefined,
                 title: "D",
                 content: "this is line d\n",
-                breadcrumbs: ["A", "B", "D"],
-                indexSegmentId: "/v1/someslug",
-                slug: "testindex",
+                breadcrumbs: [
+                    {
+                        slug: "/v1/someslug#A",
+                        title: "A",
+                    },
+                    {
+                        slug: "/v1/someslug#B",
+                        title: "B",
+                    },
+                    {
+                        slug: "/v1/someslug#D",
+                        title: "D",
+                    },
+                ],
+                indexSegmentId: "testindex",
+                slug: "/v1/someslug",
             },
             {
                 type: "markdown-section-v1",
                 objectID: undefined,
                 title: "E",
                 content: "this is line e\n",
-                breadcrumbs: ["A", "E"],
+                breadcrumbs: [
+                    {
+                        slug: "/v1/someslug#A",
+                        title: "A",
+                    },
+                    {
+                        slug: "/v1/someslug#E",
+                        title: "E",
+                    },
+                ],
                 indexSegmentId: "testindex",
                 slug: "/v1/someslug",
             },
@@ -196,16 +245,38 @@ describe("algolia utils", () => {
                 objectID: undefined,
                 title: "F",
                 content: "this is line f\nthis is line f.2\n",
-                breadcrumbs: ["A", "E", "F"],
-                indexSegmentId: "/v1/someslug",
-                slug: "testindex",
+                breadcrumbs: [
+                    {
+                        slug: "/v1/someslug#A",
+                        title: "A",
+                    },
+                    {
+                        slug: "/v1/someslug#E",
+                        title: "E",
+                    },
+                    {
+                        slug: "/v1/someslug#F",
+                        title: "F",
+                    },
+                ],
+                indexSegmentId: "testindex",
+                slug: "/v1/someslug",
             },
             {
                 type: "markdown-section-v1",
                 objectID: undefined,
                 title: "G",
                 content: "this is line g\n\n",
-                breadcrumbs: ["A", "G"],
+                breadcrumbs: [
+                    {
+                        slug: "/v1/someslug#A",
+                        title: "A",
+                    },
+                    {
+                        slug: "/v1/someslug#G",
+                        title: "G",
+                    },
+                ],
                 indexSegmentId: "testindex",
                 slug: "/v1/someslug",
             },

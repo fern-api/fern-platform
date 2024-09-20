@@ -2267,7 +2267,7 @@ export function getMarkdownSections(
     return records.concat(
         markdownSection.children.reduce((acc: AlgoliaSearchRecord[], markdownSectionChild: MarkdownNode) => {
             return acc.concat(
-                getMarkdownSections(markdownSectionChild, sectionBreadcrumbs, slug, indexSegmentId, false),
+                getMarkdownSections(markdownSectionChild, sectionBreadcrumbs, indexSegmentId, slug, false),
             );
         }, []),
     );
