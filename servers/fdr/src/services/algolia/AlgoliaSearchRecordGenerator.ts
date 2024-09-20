@@ -14,6 +14,7 @@ import { v4 as uuid } from "uuid";
 import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { BreadcrumbsInfo } from "../../api/generated/api";
 import { EndpointPathPart } from "../../api/generated/api/resources/api/resources/v1/resources/read";
+import { HttpMethod } from "../../api/generated/api/resources/navigation";
 import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
@@ -737,6 +738,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "endpoint-field-v1",
                                         title: header.key,
                                         description: header.description,
                                         availability: header.availability,
@@ -759,6 +761,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    type: "endpoint-field-v1",
                                 });
                             });
                         }
@@ -774,6 +777,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "endpoint-field-v1",
                                         title: param.key,
                                         description: param.description,
                                         availability: param.availability,
@@ -796,6 +800,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    type: "endpoint-field-v1",
                                 });
                             });
                         }
@@ -811,6 +816,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "endpoint-field-v1",
                                         title: param.key,
                                         description: param.description,
                                         availability: param.availability,
@@ -833,6 +839,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    type: "endpoint-field-v1",
                                 });
                             });
                         }
@@ -844,6 +851,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "endpoint-field-v1",
                                         title: `${endpoint.name ?? endpoint.id} Request`,
                                         description: endpoint.request.description,
                                         availability: endpoint.availability,
@@ -883,6 +891,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    type: "endpoint-field-v1",
                                 });
                             } else if (endpoint.request.type.type === "formData") {
                                 endpoint.request.type.properties.forEach((property) => {
@@ -896,6 +905,7 @@ export class AlgoliaSearchRecordGenerator {
                                             type: "field-v1",
                                             objectID: uuid(),
                                             value: {
+                                                type: "endpoint-field-v1",
                                                 title: property.key,
                                                 description: property.description,
                                                 availability: property.availability,
@@ -918,6 +928,7 @@ export class AlgoliaSearchRecordGenerator {
                                             method: endpoint.method,
                                             endpointPath: endpoint.path.parts,
                                             isResponseStream: node.isResponseStream,
+                                            type: "endpoint-field-v1",
                                         });
                                     }
                                 });
@@ -932,6 +943,7 @@ export class AlgoliaSearchRecordGenerator {
                                         type: "field-v1",
                                         objectID: uuid(),
                                         value: {
+                                            type: "endpoint-field-v1",
                                             title: property.key,
                                             description: property.description,
                                             availability: property.availability,
@@ -954,6 +966,7 @@ export class AlgoliaSearchRecordGenerator {
                                         method: endpoint.method,
                                         endpointPath: endpoint.path.parts,
                                         isResponseStream: node.isResponseStream,
+                                        type: "endpoint-field-v1",
                                     });
                                 });
                             }
@@ -966,6 +979,7 @@ export class AlgoliaSearchRecordGenerator {
                                 type: "field-v1",
                                 objectID: uuid(),
                                 value: {
+                                    type: "endpoint-field-v1",
                                     title: `${endpoint.name ?? endpoint.id} Response`,
                                     description: endpoint.response.description,
                                     availability: endpoint.availability,
@@ -1004,6 +1018,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    type: "endpoint-field-v1",
                                 });
                             } else if (endpoint.response.type.type === "object") {
                                 endpoint.response.type.properties.forEach((property) => {
@@ -1016,6 +1031,7 @@ export class AlgoliaSearchRecordGenerator {
                                         type: "field-v1",
                                         objectID: uuid(),
                                         value: {
+                                            type: "endpoint-field-v1",
                                             title: property.key,
                                             description: property.description,
                                             availability: property.availability,
@@ -1038,6 +1054,7 @@ export class AlgoliaSearchRecordGenerator {
                                         method: endpoint.method,
                                         endpointPath: endpoint.path.parts,
                                         isResponseStream: node.isResponseStream,
+                                        type: "endpoint-field-v1",
                                     });
                                 });
                             }
@@ -1087,6 +1104,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "websocket-field-v1",
                                         title: param.key,
                                         description: param.description,
                                         availability: param.availability,
@@ -1105,6 +1123,7 @@ export class AlgoliaSearchRecordGenerator {
                                     version,
                                     indexSegmentId,
                                     endpointPath: ws.path.parts,
+                                    type: "websocket-field-v1",
                                 });
                             });
                         }
@@ -1120,6 +1139,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "websocket-field-v1",
                                         title: param.key,
                                         description: param.description,
                                         availability: param.availability,
@@ -1138,6 +1158,7 @@ export class AlgoliaSearchRecordGenerator {
                                     version,
                                     indexSegmentId,
                                     endpointPath: ws.path.parts,
+                                    type: "websocket-field-v1",
                                 });
                             });
                         }
@@ -1153,6 +1174,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "websocket-field-v1",
                                         title: param.key,
                                         description: param.description,
                                         availability: param.availability,
@@ -1171,6 +1193,7 @@ export class AlgoliaSearchRecordGenerator {
                                     version,
                                     indexSegmentId,
                                     endpointPath: ws.path.parts,
+                                    type: "websocket-field-v1",
                                 });
                             });
                         }
@@ -1183,6 +1206,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "websocket-field-v1",
                                         title: `${ws.name ?? ws.id} ${messageType}`,
                                         description: message.description,
                                         availability: message.availability,
@@ -1215,6 +1239,7 @@ export class AlgoliaSearchRecordGenerator {
                                         version,
                                         indexSegmentId,
                                         endpointPath: ws.path.parts,
+                                        type: "websocket-field-v1",
                                     });
                                 } else if (message.body.type === "object") {
                                     message.body.properties.forEach((property) => {
@@ -1231,6 +1256,7 @@ export class AlgoliaSearchRecordGenerator {
                                             type: "field-v1",
                                             objectID: uuid(),
                                             value: {
+                                                type: "websocket-field-v1",
                                                 title: property.key,
                                                 description: property.description,
                                                 availability: property.availability,
@@ -1249,6 +1275,7 @@ export class AlgoliaSearchRecordGenerator {
                                             version,
                                             indexSegmentId,
                                             endpointPath: ws.path.parts,
+                                            type: "websocket-field-v1",
                                         });
                                     });
                                 } else {
@@ -1303,6 +1330,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "webhook-field-v1",
                                         title: header.key,
                                         description: header.description,
                                         availability: header.availability,
@@ -1323,6 +1351,7 @@ export class AlgoliaSearchRecordGenerator {
                                     indexSegmentId,
                                     method: webhook.method,
                                     endpointPath,
+                                    type: "websocket-field-v1",
                                 });
                             });
                         }
@@ -1331,6 +1360,7 @@ export class AlgoliaSearchRecordGenerator {
                             type: "field-v1",
                             objectID: uuid(),
                             value: {
+                                type: "webhook-field-v1",
                                 title: `${webhook.name ?? webhook.id} Payload`,
                                 description: webhook.payload.description,
                                 breadcrumbs: toBreadcrumbs(parents).concat([
@@ -1342,6 +1372,7 @@ export class AlgoliaSearchRecordGenerator {
                                 slug: `${webhook.urlSlug}#payload`,
                                 version,
                                 indexSegmentId: context.indexSegment.id,
+                                method: webhook.method,
                                 endpointPath,
                             },
                         });
@@ -1361,6 +1392,7 @@ export class AlgoliaSearchRecordGenerator {
                                 indexSegmentId,
                                 method: webhook.method,
                                 endpointPath,
+                                type: "websocket-field-v1",
                             });
                         } else if (webhook.payload.type.type === "object") {
                             webhook.payload.type.properties.forEach((property) => {
@@ -1373,6 +1405,7 @@ export class AlgoliaSearchRecordGenerator {
                                     type: "field-v1",
                                     objectID: uuid(),
                                     value: {
+                                        type: "webhook-field-v1",
                                         title: property.key,
                                         description: property.description,
                                         availability: property.availability,
@@ -1393,6 +1426,7 @@ export class AlgoliaSearchRecordGenerator {
                                     indexSegmentId,
                                     method: webhook.method,
                                     endpointPath,
+                                    type: "websocket-field-v1",
                                 });
                             });
                         } else {
@@ -1579,7 +1613,30 @@ export class AlgoliaSearchRecordGenerator {
         if (Object.keys(referencedTypes).length > 0) {
             Object.entries(referencedTypes).forEach(([key, value]) => {
                 const metadata = metadataMap[key];
+
                 if (metadata != null) {
+                    const endpointProperties = {
+                        type: "endpoint-field-v1" as const,
+                        method: metadata.method as HttpMethod,
+                        endpointPath: metadata.endpointPath,
+                        isResponseStream: metadata.isResponseStream,
+                    };
+                    const websocketProperties = {
+                        type: "websocket-field-v1" as const,
+                        endpointPath: metadata.endpointPath,
+                    };
+                    const webhookProperties = {
+                        type: "webhook-field-v1" as const,
+                        method: metadata.method as HttpMethod,
+                        endpointPath: metadata.endpointPath,
+                    };
+                    const additionalProperties =
+                        metadata.method != null
+                            ? metadata.type === "endpoint-field-v1"
+                                ? endpointProperties
+                                : webhookProperties
+                            : websocketProperties;
+
                     fields.push({
                         type: "field-v1",
                         objectID: uuid(),
@@ -1591,128 +1648,118 @@ export class AlgoliaSearchRecordGenerator {
                             slug: `${metadata.slugPrefix}.${key}`,
                             version: metadata.version,
                             indexSegmentId: metadata.indexSegmentId,
-                            endpointPath: metadata.endpointPath,
-                            method: metadata.method,
-                            isResponseStream: metadata.isResponseStream,
+                            ...additionalProperties,
+                        },
+                    });
+
+                    visitDiscriminatedUnion(value.shape)._visit({
+                        object: (object) => {
+                            object.properties.forEach((property) => {
+                                if (metadata != null) {
+                                    const slug = `${metadata.slugPrefix}.${key}.${property.key}`;
+                                    fields.push({
+                                        type: "field-v1",
+                                        objectID: uuid(),
+                                        value: {
+                                            title: property.key,
+                                            description: property.description,
+                                            availability: property.availability,
+                                            breadcrumbs: metadata.breadcrumbs.concat({
+                                                title: property.key,
+                                                slug,
+                                            }),
+                                            slug,
+                                            version: metadata.version,
+                                            indexSegmentId: metadata.indexSegmentId,
+                                            extends: object.extends,
+                                            ...additionalProperties,
+                                        },
+                                    });
+                                }
+                            });
+                        },
+                        alias: noop,
+                        enum: (enum_) => {
+                            enum_.values.forEach((value) => {
+                                if (metadata != null) {
+                                    const slug = `${metadata.slugPrefix}.${key}.${value.value}`;
+                                    fields.push({
+                                        type: "field-v1",
+                                        objectID: uuid(),
+                                        value: {
+                                            title: value.value,
+                                            availability: value.availability,
+                                            description: value.description,
+                                            breadcrumbs: metadata.breadcrumbs.concat({
+                                                title: value.value,
+                                                slug,
+                                            }),
+                                            slug,
+                                            version: metadata.version,
+                                            indexSegmentId: metadata.indexSegmentId,
+                                            ...additionalProperties,
+                                        },
+                                    });
+                                }
+                            });
+                        },
+                        undiscriminatedUnion: (value) => {
+                            value.variants.forEach((variant) => {
+                                const title =
+                                    variant.displayName != null
+                                        ? variant.displayName
+                                        : variant.type.type === "id"
+                                          ? variant.type.value
+                                          : undefined;
+                                if (metadata != null && title != null) {
+                                    const slug = `${metadata.slugPrefix}.${key}.${title}`;
+                                    fields.push({
+                                        type: "field-v1",
+                                        objectID: uuid(),
+                                        value: {
+                                            title,
+                                            description: variant.description,
+                                            availability: variant.availability,
+                                            breadcrumbs: metadata.breadcrumbs.concat({
+                                                title,
+                                                slug,
+                                            }),
+                                            slug,
+                                            version: metadata.version,
+                                            indexSegmentId: metadata.indexSegmentId,
+                                            ...additionalProperties,
+                                        },
+                                    });
+                                }
+                            });
+                        },
+                        discriminatedUnion: (value) => {
+                            value.variants.forEach((variant) => {
+                                const title = variant.displayName ?? titleCase(variant.discriminantValue);
+                                if (metadata != null) {
+                                    const slug = `${metadata.slugPrefix}.${key}.${title}`;
+                                    fields.push({
+                                        type: "field-v1",
+                                        objectID: uuid(),
+                                        value: {
+                                            title,
+                                            description: variant.description,
+                                            availability: variant.availability,
+                                            breadcrumbs: metadata.breadcrumbs.concat({
+                                                title,
+                                                slug,
+                                            }),
+                                            slug,
+                                            version: metadata.version,
+                                            indexSegmentId: metadata.indexSegmentId,
+                                            ...additionalProperties,
+                                        },
+                                    });
+                                }
+                            });
                         },
                     });
                 }
-
-                visitDiscriminatedUnion(value.shape)._visit({
-                    object: (object) => {
-                        object.properties.forEach((property) => {
-                            if (metadata != null) {
-                                const slug = `${metadata.slugPrefix}.${key}.${property.key}`;
-                                fields.push({
-                                    type: "field-v1",
-                                    objectID: uuid(),
-                                    value: {
-                                        title: property.key,
-                                        description: property.description,
-                                        availability: property.availability,
-                                        breadcrumbs: metadata.breadcrumbs.concat({
-                                            title: property.key,
-                                            slug,
-                                        }),
-                                        slug,
-                                        version: metadata.version,
-                                        indexSegmentId: metadata.indexSegmentId,
-                                        extends: object.extends,
-                                        endpointPath: metadata.endpointPath,
-                                        method: metadata.method,
-                                        isResponseStream: metadata.isResponseStream,
-                                    },
-                                });
-                            }
-                        });
-                    },
-                    alias: noop,
-                    enum: (enum_) => {
-                        enum_.values.forEach((value) => {
-                            if (metadata != null) {
-                                const slug = `${metadata.slugPrefix}.${key}.${value.value}`;
-                                fields.push({
-                                    type: "field-v1",
-                                    objectID: uuid(),
-                                    value: {
-                                        title: value.value,
-                                        availability: value.availability,
-                                        description: value.description,
-                                        breadcrumbs: metadata.breadcrumbs.concat({
-                                            title: value.value,
-                                            slug,
-                                        }),
-                                        slug,
-                                        version: metadata.version,
-                                        indexSegmentId: metadata.indexSegmentId,
-                                        endpointPath: metadata.endpointPath,
-                                        method: metadata.method,
-                                        isResponseStream: metadata.isResponseStream,
-                                    },
-                                });
-                            }
-                        });
-                    },
-                    undiscriminatedUnion: (value) => {
-                        value.variants.forEach((variant) => {
-                            const title =
-                                variant.displayName != null
-                                    ? variant.displayName
-                                    : variant.type.type === "id"
-                                      ? variant.type.value
-                                      : undefined;
-                            if (metadata != null && title != null) {
-                                const slug = `${metadata.slugPrefix}.${key}.${title}`;
-                                fields.push({
-                                    type: "field-v1",
-                                    objectID: uuid(),
-                                    value: {
-                                        title,
-                                        description: variant.description,
-                                        availability: variant.availability,
-                                        breadcrumbs: metadata.breadcrumbs.concat({
-                                            title,
-                                            slug,
-                                        }),
-                                        slug,
-                                        version: metadata.version,
-                                        indexSegmentId: metadata.indexSegmentId,
-                                        endpointPath: metadata.endpointPath,
-                                        method: metadata.method,
-                                        isResponseStream: metadata.isResponseStream,
-                                    },
-                                });
-                            }
-                        });
-                    },
-                    discriminatedUnion: (value) => {
-                        value.variants.forEach((variant) => {
-                            const title = variant.displayName ?? titleCase(variant.discriminantValue);
-                            if (metadata != null) {
-                                const slug = `${metadata.slugPrefix}.${key}.${title}`;
-                                fields.push({
-                                    type: "field-v1",
-                                    objectID: uuid(),
-                                    value: {
-                                        title,
-                                        description: variant.description,
-                                        availability: variant.availability,
-                                        breadcrumbs: metadata.breadcrumbs.concat({
-                                            title,
-                                            slug,
-                                        }),
-                                        slug,
-                                        version: metadata.version,
-                                        indexSegmentId: metadata.indexSegmentId,
-                                        endpointPath: metadata.endpointPath,
-                                        method: metadata.method,
-                                        isResponseStream: metadata.isResponseStream,
-                                    },
-                                });
-                            }
-                        });
-                    },
-                });
             });
         }
 

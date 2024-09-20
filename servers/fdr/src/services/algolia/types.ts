@@ -35,6 +35,7 @@ export type TypeReferenceWithMetadata = {
     method?: HttpMethod;
     endpointPath: EndpointPathPart[];
     isResponseStream?: boolean;
+    type: "endpoint-field-v1" | "websocket-field-v1" | "webhook-field-v1";
 };
 
 export type MarkdownNode = {

@@ -4,7 +4,7 @@ import { UnreachableCaseError } from "ts-essentials";
 
 export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: string | undefined): string {
     return visitSearchRecord<string>(record)._visit({
-        v4: (record) => record.slug,
+        v4: (record) => (record.type === "field-v1" ? record.value.slug : record.slug),
         v3: (record) => record.slug,
         v2: (record) =>
             FernNavigation.utils.slugjoin(
@@ -23,7 +23,7 @@ export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: 
 
 export function getTitleForSearchRecord(record: Algolia.AlgoliaRecord): string {
     return visitSearchRecord<string>(record)._visit({
-        v4: (record) => record.title ?? "",
+        v4: (record) => (record.type === "field-v1" ? record.value.title : record.title),
         v3: (record) => record.title,
         v2: (record) =>
             record.type === "endpoint-v2"
@@ -41,8 +41,9 @@ export function getContentForSearchRecord(record: Algolia.AlgoliaRecord): string
                 case "endpoint-v4":
                 case "websocket-v4":
                 case "webhook-v4":
-                case "field-v1":
                     return record.description;
+                case "field-v1":
+                    return record.value.description;
                 case "markdown-section-v1":
                     return record.content;
             }
