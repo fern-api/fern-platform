@@ -3,7 +3,7 @@
   "extends": ["//"],
   "tasks": {
     "docs:build": {
-      "outputs": [".next/**"],
+      "outputs": [".next/**", "!.next/cache/**"],
       "dependsOn": ["^build", "^compile"]
     },
     "docs:dev": {
