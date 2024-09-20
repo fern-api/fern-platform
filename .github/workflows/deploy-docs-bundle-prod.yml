@@ -1,0 +1,127 @@
+name: Deploy @fern-ui/docs-bundle
+
+on:
+  push:
+    tags:
+      - ui@*
+
+concurrency:
+  group: app.buildwithfern.com
+  cancel-in-progress: true
+
+jobs:
+  deploy_app_buildwithfern_com:
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' && github.event_name == 'push'
+    environment:
+      name: Production - app.buildwithfern.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
+
+  deploy_app_ferndocs_com:
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' && github.event_name == 'push'
+    environment:
+      name: Production - app.ferndocs.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy app.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
+
+  deploy_app-slash_ferndocs_com:
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' && github.event_name == 'push'
+    environment:
+      name: Production - app-slash.ferndocs.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/install
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy app-slash.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
+
+  ete:
+    needs: deploy_app_buildwithfern_com
+    if: needs.deploy_app_buildwithfern_com.outputs.deployment_url
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/ete-docs-bundle
+        with:
+          deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
+          token: ${{ secrets.VERCEL_TOKEN }}
+          fern_token: ${{ secrets.FERN_TOKEN }}
+
+  promote:
+    needs:
+      - deploy_app_buildwithfern_com
+      - deploy_app_ferndocs_com
+      - deploy_app-slash_ferndocs_com
+      - ete # Ensure that the E2E tests are run successful before promoting
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        deployment_url:
+          - ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
+          - ${{ needs.deploy_app_ferndocs_com.outputs.deployment_url }}
+          - ${{ needs.deploy_app-slash_ferndocs_com.outputs.deployment_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/install
+
+      - name: Promote Deployment
+        run: pnpm vercel-scripts promote ${{ matrix.deployment_url }} --token ${{ secrets.VERCEL_TOKEN }}
+
+  smoke-test:
+    needs: promote # Ensure that the deployment is promoted before running smoke tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Smoke Test
+        env:
+          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          cd smoke-test
+          npm install -g fern-api
+          fern generate --docs --instance https://fern-platform-test.docs.buildwithfern.com
+          VALUE=$(curl https://fern-platform-test.docs.buildwithfern.com/api-reference/imdb/create-movie)
+          length=${#VALUE}
+          # Assert that length is over 1000
+          if [ $length -gt 1000 ]; then
+              echo "Length is greater than 1000"
+          else
+              exit 1
+          fi
+
+  healthchecks:
+    needs: promote # Ensure that the deployment is promoted before running healthchecks
+    uses: ./.github/workflows/healthcheck.yml
+    secrets: inherit

@@ -232,6 +232,7 @@ export class AlgoliaSearchRecordGenerator {
                           urlSlug: page.urlSlug,
                       });
             const processedContent = convertMarkdownToText(pageContent.markdown);
+            const anchorHeaders = extractHeadersFromMarkdownContent(pageContent.markdown);
             const { indexSegment } = context;
             return [
                 compact({
@@ -252,6 +253,7 @@ export class AlgoliaSearchRecordGenerator {
                               }
                             : undefined,
                     indexSegmentId: indexSegment.id,
+                    anchorHeaders,
                 }),
             ];
         } else if (item.type === "link") {
@@ -333,36 +335,55 @@ export class AlgoliaSearchRecordGenerator {
                         // this needs to be rewritten as a template, with proper markdown formatting + snapshot testing.
                         // also, the content is potentially trimmed to 10kb.
                         const contents = [endpoint.description ?? ""];
+                        const fields: string[] = [];
 
-                        const typeReferences: APIV1Read.TypeReference[] = [];
+                        const typeReferences: {
+                            reference: APIV1Read.TypeReference;
+                            anchorIdParts?: string[];
+                        }[] = [];
 
                         if (endpoint.headers != null && endpoint.headers.length > 0) {
                             contents.push("## Headers\n");
                             endpoint.headers.forEach((header) => {
-                                typeReferences.push(header.type);
+                                const anchorIdParts = ["request", "header", header.key];
+                                typeReferences.push({
+                                    reference: header.type,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `- ${header.key}=${this.stringifyTypeRef(header.type)} ${header.description ?? ""}`,
                                 );
+                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
                         if (endpoint.path.pathParameters.length > 0) {
                             contents.push("## Path Parameters\n");
                             endpoint.path.pathParameters.forEach((param) => {
-                                typeReferences.push(param.type);
+                                const anchorIdParts = ["request", "path", param.key];
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
+                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
                         if (endpoint.queryParameters.length > 0) {
                             contents.push("## Query Parameters\n");
                             endpoint.queryParameters.forEach((param) => {
-                                typeReferences.push(param.type);
+                                const anchorIdParts = ["request", "query", param.key];
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
+                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
@@ -375,17 +396,26 @@ export class AlgoliaSearchRecordGenerator {
                             contents.push("### Body\n");
 
                             if (endpoint.request.type.type === "reference") {
-                                typeReferences.push(endpoint.request.type.value);
+                                const anchorIdParts = ["request", "body"];
+                                typeReferences.push({
+                                    reference: endpoint.request.type.value,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `${this.stringifyTypeRef(endpoint.request.type.value)}: ${endpoint.request.description ?? ""}`,
                                 );
                             } else if (endpoint.request.type.type === "formData") {
                                 endpoint.request.type.properties.forEach((property) => {
                                     if (property.type === "bodyProperty") {
-                                        typeReferences.push(property.valueType);
+                                        const anchorIdParts = ["request", "body", property.key];
+                                        typeReferences.push({
+                                            reference: property.valueType,
+                                            anchorIdParts,
+                                        });
                                         contents.push(
                                             `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                         );
+                                        fields.push(anchorIdParts.join("."));
                                     }
                                 });
                             } else if (endpoint.request.type.type === "object") {
@@ -393,10 +423,15 @@ export class AlgoliaSearchRecordGenerator {
                                     contents.push(`- ${extend}`);
                                 });
                                 endpoint.request.type.properties.forEach((property) => {
-                                    typeReferences.push(property.valueType);
+                                    const anchorIdParts = ["request", "body", property.key];
+                                    typeReferences.push({
+                                        reference: property.valueType,
+                                        anchorIdParts,
+                                    });
                                     contents.push(
                                         `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                     );
+                                    fields.push(anchorIdParts.join("."));
                                 });
                             }
                         }
@@ -410,7 +445,11 @@ export class AlgoliaSearchRecordGenerator {
                             contents.push("### Body\n");
 
                             if (endpoint.response.type.type === "reference") {
-                                typeReferences.push(endpoint.response.type.value);
+                                const anchorIdParts = ["response", "body"];
+                                typeReferences.push({
+                                    reference: endpoint.response.type.value,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `${this.stringifyTypeRef(endpoint.response.type.value)}: ${endpoint.response.description ?? ""}`,
                                 );
@@ -419,15 +458,22 @@ export class AlgoliaSearchRecordGenerator {
                                     contents.push(`- ${extend}`);
                                 });
                                 endpoint.response.type.properties.forEach((property) => {
-                                    typeReferences.push(property.valueType);
+                                    const anchorIdParts = ["response", "body", property.key];
+                                    typeReferences.push({
+                                        reference: property.valueType,
+                                        anchorIdParts,
+                                    });
                                     contents.push(
                                         `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                     );
+                                    fields.push(anchorIdParts.join("."));
                                 });
                             }
                         }
 
-                        contents.push(this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}));
+                        contents.push(
+                            this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}, fields),
+                        );
 
                         records.push(
                             compact({
@@ -442,6 +488,7 @@ export class AlgoliaSearchRecordGenerator {
                                 method: endpoint.method,
                                 endpointPath: endpoint.path.parts,
                                 isResponseStream: node.isResponseStream,
+                                fields,
                             }),
                         );
                     },
@@ -453,35 +500,55 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         const contents = [ws.description ?? ""];
-                        const typeReferences: APIV1Read.TypeReference[] = [];
+                        const typeReferences: {
+                            reference: APIV1Read.TypeReference;
+                            anchorIdParts?: string[];
+                        }[] = [];
+
+                        const fields: string[] = [];
 
                         if (ws.headers.length > 0) {
                             contents.push("## Headers\n");
                             ws.headers.forEach((param) => {
-                                typeReferences.push(param.type);
+                                const anchorIdParts = ["request", "header", param.key];
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
+                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
                         if (ws.path.pathParameters.length > 0) {
                             contents.push("## Path Parameters\n");
                             ws.path.pathParameters.forEach((param) => {
-                                typeReferences.push(param.type);
+                                const anchorIdParts = ["request", "path", param.key];
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
+                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
                         if (ws.queryParameters.length > 0) {
                             contents.push("## Query Parameters\n");
                             ws.queryParameters.forEach((param) => {
-                                typeReferences.push(param.type);
+                                const anchorIdParts = ["request", "query", param.key];
+                                typeReferences.push({
+                                    reference: param.type,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `- ${param.key}=${this.stringifyTypeRef(param.type)} ${param.description ?? ""}`,
                                 );
+                                fields.push(anchorIdParts.join("."));
                             });
                         }
 
@@ -495,17 +562,33 @@ export class AlgoliaSearchRecordGenerator {
                                     contents.push(message.description);
                                 }
                                 if (message.body.type === "reference") {
-                                    typeReferences.push(message.body.value);
+                                    const anchorIdParts = [message.origin === "server" ? "receive" : "send"];
+                                    if (message.displayName != null) {
+                                        anchorIdParts.push(message.displayName);
+                                    }
+                                    typeReferences.push({
+                                        reference: message.body.value,
+                                        anchorIdParts,
+                                    });
                                     contents.push(`- ${this.stringifyTypeRef(message.body.value)}`);
                                 } else if (message.body.type === "object") {
                                     message.body.extends.forEach((extend) => {
                                         contents.push(`- ${extend}`);
                                     });
                                     message.body.properties.forEach((property) => {
-                                        typeReferences.push(property.valueType);
+                                        const anchorIdParts = [message.origin === "server" ? "receive" : "send"];
+                                        if (message.displayName != null) {
+                                            anchorIdParts.push(message.displayName);
+                                        }
+                                        typeReferences.push({
+                                            reference: property.valueType,
+                                            anchorIdParts,
+                                        });
+                                        anchorIdParts.push(property.key);
                                         contents.push(
                                             `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                         );
+                                        fields.push(anchorIdParts.join("."));
                                     });
                                 } else {
                                     assertNever(message.body);
@@ -513,7 +596,9 @@ export class AlgoliaSearchRecordGenerator {
                             });
                         }
 
-                        contents.push(this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}));
+                        contents.push(
+                            this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}, fields),
+                        );
 
                         records.push(
                             compact({
@@ -526,6 +611,7 @@ export class AlgoliaSearchRecordGenerator {
                                 version,
                                 indexSegmentId: context.indexSegment.id,
                                 endpointPath: ws.path.parts,
+                                fields,
                             }),
                         );
                     },
@@ -537,12 +623,20 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         const contents = [webhook.description ?? ""];
-                        const typeReferences: APIV1Read.TypeReference[] = [];
+                        const typeReferences: {
+                            reference: APIV1Read.TypeReference;
+                            anchorIdParts?: string[];
+                        }[] = [];
+                        const fields: string[] = [];
 
                         if (webhook.headers.length > 0) {
                             contents.push("## Headers\n");
                             webhook.headers.forEach((header) => {
-                                typeReferences.push(header.type);
+                                const anchorIdParts = ["request", "header", header.key];
+                                typeReferences.push({
+                                    reference: header.type,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `- ${header.key}=${this.stringifyTypeRef(header.type)} ${header.description ?? ""}`,
                                 );
@@ -556,25 +650,37 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         if (webhook.payload.type.type === "reference") {
-                            typeReferences.push(webhook.payload.type.value);
+                            const anchorIdParts = ["request", "body"];
+                            typeReferences.push({
+                                reference: webhook.payload.type.value,
+                                anchorIdParts,
+                            });
                             contents.push(
                                 `${this.stringifyTypeRef(webhook.payload.type.value)}: ${webhook.payload.description ?? ""}`,
                             );
+                            fields.push(anchorIdParts.join("."));
                         } else if (webhook.payload.type.type === "object") {
                             webhook.payload.type.extends.forEach((extend) => {
                                 contents.push(`- ${extend}`);
                             });
                             webhook.payload.type.properties.forEach((property) => {
-                                typeReferences.push(property.valueType);
+                                const anchorIdParts = ["request", "body", property.key];
+                                typeReferences.push({
+                                    reference: property.valueType,
+                                    anchorIdParts,
+                                });
                                 contents.push(
                                     `- ${property.key}=${this.stringifyTypeRef(property.valueType)} ${property.description ?? ""}`,
                                 );
+                                fields.push(anchorIdParts.join("."));
                             });
                         } else {
                             assertNever(webhook.payload.type);
                         }
 
-                        contents.push(this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}));
+                        contents.push(
+                            this.collectReferencedTypesToContent(typeReferences, holder?.api.types ?? {}, fields),
+                        );
 
                         records.push(
                             compact({
@@ -588,6 +694,7 @@ export class AlgoliaSearchRecordGenerator {
                                 indexSegmentId: context.indexSegment.id,
                                 method: webhook.method,
                                 endpointPath: webhook.path.map((path) => ({ type: "literal", value: path })),
+                                fields,
                             }),
                         );
                     },
@@ -605,6 +712,7 @@ export class AlgoliaSearchRecordGenerator {
                 }
 
                 const frontmatter = getFrontmatter(md);
+                const anchorHeaders = extractHeadersFromMarkdownContent(md);
 
                 records.push(
                     compact({
@@ -616,6 +724,7 @@ export class AlgoliaSearchRecordGenerator {
                         slug: node.slug,
                         version,
                         indexSegmentId: context.indexSegment.id,
+                        anchorHeaders,
                     }),
                 );
             }
@@ -639,19 +748,28 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private collectReferencedTypesToContent(
-        typeReferences: APIV1Read.TypeReference[],
+        typeReferences: {
+            reference: APIV1Read.TypeReference;
+            anchorIdParts?: string[];
+        }[],
         types: Record<string, APIV1Read.TypeDefinition>,
+        fields: string[],
     ): string {
         let referencedTypes: ReferencedTypes = {};
+        const anchorIdPartsMap: Record<string, string[] | undefined> = {};
 
         typeReferences.forEach((typeReference) => {
+            const allReferencedTypes = getAllReferencedTypes({
+                reference: typeReference.reference,
+                types,
+            });
             referencedTypes = {
                 ...referencedTypes,
-                ...getAllReferencedTypes({
-                    reference: typeReference,
-                    types,
-                }),
+                ...allReferencedTypes,
             };
+            Object.keys(allReferencedTypes).forEach((key) => {
+                anchorIdPartsMap[key] = typeReference.anchorIdParts;
+            });
         });
 
         const contents = [];
@@ -673,6 +791,10 @@ export class AlgoliaSearchRecordGenerator {
                             contents.push(
                                 `- ${property.key}: ${this.stringifyTypeRef(property.valueType)} - ${property.description ?? ""}`,
                             );
+                            const anchorIdPrefix = anchorIdPartsMap[key];
+                            if (anchorIdPrefix != null) {
+                                fields.push([...anchorIdPrefix, value.name, property.key].join("."));
+                            }
                         });
                     },
                     alias: noop,
@@ -706,6 +828,10 @@ export class AlgoliaSearchRecordGenerator {
                                 contents.push(
                                     `- ${property.key}: ${this.stringifyTypeRef(property.valueType)} - ${property.description ?? ""}`,
                                 );
+                                const anchorIdPrefix = anchorIdPartsMap[key];
+                                if (anchorIdPrefix != null) {
+                                    fields.push([...anchorIdPrefix, variant.displayName, property.key].join("."));
+                                }
                             });
                         });
                     },
@@ -804,6 +930,7 @@ export class AlgoliaSearchRecordGenerator {
 
             if (changelogPageContent != null) {
                 const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                const anchorHeaders = extractHeadersFromMarkdownContent(changelogPageContent.markdown);
                 const { indexSegment } = context;
                 const pageContext = context.withPathPart({
                     // TODO: parse from frontmatter?
@@ -829,6 +956,7 @@ export class AlgoliaSearchRecordGenerator {
                                   }
                                 : undefined,
                         indexSegmentId: indexSegment.id,
+                        anchorHeaders,
                     }),
                 );
             }
@@ -842,6 +970,7 @@ export class AlgoliaSearchRecordGenerator {
                 const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
                 if (changelogPageContent != null) {
                     const processedContent = convertMarkdownToText(changelogPageContent.markdown);
+                    const anchorHeaders = extractHeadersFromMarkdownContent(changelogPageContent.markdown);
                     const { indexSegment } = context;
 
                     records.push(
@@ -864,6 +993,7 @@ export class AlgoliaSearchRecordGenerator {
                                       }
                                     : undefined,
                             indexSegmentId: indexSegment.id,
+                            anchorHeaders,
                         }),
                     );
                 }
@@ -1045,4 +1175,41 @@ export function getFrontmatter(content: string): Frontmatter {
     } catch (e) {
         return {};
     }
+}
+
+type Header = {
+    level: number;
+    text: string;
+};
+
+function extractHeadersFromMarkdownContent(markdown: string): Header[] {
+    const headers: Header[] = [];
+    const lines: string[] = markdown.split("\n");
+    let insideCodeBlock = false;
+
+    for (const line of lines) {
+        const trimmedLine = line.trim();
+
+        if (trimmedLine.startsWith("```") || trimmedLine.startsWith("~~~")) {
+            insideCodeBlock = !insideCodeBlock;
+            continue;
+        }
+
+        if (insideCodeBlock) {
+            continue;
+        }
+
+        if (trimmedLine.startsWith("##")) {
+            const headerMatch = trimmedLine.match(/^(#{2,6})\s+(.*)$/);
+            if (headerMatch) {
+                const level = headerMatch[1]?.length;
+                const text = headerMatch[2]?.trim();
+                if (level != null && text != null) {
+                    headers.push({ level, text });
+                }
+            }
+        }
+    }
+
+    return headers;
 }

@@ -1,16 +1,15 @@
+import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
+import { loadWithUrl } from "@/server/loadWithUrl";
+import { getXFernHostNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { getFrontmatter } from "@fern-ui/ui";
-import { Feed, Item } from "feed";
-import { NextApiRequest, NextApiResponse } from "next";
-import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { getXFernHostNode } from "../../../utils/xFernHost";
-// eslint-disable-next-line import/no-internal-modules
 import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import * as Sentry from "@sentry/nextjs";
+import { Feed, Item } from "feed";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export const revalidate = 60 * 60 * 24;
 
@@ -39,11 +38,11 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
     const url = buildUrlFromApiNode(xFernHost, req);
     const docs = await loadWithUrl(url);
 
-    if (docs == null) {
+    if (!docs.ok) {
         return res.status(404).end();
     }
 
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs);
+    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
     const collector = NodeCollector.collect(root);
 
     const slug = FernNavigation.utils.slugjoin(decodeURIComponent(path));
@@ -67,7 +66,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         year.children.forEach((month) => {
             month.children.forEach((entry) => {
                 try {
-                    feed.addItem(toFeedItem(entry, xFernHost, docs.definition.pages, docs.definition.files));
+                    feed.addItem(toFeedItem(entry, xFernHost, docs.body.definition.pages, docs.body.definition.files));
                 } catch (e) {
                     // eslint-disable-next-line no-console
                     console.error(e);

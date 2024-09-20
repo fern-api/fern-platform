@@ -1,9 +1,0 @@
-{
-  "type": "next-app",
-  "private": true,
-  "rules": {
-    "depcheck": {
-      "ignores": ["@types/react"]
-    }
-  }
-}

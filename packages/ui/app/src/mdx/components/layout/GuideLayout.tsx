@@ -3,7 +3,7 @@ import { FernScrollArea } from "@fern-ui/components";
 import type { ElementContent } from "hast";
 import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import type { ReactElement, ReactNode } from "react";
-import { BottomNavigationButtons } from "../../../components/BottomNavigationButtons";
+import { BottomNavigationNeighbors } from "../../../components/BottomNavigationNeighbors";
 import { EditThisPageButton } from "../../../components/EditThisPage";
 import { PageHeader } from "../../../components/PageHeader";
 import { TableOfContents } from "../../../components/table-of-contents/TableOfContents";
@@ -63,7 +63,7 @@ export function GuideLayout({
                             <EditThisPageButton editThisPageUrl={editThisPageUrl} />
                         </div>
 
-                        {!hideNavLinks && <BottomNavigationButtons />}
+                        {!hideNavLinks && <BottomNavigationNeighbors />}
                         <BuiltWithFern className="w-fit mx-auto my-8" />
                     </footer>
                 )}

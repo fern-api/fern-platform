@@ -70,8 +70,8 @@ export class SlackServiceImpl implements SlackService {
 
     async notifyFailedToRevalidatePaths(request: FailedToRevalidatePathsNotification): Promise<void> {
         try {
-            const failedRevalidations = request.paths.response?.failedRevalidations;
-            if (failedRevalidations != null && failedRevalidations.length > 0) {
+            const failedRevalidations = request.paths.failed;
+            if (request.paths.failed.length > 0) {
                 const { ts } = await this.client.chat.postMessage({
                     channel: "#engineering-notifs",
                     text: `:rotating_light: \`${request.domain}\` encountered ${failedRevalidations.length} revalidation failurs. }`,

@@ -11,8 +11,8 @@ import {
     ResolvedWebSocketMessage,
     resolveEnvironment,
 } from "../resolver/types";
-import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
+import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { buildAuthHeaders, buildRequestUrl } from "./utils";
 

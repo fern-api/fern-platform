@@ -57,3 +57,12 @@ lerna-debug.log*
 #ide
 .idea/
 *.cookie
+
+# script outputs
+domains.txt
+preview.txt
+last-deploy.txt
+deployment-url.txt
+
+# next.js analysis
+analyze

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "docs:build": {
+      "outputs": [".next/**"],
+      "dependsOn": ["^build", "^compile"]
+    },
+    "docs:dev": {
+      "dependsOn": ["^build", "^compile"]
+    },
+    "docs:start": {
+      "dependsOn": ["docs:build"]
+    },
+    "docs:lint": {
+      "dependsOn": ["^build", "^compile"]
+    }
+  }
+}

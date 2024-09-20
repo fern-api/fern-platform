@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { FC, useEffect } from "react";
 import useSWR from "swr";
 import { APIS_ATOM, store } from "../atoms";
-import { HAS_PLAYGROUND_ATOM, useInitPlaygroundRouter } from "../atoms/playground";
+import { IS_PLAYGROUND_ENABLED_ATOM, useInitPlaygroundRouter } from "../atoms/playground";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { ResolvedRootPackage } from "../resolver/types";
 
@@ -18,7 +18,7 @@ const fetcher = async (url: string) => {
 
 export const PlaygroundContextProvider: FC = () => {
     const key = useApiRoute("/api/fern-docs/resolve-api");
-    const { data } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {
+    const { data, isLoading } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {
         revalidateOnFocus: false,
     });
     useEffect(() => {
@@ -29,6 +29,6 @@ export const PlaygroundContextProvider: FC = () => {
 
     useInitPlaygroundRouter();
 
-    const hasPlayground = useAtomValue(HAS_PLAYGROUND_ATOM);
-    return hasPlayground ? <PlaygroundDrawer /> : null;
+    const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
+    return isPlaygroundEnabled ? <PlaygroundDrawer isLoading={isLoading} /> : null;
 };

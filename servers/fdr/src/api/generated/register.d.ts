@@ -4,6 +4,7 @@
 import express from "express";
 import { DiffService } from "./api/resources/diff/service/DiffService";
 import { DocsCacheService } from "./api/resources/docsCache/service/DocsCacheService";
+import { GitService } from "./api/resources/git/service/GitService";
 import { SnippetsFactoryService } from "./api/resources/snippetsFactory/service/SnippetsFactoryService";
 import { SnippetsService } from "./api/resources/snippets/service/SnippetsService";
 import { TemplatesService } from "./api/resources/templates/service/TemplatesService";
@@ -21,6 +22,7 @@ import { VersionsService as sdks_VersionsService } from "./api/resources/sdks/re
 export declare function register(expressApp: express.Express | express.Router, services: {
     diff: DiffService;
     docsCache: DocsCacheService;
+    git: GitService;
     snippetsFactory: SnippetsFactoryService;
     snippets: SnippetsService;
     templates: TemplatesService;

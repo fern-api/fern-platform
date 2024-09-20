@@ -8,6 +8,13 @@ import * as FernRegistry from "../../../../../index";
 export interface ChangelogEntry {
     type: FernRegistry.generators.ChangelogEntryType;
     summary: string;
+    /**
+     * Any URLs that are relevant to the change, such as a PR or issue. This is optional for backcompat.
+     *
+     * You do not always need to specify the URL as the CLI can fill it in with the current PR, but given you can choose to not
+     * release within the same PR as the change is introduced, this should be specified for divorcing the two.
+     */
+    links?: string[];
     upgradeNotes?: string;
     added?: string[];
     changed?: string[];

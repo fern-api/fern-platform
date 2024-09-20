@@ -33,7 +33,7 @@ import { Callout } from "../mdx/components/callout";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
-import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
+import { PlaygroundEndpointForm } from "./endpoint/PlaygroundEndpointForm";
 import { PlaygroundAuthState } from "./types";
 import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils";
 

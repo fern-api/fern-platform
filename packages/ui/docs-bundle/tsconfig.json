@@ -2,9 +2,34 @@
   "extends": "@fern-platform/configs/tsconfig/nextjs.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__"],
-  "references": [{ "path": "../../commons/core-utils" }, { "path": "../app" }, { "path": "../components" }]
+  "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__", "instrumentation.ts", "sentry.*.config.ts"],
+  "references": [
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../commons/fdr-utils"
+    },
+    {
+      "path": "../../commons/search-utils"
+    },
+    {
+      "path": "../../fdr-sdk"
+    },
+    {
+      "path": "../app"
+    },
+    {
+      "path": "../chatbot"
+    },
+    {
+      "path": "../components"
+    }
+  ]
 }

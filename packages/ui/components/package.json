@@ -7,20 +7,19 @@
     "directory": "packages/components"
   },
   "private": true,
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./src/index.scss": "./src/index.scss"
+  },
   "sideEffects": [
     "*.css",
     "*.scss"
   ],
+  "files": [
+    "src"
+  ],
   "scripts": {
-    "clean": "rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",

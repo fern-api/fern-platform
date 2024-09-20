@@ -25,13 +25,21 @@ export interface FernTagProps extends PropsWithChildren {
     variant?: "subtle" | "solid";
     colorScheme?: FernTagColorScheme;
     className?: string;
+    skeleton?: boolean;
 }
 
 /**
  * The `FernTag` component is used for items that need to be labeled, categorized, or organized using keywords that describe them.
  */
 export const FernTag = forwardRef<HTMLSpanElement, FernTagProps>(
-    ({ children, rounded = false, size = "lg", variant = "subtle", colorScheme = "gray", className }, ref) => {
+    (
+        { children, rounded = false, size = "lg", variant = "subtle", colorScheme = "gray", className, skeleton },
+        ref,
+    ) => {
+        if (skeleton) {
+            colorScheme = "gray";
+        }
+
         return (
             <span
                 ref={ref}
@@ -70,7 +78,7 @@ export const FernTag = forwardRef<HTMLSpanElement, FernTagProps>(
                     className,
                 )}
             >
-                {children}
+                {skeleton ? <span className="contents invisible">{children}</span> : children}
             </span>
         );
     },

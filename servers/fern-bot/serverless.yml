@@ -28,6 +28,8 @@ provider:
     FERNIE_SLACK_APP_TOKEN: ${env:FERNIE_SLACK_APP_TOKEN, 'placeholder'}
     CUSTOMER_ALERTS_SLACK_CHANNEL: ${env:CUSTOMER_ALERTS_SLACK_CHANNEL, 'placeholder'}
     REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
+    FERN_TOKEN: ${env:FERN_TOKEN, 'OMIT'}
+
   # Roles for the lambda functions
   iam:
     role:
@@ -78,6 +80,14 @@ functions:
     memorySize: 5120
     ephemeralStorageSize: 10240
     handler: "src/functions/generator-updates/updateGeneratorVersion.handler"
+    layers:
+      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
+
+  updateFDRRepoData:
+    timeout: 900
+    memorySize: 5120
+    ephemeralStorageSize: 10240
+    handler: "src/functions/update-fdr-repo-data/updateFDRRepoData.handler"
     layers:
       - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
 
@@ -179,6 +189,39 @@ stepFunctions:
                             "Payload.$": "$"
                             FunctionName:
                               Fn::GetAtt: [updateGeneratorVersion, Arn]
+                          End: true
+                          # Try to discard whatever result AWS has for us
+                          # since we'll hit a size limit otherwise, and
+                          # the output is useless to us.
+                          ResultPath: null
+                          OutputPath: null
+              - StartAt: UpdateFDRRepoDataBranch
+                States:
+                  UpdateGeneratorsBranch:
+                    Type: Map
+                    End: true
+                    MaxConcurrency: 50
+                    ItemReader:
+                      ReaderConfig:
+                        InputType: CSV
+                        CSVHeaderLocation: FIRST_ROW
+                      Resource: "arn:aws:states:::s3:getObject"
+                      Parameters:
+                        Bucket: "fern-bot-${opt:stage}"
+                        Key: "lambdas/repos.csv"
+                    ItemProcessor:
+                      ProcessorConfig:
+                        Mode: DISTRIBUTED
+                        ExecutionType: STANDARD
+                      StartAt: HandleRepoForGenerator
+                      States:
+                        HandleRepoForGenerator:
+                          Type: Task
+                          Resource: "arn:aws:states:::lambda:invoke"
+                          Parameters:
+                            "Payload.$": "$"
+                            FunctionName:
+                              Fn::GetAtt: [updateFDRRepoData, Arn]
                           End: true
                           # Try to discard whatever result AWS has for us
                           # since we'll hit a size limit otherwise, and

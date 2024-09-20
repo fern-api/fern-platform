@@ -1,11 +1,12 @@
-import { FernRevalidation, FernRevalidationClient } from "@fern-fern/revalidation-sdk";
+import { FernDocs, FernDocsClient } from "@fern-fern/fern-docs-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { FdrApplication } from "../../app";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
 
 export type RevalidatedPathsResponse = {
-    response?: FernRevalidation.RevalidateAllV2Response;
+    successful: FernDocs.SuccessfulRevalidation[];
+    failed: FernDocs.FailedRevalidation[];
     revalidationFailed: boolean;
 };
 
@@ -46,27 +47,34 @@ export class RevalidatorServiceImpl implements RevalidatorService {
     }): Promise<RevalidatedPathsResponse> {
         let revalidationFailed = false;
         try {
-            const client = new FernRevalidationClient({
+            const client = new FernDocsClient({
                 environment: baseUrl.toURL().toString(),
             });
             app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
-            const response = await client.revalidateAllV3({
-                host: baseUrl.hostname,
-                basePath: baseUrl.path != null ? baseUrl.path : "",
-                xFernHost: baseUrl.hostname,
-            });
+            const page = await client.revalidation.revalidateAllV4();
+
+            const successful: FernDocs.SuccessfulRevalidation[] = [];
+            const failed: FernDocs.FailedRevalidation[] = [];
+
+            for await (const result of page) {
+                if (!result.success) {
+                    failed.push(result);
+                    app?.logger.error(`Revalidation failed for ${result.url}`, result.error);
+                } else {
+                    successful.push(result);
+                }
+            }
+
             return {
-                response,
+                failed,
+                successful,
                 revalidationFailed: false,
             };
         } catch (e) {
             app?.logger.error("Failed to revalidate paths", e);
             revalidationFailed = true;
             console.log(e);
-            return {
-                response: undefined,
-                revalidationFailed: true,
-            };
+            return { failed: [], successful: [], revalidationFailed: true };
         }
     }
 }

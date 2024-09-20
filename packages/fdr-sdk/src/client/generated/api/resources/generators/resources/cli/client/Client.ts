@@ -201,7 +201,6 @@ export class Cli {
      *
      * @example
      *     await fernRegistry.generators.cli.upsertCliRelease({
-     *         irVersion: 1,
      *         version: "string",
      *         createdAt: "2023-01-15",
      *         isYanked: {
@@ -210,6 +209,9 @@ export class Cli {
      *         changelogEntry: [{
      *                 type: FernRegistry.generators.ChangelogEntryType.Fix,
      *                 summary: "string",
+     *                 links: {
+     *                     "key": "value"
+     *                 },
      *                 upgradeNotes: {
      *                     "key": "value"
      *                 },
@@ -228,7 +230,9 @@ export class Cli {
      *                 fixed: {
      *                     "key": "value"
      *                 }
-     *             }]
+     *             }],
+     *         irVersion: 1,
+     *         tags: ["string"]
      *     })
      */
     public async upsertCliRelease(

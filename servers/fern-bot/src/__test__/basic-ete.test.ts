@@ -13,6 +13,7 @@ import { SimpleGit } from "simple-git";
 const REPO_FULL_NAME = "fern-api/fern-bot-tests";
 const CLI_TEST_BRANCH = "fern/update/cli";
 const PYTHON_TEST_BRANCH = "fern/update/fern-python-sdk@local";
+const JAVA_TEST_BRANCH = "fern/update/fern-java-sdk@another-group";
 
 export async function getBranch(git: SimpleGit, branchToCheckoutName: string): Promise<void> {
     await git.fetch(DEFAULT_REMOTE_NAME, branchToCheckoutName);
@@ -46,6 +47,11 @@ beforeEach(async () => {
                 owner: installation.repository.owner.login,
                 repo: installation.repository.name,
                 ref: `heads/${PYTHON_TEST_BRANCH}`,
+            });
+            await installation.octokit.rest.git.deleteRef({
+                owner: installation.repository.owner.login,
+                repo: installation.repository.name,
+                ref: `heads/${JAVA_TEST_BRANCH}`,
             });
         } catch (e) {
             console.log("Branches do not exist, continuing, consider `beforeEach` a success.");
@@ -84,6 +90,22 @@ it(
                     )
                 ).stdout,
             );
+            const anotherGroupPythonVersion = cleanStdout(
+                (
+                    await execFernCli(
+                        "generator get --version --generator fernapi/fern-python-sdk --group another-group",
+                        fullRepoPath,
+                    )
+                ).stdout,
+            );
+            const javaVersion = cleanStdout(
+                (
+                    await execFernCli(
+                        "generator get --version --generator fernapi/fern-java-sdk --group another-group",
+                        fullRepoPath,
+                    )
+                ).stdout,
+            );
 
             // Run local invoke of the bot
             // TODO: it'd be great if this could be called directly to more appropriately mirror the lambda,
@@ -106,8 +128,36 @@ it(
             }
 
             await getBranch(git, PYTHON_TEST_BRANCH);
-            const upgradedPythonVersion = cleanStdout((await execFernCli("--version", fullRepoPath)).stdout);
+            const upgradedPythonVersion = cleanStdout(
+                (
+                    await execFernCli(
+                        "generator get --group local --generator fernapi/fern-python-sdk --version",
+                        fullRepoPath,
+                    )
+                ).stdout,
+            );
             expect(upgradedPythonVersion).not.toBe(pythonVersion);
+
+            await getBranch(git, JAVA_TEST_BRANCH);
+            // Make sure we're not including major version bumps in other PRs
+            const upgradedPythonVersionJavaBranch = cleanStdout(
+                (
+                    await execFernCli(
+                        "generator get --group another-group --generator fernapi/fern-python-sdk --version",
+                        fullRepoPath,
+                    )
+                ).stdout,
+            );
+            expect(upgradedPythonVersionJavaBranch).toBe(anotherGroupPythonVersion);
+            const upgradedJavaVersion = cleanStdout(
+                (
+                    await execFernCli(
+                        "generator get --group another-group --generator fernapi/fern-java-sdk --version",
+                        fullRepoPath,
+                    )
+                ).stdout,
+            );
+            expect(upgradedJavaVersion).not.toBe(javaVersion);
         });
     },
     // 30s timeout

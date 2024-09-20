@@ -3,7 +3,6 @@ import * as fs from "fs";
 import * as yaml from "js-yaml";
 
 export function getPlaywrightTestUrls(type: string): string[] {
-    const testUrls: string[] = [];
     const playwrightConfig = yaml.load(fs.readFileSync("playwright/inclusions.yml", "utf-8"));
 
     if (!(type in playwrightConfig)) {
@@ -11,28 +10,14 @@ export function getPlaywrightTestUrls(type: string): string[] {
     }
     const testInclusions = new Set<string>(playwrightConfig[type]);
 
-    function processLineByLineSync(filePath: string): void {
-        const fileContent = fs.readFileSync(filePath, "utf-8");
-
-        const lines = fileContent.split(/\r?\n/);
-
-        lines.forEach((line) => {
-            const urlPattern = /\(([^)]+\?host=([^&]+))\)/;
-            const match = line.match(urlPattern);
-            if (match) {
-                const fullUrl = match[1];
-                const isIncludedUrl = match[2];
-                if (fullUrl && testInclusions.has(isIncludedUrl ?? "")) {
-                    testUrls.push(fullUrl);
-                }
-            }
-        });
-    }
-
-    processLineByLineSync("preview.txt");
+    const testUrls: string[] = fs
+        .readFileSync("domains.txt", "utf-8")
+        .split(/\r?\n/)
+        .filter((domain) => testInclusions.has(domain))
+        .map((domain) => `https://${domain}`);
 
     if (testUrls.length === 0) {
-        throw new Error("No URLs found in preview.txt");
+        throw new Error("No URLs found in domains.txt");
     }
 
     return testUrls;

@@ -24,6 +24,7 @@ env:
   FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
   CUSTOMER_ALERTS_SLACK_CHANNEL: "customer-upgrades-dev"
   CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
 jobs:
   deploy_dev:
