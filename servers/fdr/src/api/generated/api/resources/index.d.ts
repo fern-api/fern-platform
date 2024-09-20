@@ -21,6 +21,7 @@ export * as tokens from "./tokens";
 export * from "./tokens/types";
 export * as docsCache from "./docsCache";
 export * from "./docsCache/service/requests";
+export * from "./git/service/requests";
 export * from "./snippetsFactory/service/requests";
 export * from "./snippets/service/requests";
 export * from "./templates/service/requests";

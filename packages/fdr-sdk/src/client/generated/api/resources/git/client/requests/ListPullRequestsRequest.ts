@@ -17,32 +17,24 @@ import * as FernRegistry from "../../../../index";
  *     }
  */
 export interface ListPullRequestsRequest {
-    /**
-     * The page number to retrieve. Defaults to 0.
-     */
+    /** The page number to retrieve. Defaults to 0. */
     page?: number;
-    /**
-     * The number of items to retrieve per page. Defaults to 20.
-     */
+    /** The number of items to retrieve per page. Defaults to 20. */
     pageSize?: number;
     /**
      * The name of the repository to filter pull requests by (ex: full-platform).
+     *
      */
     repositoryName?: string;
     /**
      * The organization name of the repository owner to filter pull requests by (ex: fern-api).
+     *
      */
     repositoryOwner?: string;
-    /**
-     * The Fern organization ID to filter repositories by.
-     */
+    /** The Fern organization ID to filter repositories by. */
     organizationId?: FernRegistry.OrgId;
-    /**
-     * The status(es) of the pull request to filter by.
-     */
+    /** The status(es) of the pull request to filter by. */
     state?: FernRegistry.PullRequestState[];
-    /**
-     * The login (github username) of the author(s) to filter by.
-     */
+    /** The login (github username) of the author(s) to filter by. */
     author?: string[];
 }

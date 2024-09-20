@@ -141,31 +141,32 @@ service:
 
     listRepositories:
       docs: Get all repositories.
-      method: GET
+      method: POST
       path: "/repository/list"
       pagination:
         offset: $request.page
         results: $response.repositories
       request:
         name: ListRepositoriesRequest
-        query-parameters:
-          page:
-            type: optional<integer>
-            docs: The page number to retrieve. Defaults to 0.
-          pageSize:
-            type: optional<integer>
-            docs: The number of items to retrieve per page. Defaults to 20.
-          organizationId:
-            type: optional<commons.OrgId>
-            docs: The Fern organization ID to filter repositories by.
-          repositoryName:
-            type: optional<string>
-            docs: |
-              The name of the repository to filter pull requests by (ex: full-platform).
-          repositoryOwner:
-            type: optional<string>
-            docs: |
-              The organization name of the repository owner to filter pull requests by (ex: fern-api).
+        body:
+          properties:
+            page:
+              type: optional<integer>
+              docs: The page number to retrieve. Defaults to 0.
+            pageSize:
+              type: optional<integer>
+              docs: The number of items to retrieve per page. Defaults to 20.
+            organizationId:
+              type: optional<commons.OrgId>
+              docs: The Fern organization ID to filter repositories by.
+            repositoryName:
+              type: optional<string>
+              docs: |
+                The name of the repository to filter pull requests by (ex: full-platform).
+            repositoryOwner:
+              type: optional<string>
+              docs: |
+                The organization name of the repository owner to filter pull requests by (ex: fern-api).
       response: ListRepositoriesResponse
 
     upsertRepository:
@@ -194,37 +195,38 @@ service:
 
     listPullRequests:
       docs: Get all pull requests.
-      method: GET
+      method: POST
       path: "/pull-request/list"
       pagination:
         offset: $request.page
         results: $response.pullRequests
       request:
         name: ListPullRequestsRequest
-        query-parameters:
-          page:
-            type: optional<integer>
-            docs: The page number to retrieve. Defaults to 0.
-          pageSize:
-            type: optional<integer>
-            docs: The number of items to retrieve per page. Defaults to 20.
-          repositoryName:
-            type: optional<string>
-            docs: |
-              The name of the repository to filter pull requests by (ex: full-platform).
-          repositoryOwner:
-            type: optional<string>
-            docs: |
-              The organization name of the repository owner to filter pull requests by (ex: fern-api).
-          organizationId:
-            type: optional<commons.OrgId>
-            docs: The Fern organization ID to filter repositories by.
-          state:
-            type: optional<list<PullRequestState>>
-            docs: The status(es) of the pull request to filter by.
-          author:
-            type: optional<list<string>>
-            docs: The login (github username) of the author(s) to filter by.
+        body:
+          properties:
+            page:
+              type: optional<integer>
+              docs: The page number to retrieve. Defaults to 0.
+            pageSize:
+              type: optional<integer>
+              docs: The number of items to retrieve per page. Defaults to 20.
+            repositoryName:
+              type: optional<string>
+              docs: |
+                The name of the repository to filter pull requests by (ex: full-platform).
+            repositoryOwner:
+              type: optional<string>
+              docs: |
+                The organization name of the repository owner to filter pull requests by (ex: fern-api).
+            organizationId:
+              type: optional<commons.OrgId>
+              docs: The Fern organization ID to filter repositories by.
+            state:
+              type: optional<list<PullRequestState>>
+              docs: The status(es) of the pull request to filter by.
+            author:
+              type: optional<list<string>>
+              docs: The login (github username) of the author(s) to filter by.
       response: ListPullRequestsResponse
 
     upsertPullRequest:

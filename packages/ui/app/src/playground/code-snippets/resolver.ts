@@ -59,10 +59,13 @@ export class PlaygroundCodeSnippetResolver {
     private typescriptSdkResolver: SnippetTemplateResolver | undefined;
     private pythonRequestsResolver: SnippetTemplateResolver | undefined;
 
-    public resolve(lang: "curl" | "python" | "typescript", apiDefinition?: APIV1Read.ApiDefinition): string {
+    public resolve(
+        lang: "curl" | "python" | "typescript" | "javascript",
+        apiDefinition?: APIV1Read.ApiDefinition,
+    ): string {
         if (lang === "curl") {
             return this.toCurl();
-        } else if (lang === "typescript") {
+        } else if (lang === "typescript" || lang === "javascript") {
             return this.toTypescriptSdkSnippet(apiDefinition) ?? this.toTypescriptFetch();
         } else if (lang === "python") {
             return this.toPythonSdkSnippet(apiDefinition) ?? this.toPythonRequests();

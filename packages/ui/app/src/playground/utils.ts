@@ -1,7 +1,6 @@
 import { APIV1Read, Snippets } from "@fern-api/fdr-sdk/client/types";
 import { assertNever, isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { decodeJwt } from "jose";
-import jp from "jsonpath";
 import { compact, mapValues } from "lodash-es";
 import {
     ResolvedEndpointDefinition,
@@ -575,6 +574,10 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     closeContainer,
     setDisplayFailedLogin,
 }: OAuthClientCredentialReferencedEndpointLoginFlowProps): Promise<void> => {
+    if (typeof window === "undefined") {
+        return;
+    }
+
     const headers: Record<string, string> = {
         ...mapValues(formState.headers ?? {}, unknownToString),
     };
@@ -591,11 +594,12 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     };
     const res = await executeProxyRest(proxyEnvironment, req);
 
-    visitDiscriminatedUnion(res, "type")._visit({
-        json: (jsonRes) => {
+    await visitDiscriminatedUnion(res, "type")._visit<void | Promise<void>>({
+        json: async (jsonRes) => {
             if (jsonRes.response.ok) {
                 try {
-                    const accessToken = jp.query(
+                    const jsonpath = await import("jsonpath");
+                    const accessToken = jsonpath.query(
                         jsonRes.response,
                         oAuthClientCredentialsReferencedEndpoint.accessTokenLocator,
                     )?.[0];

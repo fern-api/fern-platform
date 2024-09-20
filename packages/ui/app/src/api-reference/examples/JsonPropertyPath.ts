@@ -12,10 +12,13 @@ export declare namespace JsonPropertyPathPart {
         propertyName?: string;
     }
 
+    /**
+     * TODO: support more than just string values (e.g. other primitives)
+     */
     export interface ObjectFilter {
         type: "objectFilter";
         propertyName: string;
-        requiredValue: string;
+        requiredStringValue: string;
     }
 
     export interface ListItem {
