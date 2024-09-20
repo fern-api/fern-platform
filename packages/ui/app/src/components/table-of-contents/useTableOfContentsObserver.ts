@@ -58,6 +58,15 @@ export function useTableOfContentsObserver(ids: string[], setActiveId: (id: stri
             const intersectionTop = scrollY + rootTop;
             const intersectionBottom = scrollY + rootTop + clientHeight;
 
+            // when the user scrolls to the very top of the page, set the anchorInView to the first anchor
+            if (scrollY === 0) {
+                const firstAnchor = ids[0];
+                if (firstAnchor) {
+                    setActiveId(firstAnchor);
+                }
+                return;
+            }
+
             // when the user scrolls to the very bottom of the page, set the anchorInView to the last anchor
             const lastAnchor = ids[ids.length - 1];
             if (scrollHeight - clientHeight <= scrollY) {
@@ -99,13 +108,19 @@ export function useTableOfContentsObserver(ids: string[], setActiveId: (id: stri
             const scrollY = root instanceof Document ? window.scrollY : root.scrollTop;
             const top = root instanceof Document ? 0 : root.getBoundingClientRect().top;
             try {
-                idToYRef.current = Array.from(document.querySelectorAll(ids.map(toIdQuerySelector).join(", "))).reduce<
-                    Record<string, number>
-                >((prev, curr) => {
+                idToYRef.current = Array.from(
+                    document.querySelectorAll(
+                        ids
+                            .filter((id) => id.trim().length > 0)
+                            .map(toIdQuerySelector)
+                            .join(", "),
+                    ),
+                ).reduce<Record<string, number>>((prev, curr) => {
                     prev[curr.id] = curr.getBoundingClientRect().top + scrollY - top;
                     return prev;
                 }, {});
             } catch (e) {
+                console.log("Error measuring table of contents", e);
                 captureSentryError(e, { errorDescription: "Error measuring table of contents" });
             }
         });
