@@ -32,3 +32,10 @@ export type TypeReferenceWithMetadata = {
     version: AlgoliaRecordVersionV3 | undefined;
     indexSegmentId: string;
 };
+
+export type MarkdownNode = {
+    level: number;
+    heading: string;
+    content: string;
+    children: MarkdownNode[];
+};

@@ -16,7 +16,7 @@ import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
 import { ReferencedTypes, getAllReferencedTypes } from "./getAllReferencedTypes";
-import type { AlgoliaSearchRecord, IndexSegment, TypeReferenceWithMetadata } from "./types";
+import type { AlgoliaSearchRecord, IndexSegment, MarkdownNode, TypeReferenceWithMetadata } from "./types";
 
 class NavigationContext {
     #indexSegment: IndexSegment;
@@ -1909,17 +1909,10 @@ export function getFrontmatter(content: string): Frontmatter {
     }
 }
 
-type Header = {
-    level: number;
-    heading: string;
-    content: string;
-    children: Header[];
-};
-
-export function getMarkdownSectionTree(markdown: string): Header {
+export function getMarkdownSectionTree(markdown: string): MarkdownNode {
     const lines: string[] = markdown.split("\n");
     let insideCodeBlock = false;
-    const root: Header = { level: 0, heading: "", content: "", children: [] };
+    const root: MarkdownNode = { level: 0, heading: "", content: "", children: [] };
     const collectedNodes = [root];
 
     for (const line of lines) {
@@ -1963,28 +1956,33 @@ export function getMarkdownSectionTree(markdown: string): Header {
 }
 
 export function getMarkdownSections(
-    markdownSection: Header,
+    markdownSection: MarkdownNode,
     breadcrumbs: string[],
     indexSegmentId: string,
     slug: string,
+    firstNode = true,
 ): AlgoliaSearchRecord[] {
     const sectionBreadcrumbs = markdownSection.heading
         ? breadcrumbs.concat([markdownSection.heading])
         : breadcrumbs.slice(0);
-    const records: AlgoliaSearchRecord[] = [
-        compact({
-            type: "markdown-section-v1",
-            objectID: uuid(),
-            title: markdownSection.heading,
-            content: markdownSection.content,
-            breadcrumbs: sectionBreadcrumbs,
-            indexSegmentId,
-            slug,
-        }),
-    ];
+    const records: AlgoliaSearchRecord[] = firstNode
+        ? []
+        : [
+              compact({
+                  type: "markdown-section-v1",
+                  objectID: uuid(),
+                  title: markdownSection.heading,
+                  content: markdownSection.content,
+                  breadcrumbs: sectionBreadcrumbs,
+                  indexSegmentId,
+                  slug,
+              }),
+          ];
     return records.concat(
-        markdownSection.children.reduce((acc: AlgoliaSearchRecord[], markdownSectionChild: Header) => {
-            return acc.concat(getMarkdownSections(markdownSectionChild, sectionBreadcrumbs, slug, indexSegmentId));
+        markdownSection.children.reduce((acc: AlgoliaSearchRecord[], markdownSectionChild: MarkdownNode) => {
+            return acc.concat(
+                getMarkdownSections(markdownSectionChild, sectionBreadcrumbs, slug, indexSegmentId, false),
+            );
         }, []),
     );
 }
