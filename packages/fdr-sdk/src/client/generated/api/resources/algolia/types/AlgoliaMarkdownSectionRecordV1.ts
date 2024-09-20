@@ -4,10 +4,6 @@
 
 import * as FernRegistry from "../../../index";
 
-export interface AlgoliaMarkdownSectionRecordV1 {
-    title: string;
+export interface AlgoliaMarkdownSectionRecordV1 extends FernRegistry.AlgoliaPageRecordV4 {
     content: string;
-    breadcrumbs: FernRegistry.Breadcrumbs;
-    indexSegmentId: FernRegistry.IndexSegmentId;
-    slug: FernRegistry.navigation.Slug;
 }

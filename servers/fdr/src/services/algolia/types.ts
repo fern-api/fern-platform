@@ -1,5 +1,6 @@
 import { APIV1Read, Algolia, DocsV1Db } from "../../api";
-import { AlgoliaRecordVersionV3 } from "../../api/generated/api";
+import { AlgoliaRecordVersionV3, BreadcrumbsInfo } from "../../api/generated/api";
+import { EndpointPathPart, HttpMethod } from "../../api/generated/api/resources/api/resources/v1/resources/read";
 import type { DocsVersion } from "../../types";
 
 export type IndexSegment =
@@ -27,10 +28,13 @@ export type AlgoliaSearchRecord = WithObjectId<Algolia.AlgoliaRecord>;
 export type TypeReferenceWithMetadata = {
     reference: APIV1Read.TypeReference;
     anchorIdParts: string[];
-    breadcrumbs: string[];
+    breadcrumbs: BreadcrumbsInfo[];
     slugPrefix: string;
     version: AlgoliaRecordVersionV3 | undefined;
     indexSegmentId: string;
+    method?: HttpMethod;
+    endpointPath: EndpointPathPart[];
+    isResponseStream?: boolean;
 };
 
 export type MarkdownNode = {

@@ -10,6 +10,13 @@ types:
 
   Breadcrumbs: list<string>
 
+  BreadcrumbsV2: list<BreadcrumbsInfo>
+
+  BreadcrumbsInfo:
+    properties:
+      title: string
+      slug: string
+
   IndexSegmentId: string
 
   AlgoliaRecord:
@@ -41,7 +48,7 @@ types:
     properties:
       title: string
       description: optional<string>
-      breadcrumbs: Breadcrumbs
+      breadcrumbs: BreadcrumbsV2
       slug: navigation.Slug
       version: optional<AlgoliaRecordVersionV3>
       indexSegmentId: IndexSegmentId
@@ -92,23 +99,34 @@ types:
       endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
 
   AlgoliaMarkdownSectionRecordV1:
+    extends: AlgoliaPageRecordV4
     properties:
-      title: string
       content: string
-      breadcrumbs: Breadcrumbs
-      indexSegmentId: IndexSegmentId
-      slug: navigation.Slug
+
+  AlgoliaEndpointFieldRecordV1:
+    extends: AlgoliaEndpointRecordV4
+    properties:
+      availability: optional<string>
+      extends: optional<list<string>>
+
+  AlgoliaWebSocketFieldRecordV1:
+    extends: AlgoliaWebSocketRecordV4
+    properties:
+      availability: optional<string>
+      extends: optional<list<string>>
+
+  AlgoliaWebhookFieldRecordV1:
+    extends: AlgoliaWebhookRecordV4
+    properties:
+      availability: optional<string>
+      extends: optional<list<string>>
 
   AlgoliaFieldRecordV1:
-    properties:
-      title: optional<string>
-      description: optional<string>
-      availability: optional<string>
-      breadcrumbs: Breadcrumbs
-      slug: navigation.Slug
-      version: optional<AlgoliaRecordVersionV3>
-      indexSegmentId: IndexSegmentId
-      extends: optional<list<string>>
+    union:
+      - AlgoliaEndpointFieldRecordV1
+      - AlgoliaWebSocketFieldRecordV1
+      - AlgoliaWebhookFieldRecordV1
+    discriminated: false
 
   IndexSegment:
     properties:

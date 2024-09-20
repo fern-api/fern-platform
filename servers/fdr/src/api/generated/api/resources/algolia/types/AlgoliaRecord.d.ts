@@ -31,8 +31,9 @@ export declare namespace AlgoliaRecord {
     interface MarkdownSectionV1 extends FernRegistry.AlgoliaMarkdownSectionRecordV1 {
         type: "markdown-section-v1";
     }
-    interface FieldV1 extends FernRegistry.AlgoliaFieldRecordV1 {
+    interface FieldV1 {
         type: "field-v1";
+        value: FernRegistry.AlgoliaFieldRecordV1;
     }
     interface Endpoint extends FernRegistry.AlgoliaEndpointRecord {
         type: "endpoint";

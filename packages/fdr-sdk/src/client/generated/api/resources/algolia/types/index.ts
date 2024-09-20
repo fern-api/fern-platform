@@ -1,5 +1,7 @@
 export * from "./AlgoliaSearchIndex";
 export * from "./Breadcrumbs";
+export * from "./BreadcrumbsV2";
+export * from "./BreadcrumbsInfo";
 export * from "./IndexSegmentId";
 export * from "./AlgoliaRecord";
 export * from "./AlgoliaRecordVersionV3";
@@ -12,6 +14,9 @@ export * from "./AlgoliaWebSocketRecordV3";
 export * from "./AlgoliaWebhookRecordV4";
 export * from "./AlgoliaWebhookRecordV3";
 export * from "./AlgoliaMarkdownSectionRecordV1";
+export * from "./AlgoliaEndpointFieldRecordV1";
+export * from "./AlgoliaWebSocketFieldRecordV1";
+export * from "./AlgoliaWebhookFieldRecordV1";
 export * from "./AlgoliaFieldRecordV1";
 export * from "./IndexSegment";
 export * from "./SingleAlgoliaIndexInfo";

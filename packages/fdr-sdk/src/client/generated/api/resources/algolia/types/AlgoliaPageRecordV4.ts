@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../index";
 export interface AlgoliaPageRecordV4 {
     title: string;
     description?: string;
-    breadcrumbs: FernRegistry.Breadcrumbs;
+    breadcrumbs: FernRegistry.BreadcrumbsV2;
     slug: FernRegistry.navigation.Slug;
     version?: FernRegistry.AlgoliaRecordVersionV3;
     indexSegmentId: FernRegistry.IndexSegmentId;
