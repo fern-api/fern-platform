@@ -101,7 +101,7 @@ types:
 
   AlgoliaFieldRecordV1:
     properties:
-      name: optional<string>
+      title: optional<string>
       description: optional<string>
       availability: optional<string>
       breadcrumbs: Breadcrumbs

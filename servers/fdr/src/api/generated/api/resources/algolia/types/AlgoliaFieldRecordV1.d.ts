@@ -3,7 +3,7 @@
  */
 import * as FernRegistry from "../../../index";
 export interface AlgoliaFieldRecordV1 {
-    name?: string;
+    title?: string;
     description?: string;
     availability?: string;
     breadcrumbs: FernRegistry.Breadcrumbs;
