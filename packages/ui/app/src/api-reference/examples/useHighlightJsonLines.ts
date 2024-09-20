@@ -100,7 +100,7 @@ function getQueryPart(path: JsonPropertyPathPart) {
 
 function createHoveredJsonLinesAtom(json: unknown, hoveredPropertyPath: JsonPropertyPath = [], jsonStartLine = 0) {
     const atom = atomWithLazy(async () => {
-        if (hoveredPropertyPath.length === 0 || jsonStartLine < 0) {
+        if (hoveredPropertyPath.length === 0 || jsonStartLine < 0 || typeof window === "undefined") {
             return [];
         }
         /**
