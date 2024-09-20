@@ -219,6 +219,12 @@ service:
           organizationId:
             type: optional<commons.OrgId>
             docs: The Fern organization ID to filter repositories by.
+          state:
+            type: optional<list<PullRequestState>>
+            docs: The status(es) of the pull request to filter by.
+          author:
+            type: optional<list<string>>
+            docs: The login (github username) of the author(s) to filter by.
       response: ListPullRequestsResponse
 
     upsertPullRequest:

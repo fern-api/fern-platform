@@ -11,7 +11,9 @@ import * as FernRegistry from "../../../../index";
  *         pageSize: 1,
  *         repositoryName: "string",
  *         repositoryOwner: "string",
- *         organizationId: "string"
+ *         organizationId: "string",
+ *         state: [FernRegistry.PullRequestState.Open],
+ *         author: ["string"]
  *     }
  */
 export interface ListPullRequestsRequest {
@@ -35,4 +37,12 @@ export interface ListPullRequestsRequest {
      * The Fern organization ID to filter repositories by.
      */
     organizationId?: FernRegistry.OrgId;
+    /**
+     * The status(es) of the pull request to filter by.
+     */
+    state?: FernRegistry.PullRequestState[];
+    /**
+     * The login (github username) of the author(s) to filter by.
+     */
+    author?: string[];
 }

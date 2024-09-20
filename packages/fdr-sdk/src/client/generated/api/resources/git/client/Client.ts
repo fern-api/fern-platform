@@ -324,14 +324,16 @@ export class Git {
      *         pageSize: 1,
      *         repositoryName: "string",
      *         repositoryOwner: "string",
-     *         organizationId: "string"
+     *         organizationId: "string",
+     *         state: [FernRegistry.PullRequestState.Open],
+     *         author: ["string"]
      *     })
      */
     public async listPullRequests(
         request: FernRegistry.ListPullRequestsRequest = {},
         requestOptions?: Git.RequestOptions
     ): Promise<core.APIResponse<FernRegistry.ListPullRequestsResponse, FernRegistry.git.listPullRequests.Error>> {
-        const { page, pageSize, repositoryName, repositoryOwner, organizationId } = request;
+        const { page, pageSize, repositoryName, repositoryOwner, organizationId, state, author } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
@@ -351,6 +353,14 @@ export class Git {
 
         if (organizationId != null) {
             _queryParams["organizationId"] = organizationId;
+        }
+
+        if (state != null) {
+            _queryParams["state"] = JSON.stringify(state);
+        }
+
+        if (author != null) {
+            _queryParams["author"] = JSON.stringify(author);
         }
 
         const _response = await core.fetcher({
