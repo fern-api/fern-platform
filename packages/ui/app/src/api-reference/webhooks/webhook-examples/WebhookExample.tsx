@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { createRef, useEffect, useMemo } from "react";
 import { ResolvedExampleWebhookPayload } from "../../../resolver/types";
-import { getJsonLineNumbers } from "../../examples/getJsonLineNumbers";
+import { useHighlightJsonLines } from "../../examples/getJsonLineNumbers";
 import { useWebhookContext } from "../webhook-context/useWebhookContext";
 
 const CodeSnippetExample = dynamic(
@@ -20,15 +20,9 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
 
     const payloadJsonString = useMemo(() => JSON.stringify(example.payload, null, 2), [example.payload]);
 
-    const requestHighlightLines = useMemo(() => {
-        if (hoveredPayloadPropertyPath.length === 0) {
-            return [];
-        }
-        return getJsonLineNumbers(example.payload, hoveredPayloadPropertyPath);
-    }, [example.payload, hoveredPayloadPropertyPath]);
-
     const requestViewportRef = createRef<HTMLDivElement>();
 
+    const requestHighlightLines = useHighlightJsonLines(example.payload, hoveredPayloadPropertyPath);
     useEffect(() => {
         if (requestViewportRef.current != null && requestHighlightLines[0] != null) {
             const lineNumber = Array.isArray(requestHighlightLines[0])

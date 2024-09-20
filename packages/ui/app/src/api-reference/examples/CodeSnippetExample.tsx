@@ -1,13 +1,13 @@
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
-import { createRef, FC, useCallback, useEffect, useMemo } from "react";
+import { FC, createRef, useCallback, useEffect, useMemo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { ScrollToHandle } from "../../syntax-highlighting/FernSyntaxHighlighterTokens";
-import { getJsonLineNumbers } from "./getJsonLineNumbers";
 import { JsonPropertyPath } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
+import { useHighlightJsonLines } from "./getJsonLineNumbers";
 
 export declare namespace CodeSnippetExample {
     export interface Props extends Omit<TitledExample.Props, "copyToClipboardText"> {
@@ -45,13 +45,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
         }
     });
 
-    const requestHighlightLines = useMemo(() => {
-        if (hoveredPropertyPath == null || hoveredPropertyPath.length === 0 || jsonStartLine === -1) {
-            return [];
-        }
-        const startLine = jsonStartLine ?? 0;
-        return getJsonLineNumbers(json, hoveredPropertyPath, startLine + 1);
-    }, [hoveredPropertyPath, jsonStartLine, json]);
+    const requestHighlightLines = useHighlightJsonLines(json, hoveredPropertyPath, jsonStartLine);
 
     useEffect(() => {
         if (viewportRef.current != null && requestHighlightLines[0] != null) {

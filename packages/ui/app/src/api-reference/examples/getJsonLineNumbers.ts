@@ -1,10 +1,17 @@
 import { isPlainObject } from "@fern-ui/core-utils";
-import { query as jpquery } from "jsonpath";
+// import { query as jpquery } from "jsonpath";
+import { useAtomValue } from "jotai";
+import { atomWithLazy } from "jotai/utils";
+import { useMemoOne } from "use-memo-one";
 import { captureSentryError } from "../../analytics/sentry";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
 
-export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start = 0): (number | [number, number])[] {
+export async function getJsonLineNumbers(
+    json: unknown,
+    path: JsonPropertyPath,
+    start = 0,
+): Promise<(number | [number, number])[]> {
     const jsonString = JSON.stringify(json, undefined, 2);
     const part = path[0];
     if (part == null) {
@@ -17,6 +24,7 @@ export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start 
     let results: unknown[] = [];
 
     try {
+        const jpquery = await import("jsonpath").then((m) => m.query);
         results = jpquery(json, query);
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -37,22 +45,26 @@ export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start 
         }
     }
 
-    return results.flatMap((result) => {
-        // get start of string by matching
-        const toMatch = jsonStringifyAndIndent(
-            result,
-            part.type === "objectProperty" ? part.propertyName : undefined,
-            1,
-        );
-        const startLine = lineNumberOf(jsonString, toMatch);
-        if (startLine === -1) {
-            return [];
-        }
+    return Promise.all(
+        results.map(async (result) => {
+            // get start of string by matching
+            const toMatch = jsonStringifyAndIndent(
+                result,
+                part.type === "objectProperty" ? part.propertyName : undefined,
+                1,
+            );
+            const startLine = lineNumberOf(jsonString, toMatch);
+            if (startLine === -1) {
+                return [];
+            }
 
-        return getJsonLineNumbers(result, path.slice(1), startLine).map((line) =>
-            typeof line === "number" ? start + line : [start + line[0], start + line[1]],
-        );
-    });
+            const lineNumbers = await getJsonLineNumbers(result, path.slice(1), startLine);
+
+            return lineNumbers.map((line): number | [number, number] =>
+                typeof line === "number" ? start + line : [start + line[0], start + line[1]],
+            );
+        }),
+    ).then((nestedLineNumbers) => nestedLineNumbers.flat());
 }
 
 function jsonStringifyAndIndent(json: unknown, key: string | undefined, depth: number) {
@@ -75,4 +87,22 @@ function getQueryPart(path: JsonPropertyPathPart) {
         case "objectFilter":
             return `[?(@.${path.propertyName}=='${path.requiredValue}')]`;
     }
+}
+
+export function useHighlightJsonLines(
+    json: unknown,
+    hoveredPropertyPath: JsonPropertyPath = [],
+    jsonStartLine = 0,
+): (number | [number, number])[] {
+    const atom = useMemoOne(
+        () =>
+            atomWithLazy(async () => {
+                if (hoveredPropertyPath.length === 0 || jsonStartLine < 0) {
+                    return [];
+                }
+                return getJsonLineNumbers(json, hoveredPropertyPath, jsonStartLine + 1);
+            }),
+        [hoveredPropertyPath, jsonStartLine, json],
+    );
+    return useAtomValue(atom);
 }
