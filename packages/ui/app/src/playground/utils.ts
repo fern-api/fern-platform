@@ -574,6 +574,10 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     closeContainer,
     setDisplayFailedLogin,
 }: OAuthClientCredentialReferencedEndpointLoginFlowProps): Promise<void> => {
+    if (typeof window === "undefined") {
+        return;
+    }
+
     const headers: Record<string, string> = {
         ...mapValues(formState.headers ?? {}, unknownToString),
     };
@@ -590,13 +594,12 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     };
     const res = await executeProxyRest(proxyEnvironment, req);
 
-    const jpquery = await import("jsonpath").then((jsonpath) => jsonpath.query);
-
-    visitDiscriminatedUnion(res, "type")._visit({
-        json: (jsonRes) => {
+    await visitDiscriminatedUnion(res, "type")._visit<void | Promise<void>>({
+        json: async (jsonRes) => {
             if (jsonRes.response.ok) {
                 try {
-                    const accessToken = jpquery(
+                    const jsonpath = await import("jsonpath");
+                    const accessToken = jsonpath.query(
                         jsonRes.response,
                         oAuthClientCredentialsReferencedEndpoint.accessTokenLocator,
                     )?.[0];

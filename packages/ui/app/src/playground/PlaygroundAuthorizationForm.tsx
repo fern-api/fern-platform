@@ -169,6 +169,9 @@ function FoundOAuthReferencedEndpointForm({
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
+    /**
+     * TODO: turn this into a loadable (suspense)
+     */
     const oAuthClientCredentialLogin = async () => {
         setValue((prev) => ({ ...prev, isLoggingIn: true }));
         await oAuthClientCredentialReferencedEndpointLoginFlow({

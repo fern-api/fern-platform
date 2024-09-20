@@ -72,7 +72,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 {
                     type: "objectFilter",
                     propertyName: discriminant,
-                    requiredValue: unionVariant.discriminantValue,
+                    requiredStringValue: unionVariant.discriminantValue,
                 },
             ],
         }),
