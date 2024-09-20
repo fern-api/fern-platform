@@ -28,6 +28,7 @@ import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { IFrame } from "./iframe";
 import { CustomLayout, GuideLayout, OverviewLayout, PageLayout, ReferenceLayout } from "./layout";
+import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
 import { Step, StepGroup } from "./steps";
@@ -53,6 +54,7 @@ const FERN_COMPONENTS = {
     EndpointResponseSnippet,
     Frame,
     Icon: RemoteFontAwesomeIcon,
+    Mermaid,
     ParamField,
     Step,
     StepGroup,
