@@ -29,6 +29,7 @@ import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { IFrame } from "./iframe";
+import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { ReferenceLayoutAside, ReferenceLayoutMain } from "./reference-layout";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
@@ -59,6 +60,7 @@ const FERN_COMPONENTS = {
     Frame,
     Icon: RemoteFontAwesomeIcon,
     LaunchDarkly,
+    Mermaid,
     ParamField,
     Step,
     StepGroup,
