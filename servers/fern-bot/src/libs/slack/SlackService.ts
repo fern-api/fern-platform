@@ -130,7 +130,7 @@ export class SlackService {
                 type: "section",
                 text: {
                     type: "mrkdwn",
-                    text: `*Organization*: ${this.getOrganizationName(organization)}\n*Github Repo:* ${repoName}${this.getStaleAPISpecPRMessage(apiSpecPull)}${this.getStaleVersionUpgradePRsMessage(versionUpdatePulls)}`,
+                    text: `*Organization*: ${this.getOrganizationName(organization)}\n*Github Repo:* ${repoName}${this.getStaleAPISpecPRMessage(apiSpecPull)}`,
                 },
             },
         ];
