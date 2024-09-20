@@ -5,6 +5,7 @@ import { PullRequest } from "@fern-fern/paged-generators-sdk/api";
 import { SlackService } from "@libs/slack/SlackService";
 
 const STALE_IN_DAYS = 7;
+const STALE_IN_MS = STALE_IN_DAYS * 24 * 60 * 60 * 1000;
 const VERBOSE_MESSAGE_THRESHOLD = 5;
 const FERN_TEAM = new Set<string>([
     "abvthecity",
@@ -22,15 +23,17 @@ const EXCLUDE_ORGS = new Set<string>(["fern-api", "fern-demo"]);
 
 export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
     const client = new FernRegistryClient({ environment: env.DEFAULT_FDR_ORIGIN, token: env.FERN_TOKEN });
+    console.log("Fetching stale PRs");
     const botPulls = await client.git.listPullRequests({
         // Is the author any fern member, or the github app?
         author: [env.GITHUB_APP_LOGIN_NAME],
         state: [PullRequestState.Open, PullRequestState.Closed],
     });
+    console.log("Stale PRs fetched");
 
     const orgPullMap = new Map<string, PullRequest[]>();
     for await (const pull of botPulls) {
-        if (pull.createdAt < new Date(Date.now() - STALE_IN_DAYS * 24 * 60 * 60 * 1000)) {
+        if (pull.createdAt < new Date(Date.now() - STALE_IN_MS)) {
             orgPullMap.set(pull.repositoryOwner, [...(orgPullMap.get(pull.repositoryOwner) || []), pull]);
         }
     }
@@ -80,7 +83,7 @@ export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
         if (EXCLUDE_ORGS.has(pull.repositoryOwner)) {
             continue;
         }
-        if (pull.createdAt < new Date(Date.now() - STALE_IN_DAYS * 24 * 60 * 60 * 1000)) {
+        if (pull.createdAt < new Date(Date.now() - STALE_IN_MS)) {
             numStaleTeamPulls++;
         }
     }
