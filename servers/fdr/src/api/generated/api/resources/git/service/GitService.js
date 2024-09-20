@@ -51,7 +51,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.get("/repository", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/repository/list", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.listRepositories(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
@@ -75,7 +75,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.put("/repository", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.put("/repository/upsert", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.upsertRepository(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {
@@ -99,7 +99,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.delete("/repository/:repositoryOwner/:repositoryName", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.delete("/repository/:repositoryOwner/:repositoryName/delete", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.deleteRepository(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {
@@ -147,7 +147,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.get("/pull-request", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get("/pull-request/list", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.listPullRequests(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
@@ -171,7 +171,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.put("/pull-request", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.put("/pull-request/upsert", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.upsertPullRequest(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {
@@ -195,7 +195,7 @@ export class GitService {
                 next(error);
             }
         }));
-        this.router.delete("/pull-request/:repositoryOwner/:repositoryName/:pullRequestNumber", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.delete("/pull-request/:repositoryOwner/:repositoryName/:pullRequestNumber/delete", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.deletePullRequest(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {

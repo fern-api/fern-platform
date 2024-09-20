@@ -64,9 +64,9 @@ it("pulls happy path", async () => {
         repositoryOwner: "acme",
         repositoryName: "repoForPRs",
         author: {
-            name: "Armando",
+            name: "Not Armando",
             email: "armando@buildwithfern.com",
-            username: "armando",
+            username: "not_armando",
         },
         reviewers: [],
         title: "PR 1",
@@ -100,6 +100,8 @@ it("pulls happy path", async () => {
         repositoryName: undefined,
         repositoryOwner: undefined,
         organizationId: undefined,
+        state: undefined,
+        author: undefined,
     });
     expect(pulls.pullRequests).toEqual([pull2, pull1]);
 
@@ -107,4 +109,41 @@ it("pulls happy path", async () => {
         .git()
         .getPullRequest({ repositoryOwner: "acme", repositoryName: "repoForPRs", pullRequestNumber: 1 });
     expect(pull1FromDb).toEqual(pull1);
+
+    const pull3: PullRequest = {
+        pullRequestNumber: 3,
+        repositoryOwner: "acme",
+        repositoryName: "repoForPRs",
+        author: {
+            name: "Armando",
+            email: "armando@buildwithfern.com",
+            username: "armando",
+        },
+        reviewers: [],
+        title: "PR 2",
+        url: "https://123.com",
+        checks: [],
+        state: PullRequestState.Merged,
+        createdAt: new Date().toISOString(),
+        mergedAt: new Date().toISOString(),
+    };
+    await fdrApplication.dao.git().upsertPullRequest({ pullRequest: pull3 });
+
+    const pullsByState = await fdrApplication.dao.git().listPullRequests({
+        repositoryName: undefined,
+        repositoryOwner: undefined,
+        organizationId: undefined,
+        state: [PullRequestState.Merged],
+        author: undefined,
+    });
+    expect(pullsByState.pullRequests).toEqual([pull3, pull2]);
+
+    const pullsByAuthor = await fdrApplication.dao.git().listPullRequests({
+        repositoryName: undefined,
+        repositoryOwner: undefined,
+        organizationId: undefined,
+        state: undefined,
+        author: ["not_armando"],
+    });
+    expect(pullsByAuthor.pullRequests).toEqual([pull1]);
 });

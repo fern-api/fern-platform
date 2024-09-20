@@ -2,6 +2,9 @@ import execa from "execa";
 import tmp from "tmp-promise";
 import { doesPathExist } from "./fs";
 
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
+
 export async function execFernCli(
     command: string,
     cwd?: string,
@@ -42,4 +45,25 @@ export async function execFernCli(
         console.error("fern command failed.");
         throw error;
     }
+}
+
+// We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
+// Exported to leverage in tests
+export function cleanFernStdout(stdout: string): string {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return stdout.split("╭─")[0]!.split("\n")[0]!.trim();
+}
+
+// This type is meant to mirror the data model for the `generator list` command
+// defined in the OSS repo.
+type GeneratorList = Record<string, Record<string, string[]>>;
+export const NO_API_FALLBACK_KEY = "NO_API_FALLBACK";
+export async function getGenerators(fullRepoPath: string): Promise<GeneratorList> {
+    const tmpDir = await tmp.dir();
+    const outputPath = `${tmpDir.path}/gen_list.yml`;
+    await execFernCli(`generator list --api-fallback ${NO_API_FALLBACK_KEY} -o ${outputPath}`, fullRepoPath);
+
+    const data = await readFile(outputPath, "utf-8");
+
+    return yaml.load(data) as GeneratorList;
 }
