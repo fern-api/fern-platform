@@ -120,7 +120,6 @@ export function useTableOfContentsObserver(ids: string[], setActiveId: (id: stri
                     return prev;
                 }, {});
             } catch (e) {
-                console.log("Error measuring table of contents", e);
                 captureSentryError(e, { errorDescription: "Error measuring table of contents" });
             }
         });
