@@ -1,4 +1,3 @@
-import { DocsKVCache } from "@/server/DocsCache";
 import { Revalidator } from "@/server/revalidator";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -7,6 +6,7 @@ import type { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { provideRegistryService } from "@fern-ui/ui";
 import { getAuthEdgeConfig } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { DocsKVCache } from "../../../../server/DocsKVCache";
 
 export const config = {
     maxDuration: 300,
@@ -63,8 +63,8 @@ const handler: NextApiHandler = async (
         const slugCollector = NodeCollector.collect(node);
         const slugs = slugCollector.getPageSlugs();
 
-        const cache = DocsKVCache.getInstance(xFernHost);
-        const previouslyVisitedSlugs = (await cache.getVisitedSlugs()).filter((slug) => !slugs.includes(slug));
+        const cache = DocsKVCache.for(xFernHost);
+        const previouslyVisitedSlugs = (await cache.visitedSlugs.get()).filter((slug) => !slugs.includes(slug));
 
         const results: FernDocs.RevalidationResult[] = [];
         for (const batch of chunk(slugs, DEFAULT_BATCH_SIZE)) {
