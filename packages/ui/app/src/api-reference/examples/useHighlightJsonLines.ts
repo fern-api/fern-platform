@@ -1,4 +1,5 @@
 import { isPlainObject } from "@fern-ui/core-utils";
+import { captureException } from "@sentry/nextjs";
 import { useAtomValue } from "jotai";
 import { atomWithLazy, loadable } from "jotai/utils";
 import { useMemoOne } from "use-memo-one";
@@ -17,7 +18,10 @@ type HighlightLineResult = number | [number, number];
  * @internal
  *
  * This function recursively searches for the line numbers of a json object that matches the given json path.
- * `jq.query` can throw an error if the json object or path is invalid.
+ * Note: `jq.query` can throw an error if the json object or path is invalid, so it needs to be try-catched.
+ *
+ * It assumes that the json object uses `JSON.stringify(json, undefined, 2)` to format the json object, and
+ * works by incrementally string-matching each part of the json path and merging the result of each part.
  *
  * @param jq jsonpath module (which we can't import directly because it dramatically increases bundle size)
  * @param json unknown json object to query
@@ -43,7 +47,7 @@ export function getJsonLineNumbers(
 
     const results: unknown[] = jq.query(json, query);
     if (part.type === "objectFilter") {
-        if (isPlainObject(json) && json[part.propertyName] === part.requiredValue) {
+        if (isPlainObject(json) && json[part.propertyName] === part.requiredStringValue) {
             return getJsonLineNumbers(jq, json, path.slice(1), start);
         }
     }
@@ -73,7 +77,7 @@ export function getJsonLineNumbers(
 }
 
 function jsonStringifyAndIndent(json: unknown, key: string | undefined, depth: number) {
-    let jsonString = JSON.stringify(json, undefined, 2);
+    let jsonString = JSON.stringify(json, undefined, INDENT_SPACES);
     if (key != null) {
         jsonString = `"${key}": ${jsonString}`;
     }
@@ -90,7 +94,7 @@ function getQueryPart(path: JsonPropertyPathPart) {
         case "listItem":
             return "[*]";
         case "objectFilter":
-            return `[?(@.${path.propertyName}=='${path.requiredValue}')]`;
+            return `[?(@.${path.propertyName}=='${path.requiredStringValue}')]`;
     }
 }
 
@@ -106,6 +110,9 @@ function createHoveredJsonLinesAtom(json: unknown, hoveredPropertyPath: JsonProp
         return getJsonLineNumbers(jq, json, hoveredPropertyPath, jsonStartLine + 1);
     });
 
+    /**
+     * Loadable has built-in try-catch for the async function
+     */
     return loadable(atom);
 }
 
@@ -123,8 +130,9 @@ export function useHighlightJsonLines(
     if (value.state === "hasData") {
         return value.data;
     } else if (value.state === "hasError") {
-        // eslint-disable-next-line no-console
-        console.error(value.error);
+        captureException(value.error, {
+            extra: { json, hoveredPropertyPath, jsonStartLine },
+        });
     }
 
     return [];

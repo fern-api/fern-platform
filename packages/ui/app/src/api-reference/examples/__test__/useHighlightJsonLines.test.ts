@@ -73,7 +73,7 @@ describe("useHighlightJsonLines", () => {
                 { type: "objectProperty", propertyName: "data" },
                 { type: "listItem" },
                 { type: "objectProperty", propertyName: "a" },
-                { type: "objectFilter", propertyName: "d", requiredValue: "filter" },
+                { type: "objectFilter", propertyName: "d", requiredStringValue: "filter" },
             ]),
         ).toEqual([
             [8, 13],
