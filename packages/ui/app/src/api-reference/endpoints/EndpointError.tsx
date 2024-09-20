@@ -70,7 +70,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
             </div>
 
             {error.shape != null && (
-                <FernCollapse isOpen={isSelected} className="w-full">
+                <FernCollapse open={isSelected} className="w-full">
                     <div className="space-y-2 pt-2">
                         <div className="t-muted w-full text-start text-sm leading-7">
                             {`This error return ${renderTypeShorthand(error.shape, { withArticle: true }, types)}.`}
