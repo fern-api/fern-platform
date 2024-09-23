@@ -17,10 +17,7 @@ export async function updateFDRRepoDataInternal(env: Env, repoData: RepoData | u
 
     // Get repo data for the given repo
     await app.eachRepository(async (installation) => {
-        if (
-            (repoData && installation.repository.full_name !== repoData.full_name) ||
-            installation.repository.full_name === "fern-api/fern-platform"
-        ) {
+        if (repoData && installation.repository.full_name !== repoData.full_name) {
             return;
         }
         await updateRepoDb(
@@ -128,13 +125,13 @@ async function updateRepoDb(
 
 async function getAndUpsertPulls(client: FernRegistryClient, octokit: Octokit, repository: Repository) {
     // Get all PRs on repo, update PRs in FDR
-    const pulls = await octokit.rest.pulls.list({
+    const pulls = await octokit.paginate(octokit.rest.pulls.list, {
         state: "all",
         owner: repository.owner.login,
         repo: repository.name,
     });
 
-    for (const pull of pulls.data) {
+    for (const pull of pulls) {
         try {
             await client.git.upsertPullRequest({
                 pullRequestNumber: pull.number,

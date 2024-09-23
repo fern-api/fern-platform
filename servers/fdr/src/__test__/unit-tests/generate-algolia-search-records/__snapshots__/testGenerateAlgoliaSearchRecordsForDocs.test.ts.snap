@@ -3,28 +3,6 @@
 exports[`generateAlgoliaSearchRecordsForDocs > {"name":"candid"} 1`] = `
 [
   {
-    "anchorHeaders": [
-      {
-        "level": 3,
-        "text": "Encounters",
-      },
-      {
-        "level": 3,
-        "text": "Eligibility",
-      },
-      {
-        "level": 3,
-        "text": "Exports",
-      },
-      {
-        "level": 3,
-        "text": "Tasks",
-      },
-      {
-        "level": 3,
-        "text": "Example workflow using Candid's products",
-      },
-    ],
     "content": "ENCOUNTERS
 
 Candid's primary entry point for submitting encounter information is the Encounters [../api-reference/encounters] endpoint. Candid
@@ -77,12 +55,6 @@ EXAMPLE WORKFLOW USING CANDID'S PRODUCTS
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 3,
-        "text": "IMPORTANT",
-      },
-    ],
     "content": "Candid Health supports most payers. You can find a list of supported payers with their respective payer_id, payer_name, and cpid
 below.
 
@@ -121,32 +93,6 @@ View list of supported Payer IDs, Payer Names, and CPIDs or download a CSV here
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Prerequisites",
-      },
-      {
-        "level": 2,
-        "text": "Installation",
-      },
-      {
-        "level": 2,
-        "text": "Authentication",
-      },
-      {
-        "level": 2,
-        "text": "Making an Example Request",
-      },
-      {
-        "level": 2,
-        "text": "Error Handling",
-      },
-      {
-        "level": 2,
-        "text": "Full Source Code",
-      },
-    ],
     "content": "This page outlines how to use our Python and TypeScript SDKs to interact with our API. Specifically, you'll learn how to make a
 request to create an Encounter.
 
@@ -413,7 +359,6 @@ const createEncounterResponse = await client.encounters.v4.create({
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [],
     "content": "We strive to keep our API integration experience seamless. When making API design decisions, we do the following:
 
  * We aim to use the same APIs internally that you use. This allows us to catch errors early and to make sure that our API is easy
@@ -446,7 +391,6 @@ const createEncounterResponse = await client.encounters.v4.create({
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [],
     "content": "Endpoints in our API live in one of three states: incubating, available, and deprecated.
 
  * Incubating: Endpoints in this state can be used, but proceed with caution. We are still working on them, and they may change or
@@ -476,12 +420,6 @@ available.",
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 3,
-        "text": "What is a breaking change",
-      },
-    ],
     "content": "We do our absolute best to avoid breaking changes in our API. However, sometimes we need to make changes to our API that will
 break existing clients. Here's how we recommend thinking about breaking changes from us:
 
@@ -528,24 +466,6 @@ Here are some examples of changes that we consider breaking:
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 3,
-        "text": "Type Aliases & Branding",
-      },
-      {
-        "level": 3,
-        "text": "Pagination",
-      },
-      {
-        "level": 3,
-        "text": "Decimals",
-      },
-      {
-        "level": 3,
-        "text": "Unions",
-      },
-    ],
     "content": "TYPE ALIASES & BRANDING
 
 For many string or UUID types, you may notice we alias / brand them as their own type. Branding is a technique to preserve the
@@ -1403,20 +1323,6 @@ A schema of the response object can be found here: Change Healthcare Docs
 exports[`generateAlgoliaSearchRecordsForDocs > {"name":"primer"} 1`] = `
 [
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "API Endpoint Deployments",
-      },
-      {
-        "level": 2,
-        "text": "API Versions",
-      },
-      {
-        "level": 3,
-        "text": "Available Versions",
-      },
-    ],
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
@@ -1472,16 +1378,6 @@ Read about the available versions of the APIs below on our Changelog [https://ap
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Managing API Keys",
-      },
-      {
-        "level": 2,
-        "text": "Available scopes",
-      },
-    ],
     "content": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
@@ -1531,20 +1427,6 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Status Codes",
-      },
-      {
-        "level": 2,
-        "text": "Error Responses",
-      },
-      {
-        "level": 2,
-        "text": "Payment Status",
-      },
-    ],
     "content": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
@@ -1613,7 +1495,6 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
     },
   },
   {
-    "anchorHeaders": [],
     "content": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
@@ -1660,24 +1541,6 @@ be made for a single order.",
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Get the customer balance",
-      },
-      {
-        "level": 2,
-        "text": "Redeem points",
-      },
-      {
-        "level": 2,
-        "text": "Refund points",
-      },
-      {
-        "level": 2,
-        "text": "Get a list of transactions",
-      },
-    ],
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
@@ -1733,32 +1596,6 @@ transactions. In most cases it makes sense to filter by connectionId. You can al
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Migrating to v2.1",
-      },
-      {
-        "level": 2,
-        "text": "Client Session",
-      },
-      {
-        "level": 3,
-        "text": "v2.1",
-      },
-      {
-        "level": 2,
-        "text": "Summary of the v2.1 changes",
-      },
-      {
-        "level": 2,
-        "text": "Create a Payment",
-      },
-      {
-        "level": 2,
-        "text": "Summary of the v2.1 changes",
-      },
-    ],
     "content": "We are continually introducing new functionality to the Primer Ecosystem, some of which requires additional inputs on our APIs. To
 make sure these changes don’t break any existing integrations, we roll them out safely using API Versions.
 
@@ -2016,16 +1853,6 @@ SUMMARY OF THE V2.1 CHANGES
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Client Session API",
-      },
-      {
-        "level": 2,
-        "text": "Payments API",
-      },
-    ],
     "content": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API. You must set the
 X-Api-Version header to 2.2 to use v2.2 of the API.
 
@@ -2059,20 +1886,6 @@ PAYMENTS API
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Client Session API",
-      },
-      {
-        "level": 2,
-        "text": "Payments API",
-      },
-      {
-        "level": 2,
-        "text": "Payment Methods API",
-      },
-    ],
     "content": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.
 
 Starting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉 Set the
@@ -2125,16 +1938,6 @@ PAYMENT METHODS API
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Client Session API",
-      },
-      {
-        "level": 2,
-        "text": "Payments API",
-      },
-    ],
     "content": "Version 2 includes improvements to the Client Session API and the Payments API.
 
 
@@ -3253,20 +3056,6 @@ Create a loyalty transaction. This is either a points redemption or a points ref
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "API Endpoint Deployments",
-      },
-      {
-        "level": 2,
-        "text": "API Versions",
-      },
-      {
-        "level": 3,
-        "text": "Available Versions",
-      },
-    ],
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
@@ -3322,16 +3111,6 @@ Read about the available versions of the APIs below on our Changelog [https://ap
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Managing API Keys",
-      },
-      {
-        "level": 2,
-        "text": "Available scopes",
-      },
-    ],
     "content": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
@@ -3381,20 +3160,6 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Status Codes",
-      },
-      {
-        "level": 2,
-        "text": "Error Responses",
-      },
-      {
-        "level": 2,
-        "text": "Payment Status",
-      },
-    ],
     "content": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
@@ -3463,7 +3228,6 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
     },
   },
   {
-    "anchorHeaders": [],
     "content": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
@@ -3510,24 +3274,6 @@ be made for a single order.",
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Get the customer balance",
-      },
-      {
-        "level": 2,
-        "text": "Redeem points",
-      },
-      {
-        "level": 2,
-        "text": "Refund points",
-      },
-      {
-        "level": 2,
-        "text": "Get a list of transactions",
-      },
-    ],
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
@@ -4291,20 +4037,6 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "API Endpoint Deployments",
-      },
-      {
-        "level": 2,
-        "text": "API Versions",
-      },
-      {
-        "level": 3,
-        "text": "Available Versions",
-      },
-    ],
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods. All other actions are either managed in the
 Universal Checkout implementation or in the Dashboard.
 
@@ -4360,16 +4092,6 @@ Read about the available versions of the APIs below on our Changelog [https://ap
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Managing API Keys",
-      },
-      {
-        "level": 2,
-        "text": "Available scopes",
-      },
-    ],
     "content": "Primer uses API keys to authenticate requests. You can manage API keys in the Developers
 [https://sandbox-dashboard.primer.io/developers] area of the dashboard.
 
@@ -4419,20 +4141,6 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Status Codes",
-      },
-      {
-        "level": 2,
-        "text": "Error Responses",
-      },
-      {
-        "level": 2,
-        "text": "Payment Status",
-      },
-    ],
     "content": "STATUS CODES
 
 The following table summarizes the HTTP response codes you may receive from the Primer REST API.
@@ -4501,7 +4209,6 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
     },
   },
   {
-    "anchorHeaders": [],
     "content": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request
 without risking the user being charged or refunded multiple times.
 
@@ -4548,24 +4255,6 @@ be made for a single order.",
     },
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Get the customer balance",
-      },
-      {
-        "level": 2,
-        "text": "Redeem points",
-      },
-      {
-        "level": 2,
-        "text": "Refund points",
-      },
-      {
-        "level": 2,
-        "text": "Get a list of transactions",
-      },
-    ],
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection.
@@ -5234,24 +4923,6 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
 exports[`generateAlgoliaSearchRecordsForDocs > {"name":"vellum"} 1`] = `
 [
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "Jinja Templating",
-      },
-      {
-        "level": 3,
-        "text": "Variables",
-      },
-      {
-        "level": 3,
-        "text": "Conditionals",
-      },
-      {
-        "level": 3,
-        "text": "Comments",
-      },
-    ],
     "content": "When using an LLM, you input a prompt and get back a completion. However, in order for a prompt to be reusable, you’ll want to be
 able to specify certain parts of it dynamically.
 
@@ -5311,20 +4982,6 @@ You can use jinja to leave comments in your prompt that don’t use up any token
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 3,
-        "text": "History",
-      },
-      {
-        "level": 3,
-        "text": "Save, Collaboration, and Tags",
-      },
-      {
-        "level": 3,
-        "text": "Share Your Work",
-      },
-    ],
     "content": "Vellum Playground is a powerful tool for rapid iteration and collaboration between multiple models and prompts. Save, tag, and
 share your work with ease using the features outlined below.
 
@@ -5382,16 +5039,6 @@ With these powerful features, Vellum Playground makes it easy to collaborate, it
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 2,
-        "text": "What is a Document Index?",
-      },
-      {
-        "level": 2,
-        "text": "How to upload documents?",
-      },
-    ],
     "content": "Any document that you want to query against should be uploaded ahead of time at https://app.vellum.ai/document-indexes
 [https://app.vellum.ai/document-indexes].
 
@@ -5440,7 +5087,6 @@ for reindexing re-uploading it and specifying the same \`External ID\`.",
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [],
     "content": "You can monitor production traffic of a Vellum Deployment through all the charts in the Monitoring tab. These charts can be
 filtered for various time ranges using the “Relative Date” button. This help doc details the charts you can see on this tab, if
 you’d like to see any other information about your Deployment, please don’t hesitate to reach out and we can add it in!
@@ -5479,24 +5125,6 @@ Num LLM Provider Errors Over Time: Number of errors from the LLM provider",
     "type": "page-v2",
   },
   {
-    "anchorHeaders": [
-      {
-        "level": 3,
-        "text": "Welcome 👋",
-      },
-      {
-        "level": 3,
-        "text": "API Stability",
-      },
-      {
-        "level": 3,
-        "text": "Base URLs",
-      },
-      {
-        "level": 3,
-        "text": "Official API Clients:",
-      },
-    ],
     "content": "WELCOME 👋
 
 Welcome to Vellum's API documentation! Here you'll find information about the various endpoints available to you, as well as the
