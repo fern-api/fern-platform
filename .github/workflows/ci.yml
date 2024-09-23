@@ -89,7 +89,8 @@ jobs:
 
       - name: Codegen
         run: |
-          pnpm fern generate --local --api fdr
+          pnpm fdr:generate
+          pnpm navigation:generate
           pnpm turbo --filter=@fern-platform/fdr codegen
 
       - name: Ensure no changes to git-tracked files
