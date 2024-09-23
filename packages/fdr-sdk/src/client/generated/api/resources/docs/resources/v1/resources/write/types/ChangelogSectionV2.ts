@@ -7,6 +7,6 @@ import * as FernRegistry from "../../../../../../../index";
 export interface ChangelogSectionV2 extends FernRegistry.docs.v1.write.NavigationNodeMetadata {
     title: string | undefined;
     description: string | undefined;
-    pageId: string | undefined;
+    pageId: FernRegistry.PageId | undefined;
     items: FernRegistry.docs.v1.write.ChangelogItem[];
 }

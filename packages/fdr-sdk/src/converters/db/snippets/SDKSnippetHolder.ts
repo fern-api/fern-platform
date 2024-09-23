@@ -66,7 +66,7 @@ export class SDKSnippetHolder {
             exampleId,
             getSdk: (config) => config.pythonSdk,
             getSnippet: (snippet) => {
-                return snippet.type === "python" ? snippet : undefined;
+                return snippet.type === "python" ? { ...snippet, install: undefined } : undefined;
             },
         });
     }
@@ -92,7 +92,7 @@ export class SDKSnippetHolder {
             exampleId,
             getSdk: (config) => config.typescriptSdk,
             getSnippet: (snippet) => {
-                return snippet.type === "typescript" ? snippet : undefined;
+                return snippet.type === "typescript" ? { ...snippet, install: undefined } : undefined;
             },
         });
     }
@@ -118,7 +118,7 @@ export class SDKSnippetHolder {
             exampleId,
             getSdk: (config) => config.goSdk,
             getSnippet: (snippet) => {
-                return snippet.type === "go" ? snippet : undefined;
+                return snippet.type === "go" ? { ...snippet, install: undefined } : undefined;
             },
         });
     }
@@ -144,7 +144,7 @@ export class SDKSnippetHolder {
             exampleId,
             getSdk: (config) => config.rubySdk,
             getSnippet: (snippet) => {
-                return snippet.type === "ruby" ? snippet : undefined;
+                return snippet.type === "ruby" ? { ...snippet, install: undefined } : undefined;
             },
         });
     }

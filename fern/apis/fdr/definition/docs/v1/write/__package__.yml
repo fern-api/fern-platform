@@ -214,7 +214,7 @@ types:
 
   VersionedNavigationConfigData:
     properties:
-      version: string
+      version: rootCommons.VersionId
       urlSlugOverride: optional<string>
       availability: optional<VersionAvailability>
       config: UnversionedNavigationConfig
@@ -333,7 +333,7 @@ types:
     properties:
       title: optional<string>
       description: optional<string>
-      pageId: optional<string>
+      pageId: optional<rootCommons.PageId>
       items: list<ChangelogItem>
 
   ChangelogSectionV3:
@@ -343,7 +343,7 @@ types:
   ChangelogItem:
     properties:
       date: date
-      pageId: string
+      pageId: rootCommons.PageId
       hidden: optional<boolean>
 
   DocsSection:

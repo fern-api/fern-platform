@@ -92,6 +92,7 @@ function transformErrorsV2(dbShape: APIV1Db.DbEndpointDefinition): APIV1Read.Err
         return dbShape.errors.map((error): APIV1Read.ErrorDeclarationV2 => {
             return {
                 name: undefined,
+                examples: undefined,
                 ...error,
                 type:
                     error.type != null

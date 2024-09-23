@@ -505,6 +505,7 @@ function transformItems(items: DocsV1Write.ApiNavigationConfigItem[]) {
                 type: "subpackage",
                 subpackageId: item.subpackageId,
                 items: transformItems(item.items),
+                summaryPageId: item.summaryPageId,
             };
         } else if (item.type === "page") {
             return transformPageNavigationItemForDb(item);

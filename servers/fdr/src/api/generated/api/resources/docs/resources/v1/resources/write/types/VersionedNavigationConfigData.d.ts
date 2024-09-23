@@ -3,7 +3,7 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface VersionedNavigationConfigData {
-    version: string;
+    version: FernRegistry.VersionId;
     urlSlugOverride?: string;
     availability?: FernRegistry.docs.v1.write.VersionAvailability;
     config: FernRegistry.docs.v1.write.UnversionedNavigationConfig;
