@@ -97,6 +97,10 @@ export function useHighlightJsonLines(
     jsonStartLine = 0,
 ): HighlightLineResult[] {
     return useMemo(() => {
+        if (hoveredPropertyPath.length === 0 || jsonStartLine < 0 || typeof window === "undefined") {
+            return [];
+        }
+
         try {
             return getJsonLineNumbers(json, hoveredPropertyPath, jsonStartLine + 1);
         } catch (error) {
