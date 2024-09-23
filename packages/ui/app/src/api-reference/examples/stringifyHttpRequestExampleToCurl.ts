@@ -1,6 +1,5 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { captureSentryError } from "../../analytics/sentry";
-import { unknownToString } from "../../util/unknownToString";
 import { HttpRequestExample } from "./HttpRequestExample";
 
 function requiresUrlEncode(str: string): boolean {

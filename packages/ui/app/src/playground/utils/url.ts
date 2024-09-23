@@ -1,5 +1,5 @@
+import { unknownToString } from "@fern-ui/core-utils";
 import { ResolvedEndpointDefinition, ResolvedEndpointPathParts, resolveEnvironment } from "../../resolver/types";
-import { unknownToString } from "../../util/unknownToString";
 import { PlaygroundRequestFormState } from "../types";
 
 export function buildQueryParams(queryParameters: Record<string, unknown> | undefined): string {
