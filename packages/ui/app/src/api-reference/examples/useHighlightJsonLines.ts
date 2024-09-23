@@ -101,7 +101,7 @@ export function useHighlightJsonLines(
     jsonStartLine = 0,
 ): HighlightLineResult[] {
     const [results, setResults] = useState<HighlightLineResult[]>([]);
-    const nonce = useRef(0);
+    const nonce = useRef(0); // this is used to cancel the async call if the hoveredPropertyPath changes
 
     useEffect(() => {
         const currentNonce = ++nonce.current;
