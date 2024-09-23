@@ -9,10 +9,10 @@ function safeMatch(source: string, path: string): ReturnType<ReturnType<typeof m
         return { params: {}, path, index: 0 };
     }
     try {
-        return match(source, { decode: false })(path);
+        return match(source)(path);
     } catch (e) {
         // eslint-disable-next-line no-console
-        console.debug(e, { source, path });
+        console.error(e, { source, path });
         return false;
     }
 }
@@ -22,10 +22,10 @@ function safeCompile(
     match: Exclude<ReturnType<typeof safeMatch>, false>,
 ): ReturnType<ReturnType<typeof compile>> {
     try {
-        return compile(destination, { encode: false })(match.params);
+        return compile(destination)(match.params);
     } catch (e) {
         // eslint-disable-next-line no-console
-        console.debug(e, { match, destination });
+        console.error(e, { match, destination });
         return destination;
     }
 }
