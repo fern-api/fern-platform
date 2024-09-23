@@ -218,7 +218,7 @@ export class ReadmeGenerator {
 
     private writeFernShield({ writer }: { writer: Writer }): void {
         writer.writeLine(
-            "[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=readme&utm_campaign=${this.organizationPascalCase})",
+            `[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=readme&utm_campaign=${this.organizationPascalCase})`,
         );
     }
 
