@@ -11,7 +11,7 @@ export interface DocsConfig {
     footerLinks?: FernRegistry.docs.v1.commons.FooterLink[];
     logoHeight?: FernRegistry.docs.v1.read.Height;
     logoHref?: FernRegistry.Url;
-    favicon?: FernRegistry.docs.v1.commons.FileId;
+    favicon?: FernRegistry.FileId;
     metadata?: FernRegistry.docs.v1.commons.MetadataConfig;
     redirects?: FernRegistry.docs.v1.commons.RedirectConfig[];
     colorsV3?: FernRegistry.docs.v1.read.ColorsConfigV3;

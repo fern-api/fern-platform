@@ -3,8 +3,8 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface ThemeConfig {
-    logo?: FernRegistry.docs.v1.commons.FileId;
-    backgroundImage?: FernRegistry.docs.v1.commons.FileId;
+    logo?: FernRegistry.FileId;
+    backgroundImage?: FernRegistry.FileId;
     accentPrimary: FernRegistry.docs.v1.commons.RgbaColor;
     background: FernRegistry.docs.v1.read.Background;
     border?: FernRegistry.docs.v1.commons.RgbaColor;

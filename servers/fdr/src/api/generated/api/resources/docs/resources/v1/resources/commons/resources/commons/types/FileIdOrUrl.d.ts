@@ -6,7 +6,7 @@ export declare type FileIdOrUrl = FernRegistry.docs.v1.commons.FileIdOrUrl.FileI
 export declare namespace FileIdOrUrl {
     interface FileId {
         type: "fileId";
-        value: FernRegistry.docs.v1.commons.FileId;
+        value: FernRegistry.FileId;
     }
     interface Url {
         type: "url";

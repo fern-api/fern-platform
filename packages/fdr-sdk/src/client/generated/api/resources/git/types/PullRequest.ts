@@ -11,7 +11,7 @@ export interface PullRequest {
     author: FernRegistry.GithubUser | undefined;
     reviewers: FernRegistry.PullRequestReviewer[];
     title: string;
-    url: string;
+    url: FernRegistry.Url;
     checks: FernRegistry.CheckRun[];
     state: FernRegistry.PullRequestState;
     createdAt: string;

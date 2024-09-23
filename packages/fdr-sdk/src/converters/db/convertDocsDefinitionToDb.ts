@@ -349,7 +349,7 @@ function transformPublishedSdkForReading(writeShape: DocsV1Write.PublishedSdk): 
                 coordinate: writeShape.coordinate,
                 githubRepo: {
                     name: writeShape.githubRepoName,
-                    url: `https://github.com/${writeShape.githubRepoName}`,
+                    url: FdrAPI.Url(`https://github.com/${writeShape.githubRepoName}`),
                 },
                 version: writeShape.version,
             };
@@ -359,7 +359,7 @@ function transformPublishedSdkForReading(writeShape: DocsV1Write.PublishedSdk): 
                 packageName: writeShape.packageName,
                 githubRepo: {
                     name: writeShape.githubRepoName,
-                    url: `https://github.com/${writeShape.githubRepoName}`,
+                    url: FdrAPI.Url(`https://github.com/${writeShape.githubRepoName}`),
                 },
                 version: writeShape.version,
             };
@@ -369,7 +369,7 @@ function transformPublishedSdkForReading(writeShape: DocsV1Write.PublishedSdk): 
                 packageName: writeShape.packageName,
                 githubRepo: {
                     name: writeShape.githubRepoName,
-                    url: `https://github.com/${writeShape.githubRepoName}`,
+                    url: FdrAPI.Url(`https://github.com/${writeShape.githubRepoName}`),
                 },
                 version: writeShape.version,
             };
@@ -385,7 +385,7 @@ function transformPublishedPostmanCollectionForReading(
             writeShape.githubRepoName != null
                 ? {
                       name: writeShape.githubRepoName,
-                      url: `https://github.com/${writeShape.githubRepoName}`,
+                      url: FdrAPI.Url(`https://github.com/${writeShape.githubRepoName}`),
                   }
                 : undefined,
     };

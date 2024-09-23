@@ -13,7 +13,7 @@ export interface DocsConfig {
     footerLinks: FernRegistry.docs.v1.commons.FooterLink[] | undefined;
     logoHeight: FernRegistry.docs.v1.write.Height | undefined;
     logoHref: FernRegistry.Url | undefined;
-    favicon: FernRegistry.docs.v1.commons.FileId | undefined;
+    favicon: FernRegistry.FileId | undefined;
     metadata: FernRegistry.docs.v1.commons.MetadataConfig | undefined;
     redirects: FernRegistry.docs.v1.commons.RedirectConfig[] | undefined;
     colorsV3: FernRegistry.docs.v1.write.ColorsConfigV3 | undefined;
@@ -24,9 +24,9 @@ export interface DocsConfig {
     css: FernRegistry.docs.v1.commons.CssConfig | undefined;
     js: FernRegistry.docs.v1.commons.JsConfig | undefined;
     playground: FernRegistry.docs.v1.commons.PlaygroundConfig | undefined;
-    backgroundImage: FernRegistry.docs.v1.commons.FileId | undefined;
+    backgroundImage: FernRegistry.FileId | undefined;
     logoV2: FernRegistry.docs.v1.commons.ThemedFileId | undefined;
-    logo: FernRegistry.docs.v1.commons.FileId | undefined;
+    logo: FernRegistry.FileId | undefined;
     colors: FernRegistry.docs.v1.commons.ColorsConfig | undefined;
     colorsV2: FernRegistry.docs.v1.commons.ColorsConfigV2 | undefined;
     typography: FernRegistry.docs.v1.commons.DocsTypographyConfig | undefined;

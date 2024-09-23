@@ -9,7 +9,7 @@ import * as FernRegistry from "../../../../index";
  *     {
  *         endpoint: {
  *             method: FernRegistry.HttpMethod.Get,
- *             path: FernRegistry.EndpointPath("/v1/search")
+ *             path: FernRegistry.EndpointPathLiteral("/v1/search")
  *         }
  *     }
  */

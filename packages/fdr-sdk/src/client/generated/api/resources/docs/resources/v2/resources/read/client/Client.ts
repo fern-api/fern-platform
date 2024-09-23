@@ -29,7 +29,7 @@ export class Read {
      *
      * @example
      *     await fernRegistry.docs.v2.read.getOrganizationForUrl({
-     *         url: "string"
+     *         url: FernRegistry.Url("string")
      *     })
      */
     public async getOrganizationForUrl(
@@ -83,7 +83,7 @@ export class Read {
      *
      * @example
      *     await fernRegistry.docs.v2.read.getDocsForUrl({
-     *         url: "string"
+     *         url: FernRegistry.Url("string")
      *     })
      */
     public async getDocsForUrl(
@@ -143,7 +143,7 @@ export class Read {
      *
      * @example
      *     await fernRegistry.docs.v2.read.getPrivateDocsForUrl({
-     *         url: "string"
+     *         url: FernRegistry.Url("string")
      *     })
      */
     public async getPrivateDocsForUrl(

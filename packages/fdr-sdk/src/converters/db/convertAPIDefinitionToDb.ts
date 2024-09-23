@@ -533,7 +533,7 @@ function transformCodeExamples({
     };
 }
 
-function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition): FdrAPI.EndpointPath {
+function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition): FdrAPI.EndpointPathLiteral {
     let endpointPath = "";
     for (const part of endpoint.path.parts) {
         if (part.type === "literal") {
@@ -542,7 +542,7 @@ function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition): FdrAP
             endpointPath += `{${part.value}}`;
         }
     }
-    return FdrAPI.EndpointPath(endpointPath);
+    return FdrAPI.EndpointPathLiteral(endpointPath);
 }
 
 function transformTypeDefinition({

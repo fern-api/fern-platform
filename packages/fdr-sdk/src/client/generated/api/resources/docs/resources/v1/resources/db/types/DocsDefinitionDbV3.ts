@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../../../../../index";
 export interface DocsDefinitionDbV3 {
     pages: Record<FernRegistry.PageId, FernRegistry.docs.v1.read.PageContent>;
     referencedApis: FernRegistry.ApiDefinitionId[];
-    files: Record<FernRegistry.docs.v1.commons.FileId, FernRegistry.docs.v1.db.DbFileInfoV2>;
+    files: Record<FernRegistry.FileId, FernRegistry.docs.v1.db.DbFileInfoV2>;
     config: FernRegistry.docs.v1.db.DocsDbConfig;
     /**
      * A map of file names to their contents.

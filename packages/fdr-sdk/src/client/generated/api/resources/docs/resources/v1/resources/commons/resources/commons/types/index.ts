@@ -1,4 +1,3 @@
-export * from "./FileId";
 export * from "./FileIdOrUrl";
 export * from "./RgbaColor";
 export * from "./ProgrammingLanguage";

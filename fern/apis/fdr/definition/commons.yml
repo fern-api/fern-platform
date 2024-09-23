@@ -33,11 +33,13 @@ types:
 
   PageId: string
 
+  FileId: string
+
   Url: string
 
   EndpointIdentifier:
     properties:
-      path: EndpointPath
+      path: EndpointPathLiteral
       method: HttpMethod
       identifierOverride:
         type: optional<string>
@@ -46,7 +48,7 @@ types:
           method are not (specifically for the fern definition, consider chat and chat stream). This is optional to 
           remain backcompat with old snippets of yore.
 
-  EndpointPath:
+  EndpointPathLiteral:
     type: string
     docs: The relative path for an endpont (e.g. `/users/{userId}`)
 

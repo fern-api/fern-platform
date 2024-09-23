@@ -11,5 +11,5 @@ export interface SnippetsPage {
      * The snippets are returned as a map of endpoint path (e.g. `/api/users`)
      * to a map of endpoint method (e.g. `POST`) to snippets.
      */
-    snippets: Record<FernRegistry.EndpointPath, FernRegistry.SnippetsByEndpointMethod>;
+    snippets: Record<FernRegistry.EndpointPathLiteral, FernRegistry.SnippetsByEndpointMethod>;
 }

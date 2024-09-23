@@ -4,4 +4,4 @@
 /**
  * The relative path for an endpont (e.g. `/users/{userId}`)
  */
-export declare type EndpointPath = string;
+export declare type EndpointPathLiteral = string;

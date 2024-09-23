@@ -10,7 +10,7 @@ export interface ChangelogSection {
     hidden?: boolean;
     description?: string;
     /** Optional mdx content to display at the top of the changelog section. The title and description will be parsed from the frontmatter and replace the config-defined values. */
-    pageId?: string;
+    pageId?: FernRegistry.PageId;
     items: FernRegistry.docs.v1.write.ChangelogItem[];
     urlSlug: string;
     fullSlug?: string[];

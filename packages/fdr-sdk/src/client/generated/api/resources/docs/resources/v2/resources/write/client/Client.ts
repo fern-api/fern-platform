@@ -267,7 +267,7 @@ export class Write {
      *                     }],
      *                 logoHeight: 1.1,
      *                 logoHref: FernRegistry.Url("string"),
-     *                 favicon: FernRegistry.docs.v1.commons.FileId("string"),
+     *                 favicon: FernRegistry.FileId("string"),
      *                 metadata: {
      *                     og:site_name: "string",
      *                     og:title: "string",
@@ -425,7 +425,7 @@ export class Write {
      *                             "key": "value"
      *                         }],
      *                     files: [{
-     *                             fileId: FernRegistry.docs.v1.commons.FileId("string"),
+     *                             fileId: FernRegistry.FileId("string"),
      *                             strategy: {
      *                                 "key": "value"
      *                             }
@@ -437,12 +437,12 @@ export class Write {
      *                 playground: {
      *                     oauth: true
      *                 },
-     *                 backgroundImage: FernRegistry.docs.v1.commons.FileId("string"),
+     *                 backgroundImage: FernRegistry.FileId("string"),
      *                 logoV2: {
-     *                     dark: FernRegistry.docs.v1.commons.FileId("string"),
-     *                     light: FernRegistry.docs.v1.commons.FileId("string")
+     *                     dark: FernRegistry.FileId("string"),
+     *                     light: FernRegistry.FileId("string")
      *                 },
-     *                 logo: FernRegistry.docs.v1.commons.FileId("string"),
+     *                 logo: FernRegistry.FileId("string"),
      *                 colors: {
      *                     accentPrimary: {
      *                         r: 1,
@@ -464,15 +464,15 @@ export class Write {
      *                 typography: {
      *                     headingsFont: {
      *                         name: "string",
-     *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
+     *                         fontFile: FernRegistry.FileId("string")
      *                     },
      *                     bodyFont: {
      *                         name: "string",
-     *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
+     *                         fontFile: FernRegistry.FileId("string")
      *                     },
      *                     codeFont: {
      *                         name: "string",
-     *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
+     *                         fontFile: FernRegistry.FileId("string")
      *                     }
      *                 }
      *             },
@@ -536,7 +536,7 @@ export class Write {
      *
      * @example
      *     await fernRegistry.docs.v2.write.reindexAlgoliaSearchRecords({
-     *         url: "string"
+     *         url: FernRegistry.Url("string")
      *     })
      */
     public async reindexAlgoliaSearchRecords(

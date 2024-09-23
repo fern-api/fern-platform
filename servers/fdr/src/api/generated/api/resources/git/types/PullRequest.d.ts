@@ -9,7 +9,7 @@ export interface PullRequest {
     author?: FernRegistry.GithubUser;
     reviewers: FernRegistry.PullRequestReviewer[];
     title: string;
-    url: string;
+    url: FernRegistry.Url;
     checks: FernRegistry.CheckRun[];
     state: FernRegistry.PullRequestState;
     createdAt: string;

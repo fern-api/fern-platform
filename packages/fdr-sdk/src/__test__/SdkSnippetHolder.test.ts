@@ -20,7 +20,7 @@ describe("SDK Snippet Holder", () => {
             snippetTemplatesByEndpointId: {},
             snippetsBySdkId: {
                 "python|acme|0.0.1": {
-                    [FdrAPI.EndpointPath("/users/v1")]: {
+                    [FdrAPI.EndpointPathLiteral("/users/v1")]: {
                         DELETE: [],
                         GET: [
                             {
@@ -48,7 +48,7 @@ describe("SDK Snippet Holder", () => {
         });
         const snippet = sdkSnippetHolder.getPythonCodeSnippetForEndpoint({
             endpointMethod: "GET",
-            endpointPath: "/users/v1",
+            endpointPath: FdrAPI.EndpointPathLiteral("/users/v1"),
             endpointId: "endpoint_connectors.list",
             exampleId: undefined,
         });

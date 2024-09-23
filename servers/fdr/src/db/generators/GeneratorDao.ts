@@ -14,7 +14,7 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export type SnippetTemplatesByEndpoint = Record<
-    FdrAPI.EndpointPath,
+    FdrAPI.EndpointPathLiteral,
     Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
 >;
 

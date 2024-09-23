@@ -4,11 +4,9 @@ imports:
   rootCommons: ../../../commons.yml
 
 types:
-  FileId: string
-
   FileIdOrUrl:
     union:
-      fileId: FileId
+      fileId: rootCommons.FileId
       url: rootCommons.Url
 
   RgbaColor:
@@ -276,7 +274,7 @@ types:
 
   JsFileConfig:
     properties:
-      fileId: FileId
+      fileId: rootCommons.FileId
       strategy: optional<JsScriptStrategy>
 
   JsScriptStrategy:
@@ -313,7 +311,7 @@ types:
 
   CustomFontConfigVariant:
     properties:
-      fontFile: FileId
+      fontFile: rootCommons.FileId
       weight: optional<list<string>>
       style: optional<list<FontStyle>>
 
@@ -340,8 +338,8 @@ types:
   ThemedFileId:
     availability: deprecated
     properties:
-      dark: optional<FileId>
-      light: optional<FileId>
+      dark: optional<rootCommons.FileId>
+      light: optional<rootCommons.FileId>
 
   ColorsConfig:
     availability: deprecated
@@ -382,4 +380,4 @@ types:
     availability: deprecated
     properties:
       name: string
-      fontFile: FileId
+      fontFile: rootCommons.FileId

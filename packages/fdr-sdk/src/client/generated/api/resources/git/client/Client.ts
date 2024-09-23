@@ -140,7 +140,7 @@ export class Git {
      *         name: "string",
      *         owner: "string",
      *         fullName: "string",
-     *         url: "string",
+     *         url: FernRegistry.Url("string"),
      *         repositoryOwnerOrganizationId: FernRegistry.OrgId("string"),
      *         defaultBranchChecks: [{
      *                 checkId: "string",
@@ -365,7 +365,7 @@ export class Git {
      *                 username: "string"
      *             }],
      *         title: "string",
-     *         url: "string",
+     *         url: FernRegistry.Url("string"),
      *         checks: [{
      *                 checkId: "string",
      *                 repositoryOwner: "string",

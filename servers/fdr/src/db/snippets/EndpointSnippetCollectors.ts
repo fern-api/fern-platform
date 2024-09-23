@@ -1,7 +1,7 @@
 import { FdrAPI } from "../../api";
 
 export class EndpointSnippetCollector {
-    private snippetsByEndpoint: Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod> = {};
+    private snippetsByEndpoint: Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod> = {};
     private snippetsByEndpointId: Record<string, FdrAPI.Snippet[]> = {};
 
     public collect({
@@ -33,7 +33,7 @@ export class EndpointSnippetCollector {
         this.snippetsByEndpoint[endpointPath]?.[endpointMethod]?.push(snippet);
     }
 
-    public get(): Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod> {
+    public get(): Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod> {
         return this.snippetsByEndpoint;
     }
 

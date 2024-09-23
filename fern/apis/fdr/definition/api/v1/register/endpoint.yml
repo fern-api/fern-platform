@@ -228,9 +228,7 @@ types:
   FilenameWithData:
     properties:
       filename: string
-      data: FileId
-
-  FileId: string
+      data: rootCommons.FileId
 
   ExampleEndpointResponse:
     union:

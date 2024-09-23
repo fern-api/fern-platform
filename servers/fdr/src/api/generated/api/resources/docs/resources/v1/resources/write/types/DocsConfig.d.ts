@@ -11,7 +11,7 @@ export interface DocsConfig {
     footerLinks?: FernRegistry.docs.v1.commons.FooterLink[];
     logoHeight?: FernRegistry.docs.v1.write.Height;
     logoHref?: FernRegistry.Url;
-    favicon?: FernRegistry.docs.v1.commons.FileId;
+    favicon?: FernRegistry.FileId;
     metadata?: FernRegistry.docs.v1.commons.MetadataConfig;
     redirects?: FernRegistry.docs.v1.commons.RedirectConfig[];
     colorsV3?: FernRegistry.docs.v1.write.ColorsConfigV3;
@@ -22,9 +22,9 @@ export interface DocsConfig {
     css?: FernRegistry.docs.v1.commons.CssConfig;
     js?: FernRegistry.docs.v1.commons.JsConfig;
     playground?: FernRegistry.docs.v1.commons.PlaygroundConfig;
-    backgroundImage?: FernRegistry.docs.v1.commons.FileId;
+    backgroundImage?: FernRegistry.FileId;
     logoV2?: FernRegistry.docs.v1.commons.ThemedFileId;
-    logo?: FernRegistry.docs.v1.commons.FileId;
+    logo?: FernRegistry.FileId;
     colors?: FernRegistry.docs.v1.commons.ColorsConfig;
     colorsV2?: FernRegistry.docs.v1.commons.ColorsConfigV2;
     typography?: FernRegistry.docs.v1.commons.DocsTypographyConfig;

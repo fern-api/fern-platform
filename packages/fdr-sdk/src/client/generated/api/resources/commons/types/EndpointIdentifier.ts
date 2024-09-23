@@ -5,7 +5,7 @@
 import * as FernRegistry from "../../../index";
 
 export interface EndpointIdentifier {
-    path: FernRegistry.EndpointPath;
+    path: FernRegistry.EndpointPathLiteral;
     method: FernRegistry.HttpMethod;
     /**
      * The ID for the endpoint as declared within the IR, this is a unique name for the endpoint, whereas path and

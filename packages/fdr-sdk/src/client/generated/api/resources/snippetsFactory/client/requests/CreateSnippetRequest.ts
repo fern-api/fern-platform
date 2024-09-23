@@ -20,7 +20,7 @@ import * as FernRegistry from "../../../../index";
  *                         client: "string"
  *                     },
  *                     endpoint: {
- *                         path: FernRegistry.EndpointPath("string"),
+ *                         path: FernRegistry.EndpointPathLiteral("string"),
  *                         method: FernRegistry.HttpMethod.Get,
  *                         identifierOverride: "string"
  *                     },

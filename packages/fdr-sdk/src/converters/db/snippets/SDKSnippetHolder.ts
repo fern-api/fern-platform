@@ -10,23 +10,23 @@ export interface SnippetsConfigWithSdkId {
 
 export interface SdkSnippetHolderArgs {
     // Legacy format for snippets leveraging path and method (which is not unique enough for some cases)
-    snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
+    snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod>>;
     // If these are present for the SDK ID, use these, otherwise use snippetsBySdkId
     snippetsBySdkIdAndEndpointId: Record<string, Record<string, FdrAPI.Snippet[]>>;
     snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
     snippetTemplatesByEndpoint: Record<
-        FdrAPI.EndpointPath,
+        FdrAPI.EndpointPathLiteral,
         Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
     >;
     snippetTemplatesByEndpointId: Record<string, APIV1Read.EndpointSnippetTemplates>;
 }
 
 export class SDKSnippetHolder {
-    private snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
+    private snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod>>;
     private snippetsBySdkIdAndEndpointId: Record<string, Record<string, FdrAPI.Snippet[]>>;
     private snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
     private snippetTemplatesByEndpoint: Record<
-        FdrAPI.EndpointPath,
+        FdrAPI.EndpointPathLiteral,
         Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
     >;
     private snippetTemplatesByEndpointId: Record<string, APIV1Read.EndpointSnippetTemplates>;
@@ -51,7 +51,7 @@ export class SDKSnippetHolder {
         endpointId,
         exampleId,
     }: {
-        endpointPath: FdrAPI.EndpointPath;
+        endpointPath: FdrAPI.EndpointPathLiteral;
         endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
@@ -77,7 +77,7 @@ export class SDKSnippetHolder {
         endpointId,
         exampleId,
     }: {
-        endpointPath: FdrAPI.EndpointPath;
+        endpointPath: FdrAPI.EndpointPathLiteral;
         endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
@@ -103,7 +103,7 @@ export class SDKSnippetHolder {
         endpointId,
         exampleId,
     }: {
-        endpointPath: FdrAPI.EndpointPath;
+        endpointPath: FdrAPI.EndpointPathLiteral;
         endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
@@ -129,7 +129,7 @@ export class SDKSnippetHolder {
         endpointId,
         exampleId,
     }: {
-        endpointPath: FdrAPI.EndpointPath;
+        endpointPath: FdrAPI.EndpointPathLiteral;
         endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
@@ -157,7 +157,7 @@ export class SDKSnippetHolder {
         getSdk,
         getSnippet,
     }: {
-        endpointPath: FdrAPI.EndpointPath;
+        endpointPath: FdrAPI.EndpointPathLiteral;
         endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
@@ -198,7 +198,7 @@ export class SDKSnippetHolder {
         endpointMethod,
         endpointId,
     }: {
-        endpointPath: FdrAPI.EndpointPath;
+        endpointPath: FdrAPI.EndpointPathLiteral;
         endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
     }): APIV1Read.EndpointSnippetTemplates | undefined {

@@ -19,7 +19,7 @@ types:
     properties:
       pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<commons.FileId, DbFileInfo>
+      files: map<rootCommons.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<commons.ColorsConfig>
 
@@ -28,7 +28,7 @@ types:
     properties:
       pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<commons.FileId, DbFileInfo>
+      files: map<rootCommons.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<commons.ColorsConfig>
       typography: optional<commons.DocsTypographyConfig>
@@ -37,7 +37,7 @@ types:
     properties:
       pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<commons.FileId, DbFileInfoV2>
+      files: map<rootCommons.FileId, DbFileInfoV2>
       config: DocsDbConfig
       jsFiles:
         type: optional<map<string, string>>
@@ -59,14 +59,14 @@ types:
       # logo
       logoHeight: optional<docsReadV1.Height>
       logoHref: optional<rootCommons.Url>
-      favicon: optional<commons.FileId>
+      favicon: optional<rootCommons.FileId>
 
       # seo
       metadata: optional<commons.MetadataConfig>
       redirects: optional<list<commons.RedirectConfig>>
 
       # styles
-      backgroundImage: optional<commons.FileId>
+      backgroundImage: optional<rootCommons.FileId>
       colorsV3: optional<docsReadV1.ColorsConfigV3>
       layout: optional<commons.DocsLayoutConfig>
       typographyV2: optional<commons.DocsTypographyConfigV2>
@@ -84,7 +84,7 @@ types:
 
       # deprecated
       logo:
-        type: optional<commons.FileId>
+        type: optional<rootCommons.FileId>
         availability: deprecated
       logoV2:
         type: optional<commons.ThemedFileId>

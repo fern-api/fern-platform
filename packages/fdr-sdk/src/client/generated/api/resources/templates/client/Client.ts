@@ -41,7 +41,7 @@ export class Templates {
      *                 version: "string"
      *             },
      *             endpointId: {
-     *                 path: FernRegistry.EndpointPath("string"),
+     *                 path: FernRegistry.EndpointPathLiteral("string"),
      *                 method: FernRegistry.HttpMethod.Get,
      *                 identifierOverride: "string"
      *             },
@@ -137,7 +137,7 @@ export class Templates {
      *                     version: "string"
      *                 },
      *                 endpointId: {
-     *                     path: FernRegistry.EndpointPath("string"),
+     *                     path: FernRegistry.EndpointPathLiteral("string"),
      *                     method: FernRegistry.HttpMethod.Get,
      *                     identifierOverride: "string"
      *                 },
@@ -231,7 +231,7 @@ export class Templates {
      *             version: "string"
      *         },
      *         endpointId: {
-     *             path: FernRegistry.EndpointPath("string"),
+     *             path: FernRegistry.EndpointPathLiteral("string"),
      *             method: FernRegistry.HttpMethod.Get,
      *             identifierOverride: "string"
      *         }

@@ -33,7 +33,7 @@ export class Snippets {
      *     await fernRegistry.snippets.get({
      *         endpoint: {
      *             method: FernRegistry.HttpMethod.Get,
-     *             path: FernRegistry.EndpointPath("/v1/search")
+     *             path: FernRegistry.EndpointPathLiteral("/v1/search")
      *         }
      *     })
      */

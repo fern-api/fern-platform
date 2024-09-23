@@ -67,8 +67,8 @@ types:
       algoliaSearchIndex: optional<algolia.AlgoliaSearchIndex>
       pages: map<rootCommons.PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
-      files: map<commons.FileId, rootCommons.Url>
-      filesV2: map<commons.FileId, File>
+      files: map<rootCommons.FileId, rootCommons.Url>
+      filesV2: map<rootCommons.FileId, File>
       jsFiles:
         type: optional<map<string, string>>
         docs: |
@@ -80,7 +80,7 @@ types:
 
   PageContent:
     properties:
-      markdown: string # eventually PageContent should just be a commons.FileId ?
+      markdown: string # eventually PageContent should just be a rootCommons.FileId ?
       editThisPageUrl: optional<rootCommons.Url>
 
   DocsConfig:
@@ -97,7 +97,7 @@ types:
       # logo
       logoHeight: optional<Height>
       logoHref: optional<rootCommons.Url>
-      favicon: optional<commons.FileId>
+      favicon: optional<rootCommons.FileId>
 
       # seo
       metadata: optional<commons.MetadataConfig>
@@ -121,13 +121,13 @@ types:
 
       # deprecated
       # backgroundImage:
-      #   type: optional<commons.FileId>
+      #   type: optional<rootCommons.FileId>
       #   availability: deprecated
       # logoV2:
       #   type: optional<commons.ThemedFileId>
       #   availability: deprecated
       # logo:
-      #   type: optional<commons.FileId>
+      #   type: optional<rootCommons.FileId>
       #   availability: deprecated
       # colors:
       #   type: optional<commons.ColorsConfig>
@@ -147,8 +147,8 @@ types:
 
   ThemeConfig:
     properties:
-      logo: optional<commons.FileId>
-      backgroundImage: optional<commons.FileId>
+      logo: optional<rootCommons.FileId>
+      backgroundImage: optional<rootCommons.FileId>
       accentPrimary: commons.RgbaColor
       background: Background
       border: optional<commons.RgbaColor>
@@ -253,7 +253,7 @@ types:
     properties:
       title: string
       icon: optional<string>
-      url: string
+      url: rootCommons.Url
 
   ApiSection:
     availability: deprecated
@@ -330,7 +330,7 @@ types:
 
   PublishedPostmanCollection:
     properties:
-      url: string
+      url: rootCommons.Url
       githubRepo: optional<GitHubRepo>
 
   PublishedSdk:
@@ -360,7 +360,7 @@ types:
   GitHubRepo:
     properties:
       name: string
-      url: string
+      url: rootCommons.Url
 
 errors:
   DomainNotRegisteredError:

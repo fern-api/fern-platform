@@ -20,7 +20,7 @@ export interface LoadDbSnippetsPage {
 }
 
 export interface DbSnippetsPage {
-    snippets: Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>;
+    snippets: Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod>;
     snippetsByEndpointId: Record<string, FdrAPI.Snippet[]>;
     nextPage: number | undefined;
 }
@@ -44,12 +44,12 @@ export interface SnippetsDao {
     // TODO(armando): whenever we call this, we should call this other endpoint too
     loadAllSnippetsForSdkIds(
         sdkIds: string[],
-    ): Promise<Record<string, Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>>;
+    ): Promise<Record<string, Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod>>>;
 
     loadAllSnippetsForSdkIdsByEndpointId(sdkIds: string[]): Promise<Record<string, Record<string, FdrAPI.Snippet[]>>>;
 
     // TODO(armando): same here
-    loadAllSnippetsBySdkId(sdkId: string): Promise<Record<FdrAPI.EndpointPath, FdrAPI.SnippetsByEndpointMethod>>;
+    loadAllSnippetsBySdkId(sdkId: string): Promise<Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod>>;
 
     loadAllSnippetsBySdkIdByEndpointId(sdkId: string): Promise<Record<string, FdrAPI.Snippet[]>>;
 

@@ -13,7 +13,7 @@ export interface DocsConfig {
     footerLinks: FernRegistry.docs.v1.commons.FooterLink[] | undefined;
     logoHeight: FernRegistry.docs.v1.read.Height | undefined;
     logoHref: FernRegistry.Url | undefined;
-    favicon: FernRegistry.docs.v1.commons.FileId | undefined;
+    favicon: FernRegistry.FileId | undefined;
     metadata: FernRegistry.docs.v1.commons.MetadataConfig | undefined;
     redirects: FernRegistry.docs.v1.commons.RedirectConfig[] | undefined;
     colorsV3: FernRegistry.docs.v1.read.ColorsConfigV3 | undefined;

@@ -92,7 +92,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     }],
  *                 logoHeight: 1.1,
  *                 logoHref: FernRegistry.Url("string"),
- *                 favicon: FernRegistry.docs.v1.commons.FileId("string"),
+ *                 favicon: FernRegistry.FileId("string"),
  *                 metadata: {
  *                     og:site_name: "string",
  *                     og:title: "string",
@@ -250,7 +250,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }],
  *                     files: [{
- *                             fileId: FernRegistry.docs.v1.commons.FileId("string"),
+ *                             fileId: FernRegistry.FileId("string"),
  *                             strategy: {
  *                                 "key": "value"
  *                             }
@@ -262,12 +262,12 @@ import * as FernRegistry from "../../../../../../../../index";
  *                 playground: {
  *                     oauth: true
  *                 },
- *                 backgroundImage: FernRegistry.docs.v1.commons.FileId("string"),
+ *                 backgroundImage: FernRegistry.FileId("string"),
  *                 logoV2: {
- *                     dark: FernRegistry.docs.v1.commons.FileId("string"),
- *                     light: FernRegistry.docs.v1.commons.FileId("string")
+ *                     dark: FernRegistry.FileId("string"),
+ *                     light: FernRegistry.FileId("string")
  *                 },
- *                 logo: FernRegistry.docs.v1.commons.FileId("string"),
+ *                 logo: FernRegistry.FileId("string"),
  *                 colors: {
  *                     accentPrimary: {
  *                         r: 1,
@@ -289,15 +289,15 @@ import * as FernRegistry from "../../../../../../../../index";
  *                 typography: {
  *                     headingsFont: {
  *                         name: "string",
- *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
+ *                         fontFile: FernRegistry.FileId("string")
  *                     },
  *                     bodyFont: {
  *                         name: "string",
- *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
+ *                         fontFile: FernRegistry.FileId("string")
  *                     },
  *                     codeFont: {
  *                         name: "string",
- *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
+ *                         fontFile: FernRegistry.FileId("string")
  *                     }
  *                 }
  *             },
