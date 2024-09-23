@@ -1,8 +1,5 @@
 import { isPlainObject } from "@fern-ui/core-utils";
-import { captureException } from "@sentry/nextjs";
-import { useAtomValue } from "jotai";
-import { atomWithLazy, loadable } from "jotai/utils";
-import { useMemoOne } from "use-memo-one";
+import { useEffect, useRef, useState } from "react";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
 
@@ -98,42 +95,38 @@ function getQueryPart(path: JsonPropertyPathPart) {
     }
 }
 
-function createHoveredJsonLinesAtom(json: unknown, hoveredPropertyPath: JsonPropertyPath = [], jsonStartLine = 0) {
-    const atom = atomWithLazy(async () => {
-        if (hoveredPropertyPath.length === 0 || jsonStartLine < 0 || typeof window === "undefined") {
-            return [];
-        }
-        /**
-         * dynamically import jsonpath on the client-side
-         */
-        const jq = await import("jsonpath");
-        return getJsonLineNumbers(jq, json, hoveredPropertyPath, jsonStartLine + 1);
-    });
-
-    /**
-     * Loadable has built-in try-catch for the async function
-     */
-    return loadable(atom);
-}
-
 export function useHighlightJsonLines(
     json: unknown,
     hoveredPropertyPath: JsonPropertyPath = [],
     jsonStartLine = 0,
 ): HighlightLineResult[] {
-    const atom = useMemoOne(
-        () => createHoveredJsonLinesAtom(json, hoveredPropertyPath, jsonStartLine),
-        [hoveredPropertyPath, jsonStartLine, json],
-    );
+    const [results, setResults] = useState<HighlightLineResult[]>([]);
+    const nonce = useRef(0);
 
-    const value = useAtomValue(atom);
-    if (value.state === "hasData") {
-        return value.data;
-    } else if (value.state === "hasError") {
-        captureException(value.error, {
-            extra: { json, hoveredPropertyPath, jsonStartLine },
-        });
-    }
+    useEffect(() => {
+        const currentNonce = ++nonce.current;
+        if (hoveredPropertyPath.length === 0 || jsonStartLine < 0 || typeof window === "undefined") {
+            setResults([]);
+            return;
+        }
 
-    return [];
+        void (async () => {
+            try {
+                // https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#with-external-libraries
+                // Note: there's a bug in nextjs that causes the import to fail inside of an jotai atom.
+                // The workaround is to import the module inside of the useEffect.
+                const jq = await import("jsonpath");
+                if (currentNonce !== nonce.current) {
+                    return;
+                }
+                setResults(getJsonLineNumbers(jq, json, hoveredPropertyPath, jsonStartLine + 1));
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.error(e);
+                setResults([]);
+            }
+        })();
+    }, [hoveredPropertyPath, json, jsonStartLine]);
+
+    return results;
 }
