@@ -16,8 +16,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       fern-api:
-        specifier: ^0.21.0
-        version: 0.21.0
+        specifier: 0.41.16
+        version: 0.41.16
     devDependencies:
       '@babel/core':
         specifier: ^7.23.7
@@ -10560,6 +10560,10 @@ packages:
 
   fern-api@0.21.0:
     resolution: {integrity: sha512-/Zf/24Cg4YoRsbwJ8Joot0AcosQwUyvGQvZ6Qi0Cu/c83FfrWvQ73cb3ddJQCyzWhM06McgO5uguviSmgFyQWQ==}
+    hasBin: true
+
+  fern-api@0.41.16:
+    resolution: {integrity: sha512-LykhNvMl0NjTnCu6kHiYV9a2Y3iX5HMFlD6dO1A6J1WfvH8mcKYzcz/R/Md9/h6QygSeuuFGAo/K3JJ9e3j4QQ==}
     hasBin: true
 
   fetch-retry@5.0.6:
@@ -28476,6 +28480,8 @@ snapshots:
       xml-js: 1.6.11
 
   fern-api@0.21.0: {}
+
+  fern-api@0.41.16: {}
 
   fetch-retry@5.0.6: {}
 

@@ -32,7 +32,7 @@
     "docs:start": "turbo docs:start",
     "docs:e2e": "vitest --run test/docs-e2e/**/* --globals",
     "fdr:generate": "pnpm fern generate --api fdr --local && pnpm --filter=@fern-api/fdr-sdk compile",
-    "navigation:generate": "pnpm fern generate --api navigation --local"
+    "navigation:generate": "pnpm fern generate --api fdr --group navigation --local  && pnpm --filter=@fern-api/fdr-sdk compile"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
@@ -102,7 +102,7 @@
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",
-    "fern-api": "^0.21.0"
+    "fern-api": "0.41.16"
   },
   "packageManager": "pnpm@9.4.0",
   "nextBundleAnalysis": {
