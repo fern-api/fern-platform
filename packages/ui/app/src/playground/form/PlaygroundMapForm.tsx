@@ -1,9 +1,9 @@
 import { FernButton } from "@fern-ui/components";
-import { isPlainObject } from "@fern-ui/core-utils";
+import { isPlainObject, unknownToString } from "@fern-ui/core-utils";
 import { Plus, Xmark } from "iconoir-react";
 import { memo, useCallback, useEffect, useState } from "react";
 import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapOptional } from "../../resolver/types";
-import { getDefaultValueForType, unknownToString } from "../utils";
+import { getDefaultValueForType } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 interface PlaygroundMapFormProps {

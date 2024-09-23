@@ -35,7 +35,7 @@ import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundEndpointForm } from "./endpoint/PlaygroundEndpointForm";
 import { PlaygroundAuthState } from "./types";
-import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils";
+import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils/oauth";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;

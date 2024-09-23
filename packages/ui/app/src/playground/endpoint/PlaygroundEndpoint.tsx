@@ -1,4 +1,5 @@
 import { FernTooltipProvider } from "@fern-ui/components";
+import { unknownToString } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
@@ -30,7 +31,6 @@ import {
     getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
     serializeFormStateBody,
-    unknownToString,
 } from "../utils";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
@@ -89,7 +89,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
             );
             const headers = {
                 ...authHeaders,
-                ...mapValues(formState.headers ?? {}, unknownToString),
+                ...mapValues(formState.headers ?? {}, (value) => unknownToString(value)),
             };
 
             if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
