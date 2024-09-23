@@ -1,8 +1,7 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import { captureException } from "@sentry/nextjs";
-import { useAtomValue } from "jotai";
-import { atomWithLazy, loadable } from "jotai/utils";
-import { useMemoOne } from "use-memo-one";
+import jsonpath from "jsonpath";
+import { useMemo } from "react";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
 
@@ -23,18 +22,12 @@ type HighlightLineResult = number | [number, number];
  * It assumes that the json object uses `JSON.stringify(json, undefined, 2)` to format the json object, and
  * works by incrementally string-matching each part of the json path and merging the result of each part.
  *
- * @param jq jsonpath module (which we can't import directly because it dramatically increases bundle size)
  * @param json unknown json object to query
  * @param path json path, which is constructed from the api reference hover state
  * @param start line number where the json object starts
  * @returns a list of line numbers that match the json path
  */
-export function getJsonLineNumbers(
-    jq: Awaited<typeof import("jsonpath")>,
-    json: unknown,
-    path: JsonPropertyPath,
-    start = 0,
-): HighlightLineResult[] {
+export function getJsonLineNumbers(json: unknown, path: JsonPropertyPath, start = 0): HighlightLineResult[] {
     const jsonString = JSON.stringify(json, undefined, INDENT_SPACES);
 
     const part = path[0];
@@ -45,10 +38,10 @@ export function getJsonLineNumbers(
 
     const query = "$" + getQueryPart(part);
 
-    const results: unknown[] = jq.query(json, query);
+    const results: unknown[] = jsonpath.query(json, query);
     if (part.type === "objectFilter") {
         if (isPlainObject(json) && json[part.propertyName] === part.requiredStringValue) {
-            return getJsonLineNumbers(jq, json, path.slice(1), start);
+            return getJsonLineNumbers(json, path.slice(1), start);
         }
     }
 
@@ -65,7 +58,7 @@ export function getJsonLineNumbers(
             return [];
         }
 
-        const jsonLineNumbers = getJsonLineNumbers(jq, result, path.slice(1), startLine);
+        const jsonLineNumbers = getJsonLineNumbers(result, path.slice(1), startLine);
 
         return jsonLineNumbers.map(
             (line): HighlightLineResult =>
@@ -98,42 +91,17 @@ function getQueryPart(path: JsonPropertyPathPart) {
     }
 }
 
-function createHoveredJsonLinesAtom(json: unknown, hoveredPropertyPath: JsonPropertyPath = [], jsonStartLine = 0) {
-    const atom = atomWithLazy(async () => {
-        if (hoveredPropertyPath.length === 0 || jsonStartLine < 0 || typeof window === "undefined") {
-            return [];
-        }
-        /**
-         * dynamically import jsonpath on the client-side
-         */
-        const jq = await import("jsonpath");
-        return getJsonLineNumbers(jq, json, hoveredPropertyPath, jsonStartLine + 1);
-    });
-
-    /**
-     * Loadable has built-in try-catch for the async function
-     */
-    return loadable(atom);
-}
-
 export function useHighlightJsonLines(
     json: unknown,
     hoveredPropertyPath: JsonPropertyPath = [],
     jsonStartLine = 0,
 ): HighlightLineResult[] {
-    const atom = useMemoOne(
-        () => createHoveredJsonLinesAtom(json, hoveredPropertyPath, jsonStartLine),
-        [hoveredPropertyPath, jsonStartLine, json],
-    );
-
-    const value = useAtomValue(atom);
-    if (value.state === "hasData") {
-        return value.data;
-    } else if (value.state === "hasError") {
-        captureException(value.error, {
-            extra: { json, hoveredPropertyPath, jsonStartLine },
-        });
-    }
-
-    return [];
+    return useMemo(() => {
+        try {
+            return getJsonLineNumbers(json, hoveredPropertyPath, jsonStartLine + 1);
+        } catch (error) {
+            captureException(error);
+            return [];
+        }
+    }, [hoveredPropertyPath, json, jsonStartLine]);
 }
