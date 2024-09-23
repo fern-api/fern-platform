@@ -1,4 +1,5 @@
 import { FernTooltipProvider } from "@fern-ui/components";
+import { unknownToString } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
@@ -19,7 +20,6 @@ import { useApiRoute } from "../../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { getAppBuildwithfernCom } from "../../hooks/useStandardProxyEnvironment";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition, resolveEnvironment } from "../../resolver/types";
-import { unknownToString } from "../../util/unknownToString";
 import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
@@ -89,7 +89,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
             );
             const headers = {
                 ...authHeaders,
-                ...mapValues(formState.headers ?? {}, unknownToString),
+                ...mapValues(formState.headers ?? {}, (value) => unknownToString(value)),
             };
 
             if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {

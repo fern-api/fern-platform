@@ -1,8 +1,8 @@
 import { APIV1Read, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
+import { unknownToString } from "@fern-ui/core-utils";
 import jsonpath from "jsonpath";
 import { mapValues } from "lodash-es";
 import { ResolvedEndpointDefinition } from "../../resolver/types";
-import { unknownToString } from "../../util/unknownToString";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { PlaygroundEndpointRequestFormState, ProxyRequest } from "../types";
 import { serializeFormStateBody } from "./serialize";
@@ -32,7 +32,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     }
 
     const headers: Record<string, string> = {
-        ...mapValues(formState.headers ?? {}, unknownToString),
+        ...mapValues(formState.headers ?? {}, (value) => unknownToString(value)),
     };
 
     if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {

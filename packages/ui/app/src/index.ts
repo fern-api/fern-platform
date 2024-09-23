@@ -19,4 +19,3 @@ export { getRegistryServiceWithToken, provideRegistryService } from "./services/
 export { renderThemeStylesheet } from "./themes/stylesheet/renderThemeStylesheet";
 export { getGitHubInfo, getGitHubRepo } from "./util/github";
 export { resolveDocsContent } from "./util/resolveDocsContent";
-export { unknownToString } from "./util/unknownToString";
