@@ -1,8 +1,7 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import { captureException } from "@sentry/nextjs";
-import { useAtomValue } from "jotai";
-import { atomWithLazy, loadable } from "jotai/utils";
-import { useMemoOne } from "use-memo-one";
+import jsonpath from "jsonpath";
+import { useMemo } from "react";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
 
@@ -30,7 +29,7 @@ type HighlightLineResult = number | [number, number];
  * @returns a list of line numbers that match the json path
  */
 export function getJsonLineNumbers(
-    jq: Awaited<typeof import("jsonpath")>,
+    jq: typeof jsonpath,
     json: unknown,
     path: JsonPropertyPath,
     start = 0,
@@ -98,42 +97,17 @@ function getQueryPart(path: JsonPropertyPathPart) {
     }
 }
 
-function createHoveredJsonLinesAtom(json: unknown, hoveredPropertyPath: JsonPropertyPath = [], jsonStartLine = 0) {
-    const atom = atomWithLazy(async () => {
-        if (hoveredPropertyPath.length === 0 || jsonStartLine < 0 || typeof window === "undefined") {
-            return [];
-        }
-        /**
-         * dynamically import jsonpath on the client-side
-         */
-        const jq = await import("jsonpath");
-        return getJsonLineNumbers(jq, json, hoveredPropertyPath, jsonStartLine + 1);
-    });
-
-    /**
-     * Loadable has built-in try-catch for the async function
-     */
-    return loadable(atom);
-}
-
 export function useHighlightJsonLines(
     json: unknown,
     hoveredPropertyPath: JsonPropertyPath = [],
     jsonStartLine = 0,
 ): HighlightLineResult[] {
-    const atom = useMemoOne(
-        () => createHoveredJsonLinesAtom(json, hoveredPropertyPath, jsonStartLine),
-        [hoveredPropertyPath, jsonStartLine, json],
-    );
-
-    const value = useAtomValue(atom);
-    if (value.state === "hasData") {
-        return value.data;
-    } else if (value.state === "hasError") {
-        captureException(value.error, {
-            extra: { json, hoveredPropertyPath, jsonStartLine },
-        });
-    }
-
-    return [];
+    return useMemo(() => {
+        try {
+            return getJsonLineNumbers(jsonpath, json, hoveredPropertyPath, jsonStartLine + 1);
+        } catch (e) {
+            captureException(e);
+            return [];
+        }
+    }, [json, hoveredPropertyPath, jsonStartLine]);
 }
