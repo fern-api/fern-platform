@@ -1,3 +1,4 @@
+import { unknownToString } from "@fern-api/fdr-sdk";
 import { isPlainObject } from "@fern-ui/core-utils";
 import type { Element, ElementContent, Node, Root, RootContent, Text } from "hast";
 import type {
@@ -6,7 +7,6 @@ import type {
     MdxJsxExpressionAttribute,
     MdxJsxFlowElementHast,
 } from "mdast-util-mdx-jsx";
-import { unknownToString } from "../../util/unknownToString";
 import { valueToEstree } from "./to-estree";
 
 export function isMdxJsxFlowElement(node: Node): node is MdxJsxFlowElementHast {

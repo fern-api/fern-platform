@@ -1,6 +1,6 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { ResolvedEndpointDefinition, resolveEnvironment } from "../resolver/types";
 
 export type EndpointPathPart =
     | {
@@ -29,7 +29,7 @@ export function getEndpointAvailabilityLabel(
     }
 }
 
-export function getEndpointEnvironmentUrl(endpoint: ResolvedEndpointDefinition): string | undefined {
+export function getEndpointEnvironmentUrl(endpoint: ApiDefinition.EndpointDefinition): string | undefined {
     return resolveEnvironment(endpoint)?.baseUrl;
 }
 

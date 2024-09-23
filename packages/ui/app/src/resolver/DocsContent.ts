@@ -1,7 +1,8 @@
 import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { BundledMDX } from "../mdx/types";
-import type { ResolvedApiEndpoint, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
+// import type { ResolvedApiEndpoint, ResolvedRootPackage } from "./types";
 
 export declare namespace DocsContent {
     export interface Neighbor {
@@ -42,16 +43,30 @@ export declare namespace DocsContent {
         mdx: BundledMDX;
         neighbors: Neighbors;
         // TODO: downselect apis to only the fields we need
-        apis: Record<string, ResolvedRootPackage>;
+        apis: Record<string, ApiDefinition.ApiDefinition>;
     }
+
+    interface EndpointDefinitionPage extends ApiDefinition.EndpointDefinition {
+        type: "endpoint";
+    }
+
+    interface WebhookDefinitionPage extends ApiDefinition.WebhookDefinition {
+        type: "webhook";
+    }
+
+    interface WebSocketChannelPage extends ApiDefinition.WebSocketChannel {
+        type: "websocket";
+    }
+
+    type ApiContentPage = EndpointDefinitionPage | WebhookDefinitionPage | WebSocketChannelPage;
 
     interface ApiEndpointPage {
         type: "api-endpoint-page";
         slug: FernNavigation.Slug;
         api: FdrAPI.ApiDefinitionId;
         auth: APIV1Read.ApiAuth | undefined;
-        types: Record<string, ResolvedTypeDefinition>;
-        item: ResolvedApiEndpoint;
+        types: Record<string, ApiDefinition.TypeDefinition>;
+        item: ApiContentPage;
         showErrors: boolean;
         neighbors: Neighbors;
     }
@@ -62,7 +77,7 @@ export declare namespace DocsContent {
         slug: FernNavigation.Slug;
         api: string;
         paginated: boolean;
-        apiDefinition: ResolvedRootPackage;
+        apiDefinition: ApiDefinition.ApiDefinition;
         showErrors: boolean;
     }
 }

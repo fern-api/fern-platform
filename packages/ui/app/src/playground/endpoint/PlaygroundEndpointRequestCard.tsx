@@ -1,3 +1,4 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, FernButton, FernButtonGroup, FernCard } from "@fern-ui/components";
 import { useAtom, useSetAtom } from "jotai";
 import { ReactElement } from "react";
@@ -9,13 +10,12 @@ import {
     useFeatureFlags,
 } from "../../atoms";
 import { useStandardProxyEnvironment } from "../../hooks/useStandardProxyEnvironment";
-import { ResolvedEndpointDefinition } from "../../resolver/types";
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";
 import { PlaygroundEndpointRequestFormState } from "../types";
 
 interface PlaygroundEndpointRequestCardProps {
-    endpoint: ResolvedEndpointDefinition;
+    endpoint: ApiDefinition.EndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
 }
 

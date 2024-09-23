@@ -1,5 +1,6 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
@@ -7,7 +8,6 @@ import { FernAnchor } from "../../components/FernAnchor";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
 import type { BundledMDX } from "../../mdx/types";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
@@ -17,11 +17,11 @@ export declare namespace EndpointParameter {
     export interface Props {
         name: string;
         description: BundledMDX | undefined;
-        shape: ResolvedTypeShape;
+        shape: ApiDefinition.TypeShapeOrReference;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
         availability: APIV1Read.Availability | null | undefined;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 
     export interface ContentProps {

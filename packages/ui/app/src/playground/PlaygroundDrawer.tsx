@@ -1,3 +1,4 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton } from "@fern-ui/components";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
@@ -9,7 +10,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 import { ReactElement, memo, useEffect, useMemo } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { HEADER_HEIGHT_ATOM, useAtomEffect, useFlattenedApis, useSidebarNodes } from "../atoms";
+import { APIS_ATOM, HEADER_HEIGHT_ATOM, useAtomEffect, useSidebarNodes } from "../atoms";
 import {
     MAX_PLAYGROUND_HEIGHT_ATOM,
     PLAYGROUND_NODE_ID,
@@ -20,7 +21,6 @@ import {
 } from "../atoms/playground";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { isEndpoint, isWebSocket, type ResolvedApiEndpointWithPackage } from "../resolver/types";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundEndpoint } from "./endpoint/PlaygroundEndpoint";
@@ -34,7 +34,7 @@ interface PlaygroundDrawerProps {
 
 export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): ReactElement | null => {
     const selectionState = usePlaygroundNode();
-    const apis = useFlattenedApis();
+    const apis = useAtomValue(APIS_ATOM);
 
     const sidebar = useSidebarNodes();
     const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
@@ -42,10 +42,10 @@ export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): Rea
     const matchedSection = selectionState != null ? apis[selectionState.apiDefinitionId] : undefined;
 
     const nodeIdToApiDefinition = useMemo(() => {
-        const nodes = new Map<FernNavigation.NodeId, ResolvedApiEndpointWithPackage>();
+        const nodes = new Map<FernNavigation.NodeId, ApiDefinition.ApiEndpointWithPackage>();
         Object.values(apis).forEach((api) => {
-            api.endpoints.forEach((endpoint) => {
-                nodes.set(endpoint.nodeId, endpoint);
+            Object.values(api.endpoints).forEach((endpoint) => {
+                nodes.set(FernNavigation.NodeId(endpoint.nodeId), endpoint);
             });
         });
         return nodes;
@@ -83,18 +83,10 @@ export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): Rea
     const togglePlayground = useTogglePlayground();
 
     const matchedEndpoint =
-        selectionState?.type === "endpoint"
-            ? (matchedSection?.endpoints.find(
-                  (definition) => isEndpoint(definition) && definition.id === selectionState.endpointId,
-              ) as ResolvedApiEndpointWithPackage.Endpoint | undefined)
-            : undefined;
+        selectionState?.type === "endpoint" ? matchedSection?.endpoints[selectionState.id] : undefined;
 
     const matchedWebSocket =
-        selectionState?.type === "webSocket"
-            ? (matchedSection?.endpoints.find(
-                  (definition) => isWebSocket(definition) && definition.id === selectionState.webSocketId,
-              ) as ResolvedApiEndpointWithPackage.WebSocket | undefined)
-            : undefined;
+        selectionState?.type === "webSocket" ? matchedSection?.websockets[selectionState.id] : undefined;
 
     useEffect(() => {
         // if keyboard press "ctrl + `", open playground

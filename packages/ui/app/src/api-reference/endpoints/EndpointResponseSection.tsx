@@ -1,24 +1,24 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { Markdown } from "../../mdx/Markdown";
-import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointResponseSection {
     export interface Props {
-        responseBody: ResolvedResponseBody;
+        response: ApiDefinition.HttpResponse;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
 export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = ({
-    responseBody,
+    response,
     onHoverProperty,
     anchorIdParts,
     slug,
@@ -31,10 +31,10 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
             <Markdown
                 size="sm"
                 className="!t-muted border-default border-b pb-5 leading-6"
-                mdx={responseBody.description}
-                fallback={getResponseSummary({ responseBody, types, isAudioFileDownloadSpanSummary })}
+                mdx={response.description}
+                fallback={getResponseSummary({ response, types, isAudioFileDownloadSpanSummary })}
             />
-            {visitResolvedHttpResponseBodyShape(responseBody.shape, {
+            {visitApiDefinition.HttpResponseBodyShape(response.shape, {
                 fileDownload: () => null,
                 streamingText: () => {
                     // eslint-disable-next-line no-console
@@ -84,15 +84,15 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
 };
 
 function getResponseSummary({
-    responseBody,
+    response,
     types,
     isAudioFileDownloadSpanSummary,
 }: {
-    responseBody: ResolvedResponseBody;
-    types: Record<string, ResolvedTypeDefinition>;
+    response: ApiDefinition.HttpResponse;
+    types: Record<string, ApiDefinition.TypeDefinition>;
     isAudioFileDownloadSpanSummary: boolean;
 }) {
-    if (responseBody.shape.type === "fileDownload") {
+    if (response.body.type === "fileDownload") {
         if (isAudioFileDownloadSpanSummary) {
             return (
                 <span>
@@ -101,12 +101,10 @@ function getResponseSummary({
             );
         }
         return "This endpoint returns a file.";
-    } else if (responseBody.shape.type === "streamingText") {
+    } else if (response.body.type === "streamingText") {
         return "This endpoint sends text responses over a long-lived HTTP connection.";
-    } else if (responseBody.shape.type === "streamCondition") {
-        return "This endpoint returns a stream.";
-    } else if (responseBody.shape.type === "stream") {
-        return `This endpoint returns a stream of ${renderTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}.`;
+    } else if (response.body.type === "stream") {
+        return `This endpoint returns a stream of ${renderTypeShorthand(response.body.value, types, { withArticle: false })}.`;
     }
-    return `This endpoint returns ${renderTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
+    return `This endpoint returns ${renderTypeShorthand(response.body, types, { withArticle: true })}.`;
 }

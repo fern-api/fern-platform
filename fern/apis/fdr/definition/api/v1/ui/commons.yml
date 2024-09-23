@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: ../../../commons.yml
+  read: ../read/commons.yml
+  nav: ../../../navigation/__package__.yml
+
+types:
+  MdxEngine:
+    enum:
+      - name: next_mdx_remote
+        value: next-mdx-remote
+        docs: Original MDX engine used by fern docs
+      - name: mdx_bundler
+        value: mdx-bundler
+        docs: New MDX engine used by fern docs that supports esbuild
+
+  BundledMDX:
+    properties:
+      engine: MdxEngine
+      code: string
+      frontmatter: unknown # TODO: Define strict frontmatter types
+      scope: unknown
+
+  Description:
+    docs: In NextJS SSG/SSR step, unresolved descriptions are resolved to BundledMDX via either mdx-bundler or next-mdx-remote.
+    union:
+      resolved: BundledMDX
+      unresolved: string
+
+  WithDescription:
+    properties:
+      description: optional<Description>
+
+  WithEndpointMetadata:
+    extends:
+      - WithDescription
+      - read.WithAvailability
+    properties:
+      title: string
+      nodeId: nav.NodeId
+      breadcrumbs: list<nav.NavigationBreadcrumbItem>
+      apiDefinitionId: commons.ApiDefinitionId
+      slug: nav.Slug
+
+  WithAvailability: read.WithAvailability
+  JqString: read.JqString

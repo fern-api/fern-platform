@@ -6,6 +6,7 @@ export * as Algolia from "./generated/api/resources/algolia";
 export * as APIV1Db from "./generated/api/resources/api/resources/v1/resources/db";
 export * as APIV1Read from "./generated/api/resources/api/resources/v1/resources/read";
 export * as APIV1Write from "./generated/api/resources/api/resources/v1/resources/register";
+export * as APIV1UI from "./generated/api/resources/api/resources/v1/resources/ui";
 export * as DocsV2Read from "./generated/api/resources/docs/resources/v2/resources/read";
 export * as DocsV2Write from "./generated/api/resources/docs/resources/v2/resources/write";
 export * as Snippets from "./generated/api/resources/snippets/types";

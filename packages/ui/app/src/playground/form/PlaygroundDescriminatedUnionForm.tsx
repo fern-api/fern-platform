@@ -1,13 +1,9 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
 import { titleCase } from "@fern-ui/core-utils";
 import { NavArrowDown } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo } from "react";
-import {
-    ResolvedDiscriminatedUnionShape,
-    ResolvedTypeDefinition,
-    dereferenceObjectProperties,
-} from "../../resolver/types";
 import { castToRecord, getDefaultValueForObjectProperties } from "../utils";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 
@@ -16,8 +12,8 @@ const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) 
 });
 
 interface PlaygroundDiscriminatedUnionFormProps {
-    discriminatedUnion: ResolvedDiscriminatedUnionShape;
-    types: Record<string, ResolvedTypeDefinition>;
+    discriminatedUnion: ApiDefinition.DiscriminatedUnionType;
+    types: Record<string, ApiDefinition.TypeDefinition>;
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
@@ -47,11 +43,14 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
                 }
                 return {
                     [discriminatedUnion.discriminant]: variantKey,
-                    ...getDefaultValueForObjectProperties(dereferenceObjectProperties(selectedVariant, types), types),
+                    ...getDefaultValueForObjectProperties(
+                        ApiDefinition.dereferenceDiscriminatedUnionVariant(discriminatedUnion, selectedVariant, types),
+                        types,
+                    ),
                 };
             });
         },
-        [discriminatedUnion.discriminant, discriminatedUnion.variants, onChange, types],
+        [discriminatedUnion, onChange, types],
     );
 
     const activeVariant = discriminatedUnion.variants.find(
@@ -76,7 +75,10 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
         (variant) => variant.discriminantValue === selectedVariantKey,
     );
 
-    const properties = selectedVariant != null ? dereferenceObjectProperties(selectedVariant, types) : [];
+    const properties =
+        selectedVariant != null
+            ? ApiDefinition.dereferenceDiscriminatedUnionVariant(discriminatedUnion, selectedVariant, types)
+            : [];
 
     return (
         <div className="w-full">

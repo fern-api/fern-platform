@@ -1,3 +1,4 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -8,11 +9,8 @@ import type { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
 import { getFrontmatter } from "../mdx/frontmatter";
 import type { BundledMDX, FernSerializeMdxOptions } from "../mdx/types";
-import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
-import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
-import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
 import type { DocsContent } from "../resolver/DocsContent";
-import type { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types";
+import { resolveApiDefinition } from "../resolver/resolveApiDefinition";
 
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
@@ -164,68 +162,60 @@ export async function resolveDocsContent({
         // if long scrolling is disabled, we should render a markdown page by itself
         return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, domain, neighbors);
     } else if (apiReference != null) {
-        let api = apis[apiReference.apiDefinitionId];
-        if (api == null) {
-            // eslint-disable-next-line no-console
-            console.error("API not found", apiReference.apiDefinitionId);
-            return;
+        const rawApi = apis[apiReference.apiDefinitionId];
+        if (rawApi == null) {
+            throw new Error(`API not found: ${apiReference.apiDefinitionId}`);
         }
+
+        let api = ApiDefinition.convertApiDefinition(
+            found.collector,
+            ApiDefinition.ReadApiDefinitionHolder.create(rawApi),
+            featureFlags,
+        );
+
         if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
-            const pruner = new FernNavigation.ApiDefinitionPruner(api);
+            const pruner = new ApiDefinition.ApiDefinitionPruner(api);
             const parent = found.parents[found.parents.length - 1];
             api = pruner.prune(parent?.type === "endpointPair" ? parent : node);
-            const holder = FernNavigation.ApiDefinitionHolder.create(api);
-            const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
-            const defResolver = new ApiEndpointResolver(
-                found.collector,
-                holder,
-                typeResolver,
-                await typeResolver.resolve(),
-                featureFlags,
-                mdxOptions,
-            );
+            api = await resolveApiDefinition(api, featureFlags, mdxOptions?.files);
+            const item = visitDiscriminatedUnion(node)._visit<DocsContent.ApiContentPage | undefined>({
+                endpoint: (endpoint) => {
+                    const found = api.endpoints[endpoint.id];
+                    return found != null ? { type: "endpoint", ...found } : undefined;
+                },
+                webSocket: (webSocket) => {
+                    const found = api.websockets[webSocket.id];
+                    return found != null ? { type: "websocket", ...found } : undefined;
+                },
+                webhook: (webhook) => {
+                    const found = api.webhooks[webhook.id];
+                    return found != null ? { type: "webhook", ...found } : undefined;
+                },
+                _other: () => undefined,
+            });
+            if (item == null) {
+                return;
+            }
             return {
                 type: "api-endpoint-page",
                 slug: found.node.slug,
                 api: apiReference.apiDefinitionId,
                 auth: api.auth,
-                types: await typeResolver.resolve(),
-                item: await visitDiscriminatedUnion(node)._visit<Promise<ResolvedApiEndpoint>>({
-                    endpoint: async (endpoint) => {
-                        if (parent?.type === "endpointPair") {
-                            const [stream, nonStream] = await Promise.all([
-                                defResolver.resolveEndpointDefinition(parent.stream),
-                                defResolver.resolveEndpointDefinition(parent.nonStream),
-                            ]);
-                            nonStream.stream = stream;
-                            return nonStream;
-                        }
-                        return defResolver.resolveEndpointDefinition(endpoint);
-                    },
-                    webSocket: (webSocket) => defResolver.resolveWebsocketChannel(webSocket),
-                    webhook: (webhook) => defResolver.resolveWebhookDefinition(webhook),
-                }),
+                types: api.types,
+                item,
                 showErrors: apiReference.showErrors ?? false,
                 neighbors,
             };
         }
-        const holder = FernNavigation.ApiDefinitionHolder.create(api);
-        const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
-        const apiDefinition = await ApiDefinitionResolver.resolve(
-            found.collector,
-            apiReference,
-            holder,
-            typeResolver,
-            pages,
-            mdxOptions,
-            featureFlags,
-        );
+
+        api = await resolveApiDefinition(api, featureFlags, mdxOptions?.files);
+
         return {
             type: "api-reference-page",
             slug: found.node.slug,
             title: node.title,
             api: apiReference.apiDefinitionId,
-            apiDefinition,
+            apiDefinition: api,
             paginated: apiReference.paginated ?? false,
             // artifacts: apiSection.artifacts ?? null, // TODO: add artifacts
             showErrors: apiReference.showErrors ?? false,
@@ -277,7 +267,7 @@ async function resolveMarkdownPage(
     }
     const resolvedApis = Object.fromEntries(
         await Promise.all(
-            apiNodes.map(async (apiNode): Promise<[title: string, ResolvedRootPackage]> => {
+            apiNodes.map(async (apiNode): Promise<[title: string, ApiDefinition.ApiDefinition]> => {
                 const definition = apis[apiNode.apiDefinitionId];
                 if (definition == null) {
                     // eslint-disable-next-line no-console
@@ -286,29 +276,19 @@ async function resolveMarkdownPage(
                         apiNode.title,
                         {
                             // TODO: alert if the API is not found — this is a bug
-                            type: "rootPackage",
-                            api: apiNode.apiDefinitionId,
-                            auth: undefined,
+                            id: apiNode.apiDefinitionId,
+                            nodeId: apiNode.id,
+                            endpoints: {},
+                            websockets: {},
+                            webhooks: {},
                             types: {},
-                            items: [],
-                            slug: FernNavigation.Slug(""),
                         },
                     ];
                 }
-                const holder = FernNavigation.ApiDefinitionHolder.create(definition);
-                const typeResolver = new ApiTypeResolver(definition.types, mdxOptions);
-                return [
-                    apiNode.title,
-                    await ApiDefinitionResolver.resolve(
-                        found.collector,
-                        apiNode,
-                        holder,
-                        typeResolver,
-                        pages,
-                        mdxOptions,
-                        featureFlags,
-                    ),
-                ];
+                const holder = ApiDefinition.ReadApiDefinitionHolder.create(definition);
+                let api = ApiDefinition.convertApiDefinition(found.collector, holder, featureFlags);
+                api = await resolveApiDefinition(api, featureFlags, mdxOptions?.files);
+                return [apiNode.title, api];
             }),
         ),
     );

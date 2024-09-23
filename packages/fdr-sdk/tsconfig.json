@@ -5,6 +5,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "lib": ["DOM", "ESNext"]
+    // "exactOptionalPropertyTypes": true
   },
   "include": ["./src/**/*"]
 }

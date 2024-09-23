@@ -1,14 +1,9 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { ReactElement, useCallback } from "react";
 import { Markdown } from "../../../mdx/Markdown";
-import {
-    ResolvedTypeDefinition,
-    ResolvedTypeShape,
-    ResolvedUndiscriminatedUnionShapeVariant,
-    unwrapReference,
-} from "../../../resolver/types";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
@@ -24,44 +19,44 @@ type IconInfo = {
 };
 
 function getIconInfoForTypeReference(
-    typeRef: ResolvedTypeShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    typeRef: ApiDefinition.TypeShapeOrReference,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): IconInfo | null {
-    return visitDiscriminatedUnion(unwrapReference(typeRef, types), "type")._visit<IconInfo | null>({
-        primitive: (primitive) =>
-            visitDiscriminatedUnion(primitive.value, "type")._visit<IconInfo | null>({
-                string: () => ({ content: "abc", size: 6 }),
-                boolean: () => ({ content: "true", size: 6 }),
-                integer: () => ({ content: "123", size: 6 }),
-                uint: () => ({ content: "123", size: 6 }),
-                uint64: () => ({ content: "123", size: 6 }),
-                double: () => ({ content: "1.2", size: 6 }),
-                long: () => ({ content: "123", size: 6 }),
-                datetime: () => ({ content: "abc", size: 6 }),
-                uuid: () => ({ content: "abc", size: 6 }),
-                base64: () => ({ content: "abc", size: 6 }),
-                date: () => ({ content: "abc", size: 6 }),
-                bigInteger: () => ({ content: "123", size: 6 }),
-                _other: () => null,
-            }),
-        literal: () => ({ content: "!", size: 6 }),
-        object: () => null,
-        undiscriminatedUnion: () => null,
-        discriminatedUnion: () => null,
-        enum: () => null,
-        optional: (optional) => getIconInfoForTypeReference(optional.shape, types),
-        list: (list) => getIconInfoForTypeReference(list.shape, types),
-        set: (set) => getIconInfoForTypeReference(set.shape, types),
-        map: () => ({ content: "{}", size: 9 }),
-        unknown: () => ({ content: "{}", size: 6 }),
-        _other: () => null,
-        alias: (reference) => getIconInfoForTypeReference(reference.shape, types),
-    });
+    return visitDiscriminatedUnion(ApiDefinition.unwrapReference(typeRef, types).shape, "type")._visit<IconInfo | null>(
+        {
+            primitive: (primitive) =>
+                visitDiscriminatedUnion(primitive.value)._visit<IconInfo | null>({
+                    string: () => ({ content: "abc", size: 6 }),
+                    boolean: () => ({ content: "true", size: 6 }),
+                    integer: () => ({ content: "123", size: 6 }),
+                    uint: () => ({ content: "123", size: 6 }),
+                    uint64: () => ({ content: "123", size: 6 }),
+                    double: () => ({ content: "1.2", size: 6 }),
+                    long: () => ({ content: "123", size: 6 }),
+                    datetime: () => ({ content: "abc", size: 6 }),
+                    uuid: () => ({ content: "abc", size: 6 }),
+                    base64: () => ({ content: "abc", size: 6 }),
+                    date: () => ({ content: "abc", size: 6 }),
+                    bigInteger: () => ({ content: "123", size: 6 }),
+                    _other: () => null,
+                }),
+            literal: () => ({ content: "!", size: 6 }),
+            object: () => null,
+            undiscriminatedUnion: () => null,
+            discriminatedUnion: () => null,
+            enum: () => null,
+            list: (list) => getIconInfoForTypeReference(list.itemShape, types),
+            set: (set) => getIconInfoForTypeReference(set.itemShape, types),
+            map: () => ({ content: "{}", size: 9 }),
+            unknown: () => ({ content: "{}", size: 6 }),
+            _other: () => null,
+        },
+    );
 }
 
 function getIconForTypeReference(
-    typeRef: ResolvedTypeShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    typeRef: ApiDefinition.TypeShapeOrReference,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): ReactElement | null {
     const info = getIconInfoForTypeReference(typeRef, types);
     if (info == null) {
@@ -80,12 +75,12 @@ function getIconForTypeReference(
 
 export declare namespace UndiscriminatedUnionVariant {
     export interface Props {
-        unionVariant: ResolvedUndiscriminatedUnionShapeVariant;
+        unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
         anchorIdParts: readonly string[];
         applyErrorStyles: boolean;
         slug: FernNavigation.Slug;
         idx: number;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -119,7 +114,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         <span className="t-default font-mono text-sm">{unionVariant.displayName}</span>
                     )}
                     <span className="t-muted inline-flex items-baseline gap-2 text-xs">
-                        {renderTypeShorthand(unionVariant.shape, { nullable: contextValue.isResponse }, types)}
+                        {renderTypeShorthand(unionVariant.shape, types)}
                     </span>
                     {unionVariant.availability != null && (
                         <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />

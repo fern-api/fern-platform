@@ -1,16 +1,10 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernCollapse } from "@fern-ui/components";
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { MouseEventHandler, memo } from "react";
-import {
-    ResolvedError,
-    ResolvedTypeDefinition,
-    ResolvedTypeShape,
-    dereferenceObjectProperties,
-    unwrapReference,
-} from "../../resolver/types";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
@@ -19,7 +13,7 @@ import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointError {
     export interface Props {
-        error: ResolvedError;
+        error: ApiDefinition.ErrorResponse;
         isFirst: boolean;
         isLast: boolean;
         isSelected: boolean;
@@ -28,7 +22,7 @@ export declare namespace EndpointError {
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
         availability: APIV1Read.Availability | null | undefined;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -69,18 +63,18 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                 {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
             </div>
 
-            {error.shape != null && (
+            {error.type != null && (
                 <FernCollapse open={isSelected} className="w-full">
                     <div className="space-y-2 pt-2">
                         <div className="t-muted w-full text-start text-sm leading-7">
-                            {`This error return ${renderTypeShorthand(error.shape, { withArticle: true }, types)}.`}
+                            {`This error return ${renderTypeShorthand(error.type, types, { withArticle: true })}.`}
                         </div>
-                        {shouldHideShape(error.shape, types) ? null : (
+                        {shouldHideShape(error.type, types) ? null : (
                             <div className="w-full text-start">
                                 <TypeReferenceDefinitions
                                     isCollapsible
                                     applyErrorStyles
-                                    shape={error.shape}
+                                    shape={error.type}
                                     onHoverProperty={onHoverProperty}
                                     anchorIdParts={anchorIdParts}
                                     slug={slug}
@@ -96,20 +90,21 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     );
 });
 
-function shouldHideShape(shape: ResolvedTypeShape, types: Record<string, ResolvedTypeDefinition>): boolean {
-    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<boolean>({
+function shouldHideShape(
+    shape: ApiDefinition.TypeShapeOrReference,
+    types: Record<string, ApiDefinition.TypeDefinition>,
+): boolean {
+    return visitDiscriminatedUnion(ApiDefinition.unwrapReference(shape, types).shape)._visit<boolean>({
         primitive: () => true,
         literal: () => true,
-        object: (object) => dereferenceObjectProperties(object, types).length === 0,
+        object: (object) => ApiDefinition.dereferenceObjectProperties(object, types).length === 0,
         undiscriminatedUnion: () => false,
         discriminatedUnion: () => false,
         enum: () => false,
-        optional: (value) => shouldHideShape(value.shape, types),
-        list: (value) => shouldHideShape(value.shape, types),
-        set: (value) => shouldHideShape(value.shape, types),
+        list: (value) => shouldHideShape(value.itemShape, types),
+        set: (value) => shouldHideShape(value.itemShape, types),
         map: () => false,
         unknown: () => true,
-        alias: (value) => shouldHideShape(value.shape, types),
         _other: () => true,
     });
 }

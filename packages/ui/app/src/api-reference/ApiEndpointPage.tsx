@@ -1,13 +1,13 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { ApiPageContext } from "../contexts/api-page";
-import type { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { SingleApiPageContent } from "./SingleApiPageContent";
+import { SingleApiPageContent, type ApiPage } from "./SingleApiPageContent";
 
 export declare namespace ApiEndpointPage {
     export interface Props {
-        item: ResolvedApiEndpoint;
+        item: ApiPage.Item;
         showErrors: boolean;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 

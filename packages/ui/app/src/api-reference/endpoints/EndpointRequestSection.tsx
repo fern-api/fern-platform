@@ -1,17 +1,11 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
 import { Markdown } from "../../mdx/Markdown";
 import type { BundledMDX } from "../../mdx/types";
-import {
-    ResolvedFormDataRequestProperty,
-    ResolvedRequestBody,
-    ResolvedTypeDefinition,
-    unwrapDescription,
-    visitResolvedHttpRequestBodyShape,
-} from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -20,16 +14,16 @@ import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter
 
 export declare namespace EndpointRequestSection {
     export interface Props {
-        requestBody: ResolvedRequestBody;
+        request: ApiDefinition.HttpRequest;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
 export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
-    requestBody,
+    request,
     onHoverProperty,
     anchorIdParts,
     slug,
@@ -40,26 +34,26 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
             <Markdown
                 size="sm"
                 className={cn("t-muted pb-5 leading-6", {
-                    "border-default border-b": requestBody.shape.type !== "formData",
+                    "border-default border-b": request.body.type !== "formData",
                 })}
-                mdx={requestBody.description}
-                fallback={`This endpoint expects ${visitResolvedHttpRequestBodyShape<string>(requestBody.shape, {
+                mdx={request.description}
+                fallback={`This endpoint expects ${visitDiscriminatedUnion(request.body)._visit<string>({
                     formData: (formData) => {
-                        const fileArrays = formData.properties.filter(
+                        const fileArrays = formData.fields.filter(
                             (p) => p.type === "fileArray",
                         ) as APIV1Read.FilePropertyArray[];
-                        const files = formData.properties.filter(
+                        const files = formData.fields.filter(
                             (p) => p.type === "file",
                         ) as APIV1Read.FilePropertySingle[];
                         return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
                     },
                     bytes: (bytes) => `binary data${bytes.contentType != null ? ` of type ${bytes.contentType}` : ""}`,
-                    typeShape: (typeShape) => renderTypeShorthand(typeShape, { withArticle: true }, types),
+                    typeShape: (typeShape) => renderTypeShorthand(typeShape, types, { withArticle: true }),
                 })}.`}
             />
-            {visitResolvedHttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
+            {visitDiscriminatedUnion(request.body)._visit<ReactNode | null>({
                 formData: (formData) =>
-                    formData.properties.map((p) => (
+                    formData.fields.map((p) => (
                         <Fragment key={p.key}>
                             <TypeComponentSeparator />
                             {visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
@@ -116,8 +110,8 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 };
 
 function getDescription(
-    bodyProperty: ResolvedFormDataRequestProperty.BodyProperty,
-    types: Record<string, ResolvedTypeDefinition>,
+    bodyProperty: ApiDefinition.FormDataRequestProperty.BodyProperty,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): BundledMDX | undefined {
     if (bodyProperty.description != null) {
         return bodyProperty.description;

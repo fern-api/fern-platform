@@ -1,23 +1,10 @@
+import { unknownToString } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { APIV1Read, Snippets } from "@fern-api/fdr-sdk/client/types";
 import { assertNever, isNonNullish, isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { decodeJwt } from "jose";
 import { compact, mapValues } from "lodash-es";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedEndpointPathParts,
-    ResolvedExampleEndpointCall,
-    ResolvedFormDataRequestProperty,
-    ResolvedHttpRequestBodyShape,
-    ResolvedObjectProperty,
-    ResolvedTypeDefinition,
-    ResolvedTypeShape,
-    ResolvedWebSocketChannel,
-    dereferenceObjectProperties,
-    resolveEnvironment,
-    unwrapReference,
-    visitResolvedHttpRequestBodyShape,
-} from "../resolver/types";
-import { unknownToString } from "../util/unknownToString";
+import { resolveEnvironment } from "../resolver/types";
 import { blobToDataURL } from "./fetch-utils/blobToDataURL";
 import { executeProxyRest } from "./fetch-utils/executeProxyRest";
 import {
@@ -52,12 +39,12 @@ export function buildQueryParams(queryParameters: Record<string, unknown> | unde
     return queryParams.size > 0 ? "?" + queryParams.toString() : "";
 }
 
-function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<string, unknown>): string {
+function buildPath(path: ApiDefinition.EndpointPathPart[], pathParameters?: Record<string, unknown>): string {
     return path
         .map((part) => {
             if (part.type === "pathParameter") {
-                const stateValue = unknownToString(pathParameters?.[part.key]);
-                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + part.key;
+                const stateValue = unknownToString(pathParameters?.[part.value]);
+                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + part.value;
             }
             return part.value;
         })
@@ -66,7 +53,7 @@ function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<st
 
 export function buildRequestUrl(
     baseUrl: string = "",
-    path: ResolvedEndpointPathParts[] = [],
+    path: ApiDefinition.EndpointPathPart[] = [],
     pathParameters: Record<string, unknown> = {},
     queryParameters: Record<string, unknown> = {},
 ): string {
@@ -74,7 +61,7 @@ export function buildRequestUrl(
 }
 
 export function buildEndpointUrl(
-    endpoint: ResolvedEndpointDefinition | undefined,
+    endpoint: ApiDefinition.EndpointDefinition | undefined,
     formState: PlaygroundRequestFormState | undefined,
 ): string {
     return buildRequestUrl(
@@ -195,8 +182,8 @@ export function buildAuthHeaders(
 }
 
 export function getDefaultValueForObjectProperties(
-    properties: ResolvedObjectProperty[] = [],
-    types: Record<string, ResolvedTypeDefinition>,
+    properties: ApiDefinition.ObjectProperty[] = [],
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): Record<string, unknown> {
     return properties.reduce<Record<string, unknown>>((acc, property) => {
         const defaultValue = getDefaultValueForType(property.valueShape, types);
@@ -208,17 +195,23 @@ export function getDefaultValueForObjectProperties(
 }
 
 export function matchesTypeReference(
-    shape: ResolvedTypeShape,
+    shape: ApiDefinition.TypeShapeOrReference,
     value: unknown,
-    types: Record<string, ResolvedTypeDefinition>,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): boolean {
-    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<boolean>({
+    const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    if (unwrapped.isOptional && value == null) {
+        return true;
+    }
+    return visitDiscriminatedUnion(unwrapped.shape)._visit<boolean>({
         object: (object) => {
             if (!isPlainObject(value)) {
                 return false;
             }
-            const propertyMap = new Map<string, ResolvedObjectProperty>();
-            dereferenceObjectProperties(object, types).forEach((property) => propertyMap.set(property.key, property));
+            const propertyMap = new Map<string, ApiDefinition.ObjectProperty>();
+            ApiDefinition.dereferenceObjectProperties(object, types).forEach((property) =>
+                propertyMap.set(property.key, property),
+            );
             return Object.keys(value).every((key) => {
                 const property = propertyMap.get(key);
                 if (property == null) {
@@ -241,9 +234,9 @@ export function matchesTypeReference(
                     return false;
                 }
 
-                const propertyMap = new Map<string, ResolvedObjectProperty>();
-                dereferenceObjectProperties(variant, types).forEach((property) =>
-                    propertyMap.set(property.key, property),
+                const propertyMap = new Map<string, ApiDefinition.ObjectProperty>();
+                ApiDefinition.dereferenceDiscriminatedUnionVariant(discriminatedUnion, variant, types).forEach(
+                    (property) => propertyMap.set(property.key, property),
                 );
                 return Object.keys(value).every((key) => {
                     if (key === discriminatedUnion.discriminant) {
@@ -282,11 +275,10 @@ export function matchesTypeReference(
                 _other: () => value == null,
             }),
         literal: (literal) => value === literal.value.value,
-        optional: (optionalType) => value == null || matchesTypeReference(optionalType.shape, value, types),
         list: (listType) =>
-            Array.isArray(value) && value.every((item) => matchesTypeReference(listType.shape, item, types)),
+            Array.isArray(value) && value.every((item) => matchesTypeReference(listType.itemShape, item, types)),
         set: (setType) =>
-            Array.isArray(value) && value.every((item) => matchesTypeReference(setType.shape, item, types)),
+            Array.isArray(value) && value.every((item) => matchesTypeReference(setType.itemShape, item, types)),
         map: (MapTypeContextProvider) =>
             isPlainObject(value) &&
             Object.keys(value).every((key) =>
@@ -294,18 +286,17 @@ export function matchesTypeReference(
             ),
         unknown: () => value == null,
         _other: () => value == null,
-        alias: (reference) => matchesTypeReference(reference.shape, value, types),
     });
 }
 
 export function getDefaultValuesForBody(
-    requestShape: ResolvedHttpRequestBodyShape | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
+    requestShape: ApiDefinition.HttpRequestBodyShape | undefined,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): PlaygroundFormStateBody | undefined {
     if (requestShape == null) {
         return undefined;
     }
-    return visitResolvedHttpRequestBodyShape<PlaygroundFormStateBody | undefined>(requestShape, {
+    return visitApiDefinition.HttpRequestBodyShape<PlaygroundFormStateBody | undefined>(requestShape, {
         formData: () => ({ type: "form-data", value: {} }),
         bytes: () => ({ type: "octet-stream", value: undefined }),
         typeShape: (typeShape) => ({
@@ -316,11 +307,16 @@ export function getDefaultValuesForBody(
 }
 
 export function getDefaultValueForType(
-    shape: ResolvedTypeShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    shape: ApiDefinition.TypeShapeOrReference,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): unknown {
-    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<unknown>({
-        object: (object) => getDefaultValueForObjectProperties(dereferenceObjectProperties(object, types), types),
+    const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    if (unwrapped.defaultValue) {
+        return unwrapped.defaultValue;
+    }
+    return visitDiscriminatedUnion(unwrapped.shape)._visit<unknown>({
+        object: (object) =>
+            getDefaultValueForObjectProperties(ApiDefinition.dereferenceObjectProperties(object, types), types),
         discriminatedUnion: (discriminatedUnion) => {
             const variant = discriminatedUnion.variants[0];
 
@@ -328,10 +324,10 @@ export function getDefaultValueForType(
                 return undefined;
             }
 
-            return {
-                ...getDefaultValueForObjectProperties(dereferenceObjectProperties(variant, types), types),
-                [discriminatedUnion.discriminant]: variant.discriminantValue,
-            };
+            return getDefaultValueForObjectProperties(
+                ApiDefinition.dereferenceDiscriminatedUnionVariant(discriminatedUnion, variant, types),
+                types,
+            );
         },
         undiscriminatedUnion: (undiscriminatedUnion) => {
             const variant = undiscriminatedUnion.variants[0];
@@ -359,27 +355,24 @@ export function getDefaultValueForType(
                 _other: () => undefined,
             }),
         literal: (literal) => literal.value.value,
-        optional: () => undefined,
         list: () => [],
         set: () => [],
         map: () => ({}),
         unknown: () => undefined,
         _other: () => undefined,
-        alias: (alias) => getDefaultValueForType(alias.shape, types),
     });
 }
 
 export function isExpandable(
-    valueShape: ResolvedTypeShape,
+    valueShape: ApiDefinition.TypeShape,
     currentValue: unknown,
-    types: Record<string, ResolvedTypeDefinition>,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): boolean {
-    return visitDiscriminatedUnion(unwrapReference(valueShape, types), "type")._visit<boolean>({
+    return visitDiscriminatedUnion(ApiDefinition.unwrapReference(valueShape, types).shape)._visit<boolean>({
         object: () => false,
         discriminatedUnion: () => false,
         undiscriminatedUnion: () => false,
         enum: () => false,
-        optional: (optional) => isExpandable(optional.shape, currentValue, types),
         list: () => Array.isArray(currentValue) && currentValue.length > 0,
         set: () => Array.isArray(currentValue) && currentValue.length > 0,
         map: () => isPlainObject(currentValue) && Object.keys(currentValue).length > 0,
@@ -387,17 +380,16 @@ export function isExpandable(
         _other: () => false,
         primitive: () => false,
         literal: () => false,
-        alias: (alias) => isExpandable(alias.shape, currentValue, types),
     });
 }
 
 export function hasRequiredFields(
-    bodyShape: ResolvedHttpRequestBodyShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    bodyShape: ApiDefinition.HttpRequestBodyShape,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): boolean {
-    return visitResolvedHttpRequestBodyShape(bodyShape, {
+    return visitDiscriminatedUnion(bodyShape)._visit({
         formData: (formData) =>
-            formData.properties.some((property) =>
+            formData.fields.some((property) =>
                 visitDiscriminatedUnion(property, "type")._visit<boolean>({
                     file: (file) => !file.isOptional,
                     fileArray: (fileArray) => !fileArray.isOptional,
@@ -406,33 +398,38 @@ export function hasRequiredFields(
                 }),
             ) ?? true,
         bytes: (bytes) => !bytes.isOptional,
-        typeShape: (shape) =>
-            visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
-                primitive: () => true,
-                literal: () => true,
-                object: (object) =>
-                    dereferenceObjectProperties(object, types).some((property) =>
-                        hasRequiredFields(property.valueShape, types),
-                    ),
-                undiscriminatedUnion: () => true,
-                discriminatedUnion: () => true,
-                enum: () => true,
-                optional: () => false,
-                list: () => true,
-                set: () => true,
-                map: () => true,
-                unknown: () => true,
-                alias: (alias) => hasRequiredFields(alias.shape, types),
-                _other: () => true,
-            }),
+        object: (object) =>
+            ApiDefinition.dereferenceObjectProperties(object, types).some((property) =>
+                hasRequiredFields(property.valueShape, types),
+            ),
+        reference: (reference) => hasRequiredFields(reference.value.shape, types),
+        // typeShape: (shape) =>
+        //     visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
+        //         primitive: () => true,
+        //         literal: () => true,
+        //         object: (object) =>
+        //             dereferenceObjectProperties(object, types).some((property) =>
+        //                 hasRequiredFields(property.valueShape, types),
+        //             ),
+        //         undiscriminatedUnion: () => true,
+        //         discriminatedUnion: () => true,
+        //         enum: () => true,
+        //         optional: () => false,
+        //         list: () => true,
+        //         set: () => true,
+        //         map: () => true,
+        //         unknown: () => true,
+        //         alias: (alias) => hasRequiredFields(alias.shape, types),
+        //         _other: () => true,
+        //     }),
     });
 }
 
 export function hasOptionalFields(
-    bodyShape: ResolvedHttpRequestBodyShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    bodyShape: ApiDefinition.HttpRequestBodyShape,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): boolean {
-    return visitResolvedHttpRequestBodyShape(bodyShape, {
+    return visitApiDefinition.HttpRequestBodyShape(bodyShape, {
         formData: (formData) =>
             formData.properties.some((property) =>
                 visitDiscriminatedUnion(property, "type")._visit<boolean>({
@@ -468,10 +465,14 @@ export function hasOptionalFields(
 export const ENUM_RADIO_BREAKPOINT = 5;
 
 export function shouldRenderInline(
-    typeReference: ResolvedTypeShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    shape: ApiDefinition.TypeShapeOrReference,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): boolean {
-    return visitDiscriminatedUnion(unwrapReference(typeReference, types), "type")._visit({
+    const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    if (unwrapped.isOptional) {
+        return false;
+    }
+    return visitDiscriminatedUnion(unwrapped.shape)._visit({
         primitive: () => true,
         literal: () => true,
         object: () => false,
@@ -479,36 +480,34 @@ export function shouldRenderInline(
         undiscriminatedUnion: () => false,
         discriminatedUnion: () => false,
         enum: (_enum) => true,
-        optional: () => false,
         list: () => false,
         set: () => false,
         unknown: () => false,
-        alias: (alias) => shouldRenderInline(alias.shape, types),
         _other: () => false,
     });
 }
 export { unknownToString };
 
 export function getInitialEndpointRequestFormState(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
+    endpoint: ApiDefinition.EndpointDefinition | undefined,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): PlaygroundEndpointRequestFormState {
     return {
         type: "endpoint",
-        headers: getDefaultValueForObjectProperties(endpoint?.headers, types),
+        headers: getDefaultValueForObjectProperties(endpoint?.requestHeaders, types),
         pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters, types),
         queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters, types),
-        body: getDefaultValuesForBody(endpoint?.requestBody?.shape, types),
+        body: getDefaultValuesForBody(endpoint?.request?.body, types),
     };
 }
 
 export function getInitialWebSocketRequestFormState(
-    webSocket: ResolvedWebSocketChannel | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
+    webSocket: ApiDefinition.WebSocketChannel | undefined,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): PlaygroundWebSocketRequestFormState {
     return {
         type: "websocket",
-        headers: getDefaultValueForObjectProperties(webSocket?.headers, types),
+        headers: getDefaultValueForObjectProperties(webSocket?.requestHeaders, types),
         pathParameters: getDefaultValueForObjectProperties(webSocket?.pathParameters, types),
         queryParameters: getDefaultValueForObjectProperties(webSocket?.queryParameters, types),
         messages: Object.fromEntries(
@@ -520,9 +519,9 @@ export function getInitialWebSocketRequestFormState(
 }
 
 export function getInitialEndpointRequestFormStateWithExample(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    exampleCall: ResolvedExampleEndpointCall | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
+    endpoint: ApiDefinition.EndpointDefinition | undefined,
+    exampleCall: ApiDefinition.ExampleEndpointCall | undefined,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): PlaygroundEndpointRequestFormState {
     if (exampleCall == null) {
         return getInitialEndpointRequestFormState(endpoint, types);
@@ -539,9 +538,9 @@ export function getInitialEndpointRequestFormStateWithExample(
                       value: mapValues(
                           exampleCall.requestBody.value,
                           (exampleValue): PlaygroundFormDataEntryValue =>
-                              exampleValue.type === "file"
+                              exampleValue.type === "filename" || exampleValue.type === "filenameWithData"
                                   ? { type: "file", value: undefined }
-                                  : exampleValue.type === "fileArray"
+                                  : exampleValue.type === "filenames" || exampleValue.type === "filenamesWithData"
                                     ? { type: "fileArray", value: [] }
                                     : { type: "json", value: exampleValue.value },
                       ),
@@ -557,7 +556,7 @@ export function getInitialEndpointRequestFormStateWithExample(
 
 export interface OAuthClientCredentialReferencedEndpointLoginFlowProps {
     formState: PlaygroundEndpointRequestFormState;
-    endpoint: ResolvedEndpointDefinition;
+    endpoint: ApiDefinition.EndpointDefinition;
     proxyEnvironment: string;
     oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
     setValue: (value: (prev: any) => any) => void;
@@ -582,15 +581,15 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
         ...mapValues(formState.headers ?? {}, unknownToString),
     };
 
-    if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
-        headers["Content-Type"] = endpoint.requestBody.contentType;
+    if (endpoint.method !== "GET" && endpoint.request?.contentType != null) {
+        headers["Content-Type"] = endpoint.request.contentType;
     }
 
     const req: ProxyRequest = {
         url: buildEndpointUrl(endpoint, formState),
         method: endpoint.method,
         headers,
-        body: await serializeFormStateBody("", endpoint.requestBody?.shape, formState.body, false),
+        body: await serializeFormStateBody("", endpoint.request?.body, formState.body, false),
     };
     const res = await executeProxyRest(proxyEnvironment, req);
 
@@ -634,7 +633,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
 
 export async function serializeFormStateBody(
     environment: string,
-    shape: ResolvedHttpRequestBodyShape | undefined,
+    shape: ApiDefinition.HttpRequestBodyShape | undefined,
     body: PlaygroundFormStateBody | undefined,
     usesApplicationJsonInFormDataValue: boolean,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
@@ -667,9 +666,9 @@ export async function serializeFormStateBody(
                         if (shape.type !== "formData") {
                             return undefined;
                         }
-                        const property = shape.properties.find((p) => p.key === key && p.type === "bodyProperty") as
-                            | ResolvedFormDataRequestProperty.BodyProperty
-                            | undefined;
+                        const property = shape.fields.find(
+                            (p): p is ApiDefinition.FormDataField.Property => p.key === key && p.type === "property",
+                        );
 
                         // check if the json value is a string and performa a safe parse operation to check if the json is stringified
                         if (typeof value.value === "string") {

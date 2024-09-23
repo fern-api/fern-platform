@@ -1,4 +1,4 @@
-import type { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import clsx from "clsx";
 import { atom, useAtomValue } from "jotai";

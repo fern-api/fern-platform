@@ -1,16 +1,16 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { ResolvedPayload, ResolvedTypeDefinition } from "../../resolver/types";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace WebhookPayloadSection {
     export interface Props {
-        payload: ResolvedPayload;
+        payload: ApiDefinition.WebhookPayload;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -24,10 +24,10 @@ export const WebhookPayloadSection: React.FC<WebhookPayloadSection.Props> = ({
     return (
         <div className="flex flex-col">
             <div className="t-muted border-default border-b pb-5 text-sm leading-6">
-                {`The payload of this webhook request is ${renderTypeShorthand(payload.shape, { withArticle: true }, types)}.`}
+                {`The payload of this webhook request is ${renderTypeShorthand(payload.body, { withArticle: true }, types)}.`}
             </div>
             <TypeReferenceDefinitions
-                shape={payload.shape}
+                shape={payload.body}
                 isCollapsible={false}
                 onHoverProperty={onHoverProperty}
                 anchorIdParts={anchorIdParts}

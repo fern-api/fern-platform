@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { FernAnchor } from "../../components/FernAnchor";

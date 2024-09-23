@@ -1,3 +1,4 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { EMPTY_ARRAY, isNonNullish } from "@fern-ui/core-utils";
@@ -7,7 +8,6 @@ import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useSetAndOpenPlayground } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
-import { type ResolvedApiEndpointWithPackage } from "../../resolver/types";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
@@ -17,7 +17,7 @@ export interface PlaygroundEndpointSelectorContentProps {
     closeDropdown?: () => void;
     selectedEndpoint?: FernNavigation.NavigationNodeApiLeaf;
     className?: string;
-    nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiEndpointWithPackage>;
+    nodeIdToApiDefinition: Map<FernNavigation.NodeId, ApiDefinition.ApiEndpointWithPackage>;
 }
 
 export interface ApiGroup {

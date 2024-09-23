@@ -1,13 +1,13 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltip } from "@fern-ui/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { ReactElement } from "react";
 import { Markdown } from "../mdx/Markdown";
-import type { BundledMDX } from "../mdx/types";
 
 type ChipProps = {
     name: string;
-    description?: BundledMDX | undefined;
+    description?: ApiDefinition.Description | undefined;
     small?: boolean;
 };
 

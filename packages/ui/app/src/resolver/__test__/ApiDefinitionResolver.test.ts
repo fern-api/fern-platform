@@ -3,8 +3,8 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import fs from "fs";
 import path from "path";
 import { DEFAULT_FEATURE_FLAGS } from "../../atoms";
-import { ApiDefinitionResolver } from "../ApiDefinitionResolver";
 import { ApiTypeResolver } from "../ApiTypeResolver";
+import { ApiDefinitionResolver } from "../resolveApiDefinition";
 import { ResolvedEndpointDefinition } from "../types";
 
 describe("resolveApiDefinition", () => {

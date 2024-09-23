@@ -1,10 +1,10 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import cn from "clsx";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useRef } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
-import { ResolvedTypeDefinition, ResolvedWebhookDefinition, getParameterDescription } from "../../resolver/types";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -21,9 +21,9 @@ const WebhookExample = dynamic(
 
 export declare namespace WebhookContent {
     export interface Props {
-        webhook: ResolvedWebhookDefinition;
+        webhook: ApiDefinition.WebhookDefinition;
         hideBottomSeparator?: boolean;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 

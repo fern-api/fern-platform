@@ -1,4 +1,5 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
@@ -6,7 +7,6 @@ import { FernAnchor } from "../../../components/FernAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useHref } from "../../../hooks/useHref";
 import { Markdown } from "../../../mdx/Markdown";
-import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapDescription } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
@@ -24,11 +24,11 @@ import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
     export interface Props {
-        property: ResolvedObjectProperty;
+        property: ApiDefinition.ObjectProperty;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
         applyErrorStyles: boolean;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -100,12 +100,15 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
 
     const href = useHref(slug, anchorId);
 
-    const description = useMemo(() => {
+    const descriptions = useMemo(() => {
+        const descriptions: ApiDefinition.Description[] = [];
+
         if (property.description != null) {
-            return property.description;
+            descriptions.push(property.description);
         }
 
-        return unwrapDescription(property.valueShape, types);
+        descriptions.push(...ApiDefinition.unwrapReference(property.valueShape, types).descriptions);
+        return descriptions;
     }, [property.description, property.valueShape, types]);
 
     return (
@@ -146,7 +149,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                     </TypeDefinitionContext.Provider>
                 </FernErrorBoundary>
             )}
-            <Markdown mdx={description} size="sm" />
+            <Markdown mdx={descriptions} size="sm" />
             {hasInternalTypeReference(property.valueShape, types) && !hasInlineEnum(property.valueShape, types) && (
                 <FernErrorBoundary component="ObjectProperty">
                     <TypeDefinitionContext.Provider value={newContextValue}>

@@ -1,14 +1,9 @@
-import type { FdrAPI } from "@fern-api/fdr-sdk/client/types";
-import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import dynamic from "next/dynamic";
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import {
-    ResolvedPackageItem,
-    ResolvedTypeDefinition,
-    ResolvedWithApiDefinition,
-    isResolvedSubpackage,
-} from "../resolver/types";
 import { ApiSectionMarkdownPage } from "./ApiSectionMarkdownPage";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
 
@@ -18,10 +13,9 @@ const WebSocket = dynamic(() => import("./web-socket/WebSocket").then(({ WebSock
 
 export declare namespace ApiPackageContents {
     export interface Props {
-        api: FdrAPI.ApiDefinitionId;
-        types: Record<string, ResolvedTypeDefinition>;
+        api: ApiDefinition.ApiDefinition;
         showErrors: boolean;
-        apiDefinition: ResolvedWithApiDefinition;
+        node: FernNavigation.ApiPackageNode | FernNavigation.ApiReferenceNode;
         isLastInParentPackage: boolean;
         anchorIdParts: readonly string[];
         breadcrumbs?: readonly string[];
@@ -30,32 +24,30 @@ export declare namespace ApiPackageContents {
 
 const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     api,
-    types,
     showErrors,
-    apiDefinition,
+    node,
     isLastInParentPackage,
     anchorIdParts,
-    breadcrumbs = EMPTY_ARRAY,
+    // breadcrumbs = EMPTY_ARRAY,
 }) => {
-    const { items } = apiDefinition;
-    const subpackageTitle = isResolvedSubpackage(apiDefinition) ? apiDefinition.title : undefined;
-    const currentBreadcrumbs = useMemo(
-        () => (subpackageTitle != null ? [...breadcrumbs, subpackageTitle] : breadcrumbs),
-        [breadcrumbs, subpackageTitle],
-    );
+    // const { items } = apiDefinition;
+    // const subpackageTitle = isApiDefinition.Subpackage(apiDefinition) ? apiDefinition.title : undefined;
+    // const currentBreadcrumbs = useMemo(
+    //     () => (subpackageTitle != null ? [...breadcrumbs, subpackageTitle] : breadcrumbs),
+    //     [breadcrumbs, subpackageTitle],
+    // );
 
     return (
         <>
-            {items.map((item, idx) => (
-                <FernErrorBoundary component="ApiPackageContents" key={item.slug}>
-                    {ResolvedPackageItem.visit(item, {
+            {node.children.map((item, idx) => (
+                <FernErrorBoundary component="ApiPackageContents" key={node.slug}>
+                    {visitDiscriminatedUnion(item)._visit({
                         endpoint: (endpoint) => (
                             <Endpoint
                                 api={api}
                                 showErrors={showErrors}
-                                endpoint={endpoint}
-                                isLastInApi={isLastInParentPackage && idx === items.length - 1}
-                                types={types}
+                                endpoint={api.endpoints[endpoint.id]}
+                                isLastInApi={isLastInParentPackage && idx === node.children.length - 1}
                             />
                         ),
                         webhook: (webhook) => (
@@ -82,7 +74,7 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                                 apiDefinition={subpackage}
                                 isLastInParentPackage={isLastInParentPackage && idx === items.length - 1}
                                 anchorIdParts={anchorIdParts}
-                                breadcrumbs={currentBreadcrumbs}
+                                // breadcrumbs={currentBreadcrumbs}
                             />
                         ),
                         page: (page) => (

@@ -1,17 +1,17 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
 import { NavArrowDown } from "iconoir-react";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Markdown } from "../../mdx/Markdown";
-import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../resolver/types";
 import { getDefaultValueForType, matchesTypeReference } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 interface PlaygroundUniscriminatedUnionFormProps {
-    undiscriminatedUnion: ResolvedUndiscriminatedUnionShape;
+    undiscriminatedUnion: ApiDefinition.UndiscriminatedUnionType;
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, ApiDefinition.TypeDefinition>;
     disabled?: boolean;
 }
 
@@ -55,7 +55,7 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
                         labelFallback = variant.shape.value.type;
                         break;
                     case "optional":
-                        labelFallback = variant.shape.shape.type;
+                        labelFallback = variant.shape.itemShape.type;
                         break;
                     default:
                         labelFallback = variant.shape.type;

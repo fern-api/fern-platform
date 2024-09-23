@@ -49,5 +49,6 @@ export * from "./WithPage";
 export * from "./WithOverviewPage";
 export * from "./WithApiDefinitionId";
 export * from "./WithRedirect";
+export * from "./NavigationBreadcrumbItem";
 export * from "./HttpMethod";
 export * from "./Availability";

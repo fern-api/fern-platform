@@ -45,12 +45,8 @@ types:
     enum:
       - client
       - server
-  # mirror of http.HttpRequestBodyShape without fileUpload
 
-  WebSocketMessageBodyShape:
-    union:
-      object: type.ObjectType
-      reference: type.TypeReference
+  WebSocketMessageBodyShape: http.JsonBodyShape
 
   ExampleWebSocketSession:
     extends: commons.WithDescription

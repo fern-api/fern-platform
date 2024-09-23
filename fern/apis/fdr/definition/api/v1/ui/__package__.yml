@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+# NOTE: These types are only used in the UI and can change without affecting the API
+# Please keep them in sync with the read types
+
+imports:
+  http: endpoint.yml
+  webhook: webhook.yml
+  websocket: websocket.yml
+  type: type.yml
+  rootCommons: ../../../commons.yml
+  read: ../read/__package__.yml
+  nav: ../../../navigation/__package__.yml
+
+types:
+  ApiDefinitionId: rootCommons.ApiDefinitionId
+  ApiAuth: read.ApiAuth
+  ApiDefinition:
+    properties:
+      id: ApiDefinitionId
+      nodeId: nav.NodeId
+      endpoints: map<nav.NodeId, http.EndpointDefinition>
+      websockets: map<nav.NodeId, websocket.WebSocketChannel>
+      webhooks: map<nav.NodeId, webhook.WebhookDefinition>
+      types: map<type.TypeId, type.TypeDefinition>
+      auth: optional<ApiAuth>
+      globalHeaders: optional<list<type.ObjectProperty>>

@@ -3,7 +3,7 @@
 imports:
   type: type.yml
   commons: commons.yml
-  endpoint: endpoint.yml
+  http: endpoint.yml
 
 types:
   WebhookId: string
@@ -17,7 +17,7 @@ types:
       id: WebhookId
       name: optional<string>
       path: list<string>
-      headers: list<endpoint.Header>
+      headers: list<http.Header>
       payload: WebhookPayload
       examples: list<ExampleWebhookPayload>
 
@@ -31,10 +31,7 @@ types:
     properties:
       type: WebhookPayloadShape
 
-  WebhookPayloadShape:
-    union:
-      object: type.ObjectType
-      reference: type.TypeReference
+  WebhookPayloadShape: http.JsonBodyShape
 
   ExampleWebhookPayload:
     properties:

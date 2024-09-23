@@ -1,22 +1,24 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { FernCard } from "@fern-ui/components";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { Callout } from "../mdx/components/callout";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../resolver/types";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 
 interface PlaygroundWebSocketHandshakeFormProps {
-    websocket: ResolvedWebSocketChannel;
+    websocket: ApiDefinition.WebSocketChannel;
+    auth: ApiDefinition.ApiAuth | undefined;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, ApiDefinition.TypeDefinition>;
     error: string | null;
     disabled: boolean;
 }
 
 export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFormProps> = ({
     websocket,
+    auth,
     formState,
     setFormState,
     types,
@@ -55,8 +57,8 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
 
     if (
         error == null &&
-        websocket.auth == null &&
-        websocket.headers.length === 0 &&
+        !websocket.authed &&
+        websocket.requestHeaders.length === 0 &&
         websocket.pathParameters.length === 0 &&
         websocket.queryParameters.length === 0
     ) {
@@ -71,10 +73,10 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                 </Callout>
             )}
 
-            {websocket.auth != null && <PlaygroundAuthorizationFormCard auth={websocket.auth} disabled={disabled} />}
+            {websocket.authed && auth && <PlaygroundAuthorizationFormCard auth={auth} disabled={disabled} />}
 
             <div className="col-span-2 space-y-8">
-                {websocket.headers.length > 0 && (
+                {websocket.requestHeaders.length > 0 && (
                     <div>
                         <div className="mb-4 px-4">
                             <h5 className="t-muted m-0">Headers</h5>

@@ -1,18 +1,18 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { WebSocketMessage } from "../api-reference/web-socket/WebSocketMessages";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 
 interface PlaygroundWebSocketContentProps {
-    websocket: ResolvedWebSocketChannel;
+    websocket: ApiDefinition.WebSocketChannel;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
     messages: WebSocketMessage[];
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, ApiDefinition.TypeDefinition>;
     startSesssion: () => void;
     clearMessages: () => void;
-    sendMessage: (message: ResolvedWebSocketMessage, data: unknown) => void;
+    sendMessage: (message: ApiDefinition.WebSocketMessage, data: unknown) => void;
     connected: boolean;
     error: string | null;
 }

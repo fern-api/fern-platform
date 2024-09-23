@@ -1,9 +1,9 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useRouteListener } from "../../../atoms";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import {
     TypeDefinitionContext,
@@ -19,11 +19,18 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinitionError {
     export interface Props {
-        typeShape: ResolvedTypeDefinition;
+        shape: Exclude<
+            ApiDefinition.DereferencedNonOptionalTypeShapeOrReference,
+            | ApiDefinition.TypeReference.Primitive
+            | ApiDefinition.TypeReference.Map
+            | ApiDefinition.TypeReference.List
+            | ApiDefinition.TypeReference.Set
+            | ApiDefinition.TypeReference.Unknown
+        >;
         isCollapsible: boolean;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -35,7 +42,7 @@ interface CollapsibleContent {
 }
 
 export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.Props> = ({
-    typeShape,
+    shape,
     isCollapsible,
     anchorIdParts,
     slug,
@@ -43,9 +50,9 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
 }) => {
     const collapsableContent = useMemo(
         () =>
-            visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
+            visitDiscriminatedUnion(shape, "type")._visit<CollapsibleContent | undefined>({
                 object: (object) => ({
-                    elements: dereferenceObjectProperties(object, types).map((property) => (
+                    elements: ApiDefinition.dereferenceObjectProperties(object, types).map((property) => (
                         <ObjectProperty
                             key={property.key}
                             property={property}
@@ -115,10 +122,8 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                     elementNamePlural: "literals",
                 }),
                 _other: () => undefined,
-                alias: () => undefined,
-                unknown: () => undefined,
             }),
-        [typeShape, types, anchorIdParts, slug],
+        [shape, types, anchorIdParts, slug],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);

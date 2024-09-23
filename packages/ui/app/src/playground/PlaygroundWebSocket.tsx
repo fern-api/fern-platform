@@ -1,3 +1,4 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { Wifi, WifiOff } from "iconoir-react";
@@ -5,12 +6,6 @@ import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "reac
 import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
 import { useSelectedEnvironmentId } from "../atoms/environment";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
-import {
-    ResolvedTypeDefinition,
-    ResolvedWebSocketChannel,
-    ResolvedWebSocketMessage,
-    resolveEnvironment,
-} from "../resolver/types";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
@@ -20,8 +15,8 @@ import { buildAuthHeaders, buildRequestUrl } from "./utils";
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
 
 interface PlaygroundWebSocketProps {
-    websocket: ResolvedWebSocketChannel;
-    types: Record<string, ResolvedTypeDefinition>;
+    websocket: ApiDefinition.WebSocketChannel;
+    types: Record<string, ApiDefinition.TypeDefinition>;
 }
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, types }): ReactElement => {
@@ -115,7 +110,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
     ]);
 
     const handleSendMessage = useCallback(
-        async (message: ResolvedWebSocketMessage, data: unknown) => {
+        async (message: ApiDefinition.WebSocketMessage, data: unknown) => {
             const isConnected = await startSession();
             if (isConnected && socket.current != null && socket.current.readyState === WebSocket.OPEN) {
                 // TODO: handle validation

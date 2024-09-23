@@ -1,17 +1,17 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { FernButton } from "@fern-ui/components";
 import cn from "clsx";
 import { Plus, Xmark } from "iconoir-react";
 import { memo, useCallback } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getDefaultValueForType, shouldRenderInline } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 interface PlaygroundListFormProps {
-    itemShape: ResolvedTypeShape;
+    itemShape: ApiDefinition.TypeShape;
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, ApiDefinition.TypeDefinition>;
 }
 
 export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, onChange, value, id, types }) => {

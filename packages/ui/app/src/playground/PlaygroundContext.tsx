@@ -1,3 +1,4 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { useAtomValue } from "jotai";
 import dynamic from "next/dynamic";
 import { FC, useEffect } from "react";
@@ -5,7 +6,6 @@ import useSWR from "swr";
 import { APIS_ATOM, store } from "../atoms";
 import { IS_PLAYGROUND_ENABLED_ATOM, useInitPlaygroundRouter } from "../atoms/playground";
 import { useApiRoute } from "../hooks/useApiRoute";
-import { ResolvedRootPackage } from "../resolver/types";
 
 const PlaygroundDrawer = dynamic(() => import("./PlaygroundDrawer").then((m) => m.PlaygroundDrawer), {
     ssr: false,
@@ -18,7 +18,7 @@ const fetcher = async (url: string) => {
 
 export const PlaygroundContextProvider: FC = () => {
     const key = useApiRoute("/api/fern-docs/resolve-api");
-    const { data, isLoading } = useSWR<Record<string, ResolvedRootPackage> | null>(key, fetcher, {
+    const { data, isLoading } = useSWR<Record<string, ApiDefinition.ApiDefinition> | null>(key, fetcher, {
         revalidateOnFocus: false,
     });
     useEffect(() => {

@@ -1,0 +1,148 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  read: ../read/type.yml
+
+types:
+  TypeId: read.TypeId
+  BytesRequest: read.BytesRequest
+  ContentType: read.ContentType
+  PropertyKey: read.PropertyKey
+
+  TypeDefinition:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      name: string
+      shape: TypeShape
+
+  TypeReference:
+    union:
+      id: read.TypeReferenceId
+      primitive: read.PrimitiveType
+      optional: OptionalType
+      list: ListType
+      set: SetType
+      map: MapType
+      literal: read.LiteralType
+      unknown: UnknownType
+
+  UnknownType:
+    properties:
+      displayName: optional<string>
+
+  TypeShape:
+    union:
+      alias: TypeReference
+      enum: EnumType
+      undiscriminatedUnion: UndiscriminatedUnionType
+      discriminatedUnion: DiscriminatedUnionType
+      object: ObjectType
+
+  ObjectType:
+    properties:
+      extends: list<TypeId>
+      properties: list<ObjectProperty>
+
+  ObjectProperty:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: PropertyKey
+      valueShape: TypeReference
+
+  EnumType:
+    properties:
+      default: optional<string>
+      values: list<EnumValue>
+
+  EnumValue:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      value: string
+
+  UndiscriminatedUnionType:
+    properties:
+      variants: list<UndiscriminatedUnionVariant>
+
+  UndiscriminatedUnionVariant:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      displayName: optional<string>
+      shape: TypeReference
+
+  DiscriminatedUnionType:
+    properties:
+      discriminant: string
+      variants: list<DiscriminatedUnionVariant>
+
+  DiscriminatedUnionVariant:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      discriminantValue: string
+      displayName: optional<string>
+      additionalProperties: ObjectType
+
+  FormDataRequest:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      name: string
+      fields: list<FormDataField>
+
+  FormDataField:
+    union:
+      file: FormDataFile
+      files: FormDataFiles
+      property: FormDataProperty
+
+  FormDataProperty:
+    extends: ObjectProperty
+    properties:
+      contentType: optional<ContentType>
+
+  FormDataFile:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: read.PropertyKey
+      isOptional: boolean
+      contentType: optional<ContentType>
+
+  FormDataFiles:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      key: read.PropertyKey
+      isOptional: boolean
+      contentType: optional<ContentType>
+
+  OptionalType:
+    properties:
+      itemShape: TypeReference
+      defaultValue: optional<unknown>
+
+  ListType:
+    properties:
+      itemShape: TypeReference
+
+  SetType:
+    properties:
+      itemShape: TypeReference
+
+  MapType:
+    properties:
+      keyShape: TypeReference
+      valueShape: TypeReference

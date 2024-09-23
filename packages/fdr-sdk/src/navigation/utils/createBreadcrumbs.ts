@@ -2,7 +2,7 @@ import { noop } from "ts-essentials";
 import { visitDiscriminatedUnion } from "../../utils";
 import { hasMetadata, isLeaf, type NavigationBreadcrumbItem, type NavigationNode } from "../types";
 
-export function createBreadcrumbs(nodes: NavigationNode[]): readonly NavigationBreadcrumbItem[] {
+export function createBreadcrumbs(nodes: NavigationNode[]): NavigationBreadcrumbItem[] {
     const breadcrumb: NavigationBreadcrumbItem[] = [];
     nodes.forEach((node) => {
         if (!hasMetadata(node) || isLeaf(node)) {

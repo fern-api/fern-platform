@@ -79,6 +79,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
 
     if (RUNTIME.type === "node") {
         if (args.body instanceof (await import("formdata-node")).FormData) {
+            // @ts-expect-error
             body = args.body;
         } else {
             body = maybeStringifyBody(args.body);

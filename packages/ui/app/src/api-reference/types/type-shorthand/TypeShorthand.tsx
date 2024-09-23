@@ -1,36 +1,31 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { unknownToString } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { uniq } from "lodash-es";
 import { ReactNode } from "react";
-import {
-    DereferencedTypeShape,
-    ResolvedFormDataRequestProperty,
-    ResolvedTypeDefinition,
-    ResolvedTypeShape,
-    ResolvedUnknownTypeShape,
-    unwrapAlias,
-    unwrapOptional,
-    unwrapReference,
-} from "../../../resolver/types";
 
 export interface TypeShorthandOptions {
     plural?: boolean;
     withArticle?: boolean;
-    nullable?: boolean; // determines whether to render "Optional" or "Nullable"
+    isOptional?: boolean;
 }
 
 export function renderTypeShorthandRoot(
-    shape: ResolvedTypeShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    shape: ApiDefinition.TypeShapeOrReference,
+    types: Record<string, ApiDefinition.TypeDefinition>,
     isResponse: boolean = false,
 ): ReactNode {
-    const typeShorthand = renderTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
-    const unaliasedShape = unwrapAlias(shape, types);
-    const defaultsTo = renderDefaultsTo(unaliasedShape);
+    const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    if (unwrapped == null) {
+        return null;
+    }
+
+    const typeShorthand = renderDereferencedTypeShorthand(unwrapped.shape, types, { isOptional: unwrapped.isOptional });
+    const defaultsTo = renderDefaultsTo(unwrapped);
     return (
         <span className="fern-api-property-meta">
             <span>{typeShorthand}</span>
-            {unaliasedShape.type === "optional" ? (
+            {unwrapped.isOptional ? (
                 <span>Optional</span>
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
@@ -46,62 +41,57 @@ export function renderTypeShorthandRoot(
 }
 
 export function renderTypeShorthandFormDataProperty(
-    property: Exclude<ResolvedFormDataRequestProperty, ResolvedFormDataRequestProperty.BodyProperty>,
+    field: Exclude<ApiDefinition.FormDataField, ApiDefinition.FormDataField.Property>,
 ): ReactNode {
     return (
         <span className="fern-api-property-meta">
-            <span>{property.type === "file" ? "file" : property.type === "fileArray" ? "files" : "unknown"}</span>
-            {property.isOptional ? <span>Optional</span> : <span className="t-danger">Required</span>}
+            <span>{field.type}</span>
+            {field.isOptional ? <span>Optional</span> : <span className="t-danger">Required</span>}
         </span>
     );
 }
 
-function renderDefaultsTo(shape: DereferencedTypeShape): string | undefined {
-    if (shape.type !== "optional") {
+function renderDefaultsTo(unwrapped: ApiDefinition.UnwrappedReference): string | undefined {
+    if (!unwrapped.isOptional) {
         return undefined;
+    } else {
+        if (unwrapped.defaultValue == null) {
+            return undefined;
+        }
+        return typeof unwrapped.defaultValue === "string"
+            ? `"${unwrapped.defaultValue}"`
+            : unknownToString(unwrapped.defaultValue);
     }
-
-    if (shape.shape.type === "primitive") {
-        return renderDefaultToPrimitive(shape.shape.value);
-    }
-
-    if (shape.shape.type === "enum") {
-        return shape.shape.default;
-    }
-
-    return undefined;
-}
-
-function renderDefaultToPrimitive(shape: APIV1Read.PrimitiveType): string | undefined {
-    return visitDiscriminatedUnion(shape, "type")._visit<string | undefined>({
-        string: (value) => value.default,
-        integer: (value) => value.default?.toString(),
-        double: (value) => value.default?.toString(),
-        uint: () => undefined,
-        uint64: () => undefined,
-        boolean: (value) => value.default?.toString(),
-        long: (value) => value.default?.toString(),
-        datetime: (datetime) => datetime.default,
-        uuid: (uuid) => uuid.default,
-        base64: (base64) => base64.default,
-        date: (value) => value.default,
-        bigInteger: (value) => value.default,
-        _other: () => undefined,
-    });
 }
 
 export function renderTypeShorthand(
-    shape: ResolvedTypeShape,
-    { plural = false, withArticle = false, nullable = false }: TypeShorthandOptions = {
+    shape: ApiDefinition.TypeShapeOrReference,
+    types: Record<string, ApiDefinition.TypeDefinition>,
+    opts: TypeShorthandOptions = {
         plural: false,
         withArticle: false,
-        nullable: false,
+        isOptional: false,
     },
-    types: Record<string, ResolvedTypeDefinition>,
+): string {
+    const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    return renderDereferencedTypeShorthand(unwrapped.shape, types, { ...opts, isOptional: unwrapped.isOptional });
+}
+
+function renderDereferencedTypeShorthand(
+    shape: ApiDefinition.DereferencedNonOptionalTypeShapeOrReference,
+    types: Record<string, ApiDefinition.TypeDefinition>,
+    { plural = false, withArticle = false, isOptional = false }: TypeShorthandOptions = {
+        plural: false,
+        withArticle: false,
+        isOptional: false,
+    },
 ): string {
     const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
-    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
+    if (isOptional) {
+        return `${maybeWithArticle("an", "optional")} ${renderTypeShorthand(shape, types, { plural })}`;
+    }
+    return visitDiscriminatedUnion(shape)._visit({
         // primitives
         primitive: (primitive) =>
             visitDiscriminatedUnion(primitive.value, "type")._visit({
@@ -117,14 +107,19 @@ export function renderTypeShorthand(
                 base64: () => (plural ? "Base64 strings" : maybeWithArticle("a", "Base64 string")),
                 date: () => (plural ? "dates" : maybeWithArticle("a", "date")),
                 bigInteger: () => (plural ? "big integers" : maybeWithArticle("a", "big integer")),
-                _other: () => "<unknown>",
+                _other: () => "any",
             }),
 
         // referenced shapes
         object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
         undiscriminatedUnion: (union) => {
             return uniq(
-                union.variants.map((variant) => renderTypeShorthand(variant.shape, { plural, withArticle }, types)),
+                union.variants.map((variant) =>
+                    renderTypeShorthand(variant.shape, types, {
+                        plural,
+                        withArticle,
+                    }),
+                ),
             ).join(" or ");
         },
         discriminatedUnion: () => (plural ? "objects" : maybeWithArticle("an", "object")),
@@ -136,40 +131,33 @@ export function renderTypeShorthand(
             return plural ? "enums" : maybeWithArticle("an", "enum");
         },
 
-        // containing shapes
-        optional: (optional) =>
-            `${maybeWithArticle("an", nullable ? "optional" : "optional")} ${renderTypeShorthand(optional.shape, { plural }, types)}`,
         list: (list) =>
-            `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${renderTypeShorthand(
-                list.shape,
-                { plural: true },
-                types,
-            )}`,
+            `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${renderTypeShorthand(list.itemShape, types, {
+                plural: true,
+            })}`,
         set: (set) =>
-            `${plural ? "sets of" : maybeWithArticle("a", "set of")} ${renderTypeShorthand(
-                set.shape,
-                { plural: true },
-                types,
-            )}`,
-        map: (map) =>
-            `${plural ? "maps from" : maybeWithArticle("a", "map from")} ${renderTypeShorthand(
+            `${plural ? "sets of" : maybeWithArticle("a", "set of")} ${renderTypeShorthand(set.itemShape, types, {
+                plural: true,
+            })}`,
+        map: (map) => {
+            return `${plural ? "maps from" : maybeWithArticle("a", "map from")} ${renderTypeShorthand(
                 map.keyShape,
-                { plural: true },
                 types,
-            )} to ${renderTypeShorthand(map.valueShape, { plural: true }, types)}`,
+                { plural: true },
+            )} to ${renderTypeShorthand(map.valueShape, types, { plural: true })}`;
+        },
 
         // literals
         literal: (literal) =>
             visitDiscriminatedUnion(literal.value, "type")._visit({
                 stringLiteral: ({ value }) => `"${value}"`,
                 booleanLiteral: ({ value }) => value.toString(),
-                _other: () => "<unknown>",
+                _other: () => "any",
             }),
         // other
-        unknown: (unknown: ResolvedUnknownTypeShape) => {
+        unknown: (unknown) => {
             return unknown.displayName ?? "any";
         },
-        _other: () => "<unknown>",
-        alias: (reference) => renderTypeShorthand(reference.shape, { plural, withArticle }, types),
+        _other: () => "any",
     });
 }

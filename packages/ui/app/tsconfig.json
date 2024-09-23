@@ -6,7 +6,10 @@
     "outDir": "./dist",
     "rootDir": "."
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*",
+    "../../fdr-sdk/src/api-definition/snippets/__test__/stringifyHttpRequestExampleToCurl.test.ts"
+  ],
   "references": [
     {
       "path": "../../commons/core-utils"

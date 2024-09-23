@@ -1,12 +1,12 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import cn from "clsx";
 import { MonospaceText } from "../../../components/MonospaceText";
 import { Markdown } from "../../../mdx/Markdown";
-import { ResolvedEnumValue } from "../../../resolver/types";
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
 
 export declare namespace EnumValue {
     export interface Props {
-        enumValue: ResolvedEnumValue;
+        enumValue: ApiDefinition.EnumValue;
     }
 }
 

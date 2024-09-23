@@ -1,8 +1,8 @@
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
+import { ReadApiDefinitionHolder } from "../../api-definition/ReadApiDefinitionHolder";
 import type { APIV1Read, DocsV1Read } from "../../client/types";
 import { titleCase, visitDiscriminatedUnion } from "../../utils";
-import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { ROOT_PACKAGE_ID } from "../consts";
 import { FernNavigation } from "../generated";
 import { followRedirects } from "../utils";
@@ -39,7 +39,7 @@ export class ApiReferenceNavigationConverter {
     }
 
     apiDefinitionId: FernNavigation.ApiDefinitionId;
-    #holder: ApiDefinitionHolder;
+    #holder: ReadApiDefinitionHolder;
     #visitedEndpoints = new Set<FernNavigation.EndpointId>();
     #visitedWebSockets = new Set<FernNavigation.WebSocketId>();
     #visitedWebhooks = new Set<FernNavigation.WebhookId>();
@@ -57,7 +57,7 @@ export class ApiReferenceNavigationConverter {
         private paginated: boolean | undefined,
     ) {
         this.apiDefinitionId = FernNavigation.ApiDefinitionId(api.id);
-        this.#holder = ApiDefinitionHolder.create(api);
+        this.#holder = ReadApiDefinitionHolder.create(api);
         this.#idgen = idgen;
     }
 
@@ -200,7 +200,7 @@ export class ApiReferenceNavigationConverter {
         }
 
         package_.endpoints.forEach((endpoint) => {
-            const endpointId = ApiDefinitionHolder.createEndpointId(endpoint, subpackageId);
+            const endpointId = ReadApiDefinitionHolder.createEndpointId(endpoint, subpackageId);
             if (this.#visitedEndpoints.has(endpointId)) {
                 return;
             }
@@ -209,7 +209,7 @@ export class ApiReferenceNavigationConverter {
         });
 
         package_.websockets.forEach((webSocket) => {
-            const webSocketId = ApiDefinitionHolder.createWebSocketId(webSocket, subpackageId);
+            const webSocketId = ReadApiDefinitionHolder.createWebSocketId(webSocket, subpackageId);
             if (this.#visitedWebSockets.has(webSocketId)) {
                 return;
             }
@@ -218,7 +218,7 @@ export class ApiReferenceNavigationConverter {
         });
 
         package_.webhooks.forEach((webhook) => {
-            const webhookId = ApiDefinitionHolder.createWebhookId(webhook, subpackageId);
+            const webhookId = ReadApiDefinitionHolder.createWebhookId(webhook, subpackageId);
             if (this.#visitedWebhooks.has(webhookId)) {
                 return;
             }
@@ -334,7 +334,7 @@ export class ApiReferenceNavigationConverter {
                         console.error(`Endpoint ${oldEndpointId.value} not found in ${targetSubpackageId}`);
                         return;
                     }
-                    const endpointId = ApiDefinitionHolder.createEndpointId(endpoint, targetSubpackageId);
+                    const endpointId = ReadApiDefinitionHolder.createEndpointId(endpoint, targetSubpackageId);
                     children.push(this.convertEndpointNode(endpointId, endpoint, parentSlug));
                     this.#visitedEndpoints.add(endpointId);
                 },
@@ -345,7 +345,7 @@ export class ApiReferenceNavigationConverter {
                         console.error(`WebSocket ${oldWebSocketId.value} not found in ${targetSubpackageId}`);
                         return;
                     }
-                    const webSocketId = ApiDefinitionHolder.createWebSocketId(webSocket, targetSubpackageId);
+                    const webSocketId = ReadApiDefinitionHolder.createWebSocketId(webSocket, targetSubpackageId);
                     children.push(this.convertWebSocketNode(webSocketId, webSocket, parentSlug));
                     this.#visitedWebSockets.add(webSocketId);
                 },
@@ -356,7 +356,7 @@ export class ApiReferenceNavigationConverter {
                         console.error(`Webhook ${oldWebhookId.value} not found in ${targetSubpackageId}`);
                         return;
                     }
-                    const webhookId = ApiDefinitionHolder.createWebhookId(webhook, targetSubpackageId);
+                    const webhookId = ReadApiDefinitionHolder.createWebhookId(webhook, targetSubpackageId);
                     children.push(this.convertWebhookNode(webhookId, webhook, parentSlug));
                     this.#visitedWebhooks.add(webhookId);
                 },

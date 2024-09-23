@@ -15,6 +15,10 @@
       "types": "./dist/navigation/index.d.ts",
       "default": "./dist/navigation/index.js"
     },
+    "./api-definition": {
+      "types": "./dist/api-definition/index.d.ts",
+      "default": "./dist/api-definition/index.js"
+    },
     "./client/types": {
       "types": "./dist/client/types.d.ts",
       "default": "./dist/client/types.js"

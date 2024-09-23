@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  http: endpoint.yml
+  read: ../read/websocket.yml
+  type: type.yml
+
+types:
+  WebSocketId: read.WebSocketId
+
+  WebSocketChannel:
+    extends: commons.WithEndpointMetadata
+    properties:
+      id: WebSocketId
+      authed: boolean
+      defaultEnvironment: optional<http.EnvironmentId>
+      environments: list<http.Environment>
+      path: list<http.EndpointPathPart>
+      pathParameters: list<type.ObjectProperty>
+      queryParameters: list<type.ObjectProperty>
+      requestHeaders: list<type.ObjectProperty>
+      messages:
+        docs: "The messages that can be sent and received on this channel"
+        type: list<WebSocketMessage>
+      examples: list<ExampleWebSocketSession>
+
+  WebSocketMessage:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      type: read.WebSocketMessageId
+      displayName: optional<string>
+      origin: read.WebSocketMessageOrigin
+      body: type.TypeShape
+
+  ExampleWebSocketSession:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      path: string
+      pathParameters: map<type.PropertyKey, unknown>
+      queryParameters: map<type.PropertyKey, unknown>
+      requestHeaders: map<type.PropertyKey, unknown>
+      messages: list<read.ExampleWebSocketMessage>

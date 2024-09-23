@@ -193,7 +193,7 @@ types:
   BytesRequest:
     properties:
       isOptional: boolean
-      contentType: optional<string>
+      contentType: optional<ContentType>
 
   FormDataProperty:
     union:

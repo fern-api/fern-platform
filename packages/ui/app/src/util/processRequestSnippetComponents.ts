@@ -1,32 +1,20 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { parse } from "url";
 import urljoin from "url-join";
-import { ResolvedEndpointDefinition, ResolvedEndpointPathParts, ResolvedWithApiDefinition } from "../resolver/types";
 
 export function findEndpoint({
     api,
     method,
     path,
 }: {
-    api: ResolvedWithApiDefinition;
+    api: ApiDefinition.ApiDefinition;
     method: string;
     path: string;
-}): ResolvedEndpointDefinition | undefined {
+}): ApiDefinition.EndpointDefinition | undefined {
     path = path.startsWith("/") ? path : `/${path}`;
-    for (const item of api.items) {
-        if (item.type !== "endpoint") {
-            continue;
-        }
+    for (const item of Object.values(api.endpoints)) {
         if (item.method === method && getMatchablePermutationsForEndpoint(item).has(path)) {
             return item;
-        }
-    }
-
-    for (const [_, subpackage] of Object.entries(api.items)) {
-        if (subpackage.type === "subpackage") {
-            const endpoint = findEndpoint({ api: subpackage, method, path });
-            if (endpoint) {
-                return endpoint;
-            }
         }
     }
 
@@ -34,7 +22,7 @@ export function findEndpoint({
 }
 
 export function getMatchablePermutationsForEndpoint(
-    endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments">,
+    endpoint: Pick<ApiDefinition.EndpointDefinition, "path" | "environments">,
 ): Set<string> {
     const path1 = getPathFromEndpoint1(endpoint.path);
     const path2 = getPathFromEndpoint2(endpoint.path);
@@ -56,10 +44,10 @@ export function getMatchablePermutationsForEndpoint(
     return possiblePaths;
 }
 
-function getPathFromEndpoint1(path: ResolvedEndpointPathParts[]): string {
-    return urljoin("/", ...path.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)));
+function getPathFromEndpoint1(path: ApiDefinition.EndpointPathPart[]): string {
+    return urljoin("/", ...path.map((part) => (part.type === "literal" ? part.value : `{${part.value}}`)));
 }
 
-function getPathFromEndpoint2(path: ResolvedEndpointPathParts[]): string {
-    return urljoin("/", ...path.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)));
+function getPathFromEndpoint2(path: ApiDefinition.EndpointPathPart[]): string {
+    return urljoin("/", ...path.map((part) => (part.type === "literal" ? part.value : `:${part.value}`)));
 }

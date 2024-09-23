@@ -1,4 +1,4 @@
-import { ResolvedEndpointDefinition } from "../../resolver/types";
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { getMatchablePermutationsForEndpoint } from "../processRequestSnippetComponents";
 
 function literal(value: string) {
@@ -10,22 +10,13 @@ function literal(value: string) {
 function pathParameter(key: string) {
     return {
         type: "pathParameter" as const,
-        key,
-        valueShape: {
-            type: "primitive" as const,
-            value: { type: "string" as const },
-            description: undefined,
-            availability: undefined,
-        },
-        hidden: false,
-        description: undefined,
-        availability: undefined,
+        value: key,
     };
 }
 
 describe("getAllMatchablePathsForEndpoint", () => {
     it("should return all permutations for an endpoint", () => {
-        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments"> = {
+        const endpoint: Pick<ApiDefinition.EndpointDefinition, "path" | "environments"> = {
             path: [literal("api"), pathParameter("id")],
             environments: [{ id: "1", baseUrl: "https://api.example.com" }],
         };
@@ -36,7 +27,7 @@ describe("getAllMatchablePathsForEndpoint", () => {
     });
 
     it("should return all permutations for an endpoint with a base path", () => {
-        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments"> = {
+        const endpoint: Pick<ApiDefinition.EndpointDefinition, "path" | "environments"> = {
             path: [literal("api"), pathParameter("id")],
             environments: [{ id: "1", baseUrl: "https://api.example.com/v1" }],
         };
@@ -55,7 +46,7 @@ describe("getAllMatchablePathsForEndpoint", () => {
 
     // tests urljoin works
     it("should return all permutations for an endpoint with a base path 2", () => {
-        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments"> = {
+        const endpoint: Pick<ApiDefinition.EndpointDefinition, "path" | "environments"> = {
             path: [literal("/api/"), pathParameter("id")],
             environments: [{ id: "1", baseUrl: "https://api.example.com/v1/" }],
         };

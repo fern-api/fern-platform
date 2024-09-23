@@ -1,3 +1,4 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import {
     FernButton,
@@ -30,7 +31,6 @@ import { useOAuthEndpoint } from "../atoms/oauth";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { Callout } from "../mdx/components/callout";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundEndpointForm } from "./endpoint/PlaygroundEndpointForm";
@@ -157,8 +157,8 @@ function FoundOAuthReferencedEndpointForm({
     closeContainer,
     disabled,
 }: {
-    oAuthEndpoint: ResolvedEndpointDefinition;
-    types: Record<string, ResolvedTypeDefinition>;
+    oAuthEndpoint: ApiDefinition.EndpointDefinition;
+    types: Record<string, ApiDefinition.TypeDefinition>;
     oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
     closeContainer: () => void;
     disabled?: boolean;
@@ -359,7 +359,7 @@ export const PlaygroundAuthorizationForm: FC<PlaygroundAuthorizationFormProps> =
 };
 
 interface PlaygroundAuthorizationFormCardProps {
-    auth: APIV1Read.ApiAuth;
+    auth: ApiDefinition.ApiAuth;
     disabled: boolean;
 }
 

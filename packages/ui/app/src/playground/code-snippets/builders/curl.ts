@@ -1,7 +1,6 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty } from "lodash-es";
-import { stringifyHttpRequestExampleToCurl } from "../../../api-reference/examples/stringifyHttpRequestExampleToCurl";
-import { ResolvedExampleEndpointRequest, ResolvedFormValue } from "../../../resolver/types";
 import { convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest } from "../../types";
 import { PlaygroundCodeSnippetBuilder } from "./types";
 
@@ -14,27 +13,27 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
     }
 
     public override build(): string {
-        return stringifyHttpRequestExampleToCurl({
+        return ApiDefinition.convertToCurl({
             method: this.endpoint.method,
             url: this.url,
-            urlQueries: this.formState.queryParameters,
+            searchParams: this.formState.queryParameters,
             headers: this.formState.headers,
             body: this.#convertFormStateToBody(),
         });
     }
 
-    #convertFormStateToBody(): ResolvedExampleEndpointRequest | undefined {
+    #convertFormStateToBody(): ApiDefinition.ExampleEndpointCall | undefined {
         if (this.formState.body == null) {
             return undefined;
         }
-        return visitDiscriminatedUnion(this.formState.body, "type")._visit<ResolvedExampleEndpointRequest | undefined>({
+        return visitDiscriminatedUnion(this.formState.body, "type")._visit<
+            ApiDefinition.ExampleEndpointCall["requestBody"] | undefined
+        >({
             json: ({ value }) => ({ type: "json", value }),
-            "form-data": ({ value }): ResolvedExampleEndpointRequest.Form | undefined => {
+            "form-data": ({ value }): ApiDefinition.ExampleEndpointRequest.Form | undefined => {
                 const properties =
-                    this.endpoint.requestBody?.shape.type === "formData"
-                        ? this.endpoint.requestBody.shape.properties
-                        : [];
-                const newValue: Record<string, ResolvedFormValue> = {};
+                    this.endpoint.request?.body.type === "formData" ? this.endpoint.request.body.fields : [];
+                const newValue: Record<string, ApiDefinition.FormDataField> = {};
                 for (const [key, v] of Object.entries(value)) {
                     const property = properties.find((property) => property.key === key);
                     const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(
@@ -51,7 +50,7 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
                 }
                 return { type: "form", value: newValue };
             },
-            "octet-stream": ({ value }): ResolvedExampleEndpointRequest.Bytes | undefined =>
+            "octet-stream": ({ value }): ApiDefinition.ExampleEndpointRequest.Bytes | undefined =>
                 value != null ? { type: "bytes", fileName: value.name, value: undefined } : undefined,
             _other: () => undefined,
         });

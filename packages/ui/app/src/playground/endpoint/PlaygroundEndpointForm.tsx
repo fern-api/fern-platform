@@ -1,12 +1,6 @@
 import { titleCase } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedTypeDefinition,
-    dereferenceObjectProperties,
-    unwrapReference,
-    visitResolvedHttpRequestBodyShape,
-} from "../../resolver/types";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "../form/PlaygroundTypeReferenceForm";
@@ -15,10 +9,10 @@ import { PlaygroundEndpointFormSection } from "./PlaygroundEndpointFormSection";
 import { PlaygroundEndpointMultipartForm } from "./PlaygroundEndpointMultipartForm";
 
 interface PlaygroundEndpointFormProps {
-    endpoint: ResolvedEndpointDefinition;
+    endpoint: ApiDefinition.EndpointDefinition;
     formState: PlaygroundEndpointRequestFormState | undefined;
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, ApiDefinition.TypeDefinition>;
     ignoreHeaders?: boolean;
 }
 
@@ -103,11 +97,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
     return (
         <>
-            {endpoint.headers.length > 0 && (
+            {endpoint.requestHeaders.length > 0 && (
                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Headers">
                     <PlaygroundObjectPropertiesForm
                         id="header"
-                        properties={endpoint.headers}
+                        properties={endpoint.requestHeaders}
                         onChange={setHeaders}
                         value={formState?.headers}
                         types={types}
@@ -140,7 +134,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
             )}
 
             {endpoint.requestBody != null &&
-                visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
+                visitApiDefinition.HttpRequestBodyShape(endpoint.requestBody.shape, {
                     formData: (formData) => (
                         <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title={titleCase(formData.name)}>
                             <PlaygroundEndpointMultipartForm

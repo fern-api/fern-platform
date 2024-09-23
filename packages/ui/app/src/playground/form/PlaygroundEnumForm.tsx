@@ -1,12 +1,12 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { NavArrowDown } from "iconoir-react";
 import { sortBy } from "lodash-es";
 import { memo, useMemo } from "react";
 import { Markdown } from "../../mdx/Markdown";
-import { ResolvedEnumValue } from "../../resolver/types";
 
 interface PlaygroundEnumFormProps {
-    enumValues: ResolvedEnumValue[];
+    enumValues: ApiDefinition.EnumValue[];
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;

@@ -1,5 +1,6 @@
+import { unknownToString } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-ui/core-utils";
-import { unknownToString, type SerializableFormDataEntryValue } from "@fern-ui/ui";
+import { type SerializableFormDataEntryValue } from "@fern-ui/ui";
 import FormData from "form-data";
 import { resolveSerializableFile } from "./resolveSerializableFile";
 

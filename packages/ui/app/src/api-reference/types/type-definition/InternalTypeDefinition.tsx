@@ -1,4 +1,5 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
@@ -7,7 +8,6 @@ import { ReactElement, memo, useCallback, useMemo } from "react";
 import { useRouteListener } from "../../../atoms";
 import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import {
     TypeDefinitionContext,
@@ -23,11 +23,18 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: ResolvedTypeDefinition;
+        shape: Exclude<
+            ApiDefinition.DereferencedNonOptionalTypeShapeOrReference,
+            | ApiDefinition.TypeReference.Primitive
+            | ApiDefinition.TypeReference.Map
+            | ApiDefinition.TypeReference.List
+            | ApiDefinition.TypeReference.Set
+            | ApiDefinition.TypeReference.Unknown
+        >;
         isCollapsible: boolean;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -39,7 +46,7 @@ interface CollapsibleContent {
 }
 
 export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(function InternalTypeDefinition({
-    typeShape,
+    shape,
     isCollapsible,
     anchorIdParts,
     slug,
@@ -47,9 +54,9 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
 }) {
     const collapsableContent = useMemo(
         () =>
-            visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
+            visitDiscriminatedUnion(shape, "type")._visit<CollapsibleContent | undefined>({
                 object: (object) => ({
-                    elements: dereferenceObjectProperties(object, types).map((property) => (
+                    elements: ApiDefinition.dereferenceObjectProperties(object, types).map((property) => (
                         <ObjectProperty
                             key={property.key}
                             property={property}
@@ -114,11 +121,9 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
                     elementNameSingular: "literal",
                     elementNamePlural: "literals",
                 }),
-                alias: () => undefined,
-                unknown: () => undefined,
                 _other: () => undefined,
             }),
-        [typeShape, types, anchorIdParts, slug],
+        [shape, types, anchorIdParts, slug],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);

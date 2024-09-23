@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  type: type.yml
+  read: ../read/webhook.yml
+
+types:
+  WebhookId: read.WebhookId
+
+  WebhookDefinition:
+    extends: commons.WithEndpointMetadata
+    properties:
+      id: WebhookId
+      method: read.WebhookHttpMethod
+      path: list<string>
+      headers: list<type.ObjectProperty>
+      payload: WebhookPayload
+      examples: list<read.ExampleWebhookPayload>
+
+  WebhookPayload:
+    extends: commons.WithDescription
+    properties:
+      shape: type.TypeShape

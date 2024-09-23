@@ -1,13 +1,13 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import clsx from "clsx";
 import { memo, type ReactNode } from "react";
 import { MdxContent } from "./MdxContent";
-import type { BundledMDX } from "./types";
 
 export declare namespace Markdown {
     export interface Props {
         title?: ReactNode;
 
-        mdx: BundledMDX | undefined;
+        mdx: ApiDefinition.Description | undefined;
         className?: string;
         size?: "xs" | "sm" | "lg";
 
@@ -20,14 +20,14 @@ export declare namespace Markdown {
 
 export const Markdown = memo<Markdown.Props>(({ title, mdx, className, size, fallback }) => {
     // If the MDX is empty, return null
-    if (!fallback && (mdx == null || (typeof mdx === "string" && mdx.trim().length === 0))) {
+    if (!fallback && (mdx == null || (mdx.type === "unresolved" && mdx.value.trim().length === 0))) {
         return null;
     }
 
     return (
         <div
             className={clsx(className, "break-words max-w-none prose dark:prose-invert", {
-                "whitespace-pre-wrap": typeof mdx === "string",
+                "whitespace-pre-wrap": mdx?.type === "unresolved",
                 "prose-base": size == null,
                 "prose-sm dark:prose-invert-sm !text-xs": size === "xs",
                 "prose-sm dark:prose-invert-sm": size === "sm",

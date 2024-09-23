@@ -1,3 +1,4 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { useMemo } from "react";
 import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/CodeExampleClientDropdown";
@@ -7,7 +8,6 @@ import { generateCodeExamples } from "../../../api-reference/examples/code-examp
 import { useDocsContent } from "../../../atoms";
 import { useSelectedEnvironmentId } from "../../../atoms/environment";
 import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
-import { ResolvedEndpointDefinition, resolveEnvironment } from "../../../resolver/types";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";
 import { RequestSnippet } from "./types";
 import { extractEndpointPathAndMethod, useSelectedClient } from "./utils";
@@ -37,7 +37,7 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
         if (content.type !== "custom-markdown-page") {
             return;
         }
-        let endpoint: ResolvedEndpointDefinition | undefined;
+        let endpoint: ApiDefinition.EndpointDefinition | undefined;
         for (const api of Object.values(content.apis)) {
             endpoint = findEndpoint({
                 api,

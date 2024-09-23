@@ -1,15 +1,15 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { useBooleanState, useResizeObserver } from "@fern-ui/react-commons";
 import cn from "clsx";
 import dynamic from "next/dynamic";
 import { ReactElement, useRef, useState } from "react";
-import { ResolvedEndpointDefinition } from "../../resolver/types";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 
 interface PlaygroundEndpointDescriptionProps {
-    endpoint: ResolvedEndpointDefinition;
+    endpoint: ApiDefinition.EndpointDefinition;
 }
 
 export function PlaygroundEndpointDescription({ endpoint }: PlaygroundEndpointDescriptionProps): ReactElement {

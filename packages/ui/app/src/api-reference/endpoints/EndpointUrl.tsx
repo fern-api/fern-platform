@@ -1,3 +1,4 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -9,11 +10,10 @@ import { useAllEnvironmentIds } from "../../atoms/environment";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { buildRequestUrl } from "../../playground/utils";
-import { ResolvedEndpointPathParts } from "../../resolver/types";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
-        path: ResolvedEndpointPathParts[];
+        path: ApiDefinition.EndpointPathPart[];
         method: APIV1Read.HttpMethod;
         selectedEnvironment?: APIV1Read.Environment;
         showEnvironment?: boolean;
@@ -87,7 +87,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                             key={`part-${i}`}
                             className="whitespace-nowrap text-accent bg-accent-highlight rounded px-1"
                         >
-                            :{pathParameter.key}
+                            :{pathParameter.value}
                         </span>,
                     );
                 },

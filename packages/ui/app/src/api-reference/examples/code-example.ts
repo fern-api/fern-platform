@@ -1,6 +1,6 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { titleCase } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
-import { ResolvedExampleEndpointCall } from "../../resolver/types";
 
 export interface CodeExample {
     key: string;
@@ -10,7 +10,7 @@ export interface CodeExample {
     code: string;
     // hast: Root;
     install: string | null | undefined;
-    exampleCall: ResolvedExampleEndpointCall;
+    exampleCall: ApiDefinition.ExampleEndpointCall;
 }
 
 export interface CodeExampleGroup {
@@ -21,7 +21,7 @@ export interface CodeExampleGroup {
 }
 
 // key is the language
-export function generateCodeExamples(examples: ResolvedExampleEndpointCall[]): CodeExampleGroup[] {
+export function generateCodeExamples(examples: ApiDefinition.ExampleEndpointCall[]): CodeExampleGroup[] {
     const codeExamples = new Map<string, CodeExample[]>();
     examples.forEach((example, i) => {
         example.snippets.forEach((snippet, j) => {

@@ -8,5 +8,5 @@ export interface BytesRequest
     extends FernRegistry.api.v1.register.WithDescription,
         FernRegistry.api.v1.register.WithAvailability {
     isOptional: boolean;
-    contentType?: string;
+    contentType?: FernRegistry.api.v1.register.ContentType;
 }

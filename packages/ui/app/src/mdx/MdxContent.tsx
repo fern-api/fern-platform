@@ -1,12 +1,13 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import dynamic from "next/dynamic";
 import React, { memo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FrontmatterContextProvider } from "../contexts/frontmatter";
-import type { BundledMDX } from "./types";
+import { FernDocsFrontmatter } from "./frontmatter";
 
 export declare namespace MdxContent {
     export interface Props {
-        mdx: BundledMDX | undefined;
+        mdx: ApiDefinition.Description | undefined;
         fallback?: React.ReactNode;
     }
 }
@@ -24,21 +25,21 @@ const NextMdxRemoteComponent = dynamic(
 export const MdxContent = memo<MdxContent.Props>(function MdxContent({ mdx, fallback }) {
     if (
         mdx == null ||
-        (typeof mdx === "string" && mdx.trim().length === 0) ||
-        (typeof mdx !== "string" && mdx.code.trim().length === 0)
+        (mdx.type === "unresolved" && mdx.value.trim().length === 0) ||
+        (mdx.type === "resolved" && mdx.code.trim().length === 0)
     ) {
         return fallback;
     }
 
-    if (typeof mdx === "string") {
-        return mdx;
+    if (mdx.type === "unresolved") {
+        return mdx.value;
     }
 
     const MdxComponent = mdx.engine === "mdx-bundler" ? MdxBundlerComponent : NextMdxRemoteComponent;
 
     return (
         <FernErrorBoundary component="MdxContent">
-            <FrontmatterContextProvider value={mdx.frontmatter}>
+            <FrontmatterContextProvider value={mdx.frontmatter as FernDocsFrontmatter}>
                 <MdxComponent {...mdx} />
             </FrontmatterContextProvider>
         </FernErrorBoundary>

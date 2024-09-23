@@ -1,24 +1,26 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { useInView } from "framer-motion";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
-import { isEqual } from "lodash-es";
+import { isEqual, last } from "lodash-es";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useCallbackOne } from "use-memo-one";
+import { useCallbackOne, useMemoOne } from "use-memo-one";
 import {
     ANCHOR_ATOM,
     BREAKPOINT_ATOM,
     CONTENT_HEIGHT_ATOM,
     CURRENT_NODE_ID_ATOM,
     FERN_LANGUAGE_ATOM,
-    FERN_STREAM_ATOM,
     MOBILE_SIDEBAR_ENABLED_ATOM,
+    NAVIGATION_NODES_ATOM,
     store,
     useAtomEffect,
 } from "../../atoms";
 import { useHref } from "../../hooks/useHref";
-import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -33,11 +35,10 @@ const EndpointContentCodeSnippets = dynamic(
 
 export declare namespace EndpointContent {
     export interface Props {
-        api: string;
+        api: ApiDefinition.ApiDefinition;
         showErrors: boolean;
-        endpoint: ResolvedEndpointDefinition;
+        endpoint: ApiDefinition.EndpointDefinition;
         hideBottomSeparator?: boolean;
-        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -71,12 +72,17 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
 export const EndpointContent = memo<EndpointContent.Props>((props) => {
-    const { api, showErrors, endpoint: endpointProp, hideBottomSeparator = false, types } = props;
-    const isStream = useAtomValue(FERN_STREAM_ATOM);
-    const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
+    const { api, showErrors, endpoint, hideBottomSeparator = false } = props;
+
+    const parentNode = useAtomValue(
+        useMemoOne(
+            () => atom((get) => last(get(NAVIGATION_NODES_ATOM).getParents(FernNavigation.NodeId(endpoint.nodeId)))),
+            [endpoint.nodeId],
+        ),
+    );
 
     const ref = useRef<HTMLDivElement>(null);
-    useApiPageCenterElement(ref, endpoint.slug);
+    useApiPageCenterElement(ref, FernNavigation.Slug(endpoint.slug));
 
     const isInViewport =
         useInView(ref, {
@@ -98,14 +104,14 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         [setHoveredResponsePropertyPath],
     );
 
-    const [selectedError, setSelectedError] = useState<ResolvedError | undefined>();
+    const [selectedError, setSelectedError] = useState<ApiDefinition.ErrorResponse | undefined>();
 
     useAtomEffect(
         useCallbackOne((get) => {
             const anchor = get(ANCHOR_ATOM);
             const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
             if (statusCodeOrName != null) {
-                const error = endpoint.errors.find((e) =>
+                const error = endpoint.errors?.find((e) =>
                     typeof statusCodeOrName === "number"
                         ? e.statusCode === statusCodeOrName
                         : convertNameToAnchorPart(e.name) === statusCodeOrName,
@@ -125,7 +131,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode);
     }, [endpoint.examples, selectedError]);
 
-    const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody?.contentType);
+    const [contentType, setContentType] = useState<string | undefined>(endpoint.request?.contentType);
     const clients = useMemo(() => generateCodeExamples(examples), [examples]);
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
     const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
@@ -255,8 +261,8 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                 <EndpointContentHeader
                     endpoint={endpoint}
                     streamToggle={
-                        endpointProp.stream != null && (
-                            <EndpointStreamingEnabledToggle endpoint={endpointProp} container={ref} />
+                        parentNode?.type === "endpointPair" && (
+                            <EndpointStreamingEnabledToggle endpoint={endpoint} container={ref} />
                         )
                     }
                 />
@@ -269,6 +275,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                         }}
                     >
                         <EndpointContentLeft
+                            api={api}
                             endpoint={endpoint}
                             showErrors={showErrors}
                             onHoverRequestProperty={onHoverRequestProperty}
@@ -277,7 +284,6 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                             setSelectedError={setSelectedError}
                             contentType={contentType}
                             setContentType={setContentType}
-                            types={types}
                         />
                     </div>
 
@@ -289,7 +295,6 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     >
                         {isInViewport && (
                             <EndpointContentCodeSnippets
-                                api={api}
                                 endpoint={endpoint}
                                 example={selectedClient.exampleCall}
                                 clients={clients}
@@ -301,7 +306,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
                                 showErrors={showErrors}
                                 selectedError={selectedError}
-                                errors={endpoint.errors}
+                                errors={endpoint.errors ?? EMPTY_ARRAY}
                                 setSelectedError={setSelectedError}
                                 measureHeight={setExampleHeight}
                             />

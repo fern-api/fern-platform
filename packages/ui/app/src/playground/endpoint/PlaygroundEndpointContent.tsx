@@ -1,6 +1,6 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { Loadable } from "@fern-ui/loadable";
 import { Dispatch, ReactElement, SetStateAction, useDeferredValue } from "react";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
 import { PlaygroundAuthorizationFormCard } from "../PlaygroundAuthorizationForm";
 import { PlaygroundEndpointRequestFormState } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
@@ -11,18 +11,20 @@ import { PlaygroundEndpointRequestCard } from "./PlaygroundEndpointRequestCard";
 import { PlaygroundResponseCard } from "./PlaygroundResponseCard";
 
 interface PlaygroundEndpointContentProps {
-    endpoint: ResolvedEndpointDefinition;
+    endpoint: ApiDefinition.EndpointDefinition;
+    auth: ApiDefinition.ApiAuth;
     formState: PlaygroundEndpointRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
     response: Loadable<PlaygroundResponse>;
     sendRequest: () => void;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, ApiDefinition.TypeDefinition>;
 }
 
 export function PlaygroundEndpointContent({
     endpoint,
+    auth,
     formState,
     setFormState,
     resetWithExample,
@@ -35,7 +37,7 @@ export function PlaygroundEndpointContent({
 
     const form = (
         <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
-            {endpoint.auth != null && <PlaygroundAuthorizationFormCard auth={endpoint.auth} disabled={false} />}
+            {endpoint.authed && <PlaygroundAuthorizationFormCard auth={auth} disabled={false} />}
 
             <div className="col-span-2 space-y-8">
                 <PlaygroundEndpointForm

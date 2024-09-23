@@ -26,8 +26,8 @@ types:
       - VersionedNode
       - UnversionedNode
       - ProductGroupNode
-  
-  ProductChild: 
+
+  ProductChild:
     discriminated: false
     union:
       - VersionedNode
@@ -75,12 +75,12 @@ types:
 
   # nodes without metadata
 
-  ProductGroupNode: 
+  ProductGroupNode:
     extends: WithNodeId
-    properties: 
+    properties:
       type: literal<"productgroup">
       landingPage: optional<LandingPageNode>
-      children: 
+      children:
         type: list<ProductNode>
         docs: The individual products being documented
 
@@ -133,8 +133,8 @@ types:
   # nodes with metadata
 
   RootNode:
-    audiences: 
-      - navigation  
+    audiences:
+      - navigation
     extends:
       - WithNodeMetadata
       - WithRedirect
@@ -142,17 +142,17 @@ types:
       type: literal<"root">
       version: literal<"v1">
       child: RootChild
-  
-  ProductNode: 
+
+  ProductNode:
     extends:
       - WithNodeMetadata
       - WithRedirect
-    properties: 
-      type: literal<"product">      
+    properties:
+      type: literal<"product">
       default: boolean
       productId: ProductId
       child: ProductChild
-      subtitle: 
+      subtitle:
         type: string
         docs: Couple words for what the product is
 
@@ -345,8 +345,14 @@ types:
     properties:
       pointsTo: optional<Slug>
 
+  NavigationBreadcrumbItem:
+    properties:
+      title: string
+      pointsTo: optional<Slug>
+
   # enums
 
+  # TODO: merge with FDR read types
   HttpMethod:
     enum:
       - GET
@@ -355,6 +361,7 @@ types:
       - PATCH
       - DELETE
 
+  # TODO: merge with FDR read types
   Availability:
     enum:
       - stable

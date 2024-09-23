@@ -1,3 +1,4 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { SendSolid } from "iconoir-react";
@@ -18,7 +19,6 @@ import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { useApiRoute } from "../../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { getAppBuildwithfernCom } from "../../hooks/useStandardProxyEnvironment";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition, resolveEnvironment } from "../../resolver/types";
 import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
@@ -36,8 +36,8 @@ import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
 interface PlaygroundEndpointProps {
-    endpoint: ResolvedEndpointDefinition;
-    types: Record<string, ResolvedTypeDefinition>;
+    endpoint: ApiDefinition.EndpointDefinition;
+    types: Record<string, ApiDefinition.TypeDefinition>;
 }
 
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, types }): ReactElement => {

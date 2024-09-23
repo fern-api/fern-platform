@@ -1,13 +1,9 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { useCallback, useMemo } from "react";
 import { Markdown } from "../../../mdx/Markdown";
-import {
-    ResolvedDiscriminatedUnionShapeVariant,
-    ResolvedTypeDefinition,
-    dereferenceObjectProperties,
-} from "../../../resolver/types";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
@@ -18,50 +14,30 @@ import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinitio
 
 export declare namespace DiscriminatedUnionVariant {
     export interface Props {
-        discriminant: string;
-        unionVariant: ResolvedDiscriminatedUnionShapeVariant;
+        union: ApiDefinition.DiscriminatedUnionType;
+        variant: ApiDefinition.DiscriminatedUnionVariant;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
 export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props> = ({
-    discriminant,
-    unionVariant,
+    union,
+    variant,
     anchorIdParts,
     slug,
     types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
-    const shape = useMemo((): ResolvedTypeDefinition => {
+    const shape = useMemo((): ApiDefinition.TypeShape.Object_ => {
         return {
             type: "object",
-            properties: [
-                {
-                    key: discriminant,
-                    valueShape: {
-                        type: "literal",
-                        value: {
-                            type: "stringLiteral",
-                            value: unionVariant.discriminantValue,
-                        },
-                        description: undefined,
-                        availability: undefined,
-                    },
-                    description: undefined,
-                    availability: undefined,
-                    hidden: false,
-                },
-                ...dereferenceObjectProperties(unionVariant, types),
-            ],
-            name: undefined,
-            description: undefined,
-            availability: undefined,
+            properties: ApiDefinition.dereferenceDiscriminatedUnionVariant(union, variant, types),
             extends: [],
         };
-    }, [discriminant, types, unionVariant]);
+    }, [types, union, variant]);
 
     const contextValue = useTypeDefinitionContext();
     const newContextValue = useCallback(
@@ -71,12 +47,12 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 ...contextValue.jsonPropertyPath,
                 {
                     type: "objectFilter",
-                    propertyName: discriminant,
-                    requiredStringValue: unionVariant.discriminantValue,
+                    propertyName: union.discriminant,
+                    requiredStringValue: variant.discriminantValue,
                 },
             ],
         }),
-        [contextValue, discriminant, unionVariant.discriminantValue],
+        [contextValue, union.discriminant, variant.discriminantValue],
     );
 
     return (
@@ -85,17 +61,15 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 "px-3": !isRootTypeDefinition,
             })}
         >
-            <span className="fern-api-property-key">
-                {unionVariant.displayName ?? titleCase(unionVariant.discriminantValue)}
-            </span>
-            {unionVariant.availability != null && (
-                <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
+            <span className="fern-api-property-key">{variant.displayName ?? titleCase(variant.discriminantValue)}</span>
+            {variant.availability != null && (
+                <EndpointAvailabilityTag availability={variant.availability} minimal={true} />
             )}
             <div className="flex flex-col">
-                <Markdown mdx={unionVariant.description} size="sm" />
+                <Markdown mdx={variant.description} size="sm" />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition
-                        typeShape={shape}
+                        shape={shape}
                         isCollapsible={true}
                         anchorIdParts={anchorIdParts}
                         slug={slug}

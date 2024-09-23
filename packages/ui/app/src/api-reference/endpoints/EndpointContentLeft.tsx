@@ -1,15 +1,9 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedError,
-    ResolvedObjectProperty,
-    ResolvedTypeDefinition,
-    getParameterDescription,
-} from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointError } from "./EndpointError";
@@ -24,15 +18,16 @@ export interface HoveringProps {
 
 export declare namespace EndpointContentLeft {
     export interface Props {
-        endpoint: ResolvedEndpointDefinition;
+        endpoint: ApiDefinition.EndpointDefinition;
+        auth: ApiDefinition.ApiAuth | undefined;
         showErrors: boolean;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
-        selectedError: ResolvedError | undefined;
-        setSelectedError: (idx: ResolvedError | undefined) => void;
+        selectedError: ApiDefinition.ErrorResponse | undefined;
+        setSelectedError: (idx: ApiDefinition.ErrorResponse | undefined) => void;
         contentType: string | undefined;
         setContentType: (contentType: string) => void;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -47,6 +42,7 @@ const RESPONSE_ERROR = ["response", "error"];
 
 const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     endpoint,
+    auth,
     showErrors,
     onHoverRequestProperty,
     onHoverResponseProperty,
@@ -58,9 +54,9 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 }) => {
     const { isAuthEnabledInDocs } = useFeatureFlags();
 
-    let authHeaders: ResolvedObjectProperty | undefined;
-    if (endpoint.auth && isAuthEnabledInDocs) {
-        authHeaders = visitDiscriminatedUnion(endpoint.auth, "type")._visit<ResolvedObjectProperty>({
+    let authHeaders: ApiDefinition.ObjectProperty | undefined;
+    if (endpoint.authed && auth && isAuthEnabledInDocs) {
+        authHeaders = visitDiscriminatedUnion(auth, "type")._visit<ApiDefinition.ObjectProperty>({
             basicAuth: () => {
                 return {
                     key: "Authorization",
@@ -118,7 +114,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         });
     }
 
-    let headers = endpoint.headers.filter((header) => !header.hidden);
+    let headers = endpoint.requestHeaders.filter((header) => !header.hidden);
 
     if (authHeaders) {
         headers = [authHeaders, ...headers];
@@ -135,7 +131,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 <TypeComponentSeparator />
                                 <EndpointParameter
                                     name={parameter.key}
-                                    shape={parameter.valueShape}
+                                    shape={parameter.type}
                                     anchorIdParts={[...REQUEST_PATH, parameter.key]}
                                     slug={endpoint.slug}
                                     description={getParameterDescription(parameter, types)}
@@ -152,9 +148,10 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     <div>
                         {headers.map((parameter) => {
                             let isAuth = false;
-                            const auth = endpoint.auth;
                             if (
-                                (auth?.type === "header" && parameter.key === auth?.headerWireValue) ||
+                                (endpoint.authed &&
+                                    auth?.type === "header" &&
+                                    parameter.key === auth?.headerWireValue) ||
                                 parameter.key === "Authorization"
                             ) {
                                 isAuth = true;
@@ -172,7 +169,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     <TypeComponentSeparator />
                                     <EndpointParameter
                                         name={parameter.key}
-                                        shape={parameter.valueShape}
+                                        shape={parameter.type}
                                         anchorIdParts={[...REQUEST_HEADER, parameter.key]}
                                         slug={endpoint.slug}
                                         description={getParameterDescription(parameter, types)}
@@ -193,7 +190,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 <TypeComponentSeparator />
                                 <EndpointParameter
                                     name={parameter.key}
-                                    shape={parameter.valueShape}
+                                    shape={parameter.type}
                                     anchorIdParts={[...REQUEST_QUERY, parameter.key]}
                                     slug={endpoint.slug}
                                     description={getParameterDescription(parameter, types)}
@@ -251,15 +248,15 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </FernCard>
                 </Tabs.Root>
             )} */}
-            {endpoint.requestBody != null && (
+            {endpoint.request != null && (
                 <EndpointSection
-                    key={endpoint.requestBody.contentType}
+                    key={endpoint.request.contentType}
                     title="Request"
                     anchorIdParts={REQUEST}
                     slug={endpoint.slug}
                 >
                     <EndpointRequestSection
-                        requestBody={endpoint.requestBody}
+                        requestBody={endpoint.request.body}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={REQUEST_BODY}
                         slug={endpoint.slug}
@@ -267,10 +264,10 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     />
                 </EndpointSection>
             )}
-            {endpoint.responseBody != null && (
+            {endpoint.response != null && (
                 <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={endpoint.slug}>
                     <EndpointResponseSection
-                        responseBody={endpoint.responseBody}
+                        responseBody={endpoint.response.body}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={RESPONSE_BODY}
                         slug={endpoint.slug}
@@ -278,7 +275,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     />
                 </EndpointSection>
             )}
-            {showErrors && endpoint.errors.length > 0 && (
+            {showErrors && endpoint.errors?.length && (
                 <EndpointSection title="Errors" anchorIdParts={RESPONSE_ERROR} slug={endpoint.slug}>
                     <div className="border-default flex flex-col overflow-visible rounded-lg border">
                         {sortBy(
@@ -291,7 +288,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     key={idx}
                                     error={error}
                                     isFirst={idx === 0}
-                                    isLast={idx === endpoint.errors.length - 1}
+                                    isLast={idx === (endpoint.errors?.length ?? 0) - 1}
                                     isSelected={selectedError != null && isErrorEqual(error, selectedError)}
                                     onClick={(event) => {
                                         event.stopPropagation();
@@ -317,7 +314,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 
 export const EndpointContentLeft = memo(UnmemoizedEndpointContentLeft);
 
-function isErrorEqual(a: ResolvedError, b: ResolvedError): boolean {
+function isErrorEqual(a: ApiDefinition.ErrorResponse, b: ApiDefinition.ErrorResponse): boolean {
     return (
         a.statusCode === b.statusCode &&
         (a.name != null && b.name != null ? a.name === b.name : a.name == null && b.name == null)

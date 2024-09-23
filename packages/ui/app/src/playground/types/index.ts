@@ -1,6 +1,6 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { assertNever } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
-import { ResolvedFormDataRequestProperty, ResolvedFormValue } from "../../resolver/types";
 import { PlaygroundFormDataEntryValue } from "./formDataEntryValue";
 import { JsonVariant } from "./jsonVariant";
 
@@ -20,9 +20,9 @@ export declare namespace PlaygroundFormStateBody {
 
 export function convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(
     value: PlaygroundFormDataEntryValue,
-    property: ResolvedFormDataRequestProperty | undefined,
+    property: ApiDefinition.FormDataProperty | undefined,
     isFileForgeHackEnabled: boolean,
-): ResolvedFormValue | undefined {
+): ApiDefinition.FormValue | undefined {
     switch (value.type) {
         case "file":
             if (value.value == null) {

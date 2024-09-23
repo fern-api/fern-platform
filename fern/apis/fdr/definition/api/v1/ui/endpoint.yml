@@ -1,0 +1,114 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  type: type.yml
+  commons: commons.yml
+  snippetTemplate: ../../../templates.yml
+  read: ../read/endpoint.yml
+
+types:
+  EndpointId: read.EndpointId
+  EnvironmentId: read.EnvironmentId
+  Environment: read.Environment
+  EndpointPathPart: read.EndpointPathPart
+
+  EndpointDefinition:
+    extends: commons.WithEndpointMetadata
+    properties:
+      id: EndpointId # or original endpoint id?
+      authed:
+        type: boolean
+        docs: When this is true, the api definition will have a union for auth
+      defaultEnvironment: optional<EnvironmentId>
+      environments: list<Environment>
+      method: read.HttpMethod
+      path: list<EndpointPathPart>
+      pathParameters: list<type.ObjectProperty>
+      queryParameters: list<type.ObjectProperty>
+      requestHeaders: list<type.ObjectProperty>
+      responseHeaders: list<type.ObjectProperty> # this is not being used currently
+      request: optional<HttpRequest>
+      response: optional<HttpResponse>
+      errors: optional<list<ErrorResponse>>
+      examples: list<ExampleEndpointCall>
+      snippetTemplates: optional<read.EndpointSnippetTemplates>
+
+  HttpRequest:
+    extends: commons.WithDescription
+    properties:
+      contentType: optional<string>
+      body: HttpRequestBodyShape
+
+  HttpRequestBodyShape:
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
+      bytes: type.BytesRequest
+      formData: type.FormDataRequest
+
+  # TODO: support multiple status codes
+  HttpResponse:
+    extends: commons.WithDescription
+    properties:
+      body: HttpResponseBodyShape
+      statusCode: integer
+
+  HttpResponseBodyShape:
+    union:
+      object: type.ObjectType
+      reference: type.TypeReference
+      fileDownload: FileDownloadResponseBodyShape
+      streamingText: {}
+      stream: StreamResponse
+
+  FileDownloadResponseBodyShape:
+    properties:
+      contentType: optional<string>
+
+  StreamResponse:
+    properties:
+      terminator:
+        type: optional<string>
+        docs: |
+          The terminator for each message. For example, for OpenAPI 
+          the terminator is [DATA].
+      shape: type.TypeShape
+
+  # TODO: merge with HttpResponse when we support multiple status codes
+  ErrorResponse:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      shape: optional<type.TypeShape>
+      statusCode: integer
+      name: optional<string>
+      examples: optional<list<ErrorExample>>
+
+  ExampleEndpointCall:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      path: string
+      pathParameters: map<type.PropertyKey, unknown>
+      queryParameters: map<type.PropertyKey, unknown>
+      headers: map<type.PropertyKey, unknown>
+      requestBody: optional<read.ExampleEndpointRequest>
+      responseStatusCode: integer
+      responseBody: optional<read.ExampleEndpointResponse>
+      snippets: list<CodeSnippet>
+
+  CodeSnippet:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      language: read.Language
+      install: optional<string>
+      code: string
+      generated: boolean
+
+  ErrorExample:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      responseBody: read.ExampleErrorResponse

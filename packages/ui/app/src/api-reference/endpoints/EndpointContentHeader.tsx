@@ -1,12 +1,12 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { memo, type ReactNode } from "react";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
-import { ResolvedEndpointDefinition, resolveEnvironment } from "../../resolver/types";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 interface EndpointContentHeaderProps {
-    endpoint: ResolvedEndpointDefinition;
+    endpoint: ApiDefinition.EndpointDefinition;
     streamToggle?: ReactNode;
 }
 

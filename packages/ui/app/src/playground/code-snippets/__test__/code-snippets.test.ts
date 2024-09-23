@@ -1,66 +1,53 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { PlaygroundEndpointRequestFormState } from "../../types";
 import { CurlSnippetBuilder } from "../builders/curl";
 import { PythonRequestSnippetBuilder } from "../builders/python";
 import { TypescriptFetchSnippetBuilder } from "../builders/typescript";
 
 describe("PlaygroundCodeSnippetBuilder", () => {
-    const endpoint: ResolvedEndpointDefinition = {
-        type: "endpoint",
+    const endpoint: ApiDefinition.EndpointDefinition = {
         nodeId: FernNavigation.NodeId(""),
         breadcrumbs: [],
         id: "",
         apiDefinitionId: "",
         slug: FernNavigation.Slug(""),
-        auth: undefined,
         availability: undefined,
-        defaultEnvironment: {
-            id: "Prod",
-            baseUrl: "https://example.com",
-        },
-        environments: [],
+        defaultEnvironment: "Prod",
+        environments: [
+            {
+                id: "Prod",
+                baseUrl: "https://example.com",
+            },
+        ],
         method: "POST",
         title: "My endpoint",
         path: [
             { type: "literal", value: "/test/" },
             {
-                key: "test",
                 type: "pathParameter",
-                valueShape: {
-                    type: "primitive",
-                    value: { type: "string" },
-                    description: undefined,
-                    availability: undefined,
-                },
-                hidden: false,
-                description: undefined,
-                availability: undefined,
+                value: "test",
             },
         ],
         pathParameters: [
             {
                 key: "test",
-                valueShape: {
+                type: {
                     type: "primitive",
                     value: { type: "string" },
-                    description: undefined,
-                    availability: undefined,
                 },
-                hidden: false,
-                description: undefined,
-                availability: undefined,
             },
         ],
         queryParameters: [],
-        headers: [],
-        requestBody: undefined,
-        responseBody: undefined,
+        requestHeaders: [],
+        request: undefined,
+        response: undefined,
         errors: [],
         examples: [],
         snippetTemplates: undefined,
-        stream: undefined,
         description: undefined,
+        authed: true,
+        responseHeaders: [],
     };
     const formState: PlaygroundEndpointRequestFormState = {
         type: "endpoint",

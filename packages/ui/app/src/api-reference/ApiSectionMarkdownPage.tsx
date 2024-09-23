@@ -1,13 +1,13 @@
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
 import { ReactElement, memo, useRef } from "react";
 import { useHref } from "../hooks/useHref";
 import { useShouldLazyRender } from "../hooks/useShouldLazyRender";
 import { Markdown } from "../mdx/Markdown";
-import { ResolvedPageMetadata } from "../resolver/types";
 import { useApiPageCenterElement } from "./useApiPageCenterElement";
 
 interface ApiSectionMarkdownPageProps {
-    page: ResolvedPageMetadata;
+    // page: ResolvedPageMetadata;
     hideBottomSeparator: boolean;
 }
 
@@ -33,7 +33,7 @@ export const ApiSectionMarkdownPage = memo(
         page,
         hideBottomSeparator,
     }: {
-        page: ResolvedPageMetadata;
+        page: FernNavigation.NavigationNodeWithMarkdown;
         hideBottomSeparator: boolean;
     }): ReactElement | null => {
         // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.

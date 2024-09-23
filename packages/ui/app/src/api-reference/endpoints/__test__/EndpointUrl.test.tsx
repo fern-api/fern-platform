@@ -2,22 +2,18 @@
  * @vitest-environment jsdom
  */
 
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { render, screen } from "@testing-library/react";
-import { ResolvedEndpointPathParts } from "../../../resolver/types";
 import { EndpointUrl } from "../EndpointUrl";
 
-function lit(value: string): ResolvedEndpointPathParts.Literal {
+function lit(value: string): ApiDefinition.EndpointPathPart {
     return { type: "literal", value };
 }
 
-function path(key: string): ResolvedEndpointPathParts.PathParameter {
+function path(key: string): ApiDefinition.EndpointPathPart {
     return {
         type: "pathParameter",
-        key,
-        valueShape: { type: "primitive", description: undefined, availability: undefined, value: { type: "string" } },
-        hidden: false,
-        description: undefined,
-        availability: undefined,
+        value: key,
     };
 }
 

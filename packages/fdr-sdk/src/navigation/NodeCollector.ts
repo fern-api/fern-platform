@@ -22,12 +22,51 @@ interface NavigationNodeWithMetadataAndParents {
 
 const NodeCollectorInstances = new WeakMap<NavigationNode, NodeCollector>();
 
+export class ApiReferenceNodeCollector {
+    private endpointIdToNode = new Map<FernNavigation.EndpointId, FernNavigation.EndpointNode>();
+    private webSocketIdToNode = new Map<FernNavigation.WebSocketId, FernNavigation.WebSocketNode>();
+    private webhookIdToNode = new Map<FernNavigation.WebhookId, FernNavigation.WebhookNode>();
+
+    public static collect(rootNode: FernNavigation.ApiReferenceNode): ApiReferenceNodeCollector {
+        return new ApiReferenceNodeCollector(rootNode);
+    }
+
+    private constructor(private internalRootNode: FernNavigation.ApiReferenceNode) {
+        traverseNavigation(internalRootNode, (node) => {
+            if (node.type === "endpoint") {
+                this.endpointIdToNode.set(node.endpointId, node);
+            } else if (node.type === "webSocket") {
+                this.webSocketIdToNode.set(node.webSocketId, node);
+            } else if (node.type === "webhook") {
+                this.webhookIdToNode.set(node.webhookId, node);
+            }
+        });
+    }
+
+    get rootNode() {
+        return this.internalRootNode;
+    }
+
+    public getEndpointNode(endpointId: FernNavigation.EndpointId): FernNavigation.EndpointNode | undefined {
+        return this.endpointIdToNode.get(endpointId);
+    }
+
+    public getWebSocketNode(webSocketId: FernNavigation.WebSocketId): FernNavigation.WebSocketNode | undefined {
+        return this.webSocketIdToNode.get(webSocketId);
+    }
+
+    public getWebhookNode(webhookId: FernNavigation.WebhookId): FernNavigation.WebhookNode | undefined {
+        return this.webhookIdToNode.get(webhookId);
+    }
+}
+
 export class NodeCollector {
     private static readonly EMPTY = new NodeCollector(undefined);
     private idToNode = new Map<FernNavigation.NodeId, NavigationNode>();
     private idToNodeParents = new Map<FernNavigation.NodeId, NavigationNode[]>();
     private slugToNode = new Map<FernNavigation.Slug, NavigationNodeWithMetadataAndParents>();
     private orphanedNodes: NavigationNodeWithMetadata[] = [];
+    private _apis = new Map<FernNavigation.ApiDefinitionId, ApiReferenceNodeCollector>();
 
     public static collect(rootNode: NavigationNode | undefined): NodeCollector {
         if (rootNode == null) {
@@ -118,6 +157,10 @@ export class NodeCollector {
             }
             this.orphanedNodes.push(node);
         }
+
+        if (node.type === "apiReference") {
+            this._apis.set(node.apiDefinitionId, ApiReferenceNodeCollector.collect(node));
+        }
     }
 
     public getOrphanedNodes(): NavigationNodeWithMetadata[] {
@@ -178,4 +221,8 @@ export class NodeCollector {
     public getVersionNodes = (): FernNavigation.VersionNode[] => {
         return this.versionNodes;
     };
+
+    get apis(): ReadonlyMap<FernNavigation.ApiDefinitionId, ApiReferenceNodeCollector> {
+        return this._apis;
+    }
 }

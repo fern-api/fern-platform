@@ -4,17 +4,4 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export type WebSocketMessageBodyShape =
-    | FernRegistry.api.v1.read.WebSocketMessageBodyShape.Object_
-    | FernRegistry.api.v1.read.WebSocketMessageBodyShape.Reference;
-
-export declare namespace WebSocketMessageBodyShape {
-    interface Object_ extends FernRegistry.api.v1.read.ObjectType {
-        type: "object";
-    }
-
-    interface Reference {
-        type: "reference";
-        value: FernRegistry.api.v1.read.TypeReference;
-    }
-}
+export type WebSocketMessageBodyShape = FernRegistry.api.v1.read.JsonBodyShape;
