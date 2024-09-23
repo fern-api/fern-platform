@@ -661,7 +661,10 @@ export class AlgoliaSearchRecordGenerator {
             api != null ? FernNavigation.ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
         const records: AlgoliaSearchRecord[] = [];
 
-        const breadcrumbs = context.pathParts.map((part) => part.name);
+        const breadcrumbs = context.pathParts.map((part) => ({
+            title: part.name,
+            slug: part.urlSlug,
+        }));
 
         const version =
             context.indexSegment.type === "versioned"
@@ -683,20 +686,18 @@ export class AlgoliaSearchRecordGenerator {
                               ? false
                               : true,
                     )
-                    .map((parent) => parent.title),
-            ].reduce((acc: BreadcrumbsInfo[], breadcrumb: string) => {
-                if (acc.length === 0) {
-                    return [{ title: breadcrumb, slug: breadcrumb }];
-                }
-                return [...acc, { title: breadcrumb, slug: `${acc[acc.length - 1]?.slug}/${breadcrumb}` }];
-            }, []);
+                    .map((parent) => ({
+                        title: parent.title,
+                        slug: parent.slug,
+                    })),
+            ];
         }
 
         function anchorIdToSlug(
             node: FernNavigation.EndpointNode | WebSocketNode | WebhookNode,
             anchorIdParts: string[],
         ) {
-            return `${node.slug}#${anchorIdParts.join(".")}`;
+            return encodeURI(`${node.slug}#${anchorIdParts.join(".")}`);
         }
 
         FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
@@ -1525,7 +1526,6 @@ export class AlgoliaSearchRecordGenerator {
                 ...allReferencedTypes,
             };
         });
-
         const contents = [];
         if (Object.keys(referencedTypes).length > 0) {
             contents.push("## Referenced Types\n");
@@ -1637,6 +1637,7 @@ export class AlgoliaSearchRecordGenerator {
                                 : webhookProperties
                             : websocketProperties;
 
+                    const baseSlug = encodeURI(`${metadata.slugPrefix}.${value.name}`);
                     fields.push({
                         type: "field-v1",
                         objectID: uuid(),
@@ -1645,7 +1646,7 @@ export class AlgoliaSearchRecordGenerator {
                             description: value.description,
                             availability: value.availability,
                             breadcrumbs: metadata.breadcrumbs,
-                            slug: `${metadata.slugPrefix}.${key}`,
+                            slug: baseSlug,
                             version: metadata.version,
                             indexSegmentId: metadata.indexSegmentId,
                             ...additionalProperties,
@@ -1656,7 +1657,7 @@ export class AlgoliaSearchRecordGenerator {
                         object: (object) => {
                             object.properties.forEach((property) => {
                                 if (metadata != null) {
-                                    const slug = `${metadata.slugPrefix}.${key}.${property.key}`;
+                                    const slug = encodeURI(`${baseSlug}.${property.key}`);
                                     fields.push({
                                         type: "field-v1",
                                         objectID: uuid(),
@@ -1682,7 +1683,7 @@ export class AlgoliaSearchRecordGenerator {
                         enum: (enum_) => {
                             enum_.values.forEach((value) => {
                                 if (metadata != null) {
-                                    const slug = `${metadata.slugPrefix}.${key}.${value.value}`;
+                                    const slug = encodeURI(`${baseSlug}.${value.value}`);
                                     fields.push({
                                         type: "field-v1",
                                         objectID: uuid(),
@@ -1712,7 +1713,7 @@ export class AlgoliaSearchRecordGenerator {
                                           ? variant.type.value
                                           : undefined;
                                 if (metadata != null && title != null) {
-                                    const slug = `${metadata.slugPrefix}.${key}.${title}`;
+                                    const slug = encodeURI(`${baseSlug}.${title}`);
                                     fields.push({
                                         type: "field-v1",
                                         objectID: uuid(),
@@ -1737,7 +1738,7 @@ export class AlgoliaSearchRecordGenerator {
                             value.variants.forEach((variant) => {
                                 const title = variant.displayName ?? titleCase(variant.discriminantValue);
                                 if (metadata != null) {
-                                    const slug = `${metadata.slugPrefix}.${key}.${title}`;
+                                    const slug = encodeURI(`${baseSlug}.${title}`);
                                     fields.push({
                                         type: "field-v1",
                                         objectID: uuid(),
@@ -2241,34 +2242,32 @@ export function getMarkdownSections(
     breadcrumbs: BreadcrumbsInfo[],
     indexSegmentId: string,
     slug: string,
-    firstNode = true,
 ): AlgoliaSearchRecord[] {
     const sectionBreadcrumbs = markdownSection.heading
         ? breadcrumbs.concat([
               {
                   title: markdownSection.heading,
-                  slug: firstNode ? slug : `${slug}#${markdownSection.heading}`,
+                  slug: markdownSection.level === 0 ? slug : `${slug}#${markdownSection.heading}`,
               },
           ])
         : breadcrumbs.slice(0);
-    const records: AlgoliaSearchRecord[] = firstNode
-        ? []
-        : [
-              compact({
-                  type: "markdown-section-v1",
-                  objectID: uuid(),
-                  title: markdownSection.heading,
-                  content: markdownSection.content,
-                  breadcrumbs: sectionBreadcrumbs,
-                  indexSegmentId,
-                  slug,
-              }),
-          ];
+    const records: AlgoliaSearchRecord[] =
+        markdownSection.content.trim().length === 0
+            ? []
+            : [
+                  compact({
+                      type: "markdown-section-v1",
+                      objectID: uuid(),
+                      title: markdownSection.heading,
+                      content: markdownSection.content,
+                      breadcrumbs: sectionBreadcrumbs,
+                      indexSegmentId,
+                      slug,
+                  }),
+              ];
     return records.concat(
         markdownSection.children.reduce((acc: AlgoliaSearchRecord[], markdownSectionChild: MarkdownNode) => {
-            return acc.concat(
-                getMarkdownSections(markdownSectionChild, sectionBreadcrumbs, indexSegmentId, slug, false),
-            );
+            return acc.concat(getMarkdownSections(markdownSectionChild, sectionBreadcrumbs, indexSegmentId, slug));
         }, []),
     );
 }
