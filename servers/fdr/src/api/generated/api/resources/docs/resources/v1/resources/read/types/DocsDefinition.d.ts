@@ -4,9 +4,9 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface DocsDefinition {
     algoliaSearchIndex?: FernRegistry.AlgoliaSearchIndex;
-    pages: Record<FernRegistry.docs.v1.commons.PageId, FernRegistry.docs.v1.read.PageContent>;
+    pages: Record<FernRegistry.PageId, FernRegistry.docs.v1.read.PageContent>;
     apis: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.v1.read.ApiDefinition>;
-    files: Record<FernRegistry.docs.v1.commons.FileId, FernRegistry.docs.v1.commons.Url>;
+    files: Record<FernRegistry.docs.v1.commons.FileId, FernRegistry.Url>;
     filesV2: Record<FernRegistry.docs.v1.commons.FileId, FernRegistry.docs.v1.read.File_>;
     /**
      * A map of file names to their contents.

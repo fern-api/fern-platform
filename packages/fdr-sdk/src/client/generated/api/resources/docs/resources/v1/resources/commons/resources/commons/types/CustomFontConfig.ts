@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../../../../../../../index";
 export interface CustomFontConfig {
     name: string;
     variants: FernRegistry.docs.v1.commons.CustomFontConfigVariant[];
-    display?: FernRegistry.docs.v1.commons.FontDisplay;
-    fallback?: string[];
-    fontVariationSettings?: string;
+    display: FernRegistry.docs.v1.commons.FontDisplay | undefined;
+    fallback: string[] | undefined;
+    fontVariationSettings: string | undefined;
 }

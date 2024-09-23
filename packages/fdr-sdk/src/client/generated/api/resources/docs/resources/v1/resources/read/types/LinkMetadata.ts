@@ -4,6 +4,6 @@
 
 export interface LinkMetadata {
     title: string;
-    icon?: string;
+    icon: string | undefined;
     url: string;
 }

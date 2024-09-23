@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
+import { FernNavigation } from "../..";
 import type { DocsV2Read } from "../../client/types";
-import { FernNavigation } from "../generated";
 import { convertLoadDocsForUrlResponse, findNode } from "../utils";
 import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
 

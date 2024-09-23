@@ -9,6 +9,6 @@ export interface SectionNode
         FernRegistry.navigation.WithOverviewPage,
         FernRegistry.navigation.WithRedirect {
     type: "section";
-    collapsed?: boolean;
+    collapsed: boolean | undefined;
     children: FernRegistry.navigation.NavigationChild[];
 }

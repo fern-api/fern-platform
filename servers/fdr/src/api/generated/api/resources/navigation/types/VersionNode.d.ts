@@ -5,7 +5,7 @@ import * as FernRegistry from "../../../index";
 export interface VersionNode extends FernRegistry.navigation.WithNodeMetadata, FernRegistry.navigation.WithRedirect {
     type: "version";
     default: boolean;
-    versionId: FernRegistry.navigation.VersionId;
+    versionId: FernRegistry.VersionId;
     child: FernRegistry.navigation.VersionChild;
     availability?: FernRegistry.navigation.Availability;
     landingPage?: FernRegistry.navigation.LandingPageNode;

@@ -281,7 +281,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.read.getDocsConfigById("string")
+     *     await fernRegistry.docs.v2.read.getDocsConfigById(FernRegistry.DocsConfigId("string"))
      */
     public async getDocsConfigById(
         docsConfigId: FernRegistry.DocsConfigId,

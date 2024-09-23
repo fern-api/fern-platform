@@ -8,6 +8,6 @@ export interface ImageFilePath {
     filePath: FernRegistry.docs.v1.write.FilePath;
     width: number;
     height: number;
-    blurDataUrl?: string;
-    alt?: string;
+    blurDataUrl: string | undefined;
+    alt: string | undefined;
 }

@@ -34,11 +34,11 @@ export class Write {
      *         authConfig: {
      *             type: "public"
      *         },
-     *         orgId: "string",
-     *         apiId: "string",
-     *         filepaths: ["string"],
+     *         orgId: FernRegistry.OrgId("string"),
+     *         apiId: FernRegistry.ApiId("string"),
+     *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
      *         images: [{
-     *                 filePath: "string",
+     *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
      *                 width: 1.1,
      *                 height: 1.1,
      *                 blurDataUrl: "string",
@@ -108,13 +108,13 @@ export class Write {
      * @example
      *     await fernRegistry.docs.v2.write.startDocsPreviewRegister({
      *         basePath: "string",
-     *         orgId: "string",
+     *         orgId: FernRegistry.OrgId("string"),
      *         authConfig: {
      *             type: "public"
      *         },
-     *         filepaths: ["string"],
+     *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
      *         images: [{
-     *                 filePath: "string",
+     *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
      *                 width: 1.1,
      *                 height: 1.1,
      *                 blurDataUrl: "string",
@@ -181,12 +181,12 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.write.finishDocsRegister("string", {
+     *     await fernRegistry.docs.v2.write.finishDocsRegister(FernRegistry.docs.v1.write.DocsRegistrationId("string"), {
      *         docsDefinition: {
      *             pages: {
      *                 "string": {
      *                     markdown: "string",
-     *                     editThisPageUrl: "string"
+     *                     editThisPageUrl: FernRegistry.Url("string")
      *                 }
      *             },
      *             config: {
@@ -240,7 +240,7 @@ export class Write {
      *                             }
      *                         }],
      *                     landingPage: {
-     *                         id: "string",
+     *                         id: FernRegistry.PageId("string"),
      *                         title: "string",
      *                         icon: {
      *                             "key": "value"
@@ -266,8 +266,8 @@ export class Write {
      *                         }
      *                     }],
      *                 logoHeight: 1.1,
-     *                 logoHref: "string",
-     *                 favicon: "string",
+     *                 logoHref: FernRegistry.Url("string"),
+     *                 favicon: FernRegistry.docs.v1.commons.FileId("string"),
      *                 metadata: {
      *                     og:site_name: "string",
      *                     og:title: "string",
@@ -425,7 +425,7 @@ export class Write {
      *                             "key": "value"
      *                         }],
      *                     files: [{
-     *                             fileId: "string",
+     *                             fileId: FernRegistry.docs.v1.commons.FileId("string"),
      *                             strategy: {
      *                                 "key": "value"
      *                             }
@@ -437,12 +437,12 @@ export class Write {
      *                 playground: {
      *                     oauth: true
      *                 },
-     *                 backgroundImage: "string",
+     *                 backgroundImage: FernRegistry.docs.v1.commons.FileId("string"),
      *                 logoV2: {
-     *                     dark: "string",
-     *                     light: "string"
+     *                     dark: FernRegistry.docs.v1.commons.FileId("string"),
+     *                     light: FernRegistry.docs.v1.commons.FileId("string")
      *                 },
-     *                 logo: "string",
+     *                 logo: FernRegistry.docs.v1.commons.FileId("string"),
      *                 colors: {
      *                     accentPrimary: {
      *                         r: 1,
@@ -464,15 +464,15 @@ export class Write {
      *                 typography: {
      *                     headingsFont: {
      *                         name: "string",
-     *                         fontFile: "string"
+     *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
      *                     },
      *                     bodyFont: {
      *                         name: "string",
-     *                         fontFile: "string"
+     *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
      *                     },
      *                     codeFont: {
      *                         name: "string",
-     *                         fontFile: "string"
+     *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
      *                     }
      *                 }
      *             },

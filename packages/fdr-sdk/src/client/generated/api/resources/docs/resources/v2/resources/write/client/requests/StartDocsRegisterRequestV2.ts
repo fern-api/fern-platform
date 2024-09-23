@@ -12,11 +12,11 @@ import * as FernRegistry from "../../../../../../../../index";
  *         authConfig: {
  *             type: "public"
  *         },
- *         orgId: "string",
- *         apiId: "string",
- *         filepaths: ["string"],
+ *         orgId: FernRegistry.OrgId("string"),
+ *         apiId: FernRegistry.ApiId("string"),
+ *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
  *         images: [{
- *                 filePath: "string",
+ *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
  *                 width: 1.1,
  *                 height: 1.1,
  *                 blurDataUrl: "string",

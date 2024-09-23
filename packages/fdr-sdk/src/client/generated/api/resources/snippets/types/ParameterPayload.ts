@@ -4,5 +4,5 @@
 
 export interface ParameterPayload {
     name: string;
-    value?: unknown;
+    value: unknown;
 }

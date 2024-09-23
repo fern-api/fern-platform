@@ -29,7 +29,7 @@ export class DocsCache {
      *
      * @example
      *     await fernRegistry.docsCache.invalidate({
-     *         url: "string"
+     *         url: FernRegistry.Url("string")
      *     })
      */
     public async invalidate(

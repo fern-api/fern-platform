@@ -2,15 +2,10 @@ import tinycolor from "tinycolor2";
 import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";
 import { kebabCase } from "../../utils";
-import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
-export function convertDbDocsConfigToRead({
-    dbShape,
-}: {
-    dbShape: DocsV1Db.DocsDbConfig;
-}): WithoutQuestionMarks<DocsV1Read.DocsConfig> {
+export function convertDbDocsConfigToRead({ dbShape }: { dbShape: DocsV1Db.DocsDbConfig }): DocsV1Read.DocsConfig {
     return {
         navigation: transformNavigationConfigToRead(dbShape.navigation),
         logoHeight: dbShape.logoHeight,
@@ -107,10 +102,10 @@ export function transformNavigationConfigToRead(dbShape: DocsV1Db.NavigationConf
 
 function transformVersionedNavigationConfigToRead(
     config: DocsV1Db.VersionedNavigationConfig,
-): WithoutQuestionMarks<DocsV1Read.VersionedNavigationConfig> {
+): DocsV1Read.VersionedNavigationConfig {
     return {
         versions: config.versions.map(
-            (version): WithoutQuestionMarks<DocsV1Read.VersionedNavigationConfigData> => ({
+            (version): DocsV1Read.VersionedNavigationConfigData => ({
                 urlSlug: version.urlSlug ?? kebabCase(version.version),
                 availability: version.availability,
                 version: version.version,

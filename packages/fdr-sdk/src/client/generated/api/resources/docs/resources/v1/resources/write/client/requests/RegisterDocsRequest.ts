@@ -11,7 +11,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *             pages: {
  *                 "string": {
  *                     markdown: "string",
- *                     editThisPageUrl: "string"
+ *                     editThisPageUrl: FernRegistry.Url("string")
  *                 }
  *             },
  *             config: {
@@ -65,7 +65,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             }
  *                         }],
  *                     landingPage: {
- *                         id: "string",
+ *                         id: FernRegistry.PageId("string"),
  *                         title: "string",
  *                         icon: {
  *                             "key": "value"
@@ -91,8 +91,8 @@ import * as FernRegistry from "../../../../../../../../index";
  *                         }
  *                     }],
  *                 logoHeight: 1.1,
- *                 logoHref: "string",
- *                 favicon: "string",
+ *                 logoHref: FernRegistry.Url("string"),
+ *                 favicon: FernRegistry.docs.v1.commons.FileId("string"),
  *                 metadata: {
  *                     og:site_name: "string",
  *                     og:title: "string",
@@ -250,7 +250,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }],
  *                     files: [{
- *                             fileId: "string",
+ *                             fileId: FernRegistry.docs.v1.commons.FileId("string"),
  *                             strategy: {
  *                                 "key": "value"
  *                             }
@@ -262,12 +262,12 @@ import * as FernRegistry from "../../../../../../../../index";
  *                 playground: {
  *                     oauth: true
  *                 },
- *                 backgroundImage: "string",
+ *                 backgroundImage: FernRegistry.docs.v1.commons.FileId("string"),
  *                 logoV2: {
- *                     dark: "string",
- *                     light: "string"
+ *                     dark: FernRegistry.docs.v1.commons.FileId("string"),
+ *                     light: FernRegistry.docs.v1.commons.FileId("string")
  *                 },
- *                 logo: "string",
+ *                 logo: FernRegistry.docs.v1.commons.FileId("string"),
  *                 colors: {
  *                     accentPrimary: {
  *                         r: 1,
@@ -289,15 +289,15 @@ import * as FernRegistry from "../../../../../../../../index";
  *                 typography: {
  *                     headingsFont: {
  *                         name: "string",
- *                         fontFile: "string"
+ *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
  *                     },
  *                     bodyFont: {
  *                         name: "string",
- *                         fontFile: "string"
+ *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
  *                     },
  *                     codeFont: {
  *                         name: "string",
- *                         fontFile: "string"
+ *                         fontFile: FernRegistry.docs.v1.commons.FileId("string")
  *                     }
  *                 }
  *             },

@@ -31,8 +31,8 @@ export class SnippetsFactory {
      *
      * @example
      *     await fernRegistry.snippetsFactory.createSnippetsForSdk({
-     *         orgId: "string",
-     *         apiId: "string",
+     *         orgId: FernRegistry.OrgId("string"),
+     *         apiId: FernRegistry.ApiId("string"),
      *         snippets: {
      *             type: "typescript",
      *             sdk: {
@@ -44,8 +44,8 @@ export class SnippetsFactory {
      *                         client: "string"
      *                     },
      *                     endpoint: {
-     *                         path: "string",
-     *                         method: FernRegistry.EndpointMethod.Put,
+     *                         path: FernRegistry.EndpointPath("string"),
+     *                         method: FernRegistry.HttpMethod.Get,
      *                         identifierOverride: "string"
      *                     },
      *                     exampleIdentifier: "string"

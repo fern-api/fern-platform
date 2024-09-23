@@ -17,7 +17,7 @@ types:
   DocsDefinitionDbV1:
     availability: deprecated
     properties:
-      pages: map<commons.PageId, docsReadV1.PageContent>
+      pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
       files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
@@ -26,7 +26,7 @@ types:
   DocsDefinitionDbV2:
     availability: deprecated
     properties:
-      pages: map<commons.PageId, docsReadV1.PageContent>
+      pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
       files: map<commons.FileId, DbFileInfo>
       config: DocsDbConfig
@@ -35,7 +35,7 @@ types:
 
   DocsDefinitionDbV3:
     properties:
-      pages: map<commons.PageId, docsReadV1.PageContent>
+      pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
       files: map<commons.FileId, DbFileInfoV2>
       config: DocsDbConfig
@@ -58,7 +58,7 @@ types:
 
       # logo
       logoHeight: optional<docsReadV1.Height>
-      logoHref: optional<commons.Url>
+      logoHref: optional<rootCommons.Url>
       favicon: optional<commons.FileId>
 
       # seo
@@ -209,4 +209,4 @@ types:
       collapsed: boolean
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
-      overviewPageId: optional<commons.PageId>
+      overviewPageId: optional<rootCommons.PageId>

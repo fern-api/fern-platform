@@ -1,5 +1,5 @@
+import { FernNavigation } from "../..";
 import { visitDiscriminatedUnion } from "../../utils";
-import { FernNavigation } from "../generated";
 import { hasMetadata } from "../types";
 import { NavigationNode } from "../types/NavigationNode";
 

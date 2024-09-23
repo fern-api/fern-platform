@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../index";
 export interface WithPage {
-    pageId: FernRegistry.navigation.PageId;
+    pageId: FernRegistry.PageId;
     noindex?: boolean;
 }

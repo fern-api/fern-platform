@@ -10,6 +10,6 @@ export declare namespace FileIdOrUrl {
     }
     interface Url {
         type: "url";
-        value: FernRegistry.docs.v1.commons.Url;
+        value: FernRegistry.Url;
     }
 }

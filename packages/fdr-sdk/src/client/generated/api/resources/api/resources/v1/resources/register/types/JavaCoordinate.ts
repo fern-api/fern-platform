@@ -4,5 +4,5 @@
 
 export interface JavaCoordinate {
     coordinate: string;
-    version?: string;
+    version: string | undefined;
 }

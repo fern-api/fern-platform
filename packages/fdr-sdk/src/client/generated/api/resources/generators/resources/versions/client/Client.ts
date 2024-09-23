@@ -34,7 +34,7 @@ export class Versions {
      *
      * @example
      *     await fernRegistry.generators.versions.getLatestGeneratorRelease({
-     *         generator: "string",
+     *         generator: FernRegistry.generators.GeneratorId("string"),
      *         cliVersion: "string",
      *         irVersion: 1,
      *         generatorMajorVersion: 1,
@@ -99,7 +99,7 @@ export class Versions {
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.getChangelog("string", {
+     *     await fernRegistry.generators.versions.getChangelog(FernRegistry.generators.GeneratorId("string"), {
      *         fromVersion: {
      *             type: "inclusive",
      *             value: "string"
@@ -189,7 +189,7 @@ export class Versions {
      *                     "key": "value"
      *                 }
      *             }],
-     *         generatorId: "string",
+     *         generatorId: FernRegistry.generators.GeneratorId("string"),
      *         irVersion: 1,
      *         migration: "string",
      *         customConfigSchema: "string",
@@ -249,7 +249,7 @@ export class Versions {
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.getGeneratorRelease("string", "string")
+     *     await fernRegistry.generators.versions.getGeneratorRelease(FernRegistry.generators.GeneratorId("string"), "string")
      */
     public async getGeneratorRelease(
         generator: FernRegistry.generators.GeneratorId,
@@ -309,7 +309,7 @@ export class Versions {
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.listGeneratorReleases("string", {
+     *     await fernRegistry.generators.versions.listGeneratorReleases(FernRegistry.generators.GeneratorId("string"), {
      *         page: 1,
      *         pageSize: 1
      *     })

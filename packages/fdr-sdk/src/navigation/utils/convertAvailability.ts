@@ -1,6 +1,6 @@
+import { FernNavigation } from "../..";
 import type { APIV1Read, DocsV1Read } from "../../client/types";
 import { assertNever } from "../../utils";
-import { FernNavigation } from "../generated";
 
 export function convertAvailability(
     availability: DocsV1Read.VersionAvailability | APIV1Read.Availability | undefined,

@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         orgId: "string",
+ *         orgId: FernRegistry.OrgId("string"),
  *         scope: "string"
  *     }
  */

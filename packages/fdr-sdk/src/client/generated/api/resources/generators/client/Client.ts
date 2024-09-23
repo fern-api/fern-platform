@@ -36,7 +36,7 @@ export class Generators {
      *
      * @example
      *     await fernRegistry.generators.upsertGenerator({
-     *         id: "string",
+     *         id: FernRegistry.generators.GeneratorId("string"),
      *         displayName: "string",
      *         generatorType: {
      *             type: "sdk"
@@ -138,7 +138,7 @@ export class Generators {
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.getGenerator("string")
+     *     await fernRegistry.generators.getGenerator(FernRegistry.generators.GeneratorId("string"))
      */
     public async getGenerator(
         generatorId: FernRegistry.generators.GeneratorId,

@@ -1,6 +1,5 @@
 import { APIV1Db, APIV1Read } from "../../client";
 import { assertNever } from "../utils/assertNever";
-import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 
 export function convertDbAPIDefinitionsToRead(dbApiDefinitions: Record<string, APIV1Db.DbApiDefinition>) {
     return Object.fromEntries(
@@ -11,9 +10,7 @@ export function convertDbAPIDefinitionsToRead(dbApiDefinitions: Record<string, A
     );
 }
 
-export function convertDbAPIDefinitionToRead(
-    dbShape: APIV1Db.DbApiDefinition,
-): WithoutQuestionMarks<APIV1Read.ApiDefinition> {
+export function convertDbAPIDefinitionToRead(dbShape: APIV1Db.DbApiDefinition): APIV1Read.ApiDefinition {
     return {
         id: dbShape.id,
         rootPackage: {
@@ -41,7 +38,7 @@ function transformSubpackage({
     dbShape,
 }: {
     dbShape: APIV1Db.DbApiDefinitionSubpackage;
-}): WithoutQuestionMarks<APIV1Read.ApiDefinitionSubpackage> {
+}): APIV1Read.ApiDefinitionSubpackage {
     return {
         subpackageId: dbShape.subpackageId,
         parent: dbShape.parent,
@@ -60,11 +57,7 @@ function transformSubpackage({
     };
 }
 
-function transformEndpoint({
-    dbShape,
-}: {
-    dbShape: APIV1Db.DbEndpointDefinition;
-}): WithoutQuestionMarks<APIV1Read.EndpointDefinition> {
+function transformEndpoint({ dbShape }: { dbShape: APIV1Db.DbEndpointDefinition }): APIV1Read.EndpointDefinition {
     return {
         environments: dbShape.environments ?? [],
         availability: dbShape.availability,
@@ -113,11 +106,7 @@ function transformErrorsV2(dbShape: APIV1Db.DbEndpointDefinition): APIV1Read.Err
     return undefined;
 }
 
-function transformHttpRequest({
-    dbShape,
-}: {
-    dbShape: APIV1Db.DbHttpRequest;
-}): WithoutQuestionMarks<APIV1Read.HttpRequest> {
+function transformHttpRequest({ dbShape }: { dbShape: APIV1Db.DbHttpRequest }): APIV1Read.HttpRequest {
     switch (dbShape.type.type) {
         case "object":
         case "reference":
@@ -148,7 +137,7 @@ export function convertExampleEndpointCall({
     dbShape,
 }: {
     dbShape: APIV1Read.ExampleEndpointCall;
-}): WithoutQuestionMarks<APIV1Read.ExampleEndpointCall> {
+}): APIV1Read.ExampleEndpointCall {
     return {
         name: dbShape.name,
         description: dbShape.description,

@@ -5,13 +5,13 @@
 import * as FernRegistry from "../../../index";
 
 export interface EnumTemplate {
-    imports?: string[];
+    imports: string[] | undefined;
     /**
      * We might not need this, but the idea here is to be able to omit if it's optional and undefined,
      * or default if omitted and required.
      */
     isOptional: boolean;
-    templateString?: string;
+    templateString: string | undefined;
     values: Record<string, string>;
-    templateInput?: FernRegistry.PayloadInput;
+    templateInput: FernRegistry.PayloadInput | undefined;
 }

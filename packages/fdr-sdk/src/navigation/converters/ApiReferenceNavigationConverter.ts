@@ -1,10 +1,10 @@
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
-import type { APIV1Read, DocsV1Read } from "../../client/types";
+import { FernNavigation } from "../..";
+import { APIV1Read, DocsV1Read } from "../../client/types";
 import { titleCase, visitDiscriminatedUnion } from "../../utils";
 import { ApiDefinitionHolder } from "../ApiDefinitionHolder";
 import { ROOT_PACKAGE_ID } from "../consts";
-import { FernNavigation } from "../generated";
 import { followRedirects } from "../utils";
 import { convertAvailability } from "../utils/convertAvailability";
 import { isSubpackage } from "../utils/isSubpackage";
@@ -112,7 +112,11 @@ export class ApiReferenceNavigationConverter {
 
     private convertChildren(parentSlug: SlugGenerator): FernNavigation.ApiPackageChild[] {
         if (this.apiSection.navigation != null) {
-            return this.convertApiNavigationItems(this.apiSection.navigation.items, parentSlug, "root");
+            return this.convertApiNavigationItems(
+                this.apiSection.navigation.items,
+                parentSlug,
+                APIV1Read.SubpackageId("root"),
+            );
         }
 
         return this.convertPackageToChildren(this.api.rootPackage, parentSlug);
@@ -279,7 +283,7 @@ export class ApiReferenceNavigationConverter {
     private convertApiNavigationItems(
         items: DocsV1Read.ApiNavigationConfigItem[],
         parentSlug: SlugGenerator,
-        subpackageId: string,
+        subpackageId: APIV1Read.SubpackageId,
     ): FernNavigation.ApiPackageChild[] {
         const children: FernNavigation.ApiPackageChild[] = [];
         let subpackage = subpackageId === "root" ? this.api.rootPackage : this.api.subpackages[subpackageId];

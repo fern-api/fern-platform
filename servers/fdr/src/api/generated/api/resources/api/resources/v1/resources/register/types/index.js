@@ -14,7 +14,6 @@ export * from "./JavaCoordinate";
 export * from "./RubyGem";
 export * from "./ApiDefinitionPackage";
 export * from "./ApiDefinitionSubpackage";
-export * from "./SubpackageId";
 export * from "./ApiAuth";
 export * from "./BasicAuth";
 export * from "./BearerAuth";

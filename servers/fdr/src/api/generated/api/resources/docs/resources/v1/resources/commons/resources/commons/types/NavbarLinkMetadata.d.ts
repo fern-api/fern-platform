@@ -3,7 +3,7 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface NavbarLinkMetadata {
-    url: FernRegistry.docs.v1.commons.Url;
+    url: FernRegistry.Url;
     text?: string;
     icon?: string;
     rightIcon?: string;

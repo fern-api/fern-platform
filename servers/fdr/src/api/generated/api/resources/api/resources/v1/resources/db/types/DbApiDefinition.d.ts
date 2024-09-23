@@ -5,8 +5,8 @@ import * as FernRegistry from "../../../../../../../index";
 export interface DbApiDefinition {
     id: FernRegistry.ApiDefinitionId;
     rootPackage: FernRegistry.api.v1.db.DbApiDefinitionPackage;
-    types: Record<FernRegistry.api.v1.read.TypeId, FernRegistry.api.v1.read.TypeDefinition>;
-    subpackages: Record<FernRegistry.api.v1.read.SubpackageId, FernRegistry.api.v1.db.DbApiDefinitionSubpackage>;
+    types: Record<FernRegistry.api.v1.TypeId, FernRegistry.api.v1.read.TypeDefinition>;
+    subpackages: Record<FernRegistry.api.v1.SubpackageId, FernRegistry.api.v1.db.DbApiDefinitionSubpackage>;
     auth?: FernRegistry.api.v1.read.ApiAuth;
     /**
      * Whether or not endpoints are being served at different

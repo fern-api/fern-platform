@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface ThemedFileId {
-    dark?: FernRegistry.docs.v1.commons.FileId;
-    light?: FernRegistry.docs.v1.commons.FileId;
+    dark: FernRegistry.docs.v1.commons.FileId | undefined;
+    light: FernRegistry.docs.v1.commons.FileId | undefined;
 }

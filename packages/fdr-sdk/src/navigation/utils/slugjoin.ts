@@ -1,5 +1,5 @@
 import urljoin from "url-join";
-import { FernNavigation } from "../generated";
+import { FernNavigation } from "../..";
 
 // normalizes slug parts and joins them with a single slash
 export function slugjoin(...parts: string[]): FernNavigation.Slug {

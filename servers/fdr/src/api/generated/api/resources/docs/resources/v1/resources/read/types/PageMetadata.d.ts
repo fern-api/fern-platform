@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface PageMetadata extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
-    id: FernRegistry.docs.v1.commons.PageId;
+    id: FernRegistry.PageId;
     title: string;
 }

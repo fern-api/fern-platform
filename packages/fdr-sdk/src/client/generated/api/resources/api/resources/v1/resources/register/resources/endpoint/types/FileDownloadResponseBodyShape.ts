@@ -3,5 +3,5 @@
  */
 
 export interface FileDownloadResponseBodyShape {
-    contentType?: string;
+    contentType: string | undefined;
 }

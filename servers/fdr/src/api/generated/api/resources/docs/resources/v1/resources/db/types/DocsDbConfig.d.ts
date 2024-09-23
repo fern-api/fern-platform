@@ -10,7 +10,7 @@ export interface DocsDbConfig {
     navbarLinks?: FernRegistry.docs.v1.commons.NavbarLink[];
     footerLinks?: FernRegistry.docs.v1.commons.FooterLink[];
     logoHeight?: FernRegistry.docs.v1.read.Height;
-    logoHref?: FernRegistry.docs.v1.commons.Url;
+    logoHref?: FernRegistry.Url;
     favicon?: FernRegistry.docs.v1.commons.FileId;
     metadata?: FernRegistry.docs.v1.commons.MetadataConfig;
     redirects?: FernRegistry.docs.v1.commons.RedirectConfig[];

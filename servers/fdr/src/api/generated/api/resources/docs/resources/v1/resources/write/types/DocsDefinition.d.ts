@@ -3,7 +3,7 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface DocsDefinition {
-    pages: Record<FernRegistry.docs.v1.commons.PageId, FernRegistry.docs.v1.write.PageContent>;
+    pages: Record<FernRegistry.PageId, FernRegistry.docs.v1.write.PageContent>;
     config: FernRegistry.docs.v1.write.DocsConfig;
     /**
      * A map of file names to their contents.

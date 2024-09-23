@@ -5,5 +5,5 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface NavbarGithubMetadata {
-    url: FernRegistry.docs.v1.commons.Url;
+    url: FernRegistry.Url;
 }

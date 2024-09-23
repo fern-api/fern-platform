@@ -4,9 +4,7 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface FormDataRequest
-    extends FernRegistry.api.v1.register.WithDescription,
-        FernRegistry.api.v1.register.WithAvailability {
+export interface FormDataRequest extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
     name: string;
     properties: FernRegistry.api.v1.register.FormDataProperty[];
 }

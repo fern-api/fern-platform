@@ -4,11 +4,9 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface ErrorDeclarationV2
-    extends FernRegistry.api.v1.register.WithDescription,
-        FernRegistry.api.v1.register.WithAvailability {
-    type?: FernRegistry.api.v1.register.TypeShape;
+export interface ErrorDeclarationV2 extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
+    type: FernRegistry.api.v1.register.TypeShape | undefined;
     statusCode: number;
-    name?: string;
-    examples?: FernRegistry.api.v1.register.ErrorExample[];
+    name: string | undefined;
+    examples: FernRegistry.api.v1.register.ErrorExample[] | undefined;
 }

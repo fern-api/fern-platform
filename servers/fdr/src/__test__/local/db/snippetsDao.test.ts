@@ -21,7 +21,7 @@ it("snippet api dao", async () => {
                     {
                         endpoint: {
                             path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            method: FdrAPI.HttpMethod.Get,
                         },
                         snippet: {
                             async_client: "invalid",
@@ -79,7 +79,7 @@ it("snippets dao", async () => {
                     {
                         endpoint: {
                             path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            method: FdrAPI.HttpMethod.Get,
                         },
                         snippet: {
                             async_client: "invalid",
@@ -105,7 +105,7 @@ it("snippets dao", async () => {
                     {
                         endpoint: {
                             path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            method: FdrAPI.HttpMethod.Get,
                         },
                         snippet: {
                             async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
@@ -130,7 +130,7 @@ it("snippets dao", async () => {
                     {
                         endpoint: {
                             path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            method: FdrAPI.HttpMethod.Get,
                         },
                         snippet: {
                             async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
@@ -148,7 +148,7 @@ it("snippets dao", async () => {
             apiId: "api",
             endpointIdentifier: {
                 path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                method: FdrAPI.HttpMethod.Get,
             },
             sdks: undefined,
             page: undefined,
@@ -226,7 +226,7 @@ it("snippets dao with example id", async () => {
                     {
                         endpoint: {
                             path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            method: FdrAPI.HttpMethod.Get,
                         },
                         snippet: {
                             async_client: "invalid",
@@ -237,7 +237,7 @@ it("snippets dao with example id", async () => {
                     {
                         endpoint: {
                             path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            method: FdrAPI.HttpMethod.Get,
                         },
                         snippet: {
                             async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
@@ -256,7 +256,7 @@ it("snippets dao with example id", async () => {
             apiId: "apiId",
             endpointIdentifier: {
                 path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                method: FdrAPI.HttpMethod.Get,
             },
             sdks: undefined,
             page: undefined,
@@ -295,7 +295,7 @@ it("snippets dao with example id", async () => {
             apiId: "apiId",
             endpointIdentifier: {
                 path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                method: FdrAPI.HttpMethod.Get,
             },
             sdks: undefined,
             page: undefined,
@@ -334,7 +334,7 @@ it("snippets dao with example id", async () => {
             apiId: "apiId",
             endpointIdentifier: {
                 path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                method: FdrAPI.HttpMethod.Get,
             },
             sdks: undefined,
             page: undefined,
@@ -364,7 +364,7 @@ it("snippets template", async () => {
                     },
                     endpointId: {
                         path: "/users/v1",
-                        method: FdrAPI.EndpointMethod.Get,
+                        method: FdrAPI.HttpMethod.Get,
                     },
                     snippetTemplate: {
                         type: "v1",
@@ -384,7 +384,7 @@ it("snippets template", async () => {
                     },
                     endpointId: {
                         path: "/users/v1",
-                        method: FdrAPI.EndpointMethod.Get,
+                        method: FdrAPI.HttpMethod.Get,
                     },
                     snippetTemplate: {
                         type: "v1",
@@ -406,7 +406,7 @@ it("snippets template", async () => {
             apiId: "api",
             endpointId: {
                 path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                method: FdrAPI.HttpMethod.Get,
             },
             sdk: {
                 type: "python",

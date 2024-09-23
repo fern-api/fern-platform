@@ -3,5 +3,5 @@
  */
 
 export interface DatetimeType {
-    default?: string;
+    default: string | undefined;
 }

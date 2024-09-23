@@ -6,5 +6,5 @@ import * as FernRegistry from "../../../../../../../index";
 
 export interface ApiArtifacts {
     sdks: FernRegistry.docs.v1.read.PublishedSdk[];
-    postman?: FernRegistry.docs.v1.read.PublishedPostmanCollection;
+    postman: FernRegistry.docs.v1.read.PublishedPostmanCollection | undefined;
 }

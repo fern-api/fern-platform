@@ -3,5 +3,5 @@
  */
 
 export interface BearerAuth {
-    tokenName?: string;
+    tokenName: string | undefined;
 }

@@ -5,9 +5,9 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface ImageFile {
-    url: FernRegistry.docs.v1.commons.Url;
+    url: FernRegistry.Url;
     width: number;
     height: number;
-    blurDataUrl?: string;
-    alt?: string;
+    blurDataUrl: string | undefined;
+    alt: string | undefined;
 }

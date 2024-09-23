@@ -10,7 +10,6 @@ import {
 } from "../../client";
 import { isNavigationTabLink } from "../../client/visitNavigationTab";
 import { kebabCase } from "../../utils";
-import { type WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
@@ -27,8 +26,8 @@ export interface S3FileInfo {
         | undefined;
 }
 
-type ConvertedDocsDefinition = WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3> & {
-    config: WithoutQuestionMarks<DocsV1Db.DocsDbConfig>;
+type ConvertedDocsDefinition = DocsV1Db.DocsDefinitionDb.V3 & {
+    config: DocsV1Db.DocsDbConfig;
 };
 
 export function convertDocsDefinitionToDb({
@@ -130,10 +129,10 @@ export function transformNavigationConfigForDb(writeShape: DocsV1Write.Navigatio
 
 function transformVersionedNavigationConfigForDb(
     config: DocsV1Write.VersionedNavigationConfig,
-): WithoutQuestionMarks<DocsV1Db.VersionedNavigationConfig> {
+): DocsV1Db.VersionedNavigationConfig {
     return {
         versions: config.versions.map(
-            (version): WithoutQuestionMarks<DocsV1Db.VersionedNavigationConfigData> => ({
+            (version): DocsV1Db.VersionedNavigationConfigData => ({
                 urlSlug: version.urlSlugOverride ?? kebabCase(version.version),
                 availability: version.availability,
                 version: version.version,
@@ -194,7 +193,7 @@ function transformNavigationTabV2ForDb(writeShape: DocsV1Write.NavigationTabV2):
     }
 }
 
-function toChangelogDb(writeShape: DocsV1Write.ChangelogSectionV2): WithoutQuestionMarks<DocsV1Read.ChangelogSection> {
+function toChangelogDb(writeShape: DocsV1Write.ChangelogSectionV2): DocsV1Read.ChangelogSection {
     return {
         title: writeShape.title,
         icon: writeShape.icon,
@@ -210,9 +209,7 @@ function toChangelogDb(writeShape: DocsV1Write.ChangelogSectionV2): WithoutQuest
     };
 }
 
-export function transformNavigationItemForDb(
-    writeShape: DocsV1Write.NavigationItem,
-): WithoutQuestionMarks<DocsV1Db.NavigationItem> {
+export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationItem): DocsV1Db.NavigationItem {
     switch (writeShape.type) {
         case "api":
             return {
@@ -336,9 +333,7 @@ function getReferencedApiDefinitionIdFromItem(item: DocsV1Db.NavigationItem): Fd
     }
 }
 
-function transformArtifactsForReading(
-    writeShape: DocsV1Write.ApiArtifacts,
-): WithoutQuestionMarks<DocsV1Read.ApiArtifacts> {
+function transformArtifactsForReading(writeShape: DocsV1Write.ApiArtifacts): DocsV1Read.ApiArtifacts {
     return {
         sdks: writeShape.sdks.map((sdk) => transformPublishedSdkForReading(sdk)),
         postman:
@@ -346,9 +341,7 @@ function transformArtifactsForReading(
     };
 }
 
-function transformPublishedSdkForReading(
-    writeShape: DocsV1Write.PublishedSdk,
-): WithoutQuestionMarks<DocsV1Read.PublishedSdk> {
+function transformPublishedSdkForReading(writeShape: DocsV1Write.PublishedSdk): DocsV1Read.PublishedSdk {
     switch (writeShape.type) {
         case "maven":
             return {
@@ -385,7 +378,7 @@ function transformPublishedSdkForReading(
 
 function transformPublishedPostmanCollectionForReading(
     writeShape: DocsV1Write.PublishedPostmanCollection,
-): WithoutQuestionMarks<DocsV1Read.PublishedPostmanCollection> {
+): DocsV1Read.PublishedPostmanCollection {
     return {
         url: writeShape.url,
         githubRepo:
@@ -404,7 +397,7 @@ function transformColorsV3ForDb({
 }: {
     writeShape: DocsV1Write.ColorsConfigV3;
     docsConfig: DocsV1Write.DocsConfig;
-}): WithoutQuestionMarks<DocsV1Read.ColorsConfigV3> {
+}): DocsV1Read.ColorsConfigV3 {
     switch (writeShape.type) {
         case "dark":
             return {
@@ -470,15 +463,15 @@ function transformColorsV3ForDb({
 function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata,
     defaultSlug?: string,
-): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page>;
+): DocsV1Read.NavigationItem.Page;
 function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata | undefined,
     defaultSlug?: string,
-): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined;
+): DocsV1Read.NavigationItem.Page | undefined;
 function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata | undefined,
     defaultSlug?: string,
-): WithoutQuestionMarks<DocsV1Read.NavigationItem.Page> | undefined {
+): DocsV1Read.NavigationItem.Page | undefined {
     if (writeShape == null) {
         return undefined;
     }

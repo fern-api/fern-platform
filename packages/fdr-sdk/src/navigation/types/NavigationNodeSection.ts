@@ -1,4 +1,4 @@
-import type { FernNavigation } from "../generated";
+import type { FernNavigation } from "../..";
 import type { NavigationNode } from "./NavigationNode";
 
 /**

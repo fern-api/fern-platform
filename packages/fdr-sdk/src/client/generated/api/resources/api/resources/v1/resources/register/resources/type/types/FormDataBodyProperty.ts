@@ -5,5 +5,5 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface FormDataBodyProperty extends FernRegistry.api.v1.register.ObjectProperty {
-    contentType?: FernRegistry.api.v1.register.ContentType;
+    contentType: FernRegistry.api.v1.register.ContentType | undefined;
 }

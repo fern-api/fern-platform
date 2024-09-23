@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { FernNavigation } from "../..";
 import type { DocsV1Read } from "../../client/types";
-import { FernNavigation } from "../generated";
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { SlugGenerator } from "./SlugGenerator";
 

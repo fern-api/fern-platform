@@ -5,5 +5,5 @@
 export interface ChangelogItem {
     date: string;
     pageId: string;
-    hidden?: boolean;
+    hidden: boolean | undefined;
 }

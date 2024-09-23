@@ -29,8 +29,8 @@ export class Diff {
      *
      * @example
      *     await fernRegistry.diff.diff({
-     *         previousApiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         currentApiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+     *         previousApiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *         currentApiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      *     })
      */
     public async diff(

@@ -1,7 +1,6 @@
 import isEqual from "fast-deep-equal";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
 import { kebabCase, titleCase } from "../../utils";
-import { WithoutQuestionMarks } from "../utils/WithoutQuestionMarks";
 import { assertNever } from "../utils/assertNever";
 import {
     generateEndpointErrorExample,
@@ -16,7 +15,7 @@ export function convertAPIDefinitionToDb(
     writeShape: APIV1Write.ApiDefinition,
     id: FdrAPI.ApiDefinitionId,
     snippets: SDKSnippetHolder,
-): WithoutQuestionMarks<APIV1Db.DbApiDefinition> {
+): APIV1Db.DbApiDefinition {
     const subpackageToParent: Record<APIV1Write.SubpackageId, APIV1Write.SubpackageId> = {};
     for (const [parentId, parentContents] of entries(writeShape.subpackages)) {
         for (const subpackageId of parentContents.subpackages) {
@@ -53,7 +52,7 @@ export function convertAPIDefinitionToDb(
             }),
         ),
         subpackages: entries(writeShape.subpackages).reduce<
-            Record<FdrAPI.api.v1.read.SubpackageId, APIV1Db.DbApiDefinitionSubpackage>
+            Record<APIV1Read.SubpackageId, APIV1Db.DbApiDefinitionSubpackage>
         >((subpackages, [subpackageId, subpackage]) => {
             subpackages[subpackageId] = transformSubpackage({
                 writeShape: subpackage,
@@ -86,7 +85,7 @@ function transformSubpackage({
     apiDefinition: APIV1Write.ApiDefinition;
     context: ApiDefinitionTransformationContext;
     snippets: SDKSnippetHolder;
-}): WithoutQuestionMarks<APIV1Db.DbApiDefinitionSubpackage> {
+}): APIV1Db.DbApiDefinitionSubpackage {
     const parent = subpackageToParent[id];
     const endpoints = writeShape.endpoints.map((endpoint) =>
         transformEndpoint({ writeShape: endpoint, apiDefinition, context, snippets }),
@@ -116,7 +115,7 @@ function transformWebsocket({
     writeShape,
 }: {
     writeShape: APIV1Write.WebSocketChannel;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.WebSocketChannel> {
+}): FdrAPI.api.v1.read.WebSocketChannel {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     const urlSlug = kebabCase(writeShape.id);
     return {
@@ -144,7 +143,7 @@ function transformWebhook({
 }: {
     writeShape: APIV1Write.WebhookDefinition;
     apiDefinition: APIV1Write.ApiDefinition;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.WebhookDefinition> {
+}): FdrAPI.api.v1.read.WebhookDefinition {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     const urlSlug = kebabCase(writeShape.id);
     const oldUrlSlug = kebabCase(writeShape.name ?? writeShape.id);
@@ -177,7 +176,7 @@ function transformEndpoint({
     apiDefinition: APIV1Write.ApiDefinition;
     context: ApiDefinitionTransformationContext;
     snippets: SDKSnippetHolder;
-}): WithoutQuestionMarks<APIV1Db.DbEndpointDefinition> {
+}): APIV1Db.DbEndpointDefinition {
     context.registerEnvironments(writeShape.environments ?? []);
     // const htmlDescription = getHtmlDescription(writeShape.description);
     const urlSlug = kebabCase(writeShape.id);
@@ -241,6 +240,7 @@ function transformErrorsV2(writeShape: APIV1Write.EndpointDefinition): APIV1Read
         return writeShape.errors.map((error): APIV1Read.ErrorDeclarationV2 => {
             return {
                 name: undefined,
+                examples: undefined,
                 ...error,
                 type:
                     error.type != null
@@ -353,7 +353,7 @@ function getExampleEndpointCalls({
     writeShape: APIV1Write.EndpointDefinition;
     apiDefinition: APIV1Write.ApiDefinition;
     snippets: SDKSnippetHolder;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.ExampleEndpointCall>[] {
+}): FdrAPI.api.v1.read.ExampleEndpointCall[] {
     const examples: APIV1Write.ExampleEndpointCall[] = [];
 
     const { successExamples: registeredSuccessExamples, errorExamples: registeredErrorExamples } =
@@ -405,11 +405,7 @@ function groupExamplesByStatusCode(examples: APIV1Write.ExampleEndpointCall[]) {
     return { successExamples, errorExamples };
 }
 
-function transformHttpRequestToDb({
-    writeShape,
-}: {
-    writeShape: APIV1Write.HttpRequest;
-}): WithoutQuestionMarks<APIV1Db.DbHttpRequest> {
+function transformHttpRequestToDb({ writeShape }: { writeShape: APIV1Write.HttpRequest }): APIV1Db.DbHttpRequest {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     switch (writeShape.type.type) {
         case "object":
@@ -456,7 +452,7 @@ export function transformExampleEndpointCall({
     writeShape: APIV1Write.ExampleEndpointCall;
     endpointDefinition: APIV1Write.EndpointDefinition;
     snippets: SDKSnippetHolder;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.ExampleEndpointCall> {
+}): FdrAPI.api.v1.read.ExampleEndpointCall {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         name: writeShape.name,
@@ -537,7 +533,7 @@ function transformCodeExamples({
     };
 }
 
-function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition) {
+function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition): FdrAPI.EndpointPath {
     let endpointPath = "";
     for (const part of endpoint.path.parts) {
         if (part.type === "literal") {
@@ -546,14 +542,14 @@ function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition) {
             endpointPath += `{${part.value}}`;
         }
     }
-    return endpointPath;
+    return FdrAPI.EndpointPath(endpointPath);
 }
 
 function transformTypeDefinition({
     writeShape,
 }: {
     writeShape: APIV1Write.TypeDefinition;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.TypeDefinition> {
+}): FdrAPI.api.v1.read.TypeDefinition {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -565,11 +561,7 @@ function transformTypeDefinition({
     };
 }
 
-function transformShape({
-    writeShape,
-}: {
-    writeShape: APIV1Write.TypeShape;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.TypeShape> {
+function transformShape({ writeShape }: { writeShape: APIV1Write.TypeShape }): FdrAPI.api.v1.read.TypeShape {
     switch (writeShape.type) {
         case "object":
             return {
@@ -610,7 +602,7 @@ function transformProperty({
     writeShape,
 }: {
     writeShape: APIV1Write.ObjectProperty;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.ObjectProperty> {
+}): FdrAPI.api.v1.read.ObjectProperty {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -622,11 +614,7 @@ function transformProperty({
     };
 }
 
-function transformEnumValue({
-    writeShape,
-}: {
-    writeShape: APIV1Write.EnumValue;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.EnumValue> {
+function transformEnumValue({ writeShape }: { writeShape: APIV1Write.EnumValue }): FdrAPI.api.v1.read.EnumValue {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         availability: writeShape.availability,
@@ -641,7 +629,7 @@ function transformDiscriminatedVariant({
     writeShape,
 }: {
     writeShape: APIV1Write.DiscriminatedUnionVariant;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.DiscriminatedUnionVariant> {
+}): FdrAPI.api.v1.read.DiscriminatedUnionVariant {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -663,7 +651,7 @@ function transformUnDiscriminatedVariant({
     writeShape,
 }: {
     writeShape: APIV1Write.UndiscriminatedUnionVariant;
-}): WithoutQuestionMarks<FdrAPI.api.v1.read.UndiscriminatedUnionVariant> {
+}): FdrAPI.api.v1.read.UndiscriminatedUnionVariant {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         description: writeShape.description,
@@ -680,7 +668,7 @@ function entries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
 }
 
 class ApiDefinitionTransformationContext {
-    private uniqueBaseUrls: Record<APIV1Write.EnvironmentId, Set<string>> = {};
+    private uniqueBaseUrls: Record<FdrAPI.EnvironmentId, Set<string>> = {};
 
     public registerEnvironments(environments: APIV1Write.Environment[]): void {
         for (const environment of environments) {

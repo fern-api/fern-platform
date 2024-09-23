@@ -319,7 +319,7 @@ types:
           to a map of endpoint method (e.g. `POST`) to snippets.
 
   SnippetsByEndpointMethod:
-    type: map<commons.EndpointMethod, list<Snippet>>
+    type: map<commons.HttpMethod, list<Snippet>>
 
   Snippet:
     audiences:

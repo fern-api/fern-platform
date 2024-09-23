@@ -1,3 +1,4 @@
+import { FdrAPI } from "../client/types";
 import { SDKSnippetHolder } from "../converters";
 
 describe("SDK Snippet Holder", () => {
@@ -11,6 +12,7 @@ describe("SDK Snippet Holder", () => {
                             sdk: { package: "acme", version: "0.0.1" },
                             sync_client: "client = Acme(api_key='YOUR_API_KEY')",
                             type: "python",
+                            exampleIdentifier: undefined,
                         },
                     ],
                 },
@@ -18,7 +20,7 @@ describe("SDK Snippet Holder", () => {
             snippetTemplatesByEndpointId: {},
             snippetsBySdkId: {
                 "python|acme|0.0.1": {
-                    "/users/v1": {
+                    [FdrAPI.EndpointPath("/users/v1")]: {
                         DELETE: [],
                         GET: [
                             {
@@ -26,6 +28,7 @@ describe("SDK Snippet Holder", () => {
                                 sdk: { package: "acme", version: "0.0.1" },
                                 sync_client: "client = Acme(api_key='YOUR_API_KEY')",
                                 type: "python",
+                                exampleIdentifier: undefined,
                             },
                         ],
                         PATCH: [],
@@ -37,6 +40,7 @@ describe("SDK Snippet Holder", () => {
             snippetsConfigWithSdkId: {
                 pythonSdk: {
                     package: "acme",
+                    version: undefined,
                     sdkId: "python|acme|0.0.1",
                 },
             },

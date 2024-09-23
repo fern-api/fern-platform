@@ -16,7 +16,7 @@ export interface SdkSnippetHolderArgs {
     snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
     snippetTemplatesByEndpoint: Record<
         FdrAPI.EndpointPath,
-        Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+        Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
     >;
     snippetTemplatesByEndpointId: Record<string, APIV1Read.EndpointSnippetTemplates>;
 }
@@ -27,7 +27,7 @@ export class SDKSnippetHolder {
     private snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
     private snippetTemplatesByEndpoint: Record<
         FdrAPI.EndpointPath,
-        Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+        Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
     >;
     private snippetTemplatesByEndpointId: Record<string, APIV1Read.EndpointSnippetTemplates>;
 
@@ -51,8 +51,8 @@ export class SDKSnippetHolder {
         endpointId,
         exampleId,
     }: {
-        endpointPath: string;
-        endpointMethod: FdrAPI.EndpointMethod;
+        endpointPath: FdrAPI.EndpointPath;
+        endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
     }): APIV1Read.PythonSnippet | undefined {
@@ -77,8 +77,8 @@ export class SDKSnippetHolder {
         endpointId,
         exampleId,
     }: {
-        endpointPath: string;
-        endpointMethod: FdrAPI.EndpointMethod;
+        endpointPath: FdrAPI.EndpointPath;
+        endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
     }): APIV1Read.TypescriptSnippet | undefined {
@@ -103,8 +103,8 @@ export class SDKSnippetHolder {
         endpointId,
         exampleId,
     }: {
-        endpointPath: string;
-        endpointMethod: FdrAPI.EndpointMethod;
+        endpointPath: FdrAPI.EndpointPath;
+        endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
     }): APIV1Read.GoSnippet | undefined {
@@ -129,8 +129,8 @@ export class SDKSnippetHolder {
         endpointId,
         exampleId,
     }: {
-        endpointPath: string;
-        endpointMethod: FdrAPI.EndpointMethod;
+        endpointPath: FdrAPI.EndpointPath;
+        endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
     }): APIV1Read.RubySnippet | undefined {
@@ -157,8 +157,8 @@ export class SDKSnippetHolder {
         getSdk,
         getSnippet,
     }: {
-        endpointPath: string;
-        endpointMethod: FdrAPI.EndpointMethod;
+        endpointPath: FdrAPI.EndpointPath;
+        endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
         getSdk: (config: SnippetsConfigWithSdkId) => { sdkId: string } | undefined;
@@ -198,8 +198,8 @@ export class SDKSnippetHolder {
         endpointMethod,
         endpointId,
     }: {
-        endpointPath: string;
-        endpointMethod: FdrAPI.EndpointMethod;
+        endpointPath: FdrAPI.EndpointPath;
+        endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
     }): APIV1Read.EndpointSnippetTemplates | undefined {
         let snippetsForEndpoint;

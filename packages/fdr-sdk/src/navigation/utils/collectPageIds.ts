@@ -1,4 +1,4 @@
-import { FernNavigation } from "../generated";
+import { FernNavigation } from "../..";
 import { isPage } from "../types";
 import { NavigationNode } from "../types/NavigationNode";
 import { getPageId } from "./getPageId";

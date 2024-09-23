@@ -12,5 +12,5 @@ export interface DocsSection extends FernRegistry.docs.v1.write.NavigationNodeMe
     collapsed?: boolean;
     skipUrlSlug?: boolean;
     /** If provided, clicking on this section will open this page instead of the first page in the section. */
-    overviewPageId?: FernRegistry.docs.v1.commons.PageId;
+    overviewPageId?: FernRegistry.PageId;
 }

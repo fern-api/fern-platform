@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../../../../index";
 /**
  * @example
  *     {
- *         generator: "string",
+ *         generator: FernRegistry.generators.GeneratorId("string"),
  *         cliVersion: "string",
  *         irVersion: 1,
  *         generatorMajorVersion: 1,

@@ -1,15 +1,12 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
+  rootCommons: ../../../commons.yml
   type: type.yml
-  commons: commons.yml
+  commons: ../commons.yml
   snippetTemplate: ../../../templates.yml
 
 types:
-  EnvironmentId: string
-
-  EndpointId: string
-
   EndpointDefinition:
     extends: commons.WithDescription
     properties:
@@ -17,10 +14,10 @@ types:
         type: boolean
         docs: When this is true, the api definition will have a union for auth
       availability: optional<commons.Availability>
-      defaultEnvironment: optional<EnvironmentId>
-      environments: list<Environment>
-      method: HttpMethod
-      id: EndpointId
+      defaultEnvironment: optional<rootCommons.EnvironmentId>
+      environments: list<commons.Environment>
+      method: rootCommons.HttpMethod
+      id: rootCommons.EndpointId
       originalEndpointId: optional<string>
       urlSlug: string
       migratedFromUrlSlugs: optional<list<string>>
@@ -42,19 +39,6 @@ types:
       typescript: optional<snippetTemplate.VersionedSnippetTemplate>
       python: optional<snippetTemplate.VersionedSnippetTemplate>
 
-  Environment:
-    properties:
-      id: EnvironmentId
-      baseUrl: string
-
-  HttpMethod:
-    enum:
-      - GET
-      - POST
-      - PUT
-      - PATCH
-      - DELETE
-
   EndpointPath:
     properties:
       parts: list<EndpointPathPart>
@@ -63,17 +47,15 @@ types:
   EndpointPathPart:
     union:
       literal: string
-      pathParameter: PathParameterKey
+      pathParameter: commons.PathParameterKey
 
   PathParameter:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      key: PathParameterKey
+      key: commons.PathParameterKey
       type: type.TypeReference
-
-  PathParameterKey: string
 
   QueryParameter:
     extends:
@@ -168,7 +150,7 @@ types:
 
   StreamCondition:
     union:
-      booleanRequestProperty: type.PropertyKey
+      booleanRequestProperty: commons.PropertyKey
 
   ErrorDeclaration:
     extends:
@@ -194,7 +176,7 @@ types:
     properties:
       name: optional<string>
       path: string
-      pathParameters: map<PathParameterKey, unknown>
+      pathParameters: map<commons.PathParameterKey, unknown>
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
       requestBody: unknown

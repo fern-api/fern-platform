@@ -83,7 +83,7 @@ export class Git {
      *     await fernRegistry.git.listRepositories({
      *         page: 1,
      *         pageSize: 1,
-     *         organizationId: "string",
+     *         organizationId: FernRegistry.OrgId("string"),
      *         repositoryName: "string",
      *         repositoryOwner: "string"
      *     })
@@ -141,7 +141,7 @@ export class Git {
      *         owner: "string",
      *         fullName: "string",
      *         url: "string",
-     *         repositoryOwnerOrganizationId: "string",
+     *         repositoryOwnerOrganizationId: FernRegistry.OrgId("string"),
      *         defaultBranchChecks: [{
      *                 checkId: "string",
      *                 repositoryOwner: "string",
@@ -302,7 +302,7 @@ export class Git {
      *         pageSize: 1,
      *         repositoryName: "string",
      *         repositoryOwner: "string",
-     *         organizationId: "string",
+     *         organizationId: FernRegistry.OrgId("string"),
      *         state: [FernRegistry.PullRequestState.Open],
      *         author: ["string"]
      *     })

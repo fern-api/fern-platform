@@ -4,6 +4,7 @@ imports:
   rootCommons: ../../../commons.yml
   commons: ../commons/commons.yml
   navigation: ../../../navigation/__package__.yml
+  apiCommonsV1: ../../../api/v1/commons.yml
 
 service:
   base-path: /registry/docs
@@ -66,7 +67,7 @@ types:
 
   DocsDefinition:
     properties:
-      pages: map<commons.PageId, PageContent>
+      pages: map<rootCommons.PageId, PageContent>
       config: DocsConfig
       jsFiles:
         type: optional<map<string, string>>
@@ -77,7 +78,7 @@ types:
   PageContent:
     properties:
       markdown: string # eventually PageContent should just be a commons.FileId ?
-      editThisPageUrl: optional<commons.Url>
+      editThisPageUrl: optional<rootCommons.Url>
 
   DocsConfig:
     properties:
@@ -92,7 +93,7 @@ types:
 
       # logo
       logoHeight: optional<Height>
-      logoHref: optional<commons.Url>
+      logoHref: optional<rootCommons.Url>
       favicon: optional<commons.FileId>
 
       # seo
@@ -239,7 +240,7 @@ types:
     extends: NavigationNodeMetadata
     properties:
       id:
-        type: commons.PageId
+        type: rootCommons.PageId
         docs: This is a filepath relative to the fern folder, with a .md/.mdx extension.
       title: string
 
@@ -288,23 +289,23 @@ types:
   ApiNavigationConfigRoot:
     availability: deprecated
     properties:
-      summaryPageId: optional<commons.PageId>
+      summaryPageId: optional<rootCommons.PageId>
       items: list<ApiNavigationConfigItem>
 
   ApiNavigationConfigItem:
     availability: deprecated
     union:
       subpackage: ApiNavigationConfigSubpackage
-      endpointId: commons.EndpointId
-      websocketId: commons.WebSocketId
-      webhookId: commons.WebhookId
+      endpointId: rootCommons.EndpointId
+      websocketId: rootCommons.WebSocketId
+      webhookId: rootCommons.WebhookId
       page: PageMetadata
 
   ApiNavigationConfigSubpackage:
     availability: deprecated
     properties:
-      summaryPageId: optional<commons.PageId>
-      subpackageId: commons.SubpackageId
+      summaryPageId: optional<rootCommons.PageId>
+      subpackageId: apiCommonsV1.SubpackageId
       items: list<ApiNavigationConfigItem>
 
   ChangelogSection:
@@ -358,7 +359,7 @@ types:
           If false, the section title will be displayed as a header and the items will be displayed below it, and cannot be collapsed.
       skipUrlSlug: optional<boolean>
       overviewPageId:
-        type: optional<commons.PageId>
+        type: optional<rootCommons.PageId>
         availability: in-development
         docs: |
           If provided, clicking on this section will open this page instead of the first page in the section.

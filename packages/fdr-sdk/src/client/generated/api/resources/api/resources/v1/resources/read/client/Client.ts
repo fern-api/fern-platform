@@ -28,7 +28,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.api.v1.read.getApi("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     *     await fernRegistry.api.v1.read.getApi(FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
      */
     public async getApi(
         apiDefinitionId: FernRegistry.ApiDefinitionId,

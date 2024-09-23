@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../index";
 export interface WithApiDefinitionId {
-    apiDefinitionId: FernRegistry.navigation.ApiDefinitionId;
+    apiDefinitionId: FernRegistry.ApiDefinitionId;
     availability?: FernRegistry.navigation.Availability;
 }

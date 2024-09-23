@@ -29,18 +29,18 @@ export class Register {
      *
      * @example
      *     await fernRegistry.api.v1.register.registerApiDefinition({
-     *         orgId: "string",
-     *         apiId: "string",
+     *         orgId: FernRegistry.OrgId("string"),
+     *         apiId: FernRegistry.ApiId("string"),
      *         definition: {
      *             rootPackage: {
      *                 endpoints: [{
      *                         auth: true,
-     *                         defaultEnvironment: "string",
+     *                         defaultEnvironment: FernRegistry.EnvironmentId("string"),
      *                         environments: [{
      *                                 "key": "value"
      *                             }],
-     *                         method: FernRegistry.api.v1.register.HttpMethod.Get,
-     *                         id: "string",
+     *                         method: FernRegistry.HttpMethod.Get,
+     *                         id: FernRegistry.EndpointId("string"),
      *                         originalEndpointId: "string",
      *                         name: "string",
      *                         path: {
@@ -51,7 +51,7 @@ export class Register {
      *                                     }
      *                                 }],
      *                             pathParameters: [{
-     *                                     key: "string",
+     *                                     key: FernRegistry.api.v1.PathParameterKey("string"),
      *                                     type: {
      *                                         type: "id"
      *                                     },
@@ -160,7 +160,7 @@ export class Register {
      *                         }
      *                     }],
      *                 websockets: [{
-     *                         id: "string",
+     *                         id: FernRegistry.WebSocketId("string"),
      *                         auth: true,
      *                         name: {
      *                             "key": "value"
@@ -179,7 +179,7 @@ export class Register {
      *                                     }
      *                                 }],
      *                             pathParameters: [{
-     *                                     key: "string",
+     *                                     key: FernRegistry.api.v1.PathParameterKey("string"),
      *                                     type: {
      *                                         type: "id"
      *                                     },
@@ -211,8 +211,8 @@ export class Register {
      *                         }
      *                     }],
      *                 webhooks: [{
-     *                         method: FernRegistry.api.v1.register.WebhookHttpMethod.Get,
-     *                         id: "string",
+     *                         method: FernRegistry.api.v1.WebhookHttpMethod.Get,
+     *                         id: FernRegistry.WebhookId("string"),
      *                         name: {
      *                             "key": "value"
      *                         },
@@ -237,9 +237,9 @@ export class Register {
      *                             "key": "value"
      *                         }
      *                     }],
-     *                 types: ["string"],
-     *                 subpackages: ["string"],
-     *                 pointsTo: "string"
+     *                 types: [FernRegistry.api.v1.TypeId("string")],
+     *                 subpackages: [FernRegistry.api.v1.SubpackageId("string")],
+     *                 pointsTo: FernRegistry.api.v1.SubpackageId("string")
      *             },
      *             types: {
      *                 "string": {
@@ -260,17 +260,17 @@ export class Register {
      *             },
      *             subpackages: {
      *                 "string": {
-     *                     subpackageId: "string",
+     *                     subpackageId: FernRegistry.api.v1.SubpackageId("string"),
      *                     name: "string",
      *                     displayName: "string",
      *                     endpoints: [{
      *                             auth: true,
-     *                             defaultEnvironment: "string",
+     *                             defaultEnvironment: FernRegistry.EnvironmentId("string"),
      *                             environments: [{
      *                                     "key": "value"
      *                                 }],
-     *                             method: FernRegistry.api.v1.register.HttpMethod.Get,
-     *                             id: "string",
+     *                             method: FernRegistry.HttpMethod.Get,
+     *                             id: FernRegistry.EndpointId("string"),
      *                             originalEndpointId: "string",
      *                             name: "string",
      *                             path: {
@@ -281,7 +281,7 @@ export class Register {
      *                                         }
      *                                     }],
      *                                 pathParameters: [{
-     *                                         key: "string",
+     *                                         key: FernRegistry.api.v1.PathParameterKey("string"),
      *                                         type: {
      *                                             type: "id"
      *                                         },
@@ -390,7 +390,7 @@ export class Register {
      *                             }
      *                         }],
      *                     websockets: [{
-     *                             id: "string",
+     *                             id: FernRegistry.WebSocketId("string"),
      *                             auth: true,
      *                             name: {
      *                                 "key": "value"
@@ -409,7 +409,7 @@ export class Register {
      *                                         }
      *                                     }],
      *                                 pathParameters: [{
-     *                                         key: "string",
+     *                                         key: FernRegistry.api.v1.PathParameterKey("string"),
      *                                         type: {
      *                                             type: "id"
      *                                         },
@@ -441,8 +441,8 @@ export class Register {
      *                             }
      *                         }],
      *                     webhooks: [{
-     *                             method: FernRegistry.api.v1.register.WebhookHttpMethod.Get,
-     *                             id: "string",
+     *                             method: FernRegistry.api.v1.WebhookHttpMethod.Get,
+     *                             id: FernRegistry.WebhookId("string"),
      *                             name: {
      *                                 "key": "value"
      *                             },
@@ -467,9 +467,9 @@ export class Register {
      *                                 "key": "value"
      *                             }
      *                         }],
-     *                     types: ["string"],
-     *                     subpackages: ["string"],
-     *                     pointsTo: "string",
+     *                     types: [FernRegistry.api.v1.TypeId("string")],
+     *                     subpackages: [FernRegistry.api.v1.SubpackageId("string")],
+     *                     pointsTo: FernRegistry.api.v1.SubpackageId("string"),
      *                     description: {
      *                         "key": "value"
      *                     }

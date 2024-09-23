@@ -4,5 +4,5 @@
 
 export interface PublishedPostmanCollection {
     url: string;
-    githubRepoName?: string;
+    githubRepoName: string | undefined;
 }

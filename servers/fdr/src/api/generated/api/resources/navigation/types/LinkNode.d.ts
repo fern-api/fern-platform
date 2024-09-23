@@ -6,5 +6,5 @@ export interface LinkNode extends FernRegistry.navigation.WithNodeId {
     type: "link";
     title: string;
     icon?: string;
-    url: FernRegistry.navigation.Url;
+    url: FernRegistry.Url;
 }

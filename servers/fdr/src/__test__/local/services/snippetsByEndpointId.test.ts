@@ -25,7 +25,7 @@ it("Load snippets by endpoint id", async () => {
                 {
                     endpoint: {
                         path: "/users/v1",
-                        method: FdrAPI.EndpointMethod.Get,
+                        method: FdrAPI.HttpMethod.Get,
                         identifierOverride: "endpoint_users.list",
                     },
                     snippet: {
@@ -41,7 +41,7 @@ it("Load snippets by endpoint id", async () => {
         apiId: "user",
         endpoint: {
             path: "/users/v1",
-            method: FdrAPI.EndpointMethod.Get,
+            method: FdrAPI.HttpMethod.Get,
             identifierOverride: "endpoint_users.list",
         },
     });

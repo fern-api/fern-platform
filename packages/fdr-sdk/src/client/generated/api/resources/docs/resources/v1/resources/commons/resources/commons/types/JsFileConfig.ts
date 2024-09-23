@@ -6,5 +6,5 @@ import * as FernRegistry from "../../../../../../../../../index";
 
 export interface JsFileConfig {
     fileId: FernRegistry.docs.v1.commons.FileId;
-    strategy?: FernRegistry.docs.v1.commons.JsScriptStrategy;
+    strategy: FernRegistry.docs.v1.commons.JsScriptStrategy | undefined;
 }

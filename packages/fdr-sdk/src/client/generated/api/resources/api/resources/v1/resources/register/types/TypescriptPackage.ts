@@ -4,5 +4,5 @@
 
 export interface TypescriptPackage {
     package: string;
-    version?: string;
+    version: string | undefined;
 }

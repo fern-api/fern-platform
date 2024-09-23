@@ -8,8 +8,8 @@ import * as FernRegistry from "../../../../index";
  * @example
  *     {
  *         endpoint: {
- *             method: FernRegistry.EndpointMethod.Get,
- *             path: "/v1/search"
+ *             method: FernRegistry.HttpMethod.Get,
+ *             path: FernRegistry.EndpointPath("/v1/search")
  *         }
  *     }
  */

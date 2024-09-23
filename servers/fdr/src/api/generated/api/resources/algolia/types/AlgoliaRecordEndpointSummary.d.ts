@@ -5,6 +5,6 @@ import * as FernRegistry from "../../../index";
 export interface AlgoliaRecordEndpointSummary {
     name?: string;
     description?: string;
-    method: FernRegistry.api.v1.read.HttpMethod;
+    method: FernRegistry.HttpMethod;
     path: FernRegistry.AlgoliaRecordEndpointPath;
 }

@@ -31,7 +31,7 @@ export interface LoadSnippetAPIsRequest {
 
 export type SnippetTemplatesByEndpoint = Record<
     FdrAPI.EndpointPath,
-    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
 >;
 
 export type SnippetTemplatesByEndpointIdentifier = Record<string, APIV1Read.EndpointSnippetTemplates>;
@@ -272,7 +272,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         });
     }
 
-    public DEFAULT_ENDPOINT_SNIPPET_TEMPLATES: Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates> = {
+    public DEFAULT_ENDPOINT_SNIPPET_TEMPLATES: Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates> = {
         PATCH: {},
         POST: {},
         PUT: {},
@@ -290,7 +290,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         apiId: string;
         sdkRequests: SdkRequest[];
         definition: APIV1Write.ApiDefinition;
-    }): Promise<Record<FdrAPI.EndpointPath, Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>>> {
+    }): Promise<Record<FdrAPI.EndpointPath, Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>>> {
         const endpoints: APIV1Write.EndpointDefinition[] = [];
         for (const endpoint of definition.rootPackage.endpoints) {
             endpoints.push(endpoint);
@@ -302,10 +302,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             }
         }
 
-        const toRet: Record<
-            FdrAPI.EndpointPath,
-            Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
-        > = {};
+        const toRet: Record<FdrAPI.EndpointPath, Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>> = {};
         for (const endpoint of endpoints) {
             for (const sdk of sdkRequests) {
                 if (sdk.type !== "typescript" && sdk.type !== "python") {

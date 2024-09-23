@@ -31,7 +31,7 @@ export class Tokens {
      *
      * @example
      *     await fernRegistry.tokens.generate({
-     *         orgId: "string",
+     *         orgId: FernRegistry.OrgId("string"),
      *         scope: "string"
      *     })
      */
@@ -78,8 +78,8 @@ export class Tokens {
      *
      * @example
      *     await fernRegistry.tokens.revoke({
-     *         orgId: "string",
-     *         tokenId: "string"
+     *         orgId: FernRegistry.OrgId("string"),
+     *         tokenId: FernRegistry.TokenId("string")
      *     })
      */
     public async revoke(

@@ -21,7 +21,7 @@ it("get snippets", async () => {
                 {
                     endpoint: {
                         path: "/snippets/load",
-                        method: FdrAPI.EndpointMethod.Post,
+                        method: FdrAPI.HttpMethod.Post,
                     },
                     snippet: {
                         async_client: "const petstore = new AsyncPetstoreClient(\napi_key='YOUR_API_KEY',\n)",
@@ -38,7 +38,7 @@ it("get snippets", async () => {
             apiId: "foo",
             endpoint: {
                 path: "/snippets/load",
-                method: FdrAPI.EndpointMethod.Post,
+                method: FdrAPI.HttpMethod.Post,
             },
         }),
     );
@@ -138,7 +138,7 @@ it("get Go snippets", async () => {
                 {
                     endpoint: {
                         path: "/snippets/load",
-                        method: FdrAPI.EndpointMethod.Post,
+                        method: FdrAPI.HttpMethod.Post,
                     },
                     snippet: {
                         client: "client := acmeclient.NewClient()\n",
@@ -154,7 +154,7 @@ it("get Go snippets", async () => {
             orgId: "acme",
             endpoint: {
                 path: "/snippets/load",
-                method: FdrAPI.EndpointMethod.Post,
+                method: FdrAPI.HttpMethod.Post,
             },
         }),
     );
@@ -250,7 +250,7 @@ it("get Ruby snippets", async () => {
                 {
                     endpoint: {
                         path: "/snippets/load",
-                        method: FdrAPI.EndpointMethod.Post,
+                        method: FdrAPI.HttpMethod.Post,
                     },
                     snippet: {
                         client: "client = Acme::Client()\n",
@@ -266,7 +266,7 @@ it("get Ruby snippets", async () => {
             orgId: "acme",
             endpoint: {
                 path: "/snippets/load",
-                method: FdrAPI.EndpointMethod.Post,
+                method: FdrAPI.HttpMethod.Post,
             },
         }),
     );
@@ -362,7 +362,7 @@ it("get snippets with unregistered API", async () => {
                 {
                     endpoint: {
                         path: "/users/v1",
-                        method: FdrAPI.EndpointMethod.Get,
+                        method: FdrAPI.HttpMethod.Get,
                     },
                     snippet: {
                         client: "const petstore = new PetstoreClient({\napiKey: 'YOUR_API_KEY',\n});",
@@ -378,7 +378,7 @@ it("get snippets with unregistered API", async () => {
             apiId: "fresh",
             endpoint: {
                 path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                method: FdrAPI.HttpMethod.Get,
             },
         }),
     );
@@ -404,7 +404,7 @@ it("load snippets", async () => {
         snippets.push({
             endpoint: {
                 path: `/users/v${i}`,
-                method: FdrAPI.EndpointMethod.Get,
+                method: FdrAPI.HttpMethod.Get,
             },
             snippet: {
                 client: `const clientV${i} = new UserClient({\napiKey: 'YOUR_API_KEY',\n});`,
@@ -496,7 +496,7 @@ it("user not part of org", async () => {
                 {
                     endpoint: {
                         path: "/users/v1",
-                        method: FdrAPI.EndpointMethod.Get,
+                        method: FdrAPI.HttpMethod.Get,
                     },
                     snippet: {
                         client: "client := userclient.New(userclient.WithAuthToken('YOUR_AUTH_TOKEN')",
@@ -510,7 +510,7 @@ it("user not part of org", async () => {
         orgId: "private",
         endpoint: {
             path: "/users/v1",
-            method: FdrAPI.EndpointMethod.Get,
+            method: FdrAPI.HttpMethod.Get,
         },
     });
     console.log("bruh", JSON.stringify(response));
@@ -534,7 +534,7 @@ it("snippets apiId not found", async () => {
                 {
                     endpoint: {
                         path: "/users/v1",
-                        method: FdrAPI.EndpointMethod.Get,
+                        method: FdrAPI.HttpMethod.Get,
                     },
                     snippet: {
                         client: "const acme = new AcmeClient({\napiKey: 'YOUR_API_KEY',\n});",
@@ -550,7 +550,7 @@ it("snippets apiId not found", async () => {
         apiId: "dne",
         endpoint: {
             path: "/users/v1",
-            method: FdrAPI.EndpointMethod.Get,
+            method: FdrAPI.HttpMethod.Get,
         },
     });
     expect(response.ok === false).toBe(true);
@@ -578,7 +578,7 @@ it("get snippets (unauthenticated)", async () => {
                 {
                     endpoint: {
                         path: "/users/v1",
-                        method: FdrAPI.EndpointMethod.Get,
+                        method: FdrAPI.HttpMethod.Get,
                     },
                     snippet: {
                         client: "client := userclient.New(userclient.WithAuthToken('YOUR_AUTH_TOKEN')",
@@ -594,7 +594,7 @@ it("get snippets (unauthenticated)", async () => {
         apiId: "user",
         endpoint: {
             path: "/users/v1",
-            method: FdrAPI.EndpointMethod.Get,
+            method: FdrAPI.HttpMethod.Get,
         },
     });
     expect(response.ok).toBe(false);

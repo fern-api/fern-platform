@@ -31,9 +31,9 @@ export class Templates {
      *
      * @example
      *     await fernRegistry.templates.register({
-     *         orgId: "string",
-     *         apiId: "string",
-     *         apiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         orgId: FernRegistry.OrgId("string"),
+     *         apiId: FernRegistry.ApiId("string"),
+     *         apiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *         snippet: {
      *             sdk: {
      *                 type: "typescript",
@@ -41,8 +41,8 @@ export class Templates {
      *                 version: "string"
      *             },
      *             endpointId: {
-     *                 path: "string",
-     *                 method: FernRegistry.EndpointMethod.Put,
+     *                 path: FernRegistry.EndpointPath("string"),
+     *                 method: FernRegistry.HttpMethod.Get,
      *                 identifierOverride: "string"
      *             },
      *             snippetTemplate: {
@@ -127,9 +127,9 @@ export class Templates {
      *
      * @example
      *     await fernRegistry.templates.registerBatch({
-     *         orgId: "string",
-     *         apiId: "string",
-     *         apiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         orgId: FernRegistry.OrgId("string"),
+     *         apiId: FernRegistry.ApiId("string"),
+     *         apiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *         snippets: [{
      *                 sdk: {
      *                     type: "typescript",
@@ -137,8 +137,8 @@ export class Templates {
      *                     version: "string"
      *                 },
      *                 endpointId: {
-     *                     path: "string",
-     *                     method: FernRegistry.EndpointMethod.Put,
+     *                     path: FernRegistry.EndpointPath("string"),
+     *                     method: FernRegistry.HttpMethod.Get,
      *                     identifierOverride: "string"
      *                 },
      *                 snippetTemplate: {
@@ -223,16 +223,16 @@ export class Templates {
      *
      * @example
      *     await fernRegistry.templates.get({
-     *         orgId: "string",
-     *         apiId: "string",
+     *         orgId: FernRegistry.OrgId("string"),
+     *         apiId: FernRegistry.ApiId("string"),
      *         sdk: {
      *             type: "typescript",
      *             package: "string",
      *             version: "string"
      *         },
      *         endpointId: {
-     *             path: "string",
-     *             method: FernRegistry.EndpointMethod.Put,
+     *             path: FernRegistry.EndpointPath("string"),
+     *             method: FernRegistry.HttpMethod.Get,
      *             identifierOverride: "string"
      *         }
      *     })

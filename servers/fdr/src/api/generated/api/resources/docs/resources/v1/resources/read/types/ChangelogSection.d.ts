@@ -5,6 +5,6 @@ import * as FernRegistry from "../../../../../../../index";
 export interface ChangelogSection extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
     title?: string;
     description?: string;
-    pageId?: FernRegistry.docs.v1.commons.PageId;
+    pageId?: FernRegistry.PageId;
     items: FernRegistry.docs.v1.read.ChangelogItem[];
 }
