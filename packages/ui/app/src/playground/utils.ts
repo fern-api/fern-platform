@@ -17,6 +17,7 @@ import {
     unwrapReference,
     visitResolvedHttpRequestBodyShape,
 } from "../resolver/types";
+import { lazyjsonpath } from "../util/lazyjsonpath";
 import { unknownToString } from "../util/unknownToString";
 import { blobToDataURL } from "./fetch-utils/blobToDataURL";
 import { executeProxyRest } from "./fetch-utils/executeProxyRest";
@@ -598,7 +599,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
         json: async (jsonRes) => {
             if (jsonRes.response.ok) {
                 try {
-                    const jsonpath = await import("jsonpath");
+                    const jsonpath = await lazyjsonpath();
                     const accessToken = jsonpath.query(
                         jsonRes.response,
                         oAuthClientCredentialsReferencedEndpoint.accessTokenLocator,

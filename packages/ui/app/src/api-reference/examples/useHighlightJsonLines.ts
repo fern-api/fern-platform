@@ -1,5 +1,6 @@
 import { isPlainObject } from "@fern-ui/core-utils";
 import { useEffect, useRef, useState } from "react";
+import { lazyjsonpath } from "../../util/lazyjsonpath";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
 
@@ -115,7 +116,7 @@ export function useHighlightJsonLines(
                 // https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#with-external-libraries
                 // Note: there's a bug in nextjs that causes the import to fail inside of an jotai atom.
                 // The workaround is to import the module inside of the useEffect.
-                const jq = await import("jsonpath");
+                const jq = await lazyjsonpath();
                 if (currentNonce !== nonce.current) {
                     return;
                 }
