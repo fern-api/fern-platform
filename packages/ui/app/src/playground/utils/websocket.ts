@@ -1,6 +1,6 @@
 import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../../resolver/types";
 import { PlaygroundWebSocketRequestFormState } from "../types";
-import { getDefaultValueForObjectProperties, getDefaultValueForType } from "./utils";
+import { getDefaultValueForObjectProperties, getDefaultValueForType } from "./default-values";
 
 export function getInitialWebSocketRequestFormState(
     webSocket: ResolvedWebSocketChannel | undefined,
