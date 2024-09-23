@@ -77,12 +77,48 @@ describe("getRedirectForPath", () => {
         ).toEqual({
             redirect: { destination: "/baz/123", permanent: false },
         });
+    });
+
+    it("should return redirect for wildcard", () => {
         expect(
             getRedirectForPath("/docs/bar/123/456", MOCK_BASE_URL_1, [
-                { source: "/docs/bar/*", destination: "/baz/*" },
+                { source: "/docs/bar/:path*", destination: "/baz/:path*" },
             ]),
         ).toEqual({
             redirect: { destination: "/baz/123/456", permanent: false },
+        });
+        expect(
+            getRedirectForPath("/docs/bar/123/456/", MOCK_BASE_URL_1, [
+                { source: "/docs/bar/:path*/", destination: "/baz/:path*/" },
+            ]),
+        ).toEqual({
+            redirect: { destination: "/baz/123/456/", permanent: false },
+        });
+    });
+
+    it("should respect regex", () => {
+        expect(
+            getRedirectForPath("/bar/123", MOCK_BASE_URL_0, [{ source: "/bar/:id(\\d+)", destination: "/baz/:id" }]),
+        ).toEqual({
+            redirect: { destination: "/baz/123", permanent: false },
+        });
+
+        expect(
+            getRedirectForPath("/bar/abc", MOCK_BASE_URL_0, [{ source: "/bar/:id(\\d+)", destination: "/baz/:id" }]),
+        ).toBeUndefined();
+
+        expect(
+            getRedirectForPath("/bar/abc", MOCK_BASE_URL_0, [{ source: "/bar/:id(\\w+)", destination: "/baz/:id" }]),
+        ).toEqual({
+            redirect: { destination: "/baz/abc", permanent: false },
+        });
+
+        expect(
+            getRedirectForPath("/bar/efg", MOCK_BASE_URL_0, [
+                { source: "/bar/:param(abc|efg)", destination: "/baz/:param" },
+            ]),
+        ).toEqual({
+            redirect: { destination: "/baz/efg", permanent: false },
         });
     });
 
