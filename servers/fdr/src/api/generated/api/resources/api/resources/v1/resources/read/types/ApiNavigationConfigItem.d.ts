@@ -9,14 +9,14 @@ export declare namespace ApiNavigationConfigItem {
     }
     interface EndpointId {
         type: "endpointId";
-        value: FernRegistry.api.v1.read.EndpointId;
+        value: FernRegistry.EndpointId;
     }
     interface WebsocketId {
         type: "websocketId";
-        value: FernRegistry.api.v1.read.WebSocketId;
+        value: FernRegistry.WebSocketId;
     }
     interface WebhookId {
         type: "webhookId";
-        value: FernRegistry.api.v1.read.WebhookId;
+        value: FernRegistry.WebhookId;
     }
 }

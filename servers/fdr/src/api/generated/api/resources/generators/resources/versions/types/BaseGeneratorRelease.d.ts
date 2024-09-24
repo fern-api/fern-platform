@@ -7,9 +7,9 @@ export interface BaseGeneratorRelease {
     /** The major version of the IR that this generator version consumes. */
     irVersion: number;
     /** The TypeScript file for the migration to run when upgrading to this version. Ideally this would be typed as a file, but we don't support file upload in the express generator. */
-    migration?: string;
+    migration: string | undefined;
     /** The JSON schema (stringified) for the custom config that this generator version supports. */
-    customConfigSchema?: string;
+    customConfigSchema: string | undefined;
     /** Tags to categorize the Generator release. */
-    tags?: string[];
+    tags: string[] | undefined;
 }

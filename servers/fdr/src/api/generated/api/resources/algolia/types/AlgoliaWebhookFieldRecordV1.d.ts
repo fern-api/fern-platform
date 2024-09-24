@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../index";
 export interface AlgoliaWebhookFieldRecordV1 extends FernRegistry.AlgoliaWebhookRecordV4 {
-    availability?: string;
-    extends?: string[];
+    availability: string | undefined;
+    extends: string[] | undefined;
 }

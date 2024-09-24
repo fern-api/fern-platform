@@ -1,4 +1,4 @@
-import { FernNavigation } from "../generated";
+import { FernNavigation } from "../..";
 import { NavigationNode, hasMetadata } from "../types";
 import { hasRedirect } from "../types/NavigationNodeWithRedirect";
 import { traverseNavigation } from "./traverseNavigation";

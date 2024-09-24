@@ -1,22 +1,14 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+imports:
+  commons: ../commons.yml
+
 types:
   Slug: string
-  Url: string
 
-  VersionId: string
   TabId: string
-  PageId: string
   NodeId: string
   ProductId: string
-  EnvironmentId:
-    type: string
-    docs: Identifier for an API environment (i.e. "Prod", "Staging", "Dev")
-
-  ApiDefinitionId: string
-  EndpointId: string
-  WebSocketId: string
-  WebhookId: string
 
   # discriminated unions
 
@@ -26,8 +18,8 @@ types:
       - VersionedNode
       - UnversionedNode
       - ProductGroupNode
-  
-  ProductChild: 
+
+  ProductChild:
     discriminated: false
     union:
       - VersionedNode
@@ -75,12 +67,12 @@ types:
 
   # nodes without metadata
 
-  ProductGroupNode: 
+  ProductGroupNode:
     extends: WithNodeId
-    properties: 
+    properties:
       type: literal<"productgroup">
       landingPage: optional<LandingPageNode>
-      children: 
+      children:
         type: list<ProductNode>
         docs: The individual products being documented
 
@@ -128,13 +120,13 @@ types:
       type: literal<"link">
       title: string
       icon: optional<string>
-      url: Url
+      url: commons.Url
 
   # nodes with metadata
 
   RootNode:
-    audiences: 
-      - navigation  
+    audiences:
+      - navigation
     extends:
       - WithNodeMetadata
       - WithRedirect
@@ -142,17 +134,17 @@ types:
       type: literal<"root">
       version: literal<"v1">
       child: RootChild
-  
-  ProductNode: 
+
+  ProductNode:
     extends:
       - WithNodeMetadata
       - WithRedirect
-    properties: 
-      type: literal<"product">      
+    properties:
+      type: literal<"product">
       default: boolean
       productId: ProductId
       child: ProductChild
-      subtitle: 
+      subtitle:
         type: string
         docs: Couple words for what the product is
 
@@ -163,7 +155,7 @@ types:
     properties:
       type: literal<"version">
       default: boolean
-      versionId: VersionId
+      versionId: commons.VersionId
       child: VersionChild
       availability: optional<Availability>
       landingPage: optional<LandingPageNode>
@@ -253,7 +245,7 @@ types:
   PlaygroundSettings:
     properties:
       environments:
-        type: optional<list<EnvironmentId>>
+        type: optional<list<commons.EnvironmentId>>
         docs: |
           A list of environment IDs that are allowed to be used in the playground.
           If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
@@ -261,7 +253,7 @@ types:
 
   PlaygroundButtonSettings:
     properties:
-      href: optional<Url>
+      href: optional<commons.Url>
 
   EndpointNode:
     extends:
@@ -269,8 +261,8 @@ types:
       - WithApiDefinitionId
     properties:
       type: literal<"endpoint">
-      method: HttpMethod
-      endpointId: EndpointId
+      method: commons.HttpMethod
+      endpointId: commons.EndpointId
       isResponseStream: optional<boolean>
       playground:
         type: optional<PlaygroundSettings>
@@ -282,7 +274,7 @@ types:
       - WithApiDefinitionId
     properties:
       type: literal<"webSocket">
-      webSocketId: WebSocketId
+      webSocketId: commons.WebSocketId
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affect this endpoint specifically.
@@ -293,8 +285,8 @@ types:
       - WithApiDefinitionId
     properties:
       type: literal<"webhook">
-      method: HttpMethod
-      webhookId: WebhookId
+      method: commons.HttpMethod
+      webhookId: commons.WebhookId
       # note: webhooks do not have a playground
 
   ApiPackageNode:
@@ -328,17 +320,17 @@ types:
 
   WithPage:
     properties:
-      pageId: PageId
+      pageId: commons.PageId
       noindex: optional<boolean>
 
   WithOverviewPage:
     properties:
-      overviewPageId: optional<PageId>
+      overviewPageId: optional<commons.PageId>
       noindex: optional<boolean>
 
   WithApiDefinitionId:
     properties:
-      apiDefinitionId: ApiDefinitionId
+      apiDefinitionId: commons.ApiDefinitionId
       availability: optional<Availability>
 
   WithRedirect:
@@ -346,14 +338,6 @@ types:
       pointsTo: optional<Slug>
 
   # enums
-
-  HttpMethod:
-    enum:
-      - GET
-      - POST
-      - PUT
-      - PATCH
-      - DELETE
 
   Availability:
     enum:

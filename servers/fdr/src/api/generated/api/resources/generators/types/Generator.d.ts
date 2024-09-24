@@ -6,7 +6,7 @@ export interface Generator {
     id: FernRegistry.generators.GeneratorId;
     displayName: string;
     generatorType: FernRegistry.generators.GeneratorType;
-    generatorLanguage?: FernRegistry.generators.GeneratorLanguage;
+    generatorLanguage: FernRegistry.generators.GeneratorLanguage | undefined;
     /** The name of the docker image to pull to run this generator. */
     dockerImage: string;
 }

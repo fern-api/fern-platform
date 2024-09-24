@@ -1,15 +1,7 @@
 import { APIV1Read, APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
-import {
-    BadRequestError,
-    EndpointSnippetTemplate,
-    GetSnippetTemplate,
-    RegisterSnippetTemplateBatchRequest,
-    Sdk,
-    SdkRequest,
-    Template,
-} from "../../api/generated/api";
+import { BadRequestError, GetSnippetTemplate } from "../../api/generated/api";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
 import { SdkDaoImpl, SdkPackage } from "../sdk/SdkDao";
 import { SdkIdFactory } from "./SdkIdFactory";
@@ -30,8 +22,8 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export type SnippetTemplatesByEndpoint = Record<
-    FdrAPI.EndpointPath,
-    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    FdrAPI.EndpointPathLiteral,
+    Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
 >;
 
 export type SnippetTemplatesByEndpointIdentifier = Record<string, APIV1Read.EndpointSnippetTemplates>;
@@ -41,26 +33,26 @@ export interface SnippetTemplateDao {
         loadSnippetTemplateRequest,
     }: {
         loadSnippetTemplateRequest: GetSnippetTemplate;
-    }): Promise<EndpointSnippetTemplate | null>;
+    }): Promise<FdrAPI.EndpointSnippetTemplate | null>;
 
     loadSnippetTemplatesByEndpoint(opts: {
         orgId: FdrAPI.OrgId;
         apiId: FdrAPI.ApiId;
-        sdkRequests: SdkRequest[];
+        sdkRequests: FdrAPI.SdkRequest[];
         definition: APIV1Write.ApiDefinition;
     }): Promise<SnippetTemplatesByEndpoint>;
 
     loadSnippetTemplatesByEndpointIdentifier(opts: {
         orgId: FdrAPI.OrgId;
         apiId: FdrAPI.ApiId;
-        sdkRequests: SdkRequest[];
+        sdkRequests: FdrAPI.SdkRequest[];
         definition: APIV1Write.ApiDefinition;
     }): Promise<SnippetTemplatesByEndpointIdentifier>;
 
     storeSnippetTemplate({
         storeSnippetsInfo,
     }: {
-        storeSnippetsInfo: RegisterSnippetTemplateBatchRequest;
+        storeSnippetsInfo: FdrAPI.RegisterSnippetTemplateBatchRequest;
     }): Promise<void>;
 }
 
@@ -72,9 +64,9 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         sdkRequests,
         definition,
     }: {
-        orgId: string;
-        apiId: string;
-        sdkRequests: SdkRequest[];
+        orgId: FdrAPI.OrgId;
+        apiId: FdrAPI.ApiId;
+        sdkRequests: FdrAPI.SdkRequest[];
         definition: APIV1Write.ApiDefinition;
     }): Promise<SnippetTemplatesByEndpointIdentifier> {
         const endpoints: APIV1Write.EndpointDefinition[] = [];
@@ -102,6 +94,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                         endpointId: {
                             path: getEndpointPathAsString(endpoint),
                             method: endpoint.method,
+                            identifierOverride: undefined,
                         },
                     },
                 });
@@ -109,7 +102,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                     const template = {
                         [sdk.type]: result.snippetTemplate,
                         ...(toRet[result.endpointId.identifierOverride] ?? {}),
-                    };
+                    } as APIV1Read.EndpointSnippetTemplates;
                     toRet[result.endpointId.identifierOverride] = template;
                 }
             }
@@ -118,7 +111,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         return toRet;
     }
 
-    async getSdkFromSdkRequest(request: SdkRequest): Promise<Sdk> {
+    async getSdkFromSdkRequest(request: FdrAPI.SdkRequest): Promise<FdrAPI.Sdk> {
         if (request.version != null) {
             return { ...request, version: request.version };
         } else {
@@ -154,7 +147,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         loadSnippetTemplateRequest,
     }: {
         loadSnippetTemplateRequest: GetSnippetTemplate;
-    }): Promise<EndpointSnippetTemplate | null> {
+    }): Promise<FdrAPI.EndpointSnippetTemplate | null> {
         const sdkFromRequest = await getSdkFromSdkRequest(this.prisma, loadSnippetTemplateRequest.sdk);
 
         let snippetTemplate = null;
@@ -184,21 +177,23 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             return null;
         }
         return {
+            apiDefinitionId: undefined,
+            additionalTemplates: undefined,
             endpointId: {
-                path: snippetTemplate.endpointPath,
+                path: FdrAPI.EndpointPathLiteral(snippetTemplate.endpointPath),
                 method: snippetTemplate.endpointMethod,
                 identifierOverride: snippetTemplate.identifierOverride ?? undefined,
             },
             sdk: sdkFromRequest,
             snippetTemplate: {
                 type: snippetTemplate.version,
-                functionInvocation: readBuffer(snippetTemplate.functionInvocation) as Template,
+                functionInvocation: readBuffer(snippetTemplate.functionInvocation) as FdrAPI.Template,
                 clientInstantiation: readBuffer(snippetTemplate.clientInstantiation) as string,
             },
         };
     }
 
-    private getSdkId(sdk: Sdk): string {
+    private getSdkId(sdk: FdrAPI.Sdk): string {
         switch (sdk.type) {
             case "typescript":
                 return SdkIdFactory.fromTypescript(sdk);
@@ -216,7 +211,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
     public async storeSnippetTemplate({
         storeSnippetsInfo,
     }: {
-        storeSnippetsInfo: RegisterSnippetTemplateBatchRequest;
+        storeSnippetsInfo: FdrAPI.RegisterSnippetTemplateBatchRequest;
     }): Promise<void> {
         const dbApi = await this.prisma.snippetApi.findUnique({
             where: {
@@ -272,12 +267,27 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         });
     }
 
-    public DEFAULT_ENDPOINT_SNIPPET_TEMPLATES: Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates> = {
-        PATCH: {},
-        POST: {},
-        PUT: {},
-        GET: {},
-        DELETE: {},
+    public DEFAULT_ENDPOINT_SNIPPET_TEMPLATES: Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates> = {
+        PATCH: {
+            typescript: undefined,
+            python: undefined,
+        },
+        POST: {
+            typescript: undefined,
+            python: undefined,
+        },
+        PUT: {
+            typescript: undefined,
+            python: undefined,
+        },
+        GET: {
+            typescript: undefined,
+            python: undefined,
+        },
+        DELETE: {
+            typescript: undefined,
+            python: undefined,
+        },
     };
 
     public async loadSnippetTemplatesByEndpoint({
@@ -286,11 +296,11 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         sdkRequests,
         definition,
     }: {
-        orgId: string;
-        apiId: string;
-        sdkRequests: SdkRequest[];
+        orgId: FdrAPI.OrgId;
+        apiId: FdrAPI.ApiId;
+        sdkRequests: FdrAPI.SdkRequest[];
         definition: APIV1Write.ApiDefinition;
-    }): Promise<Record<FdrAPI.EndpointPath, Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>>> {
+    }): Promise<Record<FdrAPI.EndpointPathLiteral, Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>>> {
         const endpoints: APIV1Write.EndpointDefinition[] = [];
         for (const endpoint of definition.rootPackage.endpoints) {
             endpoints.push(endpoint);
@@ -303,8 +313,8 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         }
 
         const toRet: Record<
-            FdrAPI.EndpointPath,
-            Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+            FdrAPI.EndpointPathLiteral,
+            Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
         > = {};
         for (const endpoint of endpoints) {
             for (const sdk of sdkRequests) {
@@ -319,6 +329,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                         endpointId: {
                             path: getEndpointPathAsString(endpoint),
                             method: endpoint.method,
+                            identifierOverride: undefined,
                         },
                     },
                 });
@@ -349,5 +360,5 @@ function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition) {
             endpointPath += `{${part.value}}`;
         }
     }
-    return endpointPath;
+    return APIV1Write.EndpointPathLiteral(endpointPath);
 }

@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { memo } from "react";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../../resolver/types";

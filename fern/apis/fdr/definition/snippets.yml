@@ -313,13 +313,13 @@ types:
         type: optional<integer>
         docs: If present, pass this into the `page` query parameter to load the next page.
       snippets:
-        type: map<commons.EndpointPath, SnippetsByEndpointMethod>
+        type: map<commons.EndpointPathLiteral, SnippetsByEndpointMethod>
         docs: |
           The snippets are returned as a map of endpoint path (e.g. `/api/users`) 
           to a map of endpoint method (e.g. `POST`) to snippets.
 
   SnippetsByEndpointMethod:
-    type: map<commons.EndpointMethod, list<Snippet>>
+    type: map<commons.HttpMethod, list<Snippet>>
 
   Snippet:
     audiences:

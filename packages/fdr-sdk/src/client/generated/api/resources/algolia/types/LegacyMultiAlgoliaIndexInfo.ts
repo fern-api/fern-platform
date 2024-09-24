@@ -3,5 +3,5 @@
  */
 
 export interface LegacyMultiAlgoliaIndexInfo {
-    algoliaIndex?: string;
+    algoliaIndex: string | undefined;
 }

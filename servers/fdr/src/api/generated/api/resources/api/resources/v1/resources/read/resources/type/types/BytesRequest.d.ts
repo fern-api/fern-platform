@@ -3,5 +3,5 @@
  */
 export interface BytesRequest {
     isOptional: boolean;
-    contentType?: string;
+    contentType: string | undefined;
 }

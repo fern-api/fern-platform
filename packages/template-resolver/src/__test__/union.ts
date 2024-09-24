@@ -1,13 +1,13 @@
-import { FernRegistry } from "../generated";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 
-export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
+export const UNIONS_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
     sdk: {
         type: "typescript",
         package: "unions",
         version: "7.10.3",
     },
     endpointId: {
-        path: "/",
+        path: FdrAPI.EndpointPathLiteral("/"),
         method: "POST",
         identifierOverride: "endpoint_.create_movie",
     },
@@ -44,7 +44,13 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                         {
                                             type: {
                                                 type: "primitive",
-                                                value: { type: "string" },
+                                                value: {
+                                                    type: "string",
+                                                    regex: undefined,
+                                                    minLength: undefined,
+                                                    maxLength: undefined,
+                                                    default: undefined,
+                                                },
                                             },
                                             template: {
                                                 type: "generic",
@@ -58,12 +64,18 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         path: undefined,
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                         {
                                             type: {
                                                 type: "primitive",
-                                                value: { type: "double" },
+                                                value: {
+                                                    type: "double",
+                                                    minimum: undefined,
+                                                    maximum: undefined,
+                                                    default: undefined,
+                                                },
                                             },
                                             template: {
                                                 type: "generic",
@@ -77,12 +89,14 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         path: undefined,
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                         {
                                             type: {
                                                 type: "id",
-                                                value: "type_imdb:DetailedMovieReview",
+                                                value: APIV1Read.TypeId("type_imdb:DetailedMovieReview"),
+                                                default: undefined,
                                             },
                                             template: {
                                                 type: "generic",
@@ -104,6 +118,7 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                     path: "summary",
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                     },
                                                     {
@@ -120,6 +135,7 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                     path: "notes",
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                     },
                                                     {
@@ -136,15 +152,18 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                     path: "stars",
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                         {
                                             type: {
                                                 type: "id",
-                                                value: "type_imdb:AgressiveMovieReview",
+                                                value: APIV1Read.TypeId("type_imdb:AgressiveMovieReview"),
+                                                default: undefined,
                                             },
                                             template: {
                                                 type: "generic",
@@ -166,6 +185,7 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                     path: "reallyAngrySummary",
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                     },
                                                     {
@@ -182,6 +202,7 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                     path: "notes",
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                     },
                                                     {
@@ -198,9 +219,11 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                     path: "stars",
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                     ],
@@ -214,4 +237,6 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
         clientInstantiation:
             'const cohere = new CohereClient({ token: "YOUR_TOKEN", clientName: "YOUR_CLIENT_NAME" });',
     },
+    apiDefinitionId: undefined,
+    additionalTemplates: undefined,
 };

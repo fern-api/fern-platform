@@ -14,7 +14,7 @@ export type FormValue =
 export declare namespace FormValue {
     interface Json {
         type: "json";
-        value?: unknown;
+        value: unknown;
     }
 
     interface Filename {

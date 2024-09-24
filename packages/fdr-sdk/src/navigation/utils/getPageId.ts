@@ -1,5 +1,5 @@
+import { FernNavigation } from "../..";
 import { visitDiscriminatedUnion } from "../../utils";
-import { FernNavigation } from "../generated";
 import { NavigationNodePage } from "../types";
 
 const RETURN_PAGEID = (node: { pageId: FernNavigation.PageId }) => node.pageId;

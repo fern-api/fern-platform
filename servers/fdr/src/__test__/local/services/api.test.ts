@@ -1,4 +1,4 @@
-import { APIV1Write } from "@fern-api/fdr-sdk";
+import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { inject } from "vitest";
 import { createApiDefinition, getAPIResponse, getClient } from "../util";
 
@@ -9,13 +9,18 @@ export const EMPTY_REGISTER_API_DEFINITION: APIV1Write.ApiDefinition = {
         websockets: [],
         types: [],
         subpackages: [],
+        pointsTo: undefined,
     },
     subpackages: {},
     types: {},
+    auth: undefined,
+    globalHeaders: undefined,
+    snippetsConfiguration: undefined,
+    navigation: undefined,
 };
 
 const MOCK_REGISTER_API_DEFINITION: APIV1Write.ApiDefinition = createApiDefinition({
-    endpointId: "dummy",
+    endpointId: APIV1Write.EndpointId("dummy"),
     endpointMethod: "POST",
     endpointPath: {
         parts: [{ type: "literal", value: "dummy" }],
@@ -28,8 +33,8 @@ it("register api", async () => {
     // register empty definition
     const emptyDefinitionRegisterResponse = getAPIResponse(
         await fdr.api.v1.register.registerApiDefinition({
-            orgId: "fern",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("fern"),
+            apiId: FdrAPI.ApiId("api"),
             definition: EMPTY_REGISTER_API_DEFINITION,
         }),
     );
@@ -52,8 +57,8 @@ it("register api", async () => {
     // register updated definition
     const updatedDefinitionRegisterResponse = getAPIResponse(
         await fdr.api.v1.register.registerApiDefinition({
-            orgId: "fern",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("fern"),
+            apiId: FdrAPI.ApiId("api"),
             definition: MOCK_REGISTER_API_DEFINITION,
         }),
     );

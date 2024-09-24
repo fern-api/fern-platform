@@ -43,7 +43,7 @@ export class DocsRegistrationDao {
             authType: response.authType,
             customUrls: response.customURLs.map((url) => ParsedBaseUrl.parse(url)),
             isPreview: response.isPreview,
-            orgId: response.orgID,
+            orgId: FdrAPI.OrgId(response.orgID),
             fernUrl: ParsedBaseUrl.parse(response.fernURL),
             s3FileInfos: readBuffer(response.s3FileInfos) as any as Record<DocsV1Write.FilePath, S3DocsFileInfo>,
         };

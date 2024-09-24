@@ -1,5 +1,5 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";

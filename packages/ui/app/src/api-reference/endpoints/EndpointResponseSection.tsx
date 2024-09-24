@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { Markdown } from "../../mdx/Markdown";

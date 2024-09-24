@@ -14,8 +14,11 @@ export declare namespace Tokens {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -30,8 +33,8 @@ export class Tokens {
      * @param {Tokens.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.tokens.generate({
-     *         orgId: "string",
+     *     await client.tokens.generate({
+     *         orgId: FernRegistry.OrgId("string"),
      *         scope: "string"
      *     })
      */
@@ -52,6 +55,7 @@ export class Tokens {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -77,9 +81,9 @@ export class Tokens {
      * @param {Tokens.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.tokens.revoke({
-     *         orgId: "string",
-     *         tokenId: "string"
+     *     await client.tokens.revoke({
+     *         orgId: FernRegistry.OrgId("string"),
+     *         tokenId: FernRegistry.TokenId("string")
      *     })
      */
     public async revoke(
@@ -99,6 +103,7 @@ export class Tokens {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

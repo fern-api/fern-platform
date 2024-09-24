@@ -1,3 +1,4 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
@@ -63,7 +64,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         authHeaders = visitDiscriminatedUnion(endpoint.auth, "type")._visit<ResolvedObjectProperty>({
             basicAuth: () => {
                 return {
-                    key: "Authorization",
+                    key: APIV1Read.PropertyKey("Authorization"),
                     description: "Basic authentication of the form Basic <username:password>.",
                     hidden: false,
                     valueShape: {
@@ -75,7 +76,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             },
             bearerAuth: () => {
                 return {
-                    key: "Authorization",
+                    key: APIV1Read.PropertyKey("Authorization"),
                     description: "Bearer authentication of the form Bearer <token>, where token is your auth token.",
                     hidden: false,
                     valueShape: {
@@ -87,7 +88,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             },
             header: (value) => {
                 return {
-                    key: value.headerWireValue,
+                    key: APIV1Read.PropertyKey(value.headerWireValue),
                     description:
                         value.prefix != null ? `Header authentication of the form ${value.prefix} <token>` : undefined,
                     hidden: false,
@@ -103,7 +104,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     clientCredentials: (clientCredentialsValue) =>
                         visitDiscriminatedUnion(clientCredentialsValue.value, "type")._visit({
                             referencedEndpoint: () => ({
-                                key: "Authorization",
+                                key: APIV1Read.PropertyKey("Authorization"),
                                 description: "OAuth authentication of the form Bearer <token>.",
                                 hidden: false,
                                 valueShape: {

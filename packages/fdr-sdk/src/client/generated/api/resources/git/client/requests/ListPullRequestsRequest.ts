@@ -11,8 +11,8 @@ import * as FernRegistry from "../../../../index";
  *         pageSize: 1,
  *         repositoryName: "string",
  *         repositoryOwner: "string",
- *         organizationId: "string",
- *         state: [FernRegistry.PullRequestState.Open],
+ *         organizationId: FernRegistry.OrgId("string"),
+ *         state: ["open"],
  *         author: ["string"]
  *     }
  */

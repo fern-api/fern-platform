@@ -4,5 +4,5 @@
 export interface AlgoliaRecordPathPart {
     name: string;
     urlSlug: string;
-    skipUrlSlug?: boolean;
+    skipUrlSlug: boolean | undefined;
 }

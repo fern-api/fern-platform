@@ -5,7 +5,7 @@ imports:
   rootCommons: ../../../commons.yml
   readRoot: ../read/__package__.yml
   readType: ../read/type.yml
-  readCommons: ../read/commons.yml
+  commons: ../commons.yml
   readWebhook: ../read/webhook.yml
   readWebsocket: ../read/websocket.yml
   readEndpoint: ../read/endpoint.yml
@@ -15,8 +15,8 @@ types:
     properties:
       id: rootCommons.ApiDefinitionId
       rootPackage: DbApiDefinitionPackage
-      types: map<readType.TypeId, readType.TypeDefinition>
-      subpackages: map<readRoot.SubpackageId, DbApiDefinitionSubpackage>
+      types: map<commons.TypeId, readType.TypeDefinition>
+      subpackages: map<commons.SubpackageId, DbApiDefinitionSubpackage>
       auth: optional<readRoot.ApiAuth>
       hasMultipleBaseUrls:
         type: boolean
@@ -34,21 +34,21 @@ types:
       endpoints: list<endpoint.DbEndpointDefinition>
       websockets: optional<list<readWebsocket.WebSocketChannel>>
       webhooks: optional<list<readWebhook.WebhookDefinition>>
-      types: list<readType.TypeId>
-      subpackages: list<readRoot.SubpackageId>
+      types: list<commons.TypeId>
+      subpackages: list<commons.SubpackageId>
       pointsTo:
         docs: |
           if present, this package should be replaced with the provided subpackage
           in the docs navigation.
-        type: optional<readRoot.SubpackageId>
+        type: optional<commons.SubpackageId>
 
   DbApiDefinitionSubpackage:
     extends:
-      - readCommons.WithDescription
+      - commons.WithDescription
       - DbApiDefinitionPackage
     properties:
-      parent: optional<readRoot.SubpackageId>
-      subpackageId: readRoot.SubpackageId
+      parent: optional<commons.SubpackageId>
+      subpackageId: commons.SubpackageId
       name: string
       urlSlug: string
       displayName: optional<string>

@@ -81,7 +81,7 @@ export function getAllReferencedTypes({
                         return {
                             ...base,
                             ...getAllReferencedTypesFromReference({
-                                reference: { type: "id", value },
+                                reference: { type: "id", value, default: undefined },
                                 results,
                             }),
                         };
@@ -106,6 +106,8 @@ export function getAllReferencedTypes({
                                 definition: {
                                     name: value.discriminantValue,
                                     shape: { type: "object", ...value.additionalProperties },
+                                    description: undefined,
+                                    availability: undefined,
                                 },
                                 results,
                             }),

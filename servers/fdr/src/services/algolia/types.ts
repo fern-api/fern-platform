@@ -1,18 +1,16 @@
-import { APIV1Read, Algolia, DocsV1Db } from "../../api";
-import { AlgoliaRecordVersionV3, BreadcrumbsInfo } from "../../api/generated/api";
-import { EndpointPathPart, HttpMethod } from "../../api/generated/api/resources/api/resources/v1/resources/read";
+import { APIV1Read, Algolia, DocsV1Db, FdrAPI } from "@fern-api/fdr-sdk";
 import type { DocsVersion } from "../../types";
 
 export type IndexSegment =
     | {
           type: "versioned";
-          id: string;
+          id: FdrAPI.IndexSegmentId;
           searchApiKey: string;
           version: DocsVersion;
       }
     | {
           type: "unversioned";
-          id: string;
+          id: FdrAPI.IndexSegmentId;
           searchApiKey: string;
       };
 
@@ -28,12 +26,12 @@ export type AlgoliaSearchRecord = WithObjectId<Algolia.AlgoliaRecord>;
 export type TypeReferenceWithMetadata = {
     reference: APIV1Read.TypeReference;
     anchorIdParts: string[];
-    breadcrumbs: BreadcrumbsInfo[];
+    breadcrumbs: Algolia.BreadcrumbsInfo[];
     slugPrefix: string;
-    version: AlgoliaRecordVersionV3 | undefined;
-    indexSegmentId: string;
-    method?: HttpMethod;
-    endpointPath: EndpointPathPart[];
+    version: Algolia.AlgoliaRecordVersionV3 | undefined;
+    indexSegmentId: FdrAPI.IndexSegmentId;
+    method?: FdrAPI.HttpMethod;
+    endpointPath: APIV1Read.EndpointPathPart[];
     isResponseStream?: boolean;
     type: "endpoint-field-v1" | "websocket-field-v1" | "webhook-field-v1";
 };

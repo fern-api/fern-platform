@@ -1,3 +1,4 @@
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { getMarkdownSectionTree, getMarkdownSections } from "../../services/algolia/AlgoliaSearchRecordGenerator";
 
 describe("algolia utils", () => {
@@ -137,8 +138,8 @@ describe("algolia utils", () => {
                     ],
                 },
                 [],
-                "testindex",
-                "/v1/someslug",
+                FdrAPI.IndexSegmentId("testindex"),
+                FernNavigation.Slug("v1/someslug"),
             ).map((record) => {
                 return {
                     ...record,
@@ -153,12 +154,12 @@ describe("algolia utils", () => {
                 content: "this is line A\n",
                 breadcrumbs: [
                     {
-                        slug: "/v1/someslug#A",
+                        slug: "v1/someslug#A",
                         title: "A",
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "/v1/someslug",
+                slug: "v1/someslug",
             },
             {
                 type: "markdown-section-v1",
@@ -167,16 +168,16 @@ describe("algolia utils", () => {
                 content: "this is line b\n```\n## somecrap\nfasdfafafdadf\n```\n",
                 breadcrumbs: [
                     {
-                        slug: "/v1/someslug#A",
+                        slug: "v1/someslug#A",
                         title: "A",
                     },
                     {
-                        slug: "/v1/someslug#B",
+                        slug: "v1/someslug#B",
                         title: "B",
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "/v1/someslug",
+                slug: "v1/someslug",
             },
             {
                 type: "markdown-section-v1",
@@ -185,20 +186,20 @@ describe("algolia utils", () => {
                 content: "this is line c\n\nthis is line c.2\n\n",
                 breadcrumbs: [
                     {
-                        slug: "/v1/someslug#A",
+                        slug: "v1/someslug#A",
                         title: "A",
                     },
                     {
-                        slug: "/v1/someslug#B",
+                        slug: "v1/someslug#B",
                         title: "B",
                     },
                     {
-                        slug: "/v1/someslug#C",
+                        slug: "v1/someslug#C",
                         title: "C",
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "/v1/someslug",
+                slug: "v1/someslug",
             },
             {
                 type: "markdown-section-v1",
@@ -207,20 +208,20 @@ describe("algolia utils", () => {
                 content: "this is line d\n",
                 breadcrumbs: [
                     {
-                        slug: "/v1/someslug#A",
+                        slug: "v1/someslug#A",
                         title: "A",
                     },
                     {
-                        slug: "/v1/someslug#B",
+                        slug: "v1/someslug#B",
                         title: "B",
                     },
                     {
-                        slug: "/v1/someslug#D",
+                        slug: "v1/someslug#D",
                         title: "D",
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "/v1/someslug",
+                slug: "v1/someslug",
             },
             {
                 type: "markdown-section-v1",
@@ -229,16 +230,16 @@ describe("algolia utils", () => {
                 content: "this is line e\n",
                 breadcrumbs: [
                     {
-                        slug: "/v1/someslug#A",
+                        slug: "v1/someslug#A",
                         title: "A",
                     },
                     {
-                        slug: "/v1/someslug#E",
+                        slug: "v1/someslug#E",
                         title: "E",
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "/v1/someslug",
+                slug: "v1/someslug",
             },
             {
                 type: "markdown-section-v1",
@@ -247,20 +248,20 @@ describe("algolia utils", () => {
                 content: "this is line f\nthis is line f.2\n",
                 breadcrumbs: [
                     {
-                        slug: "/v1/someslug#A",
+                        slug: "v1/someslug#A",
                         title: "A",
                     },
                     {
-                        slug: "/v1/someslug#E",
+                        slug: "v1/someslug#E",
                         title: "E",
                     },
                     {
-                        slug: "/v1/someslug#F",
+                        slug: "v1/someslug#F",
                         title: "F",
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "/v1/someslug",
+                slug: "v1/someslug",
             },
             {
                 type: "markdown-section-v1",
@@ -269,16 +270,16 @@ describe("algolia utils", () => {
                 content: "this is line g\n\n",
                 breadcrumbs: [
                     {
-                        slug: "/v1/someslug#A",
+                        slug: "v1/someslug#A",
                         title: "A",
                     },
                     {
-                        slug: "/v1/someslug#G",
+                        slug: "v1/someslug#G",
                         title: "G",
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "/v1/someslug",
+                slug: "v1/someslug",
             },
         ]);
     });

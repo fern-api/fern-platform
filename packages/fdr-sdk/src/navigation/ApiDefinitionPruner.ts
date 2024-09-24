@@ -1,7 +1,7 @@
 import type { APIV1Read } from "../client/types";
+import type { FernNavigation } from "./..";
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ApiTypeIdVisitor } from "./ApiTypeIdVisitor";
-import type { FernNavigation } from "./generated";
 import type { NavigationNodeApiLeaf } from "./types";
 
 export class ApiDefinitionPruner {

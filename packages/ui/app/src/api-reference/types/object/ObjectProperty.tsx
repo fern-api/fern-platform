@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";

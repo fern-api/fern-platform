@@ -7,9 +7,7 @@
   "type": "module",
   "sideEffects": false,
   "source": "src/index.ts",
-  "module": "dist/index.js",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",

@@ -3,7 +3,7 @@
  */
 import * as FernRegistry from "../../../index";
 export interface GenericTemplate {
-    imports?: string[];
+    imports: string[] | undefined;
     /**
      * We might not need this, but the idea here is to be able to omit if it's optional and undefined,
      * or default if omitted and required.
@@ -11,7 +11,7 @@ export interface GenericTemplate {
     isOptional: boolean;
     templateString: string;
     /** An ordered list of inputs to the template. */
-    templateInputs?: FernRegistry.TemplateInput[];
+    templateInputs: FernRegistry.TemplateInput[] | undefined;
     /** In the event you have multiple template inputs, how do you concat them together */
-    inputDelimiter?: string;
+    inputDelimiter: string | undefined;
 }

@@ -23,8 +23,8 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export type SnippetTemplatesByEndpoint = Record<
-    FdrAPI.EndpointPath,
-    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    FdrAPI.EndpointPathLiteral,
+    Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
 >;
 
 export type SnippetTemplatesByEndpointIdentifier = Record<string, APIV1Read.EndpointSnippetTemplates>;
@@ -348,7 +348,7 @@ function convertPrismaPullRequest(maybePR: prisma.PullRequest | null): PullReque
         reviewers: readBuffer(maybePR.reviewers) as PullRequestReviewer[],
         checks: readBuffer(maybePR.checks) as CheckRun[],
         title: maybePR.title,
-        url: maybePR.url,
+        url: FdrAPI.Url(maybePR.url),
         state: maybePR.state,
         createdAt: maybePR.createdAt.toISOString(),
         updatedAt: maybePR.updatedAt?.toISOString(),

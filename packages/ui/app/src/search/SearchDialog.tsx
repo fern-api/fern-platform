@@ -88,7 +88,10 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 
         return (
             <InstantSearch searchClient={searchClient} indexName={indexName}>
-                <Configure filters="type: 'endpoint-v4'" hitsPerPage={40} />
+                <Configure
+                    // filters="type: 'endpoint-v4'"
+                    hitsPerPage={20}
+                />
                 <SearchMobileBox ref={inputRef} placeholder={placeholder} className="mx-4 mt-4" />
                 <SearchMobileHits>{children}</SearchMobileHits>
             </InstantSearch>

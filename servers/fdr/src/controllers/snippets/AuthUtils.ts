@@ -1,4 +1,6 @@
-import { FdrAPI } from "../../api";
+import { FdrAPI } from "@fern-api/fdr-sdk";
+import { UnauthorizedError } from "../../api/generated/api/resources/commons/errors";
+import { OrgIdNotFound, OrgIdRequiredError } from "../../api/generated/api/resources/snippets/errors";
 import { FdrApplication } from "../../app";
 
 export class AuthUtility {
@@ -6,24 +8,22 @@ export class AuthUtility {
         private readonly app: FdrApplication,
         private readonly authHeader: string,
     ) {}
-    public async inferOrg(): Promise<string> {
+    public async inferOrg(): Promise<FdrAPI.OrgId> {
         const orgIds = await this.getOrgIds();
         if (orgIds.size > 1) {
-            throw new FdrAPI.OrgIdRequiredError(
-                "Your user has access to multiple organizations. Please provide an orgId",
-            );
+            throw new OrgIdRequiredError("Your user has access to multiple organizations. Please provide an orgId");
         }
         const inferredOrgId = Array.from(orgIds)[0];
         if (inferredOrgId == null) {
-            throw new FdrAPI.OrgIdNotFound("No organizations were resolved for this user");
+            throw new OrgIdNotFound("No organizations were resolved for this user");
         }
-        return inferredOrgId;
+        return FdrAPI.OrgId(inferredOrgId);
     }
 
     public async assertUserHasAccessToOrg(orgId: string) {
         const orgIds = await this.getOrgIds();
         if (!orgIds.has(orgId)) {
-            throw new FdrAPI.UnauthorizedError(`You are not a member of organization ${orgId}`);
+            throw new UnauthorizedError(`You are not a member of organization ${orgId}`);
         }
     }
 

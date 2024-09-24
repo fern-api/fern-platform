@@ -83,7 +83,7 @@ service:
         name: ReindexAlgoliaRecordsRequest
         body:
           properties:
-            url: string
+            url: rootCommons.Url
       errors:
         - DocsNotFoundError
         - ReindexNotAllowedError

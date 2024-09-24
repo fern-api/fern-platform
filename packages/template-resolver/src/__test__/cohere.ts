@@ -1,13 +1,13 @@
-import { FernRegistry } from "../generated";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
-export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
+export const CHAT_COMPLETION_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
     sdk: {
         type: "typescript",
         package: "cohere-ai",
         version: "7.10.3",
     },
     endpointId: {
-        path: "/chat",
+        path: FdrAPI.EndpointPathLiteral("/chat"),
         method: "POST",
         identifierOverride: "endpoint_.chat_stream",
     },
@@ -43,6 +43,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "message",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -59,6 +60,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "model",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -75,6 +77,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "preamble",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -122,6 +125,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                 path: "message",
                                                                             },
                                                                         ],
+                                                                        inputDelimiter: undefined,
                                                                     },
                                                                 },
                                                                 {
@@ -156,6 +160,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                 path: "name",
                                                                                             },
                                                                                         ],
+                                                                                        inputDelimiter: undefined,
                                                                                     },
                                                                                 },
                                                                                 {
@@ -183,6 +188,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         valueTemplate: {
                                                                                             type: "generic",
@@ -198,6 +204,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         templateInput: {
                                                                                             location: "RELATIVE",
@@ -217,6 +224,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                             SYSTEM: {
                                                 type: "generic",
@@ -248,6 +256,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                 path: "message",
                                                                             },
                                                                         ],
+                                                                        inputDelimiter: undefined,
                                                                     },
                                                                 },
                                                                 {
@@ -282,6 +291,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                 path: "name",
                                                                                             },
                                                                                         ],
+                                                                                        inputDelimiter: undefined,
                                                                                     },
                                                                                 },
                                                                                 {
@@ -309,6 +319,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         valueTemplate: {
                                                                                             type: "generic",
@@ -324,6 +335,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         templateInput: {
                                                                                             location: "RELATIVE",
@@ -343,6 +355,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                             USER: {
                                                 type: "generic",
@@ -374,6 +387,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                 path: "message",
                                                                             },
                                                                         ],
+                                                                        inputDelimiter: undefined,
                                                                     },
                                                                 },
                                                                 {
@@ -408,6 +422,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                 path: "name",
                                                                                             },
                                                                                         ],
+                                                                                        inputDelimiter: undefined,
                                                                                     },
                                                                                 },
                                                                                 {
@@ -435,6 +450,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         valueTemplate: {
                                                                                             type: "generic",
@@ -450,6 +466,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         templateInput: {
                                                                                             location: "RELATIVE",
@@ -469,6 +486,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                             TOOL: {
                                                 type: "generic",
@@ -530,6 +548,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                             path: "call.name",
                                                                                                         },
                                                                                                     ],
+                                                                                                    inputDelimiter:
+                                                                                                        undefined,
                                                                                                 },
                                                                                             },
                                                                                             {
@@ -560,6 +580,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                                     path: undefined,
                                                                                                                 },
                                                                                                             ],
+                                                                                                        inputDelimiter:
+                                                                                                            undefined,
                                                                                                     },
                                                                                                     valueTemplate: {
                                                                                                         type: "generic",
@@ -577,6 +599,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                                     path: undefined,
                                                                                                                 },
                                                                                                             ],
+                                                                                                        inputDelimiter:
+                                                                                                            undefined,
                                                                                                     },
                                                                                                     templateInput: {
                                                                                                         location:
@@ -621,6 +645,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                         path: undefined,
                                                                                                     },
                                                                                                 ],
+                                                                                                inputDelimiter:
+                                                                                                    undefined,
                                                                                             },
                                                                                             valueTemplate: {
                                                                                                 type: "generic",
@@ -636,6 +662,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                                                         path: undefined,
                                                                                                     },
                                                                                                 ],
+                                                                                                inputDelimiter:
+                                                                                                    undefined,
                                                                                             },
                                                                                             templateInput: {
                                                                                                 location: "RELATIVE",
@@ -660,6 +688,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                         templateInput: {
@@ -687,6 +716,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "conversation_id",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -737,6 +767,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                             path: "id",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -753,6 +784,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                             path: "user_access_token",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -769,6 +801,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                             path: "continue_on_failure",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -793,6 +826,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                 path: undefined,
                                                             },
                                                         ],
+                                                        inputDelimiter: undefined,
                                                     },
                                                     valueTemplate: {
                                                         type: "generic",
@@ -806,6 +840,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                 path: undefined,
                                                             },
                                                         ],
+                                                        inputDelimiter: undefined,
                                                     },
                                                     templateInput: {
                                                         location: "RELATIVE",
@@ -835,6 +870,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "search_queries_only",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -864,6 +900,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                     path: undefined,
                                                 },
                                             ],
+                                            inputDelimiter: undefined,
                                         },
                                         valueTemplate: {
                                             type: "generic",
@@ -877,6 +914,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                     path: undefined,
                                                 },
                                             ],
+                                            inputDelimiter: undefined,
                                         },
                                         templateInput: {
                                             location: "RELATIVE",
@@ -920,6 +958,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "temperature",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -936,6 +975,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "max_tokens",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -952,6 +992,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "max_input_tokens",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -968,6 +1009,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "k",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -984,6 +1026,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "p",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -1000,6 +1043,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "seed",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -1022,6 +1066,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                 path: undefined,
                                             },
                                         ],
+                                        inputDelimiter: undefined,
                                     },
                                     templateInput: {
                                         location: "BODY",
@@ -1043,6 +1088,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "frequency_penalty",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -1059,6 +1105,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "presence_penalty",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -1075,6 +1122,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "raw_prompting",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -1091,6 +1139,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "return_prompt",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -1122,6 +1171,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                             path: "name",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -1138,6 +1188,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                             path: "description",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -1162,6 +1213,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                 path: undefined,
                                                             },
                                                         ],
+                                                        inputDelimiter: undefined,
                                                     },
                                                     valueTemplate: {
                                                         type: "generic",
@@ -1184,6 +1236,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                             path: "description",
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                             },
                                                             {
@@ -1200,6 +1253,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                             path: "type",
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                             },
                                                             {
@@ -1216,6 +1270,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                             path: "required",
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                             },
                                                         ],
@@ -1272,6 +1327,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                         path: "call.name",
                                                                     },
                                                                 ],
+                                                                inputDelimiter: undefined,
                                                             },
                                                         },
                                                         {
@@ -1296,6 +1352,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                             path: undefined,
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                                 valueTemplate: {
                                                                     type: "generic",
@@ -1309,6 +1366,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                             path: undefined,
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                                 templateInput: {
                                                                     location: "RELATIVE",
@@ -1348,6 +1406,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                     path: undefined,
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                         valueTemplate: {
                                                             type: "generic",
@@ -1361,6 +1420,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                                     path: undefined,
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                         templateInput: {
                                                             location: "RELATIVE",
@@ -1395,6 +1455,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             path: "force_single_step",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                         ],
@@ -1427,6 +1488,7 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                         },
                                     ],
                                     type: "generic",
+                                    inputDelimiter: undefined,
                                 },
                                 type: "template",
                             },
@@ -1443,11 +1505,13 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                         },
                                     ],
                                     type: "generic",
+                                    inputDelimiter: undefined,
                                 },
                                 type: "template",
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                     type: "template",
                 },
@@ -1455,16 +1519,18 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
             type: "generic",
         },
     },
+    apiDefinitionId: undefined,
+    additionalTemplates: undefined,
 };
 
-export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegistry.EndpointSnippetTemplate = {
+export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FdrAPI.EndpointSnippetTemplate = {
     sdk: {
         type: "typescript",
         package: "cohere-ai",
         version: "7.10.3",
     },
     endpointId: {
-        path: "/chat",
+        path: FdrAPI.EndpointPathLiteral("/chat"),
         method: "POST",
         identifierOverride: "endpoint_.chat_stream",
     },
@@ -1500,6 +1566,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "message",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -1516,6 +1583,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "model",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -1532,6 +1600,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "preamble",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -1579,6 +1648,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                 path: "message",
                                                                             },
                                                                         ],
+                                                                        inputDelimiter: undefined,
                                                                     },
                                                                 },
                                                                 {
@@ -1613,6 +1683,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                 path: "name",
                                                                                             },
                                                                                         ],
+                                                                                        inputDelimiter: undefined,
                                                                                     },
                                                                                 },
                                                                                 {
@@ -1640,6 +1711,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         valueTemplate: {
                                                                                             type: "generic",
@@ -1655,6 +1727,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         templateInput: {
                                                                                             location: "RELATIVE",
@@ -1674,6 +1747,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                             SYSTEM: {
                                                 type: "generic",
@@ -1705,6 +1779,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                 path: "message",
                                                                             },
                                                                         ],
+                                                                        inputDelimiter: undefined,
                                                                     },
                                                                 },
                                                                 {
@@ -1739,6 +1814,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                 path: "name",
                                                                                             },
                                                                                         ],
+                                                                                        inputDelimiter: undefined,
                                                                                     },
                                                                                 },
                                                                                 {
@@ -1766,6 +1842,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         valueTemplate: {
                                                                                             type: "generic",
@@ -1781,6 +1858,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         templateInput: {
                                                                                             location: "RELATIVE",
@@ -1800,6 +1878,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                             USER: {
                                                 type: "generic",
@@ -1831,6 +1910,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                 path: "message",
                                                                             },
                                                                         ],
+                                                                        inputDelimiter: undefined,
                                                                     },
                                                                 },
                                                                 {
@@ -1865,6 +1945,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                 path: "name",
                                                                                             },
                                                                                         ],
+                                                                                        inputDelimiter: undefined,
                                                                                     },
                                                                                 },
                                                                                 {
@@ -1892,6 +1973,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         valueTemplate: {
                                                                                             type: "generic",
@@ -1907,6 +1989,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                     path: undefined,
                                                                                                 },
                                                                                             ],
+                                                                                            inputDelimiter: undefined,
                                                                                         },
                                                                                         templateInput: {
                                                                                             location: "RELATIVE",
@@ -1926,6 +2009,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                             TOOL: {
                                                 type: "generic",
@@ -1987,6 +2071,8 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                             path: "call.name",
                                                                                                         },
                                                                                                     ],
+                                                                                                    inputDelimiter:
+                                                                                                        undefined,
                                                                                                 },
                                                                                             },
                                                                                             {
@@ -2017,6 +2103,8 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                                     path: undefined,
                                                                                                                 },
                                                                                                             ],
+                                                                                                        inputDelimiter:
+                                                                                                            undefined,
                                                                                                     },
                                                                                                     valueTemplate: {
                                                                                                         type: "generic",
@@ -2034,6 +2122,8 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                                     path: undefined,
                                                                                                                 },
                                                                                                             ],
+                                                                                                        inputDelimiter:
+                                                                                                            undefined,
                                                                                                     },
                                                                                                     templateInput: {
                                                                                                         location:
@@ -2078,6 +2168,8 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                         path: undefined,
                                                                                                     },
                                                                                                 ],
+                                                                                                inputDelimiter:
+                                                                                                    undefined,
                                                                                             },
                                                                                             valueTemplate: {
                                                                                                 type: "generic",
@@ -2093,6 +2185,8 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                                                         path: undefined,
                                                                                                     },
                                                                                                 ],
+                                                                                                inputDelimiter:
+                                                                                                    undefined,
                                                                                             },
                                                                                             templateInput: {
                                                                                                 location: "RELATIVE",
@@ -2117,6 +2211,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                         },
                                                     },
                                                 ],
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                         templateInput: {
@@ -2144,6 +2239,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "conversation_id",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2194,6 +2290,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                             path: "id",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -2210,6 +2307,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                             path: "user_access_token",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -2226,6 +2324,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                             path: "continue_on_failure",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -2250,6 +2349,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                 path: undefined,
                                                             },
                                                         ],
+                                                        inputDelimiter: undefined,
                                                     },
                                                     valueTemplate: {
                                                         type: "generic",
@@ -2263,6 +2363,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                 path: undefined,
                                                             },
                                                         ],
+                                                        inputDelimiter: undefined,
                                                     },
                                                     templateInput: {
                                                         location: "RELATIVE",
@@ -2292,6 +2393,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "search_queries_only",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2321,6 +2423,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                     path: undefined,
                                                 },
                                             ],
+                                            inputDelimiter: undefined,
                                         },
                                         valueTemplate: {
                                             type: "generic",
@@ -2334,6 +2437,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                     path: undefined,
                                                 },
                                             ],
+                                            inputDelimiter: undefined,
                                         },
                                         templateInput: {
                                             location: "RELATIVE",
@@ -2377,6 +2481,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "temperature",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2393,6 +2498,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "max_tokens",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2409,6 +2515,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "max_input_tokens",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2425,6 +2532,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "k",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2441,6 +2549,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "p",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2457,6 +2566,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "seed",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2479,6 +2589,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                 path: undefined,
                                             },
                                         ],
+                                        inputDelimiter: undefined,
                                     },
                                     templateInput: {
                                         location: "BODY",
@@ -2500,6 +2611,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "frequency_penalty",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2516,6 +2628,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "presence_penalty",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2532,6 +2645,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "raw_prompting",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2548,6 +2662,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "return_prompt",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2579,6 +2694,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                             path: "name",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -2595,6 +2711,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                             path: "description",
                                                         },
                                                     ],
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -2619,6 +2736,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                 path: undefined,
                                                             },
                                                         ],
+                                                        inputDelimiter: undefined,
                                                     },
                                                     valueTemplate: {
                                                         type: "generic",
@@ -2641,6 +2759,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                             path: "description",
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                             },
                                                             {
@@ -2657,6 +2776,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                             path: "type",
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                             },
                                                             {
@@ -2673,6 +2793,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                             path: "required",
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                             },
                                                         ],
@@ -2729,6 +2850,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                         path: "call.name",
                                                                     },
                                                                 ],
+                                                                inputDelimiter: undefined,
                                                             },
                                                         },
                                                         {
@@ -2753,6 +2875,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                             path: undefined,
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                                 valueTemplate: {
                                                                     type: "generic",
@@ -2766,6 +2889,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                             path: undefined,
                                                                         },
                                                                     ],
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                                 templateInput: {
                                                                     location: "RELATIVE",
@@ -2805,6 +2929,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                     path: undefined,
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                         valueTemplate: {
                                                             type: "generic",
@@ -2818,6 +2943,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                     path: undefined,
                                                                 },
                                                             ],
+                                                            inputDelimiter: undefined,
                                                         },
                                                         templateInput: {
                                                             location: "RELATIVE",
@@ -2852,6 +2978,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                             path: "force_single_step",
                                         },
                                     ],
+                                    inputDelimiter: undefined,
                                 },
                             },
                             {
@@ -2893,6 +3020,7 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
                                                                         },
                                                                     ],
                                                                     type: "generic",
+                                                                    inputDelimiter: undefined,
                                                                 },
                                                             },
                                                         ],
@@ -2925,4 +3053,6 @@ export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegis
         clientInstantiation:
             'const cohere = new CohereClient({ token: "YOUR_TOKEN", clientName: "YOUR_CLIENT_NAME" });',
     },
+    apiDefinitionId: undefined,
+    additionalTemplates: undefined,
 };

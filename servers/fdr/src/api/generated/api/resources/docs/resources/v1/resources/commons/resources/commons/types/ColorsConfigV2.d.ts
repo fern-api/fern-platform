@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface ColorsConfigV2 {
-    accentPrimary?: FernRegistry.docs.v1.commons.ColorConfig;
-    background?: FernRegistry.docs.v1.commons.ColorConfig;
+    accentPrimary: FernRegistry.docs.v1.commons.ColorConfig | undefined;
+    background: FernRegistry.docs.v1.commons.ColorConfig | undefined;
 }

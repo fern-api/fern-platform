@@ -14,8 +14,11 @@ export declare namespace Read {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,7 +31,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v1.read.getDocsForDomainLegacy("string")
+     *     await client.docs.v1.read.getDocsForDomainLegacy("string")
      */
     public async getDocsForDomainLegacy(
         domain: string,
@@ -52,6 +55,7 @@ export class Read {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -84,7 +88,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v1.read.getDocsForDomain({
+     *     await client.docs.v1.read.getDocsForDomain({
      *         domain: "string"
      *     })
      */
@@ -107,6 +111,7 @@ export class Read {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

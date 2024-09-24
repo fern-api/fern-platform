@@ -1,4 +1,4 @@
-import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
@@ -418,12 +418,20 @@ export declare namespace ResolvedEndpointPathParts {
     }
 }
 
-export function stringifyResolvedEndpointPathParts(pathParts: ResolvedEndpointPathParts[]): string {
-    return pathParts.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)).join("");
+export function stringifyResolvedEndpointPathParts(
+    pathParts: ResolvedEndpointPathParts[],
+): APIV1Read.EndpointPathLiteral {
+    return APIV1Read.EndpointPathLiteral(
+        pathParts.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)).join(""),
+    );
 }
 
-export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEndpointPathParts[]): string {
-    return pathParts.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)).join("");
+export function stringifyResolvedEndpointPathPartsTemplate(
+    pathParts: ResolvedEndpointPathParts[],
+): APIV1Read.EndpointPathLiteral {
+    return APIV1Read.EndpointPathLiteral(
+        pathParts.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)).join(""),
+    );
 }
 
 export interface ResolvedWebSocketChannel extends WithEndpointMetadata {

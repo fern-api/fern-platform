@@ -1,4 +1,4 @@
-import { FernRepository } from "@fern-api/fdr-sdk/src/client/generated/api";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { PullRequest, PullRequestState } from "../../../api/generated/api";
 import { createMockFdrApplication } from "../../mock";
 
@@ -7,27 +7,27 @@ const fdrApplication = createMockFdrApplication({
 });
 
 it("repo happy path", async () => {
-    const repo1: FernRepository = {
+    const repo1: FdrAPI.FernRepository = {
         type: "sdk",
         id: { type: "github", id: "acme-123" },
         name: "repo1",
         owner: "acme",
         fullName: "acme/repo1",
-        repositoryOwnerOrganizationId: "acme",
-        url: "https://123.com",
+        repositoryOwnerOrganizationId: FdrAPI.OrgId("acme"),
+        url: FdrAPI.Url("https://123.com"),
         defaultBranchChecks: [],
         sdkLanguage: "python",
     };
     await fdrApplication.dao.git().upsertRepository({ repository: repo1 });
 
-    const repo2: FernRepository = {
+    const repo2: FdrAPI.FernRepository = {
         type: "config",
         id: { type: "github", id: "octo-123" },
         name: "repo1",
         owner: "octoai",
         fullName: "octoai/repo1",
-        repositoryOwnerOrganizationId: "octoai",
-        url: "https://123.com",
+        repositoryOwnerOrganizationId: FdrAPI.OrgId("octoai"),
+        url: FdrAPI.Url("https://123.com"),
         defaultBranchChecks: [],
     };
     await fdrApplication.dao.git().upsertRepository({ repository: repo2 });
@@ -46,14 +46,14 @@ it("repo happy path", async () => {
 });
 
 it("pulls happy path", async () => {
-    const repository: FernRepository = {
+    const repository: FdrAPI.FernRepository = {
         type: "sdk",
         id: { type: "github", id: "12345" },
         name: "repoForPRs",
         owner: "acme",
         fullName: "acme/repoForPRs",
-        repositoryOwnerOrganizationId: "acme",
-        url: "https://123.com",
+        repositoryOwnerOrganizationId: FdrAPI.OrgId("acme"),
+        url: FdrAPI.Url("https://123.com"),
         defaultBranchChecks: [],
         sdkLanguage: "python",
     };
@@ -70,10 +70,13 @@ it("pulls happy path", async () => {
         },
         reviewers: [],
         title: "PR 1",
-        url: "https://123.com",
+        url: FdrAPI.Url("https://123.com"),
         checks: [],
         state: PullRequestState.Open,
         createdAt: new Date().toISOString(),
+        updatedAt: undefined,
+        mergedAt: undefined,
+        closedAt: undefined,
     };
     await fdrApplication.dao.git().upsertPullRequest({ pullRequest: pull1 });
 
@@ -88,11 +91,13 @@ it("pulls happy path", async () => {
         },
         reviewers: [],
         title: "PR 2",
-        url: "https://123.com",
+        url: FdrAPI.Url("https://123.com"),
         checks: [],
         state: PullRequestState.Merged,
         createdAt: new Date().toISOString(),
         mergedAt: new Date().toISOString(),
+        updatedAt: undefined,
+        closedAt: undefined,
     };
     await fdrApplication.dao.git().upsertPullRequest({ pullRequest: pull2 });
 
@@ -121,11 +126,13 @@ it("pulls happy path", async () => {
         },
         reviewers: [],
         title: "PR 2",
-        url: "https://123.com",
+        url: FdrAPI.Url("https://123.com"),
         checks: [],
         state: PullRequestState.Merged,
         createdAt: new Date().toISOString(),
         mergedAt: new Date().toISOString(),
+        updatedAt: undefined,
+        closedAt: undefined,
     };
     await fdrApplication.dao.git().upsertPullRequest({ pullRequest: pull3 });
 

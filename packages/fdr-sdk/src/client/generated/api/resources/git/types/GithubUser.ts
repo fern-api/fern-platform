@@ -3,7 +3,7 @@
  */
 
 export interface GithubUser {
-    name?: string;
-    email?: string;
+    name: string | undefined;
+    email: string | undefined;
     username: string;
 }

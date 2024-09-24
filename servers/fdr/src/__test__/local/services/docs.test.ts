@@ -1,22 +1,49 @@
-import { DocsV1Write } from "@fern-api/fdr-sdk";
+import { DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { uniqueId } from "lodash-es";
 import { inject } from "vitest";
 import { getAPIResponse, getClient } from "../util";
 
-export const FONT_FILE_ID = uniqueId();
+export const FONT_FILE_ID = DocsV1Write.FileId(uniqueId());
 export const WRITE_DOCS_REGISTER_DEFINITION: DocsV1Write.DocsDefinition = {
     pages: {},
     config: {
         navigation: {
             items: [],
+            landingPage: undefined,
         },
         typography: {
             headingsFont: {
                 name: "Syne",
                 fontFile: FONT_FILE_ID,
             },
+            bodyFont: undefined,
+            codeFont: undefined,
         },
+        title: undefined,
+        defaultLanguage: undefined,
+        announcement: undefined,
+        navbarLinks: undefined,
+        footerLinks: undefined,
+        logoHeight: undefined,
+        logoHref: undefined,
+        favicon: undefined,
+        metadata: undefined,
+        redirects: undefined,
+        colorsV3: undefined,
+        layout: undefined,
+        typographyV2: undefined,
+        analyticsConfig: undefined,
+        integrations: undefined,
+        css: undefined,
+        js: undefined,
+        playground: undefined,
+        backgroundImage: undefined,
+        logoV2: undefined,
+        logo: undefined,
+        colors: undefined,
+        colorsV2: undefined,
     },
+    jsFiles: undefined,
 };
 
 it("docs register", async () => {
@@ -26,9 +53,9 @@ it("docs register", async () => {
     // register docs
     const startDocsRegisterResponse = getAPIResponse(
         await fdr.docs.v1.write.startDocsRegister({
-            orgId: "fern",
+            orgId: FdrAPI.OrgId("fern"),
             domain,
-            filepaths: ["logo.png", "guides/guide.mdx"],
+            filepaths: [DocsV1Write.FilePath("logo.png"), DocsV1Write.FilePath("guides/guide.mdx")],
         }),
     );
     await fdr.docs.v1.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
@@ -47,7 +74,7 @@ it("docs register", async () => {
     // re-register docs
     const startDocsRegisterResponse2 = getAPIResponse(
         await fdr.docs.v1.write.startDocsRegister({
-            orgId: "fern",
+            orgId: FdrAPI.OrgId("fern"),
             domain,
             filepaths: [],
         }),
@@ -62,11 +89,15 @@ it("docs register V2", async () => {
     // register docs
     const startDocsRegisterResponse = getAPIResponse(
         await fdr.docs.v2.write.startDocsRegister({
-            orgId: "acme",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("api"),
             domain: "https://acme.docs.buildwithfern.com",
             customDomains: ["https://docs.useacme.com/docs"],
-            filepaths: ["logo.png", "guides/guide.mdx", "fonts/Syne.woff2"],
+            filepaths: [
+                DocsV1Write.FilePath("logo.png"),
+                DocsV1Write.FilePath("guides/guide.mdx"),
+                DocsV1Write.FilePath("fonts/Syne.woff2"),
+            ],
         }),
     );
     await fdr.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
@@ -75,7 +106,7 @@ it("docs register V2", async () => {
     // load docs
     let docs = getAPIResponse(
         await fdr.docs.v2.read.getDocsForUrl({
-            url: "https://acme.docs.buildwithfern.com/my/random/slug",
+            url: DocsV1Write.Url("https://acme.docs.buildwithfern.com/my/random/slug"),
         }),
     );
     expect(docs.baseUrl.domain).toEqual("acme.docs.buildwithfern.com");
@@ -90,7 +121,7 @@ it("docs register V2", async () => {
     // load docs again
     docs = getAPIResponse(
         await fdr.docs.v2.read.getDocsForUrl({
-            url: "https://docs.useacme.com/docs/1/",
+            url: DocsV1Write.Url("https://docs.useacme.com/docs/1/"),
         }),
     );
     expect(docs.baseUrl.domain).toEqual("docs.useacme.com");
@@ -100,8 +131,8 @@ it("docs register V2", async () => {
     //re-register docs
     const startDocsRegisterResponse2 = getAPIResponse(
         await fdr.docs.v2.write.startDocsRegister({
-            orgId: "acme",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("api"),
             domain: "https://acme.docs.buildwithfern.com",
             customDomains: ["https://docs.useacme.com"],
             filepaths: [],
@@ -117,11 +148,15 @@ it("docs reindex", async () => {
     // register docs
     const startDocsRegisterResponse = getAPIResponse(
         await fdr.docs.v2.write.startDocsRegister({
-            orgId: "acme",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("api"),
             domain: "https://acme.docs.buildwithfern.com",
             customDomains: ["https://docs.useacme.com/docs"],
-            filepaths: ["logo.png", "guides/guide.mdx", "fonts/Syne.woff2"],
+            filepaths: [
+                DocsV1Write.FilePath("logo.png"),
+                DocsV1Write.FilePath("guides/guide.mdx"),
+                DocsV1Write.FilePath("fonts/Syne.woff2"),
+            ],
         }),
     );
     await fdr.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
@@ -130,19 +165,19 @@ it("docs reindex", async () => {
 
     const first = getAPIResponse(
         await fdr.docs.v2.read.getDocsForUrl({
-            url: "https://acme.docs.buildwithfern.com",
+            url: DocsV1Write.Url("https://acme.docs.buildwithfern.com"),
         }),
     );
 
     const response = await fdr.docs.v2.write.reindexAlgoliaSearchRecords({
-        url: "https://acme.docs.buildwithfern.com",
+        url: DocsV1Write.Url("https://acme.docs.buildwithfern.com"),
     });
 
     expect(response.ok).toBeTruthy();
 
     const second = getAPIResponse(
         await fdr.docs.v2.read.getDocsForUrl({
-            url: "https://acme.docs.buildwithfern.com",
+            url: DocsV1Write.Url("https://acme.docs.buildwithfern.com"),
         }),
     );
 

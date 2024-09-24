@@ -1,4 +1,4 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
@@ -58,7 +58,7 @@ export class ApiEndpointResolver {
                     }),
                 ]);
                 return {
-                    key: parameter.key,
+                    key: APIV1Read.PropertyKey(parameter.key),
                     valueShape,
                     description,
                     availability: parameter.availability,
@@ -76,7 +76,7 @@ export class ApiEndpointResolver {
                     }),
                 ]);
                 return {
-                    key: parameter.key,
+                    key: APIV1Read.PropertyKey(parameter.key),
                     valueShape,
                     description,
                     availability: parameter.availability,
@@ -94,7 +94,7 @@ export class ApiEndpointResolver {
                     }),
                 ]);
                 return {
-                    key: header.key,
+                    key: APIV1Read.PropertyKey(header.key),
                     valueShape,
                     description,
                     availability: header.availability,
@@ -109,7 +109,7 @@ export class ApiEndpointResolver {
                     }),
                 ]);
                 return {
-                    key: header.key,
+                    key: APIV1Read.PropertyKey(header.key),
                     valueShape,
                     description,
                     availability: header.availability,
@@ -163,11 +163,11 @@ export class ApiEndpointResolver {
             if (pathPart.type === "literal") {
                 return pathPart;
             } else {
-                const parameter = pathParameters.find((parameter) => parameter.key === pathPart.value);
+                const parameter = pathParameters.find((parameter) => String(parameter.key) === String(pathPart.value));
                 if (parameter == null) {
                     return {
                         type: "pathParameter",
-                        key: pathPart.value,
+                        key: APIV1Read.PropertyKey(pathPart.value),
                         valueShape: {
                             type: "unknown",
                             availability: undefined,
@@ -288,15 +288,17 @@ export class ApiEndpointResolver {
 
         for (const header of headers) {
             if (
-                header.key.toLowerCase() === "authorization" ||
-                header.key.toLowerCase().includes("api-key") ||
-                header.key.toLowerCase().includes("apikey")
+                APIV1Read.PropertyKey(header.key).toLowerCase() === "authorization" ||
+                APIV1Read.PropertyKey(header.key).toLowerCase().includes("api-key") ||
+                APIV1Read.PropertyKey(header.key).toLowerCase().includes("apikey")
             ) {
                 const auth: APIV1Read.ApiAuth = {
                     type: "header",
-                    headerWireValue: header.key,
+                    headerWireValue: APIV1Read.PropertyKey(header.key),
+                    nameOverride: undefined,
+                    prefix: undefined,
                 };
-                return { auth, headers: headers.filter((h) => h.key !== header.key) };
+                return { auth, headers: headers.filter((h) => h.key !== APIV1Read.PropertyKey(header.key)) };
             }
         }
 
@@ -311,7 +313,7 @@ export class ApiEndpointResolver {
         const pathParametersPromise = Promise.all(
             channel.path.pathParameters.map(
                 async (parameter): Promise<ResolvedObjectProperty> => ({
-                    key: parameter.key,
+                    key: APIV1Read.PropertyKey(parameter.key),
                     valueShape: await this.typeResolver.resolveTypeReference(parameter.type),
                     description: await serializeMdx(parameter.description, {
                         files: this.mdxOptions?.files,
@@ -330,7 +332,7 @@ export class ApiEndpointResolver {
                     }),
                 ]);
                 return {
-                    key: header.key,
+                    key: APIV1Read.PropertyKey(header.key),
                     valueShape,
                     description,
                     availability: header.availability,
@@ -345,7 +347,7 @@ export class ApiEndpointResolver {
                     }),
                 ]);
                 return {
-                    key: header.key,
+                    key: APIV1Read.PropertyKey(header.key),
                     valueShape,
                     description,
                     availability: header.availability,
@@ -362,7 +364,7 @@ export class ApiEndpointResolver {
                     }),
                 ]);
                 return {
-                    key: parameter.key,
+                    key: APIV1Read.PropertyKey(parameter.key),
                     valueShape,
                     description,
                     availability: parameter.availability,
@@ -421,7 +423,9 @@ export class ApiEndpointResolver {
                     if (pathPart.type === "literal") {
                         return { ...pathPart };
                     } else {
-                        const correspondingParameter = pathParameters.find((param) => param.key === pathPart.value);
+                        const correspondingParameter = pathParameters.find(
+                            (param) => String(param.key) === String(pathPart.value),
+                        );
                         if (correspondingParameter === undefined) {
                             // eslint-disable-next-line no-console
                             console.error(
@@ -456,7 +460,7 @@ export class ApiEndpointResolver {
             Promise.all(
                 webhook.headers.map(
                     async (header): Promise<ResolvedObjectProperty> => ({
-                        key: header.key,
+                        key: APIV1Read.PropertyKey(header.key),
                         valueShape: await this.typeResolver.resolveTypeReference(header.type),
                         description: await serializeMdx(header.description, {
                             files: this.mdxOptions?.files,

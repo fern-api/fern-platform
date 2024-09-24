@@ -4,5 +4,5 @@
 
 export interface RubyGem {
     gem: string;
-    version?: string;
+    version: string | undefined;
 }

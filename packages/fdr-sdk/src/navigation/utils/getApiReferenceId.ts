@@ -1,5 +1,5 @@
+import { FernNavigation } from "../..";
 import { visitDiscriminatedUnion } from "../../utils";
-import { FernNavigation } from "../generated";
 import { NavigationNode } from "../types/NavigationNode";
 
 const RETURN_UNDEFINED = () => undefined;

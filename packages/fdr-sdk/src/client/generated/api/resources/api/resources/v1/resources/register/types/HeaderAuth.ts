@@ -3,8 +3,8 @@
  */
 
 export interface HeaderAuth {
-    nameOverride?: string;
+    nameOverride: string | undefined;
     headerWireValue: string;
     /** The prefix that comes before the header */
-    prefix?: string;
+    prefix: string | undefined;
 }

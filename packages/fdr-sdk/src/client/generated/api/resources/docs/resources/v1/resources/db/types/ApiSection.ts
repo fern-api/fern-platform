@@ -6,16 +6,16 @@ import * as FernRegistry from "../../../../../../../index";
 
 export interface ApiSection {
     title: string;
-    icon?: string;
+    icon: string | undefined;
     api: FernRegistry.ApiDefinitionId;
     urlSlug: string;
     skipUrlSlug: boolean;
-    artifacts?: FernRegistry.docs.v1.read.ApiArtifacts;
-    showErrors?: boolean;
-    changelog?: FernRegistry.docs.v1.read.ChangelogSection;
-    hidden?: boolean;
-    fullSlug?: string[];
-    navigation?: FernRegistry.docs.v1.read.ApiNavigationConfigRoot;
-    longScrolling?: boolean;
-    flattened?: boolean;
+    artifacts: FernRegistry.docs.v1.read.ApiArtifacts | undefined;
+    showErrors: boolean | undefined;
+    changelog: FernRegistry.docs.v1.read.ChangelogSection | undefined;
+    hidden: boolean | undefined;
+    fullSlug: string[] | undefined;
+    navigation: FernRegistry.docs.v1.read.ApiNavigationConfigRoot | undefined;
+    longScrolling: boolean | undefined;
+    flattened: boolean | undefined;
 }

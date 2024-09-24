@@ -3,8 +3,8 @@
  */
 
 export interface NavigationNodeMetadata {
-    icon?: string;
-    hidden?: boolean;
+    icon: string | undefined;
+    hidden: boolean | undefined;
     urlSlug: string;
-    fullSlug?: string[];
+    fullSlug: string[] | undefined;
 }

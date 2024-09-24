@@ -1,5 +1,10 @@
 import {
+    APIV1Db,
+    APIV1Read,
+    Algolia,
+    DocsV1Db,
     DocsV1Read,
+    FdrAPI,
     FernNavigation,
     convertDbAPIDefinitionToRead,
     titleCase,
@@ -7,14 +12,12 @@ import {
     visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
-import { WebSocketNode, WebhookNode } from "@fern-api/fdr-sdk/src/navigation";
+import { HttpMethod, WebSocketNode, WebhookNode } from "@fern-api/fdr-sdk/dist/navigation";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
-import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { BreadcrumbsInfo } from "../../api/generated/api";
 import { EndpointPathPart } from "../../api/generated/api/resources/api/resources/v1/resources/read";
-import { HttpMethod } from "../../api/generated/api/resources/navigation";
 import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
@@ -23,7 +26,7 @@ import type { AlgoliaSearchRecord, IndexSegment, MarkdownNode, TypeReferenceWith
 
 class NavigationContext {
     #indexSegment: IndexSegment;
-    #pathParts: PathPart[];
+    #pathParts: Algolia.AlgoliaRecordPathPart[];
 
     /**
      * The path represented by context slugs.
@@ -44,7 +47,7 @@ class NavigationContext {
 
     public constructor(
         public readonly indexSegment: IndexSegment,
-        pathParts: PathPart[],
+        pathParts: Algolia.AlgoliaRecordPathPart[],
     ) {
         this.#indexSegment = indexSegment;
         this.#pathParts = pathParts;
@@ -53,14 +56,14 @@ class NavigationContext {
     /**
      * @returns A new `NavigationContext` instance.
      */
-    public withPathPart(pathPart: PathPart) {
+    public withPathPart(pathPart: Algolia.AlgoliaRecordPathPart) {
         return this.withPathParts([pathPart]);
     }
 
     /**
      * @returns A new `NavigationContext` instance.
      */
-    public withPathParts(pathParts: PathPart[]) {
+    public withPathParts(pathParts: Algolia.AlgoliaRecordPathPart[]) {
         return new NavigationContext(this.#indexSegment, [...this.#pathParts, ...pathParts]);
     }
 
@@ -70,7 +73,7 @@ class NavigationContext {
     public withFullSlug(fullSlug: string[]) {
         return new NavigationContext(
             this.#indexSegment,
-            fullSlug.map((urlSlug) => ({ name: urlSlug, urlSlug })),
+            fullSlug.map((urlSlug) => ({ name: urlSlug, urlSlug, skipUrlSlug: undefined })),
         );
     }
 }
@@ -138,6 +141,7 @@ export class AlgoliaSearchRecordGenerator {
                             context.withPathPart({
                                 name: tab.title ?? "Changelog",
                                 urlSlug: tab.urlSlug,
+                                skipUrlSlug: undefined,
                             }),
                         ).concat(
                             this.generateAlgoliaSearchRecordsForChangelogSectionV2(
@@ -145,6 +149,7 @@ export class AlgoliaSearchRecordGenerator {
                                 context.withPathPart({
                                     name: tab.title ?? "Changelog",
                                     urlSlug: tab.urlSlug,
+                                    skipUrlSlug: undefined,
                                 }),
                             ),
                         );
@@ -158,7 +163,11 @@ export class AlgoliaSearchRecordGenerator {
                         const tabRecords = group.items.map((item) =>
                             this.generateAlgoliaSearchRecordsForNavigationItem(
                                 item,
-                                context.withPathPart({ name: tab.title, urlSlug: group.urlSlug }),
+                                context.withPathPart({
+                                    name: tab.title,
+                                    urlSlug: group.urlSlug,
+                                    skipUrlSlug: undefined,
+                                }),
                             ),
                         );
                         return tabRecords.flat(1);
@@ -243,6 +252,7 @@ export class AlgoliaSearchRecordGenerator {
                     : context.withPathPart({
                           name: page.title,
                           urlSlug: page.urlSlug,
+                          skipUrlSlug: undefined,
                       });
             const processedContent = convertMarkdownToText(pageContent.markdown);
             const { indexSegment } = context;
@@ -307,10 +317,12 @@ export class AlgoliaSearchRecordGenerator {
 
         const version =
             context.indexSegment.type === "versioned"
-                ? {
+                ? ({
                       id: context.indexSegment.version.id,
-                      slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
-                  }
+                      slug: FernNavigation.Slug(
+                          context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                      ),
+                  } satisfies Algolia.AlgoliaRecordVersionV3)
                 : undefined;
 
         function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): string[] {
@@ -668,10 +680,12 @@ export class AlgoliaSearchRecordGenerator {
 
         const version =
             context.indexSegment.type === "versioned"
-                ? {
+                ? ({
                       id: context.indexSegment.version.id,
-                      slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
-                  }
+                      slug: FernNavigation.Slug(
+                          context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                      ),
+                  } satisfies Algolia.AlgoliaRecordVersionV3)
                 : undefined;
 
         function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): BreadcrumbsInfo[] {
@@ -696,8 +710,8 @@ export class AlgoliaSearchRecordGenerator {
         function anchorIdToSlug(
             node: FernNavigation.EndpointNode | WebSocketNode | WebhookNode,
             anchorIdParts: string[],
-        ) {
-            return encodeURI(`${node.slug}#${anchorIdParts.join(".")}`);
+        ): FernNavigation.Slug {
+            return FernNavigation.Slug(encodeURI(`${node.slug}#${anchorIdParts.join(".")}`));
         }
 
         FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
@@ -748,6 +762,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    extends: undefined,
                                 });
                                 if (header.type.type === "id") {
                                     typeReferences.push({
@@ -786,6 +801,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    extends: undefined,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -824,6 +840,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    extends: undefined,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -909,6 +926,7 @@ export class AlgoliaSearchRecordGenerator {
                                             method: endpoint.method,
                                             endpointPath: endpoint.path.parts,
                                             isResponseStream: node.isResponseStream,
+                                            extends: undefined,
                                         });
                                         if (property.valueType.type === "id") {
                                             typeReferences.push({
@@ -946,6 +964,7 @@ export class AlgoliaSearchRecordGenerator {
                                         method: endpoint.method,
                                         endpointPath: endpoint.path.parts,
                                         isResponseStream: node.isResponseStream,
+                                        extends: undefined,
                                     });
                                     if (property.valueType.type === "id") {
                                         typeReferences.push({
@@ -1030,6 +1049,7 @@ export class AlgoliaSearchRecordGenerator {
                                         method: endpoint.method,
                                         endpointPath: endpoint.path.parts,
                                         isResponseStream: node.isResponseStream,
+                                        extends: undefined,
                                     });
                                     if (property.valueType.type === "id") {
                                         typeReferences.push({
@@ -1100,6 +1120,7 @@ export class AlgoliaSearchRecordGenerator {
                                     version,
                                     indexSegmentId,
                                     endpointPath: ws.path.parts,
+                                    extends: undefined,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -1134,6 +1155,7 @@ export class AlgoliaSearchRecordGenerator {
                                     version,
                                     indexSegmentId,
                                     endpointPath: ws.path.parts,
+                                    extends: undefined,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -1168,6 +1190,7 @@ export class AlgoliaSearchRecordGenerator {
                                     version,
                                     indexSegmentId,
                                     endpointPath: ws.path.parts,
+                                    extends: undefined,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -1246,6 +1269,7 @@ export class AlgoliaSearchRecordGenerator {
                                             version,
                                             indexSegmentId,
                                             endpointPath: ws.path.parts,
+                                            extends: undefined,
                                         });
                                         if (property.valueType.type === "id") {
                                             typeReferences.push({
@@ -1320,6 +1344,7 @@ export class AlgoliaSearchRecordGenerator {
                                     indexSegmentId,
                                     method: webhook.method,
                                     endpointPath,
+                                    extends: undefined,
                                 });
                                 if (header.type.type === "id") {
                                     typeReferences.push({
@@ -1337,6 +1362,7 @@ export class AlgoliaSearchRecordGenerator {
                             });
                         }
 
+                        const slug = FernNavigation.Slug(encodeURI(`${webhook.urlSlug}#payload`));
                         fields.push({
                             objectID: uuid(),
                             type: "webhook-field-v1",
@@ -1345,14 +1371,16 @@ export class AlgoliaSearchRecordGenerator {
                             breadcrumbs: toBreadcrumbs(parents).concat([
                                 {
                                     title: "payload",
-                                    slug: `${webhook.urlSlug}#payload`,
+                                    slug,
                                 },
                             ]),
-                            slug: `${webhook.urlSlug}#payload`,
+                            slug,
                             version,
                             indexSegmentId: context.indexSegment.id,
                             method: webhook.method,
                             endpointPath,
+                            availability: undefined,
+                            extends: undefined,
                         });
 
                         if (webhook.payload.type.type === "reference") {
@@ -1391,6 +1419,7 @@ export class AlgoliaSearchRecordGenerator {
                                     indexSegmentId: context.indexSegment.id,
                                     method: webhook.method,
                                     endpointPath,
+                                    extends: undefined,
                                 });
                                 if (property.valueType.type === "id") {
                                     typeReferences.push({
@@ -1605,7 +1634,7 @@ export class AlgoliaSearchRecordGenerator {
                             object: (object) => {
                                 const referenceLeaves: TypeReferenceWithMetadata[] = [];
                                 object.properties.forEach((property) => {
-                                    const slug = encodeURI(`${baseSlug}.${property.key}`);
+                                    const slug = FernNavigation.Slug(encodeURI(`${baseSlug}.${property.key}`));
                                     if (
                                         property.valueType.type === "id" &&
                                         !visitedNodes.has(property.valueType.value)
@@ -1646,7 +1675,7 @@ export class AlgoliaSearchRecordGenerator {
                                 object.extends.forEach((extend) => {
                                     if (!visitedNodes.has(extend)) {
                                         referenceLeaves.push({
-                                            reference: { type: "id", value: extend },
+                                            reference: { type: "id", value: extend, default: undefined },
                                             anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
                                             breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
                                             slugPrefix: baseSlug,
@@ -1671,7 +1700,7 @@ export class AlgoliaSearchRecordGenerator {
                             alias: () => undefined,
                             enum: (enum_) => {
                                 enum_.values.forEach((value) => {
-                                    const slug = encodeURI(`${baseSlug}.${value.value}`);
+                                    const slug = FernNavigation.Slug(encodeURI(`${baseSlug}.${value.value}`));
                                     fields.push({
                                         objectID: uuid(),
                                         title: value.value,
@@ -1687,6 +1716,7 @@ export class AlgoliaSearchRecordGenerator {
                                         slug,
                                         version: typeReferenceWithMetadata.version,
                                         indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                        extends: undefined,
                                         ...additionalProperties,
                                     });
                                 });
@@ -1700,7 +1730,7 @@ export class AlgoliaSearchRecordGenerator {
                                             : variant.type.type === "id"
                                               ? variant.type.value
                                               : "";
-                                    const slug = encodeURI(`${baseSlug}.${variant.displayName}`);
+                                    const slug = FernNavigation.Slug(encodeURI(`${baseSlug}.${variant.displayName}`));
                                     if (variant.type.type === "id" && !visitedNodes.has(variant.type.value)) {
                                         referenceLeaves.push({
                                             reference: variant.type,
@@ -1733,6 +1763,7 @@ export class AlgoliaSearchRecordGenerator {
                                             slug,
                                             version: typeReferenceWithMetadata.version,
                                             indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                            extends: undefined,
                                             ...additionalProperties,
                                         });
                                     }
@@ -1746,12 +1777,12 @@ export class AlgoliaSearchRecordGenerator {
                                 const referenceLeaves: TypeReferenceWithMetadata[] = [];
                                 discriminatedUnion.variants.forEach((variant) => {
                                     const title = variant.displayName ?? titleCase(variant.discriminantValue);
-                                    const slug = encodeURI(`${baseSlug}.${title}`);
+                                    const slug = FernNavigation.Slug(encodeURI(`${baseSlug}.${title}`));
 
                                     variant.additionalProperties.extends.forEach((extend) => {
                                         if (!visitedNodes.has(extend)) {
                                             referenceLeaves.push({
-                                                reference: { type: "id", value: extend },
+                                                reference: { type: "id", value: extend, default: undefined },
                                                 anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
                                                 breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
                                                 slugPrefix: baseSlug,
@@ -1914,7 +1945,9 @@ export class AlgoliaSearchRecordGenerator {
             context.indexSegment.type === "versioned"
                 ? {
                       id: context.indexSegment.version.id,
-                      slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                      slug: FernNavigation.Slug(
+                          context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                      ),
                   }
                 : undefined;
 
@@ -1995,6 +2028,7 @@ export class AlgoliaSearchRecordGenerator {
                     // TODO: parse from frontmatter?
                     name: title,
                     urlSlug,
+                    skipUrlSlug: undefined,
                 });
                 records.push(
                     compact({
@@ -2022,7 +2056,8 @@ export class AlgoliaSearchRecordGenerator {
             changelog.items.forEach((changelogItem) => {
                 const changelogItemContext = context.withPathPart({
                     name: `${title} - ${changelogItem.date}`,
-                    urlSlug, // changelogs are all under the same page
+                    urlSlug,
+                    skipUrlSlug: undefined,
                 });
 
                 const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
@@ -2070,7 +2105,7 @@ export class AlgoliaSearchRecordGenerator {
         const records: AlgoliaSearchRecord[] = [];
         if (changelog.pageId != null) {
             const changelogPageContent = this.config.docsDefinition.pages[changelog.pageId];
-            const urlSlug = changelog.urlSlug;
+            const urlSlug = FernNavigation.Slug(changelog.urlSlug);
             const title = changelog.title ?? fallbackTitle;
 
             if (changelogPageContent != null) {
@@ -2088,15 +2123,17 @@ export class AlgoliaSearchRecordGenerator {
                             breadcrumbs: [
                                 {
                                     title,
-                                    slug: urlSlug,
+                                    slug: FernNavigation.Slug(urlSlug),
                                 },
                             ],
-                            slug: urlSlug,
+                            slug: FernNavigation.Slug(urlSlug),
                             version:
                                 indexSegment.type === "versioned"
                                     ? {
                                           id: indexSegment.version.id,
-                                          slug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                          slug: FernNavigation.Slug(
+                                              indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                          ),
                                       }
                                     : undefined,
                             indexSegmentId: indexSegment.id,
@@ -2107,10 +2144,11 @@ export class AlgoliaSearchRecordGenerator {
             }
 
             changelog.items.forEach((changelogItem) => {
-                const changelogItemContext = context.withPathPart({
-                    name: `${title} - ${changelogItem.date}`,
-                    urlSlug, // changelogs are all under the same page
-                });
+                // const changelogItemContext = context.withPathPart({
+                //     name: `${title} - ${changelogItem.date}`,
+                //     urlSlug,
+                //     skipUrlSlug: undefined,
+                // });
 
                 const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
                 if (changelogPageContent != null) {
@@ -2131,15 +2169,17 @@ export class AlgoliaSearchRecordGenerator {
                             breadcrumbs: [
                                 {
                                     title,
-                                    slug: urlSlug,
+                                    slug: FernNavigation.Slug(urlSlug),
                                 },
                             ],
-                            slug: urlSlug,
+                            slug: FernNavigation.Slug(urlSlug),
                             version:
                                 indexSegment.type === "versioned"
                                     ? {
                                           id: indexSegment.version.id,
-                                          slug: indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                          slug: FernNavigation.Slug(
+                                              indexSegment.version.urlSlug ?? indexSegment.version.id,
+                                          ),
                                       }
                                     : undefined,
                             indexSegmentId: indexSegment.id,
@@ -2167,7 +2207,7 @@ export class AlgoliaSearchRecordGenerator {
         });
 
         Object.entries(subpackages).forEach(([id, subpackage]) => {
-            const pathParts = subpackagePathParts[id];
+            const pathParts = subpackagePathParts[APIV1Db.SubpackageId(id)];
             if (pathParts == null) {
                 LOGGER.error("Excluding subpackage from search. Failed to find path parts for subpackage id=", id);
                 return;
@@ -2193,6 +2233,7 @@ export class AlgoliaSearchRecordGenerator {
             const endpointContext = context.withPathPart({
                 name: endpointDef.name ?? "",
                 urlSlug: endpointDef.urlSlug,
+                skipUrlSlug: undefined,
             });
             const { indexSegment } = context;
             records.push(
@@ -2229,17 +2270,17 @@ export class AlgoliaSearchRecordGenerator {
     }
 }
 
-interface PathPart {
-    name: string;
-    urlSlug: string;
-    skipUrlSlug?: boolean;
-}
+// interface PathPart {
+//     name: string;
+//     urlSlug: string;
+//     skipUrlSlug?: boolean;
+// }
 
 function getPathPartsBySubpackage({
     definition,
 }: {
     definition: APIV1Db.DbApiDefinition;
-}): Record<APIV1Read.SubpackageId, PathPart[]> {
+}): Record<APIV1Read.SubpackageId, Algolia.AlgoliaRecordPathPart[]> {
     return getPathPartsBySubpackageHelper({
         definition,
         subpackages: getSubpackagesMap({ definition, subpackages: definition.rootPackage.subpackages }),
@@ -2254,9 +2295,9 @@ function getPathPartsBySubpackageHelper({
 }: {
     definition: APIV1Db.DbApiDefinition;
     subpackages: Record<APIV1Read.SubpackageId, APIV1Db.DbApiDefinitionSubpackage>;
-    pathParts: PathPart[];
-}): Record<APIV1Read.SubpackageId, PathPart[]> {
-    let result: Record<APIV1Read.SubpackageId, PathPart[]> = {};
+    pathParts: Algolia.AlgoliaRecordPathPart[];
+}): Record<APIV1Read.SubpackageId, Algolia.AlgoliaRecordPathPart[]> {
+    let result: Record<APIV1Read.SubpackageId, Algolia.AlgoliaRecordPathPart[]> = {};
     for (const [id, subpackage] of Object.entries(subpackages)) {
         if (subpackage.pointsTo != null) {
             const pointedToSubpackage = definition.subpackages[subpackage.pointsTo];
@@ -2279,8 +2320,15 @@ function getPathPartsBySubpackageHelper({
                 }),
             };
         } else {
-            const path: PathPart[] = [...pathParts, { name: subpackage.name, urlSlug: subpackage.urlSlug }];
-            result[id] = path;
+            const path: Algolia.AlgoliaRecordPathPart[] = [
+                ...pathParts,
+                {
+                    name: subpackage.name,
+                    urlSlug: subpackage.urlSlug,
+                    skipUrlSlug: undefined,
+                },
+            ];
+            result[APIV1Db.SubpackageId(id)] = path;
             result = {
                 ...result,
                 ...getPathPartsBySubpackageHelper({
@@ -2375,8 +2423,8 @@ export function getMarkdownSectionTree(markdown: string): MarkdownNode {
 export function getMarkdownSections(
     markdownSection: MarkdownNode,
     breadcrumbs: BreadcrumbsInfo[],
-    indexSegmentId: string,
-    slug: string,
+    indexSegmentId: FdrAPI.IndexSegmentId,
+    slug: FernNavigation.Slug,
 ): AlgoliaSearchRecord[] {
     const sectionBreadcrumbs = markdownSection.heading
         ? breadcrumbs.concat([
@@ -2398,6 +2446,8 @@ export function getMarkdownSections(
                       breadcrumbs: sectionBreadcrumbs,
                       indexSegmentId,
                       slug,
+                      description: undefined,
+                      version: undefined,
                   }),
               ];
     return records.concat(

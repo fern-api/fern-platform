@@ -6,5 +6,5 @@ export interface BaseCliRelease {
     /** The major version of the IR that this CLI exposes. */
     irVersion: number;
     /** Tags to categorize the CLI release. */
-    tags?: string[];
+    tags: string[] | undefined;
 }

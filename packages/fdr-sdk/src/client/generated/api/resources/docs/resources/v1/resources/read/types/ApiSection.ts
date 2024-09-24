@@ -8,10 +8,10 @@ export interface ApiSection extends FernRegistry.docs.v1.read.NavigationNodeMeta
     title: string;
     api: FernRegistry.ApiDefinitionId;
     skipUrlSlug: boolean;
-    artifacts?: FernRegistry.docs.v1.read.ApiArtifacts;
+    artifacts: FernRegistry.docs.v1.read.ApiArtifacts | undefined;
     showErrors: boolean;
-    changelog?: FernRegistry.docs.v1.read.ChangelogSection;
-    navigation?: FernRegistry.docs.v1.read.ApiNavigationConfigRoot;
-    longScrolling?: boolean;
-    flattened?: boolean;
+    changelog: FernRegistry.docs.v1.read.ChangelogSection | undefined;
+    navigation: FernRegistry.docs.v1.read.ApiNavigationConfigRoot | undefined;
+    longScrolling: boolean | undefined;
+    flattened: boolean | undefined;
 }

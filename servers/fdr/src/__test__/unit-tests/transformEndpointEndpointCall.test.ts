@@ -1,5 +1,4 @@
-import { SDKSnippetHolder, transformExampleEndpointCall } from "@fern-api/fdr-sdk";
-import { APIV1Write } from "../../api";
+import { APIV1Write, FdrAPI, SDKSnippetHolder, transformExampleEndpointCall } from "@fern-api/fdr-sdk";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
@@ -12,22 +11,30 @@ const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
 describe("transformEndpointEndpointCall", () => {
     it("correctly transforms", () => {
         const endpointDefinition: APIV1Write.EndpointDefinition = {
-            id: "endpoint-id",
+            id: FdrAPI.EndpointId("endpoint-id"),
             description: "This is some ```markdown```",
             method: APIV1Write.HttpMethod.Post,
             path: {
                 parts: [
                     { type: "literal", value: "/prefix" },
-                    { type: "pathParameter", value: "pathParam" },
+                    { type: "pathParameter", value: APIV1Write.PathParameterKey("pathParam") },
                     { type: "literal", value: "/suffix" },
                 ],
                 pathParameters: [
                     {
-                        key: "pathParam",
+                        key: APIV1Write.PathParameterKey("pathParam"),
                         type: {
                             type: "primitive",
-                            value: { type: "string" },
+                            value: {
+                                type: "string",
+                                regex: undefined,
+                                minLength: undefined,
+                                maxLength: undefined,
+                                default: undefined,
+                            },
                         },
+                        description: undefined,
+                        availability: undefined,
                     },
                 ],
             },
@@ -36,8 +43,10 @@ describe("transformEndpointEndpointCall", () => {
                     key: "queryParam",
                     type: {
                         type: "primitive",
-                        value: { type: "integer" },
+                        value: { type: "integer", minimum: undefined, maximum: undefined, default: undefined },
                     },
+                    description: undefined,
+                    availability: undefined,
                 },
             ],
             headers: [
@@ -45,11 +54,23 @@ describe("transformEndpointEndpointCall", () => {
                     key: "header",
                     type: {
                         type: "primitive",
-                        value: { type: "boolean" },
+                        value: { type: "boolean", default: undefined },
                     },
+                    description: undefined,
+                    availability: undefined,
                 },
             ],
             examples: [],
+            auth: undefined,
+            defaultEnvironment: undefined,
+            environments: undefined,
+            originalEndpointId: undefined,
+            name: undefined,
+            request: undefined,
+            response: undefined,
+            errors: undefined,
+            errorsV2: undefined,
+            availability: undefined,
         };
 
         const transformed = transformExampleEndpointCall({
@@ -57,7 +78,7 @@ describe("transformEndpointEndpointCall", () => {
             writeShape: {
                 path: "/prefix/path-param-value/suffix",
                 pathParameters: {
-                    pathParam: "path-param-value",
+                    [APIV1Write.PathParameterKey("pathParam")]: "path-param-value",
                 },
                 queryParameters: {
                     queryParam: 123,
@@ -66,6 +87,13 @@ describe("transformEndpointEndpointCall", () => {
                     header: true,
                 },
                 responseStatusCode: 200,
+                name: undefined,
+                requestBody: undefined,
+                requestBodyV3: undefined,
+                responseBody: undefined,
+                responseBodyV3: undefined,
+                codeSamples: undefined,
+                description: undefined,
             },
             snippets: EMPTY_SNIPPET_HOLDER,
         });

@@ -6,6 +6,6 @@ export declare type ExampleErrorResponse = FernRegistry.api.v1.read.ExampleError
 export declare namespace ExampleErrorResponse {
     interface Json {
         type: "json";
-        value?: unknown;
+        value: unknown;
     }
 }

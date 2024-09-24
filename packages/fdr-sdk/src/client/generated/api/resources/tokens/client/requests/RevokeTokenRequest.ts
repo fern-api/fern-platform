@@ -7,8 +7,8 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         orgId: "string",
- *         tokenId: "string"
+ *         orgId: FernRegistry.OrgId("string"),
+ *         tokenId: FernRegistry.TokenId("string")
  *     }
  */
 export interface RevokeTokenRequest {

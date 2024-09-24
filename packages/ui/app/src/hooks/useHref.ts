@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { Atom, useAtomValue } from "jotai";
 import { TRAILING_SLASH_ATOM } from "../atoms";
 

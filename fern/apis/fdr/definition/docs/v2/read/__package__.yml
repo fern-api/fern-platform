@@ -18,7 +18,7 @@ service:
         name: GetOrganizationForUrlRequest
         body:
           properties:
-            url: string
+            url: rootCommons.Url
       response: rootCommons.OrgId
       errors:
         - DomainNotRegisteredError
@@ -30,7 +30,7 @@ service:
         name: LoadDocsForUrlRequest
         body:
           properties:
-            url: string
+            url: rootCommons.Url
       response: LoadDocsForUrlResponse
       errors:
         - DomainNotRegisteredError
@@ -44,7 +44,7 @@ service:
         name: LoadPrivateDocsForUrlRequest
         body:
           properties:
-            url: string
+            url: rootCommons.Url
       response: LoadDocsForUrlResponse
       errors:
         - DomainNotRegisteredError

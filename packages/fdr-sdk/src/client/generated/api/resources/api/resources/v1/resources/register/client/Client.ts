@@ -14,8 +14,11 @@ export declare namespace Register {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,19 +31,19 @@ export class Register {
      * @param {Register.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.api.v1.register.registerApiDefinition({
-     *         orgId: "string",
-     *         apiId: "string",
+     *     await client.api.v1.register.registerApiDefinition({
+     *         orgId: FernRegistry.OrgId("string"),
+     *         apiId: FernRegistry.ApiId("string"),
      *         definition: {
      *             rootPackage: {
      *                 endpoints: [{
      *                         auth: true,
-     *                         defaultEnvironment: "string",
+     *                         defaultEnvironment: FernRegistry.EnvironmentId("string"),
      *                         environments: [{
      *                                 "key": "value"
      *                             }],
-     *                         method: FernRegistry.api.v1.register.HttpMethod.Get,
-     *                         id: "string",
+     *                         method: "GET",
+     *                         id: FernRegistry.EndpointId("string"),
      *                         originalEndpointId: "string",
      *                         name: "string",
      *                         path: {
@@ -51,7 +54,7 @@ export class Register {
      *                                     }
      *                                 }],
      *                             pathParameters: [{
-     *                                     key: "string",
+     *                                     key: FernRegistry.api.v1.PathParameterKey("string"),
      *                                     type: {
      *                                         type: "id"
      *                                     },
@@ -160,7 +163,7 @@ export class Register {
      *                         }
      *                     }],
      *                 websockets: [{
-     *                         id: "string",
+     *                         id: FernRegistry.WebSocketId("string"),
      *                         auth: true,
      *                         name: {
      *                             "key": "value"
@@ -179,7 +182,7 @@ export class Register {
      *                                     }
      *                                 }],
      *                             pathParameters: [{
-     *                                     key: "string",
+     *                                     key: FernRegistry.api.v1.PathParameterKey("string"),
      *                                     type: {
      *                                         type: "id"
      *                                     },
@@ -211,8 +214,8 @@ export class Register {
      *                         }
      *                     }],
      *                 webhooks: [{
-     *                         method: FernRegistry.api.v1.register.WebhookHttpMethod.Get,
-     *                         id: "string",
+     *                         method: "GET",
+     *                         id: FernRegistry.WebhookId("string"),
      *                         name: {
      *                             "key": "value"
      *                         },
@@ -237,9 +240,9 @@ export class Register {
      *                             "key": "value"
      *                         }
      *                     }],
-     *                 types: ["string"],
-     *                 subpackages: ["string"],
-     *                 pointsTo: "string"
+     *                 types: [FernRegistry.api.v1.TypeId("string")],
+     *                 subpackages: [FernRegistry.api.v1.SubpackageId("string")],
+     *                 pointsTo: FernRegistry.api.v1.SubpackageId("string")
      *             },
      *             types: {
      *                 "string": {
@@ -260,17 +263,17 @@ export class Register {
      *             },
      *             subpackages: {
      *                 "string": {
-     *                     subpackageId: "string",
+     *                     subpackageId: FernRegistry.api.v1.SubpackageId("string"),
      *                     name: "string",
      *                     displayName: "string",
      *                     endpoints: [{
      *                             auth: true,
-     *                             defaultEnvironment: "string",
+     *                             defaultEnvironment: FernRegistry.EnvironmentId("string"),
      *                             environments: [{
      *                                     "key": "value"
      *                                 }],
-     *                             method: FernRegistry.api.v1.register.HttpMethod.Get,
-     *                             id: "string",
+     *                             method: "GET",
+     *                             id: FernRegistry.EndpointId("string"),
      *                             originalEndpointId: "string",
      *                             name: "string",
      *                             path: {
@@ -281,7 +284,7 @@ export class Register {
      *                                         }
      *                                     }],
      *                                 pathParameters: [{
-     *                                         key: "string",
+     *                                         key: FernRegistry.api.v1.PathParameterKey("string"),
      *                                         type: {
      *                                             type: "id"
      *                                         },
@@ -390,7 +393,7 @@ export class Register {
      *                             }
      *                         }],
      *                     websockets: [{
-     *                             id: "string",
+     *                             id: FernRegistry.WebSocketId("string"),
      *                             auth: true,
      *                             name: {
      *                                 "key": "value"
@@ -409,7 +412,7 @@ export class Register {
      *                                         }
      *                                     }],
      *                                 pathParameters: [{
-     *                                         key: "string",
+     *                                         key: FernRegistry.api.v1.PathParameterKey("string"),
      *                                         type: {
      *                                             type: "id"
      *                                         },
@@ -441,8 +444,8 @@ export class Register {
      *                             }
      *                         }],
      *                     webhooks: [{
-     *                             method: FernRegistry.api.v1.register.WebhookHttpMethod.Get,
-     *                             id: "string",
+     *                             method: "GET",
+     *                             id: FernRegistry.WebhookId("string"),
      *                             name: {
      *                                 "key": "value"
      *                             },
@@ -467,9 +470,9 @@ export class Register {
      *                                 "key": "value"
      *                             }
      *                         }],
-     *                     types: ["string"],
-     *                     subpackages: ["string"],
-     *                     pointsTo: "string",
+     *                     types: [FernRegistry.api.v1.TypeId("string")],
+     *                     subpackages: [FernRegistry.api.v1.SubpackageId("string")],
+     *                     pointsTo: FernRegistry.api.v1.SubpackageId("string"),
      *                     description: {
      *                         "key": "value"
      *                     }
@@ -557,6 +560,7 @@ export class Register {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

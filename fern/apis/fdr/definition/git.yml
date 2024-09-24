@@ -47,7 +47,7 @@ types:
       fullName:
         type: string
         docs: The full name of the repository, e.g. fern-api/fern. It includes the owner, as well as the name of the repository.
-      url: string
+      url: commons.Url
       repositoryOwnerOrganizationId:
         type: commons.OrgId
         docs: The Fern organization ID of the repository owner.
@@ -98,7 +98,7 @@ types:
       author: optional<GithubUser>
       reviewers: list<PullRequestReviewer>
       title: string
-      url: string
+      url: commons.Url
       checks: list<CheckRun>
       state: PullRequestState
       createdAt: datetime

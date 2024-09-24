@@ -4,6 +4,7 @@ imports:
   rootCommons: ../../../commons.yml
   commons: ../commons/commons.yml
   navigation: ../../../navigation/__package__.yml
+  apiCommonsV1: ../../../api/v1/commons.yml
 
 service:
   base-path: /registry/docs
@@ -58,15 +59,15 @@ types:
     properties:
       uploadUrl: string
       fileId:
-        type: commons.FileId
+        type: rootCommons.FileId
         docs: |
-          When reading docs we will return a map<commons.FileId, URL> that you can use to look up the docs.
+          When reading docs we will return a map<rootCommons.FileId, URL> that you can use to look up the docs.
 
   Height: double
 
   DocsDefinition:
     properties:
-      pages: map<commons.PageId, PageContent>
+      pages: map<rootCommons.PageId, PageContent>
       config: DocsConfig
       jsFiles:
         type: optional<map<string, string>>
@@ -76,8 +77,8 @@ types:
 
   PageContent:
     properties:
-      markdown: string # eventually PageContent should just be a commons.FileId ?
-      editThisPageUrl: optional<commons.Url>
+      markdown: string # eventually PageContent should just be a rootCommons.FileId ?
+      editThisPageUrl: optional<rootCommons.Url>
 
   DocsConfig:
     properties:
@@ -92,8 +93,8 @@ types:
 
       # logo
       logoHeight: optional<Height>
-      logoHref: optional<commons.Url>
-      favicon: optional<commons.FileId>
+      logoHref: optional<rootCommons.Url>
+      favicon: optional<rootCommons.FileId>
 
       # seo
       metadata: optional<commons.MetadataConfig>
@@ -117,10 +118,10 @@ types:
       playground: optional<commons.PlaygroundConfig>
 
       # deprecated
-      backgroundImage: optional<commons.FileId>
+      backgroundImage: optional<rootCommons.FileId>
       logoV2: optional<commons.ThemedFileId>
       logo:
-        type: optional<commons.FileId>
+        type: optional<rootCommons.FileId>
         availability: deprecated
       colors:
         type: optional<commons.ColorsConfig>
@@ -140,8 +141,8 @@ types:
 
   ThemeConfig:
     properties:
-      logo: optional<commons.FileId>
-      backgroundImage: optional<commons.FileId>
+      logo: optional<rootCommons.FileId>
+      backgroundImage: optional<rootCommons.FileId>
       accentPrimary: commons.RgbaColor
       background: optional<commons.RgbaColor>
       border: optional<commons.RgbaColor>
@@ -200,7 +201,7 @@ types:
     properties:
       title: string
       icon: optional<string>
-      url: string
+      url: rootCommons.Url
 
   UnversionedUntabbedNavigationConfig:
     properties:
@@ -213,7 +214,7 @@ types:
 
   VersionedNavigationConfigData:
     properties:
-      version: string
+      version: rootCommons.VersionId
       urlSlugOverride: optional<string>
       availability: optional<VersionAvailability>
       config: UnversionedNavigationConfig
@@ -239,7 +240,7 @@ types:
     extends: NavigationNodeMetadata
     properties:
       id:
-        type: commons.PageId
+        type: rootCommons.PageId
         docs: This is a filepath relative to the fern folder, with a .md/.mdx extension.
       title: string
 
@@ -260,7 +261,7 @@ types:
     properties:
       title: string
       icon: optional<string>
-      url: string
+      url: rootCommons.Url
 
   ApiSection:
     availability: deprecated
@@ -288,23 +289,23 @@ types:
   ApiNavigationConfigRoot:
     availability: deprecated
     properties:
-      summaryPageId: optional<commons.PageId>
+      summaryPageId: optional<rootCommons.PageId>
       items: list<ApiNavigationConfigItem>
 
   ApiNavigationConfigItem:
     availability: deprecated
     union:
       subpackage: ApiNavigationConfigSubpackage
-      endpointId: commons.EndpointId
-      websocketId: commons.WebSocketId
-      webhookId: commons.WebhookId
+      endpointId: rootCommons.EndpointId
+      websocketId: rootCommons.WebSocketId
+      webhookId: rootCommons.WebhookId
       page: PageMetadata
 
   ApiNavigationConfigSubpackage:
     availability: deprecated
     properties:
-      summaryPageId: optional<commons.PageId>
-      subpackageId: commons.SubpackageId
+      summaryPageId: optional<rootCommons.PageId>
+      subpackageId: apiCommonsV1.SubpackageId
       items: list<ApiNavigationConfigItem>
 
   ChangelogSection:
@@ -320,7 +321,7 @@ types:
       hidden: optional<boolean>
       description: optional<string>
       pageId:
-        type: optional<string>
+        type: optional<rootCommons.PageId>
         docs: |
           Optional mdx content to display at the top of the changelog section. The title and description will be parsed from the frontmatter and replace the config-defined values.
       items: list<ChangelogItem>
@@ -332,7 +333,7 @@ types:
     properties:
       title: optional<string>
       description: optional<string>
-      pageId: optional<string>
+      pageId: optional<rootCommons.PageId>
       items: list<ChangelogItem>
 
   ChangelogSectionV3:
@@ -342,7 +343,7 @@ types:
   ChangelogItem:
     properties:
       date: date
-      pageId: string
+      pageId: rootCommons.PageId
       hidden: optional<boolean>
 
   DocsSection:
@@ -358,7 +359,7 @@ types:
           If false, the section title will be displayed as a header and the items will be displayed below it, and cannot be collapsed.
       skipUrlSlug: optional<boolean>
       overviewPageId:
-        type: optional<commons.PageId>
+        type: optional<rootCommons.PageId>
         availability: in-development
         docs: |
           If provided, clicking on this section will open this page instead of the first page in the section.
@@ -370,7 +371,7 @@ types:
 
   PublishedPostmanCollection:
     properties:
-      url: string
+      url: rootCommons.Url
       githubRepoName: optional<string>
 
   PublishedSdk:

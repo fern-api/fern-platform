@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface EndpointSnippetTemplates {
-    typescript?: FernRegistry.VersionedSnippetTemplate;
-    python?: FernRegistry.VersionedSnippetTemplate;
+    typescript: FernRegistry.VersionedSnippetTemplate | undefined;
+    python: FernRegistry.VersionedSnippetTemplate | undefined;
 }

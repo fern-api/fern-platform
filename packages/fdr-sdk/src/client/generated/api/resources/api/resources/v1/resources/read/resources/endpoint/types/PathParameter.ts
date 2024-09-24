@@ -4,9 +4,7 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface PathParameter
-    extends FernRegistry.api.v1.read.WithDescription,
-        FernRegistry.api.v1.read.WithAvailability {
-    key: FernRegistry.api.v1.read.PathParameterKey;
+export interface PathParameter extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
+    key: FernRegistry.api.v1.PathParameterKey;
     type: FernRegistry.api.v1.read.TypeReference;
 }

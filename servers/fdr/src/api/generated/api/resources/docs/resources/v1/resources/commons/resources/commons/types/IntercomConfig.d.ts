@@ -3,5 +3,5 @@
  */
 export interface IntercomConfig {
     appId: string;
-    apiBase?: string;
+    apiBase: string | undefined;
 }

@@ -5,5 +5,5 @@ import * as FernRegistry from "../../../index";
 export interface PayloadInput {
     location: FernRegistry.PayloadLocation;
     /** Dot delimited path to the value within the payload, if omitted the full payload is used. */
-    path?: string;
+    path: string | undefined;
 }

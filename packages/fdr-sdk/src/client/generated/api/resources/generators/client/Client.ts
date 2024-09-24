@@ -16,8 +16,11 @@ export declare namespace Generators {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -35,13 +38,13 @@ export class Generators {
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.upsertGenerator({
-     *         id: "string",
+     *     await client.generators.upsertGenerator({
+     *         id: FernRegistry.generators.GeneratorId("string"),
      *         displayName: "string",
      *         generatorType: {
      *             type: "sdk"
      *         },
-     *         generatorLanguage: FernRegistry.generators.GeneratorLanguage.Python,
+     *         generatorLanguage: "python",
      *         dockerImage: "string"
      *     })
      */
@@ -62,6 +65,7 @@ export class Generators {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -87,7 +91,7 @@ export class Generators {
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.getGeneratorByImage({
+     *     await client.generators.getGeneratorByImage({
      *         dockerImage: "string"
      *     })
      */
@@ -113,6 +117,7 @@ export class Generators {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -138,7 +143,7 @@ export class Generators {
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.getGenerator("string")
+     *     await client.generators.getGenerator(FernRegistry.generators.GeneratorId("string"))
      */
     public async getGenerator(
         generatorId: FernRegistry.generators.GeneratorId,
@@ -159,6 +164,7 @@ export class Generators {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -182,7 +188,7 @@ export class Generators {
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.listGenerators()
+     *     await client.generators.listGenerators()
      */
     public async listGenerators(
         requestOptions?: Generators.RequestOptions
@@ -200,6 +206,7 @@ export class Generators {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

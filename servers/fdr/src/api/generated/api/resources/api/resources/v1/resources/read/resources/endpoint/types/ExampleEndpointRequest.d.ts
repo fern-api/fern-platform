@@ -6,7 +6,7 @@ export declare type ExampleEndpointRequest = FernRegistry.api.v1.read.ExampleEnd
 export declare namespace ExampleEndpointRequest {
     interface Json {
         type: "json";
-        value?: unknown;
+        value: unknown;
     }
     interface Form {
         type: "form";

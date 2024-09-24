@@ -13,5 +13,5 @@ export interface SnippetRegistryEntry {
      * Additional templates to use for this endpoint, for example if you wanted
      * an async example, you could have { "async": Template(...) }.
      */
-    additionalTemplates?: Record<string, FernRegistry.VersionedSnippetTemplate>;
+    additionalTemplates: Record<string, FernRegistry.VersionedSnippetTemplate> | undefined;
 }

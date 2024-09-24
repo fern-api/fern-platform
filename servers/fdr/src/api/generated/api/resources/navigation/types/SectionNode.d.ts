@@ -4,6 +4,6 @@
 import * as FernRegistry from "../../../index";
 export interface SectionNode extends FernRegistry.navigation.WithNodeMetadata, FernRegistry.navigation.WithOverviewPage, FernRegistry.navigation.WithRedirect {
     type: "section";
-    collapsed?: boolean;
+    collapsed: boolean | undefined;
     children: FernRegistry.navigation.NavigationChild[];
 }

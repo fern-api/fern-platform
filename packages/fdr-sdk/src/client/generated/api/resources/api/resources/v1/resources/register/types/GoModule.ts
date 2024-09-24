@@ -4,5 +4,5 @@
 
 export interface GoModule {
     githubRepo: string;
-    version?: string;
+    version: string | undefined;
 }

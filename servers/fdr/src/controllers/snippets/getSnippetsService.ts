@@ -1,15 +1,10 @@
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { SnippetsService } from "../../api";
-import {
-    EndpointSnippetTemplate,
-    InvalidPageError,
-    Snippet,
-    SnippetTemplateNotFoundError,
-    UnauthorizedError,
-} from "../../api/generated/api";
+import { InvalidPageError, SnippetTemplateNotFoundError, UnauthorizedError } from "../../api/generated/api";
 import { type FdrApplication } from "../../app";
 import { DbSnippetsPage } from "../../db/snippets/SnippetsDao";
 import { APIResolver } from "./APIResolver";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
 export function getSnippetsService(app: FdrApplication): SnippetsService {
     return new SnippetsService({
@@ -62,10 +57,10 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                 return res.send(snippetsForEndpoint ?? []);
             } else {
                 try {
-                    const snippets: Snippet[] = [];
+                    const snippets: FdrAPI.Snippet[] = [];
 
                     for (const sdk of req.body.sdks ?? []) {
-                        const endpointSnippetTemplate: EndpointSnippetTemplate | null = await app.dao
+                        const endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate | null = await app.dao
                             .snippetTemplates()
                             .loadSnippetTemplate({
                                 loadSnippetTemplateRequest: {

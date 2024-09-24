@@ -2,8 +2,9 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 
 export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippetTemplate => ({
     endpointId: {
-        path: "/v1/chat/completions",
+        path: FdrAPI.EndpointPathLiteral("/v1/chat/completions"),
         method: "POST",
+        identifierOverride: undefined,
     },
     sdk: {
         type: "python",
@@ -31,6 +32,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
                 {
@@ -59,6 +61,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                             },
                                         ],
                                         type: "generic",
+                                        inputDelimiter: undefined,
                                     },
                                 },
                                 {
@@ -75,6 +78,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                             },
                                         ],
                                         type: "generic",
+                                        inputDelimiter: undefined,
                                     },
                                 },
                                 {
@@ -91,6 +95,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                             },
                                         ],
                                         type: "generic",
+                                        inputDelimiter: undefined,
                                     },
                                 },
                             ],
@@ -118,6 +123,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
                 {
@@ -139,6 +145,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                 },
                             ],
                             type: "generic",
+                            inputDelimiter: undefined,
                         },
                         valueTemplate: {
                             imports: [],
@@ -152,6 +159,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                 },
                             ],
                             type: "generic",
+                            inputDelimiter: undefined,
                         },
                         keyValueSeparator: ": ",
                         templateInput: {
@@ -175,6 +183,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
                 {
@@ -203,6 +212,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                             },
                                         ],
                                         type: "generic",
+                                        inputDelimiter: undefined,
                                     },
                                 },
                                 {
@@ -226,6 +236,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                                         },
                                                     ],
                                                     type: "generic",
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                             {
@@ -242,6 +253,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                                         },
                                                     ],
                                                     type: "generic",
+                                                    inputDelimiter: undefined,
                                                 },
                                             },
                                         ],
@@ -263,6 +275,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                             },
                                         ],
                                         type: "generic",
+                                        inputDelimiter: undefined,
                                     },
                                 },
                             ],
@@ -290,6 +303,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
                 {
@@ -306,6 +320,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
                 {
@@ -334,6 +349,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                             },
                                         ],
                                         type: "generic",
+                                        inputDelimiter: undefined,
                                     },
                                     templateInput: {
                                         location: "BODY",
@@ -365,6 +381,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                                     },
                                                 ],
                                                 type: "generic",
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                         {
@@ -381,6 +398,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                                     },
                                                 ],
                                                 type: "generic",
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                         {
@@ -397,6 +415,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                                     },
                                                 ],
                                                 type: "generic",
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                         {
@@ -418,6 +437,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                                         },
                                                     ],
                                                     type: "generic",
+                                                    inputDelimiter: undefined,
                                                 },
                                                 templateInput: {
                                                     location: "BODY",
@@ -440,6 +460,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                                     },
                                                 ],
                                                 type: "generic",
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                         {
@@ -456,6 +477,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                                     },
                                                 ],
                                                 type: "generic",
+                                                inputDelimiter: undefined,
                                             },
                                         },
                                     ],
@@ -482,6 +504,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
                 {
@@ -498,6 +521,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
                 {
@@ -526,6 +550,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                             },
                                         ],
                                         type: "generic",
+                                        inputDelimiter: undefined,
                                     },
                                     valueTemplate: {
                                         imports: [],
@@ -539,6 +564,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                             },
                                         ],
                                         type: "generic",
+                                        inputDelimiter: undefined,
                                     },
                                     keyValueSeparator: ": ",
                                     templateInput: {
@@ -562,6 +588,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                                         },
                                     ],
                                     type: "generic",
+                                    inputDelimiter: undefined,
                                 },
                             },
                         ],
@@ -583,6 +610,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
                 {
@@ -599,6 +627,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
                 {
@@ -615,6 +644,7 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
                             },
                         ],
                         type: "generic",
+                        inputDelimiter: undefined,
                     },
                 },
             ],
@@ -624,6 +654,8 @@ export const CHAT_COMPLETION_SNIPPET = (version: string): FdrAPI.EndpointSnippet
         clientInstantiation:
             'from octoai.client import AsyncOctoAI\n\nclient = AsyncOctoAI(\n    api_key="YOUR_API_KEY",\n)\n',
     },
+    apiDefinitionId: undefined,
+    additionalTemplates: undefined,
 });
 
 export const CHAT_COMPLETION_PAYLOAD: FdrAPI.CustomSnippetPayload = {
@@ -647,4 +679,5 @@ export const CHAT_COMPLETION_PAYLOAD: FdrAPI.CustomSnippetPayload = {
         temperature: 0.1,
         top_p: 0.9,
     },
+    auth: undefined,
 };

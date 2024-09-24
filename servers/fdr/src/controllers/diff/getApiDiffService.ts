@@ -1,5 +1,7 @@
-import { APIV1Db, APIV1Read, DiffService, FdrAPI } from "../../api";
+import { APIV1Db, FdrAPI } from "@fern-api/fdr-sdk";
+import { DiffService } from "../../api";
 import { PathParameter, PathParameterDiff, QueryParameter, QueryParameterDiff } from "../../api/generated/api";
+import { ApiDoesNotExistError } from "../../api/generated/api/resources/api/resources/v1/resources/read/errors";
 import { type FdrApplication } from "../../app";
 
 export function getApiDiffService(app: FdrApplication): DiffService {
@@ -9,7 +11,7 @@ export function getApiDiffService(app: FdrApplication): DiffService {
             const current = await app.dao.apis().loadAPIDefinition(req.query.currentApiDefinitionId);
 
             if (!previous || !current) {
-                throw new APIV1Read.ApiDoesNotExistError();
+                throw new ApiDoesNotExistError();
             }
 
             const previousEndpoints = getEndpoints(previous);
@@ -19,7 +21,7 @@ export function getApiDiffService(app: FdrApplication): DiffService {
             const addedEndpoints: FdrAPI.AddedEndpoint[] = [];
             const updatedEndpoints: FdrAPI.UpdatedEndpoint[] = [];
             for (const [endpointId, currentEndpoint] of Object.entries(currentEndpoints)) {
-                const previousEndpoint = previousEndpoints[endpointId];
+                const previousEndpoint = previousEndpoints[FdrAPI.EndpointId(endpointId)];
                 const endpointIdentifier = {
                     method: currentEndpoint.method,
                     path: getEndpointPath(currentEndpoint),
@@ -174,7 +176,7 @@ function getQueryParameterDiff({
     };
 }
 
-function getEndpoints(apiDefinition: APIV1Db.DbApiDefinition): Record<string, APIV1Db.DbEndpointDefinition> {
+function getEndpoints(apiDefinition: APIV1Db.DbApiDefinition): Record<FdrAPI.EndpointId, APIV1Db.DbEndpointDefinition> {
     const endpoints: Record<string, APIV1Db.DbEndpointDefinition> = {};
     apiDefinition.rootPackage.endpoints.forEach((endpoint) => {
         endpoints[getEndpointId(endpoint)] = endpoint;
@@ -187,12 +189,12 @@ function getEndpoints(apiDefinition: APIV1Db.DbApiDefinition): Record<string, AP
     return endpoints;
 }
 
-function getEndpointId(endpoint: APIV1Db.DbEndpointDefinition): string {
+function getEndpointId(endpoint: APIV1Db.DbEndpointDefinition): FdrAPI.EndpointId {
     const path = getEndpointPath(endpoint);
-    return `${endpoint.method}_${path}`;
+    return FdrAPI.EndpointId(`${endpoint.method}_${path}`);
 }
 
-function getEndpointPath(endpoint: APIV1Db.DbEndpointDefinition): string {
+function getEndpointPath(endpoint: APIV1Db.DbEndpointDefinition): FdrAPI.EndpointPathLiteral {
     let path = "";
     for (const part of endpoint.path.parts) {
         if (part.type === "literal") {
@@ -201,5 +203,5 @@ function getEndpointPath(endpoint: APIV1Db.DbEndpointDefinition): string {
             path += `{${part.value}}`;
         }
     }
-    return path;
+    return FdrAPI.EndpointPathLiteral(path);
 }

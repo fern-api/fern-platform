@@ -4,7 +4,7 @@ imports:
   endpoint: endpoint.yml
   type: type.yml
   rootCommons: ../../../commons.yml
-  commons: commons.yml
+  commons: ../commons.yml
   webhook: webhook.yml
   websocket: websocket.yml
 
@@ -28,8 +28,8 @@ types:
     properties:
       id: rootCommons.ApiDefinitionId
       rootPackage: ApiDefinitionPackage
-      types: map<type.TypeId, type.TypeDefinition>
-      subpackages: map<SubpackageId, ApiDefinitionSubpackage>
+      types: map<commons.TypeId, type.TypeDefinition>
+      subpackages: map<commons.SubpackageId, ApiDefinitionSubpackage>
       auth: optional<ApiAuth>
       hasMultipleBaseUrls:
         type: optional<boolean>
@@ -50,13 +50,13 @@ types:
   ApiNavigationConfigItem:
     union:
       subpackage: ApiNavigationConfigSubpackage
-      endpointId: endpoint.EndpointId
-      websocketId: websocket.WebSocketId
-      webhookId: webhook.WebhookId
+      endpointId: rootCommons.EndpointId
+      websocketId: rootCommons.WebSocketId
+      webhookId: rootCommons.WebhookId
 
   ApiNavigationConfigSubpackage:
     properties:
-      subpackageId: SubpackageId
+      subpackageId: commons.SubpackageId
       items: list<ApiNavigationConfigItem>
 
   ApiDefinitionPackage:
@@ -64,26 +64,24 @@ types:
       endpoints: list<endpoint.EndpointDefinition>
       websockets: list<websocket.WebSocketChannel>
       webhooks: list<webhook.WebhookDefinition>
-      types: list<type.TypeId>
-      subpackages: list<SubpackageId>
+      types: list<commons.TypeId>
+      subpackages: list<commons.SubpackageId>
       pointsTo:
         docs: |
           if present, this package should be replaced with the provided subpackage
           in the docs navigation.
-        type: optional<SubpackageId>
+        type: optional<commons.SubpackageId>
 
   ApiDefinitionSubpackage:
     extends:
       - commons.WithDescription
       - ApiDefinitionPackage
     properties:
-      parent: optional<SubpackageId>
-      subpackageId: SubpackageId
+      parent: optional<commons.SubpackageId>
+      subpackageId: commons.SubpackageId
       name: string
       urlSlug: string
       displayName: optional<string>
-
-  SubpackageId: string
 
   ApiAuth:
     union:
@@ -119,7 +117,7 @@ types:
 
   OAuthClientCredentialsReferencedEndpoint:
     properties:
-      endpointId: endpoint.EndpointId
+      endpointId: rootCommons.EndpointId
       accessTokenLocator: commons.JqString
 
 errors:

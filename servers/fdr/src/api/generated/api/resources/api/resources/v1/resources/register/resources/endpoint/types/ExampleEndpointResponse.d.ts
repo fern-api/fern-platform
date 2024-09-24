@@ -6,7 +6,7 @@ export declare type ExampleEndpointResponse = FernRegistry.api.v1.register.Examp
 export declare namespace ExampleEndpointResponse {
     interface Json {
         type: "json";
-        value?: unknown;
+        value: unknown;
     }
     interface Filename {
         type: "filename";

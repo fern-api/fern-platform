@@ -1,4 +1,4 @@
-import { FernNavigation } from "../../generated";
+import { FernNavigation } from "../../..";
 import { toDefaultSlug } from "../pruneVersionNode";
 
 describe("toDefaultSlug", () => {

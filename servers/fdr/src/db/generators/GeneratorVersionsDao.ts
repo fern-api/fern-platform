@@ -32,8 +32,8 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export type SnippetTemplatesByEndpoint = Record<
-    FdrAPI.EndpointPath,
-    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    FdrAPI.EndpointPathLiteral,
+    Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
 >;
 
 export type SnippetTemplatesByEndpointIdentifier = Record<string, APIV1Read.EndpointSnippetTemplates>;
@@ -261,7 +261,7 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
     }
 
     return {
-        generatorId: generatorRelease.generatorId,
+        generatorId: FdrAPI.generators.GeneratorId(generatorRelease.generatorId),
         version: generatorRelease.version,
         irVersion: generatorRelease.irVersion,
         releaseType: convertPrismaReleaseType(generatorRelease.releaseType),

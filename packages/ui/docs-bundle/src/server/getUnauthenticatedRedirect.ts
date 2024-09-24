@@ -1,3 +1,4 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { provideRegistryService } from "@fern-ui/ui";
 import type { Redirect } from "next/types";
@@ -17,7 +18,7 @@ export async function getUnauthenticatedRedirect(xFernHost: string, path: string
 
 async function maybeGetWorkosOrganization(host: string): Promise<string | undefined> {
     const docsV2ReadClient = provideRegistryService().docs.v2.read;
-    const maybeFernOrgId = await docsV2ReadClient.getOrganizationForUrl({ url: host });
+    const maybeFernOrgId = await docsV2ReadClient.getOrganizationForUrl({ url: FdrAPI.Url(host) });
     if (!maybeFernOrgId.ok) {
         return undefined;
     }

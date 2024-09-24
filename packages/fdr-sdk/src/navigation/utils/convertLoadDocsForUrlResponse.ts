@@ -1,7 +1,7 @@
-import type { APIV1Read, DocsV2Read } from "../../client/types";
+import { FernNavigation } from "../..";
+import { APIV1Read, type DocsV2Read } from "../../client/types";
 import { mapValues } from "../../utils";
 import { NavigationConfigConverter } from "../converters/NavigationConfigConverter";
-import { FernNavigation } from "../generated";
 import { getFrontmatter } from "./getFrontmatter";
 import { getFullSlugFromFrontmatter } from "./getFullSlugFromFrontmatter";
 import { getNoIndexFromFrontmatter } from "./getNoIndexFromFrontmatter";
@@ -61,8 +61,8 @@ function hackReorderApis(
 }
 
 function hackReorderAssemblyApi(api: APIV1Read.ApiDefinition): APIV1Read.ApiDefinition {
-    const SUBPACKAGE_REALTIME = "subpackage_realtime";
-    const SUBPACKAGE_STREAMING = "subpackage_streaming";
+    const SUBPACKAGE_REALTIME = APIV1Read.SubpackageId("subpackage_realtime");
+    const SUBPACKAGE_STREAMING = APIV1Read.SubpackageId("subpackage_streaming");
 
     const realtime = api.subpackages[SUBPACKAGE_REALTIME];
     const streaming = api.subpackages[SUBPACKAGE_STREAMING];
