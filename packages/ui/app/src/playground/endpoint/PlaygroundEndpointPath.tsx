@@ -1,6 +1,6 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import cn from "clsx";
 import { Xmark } from "iconoir-react";
@@ -12,7 +12,7 @@ import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropd
 import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../../resolver/types";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "../types";
-import { buildRequestUrl, unknownToString } from "../utils";
+import { buildRequestUrl } from "../utils";
 
 interface PlaygroundEndpointPathProps {
     method: APIV1Read.HttpMethod | undefined;

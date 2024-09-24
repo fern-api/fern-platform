@@ -1,4 +1,3 @@
-import jq from "jsonpath";
 import { getJsonLineNumbers } from "../useHighlightJsonLines";
 
 const MOCK_JSON = {
@@ -43,12 +42,12 @@ const MOCK_JSON = {
 
 describe("useHighlightJsonLines", () => {
     it("should return all range of all lines if path is empty", () => {
-        expect(getJsonLineNumbers(jq, MOCK_JSON, [])).toEqual([[0, 27]]);
+        expect(getJsonLineNumbers(MOCK_JSON, [])).toEqual([[0, 27]]);
     });
 
     it("should return nothing with invalid selector", () => {
         expect(
-            getJsonLineNumbers(jq, MOCK_JSON, [
+            getJsonLineNumbers(MOCK_JSON, [
                 { type: "objectProperty", propertyName: "data" },
                 { type: "listItem" },
                 { type: "objectProperty", propertyName: "d" },
@@ -58,7 +57,7 @@ describe("useHighlightJsonLines", () => {
 
     it("should return line numbers with valid selector", () => {
         expect(
-            getJsonLineNumbers(jq, MOCK_JSON, [
+            getJsonLineNumbers(MOCK_JSON, [
                 { type: "objectProperty", propertyName: "data" },
                 { type: "listItem" },
                 { type: "objectProperty", propertyName: "a" },
@@ -69,7 +68,7 @@ describe("useHighlightJsonLines", () => {
 
     it("should return line numbers with valid selector and filter", () => {
         expect(
-            getJsonLineNumbers(jq, MOCK_JSON, [
+            getJsonLineNumbers(MOCK_JSON, [
                 { type: "objectProperty", propertyName: "data" },
                 { type: "listItem" },
                 { type: "objectProperty", propertyName: "a" },
