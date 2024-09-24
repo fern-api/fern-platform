@@ -172,6 +172,7 @@ export async function getDocsPageProps(
             docs.definition.apis,
             node,
             true,
+            false,
         ),
         fallback: {},
         analytics: undefined,

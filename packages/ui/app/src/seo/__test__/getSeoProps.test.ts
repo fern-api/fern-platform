@@ -1,11 +1,12 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { DefinitionObjectFactory } from "@fern-ui/fdr-utils";
 import { extractHeadline, getSeoProps } from "../getSeoProp";
 
 describe("getSeoProps", () => {
     it("seo disabled", () => {
         const props = getSeoProps(
             "host",
-            { navigation: { items: [] } },
+            DefinitionObjectFactory.createDocsDefinition().config,
             {},
             {},
             {},
@@ -16,6 +17,7 @@ describe("getSeoProps", () => {
                     pageId: FernNavigation.PageId("pageId"),
                     title: "page",
                     slug: FernNavigation.Slug("slug"),
+                    canonicalSlug: undefined,
                     icon: undefined,
                     hidden: false,
                     noindex: undefined,
@@ -25,6 +27,7 @@ describe("getSeoProps", () => {
                 root: { slug: FernNavigation.Slug("") } as FernNavigation.RootNode,
             },
             true,
+            false,
         );
         expect(props.noindex).toBe(true);
         expect(props.nofollow).toBe(true);

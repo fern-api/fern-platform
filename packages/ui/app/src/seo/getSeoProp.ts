@@ -6,6 +6,7 @@ import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
+import { getToHref } from "../hooks/useHref";
 import { stringHasMarkdown } from "../mdx/common/util";
 import { getFrontmatter } from "../mdx/frontmatter";
 import { getFontExtension } from "../themes/stylesheet/getFontVariables";
@@ -51,6 +52,7 @@ export function getSeoProps(
     apis: Record<string, APIV1Read.ApiDefinition>,
     { node, parents }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
     isSeoDisabled: boolean,
+    isTrailingSlashEnabled: boolean,
 ): NextSeoProps {
     const additionalMetaTags: MetaTag[] = [];
     const additionalLinkTags: LinkTag[] = [];
@@ -69,7 +71,8 @@ export function getSeoProps(
      * Canonical slugs are computed upstream, where duplicated markdown pages, and multi-version docs are both handled.
      */
     // TODO: set canonical domain in docs.yml
-    seo.canonical = `https://${domain}/${node.canonicalSlug ?? node.slug}`;
+    const toHref = getToHref(isTrailingSlashEnabled);
+    seo.canonical = `https://${domain}/${toHref(node.canonicalSlug ?? node.slug)}`;
 
     const pageId = FernNavigation.utils.getPageId(node);
 

@@ -220,6 +220,7 @@ export async function withInitialProps({
             docs.definition.apis,
             node,
             await getSeoDisabled(xFernHost),
+            isTrailingSlashEnabled(),
         ),
         user: auth?.user,
         fallback: {},
