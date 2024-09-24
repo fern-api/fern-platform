@@ -12,7 +12,6 @@ import {
     visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
-import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/src/navigation";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
@@ -309,7 +308,8 @@ export class AlgoliaSearchRecordGenerator {
         if (api == null) {
             LOGGER.error("Failed to find API definition for API reference node. id=", root.apiDefinitionId);
         }
-        const holder = api != null ? ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
+        const holder =
+            api != null ? FernNavigation.ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
         const records: AlgoliaSearchRecord[] = [];
 
         const breadcrumbs = context.pathParts.map((part) => part.name);
@@ -668,7 +668,8 @@ export class AlgoliaSearchRecordGenerator {
         if (api == null) {
             LOGGER.error("Failed to find API definition for API reference node. id=", root.apiDefinitionId);
         }
-        const holder = api != null ? ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
+        const holder =
+            api != null ? FernNavigation.ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
         const records: AlgoliaSearchRecord[] = [];
 
         const breadcrumbs = context.pathParts.map((part) => ({
