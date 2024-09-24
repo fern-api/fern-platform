@@ -46,12 +46,18 @@ export interface DocsDefinitionCache {
 }
 
 /**
+ * The semantic version that the current version of FDR expects.
+ * Please bump this version if you would like to "clear" the cache.
+ */
+const SEMANTIC_VERSION = "v2";
+
+/**
  * All modifications to this type must be forward compatible.
  * In other words, only add optional properties.
  */
 export interface CachedDocsResponse {
     /** Adding a version to the cached response to allow for breaks in the future. */
-    version: "v2";
+    version: typeof SEMANTIC_VERSION;
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
     dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfoV2>;
@@ -248,10 +254,16 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     }
 
     private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse | null> {
+        let record: CachedDocsResponse | null = null;
         if (this.redisDocsCache) {
-            return await this.redisDocsCache.get({ url });
+            record = await this.redisDocsCache.get({ url });
+        } else {
+            record = this.localDocsCache.get({ url }) ?? null;
         }
-        return this.localDocsCache.get({ url }) ?? null;
+        if (record != null && record.version !== SEMANTIC_VERSION) {
+            return null;
+        }
+        return record;
     }
 
     private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {
