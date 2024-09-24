@@ -6,6 +6,7 @@ import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
+import urlJoin from "url-join";
 import { getToHref } from "../hooks/useHref";
 import { stringHasMarkdown } from "../mdx/common/util";
 import { getFrontmatter } from "../mdx/frontmatter";
@@ -72,7 +73,7 @@ export function getSeoProps(
      */
     // TODO: set canonical domain in docs.yml
     const toHref = getToHref(isTrailingSlashEnabled);
-    seo.canonical = `https://${domain}/${toHref(node.canonicalSlug ?? node.slug)}`;
+    seo.canonical = urlJoin(`https://${domain}`, toHref(node.canonicalSlug ?? node.slug));
 
     const pageId = FernNavigation.getPageId(node);
 
