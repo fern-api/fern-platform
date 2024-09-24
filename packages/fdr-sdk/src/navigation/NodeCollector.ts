@@ -1,4 +1,3 @@
-import urljoin from "url-join";
 import { once } from "../utils";
 import { FernNavigation } from "./..";
 import { pruneVersionNode } from "./utils/pruneVersionNode";
@@ -160,11 +159,17 @@ export class NodeCollector {
 
     /**
      * Returns a list of slugs for all pages in the navigation tree. This includes hidden pages.
+     *
+     * @returns {string[]} A list of slugs for all canonical pages in the navigation tree.
      */
     public getPageSlugs = once((): string[] => {
-        return [...this.slugToNode.values()]
-            .filter(({ node }) => FernNavigation.isPage(node))
-            .map(({ node }) => urljoin(node.slug));
+        return Array.from(
+            new Set(
+                [...this.slugToNode.values()]
+                    .filter(({ node }) => FernNavigation.isPage(node))
+                    .map(({ node }) => node.canonicalSlug ?? node.slug),
+            ),
+        );
     });
 
     /**
@@ -173,10 +178,14 @@ export class NodeCollector {
      * This excludes hidden pages and noindex pages.
      */
     public getIndexablePageSlugs = once((): string[] => {
-        return [...this.slugToNode.values()]
-            .filter(({ node }) => FernNavigation.isPage(node) && node.hidden !== true)
-            .filter(({ node }) => (FernNavigation.hasMarkdown(node) ? node.noindex !== true : true))
-            .map(({ node }) => urljoin(node.slug));
+        return Array.from(
+            new Set(
+                [...this.slugToNode.values()]
+                    .filter(({ node }) => FernNavigation.isPage(node) && !node.hidden)
+                    .filter(({ node }) => (FernNavigation.hasMarkdown(node) ? !node.noindex : true))
+                    .map(({ node }) => node.canonicalSlug ?? node.slug),
+            ),
+        );
     });
 
     public getVersionNodes = (): FernNavigation.VersionNode[] => {

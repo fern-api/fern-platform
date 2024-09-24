@@ -35,10 +35,38 @@ export class FernNavigationV1ToLatest {
     };
 
     public versioned = (node: FernNavigation.V1.VersionedNode): FernNavigation.VersionedNode => {
+        if (node.children.length === 0) {
+            return {
+                type: "versioned",
+                id: FernNavigation.NodeId(node.id),
+                children: [],
+            };
+        }
+
+        let defaultVersionIdx = node.children.findIndex((child) => child.default);
+        if (defaultVersionIdx === -1) {
+            defaultVersionIdx = 0;
+        }
+
+        /**
+         * the default version should be the preferred canonical slug
+         */
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const defaultVersion = this.version(node.children[defaultVersionIdx]!);
+
+        /**
+         * visit the rest of the children, but splice the default version in its original position
+         */
+        const children = [
+            ...node.children.slice(0, defaultVersionIdx).map((child) => this.version(child)),
+            defaultVersion,
+            ...node.children.slice(defaultVersionIdx + 1).map((child) => this.version(child)),
+        ];
+
         const latest: FernNavigation.VersionedNode = {
             type: "versioned",
             id: FernNavigation.NodeId(node.id),
-            children: node.children.map((child) => this.version(child)),
+            children,
         };
 
         return latest;
@@ -140,10 +168,41 @@ export class FernNavigationV1ToLatest {
     };
 
     public productGroup = (node: FernNavigation.V1.ProductGroupNode): FernNavigation.ProductGroupNode => {
+        const landingPage = node.landingPage ? this.landingPage(node.landingPage) : undefined;
+        if (node.children.length === 0) {
+            return {
+                type: "productgroup",
+                landingPage,
+                id: FernNavigation.NodeId(node.id),
+                children: [],
+            };
+        }
+
+        let defaultProductIdx = node.children.findIndex((child) => child.default);
+
+        if (defaultProductIdx === -1) {
+            defaultProductIdx = 0;
+        }
+
+        /**
+         * the default product should be the preferred canonical slug
+         */
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const defaultProduct = this.product(node.children[defaultProductIdx]!);
+
+        /**
+         * visit the rest of the children, but splice the default product in its original position
+         */
+        const children = [
+            ...node.children.slice(0, defaultProductIdx).map((child) => this.product(child)),
+            defaultProduct,
+            ...node.children.slice(defaultProductIdx + 1).map((child) => this.product(child)),
+        ];
+
         const latest: FernNavigation.ProductGroupNode = {
             type: "productgroup",
-            landingPage: node.landingPage ? this.landingPage(node.landingPage) : undefined,
-            children: node.children.map((child) => this.product(child)),
+            landingPage,
+            children,
             id: FernNavigation.NodeId(node.id),
         };
         return latest;
