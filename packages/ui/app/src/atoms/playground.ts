@@ -1,4 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { captureMessage } from "@sentry/nextjs";
 import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -301,7 +302,7 @@ export function usePlaygroundEndpointFormState(
 ): [PlaygroundEndpointRequestFormState, Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(endpoint.nodeId);
     const formState = useAtomValue(playgroundFormStateFamily(endpoint.nodeId));
-    const types = useFlattenedApi(endpoint.apiDefinitionId)?.types ?? {};
+    const types = useFlattenedApi(endpoint.apiDefinitionId)?.types ?? EMPTY_OBJECT;
 
     return [
         formState?.type === "endpoint" ? formState : getInitialEndpointRequestFormState(endpoint, types),
@@ -319,7 +320,7 @@ export function usePlaygroundEndpointFormState(
                             : update;
                     set(formStateAtom, newFormState);
                 },
-                [formStateAtom, endpoint.nodeId],
+                [formStateAtom, endpoint, types],
             ),
         ),
     ];
@@ -330,7 +331,7 @@ export function usePlaygroundWebsocketFormState(
 ): [PlaygroundWebSocketRequestFormState, Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(channel.nodeId);
     const formState = useAtomValue(playgroundFormStateFamily(channel.nodeId));
-    const types = useFlattenedApi(channel.apiDefinitionId)?.types ?? {};
+    const types = useFlattenedApi(channel.apiDefinitionId)?.types ?? EMPTY_OBJECT;
 
     return [
         formState?.type === "websocket" ? formState : getInitialWebSocketRequestFormState(channel, types),
@@ -348,7 +349,7 @@ export function usePlaygroundWebsocketFormState(
                             : update;
                     set(formStateAtom, newFormState);
                 },
-                [formStateAtom, channel.nodeId],
+                [formStateAtom, channel, types],
             ),
         ),
     ];

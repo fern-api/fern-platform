@@ -1,10 +1,11 @@
 import { FernTooltipProvider } from "@fern-ui/components";
+import { unknownToString } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
+import { useEventCallback } from "@fern-ui/react-commons";
 import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { FC, ReactElement, useCallback, useState } from "react";
-import { useCallbackOne } from "use-memo-one";
 import { captureSentryError } from "../../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -30,7 +31,6 @@ import {
     getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
     serializeFormStateBody,
-    unknownToString,
 } from "../utils";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
@@ -43,13 +43,13 @@ interface PlaygroundEndpointProps {
 export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, types }): ReactElement => {
     const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);
 
-    const resetWithExample = useCallbackOne(() => {
+    const resetWithExample = useEventCallback(() => {
         setFormState(getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], types));
-    }, [endpoint, types]);
+    });
 
-    const resetWithoutExample = useCallbackOne(() => {
+    const resetWithoutExample = useEventCallback(() => {
         setFormState(getInitialEndpointRequestFormState(endpoint, types));
-    }, []);
+    });
 
     const basePath = useBasePath();
     const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
@@ -89,7 +89,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
             );
             const headers = {
                 ...authHeaders,
-                ...mapValues(formState.headers ?? {}, unknownToString),
+                ...mapValues(formState.headers ?? {}, (value) => unknownToString(value)),
             };
 
             if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
