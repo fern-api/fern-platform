@@ -3,6 +3,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import fs from "fs";
 import path from "path";
 import { DEFAULT_FEATURE_FLAGS } from "../../atoms";
+import { serializeMdx } from "../../mdx/bundler";
 import { ApiDefinitionResolver } from "../ApiDefinitionResolver";
 import { ApiTypeResolver } from "../ApiTypeResolver";
 import { ResolvedEndpointDefinition } from "../types";
@@ -14,7 +15,7 @@ describe("resolveApiDefinition", () => {
 
         const fixture = JSON.parse(content) as APIV1Read.ApiDefinition;
         const holder = FernNavigation.ApiDefinitionHolder.create(fixture);
-        const typeResolver = new ApiTypeResolver(fixture.types, undefined);
+        const typeResolver = new ApiTypeResolver(fixture.types, undefined, serializeMdx);
 
         // mocked node
         const node = FernNavigation.ApiReferenceNavigationConverter.convert(
@@ -48,6 +49,7 @@ describe("resolveApiDefinition", () => {
             {},
             undefined,
             DEFAULT_FEATURE_FLAGS,
+            serializeMdx,
         );
         expect(resolved).toMatchSnapshot();
     });
@@ -58,7 +60,7 @@ describe("resolveApiDefinition", () => {
 
         const fixture = JSON.parse(content) as APIV1Read.ApiDefinition;
         const holder = FernNavigation.ApiDefinitionHolder.create(fixture);
-        const typeResolver = new ApiTypeResolver(fixture.types, undefined);
+        const typeResolver = new ApiTypeResolver(fixture.types, undefined, serializeMdx);
 
         // mocked node
         const node = FernNavigation.ApiReferenceNavigationConverter.convert(
@@ -92,6 +94,7 @@ describe("resolveApiDefinition", () => {
             {},
             undefined,
             DEFAULT_FEATURE_FLAGS,
+            serializeMdx,
         );
         expect(resolved).toMatchSnapshot();
         expect((resolved.items[0] as ResolvedEndpointDefinition).auth).toBeUndefined();

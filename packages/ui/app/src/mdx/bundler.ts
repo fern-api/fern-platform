@@ -27,3 +27,8 @@ export async function serializeMdx(
     const bundler = await getMdxBundler();
     return bundler(content, options);
 }
+
+export type MDX_SERIALIZER = {
+    (content: string, options?: FernSerializeMdxOptions): Promise<BundledMDX>;
+    (content: string | undefined, options?: FernSerializeMdxOptions): Promise<BundledMDX | undefined>;
+};

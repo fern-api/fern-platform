@@ -175,7 +175,7 @@ export async function resolveDocsContent({
             const parent = found.parents[found.parents.length - 1];
             api = pruner.prune(parent?.type === "endpointPair" ? parent : node);
             const holder = FernNavigation.ApiDefinitionHolder.create(api);
-            const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
+            const typeResolver = new ApiTypeResolver(api.types, mdxOptions, serializeMdx);
             const defResolver = new ApiEndpointResolver(
                 found.collector,
                 holder,
@@ -183,6 +183,7 @@ export async function resolveDocsContent({
                 await typeResolver.resolve(),
                 featureFlags,
                 mdxOptions,
+                serializeMdx,
             );
             return {
                 type: "api-endpoint-page",
@@ -210,7 +211,7 @@ export async function resolveDocsContent({
             };
         }
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
-        const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
+        const typeResolver = new ApiTypeResolver(api.types, mdxOptions, serializeMdx);
         const apiDefinition = await ApiDefinitionResolver.resolve(
             found.collector,
             apiReference,
@@ -219,6 +220,7 @@ export async function resolveDocsContent({
             pages,
             mdxOptions,
             featureFlags,
+            serializeMdx,
         );
         return {
             type: "api-reference-page",
@@ -296,7 +298,7 @@ async function resolveMarkdownPage(
                     ];
                 }
                 const holder = FernNavigation.ApiDefinitionHolder.create(definition);
-                const typeResolver = new ApiTypeResolver(definition.types, mdxOptions);
+                const typeResolver = new ApiTypeResolver(definition.types, mdxOptions, serializeMdx);
                 return [
                     apiNode.title,
                     await ApiDefinitionResolver.resolve(
@@ -307,6 +309,7 @@ async function resolveMarkdownPage(
                         pages,
                         mdxOptions,
                         featureFlags,
+                        serializeMdx,
                     ),
                 ];
             }),

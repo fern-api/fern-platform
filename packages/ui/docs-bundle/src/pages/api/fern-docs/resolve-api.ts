@@ -7,7 +7,10 @@ import {
     ApiDefinitionResolver,
     ApiTypeResolver,
     provideRegistryService,
+    serializeMdx,
     setMdxBundler,
+    type BundledMDX,
+    type FernSerializeMdxOptions,
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
 import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
@@ -16,6 +19,18 @@ import { NextApiHandler, NextApiResponse } from "next";
 import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
+
+async function serializeMdxWithCaching(content: string, options?: FernSerializeMdxOptions): Promise<BundledMDX>;
+async function serializeMdxWithCaching(
+    content: string | undefined,
+    options?: FernSerializeMdxOptions,
+): Promise<BundledMDX | undefined>;
+async function serializeMdxWithCaching(
+    content: string | undefined,
+    options: FernSerializeMdxOptions = {},
+): Promise<BundledMDX | undefined> {
+    return await serializeMdx(content, options);
+}
 
 const resolveApiHandler: NextApiHandler = async (
     req,
@@ -69,9 +84,13 @@ const resolveApiHandler: NextApiHandler = async (
                 return;
             }
             const holder = ApiDefinitionHolder.create(api);
-            const typeResolver = new ApiTypeResolver(api.types, {
-                files: docs.definition.jsFiles,
-            });
+            const typeResolver = new ApiTypeResolver(
+                api.types,
+                {
+                    files: docs.definition.jsFiles,
+                },
+                serializeMdxWithCaching,
+            );
             const resolved = ApiDefinitionResolver.resolve(
                 collector,
                 apiReference,
@@ -80,6 +99,7 @@ const resolveApiHandler: NextApiHandler = async (
                 docs.definition.pages,
                 { files: docs.definition.jsFiles },
                 featureFlags,
+                serializeMdxWithCaching,
             );
             packagesPromise.push(resolved);
         });
