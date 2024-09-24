@@ -28,6 +28,12 @@ it("generator version dao not semver", async () => {
                 generatorId: FdrAPI.generators.GeneratorId("this-fails-semver"),
                 irVersion: 0,
                 version: "abc.1.2",
+                createdAt: undefined,
+                isYanked: undefined,
+                changelogEntry: undefined,
+                migration: undefined,
+                customConfigSchema: undefined,
+                tags: undefined,
             },
         });
     }).rejects.toThrow(new InvalidVersionError({ providedVersion: "abc.1.2" }));
@@ -50,6 +56,12 @@ it("generator version get latest respects semver, not time", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-picks-latest"),
             irVersion: 2,
             version: "0.1.2",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -59,6 +71,12 @@ it("generator version get latest respects semver, not time", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-picks-latest"),
             irVersion: 0,
             version: "1.1.0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -68,6 +86,12 @@ it("generator version get latest respects semver, not time", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-picks-latest"),
             irVersion: 0,
             version: "0.1.0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -78,6 +102,12 @@ it("generator version get latest respects semver, not time", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-picks-latest"),
             irVersion: 5,
             version: "0.1.2",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -113,8 +143,19 @@ it("generator changelog", async () => {
                     type: "feat",
                     summary: "added a new feature",
                     added: ["added a new feature"],
+                    links: undefined,
+                    upgradeNotes: undefined,
+                    changed: undefined,
+                    deprecated: undefined,
+                    removed: undefined,
+                    fixed: undefined,
                 },
             ],
+            createdAt: undefined,
+            isYanked: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
@@ -127,8 +168,19 @@ it("generator changelog", async () => {
                     type: "fix",
                     summary: "fixed that new feature",
                     fixed: ["fixed that new feature"],
+                    links: undefined,
+                    upgradeNotes: undefined,
+                    added: undefined,
+                    changed: undefined,
+                    deprecated: undefined,
+                    removed: undefined,
                 },
             ],
+            createdAt: undefined,
+            isYanked: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
@@ -142,8 +194,18 @@ it("generator changelog", async () => {
                     summary: "did a couple things",
                     fixed: ["fixed that new feature"],
                     deprecated: ["idk google meet or something isn't there anymore"],
+                    links: undefined,
+                    upgradeNotes: undefined,
+                    added: undefined,
+                    changed: undefined,
+                    removed: undefined,
                 },
             ],
+            createdAt: undefined,
+            isYanked: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
@@ -151,6 +213,12 @@ it("generator changelog", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             irVersion: 0,
             version: "2.1.6",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -159,6 +227,12 @@ it("generator changelog", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             irVersion: 0,
             version: "2.1.8",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -366,6 +440,10 @@ it("get generator that works for cli version", async () => {
         cliRelease: {
             version: "0.100.0",
             irVersion: 52,
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            tags: undefined,
         },
     });
 
@@ -374,6 +452,12 @@ it("get generator that works for cli version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             irVersion: 50,
             version: "2.1.8",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -382,6 +466,12 @@ it("get generator that works for cli version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             irVersion: 51,
             version: "3.0.0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -390,6 +480,12 @@ it("get generator that works for cli version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             irVersion: 51,
             version: "3.1.0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -398,6 +494,12 @@ it("get generator that works for cli version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             irVersion: 52,
             version: "3.5.0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -436,6 +538,12 @@ it("get generator retain major version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 50,
             version: "2.0.0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -444,6 +552,12 @@ it("get generator retain major version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 50,
             version: "2.1.0-rc0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -452,6 +566,12 @@ it("get generator retain major version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 50,
             version: "2.1.8",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -460,6 +580,12 @@ it("get generator retain major version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 51,
             version: "3.0.0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -468,6 +594,12 @@ it("get generator retain major version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 51,
             version: "3.1.0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 
@@ -476,6 +608,12 @@ it("get generator retain major version", async () => {
             generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 52,
             version: "3.5.0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            migration: undefined,
+            customConfigSchema: undefined,
+            tags: undefined,
         },
     });
 

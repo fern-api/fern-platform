@@ -17,6 +17,10 @@ it("cli verion not semver", async () => {
             cliRelease: {
                 version: "abc.1.2",
                 irVersion: 0,
+                createdAt: undefined,
+                isYanked: undefined,
+                changelogEntry: undefined,
+                tags: undefined,
             },
         });
     }).rejects.toThrow(new InvalidVersionError({ providedVersion: "abc.1.2" }));
@@ -33,8 +37,15 @@ it("cli release with tags and URLs", async () => {
                 summary: "added a new feature",
                 added: ["added a new feature"],
                 links: ["https://123.com"],
+                upgradeNotes: undefined,
+                changed: undefined,
+                deprecated: undefined,
+                removed: undefined,
+                fixed: undefined,
             },
         ],
+        createdAt: undefined,
+        isYanked: undefined,
     };
 
     await fdrApplication.dao.cliVersions().upsertCliRelease({
@@ -53,6 +64,10 @@ it("cli version get latest respects semver, not time", async () => {
         cliRelease: {
             version: "0.1.2",
             irVersion: 0,
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            tags: undefined,
         },
     });
 
@@ -61,6 +76,10 @@ it("cli version get latest respects semver, not time", async () => {
         cliRelease: {
             version: "1.1.0",
             irVersion: 1,
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            tags: undefined,
         },
     });
 
@@ -69,6 +88,10 @@ it("cli version get latest respects semver, not time", async () => {
         cliRelease: {
             version: "0.1.5",
             irVersion: 0,
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            tags: undefined,
         },
     });
 
@@ -78,6 +101,10 @@ it("cli version get latest respects semver, not time", async () => {
         cliRelease: {
             version: "1.1.0-rc.1",
             irVersion: 0,
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            tags: undefined,
         },
     });
 
@@ -111,8 +138,17 @@ it("generator changelog", async () => {
                     type: "feat",
                     summary: "added a new feature",
                     added: ["added a new feature"],
+                    links: undefined,
+                    upgradeNotes: undefined,
+                    changed: undefined,
+                    deprecated: undefined,
+                    removed: undefined,
+                    fixed: undefined,
                 },
             ],
+            createdAt: undefined,
+            isYanked: undefined,
+            tags: undefined,
         },
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
@@ -124,8 +160,17 @@ it("generator changelog", async () => {
                     type: "fix",
                     summary: "fixed that new feature",
                     fixed: ["fixed that new feature"],
+                    links: undefined,
+                    upgradeNotes: undefined,
+                    added: undefined,
+                    changed: undefined,
+                    deprecated: undefined,
+                    removed: undefined,
                 },
             ],
+            createdAt: undefined,
+            isYanked: undefined,
+            tags: undefined,
         },
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
@@ -138,14 +183,26 @@ it("generator changelog", async () => {
                     summary: "did a bunch of stuff",
                     fixed: ["fixed that new feature"],
                     deprecated: ["idk google meet or something isn't there anymore"],
+                    links: undefined,
+                    upgradeNotes: undefined,
+                    added: undefined,
+                    changed: undefined,
+                    removed: undefined,
                 },
             ],
+            createdAt: undefined,
+            isYanked: undefined,
+            tags: undefined,
         },
     });
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: {
             irVersion: 1,
             version: "2.1.6",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            tags: undefined,
         },
     });
 
@@ -153,6 +210,10 @@ it("generator changelog", async () => {
         cliRelease: {
             irVersion: 0,
             version: "2.1.8",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            tags: undefined,
         },
     });
 
@@ -270,8 +331,16 @@ it("cli version happy path update", async () => {
                 summary: "did a couple things",
                 fixed: ["fixed that new feature"],
                 deprecated: ["idk google meet or something isn't there anymore"],
+                links: undefined,
+                upgradeNotes: undefined,
+                added: undefined,
+                changed: undefined,
+                removed: undefined,
             },
         ],
+        createdAt: undefined,
+        isYanked: undefined,
+        tags: undefined,
     };
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: releaseRequest,
@@ -292,8 +361,17 @@ it("cli version happy path update", async () => {
                 type: "feat",
                 summary: "added a new feature",
                 added: ["added a new feature"],
+                links: undefined,
+                upgradeNotes: undefined,
+                changed: undefined,
+                deprecated: undefined,
+                removed: undefined,
+                fixed: undefined,
             },
         ],
+        createdAt: undefined,
+        isYanked: undefined,
+        tags: undefined,
     };
     await fdrApplication.dao.cliVersions().upsertCliRelease({
         cliRelease: updateReleaseRequest,
@@ -311,6 +389,10 @@ it("cli version rc versions", async () => {
         cliRelease: {
             irVersion: 0,
             version: "0.1.2-rc0",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            tags: undefined,
         },
     });
     const oneCli = await fdrApplication.dao.cliVersions().getCliRelease({
@@ -323,6 +405,10 @@ it("cli version rc versions", async () => {
         cliRelease: {
             irVersion: 0,
             version: "0.1.2-rc.1",
+            createdAt: undefined,
+            isYanked: undefined,
+            changelogEntry: undefined,
+            tags: undefined,
         },
     });
     const twoCli = await fdrApplication.dao.cliVersions().getCliRelease({

@@ -74,6 +74,9 @@ it("pulls happy path", async () => {
         checks: [],
         state: PullRequestState.Open,
         createdAt: new Date().toISOString(),
+        updatedAt: undefined,
+        mergedAt: undefined,
+        closedAt: undefined,
     };
     await fdrApplication.dao.git().upsertPullRequest({ pullRequest: pull1 });
 
@@ -93,6 +96,8 @@ it("pulls happy path", async () => {
         state: PullRequestState.Merged,
         createdAt: new Date().toISOString(),
         mergedAt: new Date().toISOString(),
+        updatedAt: undefined,
+        closedAt: undefined,
     };
     await fdrApplication.dao.git().upsertPullRequest({ pullRequest: pull2 });
 
@@ -126,6 +131,8 @@ it("pulls happy path", async () => {
         state: PullRequestState.Merged,
         createdAt: new Date().toISOString(),
         mergedAt: new Date().toISOString(),
+        updatedAt: undefined,
+        closedAt: undefined,
     };
     await fdrApplication.dao.git().upsertPullRequest({ pullRequest: pull3 });
 
