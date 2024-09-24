@@ -91,7 +91,7 @@ groups:
     generators:
       # Internal, unadulterated for the use of the APIs
       - name: fernapi/fern-python-sdk
-        version: 1.2.0-rc1
+        version: 1.4.0
         output:
           location: pypi
           url: pypi.buildwithfern.com
@@ -154,7 +154,7 @@ groups:
       - fiddle
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.5.10-rc12-1-g4718c24
+        version: 0.10.1
         output:
           location: maven
           url: maven.buildwithfern.com

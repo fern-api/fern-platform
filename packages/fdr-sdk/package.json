@@ -17,54 +17,6 @@
       "types": "./dist/client/types.d.ts",
       "default": "./dist/client/types.js"
     },
-    "./dist/client/generated/api/resources/api/resources/v1/resources/read/resources": {
-      "types": "./dist/client/generated/api/resources/api/resources/v1/resources/read/resources/index.d.ts",
-      "default": "./dist/client/generated/api/resources/api/resources/v1/resources/read/resources/index.js"
-    },
-    "./dist/client/generated/api/resources/api/resources/v1/resources/read/types": {
-      "types": "./dist/client/generated/api/resources/api/resources/v1/resources/read/types/index.d.ts",
-      "default": "./dist/client/generated/api/resources/api/resources/v1/resources/read/types/index.js"
-    },
-    "./dist/client/generated/api/resources/api/resources/v1/resources/register/resources": {
-      "types": "./dist/client/generated/api/resources/api/resources/v1/resources/register/resources/index.d.ts",
-      "default": "./dist/client/generated/api/resources/api/resources/v1/resources/register/resources/index.js"
-    },
-    "./dist/client/generated/api/resources/api/resources/v1/resources/register/types": {
-      "types": "./dist/client/generated/api/resources/api/resources/v1/resources/register/types/index.d.ts",
-      "default": "./dist/client/generated/api/resources/api/resources/v1/resources/register/types/index.js"
-    },
-    "./dist/client/generated/api/resources/commons/types": {
-      "types": "./dist/client/generated/api/resources/commons/types/index.d.ts",
-      "default": "./dist/client/generated/api/resources/commons/types/index.js"
-    },
-    "./dist/client/generated/api/resources/docs/resources/v1/resources/write/types": {
-      "types": "./dist/client/generated/api/resources/docs/resources/v1/resources/write/types/index.d.ts",
-      "default": "./dist/client/generated/api/resources/docs/resources/v1/resources/write/types/index.js"
-    },
-    "./dist/client/generated/api/resources/docs/resources/v2/resources/write/types": {
-      "types": "./dist/client/generated/api/resources/docs/resources/v2/resources/write/types/index.d.ts",
-      "default": "./dist/client/generated/api/resources/docs/resources/v2/resources/write/types/index.js"
-    },
-    "./dist/client/generated/api/resources/generators/types": {
-      "types": "./dist/client/generated/api/resources/generators/types/index.d.ts",
-      "default": "./dist/client/generated/api/resources/generators/types/index.js"
-    },
-    "./dist/client/generated/api/resources/navigation": {
-      "types": "./dist/client/generated/api/resources/navigation/index.d.ts",
-      "default": "./dist/client/generated/api/resources/navigation/index.js"
-    },
-    "./dist/client/generated/api/resources/snippets/types": {
-      "types": "./dist/client/generated/api/resources/snippets/types/index.d.ts",
-      "default": "./dist/client/generated/api/resources/snippets/types/index.js"
-    },
-    "./dist/client/generated/api/resources/snippetsFactory/types": {
-      "types": "./dist/client/generated/api/resources/snippetsFactory/types/index.d.ts",
-      "default": "./dist/client/generated/api/resources/snippetsFactory/types/index.js"
-    },
-    "./dist/client/generated/api/resources/templates/types": {
-      "types": "./dist/client/generated/api/resources/templates/types/index.d.ts",
-      "default": "./dist/client/generated/api/resources/templates/types/index.js"
-    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
