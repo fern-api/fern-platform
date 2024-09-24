@@ -35,7 +35,7 @@ export function MaybeEnvironmentDropdown({
 
     return (
         <>
-            <span>
+            <span className="max-sm:hidden">
                 {environmentIds && environmentIds.length > 1 ? (
                     <FernDropdown
                         key="selectedEnvironment-selector"
