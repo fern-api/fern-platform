@@ -9,12 +9,13 @@ import {
     provideRegistryService,
     serializeMdx,
     setMdxBundler,
+    type BundledMDX,
+    type FernSerializeMdxOptions,
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
 import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
-import { BundledMDX, FernSerializeMdxOptions } from "../../../../../app/src/mdx/types";
 import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
