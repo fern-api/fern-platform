@@ -3,7 +3,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { captureSentryErrorMessage } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
-import { serializeMdx } from "../mdx/bundler";
+import { type MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiEndpointResolver } from "./ApiEndpointResolver";
 import { ApiTypeResolver } from "./ApiTypeResolver";
@@ -22,6 +22,7 @@ export class ApiDefinitionResolver {
         holder: FernNavigation.ApiDefinitionHolder,
         typeResolver: ApiTypeResolver,
         pages: Record<string, DocsV1Read.PageContent>,
+        serializeMdx: MDX_SERIALIZER,
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
     ): Promise<ResolvedRootPackage> {
@@ -33,6 +34,7 @@ export class ApiDefinitionResolver {
             pages,
             featureFlags,
             mdxOptions,
+            serializeMdx,
         );
         return resolver.resolveApiDefinition();
     }
@@ -48,6 +50,7 @@ export class ApiDefinitionResolver {
         private pages: Record<string, DocsV1Read.PageContent>,
         private featureFlags: FeatureFlags,
         private mdxOptions: FernSerializeMdxOptions | undefined,
+        private serializeMdx: MDX_SERIALIZER,
     ) {
         this.definitionResolver = new ApiEndpointResolver(
             this.collector,
@@ -56,6 +59,7 @@ export class ApiDefinitionResolver {
             this.resolvedTypes,
             featureFlags,
             mdxOptions,
+            serializeMdx
         );
     }
 
@@ -107,7 +111,7 @@ export class ApiDefinitionResolver {
                             id: page.pageId,
                             slug: page.slug,
                             title: page.title,
-                            markdown: await serializeMdx(pageContent.markdown, {
+                            markdown: await this.serializeMdx(pageContent.markdown, {
                                 ...this.mdxOptions,
                                 filename: page.pageId,
                                 frontmatterDefaults: {
@@ -135,7 +139,7 @@ export class ApiDefinitionResolver {
                     id: node.overviewPageId,
                     slug: node.slug,
                     title: node.title,
-                    markdown: await serializeMdx(pageContent.markdown, {
+                    markdown: await this.serializeMdx(pageContent.markdown, {
                         ...this.mdxOptions,
                         filename: node.overviewPageId,
                         frontmatterDefaults: {
@@ -166,7 +170,7 @@ export class ApiDefinitionResolver {
             return undefined;
         }
         return {
-            // description: await serializeMdx(subpackage.description),
+            // description: await this.serializeMdx(subpackage.description),
             description: undefined,
             availability: undefined,
             title: subpackage.title,

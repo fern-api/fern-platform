@@ -13,6 +13,7 @@ import {
 import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
+import { MDX_SERIALIZER } from "../../../../../app/src/mdx/bundler";
 import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
@@ -62,6 +63,11 @@ const resolveApiHandler: NextApiHandler = async (
 
         setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
+        const serializeMdx: MDX_SERIALIZER = async (content, options) => {
+            // TODO(dsinghvi): add caching layer
+            return await serializeMdx(content, options);
+        };
+
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
         FernNavigation.utils.collectApiReferences(root).forEach((apiReference) => {
             const api = docs.definition.apis[apiReference.apiDefinitionId];
@@ -69,15 +75,20 @@ const resolveApiHandler: NextApiHandler = async (
                 return;
             }
             const holder = ApiDefinitionHolder.create(api);
-            const typeResolver = new ApiTypeResolver(api.types, {
-                files: docs.definition.jsFiles,
-            });
+            const typeResolver = new ApiTypeResolver(
+                api.types,
+                {
+                    files: docs.definition.jsFiles,
+                },
+                serializeMdx,
+            );
             const resolved = ApiDefinitionResolver.resolve(
                 collector,
                 apiReference,
                 holder,
                 typeResolver,
                 docs.definition.pages,
+                serializeMdx,
                 { files: docs.definition.jsFiles },
                 featureFlags,
             );
