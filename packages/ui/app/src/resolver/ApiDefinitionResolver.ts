@@ -22,9 +22,9 @@ export class ApiDefinitionResolver {
         holder: FernNavigation.ApiDefinitionHolder,
         typeResolver: ApiTypeResolver,
         pages: Record<string, DocsV1Read.PageContent>,
-        serializeMdx: MDX_SERIALIZER,
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
+        serializeMdx: MDX_SERIALIZER,
     ): Promise<ResolvedRootPackage> {
         const resolver = new ApiDefinitionResolver(
             collector,
@@ -50,7 +50,7 @@ export class ApiDefinitionResolver {
         private pages: Record<string, DocsV1Read.PageContent>,
         private featureFlags: FeatureFlags,
         private mdxOptions: FernSerializeMdxOptions | undefined,
-        private serializeMdx: MDX_SERIALIZER,
+        private serializeMdx: MDX_SERIALIZER = serializeMdx,
     ) {
         this.definitionResolver = new ApiEndpointResolver(
             this.collector,
@@ -59,7 +59,7 @@ export class ApiDefinitionResolver {
             this.resolvedTypes,
             featureFlags,
             mdxOptions,
-            serializeMdx
+            serializeMdx,
         );
     }
 

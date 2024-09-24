@@ -42,7 +42,7 @@ export class ApiEndpointResolver {
         private resolvedTypes: Record<string, ResolvedTypeDefinition>,
         private featureFlags: FeatureFlags,
         private mdxOptions: FernSerializeMdxOptions | undefined,
-        private serializeMdx: MDX_SERIALIZER,
+        private serializeMdx: MDX_SERIALIZER = serializeMdx,
     ) {}
 
     async resolveEndpointDefinition(node: FernNavigation.EndpointNode): Promise<ResolvedEndpointDefinition> {

@@ -3,6 +3,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import fs from "fs";
 import path from "path";
 import { DEFAULT_FEATURE_FLAGS } from "../../atoms";
+import { serializeMdx } from "../../mdx/bundler";
 import { ApiDefinitionResolver } from "../ApiDefinitionResolver";
 import { ApiTypeResolver } from "../ApiTypeResolver";
 import { ResolvedEndpointDefinition } from "../types";
@@ -48,6 +49,7 @@ describe("resolveApiDefinition", () => {
             {},
             undefined,
             DEFAULT_FEATURE_FLAGS,
+            serializeMdx,
         );
         expect(resolved).toMatchSnapshot();
     });
@@ -92,6 +94,7 @@ describe("resolveApiDefinition", () => {
             {},
             undefined,
             DEFAULT_FEATURE_FLAGS,
+            serializeMdx,
         );
         expect(resolved).toMatchSnapshot();
         expect((resolved.items[0] as ResolvedEndpointDefinition).auth).toBeUndefined();
