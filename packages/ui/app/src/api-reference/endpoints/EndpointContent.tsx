@@ -101,20 +101,23 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     const [selectedError, setSelectedError] = useState<ResolvedError | undefined>();
 
     useAtomEffect(
-        useCallbackOne((get) => {
-            const anchor = get(ANCHOR_ATOM);
-            const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
-            if (statusCodeOrName != null) {
-                const error = endpoint.errors.find((e) =>
-                    typeof statusCodeOrName === "number"
-                        ? e.statusCode === statusCodeOrName
-                        : convertNameToAnchorPart(e.name) === statusCodeOrName,
-                );
-                if (error != null) {
-                    setSelectedError(error);
+        useCallbackOne(
+            (get) => {
+                const anchor = get(ANCHOR_ATOM);
+                const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
+                if (statusCodeOrName != null) {
+                    const error = endpoint.errors.find((e) =>
+                        typeof statusCodeOrName === "number"
+                            ? e.statusCode === statusCodeOrName
+                            : convertNameToAnchorPart(e.name) === statusCodeOrName,
+                    );
+                    if (error != null) {
+                        setSelectedError(error);
+                    }
                 }
-            }
-        }, []),
+            },
+            [endpoint.errors],
+        ),
     );
 
     const examples = useMemo(() => {
