@@ -7,6 +7,9 @@ import { CURRENT_NODE_ATOM, useClosePlayground } from "../../atoms";
 import { FernLink } from "../../components/FernLink";
 import { ResolvedEndpointDefinition } from "../../resolver/types";
 
+const USE_EXAMPLE_TEXT = "Use example";
+const CLEAR_FORM_TEXT = "Clear form";
+
 interface PlaygroundEndpointFormButtonsProps {
     endpoint: ResolvedEndpointDefinition;
     resetWithExample: () => void;
@@ -25,10 +28,10 @@ export function PlaygroundEndpointFormButtons({
         <div className="flex justify-between items-center">
             <FernButtonGroup>
                 <FernButton onClick={resetWithExample} size="small" variant="minimal">
-                    Use example
+                    {USE_EXAMPLE_TEXT}
                 </FernButton>
                 <FernButton onClick={resetWithoutExample} size="small" variant="minimal">
-                    Clear form
+                    {CLEAR_FORM_TEXT}
                 </FernButton>
             </FernButtonGroup>
 
