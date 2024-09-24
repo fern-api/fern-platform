@@ -26,7 +26,7 @@ async function downloadImage(url: string): Promise<void> {
         const arrBuff = await response.arrayBuffer();
         const buffer = Buffer.from(arrBuff);
         const imgPath = path.join("images", path.basename(url));
-        await fs.promises.writeFile(imgPath, buffer);
+        await fs.promises.writeFile(imgPath, new Uint8Array(buffer));
     } catch (err) {
 
     }
