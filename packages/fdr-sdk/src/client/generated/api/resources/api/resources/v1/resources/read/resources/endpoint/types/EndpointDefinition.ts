@@ -4,10 +4,9 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface EndpointDefinition extends FernRegistry.api.v1.WithDescription {
+export interface EndpointDefinition extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
     /** When this is true, the api definition will have a union for auth */
     authed: boolean;
-    availability: FernRegistry.api.v1.Availability | undefined;
     defaultEnvironment: FernRegistry.EnvironmentId | undefined;
     environments: FernRegistry.api.v1.Environment[];
     method: FernRegistry.HttpMethod;

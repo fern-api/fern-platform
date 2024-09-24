@@ -3,7 +3,7 @@
 imports:
   rootCommons: ../../../commons.yml
   commons: ../commons/commons.yml
-  navigation: ../../../navigation/__package__.yml
+  navigation: ../../../navigation/v1/__package__.yml
   apiCommonsV1: ../../../api/v1/commons.yml
 
 service:
@@ -216,15 +216,8 @@ types:
     properties:
       version: rootCommons.VersionId
       urlSlugOverride: optional<string>
-      availability: optional<VersionAvailability>
+      availability: optional<rootCommons.Availability>
       config: UnversionedNavigationConfig
-
-  VersionAvailability:
-    enum:
-      - Stable
-      - GenerallyAvailable
-      - Deprecated
-      - Beta
 
   NavigationItem:
     union:

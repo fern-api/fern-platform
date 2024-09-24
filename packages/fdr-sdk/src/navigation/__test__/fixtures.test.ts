@@ -1,0 +1,62 @@
+import fs from "fs";
+import path from "path";
+import { FernNavigation } from "../..";
+import { NodeCollector } from "../NodeCollector";
+import { FernNavigationV1ToLatest } from "../migrators/v1ToV2";
+import { collectPageIds } from "../utils/collectPageIds";
+import { readFixture } from "./readFixtures";
+
+const fixturesDir = path.join(__dirname, "fixtures");
+
+function testNavigationConfigConverter(fixtureName: string): void {
+    const fixture = readFixture(fixtureName);
+    const v1 = FernNavigation.V1.toRootNode(fixture);
+    const latest = new FernNavigationV1ToLatest().root(v1);
+
+    // eslint-disable-next-line vitest/valid-title
+    describe(fixtureName, () => {
+        const slugCollector = new NodeCollector(latest);
+
+        it("gets all urls from docs config", async () => {
+            expect(JSON.stringify(latest, undefined, 2)).toMatchFileSnapshot(`output/${fixtureName}/node.json`);
+
+            const orphanedNodes = slugCollector.getOrphanedNodes().map((node) => ({
+                id: node.id,
+                type: node.type,
+                title: node.title,
+                slug: node.slug,
+            }));
+            expect(JSON.stringify(orphanedNodes, undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/orphanedNodes.json`,
+            );
+
+            const orphanedNodesWithContent = slugCollector.getOrphanedPages();
+            expect(JSON.stringify(orphanedNodesWithContent, undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/orphanedNodesWithContent.json`,
+            );
+
+            const slugs = slugCollector.getSlugs();
+            expect(JSON.stringify(slugs, undefined, 2)).toMatchFileSnapshot(`output/${fixtureName}/slugs.json`);
+
+            const slugsWithContent = slugCollector.getPageSlugs();
+            expect(JSON.stringify(slugsWithContent, undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/slugsWithContent.json`,
+            );
+
+            const pageIds = collectPageIds(latest);
+            expect(JSON.stringify([...pageIds], undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/pageIds.json`,
+            );
+
+            expect(JSON.stringify(slugCollector.getVersionNodes(), undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/versionNodes.json`,
+            );
+        });
+    });
+}
+
+fs.readdirSync(fixturesDir).forEach((fixtureName) => {
+    if (fixtureName.endsWith(".json")) {
+        testNavigationConfigConverter(fixtureName.replace(".json", ""));
+    }
+});

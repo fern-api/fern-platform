@@ -1,11 +1,12 @@
 import { FernNavigation } from "../..";
 import { visitDiscriminatedUnion } from "../../utils";
-import { NavigationNode } from "../types/NavigationNode";
 
 const RETURN_UNDEFINED = () => undefined;
 const RETURN_API_DEFINITION_ID = (node: FernNavigation.WithApiDefinitionId) => node.apiDefinitionId;
 
-export function getApiReferenceId(node: NavigationNode | undefined): FernNavigation.ApiDefinitionId | undefined {
+export function getApiReferenceId(
+    node: FernNavigation.NavigationNode | undefined,
+): FernNavigation.ApiDefinitionId | undefined {
     if (node == null) {
         return undefined;
     }

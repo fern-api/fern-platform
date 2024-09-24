@@ -6,7 +6,7 @@ imports:
   apiReadV1: ../../../api/v1/read/__package__.yml
   apiCommonsV1: ../../../api/v1/commons.yml
   commons: ../commons/commons.yml
-  navigation: ../../../navigation/__package__.yml
+  navigation: ../../../navigation/v1/__package__.yml
 
 service:
   base-path: /registry/docs
@@ -216,15 +216,8 @@ types:
     properties:
       version: rootCommons.VersionId
       urlSlug: string
-      availability: optional<VersionAvailability>
+      availability: optional<rootCommons.Availability>
       config: UnversionedNavigationConfig
-
-  VersionAvailability:
-    enum:
-      - Stable
-      - GenerallyAvailable
-      - Deprecated
-      - Beta
 
   NavigationItem:
     union:

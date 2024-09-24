@@ -1,28 +1,20 @@
 import { FernNavigation } from "../..";
 import { NodeCollector } from "../NodeCollector";
-import {
-    isPage,
-    type NavigationBreadcrumbItem,
-    type NavigationNode,
-    type NavigationNodeNeighbor,
-    type NavigationNodePage,
-} from "../types";
-import { hasRedirect } from "../types/NavigationNodeWithRedirect";
+import { isApiReferenceNode } from "../versions/latest/isApiReferenceNode";
+import { isSidebarRootNode } from "../versions/latest/isSidebarRootNode";
+import { isTabbedNode } from "../versions/latest/isTabbedNode";
+import { isUnversionedNode } from "../versions/latest/isUnversionedNode";
+import { isVersionNode } from "../versions/latest/isVersionNode";
 import { createBreadcrumbs } from "./createBreadcrumbs";
-import { isApiReferenceNode } from "./isApiReferenceNode";
-import { isSidebarRootNode } from "./isSidebarRootNode";
-import { isTabbedNode } from "./isTabbedNode";
-import { isUnversionedNode } from "./isUnversionedNode";
-import { isVersionNode } from "./isVersionNode";
 
 export type Node = Node.Found | Node.Redirect | Node.NotFound;
 
 export declare namespace Node {
     interface Found {
         type: "found";
-        node: NavigationNodePage;
-        parents: NavigationNode[];
-        breadcrumbs: readonly NavigationBreadcrumbItem[];
+        node: FernNavigation.NavigationNodePage;
+        parents: FernNavigation.NavigationNode[];
+        breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
         root: FernNavigation.RootNode;
         versions: FernNavigation.VersionNode[];
         currentVersion: FernNavigation.VersionNode | undefined;
@@ -30,8 +22,8 @@ export declare namespace Node {
         tabs: FernNavigation.TabChild[];
         sidebar: FernNavigation.SidebarRootNode | undefined;
         apiReference: FernNavigation.ApiReferenceNode | undefined;
-        next: NavigationNodeNeighbor | undefined;
-        prev: NavigationNodeNeighbor | undefined;
+        next: FernNavigation.NavigationNodeNeighbor | undefined;
+        prev: FernNavigation.NavigationNodeNeighbor | undefined;
         collector: NodeCollector;
         landingPage: FernNavigation.LandingPageNode | undefined;
 
@@ -87,7 +79,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
     const apiReference =
         found.parents.find(isApiReferenceNode) ?? (found.node.type === "apiReference" ? found.node : undefined);
 
-    if (isPage(found.node)) {
+    if (FernNavigation.isPage(found.node)) {
         const parentsAndNode = [...found.parents, found.node];
         const tabbedNodeIndex = parentsAndNode.findIndex((node) => node === tabbedNode);
         const currentTabNode = tabbedNodeIndex !== -1 ? parentsAndNode[tabbedNodeIndex + 1] : undefined;
@@ -131,7 +123,9 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         return { type: "redirect", redirect: root.pointsTo };
     }
 
-    const redirect = hasRedirect(found.node) ? found.node.pointsTo : currentVersion?.pointsTo ?? root.pointsTo;
+    const redirect = FernNavigation.hasRedirect(found.node)
+        ? found.node.pointsTo
+        : currentVersion?.pointsTo ?? root.pointsTo;
 
     if (redirect == null || redirect === slug) {
         return { type: "notFound", redirect: undefined };

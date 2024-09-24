@@ -1,13 +1,8 @@
 export * from "./collectApiReferences";
 export * from "./collectPageIds";
-export * from "./convertAvailability";
-export * from "./convertLoadDocsForUrlResponse";
-export { createBreadcrumbs } from "./createBreadcrumbs";
+export * from "./createBreadcrumbs";
 export * from "./findNode";
-export * from "./followRedirect";
 export * from "./getApiReferenceId";
 export * from "./getNoIndexFromFrontmatter";
 export * from "./getPageId";
-export { toDefaultSlug } from "./pruneVersionNode";
-export * from "./slugjoin";
-export * from "./traverseNavigation";
+export * from "./toRootNode";

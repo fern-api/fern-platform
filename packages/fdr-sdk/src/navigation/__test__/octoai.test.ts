@@ -1,17 +1,27 @@
 import { describe } from "vitest";
+import { FernNavigation } from "../..";
+import { FernNavigationV1ToLatest } from "../migrators/v1ToV2";
+import { readFixture } from "./readFixtures";
 import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
 import { testGetNavigationRoot } from "./testGetNavigationRoot";
 
 const FIXTURE = "octoai";
+const slugs = [
+    "getting-started",
+    "getting-started/quickstart",
+    "api-reference/octoai-api/authentication",
+    "api-reference/octoai-api/account/get-account",
+    "api-reference/asset-library/list",
+];
 
-describe("getAllUrlsFromDocsConfig", () => {
-    testGetAllUrlsFromDocsConfig(FIXTURE);
-});
+// eslint-disable-next-line vitest/valid-title
+describe(FIXTURE, () => {
+    const fixture = readFixture(FIXTURE);
+    const v1 = FernNavigation.V1.toRootNode(fixture);
+    const latest = new FernNavigationV1ToLatest().root(v1);
 
-describe("getNavigationRoot", () => {
-    testGetNavigationRoot(FIXTURE, "getting-started");
-    testGetNavigationRoot(FIXTURE, "getting-started/quickstart");
-    testGetNavigationRoot(FIXTURE, "api-reference/octoai-api/authentication");
-    testGetNavigationRoot(FIXTURE, "api-reference/octoai-api/account/get-account");
-    testGetNavigationRoot(FIXTURE, "api-reference/asset-library/list");
+    testGetAllUrlsFromDocsConfig(latest, fixture.baseUrl.domain);
+    slugs.forEach((slug) => {
+        testGetNavigationRoot(latest, slug);
+    });
 });
