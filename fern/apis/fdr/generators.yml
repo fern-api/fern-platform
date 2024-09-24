@@ -9,8 +9,9 @@ groups:
           location: local-file-system
           path: ../../../servers/fdr/src/api/generated
         config:
-          noSerdeLayer: true
           outputEsm: true
+          noSerdeLayer: true
+          noOptionalProperties: true
           useBrandedStringAliases: true
       - name: fernapi/fern-typescript-node-sdk
         version: 0.40.5
@@ -18,13 +19,13 @@ groups:
           location: local-file-system
           path: ../../../packages/fdr-sdk/src/client/generated
         config:
+          outputEsm: true
           noSerdeLayer: true
           noOptionalProperties: true
+          useBrandedStringAliases: true
           outputSourceFiles: true
           neverThrowErrors: true
           timeoutInSeconds: infinity
-          outputEsm: true
-          useBrandedStringAliases: true
 
   postman:
     generators:
