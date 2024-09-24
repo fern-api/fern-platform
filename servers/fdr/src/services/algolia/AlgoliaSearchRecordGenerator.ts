@@ -1568,6 +1568,7 @@ export class AlgoliaSearchRecordGenerator {
     private collectReferencedTypesToContentV2(
         typeReferencesWithMetadata: TypeReferenceWithMetadata[],
         types: Record<string, APIV1Read.TypeDefinition>,
+        visitedNodes: Set<string> = new Set(),
     ): AlgoliaSearchRecord[] {
         const fields: AlgoliaSearchRecord[] = [];
 
@@ -1605,7 +1606,10 @@ export class AlgoliaSearchRecordGenerator {
                                 const referenceLeaves: TypeReferenceWithMetadata[] = [];
                                 object.properties.forEach((property) => {
                                     const slug = encodeURI(`${baseSlug}.${property.key}`);
-                                    if (property.valueType.type === "id") {
+                                    if (
+                                        property.valueType.type === "id" &&
+                                        !visitedNodes.has(property.valueType.value)
+                                    ) {
                                         referenceLeaves.push({
                                             reference: property.valueType,
                                             anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, property.key],
@@ -1640,21 +1644,29 @@ export class AlgoliaSearchRecordGenerator {
                                     }
                                 });
                                 object.extends.forEach((extend) => {
-                                    referenceLeaves.push({
-                                        reference: { type: "id", value: extend },
-                                        anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
-                                        breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
-                                        slugPrefix: baseSlug,
-                                        version: typeReferenceWithMetadata.version,
-                                        indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                        method: typeReferenceWithMetadata.method,
-                                        endpointPath: typeReferenceWithMetadata.endpointPath,
-                                        isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                        type: typeReferenceWithMetadata.type,
-                                    });
+                                    if (!visitedNodes.has(extend)) {
+                                        referenceLeaves.push({
+                                            reference: { type: "id", value: extend },
+                                            anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
+                                            breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
+                                            slugPrefix: baseSlug,
+                                            version: typeReferenceWithMetadata.version,
+                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                            method: typeReferenceWithMetadata.method,
+                                            endpointPath: typeReferenceWithMetadata.endpointPath,
+                                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                                            type: typeReferenceWithMetadata.type,
+                                        });
+                                    }
                                 });
 
-                                fields.concat(this.collectReferencedTypesToContentV2(referenceLeaves, types));
+                                fields.concat(
+                                    this.collectReferencedTypesToContentV2(
+                                        referenceLeaves,
+                                        types,
+                                        new Set(visitedNodes).add(type.name),
+                                    ),
+                                );
                             },
                             alias: () => undefined,
                             enum: (enum_) => {
@@ -1689,7 +1701,7 @@ export class AlgoliaSearchRecordGenerator {
                                               ? variant.type.value
                                               : "";
                                     const slug = encodeURI(`${baseSlug}.${variant.displayName}`);
-                                    if (variant.type.type === "id") {
+                                    if (variant.type.type === "id" && !visitedNodes.has(variant.type.value)) {
                                         referenceLeaves.push({
                                             reference: variant.type,
                                             anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, title],
@@ -1726,7 +1738,9 @@ export class AlgoliaSearchRecordGenerator {
                                     }
                                 });
 
-                                fields.concat(this.collectReferencedTypesToContentV2(referenceLeaves, types));
+                                fields.concat(
+                                    this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
+                                );
                             },
                             discriminatedUnion: (discriminatedUnion) => {
                                 const referenceLeaves: TypeReferenceWithMetadata[] = [];
@@ -1735,21 +1749,26 @@ export class AlgoliaSearchRecordGenerator {
                                     const slug = encodeURI(`${baseSlug}.${title}`);
 
                                     variant.additionalProperties.extends.forEach((extend) => {
-                                        referenceLeaves.push({
-                                            reference: { type: "id", value: extend },
-                                            anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
-                                            breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
-                                            slugPrefix: baseSlug,
-                                            version: typeReferenceWithMetadata.version,
-                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                            method: typeReferenceWithMetadata.method,
-                                            endpointPath: typeReferenceWithMetadata.endpointPath,
-                                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                            type: typeReferenceWithMetadata.type,
-                                        });
+                                        if (!visitedNodes.has(extend)) {
+                                            referenceLeaves.push({
+                                                reference: { type: "id", value: extend },
+                                                anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
+                                                breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
+                                                slugPrefix: baseSlug,
+                                                version: typeReferenceWithMetadata.version,
+                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                                method: typeReferenceWithMetadata.method,
+                                                endpointPath: typeReferenceWithMetadata.endpointPath,
+                                                isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                                                type: typeReferenceWithMetadata.type,
+                                            });
+                                        }
                                     });
                                     variant.additionalProperties.properties.forEach((property) => {
-                                        if (property.valueType.type === "id") {
+                                        if (
+                                            property.valueType.type === "id" &&
+                                            !visitedNodes.has(property.valueType.value)
+                                        ) {
                                             referenceLeaves.push({
                                                 reference: property.valueType,
                                                 anchorIdParts: [
@@ -1793,7 +1812,9 @@ export class AlgoliaSearchRecordGenerator {
                                     });
                                 });
 
-                                fields.concat(this.collectReferencedTypesToContentV2(referenceLeaves, types));
+                                fields.concat(
+                                    this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
+                                );
                             },
                         });
                     }
@@ -1808,6 +1829,7 @@ export class AlgoliaSearchRecordGenerator {
                                 },
                             ],
                             types,
+                            visitedNodes,
                         ),
                     );
                 },
@@ -1821,6 +1843,7 @@ export class AlgoliaSearchRecordGenerator {
                                 },
                             ],
                             types,
+                            visitedNodes,
                         ),
                     );
                 },
@@ -1834,6 +1857,7 @@ export class AlgoliaSearchRecordGenerator {
                                 },
                             ],
                             types,
+                            visitedNodes,
                         ),
                     );
                 },
@@ -1847,6 +1871,7 @@ export class AlgoliaSearchRecordGenerator {
                                 },
                             ],
                             types,
+                            visitedNodes,
                         ),
                     );
                     fields.concat(
@@ -1858,6 +1883,7 @@ export class AlgoliaSearchRecordGenerator {
                                 },
                             ],
                             types,
+                            visitedNodes,
                         ),
                     );
                 },
