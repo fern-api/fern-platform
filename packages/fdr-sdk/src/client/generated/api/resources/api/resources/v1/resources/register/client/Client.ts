@@ -14,8 +14,11 @@ export declare namespace Register {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,7 +31,7 @@ export class Register {
      * @param {Register.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.api.v1.register.registerApiDefinition({
+     *     await client.api.v1.register.registerApiDefinition({
      *         orgId: FernRegistry.OrgId("string"),
      *         apiId: FernRegistry.ApiId("string"),
      *         definition: {
@@ -39,7 +42,7 @@ export class Register {
      *                         environments: [{
      *                                 "key": "value"
      *                             }],
-     *                         method: FernRegistry.HttpMethod.Get,
+     *                         method: "GET",
      *                         id: FernRegistry.EndpointId("string"),
      *                         originalEndpointId: "string",
      *                         name: "string",
@@ -211,7 +214,7 @@ export class Register {
      *                         }
      *                     }],
      *                 webhooks: [{
-     *                         method: FernRegistry.api.v1.WebhookHttpMethod.Get,
+     *                         method: "GET",
      *                         id: FernRegistry.WebhookId("string"),
      *                         name: {
      *                             "key": "value"
@@ -269,7 +272,7 @@ export class Register {
      *                             environments: [{
      *                                     "key": "value"
      *                                 }],
-     *                             method: FernRegistry.HttpMethod.Get,
+     *                             method: "GET",
      *                             id: FernRegistry.EndpointId("string"),
      *                             originalEndpointId: "string",
      *                             name: "string",
@@ -441,7 +444,7 @@ export class Register {
      *                             }
      *                         }],
      *                     webhooks: [{
-     *                             method: FernRegistry.api.v1.WebhookHttpMethod.Get,
+     *                             method: "GET",
      *                             id: FernRegistry.WebhookId("string"),
      *                             name: {
      *                                 "key": "value"
@@ -557,6 +560,7 @@ export class Register {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

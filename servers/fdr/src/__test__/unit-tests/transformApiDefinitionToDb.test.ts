@@ -1,5 +1,4 @@
-import { SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
-import { APIV1Write } from "../../api";
+import { APIV1Write, FdrAPI, SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
@@ -15,10 +14,12 @@ it("api register", async () => {
             pointsTo: undefined,
             endpoints: [],
             subpackages: [],
-            types: ["type_User"],
+            types: [APIV1Write.TypeId("type_User")],
+            websockets: undefined,
+            webhooks: undefined,
         },
         types: {
-            type_User: {
+            [APIV1Write.TypeId("type_User")]: {
                 description: "This is some ```markdown```",
                 name: "User",
                 shape: {
@@ -27,14 +28,23 @@ it("api register", async () => {
                         type: "primitive",
                         value: {
                             type: "string",
+                            regex: undefined,
+                            minLength: undefined,
+                            maxLength: undefined,
+                            default: undefined,
                         },
                     },
                 },
+                availability: undefined,
             },
         },
         subpackages: {},
+        auth: undefined,
+        globalHeaders: undefined,
+        snippetsConfiguration: undefined,
+        navigation: undefined,
     };
-    const dbApiDefinition = convertAPIDefinitionToDb(apiDefinition, "id", EMPTY_SNIPPET_HOLDER);
+    const dbApiDefinition = convertAPIDefinitionToDb(apiDefinition, FdrAPI.ApiDefinitionId("id"), EMPTY_SNIPPET_HOLDER);
     expect(dbApiDefinition).toEqual({
         auth: undefined,
         id: "id",

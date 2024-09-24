@@ -14,8 +14,11 @@ export declare namespace Read {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,7 +31,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.read.getOrganizationForUrl({
+     *     await client.docs.v2.read.getOrganizationForUrl({
      *         url: FernRegistry.Url("string")
      *     })
      */
@@ -49,6 +52,7 @@ export class Read {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -82,7 +86,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.read.getDocsForUrl({
+     *     await client.docs.v2.read.getDocsForUrl({
      *         url: FernRegistry.Url("string")
      *     })
      */
@@ -108,6 +112,7 @@ export class Read {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -142,7 +147,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.read.getPrivateDocsForUrl({
+     *     await client.docs.v2.read.getPrivateDocsForUrl({
      *         url: FernRegistry.Url("string")
      *     })
      */
@@ -168,6 +173,7 @@ export class Read {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -204,7 +210,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.read.listAllDocsUrls({
+     *     await client.docs.v2.read.listAllDocsUrls({
      *         page: 1,
      *         limit: 1,
      *         custom: true
@@ -247,6 +253,7 @@ export class Read {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -281,7 +288,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.read.getDocsConfigById(FernRegistry.DocsConfigId("string"))
+     *     await client.docs.v2.read.getDocsConfigById(FernRegistry.DocsConfigId("string"))
      */
     public async getDocsConfigById(
         docsConfigId: FernRegistry.DocsConfigId,
@@ -305,6 +312,7 @@ export class Read {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -337,7 +345,7 @@ export class Read {
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.read.getSearchApiKeyForIndexSegment({
+     *     await client.docs.v2.read.getSearchApiKeyForIndexSegment({
      *         indexSegmentId: "string"
      *     })
      */
@@ -363,6 +371,7 @@ export class Read {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

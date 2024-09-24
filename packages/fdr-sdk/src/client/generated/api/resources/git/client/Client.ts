@@ -14,8 +14,11 @@ export declare namespace Git {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -34,7 +37,7 @@ export class Git {
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.getRepository("string", "string")
+     *     await client.git.getRepository("string", "string")
      */
     public async getRepository(
         repositoryOwner: string,
@@ -56,6 +59,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -80,7 +84,7 @@ export class Git {
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.listRepositories({
+     *     await client.git.listRepositories({
      *         page: 1,
      *         pageSize: 1,
      *         organizationId: FernRegistry.OrgId("string"),
@@ -105,6 +109,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -130,7 +135,7 @@ export class Git {
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.upsertRepository({
+     *     await client.git.upsertRepository({
      *         type: "sdk",
      *         sdkLanguage: "string",
      *         id: {
@@ -151,8 +156,8 @@ export class Git {
      *                 status: "string",
      *                 conclusion: "string",
      *                 checkRunUrl: "string",
-     *                 createdAt: new Date("2024-01-15T09:30:00.000Z"),
-     *                 completedAt: new Date("2024-01-15T09:30:00.000Z"),
+     *                 createdAt: "2024-01-15T09:30:00Z",
+     *                 completedAt: "2024-01-15T09:30:00Z",
      *                 rawCheckRun: {
      *                     "key": "value"
      *                 }
@@ -176,6 +181,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -202,7 +208,7 @@ export class Git {
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.deleteRepository("string", "string")
+     *     await client.git.deleteRepository("string", "string")
      */
     public async deleteRepository(
         repositoryOwner: string,
@@ -224,6 +230,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -250,7 +257,7 @@ export class Git {
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.getPullRequest("string", "string", 1)
+     *     await client.git.getPullRequest("string", "string", 1)
      */
     public async getPullRequest(
         repositoryOwner: string,
@@ -273,6 +280,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -297,13 +305,13 @@ export class Git {
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.listPullRequests({
+     *     await client.git.listPullRequests({
      *         page: 1,
      *         pageSize: 1,
      *         repositoryName: "string",
      *         repositoryOwner: "string",
      *         organizationId: FernRegistry.OrgId("string"),
-     *         state: [FernRegistry.PullRequestState.Open],
+     *         state: ["open"],
      *         author: ["string"]
      *     })
      */
@@ -324,6 +332,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -349,7 +358,7 @@ export class Git {
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.upsertPullRequest({
+     *     await client.git.upsertPullRequest({
      *         pullRequestNumber: 1,
      *         repositoryName: "string",
      *         repositoryOwner: "string",
@@ -375,17 +384,17 @@ export class Git {
      *                 status: "string",
      *                 conclusion: "string",
      *                 checkRunUrl: "string",
-     *                 createdAt: new Date("2024-01-15T09:30:00.000Z"),
-     *                 completedAt: new Date("2024-01-15T09:30:00.000Z"),
+     *                 createdAt: "2024-01-15T09:30:00Z",
+     *                 completedAt: "2024-01-15T09:30:00Z",
      *                 rawCheckRun: {
      *                     "key": "value"
      *                 }
      *             }],
-     *         state: FernRegistry.PullRequestState.Open,
-     *         createdAt: new Date("2024-01-15T09:30:00.000Z"),
-     *         updatedAt: new Date("2024-01-15T09:30:00.000Z"),
-     *         mergedAt: new Date("2024-01-15T09:30:00.000Z"),
-     *         closedAt: new Date("2024-01-15T09:30:00.000Z")
+     *         state: "open",
+     *         createdAt: "2024-01-15T09:30:00Z",
+     *         updatedAt: "2024-01-15T09:30:00Z",
+     *         mergedAt: "2024-01-15T09:30:00Z",
+     *         closedAt: "2024-01-15T09:30:00Z"
      *     })
      */
     public async upsertPullRequest(
@@ -405,6 +414,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -432,7 +442,7 @@ export class Git {
      * @param {Git.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.git.deletePullRequest("string", "string", 1)
+     *     await client.git.deletePullRequest("string", "string", 1)
      */
     public async deletePullRequest(
         repositoryOwner: string,
@@ -455,6 +465,7 @@ export class Git {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

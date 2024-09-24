@@ -14,8 +14,11 @@ export declare namespace Templates {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -30,7 +33,7 @@ export class Templates {
      * @param {Templates.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.templates.register({
+     *     await client.templates.register({
      *         orgId: FernRegistry.OrgId("string"),
      *         apiId: FernRegistry.ApiId("string"),
      *         apiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -42,7 +45,7 @@ export class Templates {
      *             },
      *             endpointId: {
      *                 path: FernRegistry.EndpointPathLiteral("string"),
-     *                 method: FernRegistry.HttpMethod.Get,
+     *                 method: "GET",
      *                 identifierOverride: "string"
      *             },
      *             snippetTemplate: {
@@ -101,6 +104,7 @@ export class Templates {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -126,7 +130,7 @@ export class Templates {
      * @param {Templates.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.templates.registerBatch({
+     *     await client.templates.registerBatch({
      *         orgId: FernRegistry.OrgId("string"),
      *         apiId: FernRegistry.ApiId("string"),
      *         apiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -138,7 +142,7 @@ export class Templates {
      *                 },
      *                 endpointId: {
      *                     path: FernRegistry.EndpointPathLiteral("string"),
-     *                     method: FernRegistry.HttpMethod.Get,
+     *                     method: "GET",
      *                     identifierOverride: "string"
      *                 },
      *                 snippetTemplate: {
@@ -197,6 +201,7 @@ export class Templates {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -222,7 +227,7 @@ export class Templates {
      * @param {Templates.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.templates.get({
+     *     await client.templates.get({
      *         orgId: FernRegistry.OrgId("string"),
      *         apiId: FernRegistry.ApiId("string"),
      *         sdk: {
@@ -232,7 +237,7 @@ export class Templates {
      *         },
      *         endpointId: {
      *             path: FernRegistry.EndpointPathLiteral("string"),
-     *             method: FernRegistry.HttpMethod.Get,
+     *             method: "GET",
      *             identifierOverride: "string"
      *         }
      *     })
@@ -254,6 +259,7 @@ export class Templates {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

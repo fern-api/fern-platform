@@ -1,17 +1,18 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { PrismaClient, SnippetApi } from "@prisma/client";
 
 export interface LoadSnippetAPIRequest {
-    orgId: string;
+    orgId: FdrAPI.OrgId;
     apiName: string;
 }
 
 export interface LoadSnippetAPIsRequest {
-    orgIds: string[];
+    orgIds: FdrAPI.OrgId[];
     apiName: string | undefined;
 }
 
 export interface SnippetAPIsDao {
-    createSnippetAPI({ apiName, orgId }: { apiName: string; orgId: string }): Promise<void>;
+    createSnippetAPI({ apiName, orgId }: { apiName: string; orgId: FdrAPI.OrgId }): Promise<void>;
 
     loadSnippetAPI({
         loadSnippetAPIRequest,
@@ -29,7 +30,7 @@ export interface SnippetAPIsDao {
 export class SnippetAPIsDaoImpl implements SnippetAPIsDao {
     constructor(private readonly prisma: PrismaClient) {}
 
-    public async createSnippetAPI({ apiName, orgId }: { apiName: string; orgId: string }): Promise<void> {
+    public async createSnippetAPI({ apiName, orgId }: { apiName: string; orgId: FdrAPI.OrgId }): Promise<void> {
         await this.prisma.snippetApi.create({
             data: {
                 apiName,

@@ -348,7 +348,7 @@ function convertPrismaPullRequest(maybePR: prisma.PullRequest | null): PullReque
         reviewers: readBuffer(maybePR.reviewers) as PullRequestReviewer[],
         checks: readBuffer(maybePR.checks) as CheckRun[],
         title: maybePR.title,
-        url: maybePR.url,
+        url: FdrAPI.Url(maybePR.url),
         state: maybePR.state,
         createdAt: maybePR.createdAt.toISOString(),
         updatedAt: maybePR.updatedAt?.toISOString(),

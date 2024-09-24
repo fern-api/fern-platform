@@ -17,7 +17,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                         environments: [{
  *                                 "key": "value"
  *                             }],
- *                         method: FernRegistry.HttpMethod.Get,
+ *                         method: "GET",
  *                         id: FernRegistry.EndpointId("string"),
  *                         originalEndpointId: "string",
  *                         name: "string",
@@ -189,7 +189,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                         }
  *                     }],
  *                 webhooks: [{
- *                         method: FernRegistry.api.v1.WebhookHttpMethod.Get,
+ *                         method: "GET",
  *                         id: FernRegistry.WebhookId("string"),
  *                         name: {
  *                             "key": "value"
@@ -247,7 +247,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             environments: [{
  *                                     "key": "value"
  *                                 }],
- *                             method: FernRegistry.HttpMethod.Get,
+ *                             method: "GET",
  *                             id: FernRegistry.EndpointId("string"),
  *                             originalEndpointId: "string",
  *                             name: "string",
@@ -419,7 +419,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             }
  *                         }],
  *                     webhooks: [{
- *                             method: FernRegistry.api.v1.WebhookHttpMethod.Get,
+ *                             method: "GET",
  *                             id: FernRegistry.WebhookId("string"),
  *                             name: {
  *                                 "key": "value"

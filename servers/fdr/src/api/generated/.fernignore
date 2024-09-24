@@ -1,0 +1,12 @@
+api/resources/api/resources/v1/resources/register/types/*
+api/resources/api/resources/v1/resources/register/resources/*
+api/resources/api/resources/v1/resources/read/types/*
+api/resources/api/resources/v1/resources/read/resources/*
+api/resources/snippets/types/*
+api/resources/navigation/*
+api/resources/generators/types/*
+api/resources/templates/types/*
+api/resources/docs/resources/v1/resources/write/types/*
+api/resources/commons/types/*
+api/resources/snippetsFactory/types/*
+api/resources/docs/resources/v2/resources/write/types/*

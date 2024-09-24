@@ -14,8 +14,11 @@ export declare namespace Snippets {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -30,9 +33,9 @@ export class Snippets {
      * @param {Snippets.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.snippets.get({
+     *     await client.snippets.get({
      *         endpoint: {
-     *             method: FernRegistry.HttpMethod.Get,
+     *             method: "GET",
      *             path: FernRegistry.EndpointPathLiteral("/v1/search")
      *         }
      *     })
@@ -54,6 +57,7 @@ export class Snippets {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -95,7 +99,7 @@ export class Snippets {
      * @param {Snippets.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.snippets.load({
+     *     await client.snippets.load({
      *         page: 1,
      *         orgId: FernRegistry.OrgId("vellum"),
      *         apiId: FernRegistry.ApiId("vellum-ai"),
@@ -129,6 +133,7 @@ export class Snippets {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

@@ -16,7 +16,7 @@ import * as FernRegistry from "../../../../index";
  *         },
  *         endpointId: {
  *             path: FernRegistry.EndpointPathLiteral("string"),
- *             method: FernRegistry.HttpMethod.Get,
+ *             method: "GET",
  *             identifierOverride: "string"
  *         }
  *     }

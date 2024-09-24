@@ -16,7 +16,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *             },
  *             config: {
  *                 title: "string",
- *                 defaultLanguage: FernRegistry.docs.v1.commons.ProgrammingLanguage.Typescript,
+ *                 defaultLanguage: "typescript",
  *                 announcement: {
  *                     text: "string"
  *                 },
@@ -124,7 +124,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     },
  *                     twitter:site: "string",
  *                     twitter:url: "string",
- *                     twitter:card: FernRegistry.docs.v1.commons.TwitterCardSetting.Summary,
+ *                     twitter:card: "summary",
  *                     noindex: true,
  *                     nofollow: true
  *                 },
@@ -163,10 +163,10 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }
  *                     },
- *                     searchbarPlacement: FernRegistry.docs.v1.commons.SearchbarPlacement.Header,
- *                     tabsPlacement: FernRegistry.docs.v1.commons.TabsPlacement.Header,
- *                     contentAlignment: FernRegistry.docs.v1.commons.ContentAlignment.Center,
- *                     headerPosition: FernRegistry.docs.v1.commons.HeaderPosition.Fixed,
+ *                     searchbarPlacement: "HEADER",
+ *                     tabsPlacement: "HEADER",
+ *                     contentAlignment: "CENTER",
+ *                     headerPosition: "FIXED",
  *                     disableHeader: true
  *                 },
  *                 typographyV2: {

@@ -261,7 +261,7 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
     }
 
     return {
-        generatorId: generatorRelease.generatorId,
+        generatorId: FdrAPI.generators.GeneratorId(generatorRelease.generatorId),
         version: generatorRelease.version,
         irVersion: generatorRelease.irVersion,
         releaseType: convertPrismaReleaseType(generatorRelease.releaseType),

@@ -14,8 +14,11 @@ export declare namespace Versions {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -33,9 +36,9 @@ export class Versions {
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.sdks.versions.computeSemanticVersion({
+     *     await client.sdks.versions.computeSemanticVersion({
      *         package: "string",
-     *         language: FernRegistry.sdks.Language.Go,
+     *         language: "Go",
      *         githubRepository: "string"
      *     })
      */
@@ -61,6 +64,7 @@ export class Versions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

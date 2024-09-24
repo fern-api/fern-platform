@@ -12,7 +12,7 @@ import * as FernRegistry from "../../../../index";
  *         repositoryName: "string",
  *         repositoryOwner: "string",
  *         organizationId: FernRegistry.OrgId("string"),
- *         state: [FernRegistry.PullRequestState.Open],
+ *         state: ["open"],
  *         author: ["string"]
  *     }
  */

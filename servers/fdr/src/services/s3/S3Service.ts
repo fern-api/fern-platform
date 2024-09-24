@@ -1,11 +1,10 @@
 import { GetObjectCommand, PutObjectCommand, PutObjectCommandInput, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { APIV1Write } from "@fern-api/fdr-sdk";
+import { APIV1Write, DocsV1Write, DocsV2Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Write, DocsV2Write } from "../../api";
+import { Cache } from "../../Cache";
 import { FernRegistry } from "../../api/generated";
 import type { FdrConfig } from "../../app";
-import { Cache } from "../../Cache";
 
 const ONE_WEEK_IN_SECONDS = 604800;
 
@@ -40,7 +39,7 @@ export interface S3Service {
         isPrivate: boolean;
     }): Promise<Record<DocsV1Write.FilePath, S3DocsFileInfo>>;
 
-    getPresignedDocsAssetsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string>;
+    getPresignedDocsAssetsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<FdrAPI.Url>;
 
     getPresignedApiDefinitionSourceUploadUrls({
         orgId,
@@ -90,12 +89,18 @@ export class S3ServiceImpl implements S3Service {
         });
     }
 
-    async getPresignedDocsAssetsDownloadUrl({ key, isPrivate }: { key: string; isPrivate: boolean }): Promise<string> {
+    async getPresignedDocsAssetsDownloadUrl({
+        key,
+        isPrivate,
+    }: {
+        key: string;
+        isPrivate: boolean;
+    }): Promise<FdrAPI.Url> {
         if (isPrivate) {
             // presigned url for private
             const cachedUrl = this.presignedDownloadUrlCache.get(key);
             if (cachedUrl != null && typeof cachedUrl === "string") {
-                return cachedUrl;
+                return FdrAPI.Url(cachedUrl);
             }
             const command = new GetObjectCommand({
                 Bucket: this.config.privateDocsS3.bucketName,
@@ -103,10 +108,10 @@ export class S3ServiceImpl implements S3Service {
             });
             const signedUrl = await getSignedUrl(this.privateDocsS3, command, { expiresIn: 604800 });
             this.presignedDownloadUrlCache.set(key, signedUrl);
-            return signedUrl;
+            return FdrAPI.Url(signedUrl);
         }
 
-        return `https://${this.config.publicDocsS3.bucketName}.s3.amazonaws.com/${key}`;
+        return FdrAPI.Url(`https://${this.config.publicDocsS3.bucketName}.s3.amazonaws.com/${key}`);
     }
 
     async getPresignedDocsAssetsUploadUrls({
@@ -131,7 +136,7 @@ export class S3ServiceImpl implements S3Service {
             });
             result[filepath] = {
                 presignedUrl: {
-                    fileId: uuidv4(),
+                    fileId: APIV1Write.FileId(uuidv4()),
                     uploadUrl: url,
                 },
                 key,
@@ -147,7 +152,7 @@ export class S3ServiceImpl implements S3Service {
             });
             result[image.filePath] = {
                 presignedUrl: {
-                    fileId: uuidv4(),
+                    fileId: APIV1Write.FileId(uuidv4()),
                     uploadUrl: url,
                 },
                 key,
@@ -213,9 +218,9 @@ export class S3ServiceImpl implements S3Service {
                 orgId,
                 apiId,
                 time,
-                sourceId,
+                sourceId: APIV1Write.SourceId(sourceId),
             });
-            result[sourceId] = {
+            result[APIV1Write.SourceId(sourceId)] = {
                 presignedUrl: url,
                 key,
             };
@@ -232,7 +237,7 @@ export class S3ServiceImpl implements S3Service {
         orgId: FernRegistry.OrgId;
         apiId: FernRegistry.ApiId;
         time: string;
-        sourceId: string;
+        sourceId: APIV1Write.SourceId;
     }): Promise<{ url: string; key: string }> {
         const key = this.constructS3ApiDefinitionSourceKey({ orgId, apiId, time, sourceId });
         const bucketName = this.config.privateApiDefinitionSourceS3.bucketName;

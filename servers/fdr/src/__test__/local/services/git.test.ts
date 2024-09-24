@@ -1,3 +1,4 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { inject } from "vitest";
 import { getAPIResponse, getClient } from "../util";
 
@@ -12,8 +13,8 @@ it("register repo", async () => {
         name: "name",
         owner: "owner",
         fullName: "repository.full_name",
-        url: "repository.html_url",
-        repositoryOwnerOrganizationId: "organizationId",
+        url: FdrAPI.Url("repository.html_url"),
+        repositoryOwnerOrganizationId: FdrAPI.OrgId("organizationId"),
         defaultBranchChecks: [],
     });
 

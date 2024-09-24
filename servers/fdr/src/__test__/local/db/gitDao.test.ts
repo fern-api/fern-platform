@@ -1,3 +1,4 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { FernRepository } from "@fern-api/fdr-sdk/src/client/generated/api";
 import { PullRequest, PullRequestState } from "../../../api/generated/api";
 import { createMockFdrApplication } from "../../mock";
@@ -13,8 +14,8 @@ it("repo happy path", async () => {
         name: "repo1",
         owner: "acme",
         fullName: "acme/repo1",
-        repositoryOwnerOrganizationId: "acme",
-        url: "https://123.com",
+        repositoryOwnerOrganizationId: FdrAPI.OrgId("acme"),
+        url: FdrAPI.Url("https://123.com"),
         defaultBranchChecks: [],
         sdkLanguage: "python",
     };
@@ -26,8 +27,8 @@ it("repo happy path", async () => {
         name: "repo1",
         owner: "octoai",
         fullName: "octoai/repo1",
-        repositoryOwnerOrganizationId: "octoai",
-        url: "https://123.com",
+        repositoryOwnerOrganizationId: FdrAPI.OrgId("octoai"),
+        url: FdrAPI.Url("https://123.com"),
         defaultBranchChecks: [],
     };
     await fdrApplication.dao.git().upsertRepository({ repository: repo2 });
@@ -52,8 +53,8 @@ it("pulls happy path", async () => {
         name: "repoForPRs",
         owner: "acme",
         fullName: "acme/repoForPRs",
-        repositoryOwnerOrganizationId: "acme",
-        url: "https://123.com",
+        repositoryOwnerOrganizationId: FdrAPI.OrgId("acme"),
+        url: FdrAPI.Url("https://123.com"),
         defaultBranchChecks: [],
         sdkLanguage: "python",
     };
@@ -70,7 +71,7 @@ it("pulls happy path", async () => {
         },
         reviewers: [],
         title: "PR 1",
-        url: "https://123.com",
+        url: FdrAPI.Url("https://123.com"),
         checks: [],
         state: PullRequestState.Open,
         createdAt: new Date().toISOString(),
@@ -88,7 +89,7 @@ it("pulls happy path", async () => {
         },
         reviewers: [],
         title: "PR 2",
-        url: "https://123.com",
+        url: FdrAPI.Url("https://123.com"),
         checks: [],
         state: PullRequestState.Merged,
         createdAt: new Date().toISOString(),
@@ -121,7 +122,7 @@ it("pulls happy path", async () => {
         },
         reviewers: [],
         title: "PR 2",
-        url: "https://123.com",
+        url: FdrAPI.Url("https://123.com"),
         checks: [],
         state: PullRequestState.Merged,
         createdAt: new Date().toISOString(),

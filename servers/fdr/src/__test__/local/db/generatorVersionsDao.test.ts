@@ -15,7 +15,7 @@ function delay(ms: number) {
 it("generator version dao not semver", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "this-fails-semver",
+            id: FdrAPI.generators.GeneratorId("this-fails-semver"),
             displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-fails-semver",
@@ -26,7 +26,7 @@ it("generator version dao not semver", async () => {
     await expect(async () => {
         await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
             generatorRelease: {
-                generatorId: "this-fails-semver",
+                generatorId: FdrAPI.generators.GeneratorId("this-fails-semver"),
                 irVersion: 0,
                 version: "abc.1.2",
             },
@@ -38,7 +38,7 @@ it("generator version dao not semver", async () => {
 it("generator version get latest respects semver, not time", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "this-picks-latest",
+            id: FdrAPI.generators.GeneratorId("this-picks-latest"),
             displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-picks-latest",
@@ -48,7 +48,7 @@ it("generator version get latest respects semver, not time", async () => {
     // create some versions and sleep between them to ensure the timestamps are different
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-picks-latest",
+            generatorId: FdrAPI.generators.GeneratorId("this-picks-latest"),
             irVersion: 2,
             version: "0.1.2",
         },
@@ -57,7 +57,7 @@ it("generator version get latest respects semver, not time", async () => {
     await delay(1000);
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-picks-latest",
+            generatorId: FdrAPI.generators.GeneratorId("this-picks-latest"),
             irVersion: 0,
             version: "1.1.0",
         },
@@ -66,7 +66,7 @@ it("generator version get latest respects semver, not time", async () => {
     await delay(1000);
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-picks-latest",
+            generatorId: FdrAPI.generators.GeneratorId("this-picks-latest"),
             irVersion: 0,
             version: "0.1.0",
         },
@@ -76,7 +76,7 @@ it("generator version get latest respects semver, not time", async () => {
     await delay(1000);
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-picks-latest",
+            generatorId: FdrAPI.generators.GeneratorId("this-picks-latest"),
             irVersion: 5,
             version: "0.1.2",
         },
@@ -86,7 +86,7 @@ it("generator version get latest respects semver, not time", async () => {
     expect(
         (
             await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
-                getLatestGeneratorReleaseRequest: { generator: "this-picks-latest" },
+                getLatestGeneratorReleaseRequest: { generator: FdrAPI.generators.GeneratorId("this-picks-latest") },
             })
         )?.version,
     ).toEqual("1.1.0");
@@ -95,7 +95,7 @@ it("generator version get latest respects semver, not time", async () => {
 it("generator changelog", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "this-gets-changelog",
+            id: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-gets-changelog",
@@ -106,7 +106,7 @@ it("generator changelog", async () => {
     // create some versions and sleep between them to ensure the timestamps are different
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-gets-changelog",
+            generatorId: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             irVersion: 0,
             version: "2.1.2",
             changelogEntry: [
@@ -120,7 +120,7 @@ it("generator changelog", async () => {
     });
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-gets-changelog",
+            generatorId: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             irVersion: 0,
             version: "2.1.3",
             changelogEntry: [
@@ -134,7 +134,7 @@ it("generator changelog", async () => {
     });
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-gets-changelog",
+            generatorId: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             irVersion: 0,
             version: "2.1.5",
             changelogEntry: [
@@ -149,7 +149,7 @@ it("generator changelog", async () => {
     });
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-gets-changelog",
+            generatorId: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             irVersion: 0,
             version: "2.1.6",
         },
@@ -157,7 +157,7 @@ it("generator changelog", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-gets-changelog",
+            generatorId: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             irVersion: 0,
             version: "2.1.8",
         },
@@ -166,7 +166,7 @@ it("generator changelog", async () => {
     // Note we explicitly do not include 0.1.2 and 0.1.8 in the range to ensure we're only including the range
     expect(
         await fdrApplication.dao.generatorVersions().getChangelog({
-            generator: "this-gets-changelog",
+            generator: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             versionRanges: {
                 fromVersion: { type: "inclusive", value: "2.1.3" },
                 toVersion: { type: "inclusive", value: "2.1.7" },
@@ -201,7 +201,7 @@ it("generator changelog", async () => {
     // Should not get the minimum, given it's exclusive
     expect(
         await fdrApplication.dao.generatorVersions().getChangelog({
-            generator: "this-gets-changelog",
+            generator: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             versionRanges: {
                 fromVersion: { type: "exclusive", value: "2.1.3" },
                 toVersion: { type: "exclusive", value: "2.1.7" },
@@ -226,7 +226,7 @@ it("generator changelog", async () => {
     // Should get every changelog
     expect(
         await fdrApplication.dao.generatorVersions().getChangelog({
-            generator: "this-gets-changelog",
+            generator: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             versionRanges: {
                 fromVersion: { type: "inclusive", value: "2.1.2" },
                 toVersion: { type: "inclusive", value: "2.1.8" },
@@ -272,7 +272,7 @@ it("generator changelog", async () => {
 it("generator version happy path update", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "this-is-the-happy-path",
+            id: FdrAPI.generators.GeneratorId("this-is-the-happy-path"),
             displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-is-the-happy-path",
@@ -281,7 +281,7 @@ it("generator version happy path update", async () => {
     });
 
     const releaseRequest: GeneratorReleaseRequest = {
-        generatorId: "this-is-the-happy-path",
+        generatorId: FdrAPI.generators.GeneratorId("this-is-the-happy-path"),
         irVersion: 2,
         version: "3.1.2",
         changelogEntry: [
@@ -290,14 +290,24 @@ it("generator version happy path update", async () => {
                 summary: "did a couple things",
                 fixed: ["fixed that new feature"],
                 deprecated: ["idk google meet or something isn't there anymore"],
+                links: undefined,
+                upgradeNotes: undefined,
+                added: undefined,
+                changed: undefined,
+                removed: undefined,
             },
         ],
+        createdAt: undefined,
+        isYanked: undefined,
+        migration: undefined,
+        customConfigSchema: undefined,
+        tags: undefined,
     };
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: releaseRequest,
     });
     const release = await fdrApplication.dao.generatorVersions().getGeneratorRelease({
-        generator: "this-is-the-happy-path",
+        generator: FdrAPI.generators.GeneratorId("this-is-the-happy-path"),
         version: "3.1.2",
     });
     expect(release?.generatorId).toEqual(releaseRequest.generatorId);
@@ -307,7 +317,7 @@ it("generator version happy path update", async () => {
 
     // Overwrite the release's changelog
     const updateReleaseRequest: GeneratorReleaseRequest = {
-        generatorId: "this-is-the-happy-path",
+        generatorId: FdrAPI.generators.GeneratorId("this-is-the-happy-path"),
         irVersion: 2,
         version: "3.1.2",
         changelogEntry: [
@@ -315,14 +325,25 @@ it("generator version happy path update", async () => {
                 type: "feat",
                 summary: "added a new feature",
                 added: ["added a new feature"],
+                links: undefined,
+                upgradeNotes: undefined,
+                changed: undefined,
+                deprecated: undefined,
+                removed: undefined,
+                fixed: undefined,
             },
         ],
+        createdAt: undefined,
+        isYanked: undefined,
+        migration: undefined,
+        customConfigSchema: undefined,
+        tags: undefined,
     };
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: updateReleaseRequest,
     });
     const updatedRelease = await fdrApplication.dao.generatorVersions().getGeneratorRelease({
-        generator: "this-is-the-happy-path",
+        generator: FdrAPI.generators.GeneratorId("this-is-the-happy-path"),
         version: "3.1.2",
     });
     expect(updatedRelease?.generatorId).toEqual(updateReleaseRequest.generatorId);
@@ -334,7 +355,7 @@ it("generator version happy path update", async () => {
 it("get generator that works for cli version", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "this-is-cli-restricted",
+            id: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-is-cli-restricted",
@@ -351,7 +372,7 @@ it("get generator that works for cli version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-cli-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             irVersion: 50,
             version: "2.1.8",
         },
@@ -359,7 +380,7 @@ it("get generator that works for cli version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-cli-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             irVersion: 51,
             version: "3.0.0",
         },
@@ -367,7 +388,7 @@ it("get generator that works for cli version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-cli-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             irVersion: 51,
             version: "3.1.0",
         },
@@ -375,7 +396,7 @@ it("get generator that works for cli version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-cli-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             irVersion: 52,
             version: "3.5.0",
         },
@@ -384,7 +405,7 @@ it("get generator that works for cli version", async () => {
     // Get with retain major at 2
     const releaseRetainMajor = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
-            generator: "this-is-cli-restricted",
+            generator: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             cliVersion: "0.100.0",
             generatorMajorVersion: 2,
         },
@@ -393,7 +414,7 @@ it("get generator that works for cli version", async () => {
 
     const release = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
-            generator: "this-is-cli-restricted",
+            generator: FdrAPI.generators.GeneratorId("this-is-cli-restricted"),
             cliVersion: "0.100.0",
         },
     });
@@ -403,7 +424,7 @@ it("get generator that works for cli version", async () => {
 it("get generator retain major version", async () => {
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "this-is-major-version-restricted",
+            id: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             displayName: "An SDK",
             generatorType: { type: "sdk" },
             dockerImage: "this-is-major-version-restricted",
@@ -413,7 +434,7 @@ it("get generator retain major version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-major-version-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 50,
             version: "2.0.0",
         },
@@ -421,7 +442,7 @@ it("get generator retain major version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-major-version-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 50,
             version: "2.1.0-rc0",
         },
@@ -429,7 +450,7 @@ it("get generator retain major version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-major-version-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 50,
             version: "2.1.8",
         },
@@ -437,7 +458,7 @@ it("get generator retain major version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-major-version-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 51,
             version: "3.0.0",
         },
@@ -445,7 +466,7 @@ it("get generator retain major version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-major-version-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 51,
             version: "3.1.0",
         },
@@ -453,7 +474,7 @@ it("get generator retain major version", async () => {
 
     await fdrApplication.dao.generatorVersions().upsertGeneratorRelease({
         generatorRelease: {
-            generatorId: "this-is-major-version-restricted",
+            generatorId: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             irVersion: 52,
             version: "3.5.0",
         },
@@ -462,7 +483,7 @@ it("get generator retain major version", async () => {
     // Get with retain major at 2
     const releaseRetainMajor = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
-            generator: "this-is-major-version-restricted",
+            generator: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             releaseTypes: ["GA"],
             generatorMajorVersion: 2,
         },
@@ -471,7 +492,7 @@ it("get generator retain major version", async () => {
 
     const release = await fdrApplication.dao.generatorVersions().getLatestGeneratorRelease({
         getLatestGeneratorReleaseRequest: {
-            generator: "this-is-major-version-restricted",
+            generator: FdrAPI.generators.GeneratorId("this-is-major-version-restricted"),
             releaseTypes: ["GA"],
         },
     });

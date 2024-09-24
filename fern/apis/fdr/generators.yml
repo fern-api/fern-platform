@@ -11,8 +11,9 @@ groups:
         config:
           noSerdeLayer: true
           outputEsm: true
+          useBrandedStringAliases: true
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.20.9
+        version: 0.40.5
         output:
           location: local-file-system
           path: ../../../packages/fdr-sdk/src/client/generated

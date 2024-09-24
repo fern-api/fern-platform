@@ -8,7 +8,7 @@ import * as FernRegistry from "../../../../../../index";
  * @example
  *     {
  *         package: "string",
- *         language: FernRegistry.sdks.Language.Go,
+ *         language: "Go",
  *         githubRepository: "string"
  *     }
  */

@@ -14,8 +14,11 @@ export declare namespace Diff {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,7 +31,7 @@ export class Diff {
      * @param {Diff.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.diff.diff({
+     *     await client.diff.diff({
      *         previousApiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *         currentApiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      *     })
@@ -55,6 +58,7 @@ export class Diff {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

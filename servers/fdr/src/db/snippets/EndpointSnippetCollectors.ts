@@ -1,4 +1,4 @@
-import { FdrAPI } from "../../api";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
 export class EndpointSnippetCollector {
     private snippetsByEndpoint: Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod> = {};
@@ -10,7 +10,7 @@ export class EndpointSnippetCollector {
         snippet,
         identifierOverride,
     }: {
-        endpointPath: string;
+        endpointPath: FdrAPI.EndpointPathLiteral;
         endpointMethod: "POST" | "PUT" | "GET" | "PATCH" | "DELETE";
         snippet: FdrAPI.Snippet;
         identifierOverride: string | undefined;

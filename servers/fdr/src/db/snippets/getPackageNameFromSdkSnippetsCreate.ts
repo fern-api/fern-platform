@@ -1,5 +1,5 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { Language, PrismaClient } from "@prisma/client";
-import { FdrAPI } from "../../api";
 import { BadRequestError, Sdk, SdkRequest } from "../../api/generated/api";
 import { assertNever } from "../../util";
 

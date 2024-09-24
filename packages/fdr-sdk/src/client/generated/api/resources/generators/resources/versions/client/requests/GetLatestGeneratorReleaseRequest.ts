@@ -11,7 +11,7 @@ import * as FernRegistry from "../../../../../../index";
  *         cliVersion: "string",
  *         irVersion: 1,
  *         generatorMajorVersion: 1,
- *         releaseTypes: [FernRegistry.generators.ReleaseType.Ga]
+ *         releaseTypes: ["GA"]
  *     }
  */
 export interface GetLatestGeneratorReleaseRequest {

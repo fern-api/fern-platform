@@ -1,3 +1,4 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { CliReleaseRequest, InvalidVersionError, ReleaseType } from "../../../api/generated/api/resources/generators";
 import { noncifySemanticVersion } from "../../../db/generators/noncifySemanticVersion";
 import { createMockFdrApplication } from "../../mock";
@@ -191,7 +192,7 @@ it("generator changelog", async () => {
     // Should not get the minimum, given it's exclusive
     expect(
         await fdrApplication.dao.generatorVersions().getChangelog({
-            generator: "this-gets-changelog",
+            generator: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             versionRanges: {
                 fromVersion: { type: "exclusive", value: "2.1.3" },
                 toVersion: { type: "exclusive", value: "2.1.7" },
@@ -216,7 +217,7 @@ it("generator changelog", async () => {
     // Should get every changelog
     expect(
         await fdrApplication.dao.generatorVersions().getChangelog({
-            generator: "this-gets-changelog",
+            generator: FdrAPI.generators.GeneratorId("this-gets-changelog"),
             versionRanges: {
                 fromVersion: { type: "inclusive", value: "2.1.2" },
                 toVersion: { type: "inclusive", value: "2.1.8" },

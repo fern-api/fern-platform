@@ -14,8 +14,11 @@ export declare namespace Cli {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -33,8 +36,8 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getLatestCliRelease({
-     *         releaseTypes: [FernRegistry.generators.ReleaseType.Ga],
+     *     await client.generators.cli.getLatestCliRelease({
+     *         releaseTypes: ["GA"],
      *         irVersion: 1
      *     })
      */
@@ -57,6 +60,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -92,7 +96,7 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getChangelog({
+     *     await client.generators.cli.getChangelog({
      *         fromVersion: {
      *             type: "inclusive",
      *             value: "string"
@@ -122,6 +126,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -147,7 +152,7 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getMinCliForIr(1)
+     *     await client.generators.cli.getMinCliForIr(1)
      */
     public async getMinCliForIr(
         irVersion: number,
@@ -166,6 +171,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -200,14 +206,14 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.upsertCliRelease({
+     *     await client.generators.cli.upsertCliRelease({
      *         version: "string",
      *         createdAt: "2023-01-15",
      *         isYanked: {
      *             remediationVerision: "string"
      *         },
      *         changelogEntry: [{
-     *                 type: FernRegistry.generators.ChangelogEntryType.Fix,
+     *                 type: "fix",
      *                 summary: "string",
      *                 links: {
      *                     "key": "value"
@@ -252,6 +258,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -277,7 +284,7 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getCliRelease("string")
+     *     await client.generators.cli.getCliRelease("string")
      */
     public async getCliRelease(
         cliVersion: string,
@@ -296,6 +303,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -330,7 +338,7 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.listCliReleases({
+     *     await client.generators.cli.listCliReleases({
      *         page: 1,
      *         pageSize: 1
      *     })
@@ -368,6 +376,7 @@ export class Cli {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

@@ -155,7 +155,7 @@ function convertPrismaLanguage(prismaLanguage: prisma.Language | null): Generato
 function convertPrismaGenerator(generator: prisma.Generator | null): Generator | undefined {
     return generator != null
         ? {
-              id: generator.id,
+              id: FdrAPI.generators.GeneratorId(generator.id),
               displayName: generator.displayName,
               generatorType: readBuffer(generator.generatorType) as GeneratorType,
               generatorLanguage: convertPrismaLanguage(generator.generatorLanguage),

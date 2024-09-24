@@ -1,3 +1,4 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { LOGGER } from "../app/FdrApplication";
 import { CachedDocsResponse } from "../services/docs-cache/DocsDefinitionCache";
 import RedisDocsDefinitionStore from "../services/docs-cache/RedisDocsDefinitionStore";
@@ -9,6 +10,7 @@ const HEALTHCHECK_DOCS_RESPONSE: CachedDocsResponse = {
     response: {
         baseUrl: {
             domain: "healthcheck.buildwithfern.com",
+            basePath: undefined,
         },
         definition: {
             pages: {},
@@ -16,7 +18,26 @@ const HEALTHCHECK_DOCS_RESPONSE: CachedDocsResponse = {
             config: {
                 navigation: {
                     items: [],
+                    landingPage: undefined,
                 },
+                title: undefined,
+                defaultLanguage: undefined,
+                announcement: undefined,
+                navbarLinks: undefined,
+                footerLinks: undefined,
+                logoHeight: undefined,
+                logoHref: undefined,
+                favicon: undefined,
+                metadata: undefined,
+                redirects: undefined,
+                colorsV3: undefined,
+                layout: undefined,
+                typographyV2: undefined,
+                analyticsConfig: undefined,
+                integrations: undefined,
+                css: undefined,
+                js: undefined,
+                playground: undefined,
             },
             files: {},
             filesV2: {},
@@ -25,11 +46,14 @@ const HEALTHCHECK_DOCS_RESPONSE: CachedDocsResponse = {
                 value: {
                     type: "unversioned",
                     indexSegment: {
-                        id: "healthcheck",
+                        id: FdrAPI.IndexSegmentId("healthcheck"),
                         searchApiKey: "dummy",
                     },
                 },
             },
+            algoliaSearchIndex: undefined,
+            jsFiles: undefined,
+            id: undefined,
         },
         lightModeEnabled: true,
     },

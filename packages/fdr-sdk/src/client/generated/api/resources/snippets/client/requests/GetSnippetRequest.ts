@@ -8,7 +8,7 @@ import * as FernRegistry from "../../../../index";
  * @example
  *     {
  *         endpoint: {
- *             method: FernRegistry.HttpMethod.Get,
+ *             method: "GET",
  *             path: FernRegistry.EndpointPathLiteral("/v1/search")
  *         }
  *     }

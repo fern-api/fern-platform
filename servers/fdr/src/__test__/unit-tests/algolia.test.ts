@@ -1,3 +1,4 @@
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { getMarkdownSectionTree, getMarkdownSections } from "../../services/algolia/AlgoliaSearchRecordGenerator";
 
 describe("algolia utils", () => {
@@ -137,8 +138,8 @@ describe("algolia utils", () => {
                     ],
                 },
                 [],
-                "testindex",
-                "/v1/someslug",
+                FdrAPI.IndexSegmentId("testindex"),
+                FernNavigation.Slug("v1/someslug"),
             ).map((record) => {
                 return {
                     ...record,
