@@ -4,7 +4,7 @@ import { UnreachableCaseError } from "ts-essentials";
 
 export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: string | undefined): string {
     return visitSearchRecord<string>(record)._visit({
-        v4: (record) => (record.type === "field-v1" ? record.value.slug : record.slug),
+        v4: (record) => record.slug,
         v3: (record) => record.slug,
         v2: (record) =>
             FernNavigation.utils.slugjoin(
@@ -23,7 +23,7 @@ export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: 
 
 export function getTitleForSearchRecord(record: Algolia.AlgoliaRecord): string {
     return visitSearchRecord<string>(record)._visit({
-        v4: (record) => (record.type === "field-v1" ? record.value.title : record.title),
+        v4: (record) => record.title,
         v3: (record) => record.title,
         v2: (record) =>
             record.type === "endpoint-v2"
@@ -41,9 +41,10 @@ export function getContentForSearchRecord(record: Algolia.AlgoliaRecord): string
                 case "endpoint-v4":
                 case "websocket-v4":
                 case "webhook-v4":
+                case "endpoint-field-v1":
+                case "websocket-field-v1":
+                case "webhook-field-v1":
                     return record.description;
-                case "field-v1":
-                    return record.value.description;
                 case "markdown-section-v1":
                     return record.content;
             }
@@ -132,7 +133,9 @@ interface SearchRecordVisitor<T> {
             | Algolia.AlgoliaRecord.EndpointV4
             | Algolia.AlgoliaRecord.WebsocketV4
             | Algolia.AlgoliaRecord.WebhookV4
-            | Algolia.AlgoliaRecord.FieldV1
+            | Algolia.AlgoliaRecord.EndpointFieldV1
+            | Algolia.AlgoliaRecord.WebsocketFieldV1
+            | Algolia.AlgoliaRecord.WebhookFieldV1
             | Algolia.AlgoliaRecord.MarkdownSectionV1,
     ) => T;
     v3: (
@@ -165,7 +168,9 @@ function visitSearchRecord<T>(record: Algolia.AlgoliaRecord): { _visit: (visitor
                 case "endpoint-v4":
                 case "websocket-v4":
                 case "webhook-v4":
-                case "field-v1":
+                case "endpoint-field-v1":
+                case "webhook-field-v1":
+                case "websocket-field-v1":
                 case "markdown-section-v1":
                     return visitor.v4(record);
                 default:

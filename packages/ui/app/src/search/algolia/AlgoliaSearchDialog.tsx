@@ -4,7 +4,7 @@ import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useMemo, useRef } from "react";
-import { InstantSearch, useInstantSearch } from "react-instantsearch";
+import { Configure, InstantSearch, useInstantSearch } from "react-instantsearch";
 import {
     CURRENT_VERSION_ATOM,
     IS_MOBILE_SCREEN_ATOM,
@@ -93,6 +93,10 @@ function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSea
     );
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
+            <Configure
+                // filters="type: 'endpoint-v4' OR type: 'websocket-v4' OR type: 'webhook-v4' OR type: 'page-v4' OR type: 'field-v1' OR type: 'markdown-section-v1'"
+                hitsPerPage={20}
+            />
             <div className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}

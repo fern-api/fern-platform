@@ -32,7 +32,10 @@ types:
       websocket-v3: AlgoliaWebSocketRecordV3
       webhook-v3: AlgoliaWebhookRecordV3
       markdown-section-v1: AlgoliaMarkdownSectionRecordV1
-      field-v1: AlgoliaFieldRecordV1
+      endpoint-field-v1: AlgoliaEndpointFieldRecordV1
+      websocket-field-v1: AlgoliaWebSocketFieldRecordV1
+      webhook-field-v1: AlgoliaWebhookFieldRecordV1
+
       # deprecated
       endpoint: AlgoliaEndpointRecord
       page: AlgoliaPageRecord
@@ -120,12 +123,6 @@ types:
     properties:
       availability: optional<string>
       extends: optional<list<string>>
-
-  AlgoliaFieldRecordV1:
-    union:
-      endpoint-field-v1: AlgoliaEndpointFieldRecordV1
-      websocket-field-v1: AlgoliaWebSocketFieldRecordV1
-      webhook-field-v1: AlgoliaWebhookFieldRecordV1
 
   IndexSegment:
     properties:
