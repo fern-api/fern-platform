@@ -72,7 +72,7 @@ export function getSeoProps(
      */
     // TODO: set canonical domain in docs.yml
     const toHref = getToHref(isTrailingSlashEnabled);
-    seo.canonical = `https://${domain}/${toHref(node.canonicalSlug ?? node.slug)}`;
+    seo.canonical = toHref(node.canonicalSlug ?? node.slug, domain);
 
     const pageId = FernNavigation.getPageId(node);
 
