@@ -1,20 +1,8 @@
 import type { FdrClient } from "@fern-api/fdr-sdk";
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { UnionMatcher } from "./UnionResolver";
 import { accessByPathNonNull } from "./accessByPath";
-import {
-    AuthPayload,
-    CustomSnippetPayload,
-    EndpointSnippetTemplate,
-    ParameterPayload,
-    PayloadInput,
-    Sdk,
-    Snippet,
-    SnippetTemplate,
-    Template,
-    VersionedSnippetTemplate,
-} from "./generated/api";
 import { isPlainObject } from "./isPlainObject";
 
 interface V1Snippet {
@@ -30,7 +18,7 @@ class DefaultedV1Snippet {
         imports,
         invocation,
     }: {
-        template: Template;
+        template: FdrAPI.Template;
         imports?: string[];
         isRequired?: boolean;
         invocation?: string;
@@ -69,11 +57,11 @@ class DefaultedV1Snippet {
 const TemplateSentinel = "$FERN_INPUT";
 
 export class SnippetTemplateResolver {
-    private payload: CustomSnippetPayload;
-    private endpointSnippetTemplate: EndpointSnippetTemplate;
+    private payload: FdrAPI.CustomSnippetPayload;
+    private endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate;
     private maybeApiDefinition: APIV1Read.ApiDefinition | undefined;
     private maybeObjectFlattener: ObjectFlattener | undefined;
-    private maybeApiDefinitionId: string | undefined;
+    private maybeApiDefinitionId: FdrAPI.ApiDefinitionId | undefined;
     private apiDefinitionHasBeenRequested: boolean;
     private provideFdrClient: (() => FdrClient) | undefined;
 
@@ -82,8 +70,8 @@ export class SnippetTemplateResolver {
         endpointSnippetTemplate,
         provideFdrClient,
     }: {
-        payload: CustomSnippetPayload;
-        endpointSnippetTemplate: EndpointSnippetTemplate;
+        payload: FdrAPI.CustomSnippetPayload;
+        endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate;
         provideFdrClient?: () => FdrClient;
     }) {
         this.payload = payload;
@@ -98,7 +86,7 @@ export class SnippetTemplateResolver {
     }
 
     private accessParameterPayloadByPath(
-        parameterPayloads?: ParameterPayload[],
+        parameterPayloads?: FdrAPI.ParameterPayload[],
         locationPath?: string,
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
@@ -114,7 +102,7 @@ export class SnippetTemplateResolver {
         return undefined;
     }
 
-    private accessAuthPayloadByPath(authPayload?: AuthPayload, locationPath?: string): unknown {
+    private accessAuthPayloadByPath(authPayload?: FdrAPI.AuthPayload, locationPath?: string): unknown {
         if (authPayload != null) {
             return accessByPathNonNull(authPayload, locationPath);
         }
@@ -123,7 +111,7 @@ export class SnippetTemplateResolver {
         return `YOUR_${(maybePayloadName ?? "variable").toUpperCase()}`;
     }
 
-    private getPayloadValue(location: PayloadInput, payloadOverride?: unknown): unknown | undefined {
+    private getPayloadValue(location: FdrAPI.PayloadInput, payloadOverride?: unknown): unknown | undefined {
         if (location.location === "RELATIVE" && payloadOverride != null) {
             return accessByPathNonNull(payloadOverride, location.path);
         }
@@ -181,7 +169,7 @@ export class SnippetTemplateResolver {
         payloadOverride,
         isRequired,
     }: {
-        template: Template;
+        template: FdrAPI.Template;
         payloadOverride?: unknown;
         isRequired?: boolean;
     }): DefaultedV1Snippet {
@@ -321,7 +309,7 @@ export class SnippetTemplateResolver {
 
                 const maybeUnionValue = this.getPayloadValue(
                     // Defaults to relative since the python generator didn't specify this on historical templates
-                    template.templateInput ?? { location: "RELATIVE" },
+                    template.templateInput ?? { location: FdrAPI.PayloadLocation.Relative, path: undefined },
                     payloadOverride,
                 );
                 if (maybeUnionValue == null || !isPlainObject(maybeUnionValue) || !(discriminator in maybeUnionValue)) {
@@ -365,7 +353,7 @@ export class SnippetTemplateResolver {
 
                 const maybeUnionValue = this.getPayloadValue(
                     // Defaults to relative since the python generator didn't specify this on historical templates
-                    template.templateInput ?? { location: "RELATIVE" },
+                    template.templateInput ?? { location: FdrAPI.PayloadLocation.Relative, path: undefined },
                     payloadOverride,
                 );
 
@@ -399,7 +387,7 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveSnippetV1TemplateString(template: SnippetTemplate): string {
+    private resolveSnippetV1TemplateString(template: FdrAPI.SnippetTemplate): string {
         const clientSnippet =
             typeof template.clientInstantiation === "string"
                 ? template.clientInstantiation
@@ -429,18 +417,19 @@ ${endpointSnippet?.invocation}
 `;
     }
 
-    private resolveSnippetV1TemplateToSnippet(sdk: Sdk, template: SnippetTemplate): Snippet {
+    private resolveSnippetV1TemplateToSnippet(sdk: FdrAPI.Sdk, template: FdrAPI.SnippetTemplate): FdrAPI.Snippet {
         const snippet = this.resolveSnippetV1TemplateString(template);
 
         switch (sdk.type) {
             case "typescript":
-                return { type: "typescript", sdk, client: snippet };
+                return { type: "typescript", sdk, client: snippet, exampleIdentifier: undefined };
             case "python":
                 return {
                     type: "python",
                     sdk,
                     sync_client: snippet,
                     async_client: this.resolveAdditionalTemplate("async") ?? snippet,
+                    exampleIdentifier: undefined,
                 };
             case "java":
                 return {
@@ -448,21 +437,22 @@ ${endpointSnippet?.invocation}
                     sdk,
                     sync_client: snippet,
                     async_client: this.resolveAdditionalTemplate("async") ?? snippet,
+                    exampleIdentifier: undefined,
                 };
             case "go":
-                return { type: "go", sdk, client: snippet };
+                return { type: "go", sdk, client: snippet, exampleIdentifier: undefined };
             case "ruby":
-                return { type: "ruby", sdk, client: snippet };
+                return { type: "ruby", sdk, client: snippet, exampleIdentifier: undefined };
             default:
                 throw new Error("Encountered unexpected SDK type in snippet generation, failing hard.");
         }
     }
 
-    public resolve(apiDefinition?: APIV1Read.ApiDefinition): Snippet {
+    public resolve(apiDefinition?: APIV1Read.ApiDefinition): FdrAPI.Snippet {
         this.maybeApiDefinition = apiDefinition;
 
-        const sdk: Sdk = this.endpointSnippetTemplate.sdk;
-        const template: VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
+        const sdk: FdrAPI.Sdk = this.endpointSnippetTemplate.sdk;
+        const template: FdrAPI.VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
             case "v1":
                 return this.resolveSnippetV1TemplateToSnippet(sdk, template);
@@ -471,19 +461,19 @@ ${endpointSnippet?.invocation}
         }
     }
 
-    public async resolveWithFormatting(apiDefinition?: APIV1Read.ApiDefinition): Promise<Snippet> {
+    public async resolveWithFormatting(apiDefinition?: APIV1Read.ApiDefinition): Promise<FdrAPI.Snippet> {
         const { formatSnippet } = await import("./formatSnippet");
         apiDefinition = apiDefinition ?? (await this.getApiDefinition());
         return formatSnippet(this.resolve(apiDefinition));
     }
 
-    public async getApiDefinitionAndResolve(): Promise<Snippet> {
+    public async getApiDefinitionAndResolve(): Promise<FdrAPI.Snippet> {
         const apiDefinition = await this.getApiDefinition();
         return this.resolve(apiDefinition);
     }
 
     public resolveAdditionalTemplate(key: string): string | undefined {
-        const template: VersionedSnippetTemplate | undefined =
+        const template: FdrAPI.VersionedSnippetTemplate | undefined =
             this.endpointSnippetTemplate.additionalTemplates != null
                 ? this.endpointSnippetTemplate.additionalTemplates[key]
                 : undefined;

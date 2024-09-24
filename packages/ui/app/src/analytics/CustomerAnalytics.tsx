@@ -1,10 +1,11 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import { ReactElement, memo } from "react";
-import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
+import { DOCS_ATOM, DOMAIN_ATOM, DocsProps } from "../atoms";
 import { Posthog } from "./PosthogContainer";
 import { renderSegmentSnippet } from "./segment";
 
@@ -14,7 +15,29 @@ const GoogleAnalytics = dynamic(() => import("@next/third-parties/google").then(
 const GoogleTagManager = dynamic(() => import("@next/third-parties/google").then((mod) => mod.GoogleTagManager));
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
-const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConfig ?? {}, isEqual);
+const ANALYTICS_CONFIG_ATOM = selectAtom<DocsProps, DocsV1Read.AnalyticsConfig>(
+    DOCS_ATOM,
+    (docs) =>
+        docs.analyticsConfig ?? {
+            segment: undefined,
+            fullstory: undefined,
+            intercom: undefined,
+            posthog: undefined,
+            gtm: undefined,
+            ga4: undefined,
+            amplitude: undefined,
+            mixpanel: undefined,
+            hotjar: undefined,
+            koala: undefined,
+            logrocket: undefined,
+            pirsch: undefined,
+            plausible: undefined,
+            fathom: undefined,
+            clearbit: undefined,
+            heap: undefined,
+        },
+    isEqual,
+);
 
 export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
     const domain = useAtomValue(DOMAIN_ATOM);
