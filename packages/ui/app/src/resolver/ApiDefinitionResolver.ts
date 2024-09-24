@@ -8,12 +8,19 @@ import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiEndpointResolver } from "./ApiEndpointResolver";
 import { ApiTypeResolver } from "./ApiTypeResolver";
 import type {
+    ResolvedEndpointDefinition,
     ResolvedPackageItem,
     ResolvedRootPackage,
     ResolvedSubpackage,
     ResolvedTypeDefinition,
     ResolvedWithApiDefinition,
 } from "./types";
+
+export interface ApiDefinitionResolverCache {
+    putResolvedEndpoint(endpoint: ResolvedEndpointDefinition): Promise<void>;
+
+    getResolvedEndpoint(id: FernNavigation.EndpointId): Promise<ResolvedEndpointDefinition | null | undefined>;
+}
 
 export class ApiDefinitionResolver {
     public static async resolve(
@@ -25,6 +32,7 @@ export class ApiDefinitionResolver {
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
         serializeMdx: MDX_SERIALIZER,
+        cache?: ApiDefinitionResolverCache,
     ): Promise<ResolvedRootPackage> {
         const resolver = new ApiDefinitionResolver(
             collector,
@@ -35,6 +43,7 @@ export class ApiDefinitionResolver {
             featureFlags,
             mdxOptions,
             serializeMdx,
+            cache,
         );
         return resolver.resolveApiDefinition();
     }
@@ -51,6 +60,7 @@ export class ApiDefinitionResolver {
         private featureFlags: FeatureFlags,
         private mdxOptions: FernSerializeMdxOptions | undefined,
         private serializeMdx: MDX_SERIALIZER,
+        private cache?: ApiDefinitionResolverCache,
     ) {
         this.definitionResolver = new ApiEndpointResolver(
             this.collector,
@@ -83,7 +93,15 @@ export class ApiDefinitionResolver {
         const maybeItems = await Promise.all(
             node.children.map((item) =>
                 visitDiscriminatedUnion(item)._visit<Promise<ResolvedPackageItem | undefined>>({
-                    endpoint: (endpoint) => this.definitionResolver.resolveEndpointDefinition(endpoint),
+                    endpoint: async (endpoint) => {
+                        const cached = await this.cache?.getResolvedEndpoint(endpoint.endpointId);
+                        if (cached != null) {
+                            return cached;
+                        }
+                        const resolvedEndpoint = await this.definitionResolver.resolveEndpointDefinition(endpoint);
+                        await this.cache?.putResolvedEndpoint(resolvedEndpoint);
+                        return resolvedEndpoint;
+                    },
                     endpointPair: async (endpointPair) => {
                         if (this.featureFlags.isBatchStreamToggleDisabled) {
                             captureSentryErrorMessage(

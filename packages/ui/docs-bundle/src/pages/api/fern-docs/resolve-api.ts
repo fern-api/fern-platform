@@ -1,3 +1,4 @@
+import { DocsKVCache } from "@/server/DocsCache";
 import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import { FdrAPI } from "@fern-api/fdr-sdk";
@@ -100,6 +101,7 @@ const resolveApiHandler: NextApiHandler = async (
                 { files: docs.definition.jsFiles },
                 featureFlags,
                 serializeMdxWithCaching,
+                DocsKVCache.getInstance(xFernHost),
             );
             packagesPromise.push(resolved);
         });
