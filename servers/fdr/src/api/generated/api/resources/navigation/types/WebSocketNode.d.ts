@@ -6,5 +6,5 @@ export interface WebSocketNode extends FernRegistry.navigation.WithNodeMetadata,
     type: "webSocket";
     webSocketId: FernRegistry.WebSocketId;
     /** Settings for the api playground that affect this endpoint specifically. */
-    playground?: FernRegistry.navigation.PlaygroundSettings;
+    playground: FernRegistry.navigation.PlaygroundSettings | undefined;
 }

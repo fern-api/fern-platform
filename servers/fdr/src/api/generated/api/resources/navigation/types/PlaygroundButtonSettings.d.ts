@@ -3,5 +3,5 @@
  */
 import * as FernRegistry from "../../../index";
 export interface PlaygroundButtonSettings {
-    href?: FernRegistry.Url;
+    href: FernRegistry.Url | undefined;
 }

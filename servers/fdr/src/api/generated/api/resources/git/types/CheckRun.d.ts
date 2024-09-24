@@ -11,6 +11,6 @@ export interface CheckRun {
     conclusion: string;
     checkRunUrl: string;
     createdAt: string;
-    completedAt?: string;
-    rawCheckRun?: unknown;
+    completedAt: string | undefined;
+    rawCheckRun: unknown;
 }

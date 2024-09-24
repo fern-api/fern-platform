@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../index";
 export interface WithPage {
     pageId: FernRegistry.PageId;
-    noindex?: boolean;
+    noindex: boolean | undefined;
 }

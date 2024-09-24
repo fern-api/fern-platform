@@ -6,7 +6,7 @@ export interface EndpointNode extends FernRegistry.navigation.WithNodeMetadata, 
     type: "endpoint";
     method: FernRegistry.HttpMethod;
     endpointId: FernRegistry.EndpointId;
-    isResponseStream?: boolean;
+    isResponseStream: boolean | undefined;
     /** Settings for the api playground that affect this endpoint specifically. */
-    playground?: FernRegistry.navigation.PlaygroundSettings;
+    playground: FernRegistry.navigation.PlaygroundSettings | undefined;
 }

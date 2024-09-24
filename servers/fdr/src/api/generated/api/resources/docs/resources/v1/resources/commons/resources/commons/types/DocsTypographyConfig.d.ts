@@ -3,7 +3,7 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface DocsTypographyConfig {
-    headingsFont?: FernRegistry.docs.v1.commons.FontConfig;
-    bodyFont?: FernRegistry.docs.v1.commons.FontConfig;
-    codeFont?: FernRegistry.docs.v1.commons.FontConfig;
+    headingsFont: FernRegistry.docs.v1.commons.FontConfig | undefined;
+    bodyFont: FernRegistry.docs.v1.commons.FontConfig | undefined;
+    codeFont: FernRegistry.docs.v1.commons.FontConfig | undefined;
 }

@@ -3,13 +3,13 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface DocsLayoutConfig {
-    pageWidth?: FernRegistry.docs.v1.commons.PageWidthSizeConfig;
-    contentWidth?: FernRegistry.docs.v1.commons.SizeConfig;
-    sidebarWidth?: FernRegistry.docs.v1.commons.SizeConfig;
-    headerHeight?: FernRegistry.docs.v1.commons.SizeConfig;
-    searchbarPlacement?: FernRegistry.docs.v1.commons.SearchbarPlacement;
-    tabsPlacement?: FernRegistry.docs.v1.commons.TabsPlacement;
-    contentAlignment?: FernRegistry.docs.v1.commons.ContentAlignment;
-    headerPosition?: FernRegistry.docs.v1.commons.HeaderPosition;
-    disableHeader?: boolean;
+    pageWidth: FernRegistry.docs.v1.commons.PageWidthSizeConfig | undefined;
+    contentWidth: FernRegistry.docs.v1.commons.SizeConfig | undefined;
+    sidebarWidth: FernRegistry.docs.v1.commons.SizeConfig | undefined;
+    headerHeight: FernRegistry.docs.v1.commons.SizeConfig | undefined;
+    searchbarPlacement: FernRegistry.docs.v1.commons.SearchbarPlacement | undefined;
+    tabsPlacement: FernRegistry.docs.v1.commons.TabsPlacement | undefined;
+    contentAlignment: FernRegistry.docs.v1.commons.ContentAlignment | undefined;
+    headerPosition: FernRegistry.docs.v1.commons.HeaderPosition | undefined;
+    disableHeader: boolean | undefined;
 }

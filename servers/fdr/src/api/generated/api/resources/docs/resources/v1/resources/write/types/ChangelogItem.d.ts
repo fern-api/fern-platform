@@ -5,5 +5,5 @@ import * as FernRegistry from "../../../../../../../index";
 export interface ChangelogItem {
     date: string;
     pageId: FernRegistry.PageId;
-    hidden?: boolean;
+    hidden: boolean | undefined;
 }

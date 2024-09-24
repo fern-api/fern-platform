@@ -10,5 +10,5 @@ export interface EndpointIdentifier {
      * method are not (specifically for the fern definition, consider chat and chat stream). This is optional to
      * remain backcompat with old snippets of yore.
      */
-    identifierOverride?: string;
+    identifierOverride: string | undefined;
 }

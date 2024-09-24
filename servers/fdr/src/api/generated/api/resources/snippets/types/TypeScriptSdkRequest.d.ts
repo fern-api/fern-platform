@@ -3,5 +3,5 @@
  */
 export interface TypeScriptSdkRequest {
     package: string;
-    version?: string;
+    version: string | undefined;
 }

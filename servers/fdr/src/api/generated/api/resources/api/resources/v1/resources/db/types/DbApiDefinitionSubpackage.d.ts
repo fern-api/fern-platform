@@ -3,9 +3,9 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface DbApiDefinitionSubpackage extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.db.DbApiDefinitionPackage {
-    parent?: FernRegistry.api.v1.SubpackageId;
+    parent: FernRegistry.api.v1.SubpackageId | undefined;
     subpackageId: FernRegistry.api.v1.SubpackageId;
     name: string;
     urlSlug: string;
-    displayName?: string;
+    displayName: string | undefined;
 }

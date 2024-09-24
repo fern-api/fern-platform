@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface PageContent {
     markdown: string;
-    editThisPageUrl?: FernRegistry.Url;
+    editThisPageUrl: FernRegistry.Url | undefined;
 }

@@ -20,6 +20,6 @@ export declare namespace Snippet {
         type: "ruby";
     }
     interface _Base {
-        exampleIdentifier?: string;
+        exampleIdentifier: string | undefined;
     }
 }

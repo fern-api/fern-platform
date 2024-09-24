@@ -3,8 +3,8 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface ChangelogSection extends FernRegistry.docs.v1.read.NavigationNodeMetadata {
-    title?: string;
-    description?: string;
-    pageId?: FernRegistry.PageId;
+    title: string | undefined;
+    description: string | undefined;
+    pageId: FernRegistry.PageId | undefined;
     items: FernRegistry.docs.v1.read.ChangelogItem[];
 }

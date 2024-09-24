@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface ErrorDeclaration extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
-    type?: FernRegistry.api.v1.register.TypeReference;
+    type: FernRegistry.api.v1.register.TypeReference | undefined;
     statusCode: number;
 }

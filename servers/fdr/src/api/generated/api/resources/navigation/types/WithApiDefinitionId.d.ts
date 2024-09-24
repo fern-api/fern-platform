@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../index";
 export interface WithApiDefinitionId {
     apiDefinitionId: FernRegistry.ApiDefinitionId;
-    availability?: FernRegistry.navigation.Availability;
+    availability: FernRegistry.navigation.Availability | undefined;
 }

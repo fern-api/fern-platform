@@ -3,12 +3,12 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface ThemeConfig {
-    logo?: FernRegistry.FileId;
-    backgroundImage?: FernRegistry.FileId;
+    logo: FernRegistry.FileId | undefined;
+    backgroundImage: FernRegistry.FileId | undefined;
     accentPrimary: FernRegistry.docs.v1.commons.RgbaColor;
-    background?: FernRegistry.docs.v1.commons.RgbaColor;
-    border?: FernRegistry.docs.v1.commons.RgbaColor;
-    sidebarBackground?: FernRegistry.docs.v1.commons.RgbaColor;
-    headerBackground?: FernRegistry.docs.v1.commons.RgbaColor;
-    cardBackground?: FernRegistry.docs.v1.commons.RgbaColor;
+    background: FernRegistry.docs.v1.commons.RgbaColor | undefined;
+    border: FernRegistry.docs.v1.commons.RgbaColor | undefined;
+    sidebarBackground: FernRegistry.docs.v1.commons.RgbaColor | undefined;
+    headerBackground: FernRegistry.docs.v1.commons.RgbaColor | undefined;
+    cardBackground: FernRegistry.docs.v1.commons.RgbaColor | undefined;
 }

@@ -4,12 +4,12 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface DocsSection {
     title: string;
-    icon?: string;
+    icon: string | undefined;
     items: FernRegistry.docs.v1.db.NavigationItem[];
     urlSlug: string;
     skipUrlSlug: boolean;
     collapsed: boolean;
-    hidden?: boolean;
-    fullSlug?: string[];
-    overviewPageId?: FernRegistry.PageId;
+    hidden: boolean | undefined;
+    fullSlug: string[] | undefined;
+    overviewPageId: FernRegistry.PageId | undefined;
 }

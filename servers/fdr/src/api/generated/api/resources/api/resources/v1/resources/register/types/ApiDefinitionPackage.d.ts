@@ -4,13 +4,13 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface ApiDefinitionPackage {
     endpoints: FernRegistry.api.v1.register.EndpointDefinition[];
-    websockets?: FernRegistry.api.v1.register.WebSocketChannel[];
-    webhooks?: FernRegistry.api.v1.register.WebhookDefinition[];
+    websockets: FernRegistry.api.v1.register.WebSocketChannel[] | undefined;
+    webhooks: FernRegistry.api.v1.register.WebhookDefinition[] | undefined;
     types: FernRegistry.api.v1.TypeId[];
     subpackages: FernRegistry.api.v1.SubpackageId[];
     /**
      * if present, this package should be replaced with the provided subpackage
      * in the docs navigation.
      */
-    pointsTo?: FernRegistry.api.v1.SubpackageId;
+    pointsTo: FernRegistry.api.v1.SubpackageId | undefined;
 }

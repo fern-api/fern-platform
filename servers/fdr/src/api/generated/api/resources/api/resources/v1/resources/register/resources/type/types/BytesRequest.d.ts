@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../../../../../../../index";
 export interface BytesRequest extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
     isOptional: boolean;
-    contentType?: string;
+    contentType: string | undefined;
 }

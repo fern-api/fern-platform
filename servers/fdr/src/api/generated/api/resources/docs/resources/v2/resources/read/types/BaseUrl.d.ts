@@ -3,5 +3,5 @@
  */
 export interface BaseUrl {
     domain: string;
-    basePath?: string;
+    basePath: string | undefined;
 }

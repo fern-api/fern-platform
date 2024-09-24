@@ -3,23 +3,23 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface DbEndpointDefinition extends FernRegistry.api.v1.WithDescription {
-    authed?: boolean;
-    availability?: FernRegistry.api.v1.Availability;
-    defaultEnvironment?: FernRegistry.EnvironmentId;
-    environments?: FernRegistry.api.v1.Environment[];
+    authed: boolean | undefined;
+    availability: FernRegistry.api.v1.Availability | undefined;
+    defaultEnvironment: FernRegistry.EnvironmentId | undefined;
+    environments: FernRegistry.api.v1.Environment[] | undefined;
     method: FernRegistry.HttpMethod;
     id: FernRegistry.EndpointId;
-    originalEndpointId?: string;
+    originalEndpointId: string | undefined;
     urlSlug: string;
-    migratedFromUrlSlugs?: string[];
-    name?: string;
+    migratedFromUrlSlugs: string[] | undefined;
+    name: string | undefined;
     path: FernRegistry.api.v1.read.EndpointPath;
     queryParameters: FernRegistry.api.v1.read.QueryParameter[];
     headers: FernRegistry.api.v1.read.Header[];
-    request?: FernRegistry.api.v1.db.DbHttpRequest;
-    response?: FernRegistry.api.v1.read.HttpResponse;
-    errors?: FernRegistry.api.v1.read.ErrorDeclaration[];
-    errorsV2?: FernRegistry.api.v1.read.ErrorDeclarationV2[];
+    request: FernRegistry.api.v1.db.DbHttpRequest | undefined;
+    response: FernRegistry.api.v1.read.HttpResponse | undefined;
+    errors: FernRegistry.api.v1.read.ErrorDeclaration[] | undefined;
+    errorsV2: FernRegistry.api.v1.read.ErrorDeclarationV2[] | undefined;
     examples: FernRegistry.api.v1.read.ExampleEndpointCall[];
-    snippetTemplates?: FernRegistry.api.v1.read.EndpointSnippetTemplates;
+    snippetTemplates: FernRegistry.api.v1.read.EndpointSnippetTemplates | undefined;
 }

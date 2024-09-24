@@ -7,13 +7,13 @@ export interface DbApiDefinition {
     rootPackage: FernRegistry.api.v1.db.DbApiDefinitionPackage;
     types: Record<FernRegistry.api.v1.TypeId, FernRegistry.api.v1.read.TypeDefinition>;
     subpackages: Record<FernRegistry.api.v1.SubpackageId, FernRegistry.api.v1.db.DbApiDefinitionSubpackage>;
-    auth?: FernRegistry.api.v1.read.ApiAuth;
+    auth: FernRegistry.api.v1.read.ApiAuth | undefined;
     /**
      * Whether or not endpoints are being served at different
      * base urls (i.e. https://a.com and https://b.com)
      */
     hasMultipleBaseUrls: boolean;
     /** Use the docs navigation instead. */
-    navigation?: FernRegistry.api.v1.read.ApiNavigationConfigRoot;
-    globalHeaders?: FernRegistry.api.v1.read.Header[];
+    navigation: FernRegistry.api.v1.read.ApiNavigationConfigRoot | undefined;
+    globalHeaders: FernRegistry.api.v1.read.Header[] | undefined;
 }

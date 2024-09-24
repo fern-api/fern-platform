@@ -3,9 +3,9 @@
  */
 import * as FernRegistry from "../../../index";
 export interface CustomSnippetPayload {
-    headers?: FernRegistry.ParameterPayload[];
-    pathParameters?: FernRegistry.ParameterPayload[];
-    queryParameters?: FernRegistry.ParameterPayload[];
-    requestBody?: unknown;
-    auth?: FernRegistry.AuthPayload;
+    headers: FernRegistry.ParameterPayload[] | undefined;
+    pathParameters: FernRegistry.ParameterPayload[] | undefined;
+    queryParameters: FernRegistry.ParameterPayload[] | undefined;
+    requestBody: unknown | undefined;
+    auth: FernRegistry.AuthPayload | undefined;
 }

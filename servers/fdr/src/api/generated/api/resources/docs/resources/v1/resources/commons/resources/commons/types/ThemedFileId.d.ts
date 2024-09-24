@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface ThemedFileId {
-    dark?: FernRegistry.FileId;
-    light?: FernRegistry.FileId;
+    dark: FernRegistry.FileId | undefined;
+    light: FernRegistry.FileId | undefined;
 }

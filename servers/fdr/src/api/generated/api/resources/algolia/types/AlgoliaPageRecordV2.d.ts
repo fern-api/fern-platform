@@ -6,6 +6,6 @@ export interface AlgoliaPageRecordV2 {
     title: string;
     content: string;
     path: FernRegistry.AlgoliaRecordPath;
-    version?: FernRegistry.AlgoliaRecordVersion;
+    version: FernRegistry.AlgoliaRecordVersion | undefined;
     indexSegmentId: FernRegistry.IndexSegmentId;
 }

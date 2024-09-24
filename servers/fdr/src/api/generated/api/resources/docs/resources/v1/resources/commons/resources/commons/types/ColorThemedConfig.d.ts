@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface ColorThemedConfig {
-    dark?: FernRegistry.docs.v1.commons.RgbaColor;
-    light?: FernRegistry.docs.v1.commons.RgbaColor;
+    dark: FernRegistry.docs.v1.commons.RgbaColor | undefined;
+    light: FernRegistry.docs.v1.commons.RgbaColor | undefined;
 }

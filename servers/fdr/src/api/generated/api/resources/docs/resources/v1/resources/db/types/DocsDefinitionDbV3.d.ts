@@ -11,5 +11,5 @@ export interface DocsDefinitionDbV3 {
      * A map of file names to their contents.
      * The key is the absolute path file name and the value is the file contents.
      */
-    jsFiles?: Record<string, string>;
+    jsFiles: Record<string, string> | undefined;
 }

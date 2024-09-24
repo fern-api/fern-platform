@@ -5,7 +5,7 @@ import * as FernRegistry from "../../../../../../../../../index";
 export interface WebhookDefinition extends FernRegistry.api.v1.WithDescription {
     method: FernRegistry.api.v1.WebhookHttpMethod;
     id: FernRegistry.WebhookId;
-    name?: string;
+    name: string | undefined;
     path: string[];
     headers: FernRegistry.api.v1.register.Header[];
     payload: FernRegistry.api.v1.register.WebhookPayload;

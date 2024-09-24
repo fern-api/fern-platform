@@ -7,6 +7,6 @@ export interface VersionNode extends FernRegistry.navigation.WithNodeMetadata, F
     default: boolean;
     versionId: FernRegistry.VersionId;
     child: FernRegistry.navigation.VersionChild;
-    availability?: FernRegistry.navigation.Availability;
-    landingPage?: FernRegistry.navigation.LandingPageNode;
+    availability: FernRegistry.navigation.Availability | undefined;
+    landingPage: FernRegistry.navigation.LandingPageNode | undefined;
 }

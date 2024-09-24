@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface PublishedPostmanCollection {
     url: FernRegistry.Url;
-    githubRepoName?: string;
+    githubRepoName: string | undefined;
 }

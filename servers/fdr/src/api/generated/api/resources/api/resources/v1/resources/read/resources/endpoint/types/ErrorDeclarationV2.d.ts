@@ -3,8 +3,8 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface ErrorDeclarationV2 extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
-    type?: FernRegistry.api.v1.read.TypeShape;
+    type: FernRegistry.api.v1.read.TypeShape | undefined;
     statusCode: number;
-    name?: string;
-    examples?: FernRegistry.api.v1.read.ErrorExample[];
+    name: string | undefined;
+    examples: FernRegistry.api.v1.read.ErrorExample[] | undefined;
 }

@@ -3,8 +3,8 @@
  */
 import * as FernRegistry from "../../../index";
 export interface AlgoliaRecordEndpointSummary {
-    name?: string;
-    description?: string;
+    name: string | undefined;
+    description: string | undefined;
     method: FernRegistry.HttpMethod;
     path: FernRegistry.AlgoliaRecordEndpointPath;
 }

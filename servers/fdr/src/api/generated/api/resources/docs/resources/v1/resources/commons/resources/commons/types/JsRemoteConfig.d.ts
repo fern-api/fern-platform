@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../../../../../../../index";
 export interface JsRemoteConfig {
     url: FernRegistry.Url;
-    strategy?: FernRegistry.docs.v1.commons.JsScriptStrategy;
+    strategy: FernRegistry.docs.v1.commons.JsScriptStrategy | undefined;
 }

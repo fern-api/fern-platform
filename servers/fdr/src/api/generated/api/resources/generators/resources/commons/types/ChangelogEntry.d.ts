@@ -14,11 +14,11 @@ export interface ChangelogEntry {
      * You do not always need to specify the URL as the CLI can fill it in with the current PR, but given you can choose to not
      * release within the same PR as the change is introduced, this should be specified for divorcing the two.
      */
-    links?: string[];
-    upgradeNotes?: string;
-    added?: string[];
-    changed?: string[];
-    deprecated?: string[];
-    removed?: string[];
-    fixed?: string[];
+    links: string[] | undefined;
+    upgradeNotes: string | undefined;
+    added: string[] | undefined;
+    changed: string[] | undefined;
+    deprecated: string[] | undefined;
+    removed: string[] | undefined;
+    fixed: string[] | undefined;
 }

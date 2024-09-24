@@ -4,8 +4,8 @@
 import * as FernRegistry from "../../../../../../../../../index";
 export interface NavbarLinkMetadata {
     url: FernRegistry.Url;
-    text?: string;
-    icon?: string;
-    rightIcon?: string;
-    rounded?: boolean;
+    text: string | undefined;
+    icon: string | undefined;
+    rightIcon: string | undefined;
+    rounded: boolean | undefined;
 }

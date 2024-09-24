@@ -4,6 +4,6 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface NavigationTabLink {
     title: string;
-    icon?: string;
+    icon: string | undefined;
     url: FernRegistry.Url;
 }

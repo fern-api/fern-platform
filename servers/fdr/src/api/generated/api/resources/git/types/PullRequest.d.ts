@@ -6,14 +6,14 @@ export interface PullRequest {
     pullRequestNumber: number;
     repositoryName: string;
     repositoryOwner: string;
-    author?: FernRegistry.GithubUser;
+    author: FernRegistry.GithubUser | undefined;
     reviewers: FernRegistry.PullRequestReviewer[];
     title: string;
     url: FernRegistry.Url;
     checks: FernRegistry.CheckRun[];
     state: FernRegistry.PullRequestState;
     createdAt: string;
-    updatedAt?: string;
-    mergedAt?: string;
-    closedAt?: string;
+    updatedAt: string | undefined;
+    mergedAt: string | undefined;
+    closedAt: string | undefined;
 }
