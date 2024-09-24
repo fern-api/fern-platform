@@ -12,7 +12,7 @@ const slugs = ["docs", "docs/api/section-1", "docs/api/section-2", "docs/api/sec
 describe(FIXTURE, () => {
     const fixture = readFixture(FIXTURE);
     const v1 = FernNavigation.V1.toRootNode(fixture);
-    const latest = new FernNavigationV1ToLatest().root(v1);
+    const latest = FernNavigationV1ToLatest.create().root(v1);
 
     testGetAllUrlsFromDocsConfig(latest, fixture.baseUrl.domain);
     slugs.forEach((slug) => {

@@ -7,5 +7,5 @@ export function toRootNode(
     paginated?: boolean,
 ): FernNavigation.RootNode {
     const v1 = FernNavigation.V1.toRootNode(docs, disableEndpointPairs, paginated);
-    return new FernNavigationV1ToLatest().root(v1);
+    return FernNavigationV1ToLatest.create().root(v1);
 }

@@ -1,8 +1,8 @@
 [
   {
     "id": "root..v2.3",
-    "type": "version",
+    "slug": "docs/api",
     "title": "v2.3",
-    "slug": "docs/api"
+    "type": "version"
   }
 ]
