@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 import cn from "clsx";

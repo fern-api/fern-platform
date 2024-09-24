@@ -1,5 +1,5 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { JsonLd } from "@fern-ui/next-seo";
 import grayMatter from "gray-matter";
 
@@ -46,7 +46,7 @@ type Layout =
     | Layout.PageLayout
     | Layout.CustomLayout;
 
-export interface FernDocsFrontmatter extends DocsV1Read.MetadataConfig {
+export interface FernDocsFrontmatter extends Partial<DocsV1Read.MetadataConfig> {
     /**
      * The layout of the page. This will determine the width of the content.
      * Defaults to "guide"

@@ -1,7 +1,7 @@
 import { DocsKVCache } from "@/server/DocsCache";
 import { getDocsPageProps } from "@/server/getDocsPageProps";
 import { withSSGProps } from "@/server/withSSGProps";
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { DocsPage } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ComponentProps } from "react";

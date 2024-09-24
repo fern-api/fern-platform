@@ -10,7 +10,7 @@ export class SearchSlugsCorrectRule implements Rule {
 
     public async run({ fdr, url }: RuleArgs): Promise<RuleResult> {
         const getDocsForUrlResponse = await fdr.docs.v2.read.getDocsForUrl({
-            url,
+            url: FdrAPI.Url(url),
         });
         if (!getDocsForUrlResponse.ok) {
             return {
@@ -158,7 +158,14 @@ function getSlugFromAlgoliaRecord(algoliaRecord: FdrAPI.AlgoliaRecord): string {
         case "page-v3":
         case "webhook-v3":
         case "websocket-v3":
+        case "endpoint-v4":
+        case "page-v4":
+        case "webhook-v4":
+        case "websocket-v4":
+        case "markdown-section-v1":
             return algoliaRecord.slug;
+        case "field-v1":
+            return algoliaRecord.value.slug;
         default:
             assertNever(algoliaRecord);
     }

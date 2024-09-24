@@ -105,7 +105,7 @@ export class PlaygroundCodeSnippetResolver {
         if (isSnippetTemplatesEnabled && endpoint.snippetTemplates != null) {
             if (endpoint.snippetTemplates.typescript != null) {
                 this.typescriptSdkResolver = new SnippetTemplateResolver({
-                    payload: convertToCustomSnippetPayload(formState),
+                    payload: convertToCustomSnippetPayload(formState, authState),
                     endpointSnippetTemplate: {
                         sdk: {
                             type: "typescript",
@@ -115,8 +115,11 @@ export class PlaygroundCodeSnippetResolver {
                         endpointId: {
                             path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
                             method: endpoint.method,
+                            identifierOverride: undefined,
                         },
                         snippetTemplate: endpoint.snippetTemplates.typescript,
+                        apiDefinitionId: undefined,
+                        additionalTemplates: undefined,
                     },
                     provideFdrClient: provideRegistryService,
                 });
@@ -124,7 +127,7 @@ export class PlaygroundCodeSnippetResolver {
 
             if (endpoint.snippetTemplates.python != null) {
                 this.pythonRequestsResolver = new SnippetTemplateResolver({
-                    payload: convertToCustomSnippetPayload(formState),
+                    payload: convertToCustomSnippetPayload(formState, authState),
                     endpointSnippetTemplate: {
                         sdk: {
                             type: "python",
@@ -134,8 +137,11 @@ export class PlaygroundCodeSnippetResolver {
                         endpointId: {
                             path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
                             method: endpoint.method,
+                            identifierOverride: undefined,
                         },
                         snippetTemplate: endpoint.snippetTemplates.python,
+                        apiDefinitionId: undefined,
+                        additionalTemplates: undefined,
                     },
                     provideFdrClient: provideRegistryService,
                 });

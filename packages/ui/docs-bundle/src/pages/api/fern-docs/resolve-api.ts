@@ -1,5 +1,6 @@
 import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
 import { getXFernHostNode } from "@/server/xfernhost/node";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
 import {
@@ -40,7 +41,7 @@ const resolveApiHandler: NextApiHandler = async (
         // eslint-disable-next-line no-console
         console.log("[resolve-api] Loading docs for", url);
         const docsResponse = await provideRegistryService().docs.v2.read.getDocsForUrl({
-            url,
+            url: FdrAPI.Url(url),
         });
 
         if (!docsResponse.ok) {

@@ -1,6 +1,7 @@
 import { DocsKVCache } from "@/server/DocsCache";
 import { Revalidator } from "@/server/revalidator";
 import { getXFernHostNode } from "@/server/xfernhost/node";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { FernDocs } from "@fern-fern/fern-docs-sdk";
@@ -48,7 +49,7 @@ const handler: NextApiHandler = async (
             return res.status(200).json({ successfulRevalidations: [], failedRevalidations: [] });
         }
 
-        const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url: xFernHost });
+        const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url: FdrAPI.Url(xFernHost) });
 
         if (!docs.ok) {
             /**
