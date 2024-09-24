@@ -75975,6 +75975,7 @@ exports[`transformApiDefinitionToDb > {"name":"string"} 1`] = `
           ],
           "errorsV2": [
             {
+              "examples": undefined,
               "name": undefined,
               "statusCode": 401,
               "type": undefined,
