@@ -49,7 +49,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
 
     const resetWithoutExample = useCallbackOne(() => {
         setFormState(getInitialEndpointRequestFormState(endpoint, types));
-    }, []);
+    }, [endpoint, types]);
 
     const basePath = useBasePath();
     const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
