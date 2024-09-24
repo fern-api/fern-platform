@@ -1,3 +1,5 @@
+/* eslint-disable vitest/expect-expect */
+
 const PORT = 8080;
 
 it("check health", async () => {
