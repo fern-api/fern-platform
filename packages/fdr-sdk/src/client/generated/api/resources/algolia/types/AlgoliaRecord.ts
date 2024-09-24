@@ -14,7 +14,9 @@ export type AlgoliaRecord =
     | FernRegistry.AlgoliaRecord.WebsocketV3
     | FernRegistry.AlgoliaRecord.WebhookV3
     | FernRegistry.AlgoliaRecord.MarkdownSectionV1
-    | FernRegistry.AlgoliaRecord.FieldV1
+    | FernRegistry.AlgoliaRecord.EndpointFieldV1
+    | FernRegistry.AlgoliaRecord.WebsocketFieldV1
+    | FernRegistry.AlgoliaRecord.WebhookFieldV1
     | FernRegistry.AlgoliaRecord.Endpoint
     | FernRegistry.AlgoliaRecord.Page
     | FernRegistry.AlgoliaRecord.EndpointV2
@@ -57,9 +59,16 @@ export declare namespace AlgoliaRecord {
         type: "markdown-section-v1";
     }
 
-    interface FieldV1 {
-        type: "field-v1";
-        value: FernRegistry.AlgoliaFieldRecordV1;
+    interface EndpointFieldV1 extends FernRegistry.AlgoliaEndpointFieldRecordV1 {
+        type: "endpoint-field-v1";
+    }
+
+    interface WebsocketFieldV1 extends FernRegistry.AlgoliaWebSocketFieldRecordV1 {
+        type: "websocket-field-v1";
+    }
+
+    interface WebhookFieldV1 extends FernRegistry.AlgoliaWebhookFieldRecordV1 {
+        type: "webhook-field-v1";
     }
 
     interface Endpoint extends FernRegistry.AlgoliaEndpointRecord {

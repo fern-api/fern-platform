@@ -56,6 +56,7 @@ export const SearchHits: React.FC = () => {
         }
     }, [hits, isAiChatbotEnabledInPreview]);
 
+    // TODO (rohin): change this
     useKeyboardPress({
         key: "Up",
         onPress: () => {
@@ -78,6 +79,7 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
+    // TODO (rohin): change this
     useKeyboardPress({
         key: "Down",
         onPress: () => {
@@ -347,9 +349,18 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
 
 function filterHits(hits: SearchRecord[]) {
     const hitTypeMap = {
-        endpoints: new Set(["endpoint", "endpoint-v2", "endpoint-v3", "webhook-v3", "websocket-v3"]),
-        pages: new Set(["page", "page-v2", "page-v3"]),
-        fields: new Set(["field"]),
+        endpoints: new Set([
+            "endpoint",
+            "endpoint-v2",
+            "endpoint-v3",
+            "webhook-v3",
+            "websocket-v3",
+            "endpoint-v4",
+            "webhook-v4",
+            "websocket-v4",
+        ]),
+        pages: new Set(["page", "page-v2", "page-v3", "page-v4"]),
+        fields: new Set(["field-v1", "markdown-section-v1"]),
     };
 
     const endpointHits = hits.filter((hit) => hitTypeMap["endpoints"].has(hit.type));
