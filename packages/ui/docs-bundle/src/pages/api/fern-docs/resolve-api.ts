@@ -7,16 +7,29 @@ import {
     ApiDefinitionResolver,
     ApiTypeResolver,
     provideRegistryService,
+    serializeMdx,
     setMdxBundler,
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
 import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
-import { MDX_SERIALIZER } from "../../../../../app/src/mdx/bundler";
+import { BundledMDX, FernSerializeMdxOptions } from "../../../../../app/src/mdx/types";
 import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
+
+async function serializeMdxWithCaching(content: string, options?: FernSerializeMdxOptions): Promise<BundledMDX>;
+async function serializeMdxWithCaching(
+    content: string | undefined,
+    options?: FernSerializeMdxOptions,
+): Promise<BundledMDX | undefined>;
+async function serializeMdxWithCaching(
+    content: string | undefined,
+    options: FernSerializeMdxOptions = {},
+): Promise<BundledMDX | undefined> {
+    return await serializeMdx(content, options);
+}
 
 const resolveApiHandler: NextApiHandler = async (
     req,
@@ -63,11 +76,6 @@ const resolveApiHandler: NextApiHandler = async (
 
         setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
-        const serializeMdx: MDX_SERIALIZER = async (content, options) => {
-            // TODO(dsinghvi): add caching layer
-            return await serializeMdx(content, options);
-        };
-
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
         FernNavigation.utils.collectApiReferences(root).forEach((apiReference) => {
             const api = docs.definition.apis[apiReference.apiDefinitionId];
@@ -80,7 +88,7 @@ const resolveApiHandler: NextApiHandler = async (
                 {
                     files: docs.definition.jsFiles,
                 },
-                serializeMdx,
+                serializeMdxWithCaching,
             );
             const resolved = ApiDefinitionResolver.resolve(
                 collector,
@@ -88,9 +96,9 @@ const resolveApiHandler: NextApiHandler = async (
                 holder,
                 typeResolver,
                 docs.definition.pages,
-                serializeMdx,
                 { files: docs.definition.jsFiles },
                 featureFlags,
+                serializeMdxWithCaching,
             );
             packagesPromise.push(resolved);
         });

@@ -183,7 +183,7 @@ export async function resolveDocsContent({
                 await typeResolver.resolve(),
                 featureFlags,
                 mdxOptions,
-                serializeMdx
+                serializeMdx,
             );
             return {
                 type: "api-endpoint-page",
