@@ -23,8 +23,8 @@ export async function getDocsPageProps(
     slugArray: string[],
 ): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     // HACKHACK: temporarily disable endpoint pairs for cohere in local preview
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs, docs.baseUrl.domain.includes("cohere"));
-    const slug = FernNavigation.utils.slugjoin(...slugArray);
+    const root = FernNavigation.utils.toRootNode(docs, docs.baseUrl.domain.includes("cohere"));
+    const slug = FernNavigation.slugjoin(...slugArray);
 
     // compute manual redirects
     const redirect = getRedirectForPath(`/${slug}`, docs.baseUrl, docs.definition.config.redirects);
@@ -97,7 +97,7 @@ export async function getDocsPageProps(
         .filter((version) => !version.hidden)
         .map((version, index) => {
             // if the same page exists in multiple versions, return the full slug of that page, otherwise default to version's landing page (pointsTo)
-            const expectedSlug = FernNavigation.utils.slugjoin(version.slug, node.unversionedSlug);
+            const expectedSlug = FernNavigation.slugjoin(version.slug, node.unversionedSlug);
             const pointsTo = node.collector.slugMap.has(expectedSlug) ? expectedSlug : version.pointsTo;
 
             return {
@@ -172,6 +172,7 @@ export async function getDocsPageProps(
             docs.definition.apis,
             node,
             true,
+            false,
         ),
         fallback: {},
         analytics: undefined,

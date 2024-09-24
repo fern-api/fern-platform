@@ -67,7 +67,7 @@ const resolveApiHandler: NextApiHandler = async (
         const docs = docsResponse.body;
         const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
 
-        const root = FernNavigation.utils.convertLoadDocsForUrlResponse(
+        const root = FernNavigation.utils.toRootNode(
             docsResponse.body,
             featureFlags.isBatchStreamToggleDisabled,
             featureFlags.isApiScrollingDisabled,

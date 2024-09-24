@@ -32,7 +32,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 404 });
     }
 
-    const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
+    const node = FernNavigation.utils.toRootNode(docs.body);
     const slugCollector = NodeCollector.collect(node);
     const urls = slugCollector.getIndexablePageSlugs().map((slug) => urljoin(xFernHost, slug));
 

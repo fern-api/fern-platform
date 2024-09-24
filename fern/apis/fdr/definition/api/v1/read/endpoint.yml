@@ -8,12 +8,13 @@ imports:
 
 types:
   EndpointDefinition:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       authed:
         type: boolean
         docs: When this is true, the api definition will have a union for auth
-      availability: optional<commons.Availability>
       defaultEnvironment: optional<rootCommons.EnvironmentId>
       environments: list<commons.Environment>
       method: rootCommons.HttpMethod

@@ -169,7 +169,7 @@ types:
     properties:
       version: rootCommons.VersionId
       urlSlug: optional<string>
-      availability: optional<docsReadV1.VersionAvailability>
+      availability: optional<rootCommons.Availability>
       config: UnversionedNavigationConfig
 
   NavigationItem:

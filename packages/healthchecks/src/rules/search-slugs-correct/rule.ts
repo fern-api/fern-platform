@@ -20,7 +20,7 @@ export class SearchSlugsCorrectRule implements Rule {
             };
         }
 
-        const node = FernNavigation.utils.convertLoadDocsForUrlResponse(getDocsForUrlResponse.body);
+        const node = FernNavigation.utils.toRootNode(getDocsForUrlResponse.body);
         const slugCollector = FernNavigation.NodeCollector.collect(node);
         const slugs = new Set(slugCollector.getIndexablePageSlugs());
 

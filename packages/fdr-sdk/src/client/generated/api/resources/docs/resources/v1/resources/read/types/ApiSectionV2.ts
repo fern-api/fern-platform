@@ -5,5 +5,5 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface ApiSectionV2 {
-    node: FernRegistry.navigation.ApiReferenceNode;
+    node: FernRegistry.navigation.v1.ApiReferenceNode;
 }

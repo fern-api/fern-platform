@@ -1,23 +1,24 @@
 [
   {
     "id": "root..version-1.uv.tab-2.tab-2.section-5.page-9",
-    "type": "page",
     "pageId": "page-9.md",
+    "slug": "docs/api/tab-1",
     "title": "Page 9",
-    "slug": "docs/api/tab-1"
+    "type": "page"
   },
   {
     "id": "root..version-1.uv.tab-2.tab-2.section-5.page-9",
-    "type": "page",
     "pageId": "page-9.md",
+    "slug": "docs/api/version-1/tab-1",
     "title": "Page 9",
-    "slug": "docs/api/version-1/tab-1"
+    "type": "page"
   },
   {
+    "canonicalSlug": "docs/api/version-1/tab-1",
     "id": "root..version-2.uv.tab-2.tab-2.section-5.page-9",
-    "type": "page",
     "pageId": "page-9.md",
+    "slug": "docs/api/version-2/tab-1",
     "title": "Page 9",
-    "slug": "docs/api/version-2/tab-1"
+    "type": "page"
   }
 ]

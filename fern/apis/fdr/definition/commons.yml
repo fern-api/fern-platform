@@ -64,6 +64,15 @@ types:
       # - TRACE
       # - CONNECT
 
+  Availability:
+    enum:
+      - Stable
+      - GenerallyAvailable
+      - InDevelopment
+      - PreRelease
+      - Deprecated
+      - Beta
+
 errors:
   BadRequestError:
     status-code: 400

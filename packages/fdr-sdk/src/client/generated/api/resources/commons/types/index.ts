@@ -14,3 +14,4 @@ export * from "./Url";
 export * from "./EndpointIdentifier";
 export * from "./EndpointPathLiteral";
 export * from "./HttpMethod";
+export * from "./Availability";

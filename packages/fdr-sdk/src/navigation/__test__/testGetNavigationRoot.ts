@@ -1,27 +1,16 @@
-import fs from "fs";
-import path from "path";
-import type { DocsV2Read } from "../../client/types";
-import { convertLoadDocsForUrlResponse, findNode, slugjoin } from "../utils";
+import { FernNavigation } from "../..";
+import { findNode } from "../utils";
 
-export function testGetNavigationRoot(fixtureName: string, slug: string): void {
-    // eslint-disable-next-line vitest/valid-title
-    describe(fixtureName, () => {
-        it("gets navigation root for /" + slug, async () => {
-            const fixturePath = path.join(__dirname, "fixtures", `${fixtureName}.json`);
+export function testGetNavigationRoot(root: FernNavigation.RootNode, slug: string): void {
+    it("gets navigation root for /" + slug, async () => {
+        const found = findNode(root, FernNavigation.slugjoin(slug));
 
-            const content = fs.readFileSync(fixturePath, "utf-8");
-
-            const fixture = JSON.parse(content) as DocsV2Read.LoadDocsForUrlResponse;
-            const node = convertLoadDocsForUrlResponse(fixture);
-            const found = findNode(node, slugjoin(slug));
-
-            if (found.type === "found") {
-                expect(found.node).toMatchSnapshot();
-                expect(found.currentVersion?.versionId).toMatchSnapshot();
-                expect(found.currentTab?.slug).toMatchSnapshot();
-            } else {
-                expect(found).toMatchSnapshot();
-            }
-        });
+        if (found.type === "found") {
+            expect(found.node).toMatchSnapshot();
+            expect(found.currentVersion?.versionId).toMatchSnapshot();
+            expect(found.currentTab?.slug).toMatchSnapshot();
+        } else {
+            expect(found).toMatchSnapshot();
+        }
     });
 }

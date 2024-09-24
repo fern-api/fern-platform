@@ -5,6 +5,6 @@ import * as FernRegistry from "../../../../../../../index";
 export interface VersionedNavigationConfigData {
     version: FernRegistry.VersionId;
     urlSlug: string;
-    availability: FernRegistry.docs.v1.read.VersionAvailability | undefined;
+    availability: FernRegistry.Availability | undefined;
     config: FernRegistry.docs.v1.read.UnversionedNavigationConfig;
 }

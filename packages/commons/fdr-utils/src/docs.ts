@@ -1,5 +1,6 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import { DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { Availability } from "@fern-api/fdr-sdk/navigation";
+import { UnreachableCaseError } from "ts-essentials";
 
 export function isVersionedNavigationConfig(
     navigationConfig: DocsV1Read.NavigationConfig,
@@ -43,7 +44,7 @@ export function assertIsUnversionedNavigationConfig(
     }
 }
 
-export function getVersionAvailabilityLabel(availability: Availability): string {
+export function getVersionAvailabilityLabel(availability: FdrAPI.Availability): string {
     switch (availability) {
         case Availability.Beta:
             return "beta";
@@ -58,6 +59,25 @@ export function getVersionAvailabilityLabel(availability: Availability): string 
         case Availability.PreRelease:
             return "pre-release";
         default:
-            return "unknown";
+            throw new UnreachableCaseError(availability);
+    }
+}
+
+export function getEndpointAvailabilityLabel(availability: FdrAPI.Availability): string {
+    switch (availability) {
+        case "Beta":
+            return "Beta";
+        case "Deprecated":
+            return "Deprecated";
+        case "GenerallyAvailable":
+            return "GA";
+        case "Stable":
+            return "Stable";
+        case "InDevelopment":
+            return "Developing";
+        case "PreRelease":
+            return "RC";
+        default:
+            throw new UnreachableCaseError(availability);
     }
 }

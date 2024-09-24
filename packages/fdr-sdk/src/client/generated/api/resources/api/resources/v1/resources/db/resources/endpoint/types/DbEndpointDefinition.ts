@@ -4,9 +4,10 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface DbEndpointDefinition extends FernRegistry.api.v1.WithDescription {
+export interface DbEndpointDefinition
+    extends FernRegistry.api.v1.WithDescription,
+        FernRegistry.api.v1.WithAvailability {
     authed: boolean | undefined;
-    availability: FernRegistry.api.v1.Availability | undefined;
     defaultEnvironment: FernRegistry.EnvironmentId | undefined;
     environments: FernRegistry.api.v1.Environment[] | undefined;
     method: FernRegistry.HttpMethod;

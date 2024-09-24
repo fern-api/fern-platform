@@ -8,7 +8,7 @@ export interface AlgoliaPageRecordV4 {
     title: string;
     description: string | undefined;
     breadcrumbs: FernRegistry.BreadcrumbsV2;
-    slug: FernRegistry.navigation.Slug;
+    slug: FernRegistry.navigation.v1.Slug;
     version: FernRegistry.AlgoliaRecordVersionV3 | undefined;
     indexSegmentId: FernRegistry.IndexSegmentId;
 }

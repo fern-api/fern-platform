@@ -7,13 +7,13 @@ export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: 
         v4: (record) => record.slug,
         v3: (record) => record.slug,
         v2: (record) =>
-            FernNavigation.utils.slugjoin(
+            FernNavigation.slugjoin(
                 basePath || "/",
                 record.version?.urlSlug ?? "",
                 ...getLeadingPathForSearchRecord(record),
             ),
         v1: (record) =>
-            FernNavigation.utils.slugjoin(
+            FernNavigation.slugjoin(
                 basePath || "/",
                 record.versionSlug ?? "",
                 ...getLeadingPathForSearchRecord(record),
@@ -98,7 +98,7 @@ function createSearchPlaceholder(sidebar: FernNavigation.SidebarRootNode | undef
 
 function checkHasGuides(sidebar: FernNavigation.SidebarRootNode): boolean {
     let hasGuides = false;
-    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+    FernNavigation.traverseNavigation(sidebar, (node) => {
         if (node.type === "page") {
             hasGuides = true;
             return false;
@@ -113,7 +113,7 @@ function checkHasGuides(sidebar: FernNavigation.SidebarRootNode): boolean {
 
 function checkHasEndpoints(sidebar: FernNavigation.SidebarRootNode): boolean {
     let hasEndpoints = false;
-    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+    FernNavigation.traverseNavigation(sidebar, (node) => {
         if (node.type === "apiReference") {
             hasEndpoints = true;
             return false;

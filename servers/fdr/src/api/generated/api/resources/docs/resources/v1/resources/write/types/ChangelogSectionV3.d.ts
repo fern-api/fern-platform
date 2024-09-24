@@ -3,5 +3,5 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface ChangelogSectionV3 {
-    node: FernRegistry.navigation.ChangelogNode;
+    node: FernRegistry.navigation.v1.ChangelogNode;
 }

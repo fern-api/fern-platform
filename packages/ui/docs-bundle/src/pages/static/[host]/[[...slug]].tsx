@@ -16,7 +16,7 @@ export const getStaticProps: GetStaticProps<ComponentProps<typeof DocsPage>> = a
     const props = await withSSGProps(getDocsPageProps(xFernHost, slugArray));
 
     const cache = DocsKVCache.getInstance(xFernHost);
-    const slug = FernNavigation.utils.slugjoin(...slugArray);
+    const slug = FernNavigation.slugjoin(...slugArray);
 
     if ("props" in props) {
         cache.addVisitedSlugs(slug);

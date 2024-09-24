@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig > octoai > gets all urls from docs config 1`] = `
+exports[`octoai > gets all urls from docs config 1`] = `
 [
   "octo.ai/docs/getting-started/quickstart",
   "octo.ai/docs/getting-started/pricing-and-billing",
@@ -134,35 +134,35 @@ exports[`getAllUrlsFromDocsConfig > octoai > gets all urls from docs config 1`] 
 ]
 `;
 
-exports[`getNavigationRoot > octoai > gets navigation root for /api-reference/asset-library/list 1`] = `
+exports[`octoai > gets navigation root for /api-reference/asset-library/list 1`] = `
 {
   "redirect": "docs/getting-started/quickstart",
   "type": "notFound",
 }
 `;
 
-exports[`getNavigationRoot > octoai > gets navigation root for /api-reference/octoai-api/account/get-account 1`] = `
+exports[`octoai > gets navigation root for /api-reference/octoai-api/account/get-account 1`] = `
 {
   "redirect": "docs/getting-started/quickstart",
   "type": "notFound",
 }
 `;
 
-exports[`getNavigationRoot > octoai > gets navigation root for /api-reference/octoai-api/authentication 1`] = `
+exports[`octoai > gets navigation root for /api-reference/octoai-api/authentication 1`] = `
 {
   "redirect": "docs/getting-started/quickstart",
   "type": "notFound",
 }
 `;
 
-exports[`getNavigationRoot > octoai > gets navigation root for /getting-started 1`] = `
+exports[`octoai > gets navigation root for /getting-started 1`] = `
 {
   "redirect": "docs/getting-started/quickstart",
   "type": "notFound",
 }
 `;
 
-exports[`getNavigationRoot > octoai > gets navigation root for /getting-started/quickstart 1`] = `
+exports[`octoai > gets navigation root for /getting-started/quickstart 1`] = `
 {
   "redirect": "docs/getting-started/quickstart",
   "type": "notFound",
