@@ -5,7 +5,7 @@ import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import { ReactElement, memo } from "react";
-import { DOCS_ATOM, DOMAIN_ATOM, DocsProps } from "../atoms";
+import { DOCS_ATOM, DOMAIN_ATOM, DocsProps, EMPTY_ANALYTICS_CONFIG } from "../atoms";
 import { Posthog } from "./PosthogContainer";
 import { renderSegmentSnippet } from "./segment";
 
@@ -17,25 +17,7 @@ const GoogleTagManager = dynamic(() => import("@next/third-parties/google").then
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
 const ANALYTICS_CONFIG_ATOM = selectAtom<DocsProps, DocsV1Read.AnalyticsConfig>(
     DOCS_ATOM,
-    (docs) =>
-        docs.analyticsConfig ?? {
-            segment: undefined,
-            fullstory: undefined,
-            intercom: undefined,
-            posthog: undefined,
-            gtm: undefined,
-            ga4: undefined,
-            amplitude: undefined,
-            mixpanel: undefined,
-            hotjar: undefined,
-            koala: undefined,
-            logrocket: undefined,
-            pirsch: undefined,
-            plausible: undefined,
-            fathom: undefined,
-            clearbit: undefined,
-            heap: undefined,
-        },
+    (docs) => docs.analyticsConfig ?? EMPTY_ANALYTICS_CONFIG,
     isEqual,
 );
 
