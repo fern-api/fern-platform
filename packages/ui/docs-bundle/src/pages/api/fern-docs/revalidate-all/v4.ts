@@ -70,7 +70,7 @@ const handler: NextApiHandler = async (
         return res.status(docs.error.error === "UnauthorizedError" ? 200 : 404).json({ total: 0, results: [] });
     }
 
-    const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
+    const node = FernNavigation.utils.toRootNode(docs.body);
     const slugs = NodeCollector.collect(node).getPageSlugs();
     const revalidate = new Revalidator(res, xFernHost);
 

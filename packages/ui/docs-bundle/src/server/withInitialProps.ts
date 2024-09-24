@@ -49,7 +49,7 @@ export async function withInitialProps({
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
 
-    const slug = FernNavigation.utils.slugjoin(...slugArray);
+    const slug = FernNavigation.slugjoin(...slugArray);
 
     const redirect = getRedirectForPath(urlJoin("/", slug), docs.baseUrl, docsConfig.redirects);
 
@@ -58,7 +58,7 @@ export async function withInitialProps({
     }
 
     const featureFlags = await getFeatureFlags(xFernHost);
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(
+    const root = FernNavigation.utils.toRootNode(
         docs,
         featureFlags.isBatchStreamToggleDisabled,
         featureFlags.isApiScrollingDisabled,
@@ -141,7 +141,7 @@ export async function withInitialProps({
         .filter((version) => !version.hidden)
         .map((version, index) => {
             // if the same page exists in multiple versions, return the full slug of that page, otherwise default to version's landing page (pointsTo)
-            const expectedSlug = FernNavigation.utils.slugjoin(version.slug, node.unversionedSlug);
+            const expectedSlug = FernNavigation.slugjoin(version.slug, node.unversionedSlug);
             const pointsTo = node.collector.slugMap.has(expectedSlug) ? expectedSlug : version.pointsTo;
 
             return {

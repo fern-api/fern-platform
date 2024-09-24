@@ -42,10 +42,10 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         return res.status(404).end();
     }
 
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
+    const root = FernNavigation.utils.toRootNode(docs.body);
     const collector = NodeCollector.collect(root);
 
-    const slug = FernNavigation.utils.slugjoin(decodeURIComponent(path));
+    const slug = FernNavigation.slugjoin(decodeURIComponent(path));
     const node = collector.slugMap.get(slug);
 
     if (node?.type !== "changelog") {

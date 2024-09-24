@@ -49,12 +49,7 @@ export function getSeoProps(
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
     apis: Record<string, APIV1Read.ApiDefinition>,
-    {
-        root,
-        node,
-        parents,
-        currentVersion,
-    }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
+    { node, parents }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
     isSeoDisabled: boolean,
 ): NextSeoProps {
     const additionalMetaTags: MetaTag[] = [];
@@ -69,12 +64,12 @@ export function getSeoProps(
         breadcrumbList: getBreadcrumbList(domain, pages, parents, node),
     };
 
-    // if the current version is the default version, the page is duplicated (/v1/page and /page).
-    // the canonical link should point to `/page`.
-    if (currentVersion != null && currentVersion.default) {
-        const canonicalSlug = FernNavigation.utils.toDefaultSlug(node.slug, root.slug, currentVersion.slug);
-        seo.canonical = `https://${domain}/${canonicalSlug}`;
-    }
+    /**
+     * The canonical url is self-referential unless there are multiple versions of the page.
+     * Canonical slugs are computed upstream, where duplicated markdown pages, and multi-version docs are both handled.
+     */
+    // TODO: set canonical domain in docs.yml
+    seo.canonical = `https://${domain}/${node.canonicalSlug ?? node.slug}`;
 
     const pageId = FernNavigation.utils.getPageId(node);
 
