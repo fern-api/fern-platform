@@ -8,13 +8,13 @@ import * as FernRegistry from "../../../../../../../../index";
  * @example
  *     {
  *         basePath: "string",
- *         orgId: "string",
+ *         orgId: FernRegistry.OrgId("string"),
  *         authConfig: {
  *             type: "public"
  *         },
- *         filepaths: ["string"],
+ *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
  *         images: [{
- *                 filePath: "string",
+ *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
  *                 width: 1.1,
  *                 height: 1.1,
  *                 blurDataUrl: "string",

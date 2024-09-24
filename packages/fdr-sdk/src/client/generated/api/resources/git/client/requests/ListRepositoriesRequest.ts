@@ -9,7 +9,7 @@ import * as FernRegistry from "../../../../index";
  *     {
  *         page: 1,
  *         pageSize: 1,
- *         organizationId: "string",
+ *         organizationId: FernRegistry.OrgId("string"),
  *         repositoryName: "string",
  *         repositoryOwner: "string"
  *     }

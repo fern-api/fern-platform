@@ -1,5 +1,6 @@
 import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
-import { FernNavigation, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
+import { visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
@@ -153,6 +154,10 @@ export async function withInitialProps({
             };
         });
 
+    const logoHref =
+        docs.definition.config.logoHref ??
+        (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined);
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -162,9 +167,7 @@ export async function withInitialProps({
         js: docs.definition.config.js,
         navbarLinks: docs.definition.config.navbarLinks ?? [],
         logoHeight: docs.definition.config.logoHeight,
-        logoHref:
-            docs.definition.config.logoHref ??
-            (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined),
+        logoHref: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
         files: docs.definition.filesV2,
         content,
         announcement:
@@ -208,7 +211,7 @@ export async function withInitialProps({
             trailingSlash: isTrailingSlashEnabled(),
         },
         featureFlags,
-        apis: Object.keys(docs.definition.apis),
+        apis: Object.keys(docs.definition.apis).map(FernNavigation.ApiDefinitionId),
         seo: getSeoProps(
             docs.baseUrl.domain,
             docs.definition.config,

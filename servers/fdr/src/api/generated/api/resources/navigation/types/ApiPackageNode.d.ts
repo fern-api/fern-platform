@@ -6,5 +6,5 @@ export interface ApiPackageNode extends FernRegistry.navigation.WithNodeMetadata
     type: "apiPackage";
     children: FernRegistry.navigation.ApiPackageChild[];
     /** Settings for the api playground that is applied only to descendants of this api package. */
-    playground?: FernRegistry.navigation.PlaygroundSettings;
+    playground: FernRegistry.navigation.PlaygroundSettings | undefined;
 }

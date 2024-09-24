@@ -1,27 +1,24 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  commons: commons.yml
+  rootCommons: ../../../commons.yml
+  commons: ../commons.yml
   type: type.yml
   http: endpoint.yml
 
 types:
-  WebSocketId: string
-
-  WebSocketMessageId: string
-
   WebSocketChannel:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
       urlSlug: string
-      id: WebSocketId
+      id: rootCommons.WebSocketId
       auth: boolean
       name: optional<string>
       # environments (should match to wss://)
-      defaultEnvironment: optional<http.EnvironmentId>
-      environments: list<http.Environment>
+      defaultEnvironment: optional<rootCommons.EnvironmentId>
+      environments: list<commons.Environment>
       # mirror-ish of FDR-IR
       path: http.EndpointPath
       headers: list<http.Header>
@@ -36,15 +33,11 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      type: WebSocketMessageId
+      type: commons.WebSocketMessageId
       displayName: optional<string>
-      origin: WebSocketMessageOrigin
+      origin: commons.WebSocketMessageOrigin
       body: WebSocketMessageBodyShape
 
-  WebSocketMessageOrigin:
-    enum:
-      - client
-      - server
   # mirror of http.HttpRequestBodyShape without fileUpload
 
   WebSocketMessageBodyShape:
@@ -57,12 +50,12 @@ types:
     properties:
       name: optional<string>
       path: string
-      pathParameters: map<http.PathParameterKey, unknown>
+      pathParameters: map<commons.PathParameterKey, unknown>
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
       messages: list<ExampleWebSocketMessage>
 
   ExampleWebSocketMessage:
     properties:
-      type: WebSocketMessageId
+      type: commons.WebSocketMessageId
       body: unknown

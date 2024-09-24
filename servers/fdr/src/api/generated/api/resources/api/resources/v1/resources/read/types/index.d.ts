@@ -4,7 +4,6 @@ export * from "./ApiNavigationConfigItem";
 export * from "./ApiNavigationConfigSubpackage";
 export * from "./ApiDefinitionPackage";
 export * from "./ApiDefinitionSubpackage";
-export * from "./SubpackageId";
 export * from "./ApiAuth";
 export * from "./BasicAuth";
 export * from "./BearerAuth";

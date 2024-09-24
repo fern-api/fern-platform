@@ -3,7 +3,7 @@
  */
 import * as FernRegistry from "../../../index";
 export interface DictTemplate {
-    imports?: string[];
+    imports: string[] | undefined;
     /**
      * We might not need this, but the idea here is to be able to omit if it's optional and undefined,
      * or default if omitted and required.
@@ -15,5 +15,5 @@ export interface DictTemplate {
     keyTemplate: FernRegistry.Template;
     valueTemplate: FernRegistry.Template;
     keyValueSeparator: string;
-    templateInput?: FernRegistry.PayloadInput;
+    templateInput: FernRegistry.PayloadInput | undefined;
 }

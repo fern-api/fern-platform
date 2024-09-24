@@ -7,6 +7,6 @@ import * as FernRegistry from "../../../index";
 export interface AlgoliaEndpointRecordV2 {
     endpoint: FernRegistry.AlgoliaRecordEndpointSummary;
     path: FernRegistry.AlgoliaRecordPath;
-    version?: FernRegistry.AlgoliaRecordVersion;
+    version: FernRegistry.AlgoliaRecordVersion | undefined;
     indexSegmentId: FernRegistry.IndexSegmentId;
 }

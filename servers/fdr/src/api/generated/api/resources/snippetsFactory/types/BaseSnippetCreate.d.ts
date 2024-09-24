@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../index";
 export interface BaseSnippetCreate {
     endpoint: FernRegistry.EndpointIdentifier;
-    exampleIdentifier?: string;
+    exampleIdentifier: string | undefined;
 }

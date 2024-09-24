@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../index";
 
 export interface AlgoliaWebSocketFieldRecordV1 extends FernRegistry.AlgoliaWebSocketRecordV4 {
-    availability?: string;
-    extends?: string[];
+    availability: string | undefined;
+    extends: string[] | undefined;
 }

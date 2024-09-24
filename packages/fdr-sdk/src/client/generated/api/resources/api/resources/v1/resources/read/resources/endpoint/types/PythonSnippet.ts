@@ -5,5 +5,5 @@
 export interface PythonSnippet {
     async_client: string;
     sync_client: string;
-    install?: string;
+    install: string | undefined;
 }

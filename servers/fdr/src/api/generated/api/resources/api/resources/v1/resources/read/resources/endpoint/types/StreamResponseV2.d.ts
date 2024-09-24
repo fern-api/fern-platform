@@ -7,6 +7,6 @@ export interface StreamResponseV2 {
      * The terminator for each message. For example, for OpenAPI
      * the terminator is [DATA].
      */
-    terminator?: string;
+    terminator: string | undefined;
     shape: FernRegistry.api.v1.read.JsonBodyShape;
 }

@@ -8,6 +8,6 @@ export interface WebhookNode
     extends FernRegistry.navigation.WithNodeMetadata,
         FernRegistry.navigation.WithApiDefinitionId {
     type: "webhook";
-    method: FernRegistry.navigation.HttpMethod;
-    webhookId: FernRegistry.navigation.WebhookId;
+    method: FernRegistry.HttpMethod;
+    webhookId: FernRegistry.WebhookId;
 }

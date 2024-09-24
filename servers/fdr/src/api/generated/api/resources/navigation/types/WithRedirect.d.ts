@@ -3,5 +3,5 @@
  */
 import * as FernRegistry from "../../../index";
 export interface WithRedirect {
-    pointsTo?: FernRegistry.navigation.Slug;
+    pointsTo: FernRegistry.navigation.Slug | undefined;
 }

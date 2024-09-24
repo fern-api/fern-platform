@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { Rule, RuleArgs, RuleResult } from "../runRules";
 
 export class AllPagesLoadRule implements Rule {
@@ -7,7 +7,7 @@ export class AllPagesLoadRule implements Rule {
 
     public async run({ fdr, url }: RuleArgs): Promise<RuleResult> {
         const getDocsForUrlResponse = await fdr.docs.v2.read.getDocsForUrl({
-            url,
+            url: FdrAPI.Url(url),
         });
         if (!getDocsForUrlResponse.ok) {
             return {

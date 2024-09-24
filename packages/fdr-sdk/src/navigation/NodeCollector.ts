@@ -1,6 +1,6 @@
 import urljoin from "url-join";
 import { once } from "../utils";
-import { FernNavigation } from "./generated";
+import { FernNavigation } from "./..";
 import {
     NavigationNode,
     NavigationNodeNeighbor,

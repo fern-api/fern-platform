@@ -7,6 +7,6 @@ import * as FernRegistry from "../../../index";
 export interface WithNodeMetadata extends FernRegistry.navigation.WithNodeId {
     title: string;
     slug: FernRegistry.navigation.Slug;
-    icon?: string;
-    hidden?: boolean;
+    icon: string | undefined;
+    hidden: boolean | undefined;
 }

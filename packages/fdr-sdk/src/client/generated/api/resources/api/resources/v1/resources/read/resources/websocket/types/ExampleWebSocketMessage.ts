@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface ExampleWebSocketMessage {
-    type: FernRegistry.api.v1.read.WebSocketMessageId;
-    body?: unknown;
+    type: FernRegistry.api.v1.WebSocketMessageId;
+    body: unknown;
 }

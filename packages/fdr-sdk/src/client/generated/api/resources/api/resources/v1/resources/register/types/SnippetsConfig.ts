@@ -5,9 +5,9 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface SnippetsConfig {
-    typescriptSdk?: FernRegistry.api.v1.register.TypescriptPackage;
-    pythonSdk?: FernRegistry.api.v1.register.PythonPackage;
-    goSdk?: FernRegistry.api.v1.register.GoModule;
-    javaSdk?: FernRegistry.api.v1.register.JavaCoordinate;
-    rubySdk?: FernRegistry.api.v1.register.RubyGem;
+    typescriptSdk: FernRegistry.api.v1.register.TypescriptPackage | undefined;
+    pythonSdk: FernRegistry.api.v1.register.PythonPackage | undefined;
+    goSdk: FernRegistry.api.v1.register.GoModule | undefined;
+    javaSdk: FernRegistry.api.v1.register.JavaCoordinate | undefined;
+    rubySdk: FernRegistry.api.v1.register.RubyGem | undefined;
 }

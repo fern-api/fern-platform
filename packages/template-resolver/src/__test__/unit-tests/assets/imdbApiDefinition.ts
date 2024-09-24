@@ -1,9 +1,9 @@
-import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 
 export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
-    id: "api_imdb",
+    id: FdrAPI.ApiDefinitionId("api_imdb"),
     types: {
-        "type_imdb:MovieId": {
+        [APIV1Read.TypeId("type_imdb:MovieId")]: {
             description: "The unique identifier for a Movie in the database",
             name: "MovieId",
             shape: {
@@ -12,118 +12,176 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                     type: "primitive",
                     value: {
                         type: "string",
+                        regex: undefined,
+                        default: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
                     },
                 },
             },
+            availability: undefined,
         },
-        "type_imdb:Movie": {
+        [APIV1Read.TypeId("type_imdb:Movie")]: {
             name: "Movie",
             shape: {
                 type: "object",
                 extends: [],
                 properties: [
                     {
-                        key: "id",
+                        key: APIV1Read.PropertyKey("id"),
                         valueType: {
                             type: "id",
-                            value: "type_imdb:MovieId",
+                            value: APIV1Read.TypeId("type_imdb:MovieId"),
+                            default: undefined,
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                     {
-                        key: "title",
+                        key: APIV1Read.PropertyKey("title"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "string",
+                                regex: undefined,
+                                default: undefined,
+                                minLength: undefined,
+                                maxLength: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                     {
                         description: "The rating scale out of ten stars",
-                        key: "rating",
+                        key: APIV1Read.PropertyKey("rating"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "double",
+                                minimum: undefined,
+                                maximum: undefined,
+                                default: undefined,
                             },
                         },
+                        availability: undefined,
                     },
                 ],
             },
+            availability: undefined,
+            description: undefined,
         },
-        "type_imdb:DetailedMovieReview": {
+        [APIV1Read.TypeId("type_imdb:DetailedMovieReview")]: {
             name: "DetailedMovieReview",
             shape: {
                 type: "object",
                 extends: [],
                 properties: [
                     {
-                        key: "summary",
+                        key: APIV1Read.PropertyKey("summary"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "string",
+                                regex: undefined,
+                                default: undefined,
+                                minLength: undefined,
+                                maxLength: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                     {
-                        key: "notes",
+                        key: APIV1Read.PropertyKey("notes"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "string",
+                                regex: undefined,
+                                default: undefined,
+                                minLength: undefined,
+                                maxLength: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                     {
-                        key: "stars",
+                        key: APIV1Read.PropertyKey("stars"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "double",
+                                minimum: undefined,
+                                maximum: undefined,
+                                default: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                 ],
             },
+            availability: undefined,
+            description: undefined,
         },
-        "type_imdb:AgressiveMovieReview": {
+        [APIV1Read.TypeId("type_imdb:AgressiveMovieReview")]: {
             name: "AgressiveMovieReview",
             shape: {
                 type: "object",
                 extends: [],
                 properties: [
                     {
-                        key: "reallyAngrySummary",
+                        key: APIV1Read.PropertyKey("reallyAngrySummary"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "string",
+                                regex: undefined,
+                                default: undefined,
+                                minLength: undefined,
+                                maxLength: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                     {
-                        key: "notes",
+                        key: APIV1Read.PropertyKey("notes"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "string",
+                                regex: undefined,
+                                default: undefined,
+                                minLength: undefined,
+                                maxLength: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                     {
-                        key: "stars",
+                        key: APIV1Read.PropertyKey("stars"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "double",
+                                minimum: undefined,
+                                maximum: undefined,
+                                default: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                 ],
             },
+            availability: undefined,
+            description: undefined,
         },
-        "type_imdb:MovieReview": {
+        [APIV1Read.TypeId("type_imdb:MovieReview")]: {
             name: "MovieReview",
             shape: {
                 type: "undiscriminatedUnion",
@@ -133,70 +191,109 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                             type: "primitive",
                             value: {
                                 type: "string",
+                                regex: undefined,
+                                default: undefined,
+                                minLength: undefined,
+                                maxLength: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
+                        displayName: undefined,
                     },
                     {
                         type: {
                             type: "primitive",
                             value: {
                                 type: "double",
+                                minimum: undefined,
+                                maximum: undefined,
+                                default: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
+                        displayName: undefined,
                     },
                     {
                         type: {
                             type: "id",
-                            value: "type_imdb:DetailedMovieReview",
+                            value: APIV1Read.TypeId("type_imdb:DetailedMovieReview"),
+                            default: undefined,
                         },
+                        availability: undefined,
+                        description: undefined,
+                        displayName: undefined,
                     },
                     {
                         type: {
                             type: "id",
-                            value: "type_imdb:AgressiveMovieReview",
+                            value: APIV1Read.TypeId("type_imdb:AgressiveMovieReview"),
+                            default: undefined,
                         },
+                        availability: undefined,
+                        description: undefined,
+                        displayName: undefined,
                     },
                 ],
             },
+            availability: undefined,
+            description: undefined,
         },
-        "type_imdb:CreateMovieRequest": {
+        [APIV1Read.TypeId("type_imdb:CreateMovieRequest")]: {
             name: "CreateMovieRequest",
             shape: {
                 type: "object",
                 extends: [],
                 properties: [
                     {
-                        key: "title",
+                        key: APIV1Read.PropertyKey("title"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "string",
+                                regex: undefined,
+                                default: undefined,
+                                minLength: undefined,
+                                maxLength: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                     {
-                        key: "rating",
+                        key: APIV1Read.PropertyKey("rating"),
                         valueType: {
                             type: "primitive",
                             value: {
                                 type: "double",
+                                minimum: undefined,
+                                maximum: undefined,
+                                default: undefined,
                             },
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                     {
-                        key: "review",
+                        key: APIV1Read.PropertyKey("review"),
                         valueType: {
                             type: "id",
-                            value: "type_imdb:MovieReview",
+                            value: APIV1Read.TypeId("type_imdb:MovieReview"),
+                            default: undefined,
                         },
+                        availability: undefined,
+                        description: undefined,
                     },
                 ],
             },
+            availability: undefined,
+            description: undefined,
         },
     },
     subpackages: {
-        subpackage_imdb: {
-            subpackageId: "subpackage_imdb",
+        [APIV1Read.SubpackageId("subpackage_imdb")]: {
+            subpackageId: APIV1Read.SubpackageId("subpackage_imdb"),
             name: "imdb",
             urlSlug: "imdb",
             endpoints: [
@@ -207,7 +304,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                     authed: false,
                     description: "Add a movie to the database",
                     method: "POST",
-                    id: "createMovie",
+                    id: FdrAPI.EndpointId("createMovie"),
                     originalEndpointId: "endpoint_imdb.createMovie",
                     name: "Create Movie",
                     path: {
@@ -231,34 +328,48 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                             type: "reference",
                             value: {
                                 type: "id",
-                                value: "type_imdb:CreateMovieRequest",
+                                value: APIV1Read.TypeId("type_imdb:CreateMovieRequest"),
+                                default: undefined,
                             },
                         },
+                        description: undefined,
                     },
                     response: {
                         type: {
                             type: "reference",
                             value: {
                                 type: "id",
-                                value: "type_imdb:MovieId",
+                                value: APIV1Read.TypeId("type_imdb:MovieId"),
+                                default: undefined,
                             },
                         },
+                        statusCode: undefined,
+                        description: undefined,
                     },
                     errorsV2: [],
                     examples: [],
+
+                    availability: undefined,
+                    migratedFromUrlSlugs: undefined,
+                    defaultEnvironment: undefined,
+                    snippetTemplates: undefined,
                 },
             ],
             webhooks: [],
             websockets: [],
             types: [
-                "type_imdb:MovieId",
-                "type_imdb:Movie",
-                "type_imdb:DetailedMovieReview",
-                "type_imdb:AgressiveMovieReview",
-                "type_imdb:MovieReview",
-                "type_imdb:CreateMovieRequest",
+                APIV1Read.TypeId("type_imdb:MovieId"),
+                APIV1Read.TypeId("type_imdb:Movie"),
+                APIV1Read.TypeId("type_imdb:DetailedMovieReview"),
+                APIV1Read.TypeId("type_imdb:AgressiveMovieReview"),
+                APIV1Read.TypeId("type_imdb:MovieReview"),
+                APIV1Read.TypeId("type_imdb:CreateMovieRequest"),
             ],
             subpackages: [],
+            parent: undefined,
+            displayName: undefined,
+            description: undefined,
+            pointsTo: undefined,
         },
     },
     rootPackage: {
@@ -266,7 +377,11 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
         webhooks: [],
         websockets: [],
         types: [],
-        subpackages: ["subpackage_imdb"],
+        subpackages: [APIV1Read.SubpackageId("subpackage_imdb")],
+        pointsTo: undefined,
     },
     globalHeaders: [],
+    auth: undefined,
+    hasMultipleBaseUrls: undefined,
+    navigation: undefined,
 };

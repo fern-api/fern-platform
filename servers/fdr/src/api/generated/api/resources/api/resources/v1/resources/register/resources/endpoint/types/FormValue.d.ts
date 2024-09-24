@@ -6,7 +6,7 @@ export declare type FormValue = FernRegistry.api.v1.register.FormValue.Json | Fe
 export declare namespace FormValue {
     interface Json {
         type: "json";
-        value?: unknown;
+        value: unknown;
     }
     interface Filename {
         type: "filename";

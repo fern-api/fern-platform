@@ -5,9 +5,9 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface CodeExamples {
-    nodeAxios?: string;
-    pythonSdk?: FernRegistry.api.v1.read.PythonSnippet;
-    typescriptSdk?: FernRegistry.api.v1.read.TypescriptSnippet;
-    goSdk?: FernRegistry.api.v1.read.GoSnippet;
-    rubySdk?: FernRegistry.api.v1.read.RubySnippet;
+    nodeAxios: string | undefined;
+    pythonSdk: FernRegistry.api.v1.read.PythonSnippet | undefined;
+    typescriptSdk: FernRegistry.api.v1.read.TypescriptSnippet | undefined;
+    goSdk: FernRegistry.api.v1.read.GoSnippet | undefined;
+    rubySdk: FernRegistry.api.v1.read.RubySnippet | undefined;
 }

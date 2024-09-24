@@ -1,4 +1,4 @@
-import { FernNavigation } from "../generated";
+import { FernNavigation } from "../..";
 import { NavigationNode } from "../types";
 
 export function isSidebarRootNode(node: NavigationNode): node is FernNavigation.SidebarRootNode {

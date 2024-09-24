@@ -4,6 +4,6 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface WebhookPayload extends FernRegistry.api.v1.register.WithDescription {
+export interface WebhookPayload extends FernRegistry.api.v1.WithDescription {
     type: FernRegistry.api.v1.register.WebhookPayloadShape;
 }

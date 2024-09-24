@@ -1,4 +1,4 @@
-import { FernNavigation } from "../generated";
+import { FernNavigation } from "../..";
 
 export class NodeIdGenerator {
     #ids: string[] = [];

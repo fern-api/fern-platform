@@ -4,9 +4,7 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface ObjectProperty
-    extends FernRegistry.api.v1.register.WithDescription,
-        FernRegistry.api.v1.register.WithAvailability {
-    key: FernRegistry.api.v1.register.PropertyKey;
+export interface ObjectProperty extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
+    key: FernRegistry.api.v1.PropertyKey;
     valueType: FernRegistry.api.v1.register.TypeReference;
 }

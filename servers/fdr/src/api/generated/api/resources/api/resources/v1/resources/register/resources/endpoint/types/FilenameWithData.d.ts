@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../../../../../../../index";
 export interface FilenameWithData {
     filename: string;
-    data: FernRegistry.api.v1.register.FileId;
+    data: FernRegistry.FileId;
 }

@@ -10,5 +10,5 @@ export interface Yank {
      * The remediation strategy to be used when a yank is detected. If one is not specified, we'll likely go backwards by publishing time
      * to find the last unyanked version.
      */
-    remediationVerision?: string;
+    remediationVerision: string | undefined;
 }

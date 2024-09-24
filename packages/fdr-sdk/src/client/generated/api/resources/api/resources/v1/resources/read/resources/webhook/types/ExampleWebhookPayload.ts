@@ -3,5 +3,5 @@
  */
 
 export interface ExampleWebhookPayload {
-    payload?: unknown;
+    payload: unknown;
 }

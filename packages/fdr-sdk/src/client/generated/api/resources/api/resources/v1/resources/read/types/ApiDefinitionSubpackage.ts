@@ -5,11 +5,11 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface ApiDefinitionSubpackage
-    extends FernRegistry.api.v1.read.WithDescription,
+    extends FernRegistry.api.v1.WithDescription,
         FernRegistry.api.v1.read.ApiDefinitionPackage {
-    parent?: FernRegistry.api.v1.read.SubpackageId;
-    subpackageId: FernRegistry.api.v1.read.SubpackageId;
+    parent: FernRegistry.api.v1.SubpackageId | undefined;
+    subpackageId: FernRegistry.api.v1.SubpackageId;
     name: string;
     urlSlug: string;
-    displayName?: string;
+    displayName: string | undefined;
 }

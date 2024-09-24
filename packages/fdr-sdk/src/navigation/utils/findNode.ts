@@ -1,5 +1,5 @@
+import { FernNavigation } from "../..";
 import { NodeCollector } from "../NodeCollector";
-import { FernNavigation } from "../generated";
 import {
     isPage,
     type NavigationBreadcrumbItem,

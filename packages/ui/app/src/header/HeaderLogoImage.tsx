@@ -1,9 +1,13 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { DOCS_ATOM, useColors, useFile, useLogoHeight } from "../atoms";
 import { FernImage } from "../components/FernImage";
 
-function FernFileImage({ fileId, ...props }: Omit<FernImage.Props, "src"> & { fileId: string }): ReactElement {
+function FernFileImage({
+    fileId,
+    ...props
+}: Omit<FernImage.Props, "src"> & { fileId: DocsV1Read.FileId }): ReactElement {
     return <FernImage src={useFile(fileId)} {...props} />;
 }
 

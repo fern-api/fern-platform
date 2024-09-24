@@ -1,4 +1,4 @@
-import { FdrAPI } from "../../api";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
 export class SdkIdFactory {
     public static fromTypescript(sdk: FdrAPI.TypeScriptSdk): string {

@@ -6,8 +6,8 @@ import * as FernRegistry from "../../../../../../../index";
 
 export interface ApiDefinitionSubpackage
     extends FernRegistry.api.v1.register.ApiDefinitionPackage,
-        FernRegistry.api.v1.register.WithDescription {
-    subpackageId: FernRegistry.api.v1.register.SubpackageId;
+        FernRegistry.api.v1.WithDescription {
+    subpackageId: FernRegistry.api.v1.SubpackageId;
     name: string;
-    displayName?: string;
+    displayName: string | undefined;
 }

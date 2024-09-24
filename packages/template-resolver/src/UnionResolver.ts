@@ -1,7 +1,6 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { accessByPathNonNull } from "./accessByPath";
-import { Template, UnionTemplateMember } from "./generated/api";
 import { isPlainObject } from "./isPlainObject";
 
 export class UnionMatcher {
@@ -320,7 +319,7 @@ export class UnionMatcher {
         }
     }
 
-    private scoreType({ typeId, payloadOverride }: { typeId: string; payloadOverride?: unknown }): number {
+    private scoreType({ typeId, payloadOverride }: { typeId: APIV1Read.TypeId; payloadOverride?: unknown }): number {
         const maybeType = this.apiDefinition.types[typeId];
         if (maybeType == null) {
             // If the type doesn't even exist, it shouldn't be an option. We only
@@ -335,9 +334,9 @@ export class UnionMatcher {
         members,
         payloadOverride,
     }: {
-        members: UnionTemplateMember[];
+        members: FdrAPI.UnionTemplateMember[];
         payloadOverride?: unknown;
-    }): Template | undefined {
+    }): FdrAPI.Template | undefined {
         if (members.length > 0) {
             // Score each template against the payload
             const scoredTemplates = members.map((member) => ({

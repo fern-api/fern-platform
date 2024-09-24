@@ -6,6 +6,6 @@ export declare type StreamCondition = FernRegistry.api.v1.read.StreamCondition.B
 export declare namespace StreamCondition {
     interface BooleanRequestProperty {
         type: "booleanRequestProperty";
-        value: FernRegistry.api.v1.read.PropertyKey;
+        value: FernRegistry.api.v1.PropertyKey;
     }
 }

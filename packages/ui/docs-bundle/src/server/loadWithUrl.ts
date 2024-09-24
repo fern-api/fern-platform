@@ -1,4 +1,4 @@
-import type { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { getRegistryServiceWithToken, provideRegistryService } from "@fern-ui/ui";
 import type { AuthProps } from "./authProps";
 
@@ -17,8 +17,10 @@ export async function loadWithUrl(url: string, auth?: AuthProps): Promise<LoadWi
     }
 
     if (auth != null && auth.user.partner === "workos") {
-        return getRegistryServiceWithToken(auth.token).docs.v2.read.getPrivateDocsForUrl({ url });
+        return getRegistryServiceWithToken(auth.token).docs.v2.read.getPrivateDocsForUrl({
+            url: FdrAPI.Url(url),
+        });
     } else {
-        return provideRegistryService().docs.v2.read.getDocsForUrl({ url });
+        return provideRegistryService().docs.v2.read.getDocsForUrl({ url: FdrAPI.Url(url) });
     }
 }

@@ -1,5 +1,5 @@
+import { APIV1Db } from "@fern-api/fdr-sdk";
 import { PrismaClient } from "@prisma/client";
-import { APIV1Db } from "../../api";
 import { readBuffer } from "../../util";
 
 export interface APIDefinitionDao {

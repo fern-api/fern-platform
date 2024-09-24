@@ -4,11 +4,9 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface WebSocketMessage
-    extends FernRegistry.api.v1.read.WithDescription,
-        FernRegistry.api.v1.read.WithAvailability {
-    type: FernRegistry.api.v1.read.WebSocketMessageId;
-    displayName?: string;
-    origin: FernRegistry.api.v1.read.WebSocketMessageOrigin;
+export interface WebSocketMessage extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
+    type: FernRegistry.api.v1.WebSocketMessageId;
+    displayName: string | undefined;
+    origin: FernRegistry.api.v1.WebSocketMessageOrigin;
     body: FernRegistry.api.v1.read.WebSocketMessageBodyShape;
 }

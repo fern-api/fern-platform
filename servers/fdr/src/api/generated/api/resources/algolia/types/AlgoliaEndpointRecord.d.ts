@@ -6,7 +6,7 @@ export interface AlgoliaEndpointRecord {
     title: string;
     subtitle: string;
     path: string;
-    version?: FernRegistry.VersionId;
-    versionSlug?: string;
-    indexSegmentId?: string;
+    version: FernRegistry.VersionId | undefined;
+    versionSlug: string | undefined;
+    indexSegmentId: string | undefined;
 }

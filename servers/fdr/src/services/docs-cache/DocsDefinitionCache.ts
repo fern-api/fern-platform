@@ -1,5 +1,7 @@
+import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { AuthType } from "@prisma/client";
-import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "../../api";
+import { InternalError, UnauthorizedError } from "../../api/generated/api";
+import { DomainNotRegisteredError } from "../../api/generated/api/resources/docs/resources/v2/resources/read";
 import { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
@@ -161,11 +163,11 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
     private async checkUserBelongsToOrg(url: URL, authorization: string | undefined): Promise<void> {
         if (authorization == null) {
-            throw new FdrAPI.UnauthorizedError("Authorization header is required");
+            throw new UnauthorizedError("Authorization header is required");
         }
         const orgId = await this.getOrganizationForUrl(url);
         if (orgId == null) {
-            throw new FdrAPI.InternalError("Cannot find organization for URL");
+            throw new InternalError("Cannot find organization for URL");
         }
         await this.app.services.auth.checkUserBelongsToOrg({
             authHeader: authorization,
@@ -280,7 +282,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             // delegate to V1
             const v1Domain = url.hostname.match(DOCS_DOMAIN_REGX)?.[1];
             if (v1Domain == null) {
-                throw new DocsV2Read.DomainNotRegisteredError();
+                throw new DomainNotRegisteredError();
             }
             const v1Docs = await getDocsForDomain({ app: this.app, domain: v1Domain });
             return {

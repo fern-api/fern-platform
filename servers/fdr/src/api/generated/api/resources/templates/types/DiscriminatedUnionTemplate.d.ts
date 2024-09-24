@@ -3,7 +3,7 @@
  */
 import * as FernRegistry from "../../../index";
 export interface DiscriminatedUnionTemplate {
-    imports?: string[];
+    imports: string[] | undefined;
     /**
      * We might not need this, but the idea here is to be able to omit if it's optional and undefined,
      * or default if omitted and required.
@@ -13,5 +13,5 @@ export interface DiscriminatedUnionTemplate {
     discriminantField: string;
     /** A map of the union member's discriminant to the template to use to create it */
     members: Record<string, FernRegistry.Template>;
-    templateInput?: FernRegistry.PayloadInput;
+    templateInput: FernRegistry.PayloadInput | undefined;
 }

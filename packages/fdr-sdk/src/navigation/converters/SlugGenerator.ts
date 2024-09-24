@@ -1,4 +1,4 @@
-import { FernNavigation } from "../generated";
+import { FernNavigation } from "../..";
 import { slugjoin } from "../utils/slugjoin";
 
 export class SlugGenerator {

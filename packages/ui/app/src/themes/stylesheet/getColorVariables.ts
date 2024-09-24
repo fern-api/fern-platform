@@ -22,11 +22,13 @@ export const DEFAULT_COLORS: {
             r: 129,
             g: 140,
             b: 248,
+            a: 1,
         },
         light: {
             r: 129,
             g: 140,
             b: 248,
+            a: 1,
         },
     },
     background: {
@@ -34,11 +36,13 @@ export const DEFAULT_COLORS: {
             r: 17,
             g: 20,
             b: 24,
+            a: 1,
         },
         light: {
             r: 249,
             g: 250,
             b: 251,
+            a: 1,
         },
     },
 };
@@ -379,7 +383,7 @@ export function getColorVariables(
 }
 
 function getBackgroundImage(
-    id: string | undefined,
+    id: DocsV1Read.FileId | undefined,
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): string | undefined {
     if (id == null) {

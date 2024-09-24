@@ -1,19 +1,20 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  readCommons: ../read/commons.yml
+  rootCommons: ../../../commons.yml
+  commons: ../commons.yml
   readEndpoint: ../read/endpoint.yml
 
 types:
   DbEndpointDefinition:
-    extends: readCommons.WithDescription
+    extends: commons.WithDescription
     properties:
       authed: optional<boolean>
-      availability: optional<readCommons.Availability>
-      defaultEnvironment: optional<readEndpoint.EnvironmentId>
-      environments: optional<list<readEndpoint.Environment>>
-      method: readEndpoint.HttpMethod
-      id: readEndpoint.EndpointId
+      availability: optional<commons.Availability>
+      defaultEnvironment: optional<rootCommons.EnvironmentId>
+      environments: optional<list<commons.Environment>>
+      method: rootCommons.HttpMethod
+      id: rootCommons.EndpointId
       originalEndpointId: optional<string>
       urlSlug: string
       migratedFromUrlSlugs: optional<list<string>>
@@ -29,7 +30,7 @@ types:
       snippetTemplates: optional<readEndpoint.EndpointSnippetTemplates>
 
   DbHttpRequest:
-    extends: readCommons.WithDescription
+    extends: commons.WithDescription
     properties:
       contentType: optional<string>
       type: readEndpoint.HttpRequestBodyShape

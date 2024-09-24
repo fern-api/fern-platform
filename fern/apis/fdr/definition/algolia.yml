@@ -65,14 +65,14 @@ types:
   AlgoliaEndpointRecordV4:
     extends: AlgoliaPageRecordV4
     properties:
-      method: apiReadV1Endpoint.HttpMethod
+      method: commons.HttpMethod
       endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
       isResponseStream: optional<boolean>
 
   AlgoliaEndpointRecordV3:
     extends: AlgoliaPageRecordV3
     properties:
-      method: apiReadV1Endpoint.HttpMethod
+      method: commons.HttpMethod
       endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
       isResponseStream: optional<boolean>
 
@@ -89,13 +89,13 @@ types:
   AlgoliaWebhookRecordV4:
     extends: AlgoliaPageRecordV4
     properties:
-      method: apiReadV1Endpoint.HttpMethod
+      method: commons.HttpMethod
       endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
 
   AlgoliaWebhookRecordV3:
     extends: AlgoliaPageRecordV3
     properties:
-      method: apiReadV1Endpoint.HttpMethod
+      method: commons.HttpMethod
       endpointPath: list<apiReadV1Endpoint.EndpointPathPart>
 
   AlgoliaMarkdownSectionRecordV1:
@@ -203,7 +203,7 @@ types:
     properties:
       name: optional<string>
       description: optional<string>
-      method: apiReadV1Endpoint.HttpMethod
+      method: commons.HttpMethod
       path: AlgoliaRecordEndpointPath
 
   AlgoliaRecordVersion:

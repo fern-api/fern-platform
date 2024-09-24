@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../index";
 export interface AlgoliaEndpointFieldRecordV1 extends FernRegistry.AlgoliaEndpointRecordV4 {
-    availability?: string;
-    extends?: string[];
+    availability: string | undefined;
+    extends: string[] | undefined;
 }

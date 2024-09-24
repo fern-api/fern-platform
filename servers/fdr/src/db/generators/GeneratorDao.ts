@@ -14,8 +14,8 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export type SnippetTemplatesByEndpoint = Record<
-    FdrAPI.EndpointPath,
-    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    FdrAPI.EndpointPathLiteral,
+    Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
 >;
 
 export type SnippetTemplatesByEndpointIdentifier = Record<string, APIV1Read.EndpointSnippetTemplates>;
@@ -155,7 +155,7 @@ function convertPrismaLanguage(prismaLanguage: prisma.Language | null): Generato
 function convertPrismaGenerator(generator: prisma.Generator | null): Generator | undefined {
     return generator != null
         ? {
-              id: generator.id,
+              id: FdrAPI.generators.GeneratorId(generator.id),
               displayName: generator.displayName,
               generatorType: readBuffer(generator.generatorType) as GeneratorType,
               generatorLanguage: convertPrismaLanguage(generator.generatorLanguage),

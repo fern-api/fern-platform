@@ -1,4 +1,4 @@
-import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
@@ -10,6 +10,27 @@ import { stringHasMarkdown } from "../mdx/common/util";
 import { getFrontmatter } from "../mdx/frontmatter";
 import { getFontExtension } from "../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
+
+const EMPTY_METADATA_CONFIG: DocsV1Read.MetadataConfig = {
+    "og:image": undefined,
+    "og:image:width": undefined,
+    "og:image:height": undefined,
+    "og:title": undefined,
+    "og:description": undefined,
+    "og:locale": undefined,
+    "og:url": undefined,
+    "og:site_name": undefined,
+    "twitter:handle": undefined,
+    "twitter:site": undefined,
+    "twitter:card": undefined,
+    "twitter:title": undefined,
+    "twitter:description": undefined,
+    "twitter:url": undefined,
+    "twitter:image": undefined,
+    "og:logo": undefined,
+    noindex: false,
+    nofollow: false,
+};
 
 function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1Read.File_>): DocsV1Read.File_ {
     return visitDiscriminatedUnion(fileOrUrl)._visit({
@@ -57,7 +78,7 @@ export function getSeoProps(
 
     const pageId = FernNavigation.utils.getPageId(node);
 
-    let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? {};
+    let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? EMPTY_METADATA_CONFIG;
     let seoTitleFromMarkdownH1;
     let frontmatterHeadline;
 
@@ -75,14 +96,14 @@ export function getSeoProps(
                     if (typeof frontmatterImageVar === "string") {
                         ogMetadata["og:image"] ??= {
                             type: "url",
-                            value: frontmatterImageVar,
+                            value: APIV1Read.Url(frontmatterImageVar),
                         };
                     } else {
                         visitDiscriminatedUnion(frontmatterImageVar, "type")._visit({
                             fileId: (fileId) => {
                                 const realId = fileId.value.split(":")[1];
                                 if (realId != null) {
-                                    fileId.value = realId;
+                                    fileId.value = APIV1Read.FileId(realId);
                                     ogMetadata["og:image"] = fileId;
                                 }
                             },

@@ -4,9 +4,9 @@
 import * as FernRegistry from "../../../index";
 export interface EndpointNode extends FernRegistry.navigation.WithNodeMetadata, FernRegistry.navigation.WithApiDefinitionId {
     type: "endpoint";
-    method: FernRegistry.navigation.HttpMethod;
-    endpointId: FernRegistry.navigation.EndpointId;
-    isResponseStream?: boolean;
+    method: FernRegistry.HttpMethod;
+    endpointId: FernRegistry.EndpointId;
+    isResponseStream: boolean | undefined;
     /** Settings for the api playground that affect this endpoint specifically. */
-    playground?: FernRegistry.navigation.PlaygroundSettings;
+    playground: FernRegistry.navigation.PlaygroundSettings | undefined;
 }

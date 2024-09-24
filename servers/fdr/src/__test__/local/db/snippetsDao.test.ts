@@ -9,8 +9,8 @@ it("snippet api dao", async () => {
     // create snippets
     await fdrApplication.dao.snippets().storeSnippets({
         storeSnippetsInfo: {
-            orgId: "example",
-            apiId: "bar",
+            orgId: FdrAPI.OrgId("example"),
+            apiId: FdrAPI.ApiId("bar"),
             sdk: {
                 type: "python",
                 sdk: {
@@ -20,13 +20,15 @@ it("snippet api dao", async () => {
                 snippets: [
                     {
                         endpoint: {
-                            path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                            method: FdrAPI.HttpMethod.Get,
+                            identifierOverride: undefined,
                         },
                         snippet: {
                             async_client: "invalid",
                             sync_client: "invalid",
                         },
+                        exampleIdentifier: undefined,
                     },
                 ],
             },
@@ -35,7 +37,7 @@ it("snippet api dao", async () => {
     // get snippets with orgId
     const snippetAPIs = await fdrApplication.dao.snippetAPIs().loadSnippetAPIs({
         loadSnippetAPIsRequest: {
-            orgIds: ["example", "fern"],
+            orgIds: [FdrAPI.OrgId("example"), FdrAPI.OrgId("fern")],
             apiName: undefined,
         },
     });
@@ -50,7 +52,7 @@ it("snippet api dao", async () => {
     // get snippets with orgId and apiId
     const sameSnippetAPIs = await fdrApplication.dao.snippetAPIs().loadSnippetAPIs({
         loadSnippetAPIsRequest: {
-            orgIds: ["example", "fern"],
+            orgIds: [FdrAPI.OrgId("example"), FdrAPI.OrgId("fern")],
             apiName: "bar",
         },
     });
@@ -67,8 +69,8 @@ it("snippets dao", async () => {
     // create snippets
     await fdrApplication.dao.snippets().storeSnippets({
         storeSnippetsInfo: {
-            orgId: "acme",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("api"),
             sdk: {
                 type: "python",
                 sdk: {
@@ -78,13 +80,15 @@ it("snippets dao", async () => {
                 snippets: [
                     {
                         endpoint: {
-                            path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                            method: FdrAPI.HttpMethod.Get,
+                            identifierOverride: undefined,
                         },
                         snippet: {
                             async_client: "invalid",
                             sync_client: "invalid",
                         },
+                        exampleIdentifier: undefined,
                     },
                 ],
             },
@@ -93,8 +97,8 @@ it("snippets dao", async () => {
     // overwrite snippets for the same SDK
     await fdrApplication.dao.snippets().storeSnippets({
         storeSnippetsInfo: {
-            orgId: "acme",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("api"),
             sdk: {
                 type: "python",
                 sdk: {
@@ -104,13 +108,15 @@ it("snippets dao", async () => {
                 snippets: [
                     {
                         endpoint: {
-                            path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                            method: FdrAPI.HttpMethod.Get,
+                            identifierOverride: undefined,
                         },
                         snippet: {
                             async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
                             sync_client: "client = Acme(api_key='YOUR_API_KEY')",
                         },
+                        exampleIdentifier: undefined,
                     },
                 ],
             },
@@ -118,8 +124,8 @@ it("snippets dao", async () => {
     });
     await fdrApplication.dao.snippets().storeSnippets({
         storeSnippetsInfo: {
-            orgId: "acme",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("api"),
             sdk: {
                 type: "python",
                 sdk: {
@@ -129,13 +135,15 @@ it("snippets dao", async () => {
                 snippets: [
                     {
                         endpoint: {
-                            path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                            method: FdrAPI.HttpMethod.Get,
+                            identifierOverride: undefined,
                         },
                         snippet: {
                             async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
                             sync_client: "client = Acme(api_key='YOUR_API_KEY')",
                         },
+                        exampleIdentifier: undefined,
                     },
                 ],
             },
@@ -144,11 +152,12 @@ it("snippets dao", async () => {
     // get snippets
     const response = await fdrApplication.dao.snippets().loadSnippetsPage({
         loadSnippetsInfo: {
-            orgId: "acme",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("api"),
             endpointIdentifier: {
-                path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                method: FdrAPI.HttpMethod.Get,
+                identifierOverride: undefined,
             },
             sdks: undefined,
             page: undefined,
@@ -159,7 +168,7 @@ it("snippets dao", async () => {
     console.log("broo", JSON.stringify(response, null, 2));
     expect(Object.keys(response?.snippets ?? {}).length).toEqual(1);
 
-    const snippets = response?.snippets["/users/v1"]?.GET;
+    const snippets = response?.snippets[FdrAPI.EndpointPathLiteral("/users/v1")]?.GET;
     if (snippets === undefined) {
         throw new Error("snippets were undefined");
     }
@@ -214,8 +223,8 @@ it("snippets dao with example id", async () => {
     // create snippets
     await fdrApplication.dao.snippets().storeSnippets({
         storeSnippetsInfo: {
-            orgId: "acme",
-            apiId: "apiId",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("apiId"),
             sdk: {
                 type: "python",
                 sdk: {
@@ -225,8 +234,9 @@ it("snippets dao with example id", async () => {
                 snippets: [
                     {
                         endpoint: {
-                            path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                            method: FdrAPI.HttpMethod.Get,
+                            identifierOverride: undefined,
                         },
                         snippet: {
                             async_client: "invalid",
@@ -236,8 +246,9 @@ it("snippets dao with example id", async () => {
                     },
                     {
                         endpoint: {
-                            path: "/users/v1",
-                            method: FdrAPI.EndpointMethod.Get,
+                            path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                            method: FdrAPI.HttpMethod.Get,
+                            identifierOverride: undefined,
                         },
                         snippet: {
                             async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
@@ -252,11 +263,12 @@ it("snippets dao with example id", async () => {
     // get snippets
     const response = await fdrApplication.dao.snippets().loadSnippetsPage({
         loadSnippetsInfo: {
-            orgId: "acme",
-            apiId: "apiId",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("apiId"),
             endpointIdentifier: {
-                path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                method: FdrAPI.HttpMethod.Get,
+                identifierOverride: undefined,
             },
             sdks: undefined,
             page: undefined,
@@ -266,7 +278,7 @@ it("snippets dao with example id", async () => {
     expect(response).not.toEqual(undefined);
     expect(Object.keys(response?.snippets ?? {}).length).toEqual(1);
 
-    const snippets = response?.snippets["/users/v1"]?.GET;
+    const snippets = response?.snippets[FdrAPI.EndpointPathLiteral("/users/v1")]?.GET;
     if (snippets === undefined) {
         throw new Error("snippets were undefined");
     }
@@ -291,11 +303,12 @@ it("snippets dao with example id", async () => {
 
     const response2 = await fdrApplication.dao.snippets().loadSnippetsPage({
         loadSnippetsInfo: {
-            orgId: "acme",
-            apiId: "apiId",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("apiId"),
             endpointIdentifier: {
-                path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                method: FdrAPI.HttpMethod.Get,
+                identifierOverride: undefined,
             },
             sdks: undefined,
             page: undefined,
@@ -305,7 +318,7 @@ it("snippets dao with example id", async () => {
     expect(response2).not.toEqual(undefined);
     expect(Object.keys(response2?.snippets ?? {}).length).toEqual(1);
 
-    const snippets2 = response2?.snippets["/users/v1"]?.GET;
+    const snippets2 = response2?.snippets[FdrAPI.EndpointPathLiteral("/users/v1")]?.GET;
     if (snippets2 === undefined) {
         throw new Error("snippets2 were undefined");
     }
@@ -330,18 +343,19 @@ it("snippets dao with example id", async () => {
 
     const response3 = await fdrApplication.dao.snippets().loadSnippetsPage({
         loadSnippetsInfo: {
-            orgId: "acme",
-            apiId: "apiId",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("apiId"),
             endpointIdentifier: {
-                path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                method: FdrAPI.HttpMethod.Get,
+                identifierOverride: undefined,
             },
             sdks: undefined,
             page: undefined,
             exampleIdentifier: undefined,
         },
     });
-    const snippets3 = response3?.snippets["/users/v1"]?.GET;
+    const snippets3 = response3?.snippets[FdrAPI.EndpointPathLiteral("/users/v1")]?.GET;
     if (snippets3 === undefined) {
         throw new Error("snippets3 were undefined");
     }
@@ -352,9 +366,9 @@ it("snippets dao with example id", async () => {
 it("snippets template", async () => {
     await fdrApplication.dao.snippetTemplates().storeSnippetTemplate({
         storeSnippetsInfo: {
-            orgId: "acme",
-            apiId: "api",
-            apiDefinitionId: "....",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("api"),
+            apiDefinitionId: FdrAPI.ApiDefinitionId("...."),
             snippets: [
                 {
                     sdk: {
@@ -363,8 +377,9 @@ it("snippets template", async () => {
                         version: "0.0.1",
                     },
                     endpointId: {
-                        path: "/users/v1",
-                        method: FdrAPI.EndpointMethod.Get,
+                        path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                        method: FdrAPI.HttpMethod.Get,
+                        identifierOverride: undefined,
                     },
                     snippetTemplate: {
                         type: "v1",
@@ -373,8 +388,12 @@ it("snippets template", async () => {
                             type: "generic",
                             isOptional: false,
                             templateString: "",
+                            imports: undefined,
+                            templateInputs: undefined,
+                            inputDelimiter: undefined,
                         },
                     },
+                    additionalTemplates: undefined,
                 },
                 {
                     sdk: {
@@ -383,8 +402,9 @@ it("snippets template", async () => {
                         version: "0.0.1",
                     },
                     endpointId: {
-                        path: "/users/v1",
-                        method: FdrAPI.EndpointMethod.Get,
+                        path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                        method: FdrAPI.HttpMethod.Get,
+                        identifierOverride: undefined,
                     },
                     snippetTemplate: {
                         type: "v1",
@@ -393,8 +413,12 @@ it("snippets template", async () => {
                             type: "generic",
                             isOptional: false,
                             templateString: "",
+                            imports: undefined,
+                            templateInputs: undefined,
+                            inputDelimiter: undefined,
                         },
                     },
+                    additionalTemplates: undefined,
                 },
             ],
         },
@@ -402,11 +426,12 @@ it("snippets template", async () => {
 
     const response = await fdrApplication.dao.snippetTemplates().loadSnippetTemplate({
         loadSnippetTemplateRequest: {
-            orgId: "acme",
-            apiId: "api",
+            orgId: FdrAPI.OrgId("acme"),
+            apiId: FdrAPI.ApiId("api"),
             endpointId: {
-                path: "/users/v1",
-                method: FdrAPI.EndpointMethod.Get,
+                path: FdrAPI.EndpointPathLiteral("/users/v1"),
+                method: FdrAPI.HttpMethod.Get,
+                identifierOverride: undefined,
             },
             sdk: {
                 type: "python",
@@ -418,7 +443,7 @@ it("snippets template", async () => {
 
     expect(response).not.toEqual(null);
     expect(response).toEqual({
-        endpointId: { path: "/users/v1", method: "GET" },
+        endpointId: { path: FdrAPI.EndpointPathLiteral("/users/v1"), method: "GET" },
         sdk: { type: "python", package: "acme", version: "0.0.1" },
         snippetTemplate: {
             type: "v1",
@@ -428,23 +453,25 @@ it("snippets template", async () => {
     });
 
     const response2 = await fdrApplication.dao.snippetTemplates().loadSnippetTemplatesByEndpoint({
-        orgId: "acme",
-        apiId: "api",
+        orgId: FdrAPI.OrgId("acme"),
+        apiId: FdrAPI.ApiId("api"),
         sdkRequests: [
             {
                 type: "python",
                 package: "acme",
+                version: undefined,
             },
             {
                 type: "typescript",
                 package: "acme",
+                version: undefined,
             },
         ],
         definition: {
             rootPackage: {
                 endpoints: [
                     {
-                        id: "getUsers",
+                        id: FdrAPI.EndpointId("getUsers"),
                         path: {
                             parts: [{ type: "literal", value: "/users/v1" }],
                             pathParameters: [],
@@ -453,13 +480,31 @@ it("snippets template", async () => {
                         queryParameters: [],
                         headers: [],
                         examples: [],
+                        auth: undefined,
+                        defaultEnvironment: undefined,
+                        environments: undefined,
+                        originalEndpointId: undefined,
+                        name: undefined,
+                        request: undefined,
+                        response: undefined,
+                        errors: undefined,
+                        errorsV2: undefined,
+                        description: undefined,
+                        availability: undefined,
                     },
                 ],
                 types: [],
                 subpackages: [],
+                websockets: undefined,
+                webhooks: undefined,
+                pointsTo: undefined,
             },
             types: {},
             subpackages: {},
+            auth: undefined,
+            globalHeaders: undefined,
+            snippetsConfiguration: undefined,
+            navigation: undefined,
         },
     });
 
@@ -493,19 +538,20 @@ it("snippets template", async () => {
     });
 
     const response3 = await fdrApplication.dao.snippetTemplates().loadSnippetTemplatesByEndpoint({
-        orgId: "acme",
-        apiId: "api",
+        orgId: FdrAPI.OrgId("acme"),
+        apiId: FdrAPI.ApiId("api"),
         sdkRequests: [
             {
                 type: "go",
                 githubRepo: "",
+                version: undefined,
             },
         ],
         definition: {
             rootPackage: {
                 endpoints: [
                     {
-                        id: "getUsers",
+                        id: FdrAPI.EndpointId("getUsers"),
                         path: {
                             parts: [{ type: "literal", value: "/users/v1" }],
                             pathParameters: [],
@@ -514,13 +560,31 @@ it("snippets template", async () => {
                         queryParameters: [],
                         headers: [],
                         examples: [],
+                        auth: undefined,
+                        defaultEnvironment: undefined,
+                        environments: undefined,
+                        originalEndpointId: undefined,
+                        name: undefined,
+                        request: undefined,
+                        response: undefined,
+                        errors: undefined,
+                        errorsV2: undefined,
+                        description: undefined,
+                        availability: undefined,
                     },
                 ],
                 types: [],
                 subpackages: [],
+                websockets: undefined,
+                webhooks: undefined,
+                pointsTo: undefined,
             },
             types: {},
             subpackages: {},
+            auth: undefined,
+            globalHeaders: undefined,
+            snippetsConfiguration: undefined,
+            navigation: undefined,
         },
     });
 

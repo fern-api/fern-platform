@@ -11,7 +11,7 @@ export interface BaseRepository {
     owner: string;
     /** The full name of the repository, e.g. fern-api/fern. It includes the owner, as well as the name of the repository. */
     fullName: string;
-    url: string;
+    url: FernRegistry.Url;
     /** The Fern organization ID of the repository owner. */
     repositoryOwnerOrganizationId: FernRegistry.OrgId;
     defaultBranchChecks: FernRegistry.CheckRun[];

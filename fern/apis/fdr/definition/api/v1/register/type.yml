@@ -1,11 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  commons: commons.yml
+  commons: ../commons.yml
 
 types:
-  TypeId: string
-
   TypeDefinition:
     extends:
       - commons.WithDescription
@@ -35,7 +33,7 @@ types:
 
   TypeReferenceId:
     properties:
-      value: TypeId
+      value: commons.TypeId
       default: optional<TypeReferenceIdDefault>
 
   TypeReferenceIdDefault:
@@ -44,17 +42,15 @@ types:
 
   ObjectType:
     properties:
-      extends: list<TypeId>
+      extends: list<commons.TypeId>
       properties: list<ObjectProperty>
-
-  PropertyKey: string
 
   ObjectProperty:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      key: PropertyKey
+      key: commons.PropertyKey
       valueType: TypeReference
 
   PrimitiveType:
@@ -218,7 +214,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      key: PropertyKey
+      key: commons.PropertyKey
       isOptional: boolean
       contentType: optional<ContentType>
 
@@ -227,7 +223,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      key: PropertyKey
+      key: commons.PropertyKey
       isOptional: boolean
       contentType: optional<ContentType>
 
