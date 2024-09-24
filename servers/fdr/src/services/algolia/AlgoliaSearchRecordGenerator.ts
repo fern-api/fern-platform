@@ -736,21 +736,18 @@ export class AlgoliaSearchRecordGenerator {
                                     anchorIdParts.map((part) => ({ title: part, slug })),
                                 );
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "endpoint-field-v1",
-                                        title: header.key,
-                                        description: header.description,
-                                        availability: header.availability,
-                                        breadcrumbs: fieldBreadcrumbs,
-                                        slug,
-                                        version,
-                                        indexSegmentId,
-                                        method: endpoint.method,
-                                        endpointPath: endpoint.path.parts,
-                                        isResponseStream: node.isResponseStream,
-                                    },
+                                    type: "endpoint-field-v1",
+                                    title: header.key,
+                                    description: header.description,
+                                    availability: header.availability,
+                                    breadcrumbs: fieldBreadcrumbs,
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                    method: endpoint.method,
+                                    endpointPath: endpoint.path.parts,
+                                    isResponseStream: node.isResponseStream,
                                 });
                                 if (header.type.type === "id") {
                                     typeReferences.push({
@@ -777,21 +774,18 @@ export class AlgoliaSearchRecordGenerator {
                                     anchorIdParts.map((part) => ({ title: part, slug })),
                                 );
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "endpoint-field-v1",
-                                        title: param.key,
-                                        description: param.description,
-                                        availability: param.availability,
-                                        breadcrumbs: fieldBreadcrumbs,
-                                        slug,
-                                        version,
-                                        indexSegmentId,
-                                        method: endpoint.method,
-                                        endpointPath: endpoint.path.parts,
-                                        isResponseStream: node.isResponseStream,
-                                    },
+                                    type: "endpoint-field-v1",
+                                    title: param.key,
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: fieldBreadcrumbs,
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                    method: endpoint.method,
+                                    endpointPath: endpoint.path.parts,
+                                    isResponseStream: node.isResponseStream,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -818,21 +812,18 @@ export class AlgoliaSearchRecordGenerator {
                                     anchorIdParts.map((part) => ({ title: part, slug })),
                                 );
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "endpoint-field-v1",
-                                        title: param.key,
-                                        description: param.description,
-                                        availability: param.availability,
-                                        breadcrumbs: fieldBreadcrumbs,
-                                        slug,
-                                        version,
-                                        indexSegmentId,
-                                        method: endpoint.method,
-                                        endpointPath: endpoint.path.parts,
-                                        isResponseStream: node.isResponseStream,
-                                    },
+                                    type: "endpoint-field-v1",
+                                    title: param.key,
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: fieldBreadcrumbs,
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                    method: endpoint.method,
+                                    endpointPath: endpoint.path.parts,
+                                    isResponseStream: node.isResponseStream,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -855,30 +846,27 @@ export class AlgoliaSearchRecordGenerator {
                             if (endpoint.request.description != null) {
                                 const slug = anchorIdToSlug(node, ["request"]);
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "endpoint-field-v1",
-                                        title: `${endpoint.name ?? endpoint.id} Request`,
-                                        description: endpoint.request.description,
-                                        availability: endpoint.availability,
-                                        breadcrumbs: toBreadcrumbs(parents).concat([
-                                            {
-                                                title: "request",
-                                                slug,
-                                            },
-                                        ]),
-                                        slug,
-                                        version,
-                                        indexSegmentId: context.indexSegment.id,
-                                        extends:
-                                            endpoint.request.type.type === "object"
-                                                ? endpoint.request.type.extends
-                                                : undefined,
-                                        method: endpoint.method,
-                                        endpointPath: endpoint.path.parts,
-                                        isResponseStream: node.isResponseStream,
-                                    },
+                                    type: "endpoint-field-v1",
+                                    title: `${endpoint.name ?? endpoint.id} Request`,
+                                    description: endpoint.request.description,
+                                    availability: endpoint.availability,
+                                    breadcrumbs: toBreadcrumbs(parents).concat([
+                                        {
+                                            title: "request",
+                                            slug,
+                                        },
+                                    ]),
+                                    slug,
+                                    version,
+                                    indexSegmentId: context.indexSegment.id,
+                                    extends:
+                                        endpoint.request.type.type === "object"
+                                            ? endpoint.request.type.extends
+                                            : undefined,
+                                    method: endpoint.method,
+                                    endpointPath: endpoint.path.parts,
+                                    isResponseStream: node.isResponseStream,
                                 });
                             }
 
@@ -909,21 +897,18 @@ export class AlgoliaSearchRecordGenerator {
                                             anchorIdParts.map((part) => ({ title: part, slug })),
                                         );
                                         fields.push({
-                                            type: "field-v1",
                                             objectID: uuid(),
-                                            value: {
-                                                type: "endpoint-field-v1",
-                                                title: property.key,
-                                                description: property.description,
-                                                availability: property.availability,
-                                                breadcrumbs: fieldBreadcrumbs,
-                                                slug,
-                                                version,
-                                                indexSegmentId,
-                                                method: endpoint.method,
-                                                endpointPath: endpoint.path.parts,
-                                                isResponseStream: node.isResponseStream,
-                                            },
+                                            type: "endpoint-field-v1",
+                                            title: property.key,
+                                            description: property.description,
+                                            availability: property.availability,
+                                            breadcrumbs: fieldBreadcrumbs,
+                                            slug,
+                                            version,
+                                            indexSegmentId,
+                                            method: endpoint.method,
+                                            endpointPath: endpoint.path.parts,
+                                            isResponseStream: node.isResponseStream,
                                         });
                                         if (property.valueType.type === "id") {
                                             typeReferences.push({
@@ -949,21 +934,18 @@ export class AlgoliaSearchRecordGenerator {
                                         anchorIdParts.map((part) => ({ title: part, slug })),
                                     );
                                     fields.push({
-                                        type: "field-v1",
                                         objectID: uuid(),
-                                        value: {
-                                            type: "endpoint-field-v1",
-                                            title: property.key,
-                                            description: property.description,
-                                            availability: property.availability,
-                                            breadcrumbs: fieldBreadcrumbs,
-                                            slug,
-                                            version,
-                                            indexSegmentId,
-                                            method: endpoint.method,
-                                            endpointPath: endpoint.path.parts,
-                                            isResponseStream: node.isResponseStream,
-                                        },
+                                        type: "endpoint-field-v1",
+                                        title: property.key,
+                                        description: property.description,
+                                        availability: property.availability,
+                                        breadcrumbs: fieldBreadcrumbs,
+                                        slug,
+                                        version,
+                                        indexSegmentId,
+                                        method: endpoint.method,
+                                        endpointPath: endpoint.path.parts,
+                                        isResponseStream: node.isResponseStream,
                                     });
                                     if (property.valueType.type === "id") {
                                         typeReferences.push({
@@ -987,30 +969,27 @@ export class AlgoliaSearchRecordGenerator {
                             const slug = anchorIdToSlug(node, ["response"]);
 
                             fields.push({
-                                type: "field-v1",
                                 objectID: uuid(),
-                                value: {
-                                    type: "endpoint-field-v1",
-                                    title: `${endpoint.name ?? endpoint.id} Response`,
-                                    description: endpoint.response.description,
-                                    availability: endpoint.availability,
-                                    breadcrumbs: toBreadcrumbs(parents).concat([
-                                        {
-                                            title: "response",
-                                            slug,
-                                        },
-                                    ]),
-                                    slug,
-                                    version,
-                                    indexSegmentId: context.indexSegment.id,
-                                    extends:
-                                        endpoint.response.type.type === "object"
-                                            ? endpoint.response.type.extends
-                                            : undefined,
-                                    method: endpoint.method,
-                                    endpointPath: endpoint.path.parts,
-                                    isResponseStream: node.isResponseStream,
-                                },
+                                type: "endpoint-field-v1",
+                                title: `${endpoint.name ?? endpoint.id} Response`,
+                                description: endpoint.response.description,
+                                availability: endpoint.availability,
+                                breadcrumbs: toBreadcrumbs(parents).concat([
+                                    {
+                                        title: "response",
+                                        slug,
+                                    },
+                                ]),
+                                slug,
+                                version,
+                                indexSegmentId: context.indexSegment.id,
+                                extends:
+                                    endpoint.response.type.type === "object"
+                                        ? endpoint.response.type.extends
+                                        : undefined,
+                                method: endpoint.method,
+                                endpointPath: endpoint.path.parts,
+                                isResponseStream: node.isResponseStream,
                             });
 
                             if (endpoint.response.type.type === "reference") {
@@ -1039,21 +1018,18 @@ export class AlgoliaSearchRecordGenerator {
                                         anchorIdParts.map((part) => ({ title: part, slug })),
                                     );
                                     fields.push({
-                                        type: "field-v1",
                                         objectID: uuid(),
-                                        value: {
-                                            type: "endpoint-field-v1",
-                                            title: property.key,
-                                            description: property.description,
-                                            availability: property.availability,
-                                            breadcrumbs: fieldBreadcrumbs,
-                                            slug,
-                                            version,
-                                            indexSegmentId,
-                                            method: endpoint.method,
-                                            endpointPath: endpoint.path.parts,
-                                            isResponseStream: node.isResponseStream,
-                                        },
+                                        type: "endpoint-field-v1",
+                                        title: property.key,
+                                        description: property.description,
+                                        availability: property.availability,
+                                        breadcrumbs: fieldBreadcrumbs,
+                                        slug,
+                                        version,
+                                        indexSegmentId,
+                                        method: endpoint.method,
+                                        endpointPath: endpoint.path.parts,
+                                        isResponseStream: node.isResponseStream,
                                     });
                                     if (property.valueType.type === "id") {
                                         typeReferences.push({
@@ -1114,19 +1090,16 @@ export class AlgoliaSearchRecordGenerator {
                                     anchorIdParts.map((part) => ({ title: part, slug })),
                                 );
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "websocket-field-v1",
-                                        title: param.key,
-                                        description: param.description,
-                                        availability: param.availability,
-                                        breadcrumbs: fieldBreadcrumbs,
-                                        slug,
-                                        version,
-                                        indexSegmentId,
-                                        endpointPath: ws.path.parts,
-                                    },
+                                    type: "websocket-field-v1",
+                                    title: param.key,
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: fieldBreadcrumbs,
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                    endpointPath: ws.path.parts,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -1151,19 +1124,16 @@ export class AlgoliaSearchRecordGenerator {
                                     anchorIdParts.map((part) => ({ title: part, slug })),
                                 );
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "websocket-field-v1",
-                                        title: param.key,
-                                        description: param.description,
-                                        availability: param.availability,
-                                        breadcrumbs: fieldBreadcrumbs,
-                                        slug,
-                                        version,
-                                        indexSegmentId,
-                                        endpointPath: ws.path.parts,
-                                    },
+                                    type: "websocket-field-v1",
+                                    title: param.key,
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: fieldBreadcrumbs,
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                    endpointPath: ws.path.parts,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -1188,19 +1158,16 @@ export class AlgoliaSearchRecordGenerator {
                                     anchorIdParts.map((part) => ({ title: part, slug })),
                                 );
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "websocket-field-v1",
-                                        title: param.key,
-                                        description: param.description,
-                                        availability: param.availability,
-                                        breadcrumbs: fieldBreadcrumbs,
-                                        slug,
-                                        version,
-                                        indexSegmentId,
-                                        endpointPath: ws.path.parts,
-                                    },
+                                    type: "websocket-field-v1",
+                                    title: param.key,
+                                    description: param.description,
+                                    availability: param.availability,
+                                    breadcrumbs: fieldBreadcrumbs,
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                    endpointPath: ws.path.parts,
                                 });
                                 if (param.type.type === "id") {
                                     typeReferences.push({
@@ -1222,25 +1189,22 @@ export class AlgoliaSearchRecordGenerator {
                                 const messageType = message.origin === "server" ? "receive" : "send";
                                 const slug = anchorIdToSlug(node, [messageType]);
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "websocket-field-v1",
-                                        title: `${ws.name ?? ws.id} ${messageType}`,
-                                        description: message.description,
-                                        availability: message.availability,
-                                        breadcrumbs: toBreadcrumbs(parents).concat([
-                                            {
-                                                title: messageType,
-                                                slug,
-                                            },
-                                        ]),
-                                        slug,
-                                        version,
-                                        indexSegmentId,
-                                        extends: message.body.type === "object" ? message.body.extends : undefined,
-                                        endpointPath: ws.path.parts,
-                                    },
+                                    type: "websocket-field-v1",
+                                    title: `${ws.name ?? ws.id} ${messageType}`,
+                                    description: message.description,
+                                    availability: message.availability,
+                                    breadcrumbs: toBreadcrumbs(parents).concat([
+                                        {
+                                            title: messageType,
+                                            slug,
+                                        },
+                                    ]),
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                    extends: message.body.type === "object" ? message.body.extends : undefined,
+                                    endpointPath: ws.path.parts,
                                 });
                                 if (message.body.type === "reference") {
                                     const anchorIdParts = [message.origin === "server" ? "receive" : "send"];
@@ -1272,19 +1236,16 @@ export class AlgoliaSearchRecordGenerator {
                                             anchorIdParts.map((part) => ({ title: part, slug })),
                                         );
                                         fields.push({
-                                            type: "field-v1",
                                             objectID: uuid(),
-                                            value: {
-                                                type: "websocket-field-v1",
-                                                title: property.key,
-                                                description: property.description,
-                                                availability: property.availability,
-                                                breadcrumbs: fieldBreadcrumbs,
-                                                slug,
-                                                version,
-                                                indexSegmentId,
-                                                endpointPath: ws.path.parts,
-                                            },
+                                            type: "websocket-field-v1",
+                                            title: property.key,
+                                            description: property.description,
+                                            availability: property.availability,
+                                            breadcrumbs: fieldBreadcrumbs,
+                                            slug,
+                                            version,
+                                            indexSegmentId,
+                                            endpointPath: ws.path.parts,
                                         });
                                         if (property.valueType.type === "id") {
                                             typeReferences.push({
@@ -1348,20 +1309,17 @@ export class AlgoliaSearchRecordGenerator {
                                     anchorIdParts.map((part) => ({ title: part, slug })),
                                 );
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "webhook-field-v1",
-                                        title: header.key,
-                                        description: header.description,
-                                        availability: header.availability,
-                                        breadcrumbs: fieldBreadcrumbs,
-                                        slug,
-                                        version,
-                                        indexSegmentId,
-                                        method: webhook.method,
-                                        endpointPath,
-                                    },
+                                    type: "webhook-field-v1",
+                                    title: header.key,
+                                    description: header.description,
+                                    availability: header.availability,
+                                    breadcrumbs: fieldBreadcrumbs,
+                                    slug,
+                                    version,
+                                    indexSegmentId,
+                                    method: webhook.method,
+                                    endpointPath,
                                 });
                                 if (header.type.type === "id") {
                                     typeReferences.push({
@@ -1380,24 +1338,21 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         fields.push({
-                            type: "field-v1",
                             objectID: uuid(),
-                            value: {
-                                type: "webhook-field-v1",
-                                title: `${webhook.name ?? webhook.id} Payload`,
-                                description: webhook.payload.description,
-                                breadcrumbs: toBreadcrumbs(parents).concat([
-                                    {
-                                        title: "payload",
-                                        slug: `${webhook.urlSlug}#payload`,
-                                    },
-                                ]),
-                                slug: `${webhook.urlSlug}#payload`,
-                                version,
-                                indexSegmentId: context.indexSegment.id,
-                                method: webhook.method,
-                                endpointPath,
-                            },
+                            type: "webhook-field-v1",
+                            title: `${webhook.name ?? webhook.id} Payload`,
+                            description: webhook.payload.description,
+                            breadcrumbs: toBreadcrumbs(parents).concat([
+                                {
+                                    title: "payload",
+                                    slug: `${webhook.urlSlug}#payload`,
+                                },
+                            ]),
+                            slug: `${webhook.urlSlug}#payload`,
+                            version,
+                            indexSegmentId: context.indexSegment.id,
+                            method: webhook.method,
+                            endpointPath,
                         });
 
                         if (webhook.payload.type.type === "reference") {
@@ -1425,20 +1380,17 @@ export class AlgoliaSearchRecordGenerator {
                                     anchorIdParts.map((part) => ({ title: part, slug })),
                                 );
                                 fields.push({
-                                    type: "field-v1",
                                     objectID: uuid(),
-                                    value: {
-                                        type: "webhook-field-v1",
-                                        title: property.key,
-                                        description: property.description,
-                                        availability: property.availability,
-                                        breadcrumbs: fieldBreadcrumbs,
-                                        slug,
-                                        version,
-                                        indexSegmentId: context.indexSegment.id,
-                                        method: webhook.method,
-                                        endpointPath,
-                                    },
+                                    type: "webhook-field-v1",
+                                    title: property.key,
+                                    description: property.description,
+                                    availability: property.availability,
+                                    breadcrumbs: fieldBreadcrumbs,
+                                    slug,
+                                    version,
+                                    indexSegmentId: context.indexSegment.id,
+                                    method: webhook.method,
+                                    endpointPath,
                                 });
                                 if (property.valueType.type === "id") {
                                     typeReferences.push({
@@ -1671,22 +1623,19 @@ export class AlgoliaSearchRecordGenerator {
                                         });
                                     } else {
                                         fields.push({
-                                            type: "field-v1",
                                             objectID: uuid(),
-                                            value: {
+                                            title: property.key,
+                                            description: property.description,
+                                            availability: property.availability,
+                                            breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
                                                 title: property.key,
-                                                description: property.description,
-                                                availability: property.availability,
-                                                breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
-                                                    title: property.key,
-                                                    slug,
-                                                }),
                                                 slug,
-                                                version: typeReferenceWithMetadata.version,
-                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                extends: object.extends,
-                                                ...additionalProperties,
-                                            },
+                                            }),
+                                            slug,
+                                            version: typeReferenceWithMetadata.version,
+                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                            extends: object.extends,
+                                            ...additionalProperties,
                                         });
                                     }
                                 });
@@ -1712,24 +1661,21 @@ export class AlgoliaSearchRecordGenerator {
                                 enum_.values.forEach((value) => {
                                     const slug = encodeURI(`${baseSlug}.${value.value}`);
                                     fields.push({
-                                        type: "field-v1",
                                         objectID: uuid(),
-                                        value: {
-                                            title: value.value,
-                                            availability: value.availability,
-                                            description: value.description,
-                                            breadcrumbs: [
-                                                ...typeReferenceWithMetadata.breadcrumbs,
-                                                {
-                                                    title: value.value,
-                                                    slug,
-                                                },
-                                            ],
-                                            slug,
-                                            version: typeReferenceWithMetadata.version,
-                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                            ...additionalProperties,
-                                        },
+                                        title: value.value,
+                                        availability: value.availability,
+                                        description: value.description,
+                                        breadcrumbs: [
+                                            ...typeReferenceWithMetadata.breadcrumbs,
+                                            {
+                                                title: value.value,
+                                                slug,
+                                            },
+                                        ],
+                                        slug,
+                                        version: typeReferenceWithMetadata.version,
+                                        indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                        ...additionalProperties,
                                     });
                                 });
                             },
@@ -1761,24 +1707,21 @@ export class AlgoliaSearchRecordGenerator {
                                         });
                                     } else {
                                         fields.push({
-                                            type: "field-v1",
                                             objectID: uuid(),
-                                            value: {
-                                                title,
-                                                description: variant.description,
-                                                availability: variant.availability,
-                                                breadcrumbs: [
-                                                    ...typeReferenceWithMetadata.breadcrumbs,
-                                                    {
-                                                        title,
-                                                        slug,
-                                                    },
-                                                ],
-                                                slug,
-                                                version: typeReferenceWithMetadata.version,
-                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                ...additionalProperties,
-                                            },
+                                            title,
+                                            description: variant.description,
+                                            availability: variant.availability,
+                                            breadcrumbs: [
+                                                ...typeReferenceWithMetadata.breadcrumbs,
+                                                {
+                                                    title,
+                                                    slug,
+                                                },
+                                            ],
+                                            slug,
+                                            version: typeReferenceWithMetadata.version,
+                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                            ...additionalProperties,
                                         });
                                     }
                                 });
@@ -1832,22 +1775,19 @@ export class AlgoliaSearchRecordGenerator {
                                             });
                                         } else {
                                             fields.push({
-                                                type: "field-v1",
                                                 objectID: uuid(),
-                                                value: {
+                                                title: property.key,
+                                                description: property.description,
+                                                availability: property.availability,
+                                                breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
                                                     title: property.key,
-                                                    description: property.description,
-                                                    availability: property.availability,
-                                                    breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
-                                                        title: property.key,
-                                                        slug,
-                                                    }),
                                                     slug,
-                                                    version: typeReferenceWithMetadata.version,
-                                                    indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                    extends: variant.additionalProperties.extends,
-                                                    ...additionalProperties,
-                                                },
+                                                }),
+                                                slug,
+                                                version: typeReferenceWithMetadata.version,
+                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                                extends: variant.additionalProperties.extends,
+                                                ...additionalProperties,
                                             });
                                         }
                                     });

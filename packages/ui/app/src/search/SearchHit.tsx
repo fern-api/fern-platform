@@ -9,9 +9,13 @@ import { useHref } from "../hooks/useHref";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
 import { EndpointRecordV3 } from "./content/EndpointRecordV3";
+import { EndpointRecordV4 } from "./content/EndpointRecordV4";
+import { FieldRecordV1 } from "./content/FieldRecordV1";
+import { MarkdownSectionRecordV1 } from "./content/MarkdownSectionRecordV1";
 import { PageRecord } from "./content/PageRecord";
 import { PageRecordV2 } from "./content/PageRecordV2";
 import { PageRecordV3 } from "./content/PageRecordV3";
+import { PageRecordV4 } from "./content/PageRecordV4";
 
 export declare namespace SearchHit {
     export interface Props {
@@ -48,13 +52,14 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
             "webhook-v3": (hit) => <EndpointRecordV3 hit={hit} isHovered={isHovered} />,
             "page-v3": (hit) => <PageRecordV3 hit={hit} isHovered={isHovered} />,
 
-            // TODO(rohin): Implement these
-            "endpoint-v4": () => null,
-            "websocket-v4": () => null,
-            "webhook-v4": () => null,
-            "page-v4": () => null,
-            "field-v1": () => null,
-            "markdown-section-v1": () => null,
+            "endpoint-v4": (hit) => <EndpointRecordV4 hit={hit} isHovered={isHovered} />,
+            "websocket-v4": (hit) => <EndpointRecordV4 hit={hit} isHovered={isHovered} />,
+            "webhook-v4": (hit) => <EndpointRecordV4 hit={hit} isHovered={isHovered} />,
+            "page-v4": (hit) => <PageRecordV4 hit={hit} isHovered={isHovered} />,
+            "endpoint-field-v1": (hit) => <FieldRecordV1 hit={hit} isHovered={isHovered} />,
+            "websocket-field-v1": (hit) => <FieldRecordV1 hit={hit} isHovered={isHovered} />,
+            "webhook-field-v1": (hit) => <FieldRecordV1 hit={hit} isHovered={isHovered} />,
+            "markdown-section-v1": (hit) => <MarkdownSectionRecordV1 hit={hit} isHovered={isHovered} />,
 
             _other: () => null,
         });

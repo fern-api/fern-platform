@@ -2,7 +2,7 @@ import { createSearchPlaceholderWithVersion } from "@fern-ui/search-utils";
 import { useAtomValue, useSetAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
-import { InstantSearch } from "react-instantsearch";
+import { Configure, InstantSearch } from "react-instantsearch";
 import { captureSentryError } from "../analytics/sentry";
 import {
     CURRENT_VERSION_ATOM,
@@ -88,6 +88,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 
         return (
             <InstantSearch searchClient={searchClient} indexName={indexName}>
+                <Configure filters="type: 'endpoint-v4'" hitsPerPage={40} />
                 <SearchMobileBox ref={inputRef} placeholder={placeholder} className="mx-4 mt-4" />
                 <SearchMobileHits>{children}</SearchMobileHits>
             </InstantSearch>

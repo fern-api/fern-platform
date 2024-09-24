@@ -17,7 +17,6 @@ export * from "./AlgoliaMarkdownSectionRecordV1";
 export * from "./AlgoliaEndpointFieldRecordV1";
 export * from "./AlgoliaWebSocketFieldRecordV1";
 export * from "./AlgoliaWebhookFieldRecordV1";
-export * from "./AlgoliaFieldRecordV1";
 export * from "./IndexSegment";
 export * from "./SingleAlgoliaIndexInfo";
 export * from "./UnversionedSingleAlgoliaIndexInfo";
