@@ -1468,6 +1468,9 @@ importers:
       eslint-plugin-storybook:
         specifier: ^0.8.0
         version: 0.8.0(eslint@8.57.0)(typescript@5.4.3)
+      instantsearch.js:
+        specifier: ^4.63.0
+        version: 4.68.1(algoliasearch@4.24.0)
       jsdom:
         specifier: ^24.0.0
         version: 24.0.0
