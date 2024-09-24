@@ -1,5 +1,4 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { GeneratorReleaseRequest } from "@fern-api/fdr-sdk/src/client/generated/api/resources/generators";
 import { InvalidVersionError } from "../../../api/generated/api/resources/generators";
 import { createMockFdrApplication } from "../../mock";
 
@@ -280,7 +279,7 @@ it("generator version happy path update", async () => {
         },
     });
 
-    const releaseRequest: GeneratorReleaseRequest = {
+    const releaseRequest: FdrAPI.generators.GeneratorReleaseRequest = {
         generatorId: FdrAPI.generators.GeneratorId("this-is-the-happy-path"),
         irVersion: 2,
         version: "3.1.2",
@@ -316,7 +315,7 @@ it("generator version happy path update", async () => {
     expect(release?.changelogEntry).toEqual(releaseRequest.changelogEntry);
 
     // Overwrite the release's changelog
-    const updateReleaseRequest: GeneratorReleaseRequest = {
+    const updateReleaseRequest: FdrAPI.generators.GeneratorReleaseRequest = {
         generatorId: FdrAPI.generators.GeneratorId("this-is-the-happy-path"),
         irVersion: 2,
         version: "3.1.2",

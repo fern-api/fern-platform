@@ -12,7 +12,7 @@ import {
     visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
-import { WebSocketNode, WebhookNode } from "@fern-api/fdr-sdk/src/navigation";
+import { WebSocketNode, WebhookNode } from "@fern-api/fdr-sdk/dist/navigation";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";

@@ -1,5 +1,4 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { FernRepository } from "@fern-api/fdr-sdk/src/client/generated/api";
 import { PullRequest, PullRequestState } from "../../../api/generated/api";
 import { createMockFdrApplication } from "../../mock";
 
@@ -8,7 +7,7 @@ const fdrApplication = createMockFdrApplication({
 });
 
 it("repo happy path", async () => {
-    const repo1: FernRepository = {
+    const repo1: FdrAPI.FernRepository = {
         type: "sdk",
         id: { type: "github", id: "acme-123" },
         name: "repo1",
@@ -21,7 +20,7 @@ it("repo happy path", async () => {
     };
     await fdrApplication.dao.git().upsertRepository({ repository: repo1 });
 
-    const repo2: FernRepository = {
+    const repo2: FdrAPI.FernRepository = {
         type: "config",
         id: { type: "github", id: "octo-123" },
         name: "repo1",
@@ -47,7 +46,7 @@ it("repo happy path", async () => {
 });
 
 it("pulls happy path", async () => {
-    const repository: FernRepository = {
+    const repository: FdrAPI.FernRepository = {
         type: "sdk",
         id: { type: "github", id: "12345" },
         name: "repoForPRs",

@@ -1,1 +1,1 @@
-export * from "@fern-api/fdr-sdk/src/client/generated/api/resources/generators/types";
+export * from "@fern-api/fdr-sdk/dist/client/generated/api/resources/generators/types";
