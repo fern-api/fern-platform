@@ -139,7 +139,7 @@ describe("algolia utils", () => {
                 },
                 [],
                 FdrAPI.IndexSegmentId("testindex"),
-                FernNavigation.Slug("v1/someslug"),
+                FernNavigation.V1.Slug("v1/someslug"),
             ).map((record) => {
                 return {
                     ...record,

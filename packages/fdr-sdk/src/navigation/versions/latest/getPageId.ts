@@ -1,11 +1,11 @@
-import { FernNavigation } from "../..";
-import { visitDiscriminatedUnion } from "../../utils";
+import type { NavigationNodePage, PageId } from ".";
+import { visitDiscriminatedUnion } from "../../../utils";
 
-const RETURN_PAGEID = (node: { pageId: FernNavigation.PageId }) => node.pageId;
-const RETURN_OVERVIEW_PAGEID = (node: { overviewPageId?: FernNavigation.PageId }) => node.overviewPageId;
+const RETURN_PAGEID = (node: { pageId: PageId }) => node.pageId;
+const RETURN_OVERVIEW_PAGEID = (node: { overviewPageId?: PageId }) => node.overviewPageId;
 const RETURN_UNDEFINED = () => undefined;
 
-export function getPageId(node: FernNavigation.NavigationNodePage): FernNavigation.PageId | undefined {
+export function getPageId(node: NavigationNodePage): PageId | undefined {
     return visitDiscriminatedUnion(node)._visit({
         section: RETURN_OVERVIEW_PAGEID,
         apiReference: RETURN_OVERVIEW_PAGEID,

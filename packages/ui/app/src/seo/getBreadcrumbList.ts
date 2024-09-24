@@ -17,7 +17,7 @@ export function getBreadcrumbList(
     let title = node.title;
 
     if (FernNavigation.isPage(node)) {
-        const pageId = FernNavigation.utils.getPageId(node);
+        const pageId = FernNavigation.getPageId(node);
         if (pageId != null) {
             const page = pages[pageId];
             if (page != null) {

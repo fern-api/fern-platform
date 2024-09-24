@@ -18,7 +18,7 @@ async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<BundledMDX | undefined> {
-    const pageId = FernNavigation.utils.getPageId(node);
+    const pageId = FernNavigation.getPageId(node);
     if (pageId == null) {
         return;
     }
@@ -72,7 +72,7 @@ export async function resolveDocsContent({
         const pageIds = new Set<FernNavigation.PageId>();
         FernNavigation.traverseNavigation(node, (n) => {
             if (FernNavigation.hasMarkdown(n)) {
-                const pageId = FernNavigation.utils.getPageId(n);
+                const pageId = FernNavigation.getPageId(n);
                 if (pageId != null) {
                     pageIds.add(pageId);
                 }
@@ -246,7 +246,7 @@ async function resolveMarkdownPage(
     domain: string,
     neighbors: DocsContent.Neighbors,
 ): Promise<DocsContent.CustomMarkdownPage | undefined> {
-    const pageId = FernNavigation.utils.getPageId(node);
+    const pageId = FernNavigation.getPageId(node);
     if (pageId == null) {
         return;
     }

@@ -12,7 +12,7 @@ import {
     visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
-import { HttpMethod, WebSocketNode, WebhookNode } from "@fern-api/fdr-sdk/dist/navigation";
+import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/src/navigation";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
@@ -283,17 +283,17 @@ export class AlgoliaSearchRecordGenerator {
             return this.generateAlgoliaSearchRecordsForChangelogSection(item, context);
         } else if (item.type === "changelogV3") {
             return this.generateAlgoliaSearchRecordsForChangelogNode(
-                item.node as FernNavigation.ChangelogNode,
+                item.node as FernNavigation.V1.ChangelogNode,
                 context,
             );
         } else if (item.type === "apiV2") {
             // TODO(rohin): Remove this once all search is migrated to new version
             return this.generateAlgoliaSearchRecordsForApiReferenceNode(
-                item.node as FernNavigation.ApiReferenceNode,
+                item.node as FernNavigation.V1.ApiReferenceNode,
                 context,
             ).concat(
                 this.generateAlgoliaSearchRecordsForApiReferenceNodeV2(
-                    item.node as FernNavigation.ApiReferenceNode,
+                    item.node as FernNavigation.V1.ApiReferenceNode,
                     context,
                 ),
             );
@@ -302,15 +302,14 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private generateAlgoliaSearchRecordsForApiReferenceNode(
-        root: FernNavigation.ApiReferenceNode,
+        root: FernNavigation.V1.ApiReferenceNode,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         const api = this.config.apiDefinitionsById.get(root.apiDefinitionId);
         if (api == null) {
             LOGGER.error("Failed to find API definition for API reference node. id=", root.apiDefinitionId);
         }
-        const holder =
-            api != null ? FernNavigation.ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
+        const holder = api != null ? ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
         const records: AlgoliaSearchRecord[] = [];
 
         const breadcrumbs = context.pathParts.map((part) => part.name);
@@ -319,17 +318,17 @@ export class AlgoliaSearchRecordGenerator {
             context.indexSegment.type === "versioned"
                 ? ({
                       id: context.indexSegment.version.id,
-                      slug: FernNavigation.Slug(
+                      slug: FernNavigation.V1.Slug(
                           context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
                       ),
                   } satisfies Algolia.AlgoliaRecordVersionV3)
                 : undefined;
 
-        function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): string[] {
+        function toBreadcrumbs(parents: FernNavigation.V1.NavigationNode[]): string[] {
             return [
                 ...breadcrumbs,
                 ...parents
-                    .filter(FernNavigation.hasMetadata)
+                    .filter(FernNavigation.V1.hasMetadata)
                     .filter((parent) =>
                         parent.type === "apiReference"
                             ? parent.hideTitle !== true
@@ -341,8 +340,8 @@ export class AlgoliaSearchRecordGenerator {
             ];
         }
 
-        FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
-            if (!FernNavigation.hasMetadata(node)) {
+        FernNavigation.V1.traverseNavigation(root, (node, _index, parents) => {
+            if (!FernNavigation.V1.hasMetadata(node)) {
                 return;
             }
 
@@ -350,7 +349,7 @@ export class AlgoliaSearchRecordGenerator {
                 return "skip";
             }
 
-            if (FernNavigation.isApiLeaf(node)) {
+            if (FernNavigation.V1.isApiLeaf(node)) {
                 visitDiscriminatedUnion(node)._visit({
                     endpoint: (node) => {
                         const endpoint = holder?.endpoints.get(node.endpointId);
@@ -628,8 +627,8 @@ export class AlgoliaSearchRecordGenerator {
                         );
                     },
                 });
-            } else if (FernNavigation.hasMarkdown(node)) {
-                const pageId = FernNavigation.utils.getPageId(node);
+            } else if (FernNavigation.V1.hasMarkdown(node)) {
+                const pageId = FernNavigation.V1.getPageId(node);
                 if (pageId == null) {
                     return;
                 }
@@ -662,15 +661,14 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private generateAlgoliaSearchRecordsForApiReferenceNodeV2(
-        root: FernNavigation.ApiReferenceNode,
+        root: FernNavigation.V1.ApiReferenceNode,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         const api = this.config.apiDefinitionsById.get(root.apiDefinitionId);
         if (api == null) {
             LOGGER.error("Failed to find API definition for API reference node. id=", root.apiDefinitionId);
         }
-        const holder =
-            api != null ? FernNavigation.ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
+        const holder = api != null ? ApiDefinitionHolder.create(convertDbAPIDefinitionToRead(api)) : undefined;
         const records: AlgoliaSearchRecord[] = [];
 
         const breadcrumbs = context.pathParts.map((part) => ({
@@ -682,17 +680,17 @@ export class AlgoliaSearchRecordGenerator {
             context.indexSegment.type === "versioned"
                 ? ({
                       id: context.indexSegment.version.id,
-                      slug: FernNavigation.Slug(
+                      slug: FernNavigation.V1.Slug(
                           context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
                       ),
                   } satisfies Algolia.AlgoliaRecordVersionV3)
                 : undefined;
 
-        function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): BreadcrumbsInfo[] {
+        function toBreadcrumbs(parents: FernNavigation.V1.NavigationNode[]): BreadcrumbsInfo[] {
             return [
                 ...breadcrumbs,
                 ...parents
-                    .filter(FernNavigation.hasMetadata)
+                    .filter(FernNavigation.V1.hasMetadata)
                     .filter((parent) =>
                         parent.type === "apiReference"
                             ? parent.hideTitle !== true
@@ -708,14 +706,14 @@ export class AlgoliaSearchRecordGenerator {
         }
 
         function anchorIdToSlug(
-            node: FernNavigation.EndpointNode | WebSocketNode | WebhookNode,
+            node: FernNavigation.V1.EndpointNode | FernNavigation.V1.WebSocketNode | FernNavigation.V1.WebhookNode,
             anchorIdParts: string[],
-        ): FernNavigation.Slug {
-            return FernNavigation.Slug(encodeURI(`${node.slug}#${anchorIdParts.join(".")}`));
+        ): FernNavigation.V1.Slug {
+            return FernNavigation.V1.Slug(encodeURI(`${node.slug}#${anchorIdParts.join(".")}`));
         }
 
-        FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
-            if (!FernNavigation.hasMetadata(node)) {
+        FernNavigation.V1.traverseNavigation(root, (node, _index, parents) => {
+            if (!FernNavigation.V1.hasMetadata(node)) {
                 return;
             }
 
@@ -723,7 +721,7 @@ export class AlgoliaSearchRecordGenerator {
                 return "skip";
             }
 
-            if (FernNavigation.isApiLeaf(node)) {
+            if (FernNavigation.V1.isApiLeaf(node)) {
                 const indexSegmentId = context.indexSegment.id;
                 const breadcrumbs = toBreadcrumbs(parents);
                 visitDiscriminatedUnion(node)._visit({
@@ -1132,6 +1130,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         endpointPath: ws.path.parts,
                                         type: "websocket-field-v1",
+                                        method: "GET",
                                     });
                                 }
                             });
@@ -1167,6 +1166,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         endpointPath: ws.path.parts,
                                         type: "websocket-field-v1",
+                                        method: "GET",
                                     });
                                 }
                             });
@@ -1202,6 +1202,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         endpointPath: ws.path.parts,
                                         type: "websocket-field-v1",
+                                        method: "GET",
                                     });
                                 }
                             });
@@ -1246,6 +1247,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         endpointPath: ws.path.parts,
                                         type: "websocket-field-v1",
+                                        method: "GET",
                                     });
                                 } else if (message.body.type === "object") {
                                     message.body.properties.forEach((property) => {
@@ -1281,6 +1283,7 @@ export class AlgoliaSearchRecordGenerator {
                                                 indexSegmentId,
                                                 endpointPath: ws.path.parts,
                                                 type: "websocket-field-v1",
+                                                method: "GET",
                                             });
                                         }
                                     });
@@ -1362,7 +1365,7 @@ export class AlgoliaSearchRecordGenerator {
                             });
                         }
 
-                        const slug = FernNavigation.Slug(encodeURI(`${webhook.urlSlug}#payload`));
+                        const slug = FernNavigation.V1.Slug(encodeURI(`${webhook.urlSlug}#payload`));
                         fields.push({
                             objectID: uuid(),
                             type: "webhook-field-v1",
@@ -1461,8 +1464,8 @@ export class AlgoliaSearchRecordGenerator {
                         );
                     },
                 });
-            } else if (FernNavigation.hasMarkdown(node)) {
-                const pageId = FernNavigation.utils.getPageId(node);
+            } else if (FernNavigation.V1.hasMarkdown(node)) {
+                const pageId = FernNavigation.V1.getPageId(node);
                 if (pageId == null) {
                     return;
                 }
@@ -1604,7 +1607,7 @@ export class AlgoliaSearchRecordGenerator {
         typeReferencesWithMetadata.forEach((typeReferenceWithMetadata) => {
             const endpointProperties = {
                 type: "endpoint-field-v1" as const,
-                method: typeReferenceWithMetadata.method as HttpMethod,
+                method: typeReferenceWithMetadata.method,
                 endpointPath: typeReferenceWithMetadata.endpointPath,
                 isResponseStream: typeReferenceWithMetadata.isResponseStream,
             };
@@ -1614,7 +1617,7 @@ export class AlgoliaSearchRecordGenerator {
             };
             const webhookProperties = {
                 type: "webhook-field-v1" as const,
-                method: typeReferenceWithMetadata.method as HttpMethod,
+                method: typeReferenceWithMetadata.method,
                 endpointPath: typeReferenceWithMetadata.endpointPath,
             };
             const additionalProperties =
@@ -1634,7 +1637,7 @@ export class AlgoliaSearchRecordGenerator {
                             object: (object) => {
                                 const referenceLeaves: TypeReferenceWithMetadata[] = [];
                                 object.properties.forEach((property) => {
-                                    const slug = FernNavigation.Slug(encodeURI(`${baseSlug}.${property.key}`));
+                                    const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${property.key}`));
                                     if (
                                         property.valueType.type === "id" &&
                                         !visitedNodes.has(property.valueType.value)
@@ -1700,7 +1703,7 @@ export class AlgoliaSearchRecordGenerator {
                             alias: () => undefined,
                             enum: (enum_) => {
                                 enum_.values.forEach((value) => {
-                                    const slug = FernNavigation.Slug(encodeURI(`${baseSlug}.${value.value}`));
+                                    const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${value.value}`));
                                     fields.push({
                                         objectID: uuid(),
                                         title: value.value,
@@ -1730,7 +1733,9 @@ export class AlgoliaSearchRecordGenerator {
                                             : variant.type.type === "id"
                                               ? variant.type.value
                                               : "";
-                                    const slug = FernNavigation.Slug(encodeURI(`${baseSlug}.${variant.displayName}`));
+                                    const slug = FernNavigation.V1.Slug(
+                                        encodeURI(`${baseSlug}.${variant.displayName}`),
+                                    );
                                     if (variant.type.type === "id" && !visitedNodes.has(variant.type.value)) {
                                         referenceLeaves.push({
                                             reference: variant.type,
@@ -1777,7 +1782,7 @@ export class AlgoliaSearchRecordGenerator {
                                 const referenceLeaves: TypeReferenceWithMetadata[] = [];
                                 discriminatedUnion.variants.forEach((variant) => {
                                     const title = variant.displayName ?? titleCase(variant.discriminantValue);
-                                    const slug = FernNavigation.Slug(encodeURI(`${baseSlug}.${title}`));
+                                    const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${title}`));
 
                                     variant.additionalProperties.extends.forEach((extend) => {
                                         if (!visitedNodes.has(extend)) {
@@ -1934,7 +1939,7 @@ export class AlgoliaSearchRecordGenerator {
     }
 
     private generateAlgoliaSearchRecordsForChangelogNode(
-        root: FernNavigation.ChangelogNode,
+        root: FernNavigation.V1.ChangelogNode,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         const records: AlgoliaSearchRecord[] = [];
@@ -1945,17 +1950,17 @@ export class AlgoliaSearchRecordGenerator {
             context.indexSegment.type === "versioned"
                 ? {
                       id: context.indexSegment.version.id,
-                      slug: FernNavigation.Slug(
+                      slug: FernNavigation.V1.Slug(
                           context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
                       ),
                   }
                 : undefined;
 
-        function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): string[] {
+        function toBreadcrumbs(parents: FernNavigation.V1.NavigationNode[]): string[] {
             return [
                 ...breadcrumbs,
                 ...parents
-                    .filter(FernNavigation.hasMetadata)
+                    .filter(FernNavigation.V1.hasMetadata)
                     .filter((parent) =>
                         parent.type === "apiReference"
                             ? parent.hideTitle !== true
@@ -1967,8 +1972,8 @@ export class AlgoliaSearchRecordGenerator {
             ];
         }
 
-        FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
-            if (!FernNavigation.hasMetadata(node)) {
+        FernNavigation.V1.traverseNavigation(root, (node, _index, parents) => {
+            if (!FernNavigation.V1.hasMetadata(node)) {
                 return;
             }
 
@@ -1976,8 +1981,8 @@ export class AlgoliaSearchRecordGenerator {
                 return "skip";
             }
 
-            if (FernNavigation.hasMarkdown(node)) {
-                const pageId = FernNavigation.utils.getPageId(node);
+            if (FernNavigation.V1.hasMarkdown(node)) {
+                const pageId = FernNavigation.V1.getPageId(node);
                 if (pageId == null) {
                     return;
                 }
@@ -2105,7 +2110,7 @@ export class AlgoliaSearchRecordGenerator {
         const records: AlgoliaSearchRecord[] = [];
         if (changelog.pageId != null) {
             const changelogPageContent = this.config.docsDefinition.pages[changelog.pageId];
-            const urlSlug = FernNavigation.Slug(changelog.urlSlug);
+            const urlSlug = FernNavigation.V1.Slug(changelog.urlSlug);
             const title = changelog.title ?? fallbackTitle;
 
             if (changelogPageContent != null) {
@@ -2123,15 +2128,15 @@ export class AlgoliaSearchRecordGenerator {
                             breadcrumbs: [
                                 {
                                     title,
-                                    slug: FernNavigation.Slug(urlSlug),
+                                    slug: FernNavigation.V1.Slug(urlSlug),
                                 },
                             ],
-                            slug: FernNavigation.Slug(urlSlug),
+                            slug: FernNavigation.V1.Slug(urlSlug),
                             version:
                                 indexSegment.type === "versioned"
                                     ? {
                                           id: indexSegment.version.id,
-                                          slug: FernNavigation.Slug(
+                                          slug: FernNavigation.V1.Slug(
                                               indexSegment.version.urlSlug ?? indexSegment.version.id,
                                           ),
                                       }
@@ -2169,15 +2174,15 @@ export class AlgoliaSearchRecordGenerator {
                             breadcrumbs: [
                                 {
                                     title,
-                                    slug: FernNavigation.Slug(urlSlug),
+                                    slug: FernNavigation.V1.Slug(urlSlug),
                                 },
                             ],
-                            slug: FernNavigation.Slug(urlSlug),
+                            slug: FernNavigation.V1.Slug(urlSlug),
                             version:
                                 indexSegment.type === "versioned"
                                     ? {
                                           id: indexSegment.version.id,
-                                          slug: FernNavigation.Slug(
+                                          slug: FernNavigation.V1.Slug(
                                               indexSegment.version.urlSlug ?? indexSegment.version.id,
                                           ),
                                       }
@@ -2424,7 +2429,7 @@ export function getMarkdownSections(
     markdownSection: MarkdownNode,
     breadcrumbs: BreadcrumbsInfo[],
     indexSegmentId: FdrAPI.IndexSegmentId,
-    slug: FernNavigation.Slug,
+    slug: FernNavigation.V1.Slug,
 ): AlgoliaSearchRecord[] {
     const sectionBreadcrumbs = markdownSection.heading
         ? breadcrumbs.concat([

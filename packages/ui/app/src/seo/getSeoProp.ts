@@ -74,7 +74,7 @@ export function getSeoProps(
     const toHref = getToHref(isTrailingSlashEnabled);
     seo.canonical = `https://${domain}/${toHref(node.canonicalSlug ?? node.slug)}`;
 
-    const pageId = FernNavigation.utils.getPageId(node);
+    const pageId = FernNavigation.getPageId(node);
 
     let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? EMPTY_METADATA_CONFIG;
     let seoTitleFromMarkdownH1;

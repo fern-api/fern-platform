@@ -1,5 +1,5 @@
 import { FernNavigation } from "../..";
-import { getPageId } from "./getPageId";
+import { getPageId } from "../versions/latest/getPageId";
 
 export function collectPageIds(nav: FernNavigation.NavigationNode): Set<FernNavigation.PageId> {
     const pageIds = new Set<FernNavigation.PageId>();

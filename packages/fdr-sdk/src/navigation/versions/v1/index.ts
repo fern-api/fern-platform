@@ -15,6 +15,7 @@ export * from "./NavigationNodeWithRedirect";
 export * from "./convertAvailability";
 export * from "./converters/toRootNode";
 export * from "./followRedirect";
+export * from "./getPageId";
 export * from "./slugjoin";
 export * from "./toDefaultSlug";
 export * from "./traverseNavigation";
