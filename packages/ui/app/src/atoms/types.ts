@@ -53,7 +53,6 @@ export interface AnnouncementConfig {
 }
 
 export interface DocsProps {
-    docs: {};
     baseUrl: DocsV2Read.BaseUrl;
     navigation: NavigationProps;
     title: string | undefined;
