@@ -15,7 +15,7 @@ export class ApiTypeResolver {
     public constructor(
         private types: Record<string, APIV1Read.TypeDefinition>,
         private mdxOptions: FernSerializeMdxOptions | undefined,
-        private serializeMdx: MDX_SERIALIZER = serializeMdx,
+        private serializeMdx: MDX_SERIALIZER,
     ) {}
 
     public resolve = once(async (): Promise<Record<string, ResolvedTypeDefinition>> => {

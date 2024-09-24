@@ -50,7 +50,7 @@ export class ApiDefinitionResolver {
         private pages: Record<string, DocsV1Read.PageContent>,
         private featureFlags: FeatureFlags,
         private mdxOptions: FernSerializeMdxOptions | undefined,
-        private serializeMdx: MDX_SERIALIZER = serializeMdx,
+        private serializeMdx: MDX_SERIALIZER,
     ) {
         this.definitionResolver = new ApiEndpointResolver(
             this.collector,
