@@ -44,7 +44,7 @@ export class DocsKVCache implements ApiDefinitionResolverCache {
         apiDefinitionId: APIV1Read.ApiDefinitionId;
         endpoint: ResolvedEndpointDefinition;
     }): Promise<void> {
-        await kv.sadd(this.getResovledEndpointId({ apiDefinitionId, endpointId: endpoint.id }), endpoint);
+        await kv.set(this.getResovledEndpointId({ apiDefinitionId, endpointId: endpoint.id }), endpoint);
     }
     async getResolvedEndpoint({
         apiDefinitionId,
