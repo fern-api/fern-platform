@@ -1,5 +1,5 @@
 import type { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { ApiDefinitionResolverCache, ResolvedEndpointDefinition } from "@fern-ui/ui";
+import { ApiDefinitionResolverCache, ResolvedApiPageMetadata, ResolvedEndpointDefinition } from "@fern-ui/ui";
 import { kv } from "@vercel/kv";
 
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
@@ -64,5 +64,35 @@ export class DocsKVCache implements ApiDefinitionResolverCache {
         endpointId: APIV1Read.EndpointId;
     }): string {
         return `${PREFIX}:${this.domain}:${apiDefinitionId}:endpoint:${endpointId}`;
+    }
+
+    async putApiPageMetadata({
+        apiDefinitionId,
+        page,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        page: ResolvedApiPageMetadata;
+    }): Promise<void> {
+        await kv.set(this.getResovledApiPageId({ apiDefinitionId, pageId: page.id }), page);
+    }
+
+    async getApiPageMetadata({
+        apiDefinitionId,
+        pageId,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        pageId: APIV1Read.PageId;
+    }): Promise<ResolvedApiPageMetadata | null | undefined> {
+        return await kv.get(this.getResovledApiPageId({ apiDefinitionId, pageId }));
+    }
+
+    private getResovledApiPageId({
+        apiDefinitionId,
+        pageId,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        pageId: APIV1Read.PageId;
+    }): string {
+        return `${PREFIX}:${this.domain}:${apiDefinitionId}:api-page:${pageId}`;
     }
 }
