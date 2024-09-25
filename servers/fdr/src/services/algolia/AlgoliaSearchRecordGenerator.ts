@@ -12,6 +12,7 @@ import {
     visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
+import { kebabCase } from "@fern-api/fdr-sdk/src/utils";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
@@ -774,6 +775,7 @@ export class AlgoliaSearchRecordGenerator {
                                         method: endpoint.method,
                                         endpointPath: endpoint.path.parts,
                                         isResponseStream: node.isResponseStream,
+                                        propertyKey: header.key,
                                         type: "endpoint-field-v1",
                                     });
                                 }
@@ -813,6 +815,7 @@ export class AlgoliaSearchRecordGenerator {
                                         method: endpoint.method,
                                         endpointPath: endpoint.path.parts,
                                         isResponseStream: node.isResponseStream,
+                                        propertyKey: param.key,
                                         type: "endpoint-field-v1",
                                     });
                                 }
@@ -852,6 +855,7 @@ export class AlgoliaSearchRecordGenerator {
                                         method: endpoint.method,
                                         endpointPath: endpoint.path.parts,
                                         isResponseStream: node.isResponseStream,
+                                        propertyKey: param.key,
                                         type: "endpoint-field-v1",
                                     });
                                 }
@@ -875,6 +879,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    propertyKey: undefined,
                                     type: "endpoint-field-v1",
                                 });
                             } else if (endpoint.request.type.type === "formData") {
@@ -911,6 +916,7 @@ export class AlgoliaSearchRecordGenerator {
                                                 method: endpoint.method,
                                                 endpointPath: endpoint.path.parts,
                                                 isResponseStream: node.isResponseStream,
+                                                propertyKey: property.key,
                                                 type: "endpoint-field-v1",
                                             });
                                         }
@@ -949,6 +955,7 @@ export class AlgoliaSearchRecordGenerator {
                                             method: endpoint.method,
                                             endpointPath: endpoint.path.parts,
                                             isResponseStream: node.isResponseStream,
+                                            propertyKey: property.key,
                                             type: "endpoint-field-v1",
                                         });
                                     }
@@ -973,6 +980,7 @@ export class AlgoliaSearchRecordGenerator {
                                     method: endpoint.method,
                                     endpointPath: endpoint.path.parts,
                                     isResponseStream: node.isResponseStream,
+                                    propertyKey: undefined,
                                     type: "endpoint-field-v1",
                                 });
                             } else if (endpoint.response.type.type === "object") {
@@ -1008,6 +1016,7 @@ export class AlgoliaSearchRecordGenerator {
                                             method: endpoint.method,
                                             endpointPath: endpoint.path.parts,
                                             isResponseStream: node.isResponseStream,
+                                            propertyKey: property.key,
                                             type: "endpoint-field-v1",
                                         });
                                     }
@@ -1078,6 +1087,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         endpointPath: ws.path.parts,
                                         type: "websocket-field-v1",
+                                        propertyKey: param.key,
                                         method: "GET",
                                     });
                                 }
@@ -1114,6 +1124,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         endpointPath: ws.path.parts,
                                         type: "websocket-field-v1",
+                                        propertyKey: param.key,
                                         method: "GET",
                                     });
                                 }
@@ -1150,6 +1161,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         endpointPath: ws.path.parts,
                                         type: "websocket-field-v1",
+                                        propertyKey: param.key,
                                         method: "GET",
                                     });
                                 }
@@ -1195,6 +1207,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         endpointPath: ws.path.parts,
                                         type: "websocket-field-v1",
+                                        propertyKey: undefined,
                                         method: "GET",
                                     });
                                 } else if (message.body.type === "object") {
@@ -1231,6 +1244,7 @@ export class AlgoliaSearchRecordGenerator {
                                                 indexSegmentId,
                                                 endpointPath: ws.path.parts,
                                                 type: "websocket-field-v1",
+                                                propertyKey: property.key,
                                                 method: "GET",
                                             });
                                         }
@@ -1307,6 +1321,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         method: webhook.method,
                                         endpointPath,
+                                        propertyKey: header.key,
                                         type: "websocket-field-v1",
                                     });
                                 }
@@ -1349,6 +1364,7 @@ export class AlgoliaSearchRecordGenerator {
                                 indexSegmentId,
                                 method: webhook.method,
                                 endpointPath,
+                                propertyKey: undefined,
                                 type: "websocket-field-v1",
                             });
                         } else if (webhook.payload.type.type === "object") {
@@ -1382,6 +1398,7 @@ export class AlgoliaSearchRecordGenerator {
                                         indexSegmentId,
                                         method: webhook.method,
                                         endpointPath,
+                                        propertyKey: property.key,
                                         type: "websocket-field-v1",
                                     });
                                 }
@@ -1579,204 +1596,47 @@ export class AlgoliaSearchRecordGenerator {
 
             visitDiscriminatedUnion(typeReferenceWithMetadata.reference)._visit({
                 id: (id) => {
-                    const type = types[id.value];
-                    if (type != null) {
-                        visitDiscriminatedUnion(type.shape)._visit({
-                            object: (object) => {
-                                const referenceLeaves: TypeReferenceWithMetadata[] = [];
-                                object.properties.forEach((property) => {
-                                    const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${property.key}`));
-                                    if (
-                                        property.valueType.type === "id" &&
-                                        !visitedNodes.has(property.valueType.value)
-                                    ) {
-                                        referenceLeaves.push({
-                                            reference: property.valueType,
-                                            anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, property.key],
-                                            breadcrumbs: [
-                                                ...typeReferenceWithMetadata.breadcrumbs,
-                                                { title: property.key, slug: encodeURI(`${baseSlug}.${property.key}`) },
-                                            ],
-                                            slugPrefix: slug,
-                                            version: typeReferenceWithMetadata.version,
-                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                            method: typeReferenceWithMetadata.method,
-                                            endpointPath: typeReferenceWithMetadata.endpointPath,
-                                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                            type: typeReferenceWithMetadata.type,
-                                        });
-                                    } else {
-                                        fields.push({
-                                            objectID: uuid(),
-                                            title: property.key,
-                                            description: property.description,
-                                            availability: property.availability,
-                                            breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
-                                                title: property.key,
-                                                slug,
-                                            }),
-                                            slug,
-                                            version: typeReferenceWithMetadata.version,
-                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                            extends: object.extends,
-                                            ...additionalProperties,
-                                        });
-                                    }
-                                });
-                                object.extends.forEach((extend) => {
-                                    if (!visitedNodes.has(extend)) {
-                                        referenceLeaves.push({
-                                            reference: { type: "id", value: extend, default: undefined },
-                                            anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
-                                            breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
-                                            slugPrefix: baseSlug,
-                                            version: typeReferenceWithMetadata.version,
-                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                            method: typeReferenceWithMetadata.method,
-                                            endpointPath: typeReferenceWithMetadata.endpointPath,
-                                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                            type: typeReferenceWithMetadata.type,
-                                        });
-                                    }
-                                });
-
-                                fields.push(
-                                    ...this.collectReferencedTypesToContentV2(
-                                        referenceLeaves,
-                                        types,
-                                        new Set(visitedNodes).add(type.name),
-                                    ),
-                                );
-                            },
-                            alias: () => undefined,
-                            enum: (enum_) => {
-                                enum_.values.forEach((value) => {
-                                    const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${value.value}`));
-                                    fields.push({
-                                        objectID: uuid(),
-                                        title: value.value,
-                                        availability: value.availability,
-                                        description: value.description,
-                                        breadcrumbs: [
-                                            ...typeReferenceWithMetadata.breadcrumbs,
-                                            {
-                                                title: value.value,
-                                                slug,
-                                            },
-                                        ],
-                                        slug,
-                                        version: typeReferenceWithMetadata.version,
-                                        indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                        extends: undefined,
-                                        ...additionalProperties,
-                                    });
-                                });
-                            },
-                            undiscriminatedUnion: (undiscriminatedUnion) => {
-                                const referenceLeaves: TypeReferenceWithMetadata[] = [];
-                                undiscriminatedUnion.variants.forEach((variant) => {
-                                    const title =
-                                        variant.displayName != null
-                                            ? variant.displayName
-                                            : variant.type.type === "id"
-                                              ? variant.type.value
-                                              : "";
-                                    const slug = FernNavigation.V1.Slug(
-                                        encodeURI(`${baseSlug}.${variant.displayName}`),
-                                    );
-                                    if (variant.type.type === "id" && !visitedNodes.has(variant.type.value)) {
-                                        referenceLeaves.push({
-                                            reference: variant.type,
-                                            anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, title],
-                                            breadcrumbs: [
-                                                ...typeReferenceWithMetadata.breadcrumbs,
-                                                { title, slug: encodeURI(`${baseSlug}.${title}`) },
-                                            ],
-                                            slugPrefix: slug,
-                                            version: typeReferenceWithMetadata.version,
-                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                            method: typeReferenceWithMetadata.method,
-                                            endpointPath: typeReferenceWithMetadata.endpointPath,
-                                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                            type: typeReferenceWithMetadata.type,
-                                        });
-                                    } else {
-                                        fields.push({
-                                            objectID: uuid(),
-                                            title,
-                                            description: variant.description,
-                                            availability: variant.availability,
-                                            breadcrumbs: [
-                                                ...typeReferenceWithMetadata.breadcrumbs,
-                                                {
-                                                    title,
-                                                    slug,
-                                                },
-                                            ],
-                                            slug,
-                                            version: typeReferenceWithMetadata.version,
-                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                            extends: undefined,
-                                            ...additionalProperties,
-                                        });
-                                    }
-                                });
-
-                                fields.push(
-                                    ...this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
-                                );
-                            },
-                            discriminatedUnion: (discriminatedUnion) => {
-                                const referenceLeaves: TypeReferenceWithMetadata[] = [];
-                                discriminatedUnion.variants.forEach((variant) => {
-                                    const title = variant.displayName ?? titleCase(variant.discriminantValue);
-                                    const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${title}`));
-
-                                    variant.additionalProperties.extends.forEach((extend) => {
-                                        if (!visitedNodes.has(extend)) {
-                                            referenceLeaves.push({
-                                                reference: { type: "id", value: extend, default: undefined },
-                                                anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
-                                                breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
-                                                slugPrefix: baseSlug,
-                                                version: typeReferenceWithMetadata.version,
-                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                method: typeReferenceWithMetadata.method,
-                                                endpointPath: typeReferenceWithMetadata.endpointPath,
-                                                isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                                type: typeReferenceWithMetadata.type,
-                                            });
-                                        }
-                                    });
-                                    variant.additionalProperties.properties.forEach((property) => {
+                    if (!visitedNodes.has(id.value)) {
+                        const type = types[id.value];
+                        if (type != null) {
+                            visitDiscriminatedUnion(type.shape)._visit({
+                                object: (object) => {
+                                    const referenceLeaves: TypeReferenceWithMetadata[] = [];
+                                    object.properties.forEach((property) => {
+                                        const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${property.key}`));
                                         if (
-                                            property.valueType.type === "id" &&
-                                            !visitedNodes.has(property.valueType.value)
+                                            property.valueType.type === "id" ||
+                                            property.valueType.type === "optional" ||
+                                            property.valueType.type === "map" ||
+                                            property.valueType.type === "list" ||
+                                            property.valueType.type === "set"
                                         ) {
                                             referenceLeaves.push({
                                                 reference: property.valueType,
                                                 anchorIdParts: [
                                                     ...typeReferenceWithMetadata.anchorIdParts,
-                                                    title,
                                                     property.key,
                                                 ],
                                                 breadcrumbs: [
                                                     ...typeReferenceWithMetadata.breadcrumbs,
-                                                    { title, slug },
                                                     {
                                                         title: property.key,
-                                                        slug: encodeURI(`${baseSlug}.${title}.${property.key}`),
+                                                        slug: encodeURI(`${baseSlug}.${property.key}`),
                                                     },
                                                 ],
-                                                slugPrefix: encodeURI(`${baseSlug}.${title}.${property.key}`),
+                                                slugPrefix: slug,
                                                 version: typeReferenceWithMetadata.version,
                                                 indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
                                                 method: typeReferenceWithMetadata.method,
                                                 endpointPath: typeReferenceWithMetadata.endpointPath,
                                                 isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                                                propertyKey: property.key,
                                                 type: typeReferenceWithMetadata.type,
                                             });
-                                        } else {
+                                        } else if (
+                                            property.valueType.type === "primitive" ||
+                                            property.valueType.type === "literal"
+                                        ) {
                                             fields.push({
                                                 objectID: uuid(),
                                                 title: property.key,
@@ -1789,18 +1649,230 @@ export class AlgoliaSearchRecordGenerator {
                                                 slug,
                                                 version: typeReferenceWithMetadata.version,
                                                 indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                extends: variant.additionalProperties.extends,
+                                                extends: object.extends,
                                                 ...additionalProperties,
                                             });
                                         }
                                     });
-                                });
+                                    object.extends.forEach((extend) => {
+                                        referenceLeaves.push({
+                                            reference: { type: "id", value: extend, default: undefined },
+                                            anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
+                                            breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
+                                            slugPrefix: baseSlug,
+                                            version: typeReferenceWithMetadata.version,
+                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                            method: typeReferenceWithMetadata.method,
+                                            endpointPath: typeReferenceWithMetadata.endpointPath,
+                                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                                            propertyKey: undefined,
+                                            type: typeReferenceWithMetadata.type,
+                                        });
+                                    });
 
-                                fields.push(
-                                    ...this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
+                                    fields.push(
+                                        ...this.collectReferencedTypesToContentV2(
+                                            referenceLeaves,
+                                            types,
+                                            new Set(visitedNodes).add(id.value),
+                                        ),
+                                    );
+                                },
+                                alias: () => undefined,
+                                enum: (enum_) => {
+                                    enum_.values.forEach((value) => {
+                                        const slug = FernNavigation.V1.Slug(encodeURI(baseSlug));
+                                        fields.push({
+                                            objectID: uuid(),
+                                            title: value.value,
+                                            availability: value.availability,
+                                            description: value.description,
+                                            breadcrumbs: [
+                                                ...typeReferenceWithMetadata.breadcrumbs,
+                                                {
+                                                    title: value.value,
+                                                    slug,
+                                                },
+                                            ],
+                                            slug,
+                                            version: typeReferenceWithMetadata.version,
+                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                            extends: undefined,
+                                            ...additionalProperties,
+                                        });
+                                    });
+                                },
+                                undiscriminatedUnion: (undiscriminatedUnion) => {
+                                    const referenceLeaves: TypeReferenceWithMetadata[] = [];
+                                    undiscriminatedUnion.variants.forEach((variant) => {
+                                        const title =
+                                            variant.displayName != null
+                                                ? variant.displayName
+                                                : variant.type.type === "id"
+                                                  ? variant.type.value
+                                                  : "";
+                                        const slug = FernNavigation.V1.Slug(
+                                            encodeURI(`${baseSlug}.${variant.displayName}`),
+                                        );
+                                        if (
+                                            variant.type.type === "id" ||
+                                            variant.type.type === "optional" ||
+                                            variant.type.type === "map" ||
+                                            variant.type.type === "list" ||
+                                            variant.type.type === "set"
+                                        ) {
+                                            referenceLeaves.push({
+                                                reference: variant.type,
+                                                anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, title],
+                                                breadcrumbs: [
+                                                    ...typeReferenceWithMetadata.breadcrumbs,
+                                                    { title, slug: encodeURI(`${baseSlug}.${title}`) },
+                                                ],
+                                                slugPrefix: slug,
+                                                version: typeReferenceWithMetadata.version,
+                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                                method: typeReferenceWithMetadata.method,
+                                                endpointPath: typeReferenceWithMetadata.endpointPath,
+                                                isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                                                propertyKey: undefined,
+                                                type: typeReferenceWithMetadata.type,
+                                            });
+                                        } else if (
+                                            variant.type.type === "primitive" ||
+                                            variant.type.type === "literal"
+                                        ) {
+                                            fields.push({
+                                                objectID: uuid(),
+                                                title,
+                                                description: variant.description,
+                                                availability: variant.availability,
+                                                breadcrumbs: [
+                                                    ...typeReferenceWithMetadata.breadcrumbs,
+                                                    {
+                                                        title,
+                                                        slug,
+                                                    },
+                                                ],
+                                                slug,
+                                                version: typeReferenceWithMetadata.version,
+                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                                extends: undefined,
+                                                ...additionalProperties,
+                                            });
+                                        }
+                                    });
+
+                                    fields.push(
+                                        ...this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
+                                    );
+                                },
+                                discriminatedUnion: (discriminatedUnion) => {
+                                    const referenceLeaves: TypeReferenceWithMetadata[] = [];
+                                    discriminatedUnion.variants.forEach((variant) => {
+                                        const title = variant.displayName ?? titleCase(variant.discriminantValue);
+                                        const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${title}`));
+
+                                        variant.additionalProperties.extends.forEach((extend) => {
+                                            referenceLeaves.push({
+                                                reference: { type: "id", value: extend, default: undefined },
+                                                anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
+                                                breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
+                                                slugPrefix: baseSlug,
+                                                version: typeReferenceWithMetadata.version,
+                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                                method: typeReferenceWithMetadata.method,
+                                                endpointPath: typeReferenceWithMetadata.endpointPath,
+                                                isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                                                propertyKey: undefined,
+                                                type: typeReferenceWithMetadata.type,
+                                            });
+                                        });
+                                        variant.additionalProperties.properties.forEach((property) => {
+                                            if (
+                                                property.valueType.type === "id" ||
+                                                property.valueType.type === "optional" ||
+                                                property.valueType.type === "map" ||
+                                                property.valueType.type === "list" ||
+                                                property.valueType.type === "set"
+                                            ) {
+                                                referenceLeaves.push({
+                                                    reference: property.valueType,
+                                                    anchorIdParts: [
+                                                        ...typeReferenceWithMetadata.anchorIdParts,
+                                                        title,
+                                                        property.key,
+                                                    ],
+                                                    breadcrumbs: [
+                                                        ...typeReferenceWithMetadata.breadcrumbs,
+                                                        { title, slug },
+                                                        {
+                                                            title: property.key,
+                                                            slug: encodeURI(`${baseSlug}.${title}.${property.key}`),
+                                                        },
+                                                    ],
+                                                    slugPrefix: encodeURI(`${baseSlug}.${title}.${property.key}`),
+                                                    version: typeReferenceWithMetadata.version,
+                                                    indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                                    method: typeReferenceWithMetadata.method,
+                                                    endpointPath: typeReferenceWithMetadata.endpointPath,
+                                                    isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                                                    propertyKey: property.key,
+                                                    type: typeReferenceWithMetadata.type,
+                                                });
+                                            } else if (
+                                                property.valueType.type === "primitive" ||
+                                                property.valueType.type === "literal"
+                                            ) {
+                                                fields.push({
+                                                    objectID: uuid(),
+                                                    title: property.key,
+                                                    description: property.description,
+                                                    availability: property.availability,
+                                                    breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
+                                                        title: property.key,
+                                                        slug,
+                                                    }),
+                                                    slug,
+                                                    version: typeReferenceWithMetadata.version,
+                                                    indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                                    extends: variant.additionalProperties.extends,
+                                                    ...additionalProperties,
+                                                });
+                                            }
+                                        });
+                                    });
+
+                                    fields.push(
+                                        ...this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
+                                    );
+                                },
+                            });
+                        }
+                    } else {
+                        if (typeReferenceWithMetadata.propertyKey != null) {
+                            const type = types[id.value];
+
+                            if (type) {
+                                const slug = FernNavigation.V1.Slug(
+                                    encodeURI(`${baseSlug}.${typeReferenceWithMetadata.propertyKey}`),
                                 );
-                            },
-                        });
+                                fields.push({
+                                    objectID: uuid(),
+                                    title: typeReferenceWithMetadata.propertyKey,
+                                    description: type.description,
+                                    availability: type.availability,
+                                    breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
+                                        title: typeReferenceWithMetadata.propertyKey,
+                                        slug,
+                                    }),
+                                    slug,
+                                    version: typeReferenceWithMetadata.version,
+                                    indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                                    extends: type.shape.type === "object" ? type.shape.extends : undefined,
+                                    ...additionalProperties,
+                                });
+                            }
+                        }
                     }
                 },
                 optional: (optional) => {
@@ -2384,7 +2456,7 @@ export function getMarkdownSections(
     slug: FernNavigation.V1.Slug,
 ): AlgoliaSearchRecord[] {
     const markdownSlug = FernNavigation.V1.Slug(
-        markdownSection.level === 0 ? slug : encodeURI(`${slug}#${markdownSection.heading}`),
+        markdownSection.level === 0 ? slug : encodeURI(`${slug}#${kebabCase(markdownSection.heading)}`),
     );
     const sectionBreadcrumbs = markdownSection.heading
         ? breadcrumbs.concat([

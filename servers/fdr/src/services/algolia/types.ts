@@ -33,6 +33,7 @@ export type TypeReferenceWithMetadata = {
     method: FdrAPI.HttpMethod; // websocket is always GET (during handshake)
     endpointPath: APIV1Read.EndpointPathPart[];
     isResponseStream?: boolean;
+    propertyKey: string | undefined;
     type: "endpoint-field-v1" | "websocket-field-v1" | "webhook-field-v1";
 };
 
