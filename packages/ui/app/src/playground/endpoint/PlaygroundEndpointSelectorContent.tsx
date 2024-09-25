@@ -1,6 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
-import { EMPTY_ARRAY, isNonNullish } from "@fern-ui/core-utils";
+import { isNonNullish } from "@fern-ui/core-utils";
 import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
 import dynamic from "next/dynamic";
@@ -9,6 +9,7 @@ import { useSetAndOpenPlayground } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { type ResolvedApiEndpointWithPackage } from "../../resolver/types";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
+import { createBreadcrumbSlicer } from "../utils/breadcrumb";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
@@ -26,6 +27,11 @@ export interface ApiGroup {
     breadcrumbs: readonly string[];
     items: FernNavigation.NavigationNodeApiLeaf[];
 }
+
+const trimBreadcrumbs = createBreadcrumbSlicer<ApiGroup>({
+    selectBreadcrumb: (apiGroup) => apiGroup.breadcrumbs,
+    updateBreadcrumb: (apiGroup, breadcrumbs) => ({ ...apiGroup, breadcrumbs }),
+});
 
 export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefined): ApiGroup[] {
     if (root == null) {
@@ -54,27 +60,7 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
         return;
     });
 
-    if (result.length === 0) {
-        return [];
-    }
-
-    /**
-     * we want to get the lowest level of breadcrumbs shared by all groups
-     * for example:
-     * - [a, b, c]
-     * - [a, b, d]
-     *
-     * the shared breadcrumbs would be [a, b], and the resulting breadcrumbs for each group would be [c] and [d]
-     */
-    const allBreadcrumbs = result.map((group) => group.breadcrumbs);
-    const sharedBreadcrumbs = allBreadcrumbs.reduce((acc, breadcrumbs) => {
-        return acc.filter((breadcrumb, idx) => breadcrumb === breadcrumbs[idx]);
-    }, allBreadcrumbs[0] ?? EMPTY_ARRAY);
-
-    return result.map((group) => ({
-        ...group,
-        breadcrumbs: group.breadcrumbs.slice(sharedBreadcrumbs.length),
-    }));
+    return trimBreadcrumbs(result);
 }
 
 function matchesEndpoint(query: string, group: ApiGroup, endpoint: FernNavigation.NavigationNodeApiLeaf): boolean {
