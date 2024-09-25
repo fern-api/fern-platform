@@ -22,7 +22,7 @@ export declare namespace ApiArtifacts {
 }
 
 export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiDefinition, apiArtifacts }) => {
-    const slug = FernNavigation.utils.slugjoin(apiDefinition?.slug ?? "", "client-libraries");
+    const slug = FernNavigation.slugjoin(apiDefinition?.slug ?? "", "client-libraries");
 
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, slug);

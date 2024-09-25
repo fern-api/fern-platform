@@ -30,13 +30,7 @@ types:
 
   WithAvailability:
     properties:
-      availability: optional<Availability>
-
-  Availability:
-    enum:
-      - GenerallyAvailable
-      - Deprecated
-      - Beta
+      availability: optional<rootCommons.Availability>
 
   JqString: string
 

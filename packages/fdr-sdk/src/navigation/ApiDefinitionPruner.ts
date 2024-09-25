@@ -2,12 +2,13 @@ import type { APIV1Read } from "../client/types";
 import type { FernNavigation } from "./..";
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ApiTypeIdVisitor } from "./ApiTypeIdVisitor";
-import type { NavigationNodeApiLeaf } from "./types";
 
 export class ApiDefinitionPruner {
     constructor(private api: APIV1Read.ApiDefinition) {}
 
-    public prune(node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode): APIV1Read.ApiDefinition {
+    public prune(
+        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+    ): APIV1Read.ApiDefinition {
         const rootPackage = this.pruneRootPackage(node);
         const subpackages = this.pruneSubpackages(node);
         const types = this.pruneTypes(rootPackage, subpackages, this.api.globalHeaders);
@@ -72,13 +73,13 @@ export class ApiDefinitionPruner {
     }
 
     private pruneRootPackage(
-        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
     ): APIV1Read.ApiDefinitionPackage {
         return this.prunePackage(node, this.api.rootPackage);
     }
 
     private pruneSubpackages(
-        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
     ): Record<string, APIV1Read.ApiDefinitionSubpackage> {
         const subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage> = {};
 
@@ -90,7 +91,7 @@ export class ApiDefinitionPruner {
     }
 
     private prunePackage<T extends APIV1Read.ApiDefinitionPackage>(
-        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
         pkg: T,
         subpackageId?: string,
     ): T {
@@ -118,7 +119,7 @@ export class ApiDefinitionPruner {
     }
 
     private pruneEndpoints(
-        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
         endpoints: APIV1Read.EndpointDefinition[],
         subpackageId?: string,
     ): APIV1Read.EndpointDefinition[] {
@@ -142,7 +143,7 @@ export class ApiDefinitionPruner {
     }
 
     private pruneWebSockets(
-        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
         websockets: APIV1Read.WebSocketChannel[],
         subpackageId?: string,
     ): APIV1Read.WebSocketChannel[] {
@@ -159,7 +160,7 @@ export class ApiDefinitionPruner {
     }
 
     private pruneWebhooks(
-        node: NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
         webhooks: APIV1Read.WebhookDefinition[],
         subpackageId?: string,
     ): APIV1Read.WebhookDefinition[] {

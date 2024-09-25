@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig > polytomic > gets all urls from docs config 1`] = `
+exports[`polytomic > gets all urls from docs config 1`] = `
 [
   "apidocs.polytomic.com/guides/introduction",
   "apidocs.polytomic.com/guides/ip-whitelisting",
@@ -845,22 +845,23 @@ exports[`getAllUrlsFromDocsConfig > polytomic > gets all urls from docs config 1
 ]
 `;
 
-exports[`getNavigationRoot > polytomic > gets navigation root for /2023-04-25/guides/introduction 1`] = `
+exports[`polytomic > gets navigation root for /2023-04-25/guides/introduction 1`] = `
 {
   "redirect": "2023-04-25/introduction",
   "type": "notFound",
 }
 `;
 
-exports[`getNavigationRoot > polytomic > gets navigation root for /2023-04-25/not-found 1`] = `
+exports[`polytomic > gets navigation root for /2023-04-25/not-found 1`] = `
 {
   "redirect": "2023-04-25/introduction",
   "type": "notFound",
 }
 `;
 
-exports[`getNavigationRoot > polytomic > gets navigation root for /2024-02-08/guides/introduction 1`] = `
+exports[`polytomic > gets navigation root for /2024-02-08/guides/introduction 1`] = `
 {
+  "canonicalSlug": undefined,
   "hidden": false,
   "icon": undefined,
   "id": "root..2024-02-08.uv.guides.guides.getting-started.introduction",
@@ -872,11 +873,11 @@ exports[`getNavigationRoot > polytomic > gets navigation root for /2024-02-08/gu
 }
 `;
 
-exports[`getNavigationRoot > polytomic > gets navigation root for /2024-02-08/guides/introduction 2`] = `"2024-02-08"`;
+exports[`polytomic > gets navigation root for /2024-02-08/guides/introduction 2`] = `"2024-02-08"`;
 
-exports[`getNavigationRoot > polytomic > gets navigation root for /2024-02-08/guides/introduction 3`] = `"2024-02-08/guides"`;
+exports[`polytomic > gets navigation root for /2024-02-08/guides/introduction 3`] = `"2024-02-08/guides"`;
 
-exports[`getNavigationRoot > polytomic > gets navigation root for /guides/introduction 1`] = `
+exports[`polytomic > gets navigation root for /guides/introduction 1`] = `
 {
   "hidden": false,
   "id": "root..2024-02-08.uv.guides.guides.getting-started.introduction",
@@ -887,6 +888,6 @@ exports[`getNavigationRoot > polytomic > gets navigation root for /guides/introd
 }
 `;
 
-exports[`getNavigationRoot > polytomic > gets navigation root for /guides/introduction 2`] = `"2024-02-08"`;
+exports[`polytomic > gets navigation root for /guides/introduction 2`] = `"2024-02-08"`;
 
-exports[`getNavigationRoot > polytomic > gets navigation root for /guides/introduction 3`] = `"guides"`;
+exports[`polytomic > gets navigation root for /guides/introduction 3`] = `"guides"`;

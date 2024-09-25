@@ -60,7 +60,7 @@ const handler: NextApiHandler = async (
                 .json({ successfulRevalidations: [], failedRevalidations: [] });
         }
 
-        const node = FernNavigation.utils.convertLoadDocsForUrlResponse(docs.body);
+        const node = FernNavigation.utils.toRootNode(docs.body);
         const slugCollector = NodeCollector.collect(node);
         const slugs = slugCollector.getPageSlugs();
 

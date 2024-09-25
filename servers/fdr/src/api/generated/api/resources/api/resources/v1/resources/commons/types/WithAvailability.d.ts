@@ -3,5 +3,5 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface WithAvailability {
-    availability: FernRegistry.api.v1.Availability | undefined;
+    availability: FernRegistry.Availability | undefined;
 }

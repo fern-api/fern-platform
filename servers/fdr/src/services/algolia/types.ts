@@ -30,7 +30,7 @@ export type TypeReferenceWithMetadata = {
     slugPrefix: string;
     version: Algolia.AlgoliaRecordVersionV3 | undefined;
     indexSegmentId: FdrAPI.IndexSegmentId;
-    method?: FdrAPI.HttpMethod;
+    method: FdrAPI.HttpMethod; // websocket is always GET (during handshake)
     endpointPath: APIV1Read.EndpointPathPart[];
     isResponseStream?: boolean;
     type: "endpoint-field-v1" | "websocket-field-v1" | "webhook-field-v1";

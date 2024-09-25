@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig > hume > gets all urls from docs config 1`] = `
+exports[`hume > gets all urls from docs config 1`] = `
 [
   "dev.hume.ai/intro",
   "dev.hume.ai/docs/introduction/api-key",
@@ -94,29 +94,30 @@ exports[`getAllUrlsFromDocsConfig > hume > gets all urls from docs config 1`] = 
 ]
 `;
 
-exports[`getNavigationRoot > hume > gets navigation root for /docs 1`] = `
+exports[`hume > gets navigation root for /docs 1`] = `
 {
   "redirect": "intro",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot > hume > gets navigation root for /reference 1`] = `
+exports[`hume > gets navigation root for /reference 1`] = `
 {
   "redirect": "reference/empathic-voice-interface-evi/tools/list-tools",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot > hume > gets navigation root for /reference/expression-measurement-api/stream 1`] = `
+exports[`hume > gets navigation root for /reference/expression-measurement-api/stream 1`] = `
 {
   "redirect": "reference/expression-measurement-api/stream/stream",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot > hume > gets navigation root for /support 1`] = `
+exports[`hume > gets navigation root for /support 1`] = `
 {
+  "canonicalSlug": undefined,
   "hidden": false,
   "icon": undefined,
   "id": "root.uv.docs.docs.introduction.support",
@@ -128,6 +129,6 @@ exports[`getNavigationRoot > hume > gets navigation root for /support 1`] = `
 }
 `;
 
-exports[`getNavigationRoot > hume > gets navigation root for /support 2`] = `undefined`;
+exports[`hume > gets navigation root for /support 2`] = `undefined`;
 
-exports[`getNavigationRoot > hume > gets navigation root for /support 3`] = `"docs"`;
+exports[`hume > gets navigation root for /support 3`] = `"docs"`;

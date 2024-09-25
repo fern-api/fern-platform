@@ -35,7 +35,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                 ),
                 [],
                 FdrAPI.IndexSegmentId("testindex"),
-                FernNavigation.Slug("v1/someslug"),
+                FernNavigation.V1.Slug("v1/someslug"),
             ).map((record) => {
                 return {
                     ...record,
@@ -239,7 +239,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                 },
                 [],
                 FdrAPI.IndexSegmentId("testindex"),
-                FernNavigation.Slug("v1/someslug"),
+                FernNavigation.V1.Slug("v1/someslug"),
             ).map((record) => {
                 return {
                     ...record,

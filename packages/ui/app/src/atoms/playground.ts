@@ -72,7 +72,7 @@ export const PLAYGROUND_NODE_ID = atom(
         }
         const nodes = get(NAVIGATION_NODES_ATOM);
         // return FernNavigation.NodeId(playgroundParam);
-        const node = nodes.slugMap.get(FernNavigation.utils.slugjoin(playgroundParam));
+        const node = nodes.slugMap.get(FernNavigation.slugjoin(playgroundParam));
         if (node == null || !FernNavigation.isApiLeaf(node)) {
             return get(PREV_PLAYGROUND_NODE_ID);
         }

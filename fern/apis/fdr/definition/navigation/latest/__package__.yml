@@ -1,0 +1,356 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: ../../commons.yml
+
+types:
+  Slug:
+    type: string
+    docs: |
+      The full url pathname of the node, excluding leading or trailing slashes.
+      e.g. `getting-started` or `api-reference/overview`, but not `/getting-started` or `/api-reference/overview` or `/getting-started/`
+
+  TabId: string
+  NodeId: string
+  ProductId: string
+
+  # discriminated unions
+
+  RootChild:
+    discriminated: false
+    union:
+      - VersionedNode
+      - UnversionedNode
+      - ProductGroupNode
+
+  ProductChild:
+    discriminated: false
+    union:
+      - VersionedNode
+      - UnversionedNode
+
+  VersionChild:
+    discriminated: false
+    union:
+      - TabbedNode
+      - SidebarRootNode
+
+  TabChild:
+    discriminated: false
+    union:
+      - TabNode
+      - LinkNode
+      - ChangelogNode
+
+  SidebarRootChild:
+    discriminated: false
+    union:
+      - SidebarGroupNode
+      - ApiReferenceNode
+      - SectionNode
+
+  NavigationChild:
+    discriminated: false
+    union:
+      - ApiReferenceNode
+      - SectionNode
+      - PageNode
+      - LinkNode
+      - ChangelogNode
+
+  ApiPackageChild:
+    discriminated: false
+    union:
+      - ApiPackageNode
+      - EndpointNode
+      - EndpointPairNode
+      - WebSocketNode
+      - WebhookNode
+      - PageNode
+      - LinkNode
+
+  # nodes without metadata
+
+  ProductGroupNode:
+    extends: WithNodeId
+    properties:
+      type: literal<"productgroup">
+      landingPage: optional<LandingPageNode>
+      children:
+        type: list<ProductNode>
+        docs: The individual products being documented
+
+  VersionedNode:
+    extends: WithNodeId
+    properties:
+      type: literal<"versioned">
+      children: list<VersionNode>
+
+  UnversionedNode:
+    extends: WithNodeId
+    properties:
+      type: literal<"unversioned">
+      child: VersionChild
+      landingPage: optional<LandingPageNode>
+
+  TabbedNode:
+    extends: WithNodeId
+    properties:
+      type: literal<"tabbed">
+      children: list<TabChild>
+
+  SidebarRootNode:
+    extends: WithNodeId
+    properties:
+      type: literal<"sidebarRoot">
+      children: list<SidebarRootChild>
+
+  SidebarGroupNode:
+    extends: WithNodeId
+    properties:
+      type: literal<"sidebarGroup">
+      children: list<NavigationChild>
+
+  EndpointPairNode:
+    extends: WithNodeId
+    properties:
+      type: literal<"endpointPair">
+      stream: EndpointNode
+      nonStream: EndpointNode
+
+  LinkNode:
+    extends: WithNodeId
+    properties:
+      type: literal<"link">
+      title: string
+      icon: optional<string>
+      url: commons.Url
+
+  # nodes with metadata
+
+  RootNode:
+    audiences:
+      - navigation
+    extends:
+      - WithNodeMetadata
+      - WithRedirect
+    properties:
+      type: literal<"root">
+      version: literal<"v2">
+      child: RootChild
+
+  ProductNode:
+    extends:
+      - WithNodeMetadata
+      - WithRedirect
+    properties:
+      type: literal<"product">
+      default: boolean
+      productId: ProductId
+      child: ProductChild
+      subtitle:
+        type: string
+        docs: Couple words for what the product is
+
+  VersionNode:
+    extends:
+      - WithNodeMetadata
+      - WithRedirect
+    properties:
+      type: literal<"version">
+      default: boolean
+      versionId: commons.VersionId
+      child: VersionChild
+      availability: optional<commons.Availability>
+      landingPage: optional<LandingPageNode>
+
+  TabNode:
+    extends:
+      - WithNodeMetadata
+      - WithRedirect
+    properties:
+      type: literal<"tab">
+      child: SidebarRootNode
+
+  PageNode:
+    extends:
+      - WithNodeMetadata
+      - WithPage
+    properties:
+      type: literal<"page">
+
+  LandingPageNode:
+    extends:
+      - WithNodeMetadata
+      - WithPage
+    properties:
+      type: literal<"landingPage">
+
+  SectionNode:
+    extends:
+      - WithNodeMetadata
+      - WithOverviewPage
+      - WithRedirect
+    properties:
+      type: literal<"section">
+      collapsed: optional<boolean>
+      children: list<NavigationChild>
+
+  ChangelogNode:
+    extends:
+      - WithNodeMetadata
+      - WithOverviewPage
+    properties:
+      type: literal<"changelog">
+      children: list<ChangelogYearNode>
+
+  ChangelogYearNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"changelogYear">
+      year: integer
+      children: list<ChangelogMonthNode>
+
+  ChangelogMonthNode:
+    extends: WithNodeMetadata
+    properties:
+      type: literal<"changelogMonth">
+      month: integer
+      children: list<ChangelogEntryNode>
+
+  ChangelogEntryNode:
+    extends:
+      - WithNodeMetadata
+      - WithPage
+    properties:
+      type: literal<"changelogEntry">
+      date: date
+
+  ApiReferenceNode:
+    extends:
+      - WithNodeMetadata
+      - WithOverviewPage
+      - WithApiDefinitionId
+      - WithRedirect
+    properties:
+      type: literal<"apiReference">
+      paginated:
+        type: optional<boolean>
+        docs: If true, long-scrolling will be disabled.
+      showErrors: optional<boolean>
+      hideTitle: optional<boolean>
+      children: list<ApiPackageChild>
+      changelog: optional<ChangelogNode>
+      playground:
+        # enabled: optional<boolean> (this is currently controlled in feature flags, global boolean)
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affects all endpoints.
+
+  PlaygroundSettings:
+    properties:
+      environments:
+        type: optional<list<commons.EnvironmentId>>
+        docs: |
+          A list of environment IDs that are allowed to be used in the playground.
+          If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
+      button: optional<PlaygroundButtonSettings>
+
+  PlaygroundButtonSettings:
+    properties:
+      href: optional<commons.Url>
+
+  EndpointNode:
+    extends:
+      - WithNodeMetadata
+      - WithApiDefinitionId
+    properties:
+      type: literal<"endpoint">
+      method: commons.HttpMethod
+      endpointId: commons.EndpointId
+      isResponseStream: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affect this endpoint specifically.
+
+  WebSocketNode:
+    extends:
+      - WithNodeMetadata
+      - WithApiDefinitionId
+    properties:
+      type: literal<"webSocket">
+      webSocketId: commons.WebSocketId
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affect this endpoint specifically.
+
+  WebhookNode:
+    extends:
+      - WithNodeMetadata
+      - WithApiDefinitionId
+    properties:
+      type: literal<"webhook">
+      method: commons.HttpMethod
+      webhookId: commons.WebhookId
+      # note: webhooks do not have a playground
+
+  ApiPackageNode:
+    extends:
+      - WithNodeMetadata
+      - WithOverviewPage
+      - WithApiDefinitionId
+      - WithRedirect
+    properties:
+      type: literal<"apiPackage">
+      children: list<ApiPackageChild>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that is applied only to descendants of this api package.
+
+  # utilities
+
+  WithNodeId:
+    properties:
+      id:
+        type: NodeId
+        docs: A unique, stable identifier for this node.
+
+  WithNodeMetadata:
+    extends: WithNodeId
+    properties:
+      title:
+        type: string
+        docs: |
+          This is the title that will be displayed in the sidebar. Unlike the h1 or SEO headline, this should be short and concise.
+          Do NOT use this property for the h1 of the page, the SEO headline, or search results, unless they are omitted. (This title should only be used as a fallback)
+
+          #### Order of precedence:
+          ```
+          sidebarNode.text = nav.title;
+          <h1> = frontmatter.title ?? mdx.h1[0] ?? sidebarNode.text;
+          <title> = frontmatter.headline ?? <h1>;
+          ```
+      slug: Slug
+      canonicalSlug:
+        type: optional<Slug>
+        docs: The slug that should be used in the canonical URL rel. If not provided, the `slug` will be used.
+      icon: optional<string>
+      hidden: optional<boolean>
+
+  WithPage:
+    properties:
+      pageId: commons.PageId
+      noindex: optional<boolean>
+
+  WithOverviewPage:
+    properties:
+      overviewPageId: optional<commons.PageId>
+      noindex: optional<boolean>
+
+  WithApiDefinitionId:
+    properties:
+      apiDefinitionId: commons.ApiDefinitionId
+      availability: optional<commons.Availability>
+
+  WithRedirect:
+    properties:
+      pointsTo: optional<Slug>

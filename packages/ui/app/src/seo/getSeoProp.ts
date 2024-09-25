@@ -6,6 +6,7 @@ import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
+import { getToHref } from "../hooks/useHref";
 import { stringHasMarkdown } from "../mdx/common/util";
 import { getFrontmatter } from "../mdx/frontmatter";
 import { getFontExtension } from "../themes/stylesheet/getFontVariables";
@@ -49,13 +50,9 @@ export function getSeoProps(
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
     apis: Record<string, APIV1Read.ApiDefinition>,
-    {
-        root,
-        node,
-        parents,
-        currentVersion,
-    }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
+    { node, parents }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
     isSeoDisabled: boolean,
+    isTrailingSlashEnabled: boolean,
 ): NextSeoProps {
     const additionalMetaTags: MetaTag[] = [];
     const additionalLinkTags: LinkTag[] = [];
@@ -69,14 +66,15 @@ export function getSeoProps(
         breadcrumbList: getBreadcrumbList(domain, pages, parents, node),
     };
 
-    // if the current version is the default version, the page is duplicated (/v1/page and /page).
-    // the canonical link should point to `/page`.
-    if (currentVersion != null && currentVersion.default) {
-        const canonicalSlug = FernNavigation.utils.toDefaultSlug(node.slug, root.slug, currentVersion.slug);
-        seo.canonical = `https://${domain}/${canonicalSlug}`;
-    }
+    /**
+     * The canonical url is self-referential unless there are multiple versions of the page.
+     * Canonical slugs are computed upstream, where duplicated markdown pages, and multi-version docs are both handled.
+     */
+    // TODO: set canonical domain in docs.yml
+    const toHref = getToHref(isTrailingSlashEnabled);
+    seo.canonical = toHref(node.canonicalSlug ?? node.slug, domain);
 
-    const pageId = FernNavigation.utils.getPageId(node);
+    const pageId = FernNavigation.getPageId(node);
 
     let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? EMPTY_METADATA_CONFIG;
     let seoTitleFromMarkdownH1;

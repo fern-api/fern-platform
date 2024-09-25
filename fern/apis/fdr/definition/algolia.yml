@@ -3,7 +3,7 @@
 imports:
   commons: ./commons.yml
   apiReadV1Endpoint: ./api/v1/read/endpoint.yml
-  navigation: ./navigation/__package__.yml
+  navigation: ./navigation/v1/__package__.yml
 
 types:
   AlgoliaSearchIndex: string

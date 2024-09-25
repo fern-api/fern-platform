@@ -1,18 +1,28 @@
+import { FernNavigation } from "../..";
+import { FernNavigationV1ToLatest } from "../migrators/v1ToV2";
+import { readFixture } from "./readFixtures";
 import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
 import { testGetNavigationRoot } from "./testGetNavigationRoot";
 
 const FIXTURE = "uploadcare";
+const slugs = [
+    "docs",
+    "docs/introduction",
+    "docs/introduction/intro",
+    "docs/integrations",
+    "docs/file-management",
+    "docs/file-management/overview",
+    "api/url-api",
+];
 
-describe("getAllUrlsFromDocsConfig", () => {
-    testGetAllUrlsFromDocsConfig(FIXTURE);
-});
+// eslint-disable-next-line vitest/valid-title
+describe(FIXTURE, () => {
+    const fixture = readFixture(FIXTURE);
+    const v1 = FernNavigation.V1.toRootNode(fixture);
+    const latest = FernNavigationV1ToLatest.create().root(v1);
 
-describe("getNavigationRoot", () => {
-    testGetNavigationRoot(FIXTURE, "docs");
-    testGetNavigationRoot(FIXTURE, "docs/introduction");
-    testGetNavigationRoot(FIXTURE, "docs/introduction/intro");
-    testGetNavigationRoot(FIXTURE, "docs/integrations");
-    testGetNavigationRoot(FIXTURE, "docs/file-management");
-    testGetNavigationRoot(FIXTURE, "docs/file-management/overview");
-    testGetNavigationRoot(FIXTURE, "api/url-api");
+    testGetAllUrlsFromDocsConfig(latest, fixture.baseUrl.domain);
+    slugs.forEach((slug) => {
+        testGetNavigationRoot(latest, slug);
+    });
 });

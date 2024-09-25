@@ -1,9 +1,17 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { withDefaultProtocol } from "@fern-ui/core-utils";
 import { Atom, useAtomValue } from "jotai";
+import urlJoin from "url-join";
 import { TRAILING_SLASH_ATOM } from "../atoms";
 
-export function getToHref(includeTrailingSlash: boolean = false): (slug: FernNavigation.Slug) => string {
-    return (slug) => (includeTrailingSlash ? `/${slug}/` : `/${slug}`);
+export function getToHref(includeTrailingSlash: boolean = false): (slug: FernNavigation.Slug, host?: string) => string {
+    return (slug, host) => {
+        const path = slug === "" ? "/" : includeTrailingSlash ? `/${slug}/` : `/${slug}`;
+        if (host == null) {
+            return path;
+        }
+        return urlJoin(withDefaultProtocol(host), path);
+    };
 }
 
 export function useToHref(): (slug: FernNavigation.Slug) => string {
@@ -22,5 +30,5 @@ export function useHref(slug: FernNavigation.Slug | undefined, anchor?: string):
 }
 
 export function selectHref(get: <T>(atom: Atom<T>) => T, slug: FernNavigation.Slug): string {
-    return get(TRAILING_SLASH_ATOM) ? `/${slug}/` : `/${slug}`;
+    return getToHref(get(TRAILING_SLASH_ATOM))(slug);
 }

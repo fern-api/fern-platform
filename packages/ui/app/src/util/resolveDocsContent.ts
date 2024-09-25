@@ -18,7 +18,7 @@ async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
     pages: Record<string, DocsV1Read.PageContent>,
 ): Promise<BundledMDX | undefined> {
-    const pageId = FernNavigation.utils.getPageId(node);
+    const pageId = FernNavigation.getPageId(node);
     if (pageId == null) {
         return;
     }
@@ -70,9 +70,9 @@ export async function resolveDocsContent({
 
     if (node.type === "changelog") {
         const pageIds = new Set<FernNavigation.PageId>();
-        FernNavigation.utils.traverseNavigation(node, (n) => {
+        FernNavigation.traverseNavigation(node, (n) => {
             if (FernNavigation.hasMarkdown(n)) {
-                const pageId = FernNavigation.utils.getPageId(n);
+                const pageId = FernNavigation.getPageId(n);
                 if (pageId != null) {
                     pageIds.add(pageId);
                 }
@@ -175,7 +175,7 @@ export async function resolveDocsContent({
             const parent = found.parents[found.parents.length - 1];
             api = pruner.prune(parent?.type === "endpointPair" ? parent : node);
             const holder = FernNavigation.ApiDefinitionHolder.create(api);
-            const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
+            const typeResolver = new ApiTypeResolver(api.types, mdxOptions, serializeMdx);
             const defResolver = new ApiEndpointResolver(
                 found.collector,
                 holder,
@@ -183,6 +183,7 @@ export async function resolveDocsContent({
                 await typeResolver.resolve(),
                 featureFlags,
                 mdxOptions,
+                serializeMdx,
             );
             return {
                 type: "api-endpoint-page",
@@ -210,7 +211,7 @@ export async function resolveDocsContent({
             };
         }
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
-        const typeResolver = new ApiTypeResolver(api.types, mdxOptions);
+        const typeResolver = new ApiTypeResolver(api.types, mdxOptions, serializeMdx);
         const apiDefinition = await ApiDefinitionResolver.resolve(
             found.collector,
             apiReference,
@@ -219,6 +220,7 @@ export async function resolveDocsContent({
             pages,
             mdxOptions,
             featureFlags,
+            serializeMdx,
         );
         return {
             type: "api-reference-page",
@@ -246,7 +248,7 @@ async function resolveMarkdownPage(
     domain: string,
     neighbors: DocsContent.Neighbors,
 ): Promise<DocsContent.CustomMarkdownPage | undefined> {
-    const pageId = FernNavigation.utils.getPageId(node);
+    const pageId = FernNavigation.getPageId(node);
     if (pageId == null) {
         return;
     }
@@ -296,7 +298,7 @@ async function resolveMarkdownPage(
                     ];
                 }
                 const holder = FernNavigation.ApiDefinitionHolder.create(definition);
-                const typeResolver = new ApiTypeResolver(definition.types, mdxOptions);
+                const typeResolver = new ApiTypeResolver(definition.types, mdxOptions, serializeMdx);
                 return [
                     apiNode.title,
                     await ApiDefinitionResolver.resolve(
@@ -307,6 +309,7 @@ async function resolveMarkdownPage(
                         pages,
                         mdxOptions,
                         featureFlags,
+                        serializeMdx,
                     ),
                 ];
             }),

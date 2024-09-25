@@ -1,50 +1,50 @@
 [
   {
     "id": "root..2024-02-08",
-    "type": "version",
+    "slug": "",
     "title": "2024-02-08",
-    "slug": ""
+    "type": "version"
   },
   {
     "id": "root..2024-02-08.uv.guides.guides.getting-started",
-    "type": "section",
+    "slug": "guides",
     "title": "Getting started",
-    "slug": "guides"
+    "type": "section"
   },
   {
     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference",
-    "type": "apiReference",
+    "slug": "api-reference",
     "title": "API Reference",
-    "slug": "api-reference"
+    "type": "apiReference"
   },
   {
     "id": "root..2024-02-08.uv.guides.guides.getting-started",
-    "type": "section",
+    "slug": "2024-02-08/guides",
     "title": "Getting started",
-    "slug": "2024-02-08/guides"
+    "type": "section"
   },
   {
     "id": "root..2024-02-08.uv.api-reference.api-reference.api-reference",
-    "type": "apiReference",
+    "slug": "2024-02-08/api-reference",
     "title": "API Reference",
-    "slug": "2024-02-08/api-reference"
+    "type": "apiReference"
   },
   {
     "id": "root..2023-04-25.uv.getting-started",
-    "type": "section",
+    "slug": "2023-04-25",
     "title": "Getting started",
-    "slug": "2023-04-25"
+    "type": "section"
   },
   {
     "id": "root..2022-12-12.uv.getting-started",
-    "type": "section",
+    "slug": "2022-12-12",
     "title": "Getting started",
-    "slug": "2022-12-12"
+    "type": "section"
   },
   {
     "id": "root..2021-05-23.uv.getting-started",
-    "type": "section",
+    "slug": "2021-05-23",
     "title": "Getting started",
-    "slug": "2021-05-23"
+    "type": "section"
   }
 ]

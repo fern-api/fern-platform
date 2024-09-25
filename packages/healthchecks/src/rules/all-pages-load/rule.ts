@@ -16,7 +16,7 @@ export class AllPagesLoadRule implements Rule {
                 message: `Failed to load docs for ${url} from FDR`,
             };
         }
-        const node = FernNavigation.utils.convertLoadDocsForUrlResponse(getDocsForUrlResponse.body);
+        const node = FernNavigation.utils.toRootNode(getDocsForUrlResponse.body);
         const slugCollector = FernNavigation.NodeCollector.collect(node);
         const urls = slugCollector.getPageSlugs().map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/${slug}`);
 

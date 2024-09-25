@@ -7,10 +7,11 @@ imports:
 
 types:
   DbEndpointDefinition:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
     properties:
       authed: optional<boolean>
-      availability: optional<commons.Availability>
       defaultEnvironment: optional<rootCommons.EnvironmentId>
       environments: optional<list<commons.Environment>>
       method: rootCommons.HttpMethod

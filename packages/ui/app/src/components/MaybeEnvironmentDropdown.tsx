@@ -35,7 +35,7 @@ export function MaybeEnvironmentDropdown({
 
     return (
         <>
-            <span>
+            <span className="max-sm:hidden">
                 {environmentIds && environmentIds.length > 1 ? (
                     <FernDropdown
                         key="selectedEnvironment-selector"
@@ -50,6 +50,7 @@ export function MaybeEnvironmentDropdown({
                         value={selectedEnvironmentId ?? selectedEnvironment?.id}
                     >
                         <FernButton
+                            className="py-0 px-1 h-auto"
                             text={
                                 <span key="protocol" className="whitespace-nowrap max-sm:hidden">
                                     <span className={protocolTextStyle}>{`${url && url.protocol}//`}</span>
