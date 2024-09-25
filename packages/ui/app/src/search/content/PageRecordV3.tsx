@@ -38,7 +38,7 @@ export const PageRecordV3: React.FC<PageRecordV3.Props> = ({ hit, isHovered }) =
                         "t-muted": !isHovered,
                     })}
                 >
-                    <SearchHitBreadCrumbsV2 breadcrumb={hit.breadcrumb} />
+                    <SearchHitBreadCrumbsV2 breadcrumb={hit.breadcrumbs} />
                 </span>
 
                 <LongArrowDownLeft

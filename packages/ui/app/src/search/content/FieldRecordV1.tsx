@@ -67,7 +67,7 @@ export const FieldRecordV1: React.FC<FieldRecordV1.Props> = ({ hit, isHovered })
                         "t-muted": !isHovered,
                     })}
                 >
-                    <SearchHitBreadCrumbsV3 breadcrumb={hit.breadcrumb} />
+                    <SearchHitBreadCrumbsV3 breadcrumb={hit.breadcrumbs} />
                 </span>
 
                 <LongArrowDownLeft

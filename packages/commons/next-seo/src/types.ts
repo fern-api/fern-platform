@@ -1,4 +1,4 @@
-import { BreadcrumbListSchema } from "./jsonld";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 
 export type OpeningHoursSpecification = {
     opens: string;
@@ -480,6 +480,6 @@ export interface NextSeoProps {
     additionalMetaTags?: ReadonlyArray<MetaTag>;
     additionalLinkTags?: ReadonlyArray<LinkTag>;
     children?: never;
-    breadcrumbList?: BreadcrumbListSchema;
+    breadcrumbList?: FernDocs.JsonLdBreadcrumbList;
     viewport?: string;
 }

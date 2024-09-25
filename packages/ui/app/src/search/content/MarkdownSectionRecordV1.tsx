@@ -60,7 +60,7 @@ export const MarkdownSectionRecordV1: React.FC<MarkdownSectionRecordV1.Props> = 
                         "t-muted": !isHovered,
                     })}
                 >
-                    <SearchHitBreadCrumbsV3 breadcrumb={hit.breadcrumb} />
+                    <SearchHitBreadCrumbsV3 breadcrumb={hit.breadcrumbs} />
                 </span>
 
                 <LongArrowDownLeft
