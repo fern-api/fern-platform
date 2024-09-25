@@ -37,15 +37,32 @@ export class DocsKVCache implements ApiDefinitionResolverCache {
         await kv.srem(`${PREFIX}:${this.domain}:visited-slugs`, ...slug);
     }
 
-    public async putResolvedEndpoint(endpoint: ResolvedEndpointDefinition): Promise<void> {
-        await kv.sadd(this.getResovledEndpointId(endpoint.id), endpoint);
+    async putResolvedEndpoint({
+        apiDefinitionId,
+        endpoint,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        endpoint: ResolvedEndpointDefinition;
+    }): Promise<void> {
+        await kv.sadd(this.getResovledEndpointId({ apiDefinitionId, endpointId: endpoint.id }), endpoint);
+    }
+    async getResolvedEndpoint({
+        apiDefinitionId,
+        endpointId,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        endpointId: APIV1Read.EndpointId;
+    }): Promise<ResolvedEndpointDefinition | null | undefined> {
+        return await kv.get(this.getResovledEndpointId({ apiDefinitionId, endpointId }));
     }
 
-    public getResolvedEndpoint(id: APIV1Read.EndpointId): Promise<ResolvedEndpointDefinition | null | undefined> {
-        return kv.get(this.getResovledEndpointId(id));
-    }
-
-    private getResovledEndpointId(id: APIV1Read.EndpointId): string {
-        return `${PREFIX}:${this.domain}:resolved-endpoint:${id}`;
+    private getResovledEndpointId({
+        apiDefinitionId,
+        endpointId,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        endpointId: APIV1Read.EndpointId;
+    }): string {
+        return `${PREFIX}:${this.domain}:${apiDefinitionId}:endpoint:${endpointId}`;
     }
 }

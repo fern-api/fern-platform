@@ -1,6 +1,7 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { FernRegistry } from "../../../../fdr-sdk/src/client/generated";
 import { captureSentryErrorMessage } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
 import { type MDX_SERIALIZER } from "../mdx/bundler";
@@ -17,9 +18,21 @@ import type {
 } from "./types";
 
 export interface ApiDefinitionResolverCache {
-    putResolvedEndpoint(endpoint: ResolvedEndpointDefinition): Promise<void>;
+    putResolvedEndpoint({
+        apiDefinitionId,
+        endpoint,
+    }: {
+        apiDefinitionId: FernRegistry.ApiDefinitionId;
+        endpoint: ResolvedEndpointDefinition;
+    }): Promise<void>;
 
-    getResolvedEndpoint(id: FernNavigation.EndpointId): Promise<ResolvedEndpointDefinition | null | undefined>;
+    getResolvedEndpoint({
+        apiDefinitionId,
+        endpointId,
+    }: {
+        apiDefinitionId: FernRegistry.ApiDefinitionId;
+        endpointId: FernNavigation.EndpointId;
+    }): Promise<ResolvedEndpointDefinition | null | undefined>;
 }
 
 export class ApiDefinitionResolver {
@@ -94,12 +107,18 @@ export class ApiDefinitionResolver {
             node.children.map((item) =>
                 visitDiscriminatedUnion(item)._visit<Promise<ResolvedPackageItem | undefined>>({
                     endpoint: async (endpoint) => {
-                        const cached = await this.cache?.getResolvedEndpoint(endpoint.endpointId);
+                        const cached = await this.cache?.getResolvedEndpoint({
+                            apiDefinitionId: endpoint.apiDefinitionId,
+                            endpointId: endpoint.endpointId,
+                        });
                         if (cached != null) {
                             return cached;
                         }
                         const resolvedEndpoint = await this.definitionResolver.resolveEndpointDefinition(endpoint);
-                        await this.cache?.putResolvedEndpoint(resolvedEndpoint);
+                        await this.cache?.putResolvedEndpoint({
+                            apiDefinitionId: endpoint.apiDefinitionId,
+                            endpoint: resolvedEndpoint,
+                        });
                         return resolvedEndpoint;
                     },
                     endpointPair: async (endpointPair) => {
