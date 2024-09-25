@@ -49,7 +49,11 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
                 return;
             }
 
-            const breadcrumbs = FernNavigation.utils.createBreadcrumbs(parents).map((breadcrumb) => breadcrumb.title);
+            // current node should be included in the breadcrumbs
+            const breadcrumbs = FernNavigation.utils
+                .createBreadcrumbs([...parents, node])
+                .map((breadcrumb) => breadcrumb.title);
+
             result.push({
                 api: node.apiDefinitionId,
                 id: node.id,
