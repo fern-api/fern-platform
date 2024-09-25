@@ -639,7 +639,7 @@ export class AlgoliaSearchRecordGenerator {
                     return;
                 }
 
-                const frontmatter = getFrontmatter(md);
+                const { frontmatter } = getFrontmatter(md);
 
                 records.push(
                     compact({
@@ -859,33 +859,6 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         if (endpoint.request != null) {
-                            if (endpoint.request.description != null) {
-                                const slug = anchorIdToSlug(node, ["request"]);
-                                fields.push({
-                                    objectID: uuid(),
-                                    type: "endpoint-field-v1",
-                                    title: `${endpoint.name ?? endpoint.id} Request`,
-                                    description: endpoint.request.description,
-                                    availability: endpoint.availability,
-                                    breadcrumbs: toBreadcrumbs(parents).concat([
-                                        {
-                                            title: "request",
-                                            slug,
-                                        },
-                                    ]),
-                                    slug,
-                                    version,
-                                    indexSegmentId: context.indexSegment.id,
-                                    extends:
-                                        endpoint.request.type.type === "object"
-                                            ? endpoint.request.type.extends
-                                            : undefined,
-                                    method: endpoint.method,
-                                    endpointPath: endpoint.path.parts,
-                                    isResponseStream: node.isResponseStream,
-                                });
-                            }
-
                             if (endpoint.request.type.type === "reference") {
                                 const anchorIdParts = ["request", "body"];
                                 const slug = anchorIdToSlug(node, anchorIdParts);
@@ -984,32 +957,6 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         if (endpoint.response != null) {
-                            const slug = anchorIdToSlug(node, ["response"]);
-
-                            fields.push({
-                                objectID: uuid(),
-                                type: "endpoint-field-v1",
-                                title: `${endpoint.name ?? endpoint.id} Response`,
-                                description: endpoint.response.description,
-                                availability: endpoint.availability,
-                                breadcrumbs: toBreadcrumbs(parents).concat([
-                                    {
-                                        title: "response",
-                                        slug,
-                                    },
-                                ]),
-                                slug,
-                                version,
-                                indexSegmentId: context.indexSegment.id,
-                                extends:
-                                    endpoint.response.type.type === "object"
-                                        ? endpoint.response.type.extends
-                                        : undefined,
-                                method: endpoint.method,
-                                endpointPath: endpoint.path.parts,
-                                isResponseStream: node.isResponseStream,
-                            });
-
                             if (endpoint.response.type.type === "reference") {
                                 const anchorIdParts = ["response", "body"];
                                 const slug = anchorIdToSlug(node, anchorIdParts);
@@ -1477,8 +1424,8 @@ export class AlgoliaSearchRecordGenerator {
                     return;
                 }
 
-                const frontmatter = getFrontmatter(md);
-                const markdownTree = getMarkdownSectionTree(md);
+                const { frontmatter } = getFrontmatter(md);
+                const markdownTree = getMarkdownSectionTree(md, node.title);
                 const markdownSections = getMarkdownSections(
                     markdownTree,
                     toBreadcrumbs(parents),
@@ -1693,8 +1640,8 @@ export class AlgoliaSearchRecordGenerator {
                                     }
                                 });
 
-                                fields.concat(
-                                    this.collectReferencedTypesToContentV2(
+                                fields.push(
+                                    ...this.collectReferencedTypesToContentV2(
                                         referenceLeaves,
                                         types,
                                         new Set(visitedNodes).add(type.name),
@@ -1775,8 +1722,8 @@ export class AlgoliaSearchRecordGenerator {
                                     }
                                 });
 
-                                fields.concat(
-                                    this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
+                                fields.push(
+                                    ...this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
                                 );
                             },
                             discriminatedUnion: (discriminatedUnion) => {
@@ -1849,16 +1796,16 @@ export class AlgoliaSearchRecordGenerator {
                                     });
                                 });
 
-                                fields.concat(
-                                    this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
+                                fields.push(
+                                    ...this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
                                 );
                             },
                         });
                     }
                 },
                 optional: (optional) => {
-                    fields.concat(
-                        this.collectReferencedTypesToContentV2(
+                    fields.push(
+                        ...this.collectReferencedTypesToContentV2(
                             [
                                 {
                                     ...typeReferenceWithMetadata,
@@ -1871,8 +1818,8 @@ export class AlgoliaSearchRecordGenerator {
                     );
                 },
                 list: (list) => {
-                    fields.concat(
-                        this.collectReferencedTypesToContentV2(
+                    fields.push(
+                        ...this.collectReferencedTypesToContentV2(
                             [
                                 {
                                     ...typeReferenceWithMetadata,
@@ -1885,8 +1832,8 @@ export class AlgoliaSearchRecordGenerator {
                     );
                 },
                 set: (set) => {
-                    fields.concat(
-                        this.collectReferencedTypesToContentV2(
+                    fields.push(
+                        ...this.collectReferencedTypesToContentV2(
                             [
                                 {
                                     ...typeReferenceWithMetadata,
@@ -1899,8 +1846,8 @@ export class AlgoliaSearchRecordGenerator {
                     );
                 },
                 map: (map) => {
-                    fields.concat(
-                        this.collectReferencedTypesToContentV2(
+                    fields.push(
+                        ...this.collectReferencedTypesToContentV2(
                             [
                                 {
                                     ...typeReferenceWithMetadata,
@@ -1911,8 +1858,8 @@ export class AlgoliaSearchRecordGenerator {
                             visitedNodes,
                         ),
                     );
-                    fields.concat(
-                        this.collectReferencedTypesToContentV2(
+                    fields.push(
+                        ...this.collectReferencedTypesToContentV2(
                             [
                                 {
                                     ...typeReferenceWithMetadata,
@@ -2111,13 +2058,13 @@ export class AlgoliaSearchRecordGenerator {
         const records: AlgoliaSearchRecord[] = [];
         if (changelog.pageId != null) {
             const changelogPageContent = this.config.docsDefinition.pages[changelog.pageId];
-            const urlSlug = FernNavigation.V1.Slug(changelog.urlSlug);
+            const slug = FernNavigation.V1.Slug(changelog.urlSlug);
             const title = changelog.title ?? fallbackTitle;
 
             if (changelogPageContent != null) {
                 const { indexSegment } = context;
-                const markdownTree = getMarkdownSectionTree(changelogPageContent.markdown);
-                const markdownSections = getMarkdownSections(markdownTree, [], indexSegment.id, urlSlug);
+                const markdownTree = getMarkdownSectionTree(changelogPageContent.markdown, title);
+                const markdownSections = getMarkdownSections(markdownTree, [], indexSegment.id, slug);
 
                 if (markdownTree.content && markdownTree.content.trim().length > 0) {
                     records.push(
@@ -2129,10 +2076,10 @@ export class AlgoliaSearchRecordGenerator {
                             breadcrumbs: [
                                 {
                                     title,
-                                    slug: FernNavigation.V1.Slug(urlSlug),
+                                    slug,
                                 },
                             ],
-                            slug: FernNavigation.V1.Slug(urlSlug),
+                            slug,
                             version:
                                 indexSegment.type === "versioned"
                                     ? {
@@ -2150,35 +2097,31 @@ export class AlgoliaSearchRecordGenerator {
             }
 
             changelog.items.forEach((changelogItem) => {
-                // const changelogItemContext = context.withPathPart({
-                //     name: `${title} - ${changelogItem.date}`,
-                //     urlSlug,
-                //     skipUrlSlug: undefined,
-                // });
-
+                const changelogTitle = `${title} - ${changelogItem.date}`;
+                const slug = FernNavigation.V1.Slug(changelog.urlSlug);
                 const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
                 if (changelogPageContent != null) {
                     const { indexSegment } = context;
 
-                    const markdownTree = getMarkdownSectionTree(changelogPageContent.markdown);
-                    const markdownSections = getMarkdownSections(markdownTree, [], indexSegment.id, urlSlug);
+                    const markdownTree = getMarkdownSectionTree(changelogPageContent.markdown, changelogTitle);
+                    const markdownSections = getMarkdownSections(markdownTree, [], indexSegment.id, slug);
 
                     records.push(...markdownSections.map(compact));
                     records.push(
                         compact({
                             type: "page-v4",
                             objectID: uuid(),
-                            title: `${title} - ${changelogItem.date}`,
+                            title: changelogTitle,
                             // TODO: Set to something more than 10kb on prod
                             // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
                             description: markdownTree.content,
                             breadcrumbs: [
                                 {
                                     title,
-                                    slug: FernNavigation.V1.Slug(urlSlug),
+                                    slug,
                                 },
                             ],
-                            slug: FernNavigation.V1.Slug(urlSlug),
+                            slug,
                             version:
                                 indexSegment.type === "versioned"
                                     ? {
@@ -2371,19 +2314,23 @@ interface Frontmatter {
     title?: string; // overrides sidebar title
 }
 
-export function getFrontmatter(content: string): Frontmatter {
+export function getFrontmatter(content: string): {
+    frontmatter: Frontmatter;
+    content: string;
+} {
     try {
         const gm = grayMatter(content);
-        return gm.data;
+        return { frontmatter: gm.data, content: gm.content };
     } catch (e) {
-        return {};
+        return { frontmatter: {}, content };
     }
 }
 
-export function getMarkdownSectionTree(markdown: string): MarkdownNode {
-    const lines: string[] = markdown.split("\n");
+export function getMarkdownSectionTree(markdown: string, pageTitle: string): MarkdownNode {
+    const { frontmatter, content } = getFrontmatter(markdown);
+    const lines: string[] = content.split("\n");
     let insideCodeBlock = false;
-    const root: MarkdownNode = { level: 0, heading: "", content: "", children: [] };
+    const root: MarkdownNode = { level: 0, heading: frontmatter.title ?? pageTitle, content: "", children: [] };
     const collectedNodes = [root];
 
     for (const line of lines) {
@@ -2426,20 +2373,28 @@ export function getMarkdownSectionTree(markdown: string): MarkdownNode {
     return root;
 }
 
+function sanitizeText(text: string): string {
+    return text.replace(/<[^>]*>/g, "").replace(/&[^;]+;/g, "");
+}
+
 export function getMarkdownSections(
     markdownSection: MarkdownNode,
     breadcrumbs: BreadcrumbsInfo[],
     indexSegmentId: FdrAPI.IndexSegmentId,
     slug: FernNavigation.V1.Slug,
 ): AlgoliaSearchRecord[] {
+    const markdownSlug = FernNavigation.V1.Slug(
+        markdownSection.level === 0 ? slug : encodeURI(`${slug}#${markdownSection.heading}`),
+    );
     const sectionBreadcrumbs = markdownSection.heading
         ? breadcrumbs.concat([
               {
                   title: markdownSection.heading,
-                  slug: markdownSection.level === 0 ? slug : `${slug}#${markdownSection.heading}`,
+                  slug: markdownSlug,
               },
           ])
         : breadcrumbs.slice(0);
+
     const records: AlgoliaSearchRecord[] =
         markdownSection.content.trim().length === 0
             ? []
@@ -2447,11 +2402,11 @@ export function getMarkdownSections(
                   compact({
                       type: "markdown-section-v1",
                       objectID: uuid(),
-                      title: markdownSection.heading,
-                      content: markdownSection.content,
+                      title: markdownSection.heading.trim(),
+                      content: sanitizeText(markdownSection.content.trim()),
                       breadcrumbs: sectionBreadcrumbs,
                       indexSegmentId,
-                      slug,
+                      slug: markdownSlug,
                       description: undefined,
                       version: undefined,
                   }),

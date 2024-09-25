@@ -2,7 +2,7 @@ import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
 import { BaseHit, Hit } from "instantsearch.js";
-import { Highlight } from "react-instantsearch";
+import { Snippet } from "react-instantsearch";
 import { SearchHitBreadCrumbsV3 } from "./SearchHitBreadCrumbsV3";
 
 export declare namespace MarkdownSectionRecordV1 {
@@ -41,7 +41,15 @@ export const MarkdownSectionRecordV1: React.FC<MarkdownSectionRecordV1.Props> = 
                             "t-muted": !isHovered,
                         })}
                     >
-                        <Highlight attribute="content" hit={hit} />
+                        <Snippet
+                            attribute="content"
+                            hit={hit}
+                            className={cn("line-clamp-1 text-start text-xs", {
+                                "t-accent-aaa": isHovered,
+                                "t-muted": !isHovered,
+                            })}
+                            classNames={{ highlighted: "fern-highlight" }}
+                        />
                     </span>
                 </div>
             )}

@@ -2,7 +2,7 @@ import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
 import { BaseHit, Hit } from "instantsearch.js";
-import { Highlight } from "react-instantsearch";
+import { Snippet } from "react-instantsearch";
 import { SearchHitBreadCrumbsV3 } from "./SearchHitBreadCrumbsV3";
 
 export declare namespace PageRecordV4 {
@@ -41,7 +41,15 @@ export const PageRecordV4: React.FC<PageRecordV4.Props> = ({ hit, isHovered }) =
                             "t-muted": !isHovered,
                         })}
                     >
-                        <Highlight attribute="description" hit={hit} />
+                        <Snippet
+                            attribute="description"
+                            hit={hit}
+                            className={cn("line-clamp-1 text-start text-xs", {
+                                "t-accent-aaa": isHovered,
+                                "t-muted": !isHovered,
+                            })}
+                            classNames={{ highlighted: "fern-highlight" }}
+                        />
                     </span>
                 </div>
             )}

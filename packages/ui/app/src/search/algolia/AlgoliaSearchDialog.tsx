@@ -94,7 +94,7 @@ function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSea
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
             <Configure
-                // filters="type: 'endpoint-v4' OR type: 'websocket-v4' OR type: 'webhook-v4' OR type: 'page-v4' OR type: 'field-v1' OR type: 'markdown-section-v1'"
+                // filters="type: 'endpoint-v4' OR type: 'websocket-v4' OR type: 'webhook-v4' OR type: 'page-v4' OR type: 'endpoint-field-v1' OR type: 'websocket-field-v1' OR type: 'webhook-field-v1' OR type: 'markdown-section-v1'"
                 hitsPerPage={20}
             />
             <div className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">

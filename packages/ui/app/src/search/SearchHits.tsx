@@ -27,6 +27,7 @@ export const SearchHits: React.FC = () => {
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
     const closeSearchDialog = useCloseSearchDialog();
+    const [orderedHits, setOrderedHits] = useState<SearchRecord[]>([]);
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -43,11 +44,16 @@ export const SearchHits: React.FC = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const { endpointHits, pageHits, fieldHits } = filterHits(hits);
+        setOrderedHits([...endpointHits.slice(0, 8), ...pageHits.slice(0, 8), ...fieldHits.slice(0, 8)]);
+    }, [hits]);
+
     const hoveredSearchHit = useMemo(() => {
-        return hits
+        return orderedHits
             .map((hit, index) => ({ record: hit, index }))
             .find(({ record }) => record.objectID === hoveredSearchHitId);
-    }, [hits, hoveredSearchHitId]);
+    }, [orderedHits, hoveredSearchHitId]);
 
     useEffect(() => {
         const [firstHit] = hits;
@@ -68,7 +74,7 @@ export const SearchHits: React.FC = () => {
                 return;
             }
 
-            const previousHit = hits[hoveredSearchHit.index - 1];
+            const previousHit = orderedHits[hoveredSearchHit.index - 1];
             if (previousHit != null) {
                 setHoveredSearchHitId(previousHit.objectID);
                 const ref = refs.current.get(previousHit.objectID);
@@ -84,7 +90,7 @@ export const SearchHits: React.FC = () => {
         key: "Down",
         onPress: () => {
             if (hoveredSearchHitId === COHERE_AI_HIT_ID) {
-                setHoveredSearchHitId(hits[0]?.objectID ?? null);
+                setHoveredSearchHitId(orderedHits[0]?.objectID ?? null);
                 return;
             }
 
@@ -92,7 +98,7 @@ export const SearchHits: React.FC = () => {
                 setHoveredSearchHitId(COHERE_AI_HIT_ID);
                 return;
             }
-            const nextHit = hits[hoveredSearchHit != null ? hoveredSearchHit.index + 1 : 0];
+            const nextHit = orderedHits[hoveredSearchHit != null ? hoveredSearchHit.index + 1 : 0];
             if (nextHit != null) {
                 setHoveredSearchHitId(nextHit.objectID);
                 const ref = refs.current.get(nextHit.objectID);
@@ -151,7 +157,7 @@ export const SearchHits: React.FC = () => {
         return null;
     }
 
-    const { endpointHits, pageHits } = filterHits(hits);
+    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
 
     return (
         <FernScrollArea
@@ -171,56 +177,6 @@ export const SearchHits: React.FC = () => {
                     onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
                 />
             )}
-            {/* <Accordion.Root type="single" defaultValue="endpoints" collapsible>
-                {endpointHits.length > 0 && (
-                    <Accordion.Item className="fern-search-accordion" value="endpoints">
-                        <AccordionTrigger>
-                            <p className="text-normal font-semibold mt-4 pl-0.5">Endpoints</p>
-                            <PlusCircle />
-                            
-                        </AccordionTrigger>
-                        <Accordion.Content>
-                            {endpointHits.map((hit) => (
-                                <SearchHit
-                                    setRef={(elem) => {
-                                        if (elem != null) {
-                                            refs.current.set(hit.objectID, elem);
-                                        }
-                                    }}
-                                    key={hit.objectID}
-                                    hit={hit}
-                                    isHovered={hoveredSearchHitId === hit.objectID}
-                                    onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                                />
-                            ))}
-                        </Accordion.Content>
-                    </Accordion.Item>
-                )}
-                {pageHits.length > 0 && (
-                    <Accordion.Item className="fern-search-accordion" value="pages">
-                        <AccordionTrigger>
-                            <p className="text-normal font-semibold mt-4 pl-0.5">Pages</p>
-                            <PlusCircle />
-                            
-                        </AccordionTrigger>
-                        <Accordion.AccordionContent>
-                            {pageHits.map((hit) => (
-                                <SearchHit
-                                    setRef={(elem) => {
-                                        if (elem != null) {
-                                            refs.current.set(hit.objectID, elem);
-                                        }
-                                    }}
-                                    key={hit.objectID}
-                                    hit={hit}
-                                    isHovered={hoveredSearchHitId === hit.objectID}
-                                    onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                                />
-                            ))}
-                        </Accordion.AccordionContent>
-                    </Accordion.Item>
-                )}
-            </Accordion.Root> */}
 
             {endpointHits.length > 0 && (
                 <>
@@ -260,19 +216,24 @@ export const SearchHits: React.FC = () => {
                 </>
             )}
 
-            {/* {hits.map((hit) => (
-                <SearchHit
-                    setRef={(elem) => {
-                        if (elem != null) {
-                            refs.current.set(hit.objectID, elem);
-                        }
-                    }}
-                    key={hit.objectID}
-                    hit={hit}
-                    isHovered={hoveredSearchHitId === hit.objectID}
-                    onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                />
-            ))} */}
+            {fieldHits.length > 0 && (
+                <>
+                    <p className="text-normal font-semibold mb-2 pl-0.5">Fields</p>
+                    {fieldHits.slice(0, 8).map((hit) => (
+                        <SearchHit
+                            setRef={(elem) => {
+                                if (elem != null) {
+                                    refs.current.set(hit.objectID, elem);
+                                }
+                            }}
+                            key={hit.objectID}
+                            hit={hit}
+                            isHovered={hoveredSearchHitId === hit.objectID}
+                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+                        />
+                    ))}
+                </>
+            )}
         </FernScrollArea>
     );
 };
@@ -293,7 +254,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
         return <div className="justify t-muted flex w-full flex-col hits-center py-3">No results found</div>;
     }
 
-    const { endpointHits, pageHits } = filterHits(hits);
+    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
 
     return (
         <FernScrollArea rootClassName="min-h-[80vh]" className="mask-grad-top-4 px-2 pt-4">
@@ -328,9 +289,27 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
 
             {pageHits.length > 0 && (
                 <>
-                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Pages</h3>
+                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Fields</h3>
                     <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
                     {pageHits.map((hit) => (
+                        <SearchHit
+                            setRef={(elem) => {
+                                if (elem != null) {
+                                    refs.current.set(hit.objectID, elem);
+                                }
+                            }}
+                            key={hit.objectID}
+                            hit={hit}
+                        />
+                    ))}
+                </>
+            )}
+
+            {fieldHits.length > 0 && (
+                <>
+                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Pages</h3>
+                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+                    {fieldHits.map((hit) => (
                         <SearchHit
                             setRef={(elem) => {
                                 if (elem != null) {
@@ -359,8 +338,8 @@ function filterHits(hits: SearchRecord[]) {
             "webhook-v4",
             "websocket-v4",
         ]),
-        pages: new Set(["page", "page-v2", "page-v3", "page-v4"]),
-        fields: new Set(["field-v1", "markdown-section-v1"]),
+        pages: new Set(["page", "page-v2", "page-v3", "page-v4", "markdown-section-v1"]),
+        fields: new Set(["endpoint-field-v1", "webhook-field-v1", "websocket-field-v1"]),
     };
 
     const endpointHits = hits.filter((hit) => hitTypeMap["endpoints"].has(hit.type));
