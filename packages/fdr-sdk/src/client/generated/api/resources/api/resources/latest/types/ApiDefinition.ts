@@ -10,7 +10,7 @@ export interface ApiDefinition {
     websockets: Record<FernRegistry.WebSocketId, FernRegistry.api.latest.WebSocketChannel>;
     webhooks: Record<FernRegistry.WebhookId, FernRegistry.api.latest.WebhookDefinition>;
     types: Record<FernRegistry.TypeId, FernRegistry.api.latest.TypeDefinition>;
-    namespaces: Record<FernRegistry.api.latest.NamespaceId, FernRegistry.api.latest.Namespace>;
+    subpackages: Record<FernRegistry.api.latest.SubpackageId, FernRegistry.api.latest.SubpackageMetadata>;
     auth: FernRegistry.api.latest.ApiAuth | undefined;
     globalHeaders: FernRegistry.api.latest.ObjectProperty[] | undefined;
 }

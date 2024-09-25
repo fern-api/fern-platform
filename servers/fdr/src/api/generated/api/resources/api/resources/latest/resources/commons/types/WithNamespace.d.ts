@@ -4,5 +4,5 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface WithNamespace {
     /** A list of subpackage names based on the order in which values are rendered in the frontend. */
-    namespace: FernRegistry.api.latest.NamespaceId[] | undefined;
+    namespace: FernRegistry.api.latest.SubpackageId[] | undefined;
 }

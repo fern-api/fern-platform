@@ -5,7 +5,7 @@ imports:
   webhook: webhook.yml
   websocket: websocket.yml
   type: type.yml
-  namespace: namespace.yml
+  commons: commons.yml
   rootCommons: ../../commons.yml
   read: ../v1/read/__package__.yml
 
@@ -18,6 +18,6 @@ types:
       websockets: map<rootCommons.WebSocketId, websocket.WebSocketChannel>
       webhooks: map<rootCommons.WebhookId, webhook.WebhookDefinition>
       types: map<rootCommons.TypeId, type.TypeDefinition>
-      namespaces: map<namespace.NamespaceId, namespace.Namespace>
+      subpackages: map<commons.SubpackageId, commons.SubpackageMetadata>
       auth: optional<ApiAuth>
       globalHeaders: optional<list<type.ObjectProperty>>

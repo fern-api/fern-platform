@@ -3,9 +3,11 @@
 imports:
   docs: ../../docs/latest/__package__.yml
   rootCommons: ../../commons.yml
-  namespace: namespace.yml
+  v1Commons: ../v1/commons.yml
 
 types:
+  SubpackageId: v1Commons.SubpackageId
+
   WithAvailability:
     properties:
       availability: optional<rootCommons.Availability>
@@ -17,8 +19,14 @@ types:
   WithNamespace:
     properties:
       namespace:
-        type: optional<list<namespace.NamespaceId>>
+        type: optional<list<SubpackageId>>
         docs: A list of subpackage names based on the order in which values are rendered in the frontend.
+
+  SubpackageMetadata:
+    properties:
+      id: SubpackageId
+      name: string
+      displayName: optional<string>
 
   Environment:
     properties:
