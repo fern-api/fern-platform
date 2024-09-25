@@ -9,6 +9,8 @@ export interface Frontmatter
         FernRegistry.docs.latest.WithJsonLdBreadcrumbs {
     /** The layout of the page. This will determine the width of the content. */
     layout: FernRegistry.docs.latest.Layout | undefined;
+    /** if provided, the frontmatter slug will be used instead of tying to piece it together from the navigation hierarchy. */
+    slug: FernRegistry.navigation.latest.Slug | undefined;
     /**
      * The title of the page. If not set, the title will inherit from what's set in the sidebar.
      * This is also used for the <title> tag in the HTML.

@@ -5,6 +5,8 @@ import * as FernRegistry from "../../../../../../../index";
 export interface Frontmatter extends FernRegistry.docs.latest.WithMetadataConfig, FernRegistry.docs.latest.WithJsonLdBreadcrumbs {
     /** The layout of the page. This will determine the width of the content. */
     layout: FernRegistry.docs.latest.Layout | undefined;
+    /** if provided, the frontmatter slug will be used instead of tying to piece it together from the navigation hierarchy. */
+    slug: FernRegistry.navigation.latest.Slug | undefined;
     /**
      * The title of the page. If not set, the title will inherit from what's set in the sidebar.
      * This is also used for the <title> tag in the HTML.
@@ -34,7 +36,7 @@ export interface Frontmatter extends FernRegistry.docs.latest.WithMetadataConfig
     /** Disables click-to-zoom on all imgages on this page. */
     "no-image-zoom": boolean | undefined;
     /** By default, this is inferred from docs.yml, but can be overridden. */
-    breadcrumb: FernRegistry.navigation.latest.BreadcrumbItem | undefined;
+    breadcrumb: FernRegistry.navigation.latest.BreadcrumbItem[] | undefined;
     /** Use subtitle instead. */
     excerpt: string | undefined;
 }

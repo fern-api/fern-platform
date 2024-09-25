@@ -6,7 +6,7 @@ imports:
   nav: ../../navigation/latest/__package__.yml
 
 types:
-  # All properties in this frontmatter should be optional.
+  # All properties in this frontmatter MUST be optional.
   Frontmatter:
     extends:
       - seo.WithMetadataConfig
@@ -16,6 +16,9 @@ types:
         type: optional<Layout>
         docs: The layout of the page. This will determine the width of the content.
         default: guide
+      slug:
+        type: optional<nav.Slug>
+        docs: if provided, the frontmatter slug will be used instead of tying to piece it together from the navigation hierarchy.
       title:
         type: optional<string>
         docs: |
