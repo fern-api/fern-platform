@@ -67,8 +67,8 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
      * the shared breadcrumb would be [a, b], and the resulting breadcrumb for each group would be [c] and [d]
      */
     const allBreadcrumbs = result.map((group) => group.breadcrumb);
-    const sharedBreadcrumbs = allBreadcrumbs.reduce((acc, breadcrumb) => {
-        return acc.filter((breadcrumb, idx) => breadcrumb === breadcrumb[idx]);
+    const sharedBreadcrumbs = allBreadcrumbs.reduce((acc, next) => {
+        return acc.filter((breadcrumb, idx) => breadcrumb === next[idx]);
     }, allBreadcrumbs[0] ?? EMPTY_ARRAY);
 
     return result.map((group) => ({
