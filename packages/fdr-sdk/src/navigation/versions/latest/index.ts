@@ -1,6 +1,6 @@
 export * from "../../../client/generated/api/resources/commons";
 export * from "../../../client/generated/api/resources/navigation/resources/latest/types";
-export * from "./NavigationBreadcrumbItem";
+export * from "./getPageId";
 export * from "./NavigationNode";
 export * from "./NavigationNodeApiLeaf";
 export * from "./NavigationNodeLeaf";
@@ -12,7 +12,6 @@ export * from "./NavigationNodeSection";
 export * from "./NavigationNodeSectionOverview";
 export * from "./NavigationNodeWithMetadata";
 export * from "./NavigationNodeWithRedirect";
-export * from "./getPageId";
 export * from "./slugjoin";
 export * from "./toDefaultSlug";
 export * from "./traverseNavigation";
