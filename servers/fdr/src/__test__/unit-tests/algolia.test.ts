@@ -65,7 +65,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                         title: "Overview",
                     },
                     {
-                        slug: "v1/someslug#API%20protocols%20and%20headers",
+                        slug: "v1/someslug#api-protocols-and-headers",
                         title: "API protocols and headers",
                     },
                 ],
@@ -73,7 +73,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                     "The Chariot API uses standard HTTP response codes to indicate status and errors. All responses come in standard JSON. The Chariot API is served over HTTPS TLS v1.2+ to ensure data privacy; HTTP and HTTPS with TLS versions below 1.2 are not supported. All requests with a payload must include a Content-Type of application/JSON and the body must be valid JSON.\n\nEvery Chariot API response includes a request_id as the `X-Request-Id` header. The request_id is included whether the API request succeeded or failed. For faster support, include the request_id when contacting support regarding a specific API call.",
                 indexSegmentId: "testindex",
                 objectID: undefined,
-                slug: "v1/someslug#API%20protocols%20and%20headers",
+                slug: "v1/someslug#api-protocols-and-headers",
                 title: "API protocols and headers",
                 type: "markdown-section-v1",
             },
@@ -84,7 +84,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                         title: "Overview",
                     },
                     {
-                        slug: "v1/someslug#API%20host",
+                        slug: "v1/someslug#api-host",
                         title: "API host",
                     },
                 ],
@@ -92,7 +92,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                     "```js Server.js\nhttps://sandboxapi.givechariot.com (Sandbox)\nhttps://api.givechariot.com (Production)\n```\n\nChariot has two environments: Sandbox and Production. The Sandbox environment supports only test data. All activity in the Production environment is real. When you’re getting ready to launch into production, please let us know by emailing [support@givechariot.com](support@givechariot.com) to get your production credentials.",
                 indexSegmentId: "testindex",
                 objectID: undefined,
-                slug: "v1/someslug#API%20host",
+                slug: "v1/someslug#api-host",
                 title: "API host",
                 type: "markdown-section-v1",
             },
@@ -135,7 +135,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
             children: [
                 {
                     level: 1,
-                    heading: "A heading",
+                    heading: "A",
                     content: "this is line A\n",
                     children: [
                         {
@@ -192,7 +192,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                     children: [
                         {
                             level: 1,
-                            heading: "A",
+                            heading: "A heading",
                             content: "this is line A\n",
                             children: [
                                 {
@@ -250,12 +250,12 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
             {
                 type: "markdown-section-v1",
                 objectID: undefined,
-                title: "A",
+                title: "A heading",
                 content: "this is line A",
                 breadcrumbs: [
                     {
                         slug: "v1/someslug#a-heading",
-                        title: "A",
+                        title: "A heading",
                     },
                 ],
                 indexSegmentId: "testindex",
@@ -268,8 +268,8 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                 content: "this is line b\n```\n## somecrap\nfasdfafafdadf\n```",
                 breadcrumbs: [
                     {
-                        slug: "v1/someslug#a",
-                        title: "A",
+                        slug: "v1/someslug#a-heading",
+                        title: "A heading",
                     },
                     {
                         slug: "v1/someslug#b",
@@ -286,8 +286,8 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                 content: "this is line c\n\nthis is line c.2",
                 breadcrumbs: [
                     {
-                        slug: "v1/someslug#a",
-                        title: "A",
+                        slug: "v1/someslug#a-heading",
+                        title: "A heading",
                     },
                     {
                         slug: "v1/someslug#b",
@@ -308,8 +308,8 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                 content: "this is line d",
                 breadcrumbs: [
                     {
-                        slug: "v1/someslug#a",
-                        title: "A",
+                        slug: "v1/someslug#a-heading",
+                        title: "A heading",
                     },
                     {
                         slug: "v1/someslug#b",
@@ -321,7 +321,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "v1/someslug#D",
+                slug: "v1/someslug#d",
             },
             {
                 type: "markdown-section-v1",
@@ -330,8 +330,8 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                 content: "this is line e",
                 breadcrumbs: [
                     {
-                        slug: "v1/someslug#a",
-                        title: "A",
+                        slug: "v1/someslug#a-heading",
+                        title: "A heading",
                     },
                     {
                         slug: "v1/someslug#e",
@@ -339,7 +339,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "v1/someslug#E",
+                slug: "v1/someslug#e",
             },
             {
                 type: "markdown-section-v1",
@@ -348,8 +348,8 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                 content: "this is line f\nthis is line f.2",
                 breadcrumbs: [
                     {
-                        slug: "v1/someslug#a",
-                        title: "A",
+                        slug: "v1/someslug#a-heading",
+                        title: "A heading",
                     },
                     {
                         slug: "v1/someslug#e",
@@ -361,7 +361,7 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                     },
                 ],
                 indexSegmentId: "testindex",
-                slug: "v1/someslug#F",
+                slug: "v1/someslug#f",
             },
             {
                 type: "markdown-section-v1",
@@ -370,8 +370,8 @@ Chariot has two environments: Sandbox and Production. The Sandbox environment su
                 content: "this is line g",
                 breadcrumbs: [
                     {
-                        slug: "v1/someslug#a",
-                        title: "A",
+                        slug: "v1/someslug#a-heading",
+                        title: "A heading",
                     },
                     {
                         slug: "v1/someslug#g",
