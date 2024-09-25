@@ -7,12 +7,12 @@ import {
     FdrAPI,
     FernNavigation,
     convertDbAPIDefinitionToRead,
+    kebabCase,
     titleCase,
     visitDbNavigationTab,
     visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
-import { kebabCase } from "@fern-api/fdr-sdk/src/utils";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
