@@ -1,6 +1,7 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { FernRegistry } from "../../../../fdr-sdk/src/client/generated";
 import { captureSentryErrorMessage } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
 import { type MDX_SERIALIZER } from "../mdx/bundler";
@@ -8,12 +9,31 @@ import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiEndpointResolver } from "./ApiEndpointResolver";
 import { ApiTypeResolver } from "./ApiTypeResolver";
 import type {
+    ResolvedEndpointDefinition,
     ResolvedPackageItem,
     ResolvedRootPackage,
     ResolvedSubpackage,
     ResolvedTypeDefinition,
     ResolvedWithApiDefinition,
 } from "./types";
+
+export interface ApiDefinitionResolverCache {
+    putResolvedEndpoint({
+        apiDefinitionId,
+        endpoint,
+    }: {
+        apiDefinitionId: FernRegistry.ApiDefinitionId;
+        endpoint: ResolvedEndpointDefinition;
+    }): Promise<void>;
+
+    getResolvedEndpoint({
+        apiDefinitionId,
+        endpointId,
+    }: {
+        apiDefinitionId: FernRegistry.ApiDefinitionId;
+        endpointId: FernNavigation.EndpointId;
+    }): Promise<ResolvedEndpointDefinition | null | undefined>;
+}
 
 export class ApiDefinitionResolver {
     public static async resolve(
@@ -25,6 +45,7 @@ export class ApiDefinitionResolver {
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
         serializeMdx: MDX_SERIALIZER,
+        cache?: ApiDefinitionResolverCache,
     ): Promise<ResolvedRootPackage> {
         const resolver = new ApiDefinitionResolver(
             collector,
@@ -35,6 +56,7 @@ export class ApiDefinitionResolver {
             featureFlags,
             mdxOptions,
             serializeMdx,
+            cache,
         );
         return resolver.resolveApiDefinition();
     }
@@ -51,6 +73,7 @@ export class ApiDefinitionResolver {
         private featureFlags: FeatureFlags,
         private mdxOptions: FernSerializeMdxOptions | undefined,
         private serializeMdx: MDX_SERIALIZER,
+        private cache?: ApiDefinitionResolverCache,
     ) {
         this.definitionResolver = new ApiEndpointResolver(
             this.collector,
@@ -83,7 +106,21 @@ export class ApiDefinitionResolver {
         const maybeItems = await Promise.all(
             node.children.map((item) =>
                 visitDiscriminatedUnion(item)._visit<Promise<ResolvedPackageItem | undefined>>({
-                    endpoint: (endpoint) => this.definitionResolver.resolveEndpointDefinition(endpoint),
+                    endpoint: async (endpoint) => {
+                        const cached = await this.cache?.getResolvedEndpoint({
+                            apiDefinitionId: endpoint.apiDefinitionId,
+                            endpointId: endpoint.endpointId,
+                        });
+                        if (cached != null) {
+                            return cached;
+                        }
+                        const resolvedEndpoint = await this.definitionResolver.resolveEndpointDefinition(endpoint);
+                        await this.cache?.putResolvedEndpoint({
+                            apiDefinitionId: endpoint.apiDefinitionId,
+                            endpoint: resolvedEndpoint,
+                        });
+                        return resolvedEndpoint;
+                    },
                     endpointPair: async (endpointPair) => {
                         if (this.featureFlags.isBatchStreamToggleDisabled) {
                             captureSentryErrorMessage(

@@ -1,10 +1,11 @@
-import type { FernNavigation } from "@fern-api/fdr-sdk";
+import type { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { ApiDefinitionResolverCache, ResolvedEndpointDefinition } from "@fern-ui/ui";
 import { kv } from "@vercel/kv";
 
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
 
-export class DocsKVCache {
+export class DocsKVCache implements ApiDefinitionResolverCache {
     private static instance: Map<string, DocsKVCache>;
 
     private constructor(private domain: string) {}
@@ -34,5 +35,34 @@ export class DocsKVCache {
 
     public async removeVisitedSlugs(...slug: FernNavigation.Slug[]): Promise<void> {
         await kv.srem(`${PREFIX}:${this.domain}:visited-slugs`, ...slug);
+    }
+
+    async putResolvedEndpoint({
+        apiDefinitionId,
+        endpoint,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        endpoint: ResolvedEndpointDefinition;
+    }): Promise<void> {
+        await kv.set(this.getResovledEndpointId({ apiDefinitionId, endpointId: endpoint.id }), endpoint);
+    }
+    async getResolvedEndpoint({
+        apiDefinitionId,
+        endpointId,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        endpointId: APIV1Read.EndpointId;
+    }): Promise<ResolvedEndpointDefinition | null | undefined> {
+        return await kv.get(this.getResovledEndpointId({ apiDefinitionId, endpointId }));
+    }
+
+    private getResovledEndpointId({
+        apiDefinitionId,
+        endpointId,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        endpointId: APIV1Read.EndpointId;
+    }): string {
+        return `${PREFIX}:${this.domain}:${apiDefinitionId}:endpoint:${endpointId}`;
     }
 }
