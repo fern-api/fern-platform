@@ -16,7 +16,7 @@ import { makeToc } from "./makeToc";
 import { wrapChildren } from "./to-estree";
 
 interface Options {
-    matter: FernDocs.Frontmatter;
+    matter: Partial<FernDocs.Frontmatter>;
 }
 
 export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => void {
@@ -89,9 +89,9 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
 }
 
 export function mergeMatter(
-    matter: FernDocs.Frontmatter | undefined,
+    matter: Partial<FernDocs.Frontmatter> = {},
     defaults: Partial<FernDocs.Frontmatter>,
-): FernDocs.Frontmatter {
+): Partial<FernDocs.Frontmatter> {
     if (matter == null) {
         return {
             ...defaults,
