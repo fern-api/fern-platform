@@ -61,4 +61,21 @@ describe("breadcrumb", () => {
             ["b", "f", "g"],
         ]);
     });
+
+    it("avoids trimming if nodes are reversed", () => {
+        expect(
+            trimBreadcrumb([
+                ["a", "b"], // since this is first, it's treated as the "root" node
+                ["a", "b", "c"],
+                ["a", "b", "c", "d"],
+            ]),
+        ).toStrictEqual([[], ["c"], ["c", "d"]]);
+        expect(
+            trimBreadcrumb([
+                ["a", "b", "c"],
+                ["a", "b", "c", "d"],
+                ["a", "b"], // typically this goes first, but since it's not first, don't trim away "b".
+            ]),
+        ).toStrictEqual([["b", "c"], ["b", "c", "d"], ["b"]]);
+    });
 });
