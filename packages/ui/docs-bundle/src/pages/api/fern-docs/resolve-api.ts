@@ -2,6 +2,7 @@ import { DocsKVCache } from "@/server/DocsCache";
 import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
 import {
@@ -10,7 +11,6 @@ import {
     provideRegistryService,
     serializeMdx,
     setMdxBundler,
-    type BundledMDX,
     type FernSerializeMdxOptions,
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
@@ -21,15 +21,18 @@ import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
 
-async function serializeMdxWithCaching(content: string, options?: FernSerializeMdxOptions): Promise<BundledMDX>;
+async function serializeMdxWithCaching(
+    content: string,
+    options?: FernSerializeMdxOptions,
+): Promise<FernDocs.MarkdownText>;
 async function serializeMdxWithCaching(
     content: string | undefined,
     options?: FernSerializeMdxOptions,
-): Promise<BundledMDX | undefined>;
+): Promise<FernDocs.MarkdownText | undefined>;
 async function serializeMdxWithCaching(
     content: string | undefined,
     options: FernSerializeMdxOptions = {},
-): Promise<BundledMDX | undefined> {
+): Promise<FernDocs.MarkdownText | undefined> {
     return await serializeMdx(content, options);
 }
 

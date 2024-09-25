@@ -153,7 +153,7 @@ export class ApiDefinitionResolver {
                                 filename: page.pageId,
                                 frontmatterDefaults: {
                                     title: page.title,
-                                    breadcrumbs: [], // TODO: implement breadcrumbs
+                                    breadcrumb: [], // TODO: implement breadcrumb
                                     "edit-this-page-url": pageContent.editThisPageUrl,
                                     "hide-nav-links": true,
                                     layout: "reference",
@@ -181,7 +181,7 @@ export class ApiDefinitionResolver {
                         filename: node.overviewPageId,
                         frontmatterDefaults: {
                             title: node.title,
-                            breadcrumbs: [], // TODO: implement breadcrumbs
+                            breadcrumb: [], // TODO: implement breadcrumb
                             "edit-this-page-url": pageContent.editThisPageUrl,
                             "hide-nav-links": true,
                             layout: "reference",

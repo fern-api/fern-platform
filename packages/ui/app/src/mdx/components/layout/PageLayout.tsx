@@ -9,7 +9,7 @@ import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 
 interface PageLayoutProps {
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ReactNode | undefined;
     children: ReactNode;
@@ -19,7 +19,7 @@ interface PageLayoutProps {
 }
 
 interface PageLayoutOpts {
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ElementContent | undefined;
     children: ElementContent[];
@@ -29,7 +29,7 @@ interface PageLayoutOpts {
 }
 
 export function PageLayout({
-    breadcrumbs,
+    breadcrumb,
     title,
     subtitle,
     children,
@@ -38,7 +38,7 @@ export function PageLayout({
 }: PageLayoutProps): ReactElement {
     return (
         <main className="fern-page-layout">
-            <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
+            <PageHeader breadcrumb={breadcrumb} title={title} subtitle={subtitle} />
             <div className="max-w-full fern-prose">{children}</div>
             {(!hideFeedback || editThisPageUrl != null) && (
                 <footer className="mt-12">

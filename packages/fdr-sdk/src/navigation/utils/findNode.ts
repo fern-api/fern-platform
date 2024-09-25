@@ -14,7 +14,7 @@ export declare namespace Node {
         type: "found";
         node: FernNavigation.NavigationNodePage;
         parents: FernNavigation.NavigationNode[];
-        breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+        breadcrumb: FernNavigation.BreadcrumbItem[];
         root: FernNavigation.RootNode;
         versions: FernNavigation.VersionNode[];
         currentVersion: FernNavigation.VersionNode | undefined;
@@ -101,7 +101,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         return {
             type: "found",
             node: found.node,
-            breadcrumbs: createBreadcrumbs(found.parents),
+            breadcrumb: createBreadcrumbs(found.parents),
             parents: found.parents,
             root,
             versions, // this is used to render the version switcher

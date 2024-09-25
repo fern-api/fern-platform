@@ -1,7 +1,8 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { once } from "lodash-es";
-import type { MdxEngine, SerializeMdxFunc } from "../types";
+import type { SerializeMdxFunc } from "../types";
 
-const BUNDLERS: Record<MdxEngine, () => Promise<SerializeMdxFunc>> = {
+const BUNDLERS: Record<FernDocs.MdxEngine, () => Promise<SerializeMdxFunc>> = {
     "mdx-bundler": once(
         (): Promise<SerializeMdxFunc> => import("./mdx-bundler").then(({ serializeMdx }) => serializeMdx),
     ),
@@ -10,6 +11,6 @@ const BUNDLERS: Record<MdxEngine, () => Promise<SerializeMdxFunc>> = {
     ),
 };
 
-export function getMdxBundler(engine: MdxEngine): Promise<SerializeMdxFunc> {
+export function getMdxBundler(engine: FernDocs.MdxEngine): Promise<SerializeMdxFunc> {
     return BUNDLERS[engine]();
 }

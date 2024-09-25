@@ -48,14 +48,14 @@ types:
   EndpointPathPart:
     union:
       literal: string
-      pathParameter: commons.PathParameterKey
+      pathParameter: rootCommons.PropertyKey
 
   PathParameter:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      key: commons.PathParameterKey
+      key: rootCommons.PropertyKey
       type: type.TypeReference
 
   QueryParameter:
@@ -177,7 +177,7 @@ types:
     properties:
       name: optional<string>
       path: string
-      pathParameters: map<commons.PathParameterKey, unknown>
+      pathParameters: map<rootCommons.PropertyKey, unknown>
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
       requestBody: unknown

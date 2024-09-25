@@ -1,3 +1,5 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import type { ElementContent, Root } from "hast";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
@@ -10,17 +12,16 @@ import {
     toPageLayoutHastNode,
     toReferenceLayoutHastNode,
 } from "../components/layout";
-import type { FernDocsFrontmatter } from "../frontmatter";
 import { makeToc } from "./makeToc";
 import { wrapChildren } from "./to-estree";
 
 interface Options {
-    matter: FernDocsFrontmatter;
+    matter: FernDocs.Frontmatter;
 }
 
 export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => void {
     return async (tree, vfile) => {
-        const matter = mergeMatter(vfile.data.matter as FernDocsFrontmatter | undefined, opt.matter);
+        const matter = mergeMatter(vfile.data.matter as FernDocs.Frontmatter | undefined, opt.matter);
         opt.matter = matter;
         vfile.data.matter = matter;
 
@@ -44,7 +45,7 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
                 return toCustomLayoutHastNode({ children });
             case "overview":
                 return toOverviewLayoutHastNode({
-                    breadcrumbs: matter.breadcrumbs ?? [],
+                    breadcrumb: matter.breadcrumb ?? EMPTY_ARRAY,
                     title: matter.title ?? "",
                     subtitle,
                     tableOfContents,
@@ -54,7 +55,7 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
                 });
             case "page":
                 return toPageLayoutHastNode({
-                    breadcrumbs: matter.breadcrumbs ?? [],
+                    breadcrumb: matter.breadcrumb ?? EMPTY_ARRAY,
                     title: matter.title ?? "",
                     subtitle,
                     children,
@@ -64,7 +65,7 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
                 });
             case "reference":
                 return toReferenceLayoutHastNode({
-                    breadcrumbs: matter.breadcrumbs ?? [],
+                    breadcrumb: matter.breadcrumb ?? EMPTY_ARRAY,
                     title: matter.title ?? "",
                     subtitle,
                     children,
@@ -74,7 +75,7 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
                 });
             default:
                 return toGuideLayoutHastNode({
-                    breadcrumbs: matter.breadcrumbs ?? [],
+                    breadcrumb: matter.breadcrumb ?? EMPTY_ARRAY,
                     title: matter.title ?? "",
                     subtitle,
                     tableOfContents,
@@ -88,13 +89,13 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
 }
 
 export function mergeMatter(
-    matter: FernDocsFrontmatter | undefined,
-    defaults: FernDocsFrontmatter,
-): FernDocsFrontmatter {
+    matter: FernDocs.Frontmatter | undefined,
+    defaults: Partial<FernDocs.Frontmatter>,
+): FernDocs.Frontmatter {
     if (matter == null) {
         return {
-            layout: "guide",
             ...defaults,
+            layout: defaults.layout ?? "guide",
         };
     }
 
@@ -103,14 +104,10 @@ export function mergeMatter(
         ...matter,
         title: matter.title ?? defaults.title,
         subtitle: matter.subtitle ?? matter.excerpt ?? defaults.subtitle,
-        "edit-this-page-url":
-            matter["edit-this-page-url"] ??
-            matter.editThisPageUrl ??
-            defaults["edit-this-page-url"] ??
-            defaults.editThisPageUrl,
+        "edit-this-page-url": matter["edit-this-page-url"] ?? defaults["edit-this-page-url"],
         layout: defaults.layout ?? matter.layout ?? "guide",
         "hide-nav-links": defaults["hide-nav-links"] ?? matter["hide-nav-links"],
-        breadcrumbs: matter.breadcrumbs ?? defaults.breadcrumbs,
+        breadcrumb: matter.breadcrumb ?? defaults.breadcrumb,
         "force-toc": matter["force-toc"] ?? defaults["force-toc"],
     };
 }

@@ -1,4 +1,5 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import clsx from "clsx";
 import { atom, useAtomValue } from "jotai";
@@ -11,7 +12,6 @@ import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
 import { useToHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
-import { BundledMDX } from "../mdx/types";
 import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
@@ -22,7 +22,7 @@ function flattenChangelogEntries(page: DocsContent.ChangelogPage): FernNavigatio
 
 const CHANGELOG_PAGE_SIZE = 10;
 
-function getOverviewMdx(page: DocsContent.ChangelogPage): BundledMDX | undefined {
+function getOverviewMdx(page: DocsContent.ChangelogPage): FernDocs.MarkdownText | undefined {
     return page.node.overviewPageId != null ? page.pages[page.node.overviewPageId] : undefined;
 }
 
@@ -126,7 +126,7 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
                 <ChangelogContentLayout as="section" className="pb-8">
                     <PageHeader
                         title={content.node.title}
-                        breadcrumbs={content.breadcrumbs}
+                        breadcrumb={content.breadcrumb}
                         subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
                     />
                     <Markdown mdx={overview} />

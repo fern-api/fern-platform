@@ -1,4 +1,4 @@
-import type { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernScrollArea } from "@fern-ui/components";
 import type { ElementContent } from "hast";
 import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
@@ -12,7 +12,7 @@ import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 
 interface OverviewLayoutProps {
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ReactNode | undefined;
     tableOfContents: TableOfContentsItem[] | undefined;
@@ -22,7 +22,7 @@ interface OverviewLayoutProps {
 }
 
 interface OverviewLayoutOpts {
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ElementContent | undefined;
     tableOfContents: TableOfContentsItem[] | undefined;
@@ -32,7 +32,7 @@ interface OverviewLayoutOpts {
 }
 
 export function OverviewLayout({
-    breadcrumbs,
+    breadcrumb,
     title,
     tableOfContents,
     subtitle,
@@ -50,7 +50,7 @@ export function OverviewLayout({
                 )}
             </aside>
             <article className="fern-layout-content max-w-content-wide-width">
-                <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
+                <PageHeader breadcrumb={breadcrumb} title={title} subtitle={subtitle} />
                 <div className="max-w-full fern-prose">{children}</div>
                 {(!hideFeedback || editThisPageUrl != null) && (
                     <footer className="mt-12">

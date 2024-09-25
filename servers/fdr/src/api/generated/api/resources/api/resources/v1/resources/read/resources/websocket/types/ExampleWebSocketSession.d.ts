@@ -5,7 +5,7 @@ import * as FernRegistry from "../../../../../../../../../index";
 export interface ExampleWebSocketSession extends FernRegistry.api.v1.WithDescription {
     name: string | undefined;
     path: string;
-    pathParameters: Record<FernRegistry.api.v1.PathParameterKey, unknown>;
+    pathParameters: Record<FernRegistry.PropertyKey, unknown>;
     queryParameters: Record<string, unknown>;
     headers: Record<string, unknown>;
     messages: FernRegistry.api.v1.read.ExampleWebSocketMessage[];

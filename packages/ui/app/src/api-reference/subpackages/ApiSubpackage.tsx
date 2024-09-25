@@ -13,7 +13,7 @@ export declare namespace ApiSubpackage {
         apiDefinition: ResolvedApiDefinitionPackage;
         isLastInParentPackage: boolean;
         anchorIdParts: readonly string[];
-        breadcrumbs: readonly string[];
+        breadcrumb: readonly string[];
     }
 }
 
@@ -24,7 +24,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
     apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
-    breadcrumbs,
+    breadcrumb,
 }) => {
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, apiDefinition.slug, true);
@@ -39,7 +39,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({
                 apiDefinition={apiDefinition}
                 isLastInParentPackage={isLastInParentPackage}
                 anchorIdParts={anchorIdParts}
-                breadcrumbs={breadcrumbs}
+                breadcrumb={breadcrumb}
             />
         </>
     );

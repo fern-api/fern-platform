@@ -14,7 +14,7 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoin
     const selectedEnvironmentId = useSelectedEnvironmentId();
     return (
         <header className="space-y-1 pb-2 pt-8">
-            <FernBreadcrumbs breadcrumbs={endpoint.breadcrumbs} />
+            <FernBreadcrumbs breadcrumb={endpoint.breadcrumb} />
             <div className="flex items-center justify-between">
                 <span>
                     <h1 className="fern-page-heading">{endpoint.title}</h1>

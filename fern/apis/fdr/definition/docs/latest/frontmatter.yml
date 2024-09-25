@@ -54,7 +54,7 @@ types:
         type: optional<boolean>
         docs: Disables click-to-zoom on all imgages on this page.
       breadcrumb:
-        type: optional<nav.BreadcrumbItem>
+        type: optional<list<nav.BreadcrumbItem>>
         docs: By default, this is inferred from docs.yml, but can be overridden.
       excerpt:
         availability: deprecated

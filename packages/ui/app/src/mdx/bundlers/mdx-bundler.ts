@@ -1,3 +1,4 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type { Options } from "@mdx-js/esbuild";
 import { mapKeys } from "lodash-es";
 import { bundleMDX } from "mdx-bundler";
@@ -9,28 +10,28 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import { PluggableList } from "unified";
-import { FernDocsFrontmatter } from "../frontmatter";
+import { EMPTY_FRONTMATTER } from "../../contexts/frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { mergeMatter, rehypeFernLayout } from "../plugins/rehypeLayout";
 import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
 import { customHeadingHandler } from "../plugins/remarkRehypeHandlers";
 import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
-import type { BundledMDX, FernSerializeMdxOptions } from "../types";
+import type { FernSerializeMdxOptions } from "../types";
 import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
 
 /**
  * Should only be invoked server-side.
  */
-export async function serializeMdx(content: string, options?: FernSerializeMdxOptions): Promise<BundledMDX>;
+export async function serializeMdx(content: string, options?: FernSerializeMdxOptions): Promise<FernDocs.MarkdownText>;
 export async function serializeMdx(
     content: string | undefined,
     options?: FernSerializeMdxOptions,
-): Promise<BundledMDX | undefined>;
+): Promise<FernDocs.MarkdownText | undefined>;
 export async function serializeMdx(
     content: string | undefined,
     { frontmatterDefaults, options = {}, disableMinify, files, filename }: FernSerializeMdxOptions = {},
-): Promise<BundledMDX | undefined> {
+): Promise<FernDocs.MarkdownText | undefined> {
     if (content == null) {
         return undefined;
     }
@@ -43,7 +44,7 @@ export async function serializeMdx(
         process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), "node_modules", "esbuild", "bin", "esbuild");
     }
 
-    let frontmatter: FernDocsFrontmatter = { ...frontmatterDefaults };
+    let frontmatter: FernDocs.Frontmatter = { ...EMPTY_FRONTMATTER, ...frontmatterDefaults };
 
     let cwd: string | undefined;
     if (filename != null) {
@@ -56,7 +57,7 @@ export async function serializeMdx(
     }
 
     try {
-        const bundled = await bundleMDX<FernDocsFrontmatter>({
+        const bundled = await bundleMDX<FernDocs.Frontmatter>({
             source: content,
             files: mapKeys(files ?? {}, (_file, filename) => {
                 if (cwd != null) {
@@ -141,7 +142,7 @@ export async function serializeMdx(
             engine: "mdx-bundler",
             code: bundled.code,
             frontmatter,
-            errors: bundled.errors,
+            scope: {},
         };
     } catch (e) {
         // eslint-disable-next-line no-console

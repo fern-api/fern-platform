@@ -38,7 +38,7 @@ export interface Frontmatter
     /** Disables click-to-zoom on all imgages on this page. */
     "no-image-zoom": boolean | undefined;
     /** By default, this is inferred from docs.yml, but can be overridden. */
-    breadcrumb: FernRegistry.navigation.latest.BreadcrumbItem | undefined;
+    breadcrumb: FernRegistry.navigation.latest.BreadcrumbItem[] | undefined;
     /** Use subtitle instead. */
     excerpt: string | undefined;
 }

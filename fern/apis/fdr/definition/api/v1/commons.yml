@@ -8,8 +8,6 @@ types:
 
   WebSocketMessageId: string
 
-  PathParameterKey: rootCommons.PropertyKey
-
   WebSocketMessageOrigin:
     enum:
       - client

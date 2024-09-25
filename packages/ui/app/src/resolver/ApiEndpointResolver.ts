@@ -191,7 +191,7 @@ export class ApiEndpointResolver {
         const toRet: ResolvedEndpointDefinition = {
             type: "endpoint",
             nodeId: node.id,
-            breadcrumbs: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
+            breadcrumb: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
             id: node.endpointId,
             slug: node.slug,
             description,
@@ -410,7 +410,7 @@ export class ApiEndpointResolver {
         return {
             type: "websocket",
             nodeId: node.id,
-            breadcrumbs: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
+            breadcrumb: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
             auth,
             environments: channel.environments,
             id: node.webSocketId,
@@ -475,7 +475,7 @@ export class ApiEndpointResolver {
         return {
             type: "webhook",
             nodeId: node.id,
-            breadcrumbs: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
+            breadcrumb: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
             title: node.title,
             description,
             availability: undefined,

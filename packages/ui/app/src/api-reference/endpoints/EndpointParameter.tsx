@@ -1,4 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
@@ -6,7 +7,6 @@ import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
-import type { BundledMDX } from "../../mdx/types";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -16,7 +16,7 @@ import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 export declare namespace EndpointParameter {
     export interface Props {
         name: string;
-        description: BundledMDX | undefined;
+        description: FernDocs.MarkdownText | undefined;
         shape: ResolvedTypeShape;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
@@ -26,7 +26,7 @@ export declare namespace EndpointParameter {
 
     export interface ContentProps {
         name: string;
-        description: BundledMDX | undefined;
+        description: FernDocs.MarkdownText | undefined;
         typeShorthand: ReactNode;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;

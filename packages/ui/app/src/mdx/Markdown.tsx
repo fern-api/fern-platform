@@ -1,13 +1,13 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import clsx from "clsx";
 import { memo, type ReactNode } from "react";
 import { MdxContent } from "./MdxContent";
-import type { BundledMDX } from "./types";
 
 export declare namespace Markdown {
     export interface Props {
         title?: ReactNode;
 
-        mdx: BundledMDX | undefined;
+        mdx: FernDocs.MarkdownText | undefined;
         className?: string;
         size?: "xs" | "sm" | "lg";
 

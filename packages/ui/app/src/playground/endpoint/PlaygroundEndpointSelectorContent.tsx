@@ -23,7 +23,7 @@ export interface PlaygroundEndpointSelectorContentProps {
 export interface ApiGroup {
     api: FernNavigation.ApiDefinitionId;
     id: FernNavigation.NodeId;
-    breadcrumbs: readonly string[];
+    breadcrumb: readonly string[];
     items: FernNavigation.NavigationNodeApiLeaf[];
 }
 
@@ -43,11 +43,11 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
                 return;
             }
 
-            const breadcrumbs = FernNavigation.utils.createBreadcrumbs(parents).map((breadcrumb) => breadcrumb.title);
+            const breadcrumb = FernNavigation.utils.createBreadcrumbs(parents).map((breadcrumb) => breadcrumb.title);
             result.push({
                 api: node.apiDefinitionId,
                 id: node.id,
-                breadcrumbs,
+                breadcrumb,
                 items,
             });
         }
@@ -59,27 +59,27 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
     }
 
     /**
-     * we want to get the lowest level of breadcrumbs shared by all groups
+     * we want to get the lowest level of breadcrumb shared by all groups
      * for example:
      * - [a, b, c]
      * - [a, b, d]
      *
-     * the shared breadcrumbs would be [a, b], and the resulting breadcrumbs for each group would be [c] and [d]
+     * the shared breadcrumb would be [a, b], and the resulting breadcrumb for each group would be [c] and [d]
      */
-    const allBreadcrumbs = result.map((group) => group.breadcrumbs);
-    const sharedBreadcrumbs = allBreadcrumbs.reduce((acc, breadcrumbs) => {
-        return acc.filter((breadcrumb, idx) => breadcrumb === breadcrumbs[idx]);
+    const allBreadcrumbs = result.map((group) => group.breadcrumb);
+    const sharedBreadcrumbs = allBreadcrumbs.reduce((acc, breadcrumb) => {
+        return acc.filter((breadcrumb, idx) => breadcrumb === breadcrumb[idx]);
     }, allBreadcrumbs[0] ?? EMPTY_ARRAY);
 
     return result.map((group) => ({
         ...group,
-        breadcrumbs: group.breadcrumbs.slice(sharedBreadcrumbs.length),
+        breadcrumb: group.breadcrumb.slice(sharedBreadcrumbs.length),
     }));
 }
 
 function matchesEndpoint(query: string, group: ApiGroup, endpoint: FernNavigation.NavigationNodeApiLeaf): boolean {
     return (
-        group.breadcrumbs.some((breadcrumb) => breadcrumb.toLowerCase().includes(query.toLowerCase())) ||
+        group.breadcrumb.some((breadcrumb) => breadcrumb.toLowerCase().includes(query.toLowerCase())) ||
         endpoint.title?.toLowerCase().includes(query.toLowerCase()) ||
         (endpoint.type === "endpoint" && endpoint.method.toLowerCase().includes(query.toLowerCase()))
     );
@@ -113,9 +113,9 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
             }
             return (
                 <li key={apiGroup.id}>
-                    {apiGroup.breadcrumbs.length > 0 && (
+                    {apiGroup.breadcrumb.length > 0 && (
                         <div className="flex h-[30px] items-center px-3 py-1 truncate">
-                            {apiGroup.breadcrumbs.map((breadcrumb, idx) => (
+                            {apiGroup.breadcrumb.map((breadcrumb, idx) => (
                                 <Fragment key={idx}>
                                     {idx > 0 && <Slash className="mx-0.5 size-icon-sm text-faded" />}
                                     <span className="t-accent shrink truncate whitespace-nowrap text-xs">
