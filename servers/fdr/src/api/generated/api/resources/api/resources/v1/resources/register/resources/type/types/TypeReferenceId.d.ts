@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface TypeReferenceId {
-    value: FernRegistry.api.v1.TypeId;
+    value: FernRegistry.TypeId;
     default: FernRegistry.api.v1.register.TypeReferenceIdDefault | undefined;
 }

@@ -4,10 +4,4 @@
 
 import * as FernRegistry from "../../../../../../../index";
 
-export type PathParameterKey = string & {
-    api_v1_PathParameterKey: void;
-};
-
-export function PathParameterKey(value: string): FernRegistry.api.v1.PathParameterKey {
-    return value as unknown as FernRegistry.api.v1.PathParameterKey;
-}
+export type PathParameterKey = FernRegistry.PropertyKey;

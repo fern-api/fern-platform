@@ -54,7 +54,7 @@ export class Register {
      *                                     }
      *                                 }],
      *                             pathParameters: [{
-     *                                     key: FernRegistry.api.v1.PathParameterKey("string"),
+     *                                     key: FernRegistry.PropertyKey("string"),
      *                                     type: {
      *                                         type: "id"
      *                                     },
@@ -182,7 +182,7 @@ export class Register {
      *                                     }
      *                                 }],
      *                             pathParameters: [{
-     *                                     key: FernRegistry.api.v1.PathParameterKey("string"),
+     *                                     key: FernRegistry.PropertyKey("string"),
      *                                     type: {
      *                                         type: "id"
      *                                     },
@@ -240,7 +240,7 @@ export class Register {
      *                             "key": "value"
      *                         }
      *                     }],
-     *                 types: [FernRegistry.api.v1.TypeId("string")],
+     *                 types: [FernRegistry.TypeId("string")],
      *                 subpackages: [FernRegistry.api.v1.SubpackageId("string")],
      *                 pointsTo: FernRegistry.api.v1.SubpackageId("string")
      *             },
@@ -284,7 +284,7 @@ export class Register {
      *                                         }
      *                                     }],
      *                                 pathParameters: [{
-     *                                         key: FernRegistry.api.v1.PathParameterKey("string"),
+     *                                         key: FernRegistry.PropertyKey("string"),
      *                                         type: {
      *                                             type: "id"
      *                                         },
@@ -412,7 +412,7 @@ export class Register {
      *                                         }
      *                                     }],
      *                                 pathParameters: [{
-     *                                         key: FernRegistry.api.v1.PathParameterKey("string"),
+     *                                         key: FernRegistry.PropertyKey("string"),
      *                                         type: {
      *                                             type: "id"
      *                                         },
@@ -470,7 +470,7 @@ export class Register {
      *                                 "key": "value"
      *                             }
      *                         }],
-     *                     types: [FernRegistry.api.v1.TypeId("string")],
+     *                     types: [FernRegistry.TypeId("string")],
      *                     subpackages: [FernRegistry.api.v1.SubpackageId("string")],
      *                     pointsTo: FernRegistry.api.v1.SubpackageId("string"),
      *                     description: {

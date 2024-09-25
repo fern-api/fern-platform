@@ -2,6 +2,7 @@
 
 imports:
   commons: ../commons.yml
+  rootCommons: ../../../commons.yml
 
 types:
   TypeDefinition:
@@ -33,7 +34,7 @@ types:
 
   TypeReferenceId:
     properties:
-      value: commons.TypeId
+      value: rootCommons.TypeId
       default: optional<TypeReferenceIdDefault>
 
   TypeReferenceIdDefault:
@@ -42,7 +43,7 @@ types:
 
   ObjectType:
     properties:
-      extends: list<commons.TypeId>
+      extends: list<rootCommons.TypeId>
       properties: list<ObjectProperty>
 
   ObjectProperty:
@@ -50,7 +51,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      key: commons.PropertyKey
+      key: rootCommons.PropertyKey
       valueType: TypeReference
 
   PrimitiveType:
@@ -211,7 +212,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      key: commons.PropertyKey
+      key: rootCommons.PropertyKey
       isOptional: boolean
       contentType: optional<ContentType>
 
@@ -220,7 +221,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      key: commons.PropertyKey
+      key: rootCommons.PropertyKey
       isOptional: boolean
       contentType: optional<ContentType>
 

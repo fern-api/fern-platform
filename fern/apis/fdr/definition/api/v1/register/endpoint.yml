@@ -176,7 +176,7 @@ types:
   StreamCondition:
     availability: deprecated
     union:
-      booleanRequestProperty: commons.PropertyKey
+      booleanRequestProperty: rootCommons.PropertyKey
   # examples
 
   ExampleEndpointCall:

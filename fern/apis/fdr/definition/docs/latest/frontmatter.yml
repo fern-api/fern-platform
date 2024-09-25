@@ -1,0 +1,87 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  seo: ./seo.yml
+  commons: ./commons.yml
+  nav: ../../navigation/latest/__package__.yml
+
+types:
+  # All properties in this frontmatter should be optional.
+  Frontmatter:
+    extends:
+      - seo.WithMetadataConfig
+      - seo.WithJsonLdBreadcrumbs
+    properties:
+      layout:
+        type: optional<Layout>
+        docs: The layout of the page. This will determine the width of the content.
+        default: guide
+      title:
+        type: optional<string>
+        docs: |
+          The title of the page. If not set, the title will inherit from what's set in the sidebar.
+          This is also used for the <title> tag in the HTML.
+      headline:
+        type: optional<string>
+        docs: The SEO title of the page. If not set, the title will inherit what's set in the sidebar.
+      description:
+        type: optional<string>
+        docs: The description of the page. This is used for the <meta name="description"> tag in the HTML.
+      subtitle:
+        type: optional<string>
+        docs: |
+          The subtitle of the page. This is a markdown string that is rendered below the title.
+          If `description` is not set, this will be used for the <meta name="description"> tag in the HTML.
+      image:
+        type: optional<commons.FileIdOrUrl>
+        docs: The URL to this page's image. This is currently an alias for `og:image`, but its purpose may change to a be a cover-image (pre-title).
+      edit-this-page-url:
+        type: optional<string>
+        docs: Reners an "Edit this page" link at the bottom of the page.
+      hide-toc:
+        type: optional<boolean>
+        docs: Hides the table of contents.
+      force-toc:
+        type: optional<boolean>
+        docs: Forces the table of contents to be generated for steps, accordions, and tabs.
+      hide-nav-links:
+        type: optional<boolean>
+        docs: Hides the (prev, next) navigation links at the bottom of the page.
+      hide-feedback:
+        type: optional<boolean>
+        docs: Hides the feedback form at the bottom of the page
+      no-image-zoom:
+        type: optional<boolean>
+        docs: Disables click-to-zoom on all imgages on this page.
+      breadcrumb:
+        type: optional<nav.BreadcrumbItem>
+        docs: By default, this is inferred from docs.yml, but can be overridden.
+      excerpt:
+        availability: deprecated
+        type: optional<string>
+        docs: Use subtitle instead.
+
+  Layout:
+    enum:
+      - value: guide
+        docs: Guides are typically long-form content, and are designed for readability.
+      - value: overview
+        docs: |
+          Overview pages are typically meant to be a landing page for a section of the documentation.
+          These pages are 50% wider than guide pages, but the table of contents is still visible.
+      - value: reference
+        docs: |
+          Reference pages are best used for API docs or other material that is meant to have a right-hand column.
+          This layout is not recommended for long-form content because they are 2x the width of guide pages and can be difficult to read.
+          Using an <Aside> component is recommended. It will generate a sticky right-hand column for the page, which is useful for code snippets.
+          <Aside> component is not available in guides and overview, and will automatically cause the layout to switch to reference.
+          Note: Table of contents are always hidden on reference pages.
+      - value: page
+        docs: |
+          The layout used for full-width pages. This is useful for landing pages or other custom layouts.
+          Both the navigation sidebar and the table of contents are hidden.
+          The content will take up the full width of the page-width container, which is set by docs.yml.
+      - value: custom
+        docs: |
+          This layout takes over 100% of the viewport width, below the header.
+          Unlike PageLayout, the content will not be constrained to the page-width container, and does not render any padding.

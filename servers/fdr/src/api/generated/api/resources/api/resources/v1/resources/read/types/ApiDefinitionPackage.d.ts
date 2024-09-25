@@ -6,7 +6,7 @@ export interface ApiDefinitionPackage {
     endpoints: FernRegistry.api.v1.read.EndpointDefinition[];
     websockets: FernRegistry.api.v1.read.WebSocketChannel[];
     webhooks: FernRegistry.api.v1.read.WebhookDefinition[];
-    types: FernRegistry.api.v1.TypeId[];
+    types: FernRegistry.TypeId[];
     subpackages: FernRegistry.api.v1.SubpackageId[];
     /**
      * if present, this package should be replaced with the provided subpackage

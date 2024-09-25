@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  endpoint: endpoint.yml
+  webhook: webhook.yml
+  websocket: websocket.yml
+  type: type.yml
+  namespace: namespace.yml
+  rootCommons: ../../commons.yml
+  read: ../v1/read/__package__.yml
+
+types:
+  ApiAuth: read.ApiAuth
+  ApiDefinition:
+    properties:
+      id: rootCommons.ApiDefinitionId
+      endpoints: map<rootCommons.EndpointId, endpoint.EndpointDefinition>
+      websockets: map<rootCommons.WebSocketId, websocket.WebSocketChannel>
+      webhooks: map<rootCommons.WebhookId, webhook.WebhookDefinition>
+      types: map<rootCommons.TypeId, type.TypeDefinition>
+      namespaces: map<namespace.NamespaceId, namespace.Namespace>
+      auth: optional<ApiAuth>
+      globalHeaders: optional<list<type.ObjectProperty>>

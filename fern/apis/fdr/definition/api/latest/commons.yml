@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  docs: ../../docs/latest/__package__.yml
+  rootCommons: ../../commons.yml
+  namespace: namespace.yml
+
+types:
+  WithAvailability:
+    properties:
+      availability: optional<rootCommons.Availability>
+
+  WithDescription:
+    properties:
+      description: optional<docs.MarkdownText>
+
+  WithNamespace:
+    properties:
+      namespace:
+        type: optional<list<namespace.NamespaceId>>
+        docs: A list of subpackage names based on the order in which values are rendered in the frontend.
+
+  Environment:
+    properties:
+      id: rootCommons.EnvironmentId
+      baseUrl: string
+
+  PathPart:
+    union:
+      literal: string
+      pathParameter: rootCommons.PropertyKey

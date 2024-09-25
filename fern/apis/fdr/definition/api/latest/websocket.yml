@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../commons.yml
+  commons: commons.yml
+  http: endpoint.yml
+  type: type.yml
+  read: ../v1/read/websocket.yml
+  v1: ../v1/commons.yml
+
+types:
+  WebSocketMessageId: v1.WebSocketMessageId
+  WebSocketMessageOrigin: v1.WebSocketMessageOrigin
+  ExampleWebSocketMessage: read.ExampleWebSocketMessage
+
+  WebSocketChannel:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      id: rootCommons.WebSocketId
+      authed: boolean
+      path: list<commons.PathPart>
+      messages:
+        type: list<WebSocketMessage>
+        docs: The messages that can be sent and received on this channel
+
+      defaultEnvironment: optional<rootCommons.EnvironmentId>
+      environments: optional<list<commons.Environment>>
+      pathParameters: optional<list<type.ObjectProperty>>
+      queryParameters: optional<list<type.ObjectProperty>>
+      requestHeaders: optional<list<type.ObjectProperty>>
+      examples: optional<list<ExampleWebSocketSession>>
+
+  WebSocketMessage:
+    extends:
+      - commons.WithDescription
+      - commons.WithAvailability
+    properties:
+      type: WebSocketMessageId
+      displayName: optional<string>
+      origin: WebSocketMessageOrigin
+      body: type.TypeShape
+
+  ExampleWebSocketSession:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      path: string
+      pathParameters: map<rootCommons.PropertyKey, unknown>
+      queryParameters: map<rootCommons.PropertyKey, unknown>
+      requestHeaders: map<rootCommons.PropertyKey, unknown>
+      messages: list<ExampleWebSocketMessage>

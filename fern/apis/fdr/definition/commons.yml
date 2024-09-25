@@ -31,11 +31,17 @@ types:
 
   WebhookId: string
 
+  TypeId: string
+
   PageId: string
 
   FileId: string
 
   Url: string
+
+  JqString: string
+
+  PropertyKey: string
 
   EndpointIdentifier:
     properties:
