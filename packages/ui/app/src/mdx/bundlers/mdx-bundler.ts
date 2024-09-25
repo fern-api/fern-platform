@@ -10,7 +10,6 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import { PluggableList } from "unified";
-import { EMPTY_FRONTMATTER } from "../../contexts/frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { mergeMatter, rehypeFernLayout } from "../plugins/rehypeLayout";
@@ -44,7 +43,7 @@ export async function serializeMdx(
         process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), "node_modules", "esbuild", "bin", "esbuild");
     }
 
-    let frontmatter: FernDocs.Frontmatter = { ...EMPTY_FRONTMATTER, ...frontmatterDefaults };
+    let frontmatter: Partial<FernDocs.Frontmatter> = { ...frontmatterDefaults };
 
     let cwd: string | undefined;
     if (filename != null) {
@@ -141,7 +140,8 @@ export async function serializeMdx(
         return {
             engine: "mdx-bundler",
             code: bundled.code,
-            frontmatter,
+            // this casting is ok because Partial<FernDocs.Frontmatter> satisfies FernDocs.Frontmatter
+            frontmatter: frontmatter as FernDocs.Frontmatter,
             scope: {},
         };
     } catch (e) {
