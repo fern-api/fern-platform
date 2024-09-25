@@ -1562,6 +1562,10 @@ export class AlgoliaSearchRecordGenerator {
         return contents.join("\n");
     }
 
+    // The idea behind this function is to collect the smallest subset of records that capture all type information.
+    //
+    // To do this, we descend the type tree and resolve the leaf nodes and map them to records that have built up breadcrumbs,
+    // slugs, and other metadata that is useful for search indexing.
     private collectReferencedTypesToContentV2(
         typeReferencesWithMetadata: TypeReferenceWithMetadata[],
         types: Record<string, APIV1Read.TypeDefinition>,
@@ -1570,6 +1574,8 @@ export class AlgoliaSearchRecordGenerator {
         const fields: AlgoliaSearchRecord[] = [];
 
         typeReferencesWithMetadata.forEach((typeReferenceWithMetadata) => {
+            // Based on the type of endpoint, we may have additional properties to add to the field,
+            // this is the tersest way to add them.
             const endpointProperties = {
                 type: "endpoint-field-v1" as const,
                 method: typeReferenceWithMetadata.method,
@@ -1585,6 +1591,7 @@ export class AlgoliaSearchRecordGenerator {
                 method: typeReferenceWithMetadata.method,
                 endpointPath: typeReferenceWithMetadata.endpointPath,
             };
+            // Done for appropriate type checking
             const additionalProperties =
                 typeReferenceWithMetadata.method != null
                     ? typeReferenceWithMetadata.type === "endpoint-field-v1"
@@ -1604,6 +1611,8 @@ export class AlgoliaSearchRecordGenerator {
                                     const referenceLeaves: TypeReferenceWithMetadata[] = [];
                                     object.properties.forEach((property) => {
                                         const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${property.key}`));
+                                        // If we see and object shape for a property, we need to recursively collect the underlying referenced types.
+                                        // If we see a reference or a container type, we will add it to the referenceLeaves to be processed in the next iteration.
                                         if (
                                             property.valueType.type === "id" ||
                                             property.valueType.type === "optional" ||
@@ -1633,6 +1642,7 @@ export class AlgoliaSearchRecordGenerator {
                                                 propertyKey: property.key,
                                                 type: typeReferenceWithMetadata.type,
                                             });
+                                            // If we see a primitive or literal property, we add it to our collection of algolia records.
                                         } else if (
                                             property.valueType.type === "primitive" ||
                                             property.valueType.type === "literal"
@@ -1654,6 +1664,7 @@ export class AlgoliaSearchRecordGenerator {
                                             });
                                         }
                                     });
+                                    // If we see an extension on the object, we need to process the internal types.
                                     object.extends.forEach((extend) => {
                                         referenceLeaves.push({
                                             reference: { type: "id", value: extend, default: undefined },
@@ -1682,6 +1693,8 @@ export class AlgoliaSearchRecordGenerator {
                                 enum: (enum_) => {
                                     enum_.values.forEach((value) => {
                                         const slug = FernNavigation.V1.Slug(encodeURI(baseSlug));
+                                        // For enums, we want to make a record for each enum value, but individual enum values
+                                        // do not have deep linked anchors.
                                         fields.push({
                                             objectID: uuid(),
                                             title: value.value,
@@ -1714,6 +1727,7 @@ export class AlgoliaSearchRecordGenerator {
                                         const slug = FernNavigation.V1.Slug(
                                             encodeURI(`${baseSlug}.${variant.displayName}`),
                                         );
+                                        // For undiscriminated unions, we need to check if there are any nested types that need to be processed.
                                         if (
                                             variant.type.type === "id" ||
                                             variant.type.type === "optional" ||
@@ -1737,6 +1751,7 @@ export class AlgoliaSearchRecordGenerator {
                                                 propertyKey: undefined,
                                                 type: typeReferenceWithMetadata.type,
                                             });
+                                            // If we see the variant is a primitive or literal, we add it to our collection of algolia records.
                                         } else if (
                                             variant.type.type === "primitive" ||
                                             variant.type.type === "literal"
@@ -1772,12 +1787,17 @@ export class AlgoliaSearchRecordGenerator {
                                         const title = variant.displayName ?? titleCase(variant.discriminantValue);
                                         const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${title}`));
 
+                                        // additional properties on the variant are the object shapes themselves,
+                                        // so we check for extension types here.
                                         variant.additionalProperties.extends.forEach((extend) => {
                                             referenceLeaves.push({
                                                 reference: { type: "id", value: extend, default: undefined },
                                                 anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
-                                                breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
-                                                slugPrefix: baseSlug,
+                                                breadcrumbs: [
+                                                    ...typeReferenceWithMetadata.breadcrumbs,
+                                                    { title, slug },
+                                                ],
+                                                slugPrefix: encodeURI(`${baseSlug}.${title}`),
                                                 version: typeReferenceWithMetadata.version,
                                                 indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
                                                 method: typeReferenceWithMetadata.method,
@@ -1788,6 +1808,7 @@ export class AlgoliaSearchRecordGenerator {
                                             });
                                         });
                                         variant.additionalProperties.properties.forEach((property) => {
+                                            // here we check for references or container types to process in the next iteration.
                                             if (
                                                 property.valueType.type === "id" ||
                                                 property.valueType.type === "optional" ||
@@ -1819,6 +1840,7 @@ export class AlgoliaSearchRecordGenerator {
                                                     propertyKey: property.key,
                                                     type: typeReferenceWithMetadata.type,
                                                 });
+                                                // otherwise we check for primitive or literal types to add to our collection of algolia records.
                                             } else if (
                                                 property.valueType.type === "primitive" ||
                                                 property.valueType.type === "literal"
@@ -1849,6 +1871,8 @@ export class AlgoliaSearchRecordGenerator {
                             });
                         }
                     } else {
+                        // In this case, we check to see if we've already visited the reference, we do not want to process it again.
+                        // We treat this as a leaf node, and if the object came from a propert, we add the record as being keyed by the parent key.
                         if (typeReferenceWithMetadata.propertyKey != null) {
                             const type = types[id.value];
 
@@ -1876,6 +1900,7 @@ export class AlgoliaSearchRecordGenerator {
                     }
                 },
                 optional: (optional) => {
+                    // Here, we want to unwrap the container type while preserving the parent breadcrumbs.
                     fields.push(
                         ...this.collectReferencedTypesToContentV2(
                             [
@@ -1890,6 +1915,7 @@ export class AlgoliaSearchRecordGenerator {
                     );
                 },
                 list: (list) => {
+                    // Here, we want to unwrap the container type while preserving the parent breadcrumbs
                     fields.push(
                         ...this.collectReferencedTypesToContentV2(
                             [
@@ -1904,6 +1930,7 @@ export class AlgoliaSearchRecordGenerator {
                     );
                 },
                 set: (set) => {
+                    // Here, we want to unwrap the container type while preserving the parent breadcrumbs
                     fields.push(
                         ...this.collectReferencedTypesToContentV2(
                             [
@@ -1918,6 +1945,7 @@ export class AlgoliaSearchRecordGenerator {
                     );
                 },
                 map: (map) => {
+                    // Here, we want to unwrap the container type while preserving the parent breadcrumbs
                     fields.push(
                         ...this.collectReferencedTypesToContentV2(
                             [
