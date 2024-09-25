@@ -2,7 +2,7 @@ import { noop } from "ts-essentials";
 import { FernNavigation } from "../..";
 import { visitDiscriminatedUnion } from "../../utils";
 
-export function createBreadcrumbs(nodes: FernNavigation.NavigationNode[]): readonly FernNavigation.BreadcrumbItem[] {
+export function createBreadcrumbs(nodes: FernNavigation.NavigationNode[]): FernNavigation.BreadcrumbItem[] {
     const breadcrumb: FernNavigation.BreadcrumbItem[] = [];
     nodes.forEach((node) => {
         if (!FernNavigation.hasMetadata(node) || FernNavigation.isLeaf(node)) {
