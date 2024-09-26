@@ -1,3 +1,4 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
@@ -16,7 +17,7 @@ import { rehypeSanitizeJSX } from "../plugins/rehypeSanitizeJSX";
 import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
 import { customHeadingHandler } from "../plugins/remarkRehypeHandlers";
 import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
-import type { BundledMDX, FernSerializeMdxOptions } from "../types";
+import type { FernSerializeMdxOptions } from "../types";
 import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
@@ -84,15 +85,15 @@ function withDefaultMdxOptions({
 /**
  * Should only be invoked server-side.
  */
-export async function serializeMdx(content: string, options?: FernSerializeMdxOptions): Promise<BundledMDX>;
+export async function serializeMdx(content: string, options?: FernSerializeMdxOptions): Promise<FernDocs.MarkdownText>;
 export async function serializeMdx(
     content: string | undefined,
     options?: FernSerializeMdxOptions,
-): Promise<BundledMDX | undefined>;
+): Promise<FernDocs.MarkdownText | undefined>;
 export async function serializeMdx(
     content: string | undefined,
     options?: FernSerializeMdxOptions,
-): Promise<BundledMDX | undefined> {
+): Promise<FernDocs.MarkdownText | undefined> {
     if (content == null) {
         return undefined;
     }
@@ -113,7 +114,7 @@ export async function serializeMdx(
             engine: "next-mdx-remote",
             code: result.compiledSource,
             frontmatter: result.frontmatter,
-            errors: [],
+            scope: {},
         };
     } catch (e) {
         // eslint-disable-next-line no-console

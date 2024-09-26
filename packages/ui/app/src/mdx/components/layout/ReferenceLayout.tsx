@@ -11,7 +11,7 @@ import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 
 interface ReferenceLayoutProps {
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 
     title: string;
     subtitle: ReactNode | undefined;
@@ -22,7 +22,7 @@ interface ReferenceLayoutProps {
 }
 
 interface ReferenceLayoutOpts {
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 
     title: string;
     subtitle: ElementContent | undefined;
@@ -33,7 +33,7 @@ interface ReferenceLayoutOpts {
 }
 
 export function ReferenceLayout({
-    breadcrumbs,
+    breadcrumb,
     title,
     subtitle,
     aside,
@@ -46,7 +46,7 @@ export function ReferenceLayout({
         <main className="fern-reference-layout">
             <div className="z-10 w-full min-w-0 pt-8">
                 <article className="mx-auto w-full lg:ml-0 xl:mx-auto pb-20 max-w-content-width md:max-w-endpoint-width">
-                    <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
+                    <PageHeader breadcrumb={breadcrumb} title={title} subtitle={subtitle} />
                     <div
                         className={clsx("max-w-full prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0", {
                             "md:grid md:grid-cols-2 md:gap-8 lg:gap-12 max-md:space-y-12": isValidElement(aside),

@@ -1,9 +1,9 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
 import { Markdown } from "../../mdx/Markdown";
-import type { BundledMDX } from "../../mdx/types";
 import {
     ResolvedFormDataRequestProperty,
     ResolvedRequestBody,
@@ -117,7 +117,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 function getDescription(
     bodyProperty: ResolvedFormDataRequestProperty.BodyProperty,
     types: Record<string, ResolvedTypeDefinition>,
-): BundledMDX | undefined {
+): FernDocs.MarkdownText | undefined {
     if (bodyProperty.description != null) {
         return bodyProperty.description;
     }

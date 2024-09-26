@@ -1,12 +1,12 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import dynamic from "next/dynamic";
 import React, { memo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FrontmatterContextProvider } from "../contexts/frontmatter";
-import type { BundledMDX } from "./types";
 
 export declare namespace MdxContent {
     export interface Props {
-        mdx: BundledMDX | undefined;
+        mdx: FernDocs.MarkdownText | undefined;
         fallback?: React.ReactNode;
     }
 }

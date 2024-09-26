@@ -5,28 +5,28 @@ import { useToHref } from "../hooks/useHref";
 import { FernLink } from "./FernLink";
 
 export interface FernBreadcrumbsProps {
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }
 
-export function FernBreadcrumbs({ breadcrumbs }: FernBreadcrumbsProps): ReactElement | null {
+export function FernBreadcrumbs({ breadcrumb }: FernBreadcrumbsProps): ReactElement | null {
     const toHref = useToHref();
-    const filteredBreadcrumbs = breadcrumbs.filter((item) => item.title.trim().length > 0);
+    const filteredBreadcrumbs = breadcrumb.filter((item) => item.title.trim().length > 0);
 
     if (filteredBreadcrumbs.length === 0) {
         return null;
     }
     return (
         <div>
-            <span className="fern-breadcrumbs">
+            <span className="fern-breadcrumb">
                 {filteredBreadcrumbs.map((breadcrumb, idx) => (
                     <Fragment key={idx}>
-                        {idx > 0 && <NavArrowRight className="fern-breadcrumbs-arrow" />}
+                        {idx > 0 && <NavArrowRight className="fern-breadcrumb-arrow" />}
                         {breadcrumb.pointsTo != null ? (
-                            <FernLink className="fern-breadcrumbs-item" href={toHref(breadcrumb.pointsTo)}>
+                            <FernLink className="fern-breadcrumb-item" href={toHref(breadcrumb.pointsTo)}>
                                 {breadcrumb.title}
                             </FernLink>
                         ) : (
-                            <span className="fern-breadcrumbs-item">{breadcrumb.title}</span>
+                            <span className="fern-breadcrumb-item">{breadcrumb.title}</span>
                         )}
                     </Fragment>
                 ))}

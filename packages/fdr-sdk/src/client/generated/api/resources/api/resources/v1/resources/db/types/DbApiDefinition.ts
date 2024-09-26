@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../../../../../index";
 export interface DbApiDefinition {
     id: FernRegistry.ApiDefinitionId;
     rootPackage: FernRegistry.api.v1.db.DbApiDefinitionPackage;
-    types: Record<FernRegistry.api.v1.TypeId, FernRegistry.api.v1.read.TypeDefinition>;
+    types: Record<FernRegistry.TypeId, FernRegistry.api.v1.read.TypeDefinition>;
     subpackages: Record<FernRegistry.api.v1.SubpackageId, FernRegistry.api.v1.db.DbApiDefinitionSubpackage>;
     auth: FernRegistry.api.v1.read.ApiAuth | undefined;
     /**

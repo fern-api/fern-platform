@@ -115,7 +115,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                 })}
             >
                 <header className="space-y-1 pt-8">
-                    <FernBreadcrumbs breadcrumbs={websocket.breadcrumbs} />
+                    <FernBreadcrumbs breadcrumb={websocket.breadcrumb} />
                     <div>
                         <h1 className="fern-page-heading">{websocket.title}</h1>
                         {websocket.availability != null && (

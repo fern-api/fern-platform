@@ -234,7 +234,7 @@ export class ApiDefinitionResolver {
                 filename: page.pageId,
                 frontmatterDefaults: {
                     title: page.title,
-                    breadcrumbs: [], // TODO: implement breadcrumbs
+                    breadcrumb: [], // TODO: implement breadcrumbs
                     "edit-this-page-url": pageContent.editThisPageUrl,
                     "hide-nav-links": true,
                     layout: "reference",

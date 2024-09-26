@@ -135,7 +135,7 @@ export const FieldRecordV1: React.FC<FieldRecordV1.Props> = ({ hit, isHovered })
                     })}
                 >
                     <SearchHitBreadCrumbsV3
-                        breadcrumbs={isHovered ? hit.breadcrumbs : breadcrumbParts.slicedBreadcrumbs}
+                        breadcrumb={isHovered ? hit.breadcrumbs : breadcrumbParts.slicedBreadcrumbs}
                     />
                 </span>
 

@@ -4,15 +4,9 @@ imports:
   rootCommons: ../../commons.yml
 
 types:
-  TypeId: string
-
   SubpackageId: string
 
   WebSocketMessageId: string
-
-  PathParameterKey: string
-
-  PropertyKey: string
 
   WebSocketMessageOrigin:
     enum:
@@ -31,8 +25,6 @@ types:
   WithAvailability:
     properties:
       availability: optional<rootCommons.Availability>
-
-  JqString: string
 
   Environment:
     properties:

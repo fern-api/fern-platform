@@ -36,6 +36,6 @@ export function getEndpointPathAsString(endpoint: APIV1Read.EndpointDefinition):
     );
 }
 
-export function getPathParameterAsString(pathParameterKey: APIV1Read.PathParameterKey): string {
+export function getPathParameterAsString(pathParameterKey: APIV1Read.PropertyKey): string {
     return `:${pathParameterKey}`;
 }

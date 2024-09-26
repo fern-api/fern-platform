@@ -10,6 +10,6 @@ export declare namespace EndpointPathPart {
     }
     interface PathParameter {
         type: "pathParameter";
-        value: FernRegistry.api.v1.PathParameterKey;
+        value: FernRegistry.PropertyKey;
     }
 }

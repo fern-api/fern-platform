@@ -41,3 +41,4 @@ export * from "./WithPage";
 export * from "./WithOverviewPage";
 export * from "./WithApiDefinitionId";
 export * from "./WithRedirect";
+export * from "./BreadcrumbItem";

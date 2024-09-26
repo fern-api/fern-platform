@@ -17,12 +17,12 @@ describe("transformEndpointEndpointCall", () => {
             path: {
                 parts: [
                     { type: "literal", value: "/prefix" },
-                    { type: "pathParameter", value: APIV1Write.PathParameterKey("pathParam") },
+                    { type: "pathParameter", value: FdrAPI.PropertyKey("pathParam") },
                     { type: "literal", value: "/suffix" },
                 ],
                 pathParameters: [
                     {
-                        key: APIV1Write.PathParameterKey("pathParam"),
+                        key: FdrAPI.PropertyKey("pathParam"),
                         type: {
                             type: "primitive",
                             value: {
@@ -78,7 +78,7 @@ describe("transformEndpointEndpointCall", () => {
             writeShape: {
                 path: "/prefix/path-param-value/suffix",
                 pathParameters: {
-                    [APIV1Write.PathParameterKey("pathParam")]: "path-param-value",
+                    [FdrAPI.PropertyKey("pathParam")]: "path-param-value",
                 },
                 queryParameters: {
                     queryParam: 123,

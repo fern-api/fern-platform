@@ -50,7 +50,7 @@ types:
     properties:
       name: optional<string>
       path: string
-      pathParameters: map<commons.PathParameterKey, unknown>
+      pathParameters: map<rootCommons.PropertyKey, unknown>
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
       messages: list<ExampleWebSocketMessage>

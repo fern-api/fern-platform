@@ -1,4 +1,5 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import GithubSlugger from "github-slugger";
@@ -7,7 +8,7 @@ import { captureSentryError } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
 import { serializeMdx } from "../mdx/bundler";
 import { getFrontmatter } from "../mdx/frontmatter";
-import type { BundledMDX, FernSerializeMdxOptions } from "../mdx/types";
+import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
 import { ApiEndpointResolver } from "../resolver/ApiEndpointResolver";
 import { ApiTypeResolver } from "../resolver/ApiTypeResolver";
@@ -17,7 +18,7 @@ import type { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
     pages: Record<string, DocsV1Read.PageContent>,
-): Promise<BundledMDX | undefined> {
+): Promise<FernDocs.MarkdownText | undefined> {
     const pageId = FernNavigation.getPageId(node);
     if (pageId == null) {
         return;
@@ -119,7 +120,7 @@ export async function resolveDocsContent({
 
         return {
             type: "changelog",
-            breadcrumbs: found.breadcrumbs,
+            breadcrumb: found.breadcrumb,
             title: (page != null && typeof page !== "string" ? page.frontmatter.title : undefined) ?? found.node.title,
             node,
             pages: Object.fromEntries(pageRecords.map((record) => [record.pageId, record.markdown])),
@@ -156,7 +157,7 @@ export async function resolveDocsContent({
             type: "changelog-entry",
             changelogTitle,
             changelogSlug: changelogNode.slug,
-            breadcrumbs: found.breadcrumbs,
+            breadcrumb: found.breadcrumb,
             page,
             neighbors,
         };
@@ -263,12 +264,12 @@ async function resolveMarkdownPage(
         filename: pageId,
         frontmatterDefaults: {
             title: node.title,
-            breadcrumbs: found.breadcrumbs,
+            breadcrumb: found.breadcrumb,
             "edit-this-page-url": pageContent.editThisPageUrl,
             "force-toc": featureFlags.isTocDefaultEnabled,
         },
     });
-    const frontmatter = typeof mdx === "string" ? {} : mdx.frontmatter;
+    const frontmatter: Partial<FernDocs.Frontmatter> = typeof mdx === "string" ? {} : mdx.frontmatter;
 
     let apiNodes: FernNavigation.ApiReferenceNode[] = [];
     if (

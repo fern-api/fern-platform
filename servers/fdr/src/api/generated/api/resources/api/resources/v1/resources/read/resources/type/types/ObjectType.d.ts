@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface ObjectType {
-    extends: FernRegistry.api.v1.TypeId[];
+    extends: FernRegistry.TypeId[];
     properties: FernRegistry.api.v1.read.ObjectProperty[];
 }

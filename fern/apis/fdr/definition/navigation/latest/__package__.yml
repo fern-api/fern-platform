@@ -354,3 +354,8 @@ types:
   WithRedirect:
     properties:
       pointsTo: optional<Slug>
+
+  BreadcrumbItem:
+    properties:
+      title: string
+      pointsTo: optional<Slug>

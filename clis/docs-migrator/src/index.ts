@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import * as FernDocs from "@fern-api/fdr-sdk/docs";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { DocsConfiguration, NavigationItem } from "@fern-fern/docs-config/api";
 import * as serializer from "@fern-fern/docs-config/serialization";
 import { titleCase } from "@fern-ui/core-utils";
@@ -6,8 +8,13 @@ import fs from "fs";
 import grayMatter from "gray-matter";
 import jsyaml from "js-yaml";
 import path from "path";
-import { FernDocsFrontmatter } from "./fern";
 import { MintJsonSchema, MintNavigationItemPage, MintlifyFrontmatter } from "./mintlify";
+
+type TransformFileIdOrUrl<T> = {
+    [K in keyof T]: T[K] extends FernDocs.FileIdOrUrl | undefined ? string | undefined : T[K];
+};
+
+type FernDocsFrontmatter = Partial<TransformFileIdOrUrl<FernDocs.Frontmatter>>;
 
 interface MarkdownWithMintlifyFrontmatter {
     fullSlug: readonly string[];
@@ -252,7 +259,7 @@ export class MigrateFromMintlify {
                 layout: data.mode != null ? "reference" : undefined,
                 // TODO: (rohin) investigate this more; it seems like mintlify isn't reliant on fdr, so not sure if there's a transformation here.
                 image: data["og:image"],
-                slug,
+                slug: FernNavigation.Slug(slug),
             },
             content,
         };

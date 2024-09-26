@@ -28,7 +28,7 @@ types:
     properties:
       id: rootCommons.ApiDefinitionId
       rootPackage: ApiDefinitionPackage
-      types: map<commons.TypeId, type.TypeDefinition>
+      types: map<rootCommons.TypeId, type.TypeDefinition>
       subpackages: map<commons.SubpackageId, ApiDefinitionSubpackage>
       auth: optional<ApiAuth>
       hasMultipleBaseUrls:
@@ -64,7 +64,7 @@ types:
       endpoints: list<endpoint.EndpointDefinition>
       websockets: list<websocket.WebSocketChannel>
       webhooks: list<webhook.WebhookDefinition>
-      types: list<commons.TypeId>
+      types: list<rootCommons.TypeId>
       subpackages: list<commons.SubpackageId>
       pointsTo:
         docs: |
@@ -118,7 +118,7 @@ types:
   OAuthClientCredentialsReferencedEndpoint:
     properties:
       endpointId: rootCommons.EndpointId
-      accessTokenLocator: commons.JqString
+      accessTokenLocator: rootCommons.JqString
 
 errors:
   ApiDoesNotExistError:

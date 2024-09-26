@@ -1,15 +1,6 @@
-import { z } from "zod";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 
-export const ListElementSchema = z.object({
-    "@type": z.literal("ListItem"),
-    position: z.number(),
-    name: z.string(),
-    item: z.string().optional(),
-});
-
-export type ListElementSchema = z.infer<typeof ListElementSchema>;
-
-export function listItem(position: number, name: string, item?: string): ListElementSchema {
+export function listItem(position: number, name: string, item?: string): FernDocs.JsonLdBreadcrumbListElement {
     return {
         "@type": "ListItem",
         position,
@@ -18,15 +9,7 @@ export function listItem(position: number, name: string, item?: string): ListEle
     };
 }
 
-export const BreadcrumbListSchema = z.object({
-    "@context": z.literal("https://schema.org"),
-    "@type": z.literal("BreadcrumbList"),
-    itemListElement: z.array(ListElementSchema),
-});
-
-export type BreadcrumbListSchema = z.infer<typeof BreadcrumbListSchema>;
-
-export function breadcrumbList(itemListElement: ListElementSchema[]): BreadcrumbListSchema {
+export function breadcrumbList(itemListElement: FernDocs.JsonLdBreadcrumbListElement[]): FernDocs.JsonLdBreadcrumbList {
     return {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",

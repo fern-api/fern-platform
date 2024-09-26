@@ -29,7 +29,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                     }
  *                                 }],
  *                             pathParameters: [{
- *                                     key: FernRegistry.api.v1.PathParameterKey("string"),
+ *                                     key: FernRegistry.PropertyKey("string"),
  *                                     type: {
  *                                         type: "id"
  *                                     },
@@ -157,7 +157,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                     }
  *                                 }],
  *                             pathParameters: [{
- *                                     key: FernRegistry.api.v1.PathParameterKey("string"),
+ *                                     key: FernRegistry.PropertyKey("string"),
  *                                     type: {
  *                                         type: "id"
  *                                     },
@@ -215,7 +215,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }
  *                     }],
- *                 types: [FernRegistry.api.v1.TypeId("string")],
+ *                 types: [FernRegistry.TypeId("string")],
  *                 subpackages: [FernRegistry.api.v1.SubpackageId("string")],
  *                 pointsTo: FernRegistry.api.v1.SubpackageId("string")
  *             },
@@ -259,7 +259,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                         }
  *                                     }],
  *                                 pathParameters: [{
- *                                         key: FernRegistry.api.v1.PathParameterKey("string"),
+ *                                         key: FernRegistry.PropertyKey("string"),
  *                                         type: {
  *                                             type: "id"
  *                                         },
@@ -387,7 +387,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                         }
  *                                     }],
  *                                 pathParameters: [{
- *                                         key: FernRegistry.api.v1.PathParameterKey("string"),
+ *                                         key: FernRegistry.PropertyKey("string"),
  *                                         type: {
  *                                             type: "id"
  *                                         },
@@ -445,7 +445,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                 "key": "value"
  *                             }
  *                         }],
- *                     types: [FernRegistry.api.v1.TypeId("string")],
+ *                     types: [FernRegistry.TypeId("string")],
  *                     subpackages: [FernRegistry.api.v1.SubpackageId("string")],
  *                     pointsTo: FernRegistry.api.v1.SubpackageId("string"),
  *                     description: {

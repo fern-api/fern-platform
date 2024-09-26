@@ -77,7 +77,7 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
                         "t-muted": !isHovered,
                     })}
                 >
-                    <SearchHitBreadCrumbsV2 breadcrumbs={hit.breadcrumbs} />
+                    <SearchHitBreadCrumbsV2 breadcrumb={hit.breadcrumbs} />
                 </span>
 
                 <LongArrowDownLeft

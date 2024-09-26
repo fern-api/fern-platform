@@ -15,7 +15,7 @@ types:
     properties:
       id: rootCommons.ApiDefinitionId
       rootPackage: DbApiDefinitionPackage
-      types: map<commons.TypeId, readType.TypeDefinition>
+      types: map<rootCommons.TypeId, readType.TypeDefinition>
       subpackages: map<commons.SubpackageId, DbApiDefinitionSubpackage>
       auth: optional<readRoot.ApiAuth>
       hasMultipleBaseUrls:
@@ -34,7 +34,7 @@ types:
       endpoints: list<endpoint.DbEndpointDefinition>
       websockets: optional<list<readWebsocket.WebSocketChannel>>
       webhooks: optional<list<readWebhook.WebhookDefinition>>
-      types: list<commons.TypeId>
+      types: list<rootCommons.TypeId>
       subpackages: list<commons.SubpackageId>
       pointsTo:
         docs: |
