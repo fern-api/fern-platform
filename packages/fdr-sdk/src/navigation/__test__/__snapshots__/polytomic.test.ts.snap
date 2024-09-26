@@ -879,6 +879,7 @@ exports[`polytomic > gets navigation root for /2024-02-08/guides/introduction 3`
 
 exports[`polytomic > gets navigation root for /guides/introduction 1`] = `
 {
+  "canonicalSlug": "2024-02-08/guides/introduction",
   "hidden": false,
   "id": "root..2024-02-08.uv.guides.guides.getting-started.introduction",
   "pageId": "docs/2024-02-08/pages/getting-started/introduction.mdx",

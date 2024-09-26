@@ -33,8 +33,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     const node = FernNavigation.utils.toRootNode(docs.body);
-    const slugCollector = NodeCollector.collect(node);
-    const urls = slugCollector.getIndexablePageSlugs().map((slug) => urljoin(xFernHost, slug));
+    const collector = NodeCollector.collect(node);
+    const urls = collector.indexablePageSlugs.map((slug) => urljoin(xFernHost, slug));
 
     const sitemap = getSitemapXml(urls.map((url) => conformTrailingSlash(`https://${url}`)));
 
