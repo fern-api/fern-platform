@@ -895,7 +895,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                         : webhookProperties
                     : websocketProperties;
 
-            const baseSlug = encodeURI(`${typeReferenceWithMetadata.slugPrefix}`);
+            const baseSlug = typeReferenceWithMetadata.slugPrefix;
 
             visitDiscriminatedUnion(typeReferenceWithMetadata.reference)._visit({
                 id: (id) => {
@@ -906,7 +906,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                 object: (object) => {
                                     const referenceLeaves: TypeReferenceWithMetadata[] = [];
                                     object.properties.forEach((property) => {
-                                        const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${property.key}`));
+                                        const slug = FernNavigation.V1.Slug(`${baseSlug}.${encodeURI(property.key)}`);
                                         // If we see and object shape for a property, we need to recursively collect the underlying referenced types.
                                         // If we see a reference or a container type, we will add it to the referenceLeaves to be processed in the next iteration.
                                         if (
@@ -926,7 +926,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                                     ...typeReferenceWithMetadata.breadcrumbs,
                                                     {
                                                         title: property.key,
-                                                        slug: encodeURI(`${baseSlug}.${property.key}`),
+                                                        slug: `${baseSlug}.${encodeURI(property.key)}`,
                                                     },
                                                 ],
                                                 slugPrefix: slug,
@@ -988,7 +988,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                 alias: () => undefined,
                                 enum: (enum_) => {
                                     enum_.values.forEach((value) => {
-                                        const slug = FernNavigation.V1.Slug(encodeURI(baseSlug));
+                                        const slug = FernNavigation.V1.Slug(baseSlug);
                                         // For enums, we want to make a record for each enum value, but individual enum values
                                         // do not have deep linked anchors.
                                         fields.push({
@@ -1021,7 +1021,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                                   ? variant.type.value
                                                   : "";
                                         const slug = FernNavigation.V1.Slug(
-                                            encodeURI(`${baseSlug}.${variant.displayName}`),
+                                            `${baseSlug}.${encodeURI(variant.displayName ?? "")}`,
                                         );
                                         // For undiscriminated unions, we need to check if there are any nested types that need to be processed.
                                         if (
@@ -1036,7 +1036,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                                 anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, title],
                                                 breadcrumbs: [
                                                     ...typeReferenceWithMetadata.breadcrumbs,
-                                                    { title, slug: encodeURI(`${baseSlug}.${title}`) },
+                                                    { title, slug: `${baseSlug}.${encodeURI(title)}` },
                                                 ],
                                                 slugPrefix: slug,
                                                 version: typeReferenceWithMetadata.version,
@@ -1081,7 +1081,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     const referenceLeaves: TypeReferenceWithMetadata[] = [];
                                     discriminatedUnion.variants.forEach((variant) => {
                                         const title = variant.displayName ?? titleCase(variant.discriminantValue);
-                                        const slug = FernNavigation.V1.Slug(encodeURI(`${baseSlug}.${title}`));
+                                        const slug = FernNavigation.V1.Slug(`${baseSlug}.${encodeURI(title)}`);
 
                                         // additional properties on the variant are the object shapes themselves,
                                         // so we check for extension types here.
@@ -1093,7 +1093,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                                     ...typeReferenceWithMetadata.breadcrumbs,
                                                     { title, slug },
                                                 ],
-                                                slugPrefix: encodeURI(`${baseSlug}.${title}`),
+                                                slugPrefix: `${baseSlug}.${encodeURI(title)}`,
                                                 version: typeReferenceWithMetadata.version,
                                                 indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
                                                 method: typeReferenceWithMetadata.method,
@@ -1124,10 +1124,10 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                                         { title, slug },
                                                         {
                                                             title: property.key,
-                                                            slug: encodeURI(`${baseSlug}.${title}.${property.key}`),
+                                                            slug: `${baseSlug}.${encodeURI(title)}.${encodeURI(property.key)}`,
                                                         },
                                                     ],
-                                                    slugPrefix: encodeURI(`${baseSlug}.${title}.${property.key}`),
+                                                    slugPrefix: `${baseSlug}.${encodeURI(title)}.${encodeURI(property.key)}`,
                                                     version: typeReferenceWithMetadata.version,
                                                     indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
                                                     method: typeReferenceWithMetadata.method,
@@ -1174,7 +1174,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
 
                             if (type) {
                                 const slug = FernNavigation.V1.Slug(
-                                    encodeURI(`${baseSlug}.${typeReferenceWithMetadata.propertyKey}`),
+                                    `${baseSlug}.${encodeURI(typeReferenceWithMetadata.propertyKey)}`,
                                 );
                                 fields.push({
                                     objectID: uuid(),
@@ -1407,7 +1407,7 @@ function anchorIdToSlug(
     node: FernNavigation.V1.EndpointNode | FernNavigation.V1.WebSocketNode | FernNavigation.V1.WebhookNode,
     anchorIdParts: string[],
 ): FernNavigation.V1.Slug {
-    return FernNavigation.V1.Slug(encodeURI(`${node.slug}#${anchorIdParts.join(".")}`));
+    return FernNavigation.V1.Slug(`${node.slug}#${encodeURI(anchorIdParts.join("."))}`);
 }
 
 export function getMarkdownSectionTree(markdown: string, pageTitle: string): MarkdownNode {
@@ -1468,7 +1468,7 @@ export function getMarkdownSections(
     slug: FernNavigation.V1.Slug,
 ): AlgoliaSearchRecord[] {
     const markdownSlug = FernNavigation.V1.Slug(
-        markdownSection.level === 0 ? slug : encodeURI(`${slug}#${kebabCase(markdownSection.heading.toLowerCase())}`),
+        markdownSection.level === 0 ? slug : `${slug}#${encodeURI(kebabCase(markdownSection.heading.toLowerCase()))}`,
     );
     const sectionBreadcrumbs = markdownSection.heading
         ? breadcrumbs.concat([
