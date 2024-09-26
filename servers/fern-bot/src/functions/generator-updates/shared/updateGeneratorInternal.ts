@@ -1,5 +1,4 @@
 import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
-import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import { ChangelogResponse } from "@fern-fern/generators-sdk/api/resources/generators";
 import { execFernCli, getGenerators, NO_API_FALLBACK_KEY } from "@libs/fern";
@@ -10,18 +9,6 @@ import SemVer from "semver";
 import { CleanOptions, SimpleGit } from "simple-git";
 
 const PR_BODY_LIMIT = 65000;
-
-async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
-    const client = new FernVenusApiClient({ environment: venusUrl });
-
-    const response = await client.organization.get(FernVenusApi.OrganizationId(orgId));
-    console.log(`Organization response: ${JSON.stringify(response)}, orgId: ${orgId}.`);
-    if (!response.ok) {
-        throw new Error(`Organization ${orgId} not found`);
-    }
-
-    return response.body.isFernbotCanary;
-}
 
 async function getGeneratorChangelog(
     fdrUrl: string,
@@ -141,7 +128,6 @@ export async function updateVersionInternal(
     repository: Repository,
     fernBotLoginName: string,
     fernBotLoginId: string,
-    venusUrl: string,
     fdrUrl: string,
     slackToken: string,
     slackChannel: string,
@@ -183,18 +169,6 @@ export async function updateVersionInternal(
         slackClient,
         maybeOrganization,
     });
-
-    try {
-        if (maybeOrganization == null) {
-            throw new Error("No organization was found, quitting before generator upgrades.");
-        } else if (!(await isOrganizationCanary(maybeOrganization, venusUrl))) {
-            console.log("Organization is not a fern-bot canary, skipping upgrade.");
-            return;
-        }
-    } catch (error) {
-        console.error("Could not determine if the repo owner was a fern-bot canary, quitting.");
-        throw error;
-    }
 
     const client = new FernRegistryClient({ environment: fdrUrl });
     // Pull a branch of fern/update/<generator>/<api>:<group>

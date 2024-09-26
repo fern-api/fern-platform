@@ -1,8 +1,9 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { FernScrollArea } from "@fern-ui/components";
+import { FernButton, FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 
+import { Xmark } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
@@ -19,6 +20,23 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 
 const COHERE_AI_HIT_ID = "cohere-ai-hit";
 
+const expandHits = (expanded: boolean, hits: SearchRecord[]) => {
+    return expanded ? hits : hits.slice(0, 3);
+};
+
+const ExpandButton: React.FC<{ setExpanded: (expanded: boolean) => void }> = ({ setExpanded }) => (
+    <div className="flex justify-center pt-2">
+        <FernButton
+            className="text-left"
+            variant="minimal"
+            onClick={() => setExpanded(true)}
+            icon={<Xmark className="transition rotate-45" />}
+        >
+            Show More
+        </FernButton>
+    </div>
+);
+
 export const SearchHits: React.FC = () => {
     const { isAiChatbotEnabledInPreview } = useFeatureFlags();
     const basePath = useBasePath();
@@ -28,6 +46,9 @@ export const SearchHits: React.FC = () => {
     const router = useRouter();
     const closeSearchDialog = useCloseSearchDialog();
     const [orderedHits, setOrderedHits] = useState<SearchRecord[]>([]);
+    const [expandEndpoints, setExpandEndpoints] = useState(false);
+    const [expandPages, setExpandPages] = useState(false);
+    const [expandFields, setExpandFields] = useState(false);
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -46,8 +67,12 @@ export const SearchHits: React.FC = () => {
 
     useEffect(() => {
         const { endpointHits, pageHits, fieldHits } = filterHits(hits);
-        setOrderedHits([...endpointHits.slice(0, 8), ...pageHits.slice(0, 8), ...fieldHits.slice(0, 8)]);
-    }, [hits]);
+        setOrderedHits([
+            ...expandHits(expandEndpoints, endpointHits),
+            ...expandHits(expandPages, pageHits),
+            ...expandHits(expandFields, fieldHits),
+        ]);
+    }, [hits, expandEndpoints, expandPages, expandFields]);
 
     const hoveredSearchHit = useMemo(() => {
         return orderedHits
@@ -182,7 +207,7 @@ export const SearchHits: React.FC = () => {
                 <>
                     <p className="text-normal font-semibold mb-2 pl-0.5">Endpoints</p>
 
-                    {endpointHits.slice(0, 8).map((hit) => (
+                    {expandHits(expandEndpoints, endpointHits).map((hit) => (
                         <SearchHit
                             setRef={(elem) => {
                                 if (elem != null) {
@@ -195,12 +220,13 @@ export const SearchHits: React.FC = () => {
                             onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
                         />
                     ))}
+                    {!expandEndpoints && <ExpandButton setExpanded={setExpandEndpoints} />}
                 </>
             )}
             {pageHits.length > 0 && (
                 <>
                     <p className="text-normal font-semibold mb-2 pl-0.5">Pages</p>
-                    {pageHits.slice(0, 8).map((hit) => (
+                    {expandHits(expandPages, pageHits).map((hit) => (
                         <SearchHit
                             setRef={(elem) => {
                                 if (elem != null) {
@@ -213,13 +239,14 @@ export const SearchHits: React.FC = () => {
                             onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
                         />
                     ))}
+                    {!expandPages && <ExpandButton setExpanded={setExpandPages} />}
                 </>
             )}
 
             {fieldHits.length > 0 && (
                 <>
                     <p className="text-normal font-semibold mb-2 pl-0.5">Fields</p>
-                    {fieldHits.slice(0, 8).map((hit) => (
+                    {expandHits(expandFields, fieldHits).map((hit) => (
                         <SearchHit
                             setRef={(elem) => {
                                 if (elem != null) {
@@ -232,6 +259,7 @@ export const SearchHits: React.FC = () => {
                             onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
                         />
                     ))}
+                    {!expandFields && <ExpandButton setExpanded={setExpandFields} />}
                 </>
             )}
         </FernScrollArea>
@@ -242,6 +270,9 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
     const { isAiChatbotEnabledInPreview } = useFeatureFlags();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
+    const [expandEndpoints, setExpandEndpoints] = useState(false);
+    const [expandPages, setExpandPages] = useState(false);
+    const [expandFields, setExpandFields] = useState(false);
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -273,7 +304,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                 <>
                     <h3 className="text-lg font-semibold mt-4 pl-0.5">Endpoints</h3>
                     <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {endpointHits.map((hit) => (
+                    {expandHits(expandEndpoints, endpointHits).map((hit) => (
                         <SearchHit
                             setRef={(elem) => {
                                 if (elem != null) {
@@ -284,6 +315,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                             hit={hit}
                         />
                     ))}
+                    {!expandEndpoints && <ExpandButton setExpanded={setExpandEndpoints} />}
                 </>
             )}
 
@@ -291,7 +323,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                 <>
                     <h3 className="text-lg font-semibold mt-4 pl-0.5">Fields</h3>
                     <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {pageHits.map((hit) => (
+                    {expandHits(expandPages, pageHits).map((hit) => (
                         <SearchHit
                             setRef={(elem) => {
                                 if (elem != null) {
@@ -302,6 +334,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                             hit={hit}
                         />
                     ))}
+                    {!expandPages && <ExpandButton setExpanded={setExpandPages} />}
                 </>
             )}
 
@@ -309,7 +342,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                 <>
                     <h3 className="text-lg font-semibold mt-4 pl-0.5">Pages</h3>
                     <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {fieldHits.map((hit) => (
+                    {expandHits(expandFields, fieldHits).map((hit) => (
                         <SearchHit
                             setRef={(elem) => {
                                 if (elem != null) {
@@ -320,6 +353,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                             hit={hit}
                         />
                     ))}
+                    {!expandFields && <ExpandButton setExpanded={setExpandFields} />}
                 </>
             )}
         </FernScrollArea>

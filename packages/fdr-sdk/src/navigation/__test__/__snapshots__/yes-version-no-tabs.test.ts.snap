@@ -30,6 +30,7 @@ exports[`yes-version-no-tabs > gets navigation root for /docs/api 1`] = `
 
 exports[`yes-version-no-tabs > gets navigation root for /docs/api/page-5 1`] = `
 {
+  "canonicalSlug": "docs/api/version-1/page-5",
   "id": "root..version-1.uv.section-3.page-5",
   "pageId": "page-5.md",
   "slug": "docs/api/page-5",
@@ -51,6 +52,7 @@ exports[`yes-version-no-tabs > gets navigation root for /docs/api/section-1 1`] 
 
 exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-1 1`] = `
 {
+  "canonicalSlug": "docs/api/version-1/version-1",
   "id": "root..version-1.uv.section-3.page-6",
   "pageId": "page-6.md",
   "slug": "docs/api/version-1",

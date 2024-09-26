@@ -71,7 +71,7 @@ const handler: NextApiHandler = async (
     }
 
     const node = FernNavigation.utils.toRootNode(docs.body);
-    const slugs = NodeCollector.collect(node).getPageSlugs();
+    const slugs = NodeCollector.collect(node).pageSlugs;
     const revalidate = new Revalidator(res, xFernHost);
 
     if (offset === 0) {

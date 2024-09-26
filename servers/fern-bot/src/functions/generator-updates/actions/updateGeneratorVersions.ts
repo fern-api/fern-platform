@@ -21,7 +21,6 @@ export async function updateGeneratorVersionsInternal(env: Env): Promise<void> {
             installation.repository,
             env.GITHUB_APP_LOGIN_NAME,
             env.GITHUB_APP_LOGIN_ID,
-            env.DEFAULT_VENUS_ORIGIN,
             env.DEFAULT_FDR_ORIGIN,
             env.FERNIE_SLACK_APP_TOKEN,
             env.CUSTOMER_ALERTS_SLACK_CHANNEL,

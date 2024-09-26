@@ -61,8 +61,8 @@ const handler: NextApiHandler = async (
         }
 
         const node = FernNavigation.utils.toRootNode(docs.body);
-        const slugCollector = NodeCollector.collect(node);
-        const slugs = slugCollector.getPageSlugs();
+        const collector = NodeCollector.collect(node);
+        const slugs = collector.pageSlugs;
 
         const cache = DocsKVCache.getInstance(xFernHost);
         const previouslyVisitedSlugs = (await cache.getVisitedSlugs()).filter((slug) => !slugs.includes(slug));
