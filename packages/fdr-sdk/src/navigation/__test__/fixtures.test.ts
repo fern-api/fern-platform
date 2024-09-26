@@ -16,14 +16,14 @@ function testNavigationConfigConverter(fixtureName: string): void {
 
     // eslint-disable-next-line vitest/valid-title
     describe(fixtureName, () => {
-        const slugCollector = new NodeCollector(latest);
+        const collector = new NodeCollector(latest);
 
         it("gets all urls from docs config", async () => {
             expect(JSON.stringify(sortObject(latest), undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/node.json`,
             );
 
-            const orphanedNodes = slugCollector.getOrphanedNodes().map((node) => ({
+            const orphanedNodes = collector.getOrphanedNodes().map((node) => ({
                 id: node.id,
                 type: node.type,
                 title: node.title,
@@ -33,17 +33,21 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 `output/${fixtureName}/orphanedNodes.json`,
             );
 
-            const orphanedNodesWithContent = slugCollector.getOrphanedPages();
+            const orphanedNodesWithContent = collector.getOrphanedPages();
             expect(JSON.stringify(sortObject(orphanedNodesWithContent), undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/orphanedNodesWithContent.json`,
             );
 
-            const slugs = slugCollector.getSlugs();
-            expect(JSON.stringify(slugs, undefined, 2)).toMatchFileSnapshot(`output/${fixtureName}/slugs.json`);
+            expect(JSON.stringify(collector.slugs, undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/slugs.json`,
+            );
 
-            const slugsWithContent = slugCollector.getPageSlugs();
-            expect(JSON.stringify(slugsWithContent, undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/slugsWithContent.json`,
+            expect(JSON.stringify(collector.pageSlugs, undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/slugs-pages.json`,
+            );
+
+            expect(JSON.stringify(collector.indexablePageSlugs, undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/slugs-sitemap.json`,
             );
 
             const pageIds = collectPageIds(latest);
@@ -51,7 +55,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 `output/${fixtureName}/pageIds.json`,
             );
 
-            expect(JSON.stringify(sortObject(slugCollector.getVersionNodes()), undefined, 2)).toMatchFileSnapshot(
+            expect(JSON.stringify(sortObject(collector.getVersionNodes()), undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/versionNodes.json`,
             );
         });

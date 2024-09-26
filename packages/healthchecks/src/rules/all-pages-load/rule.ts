@@ -18,7 +18,9 @@ export class AllPagesLoadRule implements Rule {
         }
         const node = FernNavigation.utils.toRootNode(getDocsForUrlResponse.body);
         const slugCollector = FernNavigation.NodeCollector.collect(node);
-        const urls = slugCollector.getPageSlugs().map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/${slug}`);
+        const urls = slugCollector
+            .getAllPageSlugs()
+            .map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/${slug}`);
 
         const responses = await Promise.all(
             urls.map(async (url) => {

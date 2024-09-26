@@ -58,19 +58,11 @@ export class NodeCollector {
         }
         FernNavigation.traverseNavigation(rootNode, (node, _index, parents) => {
             // if the node is the default version, make a copy of it and "prune" the version slug from all children nodes
-            const parent = parents[parents.length - 1];
-
             if (node.type === "version") {
                 this.versionNodes.push(node);
             }
 
-            if (
-                node.type === "version" &&
-                node.default &&
-                parent != null &&
-                parent.type === "versioned" &&
-                rootNode.type === "root"
-            ) {
+            if (node.type === "version" && node.default && rootNode.type === "root") {
                 const copy = JSON.parse(JSON.stringify(node)) as FernNavigation.VersionNode;
                 this.defaultVersion = pruneVersionNode(copy, rootNode.slug, node.slug);
                 FernNavigation.traverseNavigation(this.defaultVersion, (node, _index, innerParents) => {
@@ -153,31 +145,39 @@ export class NodeCollector {
         return this.slugToNode;
     };
 
-    public getSlugs = once((): string[] => {
+    #getSlugs = once((): string[] => {
         return [...this.slugToNode.keys()];
     });
+    get slugs(): string[] {
+        return this.#getSlugs();
+    }
 
     /**
-     * Returns a list of slugs for all pages in the navigation tree. This includes hidden pages.
+     * Returns a list of slugs for all pages in the navigation tree.
+     *
+     * This includes hidden pages and noindex pages, and is intended for revalidation purposes.
      *
      * @returns {string[]} A list of slugs for all canonical pages in the navigation tree.
      */
-    public getPageSlugs = once((): string[] => {
+    #getPageSlugs = once((): string[] => {
         return Array.from(
             new Set(
                 [...this.slugToNode.values()]
                     .filter(({ node }) => FernNavigation.isPage(node))
-                    .map(({ node }) => node.canonicalSlug ?? node.slug),
+                    .map(({ node }) => node.slug),
             ),
         );
     });
+    get pageSlugs(): string[] {
+        return this.#getPageSlugs();
+    }
 
     /**
      * Returns a list of slugs for pages that should be indexed by search engines, and by algolia.
      *
-     * This excludes hidden pages and noindex pages.
+     * This excludes hidden pages and noindex pages, and uses the canonical slug if it exists.
      */
-    public getIndexablePageSlugs = once((): string[] => {
+    #getIndexablePageSlugs = once((): string[] => {
         return Array.from(
             new Set(
                 [...this.slugToNode.values()]
@@ -187,6 +187,9 @@ export class NodeCollector {
             ),
         );
     });
+    get indexablePageSlugs(): string[] {
+        return this.#getIndexablePageSlugs();
+    }
 
     public getVersionNodes = (): FernNavigation.VersionNode[] => {
         return this.versionNodes;
