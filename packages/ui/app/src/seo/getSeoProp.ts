@@ -257,8 +257,12 @@ export function getSeoProps(
     seo.noindex = ogMetadata.noindex;
     seo.nofollow = ogMetadata.nofollow;
 
-    if (isSeoDisabled) {
+    // do not index the page if it is hidden, or has noindex set, or if SEO is disabled
+    if ((FernNavigation.hasMarkdown(node) && node.noindex) || node.hidden || isSeoDisabled) {
         seo.noindex = true;
+    }
+
+    if (isSeoDisabled) {
         seo.nofollow = true;
     }
 
