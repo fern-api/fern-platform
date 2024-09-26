@@ -25,7 +25,7 @@ export function pruneVersionNode<T extends FernNavigation.NavigationNode>(
             if (node.slug === newSlug) {
                 return "skip";
             }
-            node.canonicalSlug = node.slug;
+            node.canonicalSlug = node.canonicalSlug ?? node.slug;
             node.slug = newSlug;
         }
 
