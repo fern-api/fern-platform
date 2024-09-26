@@ -67,13 +67,15 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 const node = collector.slugMap.get(slug)!;
                 expect(node).toBeDefined();
                 expect(FernNavigation.isPage(node)).toBe(true);
-                expect(node.hidden).toBe(false);
+                expect(node.hidden).not.toBe(true);
 
                 if (!FernNavigation.isPage(node)) {
                     return;
                 }
 
-                // tests:
+                if (FernNavigation.hasMarkdown(node)) {
+                    expect(node.noindex).not.toBe(true);
+                }
 
                 const pageId = FernNavigation.getPageId(node);
                 if (pageId != null) {
