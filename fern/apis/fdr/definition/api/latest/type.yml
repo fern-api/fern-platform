@@ -3,15 +3,14 @@
 imports:
   commons: commons.yml
   rootCommons: ../../commons.yml
-  read: ../v1/read/type.yml
-  v1: ../v1/commons.yml
+  v1Read: ../v1/read/type.yml
 
 types:
-  BytesRequest: read.BytesRequest
-  ContentType: read.ContentType
-  TypeReferenceIdDefault: read.TypeReferenceIdDefault
-  PrimitiveType: read.PrimitiveType
-  LiteralType: read.LiteralType
+  BytesRequest: v1Read.BytesRequest
+  ContentType: v1Read.ContentType
+  TypeReferenceIdDefault: v1Read.TypeReferenceIdDefault
+  PrimitiveType: v1Read.PrimitiveType
+  LiteralType: v1Read.LiteralType
 
   TypeDefinition:
     extends:

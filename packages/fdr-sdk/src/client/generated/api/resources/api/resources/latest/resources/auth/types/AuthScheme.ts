@@ -4,4 +4,4 @@
 
 import * as FernRegistry from "../../../../../../../index";
 
-export type NamespaceId = FernRegistry.api.v1.SubpackageId;
+export type AuthScheme = FernRegistry.api.v1.read.ApiAuth;

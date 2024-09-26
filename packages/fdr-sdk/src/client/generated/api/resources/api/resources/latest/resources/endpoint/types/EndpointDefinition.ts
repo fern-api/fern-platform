@@ -8,9 +8,9 @@ export interface EndpointDefinition
     extends FernRegistry.api.latest.WithDescription,
         FernRegistry.api.latest.WithAvailability {
     id: FernRegistry.EndpointId;
-    authed: boolean;
     method: FernRegistry.HttpMethod;
     path: FernRegistry.api.latest.PathPart[];
+    auth: FernRegistry.api.latest.AuthSchemeId[] | undefined;
     defaultEnvironment: FernRegistry.EnvironmentId | undefined;
     environments: FernRegistry.api.latest.Environment[] | undefined;
     pathParameters: FernRegistry.api.latest.ObjectProperty[] | undefined;

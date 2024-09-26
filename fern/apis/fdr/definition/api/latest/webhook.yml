@@ -4,7 +4,7 @@ imports:
   rootCommons: ../../commons.yml
   commons: commons.yml
   type: type.yml
-  read: ../v1/read/webhook.yml
+  v1Read: ../v1/read/webhook.yml
 
 types:
   WebhookDefinition:
@@ -17,7 +17,7 @@ types:
       path: list<string>
       headers: list<type.ObjectProperty>
       payload: WebhookPayload
-      examples: list<read.ExampleWebhookPayload>
+      examples: list<v1Read.ExampleWebhookPayload>
 
   WebhookPayload:
     extends: commons.WithDescription

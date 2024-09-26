@@ -3,15 +3,16 @@
 imports:
   rootCommons: ../../commons.yml
   commons: commons.yml
+  auth: auth.yml
   type: type.yml
   snippetTemplate: ../../templates.yml
-  read: ../v1/read/endpoint.yml
+  v1Read: ../v1/read/endpoint.yml
 
 types:
-  Language: read.Language
-  ExampleEndpointRequest: read.ExampleEndpointRequest
-  ExampleEndpointResponse: read.ExampleEndpointResponse
-  ExampleErrorResponse: read.ExampleErrorResponse
+  Language: v1Read.Language
+  ExampleEndpointRequest: v1Read.ExampleEndpointRequest
+  ExampleEndpointResponse: v1Read.ExampleEndpointResponse
+  ExampleErrorResponse: v1Read.ExampleErrorResponse
 
   EndpointDefinition:
     extends:
@@ -19,10 +20,10 @@ types:
       - commons.WithAvailability
     properties:
       id: rootCommons.EndpointId # or original endpoint id?
-      authed: boolean
       method: rootCommons.HttpMethod
       path: list<commons.PathPart>
 
+      auth: optional<list<auth.AuthSchemeId>>
       defaultEnvironment: optional<rootCommons.EnvironmentId>
       environments: optional<list<commons.Environment>>
       pathParameters: optional<list<type.ObjectProperty>>

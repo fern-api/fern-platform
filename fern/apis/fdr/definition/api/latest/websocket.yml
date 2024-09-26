@@ -5,13 +5,14 @@ imports:
   commons: commons.yml
   http: endpoint.yml
   type: type.yml
-  read: ../v1/read/websocket.yml
-  v1: ../v1/commons.yml
+  auth: auth.yml
+  v1Read: ../v1/read/websocket.yml
+  v1Commons: ../v1/commons.yml
 
 types:
-  WebSocketMessageId: v1.WebSocketMessageId
-  WebSocketMessageOrigin: v1.WebSocketMessageOrigin
-  ExampleWebSocketMessage: read.ExampleWebSocketMessage
+  WebSocketMessageId: v1Commons.WebSocketMessageId
+  WebSocketMessageOrigin: v1Commons.WebSocketMessageOrigin
+  ExampleWebSocketMessage: v1Read.ExampleWebSocketMessage
 
   WebSocketChannel:
     extends:
@@ -19,12 +20,12 @@ types:
       - commons.WithAvailability
     properties:
       id: rootCommons.WebSocketId
-      authed: boolean
       path: list<commons.PathPart>
       messages:
         type: list<WebSocketMessage>
         docs: The messages that can be sent and received on this channel
 
+      auth: optional<list<auth.AuthSchemeId>>
       defaultEnvironment: optional<rootCommons.EnvironmentId>
       environments: optional<list<commons.Environment>>
       pathParameters: optional<list<type.ObjectProperty>>

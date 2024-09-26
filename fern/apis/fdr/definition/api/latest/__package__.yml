@@ -7,10 +7,9 @@ imports:
   type: type.yml
   commons: commons.yml
   rootCommons: ../../commons.yml
-  read: ../v1/read/__package__.yml
+  auth: auth.yml
 
 types:
-  ApiAuth: read.ApiAuth
   ApiDefinition:
     properties:
       id: rootCommons.ApiDefinitionId
@@ -19,5 +18,5 @@ types:
       webhooks: map<rootCommons.WebhookId, webhook.WebhookDefinition>
       types: map<rootCommons.TypeId, type.TypeDefinition>
       subpackages: map<commons.SubpackageId, commons.SubpackageMetadata>
-      auth: optional<ApiAuth>
+      auths: map<auth.AuthSchemeId, auth.AuthScheme>
       globalHeaders: optional<list<type.ObjectProperty>>
