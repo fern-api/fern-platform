@@ -27,6 +27,7 @@ import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { IFrame } from "./iframe";
+import { LaunchDarkly } from "./launchdarkly";
 import { CustomLayout, GuideLayout, OverviewLayout, PageLayout, ReferenceLayout } from "./layout";
 import { ParamField } from "./mintlify";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
@@ -53,6 +54,7 @@ const FERN_COMPONENTS = {
     EndpointResponseSnippet,
     Frame,
     Icon: RemoteFontAwesomeIcon,
+    LaunchDarkly,
     ParamField,
     Step,
     StepGroup,
