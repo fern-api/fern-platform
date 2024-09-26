@@ -1,5 +1,5 @@
 import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
-import { getMarkdownSectionTree, getMarkdownSections } from "../../services/algolia/AlgoliaSearchRecordGenerator";
+import { getMarkdownSectionTree, getMarkdownSections } from "../../services/algolia/AlgoliaSearchRecordGeneratorV2";
 
 describe("algolia utils", () => {
     it("should extract headers into a tree from markdown content 1", () => {

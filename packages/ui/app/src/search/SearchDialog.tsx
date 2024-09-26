@@ -79,6 +79,8 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
     const inputRef = useRef<HTMLInputElement>(null);
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
+    const { isNewSearchExperienceEnabled } = useFeatureFlags();
+
     if (!searchConfig.isAvailable || !isMobileScreen) {
         return children;
     }
@@ -88,10 +90,12 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 
         return (
             <InstantSearch searchClient={searchClient} indexName={indexName}>
-                <Configure
-                    // filters="type: 'endpoint-v4'"
-                    hitsPerPage={20}
-                />
+                {isNewSearchExperienceEnabled && (
+                    <Configure
+                        filters="type: 'endpoint-v4' OR type: 'websocket-v4' OR type: 'webhook-v4' OR type: 'page-v4' OR type: 'endpoint-field-v1' OR type: 'websocket-field-v1' OR type: 'webhook-field-v1' OR type: 'markdown-section-v1'"
+                        hitsPerPage={40}
+                    />
+                )}
                 <SearchMobileBox ref={inputRef} placeholder={placeholder} className="mx-4 mt-4" />
                 <SearchMobileHits>{children}</SearchMobileHits>
             </InstantSearch>

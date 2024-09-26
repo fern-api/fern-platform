@@ -32,6 +32,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isCohereTheme: false,
     isFileForgeHackEnabled: false,
     is404PageHidden: false,
+    isNewSearchExperienceEnabled: false,
 };
 
 export const EMPTY_ANALYTICS_CONFIG: DocsV1Read.AnalyticsConfig = {
