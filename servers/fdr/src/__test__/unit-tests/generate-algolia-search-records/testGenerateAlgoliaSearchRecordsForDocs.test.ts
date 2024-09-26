@@ -10,7 +10,7 @@ import {
 import { resolve } from "path";
 import type { AlgoliaSearchRecord } from "../../../services/algolia";
 import { AlgoliaIndexSegmentManagerServiceImpl } from "../../../services/algolia-index-segment-manager";
-import { AlgoliaSearchRecordGenerator } from "../../../services/algolia/AlgoliaSearchRecordGenerator";
+import { AlgoliaSearchRecordGeneratorV2 } from "../../../services/algolia/AlgoliaSearchRecordGeneratorV2";
 import { createMockFdrApplication } from "../../mock";
 
 const FIXTURES_DIR = resolve(__dirname, "fixtures");
@@ -81,7 +81,7 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
                 const apiDefinitionsById = preloadApiDefinitions();
                 const recordsWithoutIds: Omit<AlgoliaSearchRecord, "objectID">[] = [];
                 const navigationConfig = docsDefinition.config.navigation;
-                const generator = new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });
+                const generator = new AlgoliaSearchRecordGeneratorV2({ docsDefinition, apiDefinitionsById });
 
                 visitDbNavigationConfig(navigationConfig, {
                     versioned: (config) => {

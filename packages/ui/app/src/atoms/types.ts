@@ -36,6 +36,7 @@ export interface FeatureFlags {
     isCohereTheme: boolean;
     isFileForgeHackEnabled: boolean;
     is404PageHidden: boolean;
+    isNewSearchExperienceEnabled: boolean;
 }
 
 export interface NavigationProps {
