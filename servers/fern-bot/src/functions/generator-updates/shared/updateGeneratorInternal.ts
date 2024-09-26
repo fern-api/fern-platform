@@ -128,7 +128,6 @@ export async function updateVersionInternal(
     repository: Repository,
     fernBotLoginName: string,
     fernBotLoginId: string,
-    venusUrl: string,
     fdrUrl: string,
     slackToken: string,
     slackChannel: string,
