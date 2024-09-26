@@ -21,8 +21,8 @@ export class SearchSlugsCorrectRule implements Rule {
         }
 
         const node = FernNavigation.utils.toRootNode(getDocsForUrlResponse.body);
-        const slugCollector = FernNavigation.NodeCollector.collect(node);
-        const slugs = new Set(slugCollector.indexablePageSlugs);
+        const collector = FernNavigation.NodeCollector.collect(node);
+        const slugs = new Set(collector.indexablePageSlugs);
 
         const searchInfo = getDocsForUrlResponse.body.definition.search;
 
