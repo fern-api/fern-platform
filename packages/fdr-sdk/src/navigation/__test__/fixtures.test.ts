@@ -59,6 +59,47 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 `output/${fixtureName}/versionNodes.json`,
             );
         });
+
+        it("should have unique canonical urls for each page", () => {
+            const visitedPageIds = new Set<string>();
+            collector.indexablePageSlugs.forEach((slug) => {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                const node = collector.slugMap.get(slug)!;
+                expect(node).toBeDefined();
+                expect(FernNavigation.isPage(node)).toBe(true);
+                expect(node.hidden).toBe(false);
+
+                if (!FernNavigation.isPage(node)) {
+                    return;
+                }
+
+                // tests:
+
+                const pageId = FernNavigation.getPageId(node);
+                if (pageId != null) {
+                    expect(visitedPageIds.has(pageId)).toBe(false);
+                    visitedPageIds.add(pageId);
+                }
+
+                if (node.type === "endpoint") {
+                    const pageId = `${node.apiDefinitionId}-${node.endpointId}`;
+                    expect(visitedPageIds.has(pageId)).toBe(false);
+                    visitedPageIds.add(pageId);
+                }
+
+                if (node.type === "webSocket") {
+                    const pageId = `${node.apiDefinitionId}-${node.webSocketId}`;
+                    expect(visitedPageIds.has(pageId)).toBe(false);
+                    visitedPageIds.add(pageId);
+                }
+
+                if (node.type === "webhook") {
+                    const pageId = `${node.apiDefinitionId}-${node.webhookId}`;
+                    expect(visitedPageIds.has(pageId)).toBe(false);
+                    visitedPageIds.add(pageId);
+                }
+            });
+        });
     });
 }
 
