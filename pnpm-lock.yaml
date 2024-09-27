@@ -2426,6 +2426,9 @@ importers:
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5
+      '@fern-ui/core-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/core-utils
       '@prisma/client':
         specifier: 5.13.0
         version: 5.13.0(prisma@5.13.0)
