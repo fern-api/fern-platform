@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface DiscriminatedUnionType {
-    discriminant: string;
+    discriminant: FernRegistry.PropertyKey;
     variants: FernRegistry.api.latest.DiscriminatedUnionVariant[];
 }

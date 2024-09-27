@@ -34,6 +34,10 @@
       "types": "./dist/objects/isPlainObject.d.ts",
       "default": "./dist/objects/isPlainObject.js"
     },
+    "./identity": {
+      "types": "./dist/identity.d.ts",
+      "default": "./dist/identity.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"

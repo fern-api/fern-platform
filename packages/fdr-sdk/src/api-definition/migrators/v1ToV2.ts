@@ -1,10 +1,12 @@
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
-import * as V2 from "..";
 import { APIV1Read } from "../../client";
 import { SupportedLanguage } from "../../client/generated/api/resources/api/resources/v1/resources/read/resources/endpoint/types/SupportedLanguage";
 import { ROOT_PACKAGE_ID } from "../../navigation/consts";
+import { LOOP_TOLERANCE } from "../const";
+import * as V2 from "../latest";
 import { convertToCurl } from "../snippets/curl";
 import { toHttpRequest } from "../snippets/HttpRequest";
+import { sortKeysByShape } from "../sort-keys";
 
 interface Flags {
     /**
@@ -63,35 +65,14 @@ export class ApiDefinitionV1ToLatest {
         return V2.WebhookId(`${subpackageId}.${webhook.id}`);
     }
 
+    private endpoints: Record<V2.EndpointId, V2.EndpointDefinition> = {};
+    private websockets: Record<V2.WebSocketId, V2.WebSocketChannel> = {};
+    private webhooks: Record<V2.WebhookId, V2.WebhookDefinition> = {};
+    private subpackages: Record<V2.SubpackageId, V2.SubpackageMetadata> = {};
+    private types: Record<string, V2.TypeDefinition> = {};
     public migrate = (): V2.ApiDefinition => {
-        const endpoints: Record<V2.EndpointId, V2.EndpointDefinition> = {};
-        const websockets: Record<V2.WebSocketId, V2.WebSocketChannel> = {};
-        const webhooks: Record<V2.WebhookId, V2.WebhookDefinition> = {};
-        const types: Record<V2.TypeId, V2.TypeDefinition> = {};
-        const subpackages: Record<V2.SubpackageId, V2.SubpackageMetadata> = {};
-
-        [this.v1.rootPackage, ...Object.values(this.v1.subpackages)].forEach((pkg) => {
-            const [subpackageId, namespace] = this.collectNamespace(pkg, this.v1.subpackages);
-            pkg.endpoints.forEach((endpoint) => {
-                const id = ApiDefinitionV1ToLatest.createEndpointId(endpoint, subpackageId);
-                endpoints[id] = this.migrateEndpoint(id, endpoint, namespace);
-            });
-            pkg.websockets.forEach((webSocket) => {
-                const id = ApiDefinitionV1ToLatest.createWebSocketId(webSocket, subpackageId);
-                websockets[id] = this.migrateWebSocket(id, webSocket, namespace);
-            });
-            pkg.webhooks.forEach((webhook) => {
-                const id = ApiDefinitionV1ToLatest.createWebhookId(webhook, subpackageId);
-                webhooks[id] = this.migrateWebhook(id, webhook, namespace);
-            });
-        });
-
-        Object.values(this.v1.subpackages).forEach((subpackage) => {
-            subpackages[subpackage.subpackageId] = this.migrateSubpackage(subpackage);
-        });
-
         Object.entries(this.v1.types).forEach(([id, type]) => {
-            types[V2.TypeId(id)] = {
+            this.types[V2.TypeId(id)] = {
                 name: type.name,
                 description: type.description,
                 availability: type.availability,
@@ -99,13 +80,33 @@ export class ApiDefinitionV1ToLatest {
             };
         });
 
+        [this.v1.rootPackage, ...Object.values(this.v1.subpackages)].forEach((pkg) => {
+            const [subpackageId, namespace] = this.collectNamespace(pkg, this.v1.subpackages);
+            pkg.endpoints.forEach((endpoint) => {
+                const id = ApiDefinitionV1ToLatest.createEndpointId(endpoint, subpackageId);
+                this.endpoints[id] = this.migrateEndpoint(id, endpoint, namespace);
+            });
+            pkg.websockets.forEach((webSocket) => {
+                const id = ApiDefinitionV1ToLatest.createWebSocketId(webSocket, subpackageId);
+                this.websockets[id] = this.migrateWebSocket(id, webSocket, namespace);
+            });
+            pkg.webhooks.forEach((webhook) => {
+                const id = ApiDefinitionV1ToLatest.createWebhookId(webhook, subpackageId);
+                this.webhooks[id] = this.migrateWebhook(id, webhook, namespace);
+            });
+        });
+
+        Object.values(this.v1.subpackages).forEach((subpackage) => {
+            this.subpackages[subpackage.subpackageId] = this.migrateSubpackage(subpackage);
+        });
+
         return {
             id: this.v1.id,
-            endpoints,
-            websockets,
-            webhooks,
-            types,
-            subpackages,
+            endpoints: this.endpoints,
+            websockets: this.websockets,
+            webhooks: this.webhooks,
+            types: this.types,
+            subpackages: this.subpackages,
             auths: this.v1.auth ? { [AUTH_SCHEME_ID]: this.v1.auth } : {},
             globalHeaders: this.migrateParameters(this.v1.globalHeaders),
         };
@@ -123,7 +124,7 @@ export class ApiDefinitionV1ToLatest {
         let subpackage = pkg;
         let loop = 0;
         while (subpackage.parent != null) {
-            if (loop > 100) {
+            if (loop > LOOP_TOLERANCE) {
                 throw new Error("Circular subpackage reference detected");
             }
 
@@ -289,7 +290,7 @@ export class ApiDefinitionV1ToLatest {
             }),
             discriminatedUnion: (value) => ({
                 type: "discriminatedUnion",
-                discriminant: value.discriminant,
+                discriminant: V2.PropertyKey(value.discriminant),
                 variants: value.variants.map((variant) => ({
                     discriminantValue: variant.discriminantValue,
                     displayName: variant.displayName,
@@ -310,12 +311,14 @@ export class ApiDefinitionV1ToLatest {
             availability: value.availability,
         }));
     };
+
     migrateJsonShape = (shape: APIV1Read.JsonBodyShape): V2.TypeShape => {
         return visitDiscriminatedUnion(shape)._visit<V2.TypeShape>({
             object: this.migrateTypeShape,
             reference: (ref) => ({ type: "alias", value: this.migrateTypeReference(ref.value) }),
         });
     };
+
     migrateWebhookPayload = (payload: APIV1Read.WebhookPayload): V2.WebhookPayload => {
         return {
             description: payload.description,
@@ -373,18 +376,23 @@ export class ApiDefinitionV1ToLatest {
                 snippets: undefined,
             };
 
+            if (toRet.requestBody) {
+                toRet.requestBody.value = sortKeysByShape(toRet.requestBody.value, endpoint.request?.body, this.types);
+            }
+
+            if (toRet.responseBody) {
+                toRet.responseBody.value = sortKeysByShape(
+                    toRet.responseBody.value,
+                    endpoint.response?.body,
+                    this.types,
+                );
+            }
+
             toRet.snippets = this.migrateEndpointSnippets(endpoint, example, this.auth, this.flags);
 
             return toRet;
         });
     };
-
-    migrateHttpSnippets(
-        example: APIV1Read.ExampleEndpointCall,
-        endpoint: V2.EndpointDefinition,
-    ): V2.CodeSnippet[] | undefined {
-        throw new Error("Method not implemented.");
-    }
 
     migrateHttpErrors = (errors: APIV1Read.ErrorDeclarationV2[] | undefined): V2.ErrorResponse[] | undefined => {
         if (errors == null || errors.length === 0) {
@@ -416,7 +424,7 @@ export class ApiDefinitionV1ToLatest {
                     properties: this.migrateObjectProperties(value.properties),
                 }),
                 reference: (value) => ({
-                    type: "reference",
+                    type: "alias",
                     value: this.migrateTypeReference(value.value),
                 }),
                 fileDownload: (value) => value,
@@ -452,7 +460,7 @@ export class ApiDefinitionV1ToLatest {
                     properties: this.migrateObjectProperties(value.properties),
                 }),
                 reference: (value) => ({
-                    type: "reference",
+                    type: "alias",
                     value: this.migrateTypeReference(value.value),
                 }),
                 bytes: (value) => ({
@@ -462,14 +470,12 @@ export class ApiDefinitionV1ToLatest {
                 }),
                 formData: (value) => ({
                     type: "formData",
-                    name: value.name,
                     description: value.description,
                     availability: value.availability,
                     fields: this.migrateFormDataProperties(value.properties),
                 }),
                 fileUpload: (value) => ({
                     type: "formData",
-                    name: value.value?.name ?? "File Upload",
                     description: value.value?.description,
                     availability: value.value?.availability,
                     fields: this.migrateFormDataProperties(value.value?.properties ?? []),

@@ -3,7 +3,7 @@ import { compact } from "lodash-es";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
 import { APIV1Read } from "../../client";
-import { AuthScheme, EndpointDefinition } from "../../client/generated/api/resources/api/resources/latest";
+import type * as Latest from "../latest";
 
 interface HttpRequestBodyJson {
     type: "json";
@@ -52,9 +52,9 @@ export interface HttpRequest {
 
 // TODO: validate that global headers are also included in the example by CLI or FDR
 export function toHttpRequest(
-    endpoint: EndpointDefinition,
+    endpoint: Latest.EndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
-    auth: AuthScheme | undefined,
+    auth: Latest.AuthScheme | undefined,
 ): HttpRequest {
     const environmentUrl = (
         endpoint.environments?.find((env) => env.id === endpoint.defaultEnvironment) ?? endpoint.environments?.[0]
