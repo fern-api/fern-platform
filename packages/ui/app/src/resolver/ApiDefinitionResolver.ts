@@ -50,6 +50,24 @@ export interface ApiDefinitionResolverCache {
         apiDefinitionId: FernRegistry.ApiDefinitionId;
         pageId: DocsV1Read.PageId;
     }): Promise<ResolvedApiPageMetadata | null | undefined>;
+
+    putResolvedTypeDeclaration({
+        apiDefinitionId,
+        typeId,
+        type,
+    }: {
+        apiDefinitionId: FernRegistry.ApiDefinitionId;
+        typeId: FernRegistry.TypeId;
+        type: ResolvedTypeDefinition;
+    }): Promise<void>;
+
+    getResolvedTypeDeclaration({
+        apiDefinitionId,
+        typeId,
+    }: {
+        apiDefinitionId: FernRegistry.ApiDefinitionId;
+        typeId: FernNavigation.TypeId;
+    }): Promise<ResolvedTypeDefinition | null | undefined>;
 }
 
 export class ApiDefinitionResolver {
@@ -57,7 +75,6 @@ export class ApiDefinitionResolver {
         collector: FernNavigation.NodeCollector,
         root: FernNavigation.ApiReferenceNode,
         holder: FernNavigation.ApiDefinitionHolder,
-        typeResolver: ApiTypeResolver,
         pages: Record<string, DocsV1Read.PageContent>,
         mdxOptions: FernSerializeMdxOptions | undefined,
         featureFlags: FeatureFlags,
@@ -68,7 +85,7 @@ export class ApiDefinitionResolver {
             collector,
             root,
             holder,
-            typeResolver,
+            new ApiTypeResolver(root.apiDefinitionId, holder.api.types, mdxOptions, serializeMdx, cache),
             pages,
             featureFlags,
             mdxOptions,
