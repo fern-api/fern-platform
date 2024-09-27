@@ -1,3 +1,4 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import identity from "@fern-ui/core-utils/identity";
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { AsyncOrSync } from "ts-essentials";
@@ -45,6 +46,44 @@ export interface ApiDefinitionVisitor {
 export class AsyncVisitor {
     public static with(visitor: ApiDefinitionVisitor): AsyncVisitor {
         return new AsyncVisitor(visitor);
+    }
+
+    public static transformDescriptions(
+        transformer: (description: FernDocs.MarkdownText) => Promise<FernDocs.MarkdownText>,
+    ): AsyncVisitor {
+        async function internalTransformer<T extends Latest.WithDescription>(withDescription: T): Promise<T> {
+            const description =
+                withDescription.description != null ? await transformer(withDescription.description) : undefined;
+            return { ...withDescription, description };
+        }
+
+        return AsyncVisitor.with({
+            EndpointDefinition: internalTransformer,
+            HttpRequest: internalTransformer,
+            HttpResponse: internalTransformer,
+            ErrorResponse: internalTransformer,
+            ExampleEndpointCall: internalTransformer,
+            CodeSnippet: internalTransformer,
+            ErrorExample: internalTransformer,
+            WebhookDefinition: internalTransformer,
+            WebhookPayload: internalTransformer,
+            WebSocketChannel: internalTransformer,
+            WebSocketMessage: internalTransformer,
+            ExampleWebSocketSession: internalTransformer,
+            TypeDefinition: internalTransformer,
+            ObjectProperty: internalTransformer,
+            EnumValue: internalTransformer,
+            UndiscriminatedUnionVariant: internalTransformer,
+            DiscriminatedUnionVariant: internalTransformer,
+            FormDataRequest: internalTransformer,
+            FormDataField: internalTransformer,
+            FormDataFile: internalTransformer,
+            FormDataFiles: internalTransformer,
+
+            // These types do not have descriptions
+            TypeShape: identity,
+            ObjectType: identity,
+        });
     }
 
     private visitor: ApiDefinitionVisitor;
