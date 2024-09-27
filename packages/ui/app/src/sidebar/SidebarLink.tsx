@@ -22,7 +22,7 @@ import { IS_READY_ATOM, SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMo
 import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { scrollToRoute } from "../util/anchor";
-import { scrollToCenter } from "./utils";
+import { scrollToCenter } from "../util/scrollToCenter";
 
 interface SidebarSlugLinkProps {
     nodeId: FernNavigation.NodeId;
@@ -72,7 +72,6 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
         toggleExpand,
         expanded = false,
         rightElement,
-        children,
         tooltipContent,
         target,
         rel,
@@ -148,47 +147,38 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
     );
 
     return (
-        <>
-            <div
-                ref={ref}
-                className={cn("fern-sidebar-link-container group", className)}
-                data-state={selected ? "active" : "inactive"}
-            >
-                {withTooltip(
-                    renderLink(
-                        <>
-                            {range(0, depth).map((i) => (
-                                <div
-                                    key={i}
-                                    className={cn(
-                                        "fern-sidebar-link-indent",
-                                        "group-hover/sidebar:opacity-100 transition-opacity ease-out",
+        <div
+            ref={ref}
+            className={cn("fern-sidebar-link-container", className)}
+            data-state={selected ? "active" : "inactive"}
+        >
+            {withTooltip(
+                renderLink(
+                    <>
+                        {range(0, depth).map((i) => (
+                            <div key={i} className="fern-sidebar-link-indent" />
+                        ))}
+                        <span className="fern-sidebar-link-content">
+                            {icon != null && (
+                                <span className="fern-sidebar-icon">
+                                    {typeof icon === "string" ? (
+                                        <RemoteFontAwesomeIcon
+                                            icon={icon}
+                                            className="bg-faded group-data-[state=active]:bg-accent"
+                                        />
+                                    ) : (
+                                        icon
                                     )}
-                                />
-                            ))}
-                            <span className="fern-sidebar-link-content">
-                                {icon != null && (
-                                    <span className="mr-3 inline-flex items-center text-faded group-data-[state=active]:t-accent-aaa my-0.5">
-                                        {typeof icon === "string" ? (
-                                            <RemoteFontAwesomeIcon
-                                                icon={icon}
-                                                className="bg-faded group-data-[state=active]:bg-text-default"
-                                            />
-                                        ) : (
-                                            icon
-                                        )}
-                                    </span>
-                                )}
-                                {createElement(as, { className: "fern-sidebar-link-text" }, title)}
-                                {rightElement}
-                            </span>
-                            {expandButton}
-                        </>,
-                    ),
-                )}
-            </div>
-            {children}
-        </>
+                                </span>
+                            )}
+                            {createElement(as, { className: "fern-sidebar-link-text" }, title)}
+                            {rightElement}
+                        </span>
+                        {expandButton}
+                    </>,
+                ),
+            )}
+        </div>
     );
 });
 
@@ -198,7 +188,7 @@ export const SidebarLink = memo(SidebarLinkInternal);
 
 export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<SidebarSlugLinkProps>>(
     (props, parentRef) => {
-        const { slug, onClick, ...innerProps } = props;
+        const { slug, onClick, toggleExpand, ...innerProps } = props;
         const ref = useRef<HTMLDivElement>(null);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(parentRef, () => ref.current!);
@@ -235,6 +225,7 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
                 ref={ref}
                 href={href}
                 onClick={handleClick}
+                toggleExpand={toggleExpand}
                 shallow={innerProps.shallow || innerProps.selected}
                 scroll={!innerProps.shallow}
             />

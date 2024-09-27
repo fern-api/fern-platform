@@ -1,14 +1,15 @@
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import type { ElementContent } from "hast";
-import { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
+import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { ReactElement, ReactNode } from "react";
 import { EditThisPageButton } from "../../../components/EditThisPage";
 import { PageHeader } from "../../../components/PageHeader";
-import { Feedback } from "../../../custom-docs-page/Feedback";
+import { Feedback } from "../../../feedback/Feedback";
 import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 
 interface PageLayoutProps {
-    breadcrumbs: string[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ReactNode | undefined;
     children: ReactNode;
@@ -18,7 +19,7 @@ interface PageLayoutProps {
 }
 
 interface PageLayoutOpts {
-    breadcrumbs: string[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ElementContent | undefined;
     children: ElementContent[];
@@ -28,7 +29,7 @@ interface PageLayoutOpts {
 }
 
 export function PageLayout({
-    breadcrumbs,
+    breadcrumb,
     title,
     subtitle,
     children,
@@ -37,7 +38,7 @@ export function PageLayout({
 }: PageLayoutProps): ReactElement {
     return (
         <main className="fern-page-layout">
-            <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
+            <PageHeader breadcrumb={breadcrumb} title={title} subtitle={subtitle} />
             <div className="max-w-full fern-prose">{children}</div>
             {(!hideFeedback || editThisPageUrl != null) && (
                 <footer className="mt-12">

@@ -5,8 +5,8 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface UndiscriminatedUnionVariant
-    extends FernRegistry.api.v1.read.WithDescription,
-        FernRegistry.api.v1.read.WithAvailability {
-    displayName?: string;
+    extends FernRegistry.api.v1.WithDescription,
+        FernRegistry.api.v1.WithAvailability {
+    displayName: string | undefined;
     type: FernRegistry.api.v1.read.TypeReference;
 }

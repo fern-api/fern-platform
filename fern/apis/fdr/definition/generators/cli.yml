@@ -6,28 +6,33 @@ imports:
   commons: ./commons.yml
 
 types:
-  CliReleaseRequest:
-    extends: commons.ReleaseRequest
+  BaseCliRelease:
     properties:
-      ir_version:
+      irVersion:
         type: integer
         docs: The major version of the IR that this CLI exposes.
+      tags:
+        type: optional<list<string>>
+        docs: Tags to categorize the CLI release.
+
+  CliReleaseRequest:
+    extends:
+      - commons.ReleaseRequest
+      - BaseCliRelease
 
   CliRelease:
-    extends: commons.Release
-    properties:
-      ir_version:
-        type: integer
-        docs: The major version of the IR that this CLI exposes.
+    extends:
+      - commons.Release
+      - BaseCliRelease
 
   ListCliReleasesResponse:
     properties:
-      cli_releases: list<CliRelease>
+      cliReleases: list<CliRelease>
 
   IrDependency:
     properties:
-      cli_version: string
-      ir_version: integer
+      cliVersion: string
+      irVersion: integer
 
 service:
   audiences:
@@ -43,10 +48,10 @@ service:
         name: GetLatestCliReleaseRequest
         body:
           properties:
-            release_types:
+            releaseTypes:
               type: optional<list<commons.ReleaseType>>
               docs: A filter for the release type, specifically if you'd like to get RC releases only, etc. Defaults to GA releases.
-            ir_version:
+            irVersion:
               type: optional<integer>
               docs: |
                 The IR version that the CLI must respect.
@@ -56,19 +61,17 @@ service:
 
     getChangelog:
       docs: Get the changelog for the specified CLI upgrade. The response will be a map of the generator version to it's corresponding changelog.
-      method: GET
-      path: /changelog/{from_version}/to/{to_version}
-      path-parameters:
-        from_version: string
-        to_version: string
+      method: POST
+      path: /changelog
+      request: commons.GetChangelogRequest
       response: commons.GetChangelogResponse
 
     getMinCliForIr:
       docs: Get the minimum CLI version that supports the given IR version. This does not include RCs.
       method: GET
-      path: /for-ir/{ir_version}
+      path: /for-ir/{irVersion}
       path-parameters:
-        ir_version: integer
+        irVersion: integer
       response: CliRelease
       errors:
         - NoValidClisFoundError
@@ -82,9 +85,9 @@ service:
     getCliRelease:
       docs: Get the specified CLI version.
       method: GET
-      path: /{cli_version}
+      path: /{cliVersion}
       path-parameters:
-        cli_version: string
+        cliVersion: string
       response: CliRelease
       errors:
         - CliVersionNotFoundError
@@ -95,14 +98,14 @@ service:
       path: ""
       pagination:
         offset: $request.page
-        results: $response.cli_releases
+        results: $response.cliReleases
       request:
         name: ListCliReleasesRequest
         query-parameters:
           page:
             type: optional<integer>
             docs: The page integer to retrieve. Defaults to 0.
-          page_size:
+          pageSize:
             type: optional<integer>
             docs: The integer of items to retrieve per page. Defaults to 20.
       response: ListCliReleasesResponse

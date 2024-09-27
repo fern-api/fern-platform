@@ -1,9 +1,9 @@
+import { unknownToString } from "@fern-ui/core-utils";
 import type { Element, Root } from "hast";
 import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
 import type { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
-import { unknownToString } from "../../util/unknownToString";
 import type { CodeGroup } from "../components/code";
 import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
 
@@ -79,6 +79,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                         highlightLines: meta.highlights,
                         highlightStyle: meta.focused ? "focus" : "highlight",
                         maxLines: meta.maxLines,
+                        wordWrap: meta.wordWrap,
                     };
                     if (meta.title == null) {
                         parent?.children.splice(index, 1, {
@@ -132,6 +133,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                                     : title?.value?.type === "mdxJsxAttributeValueExpression"
                                       ? title.value.value
                                       : undefined),
+                            wordWrap: meta.wordWrap,
                         });
                     }
                 }
@@ -151,6 +153,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
                     highlightStyle: meta.focused ? "focus" : "highlight",
                     maxLines: meta.maxLines,
                     title: meta.title,
+                    wordWrap: meta.wordWrap,
                 });
             }
         }
@@ -183,6 +186,7 @@ interface FernCodeMeta {
     maxLines: number | undefined;
     lang: string;
     focused?: boolean;
+    wordWrap?: boolean;
     highlights: number[];
 }
 
@@ -226,6 +230,11 @@ export function parseBlockMetaString(element: Element, defaultFallback: string =
         meta = meta.replace(focused[0], "");
     }
 
+    const wordWrap = meta.match(/wordWrap/);
+    if (wordWrap) {
+        meta = meta.replace(wordWrap[0], "");
+    }
+
     const [highlights, strippedMeta] = parseHighlightedLineNumbers(meta);
     meta = strippedMeta;
 
@@ -251,6 +260,7 @@ export function parseBlockMetaString(element: Element, defaultFallback: string =
         maxLines,
         lang,
         focused: focused != null,
+        wordWrap: wordWrap != null,
         highlights,
     };
 }

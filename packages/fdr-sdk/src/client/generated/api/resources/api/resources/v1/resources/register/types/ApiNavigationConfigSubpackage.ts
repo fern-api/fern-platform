@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface ApiNavigationConfigSubpackage {
-    subpackageId: FernRegistry.api.v1.register.SubpackageId;
+    subpackageId: FernRegistry.api.v1.SubpackageId;
     items: FernRegistry.api.v1.register.ApiNavigationConfigItem[];
 }

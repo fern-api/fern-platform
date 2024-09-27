@@ -4,12 +4,12 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface WebhookDefinition extends FernRegistry.api.v1.read.WithDescription {
+export interface WebhookDefinition extends FernRegistry.api.v1.WithDescription {
     urlSlug: string;
-    migratedFromUrlSlugs?: string[];
-    method: FernRegistry.api.v1.read.WebhookHttpMethod;
-    id: FernRegistry.api.v1.read.WebhookId;
-    name?: string;
+    migratedFromUrlSlugs: string[] | undefined;
+    method: FernRegistry.api.v1.WebhookHttpMethod;
+    id: FernRegistry.WebhookId;
+    name: string | undefined;
     path: string[];
     headers: FernRegistry.api.v1.read.Header[];
     payload: FernRegistry.api.v1.read.WebhookPayload;

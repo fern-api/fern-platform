@@ -1,0 +1,50 @@
+name: Deploy @fern-ui/fontawesome-cdn
+
+on:
+  push:
+    branches:
+      - main
+
+# Cancel previous workflows on previous push so we don't have deploys overwriting eachother here
+concurrency:
+  group: icons.ferndocs.com
+  cancel-in-progress: true
+
+jobs:
+  ignore:
+    runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.ignore.outputs.continue }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ignore unchanged files
+        id: ignore
+        uses: ./.github/actions/turbo-ignore
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          project: "icons.ferndocs.com"
+          package: "@fern-ui/fontawesome-cdn"
+          environment: "production"
+          branch: main
+
+  deploy:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
+    runs-on: ubuntu-latest
+    environment:
+      name: Production - icons.ferndocs.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: ./.github/actions/install
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy icons.ferndocs.com --token=${{ secrets.VERCEL_TOKEN }} --environment=production
+          echo "Deployed to $(cat deployment-url.txt) but NOT promoted. Please promote manually."
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT

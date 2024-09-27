@@ -4,17 +4,17 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface ExampleEndpointCall extends FernRegistry.api.v1.read.WithDescription {
-    name?: string;
+export interface ExampleEndpointCall extends FernRegistry.api.v1.WithDescription {
+    name: string | undefined;
     path: string;
-    pathParameters: Record<FernRegistry.api.v1.read.PathParameterKey, unknown>;
+    pathParameters: Record<FernRegistry.PropertyKey, unknown>;
     queryParameters: Record<string, unknown>;
     headers: Record<string, unknown>;
-    requestBody?: unknown;
-    requestBodyV3?: FernRegistry.api.v1.read.ExampleEndpointRequest;
+    requestBody: unknown;
+    requestBodyV3: FernRegistry.api.v1.read.ExampleEndpointRequest | undefined;
     responseStatusCode: number;
-    responseBody?: unknown;
-    responseBodyV3?: FernRegistry.api.v1.read.ExampleEndpointResponse;
+    responseBody: unknown;
+    responseBodyV3: FernRegistry.api.v1.read.ExampleEndpointResponse | undefined;
     codeExamples: FernRegistry.api.v1.read.CodeExamples;
     codeSamples: FernRegistry.api.v1.read.CustomCodeSample[];
 }

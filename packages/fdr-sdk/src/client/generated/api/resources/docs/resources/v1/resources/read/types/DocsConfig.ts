@@ -5,21 +5,23 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface DocsConfig {
-    title?: string;
-    defaultLanguage?: FernRegistry.docs.v1.commons.ProgrammingLanguage;
-    analyticsConfig?: FernRegistry.docs.v1.commons.AnalyticsConfig;
+    title: string | undefined;
+    defaultLanguage: FernRegistry.docs.v1.commons.ProgrammingLanguage | undefined;
+    announcement: FernRegistry.docs.v1.commons.AnnouncementConfig | undefined;
     navigation: FernRegistry.docs.v1.read.NavigationConfig;
-    navbarLinks?: FernRegistry.docs.v1.commons.NavbarLink[];
-    footerLinks?: FernRegistry.docs.v1.commons.FooterLink[];
-    logoHeight?: FernRegistry.docs.v1.read.Height;
-    logoHref?: FernRegistry.docs.v1.commons.Url;
-    favicon?: FernRegistry.docs.v1.commons.FileId;
-    metadata?: FernRegistry.docs.v1.commons.MetadataConfig;
-    redirects?: FernRegistry.docs.v1.commons.RedirectConfig[];
-    colorsV3?: FernRegistry.docs.v1.read.ColorsConfigV3;
-    layout?: FernRegistry.docs.v1.commons.DocsLayoutConfig;
-    typographyV2?: FernRegistry.docs.v1.commons.DocsTypographyConfigV2;
-    integrations?: FernRegistry.docs.v1.commons.IntegrationsConfig;
-    css?: FernRegistry.docs.v1.commons.CssConfig;
-    js?: FernRegistry.docs.v1.commons.JsConfig;
+    navbarLinks: FernRegistry.docs.v1.commons.NavbarLink[] | undefined;
+    footerLinks: FernRegistry.docs.v1.commons.FooterLink[] | undefined;
+    logoHeight: FernRegistry.docs.v1.read.Height | undefined;
+    logoHref: FernRegistry.Url | undefined;
+    favicon: FernRegistry.FileId | undefined;
+    metadata: FernRegistry.docs.v1.commons.MetadataConfig | undefined;
+    redirects: FernRegistry.docs.v1.commons.RedirectConfig[] | undefined;
+    colorsV3: FernRegistry.docs.v1.read.ColorsConfigV3 | undefined;
+    layout: FernRegistry.docs.v1.commons.DocsLayoutConfig | undefined;
+    typographyV2: FernRegistry.docs.v1.commons.DocsTypographyConfigV2 | undefined;
+    analyticsConfig: FernRegistry.docs.v1.commons.AnalyticsConfig | undefined;
+    integrations: FernRegistry.docs.v1.commons.IntegrationsConfig | undefined;
+    css: FernRegistry.docs.v1.commons.CssConfig | undefined;
+    js: FernRegistry.docs.v1.commons.JsConfig | undefined;
+    playground: FernRegistry.docs.v1.commons.PlaygroundConfig | undefined;
 }

@@ -1,11 +1,12 @@
-import cn, { clsx } from "clsx";
+import { clsx } from "clsx";
 import { useAtomValue } from "jotai";
-import { ReactElement, useCallback } from "react";
+import { ReactElement } from "react";
 import { HAS_HORIZONTAL_TABS, MOBILE_SIDEBAR_ENABLED_ATOM, useColors, useIsMobileSidebarOpen } from "../../atoms";
-import { BgImageGradient } from "../../docs/BgImageGradient";
-import { Header } from "../../docs/Header";
-import { HeaderTabs } from "../../docs/HeaderTabs";
-import { useIsScrolled } from "../../docs/useIsScrolled";
+import { BgImageGradient } from "../../components/BgImageGradient";
+import { Announcement } from "../../header/Announcement";
+import { Header } from "../../header/Header";
+import { HeaderTabs } from "../../header/HeaderTabs";
+import { useIsScrolled } from "../../hooks/useIsScrolled";
 
 interface HeaderContainerProps {
     className?: string;
@@ -18,30 +19,9 @@ export function HeaderContainer({ className }: HeaderContainerProps): ReactEleme
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
 
-    const renderBackground = useCallback(
-        (className?: string) => (
-            <>
-                <style>
-                    {`
-                        .clipped-background {
-                            opacity: ${colors.light?.headerBackground != null ? 0 : 1};
-                        }
-
-                        :is(.dark) .clipped-background {
-                            opacity: ${colors.dark?.headerBackground != null ? 0 : 1};
-                        }
-                    `}
-                </style>
-                <div className={cn(className, "clipped-background")}>
-                    <BgImageGradient className="h-screen opacity-60 dark:opacity-80" />
-                </div>
-            </>
-        ),
-        [colors],
-    );
-
     return (
-        <header id="fern-header" className={className}>
+        <header id="fern-header" className={className} role="banner">
+            <Announcement />
             <div
                 className={clsx("fern-header-container width-before-scroll-bar", {
                     "has-background-light": colors.light?.headerBackground != null,
@@ -49,13 +29,14 @@ export function HeaderContainer({ className }: HeaderContainerProps): ReactEleme
                 })}
                 data-border={isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled) ? "show" : "hide"}
             >
+                <div className="clipped-background">
+                    <BgImageGradient className="h-screen opacity-60 dark:opacity-80" />
+                </div>
                 <div className="fern-header">
-                    {renderBackground()}
                     <Header className="mx-auto max-w-page-width" />
                 </div>
                 {showHeaderTabs && (
                     <nav aria-label="tabs" className="fern-header-tabs">
-                        {renderBackground()}
                         <HeaderTabs />
                     </nav>
                 )}

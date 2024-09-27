@@ -7,9 +7,9 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         orgId: "string",
- *         apiId: "string",
- *         apiDefinitionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+ *         orgId: FernRegistry.OrgId("string"),
+ *         apiId: FernRegistry.ApiId("string"),
+ *         apiDefinitionId: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
  *         snippets: [{
  *                 sdk: {
  *                     type: "typescript",
@@ -17,8 +17,8 @@ import * as FernRegistry from "../../../../index";
  *                     version: "string"
  *                 },
  *                 endpointId: {
- *                     path: "string",
- *                     method: FernRegistry.EndpointMethod.Put,
+ *                     path: FernRegistry.EndpointPathLiteral("string"),
+ *                     method: "GET",
  *                     identifierOverride: "string"
  *                 },
  *                 snippetTemplate: {

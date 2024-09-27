@@ -21,8 +21,7 @@ export function getGeneratorsVersionsController(app: FdrApplication): VersionsSe
             return res.send(
                 await app.dao.generatorVersions().getChangelog({
                     generator: req.params.generator,
-                    fromVersion: req.params.from_version,
-                    toVersion: req.params.to_version,
+                    versionRanges: req.body,
                 }),
             );
         },
@@ -33,13 +32,14 @@ export function getGeneratorsVersionsController(app: FdrApplication): VersionsSe
             });
 
             await app.dao.generatorVersions().upsertGeneratorRelease({ generatorRelease: req.body });
+            return res.send();
         },
         getGeneratorRelease: async (req, res) => {
             const maybeRelease = await app.dao
                 .generatorVersions()
                 .getGeneratorRelease({ generator: req.params.generator, version: req.params.version });
             if (!maybeRelease) {
-                throw new GeneratorVersionNotFoundError({ provided_version: req.params.version });
+                throw new GeneratorVersionNotFoundError({ providedVersion: req.params.version });
             }
 
             return res.send(maybeRelease);
@@ -49,7 +49,7 @@ export function getGeneratorsVersionsController(app: FdrApplication): VersionsSe
                 await app.dao.generatorVersions().listGeneratorReleases({
                     generator: req.params.generator,
                     page: req.query.page,
-                    pageSize: req.query.page_size,
+                    pageSize: req.query.pageSize,
                 }),
             );
         },

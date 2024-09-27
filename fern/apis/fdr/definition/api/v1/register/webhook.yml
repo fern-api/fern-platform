@@ -1,28 +1,22 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
+  rootCommons: ../../../commons.yml
   type: type.yml
-  commons: commons.yml
-  endpoint: endpoint.yml
+  commons: ../commons.yml
+  http: endpoint.yml
 
 types:
-  WebhookId: string
-
   WebhookDefinition:
     extends: commons.WithDescription
     properties:
-      method: WebhookHttpMethod
-      id: WebhookId
+      method: commons.WebhookHttpMethod
+      id: rootCommons.WebhookId
       name: optional<string>
       path: list<string>
-      headers: list<endpoint.Header>
+      headers: list<http.Header>
       payload: WebhookPayload
       examples: list<ExampleWebhookPayload>
-
-  WebhookHttpMethod:
-    enum:
-      - GET
-      - POST
 
   WebhookPayload:
     extends: commons.WithDescription

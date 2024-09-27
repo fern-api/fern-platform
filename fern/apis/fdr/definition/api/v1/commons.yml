@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../commons.yml
+
+types:
+  SubpackageId: string
+
+  WebSocketMessageId: string
+
+  WebSocketMessageOrigin:
+    enum:
+      - client
+      - server
+
+  WebhookHttpMethod:
+    enum:
+      - GET
+      - POST
+
+  WithDescription:
+    properties:
+      description: optional<string>
+
+  WithAvailability:
+    properties:
+      availability: optional<rootCommons.Availability>
+
+  Environment:
+    properties:
+      id: rootCommons.EnvironmentId
+      baseUrl: string

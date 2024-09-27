@@ -1,4 +1,4 @@
-import { APIV1Db, DocsV1Db } from "../api";
+import { APIV1Db, DocsV1Db } from "@fern-api/fdr-sdk";
 import { FdrApplication, type FdrConfig } from "../app";
 import { type FdrServices } from "../app/FdrApplication";
 import { ConfigSegmentTuple, type AlgoliaSearchRecord, type AlgoliaService } from "../services/algolia";
@@ -108,10 +108,8 @@ class MockSlackService implements SlackService {
 class MockRevalidatorService implements RevalidatorService {
     async revalidate(_params: { baseUrl: ParsedBaseUrl }): Promise<RevalidatedPathsResponse> {
         return {
-            response: {
-                successfulRevalidations: [],
-                failedRevalidations: [],
-            },
+            successful: [],
+            failed: [],
             revalidationFailed: false,
         };
     }

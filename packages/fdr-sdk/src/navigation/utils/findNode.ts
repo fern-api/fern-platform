@@ -1,23 +1,20 @@
-import { noop } from "ts-essentials";
-import { visitDiscriminatedUnion } from "../../utils";
+import { FernNavigation } from "../..";
 import { NodeCollector } from "../NodeCollector";
-import { FernNavigation } from "../generated";
-import { NavigationNode, NavigationNodeNeighbor, NavigationNodePage, hasMetadata, isPage } from "../types";
-import { hasRedirect } from "../types/NavigationNodeWithRedirect";
-import { isApiReferenceNode } from "./isApiReferenceNode";
-import { isSidebarRootNode } from "./isSidebarRootNode";
-import { isTabbedNode } from "./isTabbedNode";
-import { isUnversionedNode } from "./isUnversionedNode";
-import { isVersionNode } from "./isVersionNode";
+import { isApiReferenceNode } from "../versions/latest/isApiReferenceNode";
+import { isSidebarRootNode } from "../versions/latest/isSidebarRootNode";
+import { isTabbedNode } from "../versions/latest/isTabbedNode";
+import { isUnversionedNode } from "../versions/latest/isUnversionedNode";
+import { isVersionNode } from "../versions/latest/isVersionNode";
+import { createBreadcrumbs } from "./createBreadcrumbs";
 
 export type Node = Node.Found | Node.Redirect | Node.NotFound;
 
 export declare namespace Node {
     interface Found {
         type: "found";
-        node: NavigationNodePage;
-        parents: NavigationNode[];
-        breadcrumb: string[];
+        node: FernNavigation.NavigationNodePage;
+        parents: FernNavigation.NavigationNode[];
+        breadcrumb: FernNavigation.BreadcrumbItem[];
         root: FernNavigation.RootNode;
         versions: FernNavigation.VersionNode[];
         currentVersion: FernNavigation.VersionNode | undefined;
@@ -25,8 +22,8 @@ export declare namespace Node {
         tabs: FernNavigation.TabChild[];
         sidebar: FernNavigation.SidebarRootNode | undefined;
         apiReference: FernNavigation.ApiReferenceNode | undefined;
-        next: NavigationNodeNeighbor | undefined;
-        prev: NavigationNodeNeighbor | undefined;
+        next: FernNavigation.NavigationNodeNeighbor | undefined;
+        prev: FernNavigation.NavigationNodeNeighbor | undefined;
         collector: NodeCollector;
         landingPage: FernNavigation.LandingPageNode | undefined;
 
@@ -82,7 +79,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
     const apiReference =
         found.parents.find(isApiReferenceNode) ?? (found.node.type === "apiReference" ? found.node : undefined);
 
-    if (isPage(found.node)) {
+    if (FernNavigation.isPage(found.node)) {
         const parentsAndNode = [...found.parents, found.node];
         const tabbedNodeIndex = parentsAndNode.findIndex((node) => node === tabbedNode);
         const currentTabNode = tabbedNodeIndex !== -1 ? parentsAndNode[tabbedNodeIndex + 1] : undefined;
@@ -104,7 +101,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         return {
             type: "found",
             node: found.node,
-            breadcrumb: createBreadcrumb(found.parents),
+            breadcrumb: createBreadcrumbs(found.parents),
             parents: found.parents,
             root,
             versions, // this is used to render the version switcher
@@ -126,53 +123,13 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         return { type: "redirect", redirect: root.pointsTo };
     }
 
-    const redirect = hasRedirect(found.node) ? found.node.pointsTo : currentVersion?.pointsTo ?? root.pointsTo;
+    const redirect = FernNavigation.hasRedirect(found.node)
+        ? found.node.pointsTo
+        : currentVersion?.pointsTo ?? root.pointsTo;
 
     if (redirect == null || redirect === slug) {
         return { type: "notFound", redirect: undefined };
     }
 
     return { type: "redirect", redirect };
-}
-
-export function createBreadcrumb(nodes: NavigationNode[]): string[] {
-    const breadcrumb: string[] = [];
-    nodes.forEach((node) => {
-        if (!hasMetadata(node)) {
-            return;
-        }
-        visitDiscriminatedUnion(node)._visit({
-            root: noop,
-            version: noop,
-            tab: noop,
-            page: noop,
-            section: (section) => {
-                breadcrumb.push(section.title);
-            },
-            apiReference: (apiReference) => {
-                if (!apiReference.hideTitle) {
-                    breadcrumb.push(apiReference.title);
-                }
-            },
-            changelog: (changelog) => {
-                breadcrumb.push(changelog.title);
-            },
-            changelogYear: (changelogYear) => {
-                breadcrumb.push(changelogYear.title);
-            },
-            changelogMonth: (changelogMonth) => {
-                breadcrumb.push(changelogMonth.title);
-            },
-            apiPackage: (apiPackage) => {
-                breadcrumb.push(apiPackage.title);
-            },
-            changelogEntry: noop,
-            endpoint: noop,
-            webSocket: noop,
-            webhook: noop,
-            landingPage: noop,
-        });
-    });
-
-    return breadcrumb;
 }

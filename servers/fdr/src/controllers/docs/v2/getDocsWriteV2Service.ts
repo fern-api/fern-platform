@@ -1,8 +1,15 @@
-import { convertDocsDefinitionToDb, DocsV1Db } from "@fern-api/fdr-sdk";
+import { APIV1Db, convertDocsDefinitionToDb, DocsV1Db, DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { AuthType } from "@prisma/client";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
-import { APIV1Db, DocsV1Write, DocsV2Write, DocsV2WriteService, FdrAPI } from "../../../api";
+import { DocsV2WriteService } from "../../../api";
+import { DomainBelongsToAnotherOrgError } from "../../../api/generated/api/resources/commons/errors";
+import { DocsRegistrationIdNotFound } from "../../../api/generated/api/resources/docs/resources/v1/resources/write/errors";
+import {
+    DocsNotFoundError,
+    InvalidDomainError,
+    ReindexNotAllowedError,
+} from "../../../api/generated/api/resources/docs/resources/v2/resources/write/errors";
 import { type FdrApplication } from "../../../app";
 import { IndexSegment } from "../../../services/algolia";
 import { type S3DocsFileInfo } from "../../../services/s3";
@@ -21,7 +28,7 @@ export interface DocsRegistrationInfo {
 function validateAndParseFernDomainUrl({ app, url }: { app: FdrApplication; url: string }): ParsedBaseUrl {
     const baseUrl = ParsedBaseUrl.parse(url);
     if (!baseUrl.hostname.endsWith(app.config.domainSuffix)) {
-        throw new DocsV2Write.InvalidDomainError();
+        throw new InvalidDomainError();
     }
     return baseUrl;
 }
@@ -52,10 +59,10 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 req.body.orgId,
             );
             if (!hasOwnership) {
-                throw new FdrAPI.DomainBelongsToAnotherOrgError("Domain belongs to another org");
+                throw new DomainBelongsToAnotherOrgError("Domain belongs to another org");
             }
 
-            const docsRegistrationId = uuidv4();
+            const docsRegistrationId = DocsV1Write.DocsRegistrationId(uuidv4());
             const s3FileInfos = await app.services.s3.getPresignedDocsAssetsUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
@@ -89,7 +96,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 authHeader: req.headers.authorization,
                 orgId: req.body.orgId,
             });
-            const docsRegistrationId = uuidv4();
+            const docsRegistrationId = DocsV1Write.DocsRegistrationId(uuidv4());
             const fernUrl = ParsedBaseUrl.parse(
                 urlJoin(
                     `${req.body.orgId}-preview-${docsRegistrationId}.${app.config.domainSuffix}`,
@@ -125,7 +132,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 .docsRegistration()
                 .getDocsRegistrationById(req.params.docsRegistrationId);
             if (docsRegistrationInfo == null) {
-                throw new DocsV1Write.DocsRegistrationIdNotFound();
+                throw new DocsRegistrationIdNotFound();
             }
             try {
                 app.logger.debug(`[${docsRegistrationInfo.fernUrl.getFullUrl()}] Called finishDocsRegister`);
@@ -168,24 +175,11 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                  */
                 const urls = [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls];
 
-                // const stagingUrl = createStagingUrl(docsRegistrationInfo.fernUrl);
-                // if (stagingUrl != null) {
-                //     // revalidation needs to occur separately for staging
-                //     urls.push(stagingUrl);
-                // }
-
-                // revalidate all custom urls
                 await Promise.all(
                     urls.map(async (baseUrl) => {
                         const results = await app.services.revalidator.revalidate({ baseUrl, app });
-                        if (
-                            results.response != null &&
-                            results.response.failedRevalidations.length === 0 &&
-                            !results.revalidationFailed
-                        ) {
-                            app.logger.info(
-                                `Successfully revalidated ${results.response.successfulRevalidations.length} paths.`,
-                            );
+                        if (results.failed.length === 0 && !results.revalidationFailed) {
+                            app.logger.info(`Successfully revalidated ${results.successful.length} paths.`);
                         } else {
                             await app.services.slack.notifyFailedToRevalidatePaths({
                                 domain: baseUrl.getFullUrl(),
@@ -211,11 +205,11 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             const response = await app.dao.docsV2().loadDocsForURL(parsedUrl.toURL());
 
             if (response == null) {
-                throw new DocsV2Write.DocsNotFoundError();
+                throw new DocsNotFoundError();
             }
 
             if (response.authType !== AuthType.PUBLIC || response.isPreview || response.docsConfigInstanceId == null) {
-                throw new DocsV2Write.ReindexNotAllowedError();
+                throw new ReindexNotAllowedError();
             }
 
             const apiDefinitionsById = await (async () => {

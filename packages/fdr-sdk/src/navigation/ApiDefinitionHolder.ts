@@ -1,6 +1,6 @@
 import type { APIV1Read } from "../client/types";
+import { FernNavigation } from "./..";
 import { ROOT_PACKAGE_ID } from "./consts";
-import { FernNavigation } from "./generated";
 import { isSubpackage } from "./utils/isSubpackage";
 
 export class ApiDefinitionHolder {
@@ -41,21 +41,21 @@ export class ApiDefinitionHolder {
 
     public static createEndpointId(
         endpoint: APIV1Read.EndpointDefinition,
-        subpackageId: string,
+        subpackageId: string = ROOT_PACKAGE_ID,
     ): FernNavigation.EndpointId {
         return FernNavigation.EndpointId(endpoint.originalEndpointId ?? `${subpackageId}.${endpoint.id}`);
     }
 
     public static createWebSocketId(
         webSocket: APIV1Read.WebSocketChannel,
-        subpackageId: string,
+        subpackageId: string = ROOT_PACKAGE_ID,
     ): FernNavigation.WebSocketId {
         return FernNavigation.WebSocketId(`${subpackageId}.${webSocket.id}`);
     }
 
     public static createWebhookId(
         webhook: APIV1Read.WebhookDefinition,
-        subpackageId: string,
+        subpackageId: string = ROOT_PACKAGE_ID,
     ): FernNavigation.WebhookId {
         return FernNavigation.WebhookId(`${subpackageId}.${webhook.id}`);
     }

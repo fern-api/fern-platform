@@ -11,13 +11,13 @@ navigation:
         path: ./docs/pages/enable-api-playground.mdx
       - page: Configure Custom Domain
         path: ./docs/pages/configure-custom-domain.mdx
-      - page: Configure Segment for a new Customer 
+      - page: Configure Segment for a new Customer
         path: ./docs/pages/configure-segment.mdx
   - api: FDR API Reference
     api-name: fdr
     display-errors: true
-  - api: Revalidation API Reference
-    api-name: revalidation
+  - api: Fern Docs API Reference
+    api-name: fern-docs
     display-errors: true
   - api: Proxy API Reference
     api-name: proxy

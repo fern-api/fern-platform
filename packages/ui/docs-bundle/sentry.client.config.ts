@@ -33,20 +33,21 @@ Sentry.init({
 
     // You can remove this option if you're not planning to use the Sentry Session Replay feature:
     integrations: [
-        Sentry.replayIntegration({
-            // Additional Replay configuration goes in here, for example:
-            maskAllText: false,
-            maskAllInputs: false,
-            blockAllMedia: false,
+        Sentry.replayIntegration(),
+
+        /**
+         * filters out errors that are not from the current domain.
+         */
+        Sentry.thirdPartyErrorFilterIntegration({
+            filterKeys: ["fern-docs"],
+            behaviour: "drop-error-if-contains-third-party-frames",
         }),
     ],
+
     // This option is required for capturing headers and cookies.
     sendDefaultPii: true,
 
-    beforeSend: (event: Sentry.Event, _: Sentry.EventHint): Sentry.Event | null => {
-        if ((event.type as string) === "csp" || (event as any)?.csp != null) {
-            return null;
-        }
+    beforeSend: (event: Sentry.ErrorEvent, _: Sentry.EventHint): Sentry.ErrorEvent | null => {
         // Filter out events from privategpt
         if (event.request?.url?.includes("privategpt")) {
             return null;

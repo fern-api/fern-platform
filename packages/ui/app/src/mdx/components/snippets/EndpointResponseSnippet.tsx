@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { CodeSnippetExample } from "../../../api-page/examples/CodeSnippetExample";
-import { generateCodeExamples } from "../../../api-page/examples/code-example";
-import { useResolvedPath } from "../../../atoms";
+import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
+import { generateCodeExamples } from "../../../api-reference/examples/code-example";
+import { useDocsContent } from "../../../atoms";
 import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";
 import { RequestSnippet } from "./types";
@@ -25,14 +25,14 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
     method,
     example,
 }) => {
-    const resolvedPath = useResolvedPath();
+    const content = useDocsContent();
 
     const endpoint = useMemo(() => {
-        if (resolvedPath.type !== "custom-markdown-page") {
+        if (content.type !== "custom-markdown-page") {
             return;
         }
         let endpoint: ResolvedEndpointDefinition | undefined;
-        for (const api of Object.values(resolvedPath.apis)) {
+        for (const api of Object.values(content.apis)) {
             endpoint = findEndpoint({
                 api,
                 path,
@@ -43,7 +43,7 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
             }
         }
         return endpoint;
-    }, [method, path, resolvedPath]);
+    }, [method, path, content]);
 
     const clients = useMemo(() => generateCodeExamples(endpoint?.examples ?? []), [endpoint?.examples]);
     const [selectedClient] = useSelectedClient(clients, example);

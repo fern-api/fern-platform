@@ -29,6 +29,8 @@ describe("Snippet Template Resolver", () => {
                         },
                     ],
                 },
+                pathParameters: undefined,
+                queryParameters: undefined,
             },
             endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
         });
@@ -43,7 +45,13 @@ describe("Snippet Template Resolver", () => {
 
     it("Test empty payload", async () => {
         const resolver = new SnippetTemplateResolver({
-            payload: {},
+            payload: {
+                headers: undefined,
+                pathParameters: undefined,
+                queryParameters: undefined,
+                requestBody: undefined,
+                auth: undefined,
+            },
             endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET,
         });
         const customSnippet = await resolver.resolveWithFormatting();
@@ -91,6 +99,8 @@ describe("Snippet Template Resolver", () => {
                         },
                     ],
                 },
+                pathParameters: undefined,
+                queryParameters: undefined,
             },
             endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION,
         });

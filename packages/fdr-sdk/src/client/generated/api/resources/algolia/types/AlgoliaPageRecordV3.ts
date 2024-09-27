@@ -6,9 +6,9 @@ import * as FernRegistry from "../../../index";
 
 export interface AlgoliaPageRecordV3 {
     title: string;
-    content?: string;
+    content: string | undefined;
     breadcrumbs: FernRegistry.Breadcrumbs;
-    slug: FernRegistry.navigation.Slug;
-    version?: FernRegistry.AlgoliaRecordVersionV3;
+    slug: FernRegistry.navigation.v1.Slug;
+    version: FernRegistry.AlgoliaRecordVersionV3 | undefined;
     indexSegmentId: FernRegistry.IndexSegmentId;
 }

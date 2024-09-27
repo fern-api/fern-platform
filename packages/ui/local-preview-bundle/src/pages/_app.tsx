@@ -1,11 +1,3 @@
-import { LocalPreviewContextProvider, NextApp } from "@fern-ui/ui";
-import { AppProps } from "next/app";
-import { ReactElement } from "react";
+import { LocalPreviewNextApp } from "@fern-ui/ui";
 
-export default function App(props: AppProps): ReactElement {
-    return (
-        <LocalPreviewContextProvider>
-            <NextApp {...props} />
-        </LocalPreviewContextProvider>
-    );
-}
+export default LocalPreviewNextApp;

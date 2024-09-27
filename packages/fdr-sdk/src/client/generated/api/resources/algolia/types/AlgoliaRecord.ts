@@ -5,16 +5,40 @@
 import * as FernRegistry from "../../../index";
 
 export type AlgoliaRecord =
+    | FernRegistry.AlgoliaRecord.PageV4
+    | FernRegistry.AlgoliaRecord.EndpointV4
+    | FernRegistry.AlgoliaRecord.WebsocketV4
+    | FernRegistry.AlgoliaRecord.WebhookV4
     | FernRegistry.AlgoliaRecord.PageV3
     | FernRegistry.AlgoliaRecord.EndpointV3
     | FernRegistry.AlgoliaRecord.WebsocketV3
     | FernRegistry.AlgoliaRecord.WebhookV3
+    | FernRegistry.AlgoliaRecord.MarkdownSectionV1
+    | FernRegistry.AlgoliaRecord.EndpointFieldV1
+    | FernRegistry.AlgoliaRecord.WebsocketFieldV1
+    | FernRegistry.AlgoliaRecord.WebhookFieldV1
     | FernRegistry.AlgoliaRecord.Endpoint
     | FernRegistry.AlgoliaRecord.Page
     | FernRegistry.AlgoliaRecord.EndpointV2
     | FernRegistry.AlgoliaRecord.PageV2;
 
 export declare namespace AlgoliaRecord {
+    interface PageV4 extends FernRegistry.AlgoliaPageRecordV4 {
+        type: "page-v4";
+    }
+
+    interface EndpointV4 extends FernRegistry.AlgoliaEndpointRecordV4 {
+        type: "endpoint-v4";
+    }
+
+    interface WebsocketV4 extends FernRegistry.AlgoliaWebSocketRecordV4 {
+        type: "websocket-v4";
+    }
+
+    interface WebhookV4 extends FernRegistry.AlgoliaWebhookRecordV4 {
+        type: "webhook-v4";
+    }
+
     interface PageV3 extends FernRegistry.AlgoliaPageRecordV3 {
         type: "page-v3";
     }
@@ -29,6 +53,22 @@ export declare namespace AlgoliaRecord {
 
     interface WebhookV3 extends FernRegistry.AlgoliaWebhookRecordV3 {
         type: "webhook-v3";
+    }
+
+    interface MarkdownSectionV1 extends FernRegistry.AlgoliaMarkdownSectionRecordV1 {
+        type: "markdown-section-v1";
+    }
+
+    interface EndpointFieldV1 extends FernRegistry.AlgoliaEndpointFieldRecordV1 {
+        type: "endpoint-field-v1";
+    }
+
+    interface WebsocketFieldV1 extends FernRegistry.AlgoliaWebSocketFieldRecordV1 {
+        type: "websocket-field-v1";
+    }
+
+    interface WebhookFieldV1 extends FernRegistry.AlgoliaWebhookFieldRecordV1 {
+        type: "webhook-field-v1";
     }
 
     interface Endpoint extends FernRegistry.AlgoliaEndpointRecord {

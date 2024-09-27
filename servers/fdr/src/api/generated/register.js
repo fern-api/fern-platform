@@ -13,6 +13,7 @@ export function register(expressApp, services) {
     expressApp.use("/docs-cache", services.docsCache.toRouter());
     expressApp.use("/generators/cli", services.generators.cli.toRouter());
     expressApp.use("/generators/versions", services.generators.versions.toRouter());
+    expressApp.use("/generators/github", services.git.toRouter());
     expressApp.use("/sdks", services.sdks.versions.toRouter());
     expressApp.use("/snippets", services.snippetsFactory.toRouter());
     expressApp.use("/snippets", services.snippets.toRouter());

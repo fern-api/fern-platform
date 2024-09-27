@@ -3,5 +3,5 @@
  */
 
 export interface Base64Type {
-    default?: string;
+    default: string | undefined;
 }

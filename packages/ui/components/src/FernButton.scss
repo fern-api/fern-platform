@@ -1,6 +1,6 @@
 @layer components {
     .fern-button {
-        @apply transition-[background];
+        @apply transition-colors hover:transition-none;
         @apply inline-flex items-center justify-center;
         @apply rounded-lg px-3 py-1 text-sm h-10 sm:h-8;
         @apply cursor-pointer;
@@ -126,12 +126,12 @@
             }
         }
 
-        &.disabled {
+        &[disabled] {
             @apply cursor-not-allowed bg-black/20 text-text-default/40 hover:text-text-default/40;
             @apply dark:bg-white/10 dark:text-text-default/50 dark:hover:text-text-default/50;
         }
 
-        &:not(.disabled) {
+        &:not([disabled]) {
             &.minimal {
                 @apply bg-transparent t-muted;
 
@@ -302,7 +302,7 @@
             }
 
             &.outlined {
-                @apply ring-1 transition-[box-shadow,background] ring-inset;
+                @apply ring-1 transition-[box-shadow,background] hover:transition-none ring-inset;
                 @apply ring-default t-default;
 
                 &:hover,

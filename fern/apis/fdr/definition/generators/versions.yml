@@ -7,37 +7,35 @@ imports:
   root: ./__package__.yml
 
 types:
-  GeneratorReleaseRequest:
-    extends: commons.ReleaseRequest
+  BaseGeneratorRelease:
     properties:
-      generator_id: root.GeneratorId
-      ir_version:
+      generatorId: root.GeneratorId
+      irVersion:
         type: integer
         docs: The major version of the IR that this generator version consumes.
       migration:
         type: optional<string>
         docs: The TypeScript file for the migration to run when upgrading to this version. Ideally this would be typed as a file, but we don't support file upload in the express generator.
-      custom_config_schema:
+      customConfigSchema:
         type: optional<string>
         docs: The JSON schema (stringified) for the custom config that this generator version supports.
+      tags:
+        type: optional<list<string>>
+        docs: Tags to categorize the Generator release.
+
+  GeneratorReleaseRequest:
+    extends:
+      - commons.ReleaseRequest
+      - BaseGeneratorRelease
 
   GeneratorRelease:
-    extends: commons.Release
-    properties:
-      generator_id: root.GeneratorId
-      ir_version:
-        type: integer
-        docs: The major version of the IR that this generator version consumes.
-      migration:
-        type: optional<string>
-        docs: The TypeScript file for the migration to run when upgrading to this version.
-      custom_config_schema:
-        type: optional<string>
-        docs: The JSON schema (stringified) for the custom config that this generator version supports.
+    extends:
+      - commons.Release
+      - BaseGeneratorRelease
 
   ListGeneratorReleasesResponse:
     properties:
-      generator_releases: list<GeneratorRelease>
+      generatorReleases: list<GeneratorRelease>
 
 service:
   audiences:
@@ -54,19 +52,19 @@ service:
         body:
           properties:
             generator: root.GeneratorId
-            cli_version:
+            cliVersion:
               type: optional<string>
               docs: |
                 The version of the CLI that is requesting the latest generator version. This is used to determine the latest IR version the generator must respect.
-            ir_version:
+            irVersion:
               type: optional<integer>
               docs: |
-                The IR version that the generator must respect. If this is provided alongside `cli_version`, `cli_version` takes precedence.
-            generator_major_version:
+                The IR version that the generator must respect. If this is provided alongside `cliVersion`, `cliVersion` takes precedence.
+            generatorMajorVersion:
               type: optional<integer>
               docs: |
                 If specified, we will only return the latest version that is the same major version as provided. Useful while we do not support config migrations, etc.
-            release_types:
+            releaseTypes:
               type: optional<list<commons.ReleaseType>>
               docs: A filter for the release type, specifically if you'd like to get RC releases only, etc. Defaults to GA releases.
       response: GeneratorRelease
@@ -75,12 +73,11 @@ service:
 
     getChangelog:
       docs: Get the changelog for the specified generator upgrade. The response will be a map of the generator version to it's corresponding changelog.
-      method: GET
-      path: /{generator}/changelog/{from_version}/to/{to_version}
+      method: POST
+      path: /{generator}/changelog
       path-parameters:
         generator: root.GeneratorId
-        from_version: string
-        to_version: string
+      request: commons.GetChangelogRequest
       response: commons.GetChangelogResponse
 
     upsertGeneratorRelease:
@@ -110,14 +107,14 @@ service:
         generator: root.GeneratorId
       pagination:
         offset: $request.page
-        results: $response.generator_releases
+        results: $response.generatorReleases
       request:
         name: ListGeneratorReleasesRequest
         query-parameters:
           page:
             type: optional<integer>
             docs: The page integer to retrieve. Defaults to 0.
-          page_size:
+          pageSize:
             type: optional<integer>
             docs: The integer of items to retrieve per page. Defaults to 20.
       response: ListGeneratorReleasesResponse

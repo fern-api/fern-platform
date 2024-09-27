@@ -4,10 +4,8 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface FilePropertyArray
-    extends FernRegistry.api.v1.read.WithDescription,
-        FernRegistry.api.v1.read.WithAvailability {
-    key: FernRegistry.api.v1.read.PropertyKey;
+export interface FilePropertyArray extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
+    key: FernRegistry.PropertyKey;
     isOptional: boolean;
-    contentType?: FernRegistry.api.v1.read.ContentType;
+    contentType: FernRegistry.api.v1.read.ContentType | undefined;
 }

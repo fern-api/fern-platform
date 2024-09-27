@@ -1,9 +1,8 @@
-import { visitDbNavigationConfig } from "@fern-api/fdr-sdk";
+import { DocsV1Db, FdrAPI, visitDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { addHours, addMinutes } from "date-fns";
 import { kebabCase } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 import { Cache } from "../../Cache";
-import { DocsV1Db } from "../../api";
 import type { FdrApplication } from "../../app";
 import type { DocsVersion } from "../../types";
 import type { ConfigSegmentTuple, IndexSegment } from "../algolia";
@@ -114,13 +113,19 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
               };
     }
 
-    private generateUniqueIdForIndexSegment({ version, url }: { version?: DocsVersion; url: string }) {
+    private generateUniqueIdForIndexSegment({
+        version,
+        url,
+    }: {
+        version?: DocsVersion;
+        url: string;
+    }): FdrAPI.IndexSegmentId {
         const parts: string[] = ["seg", url];
         if (version != null) {
             parts.push(kebabCase(version.id));
         }
         parts.push(uuidv4());
-        return parts.join("_");
+        return FdrAPI.IndexSegmentId(parts.join("_"));
     }
 
     public getOrGenerateSearchApiKeyForIndexSegment(indexSegmentId: string) {

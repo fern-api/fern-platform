@@ -1,4 +1,3 @@
-import { FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { PrismaClient } from "@prisma/client";
 import winston from "winston";
 import { FdrDao } from "../db";

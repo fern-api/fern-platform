@@ -1,4 +1,4 @@
-/* eslint-disable import/no-internal-modules */
+import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import {
     APIKeyInjectionConfig,
     OAuth2Client,
@@ -9,7 +9,6 @@ import {
 } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
-import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
 

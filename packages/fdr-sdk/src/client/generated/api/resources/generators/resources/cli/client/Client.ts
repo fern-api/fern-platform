@@ -14,8 +14,11 @@ export declare namespace Cli {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -33,9 +36,9 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getLatestCliRelease({
-     *         release_types: [FernRegistry.generators.ReleaseType.Ga],
-     *         ir_version: 1
+     *     await client.generators.cli.getLatestCliRelease({
+     *         releaseTypes: ["GA"],
+     *         irVersion: 1
      *     })
      */
     public async getLatestCliRelease(
@@ -57,6 +60,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -88,16 +92,23 @@ export class Cli {
     /**
      * Get the changelog for the specified CLI upgrade. The response will be a map of the generator version to it's corresponding changelog.
      *
-     * @param {string} fromVersion
-     * @param {string} toVersion
+     * @param {FernRegistry.generators.GetChangelogRequest} request
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getChangelog("string", "string")
+     *     await client.generators.cli.getChangelog({
+     *         fromVersion: {
+     *             type: "inclusive",
+     *             value: "string"
+     *         },
+     *         toVersion: {
+     *             type: "inclusive",
+     *             value: "string"
+     *         }
+     *     })
      */
     public async getChangelog(
-        fromVersion: string,
-        toVersion: string,
+        request: FernRegistry.generators.GetChangelogRequest,
         requestOptions?: Cli.RequestOptions
     ): Promise<
         core.APIResponse<FernRegistry.generators.GetChangelogResponse, FernRegistry.generators.cli.getChangelog.Error>
@@ -105,9 +116,9 @@ export class Cli {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
-                `/generators/cli/changelog/${encodeURIComponent(fromVersion)}/to/${encodeURIComponent(toVersion)}`
+                "/generators/cli/changelog"
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
@@ -115,6 +126,8 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -139,7 +152,7 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getMinCliForIr(1)
+     *     await client.generators.cli.getMinCliForIr(1)
      */
     public async getMinCliForIr(
         irVersion: number,
@@ -158,6 +171,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -192,17 +206,19 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.upsertCliRelease({
-     *         ir_version: 1,
+     *     await client.generators.cli.upsertCliRelease({
      *         version: "string",
-     *         created_at: "2023-01-15",
-     *         is_yanked: {
-     *             remediation_verision: "string"
+     *         createdAt: "2023-01-15",
+     *         isYanked: {
+     *             remediationVerision: "string"
      *         },
-     *         changelog_entry: [{
-     *                 type: FernRegistry.generators.ChangelogEntryType.Fix,
+     *         changelogEntry: [{
+     *                 type: "fix",
      *                 summary: "string",
-     *                 upgrade_notes: {
+     *                 links: {
+     *                     "key": "value"
+     *                 },
+     *                 upgradeNotes: {
      *                     "key": "value"
      *                 },
      *                 added: {
@@ -220,7 +236,9 @@ export class Cli {
      *                 fixed: {
      *                     "key": "value"
      *                 }
-     *             }]
+     *             }],
+     *         irVersion: 1,
+     *         tags: ["string"]
      *     })
      */
     public async upsertCliRelease(
@@ -240,6 +258,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -265,7 +284,7 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.getCliRelease("string")
+     *     await client.generators.cli.getCliRelease("string")
      */
     public async getCliRelease(
         cliVersion: string,
@@ -284,6 +303,7 @@ export class Cli {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -318,9 +338,9 @@ export class Cli {
      * @param {Cli.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.cli.listCliReleases({
+     *     await client.generators.cli.listCliReleases({
      *         page: 1,
-     *         page_size: 1
+     *         pageSize: 1
      *     })
      */
     public async listCliReleases(
@@ -332,14 +352,14 @@ export class Cli {
             FernRegistry.generators.cli.listCliReleases.Error
         >
     > {
-        const { page, page_size: pageSize } = request;
+        const { page, pageSize } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (page != null) {
             _queryParams["page"] = page.toString();
         }
 
         if (pageSize != null) {
-            _queryParams["page_size"] = pageSize.toString();
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         const _response = await core.fetcher({
@@ -356,6 +376,7 @@ export class Cli {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

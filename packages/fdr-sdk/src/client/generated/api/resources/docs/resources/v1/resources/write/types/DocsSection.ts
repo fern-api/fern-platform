@@ -11,8 +11,8 @@ export interface DocsSection extends FernRegistry.docs.v1.write.NavigationNodeMe
      * This is only applicable to sections that are at the root level in the sidebar.
      * If false, the section title will be displayed as a header and the items will be displayed below it, and cannot be collapsed.
      */
-    collapsed?: boolean;
-    skipUrlSlug?: boolean;
+    collapsed: boolean | undefined;
+    skipUrlSlug: boolean | undefined;
     /** If provided, clicking on this section will open this page instead of the first page in the section. */
-    overviewPageId?: FernRegistry.docs.v1.commons.PageId;
+    overviewPageId: FernRegistry.PageId | undefined;
 }

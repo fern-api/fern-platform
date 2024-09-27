@@ -4,11 +4,21 @@ types:
   Yank:
     docs: A yank is a metadata object that declares if a version is safe to upgrade to, if present the answer is no.
     properties:
-      remediation_verision:
+      remediationVerision:
         type: optional<string>
         docs: |
           The remediation strategy to be used when a yank is detected. If one is not specified, we'll likely go backwards by publishing time
           to find the last unyanked version.
+
+  VersionRange:
+    union:
+      inclusive: string
+      exclusive: string
+
+  GetChangelogRequest:
+    properties:
+      fromVersion: VersionRange
+      toVersion: VersionRange
 
   GetChangelogResponse:
     properties:
@@ -17,7 +27,7 @@ types:
   ChangelogResponse:
     properties:
       version: string
-      changelog_entry: ChangelogEntry
+      changelogEntry: list<ChangelogEntry>
 
   ChangelogEntryType:
     docs: Following `conventional commit` types for the entries here.
@@ -33,8 +43,14 @@ types:
     properties:
       type: ChangelogEntryType
       summary: string
-      upgrade_notes: optional<string>
+      links:
+        type: optional<list<string>>
+        docs: |
+          Any URLs that are relevant to the change, such as a PR or issue. This is optional for backcompat.
 
+          You do not always need to specify the URL as the CLI can fill it in with the current PR, but given you can choose to not
+          release within the same PR as the change is introduced, this should be specified for divorcing the two.
+      upgradeNotes: optional<string>
       # Keep a Changelog
       added: optional<list<string>>
       changed: optional<list<string>>
@@ -50,23 +66,23 @@ types:
   ReleaseRequest:
     properties:
       version: string
-      created_at: optional<date>
-      is_yanked: optional<Yank>
-      changelog_entry: optional<list<ChangelogEntry>>
+      createdAt: optional<date>
+      isYanked: optional<Yank>
+      changelogEntry: optional<list<ChangelogEntry>>
 
   Release:
     extends: ReleaseRequest
     properties:
-      release_type: ReleaseType
-      major_version: integer
+      releaseType: ReleaseType
+      majorVersion: integer
 
   InvalidVersionErrorMessage:
     properties:
-      provided_version: string
+      providedVersion: string
 
   InvalidIrVersionErrorMessage:
     properties:
-      provided_version: integer
+      providedVersion: integer
 
 errors:
   InvalidVersionError:

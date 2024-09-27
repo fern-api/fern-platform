@@ -4,7 +4,7 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface ErrorExample extends FernRegistry.api.v1.register.WithDescription {
-    name?: string;
+export interface ErrorExample extends FernRegistry.api.v1.WithDescription {
+    name: string | undefined;
     responseBody: FernRegistry.api.v1.register.ExampleErrorResponse;
 }

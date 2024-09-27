@@ -6,6 +6,6 @@ import * as FernRegistry from "../../../../../../../index";
 
 export interface FileS3UploadUrl {
     uploadUrl: string;
-    /** When reading docs we will return a map<commons.FileId, URL> that you can use to look up the docs. */
-    fileId: FernRegistry.docs.v1.commons.FileId;
+    /** When reading docs we will return a map<rootCommons.FileId, URL> that you can use to look up the docs. */
+    fileId: FernRegistry.FileId;
 }

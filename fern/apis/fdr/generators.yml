@@ -4,45 +4,40 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-express
-        version: 0.9.9
+        version: 0.17.6
         output:
           location: local-file-system
           path: ../../../servers/fdr/src/api/generated
         config:
-          noSerdeLayer: true
           outputEsm: true
-          # extraDevDependencies:
-          #   "@types/mime": "3.0.4"
+          noSerdeLayer: true
+          noOptionalProperties: true
+          useBrandedStringAliases: true
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.20.9
+        version: 0.40.5
         output:
           location: local-file-system
           path: ../../../packages/fdr-sdk/src/client/generated
         config:
+          outputEsm: true
           noSerdeLayer: true
+          noOptionalProperties: true
+          useBrandedStringAliases: true
           outputSourceFiles: true
           neverThrowErrors: true
           timeoutInSeconds: infinity
-          outputEsm: true
-          extraDevDependencies:
-            "@types/mime": "3.0.4"
 
-  navigation: 
-    audiences: 
-      - navigation
-    generators:               
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.20.9
+  postman:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.4.0
         output:
-          location: local-file-system
-          path: ../../../packages/fdr-sdk/src/navigation/generated
+          location: postman
+          api-key: ${POSTMAN_API_KEY}
+          workspace-id: 5579b37c-ab1f-4660-90d1-0409e81d57bc
+          collection-id: 30404764-47b97d6f-d2af-439c-bcff-5b75e6c0e5b6
         config:
-          noOptionalProperties: true
-          outputEsm: true
-          outputSourceFiles: true
-          useBrandedStringAliases: true
-          noSerdeLayer: true
-          neverThrowErrors: true            
+          collection-name: fdr
 
   fdr-cjs-sdk:
     generators:
@@ -63,7 +58,7 @@ groups:
       - generators
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.38.6
+        version: 0.40.5
         output:
           location: npm
           url: npm.buildwithfern.com
@@ -75,13 +70,29 @@ groups:
           neverThrowErrors: true
           timeoutInSeconds: infinity
 
+  paged-generators-sdk:
+    audiences:
+      - generators
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.40.5
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/paged-generators-sdk"
+        config:
+          noSerdeLayer: false
+          skipResponseValidation: true
+          outputSourceFiles: true
+          timeoutInSeconds: infinity
+
   internal-snippets-sdks:
     audiences:
       - snippets
     generators:
       # Internal, unadulterated for the use of the APIs
       - name: fernapi/fern-python-sdk
-        version: 1.2.0-rc1
+        version: 1.4.0
         output:
           location: pypi
           url: pypi.buildwithfern.com
@@ -125,26 +136,26 @@ groups:
             "@fern-api/template-resolver": "0.7.5"
           allowCustomFetcher: true
 
-  template-resolver:
-    audiences:
-      - templateResolver
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.20.9
-        output:
-          location: local-file-system
-          path: ../../../packages/template-resolver/src/generated
-        config:
-          noSerdeLayer: true
-          outputEsm: true
-          outputSourceFiles: true
+  # template-resolver:
+  #   audiences:
+  #     - templateResolver
+  #   generators:
+  #     - name: fernapi/fern-typescript-node-sdk
+  #       version: 0.20.9
+  #       output:
+  #         location: local-file-system
+  #         path: ../../../packages/template-resolver/src/generated
+  #       config:
+  #         noSerdeLayer: true
+  #         outputEsm: true
+  #         outputSourceFiles: true
 
   fiddle:
     audiences:
       - fiddle
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.5.10-rc12-1-g4718c24
+        version: 0.10.1
         output:
           location: maven
           url: maven.buildwithfern.com

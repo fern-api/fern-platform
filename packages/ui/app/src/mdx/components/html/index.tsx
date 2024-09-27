@@ -1,4 +1,4 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import { FdrAPI, type DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import {
@@ -82,11 +82,11 @@ export const Image: FC<ImgProps> = ({ src, width: w, height: h, noZoom, enableZo
 
         // if src starts with `file:`, assume it's a referenced file; fallback to src if not found
         if (src.startsWith("file:")) {
-            const fileId = src.slice(5);
-            return files[fileId] ?? { type: "url", url: src };
+            const fileId = FdrAPI.FileId(src.slice(5));
+            return files[fileId] ?? { type: "url", url: FdrAPI.Url(src) };
         }
 
-        return { type: "url", url: src };
+        return { type: "url", url: FdrAPI.Url(src) };
     }, [files, src]);
 
     const width = stripUnits(w);

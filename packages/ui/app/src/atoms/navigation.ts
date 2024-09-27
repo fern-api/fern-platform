@@ -4,7 +4,7 @@ import { SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
-import { ResolvedPath } from "../resolver/ResolvedPath";
+import { DocsContent } from "../resolver/DocsContent";
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 
@@ -67,12 +67,33 @@ export const SIDEBAR_ROOT_NODE_ATOM = selectAtom(
 SIDEBAR_ROOT_NODE_ATOM.debugLabel = "SIDEBAR_ROOT_NODE_ATOM";
 
 // the initial path that was hard-navigated to
-export const RESOLVED_PATH_ATOM = atom<ResolvedPath>((get) => get(DOCS_ATOM).resolvedPath);
+export const RESOLVED_PATH_ATOM = atom<DocsContent>((get) => get(DOCS_ATOM).content);
 RESOLVED_PATH_ATOM.debugLabel = "RESOLVED_PATH_ATOM";
 
+export const RESOLVED_PATH_SLUG_ATOM = atom((get) => get(RESOLVED_PATH_ATOM).slug);
+
+export const RESOLVED_PATH_TITLE_ATOM = atom((get) => {
+    const content = get(RESOLVED_PATH_ATOM);
+    if (content.type === "api-endpoint-page") {
+        return content.item.title;
+    }
+    return content.title;
+});
+
+export const NEIGHBORS_ATOM = atom((get) => {
+    const content = get(RESOLVED_PATH_ATOM);
+    if (content.type === "api-reference-page" || content.type === "changelog") {
+        return {
+            prev: null,
+            next: null,
+        };
+    }
+    return content.neighbors;
+});
+
 export const RESOLVED_API_DEFINITION_ATOM = atom((get) => {
-    const resolvedPath = get(RESOLVED_PATH_ATOM);
-    return resolvedPath.type === "api-page" ? resolvedPath.api : undefined;
+    const content = get(RESOLVED_PATH_ATOM);
+    return content.type === "api-endpoint-page" || content.type === "api-reference-page" ? content.api : undefined;
 });
 
 export const NAVIGATION_NODES_ATOM = atom<FernNavigation.NodeCollector>((get) => {
@@ -106,7 +127,7 @@ export function useCurrentNodeId(): FernNavigation.NodeId | undefined {
     return useAtomValue(CURRENT_NODE_ID_ATOM);
 }
 
-export function useResolvedPath(): ResolvedPath {
+export function useDocsContent(): DocsContent {
     return useAtomValue(RESOLVED_PATH_ATOM);
 }
 

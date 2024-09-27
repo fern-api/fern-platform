@@ -1,4 +1,4 @@
-import { APIV1Write, SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
+import { APIV1Write, FdrAPI, SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1WriteService } from "../../api";
 import { SdkRequest } from "../../api/generated/api";
@@ -21,7 +21,13 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 authHeader: req.headers.authorization,
                 orgId: req.body.orgId,
             });
-            const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {};
+            const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                goSdk: undefined,
+                rubySdk: undefined,
+            };
 
             const snippetsConfigurationWithSdkIds = await app.dao.sdks().getSdkIdsForPackages(snippetsConfiguration);
             const sdkIds: string[] = [];
@@ -59,7 +65,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 definition: req.body.definition,
                 snippetsConfigurationWithSdkIds,
             });
-            const apiDefinitionId = uuidv4();
+            const apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
             const snippetHolder = new SDKSnippetHolder({
                 snippetsBySdkId,
                 snippetsBySdkIdAndEndpointId,
@@ -169,8 +175,8 @@ async function getSnippetTemplatesByEndpointIdIfEnabled({
 }: {
     app: FdrApplication;
     authorization: string | undefined;
-    orgId: string;
-    apiId: string;
+    orgId: FdrAPI.OrgId;
+    apiId: FdrAPI.ApiId;
     definition: APIV1Write.ApiDefinition;
     snippetsConfigurationWithSdkIds: SdkIdForPackage;
 }): Promise<SnippetTemplatesByEndpointIdentifier> {
@@ -207,8 +213,8 @@ async function getSnippetTemplatesIfEnabled({
 }: {
     app: FdrApplication;
     authorization: string | undefined;
-    orgId: string;
-    apiId: string;
+    orgId: FdrAPI.OrgId;
+    apiId: FdrAPI.ApiId;
     definition: APIV1Write.ApiDefinition;
     snippetsConfigurationWithSdkIds: SdkIdForPackage;
 }): Promise<SnippetTemplatesByEndpoint> {
@@ -242,8 +248,8 @@ async function getSourceUploads({
     sources,
 }: {
     app: FdrApplication;
-    orgId: string;
-    apiId: string;
+    orgId: FdrAPI.OrgId;
+    apiId: FdrAPI.ApiId;
     sources: Record<string, APIV1Write.Source>;
 }): Promise<Record<string, APIV1Write.SourceUpload>> {
     const sourceUploadUrls = await app.services.s3.getPresignedApiDefinitionSourceUploadUrls({

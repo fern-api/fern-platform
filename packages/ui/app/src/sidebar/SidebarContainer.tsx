@@ -8,10 +8,11 @@ import {
     MOBILE_SIDEBAR_ENABLED_ATOM,
     SIDEBAR_SCROLL_CONTAINER_ATOM,
     TABS_ATOM,
+    useInitSidebarExpandedNodes,
     useIsMobileSidebarOpen,
     useSidebarNodes,
 } from "../atoms";
-import { useIsScrolled } from "../docs/useIsScrolled";
+import { useIsScrolled } from "../hooks/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
@@ -31,13 +32,14 @@ const UnmemoizedSidebarContainer = forwardRef<HTMLElement, SidebarContainerProps
     const isScrolled = useIsScrolled({ current: scrollRef });
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
     const isMobileSidebarOpen = useIsMobileSidebarOpen();
+    useInitSidebarExpandedNodes();
 
     return (
         <nav aria-label="secondary" ref={ref} {...props} className={clsx("fern-sidebar-container", props.className)}>
             <SidebarFixedItemsSection showBorder={isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled)} />
             <SearchSidebar>
                 <FernScrollArea
-                    rootClassName="flex-1 shrink-1 min-h-[80vh]"
+                    rootClassName="flex-1"
                     className={clsx("group/sidebar fern-sidebar-content", {
                         "overscroll-contain": layout?.disableHeader === true,
                     })}

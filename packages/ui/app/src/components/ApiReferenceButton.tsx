@@ -1,21 +1,20 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { FernButton, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { ArrowUpRight } from "iconoir-react";
-import { useRouter } from "next/router";
-import { useToHref } from "../hooks/useHref";
+import { useHref } from "../hooks/useHref";
+import { FernLinkButton } from "./FernLinkButton";
 
 export const ApiReferenceButton: React.FC<{ slug: FernNavigation.Slug }> = ({ slug }) => {
-    const router = useRouter();
-    const toHref = useToHref();
+    const href = useHref(slug);
     return (
         <FernTooltipProvider>
             <FernTooltip content="View API reference">
-                <FernButton
+                <FernLinkButton
                     className="-m-1"
                     rounded
                     variant="minimal"
                     icon={<ArrowUpRight className="size-icon" />}
-                    onClick={() => router.push(toHref(slug))}
+                    href={href}
                 />
             </FernTooltip>
         </FernTooltipProvider>

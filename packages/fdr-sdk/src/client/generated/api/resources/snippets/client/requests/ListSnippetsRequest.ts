@@ -8,8 +8,8 @@ import * as FernRegistry from "../../../../index";
  * @example
  *     {
  *         page: 1,
- *         orgId: "vellum",
- *         apiId: "vellum-ai",
+ *         orgId: FernRegistry.OrgId("vellum"),
+ *         apiId: FernRegistry.ApiId("vellum-ai"),
  *         sdks: [{
  *                 type: "python",
  *                 package: "vellum-ai"

@@ -25,7 +25,7 @@ export function SidebarChangelogNode({ node, depth, className }: SidebarChangelo
             className={className}
             selected={selected}
             depth={Math.max(0, depth - 1)}
-            icon={node.icon ?? <Calendar />}
+            icon={node.icon ?? <Calendar className="size-4" />}
             tooltipContent={renderChangelogTooltip(node)}
             hidden={node.hidden}
         />

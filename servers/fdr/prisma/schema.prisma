@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
   engineType = "binary"
 }
 
@@ -23,12 +23,12 @@ model ApiDefinitionsV2 {
 
 model DocsRegistrations {
   registrationID String
-  orgID String
-  fernURL String
-  customURLs String[]
-  isPreview Boolean
-  authType AuthType
-  s3FileInfos Bytes
+  orgID          String
+  fernURL        String
+  customURLs     String[]
+  isPreview      Boolean
+  authType       AuthType
+  s3FileInfos    Bytes
 
   @@id([registrationID])
 }
@@ -84,34 +84,34 @@ model OverwrittenAlgoliaIndex {
 }
 
 model SnippetTemplate {
-  id                      String     @id
-  orgId                   String
-  apiName                 String
-  apiDefinitionId         String
-  endpointPath            String
-  endpointMethod          HttpMethod
-  identifierOverride      String?
-  sdkId                   String
+  id                 String                         @id
+  orgId              String
+  apiName            String
+  apiDefinitionId    String
+  endpointPath       String
+  endpointMethod     HttpMethod
+  identifierOverride String?
+  sdkId              String
   // sdk                 Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
-  version                 SnippetTemplateSemanticVersion
-  
+  version            SnippetTemplateSemanticVersion
+
   // The actual templates themselves held as binary data to save encoding the schema, which may change
-  functionInvocation      Bytes
-  clientInstantiation     Bytes
+  functionInvocation  Bytes
+  clientInstantiation Bytes
 }
 
 model Snippet {
-  id                      String     @id
-  orgId                   String
-  apiName                 String
-  endpointPath            String
-  endpointMethod          HttpMethod
-  identifierOverride      String?
-  exampleIdentifier       String?
-  sdkId                   String
-  sdk                     Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
-  snippet                 Bytes
-  createdAt               DateTime   @default(now())
+  id                 String     @id
+  orgId              String
+  apiName            String
+  endpointPath       String
+  endpointMethod     HttpMethod
+  identifierOverride String?
+  exampleIdentifier  String?
+  sdkId              String
+  sdk                Sdk        @relation(fields: [sdkId], references: [id], onDelete: Cascade)
+  snippet            Bytes
+  createdAt          DateTime   @default(now())
 }
 
 model Sdk {
@@ -162,12 +162,12 @@ enum SnippetTemplateSemanticVersion {
   v1
 }
 
-
 model Generator {
-  id        String   @id
-  generatorType Bytes
-  dockerImage String
-  generatorLanguage  Language?
+  id                String    @id
+  displayName       String
+  generatorType     Bytes
+  dockerImage       String    @unique
+  generatorLanguage Language?
 
   releases GeneratorRelease[]
 
@@ -175,53 +175,115 @@ model Generator {
   updatedAt DateTime @updatedAt
 }
 
-
 enum ReleaseType {
   ga
   rc
 }
 
 model GeneratorRelease {
-  @@id([generatorId, version])
-
   // A bit of duplication here, but it's easier to query this way
-  version   String
-  major    Int
-  minor    Int
-  patch    Int
-  nonce String
+  version String
+  major   Int
+  minor   Int
+  patch   Int
+  nonce   String
 
   generatorId String
-  generator Generator @relation(fields: [generatorId], references: [id], onDelete: Cascade)
+  generator   Generator @relation(fields: [generatorId], references: [id], onDelete: Cascade)
 
-  isYanked Bytes?
+  isYanked       Bytes?
   changelogEntry Bytes?
 
-  migration Bytes?
-  irVersion Int
+  migration          Bytes?
+  irVersion          Int
   customConfigSchema String?
 
   releaseType ReleaseType
+  tags        String[]    @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([generatorId, version])
+}
+
+model CliRelease {
+  // A bit of duplication here, but it's easier to query this way
+  version String @id
+  major   Int
+  minor   Int
+  patch   Int
+  nonce   String
+
+  irVersion Int
+
+  isYanked       Bytes?
+  changelogEntry Bytes?
+
+  releaseType ReleaseType
+  tags        String[]    @default([])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model CliRelease {
-  // A bit of duplication here, but it's easier to query this way
-  version   String @id
-  major    Int
-  minor    Int
-  patch    Int
-  nonce String
+enum PullRequestState {
+  open
+  closed
+  merged
+}
 
-  irVersion Int
+model PullRequest {
+  pullRequestNumber Int
+  // PRs coming from GitHub do not seem to contain the repo ID, but rather the owner and repo name, so let's use that
+  // instead of always performing a look up to get ID from name and owner.
+  repositoryOwner   String
+  repositoryName    String
+  repository        Repository @relation(fields: [repositoryOwner, repositoryName], references: [owner, name], onDelete: Cascade)
 
-  isYanked Bytes?
-  changelogEntry Bytes?
+  authorLogin String?
+  author      Bytes?
+  reviewers   Bytes
+  checks      Bytes
 
-  releaseType ReleaseType
+  title String
+  url   String
+  state PullRequestState
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime
+  updatedAt DateTime?
+  mergedAt  DateTime?
+  closedAt  DateTime?
+
+  @@id([pullRequestNumber, repositoryOwner, repositoryName])
+}
+
+enum RepositorySystemType {
+  github
+}
+
+enum RepositoryContentType {
+  sdk
+  config
+}
+
+model Repository {
+  id                            String @id
+  name                          String
+  owner                         String
+  fullName                      String @unique
+  url                           String
+  repositoryOwnerOrganizationId String
+
+  pulls               PullRequest[]
+  defaultBranchChecks Bytes
+
+  contentType RepositoryContentType
+  systemType  RepositorySystemType
+
+  // Allows us to maintain the full union object, but also querying by the base
+  // properties with the columns above
+  rawRepository Bytes
+
+  @@unique([owner, name])
 }

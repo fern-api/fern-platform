@@ -1,11 +1,11 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "../../SnippetTemplateResolver";
-import { FernRegistry } from "../../generated";
 import { CHAT_COMPLETION_PAYLOAD, CHAT_COMPLETION_SNIPPET } from "../octo";
 
 describe("Snippet Template Resolver", () => {
     it("Test Snippet Template Resolution", async () => {
         // Example with an object, a list of strings, a list of objects, and an enum
-        const payload: FernRegistry.CustomSnippetPayload = {
+        const payload: FdrAPI.CustomSnippetPayload = {
             pathParameters: [{ name: "tune_id", value: "someId" }],
             queryParameters: [
                 { name: "offset", value: "10" },
@@ -17,9 +17,11 @@ describe("Snippet Template Resolver", () => {
                 loras: { key1: "value1", key2: "value2" },
                 scheduler: "PNDM",
             },
+            headers: undefined,
+            auth: undefined,
         };
 
-        const samplerTemplate: FernRegistry.TemplateInput = {
+        const samplerTemplate: FdrAPI.TemplateInput = {
             type: "template",
             value: {
                 imports: ["from octoai.image_gen import Scheduler"],
@@ -31,7 +33,7 @@ describe("Snippet Template Resolver", () => {
             },
         };
 
-        const lorasTemplate: FernRegistry.TemplateInput = {
+        const lorasTemplate: FdrAPI.TemplateInput = {
             type: "template",
             value: {
                 imports: [],
@@ -41,14 +43,18 @@ describe("Snippet Template Resolver", () => {
                 keyTemplate: {
                     type: "generic",
                     templateString: "$FERN_INPUT",
-                    templateInputs: [{ type: "payload", location: "RELATIVE" }],
+                    templateInputs: [{ type: "payload", location: "RELATIVE", path: undefined }],
                     isOptional: false,
+                    inputDelimiter: undefined,
+                    imports: undefined,
                 },
                 valueTemplate: {
                     type: "generic",
                     templateString: "$FERN_INPUT",
-                    templateInputs: [{ type: "payload", location: "RELATIVE" }],
+                    templateInputs: [{ type: "payload", location: "RELATIVE", path: undefined }],
                     isOptional: false,
+                    inputDelimiter: undefined,
+                    imports: undefined,
                 },
                 keyValueSeparator: ": ",
                 templateInput: { location: "BODY", path: "loras" },
@@ -56,7 +62,7 @@ describe("Snippet Template Resolver", () => {
             },
         };
 
-        const generateSdxlRequestTemplate: FernRegistry.TemplateInput = {
+        const generateSdxlRequestTemplate: FdrAPI.TemplateInput = {
             type: "template",
             value: {
                 imports: ["from octoai.image_gen import ImageGenerationRequest"],
@@ -70,6 +76,8 @@ describe("Snippet Template Resolver", () => {
                             templateString: "prompt=$FERN_INPUT",
                             templateInputs: [{ type: "payload", location: "BODY", path: "prompt" }],
                             isOptional: false,
+                            inputDelimiter: undefined,
+                            imports: undefined,
                         },
                     },
                     {
@@ -79,6 +87,8 @@ describe("Snippet Template Resolver", () => {
                             templateString: "negative_prompt=$FERN_INPUT",
                             templateInputs: [{ type: "payload", location: "BODY", path: "negative_prompt" }],
                             isOptional: false,
+                            inputDelimiter: undefined,
+                            imports: undefined,
                         },
                     },
                     {
@@ -95,6 +105,7 @@ describe("Snippet Template Resolver", () => {
                                 },
                             ],
                             type: "generic",
+                            inputDelimiter: undefined,
                         },
                     },
                     {
@@ -111,6 +122,7 @@ describe("Snippet Template Resolver", () => {
                                 },
                             ],
                             type: "generic",
+                            inputDelimiter: undefined,
                         },
                     },
                     {
@@ -147,21 +159,28 @@ describe("Snippet Template Resolver", () => {
             },
         };
 
-        const functionInvocationTemplate: FernRegistry.Template = {
+        const functionInvocationTemplate: FdrAPI.Template = {
             imports: [],
             type: "generic",
             templateString: "client.image_gen.generate_sdxl(\n$FERN_INPUT\n)",
             templateInputs: [generateSdxlRequestTemplate],
             isOptional: false,
+            inputDelimiter: undefined,
         };
-        const endpointSnippetTemplate: FernRegistry.EndpointSnippetTemplate = {
+        const endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate = {
             sdk: { type: "python", package: "acme", version: "0.0.1" },
-            endpointId: { path: "/image_gen", method: "GET" },
+            endpointId: {
+                path: FdrAPI.EndpointPathLiteral("/image_gen"),
+                method: "GET",
+                identifierOverride: undefined,
+            },
             snippetTemplate: {
                 type: "v1",
                 clientInstantiation: "from octoai import AsyncAcme\n\nclient = AsyncAcme(api_key='YOUR_API_KEY')",
                 functionInvocation: functionInvocationTemplate,
             },
+            apiDefinitionId: undefined,
+            additionalTemplates: undefined,
         };
         const resolver = new SnippetTemplateResolver({ payload, endpointSnippetTemplate });
         const customSnippet = await resolver.resolveWithFormatting();
@@ -180,6 +199,7 @@ describe("Snippet Template Resolver", () => {
                 pathParameters: undefined,
                 queryParameters: undefined,
                 requestBody: undefined,
+                auth: undefined,
             },
             endpointSnippetTemplate: {
                 snippetTemplate: {
@@ -197,13 +217,16 @@ describe("Snippet Template Resolver", () => {
                 },
                 endpointId: {
                     method: "GET",
-                    path: "/voices",
+                    path: FdrAPI.EndpointPathLiteral("/voices"),
+                    identifierOverride: undefined,
                 },
                 sdk: {
                     type: "python",
                     package: "elevenlabs",
                     version: "0.0.1",
                 },
+                apiDefinitionId: undefined,
+                additionalTemplates: undefined,
             },
         });
         const customSnippet = await resolver.resolveWithFormatting();

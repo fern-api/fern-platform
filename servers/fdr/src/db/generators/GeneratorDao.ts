@@ -14,8 +14,8 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export type SnippetTemplatesByEndpoint = Record<
-    FdrAPI.EndpointPath,
-    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    FdrAPI.EndpointPathLiteral,
+    Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
 >;
 
 export type SnippetTemplatesByEndpointIdentifier = Record<string, APIV1Read.EndpointSnippetTemplates>;
@@ -25,6 +25,8 @@ export interface GeneratorsDao {
 
     getGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<Generator | undefined>;
 
+    getGeneratorByImage({ image }: { image: string }): Promise<Generator | undefined>;
+
     listGenerators(): Promise<Generator[]>;
 
     deleteGenerator({ generatorId }: { generatorId: GeneratorId }): Promise<void>;
@@ -33,6 +35,16 @@ export interface GeneratorsDao {
 
 export class GeneratorsDaoImpl implements GeneratorsDao {
     constructor(private readonly prisma: prisma.PrismaClient) {}
+
+    async getGeneratorByImage({ image }: { image: string }): Promise<Generator | undefined> {
+        return convertPrismaGenerator(
+            await this.prisma.generator.findUnique({
+                where: {
+                    dockerImage: image,
+                },
+            }),
+        );
+    }
     async deleteGenerators({ generatorIds }: { generatorIds: string[] }): Promise<void> {
         await this.prisma.generator.deleteMany({
             where: {
@@ -69,9 +81,10 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
         // We always just write over the previous entry here
         const data = {
             id: generator.id,
-            generatorType: writeBuffer(generator.generator_type),
-            generatorLanguage: convertGeneratorLanguage(generator.generator_language),
-            dockerImage: generator.docker_image,
+            displayName: generator.displayName,
+            generatorType: writeBuffer(generator.generatorType),
+            generatorLanguage: convertGeneratorLanguage(generator.generatorLanguage),
+            dockerImage: generator.dockerImage,
         };
         await this.prisma.generator.upsert({
             where: {
@@ -142,10 +155,11 @@ function convertPrismaLanguage(prismaLanguage: prisma.Language | null): Generato
 function convertPrismaGenerator(generator: prisma.Generator | null): Generator | undefined {
     return generator != null
         ? {
-              id: generator.id,
-              generator_type: readBuffer(generator.generatorType) as GeneratorType,
-              generator_language: convertPrismaLanguage(generator.generatorLanguage),
-              docker_image: generator.dockerImage,
+              id: FdrAPI.generators.GeneratorId(generator.id),
+              displayName: generator.displayName,
+              generatorType: readBuffer(generator.generatorType) as GeneratorType,
+              generatorLanguage: convertPrismaLanguage(generator.generatorLanguage),
+              dockerImage: generator.dockerImage,
           }
         : undefined;
 }

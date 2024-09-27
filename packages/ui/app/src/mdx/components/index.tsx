@@ -1,5 +1,6 @@
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import type { MDXComponents } from "mdx/types";
+import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
 import { FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
 import { AccordionGroup } from "./accordion";
@@ -30,9 +31,11 @@ import { IFrame } from "./iframe";
 import { CustomLayout, GuideLayout, OverviewLayout, PageLayout, ReferenceLayout } from "./layout";
 import { ParamField } from "./mintlify";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
-import { Steps } from "./steps";
+import { Step, StepGroup } from "./steps";
 import { TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
+
+const LaunchDarkly = dynamic(() => import("./launchdarkly/LaunchDarkly").then((mod) => mod.LaunchDarkly));
 
 const FERN_COMPONENTS = {
     AccordionGroup,
@@ -53,8 +56,10 @@ const FERN_COMPONENTS = {
     EndpointResponseSnippet,
     Frame,
     Icon: RemoteFontAwesomeIcon,
+    LaunchDarkly,
     ParamField,
-    Steps,
+    Step,
+    StepGroup,
     TabGroup,
     Tooltip,
 

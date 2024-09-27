@@ -35482,6 +35482,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "void",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35493,6 +35494,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "resubmit_fresh",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35504,6 +35506,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "resubmit_corrected",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35515,6 +35518,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "close_and_process",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35526,6 +35530,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "move_to_work_queue",
+            "displayName": undefined,
           },
         ],
       },
@@ -35579,6 +35584,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "not_implemented_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35590,6 +35596,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "no_payer_generated_control_number_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35601,6 +35608,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "task_required_for_work_queue_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35612,6 +35620,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "generic_work_queue_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35623,6 +35632,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "user_not_authorized_for_resubmit_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35634,6 +35644,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "user_not_authorized_to_close_all_open_tasks_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35645,6 +35656,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "execution_error",
+            "displayName": undefined,
           },
         ],
       },
@@ -35715,6 +35727,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "success",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35726,6 +35739,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "failure",
+            "displayName": undefined,
           },
         ],
       },
@@ -35873,6 +35887,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "not_implemented_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35884,6 +35899,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "no_payer_generated_control_number_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35895,6 +35911,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "task_required_for_work_queue_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35906,6 +35923,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "generic_work_queue_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35917,6 +35935,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "user_not_authorized_for_resubmit_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -35928,6 +35947,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "user_not_authorized_to_close_all_open_tasks_error",
+            "displayName": undefined,
           },
         ],
       },
@@ -35998,6 +36018,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "success",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -36009,6 +36030,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "failure",
+            "displayName": undefined,
           },
         ],
       },
@@ -36124,6 +36146,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "claim_id_set",
+            "displayName": undefined,
           },
         ],
       },
@@ -36491,6 +36514,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "no_adjudication_details",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -36500,6 +36524,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "no_match",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -36511,6 +36536,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "potential_matches",
+            "displayName": undefined,
           },
         ],
       },
@@ -36541,6 +36567,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "adjudication_match_results",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -36552,6 +36579,7 @@ customer page will be returned (this generally is a page listing the existing cu
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "legacy_match_results",
+            "displayName": undefined,
           },
         ],
       },
@@ -42534,6 +42562,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "states",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -42545,6 +42574,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "national",
+            "displayName": undefined,
           },
         ],
       },
@@ -42567,6 +42597,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "date_range",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -42576,6 +42607,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "remove",
+            "displayName": undefined,
           },
         ],
       },
@@ -43347,6 +43379,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "hold_claim",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43358,6 +43391,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "hold_ready_to_submit_claim",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43377,6 +43411,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "create_task",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43388,6 +43423,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "create_task_v2",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43399,6 +43435,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "then_validate_or_else",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43410,6 +43447,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "route_to_work_queue",
+            "displayName": undefined,
           },
         ],
       },
@@ -43500,6 +43538,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "hold_claim_available_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43511,6 +43550,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "hold_ready_to_submit_claim_available_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43522,6 +43562,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "create_task_available_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43533,6 +43574,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "create_task_v2_available_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43544,6 +43586,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "then_validate_or_else_available_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43555,6 +43598,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "route_to_work_queue_available_action",
+            "displayName": undefined,
           },
         ],
       },
@@ -43622,6 +43666,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "field",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43641,6 +43686,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "literal",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43652,6 +43698,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "variable",
+            "displayName": undefined,
           },
         ],
       },
@@ -43791,6 +43838,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "and",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43802,6 +43850,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "or",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43813,6 +43862,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "evaluate_comparator",
+            "displayName": undefined,
           },
         ],
       },
@@ -43875,6 +43925,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "list",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43897,6 +43948,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "optional",
+            "displayName": undefined,
           },
         ],
       },
@@ -43940,6 +43992,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "customer_data_request_task",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -43951,6 +44004,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other_task",
+            "displayName": undefined,
           },
         ],
       },
@@ -44210,6 +44264,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "hold_claim_executed_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44221,6 +44276,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "hold_ready_to_submit_claim_executed_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44232,6 +44288,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "create_task_executed_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44243,6 +44300,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "create_task_v2_executed_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44254,6 +44312,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "then_validate_or_else_executed_action",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44265,6 +44324,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "route_to_work_queue_executed_action",
+            "displayName": undefined,
           },
         ],
       },
@@ -44383,6 +44443,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "primitive",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44394,6 +44455,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "object",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44405,6 +44467,7 @@ https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "container",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44417,6 +44480,7 @@ For internal use only within the framework, e.g. an unknown container type is co
 Not for external use, e.g. the framework will never allow unknown literals to be provided by a client.
 ",
             "discriminantValue": "unknown",
+            "displayName": undefined,
           },
         ],
       },
@@ -44447,6 +44511,7 @@ Not for external use, e.g. the framework will never allow unknown literals to be
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "primitive_value",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44458,6 +44523,7 @@ Not for external use, e.g. the framework will never allow unknown literals to be
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "object_value",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44477,6 +44543,7 @@ Not for external use, e.g. the framework will never allow unknown literals to be
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "container_value",
+            "displayName": undefined,
           },
         ],
       },
@@ -44582,6 +44649,7 @@ The exception to this is the count element, which returns an integer primitive t
 Short-circuit if any item evaluates to false.
 ",
             "discriminantValue": "all_items",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44593,6 +44661,7 @@ Short-circuit if any item evaluates to false.
 Short-circuit if any item evaluates to true.
 ",
             "discriminantValue": "any_items",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44604,6 +44673,7 @@ Short-circuit if any item evaluates to true.
 Evaluates to false if there are no items in the list.
 ",
             "discriminantValue": "first_item",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44615,6 +44685,7 @@ Evaluates to false if there are no items in the list.
 Evaluates to false if there are no items in the list.
 ",
             "discriminantValue": "last_item",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44638,6 +44709,7 @@ Evaluates to false if there are no items in the list.
 Raises a runtime error if the index is out of the bounds of the list.
 ",
             "discriminantValue": "nth_item",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44647,6 +44719,7 @@ Raises a runtime error if the index is out of the bounds of the list.
             "availability": undefined,
             "description": "Evaluate the Statement against the number of items in the List (an integer).",
             "discriminantValue": "count",
+            "displayName": undefined,
           },
         ],
       },
@@ -44795,6 +44868,7 @@ E.g., using any of these on an optional<list<string>> will evaluate the remainde
             "availability": undefined,
             "description": "Continue to evaluate the Statement on the contained item if present, else evaluate to False (or abort an Action).",
             "discriminantValue": "if_present",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -44804,6 +44878,7 @@ E.g., using any of these on an optional<list<string>> will evaluate the remainde
             "availability": undefined,
             "description": "Evaluate the Statement on the contained item if present, else fail the Statement.",
             "discriminantValue": "or_else_fail",
+            "displayName": undefined,
           },
         ],
       },
@@ -44994,6 +45069,7 @@ E.g., using any of these on an optional<list<string>> will evaluate the remainde
 E.g. providing FieldName("bar") here on object foo with string field foo.bar will extract a string field (bar).
 ",
             "discriminantValue": "object_element",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45013,6 +45089,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": "Extract the underlying type from a list.",
             "discriminantValue": "list_element",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45032,6 +45109,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": "Extract the underlying type from an optional.",
             "discriminantValue": "optional_element",
+            "displayName": undefined,
           },
         ],
       },
@@ -45062,6 +45140,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "native_primitive",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45073,6 +45152,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "aliased_primitive",
+            "displayName": undefined,
           },
         ],
       },
@@ -45105,6 +45185,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "integer",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45126,6 +45207,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "double",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45147,6 +45229,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "string",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45168,6 +45251,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "boolean",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45189,6 +45273,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "datetime",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45208,6 +45293,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "date",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45227,6 +45313,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "decimal",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -45236,6 +45323,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "empty",
+            "displayName": undefined,
           },
         ],
       },
@@ -46076,6 +46164,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "action_not_available_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46087,6 +46176,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "covariant_list_literal_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46098,6 +46188,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "duplicate_object_field_names",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46109,6 +46200,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "empty_list_literal_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46120,6 +46212,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "incorrect_type_for_path_element_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46131,6 +46224,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "mismatched_types_for_comparator_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46142,6 +46236,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "missing_object_field_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46153,6 +46248,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "variable_not_found_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46164,6 +46260,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "illegal_index_for_nth_item_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46175,6 +46272,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "work_queue_not_found_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46186,6 +46284,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "work_queue_not_in_scope_error",
+            "displayName": undefined,
           },
         ],
       },
@@ -46356,6 +46455,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "action_performed",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46365,6 +46465,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "no_action_performed",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46374,6 +46475,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "unexpected_error",
+            "displayName": undefined,
           },
         ],
       },
@@ -46404,6 +46506,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "invalid_statement",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46415,6 +46518,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "rule_with_name_already_exists",
+            "displayName": undefined,
           },
         ],
       },
@@ -46458,6 +46562,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "success",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46469,6 +46574,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "scope_does_not_support_configurable_rules_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46480,6 +46586,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "unknown_scope_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -46491,6 +46598,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "validation_failure",
+            "displayName": undefined,
           },
         ],
       },
@@ -46535,6 +46643,7 @@ E.g. providing FieldName("bar") here on object foo with string field foo.bar wil
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "step_locator",
+            "displayName": undefined,
           },
         ],
       },
@@ -47042,6 +47151,7 @@ be submitted under effective contracts)
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "required_dates",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -47053,6 +47163,7 @@ be submitted under effective contracts)
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "non_required_dates",
+            "displayName": undefined,
           },
         ],
       },
@@ -47106,6 +47217,7 @@ be submitted under effective contracts)
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "credentialed",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -47115,6 +47227,7 @@ be submitted under effective contracts)
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "not_credentialed",
+            "displayName": undefined,
           },
         ],
       },
@@ -49053,6 +49166,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "encounter_received",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49064,6 +49178,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "claim_submission",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49075,6 +49190,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "claim_submission_failure",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49086,6 +49202,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "claim_submission_v2",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49097,6 +49214,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "era_posted",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49108,6 +49226,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "payer_check",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49119,6 +49238,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "claim_status_change",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49130,6 +49250,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "patient_payment",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49141,6 +49262,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "generic",
+            "displayName": undefined,
           },
         ],
       },
@@ -49240,6 +49362,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "only_primary",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49251,6 +49374,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "multiple_payer_responsibility_financial_information",
+            "displayName": undefined,
           },
         ],
       },
@@ -49454,6 +49578,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "out_of_network",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49465,6 +49590,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "in_network",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -49474,6 +49600,7 @@ Useful for adding a new event that can be displayed in the UI without adding a t
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "unknown",
+            "displayName": undefined,
           },
         ],
       },
@@ -50452,6 +50579,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "success",
+            "displayName": undefined,
           },
         ],
       },
@@ -51350,6 +51478,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "individual_assignee",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -51361,6 +51490,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "organization_assignee",
+            "displayName": undefined,
           },
         ],
       },
@@ -52198,6 +52328,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "change_healthcare",
+            "displayName": undefined,
           },
         ],
       },
@@ -52393,6 +52524,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "assignee",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -52402,6 +52534,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "remove",
+            "displayName": undefined,
           },
         ],
       },
@@ -52889,6 +53022,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "modifier",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -52898,6 +53032,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "all_modifiers",
+            "displayName": undefined,
           },
         ],
       },
@@ -53355,6 +53490,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "all",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -53377,6 +53513,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "geography",
+            "displayName": undefined,
           },
         ],
       },
@@ -53528,6 +53665,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "all",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -53550,6 +53688,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "license_types",
+            "displayName": undefined,
           },
         ],
       },
@@ -53676,6 +53815,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "all",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -53698,6 +53838,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "networks",
+            "displayName": undefined,
           },
         ],
       },
@@ -53744,6 +53885,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "all",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -53766,6 +53908,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "place_of_services",
+            "displayName": undefined,
           },
         ],
       },
@@ -54229,6 +54372,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "medicare_provider_identifier",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -54240,6 +54384,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "medicaid_provider_identifier",
+            "displayName": undefined,
           },
         ],
       },
@@ -54324,6 +54469,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "add",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -54335,6 +54481,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "update",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -54354,6 +54501,7 @@ if the Encounter has not occurred yet or if there is no intention of ever billin
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "remove",
+            "displayName": undefined,
           },
         ],
       },
@@ -54820,6 +54968,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -54873,6 +55022,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -54903,6 +55053,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "group_code_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -54922,6 +55073,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "reason_code_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -54941,6 +55093,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "amount_error",
+            "displayName": undefined,
           },
         ],
       },
@@ -54961,6 +55114,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "only_denied_carc_code_on_denied_service_line",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -54970,6 +55124,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "denial_code_used_without_denial_reason",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -54981,6 +55136,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -55043,6 +55199,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -55065,6 +55222,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -55095,6 +55253,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "denial_reason_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55114,6 +55273,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "insurance_allowed_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55133,6 +55293,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "insurance_paid_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55152,6 +55313,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "deductible_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55171,6 +55333,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "coinsurance_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55190,6 +55353,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "copay_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55201,6 +55365,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "carc_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55212,6 +55377,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "rarc_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55231,6 +55397,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "invalid_denied_adjustment_amount_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55240,6 +55407,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "insurance_adjustment_amount_is_greater_than_allowed_amount",
+            "displayName": undefined,
           },
         ],
       },
@@ -55412,6 +55580,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -55432,6 +55601,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "at_least_one_denial_carc_required",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55443,6 +55613,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -55513,6 +55684,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -55535,6 +55707,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -55555,6 +55728,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "denial_amount_is_not_equal_to_billed_amount",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55566,6 +55740,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -55649,6 +55824,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "reason_code_error",
+            "displayName": undefined,
           },
         ],
       },
@@ -55669,6 +55845,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "at_least_one_carc_required",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55680,6 +55857,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other",
+            "displayName": undefined,
           },
         ],
       },
@@ -55839,6 +56017,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "carc_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55850,6 +56029,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "rarc_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55869,6 +56049,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "denial_reason_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55888,6 +56069,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "invalid_denied_adjustment_amount_error",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -55897,6 +56079,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "insurance_adjustment_amount_is_greater_than_allowed_amount",
+            "displayName": undefined,
           },
         ],
       },
@@ -56483,6 +56666,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "invoice",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -56494,6 +56678,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "invoice_preview",
+            "displayName": undefined,
           },
         ],
       },
@@ -57572,6 +57757,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "integration",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -57583,6 +57769,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "rule",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -57594,6 +57781,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "filter_action_rule",
+            "displayName": undefined,
           },
         ],
       },
@@ -57724,6 +57912,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "canvas",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -57735,6 +57924,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "elation",
+            "displayName": undefined,
           },
         ],
       },
@@ -57824,6 +58014,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "canvas",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -57835,6 +58026,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "elation",
+            "displayName": undefined,
           },
         ],
       },
@@ -57975,6 +58167,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "canvas",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -57986,6 +58179,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "elation",
+            "displayName": undefined,
           },
         ],
       },
@@ -58166,6 +58360,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "match",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -58175,6 +58370,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "no_match",
+            "displayName": undefined,
           },
         ],
       },
@@ -61753,6 +61949,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "chargebee",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -61764,6 +61961,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "square",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -61775,6 +61973,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "stripe",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -61786,6 +61985,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "cedar",
+            "displayName": undefined,
           },
         ],
       },
@@ -61808,6 +62008,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "chargebee",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -61819,6 +62020,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "square",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -61830,6 +62032,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "stripe",
+            "displayName": undefined,
           },
         ],
       },
@@ -61888,6 +62091,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "chargebee",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -61899,6 +62103,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "square",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -61910,6 +62115,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "stripe",
+            "displayName": undefined,
           },
         ],
       },
@@ -63842,6 +64048,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "ordinary_rule",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -63853,6 +64060,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "configurable_rule_summary",
+            "displayName": undefined,
           },
         ],
       },
@@ -63948,6 +64156,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "content_string",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -63967,6 +64176,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "content_download_url",
+            "displayName": undefined,
           },
         ],
       },
@@ -64386,6 +64596,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "clearinghouse",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -64395,6 +64606,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "lockbox",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -64404,6 +64616,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "manual_upload",
+            "displayName": undefined,
           },
         ],
       },
@@ -64477,6 +64690,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "success",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -64488,6 +64702,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "failure",
+            "displayName": undefined,
           },
         ],
       },
@@ -64578,6 +64793,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "failure",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -64589,6 +64805,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "success_async",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -64600,6 +64817,7 @@ For example, your internal patient ID or a Dr. Chrono patient ID. Box 1a on the 
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "success_sync",
+            "displayName": undefined,
           },
         ],
       },
@@ -65191,6 +65409,7 @@ must match what was provided to the payer during the credentialing process.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "charge_row",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -65202,6 +65421,7 @@ must match what was provided to the payer during the credentialing process.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "remit_row",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -65213,6 +65433,7 @@ must match what was provided to the payer during the credentialing process.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "patient_payment_row",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -65224,6 +65445,7 @@ must match what was provided to the payer during the credentialing process.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "write_off_row",
+            "displayName": undefined,
           },
         ],
       },
@@ -67675,6 +67897,7 @@ Example: 1.1 is valid, 1.11 is not.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "close_task",
+            "displayName": undefined,
           },
         ],
       },
@@ -67782,6 +68005,7 @@ Example: 1.1 is valid, 1.11 is not.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "child",
+            "displayName": undefined,
           },
         ],
       },
@@ -68079,6 +68303,7 @@ Example: 1.1 is valid, 1.11 is not.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "auth_zero_metadata",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -68090,6 +68315,7 @@ Example: 1.1 is valid, 1.11 is not.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "google_apps_metadata",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -68101,6 +68327,7 @@ Example: 1.1 is valid, 1.11 is not.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "other_idp_metadata",
+            "displayName": undefined,
           },
         ],
       },
@@ -68241,6 +68468,7 @@ Example: 1.1 is valid, 1.11 is not.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "machine_user_metadata",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -68252,6 +68480,7 @@ Example: 1.1 is valid, 1.11 is not.
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "human_user_metadata",
+            "displayName": undefined,
           },
         ],
       },
@@ -75746,6 +75975,7 @@ exports[`transformApiDefinitionToDb > {"name":"string"} 1`] = `
           ],
           "errorsV2": [
             {
+              "examples": undefined,
               "name": undefined,
               "statusCode": 401,
               "type": undefined,
@@ -82886,6 +83116,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "STRING",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -82897,6 +83128,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "JSON",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -82908,6 +83140,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "CHAT_HISTORY",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -82919,6 +83152,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "SEARCH_RESULTS",
+            "displayName": undefined,
           },
         ],
       },
@@ -85101,6 +85335,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "STRING",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -85112,6 +85347,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "JSON",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -85123,6 +85359,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "CHAT_HISTORY",
+            "displayName": undefined,
           },
         ],
       },
@@ -85264,6 +85501,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "STRING",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -85275,6 +85513,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "JSON",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -85286,6 +85525,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "CHAT_HISTORY",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -85297,6 +85537,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "SEARCH_RESULTS",
+            "displayName": undefined,
           },
         ],
       },
@@ -85539,6 +85780,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "STRING",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -85550,6 +85792,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "JSON",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -85561,6 +85804,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "CHAT_HISTORY",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -85572,6 +85816,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "SEARCH_RESULTS",
+            "displayName": undefined,
           },
         ],
       },
@@ -86347,6 +86592,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "PROMPT",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -86358,6 +86604,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "SEARCH",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -86369,6 +86616,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "TEMPLATING",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -86380,6 +86628,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "CONDITIONAL",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -86391,6 +86640,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "TERMINAL",
+            "displayName": undefined,
           },
         ],
       },
@@ -86587,6 +86837,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "STRING",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -86598,6 +86849,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "JSON",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -86609,6 +86861,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "CHAT_HISTORY",
+            "displayName": undefined,
           },
         ],
       },
@@ -86769,6 +87022,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "STRING",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -86780,6 +87034,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "JSON",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -86791,6 +87046,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "CHAT_HISTORY",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -86802,6 +87058,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "SEARCH_RESULTS",
+            "displayName": undefined,
           },
         ],
       },
@@ -87168,6 +87425,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "WORKFLOW",
+            "displayName": undefined,
           },
           {
             "additionalProperties": {
@@ -87179,6 +87437,7 @@ or overwritten with default values.",
             "availability": undefined,
             "description": undefined,
             "discriminantValue": "NODE",
+            "displayName": undefined,
           },
         ],
       },

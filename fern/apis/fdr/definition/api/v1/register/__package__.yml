@@ -4,7 +4,7 @@ imports:
   endpoint: endpoint.yml
   type: type.yml
   rootCommons: ../../../commons.yml
-  commons: commons.yml
+  commons: ../commons.yml
   webhook: webhook.yml
   websocket: websocket.yml
 
@@ -39,8 +39,8 @@ types:
   ApiDefinition:
     properties:
       rootPackage: ApiDefinitionPackage
-      types: map<type.TypeId, type.TypeDefinition>
-      subpackages: map<SubpackageId, ApiDefinitionSubpackage>
+      types: map<rootCommons.TypeId, type.TypeDefinition>
+      subpackages: map<commons.SubpackageId, ApiDefinitionSubpackage>
       auth: optional<ApiAuth>
       globalHeaders: optional<list<endpoint.Header>>
       snippetsConfiguration: optional<SnippetsConfig>
@@ -56,13 +56,13 @@ types:
   ApiNavigationConfigItem:
     union:
       subpackage: ApiNavigationConfigSubpackage
-      endpointId: endpoint.EndpointId
-      websocketId: websocket.WebSocketId
-      webhookId: webhook.WebhookId
+      endpointId: rootCommons.EndpointId
+      websocketId: rootCommons.WebSocketId
+      webhookId: rootCommons.WebhookId
 
   ApiNavigationConfigSubpackage:
     properties:
-      subpackageId: SubpackageId
+      subpackageId: commons.SubpackageId
       items: list<ApiNavigationConfigItem>
 
   SourceId: string
@@ -120,30 +120,29 @@ types:
       endpoints: list<endpoint.EndpointDefinition>
       websockets: optional<list<websocket.WebSocketChannel>>
       webhooks: optional<list<webhook.WebhookDefinition>>
-      types: list<type.TypeId>
-      subpackages: list<SubpackageId>
+      types: list<rootCommons.TypeId>
+      subpackages: list<commons.SubpackageId>
       pointsTo:
         docs: |
           if present, this package should be replaced with the provided subpackage
           in the docs navigation.
-        type: optional<SubpackageId>
+        type: optional<commons.SubpackageId>
 
   ApiDefinitionSubpackage:
     extends:
       - ApiDefinitionPackage
       - commons.WithDescription
     properties:
-      subpackageId: SubpackageId
+      subpackageId: commons.SubpackageId
       name: string
       displayName: optional<string>
-
-  SubpackageId: string
 
   ApiAuth:
     union:
       bearerAuth: BearerAuth
       basicAuth: BasicAuth
       header: HeaderAuth
+      oAuth: OAuth
 
   BasicAuth:
     properties:
@@ -161,6 +160,19 @@ types:
       prefix:
         type: optional<string>
         docs: The prefix that comes before the header
+
+  OAuth:
+    union:
+      clientCredentials: OAuthClientCredentials
+
+  OAuthClientCredentials:
+    union:
+      referencedEndpoint: OAuthClientCredentialsReferencedEndpoint
+
+  OAuthClientCredentialsReferencedEndpoint:
+    properties:
+      endpointId: rootCommons.EndpointId
+      accessTokenLocator: rootCommons.JqString
 
   EndpointExampleGenerationErrorBody:
     properties:

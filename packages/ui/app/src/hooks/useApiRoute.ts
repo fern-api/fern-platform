@@ -1,4 +1,4 @@
-import { useAtomValue } from "jotai";
+import { Getter, useAtomValue } from "jotai";
 import urlJoin from "url-join";
 import { BASEPATH_ATOM, TRAILING_SLASH_ATOM } from "../atoms";
 
@@ -24,5 +24,11 @@ export function getApiRouteSupplier({ includeTrailingSlash, basepath }: Options)
 export function useApiRoute(route: FernDocsApiRoute, options?: Options): string {
     const basepath = useAtomValue(BASEPATH_ATOM);
     const includeTrailingSlash = useAtomValue(TRAILING_SLASH_ATOM);
+    return getApiRouteSupplier({ includeTrailingSlash, basepath, ...options })(route);
+}
+
+export function selectApiRoute(get: Getter, route: FernDocsApiRoute, options?: Options): string {
+    const basepath = get(BASEPATH_ATOM);
+    const includeTrailingSlash = get(TRAILING_SLASH_ATOM);
     return getApiRouteSupplier({ includeTrailingSlash, basepath, ...options })(route);
 }

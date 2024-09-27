@@ -1,6 +1,8 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { atomWithReducer } from "jotai/utils";
-import { DocsProps, FeatureFlags } from "./types";
+import { atomWithReducer, useHydrateAtoms } from "jotai/utils";
+import type { PropsWithChildren, ReactNode } from "react";
+import type { DocsProps, FeatureFlags } from "./types";
 
 export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isApiPlaygroundEnabled: false,
@@ -29,9 +31,31 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     hasVoiceIdPlaygroundForm: false,
     isCohereTheme: false,
     isFileForgeHackEnabled: false,
+    is404PageHidden: false,
+    isNewSearchExperienceEnabled: false,
 };
 
-const EMPTY_DOCS_STATE: DocsProps = {
+export const EMPTY_ANALYTICS_CONFIG: DocsV1Read.AnalyticsConfig = {
+    segment: undefined,
+    fullstory: undefined,
+    intercom: undefined,
+    posthog: undefined,
+    gtm: undefined,
+    ga4: undefined,
+    amplitude: undefined,
+    mixpanel: undefined,
+    hotjar: undefined,
+    koala: undefined,
+    logrocket: undefined,
+    pirsch: undefined,
+    plausible: undefined,
+    fathom: undefined,
+    clearbit: undefined,
+    heap: undefined,
+};
+
+export const EMPTY_DOCS_STATE: DocsProps = {
+    announcement: undefined,
     baseUrl: {
         domain: "app.buildwithfern.com",
         basePath: undefined,
@@ -56,7 +80,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
     logoHeight: undefined,
     logoHref: undefined,
     files: {},
-    resolvedPath: {
+    content: {
         type: "custom-markdown-page",
         slug: FernNavigation.Slug(""),
         title: "",
@@ -68,7 +92,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
     apis: [],
     seo: {},
     analytics: undefined,
-    analyticsConfig: {},
+    analyticsConfig: EMPTY_ANALYTICS_CONFIG,
     fallback: {},
     theme: "default",
     user: undefined,
@@ -83,3 +107,11 @@ export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(EMPTY_DOCS_STATE,
     return next;
 });
 DOCS_ATOM.debugLabel = "DOCS_ATOM";
+
+export function HydrateAtoms({
+    pageProps,
+    children,
+}: PropsWithChildren<{ pageProps: DocsProps | undefined }>): ReactNode {
+    useHydrateAtoms(new Map([[DOCS_ATOM, pageProps]]), { dangerouslyForceHydrate: true });
+    return children;
+}

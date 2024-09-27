@@ -32,6 +32,8 @@ function nodeHasPlayground(currentNode?: NavigationNode) {
         currentNode &&
         visitDiscriminatedUnion(currentNode)._visit<PlaygroundSettings | undefined>({
             root: () => undefined,
+            product: () => undefined,
+            productgroup: () => undefined,
             versioned: () => undefined,
             tabbed: () => undefined,
             sidebarRoot: () => undefined,

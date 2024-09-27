@@ -1,6 +1,6 @@
 import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { toast } from "@fern-ui/components";
-import { DocsPage } from "@fern-ui/ui";
+import { DocsPage, LocalPreviewDocsPage } from "@fern-ui/ui";
 import { useRouter } from "next/router";
 import { ComponentProps, ReactElement, useEffect, useRef, useState } from "react";
 import ReconnectingWebSocket from "../utils/ReconnectingWebsocket";
@@ -135,7 +135,7 @@ export default function LocalPreviewDocs(): ReactElement {
         return <></>;
     }
 
-    return <DocsPage {...docsProps} />;
+    return <LocalPreviewDocsPage {...docsProps} />;
 }
 
 async function loadDocsForUrl(origin: string) {

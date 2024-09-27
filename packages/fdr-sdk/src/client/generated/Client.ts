@@ -9,6 +9,7 @@ import { Docs } from "./api/resources/docs/client/Client";
 import { Generators } from "./api/resources/generators/client/Client";
 import { Diff } from "./api/resources/diff/client/Client";
 import { DocsCache } from "./api/resources/docsCache/client/Client";
+import { Git } from "./api/resources/git/client/Client";
 import { Sdks } from "./api/resources/sdks/client/Client";
 import { SnippetsFactory } from "./api/resources/snippetsFactory/client/Client";
 import { Snippets } from "./api/resources/snippets/client/Client";
@@ -22,8 +23,11 @@ export declare namespace FernRegistryClient {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -59,6 +63,12 @@ export class FernRegistryClient {
 
     public get docsCache(): DocsCache {
         return (this._docsCache ??= new DocsCache(this._options));
+    }
+
+    protected _git: Git | undefined;
+
+    public get git(): Git {
+        return (this._git ??= new Git(this._options));
     }
 
     protected _sdks: Sdks | undefined;

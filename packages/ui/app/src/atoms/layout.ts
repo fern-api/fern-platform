@@ -2,6 +2,7 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { atom } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
+import { ANNOUNCEMENT_HEIGHT_ATOM } from "./announcement";
 import { DOCS_ATOM } from "./docs";
 import { TABS_ATOM } from "./navigation";
 import { MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "./viewport";
@@ -13,20 +14,27 @@ export const DOCS_LAYOUT_ATOM = selectAtom(
 );
 DOCS_LAYOUT_ATOM.debugLabel = "DOCS_LAYOUT_ATOM";
 
+function getHeaderHeightPx(layout: DocsV1Read.DocsLayoutConfig | undefined): number {
+    if (layout?.headerHeight?.type === "px") {
+        return layout.headerHeight.value;
+    } else if (layout?.headerHeight?.type === "rem") {
+        return layout.headerHeight.value * 16;
+    } else {
+        return 64;
+    }
+}
+
 export const HEADER_HEIGHT_ATOM = atom<number>((get) => {
     const layout = get(DOCS_LAYOUT_ATOM);
     const isMobileSidebarEnabled = get(MOBILE_SIDEBAR_ENABLED_ATOM);
-    const headerHeight =
-        layout?.headerHeight == null
-            ? 64
-            : layout.headerHeight.type === "px"
-              ? layout.headerHeight.value
-              : layout.headerHeight.type === "rem"
-                ? layout.headerHeight.value * 16
-                : 64;
+    const headerHeight = getHeaderHeightPx(layout);
     return isMobileSidebarEnabled || layout?.disableHeader !== true ? headerHeight : 0;
 });
 HEADER_HEIGHT_ATOM.debugLabel = "HEADER_HEIGHT_ATOM";
+
+export const MOBILE_HEADER_HEIGHT_ATOM = atom<number>((get) => {
+    return getHeaderHeightPx(get(DOCS_LAYOUT_ATOM));
+});
 
 const SETTABLE_HEADER_TABS_HEIGHT_ATOM = atom<number>(44);
 SETTABLE_HEADER_TABS_HEIGHT_ATOM.debugLabel = "SETTABLE_HEADER_TABS_HEIGHT_ATOM";
@@ -76,14 +84,19 @@ export const POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM = atom<boolean>((get) => {
 POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM.debugLabel = "POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM";
 
 export const HEADER_OFFSET_ATOM = atom<number>((get) => {
+    const announcementHeight = get(ANNOUNCEMENT_HEIGHT_ATOM);
     if (!get(SHOW_HEADER_ATOM)) {
-        return 0;
+        return announcementHeight;
     }
     const headerHeight = get(HEADER_HEIGHT_ATOM);
     const tabsHeight = get(HEADER_TABS_HEIGHT_ATOM);
-    return headerHeight + tabsHeight;
+    return headerHeight + tabsHeight + announcementHeight;
 });
 HEADER_OFFSET_ATOM.debugLabel = "HEADER_OFFSET_ATOM";
+
+export const MOBILE_HEADER_OFFSET_ATOM = atom<number>((get) => {
+    return get(MOBILE_HEADER_HEIGHT_ATOM) + get(ANNOUNCEMENT_HEIGHT_ATOM);
+});
 
 export const BELOW_HEADER_HEIGHT_ATOM = atom<number>((get) => {
     const headerHeight = get(HEADER_HEIGHT_ATOM);

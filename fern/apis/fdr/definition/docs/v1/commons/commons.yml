@@ -1,24 +1,13 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+imports:
+  rootCommons: ../../../commons.yml
+
 types:
-  FileId: string
-
-  PageId: string
-
-  Url: string
-
-  SubpackageId: string
-
-  EndpointId: string
-
-  WebSocketId: string
-
-  WebhookId: string
-
   FileIdOrUrl:
     union:
-      fileId: FileId
-      url: Url
+      fileId: rootCommons.FileId
+      url: rootCommons.Url
 
   RgbaColor:
     properties:
@@ -26,6 +15,7 @@ types:
       g: integer
       b: integer
       a: optional<double>
+
   # Docs layout config
 
   ProgrammingLanguage:
@@ -44,6 +34,21 @@ types:
       - jvm
       - ts
       - js
+
+  AnnouncementConfig:
+    properties:
+      text:
+        type: string
+        docs: The text to display in the banner, using markdown.
+      # backgroundColor:
+      #   type: optional<ColorConfig>
+      #   docs: By default, the banner will use the accent primary color as its background color.
+      # textColor:
+      #   type: optional<ColorConfig>
+      #   docs: By default, the banner will use the highest contrast (black or white) as its text color, unless a custom color is provided.
+      # dismissable:
+      #   type: optional<boolean>
+      #   default: false
 
   AnalyticsConfig:
     properties:
@@ -174,6 +179,7 @@ types:
     union:
       px: double
       rem: double
+
   # SEO Config
 
   MetadataConfig:
@@ -224,7 +230,7 @@ types:
 
   NavbarLinkMetadata:
     properties:
-      url: Url
+      url: rootCommons.Url
       text: optional<string>
       icon: optional<string>
       rightIcon: optional<string>
@@ -232,22 +238,23 @@ types:
 
   NavbarGithubMetadata:
     properties:
-      url: Url # github repo url
+      url: rootCommons.Url # github repo url
 
   FooterLink:
     union:
-      github: Url
-      twitter: Url
-      x: Url
-      linkedin: Url
-      youtube: Url
-      instagram: Url
-      facebook: Url
-      discord: Url
-      slack: Url
-      hackernews: Url
-      medium: Url
-      website: Url
+      github: rootCommons.Url
+      twitter: rootCommons.Url
+      x: rootCommons.Url
+      linkedin: rootCommons.Url
+      youtube: rootCommons.Url
+      instagram: rootCommons.Url
+      facebook: rootCommons.Url
+      discord: rootCommons.Url
+      slack: rootCommons.Url
+      hackernews: rootCommons.Url
+      medium: rootCommons.Url
+      website: rootCommons.Url
+
   # Customization Config
 
   CssConfig:
@@ -262,12 +269,12 @@ types:
 
   JsRemoteConfig:
     properties:
-      url: Url
+      url: rootCommons.Url
       strategy: optional<JsScriptStrategy>
 
   JsFileConfig:
     properties:
-      fileId: FileId
+      fileId: rootCommons.FileId
       strategy: optional<JsScriptStrategy>
 
   JsScriptStrategy:
@@ -279,6 +286,7 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
+
   # Typography
 
   DocsTypographyConfigV2:
@@ -286,8 +294,8 @@ types:
       headingsFont: optional<FontConfigV2>
       bodyFont: optional<FontConfigV2>
       codeFont: optional<FontConfigV2>
-  # TODO: add support for google fonts
 
+  # TODO: add support for google fonts
   FontConfigV2:
     union:
       custom: CustomFontConfig
@@ -303,7 +311,7 @@ types:
 
   CustomFontConfigVariant:
     properties:
-      fontFile: FileId
+      fontFile: rootCommons.FileId
       weight: optional<list<string>>
       style: optional<list<FontStyle>>
 
@@ -319,13 +327,19 @@ types:
       - swap
       - fallback
       - optional
+
+  # Playground
+  PlaygroundConfig:
+    properties:
+      oauth: optional<boolean>
+
   # Deprecated
 
   ThemedFileId:
     availability: deprecated
     properties:
-      dark: optional<FileId>
-      light: optional<FileId>
+      dark: optional<rootCommons.FileId>
+      light: optional<rootCommons.FileId>
 
   ColorsConfig:
     availability: deprecated
@@ -366,4 +380,4 @@ types:
     availability: deprecated
     properties:
       name: string
-      fontFile: FileId
+      fontFile: rootCommons.FileId

@@ -16,5 +16,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "vitest.commandLine": "pnpm test",
-  "vitest.disableWorkspaceWarning": true
+  "vitest.disableWorkspaceWarning": true,
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }

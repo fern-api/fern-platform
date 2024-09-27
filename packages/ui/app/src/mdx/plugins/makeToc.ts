@@ -1,9 +1,9 @@
 import { slug } from "github-slugger";
-import type { Root } from "hast";
+import type { Doctype, ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { toString } from "hast-util-to-string";
-import { SKIP, visit } from "unist-util-visit";
-import type { TableOfContentsItem } from "../../components/TableOfContents";
+import { SKIP, visit, type BuildVisitor } from "unist-util-visit";
+import type { TableOfContentsItem } from "../../components/table-of-contents/TableOfContentsItem";
 import type { AccordionItemProps } from "../components/accordion";
 import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement } from "./utils";
 
@@ -13,10 +13,12 @@ interface FoundHeading {
     id: string;
 }
 
+type Visitor = BuildVisitor<Root | Doctype | ElementContent>;
+
 export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContentsItem[] {
     const headings: FoundHeading[] = [];
 
-    visit(tree, (node) => {
+    const visitor: Visitor = (node) => {
         // if the node is a <Steps toc={false}>, skip traversing its children
         if (isMdxJsxFlowElement(node) && node.name === "Steps") {
             const isTocEnabled =
@@ -24,9 +26,23 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
                     node.attributes.find((attr) => isMdxJsxAttribute(attr) && attr.name === "toc")?.value,
                 ) ?? isTocDefaultEnabled;
 
-            if (!isTocEnabled) {
-                return SKIP;
+            if (isTocEnabled) {
+                node.children.forEach((child) => {
+                    if (child.type === "mdxJsxFlowElement" && child.name === "Step") {
+                        const id = child.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "id")?.value;
+                        const title = child.attributes
+                            .filter(isMdxJsxAttribute)
+                            .find((attr) => attr.name === "title")?.value;
+                        if (id == null || typeof id !== "string" || title == null || typeof title !== "string") {
+                            return;
+                        }
+                        headings.push({ depth: 3, id, title });
+
+                        visit(child, visitor);
+                    }
+                });
             }
+            return SKIP;
         }
 
         // parse markdown headings
@@ -109,7 +125,9 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
         }
 
         return;
-    });
+    };
+
+    visit(tree, visitor);
 
     const minDepth = Math.min(...headings.map((heading) => heading.depth));
     return makeTree(headings, minDepth);

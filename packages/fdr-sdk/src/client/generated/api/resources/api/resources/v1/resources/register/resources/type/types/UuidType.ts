@@ -3,5 +3,5 @@
  */
 
 export interface UuidType {
-    default?: string;
+    default: string | undefined;
 }

@@ -1,20 +1,25 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import { ReactElement, memo } from "react";
-import { DOCS_ATOM, DOMAIN_ATOM } from "../atoms";
+import { DOCS_ATOM, DOMAIN_ATOM, DocsProps, EMPTY_ANALYTICS_CONFIG } from "../atoms";
 import { Posthog } from "./PosthogContainer";
 import { renderSegmentSnippet } from "./segment";
 
 const IntercomScript = dynamic(() => import("./IntercomScript").then((mod) => mod.IntercomScript));
 const FullstoryScript = dynamic(() => import("./FullstoryScript").then((mod) => mod.FullstoryScript));
 const GoogleAnalytics = dynamic(() => import("@next/third-parties/google").then((mod) => mod.GoogleAnalytics));
-const GoogleTagManager = dynamic(() => import("./GoogleTagManager").then((mod) => mod.GoogleTagManager));
+const GoogleTagManager = dynamic(() => import("@next/third-parties/google").then((mod) => mod.GoogleTagManager));
 
 const ANALYTICS_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analytics ?? {}, isEqual);
-const ANALYTICS_CONFIG_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.analyticsConfig ?? {}, isEqual);
+const ANALYTICS_CONFIG_ATOM = selectAtom<DocsProps, DocsV1Read.AnalyticsConfig>(
+    DOCS_ATOM,
+    (docs) => docs.analyticsConfig ?? EMPTY_ANALYTICS_CONFIG,
+    isEqual,
+);
 
 export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
     const domain = useAtomValue(DOMAIN_ATOM);
@@ -33,8 +38,10 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
             <Posthog customerConfig={config.posthog} />
             <IntercomScript config={config.intercom} />
             <FullstoryScript config={config.fullstory} />
+
+            {/* renders Google Analytics 4 or Google Tag Manager using @next/third-parties */}
             {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}
-            {gtm != null && <GoogleTagManager {...gtm} />}
+            {gtm != null && <GoogleTagManager gtmId={gtm.tagId} />}
         </>
     );
 });

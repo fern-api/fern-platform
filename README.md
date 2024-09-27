@@ -1,7 +1,6 @@
 # :herb: Fern Platform
 
-The Fern Platform repository contains all of Fern's closed-source services
-and frontends.
+The Fern Platform repository contains Fern's docs platform.
 
 ## API Definitions
 

@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { Generator } from "../../../api/generated/api/resources/generators";
 import { createMockFdrApplication } from "../../mock";
 
 const fdrApplication = createMockFdrApplication({
@@ -17,6 +18,7 @@ const GENERATORS_FROM_OTHER_TESTS = [
     "python-sdk-2",
     "python-sdk-3",
     "my-cool/example",
+    "this-is-major-version-restricted",
 ];
 
 beforeEach(async () => {
@@ -27,33 +29,38 @@ beforeEach(async () => {
 it("generator dao", async () => {
     // create snippets
     const generatorStarter: FdrAPI.generators.Generator = {
-        id: "my-cool/example",
-        generator_type: { type: "sdk" },
-        docker_image: "my-cool/example",
-        generator_language: FdrAPI.generators.GeneratorLanguage.Python,
+        id: FdrAPI.generators.GeneratorId("my-cool/example"),
+        displayName: "My Cool Example",
+        generatorType: { type: "sdk" },
+        dockerImage: "my-cool/example",
+        generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
     };
     await fdrApplication.dao.generators().upsertGenerator({
         generator: generatorStarter,
     });
 
-    const generator = await fdrApplication.dao.generators().getGenerator({ generatorId: "my-cool/example" });
+    const generator = await fdrApplication.dao
+        .generators()
+        .getGenerator({ generatorId: FdrAPI.generators.GeneratorId("my-cool/example") });
     expect(generator).toEqual(generatorStarter);
 
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "my-cool/example",
-            generator_type: { type: "sdk" },
-            docker_image: "changing things up",
-            generator_language: FdrAPI.generators.GeneratorLanguage.Typescript,
+            id: FdrAPI.generators.GeneratorId("my-cool/example"),
+            generatorType: { type: "sdk" },
+            displayName: "My Cool Example",
+            dockerImage: "changing things up",
+            generatorLanguage: FdrAPI.generators.GeneratorLanguage.Typescript,
         },
     });
     const generatorUpdated = await fdrApplication.dao.generators().listGenerators();
     expect(generatorUpdated).length(1);
     expect(generatorUpdated[0]).toEqual({
-        id: "my-cool/example",
-        generator_type: { type: "sdk" },
-        docker_image: "changing things up",
-        generator_language: FdrAPI.generators.GeneratorLanguage.Typescript,
+        id: FdrAPI.generators.GeneratorId("my-cool/example"),
+        generatorType: { type: "sdk" },
+        displayName: "My Cool Example",
+        dockerImage: "changing things up",
+        generatorLanguage: FdrAPI.generators.GeneratorLanguage.Typescript,
     });
 });
 
@@ -61,31 +68,63 @@ it("generator dao non-unique", async () => {
     // essentially just adding a test to make sure we don't apply a uniqueness constraint willy nilly
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "python-sdk",
-            generator_type: { type: "sdk" },
-            docker_image: "my-cool/example",
-            generator_language: FdrAPI.generators.GeneratorLanguage.Python,
+            id: FdrAPI.generators.GeneratorId("python-sdk"),
+            displayName: "Python SDK",
+            generatorType: { type: "sdk" },
+            dockerImage: "my-cool/example",
+            generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
         },
     });
 
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "python-sdk-2",
-            generator_type: { type: "sdk" },
-            docker_image: "my-cool/example",
-            generator_language: FdrAPI.generators.GeneratorLanguage.Python,
+            id: FdrAPI.generators.GeneratorId("python-sdk-2"),
+            displayName: "Python SDK",
+            generatorType: { type: "sdk" },
+            dockerImage: "my-cool/example-1",
+            generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
         },
     });
 
     await fdrApplication.dao.generators().upsertGenerator({
         generator: {
-            id: "python-sdk-3",
-            generator_type: { type: "sdk" },
-            docker_image: "my-cool/example",
-            generator_language: FdrAPI.generators.GeneratorLanguage.Python,
+            id: FdrAPI.generators.GeneratorId("python-sdk-3"),
+            displayName: "Python SDK",
+            generatorType: { type: "sdk" },
+            dockerImage: "my-cool/example-2",
+            generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
         },
     });
 
     const generatorUpdated = await fdrApplication.dao.generators().listGenerators();
     expect(generatorUpdated).length(3);
+});
+
+it("generator dao image non-unique", async () => {
+    const generator: Generator = {
+        id: FdrAPI.generators.GeneratorId("python-sdk-3"),
+        displayName: "Python SDK",
+        generatorType: { type: "sdk" },
+        dockerImage: "my-cool/example",
+        generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
+    };
+    await fdrApplication.dao.generators().upsertGenerator({ generator });
+
+    await expect(async () => {
+        await fdrApplication.dao.generators().upsertGenerator({
+            generator: {
+                id: FdrAPI.generators.GeneratorId("python-sdk-15"),
+                displayName: "Python SDK",
+                generatorType: { type: "sdk" },
+                dockerImage: "my-cool/example",
+                generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
+            },
+        });
+    }).rejects.toThrowError(
+        "\nInvalid `prisma.generator.upsert()` invocation:\n\n\nUnique constraint failed on the fields: (`dockerImage`)",
+    );
+
+    const generatorByImage = await fdrApplication.dao.generators().getGeneratorByImage({ image: "my-cool/example" });
+
+    expect(generatorByImage).toEqual(generator);
 });

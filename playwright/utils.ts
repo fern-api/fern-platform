@@ -1,56 +1,48 @@
-import * as fs from "fs";
+import { BrowserContext } from "@playwright/test";
 
-let previewDeploymentUrl: string | null = null;
+// let previewDeploymentUrl: string | null = null;
 export const getPreviewDeploymentUrl = (): string => {
-    if (previewDeploymentUrl != null) {
-        return previewDeploymentUrl;
+    if (!process.env.DEPLOYMENT_URL) {
+        throw new Error("DEPLOYMENT_URL environment variable is not set.");
     }
-
-    // TODO: use an environment variable instead of a file
-    previewDeploymentUrl = fs.readFileSync("deployment-url.txt", "utf-8").trim();
-    return previewDeploymentUrl;
+    return process.env.DEPLOYMENT_URL;
 };
 
 export interface PreviewContext {
-    /**
-     * The original URL to be previewed.
-     */
-    url: string;
+    originalUrl: string;
+    previewUrl: string; // url to visit
 
-    /**
-     * The URL to navigate to after setting the preview cookie.
-     */
-    previewUrl: string;
-
-    /**
-     * The api route that will set the _fern_docs_preview=<<host>> cookie.
-     */
-    previewCookieApiRoute: string;
-
-    /**
-     * The preview deployment URL, which will be used to replace the host of the original URL.
-     */
-    deploymentUrl: string;
+    originalHost: string; // set to _fern_docs_preview
+    deploymentHost: string; // set to the deployment host
 
     createPreviewUrl(url: string): string;
 }
 
-export function generatePreviewContext(url: string): PreviewContext {
-    const deploymentUrl = getPreviewDeploymentUrl();
+export function generatePreviewContext(uri: string): PreviewContext {
+    const deploymentUrl = new URL(getPreviewDeploymentUrl());
+    const url = new URL(uri);
     return {
-        url,
-        previewUrl: toPreviewUrl(deploymentUrl, url),
-        previewCookieApiRoute: `${deploymentUrl}/api/fern-docs/preview?host=${encodeURIComponent(new URL(url).host)}`,
-        deploymentUrl,
-        createPreviewUrl: (url: string) => toPreviewUrl(deploymentUrl, url),
+        originalUrl: uri,
+        previewUrl: toPreviewUrl(deploymentUrl.host, uri),
+        originalHost: url.host,
+        deploymentHost: deploymentUrl.host,
+        createPreviewUrl: (url: string) => toPreviewUrl(deploymentUrl.host, url),
     };
 }
 
-export function toPreviewUrl(deploymentUrl: string, url: string): string {
-    if (url.startsWith("http")) {
-        return `${deploymentUrl}${new URL(url).pathname}`;
-    } else if (url.startsWith("/")) {
-        return `${deploymentUrl}${url}`;
-    }
-    throw new Error(`Invalid URL: ${url}`);
+export function addPreviewCookie(context: BrowserContext, previewContext: PreviewContext): Promise<void> {
+    return context.addCookies([
+        {
+            name: "_fern_docs_preview",
+            value: previewContext.originalHost,
+            domain: previewContext.deploymentHost,
+            path: "/",
+        },
+    ]);
+}
+
+export function toPreviewUrl(deploymentHost: string, url: string): string {
+    const urlObj = new URL(url, url.startsWith("/") ? "https://n" : undefined);
+    urlObj.host = deploymentHost;
+    return urlObj.toString();
 }

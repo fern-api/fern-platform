@@ -4,7 +4,4 @@
 
 import * as FernRegistry from "../../../../../index";
 
-export interface CliRelease extends FernRegistry.generators.Release {
-    /** The major version of the IR that this CLI exposes. */
-    ir_version: number;
-}
+export interface CliRelease extends FernRegistry.generators.Release, FernRegistry.generators.BaseCliRelease {}

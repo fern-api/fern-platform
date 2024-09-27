@@ -1,11 +1,10 @@
+import { loadWithUrl } from "@/server/loadWithUrl";
+import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
-// eslint-disable-next-line import/no-internal-modules
 import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
 import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
-import { loadWithUrl } from "../../../utils/loadWithUrl";
-import { getXFernHostEdge } from "../../../utils/xFernHost";
 
 export const runtime = "edge";
 
@@ -24,13 +23,13 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
 
         const docs = await loadWithUrl(domain);
 
-        if (docs == null) {
+        if (!docs.ok) {
             // eslint-disable-next-line no-console
             console.error("Failed to load docs for domain", domain);
             return NextResponse.json({ isAvailable: false }, { status: 503 });
         }
 
-        const searchInfo = docs.definition.search;
+        const searchInfo = docs.body.definition.search;
         const config = await getSearchConfig(provideRegistryService(), domain, searchInfo);
         return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
     } catch (e) {

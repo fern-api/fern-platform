@@ -19,6 +19,16 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
             "type": "bearerAuth",
           },
           "availability": undefined,
+          "breadcrumb": [
+            {
+              "pointsTo": "api-reference/merchants/get-merchants",
+              "title": "API Reference",
+            },
+            {
+              "pointsTo": "api-reference/merchants/get-merchants",
+              "title": "Merchants",
+            },
+          ],
           "defaultEnvironment": undefined,
           "description": "Request Rewards Merchants",
           "environments": [],
@@ -130,6 +140,12 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
       "apiDefinitionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "auth": undefined,
       "availability": undefined,
+      "breadcrumb": [
+        {
+          "pointsTo": "api-reference/get-token",
+          "title": "API Reference",
+        },
+      ],
       "defaultEnvironment": {
         "baseUrl": "https://api.sayari.com",
         "id": "Production",
@@ -253,6 +269,12 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
         "type": "bearerAuth",
       },
       "availability": undefined,
+      "breadcrumb": [
+        {
+          "pointsTo": "api-reference/get-token",
+          "title": "API Reference",
+        },
+      ],
       "defaultEnvironment": {
         "baseUrl": "https://api.sayari.com",
         "id": "Production",
@@ -308,9 +330,17 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
       "apiDefinitionId": "054ca3d6-33a5-4d53-a813-f2a33e4062cc",
       "auth": {
         "headerWireValue": "test-api-key",
+        "nameOverride": undefined,
+        "prefix": undefined,
         "type": "header",
       },
       "availability": undefined,
+      "breadcrumb": [
+        {
+          "pointsTo": "api-reference/get-token",
+          "title": "API Reference",
+        },
+      ],
       "defaultEnvironment": {
         "baseUrl": "https://api.sayari.com",
         "id": "Production",

@@ -5,6 +5,6 @@ export interface DbImageFileInfo {
     s3Key: string;
     width: number;
     height: number;
-    blurDataUrl?: string;
-    alt?: string;
+    blurDataUrl: string | undefined;
+    alt: string | undefined;
 }

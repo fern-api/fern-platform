@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getAllUrlsFromDocsConfig > uploadcare > gets all urls from docs config 1`] = `
+exports[`uploadcare > gets all urls from docs config 1`] = `
 [
   "uploadcare-preview-79798ef5-07dc-4ff0-928d-24b4c93ccd4d.docs.buildwithfern.com/docs/introduction/intro",
   "uploadcare-preview-79798ef5-07dc-4ff0-928d-24b4c93ccd4d.docs.buildwithfern.com/docs/introduction/start/quickstart",
@@ -63,29 +63,30 @@ exports[`getAllUrlsFromDocsConfig > uploadcare > gets all urls from docs config 
 ]
 `;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /api/url-api 1`] = `
+exports[`uploadcare > gets navigation root for /api/url-api 1`] = `
 {
   "redirect": "api/url-api/file-information/file-info-json",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs 1`] = `
+exports[`uploadcare > gets navigation root for /docs 1`] = `
 {
   "redirect": "docs/introduction/intro",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-management 1`] = `
+exports[`uploadcare > gets navigation root for /docs/file-management 1`] = `
 {
   "redirect": "docs/file-management/overview",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-management/overview 1`] = `
+exports[`uploadcare > gets navigation root for /docs/file-management/overview 1`] = `
 {
+  "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root.uv.docs.docs.file-management.overview",
@@ -97,26 +98,27 @@ exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-ma
 }
 `;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-management/overview 2`] = `undefined`;
+exports[`uploadcare > gets navigation root for /docs/file-management/overview 2`] = `undefined`;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/file-management/overview 3`] = `"docs"`;
+exports[`uploadcare > gets navigation root for /docs/file-management/overview 3`] = `"docs"`;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/integrations 1`] = `
+exports[`uploadcare > gets navigation root for /docs/integrations 1`] = `
 {
   "redirect": "docs/integrations/all-integrations",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introduction 1`] = `
+exports[`uploadcare > gets navigation root for /docs/introduction 1`] = `
 {
   "redirect": "docs/introduction/intro",
   "type": "redirect",
 }
 `;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introduction/intro 1`] = `
+exports[`uploadcare > gets navigation root for /docs/introduction/intro 1`] = `
 {
+  "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root.uv.docs.docs.introduction.intro",
@@ -128,6 +130,6 @@ exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introdu
 }
 `;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introduction/intro 2`] = `undefined`;
+exports[`uploadcare > gets navigation root for /docs/introduction/intro 2`] = `undefined`;
 
-exports[`getNavigationRoot > uploadcare > gets navigation root for /docs/introduction/intro 3`] = `"docs"`;
+exports[`uploadcare > gets navigation root for /docs/introduction/intro 3`] = `"docs"`;

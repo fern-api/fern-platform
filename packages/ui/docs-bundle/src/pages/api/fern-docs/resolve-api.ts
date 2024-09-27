@@ -1,22 +1,39 @@
+import { DocsKVCache } from "@/server/DocsCache";
+import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
+import { getXFernHostNode } from "@/server/xfernhost/node";
+import { FdrAPI } from "@fern-api/fdr-sdk";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
 import {
     ApiDefinitionResolver,
-    ApiTypeResolver,
     provideRegistryService,
+    serializeMdx,
     setMdxBundler,
+    type FernSerializeMdxOptions,
     type ResolvedRootPackage,
 } from "@fern-ui/ui";
-import { NextApiHandler, NextApiResponse } from "next";
-import { buildUrlFromApiNode } from "../../../utils/buildUrlFromApi";
-import { getXFernHostNode } from "../../../utils/xFernHost";
-import { getFeatureFlags } from "./feature-flags";
-// eslint-disable-next-line import/no-internal-modules
 import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
-// eslint-disable-next-line import/no-internal-modules
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
+import { NextApiHandler, NextApiResponse } from "next";
+import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
+
+async function serializeMdxWithCaching(
+    content: string,
+    options?: FernSerializeMdxOptions,
+): Promise<FernDocs.MarkdownText>;
+async function serializeMdxWithCaching(
+    content: string | undefined,
+    options?: FernSerializeMdxOptions,
+): Promise<FernDocs.MarkdownText | undefined>;
+async function serializeMdxWithCaching(
+    content: string | undefined,
+    options: FernSerializeMdxOptions = {},
+): Promise<FernDocs.MarkdownText | undefined> {
+    return await serializeMdx(content, options);
+}
 
 const resolveApiHandler: NextApiHandler = async (
     req,
@@ -42,7 +59,7 @@ const resolveApiHandler: NextApiHandler = async (
         // eslint-disable-next-line no-console
         console.log("[resolve-api] Loading docs for", url);
         const docsResponse = await provideRegistryService().docs.v2.read.getDocsForUrl({
-            url,
+            url: FdrAPI.Url(url),
         });
 
         if (!docsResponse.ok) {
@@ -53,11 +70,13 @@ const resolveApiHandler: NextApiHandler = async (
         const docs = docsResponse.body;
         const featureFlags = await getFeatureFlags(docs.baseUrl.domain);
 
-        const root = FernNavigation.utils.convertLoadDocsForUrlResponse(
+        const root = FernNavigation.utils.toRootNode(
             docsResponse.body,
             featureFlags.isBatchStreamToggleDisabled,
             featureFlags.isApiScrollingDisabled,
         );
+
+        const collector = FernNavigation.NodeCollector.collect(root);
 
         setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
 
@@ -68,16 +87,15 @@ const resolveApiHandler: NextApiHandler = async (
                 return;
             }
             const holder = ApiDefinitionHolder.create(api);
-            const typeResolver = new ApiTypeResolver(api.types, {
-                files: docs.definition.jsFiles,
-            });
             const resolved = ApiDefinitionResolver.resolve(
+                collector,
                 apiReference,
                 holder,
-                typeResolver,
                 docs.definition.pages,
                 { files: docs.definition.jsFiles },
                 featureFlags,
+                serializeMdxWithCaching,
+                DocsKVCache.getInstance(xFernHost),
             );
             packagesPromise.push(resolved);
         });

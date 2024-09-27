@@ -1,17 +1,18 @@
-import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
+import { FdrAPI, type DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab } from "@fern-ui/fdr-utils";
+import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import {
     DEFAULT_FEATURE_FLAGS,
     DocsPage,
     FeatureFlags,
-    convertNavigatableToResolvedPath,
     getGitHubInfo,
     getGitHubRepo,
-    getRedirectForPath,
     getSeoProps,
     renderThemeStylesheet,
+    resolveDocsContent,
+    serializeMdx,
 } from "@fern-ui/ui";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
@@ -22,18 +23,13 @@ export async function getDocsPageProps(
     slugArray: string[],
 ): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     // HACKHACK: temporarily disable endpoint pairs for cohere in local preview
-    const root = FernNavigation.utils.convertLoadDocsForUrlResponse(docs, docs.baseUrl.domain.includes("cohere"));
-    const slug = FernNavigation.utils.slugjoin(...slugArray);
+    const root = FernNavigation.utils.toRootNode(docs, docs.baseUrl.domain.includes("cohere"));
+    const slug = FernNavigation.slugjoin(...slugArray);
 
     // compute manual redirects
     const redirect = getRedirectForPath(`/${slug}`, docs.baseUrl, docs.definition.config.redirects);
     if (redirect != null) {
-        return {
-            redirect: {
-                destination: redirect.destination,
-                permanent: false,
-            },
-        };
+        return redirect;
     }
 
     // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404
@@ -65,7 +61,7 @@ export async function getDocsPageProps(
     // TODO: get feature flags from the API
     const featureFlags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
 
-    const resolvedPath = await convertNavigatableToResolvedPath({
+    const content = await resolveDocsContent({
         found: node,
         apis: docs.definition.apis,
         pages: docs.definition.pages,
@@ -76,7 +72,7 @@ export async function getDocsPageProps(
         },
     });
 
-    if (resolvedPath == null) {
+    if (content == null) {
         // eslint-disable-next-line no-console
         console.error(`Failed to resolve path for ${slug}`);
         return { notFound: true };
@@ -101,7 +97,7 @@ export async function getDocsPageProps(
         .filter((version) => !version.hidden)
         .map((version, index) => {
             // if the same page exists in multiple versions, return the full slug of that page, otherwise default to version's landing page (pointsTo)
-            const expectedSlug = FernNavigation.utils.slugjoin(version.slug, node.unversionedSlug);
+            const expectedSlug = FernNavigation.slugjoin(version.slug, node.unversionedSlug);
             const pointsTo = node.collector.slugMap.has(expectedSlug) ? expectedSlug : version.pointsTo;
 
             return {
@@ -125,7 +121,14 @@ export async function getDocsPageProps(
         logoHeight: docs.definition.config.logoHeight,
         logoHref: docs.definition.config.logoHref,
         files: docs.definition.filesV2,
-        resolvedPath,
+        content,
+        announcement:
+            docs.definition.config.announcement != null
+                ? {
+                      mdx: await serializeMdx(docs.definition.config.announcement.text),
+                      text: docs.definition.config.announcement.text,
+                  }
+                : undefined,
         navigation: {
             currentTabIndex: node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab),
             tabs: node.tabs.map((tab, index) =>
@@ -160,7 +163,7 @@ export async function getDocsPageProps(
             trailingSlash: false,
         },
         featureFlags,
-        apis: Object.keys(docs.definition.apis),
+        apis: Object.keys(docs.definition.apis).map(FdrAPI.ApiDefinitionId),
         seo: getSeoProps(
             docs.baseUrl.domain,
             docs.definition.config,
@@ -169,6 +172,7 @@ export async function getDocsPageProps(
             docs.definition.apis,
             node,
             true,
+            false,
         ),
         fallback: {},
         analytics: undefined,

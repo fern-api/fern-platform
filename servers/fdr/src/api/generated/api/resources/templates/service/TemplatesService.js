@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 export class TemplatesService {
     constructor(methods, middleware = []) {
         this.methods = methods;
@@ -32,11 +32,10 @@ export class TemplatesService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'register' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
@@ -57,11 +56,10 @@ export class TemplatesService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'registerBatch' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
@@ -82,11 +80,10 @@ export class TemplatesService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     switch (error.errorName) {
                         case "UnauthorizedError":

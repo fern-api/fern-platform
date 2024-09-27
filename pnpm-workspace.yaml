@@ -1,10 +1,10 @@
 packages:
+  - "servers/**"
+  - "clis/**"
   - "packages/**"
   - "!packages/**/lib"
   - "!packages/**/dist"
   - "!packages/**/generated"
-  - "servers/**"
-  - "clis/**"
   - "!servers/**/lib"
   - "!servers/**/dist"
   - "!servers/**/generated"

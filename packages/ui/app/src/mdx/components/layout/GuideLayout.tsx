@@ -1,17 +1,19 @@
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { FernScrollArea } from "@fern-ui/components";
 import type { ElementContent } from "hast";
 import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
-import { ReactNode, type ReactElement } from "react";
-import { BottomNavigationButtons } from "../../../components/BottomNavigationButtons";
+import type { ReactElement, ReactNode } from "react";
+import { BottomNavigationNeighbors } from "../../../components/BottomNavigationNeighbors";
 import { EditThisPageButton } from "../../../components/EditThisPage";
 import { PageHeader } from "../../../components/PageHeader";
-import { TableOfContents, TableOfContentsItem } from "../../../components/TableOfContents";
-import { Feedback } from "../../../custom-docs-page/Feedback";
+import { TableOfContents } from "../../../components/table-of-contents/TableOfContents";
+import type { TableOfContentsItem } from "../../../components/table-of-contents/TableOfContentsItem";
+import { Feedback } from "../../../feedback/Feedback";
 import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 
 interface GuideLayoutProps {
-    breadcrumbs: string[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ReactNode | undefined;
     tableOfContents: TableOfContentsItem[] | undefined;
@@ -22,7 +24,7 @@ interface GuideLayoutProps {
 }
 
 interface GuideLayoutOpts {
-    breadcrumbs: string[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ElementContent | undefined;
     tableOfContents: TableOfContentsItem[] | undefined;
@@ -33,7 +35,7 @@ interface GuideLayoutOpts {
 }
 
 export function GuideLayout({
-    breadcrumbs,
+    breadcrumb,
     title,
     tableOfContents,
     subtitle,
@@ -52,7 +54,7 @@ export function GuideLayout({
                 )}
             </aside>
             <article className="fern-layout-content max-w-content-width">
-                <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
+                <PageHeader breadcrumb={breadcrumb} title={title} subtitle={subtitle} />
                 <div className="max-w-full fern-prose">{children}</div>
                 {(!hideFeedback || !hideNavLinks || editThisPageUrl != null) && (
                     <footer className="mt-12">
@@ -61,7 +63,7 @@ export function GuideLayout({
                             <EditThisPageButton editThisPageUrl={editThisPageUrl} />
                         </div>
 
-                        {!hideNavLinks && <BottomNavigationButtons />}
+                        {!hideNavLinks && <BottomNavigationNeighbors />}
                         <BuiltWithFern className="w-fit mx-auto my-8" />
                     </footer>
                 )}

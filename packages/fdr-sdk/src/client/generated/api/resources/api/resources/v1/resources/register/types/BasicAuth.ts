@@ -3,6 +3,6 @@
  */
 
 export interface BasicAuth {
-    usernameName?: string;
-    passwordName?: string;
+    usernameName: string | undefined;
+    passwordName: string | undefined;
 }

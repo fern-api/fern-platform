@@ -5,6 +5,7 @@ import {
     ChangelogResponse,
     CliRelease,
     CliReleaseRequest,
+    GetChangelogRequest,
     GetChangelogResponse,
     GetLatestCliReleaseRequest,
     ListCliReleasesResponse,
@@ -30,8 +31,8 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export type SnippetTemplatesByEndpoint = Record<
-    FdrAPI.EndpointPath,
-    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    FdrAPI.EndpointPathLiteral,
+    Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
 >;
 
 export type SnippetTemplatesByEndpointIdentifier = Record<string, APIV1Read.EndpointSnippetTemplates>;
@@ -43,7 +44,7 @@ export interface CliVersionsDao {
         getLatestCliReleaseRequest: GetLatestCliReleaseRequest;
     }): Promise<CliRelease | undefined>;
 
-    getChangelog({ fromVersion, toVersion }: { fromVersion: string; toVersion: string }): Promise<GetChangelogResponse>;
+    getChangelog({ versionRanges }: { versionRanges: GetChangelogRequest }): Promise<GetChangelogResponse>;
 
     getMinCliForIr({ irVersion }: { irVersion: number }): Promise<CliRelease | undefined>;
 
@@ -81,18 +82,26 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
         return convertPrismaCliRelease(maybeRelease);
     }
 
-    async getChangelog({
-        fromVersion,
-        toVersion,
-    }: {
-        fromVersion: string;
-        toVersion: string;
-    }): Promise<GetChangelogResponse> {
+    async getChangelog({ versionRanges }: { versionRanges: GetChangelogRequest }): Promise<GetChangelogResponse> {
         const releases = await this.prisma.cliRelease.findMany({
             where: {
                 nonce: {
-                    gte: noncifySemanticVersion(fromVersion),
-                    lte: noncifySemanticVersion(toVersion),
+                    gte:
+                        versionRanges.fromVersion.type == "inclusive"
+                            ? noncifySemanticVersion(versionRanges.fromVersion.value)
+                            : undefined,
+                    gt:
+                        versionRanges.fromVersion.type == "exclusive"
+                            ? noncifySemanticVersion(versionRanges.fromVersion.value)
+                            : undefined,
+                    lte:
+                        versionRanges.toVersion.type == "inclusive"
+                            ? noncifySemanticVersion(versionRanges.toVersion.value)
+                            : undefined,
+                    lt:
+                        versionRanges.toVersion.type == "exclusive"
+                            ? noncifySemanticVersion(versionRanges.toVersion.value)
+                            : undefined,
                 },
             },
             orderBy: [
@@ -107,7 +116,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             if (release.changelogEntry != null) {
                 changelogs.push({
                     version: release.version,
-                    changelog_entry: readBuffer(release.changelogEntry) as ChangelogEntry,
+                    changelogEntry: readBuffer(release.changelogEntry) as ChangelogEntry[],
                 });
             }
         }
@@ -122,11 +131,12 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             minor: parsedVersion.minor,
             patch: parsedVersion.patch,
             nonce: noncifySemanticVersion(cliRelease.version),
-            irVersion: cliRelease.ir_version,
+            irVersion: cliRelease.irVersion,
             releaseType: convertGeneratorReleaseType(getPrereleaseType(cliRelease.version)),
-            changelogEntry: cliRelease.changelog_entry != null ? writeBuffer(cliRelease.changelog_entry) : null,
-            isYanked: cliRelease.is_yanked != null ? writeBuffer(cliRelease.is_yanked) : null,
-            createdAt: cliRelease.created_at != null ? new Date(cliRelease.created_at) : undefined,
+            changelogEntry: cliRelease.changelogEntry != null ? writeBuffer(cliRelease.changelogEntry) : null,
+            isYanked: cliRelease.isYanked != null ? writeBuffer(cliRelease.isYanked) : null,
+            createdAt: cliRelease.createdAt != null ? new Date(cliRelease.createdAt) : undefined,
+            tags: cliRelease.tags,
         };
 
         await this.prisma.cliRelease.upsert({
@@ -179,7 +189,7 @@ export class CliVersionsDaoImpl implements CliVersionsDao {
             ],
         });
 
-        return { cli_releases: releases.map(convertPrismaCliRelease).filter((g): g is CliRelease => g != null) };
+        return { cliReleases: releases.map(convertPrismaCliRelease).filter((g): g is CliRelease => g != null) };
     }
 }
 
@@ -190,12 +200,13 @@ function convertPrismaCliRelease(cliRelease: prisma.CliRelease | null): CliRelea
 
     return {
         version: cliRelease.version,
-        ir_version: cliRelease.irVersion,
-        release_type: convertPrismaReleaseType(cliRelease.releaseType),
-        changelog_entry:
+        tags: cliRelease.tags,
+        irVersion: cliRelease.irVersion,
+        releaseType: convertPrismaReleaseType(cliRelease.releaseType),
+        changelogEntry:
             cliRelease.changelogEntry != null ? (readBuffer(cliRelease.changelogEntry) as ChangelogEntry[]) : undefined,
-        major_version: cliRelease.major,
-        is_yanked: cliRelease.isYanked != null ? (readBuffer(cliRelease.isYanked) as Yank) : undefined,
-        created_at: cliRelease.createdAt?.toISOString(),
+        majorVersion: cliRelease.major,
+        isYanked: cliRelease.isYanked != null ? (readBuffer(cliRelease.isYanked) as Yank) : undefined,
+        createdAt: cliRelease.createdAt?.toISOString(),
     };
 }

@@ -16,8 +16,11 @@ export declare namespace Generators {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -35,13 +38,14 @@ export class Generators {
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.upsertGenerator({
-     *         id: "string",
-     *         generator_type: {
+     *     await client.generators.upsertGenerator({
+     *         id: FernRegistry.generators.GeneratorId("string"),
+     *         displayName: "string",
+     *         generatorType: {
      *             type: "sdk"
      *         },
-     *         generator_language: FernRegistry.generators.GeneratorLanguage.Python,
-     *         docker_image: "string"
+     *         generatorLanguage: "python",
+     *         dockerImage: "string"
      *     })
      */
     public async upsertGenerator(
@@ -61,6 +65,7 @@ export class Generators {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -80,13 +85,65 @@ export class Generators {
     }
 
     /**
+     * Get the generator corresponding to the given docker image.
+     *
+     * @param {FernRegistry.generators.GetGeneratorByImageRequest} request
+     * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.generators.getGeneratorByImage({
+     *         dockerImage: "string"
+     *     })
+     */
+    public async getGeneratorByImage(
+        request: FernRegistry.generators.GetGeneratorByImageRequest,
+        requestOptions?: Generators.RequestOptions
+    ): Promise<
+        core.APIResponse<
+            FernRegistry.generators.Generator | undefined,
+            FernRegistry.generators.getGeneratorByImage.Error
+        >
+    > {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                "/generators/by-image"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: _response.body as FernRegistry.generators.Generator | undefined,
+            };
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.generators.getGeneratorByImage.Error._unknown(_response.error),
+        };
+    }
+
+    /**
      * Get the specified generator.
      *
      * @param {FernRegistry.generators.GeneratorId} generatorId
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.getGenerator("string")
+     *     await client.generators.getGenerator(FernRegistry.generators.GeneratorId("string"))
      */
     public async getGenerator(
         generatorId: FernRegistry.generators.GeneratorId,
@@ -107,6 +164,7 @@ export class Generators {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -130,7 +188,7 @@ export class Generators {
      * @param {Generators.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.listGenerators()
+     *     await client.generators.listGenerators()
      */
     public async listGenerators(
         requestOptions?: Generators.RequestOptions
@@ -148,6 +206,7 @@ export class Generators {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

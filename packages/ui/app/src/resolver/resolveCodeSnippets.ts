@@ -1,10 +1,10 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { HTTPSnippet, type HarRequest, type TargetId } from "httpsnippet-lite";
 import { noop } from "ts-essentials";
-import { convertEndpointExampleToHttpRequestExample } from "../api-page/examples/HttpRequestExample";
-import { stringifyHttpRequestExampleToCurl } from "../api-page/examples/stringifyHttpRequestExampleToCurl";
-import { buildRequestUrl, unknownToString } from "../api-playground/utils";
+import { convertEndpointExampleToHttpRequestExample } from "../api-reference/examples/HttpRequestExample";
+import { stringifyHttpRequestExampleToCurl } from "../api-reference/examples/stringifyHttpRequestExampleToCurl";
+import { buildRequestUrl } from "../playground/utils";
 import {
     ResolvedCodeSnippet,
     ResolvedEndpointDefinition,
@@ -258,6 +258,21 @@ function getHarRequest(
                 request.headers.push({
                     name: headerWireValue,
                     value: prefix != null ? `${prefix} <${nameOverride}>` : `<${nameOverride}>`,
+                });
+            },
+            oAuth: (oAuth) => {
+                visitDiscriminatedUnion(oAuth.value, "type")._visit({
+                    clientCredentials: (clientCredentials) => {
+                        visitDiscriminatedUnion(clientCredentials.value, "type")._visit({
+                            referencedEndpoint: () => {
+                                request.headers.push({
+                                    name: "Authorization",
+                                    value: "Bearer <token>",
+                                });
+                            },
+                        });
+                    },
+                    _other: noop,
                 });
             },
             _other: noop,

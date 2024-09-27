@@ -17,27 +17,27 @@ types:
   DocsDefinitionDbV1:
     availability: deprecated
     properties:
-      pages: map<commons.PageId, docsReadV1.PageContent>
+      pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<commons.FileId, DbFileInfo>
+      files: map<rootCommons.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<commons.ColorsConfig>
 
   DocsDefinitionDbV2:
     availability: deprecated
     properties:
-      pages: map<commons.PageId, docsReadV1.PageContent>
+      pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<commons.FileId, DbFileInfo>
+      files: map<rootCommons.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<commons.ColorsConfig>
       typography: optional<commons.DocsTypographyConfig>
 
   DocsDefinitionDbV3:
     properties:
-      pages: map<commons.PageId, docsReadV1.PageContent>
+      pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
-      files: map<commons.FileId, DbFileInfoV2>
+      files: map<rootCommons.FileId, DbFileInfoV2>
       config: DocsDbConfig
       jsFiles:
         type: optional<map<string, string>>
@@ -49,8 +49,7 @@ types:
     properties:
       title: optional<string>
       defaultLanguage: optional<commons.ProgrammingLanguage>
-
-      analyticsConfig: optional<commons.AnalyticsConfig>
+      announcement: optional<commons.AnnouncementConfig>
 
       # navigation
       navigation: NavigationConfig
@@ -59,29 +58,33 @@ types:
 
       # logo
       logoHeight: optional<docsReadV1.Height>
-      logoHref: optional<commons.Url>
-      favicon: optional<commons.FileId>
+      logoHref: optional<rootCommons.Url>
+      favicon: optional<rootCommons.FileId>
 
       # seo
       metadata: optional<commons.MetadataConfig>
       redirects: optional<list<commons.RedirectConfig>>
 
       # styles
-      backgroundImage: optional<commons.FileId>
+      backgroundImage: optional<rootCommons.FileId>
       colorsV3: optional<docsReadV1.ColorsConfigV3>
       layout: optional<commons.DocsLayoutConfig>
       typographyV2: optional<commons.DocsTypographyConfigV2>
 
       # integrations
+      analyticsConfig: optional<commons.AnalyticsConfig>
       integrations: optional<commons.IntegrationsConfig>
 
       # css and js
       css: optional<commons.CssConfig>
       js: optional<commons.JsConfig>
 
+      # playground
+      playground: optional<commons.PlaygroundConfig>
+
       # deprecated
       logo:
-        type: optional<commons.FileId>
+        type: optional<rootCommons.FileId>
         availability: deprecated
       logoV2:
         type: optional<commons.ThemedFileId>
@@ -164,9 +167,9 @@ types:
 
   VersionedNavigationConfigData:
     properties:
-      version: string
+      version: rootCommons.VersionId
       urlSlug: optional<string>
-      availability: optional<docsReadV1.VersionAvailability>
+      availability: optional<rootCommons.Availability>
       config: UnversionedNavigationConfig
 
   NavigationItem:
@@ -206,4 +209,4 @@ types:
       collapsed: boolean
       hidden: optional<boolean>
       fullSlug: optional<list<string>>
-      overviewPageId: optional<commons.PageId>
+      overviewPageId: optional<rootCommons.PageId>

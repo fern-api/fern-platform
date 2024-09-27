@@ -14,8 +14,11 @@ export declare namespace Write {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,17 +31,17 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.write.startDocsRegister({
+     *     await client.docs.v2.write.startDocsRegister({
      *         domain: "string",
      *         customDomains: ["string"],
      *         authConfig: {
      *             type: "public"
      *         },
-     *         orgId: "string",
-     *         apiId: "string",
-     *         filepaths: ["string"],
+     *         orgId: FernRegistry.OrgId("string"),
+     *         apiId: FernRegistry.ApiId("string"),
+     *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
      *         images: [{
-     *                 filePath: "string",
+     *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
      *                 width: 1.1,
      *                 height: 1.1,
      *                 blurDataUrl: "string",
@@ -68,6 +71,7 @@ export class Write {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -106,15 +110,15 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.write.startDocsPreviewRegister({
+     *     await client.docs.v2.write.startDocsPreviewRegister({
      *         basePath: "string",
-     *         orgId: "string",
+     *         orgId: FernRegistry.OrgId("string"),
      *         authConfig: {
      *             type: "public"
      *         },
-     *         filepaths: ["string"],
+     *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
      *         images: [{
-     *                 filePath: "string",
+     *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
      *                 width: 1.1,
      *                 height: 1.1,
      *                 blurDataUrl: "string",
@@ -144,6 +148,7 @@ export class Write {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -181,17 +186,180 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.write.finishDocsRegister("string", {
+     *     await client.docs.v2.write.finishDocsRegister(FernRegistry.docs.v1.write.DocsRegistrationId("string"), {
      *         docsDefinition: {
      *             pages: {
      *                 "string": {
      *                     markdown: "string",
-     *                     editThisPageUrl: "string"
+     *                     editThisPageUrl: FernRegistry.Url("string")
      *                 }
      *             },
      *             config: {
      *                 title: "string",
-     *                 defaultLanguage: FernRegistry.docs.v1.commons.ProgrammingLanguage.Typescript,
+     *                 defaultLanguage: "typescript",
+     *                 announcement: {
+     *                     text: "string"
+     *                 },
+     *                 navigation: {
+     *                     tabs: [{
+     *                             title: "string",
+     *                             items: [{
+     *                                     "key": "value"
+     *                                 }],
+     *                             skipUrlSlug: {
+     *                                 "key": "value"
+     *                             },
+     *                             icon: {
+     *                                 "key": "value"
+     *                             },
+     *                             hidden: {
+     *                                 "key": "value"
+     *                             },
+     *                             urlSlugOverride: {
+     *                                 "key": "value"
+     *                             },
+     *                             fullSlug: {
+     *                                 "key": "value"
+     *                             }
+     *                         }],
+     *                     tabsV2: [{
+     *                             type: "group",
+     *                             title: "string",
+     *                             items: [{
+     *                                     "key": "value"
+     *                                 }],
+     *                             skipUrlSlug: {
+     *                                 "key": "value"
+     *                             },
+     *                             icon: {
+     *                                 "key": "value"
+     *                             },
+     *                             hidden: {
+     *                                 "key": "value"
+     *                             },
+     *                             urlSlugOverride: {
+     *                                 "key": "value"
+     *                             },
+     *                             fullSlug: {
+     *                                 "key": "value"
+     *                             }
+     *                         }],
+     *                     landingPage: {
+     *                         id: FernRegistry.PageId("string"),
+     *                         title: "string",
+     *                         icon: {
+     *                             "key": "value"
+     *                         },
+     *                         hidden: {
+     *                             "key": "value"
+     *                         },
+     *                         urlSlugOverride: {
+     *                             "key": "value"
+     *                         },
+     *                         fullSlug: {
+     *                             "key": "value"
+     *                         }
+     *                     }
+     *                 },
+     *                 navbarLinks: [{
+     *                         type: "filled"
+     *                     }],
+     *                 footerLinks: [{
+     *                         type: "github",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     }],
+     *                 logoHeight: 1.1,
+     *                 logoHref: FernRegistry.Url("string"),
+     *                 favicon: FernRegistry.FileId("string"),
+     *                 metadata: {
+     *                     og:site_name: "string",
+     *                     og:title: "string",
+     *                     og:description: "string",
+     *                     og:url: "string",
+     *                     og:image: {
+     *                         type: "fileId",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     },
+     *                     og:image:width: 1.1,
+     *                     og:image:height: 1.1,
+     *                     og:locale: "string",
+     *                     og:logo: {
+     *                         type: "fileId",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     },
+     *                     twitter:title: "string",
+     *                     twitter:description: "string",
+     *                     twitter:handle: "string",
+     *                     twitter:image: {
+     *                         type: "fileId",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     },
+     *                     twitter:site: "string",
+     *                     twitter:url: "string",
+     *                     twitter:card: "summary",
+     *                     noindex: true,
+     *                     nofollow: true
+     *                 },
+     *                 redirects: [{
+     *                         source: "string",
+     *                         destination: "string",
+     *                         permanent: {
+     *                             "key": "value"
+     *                         }
+     *                     }],
+     *                 colorsV3: {
+     *                     type: "dark"
+     *                 },
+     *                 layout: {
+     *                     pageWidth: {
+     *                         type: "px",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     },
+     *                     contentWidth: {
+     *                         type: "px",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     },
+     *                     sidebarWidth: {
+     *                         type: "px",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     },
+     *                     headerHeight: {
+     *                         type: "px",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     },
+     *                     searchbarPlacement: "HEADER",
+     *                     tabsPlacement: "HEADER",
+     *                     contentAlignment: "CENTER",
+     *                     headerPosition: "FIXED",
+     *                     disableHeader: true
+     *                 },
+     *                 typographyV2: {
+     *                     headingsFont: {
+     *                         type: "custom"
+     *                     },
+     *                     bodyFont: {
+     *                         type: "custom"
+     *                     },
+     *                     codeFont: {
+     *                         type: "custom"
+     *                     }
+     *                 },
      *                 analyticsConfig: {
      *                     segment: {
      *                         writeKey: "string"
@@ -249,166 +417,6 @@ export class Write {
      *                         appId: "string"
      *                     }
      *                 },
-     *                 navigation: {
-     *                     tabs: [{
-     *                             title: "string",
-     *                             items: [{
-     *                                     "key": "value"
-     *                                 }],
-     *                             skipUrlSlug: {
-     *                                 "key": "value"
-     *                             },
-     *                             icon: {
-     *                                 "key": "value"
-     *                             },
-     *                             hidden: {
-     *                                 "key": "value"
-     *                             },
-     *                             urlSlugOverride: {
-     *                                 "key": "value"
-     *                             },
-     *                             fullSlug: {
-     *                                 "key": "value"
-     *                             }
-     *                         }],
-     *                     tabsV2: [{
-     *                             type: "group",
-     *                             title: "string",
-     *                             items: [{
-     *                                     "key": "value"
-     *                                 }],
-     *                             skipUrlSlug: {
-     *                                 "key": "value"
-     *                             },
-     *                             icon: {
-     *                                 "key": "value"
-     *                             },
-     *                             hidden: {
-     *                                 "key": "value"
-     *                             },
-     *                             urlSlugOverride: {
-     *                                 "key": "value"
-     *                             },
-     *                             fullSlug: {
-     *                                 "key": "value"
-     *                             }
-     *                         }],
-     *                     landingPage: {
-     *                         id: "string",
-     *                         title: "string",
-     *                         icon: {
-     *                             "key": "value"
-     *                         },
-     *                         hidden: {
-     *                             "key": "value"
-     *                         },
-     *                         urlSlugOverride: {
-     *                             "key": "value"
-     *                         },
-     *                         fullSlug: {
-     *                             "key": "value"
-     *                         }
-     *                     }
-     *                 },
-     *                 navbarLinks: [{
-     *                         type: "filled"
-     *                     }],
-     *                 footerLinks: [{
-     *                         type: "github",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     }],
-     *                 logoHeight: 1.1,
-     *                 logoHref: "string",
-     *                 favicon: "string",
-     *                 metadata: {
-     *                     og:site_name: "string",
-     *                     og:title: "string",
-     *                     og:description: "string",
-     *                     og:url: "string",
-     *                     og:image: {
-     *                         type: "fileId",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     og:image:width: 1.1,
-     *                     og:image:height: 1.1,
-     *                     og:locale: "string",
-     *                     og:logo: {
-     *                         type: "fileId",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     twitter:title: "string",
-     *                     twitter:description: "string",
-     *                     twitter:handle: "string",
-     *                     twitter:image: {
-     *                         type: "fileId",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     twitter:site: "string",
-     *                     twitter:url: "string",
-     *                     twitter:card: FernRegistry.docs.v1.commons.TwitterCardSetting.Summary,
-     *                     noindex: true,
-     *                     nofollow: true
-     *                 },
-     *                 redirects: [{
-     *                         source: "string",
-     *                         destination: "string",
-     *                         permanent: {
-     *                             "key": "value"
-     *                         }
-     *                     }],
-     *                 colorsV3: {
-     *                     type: "dark"
-     *                 },
-     *                 layout: {
-     *                     pageWidth: {
-     *                         type: "px",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     contentWidth: {
-     *                         type: "px",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     sidebarWidth: {
-     *                         type: "px",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     headerHeight: {
-     *                         type: "px",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
-     *                     },
-     *                     searchbarPlacement: FernRegistry.docs.v1.commons.SearchbarPlacement.Header,
-     *                     tabsPlacement: FernRegistry.docs.v1.commons.TabsPlacement.Header,
-     *                     contentAlignment: FernRegistry.docs.v1.commons.ContentAlignment.Center,
-     *                     headerPosition: FernRegistry.docs.v1.commons.HeaderPosition.Fixed,
-     *                     disableHeader: true
-     *                 },
-     *                 typographyV2: {
-     *                     headingsFont: {
-     *                         type: "custom"
-     *                     },
-     *                     bodyFont: {
-     *                         type: "custom"
-     *                     },
-     *                     codeFont: {
-     *                         type: "custom"
-     *                     }
-     *                 },
      *                 integrations: {
      *                     intercom: "string"
      *                 },
@@ -422,7 +430,7 @@ export class Write {
      *                             "key": "value"
      *                         }],
      *                     files: [{
-     *                             fileId: "string",
+     *                             fileId: FernRegistry.FileId("string"),
      *                             strategy: {
      *                                 "key": "value"
      *                             }
@@ -431,12 +439,15 @@ export class Write {
      *                             "key": "value"
      *                         }]
      *                 },
-     *                 backgroundImage: "string",
-     *                 logoV2: {
-     *                     dark: "string",
-     *                     light: "string"
+     *                 playground: {
+     *                     oauth: true
      *                 },
-     *                 logo: "string",
+     *                 backgroundImage: FernRegistry.FileId("string"),
+     *                 logoV2: {
+     *                     dark: FernRegistry.FileId("string"),
+     *                     light: FernRegistry.FileId("string")
+     *                 },
+     *                 logo: FernRegistry.FileId("string"),
      *                 colors: {
      *                     accentPrimary: {
      *                         r: 1,
@@ -458,15 +469,15 @@ export class Write {
      *                 typography: {
      *                     headingsFont: {
      *                         name: "string",
-     *                         fontFile: "string"
+     *                         fontFile: FernRegistry.FileId("string")
      *                     },
      *                     bodyFont: {
      *                         name: "string",
-     *                         fontFile: "string"
+     *                         fontFile: FernRegistry.FileId("string")
      *                     },
      *                     codeFont: {
      *                         name: "string",
-     *                         fontFile: "string"
+     *                         fontFile: FernRegistry.FileId("string")
      *                     }
      *                 }
      *             },
@@ -494,6 +505,7 @@ export class Write {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -529,8 +541,8 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.write.reindexAlgoliaSearchRecords({
-     *         url: "string"
+     *     await client.docs.v2.write.reindexAlgoliaSearchRecords({
+     *         url: FernRegistry.Url("string")
      *     })
      */
     public async reindexAlgoliaSearchRecords(
@@ -550,6 +562,7 @@ export class Write {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

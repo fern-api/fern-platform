@@ -4,5 +4,5 @@
 
 export interface RubySdkRequest {
     gem: string;
-    version?: string;
+    version: string | undefined;
 }

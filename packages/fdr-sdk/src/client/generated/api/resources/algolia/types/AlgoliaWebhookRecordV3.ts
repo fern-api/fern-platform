@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../index";
 
 export interface AlgoliaWebhookRecordV3 extends FernRegistry.AlgoliaPageRecordV3 {
-    method: FernRegistry.api.v1.read.HttpMethod;
+    method: FernRegistry.HttpMethod;
     endpointPath: FernRegistry.api.v1.read.EndpointPathPart[];
 }

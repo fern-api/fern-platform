@@ -3,7 +3,7 @@
  */
 
 export interface IntegerType {
-    minimum?: number;
-    maximum?: number;
-    default?: number;
+    minimum: number | undefined;
+    maximum: number | undefined;
+    default: number | undefined;
 }

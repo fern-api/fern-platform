@@ -3,5 +3,5 @@
  */
 
 export interface IntegrationsConfig {
-    intercom?: string;
+    intercom: string | undefined;
 }

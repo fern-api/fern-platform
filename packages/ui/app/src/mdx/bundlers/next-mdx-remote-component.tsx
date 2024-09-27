@@ -1,8 +1,8 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { MDXRemote } from "next-mdx-remote";
 import { ReactElement } from "react";
 import { MDX_COMPONENTS } from "../components";
-import type { BundledMDX } from "../types";
 
-export const NextMdxRemoteComponent = ({ code, frontmatter }: Exclude<BundledMDX, string>): ReactElement => {
+export const NextMdxRemoteComponent = ({ code, frontmatter }: Exclude<FernDocs.MarkdownText, string>): ReactElement => {
     return <MDXRemote scope={{}} frontmatter={frontmatter} compiledSource={code} components={MDX_COMPONENTS} />;
 };

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 /**
  * CRUD API for managing the generator entity itself.
  */
@@ -35,11 +35,10 @@ export class GeneratorsService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'upsertGenerator' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
@@ -52,7 +51,31 @@ export class GeneratorsService {
                 next(error);
             }
         }));
-        this.router.get("/:generator_id", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/by-image", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.methods.getGeneratorByImage(req, {
+                    send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
+                        res.json(responseBody);
+                    }),
+                    cookie: res.cookie.bind(res),
+                    locals: res.locals,
+                }, next);
+                next();
+            }
+            catch (error) {
+                if (error instanceof errors.FernRegistryError) {
+                    console.warn(`Endpoint 'getGeneratorByImage' unexpectedly threw ${error.constructor.name}.` +
+                        ` If this was intentional, please add ${error.constructor.name} to` +
+                        " the endpoint's errors list in your Fern Definition.");
+                    yield error.send(res);
+                }
+                else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        }));
+        this.router.get("/:generatorId", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.getGenerator(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
@@ -60,11 +83,10 @@ export class GeneratorsService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'getGenerator' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
@@ -85,11 +107,10 @@ export class GeneratorsService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.FernRegistryError) {
                     console.warn(`Endpoint 'listGenerators' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +

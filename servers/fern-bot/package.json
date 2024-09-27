@@ -6,6 +6,7 @@
     "package": "sls package",
     "release": "sls deploy",
     "invoke": "sls invoke",
+    "test:ete": "vitest --run --passWithNoTests --globals",
     "lint": "eslint --max-warnings 0 src --ext .ts",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint:fix": "pnpm lint --fix",
@@ -19,11 +20,14 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.335.0",
     "@fern-api/core-utils": "0.15.0-rc63",
-    "@fern-api/fs-utils": "0.15.0-rc63",
     "@fern-api/github": "workspace:*",
     "@fern-api/venus-api-sdk": "0.8.1-1-gd6d1a5b",
+    "@fern-fern/generators-sdk": "0.110.0-8f5b3cd3c",
+    "@fern-fern/paged-generators-sdk": "0.0.5706",
     "@octokit/openapi-types": "^22.1.0",
+    "@slack/web-api": "^6.9.0",
     "cohere-ai": "^7.9.5",
+    "execa": "^5.1.1",
     "fern-api": "^0.21.0",
     "find-up": "^7.0.0",
     "js-yaml": "^4.1.0",
@@ -32,14 +36,15 @@
     "serverless-step-functions": "^3.21.0",
     "simple-git": "^3.24.0",
     "tmp-promise": "^3.0.3",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "semver": "^7.6.2"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@octokit/types": "^13.4.1",
     "@serverless/typescript": "^3.0.0",
     "@types/aws-lambda": "^8.10.71",
-    "@types/js-yaml": "^4.0.5",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^18.7.18",
     "esbuild": "0.20.2",
     "json-schema-to-ts": "^1.5.0",
@@ -47,7 +52,9 @@
     "serverless-esbuild": "^1.23.3",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "vitest": "^1.5.0",
+    "@types/semver": "^7.5.8"
   },
   "license": "MIT"
 }

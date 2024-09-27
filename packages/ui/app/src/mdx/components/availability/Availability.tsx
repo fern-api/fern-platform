@@ -1,5 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { EndpointAvailabilityTag } from "../../../api-page/endpoints/EndpointAvailabilityTag";
+import { EndpointAvailabilityTag } from "../../../api-reference/endpoints/EndpointAvailabilityTag";
 
 export declare namespace Availability {
     export interface Props {

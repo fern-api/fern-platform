@@ -9,5 +9,5 @@ export interface DocsSection extends FernRegistry.docs.v1.read.NavigationNodeMet
     items: FernRegistry.docs.v1.read.NavigationItem[];
     skipUrlSlug: boolean;
     collapsed: boolean;
-    overviewPageId?: FernRegistry.docs.v1.commons.PageId;
+    overviewPageId: FernRegistry.PageId | undefined;
 }

@@ -6,8 +6,9 @@ import * as FernRegistry from "../../../index";
 
 export interface Generator {
     id: FernRegistry.generators.GeneratorId;
-    generator_type: FernRegistry.generators.GeneratorType;
-    generator_language?: FernRegistry.generators.GeneratorLanguage;
+    displayName: string;
+    generatorType: FernRegistry.generators.GeneratorType;
+    generatorLanguage: FernRegistry.generators.GeneratorLanguage | undefined;
     /** The name of the docker image to pull to run this generator. */
-    docker_image: string;
+    dockerImage: string;
 }

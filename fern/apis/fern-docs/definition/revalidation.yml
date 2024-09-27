@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /api/fern-docs
+  endpoints:
+    revalidatePath:
+      path: /revalidate-path
+      display-name: Revalidates a single path
+      method: GET
+      request:
+        name: RevalidatePathRequest
+        query-parameters:
+          path: string
+      response: RevalidationResult
+
+    revalidateAllV3:
+      path: /revalidate-all/v3
+      docs: Revalidates all pages in a docs website
+      display-name: Revalidate a docs instance
+      method: GET
+      response: RevalidateAllV3Response
+
+    revalidateAllV4:
+      path: /revalidate-all/v4
+      docs: Revalidates all pages a docs website with pagination
+      display-name: Revalidate a docs instance with pagination
+      method: GET
+      pagination:
+        offset: $request.offset
+        results: $response.results
+      request:
+        name: RevalidateAllV4Request
+        query-parameters:
+          offset:
+            type: optional<integer>
+            default: 0
+          limit:
+            type: optional<integer>
+            default: 10
+      response: RevalidateAllV4Response
+
+types:
+  RevalidateAllV3Response:
+    properties:
+      successfulRevalidations: list<SuccessfulRevalidation>
+      failedRevalidations: list<FailedRevalidation>
+
+  RevalidateAllV4Response:
+    properties:
+      total: integer
+      results: list<RevalidationResult>
+
+  RevalidationResult:
+    discriminated: false
+    union:
+      - SuccessfulRevalidation
+      - FailedRevalidation
+
+  SuccessfulRevalidation:
+    properties:
+      success: literal<true>
+      url: string
+
+  FailedRevalidation:
+    properties:
+      success: literal<false>
+      url: string
+      error: string

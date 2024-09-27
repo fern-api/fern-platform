@@ -4,6 +4,10 @@ imports:
   commons: ./commons.yml
 
 types:
+  GetGeneratorByImageRequest:
+    properties:
+      dockerImage: string
+
   GeneratorId:
     type: string
     docs: The type of the generator, e.g. fern-python-sdk
@@ -44,9 +48,10 @@ types:
   Generator:
     properties:
       id: GeneratorId
-      generator_type: GeneratorType
-      generator_language: optional<GeneratorLanguage>
-      docker_image:
+      displayName: string
+      generatorType: GeneratorType
+      generatorLanguage: optional<GeneratorLanguage>
+      dockerImage:
         type: string
         docs: The name of the docker image to pull to run this generator.
 
@@ -63,12 +68,19 @@ service:
       path: ""
       request: Generator
 
+    getGeneratorByImage:
+      docs: Get the generator corresponding to the given docker image.
+      method: POST
+      path: /by-image
+      request: GetGeneratorByImageRequest
+      response: optional<Generator>
+
     getGenerator:
       docs: Get the specified generator.
       method: GET
-      path: /{generator_id}
+      path: /{generatorId}
       path-parameters:
-        generator_id: GeneratorId
+        generatorId: GeneratorId
       response: optional<Generator>
 
     listGenerators:

@@ -4,8 +4,6 @@ on:
   pull_request:
     paths:
       - "fern/**"
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       prNumber:

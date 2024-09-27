@@ -1,35 +1,24 @@
-import urljoin from "url-join";
 import { once } from "../utils";
-import { FernNavigation } from "./generated";
-import {
-    NavigationNode,
-    NavigationNodeNeighbor,
-    NavigationNodeWithMetadata,
-    hasMarkdown,
-    hasMetadata,
-    isNeighbor,
-    isPage,
-} from "./types";
-import { traverseNavigation } from "./utils";
+import { FernNavigation } from "./..";
 import { pruneVersionNode } from "./utils/pruneVersionNode";
 
 interface NavigationNodeWithMetadataAndParents {
-    node: NavigationNodeWithMetadata;
-    parents: NavigationNode[];
-    next: NavigationNodeNeighbor | undefined;
-    prev: NavigationNodeNeighbor | undefined;
+    node: FernNavigation.NavigationNodeWithMetadata;
+    parents: FernNavigation.NavigationNode[];
+    next: FernNavigation.NavigationNodeNeighbor | undefined;
+    prev: FernNavigation.NavigationNodeNeighbor | undefined;
 }
 
-const NodeCollectorInstances = new WeakMap<NavigationNode, NodeCollector>();
+const NodeCollectorInstances = new WeakMap<FernNavigation.NavigationNode, NodeCollector>();
 
 export class NodeCollector {
     private static readonly EMPTY = new NodeCollector(undefined);
-    private idToNode = new Map<FernNavigation.NodeId, NavigationNode>();
-    private idToNodeParents = new Map<FernNavigation.NodeId, NavigationNode[]>();
+    private idToNode = new Map<FernNavigation.NodeId, FernNavigation.NavigationNode>();
+    private idToNodeParents = new Map<FernNavigation.NodeId, FernNavigation.NavigationNode[]>();
     private slugToNode = new Map<FernNavigation.Slug, NavigationNodeWithMetadataAndParents>();
-    private orphanedNodes: NavigationNodeWithMetadata[] = [];
+    private orphanedNodes: FernNavigation.NavigationNodeWithMetadata[] = [];
 
-    public static collect(rootNode: NavigationNode | undefined): NodeCollector {
+    public static collect(rootNode: FernNavigation.NavigationNode | undefined): NodeCollector {
         if (rootNode == null) {
             return NodeCollector.EMPTY;
         }
@@ -43,12 +32,16 @@ export class NodeCollector {
     }
 
     #last: NavigationNodeWithMetadataAndParents | undefined;
-    #lastNeighboringNode: NavigationNodeNeighbor | undefined;
-    #setNode(slug: FernNavigation.Slug, node: NavigationNodeWithMetadata, parents: NavigationNode[]) {
+    #lastNeighboringNode: FernNavigation.NavigationNodeNeighbor | undefined;
+    #setNode(
+        slug: FernNavigation.Slug,
+        node: FernNavigation.NavigationNodeWithMetadata,
+        parents: FernNavigation.NavigationNode[],
+    ) {
         const toSet = { node, parents, prev: this.#lastNeighboringNode, next: undefined };
         this.slugToNode.set(slug, toSet);
 
-        if (isNeighbor(node) && !node.hidden) {
+        if (FernNavigation.isNeighbor(node) && !node.hidden) {
             this.#lastNeighboringNode = node;
             if (this.#last != null) {
                 this.#last.next = node;
@@ -58,27 +51,22 @@ export class NodeCollector {
     }
 
     private defaultVersion: FernNavigation.VersionNode | undefined;
-    constructor(rootNode: NavigationNode | undefined) {
+    private versionNodes: FernNavigation.VersionNode[] = [];
+    constructor(rootNode: FernNavigation.NavigationNode | undefined) {
         if (rootNode == null) {
             return;
         }
-        traverseNavigation(rootNode, (node, _index, parents) => {
-            this.idToNode.set(node.id, node);
-            this.idToNodeParents.set(node.id, parents);
-
+        FernNavigation.traverseNavigation(rootNode, (node, _index, parents) => {
             // if the node is the default version, make a copy of it and "prune" the version slug from all children nodes
-            const parent = parents[parents.length - 1];
-            if (
-                node.type === "version" &&
-                node.default &&
-                parent != null &&
-                parent.type === "versioned" &&
-                rootNode.type === "root"
-            ) {
+            if (node.type === "version") {
+                this.versionNodes.push(node);
+            }
+
+            if (node.type === "version" && node.default && rootNode.type === "root") {
                 const copy = JSON.parse(JSON.stringify(node)) as FernNavigation.VersionNode;
                 this.defaultVersion = pruneVersionNode(copy, rootNode.slug, node.slug);
-                traverseNavigation(this.defaultVersion, (node, _index, innerParents) => {
-                    this.visitNode(node, [...parents, ...innerParents]);
+                FernNavigation.traverseNavigation(this.defaultVersion, (node, _index, innerParents) => {
+                    this.visitNode(node, [...parents, ...innerParents], true);
                 });
             }
 
@@ -86,25 +74,38 @@ export class NodeCollector {
         });
     }
 
-    private visitNode(node: NavigationNode, parents: NavigationNode[]): void {
+    private visitNode(
+        node: FernNavigation.NavigationNode,
+        parents: FernNavigation.NavigationNode[],
+        isDefaultVersion = false,
+    ): void {
+        if (!this.idToNode.has(node.id) || isDefaultVersion) {
+            this.idToNode.set(node.id, node);
+            this.idToNodeParents.set(node.id, parents);
+        }
+
         if (node.type === "sidebarRoot") {
             this.#last = undefined;
             this.#lastNeighboringNode = undefined;
         }
 
         // there's currently no visitable page for changelog months and years
-        if (!hasMetadata(node) || node.type === "changelogMonth" || node.type === "changelogYear") {
+        if (!FernNavigation.hasMetadata(node) || node.type === "changelogMonth" || node.type === "changelogYear") {
             return;
         }
 
         const existing = this.slugToNode.get(node.slug);
         if (existing == null) {
             this.#setNode(node.slug, node, parents);
-        } else if (!node.hidden && isPage(node) && (existing.node.hidden || !isPage(existing.node))) {
+        } else if (
+            !node.hidden &&
+            FernNavigation.isPage(node) &&
+            (existing.node.hidden || !FernNavigation.isPage(existing.node))
+        ) {
             this.orphanedNodes.push(existing.node);
             this.#setNode(node.slug, node, parents);
         } else {
-            if (isPage(existing.node)) {
+            if (FernNavigation.isPage(existing.node)) {
                 // eslint-disable-next-line no-console
                 console.warn(`Duplicate slug found: ${node.slug}`, node.title);
             }
@@ -112,19 +113,19 @@ export class NodeCollector {
         }
     }
 
-    public getOrphanedNodes(): NavigationNodeWithMetadata[] {
+    public getOrphanedNodes(): FernNavigation.NavigationNodeWithMetadata[] {
         return this.orphanedNodes;
     }
 
-    public getOrphanedPages = once((): NavigationNodeWithMetadata[] => {
-        return this.orphanedNodes.filter(isPage);
+    public getOrphanedPages = once((): FernNavigation.NavigationNodeWithMetadata[] => {
+        return this.orphanedNodes.filter(FernNavigation.isPage);
     });
 
-    private getSlugMap = once((): Map<string, NavigationNodeWithMetadata> => {
+    private getSlugMap = once((): Map<string, FernNavigation.NavigationNodeWithMetadata> => {
         return new Map([...this.slugToNode.entries()].map(([slug, { node }]) => [slug, node]));
     });
 
-    get slugMap(): Map<string, NavigationNodeWithMetadata> {
+    get slugMap(): Map<string, FernNavigation.NavigationNodeWithMetadata> {
         return this.getSlugMap();
     }
 
@@ -132,11 +133,11 @@ export class NodeCollector {
         return this.defaultVersion;
     }
 
-    public get(id: FernNavigation.NodeId): NavigationNode | undefined {
+    public get(id: FernNavigation.NodeId): FernNavigation.NavigationNode | undefined {
         return this.idToNode.get(id);
     }
 
-    public getParents(id: FernNavigation.NodeId): NavigationNode[] {
+    public getParents(id: FernNavigation.NodeId): FernNavigation.NavigationNode[] {
         return this.idToNodeParents.get(id) ?? [];
     }
 
@@ -144,32 +145,53 @@ export class NodeCollector {
         return this.slugToNode;
     };
 
-    public getSlugs = once((): string[] => {
+    #getSlugs = once((): string[] => {
         return [...this.slugToNode.keys()];
     });
+    get slugs(): string[] {
+        return this.#getSlugs();
+    }
 
     /**
-     * Returns a list of slugs for all pages in the navigation tree. This includes hidden pages.
+     * Returns a list of slugs for all pages in the navigation tree.
+     *
+     * This includes hidden pages and noindex pages, and is intended for revalidation purposes.
+     *
+     * @returns {string[]} A list of slugs for all canonical pages in the navigation tree.
      */
-    public getPageSlugs = once((): string[] => {
-        return [...this.slugToNode.values()].filter(({ node }) => isPage(node)).map(({ node }) => urljoin(node.slug));
+    #getPageSlugs = once((): string[] => {
+        return Array.from(
+            new Set(
+                [...this.slugToNode.values()]
+                    .filter(({ node }) => FernNavigation.isPage(node))
+                    .map(({ node }) => node.slug),
+            ),
+        );
     });
+    get pageSlugs(): string[] {
+        return this.#getPageSlugs();
+    }
 
     /**
      * Returns a list of slugs for pages that should be indexed by search engines, and by algolia.
      *
-     * This excludes hidden pages and noindex pages.
+     * This excludes hidden pages and noindex pages, and uses the canonical slug if it exists.
      */
-    public getIndexablePageSlugs = once((): string[] => {
-        return [...this.slugToNode.values()]
-            .filter(({ node }) => isPage(node) && node.hidden !== true)
-            .filter(({ node }) => (hasMarkdown(node) ? node.noindex !== true : true))
-            .map(({ node }) => urljoin(node.slug));
+    #getIndexablePageSlugs = once((): string[] => {
+        return Array.from(
+            new Set(
+                [...this.slugToNode.values()]
+                    .filter(({ node }) => FernNavigation.isPage(node) && !node.hidden)
+                    .filter(({ node }) => (FernNavigation.hasMarkdown(node) ? !node.noindex : true))
+                    .map(({ node }) => node.canonicalSlug ?? node.slug),
+            ),
+        );
     });
+    get indexablePageSlugs(): string[] {
+        return this.#getIndexablePageSlugs();
+    }
 
-    public getVersionNodes = once((): FernNavigation.VersionNode[] => {
-        return [...this.idToNode.values()]
-            .filter((node): node is FernNavigation.VersionNode => node.type === "version")
-            .map((node) => node);
-    });
+    public getVersionNodes = (): FernNavigation.VersionNode[] => {
+        return this.versionNodes;
+    };
 }

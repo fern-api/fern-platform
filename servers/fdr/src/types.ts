@@ -1,4 +1,6 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
+
 export interface DocsVersion {
-    id: string;
+    id: FdrAPI.VersionId;
     urlSlug?: string;
 }
