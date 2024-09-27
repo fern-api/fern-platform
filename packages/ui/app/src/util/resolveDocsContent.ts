@@ -176,12 +176,13 @@ export async function resolveDocsContent({
             const parent = found.parents[found.parents.length - 1];
             api = pruner.prune(parent?.type === "endpointPair" ? parent : node);
             const holder = FernNavigation.ApiDefinitionHolder.create(api);
-            const typeResolver = new ApiTypeResolver(api.types, mdxOptions, serializeMdx);
+            const typeResolver = new ApiTypeResolver(apiReference.apiDefinitionId, api.types, mdxOptions, serializeMdx);
+            const resolvedTypes = await typeResolver.resolve();
             const defResolver = new ApiEndpointResolver(
                 found.collector,
                 holder,
                 typeResolver,
-                await typeResolver.resolve(),
+                resolvedTypes,
                 featureFlags,
                 mdxOptions,
                 serializeMdx,
@@ -191,7 +192,7 @@ export async function resolveDocsContent({
                 slug: found.node.slug,
                 api: apiReference.apiDefinitionId,
                 auth: api.auth,
-                types: await typeResolver.resolve(),
+                types: resolvedTypes,
                 item: await visitDiscriminatedUnion(node)._visit<Promise<ResolvedApiEndpoint>>({
                     endpoint: async (endpoint) => {
                         if (parent?.type === "endpointPair") {

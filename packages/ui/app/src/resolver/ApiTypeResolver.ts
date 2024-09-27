@@ -4,6 +4,7 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { once } from "lodash-es";
 import { MDX_SERIALIZER } from "../mdx/bundler";
 import { FernSerializeMdxOptions } from "../mdx/types";
+import { ApiDefinitionResolverCache } from "./ApiDefinitionResolver";
 import {
     NonOptionalTypeShapeWithReference,
     ResolvedObjectProperty,
@@ -12,33 +13,13 @@ import {
     ResolvedTypeShape,
 } from "./types";
 
-export interface ApiTypeResolverCache {
-    putResolvedTypeDeclaration({
-        apiDefinitionId,
-        typeId,
-        type,
-    }: {
-        apiDefinitionId: APIV1Read.ApiDefinitionId;
-        typeId: APIV1Read.TypeId;
-        type: ResolvedTypeDefinition;
-    }): Promise<void>;
-
-    getResolvedTypeDeclaration({
-        apiDefinitionId,
-        typeId,
-    }: {
-        apiDefinitionId: APIV1Read.ApiDefinitionId;
-        typeId: FernNavigation.TypeId;
-    }): Promise<ResolvedTypeDefinition | null | undefined>;
-}
-
 export class ApiTypeResolver {
     public constructor(
         private apiDefinitionId: APIV1Read.ApiDefinitionId,
         private types: Record<string, APIV1Read.TypeDefinition>,
         private mdxOptions: FernSerializeMdxOptions | undefined,
         private serializeMdx: MDX_SERIALIZER,
-        private cache?: ApiTypeResolverCache,
+        private cache?: ApiDefinitionResolverCache,
     ) {}
 
     public resolve = once(async (): Promise<Record<string, ResolvedTypeDefinition>> => {

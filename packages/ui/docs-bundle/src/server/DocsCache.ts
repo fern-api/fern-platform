@@ -6,12 +6,11 @@ import {
     ResolvedTypeDefinition,
 } from "@fern-ui/ui";
 import { kv } from "@vercel/kv";
-import { ApiTypeResolverCache } from "../../../app/src/resolver/ApiTypeResolver";
 
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
 
-export class DocsKVCache implements ApiDefinitionResolverCache, ApiTypeResolverCache {
+export class DocsKVCache implements ApiDefinitionResolverCache {
     private static instance: Map<string, DocsKVCache>;
 
     private constructor(private domain: string) {}
