@@ -15,31 +15,31 @@
   "main": "dist/index.js",
   "exports": {
     "./assertNever": {
-      "types": "./dist/assertNever.d.ts",
+      "types": "./src/assertNever.ts",
       "default": "./dist/assertNever.js"
     },
     "./titleCase": {
-      "types": "./dist/titleCase.d.ts",
+      "types": "./src/titleCase.ts",
       "default": "./dist/titleCase.js"
     },
     "./unknownToString": {
-      "types": "./dist/unknownToString.d.ts",
+      "types": "./src/unknownToString.ts",
       "default": "./dist/unknownToString.js"
     },
     "./visitDiscriminatedUnion": {
-      "types": "./dist/visitDiscriminatedUnion.d.ts",
+      "types": "./src/visitDiscriminatedUnion.ts",
       "default": "./dist/visitDiscriminatedUnion.js"
     },
     "./isPlainObject": {
-      "types": "./dist/objects/isPlainObject.d.ts",
+      "types": "./src/objects/isPlainObject.ts",
       "default": "./dist/objects/isPlainObject.js"
     },
     "./identity": {
-      "types": "./dist/identity.d.ts",
+      "types": "./src/identity.ts",
       "default": "./dist/identity.js"
     },
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./src/index.ts",
       "default": "./dist/index.js"
     }
   },
