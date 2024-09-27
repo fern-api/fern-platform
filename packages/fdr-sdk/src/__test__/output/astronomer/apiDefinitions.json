@@ -152,17 +152,27 @@
                 "offset": 0,
                 "organizations": [
                   {
-                    "billingEmail": "billing@company.com",
                     "createdAt": "2022-11-22T04:37:12Z",
                     "createdBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
                       "apiTokenName": "my-token",
                       "avatarUrl": "https://avatar.url",
                       "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
                       "username": "user1@company.com"
                     },
                     "id": "clmaxoarx000008l2c5ayb9pt",
                     "isScimEnabled": false,
+                    "name": "My organization",
+                    "supportPlan": "TRIAL",
+                    "updatedAt": "2022-11-22T04:37:12Z",
+                    "updatedBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
+                      "apiTokenName": "my-token",
+                      "avatarUrl": "https://avatar.url",
+                      "fullName": "Jane Doe",
+                      "username": "user1@company.com"
+                    },
+                    "billingEmail": "billing@company.com",
                     "managedDomains": [
                       {
                         "createdAt": "2024-01-15T09:30:00Z",
@@ -173,20 +183,10 @@
                         "updatedAt": "2024-01-15T09:30:00Z"
                       }
                     ],
-                    "name": "My organization",
                     "paymentMethod": "CREDIT_CARD",
                     "product": "HOSTED",
                     "status": "ACTIVE",
-                    "supportPlan": "TRIAL",
-                    "trialExpiresAt": "2022-11-22T04:37:12Z",
-                    "updatedAt": "2022-11-22T04:37:12Z",
-                    "updatedBy": {
-                      "apiTokenName": "my-token",
-                      "avatarUrl": "https://avatar.url",
-                      "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
-                      "username": "user1@company.com"
-                    }
+                    "trialExpiresAt": "2022-11-22T04:37:12Z"
                   }
                 ],
                 "totalCount": 100
@@ -466,14 +466,14 @@
                 "managedDomains": [
                   {
                     "createdAt": "2024-01-15T09:30:00Z",
-                    "enforcedLogins": [
-                      "enforcedLogins"
-                    ],
                     "id": "cln203mz7000008jv0jyz9m3y",
                     "name": "mycompany.com",
                     "organizationId": "cln204xr2000008mu3hhe3zwe",
                     "status": "PENDING",
-                    "updatedAt": "2024-01-15T09:30:00Z"
+                    "updatedAt": "2024-01-15T09:30:00Z",
+                    "enforcedLogins": [
+                      "enforcedLogins"
+                    ]
                   }
                 ],
                 "paymentMethod": "CREDIT_CARD",
@@ -820,14 +820,14 @@
                 "managedDomains": [
                   {
                     "createdAt": "2024-01-15T09:30:00Z",
-                    "enforcedLogins": [
-                      "enforcedLogins"
-                    ],
                     "id": "cln203mz7000008jv0jyz9m3y",
                     "name": "mycompany.com",
                     "organizationId": "cln204xr2000008mu3hhe3zwe",
                     "status": "PENDING",
-                    "updatedAt": "2024-01-15T09:30:00Z"
+                    "updatedAt": "2024-01-15T09:30:00Z",
+                    "enforcedLogins": [
+                      "enforcedLogins"
+                    ]
                   }
                 ],
                 "paymentMethod": "CREDIT_CARD",
@@ -1179,16 +1179,13 @@
                     "memory": "16Gi",
                     "name": "e2-standard-4"
                   },
-                  "defaultPodSubnetRange": "172.21.0.0/19",
                   "defaultRegion": {
+                    "name": "us-east-1",
                     "bannedInstances": [
                       "bannedInstances"
                     ],
-                    "limited": true,
-                    "name": "us-east-1"
+                    "limited": true
                   },
-                  "defaultServicePeeringRange": "172.23.0.0/20",
-                  "defaultServiceSubnetRange": "172.22.0.0/22",
                   "defaultVpcSubnetRange": "172.20.0.0/19",
                   "nodeCountDefault": 20,
                   "nodeCountMax": 100,
@@ -1203,10 +1200,13 @@
                   "provider": "AWS",
                   "regions": [
                     {
-                      "limited": true,
-                      "name": "us-east-1"
+                      "name": "us-east-1",
+                      "limited": true
                     }
-                  ]
+                  ],
+                  "defaultPodSubnetRange": "172.21.0.0/19",
+                  "defaultServicePeeringRange": "172.23.0.0/20",
+                  "defaultServiceSubnetRange": "172.22.0.0/22"
                 }
               ]
             },
@@ -1565,10 +1565,10 @@
                   {
                     "name": "SMALL",
                     "spec": {
-                      "concurrency": 10,
                       "cpu": "1",
-                      "ephemeralStorage": "10Gi",
-                      "memory": "2Gi"
+                      "memory": "2Gi",
+                      "concurrency": 10,
+                      "ephemeralStorage": "10Gi"
                     }
                   }
                 ],
@@ -1581,10 +1581,10 @@
                     },
                     "name": "A5",
                     "spec": {
-                      "concurrency": 10,
                       "cpu": "1",
-                      "ephemeralStorage": "10Gi",
-                      "memory": "2Gi"
+                      "memory": "2Gi",
+                      "concurrency": 10,
+                      "ephemeralStorage": "10Gi"
                     }
                   }
                 ],
@@ -1917,11 +1917,17 @@
                     "createdAt": "2022-11-22T04:37:12Z",
                     "dbInstanceType": "db.t3.medium",
                     "id": "clm7k8tgw000008jz97i37y81",
+                    "name": "my cluster",
+                    "organizationId": "clm88r8hi000008jwhzxu5crg",
+                    "region": "us-east-1",
+                    "status": "CREATING",
+                    "type": "DEDICATED",
+                    "updatedAt": "2022-11-22T04:37:12Z",
+                    "vpcSubnetRange": "172.20.0.0/22",
                     "isLimited": false,
                     "metadata": {
                       "oidcIssuerUrl": "https://westus2.oic.prod-aks.azure.com/b84efac8-cfae-467a-b223-23b9aea1486d/3075f79e-abc2-4602-a691-28117197e83d/"
                     },
-                    "name": "my cluster",
                     "nodePools": [
                       {
                         "cloudProvider": "AWS",
@@ -1935,13 +1941,10 @@
                         "updatedAt": "2022-11-22T04:37:12Z"
                       }
                     ],
-                    "organizationId": "clm88r8hi000008jwhzxu5crg",
                     "podSubnetRange": "172.21.0.0/19",
                     "providerAccount": "provider-account",
-                    "region": "us-east-1",
                     "servicePeeringRange": "172.23.0.0/20",
                     "serviceSubnetRange": "172.22.0.0/22",
-                    "status": "CREATING",
                     "tags": [
                       {
                         "key": "key1",
@@ -1949,9 +1952,6 @@
                       }
                     ],
                     "tenantId": "your-tenant-id",
-                    "type": "DEDICATED",
-                    "updatedAt": "2022-11-22T04:37:12Z",
-                    "vpcSubnetRange": "172.20.0.0/22",
                     "workspaceIds": [
                       "workspaceIds"
                     ]
@@ -2265,10 +2265,10 @@
                     "maxNodeCount": 1,
                     "name": "default",
                     "nodeInstanceType": "t3.medium",
+                    "updatedAt": "2022-11-22T04:37:12Z",
                     "supportedAstroMachines": [
                       "supportedAstroMachines"
-                    ],
-                    "updatedAt": "2022-11-22T04:37:12Z"
+                    ]
                   }
                 ],
                 "podSubnetRange": "172.21.0.0/19",
@@ -2639,10 +2639,10 @@
                     "maxNodeCount": 1,
                     "name": "default",
                     "nodeInstanceType": "t3.medium",
+                    "updatedAt": "2022-11-22T04:37:12Z",
                     "supportedAstroMachines": [
                       "supportedAstroMachines"
-                    ],
-                    "updatedAt": "2022-11-22T04:37:12Z"
+                    ]
                   }
                 ],
                 "podSubnetRange": "172.21.0.0/19",
@@ -2988,10 +2988,10 @@
                     "maxNodeCount": 0,
                     "name": "string",
                     "nodeInstanceType": "string",
+                    "updatedAt": "2023-01-01T00:00:00Z",
                     "supportedAstroMachines": [
                       "string"
-                    ],
-                    "updatedAt": "2023-01-01T00:00:00Z"
+                    ]
                   }
                 ],
                 "podSubnetRange": "string",
@@ -3662,20 +3662,47 @@
                   {
                     "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
                     "astroRuntimeVersion": "9.1.0",
+                    "createdAt": "2022-11-22T04:37:12Z",
+                    "createdBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
+                      "apiTokenName": "my-token",
+                      "avatarUrl": "https://avatar.url",
+                      "fullName": "Jane Doe",
+                      "username": "user1@company.com"
+                    },
+                    "id": "clmh57jtm000008lb58fe2wmv",
+                    "imageRepository": "https://my-image-repository",
+                    "imageTag": "my-image-tag",
+                    "isCicdEnforced": true,
+                    "isDagDeployEnabled": true,
+                    "name": "My deployment",
+                    "namespace": "weightless-diameter-8927",
+                    "organizationId": "clmh59gt0000308lbgswe5fvh",
+                    "runtimeVersion": "9.1.0",
+                    "schedulerCpu": "1",
+                    "schedulerMemory": "1Gi",
+                    "schedulerReplicas": 1,
+                    "status": "CREATING",
+                    "updatedAt": "2022-11-22T04:37:12Z",
+                    "updatedBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
+                      "apiTokenName": "my-token",
+                      "avatarUrl": "https://avatar.url",
+                      "fullName": "Jane Doe",
+                      "username": "user1@company.com"
+                    },
+                    "webServerAirflowApiUrl": "myorganization.astronomer-dev.run/d8fe2wmv/api/v1",
+                    "webServerCpu": "0.5",
+                    "webServerIngressHostname": "clmh597sg000208lb2kjhcn8q.astronomer.run/d8fe2wmv",
+                    "webServerMemory": "0.5Gi",
+                    "webServerUrl": "myorganization.astronomer-dev.run/d8fe2wmv?orgId=org_edxLzpFcLrgEfpD5",
+                    "workspaceId": "clmh58o7d000108lb74ktc9o64",
                     "cloudProvider": "AWS",
                     "clusterId": "clmh597sg000208lb2kjhcn8q",
                     "clusterName": "my cluster",
                     "contactEmails": [
                       "contactEmails"
                     ],
-                    "createdAt": "2022-11-22T04:37:12Z",
-                    "createdBy": {
-                      "apiTokenName": "my-token",
-                      "avatarUrl": "https://avatar.url",
-                      "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
-                      "username": "user1@company.com"
-                    },
                     "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
                     "defaultTaskPodCpu": "0.5",
                     "defaultTaskPodMemory": "1Gi",
@@ -3693,61 +3720,34 @@
                     "externalIPs": [
                       "externalIPs"
                     ],
-                    "id": "clmh57jtm000008lb58fe2wmv",
-                    "imageRepository": "https://my-image-repository",
-                    "imageTag": "my-image-tag",
                     "imageVersion": "deploy-2023-09-14T19-04",
-                    "isCicdEnforced": true,
-                    "isDagDeployEnabled": true,
                     "isDevelopmentMode": true,
                     "isHighAvailability": true,
-                    "name": "My deployment",
-                    "namespace": "weightless-diameter-8927",
                     "oidcIssuerUrl": "https://westus2.oic.prod-aks.azure.com/b84efac8-cfee-467a-b223-23b9aea1486d/3075f79e-abc2-4602-a691-28117197e83d/",
-                    "organizationId": "clmh59gt0000308lbgswe5fvh",
                     "region": "us-east-1",
                     "resourceQuotaCpu": "160",
                     "resourceQuotaMemory": "320Gi",
-                    "runtimeVersion": "9.1.0",
                     "schedulerAu": 5,
-                    "schedulerCpu": "1",
-                    "schedulerMemory": "1Gi",
-                    "schedulerReplicas": 1,
                     "schedulerSize": "SMALL",
-                    "status": "CREATING",
                     "statusReason": "Successfully Deployed",
                     "taskPodNodePoolId": "clmh5mash000008mia6lnbs0f",
                     "type": "DEDICATED",
-                    "updatedAt": "2022-11-22T04:37:12Z",
-                    "updatedBy": {
-                      "apiTokenName": "my-token",
-                      "avatarUrl": "https://avatar.url",
-                      "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
-                      "username": "user1@company.com"
-                    },
-                    "webServerAirflowApiUrl": "myorganization.astronomer-dev.run/d8fe2wmv/api/v1",
-                    "webServerCpu": "0.5",
-                    "webServerIngressHostname": "clmh597sg000208lb2kjhcn8q.astronomer.run/d8fe2wmv",
-                    "webServerMemory": "0.5Gi",
                     "webServerReplicas": 1,
-                    "webServerUrl": "myorganization.astronomer-dev.run/d8fe2wmv?orgId=org_edxLzpFcLrgEfpD5",
                     "workerQueues": [
                       {
-                        "astroMachine": "A5",
                         "id": "clmh9vsuf000908midngba9mw",
                         "isDefault": true,
                         "maxWorkerCount": 10,
                         "minWorkerCount": 1,
                         "name": "default",
-                        "nodePoolId": "clmh9yjcn000a08mi8dsgbno9",
                         "podCpu": "1",
                         "podMemory": "2Gi",
-                        "workerConcurrency": 20
+                        "workerConcurrency": 20,
+                        "astroMachine": "A5",
+                        "nodePoolId": "clmh9yjcn000a08mi8dsgbno9"
                       }
                     ],
                     "workloadIdentity": "workloadIdentity",
-                    "workspaceId": "clmh58o7d000108lb74ktc9o64",
                     "workspaceName": "my-workspace"
                   }
                 ],
@@ -4136,16 +4136,16 @@
                 "webServerReplicas": 1,
                 "workerQueues": [
                   {
-                    "astroMachine": "A5",
                     "id": "clmh9vsuf000908midngba9mw",
                     "isDefault": true,
                     "maxWorkerCount": 10,
                     "minWorkerCount": 1,
                     "name": "default",
-                    "nodePoolId": "clmh9yjcn000a08mi8dsgbno9",
                     "podCpu": "1",
                     "podMemory": "2Gi",
-                    "workerConcurrency": 20
+                    "workerConcurrency": 20,
+                    "astroMachine": "A5",
+                    "nodePoolId": "clmh9yjcn000a08mi8dsgbno9"
                   }
                 ],
                 "workloadIdentity": "workloadIdentity",
@@ -4572,16 +4572,16 @@
                 "webServerReplicas": 1,
                 "workerQueues": [
                   {
-                    "astroMachine": "A5",
                     "id": "clmh9vsuf000908midngba9mw",
                     "isDefault": true,
                     "maxWorkerCount": 10,
                     "minWorkerCount": 1,
                     "name": "default",
-                    "nodePoolId": "clmh9yjcn000a08mi8dsgbno9",
                     "podCpu": "1",
                     "podMemory": "2Gi",
-                    "workerConcurrency": 20
+                    "workerConcurrency": 20,
+                    "astroMachine": "A5",
+                    "nodePoolId": "clmh9yjcn000a08mi8dsgbno9"
                   }
                 ],
                 "workloadIdentity": "workloadIdentity",
@@ -5010,16 +5010,16 @@
                 "webServerReplicas": 1,
                 "workerQueues": [
                   {
-                    "astroMachine": "A5",
                     "id": "clmh9vsuf000908midngba9mw",
                     "isDefault": true,
                     "maxWorkerCount": 10,
                     "minWorkerCount": 1,
                     "name": "default",
-                    "nodePoolId": "clmh9yjcn000a08mi8dsgbno9",
                     "podCpu": "1",
                     "podMemory": "2Gi",
-                    "workerConcurrency": 20
+                    "workerConcurrency": 20,
+                    "astroMachine": "A5",
+                    "nodePoolId": "clmh9yjcn000a08mi8dsgbno9"
                   }
                 ],
                 "workloadIdentity": "workloadIdentity",
@@ -5940,33 +5940,33 @@
               "value": {
                 "deploys": [
                   {
-                    "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
-                    "astroRuntimeVersion": "9.1.0",
                     "createdAt": "2022-11-22T04:37:12Z",
-                    "createdBySubject": {
-                      "apiTokenName": "my-token",
-                      "avatarUrl": "https://avatar.url",
-                      "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
-                      "username": "user1@company.com"
-                    },
-                    "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
-                    "dagsUploadUrl": "https://astroproddagdeploy.windows.core.net/clmh59gt0000308lbgswe5fvh/clmh57jtm000008lb58fe2wmv",
                     "deploymentId": "clmh57jtm000008lb58fe2wmv",
-                    "description": "My deploy description",
                     "id": "clvetru2w000201mowqwua63n",
                     "imageRepository": "https://my-image-repository",
                     "imageTag": "my-image-tag",
                     "isDagDeployEnabled": true,
-                    "rollbackFromId": "clvcz1lrq000101oitxtp276e",
                     "status": "INITIALIZED",
                     "type": "IMAGE_AND_DAG",
-                    "updatedAt": "2022-11-22T04:37:12Z",
-                    "updatedBySubject": {
+                    "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
+                    "astroRuntimeVersion": "9.1.0",
+                    "createdBySubject": {
+                      "id": "clm8qv74h000008mlf08scq7k",
                       "apiTokenName": "my-token",
                       "avatarUrl": "https://avatar.url",
                       "fullName": "Jane Doe",
+                      "username": "user1@company.com"
+                    },
+                    "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
+                    "dagsUploadUrl": "https://astroproddagdeploy.windows.core.net/clmh59gt0000308lbgswe5fvh/clmh57jtm000008lb58fe2wmv",
+                    "description": "My deploy description",
+                    "rollbackFromId": "clvcz1lrq000101oitxtp276e",
+                    "updatedAt": "2022-11-22T04:37:12Z",
+                    "updatedBySubject": {
                       "id": "clm8qv74h000008mlf08scq7k",
+                      "apiTokenName": "my-token",
+                      "avatarUrl": "https://avatar.url",
+                      "fullName": "Jane Doe",
                       "username": "user1@company.com"
                     }
                   }
@@ -8149,24 +8149,24 @@
                   {
                     "cicdEnforcedDefault": true,
                     "createdAt": "2023-09-08T12:00:00Z",
-                    "createdBy": {
-                      "apiTokenName": "my-token",
-                      "avatarUrl": "https://avatar.url",
-                      "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
-                      "username": "user1@company.com"
-                    },
-                    "description": "This is a test workspace",
                     "id": "clm8t5u4q000008jq4qoc3036",
                     "name": "My Workspace",
                     "organizationId": "clm8t5u4q000008jq4qoc3036",
-                    "organizationName": "My Organization",
                     "updatedAt": "2023-09-08T13:30:00Z",
-                    "updatedBy": {
+                    "createdBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
                       "apiTokenName": "my-token",
                       "avatarUrl": "https://avatar.url",
                       "fullName": "Jane Doe",
+                      "username": "user1@company.com"
+                    },
+                    "description": "This is a test workspace",
+                    "organizationName": "My Organization",
+                    "updatedBy": {
                       "id": "clm8qv74h000008mlf08scq7k",
+                      "apiTokenName": "my-token",
+                      "avatarUrl": "https://avatar.url",
+                      "fullName": "Jane Doe",
                       "username": "user1@company.com"
                     }
                   }
@@ -17102,12 +17102,12 @@
               "type": "json",
               "value": [
                 {
-                  "description": "Subject can only view deployments.",
                   "name": "Deployment_Viewer",
                   "permissions": [
                     "permissions"
                   ],
-                  "scopeType": "DEPLOYMENT"
+                  "scopeType": "DEPLOYMENT",
+                  "description": "Subject can only view deployments."
                 }
               ]
             },
@@ -17449,13 +17449,12 @@
                   {
                     "createdAt": "createdAt",
                     "createdBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
                       "apiTokenName": "my-token",
                       "avatarUrl": "https://avatar.url",
                       "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
                       "username": "user1@company.com"
                     },
-                    "description": "Subject can only view deployments.",
                     "id": "cluc9tapx000901qn2xrgqdmn",
                     "name": "Deployment_Viewer",
                     "restrictedWorkspaceIds": [
@@ -17464,23 +17463,24 @@
                     "scopeType": "DEPLOYMENT",
                     "updatedAt": "updatedAt",
                     "updatedBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
                       "apiTokenName": "my-token",
                       "avatarUrl": "https://avatar.url",
                       "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
                       "username": "user1@company.com"
-                    }
+                    },
+                    "description": "Subject can only view deployments."
                   }
                 ],
                 "totalCount": 1,
                 "defaultRoles": [
                   {
-                    "description": "Subject can only view deployments.",
                     "name": "Deployment_Viewer",
                     "permissions": [
                       "permissions"
                     ],
-                    "scopeType": "DEPLOYMENT"
+                    "scopeType": "DEPLOYMENT",
+                    "description": "Subject can only view deployments."
                   }
                 ]
               }
@@ -19237,11 +19237,17 @@
                 "teams": [
                   {
                     "createdAt": "2022-11-22T04:37:12Z",
+                    "id": "clma5ftgk000008mhgev00k7d",
+                    "isIdpManaged": false,
+                    "name": "My Team",
+                    "organizationId": "clma5g8q6000108mh88g27k1y",
+                    "organizationRole": "ORGANIZATION_OWNER",
+                    "updatedAt": "2022-11-22T04:37:12Z",
                     "createdBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
                       "apiTokenName": "my-token",
                       "avatarUrl": "https://avatar.url",
                       "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
                       "username": "user1@company.com"
                     },
                     "deploymentRoles": [
@@ -19251,18 +19257,12 @@
                       }
                     ],
                     "description": "My Team description",
-                    "id": "clma5ftgk000008mhgev00k7d",
-                    "isIdpManaged": false,
-                    "name": "My Team",
-                    "organizationId": "clma5g8q6000108mh88g27k1y",
-                    "organizationRole": "ORGANIZATION_OWNER",
                     "rolesCount": 1,
-                    "updatedAt": "2022-11-22T04:37:12Z",
                     "updatedBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
                       "apiTokenName": "my-token",
                       "avatarUrl": "https://avatar.url",
                       "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
                       "username": "user1@company.com"
                     },
                     "workspaceRoles": [
@@ -20977,11 +20977,11 @@
                 "offset": 0,
                 "teamMembers": [
                   {
+                    "userId": "clma5vzk2000108k20jhq3f7n",
+                    "username": "user1@company.com",
                     "avatarUrl": "https://avatar.url",
                     "createdAt": "2022-11-22T04:37:12Z",
-                    "fullName": "Jane Doe",
-                    "userId": "clma5vzk2000108k20jhq3f7n",
-                    "username": "user1@company.com"
+                    "fullName": "Jane Doe"
                   }
                 ],
                 "totalCount": 100
@@ -22370,19 +22370,23 @@
                 "tokens": [
                   {
                     "createdAt": "2022-11-22T04:37:12Z",
+                    "description": "my token description",
+                    "id": "clm8q7f6q000008lcgyougpsk",
+                    "name": "My token",
+                    "shortToken": "short-token",
+                    "startAt": "2022-11-22T04:37:12Z",
+                    "type": "DEPLOYMENT",
+                    "updatedAt": "2022-11-22T04:37:12Z",
                     "createdBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
                       "apiTokenName": "my-token",
                       "avatarUrl": "https://avatar.url",
                       "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
                       "username": "user1@company.com"
                     },
-                    "description": "my token description",
                     "endAt": "2022-11-22T04:37:12Z",
                     "expiryPeriodInDays": 30,
-                    "id": "clm8q7f6q000008lcgyougpsk",
                     "lastUsedAt": "2022-11-22T04:37:12Z",
-                    "name": "My token",
                     "roles": [
                       {
                         "entityId": "clm8sgvai000008l794psbkdv",
@@ -22390,16 +22394,12 @@
                         "role": "WORKSPACE_MEMBER"
                       }
                     ],
-                    "shortToken": "short-token",
-                    "startAt": "2022-11-22T04:37:12Z",
                     "token": "token",
-                    "type": "DEPLOYMENT",
-                    "updatedAt": "2022-11-22T04:37:12Z",
                     "updatedBy": {
+                      "id": "clm8qv74h000008mlf08scq7k",
                       "apiTokenName": "my-token",
                       "avatarUrl": "https://avatar.url",
                       "fullName": "Jane Doe",
-                      "id": "clm8qv74h000008mlf08scq7k",
                       "username": "user1@company.com"
                     }
                   }
@@ -24843,18 +24843,18 @@
                   {
                     "avatarUrl": "https://avatar.url",
                     "createdAt": "2022-11-22T04:37:12Z",
+                    "fullName": "Jane Doe",
+                    "id": "clm9sq6s0000008kz7uvl7yz7",
+                    "status": "ACTIVE",
+                    "updatedAt": "2022-11-22T04:37:12Z",
+                    "username": "user1@company.com",
                     "deploymentRoles": [
                       {
                         "deploymentId": "clm8t5u4q000008jq4qoc3031",
                         "role": "DEPLOYMENT_ADMIN"
                       }
                     ],
-                    "fullName": "Jane Doe",
-                    "id": "clm9sq6s0000008kz7uvl7yz7",
                     "organizationRole": "ORGANIZATION_OWNER",
-                    "status": "ACTIVE",
-                    "updatedAt": "2022-11-22T04:37:12Z",
-                    "username": "user1@company.com",
                     "workspaceRoles": [
                       {
                         "role": "WORKSPACE_OWNER",

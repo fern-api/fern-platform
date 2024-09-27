@@ -4837,9 +4837,9 @@
                       "248df4b7-aa70-47b8-a036-33ac447e668d"
                     ],
                     "schedule": {
+                      "frequency": "manual",
                       "day_of_month": "1",
                       "day_of_week": "monday",
-                      "frequency": "manual",
                       "hour": "0",
                       "minute": "0",
                       "month": "1"
@@ -19416,12 +19416,12 @@
                     "filter_logic": "filter_logic",
                     "filters": [
                       {
+                        "function": "Equality",
                         "field": {
                           "field": "id",
                           "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                         },
                         "field_id": "field1",
-                        "function": "Equality",
                         "label": "A"
                       }
                     ],
@@ -19463,11 +19463,11 @@
                     },
                     "sync_all_records": false,
                     "target": {
+                      "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                      "object": "Users",
                       "configuration": {
                         "key": "value"
                       },
-                      "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
-                      "object": "Users",
                       "search_values": {
                         "name": "value"
                       }
@@ -19877,12 +19877,12 @@
                   "filter_logic": "filter_logic",
                   "filters": [
                     {
+                      "function": "Equality",
                       "field": {
                         "field": "id",
                         "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                       },
                       "field_id": "field1",
-                      "function": "Equality",
                       "label": "A"
                     }
                   ],
@@ -20416,12 +20416,12 @@
                   "filter_logic": "filter_logic",
                   "filters": [
                     {
+                      "function": "Equality",
                       "field": {
                         "field": "id",
                         "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                       },
                       "field_id": "field1",
-                      "function": "Equality",
                       "label": "A"
                     }
                   ],
@@ -21153,12 +21153,12 @@
                   "filter_logic": "filter_logic",
                   "filters": [
                     {
+                      "function": "Equality",
                       "field": {
                         "field": "id",
                         "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                       },
                       "field_id": "field1",
-                      "function": "Equality",
                       "label": "A"
                     }
                   ],
@@ -29952,9 +29952,9 @@
                       "248df4b7-aa70-47b8-a036-33ac447e668d"
                     ],
                     "schedule": {
+                      "frequency": "manual",
                       "day_of_month": "1",
                       "day_of_week": "monday",
-                      "frequency": "manual",
                       "hour": "0",
                       "minute": "0",
                       "month": "1"
@@ -40665,12 +40665,12 @@
                     "filter_logic": "filter_logic",
                     "filters": [
                       {
+                        "function": "Equality",
                         "field": {
                           "field": "id",
                           "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                         },
                         "field_id": "field1",
-                        "function": "Equality",
                         "label": "A"
                       }
                     ],
@@ -40712,11 +40712,11 @@
                     },
                     "sync_all_records": false,
                     "target": {
+                      "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                      "object": "Users",
                       "configuration": {
                         "key": "value"
                       },
-                      "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
-                      "object": "Users",
                       "search_values": {
                         "name": "value"
                       }
@@ -41214,12 +41214,12 @@
                   "filter_logic": "filter_logic",
                   "filters": [
                     {
+                      "function": "Equality",
                       "field": {
                         "field": "id",
                         "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                       },
                       "field_id": "field1",
-                      "function": "Equality",
                       "label": "A"
                     }
                   ],
@@ -41951,12 +41951,12 @@
                   "filter_logic": "filter_logic",
                   "filters": [
                     {
+                      "function": "Equality",
                       "field": {
                         "field": "id",
                         "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                       },
                       "field_id": "field1",
-                      "function": "Equality",
                       "label": "A"
                     }
                   ],
@@ -42553,12 +42553,12 @@
                   "filter_logic": "filter_logic",
                   "filters": [
                     {
+                      "function": "Equality",
                       "field": {
                         "field": "id",
                         "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                       },
                       "field_id": "field1",
-                      "function": "Equality",
                       "label": "A"
                     }
                   ],
@@ -68194,9 +68194,9 @@
                       "248df4b7-aa70-47b8-a036-33ac447e668d"
                     ],
                     "schedule": {
+                      "frequency": "manual",
                       "day_of_month": "1",
                       "day_of_week": "monday",
-                      "frequency": "manual",
                       "hour": "0",
                       "minute": "0",
                       "month": "1"
@@ -89476,12 +89476,12 @@
                     "filter_logic": "filter_logic",
                     "filters": [
                       {
+                        "function": "Equality",
                         "field": {
                           "field": "id",
                           "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                         },
                         "field_id": "field1",
-                        "function": "Equality",
                         "label": "A"
                       }
                     ],
@@ -89523,11 +89523,11 @@
                     },
                     "sync_all_records": false,
                     "target": {
+                      "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                      "object": "Users",
                       "configuration": {
                         "key": "value"
                       },
-                      "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
-                      "object": "Users",
                       "search_values": {
                         "name": "value"
                       }
@@ -90025,12 +90025,12 @@
                   "filter_logic": "filter_logic",
                   "filters": [
                     {
+                      "function": "Equality",
                       "field": {
                         "field": "id",
                         "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                       },
                       "field_id": "field1",
-                      "function": "Equality",
                       "label": "A"
                     }
                   ],
@@ -90762,12 +90762,12 @@
                   "filter_logic": "filter_logic",
                   "filters": [
                     {
+                      "function": "Equality",
                       "field": {
                         "field": "id",
                         "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                       },
                       "field_id": "field1",
-                      "function": "Equality",
                       "label": "A"
                     }
                   ],
@@ -91697,12 +91697,12 @@
                   "filter_logic": "filter_logic",
                   "filters": [
                     {
+                      "function": "Equality",
                       "field": {
                         "field": "id",
                         "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                       },
                       "field_id": "field1",
-                      "function": "Equality",
                       "label": "A"
                     }
                   ],

@@ -157,8 +157,8 @@
                       "date": "2024-01-15T09:30:00Z",
                       "amount": 1,
                       "currencyCode": "string",
-                      "transactionType": "SALE",
                       "processorMerchantId": "string",
+                      "transactionType": "SALE",
                       "processorStatus": "PENDING",
                       "processorStatusReason": {
                         "type": "APPLICATION_ERROR",
@@ -174,7 +174,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/payment-status \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"notificationConfig\": {},\n  \"version\": \"2.1\",\n  \"signedAt\": \"1689221338\",\n  \"payment\": {\n    \"status\": \"PENDING\",\n    \"paymentMethod\": {\n      \"paymentType\": \"FIRST_PAYMENT\",\n      \"paymentMethodData\": {\n        \"last4Digits\": \"string\",\n        \"expirationMonth\": \"string\",\n        \"expirationYear\": \"string\",\n        \"binData\": {\n          \"network\": \"string\",\n          \"issuerCountryCode\": \"AW\",\n          \"issuerCurrencyCode\": \"AED\",\n          \"regionalRestriction\": \"DOMESTIC_USE_ONLY\",\n          \"accountNumberType\": \"PRIMARY_ACCOUNT_NUMBER\",\n          \"accountFundingType\": \"CREDIT\",\n          \"prepaidReloadableIndicator\": \"RELOADABLE\",\n          \"productUsageType\": \"CONSUMER\",\n          \"productCode\": \"string\",\n          \"productName\": \"string\"\n        }\n      },\n      \"threeDSecureAuthentication\": {\n        \"responseCode\": \"NOT_PERFORMED\",\n        \"reasonCode\": \"GATEWAY_UNAVAILABLE\"\n      }\n    },\n    \"processor\": {},\n    \"statusReason\": {\n      \"type\": \"APPLICATION_ERROR\",\n      \"declineType\": \"SOFT_DECLINE\",\n      \"code\": \"ERROR\"\n    },\n    \"transactions\": [\n      {\n        \"date\": \"2024-01-15T09:30:00Z\",\n        \"amount\": 1,\n        \"currencyCode\": \"string\",\n        \"transactionType\": \"SALE\",\n        \"processorMerchantId\": \"string\",\n        \"processorStatus\": \"PENDING\",\n        \"processorStatusReason\": {\n          \"type\": \"APPLICATION_ERROR\",\n          \"declineType\": \"SOFT_DECLINE\",\n          \"code\": \"ERROR\"\n        }\n      }\n    ]\n  }\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/payment-status \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"notificationConfig\": {},\n  \"version\": \"2.1\",\n  \"signedAt\": \"1689221338\",\n  \"payment\": {\n    \"status\": \"PENDING\",\n    \"paymentMethod\": {\n      \"paymentType\": \"FIRST_PAYMENT\",\n      \"paymentMethodData\": {\n        \"last4Digits\": \"string\",\n        \"expirationMonth\": \"string\",\n        \"expirationYear\": \"string\",\n        \"binData\": {\n          \"network\": \"string\",\n          \"issuerCountryCode\": \"AW\",\n          \"issuerCurrencyCode\": \"AED\",\n          \"regionalRestriction\": \"DOMESTIC_USE_ONLY\",\n          \"accountNumberType\": \"PRIMARY_ACCOUNT_NUMBER\",\n          \"accountFundingType\": \"CREDIT\",\n          \"prepaidReloadableIndicator\": \"RELOADABLE\",\n          \"productUsageType\": \"CONSUMER\",\n          \"productCode\": \"string\",\n          \"productName\": \"string\"\n        }\n      },\n      \"threeDSecureAuthentication\": {\n        \"responseCode\": \"NOT_PERFORMED\",\n        \"reasonCode\": \"GATEWAY_UNAVAILABLE\"\n      }\n    },\n    \"processor\": {},\n    \"statusReason\": {\n      \"type\": \"APPLICATION_ERROR\",\n      \"declineType\": \"SOFT_DECLINE\",\n      \"code\": \"ERROR\"\n    },\n    \"transactions\": [\n      {\n        \"date\": \"2024-01-15T09:30:00Z\",\n        \"amount\": 1,\n        \"currencyCode\": \"string\",\n        \"processorMerchantId\": \"string\",\n        \"transactionType\": \"SALE\",\n        \"processorStatus\": \"PENDING\",\n        \"processorStatusReason\": {\n          \"type\": \"APPLICATION_ERROR\",\n          \"declineType\": \"SOFT_DECLINE\",\n          \"code\": \"ERROR\"\n        }\n      }\n    ]\n  }\n}'",
                   "generated": true
                 }
               ]
@@ -337,8 +337,8 @@
                       "date": "2024-01-15T09:30:00Z",
                       "amount": 1,
                       "currencyCode": "string",
-                      "transactionType": "SALE",
                       "processorMerchantId": "string",
+                      "transactionType": "SALE",
                       "processorStatus": "PENDING",
                       "processorStatusReason": {
                         "type": "APPLICATION_ERROR",
@@ -354,7 +354,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/payment-refund \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"notificationConfig\": {},\n  \"version\": \"2.1\",\n  \"signedAt\": \"1689221338\",\n  \"payment\": {\n    \"status\": \"PENDING\",\n    \"paymentMethod\": {\n      \"paymentType\": \"FIRST_PAYMENT\",\n      \"paymentMethodData\": {\n        \"last4Digits\": \"string\",\n        \"expirationMonth\": \"string\",\n        \"expirationYear\": \"string\",\n        \"binData\": {\n          \"network\": \"string\",\n          \"issuerCountryCode\": \"AW\",\n          \"issuerCurrencyCode\": \"AED\",\n          \"regionalRestriction\": \"DOMESTIC_USE_ONLY\",\n          \"accountNumberType\": \"PRIMARY_ACCOUNT_NUMBER\",\n          \"accountFundingType\": \"CREDIT\",\n          \"prepaidReloadableIndicator\": \"RELOADABLE\",\n          \"productUsageType\": \"CONSUMER\",\n          \"productCode\": \"string\",\n          \"productName\": \"string\"\n        }\n      },\n      \"threeDSecureAuthentication\": {\n        \"responseCode\": \"NOT_PERFORMED\",\n        \"reasonCode\": \"GATEWAY_UNAVAILABLE\"\n      }\n    },\n    \"processor\": {},\n    \"statusReason\": {\n      \"type\": \"APPLICATION_ERROR\",\n      \"declineType\": \"SOFT_DECLINE\",\n      \"code\": \"ERROR\"\n    },\n    \"transactions\": [\n      {\n        \"date\": \"2024-01-15T09:30:00Z\",\n        \"amount\": 1,\n        \"currencyCode\": \"string\",\n        \"transactionType\": \"SALE\",\n        \"processorMerchantId\": \"string\",\n        \"processorStatus\": \"PENDING\",\n        \"processorStatusReason\": {\n          \"type\": \"APPLICATION_ERROR\",\n          \"declineType\": \"SOFT_DECLINE\",\n          \"code\": \"ERROR\"\n        }\n      }\n    ]\n  }\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/payment-refund \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"notificationConfig\": {},\n  \"version\": \"2.1\",\n  \"signedAt\": \"1689221338\",\n  \"payment\": {\n    \"status\": \"PENDING\",\n    \"paymentMethod\": {\n      \"paymentType\": \"FIRST_PAYMENT\",\n      \"paymentMethodData\": {\n        \"last4Digits\": \"string\",\n        \"expirationMonth\": \"string\",\n        \"expirationYear\": \"string\",\n        \"binData\": {\n          \"network\": \"string\",\n          \"issuerCountryCode\": \"AW\",\n          \"issuerCurrencyCode\": \"AED\",\n          \"regionalRestriction\": \"DOMESTIC_USE_ONLY\",\n          \"accountNumberType\": \"PRIMARY_ACCOUNT_NUMBER\",\n          \"accountFundingType\": \"CREDIT\",\n          \"prepaidReloadableIndicator\": \"RELOADABLE\",\n          \"productUsageType\": \"CONSUMER\",\n          \"productCode\": \"string\",\n          \"productName\": \"string\"\n        }\n      },\n      \"threeDSecureAuthentication\": {\n        \"responseCode\": \"NOT_PERFORMED\",\n        \"reasonCode\": \"GATEWAY_UNAVAILABLE\"\n      }\n    },\n    \"processor\": {},\n    \"statusReason\": {\n      \"type\": \"APPLICATION_ERROR\",\n      \"declineType\": \"SOFT_DECLINE\",\n      \"code\": \"ERROR\"\n    },\n    \"transactions\": [\n      {\n        \"date\": \"2024-01-15T09:30:00Z\",\n        \"amount\": 1,\n        \"currencyCode\": \"string\",\n        \"processorMerchantId\": \"string\",\n        \"transactionType\": \"SALE\",\n        \"processorStatus\": \"PENDING\",\n        \"processorStatusReason\": {\n          \"type\": \"APPLICATION_ERROR\",\n          \"declineType\": \"SOFT_DECLINE\",\n          \"code\": \"ERROR\"\n        }\n      }\n    ]\n  }\n}'",
                   "generated": true
                 }
               ]
@@ -4146,10 +4146,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "string",
                     "transactionType": "SALE",
                     "processorTransactionId": "string",
                     "processorName": "string",
-                    "processorMerchantId": "string",
                     "processorStatus": "PENDING",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -4293,10 +4293,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "string",
                     "transactionType": "SALE",
                     "processorTransactionId": "string",
                     "processorName": "string",
-                    "processorMerchantId": "string",
                     "processorStatus": "PENDING",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -10467,11 +10467,11 @@
                     "dateUpdated": "2024-01-15T09:30:00Z",
                     "status": "PENDING",
                     "orderId": "string",
+                    "currencyCode": "string",
+                    "amount": 1,
                     "processor": {
                       "name": "string"
-                    },
-                    "currencyCode": "string",
-                    "amount": 1
+                    }
                   }
                 ]
               }
@@ -10851,10 +10851,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -11213,10 +11213,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_myprocessor_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "MYPROCESSOR",
-                    "processorMerchantId": "acct_myprocessor_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -11697,10 +11697,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "SETTLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -12030,10 +12030,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "CANCELLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -12360,10 +12360,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "SETTLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -12677,10 +12677,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -12990,10 +12990,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -13323,10 +13323,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -13682,7 +13682,6 @@
               "value": {
                 "data": [
                   {
-                    "paymentMethodType": "PAYMENT_CARD",
                     "paymentMethodData": {
                       "last4Digits": "string",
                       "expirationMonth": "string",
@@ -13699,7 +13698,8 @@
                         "productCode": "string",
                         "productName": "string"
                       }
-                    }
+                    },
+                    "paymentMethodType": "PAYMENT_CARD"
                   }
                 ]
               }
@@ -26531,10 +26531,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "string",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -26877,10 +26877,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "string",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "SETTLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -27181,10 +27181,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "string",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "CANCELLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -27484,10 +27484,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "string",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "SETTLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -27772,10 +27772,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "string",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -27994,10 +27994,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "string",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -28317,13 +28317,13 @@
               "value": {
                 "data": [
                   {
-                    "paymentMethodType": "PAYMENT_CARD",
                     "paymentMethodData": {
                       "last4Digits": "string",
                       "expirationMonth": "string",
                       "expirationYear": "string",
                       "accountFundingType": "CREDIT"
-                    }
+                    },
+                    "paymentMethodType": "PAYMENT_CARD"
                   }
                 ]
               }
@@ -34088,10 +34088,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "string",
                     "transactionType": "SALE",
                     "processorTransactionId": "string",
                     "processorName": "string",
-                    "processorMerchantId": "string",
                     "processorStatus": "PENDING",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -34235,10 +34235,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "string",
                     "transactionType": "SALE",
                     "processorTransactionId": "string",
                     "processorName": "string",
-                    "processorMerchantId": "string",
                     "processorStatus": "PENDING",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -40409,11 +40409,11 @@
                     "dateUpdated": "2024-01-15T09:30:00Z",
                     "status": "PENDING",
                     "orderId": "string",
+                    "currencyCode": "string",
+                    "amount": 1,
                     "processor": {
                       "name": "string"
-                    },
-                    "currencyCode": "string",
-                    "amount": 1
+                    }
                   }
                 ]
               }
@@ -40793,10 +40793,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -41155,10 +41155,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_myprocessor_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "MYPROCESSOR",
-                    "processorMerchantId": "acct_myprocessor_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -41651,10 +41651,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "SETTLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -42035,10 +42035,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "CANCELLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -42416,10 +42416,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "SETTLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -42774,10 +42774,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -43097,10 +43097,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -43473,10 +43473,10 @@
                     "date": "string",
                     "amount": 1,
                     "currencyCode": "AED",
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -43832,7 +43832,6 @@
               "value": {
                 "data": [
                   {
-                    "paymentMethodType": "PAYMENT_CARD",
                     "paymentMethodData": {
                       "last4Digits": "string",
                       "expirationMonth": "string",
@@ -43849,7 +43848,8 @@
                         "productCode": "string",
                         "productName": "string"
                       }
-                    }
+                    },
+                    "paymentMethodType": "PAYMENT_CARD"
                   }
                 ]
               }
@@ -56261,10 +56261,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -56580,10 +56580,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "SETTLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -56876,10 +56876,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "CANCELLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -57175,10 +57175,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "SETTLED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -57455,10 +57455,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",
@@ -57673,10 +57673,10 @@
                 },
                 "transactions": [
                   {
+                    "processorMerchantId": "acct_stripe_1234",
                     "transactionType": "SALE",
                     "processorTransactionId": "54c4eb5b3ef8a",
                     "processorName": "STRIPE",
-                    "processorMerchantId": "acct_stripe_1234",
                     "processorStatus": "AUTHORIZED",
                     "processorStatusReason": {
                       "type": "APPLICATION_ERROR",

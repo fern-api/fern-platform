@@ -9,7 +9,8 @@ import { unwrapDiscriminatedUnionVariant, unwrapObjectType } from "./unwrap";
 
 function sortKeysBy(obj: Record<string, unknown>, order: string[]): Record<string, unknown> {
     return mapValues(
-        keyBy(order, (key) => key),
+        // difference() is used to ensure that all keys are included in the result
+        keyBy([...order, ...difference(Object.keys(obj), order)], (key) => key),
         (key) => obj[key],
     );
 }
@@ -22,7 +23,7 @@ export function sortKeysByShape(
     if ((!isPlainObject(obj) && !Array.isArray(obj)) || shape == null) {
         return obj;
     }
-    const toRet = visitDiscriminatedUnion(shape, "type")._visit<unknown>({
+    return visitDiscriminatedUnion(shape, "type")._visit<unknown>({
         id: ({ id }) => sortKeysByShape(obj, types[id]?.shape, types),
         primitive: () => obj,
         literal: () => obj,
@@ -109,12 +110,6 @@ export function sortKeysByShape(
         stream: () => obj,
         _other: () => obj,
     });
-
-    difference(Object.keys(obj), isPlainObject(toRet) ? Object.keys(toRet) : []).forEach((key) => {
-        (toRet as Record<string, unknown>)[key] = (obj as Record<string, unknown>)[key];
-    });
-
-    return toRet;
 }
 
 export function safeSortKeysByShape(
