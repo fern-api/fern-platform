@@ -137,10 +137,11 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
             return [];
         }
 
+        const slug = page.fullSlug && page.fullSlug.length > 0 ? page.fullSlug.join("/") : page.urlSlug;
         const breadcrumbs: BreadcrumbsInfo[] = [
             {
                 title: page.title,
-                slug: page.fullSlug ? page.fullSlug.join("/") : page.urlSlug,
+                slug,
             },
         ];
         const { indexSegment } = context;
@@ -149,7 +150,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
             pageContent.markdown,
             breadcrumbs,
             indexSegment,
-            page.urlSlug,
+            slug,
             page.title,
         );
 
