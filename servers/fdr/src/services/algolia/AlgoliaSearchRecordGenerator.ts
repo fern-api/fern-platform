@@ -17,62 +17,9 @@ import { v4 as uuid } from "uuid";
 import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
+import { NavigationContext } from "./NavigationContext";
 import { ReferencedTypes, getAllReferencedTypes } from "./getAllReferencedTypes";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
-
-export class NavigationContext {
-    #indexSegment: IndexSegment;
-    #pathParts: Algolia.AlgoliaRecordPathPart[];
-
-    /**
-     * The path represented by context slugs.
-     */
-    public get path() {
-        return this.#pathParts
-            .filter((p) => p.skipUrlSlug == null || !p.skipUrlSlug)
-            .map((p) => p.urlSlug)
-            .join("/");
-    }
-
-    /**
-     * The path represented by context slugs.
-     */
-    public get pathParts() {
-        return [...this.#pathParts];
-    }
-
-    public constructor(
-        public readonly indexSegment: IndexSegment,
-        pathParts: Algolia.AlgoliaRecordPathPart[],
-    ) {
-        this.#indexSegment = indexSegment;
-        this.#pathParts = pathParts;
-    }
-
-    /**
-     * @returns A new `NavigationContext` instance.
-     */
-    public withPathPart(pathPart: Algolia.AlgoliaRecordPathPart) {
-        return this.withPathParts([pathPart]);
-    }
-
-    /**
-     * @returns A new `NavigationContext` instance.
-     */
-    public withPathParts(pathParts: Algolia.AlgoliaRecordPathPart[]) {
-        return new NavigationContext(this.#indexSegment, [...this.#pathParts, ...pathParts]);
-    }
-
-    /**
-     * @returns A new `NavigationContext` instance.
-     */
-    public withFullSlug(fullSlug: string[]) {
-        return new NavigationContext(
-            this.#indexSegment,
-            fullSlug.map((urlSlug) => ({ name: urlSlug, urlSlug, skipUrlSlug: undefined })),
-        );
-    }
-}
 
 interface AlgoliaSearchRecordGeneratorConfig {
     docsDefinition: DocsV1Db.DocsDefinitionDb;

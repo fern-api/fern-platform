@@ -217,8 +217,9 @@ export class ReadmeGenerator {
     }
 
     private writeFernShield({ writer }: { writer: Writer }): void {
+        const repoSource = this.readmeConfig.remote?.repoUrl ?? `${this.organizationPascalCase}/${this.languageTitle}`;
         writer.writeLine(
-            "[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)",
+            `[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=${encodeURIComponent(repoSource)})`,
         );
     }
 

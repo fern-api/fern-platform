@@ -123,7 +123,11 @@ export class ApiEndpointResolver {
             (endpoint.errorsV2 ?? []).map(async (error): Promise<ResolvedError> => {
                 const [shape, description] = await Promise.all([
                     error.type != null
-                        ? this.typeResolver.resolveTypeShape(undefined, error.type, undefined, undefined)
+                        ? this.typeResolver.resolveTypeShape({
+                              typeShape: error.type,
+                              id: `${endpoint.id}-${error.statusCode}-${error.name}`,
+                              name: error.name,
+                          })
                         : ({ type: "unknown" } as ResolvedTypeDefinition),
                     this.serializeMdx(error.description, {
                         files: this.mdxOptions?.files,
