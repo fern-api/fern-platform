@@ -5,7 +5,6 @@ import path from "path";
 import { DEFAULT_FEATURE_FLAGS } from "../../atoms";
 import { serializeMdx } from "../../mdx/bundler";
 import { ApiDefinitionResolver } from "../ApiDefinitionResolver";
-import { ApiTypeResolver } from "../ApiTypeResolver";
 import { ResolvedEndpointDefinition } from "../types";
 
 describe("resolveApiDefinition", () => {
@@ -15,7 +14,6 @@ describe("resolveApiDefinition", () => {
 
         const fixture = JSON.parse(content) as APIV1Read.ApiDefinition;
         const holder = FernNavigation.ApiDefinitionHolder.create(fixture);
-        const typeResolver = new ApiTypeResolver(fixture.types, undefined, serializeMdx);
 
         // mocked node
         const v1 = FernNavigation.V1.ApiReferenceNavigationConverter.convert(
@@ -43,7 +41,6 @@ describe("resolveApiDefinition", () => {
             collector,
             node,
             holder,
-            typeResolver,
             {},
             undefined,
             DEFAULT_FEATURE_FLAGS,
@@ -58,7 +55,6 @@ describe("resolveApiDefinition", () => {
 
         const fixture = JSON.parse(content) as APIV1Read.ApiDefinition;
         const holder = FernNavigation.ApiDefinitionHolder.create(fixture);
-        const typeResolver = new ApiTypeResolver(fixture.types, undefined, serializeMdx);
 
         // mocked node
         const v1 = FernNavigation.V1.ApiReferenceNavigationConverter.convert(
@@ -86,7 +82,6 @@ describe("resolveApiDefinition", () => {
             collector,
             node,
             holder,
-            typeResolver,
             {},
             undefined,
             DEFAULT_FEATURE_FLAGS,
