@@ -6,12 +6,7 @@ export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: 
     return visitSearchRecord<string>(record)._visit({
         v4: (record) => record.slug,
         v3: (record) => record.slug,
-        v2: (record) =>
-            FernNavigation.slugjoin(
-                basePath || "/",
-                record.version?.urlSlug ?? "",
-                ...getLeadingPathForSearchRecord(record),
-            ),
+        v2: (record) => FernNavigation.slugjoin(basePath || "/", ...getLeadingPathForSearchRecord(record)),
         v1: (record) =>
             FernNavigation.slugjoin(
                 basePath || "/",
