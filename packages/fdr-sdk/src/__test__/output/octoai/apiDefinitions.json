@@ -28,7 +28,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Account"
@@ -49,9 +49,9 @@
                 "email": "email",
                 "provider": "provider",
                 "key": "key",
+                "status": "ready_trial",
                 "country": "country",
-                "company": "company",
-                "status": "ready_trial"
+                "company": "company"
               }
             },
             "snippets": {
@@ -119,7 +119,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Account"
@@ -147,9 +147,9 @@
                 "email": "email",
                 "provider": "provider",
                 "key": "key",
+                "status": "ready_trial",
                 "country": "country",
-                "company": "company",
-                "status": "ready_trial"
+                "company": "company"
               }
             },
             "snippets": {
@@ -190,7 +190,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EndpointCreate"
@@ -200,7 +200,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EndpointResponse"
@@ -217,45 +217,16 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "image_url": "image_url",
                 "name": "name",
-                "port": 1
+                "port": 1,
+                "image_url": "image_url"
               }
             },
             "responseBody": {
               "type": "json",
               "value": {
-                "min_replicas": 1,
-                "max_replicas": 1,
-                "scale_to_zero": 1,
-                "display_name": "display_name",
-                "description": "description",
-                "image_url": "image_url",
-                "registry_credential": "registry_credential",
-                "health_check_path": "health_check_path",
-                "visibility": "private",
-                "endpoint_state": "active",
-                "env_overrides": {
-                  "env_overrides": {
-                    "key": "value"
-                  }
-                },
-                "instance_type": "instance_type",
-                "container_secrets": [
-                  "container_secrets"
-                ],
-                "concurrency_per_replica": 1,
                 "name": "name",
                 "port": 1,
-                "auto_volume_experimental": true,
-                "volumes_experimental": [
-                  {
-                    "name": "name",
-                    "path": "path",
-                    "mount": "mount"
-                  }
-                ],
-                "endpoint": "endpoint",
                 "replicas": [
                   {
                     "account_key": "account_key",
@@ -265,6 +236,35 @@
                     "restarts": 1,
                     "age": 1
                   }
+                ],
+                "auto_volume_experimental": true,
+                "concurrency_per_replica": 1,
+                "container_secrets": [
+                  "container_secrets"
+                ],
+                "description": "description",
+                "display_name": "display_name",
+                "endpoint": "endpoint",
+                "endpoint_state": "active",
+                "env_overrides": {
+                  "env_overrides": {
+                    "key": "value"
+                  }
+                },
+                "health_check_path": "health_check_path",
+                "image_url": "image_url",
+                "instance_type": "instance_type",
+                "max_replicas": 1,
+                "min_replicas": 1,
+                "registry_credential": "registry_credential",
+                "scale_to_zero": 1,
+                "visibility": "private",
+                "volumes_experimental": [
+                  {
+                    "name": "name",
+                    "path": "path",
+                    "mount": "mount"
+                  }
                 ]
               }
             },
@@ -272,7 +272,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.octoai.cloud/v1/endpoint \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"image_url\": \"image_url\",\n  \"name\": \"name\",\n  \"port\": 1\n}'",
+                  "code": "curl -X POST https://api.octoai.cloud/v1/endpoint \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"name\": \"name\",\n  \"port\": 1,\n  \"image_url\": \"image_url\"\n}'",
                   "generated": true
                 }
               ]
@@ -322,7 +322,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EndpointResponse"
@@ -341,37 +341,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "min_replicas": 1,
-                "max_replicas": 1,
-                "scale_to_zero": 1,
-                "display_name": "display_name",
-                "description": "description",
-                "image_url": "image_url",
-                "registry_credential": "registry_credential",
-                "health_check_path": "health_check_path",
-                "visibility": "private",
-                "endpoint_state": "active",
-                "env_overrides": {
-                  "env_overrides": {
-                    "key": "value"
-                  }
-                },
-                "instance_type": "instance_type",
-                "container_secrets": [
-                  "container_secrets"
-                ],
-                "concurrency_per_replica": 1,
                 "name": "name",
                 "port": 1,
-                "auto_volume_experimental": true,
-                "volumes_experimental": [
-                  {
-                    "name": "name",
-                    "path": "path",
-                    "mount": "mount"
-                  }
-                ],
-                "endpoint": "endpoint",
                 "replicas": [
                   {
                     "account_key": "account_key",
@@ -380,6 +351,35 @@
                     "status": "pending",
                     "restarts": 1,
                     "age": 1
+                  }
+                ],
+                "auto_volume_experimental": true,
+                "concurrency_per_replica": 1,
+                "container_secrets": [
+                  "container_secrets"
+                ],
+                "description": "description",
+                "display_name": "display_name",
+                "endpoint": "endpoint",
+                "endpoint_state": "active",
+                "env_overrides": {
+                  "env_overrides": {
+                    "key": "value"
+                  }
+                },
+                "health_check_path": "health_check_path",
+                "image_url": "image_url",
+                "instance_type": "instance_type",
+                "max_replicas": 1,
+                "min_replicas": 1,
+                "registry_credential": "registry_credential",
+                "scale_to_zero": 1,
+                "visibility": "private",
+                "volumes_experimental": [
+                  {
+                    "name": "name",
+                    "path": "path",
+                    "mount": "mount"
                   }
                 ]
               }
@@ -438,7 +438,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_endpoint:EndpointDeleteEndpointResponse"
@@ -514,7 +514,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EndpointUpdate"
@@ -524,7 +524,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EndpointResponse"
@@ -547,37 +547,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "min_replicas": 1,
-                "max_replicas": 1,
-                "scale_to_zero": 1,
-                "display_name": "display_name",
-                "description": "description",
-                "image_url": "image_url",
-                "registry_credential": "registry_credential",
-                "health_check_path": "health_check_path",
-                "visibility": "private",
-                "endpoint_state": "active",
-                "env_overrides": {
-                  "env_overrides": {
-                    "key": "value"
-                  }
-                },
-                "instance_type": "instance_type",
-                "container_secrets": [
-                  "container_secrets"
-                ],
-                "concurrency_per_replica": 1,
                 "name": "name",
                 "port": 1,
-                "auto_volume_experimental": true,
-                "volumes_experimental": [
-                  {
-                    "name": "name",
-                    "path": "path",
-                    "mount": "mount"
-                  }
-                ],
-                "endpoint": "endpoint",
                 "replicas": [
                   {
                     "account_key": "account_key",
@@ -586,6 +557,35 @@
                     "status": "pending",
                     "restarts": 1,
                     "age": 1
+                  }
+                ],
+                "auto_volume_experimental": true,
+                "concurrency_per_replica": 1,
+                "container_secrets": [
+                  "container_secrets"
+                ],
+                "description": "description",
+                "display_name": "display_name",
+                "endpoint": "endpoint",
+                "endpoint_state": "active",
+                "env_overrides": {
+                  "env_overrides": {
+                    "key": "value"
+                  }
+                },
+                "health_check_path": "health_check_path",
+                "image_url": "image_url",
+                "instance_type": "instance_type",
+                "max_replicas": 1,
+                "min_replicas": 1,
+                "registry_credential": "registry_credential",
+                "scale_to_zero": 1,
+                "visibility": "private",
+                "volumes_experimental": [
+                  {
+                    "name": "name",
+                    "path": "path",
+                    "mount": "mount"
                   }
                 ]
               }
@@ -628,7 +628,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -751,7 +751,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ContainerResponse"
@@ -843,7 +843,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VolumeToken"
@@ -973,7 +973,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -1075,7 +1075,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -1212,7 +1212,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -1321,7 +1321,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -1395,7 +1395,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SecretKeyValue"
@@ -1405,7 +1405,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SecretKeyValue"
@@ -1486,7 +1486,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SecretKeyValue"
@@ -1580,7 +1580,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SecretKeyValue"
@@ -1662,7 +1662,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_secret:SecretDeleteSecretResponse"
@@ -1722,7 +1722,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -1785,7 +1785,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RegistryCredential"
@@ -1795,7 +1795,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RegistryCredentialSummary"
@@ -1877,7 +1877,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RegistryCredential"
@@ -1987,7 +1987,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RegistryCredentialSummary"
@@ -2067,7 +2067,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_registryCredential:RegistryCredentialDeleteRegistryCredentialResponse"
@@ -2127,7 +2127,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -2191,7 +2191,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -2285,7 +2285,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -3952,7 +3952,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ImageResponse"
@@ -3987,8 +3987,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "image_b64": "image_b64",
-                "removed_for_safety": true
+                "removed_for_safety": true,
+                "image_b64": "image_b64"
               }
             },
             "snippets": {
@@ -4184,7 +4184,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ImageResponse"
@@ -4219,8 +4219,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "image_b64": "image_b64",
-                "removed_for_safety": true
+                "removed_for_safety": true,
+                "image_b64": "image_b64"
               }
             },
             "snippets": {
@@ -4605,7 +4605,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ADetailerResponse"
@@ -4642,10 +4642,10 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "image_b64": "image_b64",
                 "num_objects_inpainted": 1,
                 "num_objects_detected": 1,
-                "num_removed_for_safety": 1
+                "num_removed_for_safety": 1,
+                "image_b64": "image_b64"
               }
             },
             "snippets": {
@@ -5209,7 +5209,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_asset-library:ListAssetsResponse"
@@ -5910,7 +5910,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_asset-library:CreateAssetResponse"
@@ -5957,29 +5957,29 @@
                   "created_at": "string",
                   "data": {
                     "asset_type": "checkpoint",
-                    "data_type": "fp16",
                     "engine": "text/llama-2-7b",
+                    "data_type": "fp16",
                     "file_format": "safetensors"
                   },
                   "description": "string",
-                  "file_structure": "unknown",
-                  "hf_repo": "string",
                   "id": "string",
-                  "is_public": true,
                   "name": "string",
                   "size_bytes": 0,
                   "status": "ready_to_upload",
                   "status_details": "string",
+                  "tenant_uuid": "string",
+                  "file_structure": "unknown",
+                  "hf_repo": "string",
+                  "is_public": true,
                   "status_info": {
                     "string": {}
                   },
-                  "tenant_uuid": "string",
                   "url": "string"
                 },
-                "token": "string",
                 "transfer_api": {
                   "type": "none"
-                }
+                },
+                "token": "string"
               }
             },
             "snippets": {
@@ -7534,7 +7534,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_asset-library:DeleteAssetResponse"
@@ -7798,7 +7798,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_asset-library:CompleteAssetUploadResponse"
@@ -8117,7 +8117,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_asset-library:RetrieveAssetResponse"
@@ -8157,23 +8157,23 @@
                   "created_at": "string",
                   "data": {
                     "asset_type": "checkpoint",
-                    "data_type": "fp16",
                     "engine": "text/llama-2-7b",
+                    "data_type": "fp16",
                     "file_format": "safetensors"
                   },
                   "description": "string",
-                  "file_structure": "unknown",
-                  "hf_repo": "string",
                   "id": "string",
-                  "is_public": true,
                   "name": "string",
                   "size_bytes": 0,
                   "status": "ready_to_upload",
                   "status_details": "string",
+                  "tenant_uuid": "string",
+                  "file_structure": "unknown",
+                  "hf_repo": "string",
+                  "is_public": true,
                   "status_info": {
                     "string": {}
                   },
-                  "tenant_uuid": "string",
                   "url": "string"
                 },
                 "transfer_api": {
@@ -8453,7 +8453,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_fine-tuning:Tune"
@@ -8506,7 +8506,6 @@
               "type": "json",
               "value": {
                 "created_at": "2023-01-01T00:00:00Z",
-                "deleted_at": "2023-01-01T00:00:00Z",
                 "description": "string",
                 "details": {
                   "tune_type": "lora_tune",
@@ -8521,18 +8520,24 @@
                       "file_id": "string"
                     }
                   ],
-                  "resize_images": true,
-                  "seed": 0,
                   "steps": 0,
                   "trigger_words": [
                     "string"
-                  ]
+                  ],
+                  "resize_images": true,
+                  "seed": 0
                 },
                 "id": "string",
                 "name": "string",
                 "output_lora_ids": [
                   "string"
                 ],
+                "status": "pending",
+                "status_details": "string",
+                "tenant_id": "string",
+                "tune_type": "lora_tune",
+                "updated_at": "2023-01-01T00:00:00Z",
+                "deleted_at": "2023-01-01T00:00:00Z",
                 "result": {
                   "number_of_available_assets": 0,
                   "output_assets": [
@@ -8545,12 +8550,7 @@
                     "string"
                   ]
                 },
-                "status": "pending",
-                "status_details": "string",
-                "succeeded_at": "2023-01-01T00:00:00Z",
-                "tenant_id": "string",
-                "tune_type": "lora_tune",
-                "updated_at": "2023-01-01T00:00:00Z"
+                "succeeded_at": "2023-01-01T00:00:00Z"
               }
             },
             "snippets": {
@@ -9413,7 +9413,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_fine-tuning:Tune"
@@ -9447,7 +9447,6 @@
               "type": "json",
               "value": {
                 "created_at": "2023-01-01T00:00:00Z",
-                "deleted_at": "2023-01-01T00:00:00Z",
                 "description": "string",
                 "details": {
                   "tune_type": "lora_tune",
@@ -9462,18 +9461,24 @@
                       "file_id": "string"
                     }
                   ],
-                  "resize_images": true,
-                  "seed": 0,
                   "steps": 0,
                   "trigger_words": [
                     "string"
-                  ]
+                  ],
+                  "resize_images": true,
+                  "seed": 0
                 },
                 "id": "string",
                 "name": "string",
                 "output_lora_ids": [
                   "string"
                 ],
+                "status": "pending",
+                "status_details": "string",
+                "tenant_id": "string",
+                "tune_type": "lora_tune",
+                "updated_at": "2023-01-01T00:00:00Z",
+                "deleted_at": "2023-01-01T00:00:00Z",
                 "result": {
                   "number_of_available_assets": 0,
                   "output_assets": [
@@ -9486,12 +9491,7 @@
                     "string"
                   ]
                 },
-                "status": "pending",
-                "status_details": "string",
-                "succeeded_at": "2023-01-01T00:00:00Z",
-                "tenant_id": "string",
-                "tune_type": "lora_tune",
-                "updated_at": "2023-01-01T00:00:00Z"
+                "succeeded_at": "2023-01-01T00:00:00Z"
               }
             },
             "snippets": {
@@ -9683,7 +9683,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "map",
               "keyShape": {
@@ -9922,7 +9922,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_fine-tuning:Tune"
@@ -9956,7 +9956,6 @@
               "type": "json",
               "value": {
                 "created_at": "2023-01-01T00:00:00Z",
-                "deleted_at": "2023-01-01T00:00:00Z",
                 "description": "string",
                 "details": {
                   "tune_type": "lora_tune",
@@ -9971,18 +9970,24 @@
                       "file_id": "string"
                     }
                   ],
-                  "resize_images": true,
-                  "seed": 0,
                   "steps": 0,
                   "trigger_words": [
                     "string"
-                  ]
+                  ],
+                  "resize_images": true,
+                  "seed": 0
                 },
                 "id": "string",
                 "name": "string",
                 "output_lora_ids": [
                   "string"
                 ],
+                "status": "pending",
+                "status_details": "string",
+                "tenant_id": "string",
+                "tune_type": "lora_tune",
+                "updated_at": "2023-01-01T00:00:00Z",
+                "deleted_at": "2023-01-01T00:00:00Z",
                 "result": {
                   "number_of_available_assets": 0,
                   "output_assets": [
@@ -9995,12 +10000,7 @@
                     "string"
                   ]
                 },
-                "status": "pending",
-                "status_details": "string",
-                "succeeded_at": "2023-01-01T00:00:00Z",
-                "tenant_id": "string",
-                "tune_type": "lora_tune",
-                "updated_at": "2023-01-01T00:00:00Z"
+                "succeeded_at": "2023-01-01T00:00:00Z"
               }
             },
             "snippets": {
@@ -10267,7 +10267,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_fine-tuning:ListTunesResponse"
@@ -10675,7 +10675,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationRequest"
@@ -10685,7 +10685,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationResponse"
@@ -12274,7 +12274,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationRequest"
@@ -12284,7 +12284,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationResponse"
@@ -13873,7 +13873,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationRequest"
@@ -13883,7 +13883,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationResponse"
@@ -15472,7 +15472,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationRequest"
@@ -15482,7 +15482,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationResponse"
@@ -17071,7 +17071,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationRequest"
@@ -17081,7 +17081,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:ImageGenerationResponse"
@@ -18856,7 +18856,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_image-gen:VideoGenerationResponse"
@@ -19744,8 +19744,8 @@
                   "type": "json",
                   "value": {
                     "message": "An example error",
-                    "object": "error",
-                    "type": "internal_error"
+                    "type": "internal_error",
+                    "object": "error"
                   }
                 }
               }
@@ -21452,7 +21452,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_text-gen:ChatCompletionResponse"
@@ -21488,8 +21488,8 @@
                   "type": "json",
                   "value": {
                     "message": "An example error",
-                    "object": "error",
-                    "type": "internal_error"
+                    "type": "internal_error",
+                    "object": "error"
                   }
                 }
               }
@@ -21530,13 +21530,13 @@
                 "created": 1,
                 "id": "id",
                 "model": "model",
-                "object": {
-                  "key": "value"
-                },
                 "usage": {
                   "completion_tokens": 1,
                   "prompt_tokens": 1,
                   "total_tokens": 1
+                },
+                "object": {
+                  "key": "value"
                 }
               }
             },
@@ -21643,9 +21643,9 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "object": "string",
                 "code": "string",
                 "message": "string",
-                "object": "string",
                 "param": "string",
                 "type": "string",
                 "validation_errors": {
@@ -23184,8 +23184,8 @@
                   "type": "json",
                   "value": {
                     "message": "An example error",
-                    "object": "error",
-                    "type": "internal_error"
+                    "type": "internal_error",
+                    "object": "error"
                   }
                 }
               }
@@ -24343,7 +24343,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_text-gen:CompletionResponse"
@@ -24379,8 +24379,8 @@
                   "type": "json",
                   "value": {
                     "message": "An example error",
-                    "object": "error",
-                    "type": "internal_error"
+                    "type": "internal_error",
+                    "object": "error"
                   }
                 }
               }
@@ -24414,10 +24414,10 @@
                 "created": 1,
                 "id": "id",
                 "model": "model",
+                "system_fingerprint": "system_fingerprint",
                 "object": {
                   "key": "value"
                 },
-                "system_fingerprint": "system_fingerprint",
                 "usage": {
                   "completion_tokens": 1,
                   "prompt_tokens": 1,
@@ -24518,9 +24518,9 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "object": "string",
                 "code": "string",
                 "message": "string",
-                "object": "string",
                 "param": "string",
                 "type": "string",
                 "validation_errors": {

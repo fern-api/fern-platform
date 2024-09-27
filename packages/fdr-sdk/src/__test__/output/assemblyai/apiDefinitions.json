@@ -36,7 +36,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_files:UploadedFile"
@@ -467,7 +467,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_transcripts:TranscriptList"
@@ -841,7 +841,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_transcripts:Transcript"
@@ -942,36 +942,13 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "language_code": "en_us",
-                "punctuate": true,
-                "format_text": true,
-                "dual_channel": true,
-                "webhook_url": "https://your-webhook-url/path",
-                "webhook_auth_header_name": "webhook-secret",
-                "webhook_auth_header_value": "webhook-secret-value",
-                "auto_highlights": true,
-                "audio_start_from": 10,
+                "audio_url": "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3",
                 "audio_end_at": 280,
-                "word_boost": [
-                  "aws",
-                  "azure",
-                  "google cloud"
-                ],
+                "audio_start_from": 10,
+                "auto_chapters": true,
+                "auto_highlights": true,
                 "boost_param": "high",
-                "filter_profanity": true,
-                "redact_pii": true,
-                "redact_pii_audio": true,
-                "redact_pii_audio_quality": "mp3",
-                "redact_pii_policies": [
-                  "us_social_security_number",
-                  "credit_card_number"
-                ],
-                "redact_pii_sub": "hash",
-                "speaker_labels": true,
-                "speakers_expected": 2,
                 "content_safety": true,
-                "iab_categories": true,
-                "language_detection": false,
                 "custom_spelling": [
                   {
                     "from": [
@@ -980,19 +957,42 @@
                     "to": "Decarlo"
                   }
                 ],
+                "custom_topics": true,
                 "disfluencies": false,
-                "sentiment_analysis": true,
-                "auto_chapters": true,
+                "dual_channel": true,
                 "entity_detection": true,
+                "filter_profanity": true,
+                "format_text": true,
+                "iab_categories": true,
+                "language_code": "en_us",
+                "language_detection": false,
+                "punctuate": true,
+                "redact_pii": true,
+                "redact_pii_audio": true,
+                "redact_pii_audio_quality": "mp3",
+                "redact_pii_policies": [
+                  "us_social_security_number",
+                  "credit_card_number"
+                ],
+                "redact_pii_sub": "hash",
+                "sentiment_analysis": true,
+                "speaker_labels": true,
+                "speakers_expected": 2,
                 "speech_threshold": 0.5,
                 "summarization": true,
                 "summary_model": "informative",
                 "summary_type": "bullets",
-                "custom_topics": true,
                 "topics": [
                   "topics"
                 ],
-                "audio_url": "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3"
+                "webhook_auth_header_name": "webhook-secret",
+                "webhook_auth_header_value": "webhook-secret-value",
+                "webhook_url": "https://your-webhook-url/path",
+                "word_boost": [
+                  "aws",
+                  "azure",
+                  "google cloud"
+                ]
               }
             },
             "responseBody": {
@@ -1002,8 +1002,12 @@
                 "language_model": "assemblyai_default",
                 "acoustic_model": "assemblyai_default",
                 "status": "completed",
-                "language_code": "en_us",
                 "audio_url": "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3",
+                "webhook_auth": true,
+                "auto_highlights": true,
+                "redact_pii": true,
+                "summarization": true,
+                "language_code": "en_us",
                 "text": "Smoke from hundreds of wildfires in Canada is triggering air quality alerts throughout the US. Skylines from Maine to Maryland to Minnesota are gray and smoggy. And in some places, the air quality warnings include the warning to stay inside. We wanted to better understand what's happening here and why, so we called Peter de Carlo, an associate professor in the Department of Environmental Health and Engineering at Johns Hopkins University Varsity. Good morning, professor. Good morning. What is it about the conditions right now that have caused this round of wildfires to affect so many people so far away? Well, there's a couple of things. The season has been pretty dry already. And then the fact that we're getting hit in the US. Is because there's a couple of weather systems that are essentially channeling the smoke from those Canadian wildfires through Pennsylvania into the Mid Atlantic and the Northeast and kind of just dropping the smoke there. So what is it in this haze that makes it harmful? And I'm assuming it is harmful. It is. The levels outside right now in Baltimore are considered unhealthy. And most of that is due to what's called particulate matter, which are tiny particles, microscopic smaller than the width of your hair that can get into your lungs and impact your respiratory system, your cardiovascular system, and even your neurological your brain. What makes this particularly harmful? Is it the volume of particulant? Is it something in particular? What is it exactly? Can you just drill down on that a little bit more? Yeah. So the concentration of particulate matter I was looking at some of the monitors that we have was reaching levels of what are, in science, big 150 micrograms per meter cubed, which is more than ten times what the annual average should be and about four times higher than what you're supposed to have on a 24 hours average. And so the concentrations of these particles in the air are just much, much higher than we typically see. And exposure to those high levels can lead to a host of health problems. And who is most vulnerable? I noticed that in New York City, for example, they're canceling outdoor activities. And so here it is in the early days of summer, and they have to keep all the kids inside. So who tends to be vulnerable in a situation like this? It's the youngest. So children, obviously, whose bodies are still developing. The elderly, who are their bodies are more in decline and they're more susceptible to the health impacts of breathing, the poor air quality. And then people who have preexisting health conditions, people with respiratory conditions or heart conditions can be triggered by high levels of air pollution. Could this get worse? That's a good question. In some areas, it's much worse than others. And it just depends on kind of where the smoke is concentrated. I think New York has some of the higher concentrations right now, but that's going to change as that air moves away from the New York area. But over the course of the next few days, we will see different areas being hit at different times with the highest concentrations. I was going to ask you about more fires start burning. I don't expect the concentrations to go up too much higher. I was going to ask you how and you started to answer this, but how much longer could this last? Or forgive me if I'm asking you to speculate, but what do you think? Well, I think the fires are going to burn for a little bit longer, but the key for us in the US. Is the weather system changing. And so right now, it's kind of the weather systems that are pulling that air into our mid Atlantic and Northeast region. As those weather systems change and shift, we'll see that smoke going elsewhere and not impact us in this region as much. And so I think that's going to be the defining factor. And I think the next couple of days we're going to see a shift in that weather pattern and start to push the smoke away from where we are. And finally, with the impacts of climate change, we are seeing more wildfires. Will we be seeing more of these kinds of wide ranging air quality consequences or circumstances? I mean, that is one of the predictions for climate change. Looking into the future, the fire season is starting earlier and lasting longer, and we're seeing more frequent fires. So, yeah, this is probably something that we'll be seeing more frequently. This tends to be much more of an issue in the Western US. So the eastern US. Getting hit right now is a little bit new. But yeah, I think with climate change moving forward, this is something that is going to happen more frequently. That's Peter De Carlo, associate professor in the Department of Environmental Health and Engineering at Johns Hopkins University. Sergeant Carlo, thanks so much for joining us and sharing this expertise with us. Thank you for having me.",
                 "words": [
                   {
@@ -1236,10 +1240,8 @@
                 "speech_model": "best",
                 "webhook_url": "https://your-webhook-url.tld/path",
                 "webhook_status_code": 200,
-                "webhook_auth": true,
                 "webhook_auth_header_name": "webhook-secret",
                 "speed_boost": true,
-                "auto_highlights": true,
                 "auto_highlights_result": {
                   "status": "success",
                   "results": [
@@ -1451,7 +1453,6 @@
                 ],
                 "boost_param": "high",
                 "filter_profanity": true,
-                "redact_pii": true,
                 "redact_pii_audio": true,
                 "redact_pii_audio_quality": "mp3",
                 "redact_pii_policies": [
@@ -1602,7 +1603,6 @@
                     "end": 280340
                   }
                 ],
-                "summarization": true,
                 "summary_type": "bullets",
                 "summary_model": "informative",
                 "summary": "- Smoke from hundreds of wildfires in Canada is triggering air quality alerts throughout the US. Skylines from Maine to Maryland to Minnesota are gray and smoggy. In some places, the air quality warnings include the warning to stay inside.\\n- Air pollution levels in Baltimore are considered unhealthy. Exposure to high levels can lead to a host of health problems. With climate change, we are seeing more wildfires. Will we be seeing more of these kinds of wide ranging air quality consequences?",
@@ -1706,7 +1706,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.assemblyai.com/v2/transcript \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"language_code\": \"en_us\",\n  \"punctuate\": true,\n  \"format_text\": true,\n  \"dual_channel\": true,\n  \"webhook_url\": \"https://your-webhook-url/path\",\n  \"webhook_auth_header_name\": \"webhook-secret\",\n  \"webhook_auth_header_value\": \"webhook-secret-value\",\n  \"auto_highlights\": true,\n  \"audio_start_from\": 10,\n  \"audio_end_at\": 280,\n  \"word_boost\": [\n    \"aws\",\n    \"azure\",\n    \"google cloud\"\n  ],\n  \"boost_param\": \"high\",\n  \"filter_profanity\": true,\n  \"redact_pii\": true,\n  \"redact_pii_audio\": true,\n  \"redact_pii_audio_quality\": \"mp3\",\n  \"redact_pii_policies\": [\n    \"us_social_security_number\",\n    \"credit_card_number\"\n  ],\n  \"redact_pii_sub\": \"hash\",\n  \"speaker_labels\": true,\n  \"speakers_expected\": 2,\n  \"content_safety\": true,\n  \"iab_categories\": true,\n  \"language_detection\": false,\n  \"custom_spelling\": [\n    {\n      \"from\": [\n        \"dicarlo\"\n      ],\n      \"to\": \"Decarlo\"\n    }\n  ],\n  \"disfluencies\": false,\n  \"sentiment_analysis\": true,\n  \"auto_chapters\": true,\n  \"entity_detection\": true,\n  \"speech_threshold\": 0.5,\n  \"summarization\": true,\n  \"summary_model\": \"informative\",\n  \"summary_type\": \"bullets\",\n  \"custom_topics\": true,\n  \"topics\": [\n    \"topics\"\n  ],\n  \"audio_url\": \"https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3\"\n}'",
+                  "code": "curl -X POST https://api.assemblyai.com/v2/transcript \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"audio_url\": \"https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3\",\n  \"audio_end_at\": 280,\n  \"audio_start_from\": 10,\n  \"auto_chapters\": true,\n  \"auto_highlights\": true,\n  \"boost_param\": \"high\",\n  \"content_safety\": true,\n  \"custom_spelling\": [\n    {\n      \"from\": [\n        \"dicarlo\"\n      ],\n      \"to\": \"Decarlo\"\n    }\n  ],\n  \"custom_topics\": true,\n  \"disfluencies\": false,\n  \"dual_channel\": true,\n  \"entity_detection\": true,\n  \"filter_profanity\": true,\n  \"format_text\": true,\n  \"iab_categories\": true,\n  \"language_code\": \"en_us\",\n  \"language_detection\": false,\n  \"punctuate\": true,\n  \"redact_pii\": true,\n  \"redact_pii_audio\": true,\n  \"redact_pii_audio_quality\": \"mp3\",\n  \"redact_pii_policies\": [\n    \"us_social_security_number\",\n    \"credit_card_number\"\n  ],\n  \"redact_pii_sub\": \"hash\",\n  \"sentiment_analysis\": true,\n  \"speaker_labels\": true,\n  \"speakers_expected\": 2,\n  \"speech_threshold\": 0.5,\n  \"summarization\": true,\n  \"summary_model\": \"informative\",\n  \"summary_type\": \"bullets\",\n  \"topics\": [\n    \"topics\"\n  ],\n  \"webhook_auth_header_name\": \"webhook-secret\",\n  \"webhook_auth_header_value\": \"webhook-secret-value\",\n  \"webhook_url\": \"https://your-webhook-url/path\",\n  \"word_boost\": [\n    \"aws\",\n    \"azure\",\n    \"google cloud\"\n  ]\n}'",
                   "generated": true
                 }
               ]
@@ -1727,8 +1727,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -1756,8 +1756,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -1785,8 +1785,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -1814,8 +1814,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -1843,8 +1843,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -1953,7 +1953,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_transcripts:Transcript"
@@ -2060,8 +2060,12 @@
                 "language_model": "assemblyai_default",
                 "acoustic_model": "assemblyai_default",
                 "status": "completed",
-                "language_code": "en_us",
                 "audio_url": "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3",
+                "webhook_auth": true,
+                "auto_highlights": true,
+                "redact_pii": true,
+                "summarization": true,
+                "language_code": "en_us",
                 "text": "Smoke from hundreds of wildfires in Canada is triggering air quality alerts throughout the US. Skylines from Maine to Maryland to Minnesota are gray and smoggy. And in some places, the air quality warnings include the warning to stay inside. We wanted to better understand what's happening here and why, so we called Peter de Carlo, an associate professor in the Department of Environmental Health and Engineering at Johns Hopkins University Varsity. Good morning, professor. Good morning. What is it about the conditions right now that have caused this round of wildfires to affect so many people so far away? Well, there's a couple of things. The season has been pretty dry already. And then the fact that we're getting hit in the US. Is because there's a couple of weather systems that are essentially channeling the smoke from those Canadian wildfires through Pennsylvania into the Mid Atlantic and the Northeast and kind of just dropping the smoke there. So what is it in this haze that makes it harmful? And I'm assuming it is harmful. It is. The levels outside right now in Baltimore are considered unhealthy. And most of that is due to what's called particulate matter, which are tiny particles, microscopic smaller than the width of your hair that can get into your lungs and impact your respiratory system, your cardiovascular system, and even your neurological your brain. What makes this particularly harmful? Is it the volume of particulant? Is it something in particular? What is it exactly? Can you just drill down on that a little bit more? Yeah. So the concentration of particulate matter I was looking at some of the monitors that we have was reaching levels of what are, in science, big 150 micrograms per meter cubed, which is more than ten times what the annual average should be and about four times higher than what you're supposed to have on a 24 hours average. And so the concentrations of these particles in the air are just much, much higher than we typically see. And exposure to those high levels can lead to a host of health problems. And who is most vulnerable? I noticed that in New York City, for example, they're canceling outdoor activities. And so here it is in the early days of summer, and they have to keep all the kids inside. So who tends to be vulnerable in a situation like this? It's the youngest. So children, obviously, whose bodies are still developing. The elderly, who are their bodies are more in decline and they're more susceptible to the health impacts of breathing, the poor air quality. And then people who have preexisting health conditions, people with respiratory conditions or heart conditions can be triggered by high levels of air pollution. Could this get worse? That's a good question. In some areas, it's much worse than others. And it just depends on kind of where the smoke is concentrated. I think New York has some of the higher concentrations right now, but that's going to change as that air moves away from the New York area. But over the course of the next few days, we will see different areas being hit at different times with the highest concentrations. I was going to ask you about more fires start burning. I don't expect the concentrations to go up too much higher. I was going to ask you how and you started to answer this, but how much longer could this last? Or forgive me if I'm asking you to speculate, but what do you think? Well, I think the fires are going to burn for a little bit longer, but the key for us in the US. Is the weather system changing. And so right now, it's kind of the weather systems that are pulling that air into our mid Atlantic and Northeast region. As those weather systems change and shift, we'll see that smoke going elsewhere and not impact us in this region as much. And so I think that's going to be the defining factor. And I think the next couple of days we're going to see a shift in that weather pattern and start to push the smoke away from where we are. And finally, with the impacts of climate change, we are seeing more wildfires. Will we be seeing more of these kinds of wide ranging air quality consequences or circumstances? I mean, that is one of the predictions for climate change. Looking into the future, the fire season is starting earlier and lasting longer, and we're seeing more frequent fires. So, yeah, this is probably something that we'll be seeing more frequently. This tends to be much more of an issue in the Western US. So the eastern US. Getting hit right now is a little bit new. But yeah, I think with climate change moving forward, this is something that is going to happen more frequently. That's Peter De Carlo, associate professor in the Department of Environmental Health and Engineering at Johns Hopkins University. Sergeant Carlo, thanks so much for joining us and sharing this expertise with us. Thank you for having me.",
                 "words": [
                   {
@@ -2294,10 +2298,8 @@
                 "speech_model": "best",
                 "webhook_url": "https://your-webhook-url.tld/path",
                 "webhook_status_code": 200,
-                "webhook_auth": true,
                 "webhook_auth_header_name": "webhook-secret",
                 "speed_boost": true,
-                "auto_highlights": true,
                 "auto_highlights_result": {
                   "status": "success",
                   "results": [
@@ -2509,7 +2511,6 @@
                 ],
                 "boost_param": "high",
                 "filter_profanity": true,
-                "redact_pii": true,
                 "redact_pii_audio": true,
                 "redact_pii_audio_quality": "mp3",
                 "redact_pii_policies": [
@@ -2660,7 +2661,6 @@
                     "end": 280340
                   }
                 ],
-                "summarization": true,
                 "summary_type": "bullets",
                 "summary_model": "informative",
                 "summary": "- Smoke from hundreds of wildfires in Canada is triggering air quality alerts throughout the US. Skylines from Maine to Maryland to Minnesota are gray and smoggy. In some places, the air quality warnings include the warning to stay inside.\\n- Air pollution levels in Baltimore are considered unhealthy. Exposure to high levels can lead to a host of health problems. With climate change, we are seeing more wildfires. Will we be seeing more of these kinds of wide ranging air quality consequences?",
@@ -2781,8 +2781,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -2806,8 +2806,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -2831,8 +2831,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -2856,8 +2856,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -2881,8 +2881,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -2983,7 +2983,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_transcripts:Transcript"
@@ -3090,8 +3090,12 @@
                 "language_model": "assemblyai_default",
                 "acoustic_model": "assemblyai_default",
                 "status": "completed",
-                "language_code": "en_us",
                 "audio_url": "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3",
+                "webhook_auth": true,
+                "auto_highlights": true,
+                "redact_pii": true,
+                "summarization": true,
+                "language_code": "en_us",
                 "text": "Smoke from hundreds of wildfires in Canada is triggering air quality alerts throughout the US. Skylines from Maine to Maryland to Minnesota are gray and smoggy. And in some places, the air quality warnings include the warning to stay inside. We wanted to better understand what's happening here and why, so we called Peter de Carlo, an associate professor in the Department of Environmental Health and Engineering at Johns Hopkins University Varsity. Good morning, professor. Good morning. What is it about the conditions right now that have caused this round of wildfires to affect so many people so far away? Well, there's a couple of things. The season has been pretty dry already. And then the fact that we're getting hit in the US. Is because there's a couple of weather systems that are essentially channeling the smoke from those Canadian wildfires through Pennsylvania into the Mid Atlantic and the Northeast and kind of just dropping the smoke there. So what is it in this haze that makes it harmful? And I'm assuming it is harmful. It is. The levels outside right now in Baltimore are considered unhealthy. And most of that is due to what's called particulate matter, which are tiny particles, microscopic smaller than the width of your hair that can get into your lungs and impact your respiratory system, your cardiovascular system, and even your neurological your brain. What makes this particularly harmful? Is it the volume of particulant? Is it something in particular? What is it exactly? Can you just drill down on that a little bit more? Yeah. So the concentration of particulate matter I was looking at some of the monitors that we have was reaching levels of what are, in science, big 150 micrograms per meter cubed, which is more than ten times what the annual average should be and about four times higher than what you're supposed to have on a 24 hours average. And so the concentrations of these particles in the air are just much, much higher than we typically see. And exposure to those high levels can lead to a host of health problems. And who is most vulnerable? I noticed that in New York City, for example, they're canceling outdoor activities. And so here it is in the early days of summer, and they have to keep all the kids inside. So who tends to be vulnerable in a situation like this? It's the youngest. So children, obviously, whose bodies are still developing. The elderly, who are their bodies are more in decline and they're more susceptible to the health impacts of breathing, the poor air quality. And then people who have preexisting health conditions, people with respiratory conditions or heart conditions can be triggered by high levels of air pollution. Could this get worse? That's a good question. In some areas, it's much worse than others. And it just depends on kind of where the smoke is concentrated. I think New York has some of the higher concentrations right now, but that's going to change as that air moves away from the New York area. But over the course of the next few days, we will see different areas being hit at different times with the highest concentrations. I was going to ask you about more fires start burning. I don't expect the concentrations to go up too much higher. I was going to ask you how and you started to answer this, but how much longer could this last? Or forgive me if I'm asking you to speculate, but what do you think? Well, I think the fires are going to burn for a little bit longer, but the key for us in the US. Is the weather system changing. And so right now, it's kind of the weather systems that are pulling that air into our mid Atlantic and Northeast region. As those weather systems change and shift, we'll see that smoke going elsewhere and not impact us in this region as much. And so I think that's going to be the defining factor. And I think the next couple of days we're going to see a shift in that weather pattern and start to push the smoke away from where we are. And finally, with the impacts of climate change, we are seeing more wildfires. Will we be seeing more of these kinds of wide ranging air quality consequences or circumstances? I mean, that is one of the predictions for climate change. Looking into the future, the fire season is starting earlier and lasting longer, and we're seeing more frequent fires. So, yeah, this is probably something that we'll be seeing more frequently. This tends to be much more of an issue in the Western US. So the eastern US. Getting hit right now is a little bit new. But yeah, I think with climate change moving forward, this is something that is going to happen more frequently. That's Peter De Carlo, associate professor in the Department of Environmental Health and Engineering at Johns Hopkins University. Sergeant Carlo, thanks so much for joining us and sharing this expertise with us. Thank you for having me.",
                 "words": [
                   {
@@ -3324,10 +3328,8 @@
                 "speech_model": "best",
                 "webhook_url": "https://your-webhook-url.tld/path",
                 "webhook_status_code": 200,
-                "webhook_auth": true,
                 "webhook_auth_header_name": "webhook-secret",
                 "speed_boost": true,
-                "auto_highlights": true,
                 "auto_highlights_result": {
                   "status": "success",
                   "results": [
@@ -3539,7 +3541,6 @@
                 ],
                 "boost_param": "high",
                 "filter_profanity": true,
-                "redact_pii": true,
                 "redact_pii_audio": true,
                 "redact_pii_audio_quality": "mp3",
                 "redact_pii_policies": [
@@ -3690,7 +3691,6 @@
                     "end": 280340
                   }
                 ],
-                "summarization": true,
                 "summary_type": "bullets",
                 "summary_model": "informative",
                 "summary": "- Smoke from hundreds of wildfires in Canada is triggering air quality alerts throughout the US. Skylines from Maine to Maryland to Minnesota are gray and smoggy. In some places, the air quality warnings include the warning to stay inside.\\n- Air pollution levels in Baltimore are considered unhealthy. Exposure to high levels can lead to a host of health problems. With climate change, we are seeing more wildfires. Will we be seeing more of these kinds of wide ranging air quality consequences?",
@@ -3811,8 +3811,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -3836,8 +3836,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -3861,8 +3861,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -3886,8 +3886,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -3911,8 +3911,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -4385,7 +4385,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_transcripts:SentencesResponse"
@@ -4800,7 +4800,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_transcripts:ParagraphsResponse"
@@ -5212,7 +5212,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_transcripts:WordSearchResponse"
@@ -5576,7 +5576,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_transcripts:RedactedAudioResponse"
@@ -5704,8 +5704,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -5729,8 +5729,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -5754,8 +5754,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -5779,8 +5779,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -5804,8 +5804,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "error": "string",
-                "status": "error"
+                "status": "error",
+                "error": "string"
               }
             },
             "snippets": {
@@ -5911,7 +5911,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_lemur:LemurTaskResponse"
@@ -6012,14 +6012,14 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "transcript_ids": [
-                  "64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce"
-                ],
+                "prompt": "List all the locations affected by wildfires.",
                 "context": "This is an interview about wildfires.",
                 "final_model": "default",
                 "max_output_size": 3000,
                 "temperature": 0,
-                "prompt": "List all the locations affected by wildfires."
+                "transcript_ids": [
+                  "64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce"
+                ]
               }
             },
             "responseBody": {
@@ -6033,7 +6033,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.assemblyai.com/lemur/v3/generate/task \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"transcript_ids\": [\n    \"64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce\"\n  ],\n  \"context\": \"This is an interview about wildfires.\",\n  \"final_model\": \"default\",\n  \"max_output_size\": 3000,\n  \"temperature\": 0,\n  \"prompt\": \"List all the locations affected by wildfires.\"\n}'",
+                  "code": "curl -X POST https://api.assemblyai.com/lemur/v3/generate/task \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"prompt\": \"List all the locations affected by wildfires.\",\n  \"context\": \"This is an interview about wildfires.\",\n  \"final_model\": \"default\",\n  \"max_output_size\": 3000,\n  \"temperature\": 0,\n  \"transcript_ids\": [\n    \"64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce\"\n  ]\n}'",
                   "generated": true
                 }
               ]
@@ -6288,7 +6288,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_lemur:LemurSummaryResponse"
@@ -6389,13 +6389,13 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "transcript_ids": [
-                  "47b95ba5-8889-44d8-bc80-5de38306e582"
-                ],
                 "context": "This is an interview about wildfires.",
                 "final_model": "default",
                 "max_output_size": 3000,
-                "temperature": 0
+                "temperature": 0,
+                "transcript_ids": [
+                  "47b95ba5-8889-44d8-bc80-5de38306e582"
+                ]
               }
             },
             "responseBody": {
@@ -6409,7 +6409,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.assemblyai.com/lemur/v3/generate/summary \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"transcript_ids\": [\n    \"47b95ba5-8889-44d8-bc80-5de38306e582\"\n  ],\n  \"context\": \"This is an interview about wildfires.\",\n  \"final_model\": \"default\",\n  \"max_output_size\": 3000,\n  \"temperature\": 0\n}'",
+                  "code": "curl -X POST https://api.assemblyai.com/lemur/v3/generate/summary \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"context\": \"This is an interview about wildfires.\",\n  \"final_model\": \"default\",\n  \"max_output_size\": 3000,\n  \"temperature\": 0,\n  \"transcript_ids\": [\n    \"47b95ba5-8889-44d8-bc80-5de38306e582\"\n  ]\n}'",
                   "generated": true
                 }
               ]
@@ -6648,7 +6648,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_lemur:LemurQuestionAnswerResponse"
@@ -6749,13 +6749,6 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "transcript_ids": [
-                  "64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce"
-                ],
-                "context": "This is an interview about wildfires.",
-                "final_model": "default",
-                "max_output_size": 3000,
-                "temperature": 0,
                 "questions": [
                   {
                     "question": "Where are there wildfires?",
@@ -6772,6 +6765,13 @@
                       "no"
                     ]
                   }
+                ],
+                "context": "This is an interview about wildfires.",
+                "final_model": "default",
+                "max_output_size": 3000,
+                "temperature": 0,
+                "transcript_ids": [
+                  "64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce"
                 ]
               }
             },
@@ -6795,7 +6795,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.assemblyai.com/lemur/v3/generate/question-answer \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"transcript_ids\": [\n    \"64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce\"\n  ],\n  \"context\": \"This is an interview about wildfires.\",\n  \"final_model\": \"default\",\n  \"max_output_size\": 3000,\n  \"temperature\": 0,\n  \"questions\": [\n    {\n      \"question\": \"Where are there wildfires?\",\n      \"answer_format\": \"List of countries in ISO 3166-1 alpha-2 format\",\n      \"answer_options\": [\n        \"US\",\n        \"CA\"\n      ]\n    },\n    {\n      \"question\": \"Is global warming affecting wildfires?\",\n      \"answer_options\": [\n        \"yes\",\n        \"no\"\n      ]\n    }\n  ]\n}'",
+                  "code": "curl -X POST https://api.assemblyai.com/lemur/v3/generate/question-answer \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"questions\": [\n    {\n      \"question\": \"Where are there wildfires?\",\n      \"answer_format\": \"List of countries in ISO 3166-1 alpha-2 format\",\n      \"answer_options\": [\n        \"US\",\n        \"CA\"\n      ]\n    },\n    {\n      \"question\": \"Is global warming affecting wildfires?\",\n      \"answer_options\": [\n        \"yes\",\n        \"no\"\n      ]\n    }\n  ],\n  \"context\": \"This is an interview about wildfires.\",\n  \"final_model\": \"default\",\n  \"max_output_size\": 3000,\n  \"temperature\": 0,\n  \"transcript_ids\": [\n    \"64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce\"\n  ]\n}'",
                   "generated": true
                 }
               ]
@@ -7079,7 +7079,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_lemur:LemurActionItemsResponse"
@@ -7180,14 +7180,14 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "transcript_ids": [
-                  "64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce"
-                ],
+                "answer_format": "Bullet Points",
                 "context": "This is an interview about wildfires.",
                 "final_model": "default",
                 "max_output_size": 3000,
                 "temperature": 0,
-                "answer_format": "Bullet Points"
+                "transcript_ids": [
+                  "64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce"
+                ]
               }
             },
             "responseBody": {
@@ -7201,7 +7201,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.assemblyai.com/lemur/v3/generate/action-items \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"transcript_ids\": [\n    \"64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce\"\n  ],\n  \"context\": \"This is an interview about wildfires.\",\n  \"final_model\": \"default\",\n  \"max_output_size\": 3000,\n  \"temperature\": 0,\n  \"answer_format\": \"Bullet Points\"\n}'",
+                  "code": "curl -X POST https://api.assemblyai.com/lemur/v3/generate/action-items \\\n     -H \"Authorization: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"answer_format\": \"Bullet Points\",\n  \"context\": \"This is an interview about wildfires.\",\n  \"final_model\": \"default\",\n  \"max_output_size\": 3000,\n  \"temperature\": 0,\n  \"transcript_ids\": [\n    \"64nygnr62k-405c-4ae8-8a6b-d90b40ff3cce\"\n  ]\n}'",
                   "generated": true
                 }
               ]
@@ -7434,7 +7434,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_lemur:PurgeLemurRequestDataResponse"
@@ -7769,7 +7769,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_realtime:RealtimeTemporaryTokenResponse"

@@ -45,7 +45,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:File"
@@ -171,7 +171,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:File"
@@ -607,7 +607,6 @@
           "contentType": "multipart/form-data",
           "body": {
             "type": "formData",
-            "name": "BaseUploadRequest",
             "fields": [
               {
                 "type": "property",
@@ -672,7 +671,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_upload:BaseUploadResponse"
@@ -728,9 +727,6 @@
               "type": "json",
               "value": {
                 "UPLOADCARE_PUB_KEY": "caa9d29da887ee88ffe6",
-                "{filename}": [
-                  "{filename}"
-                ],
                 "metadata[{key}]": "#/components/examples/metadataValue/value",
                 "signature": "04b29480233f4def5c875875b6bdc3b1",
                 "expire": 1454902434
@@ -794,7 +790,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"caa9d29da887ee88ffe6\",\n  \"{filename}\": [\n    \"{filename}\"\n  ],\n  \"metadata[{key}]\": \"#/components/examples/metadataValue/value\",\n  \"signature\": \"04b29480233f4def5c875875b6bdc3b1\",\n  \"expire\": 1454902434\n}'",
+                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"caa9d29da887ee88ffe6\",\n  \"metadata[{key}]\": \"#/components/examples/metadataValue/value\",\n  \"signature\": \"04b29480233f4def5c875875b6bdc3b1\",\n  \"expire\": 1454902434\n}'",
                   "generated": true
                 }
               ]
@@ -809,8 +805,7 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "UPLOADCARE_PUB_KEY": "string",
-                "{filename}": "<filename1>"
+                "UPLOADCARE_PUB_KEY": "string"
               }
             },
             "responseBody": {
@@ -821,7 +816,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"string\",\n  \"{filename}\": \"<filename1>\"\n}'",
+                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"string\"\n}'",
                   "generated": true
                 }
               ]
@@ -836,8 +831,7 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "UPLOADCARE_PUB_KEY": "string",
-                "{filename}": "<filename1>"
+                "UPLOADCARE_PUB_KEY": "string"
               }
             },
             "responseBody": {
@@ -848,7 +842,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"string\",\n  \"{filename}\": \"<filename1>\"\n}'",
+                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"string\"\n}'",
                   "generated": true
                 }
               ]
@@ -863,8 +857,7 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "UPLOADCARE_PUB_KEY": "string",
-                "{filename}": "<filename1>"
+                "UPLOADCARE_PUB_KEY": "string"
               }
             },
             "responseBody": {
@@ -875,7 +868,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"string\",\n  \"{filename}\": \"<filename1>\"\n}'",
+                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"string\"\n}'",
                   "generated": true
                 }
               ]
@@ -890,8 +883,7 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "UPLOADCARE_PUB_KEY": "string",
-                "{filename}": "<filename1>"
+                "UPLOADCARE_PUB_KEY": "string"
               }
             },
             "responseBody": {
@@ -902,7 +894,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"string\",\n  \"{filename}\": \"<filename1>\"\n}'",
+                  "code": "curl -X POST https://upload.uploadcare.com/base \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -d '{\n  \"UPLOADCARE_PUB_KEY\": \"string\"\n}'",
                   "generated": true
                 }
               ]
@@ -1032,7 +1024,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_upload:MultipartFileUploadStartResponse"
@@ -1343,7 +1335,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:FileUploadInfo"
@@ -1404,13 +1396,16 @@
                 "original_filename": "IMG-0412_123.JPG",
                 "filename": "IMG0412_123.JPG",
                 "mime_type": "image/jpeg",
+                "is_image": true,
+                "is_stored": true,
+                "is_ready": true,
                 "image_info": {
                   "color_mode": "RGB",
-                  "orientation": 6,
                   "format": "JPEG",
                   "sequence": false,
                   "height": 4032,
                   "width": 3024,
+                  "orientation": 6,
                   "geo_location": {
                     "latitude": 55.62013611111111,
                     "longitude": 37.66299166666666
@@ -1447,11 +1442,11 @@
                   },
                   "image": {
                     "color_mode": "RGB",
-                    "orientation": 6,
                     "format": "JPEG",
                     "sequence": false,
                     "height": 4032,
                     "width": 3024,
+                    "orientation": 6,
                     "geo_location": {
                       "latitude": 55.62013611111111,
                       "longitude": 37.66299166666666
@@ -1463,9 +1458,7 @@
                     ]
                   },
                   "video": {
-                    "duration": 261827,
                     "format": "mp4",
-                    "bitrate": 393,
                     "audio": [
                       {
                         "bitrate": 78,
@@ -1482,16 +1475,15 @@
                         "bitrate": 315,
                         "codec": "h264"
                       }
-                    ]
+                    ],
+                    "duration": 261827,
+                    "bitrate": 393
                   }
                 },
                 "metadata": {
                   "subsystem": "uploader",
                   "pet": "cat"
                 },
-                "is_image": true,
-                "is_stored": true,
-                "is_ready": true,
                 "s3_bucket": "custom-s3-bucket-name"
               }
             },
@@ -1760,7 +1752,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_upload:FromUrlUploadResponse"
@@ -1996,7 +1988,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_upload:FromUrlUploadStatusResponse"
@@ -2153,7 +2145,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:FileUploadInfo"
@@ -2210,13 +2202,16 @@
                 "original_filename": "IMG-0412_123.JPG",
                 "filename": "IMG0412_123.JPG",
                 "mime_type": "image/jpeg",
+                "is_image": true,
+                "is_stored": true,
+                "is_ready": true,
                 "image_info": {
                   "color_mode": "RGB",
-                  "orientation": 6,
                   "format": "JPEG",
                   "sequence": false,
                   "height": 4032,
                   "width": 3024,
+                  "orientation": 6,
                   "geo_location": {
                     "latitude": 55.62013611111111,
                     "longitude": 37.66299166666666
@@ -2253,11 +2248,11 @@
                   },
                   "image": {
                     "color_mode": "RGB",
-                    "orientation": 6,
                     "format": "JPEG",
                     "sequence": false,
                     "height": 4032,
                     "width": 3024,
+                    "orientation": 6,
                     "geo_location": {
                       "latitude": 55.62013611111111,
                       "longitude": 37.66299166666666
@@ -2269,9 +2264,7 @@
                     ]
                   },
                   "video": {
-                    "duration": 261827,
                     "format": "mp4",
-                    "bitrate": 393,
                     "audio": [
                       {
                         "bitrate": 78,
@@ -2288,16 +2281,15 @@
                         "bitrate": 315,
                         "codec": "h264"
                       }
-                    ]
+                    ],
+                    "duration": 261827,
+                    "bitrate": 393
                   }
                 },
                 "metadata": {
                   "subsystem": "uploader",
                   "pet": "cat"
                 },
-                "is_image": true,
-                "is_stored": true,
-                "is_ready": true,
                 "s3_bucket": "custom-s3-bucket-name"
               }
             },
@@ -2502,7 +2494,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GroupInfo"
@@ -2779,7 +2771,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GroupInfo"
@@ -5421,7 +5413,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "map",
               "keyShape": {
@@ -5689,7 +5681,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_file:FilesListResponse"
@@ -6103,7 +6095,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:File"
@@ -6160,22 +6152,22 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "datetime_removed": "2024-01-15T09:30:00Z",
-                "datetime_stored": "2018-11-26T12:49:10Z",
                 "datetime_uploaded": "2018-11-26T12:49:09Z",
                 "is_image": true,
                 "is_ready": true,
                 "mime_type": "image/jpeg",
-                "original_file_url": "https://ucarecdn.com/22240276-2f06-41f8-9411-755c8ce926ed/pineapple.jpg",
                 "original_filename": "pineapple.jpg",
                 "size": 642,
                 "url": "https://api.uploadcare.com/files/22240276-2f06-41f8-9411-755c8ce926ed/",
                 "uuid": "22240276-2f06-41f8-9411-755c8ce926ed",
+                "datetime_removed": "2024-01-15T09:30:00Z",
+                "datetime_stored": "2018-11-26T12:49:10Z",
+                "original_file_url": "https://ucarecdn.com/22240276-2f06-41f8-9411-755c8ce926ed/pineapple.jpg",
                 "appdata": {
                   "aws_rekognition_detect_labels": {
-                    "version": "2016-06-27",
                     "datetime_created": "2021-09-21T11:25:31Z",
                     "datetime_updated": "2021-09-21T11:27:33Z",
+                    "version": "2016-06-27",
                     "data": {
                       "LabelModelVersion": "2.0",
                       "Labels": [
@@ -6239,9 +6231,9 @@
                     }
                   },
                   "aws_rekognition_detect_moderation_labels": {
-                    "version": "2016-06-27",
                     "datetime_created": "2023-02-21T11:25:31Z",
                     "datetime_updated": "2023-02-21T11:27:33Z",
+                    "version": "2016-06-27",
                     "data": {
                       "ModerationModelVersion": "6.0",
                       "ModerationLabels": [
@@ -6254,17 +6246,17 @@
                     }
                   },
                   "remove_bg": {
-                    "version": "1.0",
                     "datetime_created": "2021-07-25T12:24:33Z",
                     "datetime_updated": "2021-07-25T12:24:33Z",
+                    "version": "1.0",
                     "data": {
                       "foreground_type": "person"
                     }
                   },
                   "uc_clamav_virus_scan": {
-                    "version": "0.104.2",
                     "datetime_created": "2021-09-21T11:24:33Z",
                     "datetime_updated": "2021-09-21T11:24:33Z",
+                    "version": "0.104.2",
                     "data": {
                       "infected": true,
                       "infected_with": "Win.Test.EICAR_HDB-1"
@@ -6284,11 +6276,11 @@
                   },
                   "image": {
                     "color_mode": "RGB",
-                    "orientation": 6,
                     "format": "JPEG",
                     "sequence": false,
                     "height": 500,
                     "width": 500,
+                    "orientation": 6,
                     "geo_location": {
                       "latitude": 55.62013611111111,
                       "longitude": 37.66299166666666
@@ -6300,9 +6292,7 @@
                     ]
                   },
                   "video": {
-                    "duration": 261827,
                     "format": "mp4",
-                    "bitrate": 393,
                     "audio": [
                       {
                         "bitrate": 78,
@@ -6319,7 +6309,9 @@
                         "bitrate": 315,
                         "codec": "h264"
                       }
-                    ]
+                    ],
+                    "duration": 261827,
+                    "bitrate": 393
                   }
                 },
                 "metadata": {
@@ -6538,7 +6530,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:File"
@@ -6595,22 +6587,22 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "datetime_removed": "2024-01-15T09:30:00Z",
-                "datetime_stored": "2024-01-15T09:30:00Z",
                 "datetime_uploaded": "2024-01-15T09:30:00Z",
                 "is_image": true,
                 "is_ready": true,
                 "mime_type": "image/jpeg",
-                "original_file_url": "https://ucarecdn.com/e575ed4e8-f4e8-4c14-a58b-1527b6d9ee46/EU_4.jpg",
                 "original_filename": "EU_4.jpg",
                 "size": 145212,
                 "url": "https://api.uploadcare.com/files/e10ce759-42c3-4185-bae5-e22a9143d68f/",
                 "uuid": "575ed4e8-f4e8-4c14-a58b-1527b6d9ee46",
+                "datetime_removed": "2024-01-15T09:30:00Z",
+                "datetime_stored": "2024-01-15T09:30:00Z",
+                "original_file_url": "https://ucarecdn.com/e575ed4e8-f4e8-4c14-a58b-1527b6d9ee46/EU_4.jpg",
                 "appdata": {
                   "aws_rekognition_detect_labels": {
-                    "version": "2016-06-27",
                     "datetime_created": "2024-01-15T09:30:00Z",
                     "datetime_updated": "2024-01-15T09:30:00Z",
+                    "version": "2016-06-27",
                     "data": {
                       "LabelModelVersion": "LabelModelVersion",
                       "Labels": [
@@ -6628,9 +6620,9 @@
                     }
                   },
                   "aws_rekognition_detect_moderation_labels": {
-                    "version": "2016-06-27",
                     "datetime_created": "2024-01-15T09:30:00Z",
                     "datetime_updated": "2024-01-15T09:30:00Z",
+                    "version": "2016-06-27",
                     "data": {
                       "ModerationModelVersion": "ModerationModelVersion",
                       "ModerationLabels": [
@@ -6643,9 +6635,9 @@
                     }
                   },
                   "uc_clamav_virus_scan": {
-                    "version": "0.104.2",
                     "datetime_created": "2024-01-15T09:30:00Z",
                     "datetime_updated": "2024-01-15T09:30:00Z",
+                    "version": "0.104.2",
                     "data": {
                       "infected": true
                     }
@@ -6664,11 +6656,11 @@
                   },
                   "image": {
                     "color_mode": "RGB",
-                    "orientation": 6,
                     "format": "JPEG",
                     "sequence": false,
                     "height": 2352,
                     "width": 2935,
+                    "orientation": 6,
                     "geo_location": {
                       "latitude": -1.1884555555555556,
                       "longitude": 52.66996666666667
@@ -6679,9 +6671,7 @@
                     ]
                   },
                   "video": {
-                    "duration": 261827,
                     "format": "mp4",
-                    "bitrate": 393,
                     "audio": [
                       {
                         "bitrate": 78,
@@ -6698,7 +6688,9 @@
                         "bitrate": 315,
                         "codec": "h264"
                       }
-                    ]
+                    ],
+                    "duration": 261827,
+                    "bitrate": 393
                   }
                 },
                 "metadata": {
@@ -6929,7 +6921,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:File"
@@ -6986,22 +6978,22 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "datetime_removed": "2024-01-15T09:30:00Z",
-                "datetime_stored": "2024-01-15T09:30:00Z",
                 "datetime_uploaded": "2024-01-15T09:30:00Z",
                 "is_image": true,
                 "is_ready": true,
                 "mime_type": "image/jpeg",
-                "original_file_url": "https://ucarecdn.com/e575ed4e8-f4e8-4c14-a58b-1527b6d9ee46/EU_4.jpg",
                 "original_filename": "EU_4.jpg",
                 "size": 145212,
                 "url": "https://api.uploadcare.com/files/e10ce759-42c3-4185-bae5-e22a9143d68f/",
                 "uuid": "575ed4e8-f4e8-4c14-a58b-1527b6d9ee46",
+                "datetime_removed": "2024-01-15T09:30:00Z",
+                "datetime_stored": "2024-01-15T09:30:00Z",
+                "original_file_url": "https://ucarecdn.com/e575ed4e8-f4e8-4c14-a58b-1527b6d9ee46/EU_4.jpg",
                 "appdata": {
                   "aws_rekognition_detect_labels": {
-                    "version": "2016-06-27",
                     "datetime_created": "2024-01-15T09:30:00Z",
                     "datetime_updated": "2024-01-15T09:30:00Z",
+                    "version": "2016-06-27",
                     "data": {
                       "LabelModelVersion": "LabelModelVersion",
                       "Labels": [
@@ -7019,9 +7011,9 @@
                     }
                   },
                   "aws_rekognition_detect_moderation_labels": {
-                    "version": "2016-06-27",
                     "datetime_created": "2024-01-15T09:30:00Z",
                     "datetime_updated": "2024-01-15T09:30:00Z",
+                    "version": "2016-06-27",
                     "data": {
                       "ModerationModelVersion": "ModerationModelVersion",
                       "ModerationLabels": [
@@ -7034,9 +7026,9 @@
                     }
                   },
                   "uc_clamav_virus_scan": {
-                    "version": "0.104.2",
                     "datetime_created": "2024-01-15T09:30:00Z",
                     "datetime_updated": "2024-01-15T09:30:00Z",
+                    "version": "0.104.2",
                     "data": {
                       "infected": true
                     }
@@ -7055,11 +7047,11 @@
                   },
                   "image": {
                     "color_mode": "RGB",
-                    "orientation": 6,
                     "format": "JPEG",
                     "sequence": false,
                     "height": 2352,
                     "width": 2935,
+                    "orientation": 6,
                     "geo_location": {
                       "latitude": -1.1884555555555556,
                       "longitude": 52.66996666666667
@@ -7070,9 +7062,7 @@
                     ]
                   },
                   "video": {
-                    "duration": 261827,
                     "format": "mp4",
-                    "bitrate": 393,
                     "audio": [
                       {
                         "bitrate": 78,
@@ -7089,7 +7079,9 @@
                         "bitrate": 315,
                         "codec": "h264"
                       }
-                    ]
+                    ],
+                    "duration": 261827,
+                    "bitrate": 393
                   }
                 },
                 "metadata": {
@@ -7297,7 +7289,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -7312,7 +7304,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_file:FilesStoringResponse"
@@ -7713,7 +7705,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -7728,7 +7720,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_file:FilesDeleteResponse"
@@ -8178,7 +8170,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:LocalCopyResponse"
@@ -8237,19 +8229,19 @@
               "value": {
                 "type": "file",
                 "result": {
-                  "datetime_removed": "2024-01-15T09:30:00Z",
-                  "datetime_stored": "2024-01-15T09:30:00Z",
                   "datetime_uploaded": "2024-01-15T09:30:00Z",
                   "is_image": true,
                   "is_ready": true,
                   "mime_type": "image/jpeg",
-                  "original_file_url": "original_file_url",
                   "original_filename": "EU_4.jpg",
                   "size": 0,
                   "url": "url",
                   "uuid": "575ed4e8-f4e8-4c14-a58b-1527b6d9ee46",
                   "variations": "variations",
                   "content_info": "content_info",
+                  "datetime_removed": "2024-01-15T09:30:00Z",
+                  "datetime_stored": "2024-01-15T09:30:00Z",
+                  "original_file_url": "original_file_url",
                   "metadata": {
                     "metadata": {
                       "key": "value"
@@ -8487,7 +8479,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CopiedFileUrl"
@@ -8743,7 +8735,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_addOns:AwsRekognitionExecuteResponse"
@@ -9017,7 +9009,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_addOns:AwsRekognitionExecutionStatusResponse"
@@ -9208,7 +9200,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_addOns:AwsRekognitionDetectModerationLabelsExecuteResponse"
@@ -9474,7 +9466,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_addOns:AwsRekognitionDetectModerationLabelsExecutionStatusResponse"
@@ -9668,7 +9660,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_addOns:UcClamavVirusScanExecuteResponse"
@@ -9953,7 +9945,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_addOns:UcClamavVirusScanExecutionStatusResponse"
@@ -10163,7 +10155,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_addOns:RemoveBgExecuteResponse"
@@ -10443,7 +10435,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_addOns:RemoveBgExecutionStatusResponse"
@@ -10482,10 +10474,10 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "status": "done",
                 "result": {
                   "file_id": "21975c81-7f57-4c7a-aef9-acfe28779f78"
-                }
+                },
+                "status": "done"
               }
             },
             "snippets": {
@@ -10652,7 +10644,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:MetadataItemValue"
@@ -10867,7 +10859,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "primitive",
               "value": {
@@ -10879,7 +10871,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:MetadataItemValue"
@@ -11312,7 +11304,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_group:GroupsListResponse"
@@ -11559,7 +11551,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GroupWithFiles"
@@ -11616,16 +11608,16 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "id": "id",
-                "datetime_created": "2024-01-15T09:30:00Z",
-                "files_count": 1,
                 "cdn_url": "cdn_url",
-                "url": "url",
+                "datetime_created": "2024-01-15T09:30:00Z",
                 "files": [
                   {
                     "key": "value"
                   }
-                ]
+                ],
+                "files_count": 1,
+                "id": "id",
+                "url": "url"
               }
             },
             "snippets": {
@@ -12068,7 +12060,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Project"
@@ -12275,7 +12267,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -12495,7 +12487,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookOfListResponse"
@@ -12726,7 +12718,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Webhook"
@@ -13156,7 +13148,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_conversion:DocumentConvertInfoResponse"
@@ -13454,7 +13446,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_conversion:DocumentConvertResponse"
@@ -13670,7 +13662,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_conversion:DocumentConvertStatusResponse"
@@ -13995,7 +13987,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_conversion:VideoConvertResponse"
@@ -14212,7 +14204,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_conversion:VideoConvertStatusResponse"

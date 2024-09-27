@@ -1,5 +1,6 @@
 import isPlainObject from "@fern-ui/core-utils/isPlainObject";
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import { difference } from "lodash-es";
 import keyBy from "lodash-es/keyBy";
 import mapValues from "lodash-es/mapValues";
 import type * as Latest from "./latest";
@@ -21,7 +22,7 @@ export function sortKeysByShape(
     if ((!isPlainObject(obj) && !Array.isArray(obj)) || shape == null) {
         return obj;
     }
-    return visitDiscriminatedUnion(shape, "type")._visit<unknown>({
+    const toRet = visitDiscriminatedUnion(shape, "type")._visit<unknown>({
         id: ({ id }) => sortKeysByShape(obj, types[id]?.shape, types),
         primitive: () => obj,
         literal: () => obj,
@@ -108,6 +109,12 @@ export function sortKeysByShape(
         stream: () => obj,
         _other: () => obj,
     });
+
+    difference(Object.keys(obj), isPlainObject(toRet) ? Object.keys(toRet) : []).forEach((key) => {
+        (toRet as Record<string, unknown>)[key] = (obj as Record<string, unknown>)[key];
+    });
+
+    return toRet;
 }
 
 export function safeSortKeysByShape(

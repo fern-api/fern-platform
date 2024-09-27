@@ -9067,7 +9067,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionApiResponse"
@@ -9413,7 +9413,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionWithTokenApiResponse"
@@ -9876,7 +9876,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionApiResponse"
@@ -10428,7 +10428,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentListApiResponse"
@@ -10684,7 +10684,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -10723,6 +10723,7 @@
             "requestBody": {
               "type": "json",
               "value": {
+                "paymentMethodToken": "string",
                 "currencyCode": "AED",
                 "order": {
                   "lineItems": [
@@ -10741,7 +10742,6 @@
                   ],
                   "shipping": {}
                 },
-                "paymentMethodToken": "string",
                 "customer": {
                   "billingAddress": {
                     "countryCode": "AW"
@@ -10888,7 +10888,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"currencyCode\": \"AED\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": 1,\n        \"productType\": \"PHYSICAL\",\n        \"productData\": {}\n      }\n    ],\n    \"countryCode\": \"AW\",\n    \"retailerCountryCode\": \"AW\",\n    \"fees\": [\n      {\n        \"amount\": 1\n      }\n    ],\n    \"shipping\": {}\n  },\n  \"paymentMethodToken\": \"string\",\n  \"customer\": {\n    \"billingAddress\": {\n      \"countryCode\": \"AW\"\n    },\n    \"shippingAddress\": {\n      \"countryCode\": \"AW\"\n    }\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"FIRST_PAYMENT\",\n    \"authorizationType\": \"ESTIMATED\"\n  }\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"paymentMethodToken\": \"string\",\n  \"currencyCode\": \"AED\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": 1,\n        \"productType\": \"PHYSICAL\",\n        \"productData\": {}\n      }\n    ],\n    \"countryCode\": \"AW\",\n    \"retailerCountryCode\": \"AW\",\n    \"fees\": [\n      {\n        \"amount\": 1\n      }\n    ],\n    \"shipping\": {}\n  },\n  \"customer\": {\n    \"billingAddress\": {\n      \"countryCode\": \"AW\"\n    },\n    \"shippingAddress\": {\n      \"countryCode\": \"AW\"\n    }\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"FIRST_PAYMENT\",\n    \"authorizationType\": \"ESTIMATED\"\n  }\n}'",
                   "generated": true
                 }
               ]
@@ -11052,7 +11052,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -11556,7 +11556,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -11903,7 +11903,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -12223,7 +12223,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -12548,7 +12548,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -12841,7 +12841,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -13200,7 +13200,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -13466,7 +13466,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VerifiedMerchantPaymentMethodTokenApiResponse"
@@ -13513,7 +13513,6 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "paymentMethodType": "PAYMENT_CARD",
                 "paymentMethodData": {
                   "last4Digits": "string",
                   "expirationMonth": "string",
@@ -13530,7 +13529,8 @@
                     "productCode": "string",
                     "productName": "string"
                   }
-                }
+                },
+                "paymentMethodType": "PAYMENT_CARD"
               }
             },
             "snippets": {
@@ -13661,7 +13661,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VerifiedMerchantPaymentMethodTokenListApiResponse"
@@ -13758,7 +13758,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VerifiedMerchantPaymentMethodTokenApiResponse"
@@ -13789,7 +13789,6 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "paymentMethodType": "PAYMENT_CARD",
                 "paymentMethodData": {
                   "last4Digits": "string",
                   "expirationMonth": "string",
@@ -13806,7 +13805,8 @@
                     "productCode": "string",
                     "productName": "string"
                   }
-                }
+                },
+                "paymentMethodType": "PAYMENT_CARD"
               }
             },
             "snippets": {
@@ -13900,7 +13900,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:MerchantPaymentMethodTokenApiResponse"
@@ -14022,7 +14022,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentsInsightsPayment"
@@ -14032,7 +14032,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentsInsightsPayment"
@@ -14060,12 +14060,6 @@
                   "id": "string",
                   "countryCode": "AW"
                 },
-                "status": "DECLINED",
-                "statusReason": {
-                  "type": "APPLICATION_ERROR",
-                  "declineType": "SOFT_DECLINE",
-                  "code": "ERROR"
-                },
                 "paymentMethod": {
                   "paymentMethodType": "PAYMENT_CARD",
                   "data": {
@@ -14077,6 +14071,12 @@
                   "threeDSecureAuthentication": {
                     "responseCode": "NOT_PERFORMED"
                   }
+                },
+                "status": "DECLINED",
+                "statusReason": {
+                  "type": "APPLICATION_ERROR",
+                  "declineType": "SOFT_DECLINE",
+                  "code": "ERROR"
                 },
                 "paymentType": "FIRST_PAYMENT"
               }
@@ -14095,12 +14095,6 @@
                   "id": "string",
                   "countryCode": "AW"
                 },
-                "status": "DECLINED",
-                "statusReason": {
-                  "type": "APPLICATION_ERROR",
-                  "declineType": "SOFT_DECLINE",
-                  "code": "ERROR"
-                },
                 "paymentMethod": {
                   "paymentMethodType": "PAYMENT_CARD",
                   "data": {
@@ -14113,6 +14107,12 @@
                     "responseCode": "NOT_PERFORMED"
                   }
                 },
+                "status": "DECLINED",
+                "statusReason": {
+                  "type": "APPLICATION_ERROR",
+                  "declineType": "SOFT_DECLINE",
+                  "code": "ERROR"
+                },
                 "paymentType": "FIRST_PAYMENT"
               }
             },
@@ -14120,7 +14120,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/observability/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"paymentId\": \"string\",\n  \"currencyCode\": \"AED\",\n  \"processor\": {\n    \"name\": \"APAYA\"\n  },\n  \"amount\": 1,\n  \"createdAt\": \"2024-01-15T09:30:00Z\",\n  \"order\": {\n    \"id\": \"string\",\n    \"countryCode\": \"AW\"\n  },\n  \"status\": \"DECLINED\",\n  \"statusReason\": {\n    \"type\": \"APPLICATION_ERROR\",\n    \"declineType\": \"SOFT_DECLINE\",\n    \"code\": \"ERROR\"\n  },\n  \"paymentMethod\": {\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"data\": {\n      \"binData\": {\n        \"network\": \"AMEX\",\n        \"issuerCountryCode\": \"AW\"\n      }\n    },\n    \"threeDSecureAuthentication\": {\n      \"responseCode\": \"NOT_PERFORMED\"\n    }\n  },\n  \"paymentType\": \"FIRST_PAYMENT\"\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/observability/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"paymentId\": \"string\",\n  \"currencyCode\": \"AED\",\n  \"processor\": {\n    \"name\": \"APAYA\"\n  },\n  \"amount\": 1,\n  \"createdAt\": \"2024-01-15T09:30:00Z\",\n  \"order\": {\n    \"id\": \"string\",\n    \"countryCode\": \"AW\"\n  },\n  \"paymentMethod\": {\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"data\": {\n      \"binData\": {\n        \"network\": \"AMEX\",\n        \"issuerCountryCode\": \"AW\"\n      }\n    },\n    \"threeDSecureAuthentication\": {\n      \"responseCode\": \"NOT_PERFORMED\"\n    }\n  },\n  \"status\": \"DECLINED\",\n  \"statusReason\": {\n    \"type\": \"APPLICATION_ERROR\",\n    \"declineType\": \"SOFT_DECLINE\",\n    \"code\": \"ERROR\"\n  },\n  \"paymentType\": \"FIRST_PAYMENT\"\n}'",
                   "generated": true
                 }
               ]
@@ -14323,7 +14323,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentsInsightsPayment"
@@ -14385,12 +14385,6 @@
                   "id": "string",
                   "countryCode": "AW"
                 },
-                "status": "DECLINED",
-                "statusReason": {
-                  "type": "APPLICATION_ERROR",
-                  "declineType": "SOFT_DECLINE",
-                  "code": "ERROR"
-                },
                 "paymentMethod": {
                   "paymentMethodType": "PAYMENT_CARD",
                   "data": {
@@ -14402,6 +14396,12 @@
                   "threeDSecureAuthentication": {
                     "responseCode": "NOT_PERFORMED"
                   }
+                },
+                "status": "DECLINED",
+                "statusReason": {
+                  "type": "APPLICATION_ERROR",
+                  "declineType": "SOFT_DECLINE",
+                  "code": "ERROR"
                 },
                 "paymentType": "FIRST_PAYMENT"
               }
@@ -14472,7 +14472,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:LoyaltyApiBalanceResponse"
@@ -14646,7 +14646,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:LoyaltyApiTransactionsListResponse"
@@ -14869,7 +14869,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:LoyaltyApiTransactionResponse"
@@ -14911,8 +14911,8 @@
                 "connectionId": "string",
                 "customerId": "string",
                 "orderId": "string",
-                "type": "REDEMPTION",
-                "value": 1
+                "value": 1,
+                "type": "REDEMPTION"
               }
             },
             "responseBody": {
@@ -14933,7 +14933,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/loyalty-transactions \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"connectionId\": \"string\",\n  \"customerId\": \"string\",\n  \"orderId\": \"string\",\n  \"type\": \"REDEMPTION\",\n  \"value\": 1\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/loyalty-transactions \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"connectionId\": \"string\",\n  \"customerId\": \"string\",\n  \"orderId\": \"string\",\n  \"value\": 1,\n  \"type\": \"REDEMPTION\"\n}'",
                   "generated": true
                 }
               ]
@@ -24804,7 +24804,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionApiResponse"
@@ -25141,7 +25141,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionWithTokenApiResponse"
@@ -25587,7 +25587,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionApiResponse"
@@ -26122,7 +26122,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentListApiResponse"
@@ -26374,7 +26374,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -26413,6 +26413,7 @@
             "requestBody": {
               "type": "json",
               "value": {
+                "paymentMethodToken": "string",
                 "order": {
                   "lineItems": [
                     {
@@ -26428,7 +26429,6 @@
                   ],
                   "shipping": {}
                 },
-                "paymentMethodToken": "string",
                 "customer": {
                   "billingAddress": {
                     "countryCode": "AW"
@@ -26549,7 +26549,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": 1,\n        \"productType\": \"PHYSICAL\"\n      }\n    ],\n    \"countryCode\": \"AW\",\n    \"fees\": [\n      {\n        \"amount\": 1\n      }\n    ],\n    \"shipping\": {}\n  },\n  \"paymentMethodToken\": \"string\",\n  \"customer\": {\n    \"billingAddress\": {\n      \"countryCode\": \"AW\"\n    },\n    \"shippingAddress\": {\n      \"countryCode\": \"AW\"\n    }\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"FIRST_PAYMENT\"\n  }\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"paymentMethodToken\": \"string\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": 1,\n        \"productType\": \"PHYSICAL\"\n      }\n    ],\n    \"countryCode\": \"AW\",\n    \"fees\": [\n      {\n        \"amount\": 1\n      }\n    ],\n    \"shipping\": {}\n  },\n  \"customer\": {\n    \"billingAddress\": {\n      \"countryCode\": \"AW\"\n    },\n    \"shippingAddress\": {\n      \"countryCode\": \"AW\"\n    }\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"FIRST_PAYMENT\"\n  }\n}'",
                   "generated": true
                 }
               ]
@@ -26746,7 +26746,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -27060,7 +27060,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -27353,7 +27353,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -27649,7 +27649,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -27877,7 +27877,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -28116,7 +28116,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VerifiedMerchantPaymentMethodTokenApiResponse"
@@ -28163,13 +28163,13 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "paymentMethodType": "PAYMENT_CARD",
                 "paymentMethodData": {
                   "last4Digits": "string",
                   "expirationMonth": "string",
                   "expirationYear": "string",
                   "accountFundingType": "CREDIT"
-                }
+                },
+                "paymentMethodType": "PAYMENT_CARD"
               }
             },
             "snippets": {
@@ -28199,8 +28199,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "errorId": "string",
                 "description": "string",
+                "errorId": "string",
                 "diagnosticsId": "string",
                 "validationErrors": [
                   {
@@ -28236,8 +28236,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "errorId": "string",
                 "description": "string",
+                "errorId": "string",
                 "diagnosticsId": "string",
                 "validationErrors": [
                   {
@@ -28296,7 +28296,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VerifiedMerchantPaymentMethodTokenListApiResponse"
@@ -28382,7 +28382,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VerifiedMerchantPaymentMethodTokenApiResponse"
@@ -28413,13 +28413,13 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "paymentMethodType": "PAYMENT_CARD",
                 "paymentMethodData": {
                   "last4Digits": "string",
                   "expirationMonth": "string",
                   "expirationYear": "string",
                   "accountFundingType": "CREDIT"
-                }
+                },
+                "paymentMethodType": "PAYMENT_CARD"
               }
             },
             "snippets": {
@@ -28443,8 +28443,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "errorId": "string",
                 "description": "string",
+                "errorId": "string",
                 "diagnosticsId": "string",
                 "validationErrors": [
                   {
@@ -28511,7 +28511,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:MerchantPaymentMethodTokenApiResponse"
@@ -28572,8 +28572,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "errorId": "string",
                 "description": "string",
+                "errorId": "string",
                 "diagnosticsId": "string",
                 "validationErrors": [
                   {
@@ -39009,7 +39009,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionApiResponse"
@@ -39355,7 +39355,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionWithTokenApiResponse"
@@ -39818,7 +39818,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionApiResponse"
@@ -40370,7 +40370,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentListApiResponse"
@@ -40626,7 +40626,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -40665,6 +40665,7 @@
             "requestBody": {
               "type": "json",
               "value": {
+                "paymentMethodToken": "string",
                 "currencyCode": "AED",
                 "order": {
                   "lineItems": [
@@ -40683,7 +40684,6 @@
                   ],
                   "shipping": {}
                 },
-                "paymentMethodToken": "string",
                 "customer": {
                   "billingAddress": {
                     "countryCode": "AW"
@@ -40830,7 +40830,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"currencyCode\": \"AED\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": 1,\n        \"productType\": \"PHYSICAL\",\n        \"productData\": {}\n      }\n    ],\n    \"countryCode\": \"AW\",\n    \"retailerCountryCode\": \"AW\",\n    \"fees\": [\n      {\n        \"amount\": 1\n      }\n    ],\n    \"shipping\": {}\n  },\n  \"paymentMethodToken\": \"string\",\n  \"customer\": {\n    \"billingAddress\": {\n      \"countryCode\": \"AW\"\n    },\n    \"shippingAddress\": {\n      \"countryCode\": \"AW\"\n    }\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"FIRST_PAYMENT\",\n    \"authorizationType\": \"ESTIMATED\"\n  }\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"paymentMethodToken\": \"string\",\n  \"currencyCode\": \"AED\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": 1,\n        \"productType\": \"PHYSICAL\",\n        \"productData\": {}\n      }\n    ],\n    \"countryCode\": \"AW\",\n    \"retailerCountryCode\": \"AW\",\n    \"fees\": [\n      {\n        \"amount\": 1\n      }\n    ],\n    \"shipping\": {}\n  },\n  \"customer\": {\n    \"billingAddress\": {\n      \"countryCode\": \"AW\"\n    },\n    \"shippingAddress\": {\n      \"countryCode\": \"AW\"\n    }\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"FIRST_PAYMENT\",\n    \"authorizationType\": \"ESTIMATED\"\n  }\n}'",
                   "generated": true
                 }
               ]
@@ -40994,7 +40994,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -41500,7 +41500,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -41898,7 +41898,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -42269,7 +42269,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -42645,7 +42645,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -42938,7 +42938,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -43350,7 +43350,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -43616,7 +43616,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VerifiedMerchantPaymentMethodTokenApiResponse"
@@ -43663,7 +43663,6 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "paymentMethodType": "PAYMENT_CARD",
                 "paymentMethodData": {
                   "last4Digits": "string",
                   "expirationMonth": "string",
@@ -43680,7 +43679,8 @@
                     "productCode": "string",
                     "productName": "string"
                   }
-                }
+                },
+                "paymentMethodType": "PAYMENT_CARD"
               }
             },
             "snippets": {
@@ -43811,7 +43811,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VerifiedMerchantPaymentMethodTokenListApiResponse"
@@ -43908,7 +43908,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:VerifiedMerchantPaymentMethodTokenApiResponse"
@@ -43939,7 +43939,6 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "paymentMethodType": "PAYMENT_CARD",
                 "paymentMethodData": {
                   "last4Digits": "string",
                   "expirationMonth": "string",
@@ -43956,7 +43955,8 @@
                     "productCode": "string",
                     "productName": "string"
                   }
-                }
+                },
+                "paymentMethodType": "PAYMENT_CARD"
               }
             },
             "snippets": {
@@ -44050,7 +44050,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:MerchantPaymentMethodTokenApiResponse"
@@ -44172,7 +44172,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentsInsightsPayment"
@@ -44182,7 +44182,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentsInsightsPayment"
@@ -44210,12 +44210,6 @@
                   "id": "string",
                   "countryCode": "AW"
                 },
-                "status": "DECLINED",
-                "statusReason": {
-                  "type": "APPLICATION_ERROR",
-                  "declineType": "SOFT_DECLINE",
-                  "code": "ERROR"
-                },
                 "paymentMethod": {
                   "paymentMethodType": "PAYMENT_CARD",
                   "data": {
@@ -44227,6 +44221,12 @@
                   "threeDSecureAuthentication": {
                     "responseCode": "NOT_PERFORMED"
                   }
+                },
+                "status": "DECLINED",
+                "statusReason": {
+                  "type": "APPLICATION_ERROR",
+                  "declineType": "SOFT_DECLINE",
+                  "code": "ERROR"
                 },
                 "paymentType": "FIRST_PAYMENT"
               }
@@ -44245,12 +44245,6 @@
                   "id": "string",
                   "countryCode": "AW"
                 },
-                "status": "DECLINED",
-                "statusReason": {
-                  "type": "APPLICATION_ERROR",
-                  "declineType": "SOFT_DECLINE",
-                  "code": "ERROR"
-                },
                 "paymentMethod": {
                   "paymentMethodType": "PAYMENT_CARD",
                   "data": {
@@ -44263,6 +44257,12 @@
                     "responseCode": "NOT_PERFORMED"
                   }
                 },
+                "status": "DECLINED",
+                "statusReason": {
+                  "type": "APPLICATION_ERROR",
+                  "declineType": "SOFT_DECLINE",
+                  "code": "ERROR"
+                },
                 "paymentType": "FIRST_PAYMENT"
               }
             },
@@ -44270,7 +44270,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/observability/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"paymentId\": \"string\",\n  \"currencyCode\": \"AED\",\n  \"processor\": {\n    \"name\": \"APAYA\"\n  },\n  \"amount\": 1,\n  \"createdAt\": \"2024-01-15T09:30:00Z\",\n  \"order\": {\n    \"id\": \"string\",\n    \"countryCode\": \"AW\"\n  },\n  \"status\": \"DECLINED\",\n  \"statusReason\": {\n    \"type\": \"APPLICATION_ERROR\",\n    \"declineType\": \"SOFT_DECLINE\",\n    \"code\": \"ERROR\"\n  },\n  \"paymentMethod\": {\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"data\": {\n      \"binData\": {\n        \"network\": \"AMEX\",\n        \"issuerCountryCode\": \"AW\"\n      }\n    },\n    \"threeDSecureAuthentication\": {\n      \"responseCode\": \"NOT_PERFORMED\"\n    }\n  },\n  \"paymentType\": \"FIRST_PAYMENT\"\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/observability/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"paymentId\": \"string\",\n  \"currencyCode\": \"AED\",\n  \"processor\": {\n    \"name\": \"APAYA\"\n  },\n  \"amount\": 1,\n  \"createdAt\": \"2024-01-15T09:30:00Z\",\n  \"order\": {\n    \"id\": \"string\",\n    \"countryCode\": \"AW\"\n  },\n  \"paymentMethod\": {\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"data\": {\n      \"binData\": {\n        \"network\": \"AMEX\",\n        \"issuerCountryCode\": \"AW\"\n      }\n    },\n    \"threeDSecureAuthentication\": {\n      \"responseCode\": \"NOT_PERFORMED\"\n    }\n  },\n  \"status\": \"DECLINED\",\n  \"statusReason\": {\n    \"type\": \"APPLICATION_ERROR\",\n    \"declineType\": \"SOFT_DECLINE\",\n    \"code\": \"ERROR\"\n  },\n  \"paymentType\": \"FIRST_PAYMENT\"\n}'",
                   "generated": true
                 }
               ]
@@ -44473,7 +44473,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentsInsightsPayment"
@@ -44535,12 +44535,6 @@
                   "id": "string",
                   "countryCode": "AW"
                 },
-                "status": "DECLINED",
-                "statusReason": {
-                  "type": "APPLICATION_ERROR",
-                  "declineType": "SOFT_DECLINE",
-                  "code": "ERROR"
-                },
                 "paymentMethod": {
                   "paymentMethodType": "PAYMENT_CARD",
                   "data": {
@@ -44552,6 +44546,12 @@
                   "threeDSecureAuthentication": {
                     "responseCode": "NOT_PERFORMED"
                   }
+                },
+                "status": "DECLINED",
+                "statusReason": {
+                  "type": "APPLICATION_ERROR",
+                  "declineType": "SOFT_DECLINE",
+                  "code": "ERROR"
                 },
                 "paymentType": "FIRST_PAYMENT"
               }
@@ -44622,7 +44622,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:LoyaltyApiBalanceResponse"
@@ -44796,7 +44796,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:LoyaltyApiTransactionsListResponse"
@@ -45019,7 +45019,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:LoyaltyApiTransactionResponse"
@@ -45061,8 +45061,8 @@
                 "connectionId": "string",
                 "customerId": "string",
                 "orderId": "string",
-                "type": "REDEMPTION",
-                "value": 1
+                "value": 1,
+                "type": "REDEMPTION"
               }
             },
             "responseBody": {
@@ -45083,7 +45083,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/loyalty-transactions \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"connectionId\": \"string\",\n  \"customerId\": \"string\",\n  \"orderId\": \"string\",\n  \"type\": \"REDEMPTION\",\n  \"value\": 1\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/loyalty-transactions \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"connectionId\": \"string\",\n  \"customerId\": \"string\",\n  \"orderId\": \"string\",\n  \"value\": 1,\n  \"type\": \"REDEMPTION\"\n}'",
                   "generated": true
                 }
               ]
@@ -55315,7 +55315,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClientSessionApiResponse"
@@ -55852,7 +55852,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentListApiResponse"
@@ -56100,7 +56100,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -56139,6 +56139,7 @@
             "requestBody": {
               "type": "json",
               "value": {
+                "paymentMethodToken": "string",
                 "order": {
                   "countryCode": "AW",
                   "fees": [
@@ -56158,7 +56159,6 @@
                   ],
                   "shipping": {}
                 },
-                "paymentMethodToken": "string",
                 "customer": {
                   "billingAddress": {
                     "countryCode": "AW"
@@ -56279,7 +56279,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.sandbox.primer.io/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"order\": {\n    \"countryCode\": \"AW\",\n    \"fees\": [\n      {\n        \"amount\": 1,\n        \"type\": \"string\"\n      }\n    ],\n    \"lineItems\": [\n      {\n        \"itemId\": \"string\",\n        \"description\": \"string\",\n        \"amount\": 1,\n        \"quantity\": 1,\n        \"productType\": \"PHYSICAL\"\n      }\n    ],\n    \"shipping\": {}\n  },\n  \"paymentMethodToken\": \"string\",\n  \"customer\": {\n    \"billingAddress\": {\n      \"countryCode\": \"AW\"\n    },\n    \"shippingAddress\": {\n      \"countryCode\": \"AW\"\n    }\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"FIRST_PAYMENT\"\n  }\n}'",
+                  "code": "curl -X POST https://api.sandbox.primer.io/payments \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"paymentMethodToken\": \"string\",\n  \"order\": {\n    \"countryCode\": \"AW\",\n    \"fees\": [\n      {\n        \"amount\": 1,\n        \"type\": \"string\"\n      }\n    ],\n    \"lineItems\": [\n      {\n        \"itemId\": \"string\",\n        \"description\": \"string\",\n        \"amount\": 1,\n        \"quantity\": 1,\n        \"productType\": \"PHYSICAL\"\n      }\n    ],\n    \"shipping\": {}\n  },\n  \"customer\": {\n    \"billingAddress\": {\n      \"countryCode\": \"AW\"\n    },\n    \"shippingAddress\": {\n      \"countryCode\": \"AW\"\n    }\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"FIRST_PAYMENT\"\n  }\n}'",
                   "generated": true
                 }
               ]
@@ -56449,7 +56449,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -56755,7 +56755,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -57044,7 +57044,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -57332,7 +57332,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -57556,7 +57556,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PaymentApiResponse"
@@ -57791,7 +57791,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:MerchantPaymentMethodTokenApiResponse"
@@ -57920,7 +57920,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:MerchantPaymentMethodTokenListApiResponse"
@@ -58006,7 +58006,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:MerchantPaymentMethodTokenApiResponse"
@@ -58131,7 +58131,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:MerchantPaymentMethodTokenApiResponse"

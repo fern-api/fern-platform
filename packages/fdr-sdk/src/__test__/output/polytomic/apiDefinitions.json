@@ -27,7 +27,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -87,11 +87,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -132,7 +132,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -204,11 +204,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -338,7 +338,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -442,11 +442,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -592,7 +592,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -720,11 +720,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -836,7 +836,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -948,11 +948,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -1195,7 +1195,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -1347,11 +1347,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -1488,7 +1488,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -1560,11 +1560,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -1631,7 +1631,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -1703,11 +1703,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -1819,7 +1819,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -1899,11 +1899,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -1989,7 +1989,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -2077,11 +2077,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -2250,7 +2250,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -2346,11 +2346,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -2519,7 +2519,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -2591,11 +2591,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -2668,7 +2668,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -2734,11 +2734,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -2811,7 +2811,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -2877,11 +2877,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -3011,7 +3011,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -3085,11 +3085,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -3130,7 +3130,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -3214,11 +3214,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -3326,7 +3326,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -3414,11 +3414,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -3570,7 +3570,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -3722,11 +3722,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -3896,7 +3896,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V1TopLevelResponse"
@@ -3974,11 +3974,11 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "error": "string",
                 "code": 0,
                 "context": {
                   "string": {}
                 },
-                "error": "string",
                 "status": "string"
               }
             },
@@ -4255,7 +4255,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncDestEnvelope"
@@ -4537,7 +4537,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncSourceEnvelope"
@@ -4778,7 +4778,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncListEnvelope"
@@ -5135,7 +5135,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncResponseEnvelope"
@@ -5228,9 +5228,9 @@
                     "248df4b7-aa70-47b8-a036-33ac447e668d"
                   ],
                   "schedule": {
+                    "frequency": "manual",
                     "day_of_month": "1",
                     "day_of_week": "monday",
-                    "frequency": "manual",
                     "hour": "0",
                     "minute": "0",
                     "month": "1",
@@ -5462,7 +5462,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncResponseEnvelope"
@@ -5524,9 +5524,9 @@
                     "248df4b7-aa70-47b8-a036-33ac447e668d"
                   ],
                   "schedule": {
+                    "frequency": "manual",
                     "day_of_month": "1",
                     "day_of_week": "monday",
-                    "frequency": "manual",
                     "hour": "0",
                     "minute": "0",
                     "month": "1",
@@ -6095,7 +6095,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncResponseEnvelope"
@@ -6202,9 +6202,9 @@
                     "248df4b7-aa70-47b8-a036-33ac447e668d"
                   ],
                   "schedule": {
+                    "frequency": "manual",
                     "day_of_month": "1",
                     "day_of_week": "monday",
-                    "frequency": "manual",
                     "hour": "0",
                     "minute": "0",
                     "month": "1",
@@ -6473,7 +6473,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncInput"
@@ -6483,7 +6483,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncEnvelope"
@@ -6786,7 +6786,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListBulkSchemaEnvelope"
@@ -6986,7 +6986,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListBulkSchemaEnvelope"
@@ -7313,7 +7313,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSchemaEnvelope"
@@ -7530,7 +7530,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSchemaEnvelope"
@@ -7783,7 +7783,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionTypeResponseEnvelope"
@@ -7930,7 +7930,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionListResponseEnvelope"
@@ -8189,7 +8189,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateConnectionResponseEnvelope"
@@ -8523,7 +8523,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionResponseEnvelope"
@@ -9135,7 +9135,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateConnectionResponseEnvelope"
@@ -9525,7 +9525,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionParameterValuesResponseEnvelope"
@@ -9735,7 +9735,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetConnectionMetaEnvelope"
@@ -10057,7 +10057,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelFieldResponse"
@@ -10404,7 +10404,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetConnectionMetaEnvelope"
@@ -10747,7 +10747,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:TargetResponseEnvelope"
@@ -11081,7 +11081,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V2GetEnrichmentInputFieldsResponseEnvelope"
@@ -11343,7 +11343,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateModelRequest"
@@ -11353,7 +11353,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -11675,7 +11675,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelListResponseEnvelope"
@@ -11870,7 +11870,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateModelRequest"
@@ -11880,7 +11880,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -12231,7 +12231,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -12925,7 +12925,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -13293,7 +13293,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSampleResponseEnvelope"
@@ -13605,7 +13605,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EventsEnvelope"
@@ -13804,7 +13804,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EventTypesEnvelope"
@@ -13938,7 +13938,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:JobResponseEnvelope"
@@ -14175,7 +14175,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetIdentityResponseEnvelope"
@@ -14324,7 +14324,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationsEnvelope"
@@ -14549,7 +14549,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationEnvelope"
@@ -14771,7 +14771,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationEnvelope"
@@ -15199,7 +15199,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationEnvelope"
@@ -15433,7 +15433,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListUsersEnvelope"
@@ -15634,7 +15634,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -15880,7 +15880,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -16106,7 +16106,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -16362,7 +16362,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -16630,7 +16630,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:APIKeyResponseEnvelope"
@@ -16829,7 +16829,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListPoliciesResponseEnvelope"
@@ -17026,7 +17026,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PolicyResponseEnvelope"
@@ -17343,7 +17343,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PolicyResponseEnvelope"
@@ -17823,7 +17823,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PolicyResponseEnvelope"
@@ -18137,7 +18137,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleListResponseEnvelope"
@@ -18313,7 +18313,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleResponseEnvelope"
@@ -18622,7 +18622,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleResponseEnvelope"
@@ -19041,7 +19041,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleResponseEnvelope"
@@ -19346,7 +19346,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListModelSyncResponseEnvelope"
@@ -19772,7 +19772,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSyncResponseEnvelope"
@@ -19889,13 +19889,13 @@
                   "id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                   "identity": {
                     "function": "Equality",
-                    "new_field": true,
-                    "remote_field_type_id": "string",
                     "source": {
                       "field": "id",
                       "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                     },
-                    "target": "name"
+                    "target": "name",
+                    "new_field": true,
+                    "remote_field_type_id": "string"
                   },
                   "mode": "create",
                   "name": "Users Sync",
@@ -19941,13 +19941,13 @@
                   },
                   "sync_all_records": false,
                   "target": {
+                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                    "object": "Users",
                     "configuration": {
                       "key": "value"
                     },
-                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     "filter_logic": "filter_logic",
                     "new_name": "new_name",
-                    "object": "Users",
                     "search_values": {
                       "name": "value"
                     }
@@ -20185,7 +20185,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ScheduleOptionResponseEnvelope"
@@ -20345,7 +20345,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSyncResponseEnvelope"
@@ -20428,13 +20428,13 @@
                   "id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                   "identity": {
                     "function": "Equality",
-                    "new_field": true,
-                    "remote_field_type_id": "string",
                     "source": {
                       "field": "id",
                       "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                     },
-                    "target": "name"
+                    "target": "name",
+                    "new_field": true,
+                    "remote_field_type_id": "string"
                   },
                   "mode": "create",
                   "name": "Users Sync",
@@ -20480,13 +20480,13 @@
                   },
                   "sync_all_records": false,
                   "target": {
+                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                    "object": "Users",
                     "configuration": {
                       "key": "value"
                     },
-                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     "filter_logic": "filter_logic",
                     "new_name": "new_name",
-                    "object": "Users",
                     "search_values": {
                       "name": "value"
                     }
@@ -21034,7 +21034,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSyncResponseEnvelope"
@@ -21165,13 +21165,13 @@
                   "id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                   "identity": {
                     "function": "Equality",
-                    "new_field": true,
-                    "remote_field_type_id": "string",
                     "source": {
                       "field": "id",
                       "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                     },
-                    "target": "name"
+                    "target": "name",
+                    "new_field": true,
+                    "remote_field_type_id": "string"
                   },
                   "mode": "create",
                   "name": "Users Sync",
@@ -21217,13 +21217,13 @@
                   },
                   "sync_all_records": false,
                   "target": {
+                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                    "object": "Users",
                     "configuration": {
                       "key": "value"
                     },
-                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     "filter_logic": "filter_logic",
                     "new_name": "new_name",
-                    "object": "Users",
                     "search_values": {
                       "name": "value"
                     }
@@ -21530,7 +21530,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncInput"
@@ -21540,7 +21540,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncEnvelope"
@@ -21853,7 +21853,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:StartModelSyncResponseEnvelope"
@@ -22164,7 +22164,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SyncStatusEnvelope"
@@ -22404,7 +22404,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListExecutionResponseEnvelope"
@@ -22599,7 +22599,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetExecutionResponseEnvelope"
@@ -22853,7 +22853,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ExecutionLogsResponseEnvelope"
@@ -23383,7 +23383,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookListEnvelope"
@@ -23571,7 +23571,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookEnvelope"
@@ -23797,7 +23797,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookEnvelope"
@@ -24187,7 +24187,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookEnvelope"
@@ -29893,7 +29893,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncListEnvelope"
@@ -30316,7 +30316,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncResponseEnvelope"
@@ -30409,9 +30409,9 @@
                     "248df4b7-aa70-47b8-a036-33ac447e668d"
                   ],
                   "schedule": {
+                    "frequency": "manual",
                     "day_of_month": "1",
                     "day_of_week": "monday",
-                    "frequency": "manual",
                     "hour": "0",
                     "minute": "0",
                     "month": "1",
@@ -30753,7 +30753,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncResponseEnvelope"
@@ -30815,9 +30815,9 @@
                     "248df4b7-aa70-47b8-a036-33ac447e668d"
                   ],
                   "schedule": {
+                    "frequency": "manual",
                     "day_of_month": "1",
                     "day_of_week": "monday",
-                    "frequency": "manual",
                     "hour": "0",
                     "minute": "0",
                     "month": "1",
@@ -31205,7 +31205,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncResponseEnvelope"
@@ -31312,9 +31312,9 @@
                     "248df4b7-aa70-47b8-a036-33ac447e668d"
                   ],
                   "schedule": {
+                    "frequency": "manual",
                     "day_of_month": "1",
                     "day_of_week": "monday",
-                    "frequency": "manual",
                     "hour": "0",
                     "minute": "0",
                     "month": "1",
@@ -32072,7 +32072,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncInput"
@@ -32082,7 +32082,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncEnvelope"
@@ -32516,7 +32516,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncExecutionEnvelope"
@@ -32773,7 +32773,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncStatusEnvelope"
@@ -33114,7 +33114,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncSourceEnvelope"
@@ -33487,7 +33487,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncDestEnvelope"
@@ -33870,7 +33870,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListBulkSyncExecutionsEnvelope"
@@ -34131,7 +34131,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncExecutionEnvelope"
@@ -34406,7 +34406,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListBulkSchema"
@@ -34680,7 +34680,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListBulkSchema"
@@ -35081,7 +35081,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSchemaEnvelope"
@@ -35385,7 +35385,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSchemaEnvelope"
@@ -35756,7 +35756,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionTypeResponseEnvelope"
@@ -35969,7 +35969,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionListResponseEnvelope"
@@ -36294,7 +36294,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateConnectionResponseEnvelope"
@@ -36823,7 +36823,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectCardResponseEnvelope"
@@ -37130,7 +37130,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionResponseEnvelope"
@@ -37541,7 +37541,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateConnectionResponseEnvelope"
@@ -38506,7 +38506,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionParameterValuesResponseEnvelope"
@@ -38833,7 +38833,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetModelSyncSourceMetaEnvelope"
@@ -39285,7 +39285,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelFieldResponse"
@@ -39740,7 +39740,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetConnectionMetaEnvelope"
@@ -40205,7 +40205,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:TargetResponseEnvelope"
@@ -40595,7 +40595,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListModelSyncResponseEnvelope"
@@ -41109,7 +41109,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSyncResponseEnvelope"
@@ -41226,13 +41226,13 @@
                   "id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                   "identity": {
                     "function": "Equality",
-                    "new_field": true,
-                    "remote_field_type_id": "string",
                     "source": {
                       "field": "id",
                       "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                     },
-                    "target": "name"
+                    "target": "name",
+                    "new_field": true,
+                    "remote_field_type_id": "string"
                   },
                   "mode": "create",
                   "name": "Users Sync",
@@ -41278,13 +41278,13 @@
                   },
                   "sync_all_records": false,
                   "target": {
+                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                    "object": "Users",
                     "configuration": {
                       "key": "value"
                     },
-                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     "filter_logic": "filter_logic",
                     "new_name": "new_name",
-                    "object": "Users",
                     "search_values": {
                       "name": "value"
                     }
@@ -41654,7 +41654,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ScheduleOptionResponseEnvelope"
@@ -41880,7 +41880,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSyncResponseEnvelope"
@@ -41963,13 +41963,13 @@
                   "id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                   "identity": {
                     "function": "Equality",
-                    "new_field": true,
-                    "remote_field_type_id": "string",
                     "source": {
                       "field": "id",
                       "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                     },
-                    "target": "name"
+                    "target": "name",
+                    "new_field": true,
+                    "remote_field_type_id": "string"
                   },
                   "mode": "create",
                   "name": "Users Sync",
@@ -42015,13 +42015,13 @@
                   },
                   "sync_all_records": false,
                   "target": {
+                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                    "object": "Users",
                     "configuration": {
                       "key": "value"
                     },
-                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     "filter_logic": "filter_logic",
                     "new_name": "new_name",
-                    "object": "Users",
                     "search_values": {
                       "name": "value"
                     }
@@ -42434,7 +42434,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSyncResponseEnvelope"
@@ -42565,13 +42565,13 @@
                   "id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                   "identity": {
                     "function": "Equality",
-                    "new_field": true,
-                    "remote_field_type_id": "string",
                     "source": {
                       "field": "id",
                       "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                     },
-                    "target": "name"
+                    "target": "name",
+                    "new_field": true,
+                    "remote_field_type_id": "string"
                   },
                   "mode": "create",
                   "name": "Users Sync",
@@ -42617,13 +42617,13 @@
                   },
                   "sync_all_records": false,
                   "target": {
+                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                    "object": "Users",
                     "configuration": {
                       "key": "value"
                     },
-                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     "filter_logic": "filter_logic",
                     "new_name": "new_name",
-                    "object": "Users",
                     "search_values": {
                       "name": "value"
                     }
@@ -43417,7 +43417,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncInput"
@@ -43427,7 +43427,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncEnvelope"
@@ -43850,7 +43850,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:StartModelSyncResponseEnvelope"
@@ -44293,7 +44293,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SyncStatusEnvelope"
@@ -44957,7 +44957,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncSourceStatusEnvelope"
@@ -45327,7 +45327,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncSourceSchemaEnvelope"
@@ -45713,7 +45713,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SchemaRecordsResponseEnvelope"
@@ -46160,7 +46160,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V2GetEnrichmentInputFieldsResponseEnvelope"
@@ -46532,7 +46532,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateModelRequest"
@@ -46542,7 +46542,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -46974,7 +46974,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelListResponseEnvelope"
@@ -47235,7 +47235,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateModelRequest"
@@ -47245,7 +47245,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -47706,7 +47706,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -48243,7 +48243,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -49076,7 +49076,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSampleResponseEnvelope"
@@ -49388,7 +49388,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EventsEnvelope"
@@ -49675,7 +49675,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EventTypesEnvelope"
@@ -49853,7 +49853,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:JobResponseEnvelope"
@@ -50200,7 +50200,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetIdentityResponseEnvelope"
@@ -50415,7 +50415,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationsEnvelope"
@@ -50706,7 +50706,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationEnvelope"
@@ -51016,7 +51016,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationEnvelope"
@@ -51326,7 +51326,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationEnvelope"
@@ -51920,7 +51920,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListUsersEnvelope"
@@ -52187,7 +52187,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -52521,7 +52521,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -52865,7 +52865,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -53203,7 +53203,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -53535,7 +53535,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:APIKeyResponseEnvelope"
@@ -53822,7 +53822,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListPoliciesResponseEnvelope"
@@ -54085,7 +54085,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PolicyResponseEnvelope"
@@ -54534,7 +54534,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PolicyResponseEnvelope"
@@ -54878,7 +54878,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PolicyResponseEnvelope"
@@ -55658,7 +55658,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleListResponseEnvelope"
@@ -55900,7 +55900,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleResponseEnvelope"
@@ -56341,7 +56341,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleResponseEnvelope"
@@ -56602,7 +56602,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleResponseEnvelope"
@@ -57393,7 +57393,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListExecutionResponseEnvelope"
@@ -57654,7 +57654,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetExecutionResponseEnvelope"
@@ -57996,7 +57996,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ExecutionLogsResponseEnvelope"
@@ -58746,7 +58746,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookListEnvelope"
@@ -59000,7 +59000,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookEnvelope"
@@ -59314,7 +59314,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookEnvelope"
@@ -59587,7 +59587,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookEnvelope"
@@ -66634,7 +66634,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncDestEnvelope"
@@ -67038,7 +67038,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncSourceEnvelope"
@@ -67428,7 +67428,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncSourceSchemaEnvelope"
@@ -67797,7 +67797,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncSourceStatusEnvelope"
@@ -68135,7 +68135,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncListEnvelope"
@@ -68558,7 +68558,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncResponseEnvelope"
@@ -68651,9 +68651,9 @@
                     "248df4b7-aa70-47b8-a036-33ac447e668d"
                   ],
                   "schedule": {
+                    "frequency": "manual",
                     "day_of_month": "1",
                     "day_of_week": "monday",
-                    "frequency": "manual",
                     "hour": "0",
                     "minute": "0",
                     "month": "1",
@@ -68995,7 +68995,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncResponseEnvelope"
@@ -69057,9 +69057,9 @@
                     "248df4b7-aa70-47b8-a036-33ac447e668d"
                   ],
                   "schedule": {
+                    "frequency": "manual",
                     "day_of_month": "1",
                     "day_of_week": "monday",
-                    "frequency": "manual",
                     "hour": "0",
                     "minute": "0",
                     "month": "1",
@@ -69804,7 +69804,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncResponseEnvelope"
@@ -69911,9 +69911,9 @@
                     "248df4b7-aa70-47b8-a036-33ac447e668d"
                   ],
                   "schedule": {
+                    "frequency": "manual",
                     "day_of_month": "1",
                     "day_of_week": "monday",
-                    "frequency": "manual",
                     "hour": "0",
                     "minute": "0",
                     "month": "1",
@@ -70314,7 +70314,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncInput"
@@ -70324,7 +70324,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncEnvelope"
@@ -70758,7 +70758,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncExecutionEnvelope"
@@ -71015,7 +71015,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncStatusEnvelope"
@@ -71343,7 +71343,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListBulkSyncExecutionsEnvelope"
@@ -71604,7 +71604,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSyncExecutionEnvelope"
@@ -71879,7 +71879,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListBulkSchema"
@@ -72153,7 +72153,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListBulkSchema"
@@ -72479,7 +72479,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSchemaEnvelope"
@@ -72783,7 +72783,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:BulkSchemaEnvelope"
@@ -73154,7 +73154,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionTypeResponseEnvelope"
@@ -73367,7 +73367,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionListResponseEnvelope"
@@ -73692,7 +73692,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateConnectionResponseEnvelope"
@@ -74221,7 +74221,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectCardResponseEnvelope"
@@ -74488,7 +74488,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionResponseEnvelope"
@@ -75320,7 +75320,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateConnectionResponseEnvelope"
@@ -75864,7 +75864,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ConnectionParameterValuesResponseEnvelope"
@@ -76162,7 +76162,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetConnectionMetaEnvelope"
@@ -76616,7 +76616,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelFieldResponse"
@@ -77095,7 +77095,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetConnectionMetaEnvelope"
@@ -77570,7 +77570,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:TargetResponseEnvelope"
@@ -78011,7 +78011,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SchemaRecordsResponseEnvelope"
@@ -78458,7 +78458,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:V2GetEnrichmentInputFieldsResponseEnvelope"
@@ -78720,7 +78720,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateModelRequest"
@@ -78730,7 +78730,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -79052,7 +79052,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelListResponseEnvelope"
@@ -79313,7 +79313,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateModelRequest"
@@ -79323,7 +79323,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -79784,7 +79784,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -80676,7 +80676,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelResponseEnvelope"
@@ -81154,7 +81154,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSampleResponseEnvelope"
@@ -81466,7 +81466,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EventsEnvelope"
@@ -81753,7 +81753,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:EventTypesEnvelope"
@@ -81931,7 +81931,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:JobResponseEnvelope"
@@ -82278,7 +82278,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetIdentityResponseEnvelope"
@@ -82448,7 +82448,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationsEnvelope"
@@ -82739,7 +82739,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationEnvelope"
@@ -83049,7 +83049,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationEnvelope"
@@ -83631,7 +83631,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationEnvelope"
@@ -83953,7 +83953,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListUsersEnvelope"
@@ -84220,7 +84220,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -84554,7 +84554,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -84868,7 +84868,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -85212,7 +85212,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UserEnvelope"
@@ -85568,7 +85568,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:APIKeyResponseEnvelope"
@@ -85855,7 +85855,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListPoliciesResponseEnvelope"
@@ -86118,7 +86118,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PolicyResponseEnvelope"
@@ -86567,7 +86567,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PolicyResponseEnvelope"
@@ -87245,7 +87245,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:PolicyResponseEnvelope"
@@ -87691,7 +87691,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleListResponseEnvelope"
@@ -87933,7 +87933,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleResponseEnvelope"
@@ -88374,7 +88374,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleResponseEnvelope"
@@ -88969,7 +88969,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleResponseEnvelope"
@@ -89406,7 +89406,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListModelSyncResponseEnvelope"
@@ -89920,7 +89920,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSyncResponseEnvelope"
@@ -90037,13 +90037,13 @@
                   "id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                   "identity": {
                     "function": "Equality",
-                    "new_field": true,
-                    "remote_field_type_id": "string",
                     "source": {
                       "field": "id",
                       "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                     },
-                    "target": "name"
+                    "target": "name",
+                    "new_field": true,
+                    "remote_field_type_id": "string"
                   },
                   "mode": "create",
                   "name": "Users Sync",
@@ -90089,13 +90089,13 @@
                   },
                   "sync_all_records": false,
                   "target": {
+                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                    "object": "Users",
                     "configuration": {
                       "key": "value"
                     },
-                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     "filter_logic": "filter_logic",
                     "new_name": "new_name",
-                    "object": "Users",
                     "search_values": {
                       "name": "value"
                     }
@@ -90465,7 +90465,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ScheduleOptionResponseEnvelope"
@@ -90691,7 +90691,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSyncResponseEnvelope"
@@ -90774,13 +90774,13 @@
                   "id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                   "identity": {
                     "function": "Equality",
-                    "new_field": true,
-                    "remote_field_type_id": "string",
                     "source": {
                       "field": "id",
                       "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                     },
-                    "target": "name"
+                    "target": "name",
+                    "new_field": true,
+                    "remote_field_type_id": "string"
                   },
                   "mode": "create",
                   "name": "Users Sync",
@@ -90826,13 +90826,13 @@
                   },
                   "sync_all_records": false,
                   "target": {
+                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                    "object": "Users",
                     "configuration": {
                       "key": "value"
                     },
-                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     "filter_logic": "filter_logic",
                     "new_name": "new_name",
-                    "object": "Users",
                     "search_values": {
                       "name": "value"
                     }
@@ -91578,7 +91578,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelSyncResponseEnvelope"
@@ -91709,13 +91709,13 @@
                   "id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                   "identity": {
                     "function": "Equality",
-                    "new_field": true,
-                    "remote_field_type_id": "string",
                     "source": {
                       "field": "id",
                       "model_id": "248df4b7-aa70-47b8-a036-33ac447e668d"
                     },
-                    "target": "name"
+                    "target": "name",
+                    "new_field": true,
+                    "remote_field_type_id": "string"
                   },
                   "mode": "create",
                   "name": "Users Sync",
@@ -91761,13 +91761,13 @@
                   },
                   "sync_all_records": false,
                   "target": {
+                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
+                    "object": "Users",
                     "configuration": {
                       "key": "value"
                     },
-                    "connection_id": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     "filter_logic": "filter_logic",
                     "new_name": "new_name",
-                    "object": "Users",
                     "search_values": {
                       "name": "value"
                     }
@@ -92228,7 +92228,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncInput"
@@ -92238,7 +92238,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ActivateSyncEnvelope"
@@ -92661,7 +92661,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:StartModelSyncResponseEnvelope"
@@ -93104,7 +93104,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SyncStatusEnvelope"
@@ -93432,7 +93432,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ListExecutionResponseEnvelope"
@@ -93693,7 +93693,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:GetExecutionResponseEnvelope"
@@ -94035,7 +94035,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ExecutionLogsResponseEnvelope"
@@ -94635,7 +94635,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookListEnvelope"
@@ -94889,7 +94889,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookEnvelope"
@@ -95203,7 +95203,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookEnvelope"
@@ -95747,7 +95747,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WebhookEnvelope"

@@ -89,7 +89,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:OrganizationsPaginated"
@@ -369,7 +369,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Organization"
@@ -440,18 +440,29 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "billingEmail": "billing@company.com",
                 "createdAt": "2022-11-22T04:37:12Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "id": "clmaxoarx000008l2c5ayb9pt",
                 "isScimEnabled": false,
+                "name": "My organization",
+                "supportPlan": "TRIAL",
+                "updatedAt": "2022-11-22T04:37:12Z",
+                "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
+                  "apiTokenName": "my-token",
+                  "avatarUrl": "https://avatar.url",
+                  "fullName": "Jane Doe",
+                  "subjectType": "USER",
+                  "username": "user1@company.com"
+                },
+                "billingEmail": "billing@company.com",
                 "managedDomains": [
                   {
                     "createdAt": "2024-01-15T09:30:00Z",
@@ -465,21 +476,10 @@
                     "updatedAt": "2024-01-15T09:30:00Z"
                   }
                 ],
-                "name": "My organization",
                 "paymentMethod": "CREDIT_CARD",
                 "product": "HOSTED",
                 "status": "ACTIVE",
-                "supportPlan": "TRIAL",
-                "trialExpiresAt": "2022-11-22T04:37:12Z",
-                "updatedAt": "2022-11-22T04:37:12Z",
-                "updatedBy": {
-                  "apiTokenName": "my-token",
-                  "avatarUrl": "https://avatar.url",
-                  "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
-                  "subjectType": "USER",
-                  "username": "user1@company.com"
-                }
+                "trialExpiresAt": "2022-11-22T04:37:12Z"
               }
             },
             "snippets": {
@@ -715,7 +715,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Organization"
@@ -794,18 +794,29 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "billingEmail": "billing@company.com",
                 "createdAt": "2022-11-22T04:37:12Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "id": "clmaxoarx000008l2c5ayb9pt",
                 "isScimEnabled": false,
+                "name": "My organization",
+                "supportPlan": "TRIAL",
+                "updatedAt": "2022-11-22T04:37:12Z",
+                "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
+                  "apiTokenName": "my-token",
+                  "avatarUrl": "https://avatar.url",
+                  "fullName": "Jane Doe",
+                  "subjectType": "USER",
+                  "username": "user1@company.com"
+                },
+                "billingEmail": "billing@company.com",
                 "managedDomains": [
                   {
                     "createdAt": "2024-01-15T09:30:00Z",
@@ -819,21 +830,10 @@
                     "updatedAt": "2024-01-15T09:30:00Z"
                   }
                 ],
-                "name": "My organization",
                 "paymentMethod": "CREDIT_CARD",
                 "product": "HOSTED",
                 "status": "ACTIVE",
-                "supportPlan": "TRIAL",
-                "trialExpiresAt": "2022-11-22T04:37:12Z",
-                "updatedAt": "2022-11-22T04:37:12Z",
-                "updatedBy": {
-                  "apiTokenName": "my-token",
-                  "avatarUrl": "https://avatar.url",
-                  "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
-                  "subjectType": "USER",
-                  "username": "user1@company.com"
-                }
+                "trialExpiresAt": "2022-11-22T04:37:12Z"
               }
             },
             "snippets": {
@@ -1085,7 +1085,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -1461,7 +1461,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:DeploymentOptions"
@@ -1850,7 +1850,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ClustersPaginated"
@@ -2136,7 +2136,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateClusterRequest"
@@ -2146,7 +2146,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Cluster"
@@ -2241,6 +2241,13 @@
                 "createdAt": "2022-11-22T04:37:12Z",
                 "dbInstanceType": "db.t3.medium",
                 "id": "clm7k8tgw000008jz97i37y81",
+                "name": "my cluster",
+                "organizationId": "clm88r8hi000008jwhzxu5crg",
+                "region": "us-east-1",
+                "status": "CREATING",
+                "type": "DEDICATED",
+                "updatedAt": "2022-11-22T04:37:12Z",
+                "vpcSubnetRange": "172.20.0.0/22",
                 "isLimited": false,
                 "metadata": {
                   "externalIPs": [
@@ -2248,7 +2255,6 @@
                   ],
                   "oidcIssuerUrl": "https://westus2.oic.prod-aks.azure.com/b84efac8-cfae-467a-b223-23b9aea1486d/3075f79e-abc2-4602-a691-28117197e83d/"
                 },
-                "name": "my cluster",
                 "nodePools": [
                   {
                     "cloudProvider": "AWS",
@@ -2265,13 +2271,10 @@
                     "updatedAt": "2022-11-22T04:37:12Z"
                   }
                 ],
-                "organizationId": "clm88r8hi000008jwhzxu5crg",
                 "podSubnetRange": "172.21.0.0/19",
                 "providerAccount": "provider-account",
-                "region": "us-east-1",
                 "servicePeeringRange": "172.23.0.0/20",
                 "serviceSubnetRange": "172.22.0.0/22",
-                "status": "CREATING",
                 "tags": [
                   {
                     "key": "key1",
@@ -2279,9 +2282,6 @@
                   }
                 ],
                 "tenantId": "your-tenant-id",
-                "type": "DEDICATED",
-                "updatedAt": "2022-11-22T04:37:12Z",
-                "vpcSubnetRange": "172.20.0.0/22",
                 "workspaceIds": [
                   "workspaceIds"
                 ]
@@ -2539,7 +2539,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Cluster"
@@ -2615,6 +2615,13 @@
                 "createdAt": "2022-11-22T04:37:12Z",
                 "dbInstanceType": "db.t3.medium",
                 "id": "clm7k8tgw000008jz97i37y81",
+                "name": "my cluster",
+                "organizationId": "clm88r8hi000008jwhzxu5crg",
+                "region": "us-east-1",
+                "status": "CREATING",
+                "type": "DEDICATED",
+                "updatedAt": "2022-11-22T04:37:12Z",
+                "vpcSubnetRange": "172.20.0.0/22",
                 "isLimited": false,
                 "metadata": {
                   "externalIPs": [
@@ -2622,7 +2629,6 @@
                   ],
                   "oidcIssuerUrl": "https://westus2.oic.prod-aks.azure.com/b84efac8-cfae-467a-b223-23b9aea1486d/3075f79e-abc2-4602-a691-28117197e83d/"
                 },
-                "name": "my cluster",
                 "nodePools": [
                   {
                     "cloudProvider": "AWS",
@@ -2639,13 +2645,10 @@
                     "updatedAt": "2022-11-22T04:37:12Z"
                   }
                 ],
-                "organizationId": "clm88r8hi000008jwhzxu5crg",
                 "podSubnetRange": "172.21.0.0/19",
                 "providerAccount": "provider-account",
-                "region": "us-east-1",
                 "servicePeeringRange": "172.23.0.0/20",
                 "serviceSubnetRange": "172.22.0.0/22",
-                "status": "CREATING",
                 "tags": [
                   {
                     "key": "key1",
@@ -2653,9 +2656,6 @@
                   }
                 ],
                 "tenantId": "your-tenant-id",
-                "type": "DEDICATED",
-                "updatedAt": "2022-11-22T04:37:12Z",
-                "vpcSubnetRange": "172.20.0.0/22",
                 "workspaceIds": [
                   "workspaceIds"
                 ]
@@ -2868,7 +2868,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UpdateClusterRequest"
@@ -2878,7 +2878,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Cluster"
@@ -2964,6 +2964,13 @@
                 "createdAt": "2023-01-01T00:00:00Z",
                 "dbInstanceType": "string",
                 "id": "string",
+                "name": "string",
+                "organizationId": "string",
+                "region": "string",
+                "status": "CREATING",
+                "type": "DEDICATED",
+                "updatedAt": "2023-01-01T00:00:00Z",
+                "vpcSubnetRange": "string",
                 "isLimited": true,
                 "metadata": {
                   "externalIPs": [
@@ -2971,7 +2978,6 @@
                   ],
                   "oidcIssuerUrl": "string"
                 },
-                "name": "string",
                 "nodePools": [
                   {
                     "cloudProvider": "AWS",
@@ -2988,13 +2994,10 @@
                     "updatedAt": "2023-01-01T00:00:00Z"
                   }
                 ],
-                "organizationId": "string",
                 "podSubnetRange": "string",
                 "providerAccount": "string",
-                "region": "string",
                 "servicePeeringRange": "string",
                 "serviceSubnetRange": "string",
-                "status": "CREATING",
                 "tags": [
                   {
                     "key": "string",
@@ -3002,9 +3005,6 @@
                   }
                 ],
                 "tenantId": "string",
-                "type": "DEDICATED",
-                "updatedAt": "2023-01-01T00:00:00Z",
-                "vpcSubnetRange": "string",
                 "workspaceIds": [
                   "string"
                 ]
@@ -3597,7 +3597,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:DeploymentsPaginated"
@@ -3930,7 +3930,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:CreateDeploymentRequest"
@@ -3940,7 +3940,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Deployment"
@@ -4042,21 +4042,49 @@
               "value": {
                 "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
                 "astroRuntimeVersion": "9.1.0",
+                "createdAt": "2022-11-22T04:37:12Z",
+                "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
+                  "apiTokenName": "my-token",
+                  "avatarUrl": "https://avatar.url",
+                  "fullName": "Jane Doe",
+                  "subjectType": "USER",
+                  "username": "user1@company.com"
+                },
+                "id": "clmh57jtm000008lb58fe2wmv",
+                "imageRepository": "https://my-image-repository",
+                "imageTag": "my-image-tag",
+                "isCicdEnforced": true,
+                "isDagDeployEnabled": true,
+                "name": "My deployment",
+                "namespace": "weightless-diameter-8927",
+                "organizationId": "clmh59gt0000308lbgswe5fvh",
+                "runtimeVersion": "9.1.0",
+                "schedulerCpu": "1",
+                "schedulerMemory": "1Gi",
+                "schedulerReplicas": 1,
+                "status": "CREATING",
+                "updatedAt": "2022-11-22T04:37:12Z",
+                "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
+                  "apiTokenName": "my-token",
+                  "avatarUrl": "https://avatar.url",
+                  "fullName": "Jane Doe",
+                  "subjectType": "USER",
+                  "username": "user1@company.com"
+                },
+                "webServerAirflowApiUrl": "myorganization.astronomer-dev.run/d8fe2wmv/api/v1",
+                "webServerCpu": "0.5",
+                "webServerIngressHostname": "clmh597sg000208lb2kjhcn8q.astronomer.run/d8fe2wmv",
+                "webServerMemory": "0.5Gi",
+                "webServerUrl": "myorganization.astronomer-dev.run/d8fe2wmv?orgId=org_edxLzpFcLrgEfpD5",
+                "workspaceId": "clmh58o7d000108lb74ktc9o64",
                 "cloudProvider": "AWS",
                 "clusterId": "clmh597sg000208lb2kjhcn8q",
                 "clusterName": "my cluster",
                 "contactEmails": [
                   "contactEmails"
                 ],
-                "createdAt": "2022-11-22T04:37:12Z",
-                "createdBy": {
-                  "apiTokenName": "my-token",
-                  "avatarUrl": "https://avatar.url",
-                  "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
-                  "subjectType": "USER",
-                  "username": "user1@company.com"
-                },
                 "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
                 "defaultTaskPodCpu": "0.5",
                 "defaultTaskPodMemory": "1Gi",
@@ -4074,22 +4102,13 @@
                 "externalIPs": [
                   "externalIPs"
                 ],
-                "id": "clmh57jtm000008lb58fe2wmv",
-                "imageRepository": "https://my-image-repository",
-                "imageTag": "my-image-tag",
                 "imageVersion": "deploy-2023-09-14T19-04",
-                "isCicdEnforced": true,
-                "isDagDeployEnabled": true,
                 "isDevelopmentMode": true,
                 "isHighAvailability": true,
-                "name": "My deployment",
-                "namespace": "weightless-diameter-8927",
                 "oidcIssuerUrl": "https://westus2.oic.prod-aks.azure.com/b84efac8-cfee-467a-b223-23b9aea1486d/3075f79e-abc2-4602-a691-28117197e83d/",
-                "organizationId": "clmh59gt0000308lbgswe5fvh",
                 "region": "us-east-1",
                 "resourceQuotaCpu": "160",
                 "resourceQuotaMemory": "320Gi",
-                "runtimeVersion": "9.1.0",
                 "scalingSpec": {
                   "hibernationSpec": {
                     "schedules": [
@@ -4110,29 +4129,11 @@
                   }
                 },
                 "schedulerAu": 5,
-                "schedulerCpu": "1",
-                "schedulerMemory": "1Gi",
-                "schedulerReplicas": 1,
                 "schedulerSize": "SMALL",
-                "status": "CREATING",
                 "statusReason": "Successfully Deployed",
                 "taskPodNodePoolId": "clmh5mash000008mia6lnbs0f",
                 "type": "DEDICATED",
-                "updatedAt": "2022-11-22T04:37:12Z",
-                "updatedBy": {
-                  "apiTokenName": "my-token",
-                  "avatarUrl": "https://avatar.url",
-                  "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
-                  "subjectType": "USER",
-                  "username": "user1@company.com"
-                },
-                "webServerAirflowApiUrl": "myorganization.astronomer-dev.run/d8fe2wmv/api/v1",
-                "webServerCpu": "0.5",
-                "webServerIngressHostname": "clmh597sg000208lb2kjhcn8q.astronomer.run/d8fe2wmv",
-                "webServerMemory": "0.5Gi",
                 "webServerReplicas": 1,
-                "webServerUrl": "myorganization.astronomer-dev.run/d8fe2wmv?orgId=org_edxLzpFcLrgEfpD5",
                 "workerQueues": [
                   {
                     "astroMachine": "A5",
@@ -4148,7 +4149,6 @@
                   }
                 ],
                 "workloadIdentity": "workloadIdentity",
-                "workspaceId": "clmh58o7d000108lb74ktc9o64",
                 "workspaceName": "my-workspace"
               }
             },
@@ -4404,7 +4404,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Deployment"
@@ -4478,21 +4478,49 @@
               "value": {
                 "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
                 "astroRuntimeVersion": "9.1.0",
+                "createdAt": "2022-11-22T04:37:12Z",
+                "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
+                  "apiTokenName": "my-token",
+                  "avatarUrl": "https://avatar.url",
+                  "fullName": "Jane Doe",
+                  "subjectType": "USER",
+                  "username": "user1@company.com"
+                },
+                "id": "clmh57jtm000008lb58fe2wmv",
+                "imageRepository": "https://my-image-repository",
+                "imageTag": "my-image-tag",
+                "isCicdEnforced": true,
+                "isDagDeployEnabled": true,
+                "name": "My deployment",
+                "namespace": "weightless-diameter-8927",
+                "organizationId": "clmh59gt0000308lbgswe5fvh",
+                "runtimeVersion": "9.1.0",
+                "schedulerCpu": "1",
+                "schedulerMemory": "1Gi",
+                "schedulerReplicas": 1,
+                "status": "CREATING",
+                "updatedAt": "2022-11-22T04:37:12Z",
+                "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
+                  "apiTokenName": "my-token",
+                  "avatarUrl": "https://avatar.url",
+                  "fullName": "Jane Doe",
+                  "subjectType": "USER",
+                  "username": "user1@company.com"
+                },
+                "webServerAirflowApiUrl": "myorganization.astronomer-dev.run/d8fe2wmv/api/v1",
+                "webServerCpu": "0.5",
+                "webServerIngressHostname": "clmh597sg000208lb2kjhcn8q.astronomer.run/d8fe2wmv",
+                "webServerMemory": "0.5Gi",
+                "webServerUrl": "myorganization.astronomer-dev.run/d8fe2wmv?orgId=org_edxLzpFcLrgEfpD5",
+                "workspaceId": "clmh58o7d000108lb74ktc9o64",
                 "cloudProvider": "AWS",
                 "clusterId": "clmh597sg000208lb2kjhcn8q",
                 "clusterName": "my cluster",
                 "contactEmails": [
                   "contactEmails"
                 ],
-                "createdAt": "2022-11-22T04:37:12Z",
-                "createdBy": {
-                  "apiTokenName": "my-token",
-                  "avatarUrl": "https://avatar.url",
-                  "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
-                  "subjectType": "USER",
-                  "username": "user1@company.com"
-                },
                 "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
                 "defaultTaskPodCpu": "0.5",
                 "defaultTaskPodMemory": "1Gi",
@@ -4510,22 +4538,13 @@
                 "externalIPs": [
                   "externalIPs"
                 ],
-                "id": "clmh57jtm000008lb58fe2wmv",
-                "imageRepository": "https://my-image-repository",
-                "imageTag": "my-image-tag",
                 "imageVersion": "deploy-2023-09-14T19-04",
-                "isCicdEnforced": true,
-                "isDagDeployEnabled": true,
                 "isDevelopmentMode": true,
                 "isHighAvailability": true,
-                "name": "My deployment",
-                "namespace": "weightless-diameter-8927",
                 "oidcIssuerUrl": "https://westus2.oic.prod-aks.azure.com/b84efac8-cfee-467a-b223-23b9aea1486d/3075f79e-abc2-4602-a691-28117197e83d/",
-                "organizationId": "clmh59gt0000308lbgswe5fvh",
                 "region": "us-east-1",
                 "resourceQuotaCpu": "160",
                 "resourceQuotaMemory": "320Gi",
-                "runtimeVersion": "9.1.0",
                 "scalingSpec": {
                   "hibernationSpec": {
                     "schedules": [
@@ -4546,29 +4565,11 @@
                   }
                 },
                 "schedulerAu": 5,
-                "schedulerCpu": "1",
-                "schedulerMemory": "1Gi",
-                "schedulerReplicas": 1,
                 "schedulerSize": "SMALL",
-                "status": "CREATING",
                 "statusReason": "Successfully Deployed",
                 "taskPodNodePoolId": "clmh5mash000008mia6lnbs0f",
                 "type": "DEDICATED",
-                "updatedAt": "2022-11-22T04:37:12Z",
-                "updatedBy": {
-                  "apiTokenName": "my-token",
-                  "avatarUrl": "https://avatar.url",
-                  "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
-                  "subjectType": "USER",
-                  "username": "user1@company.com"
-                },
-                "webServerAirflowApiUrl": "myorganization.astronomer-dev.run/d8fe2wmv/api/v1",
-                "webServerCpu": "0.5",
-                "webServerIngressHostname": "clmh597sg000208lb2kjhcn8q.astronomer.run/d8fe2wmv",
-                "webServerMemory": "0.5Gi",
                 "webServerReplicas": 1,
-                "webServerUrl": "myorganization.astronomer-dev.run/d8fe2wmv?orgId=org_edxLzpFcLrgEfpD5",
                 "workerQueues": [
                   {
                     "astroMachine": "A5",
@@ -4584,7 +4585,6 @@
                   }
                 ],
                 "workloadIdentity": "workloadIdentity",
-                "workspaceId": "clmh58o7d000108lb74ktc9o64",
                 "workspaceName": "my-workspace"
               }
             },
@@ -4795,7 +4795,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UpdateDeploymentRequest"
@@ -4805,7 +4805,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Deployment"
@@ -4916,21 +4916,49 @@
               "value": {
                 "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
                 "astroRuntimeVersion": "9.1.0",
+                "createdAt": "2022-11-22T04:37:12Z",
+                "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
+                  "apiTokenName": "my-token",
+                  "avatarUrl": "https://avatar.url",
+                  "fullName": "Jane Doe",
+                  "subjectType": "USER",
+                  "username": "user1@company.com"
+                },
+                "id": "clmh57jtm000008lb58fe2wmv",
+                "imageRepository": "https://my-image-repository",
+                "imageTag": "my-image-tag",
+                "isCicdEnforced": true,
+                "isDagDeployEnabled": true,
+                "name": "My deployment",
+                "namespace": "weightless-diameter-8927",
+                "organizationId": "clmh59gt0000308lbgswe5fvh",
+                "runtimeVersion": "9.1.0",
+                "schedulerCpu": "1",
+                "schedulerMemory": "1Gi",
+                "schedulerReplicas": 1,
+                "status": "CREATING",
+                "updatedAt": "2022-11-22T04:37:12Z",
+                "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
+                  "apiTokenName": "my-token",
+                  "avatarUrl": "https://avatar.url",
+                  "fullName": "Jane Doe",
+                  "subjectType": "USER",
+                  "username": "user1@company.com"
+                },
+                "webServerAirflowApiUrl": "myorganization.astronomer-dev.run/d8fe2wmv/api/v1",
+                "webServerCpu": "0.5",
+                "webServerIngressHostname": "clmh597sg000208lb2kjhcn8q.astronomer.run/d8fe2wmv",
+                "webServerMemory": "0.5Gi",
+                "webServerUrl": "myorganization.astronomer-dev.run/d8fe2wmv?orgId=org_edxLzpFcLrgEfpD5",
+                "workspaceId": "clmh58o7d000108lb74ktc9o64",
                 "cloudProvider": "AWS",
                 "clusterId": "clmh597sg000208lb2kjhcn8q",
                 "clusterName": "my cluster",
                 "contactEmails": [
                   "contactEmails"
                 ],
-                "createdAt": "2022-11-22T04:37:12Z",
-                "createdBy": {
-                  "apiTokenName": "my-token",
-                  "avatarUrl": "https://avatar.url",
-                  "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
-                  "subjectType": "USER",
-                  "username": "user1@company.com"
-                },
                 "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
                 "defaultTaskPodCpu": "0.5",
                 "defaultTaskPodMemory": "1Gi",
@@ -4948,22 +4976,13 @@
                 "externalIPs": [
                   "externalIPs"
                 ],
-                "id": "clmh57jtm000008lb58fe2wmv",
-                "imageRepository": "https://my-image-repository",
-                "imageTag": "my-image-tag",
                 "imageVersion": "deploy-2023-09-14T19-04",
-                "isCicdEnforced": true,
-                "isDagDeployEnabled": true,
                 "isDevelopmentMode": true,
                 "isHighAvailability": true,
-                "name": "My deployment",
-                "namespace": "weightless-diameter-8927",
                 "oidcIssuerUrl": "https://westus2.oic.prod-aks.azure.com/b84efac8-cfee-467a-b223-23b9aea1486d/3075f79e-abc2-4602-a691-28117197e83d/",
-                "organizationId": "clmh59gt0000308lbgswe5fvh",
                 "region": "us-east-1",
                 "resourceQuotaCpu": "160",
                 "resourceQuotaMemory": "320Gi",
-                "runtimeVersion": "9.1.0",
                 "scalingSpec": {
                   "hibernationSpec": {
                     "schedules": [
@@ -4984,29 +5003,11 @@
                   }
                 },
                 "schedulerAu": 5,
-                "schedulerCpu": "1",
-                "schedulerMemory": "1Gi",
-                "schedulerReplicas": 1,
                 "schedulerSize": "SMALL",
-                "status": "CREATING",
                 "statusReason": "Successfully Deployed",
                 "taskPodNodePoolId": "clmh5mash000008mia6lnbs0f",
                 "type": "DEDICATED",
-                "updatedAt": "2022-11-22T04:37:12Z",
-                "updatedBy": {
-                  "apiTokenName": "my-token",
-                  "avatarUrl": "https://avatar.url",
-                  "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
-                  "subjectType": "USER",
-                  "username": "user1@company.com"
-                },
-                "webServerAirflowApiUrl": "myorganization.astronomer-dev.run/d8fe2wmv/api/v1",
-                "webServerCpu": "0.5",
-                "webServerIngressHostname": "clmh597sg000208lb2kjhcn8q.astronomer.run/d8fe2wmv",
-                "webServerMemory": "0.5Gi",
                 "webServerReplicas": 1,
-                "webServerUrl": "myorganization.astronomer-dev.run/d8fe2wmv?orgId=org_edxLzpFcLrgEfpD5",
                 "workerQueues": [
                   {
                     "astroMachine": "A5",
@@ -5022,7 +5023,6 @@
                   }
                 ],
                 "workloadIdentity": "workloadIdentity",
-                "workspaceId": "clmh58o7d000108lb74ktc9o64",
                 "workspaceName": "my-workspace"
               }
             },
@@ -5649,7 +5649,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:DeploymentHibernationOverride"
@@ -5866,7 +5866,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:DeploysPaginated"
@@ -6232,7 +6232,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Deploy"
@@ -6304,41 +6304,41 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "description": "My deploy description",
-                "type": "IMAGE_AND_DAG"
+                "type": "IMAGE_AND_DAG",
+                "description": "My deploy description"
               }
             },
             "responseBody": {
               "type": "json",
               "value": {
+                "createdAt": "2022-11-22T04:37:12Z",
+                "deploymentId": "clmh57jtm000008lb58fe2wmv",
+                "id": "clvetru2w000201mowqwua63n",
+                "imageRepository": "https://my-image-repository",
+                "imageTag": "my-image-tag",
+                "isDagDeployEnabled": true,
+                "status": "INITIALIZED",
+                "type": "IMAGE_AND_DAG",
                 "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
                 "astroRuntimeVersion": "9.1.0",
-                "createdAt": "2022-11-22T04:37:12Z",
                 "createdBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
                 "dagsUploadUrl": "https://astroproddagdeploy.windows.core.net/clmh59gt0000308lbgswe5fvh/clmh57jtm000008lb58fe2wmv",
-                "deploymentId": "clmh57jtm000008lb58fe2wmv",
                 "description": "My deploy description",
-                "id": "clvetru2w000201mowqwua63n",
-                "imageRepository": "https://my-image-repository",
-                "imageTag": "my-image-tag",
-                "isDagDeployEnabled": true,
                 "rollbackFromId": "clvcz1lrq000101oitxtp276e",
-                "status": "INITIALIZED",
-                "type": "IMAGE_AND_DAG",
                 "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -6348,7 +6348,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments/deploymentId/deploys \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"description\": \"My deploy description\",\n  \"type\": \"IMAGE_AND_DAG\"\n}'",
+                  "code": "curl -X POST https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments/deploymentId/deploys \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"type\": \"IMAGE_AND_DAG\",\n  \"description\": \"My deploy description\"\n}'",
                   "generated": true
                 }
               ]
@@ -6599,7 +6599,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Deploy"
@@ -6672,34 +6672,34 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "createdAt": "2022-11-22T04:37:12Z",
+                "deploymentId": "clmh57jtm000008lb58fe2wmv",
+                "id": "clvetru2w000201mowqwua63n",
+                "imageRepository": "https://my-image-repository",
+                "imageTag": "my-image-tag",
+                "isDagDeployEnabled": true,
+                "status": "INITIALIZED",
+                "type": "IMAGE_AND_DAG",
                 "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
                 "astroRuntimeVersion": "9.1.0",
-                "createdAt": "2022-11-22T04:37:12Z",
                 "createdBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
                 "dagsUploadUrl": "https://astroproddagdeploy.windows.core.net/clmh59gt0000308lbgswe5fvh/clmh57jtm000008lb58fe2wmv",
-                "deploymentId": "clmh57jtm000008lb58fe2wmv",
                 "description": "My deploy description",
-                "id": "clvetru2w000201mowqwua63n",
-                "imageRepository": "https://my-image-repository",
-                "imageTag": "my-image-tag",
-                "isDagDeployEnabled": true,
                 "rollbackFromId": "clvcz1lrq000101oitxtp276e",
-                "status": "INITIALIZED",
-                "type": "IMAGE_AND_DAG",
                 "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -6957,7 +6957,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Deploy"
@@ -7036,34 +7036,34 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "createdAt": "2022-11-22T04:37:12Z",
+                "deploymentId": "clmh57jtm000008lb58fe2wmv",
+                "id": "clvetru2w000201mowqwua63n",
+                "imageRepository": "https://my-image-repository",
+                "imageTag": "my-image-tag",
+                "isDagDeployEnabled": true,
+                "status": "INITIALIZED",
+                "type": "IMAGE_AND_DAG",
                 "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
                 "astroRuntimeVersion": "9.1.0",
-                "createdAt": "2022-11-22T04:37:12Z",
                 "createdBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
                 "dagsUploadUrl": "https://astroproddagdeploy.windows.core.net/clmh59gt0000308lbgswe5fvh/clmh57jtm000008lb58fe2wmv",
-                "deploymentId": "clmh57jtm000008lb58fe2wmv",
                 "description": "My deploy description",
-                "id": "clvetru2w000201mowqwua63n",
-                "imageRepository": "https://my-image-repository",
-                "imageTag": "my-image-tag",
-                "isDagDeployEnabled": true,
                 "rollbackFromId": "clvcz1lrq000101oitxtp276e",
-                "status": "INITIALIZED",
-                "type": "IMAGE_AND_DAG",
                 "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -7345,7 +7345,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Deploy"
@@ -7412,34 +7412,34 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "createdAt": "2022-11-22T04:37:12Z",
+                "deploymentId": "clmh57jtm000008lb58fe2wmv",
+                "id": "clvetru2w000201mowqwua63n",
+                "imageRepository": "https://my-image-repository",
+                "imageTag": "my-image-tag",
+                "isDagDeployEnabled": true,
+                "status": "INITIALIZED",
+                "type": "IMAGE_AND_DAG",
                 "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
                 "astroRuntimeVersion": "9.1.0",
-                "createdAt": "2022-11-22T04:37:12Z",
                 "createdBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
                 "dagsUploadUrl": "https://astroproddagdeploy.windows.core.net/clmh59gt0000308lbgswe5fvh/clmh57jtm000008lb58fe2wmv",
-                "deploymentId": "clmh57jtm000008lb58fe2wmv",
                 "description": "My deploy description",
-                "id": "clvetru2w000201mowqwua63n",
-                "imageRepository": "https://my-image-repository",
-                "imageTag": "my-image-tag",
-                "isDagDeployEnabled": true,
                 "rollbackFromId": "clvcz1lrq000101oitxtp276e",
-                "status": "INITIALIZED",
-                "type": "IMAGE_AND_DAG",
                 "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -7688,7 +7688,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Deploy"
@@ -7765,34 +7765,34 @@
             "responseBody": {
               "type": "json",
               "value": {
+                "createdAt": "2022-11-22T04:37:12Z",
+                "deploymentId": "clmh57jtm000008lb58fe2wmv",
+                "id": "clvetru2w000201mowqwua63n",
+                "imageRepository": "https://my-image-repository",
+                "imageTag": "my-image-tag",
+                "isDagDeployEnabled": true,
+                "status": "INITIALIZED",
+                "type": "IMAGE_AND_DAG",
                 "airflowVersion": "2.7.2, if airflow version is not found, it will return NA",
                 "astroRuntimeVersion": "9.1.0",
-                "createdAt": "2022-11-22T04:37:12Z",
                 "createdBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "dagTarballVersion": "2024-01-12T18:32:20.5898930Z",
                 "dagsUploadUrl": "https://astroproddagdeploy.windows.core.net/clmh59gt0000308lbgswe5fvh/clmh57jtm000008lb58fe2wmv",
-                "deploymentId": "clmh57jtm000008lb58fe2wmv",
                 "description": "My deploy description",
-                "id": "clvetru2w000201mowqwua63n",
-                "imageRepository": "https://my-image-repository",
-                "imageTag": "my-image-tag",
-                "isDagDeployEnabled": true,
                 "rollbackFromId": "clvcz1lrq000101oitxtp276e",
-                "status": "INITIALIZED",
-                "type": "IMAGE_AND_DAG",
                 "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBySubject": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -8081,7 +8081,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:WorkspacesPaginated"
@@ -8392,7 +8392,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Workspace"
@@ -8463,9 +8463,9 @@
             "requestBody": {
               "type": "json",
               "value": {
+                "name": "My Workspace",
                 "cicdEnforcedDefault": true,
-                "description": "This is a test workspace",
-                "name": "My Workspace"
+                "description": "This is a test workspace"
               }
             },
             "responseBody": {
@@ -8473,25 +8473,25 @@
               "value": {
                 "cicdEnforcedDefault": true,
                 "createdAt": "2023-09-08T12:00:00Z",
+                "id": "clm8t5u4q000008jq4qoc3036",
+                "name": "My Workspace",
+                "organizationId": "clm8t5u4q000008jq4qoc3036",
+                "updatedAt": "2023-09-08T13:30:00Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "description": "This is a test workspace",
-                "id": "clm8t5u4q000008jq4qoc3036",
-                "name": "My Workspace",
-                "organizationId": "clm8t5u4q000008jq4qoc3036",
                 "organizationName": "My Organization",
-                "updatedAt": "2023-09-08T13:30:00Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -8501,7 +8501,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.astronomer.io/platform/v1beta1/organizations/organizationId/workspaces \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"cicdEnforcedDefault\": true,\n  \"description\": \"This is a test workspace\",\n  \"name\": \"My Workspace\"\n}'",
+                  "code": "curl -X POST https://api.astronomer.io/platform/v1beta1/organizations/organizationId/workspaces \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"name\": \"My Workspace\",\n  \"cicdEnforcedDefault\": true,\n  \"description\": \"This is a test workspace\"\n}'",
                   "generated": true
                 }
               ]
@@ -8729,7 +8729,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Workspace"
@@ -8803,25 +8803,25 @@
               "value": {
                 "cicdEnforcedDefault": true,
                 "createdAt": "2023-09-08T12:00:00Z",
+                "id": "clm8t5u4q000008jq4qoc3036",
+                "name": "My Workspace",
+                "organizationId": "clm8t5u4q000008jq4qoc3036",
+                "updatedAt": "2023-09-08T13:30:00Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "description": "This is a test workspace",
-                "id": "clm8t5u4q000008jq4qoc3036",
-                "name": "My Workspace",
-                "organizationId": "clm8t5u4q000008jq4qoc3036",
                 "organizationName": "My Organization",
-                "updatedAt": "2023-09-08T13:30:00Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -9073,7 +9073,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Workspace"
@@ -9155,25 +9155,25 @@
               "value": {
                 "cicdEnforcedDefault": true,
                 "createdAt": "2023-09-08T12:00:00Z",
+                "id": "clm8t5u4q000008jq4qoc3036",
+                "name": "My Workspace",
+                "organizationId": "clm8t5u4q000008jq4qoc3036",
+                "updatedAt": "2023-09-08T13:30:00Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "description": "This is a test workspace",
-                "id": "clm8t5u4q000008jq4qoc3036",
-                "name": "My Workspace",
-                "organizationId": "clm8t5u4q000008jq4qoc3036",
                 "organizationName": "My Organization",
-                "updatedAt": "2023-09-08T13:30:00Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -16160,7 +16160,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -16424,7 +16424,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Invite"
@@ -16505,18 +16505,18 @@
                 "expiresAt": "2022-11-22T04:37:12Z",
                 "inviteId": "clm9t1g17000008jmfsw20lsz",
                 "invitee": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
                 "inviter": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
@@ -17027,7 +17027,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -17372,7 +17372,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RolesPaginated"
@@ -17443,16 +17443,6 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "defaultRoles": [
-                  {
-                    "description": "Subject can only view deployments.",
-                    "name": "Deployment_Viewer",
-                    "permissions": [
-                      "permissions"
-                    ],
-                    "scopeType": "DEPLOYMENT"
-                  }
-                ],
                 "limit": 1,
                 "offset": 1,
                 "roles": [
@@ -17482,7 +17472,17 @@
                     }
                   }
                 ],
-                "totalCount": 1
+                "totalCount": 1,
+                "defaultRoles": [
+                  {
+                    "description": "Subject can only view deployments.",
+                    "name": "Deployment_Viewer",
+                    "permissions": [
+                      "permissions"
+                    ],
+                    "scopeType": "DEPLOYMENT"
+                  }
+                ]
               }
             },
             "snippets": {
@@ -17759,7 +17759,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleWithPermission"
@@ -17830,12 +17830,12 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "description": "Subject can only view deployments.",
                 "name": "Deployment_Viewer",
                 "permissions": [
                   "permissions"
                 ],
-                "scopeType": "DEPLOYMENT"
+                "scopeType": "DEPLOYMENT",
+                "description": "Subject can only view deployments."
               }
             },
             "responseBody": {
@@ -17843,14 +17843,13 @@
               "value": {
                 "createdAt": "createdAt",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
-                "description": "Subject can only view deployments.",
                 "id": "cluc9tapx000901qn2xrgqdmn",
                 "name": "Deployment_Viewer",
                 "permissions": [
@@ -17862,20 +17861,21 @@
                 "scopeType": "DEPLOYMENT",
                 "updatedAt": "updatedAt",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
-                }
+                },
+                "description": "Subject can only view deployments."
               }
             },
             "snippets": {
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/roles \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"description\": \"Subject can only view deployments.\",\n  \"name\": \"Deployment_Viewer\",\n  \"permissions\": [\n    \"permissions\"\n  ],\n  \"scopeType\": \"DEPLOYMENT\"\n}'",
+                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/roles \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"name\": \"Deployment_Viewer\",\n  \"permissions\": [\n    \"permissions\"\n  ],\n  \"scopeType\": \"DEPLOYMENT\",\n  \"description\": \"Subject can only view deployments.\"\n}'",
                   "generated": true
                 }
               ]
@@ -18184,7 +18184,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleWithPermission"
@@ -18256,11 +18256,11 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "description": "Subject can only view deployments.",
                 "name": "Deployment_Viewer",
                 "permissions": [
                   "permissions"
-                ]
+                ],
+                "description": "Subject can only view deployments."
               }
             },
             "responseBody": {
@@ -18268,14 +18268,13 @@
               "value": {
                 "createdAt": "createdAt",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
-                "description": "Subject can only view deployments.",
                 "id": "cluc9tapx000901qn2xrgqdmn",
                 "name": "Deployment_Viewer",
                 "permissions": [
@@ -18287,20 +18286,21 @@
                 "scopeType": "DEPLOYMENT",
                 "updatedAt": "updatedAt",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
-                }
+                },
+                "description": "Subject can only view deployments."
               }
             },
             "snippets": {
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/roles/customRoleId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"description\": \"Subject can only view deployments.\",\n  \"name\": \"Deployment_Viewer\",\n  \"permissions\": [\n    \"permissions\"\n  ]\n}'",
+                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/roles/customRoleId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"name\": \"Deployment_Viewer\",\n  \"permissions\": [\n    \"permissions\"\n  ],\n  \"description\": \"Subject can only view deployments.\"\n}'",
                   "generated": true
                 }
               ]
@@ -18814,7 +18814,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:RoleWithPermission"
@@ -18888,14 +18888,13 @@
               "value": {
                 "createdAt": "createdAt",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
-                "description": "Subject can only view deployments.",
                 "id": "cluc9tapx000901qn2xrgqdmn",
                 "name": "Deployment_Viewer",
                 "permissions": [
@@ -18907,13 +18906,14 @@
                 "scopeType": "DEPLOYMENT",
                 "updatedAt": "updatedAt",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
-                }
+                },
+                "description": "Subject can only view deployments."
               }
             },
             "snippets": {
@@ -19161,7 +19161,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:TeamsPaginated"
@@ -19538,7 +19538,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Team"
@@ -19609,19 +19609,25 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "description": "My Team description",
-                "name": "My Team"
+                "name": "My Team",
+                "description": "My Team description"
               }
             },
             "responseBody": {
               "type": "json",
               "value": {
                 "createdAt": "2022-11-22T04:37:12Z",
+                "id": "clma5ftgk000008mhgev00k7d",
+                "isIdpManaged": false,
+                "name": "My Team",
+                "organizationId": "clma5g8q6000108mh88g27k1y",
+                "organizationRole": "ORGANIZATION_OWNER",
+                "updatedAt": "2022-11-22T04:37:12Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
@@ -19632,18 +19638,12 @@
                   }
                 ],
                 "description": "My Team description",
-                "id": "clma5ftgk000008mhgev00k7d",
-                "isIdpManaged": false,
-                "name": "My Team",
-                "organizationId": "clma5g8q6000108mh88g27k1y",
-                "organizationRole": "ORGANIZATION_OWNER",
                 "rolesCount": 1,
-                "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
@@ -19659,7 +19659,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"description\": \"My Team description\",\n  \"name\": \"My Team\"\n}'",
+                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"name\": \"My Team\",\n  \"description\": \"My Team description\"\n}'",
                   "generated": true
                 }
               ]
@@ -19887,7 +19887,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Team"
@@ -19960,11 +19960,17 @@
               "type": "json",
               "value": {
                 "createdAt": "2022-11-22T04:37:12Z",
+                "id": "clma5ftgk000008mhgev00k7d",
+                "isIdpManaged": false,
+                "name": "My Team",
+                "organizationId": "clma5g8q6000108mh88g27k1y",
+                "organizationRole": "ORGANIZATION_OWNER",
+                "updatedAt": "2022-11-22T04:37:12Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
@@ -19975,18 +19981,12 @@
                   }
                 ],
                 "description": "My Team description",
-                "id": "clma5ftgk000008mhgev00k7d",
-                "isIdpManaged": false,
-                "name": "My Team",
-                "organizationId": "clma5g8q6000108mh88g27k1y",
-                "organizationRole": "ORGANIZATION_OWNER",
                 "rolesCount": 1,
-                "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
@@ -20237,7 +20237,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:Team"
@@ -20309,19 +20309,25 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "description": "My Team Description",
-                "name": "My Team"
+                "name": "My Team",
+                "description": "My Team Description"
               }
             },
             "responseBody": {
               "type": "json",
               "value": {
                 "createdAt": "2022-11-22T04:37:12Z",
+                "id": "clma5ftgk000008mhgev00k7d",
+                "isIdpManaged": false,
+                "name": "My Team",
+                "organizationId": "clma5g8q6000108mh88g27k1y",
+                "organizationRole": "ORGANIZATION_OWNER",
+                "updatedAt": "2022-11-22T04:37:12Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
@@ -20332,18 +20338,12 @@
                   }
                 ],
                 "description": "My Team description",
-                "id": "clma5ftgk000008mhgev00k7d",
-                "isIdpManaged": false,
-                "name": "My Team",
-                "organizationId": "clma5g8q6000108mh88g27k1y",
-                "organizationRole": "ORGANIZATION_OWNER",
                 "rolesCount": 1,
-                "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
@@ -20359,7 +20359,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams/teamId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"description\": \"My Team Description\",\n  \"name\": \"My Team\"\n}'",
+                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams/teamId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"name\": \"My Team\",\n  \"description\": \"My Team Description\"\n}'",
                   "generated": true
                 }
               ]
@@ -20901,7 +20901,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:TeamMembersPaginated"
@@ -21888,7 +21888,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SubjectRoles"
@@ -21960,13 +21960,13 @@
             "requestBody": {
               "type": "json",
               "value": {
+                "organizationRole": "ORGANIZATION_OWNER",
                 "deploymentRoles": [
                   {
                     "deploymentId": "clm8t5u4q000008jq4qoc3031",
                     "role": "DEPLOYMENT_ADMIN"
                   }
                 ],
-                "organizationRole": "ORGANIZATION_OWNER",
                 "workspaceRoles": [
                   {
                     "role": "WORKSPACE_OWNER",
@@ -21997,7 +21997,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams/teamId/roles \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"deploymentRoles\": [\n    {\n      \"deploymentId\": \"clm8t5u4q000008jq4qoc3031\",\n      \"role\": \"DEPLOYMENT_ADMIN\"\n    }\n  ],\n  \"organizationRole\": \"ORGANIZATION_OWNER\",\n  \"workspaceRoles\": [\n    {\n      \"role\": \"WORKSPACE_OWNER\",\n      \"workspaceId\": \"clm8t5u4q000008jq4qoc3036\"\n    }\n  ]\n}'",
+                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams/teamId/roles \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"organizationRole\": \"ORGANIZATION_OWNER\",\n  \"deploymentRoles\": [\n    {\n      \"deploymentId\": \"clm8t5u4q000008jq4qoc3031\",\n      \"role\": \"DEPLOYMENT_ADMIN\"\n    }\n  ],\n  \"workspaceRoles\": [\n    {\n      \"role\": \"WORKSPACE_OWNER\",\n      \"workspaceId\": \"clm8t5u4q000008jq4qoc3036\"\n    }\n  ]\n}'",
                   "generated": true
                 }
               ]
@@ -22294,7 +22294,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ApiTokensPaginated"
@@ -22686,7 +22686,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ApiToken"
@@ -22757,32 +22757,36 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "description": "This is my API token",
-                "entityId": "clm8pxjjw000008l23jm08hyu",
                 "name": "My token",
                 "role": "WORKSPACE_OWNER",
-                "tokenExpiryPeriodInDays": 30,
-                "type": "DEPLOYMENT"
+                "type": "DEPLOYMENT",
+                "description": "This is my API token",
+                "entityId": "clm8pxjjw000008l23jm08hyu",
+                "tokenExpiryPeriodInDays": 30
               }
             },
             "responseBody": {
               "type": "json",
               "value": {
                 "createdAt": "2022-11-22T04:37:12Z",
+                "description": "my token description",
+                "id": "clm8q7f6q000008lcgyougpsk",
+                "name": "My token",
+                "shortToken": "short-token",
+                "startAt": "2022-11-22T04:37:12Z",
+                "type": "DEPLOYMENT",
+                "updatedAt": "2022-11-22T04:37:12Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
-                "description": "my token description",
                 "endAt": "2022-11-22T04:37:12Z",
                 "expiryPeriodInDays": 30,
-                "id": "clm8q7f6q000008lcgyougpsk",
                 "lastUsedAt": "2022-11-22T04:37:12Z",
-                "name": "My token",
                 "roles": [
                   {
                     "entityId": "clm8sgvai000008l794psbkdv",
@@ -22790,16 +22794,12 @@
                     "role": "WORKSPACE_MEMBER"
                   }
                 ],
-                "shortToken": "short-token",
-                "startAt": "2022-11-22T04:37:12Z",
                 "token": "token",
-                "type": "DEPLOYMENT",
-                "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -22809,7 +22809,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/tokens \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"description\": \"This is my API token\",\n  \"entityId\": \"clm8pxjjw000008l23jm08hyu\",\n  \"name\": \"My token\",\n  \"role\": \"WORKSPACE_OWNER\",\n  \"tokenExpiryPeriodInDays\": 30,\n  \"type\": \"DEPLOYMENT\"\n}'",
+                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/tokens \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"name\": \"My token\",\n  \"role\": \"WORKSPACE_OWNER\",\n  \"type\": \"DEPLOYMENT\",\n  \"description\": \"This is my API token\",\n  \"entityId\": \"clm8pxjjw000008l23jm08hyu\",\n  \"tokenExpiryPeriodInDays\": 30\n}'",
                   "generated": true
                 }
               ]
@@ -23047,7 +23047,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ApiToken"
@@ -23120,20 +23120,24 @@
               "type": "json",
               "value": {
                 "createdAt": "2022-11-22T04:37:12Z",
+                "description": "my token description",
+                "id": "clm8q7f6q000008lcgyougpsk",
+                "name": "My token",
+                "shortToken": "short-token",
+                "startAt": "2022-11-22T04:37:12Z",
+                "type": "DEPLOYMENT",
+                "updatedAt": "2022-11-22T04:37:12Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
-                "description": "my token description",
                 "endAt": "2022-11-22T04:37:12Z",
                 "expiryPeriodInDays": 30,
-                "id": "clm8q7f6q000008lcgyougpsk",
                 "lastUsedAt": "2022-11-22T04:37:12Z",
-                "name": "My token",
                 "roles": [
                   {
                     "entityId": "clm8sgvai000008l794psbkdv",
@@ -23141,16 +23145,12 @@
                     "role": "WORKSPACE_MEMBER"
                   }
                 ],
-                "shortToken": "short-token",
-                "startAt": "2022-11-22T04:37:12Z",
                 "token": "token",
-                "type": "DEPLOYMENT",
-                "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -23395,7 +23395,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ApiToken"
@@ -23467,28 +23467,32 @@
             "requestBody": {
               "type": "json",
               "value": {
-                "description": "This is my API token",
-                "name": "My token"
+                "name": "My token",
+                "description": "This is my API token"
               }
             },
             "responseBody": {
               "type": "json",
               "value": {
                 "createdAt": "2022-11-22T04:37:12Z",
+                "description": "my token description",
+                "id": "clm8q7f6q000008lcgyougpsk",
+                "name": "My token",
+                "shortToken": "short-token",
+                "startAt": "2022-11-22T04:37:12Z",
+                "type": "DEPLOYMENT",
+                "updatedAt": "2022-11-22T04:37:12Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
-                "description": "my token description",
                 "endAt": "2022-11-22T04:37:12Z",
                 "expiryPeriodInDays": 30,
-                "id": "clm8q7f6q000008lcgyougpsk",
                 "lastUsedAt": "2022-11-22T04:37:12Z",
-                "name": "My token",
                 "roles": [
                   {
                     "entityId": "clm8sgvai000008l794psbkdv",
@@ -23496,16 +23500,12 @@
                     "role": "WORKSPACE_MEMBER"
                   }
                 ],
-                "shortToken": "short-token",
-                "startAt": "2022-11-22T04:37:12Z",
                 "token": "token",
-                "type": "DEPLOYMENT",
-                "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -23515,7 +23515,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/tokens/tokenId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"description\": \"This is my API token\",\n  \"name\": \"My token\"\n}'",
+                  "code": "curl -X POST https://api.astronomer.io/iam/v1beta1/organizations/organizationId/tokens/tokenId \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"name\": \"My token\",\n  \"description\": \"This is my API token\"\n}'",
                   "generated": true
                 }
               ]
@@ -24038,7 +24038,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SubjectRoles"
@@ -24408,7 +24408,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ApiToken"
@@ -24481,20 +24481,24 @@
               "type": "json",
               "value": {
                 "createdAt": "2022-11-22T04:37:12Z",
+                "description": "my token description",
+                "id": "clm8q7f6q000008lcgyougpsk",
+                "name": "My token",
+                "shortToken": "short-token",
+                "startAt": "2022-11-22T04:37:12Z",
+                "type": "DEPLOYMENT",
+                "updatedAt": "2022-11-22T04:37:12Z",
                 "createdBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 },
-                "description": "my token description",
                 "endAt": "2022-11-22T04:37:12Z",
                 "expiryPeriodInDays": 30,
-                "id": "clm8q7f6q000008lcgyougpsk",
                 "lastUsedAt": "2022-11-22T04:37:12Z",
-                "name": "My token",
                 "roles": [
                   {
                     "entityId": "clm8sgvai000008l794psbkdv",
@@ -24502,16 +24506,12 @@
                     "role": "WORKSPACE_MEMBER"
                   }
                 ],
-                "shortToken": "short-token",
-                "startAt": "2022-11-22T04:37:12Z",
                 "token": "token",
-                "type": "DEPLOYMENT",
-                "updatedAt": "2022-11-22T04:37:12Z",
                 "updatedBy": {
+                  "id": "clm8qv74h000008mlf08scq7k",
                   "apiTokenName": "my-token",
                   "avatarUrl": "https://avatar.url",
                   "fullName": "Jane Doe",
-                  "id": "clm8qv74h000008mlf08scq7k",
                   "subjectType": "USER",
                   "username": "user1@company.com"
                 }
@@ -24775,7 +24775,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UsersPaginated"
@@ -25053,7 +25053,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:User"
@@ -25127,18 +25127,18 @@
               "value": {
                 "avatarUrl": "https://avatar.url",
                 "createdAt": "2022-11-22T04:37:12Z",
+                "fullName": "Jane Doe",
+                "id": "clm9sq6s0000008kz7uvl7yz7",
+                "status": "ACTIVE",
+                "updatedAt": "2022-11-22T04:37:12Z",
+                "username": "user1@company.com",
                 "deploymentRoles": [
                   {
                     "deploymentId": "clm8t5u4q000008jq4qoc3031",
                     "role": "DEPLOYMENT_ADMIN"
                   }
                 ],
-                "fullName": "Jane Doe",
-                "id": "clm9sq6s0000008kz7uvl7yz7",
                 "organizationRole": "ORGANIZATION_OWNER",
-                "status": "ACTIVE",
-                "updatedAt": "2022-11-22T04:37:12Z",
-                "username": "user1@company.com",
                 "workspaceRoles": [
                   {
                     "role": "WORKSPACE_OWNER",
@@ -25406,7 +25406,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:SubjectRoles"
