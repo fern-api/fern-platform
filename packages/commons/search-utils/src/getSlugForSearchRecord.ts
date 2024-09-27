@@ -11,7 +11,7 @@ export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: 
                 basePath || "/",
                 record.version?.urlSlug ?? "",
                 ...getLeadingPathForSearchRecord(record),
-            ),,
+            ),
         v1: (record) =>
             FernNavigation.slugjoin(
                 basePath || "/",
