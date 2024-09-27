@@ -4,8 +4,8 @@
   "description": "convert readme docs to fern docs",
   "main": "index.js",
   "scripts": {
-    "migrate": "ts-node index.ts",
-    "clear": "rm -rf ./pages && rm -rf ./images",
+    "migrate": "rm -rf ./pages && rm -rf ./assets && rm -rf docs.yml && ts-node index.ts",
+    "clear": "rm -rf ./pages && rm -rf ./assets && rm -rf docs.yml",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
