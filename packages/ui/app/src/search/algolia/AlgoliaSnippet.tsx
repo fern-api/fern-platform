@@ -1,8 +1,8 @@
+import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { BaseHit, Hit } from "instantsearch.js";
 import { useEffect, useState } from "react";
 import { MdxContent } from "../../mdx/MdxContent";
 import { serializeMdx } from "../../mdx/bundler";
-import { BundledMDX } from "../../mdx/types";
 import { replaceBackticksWithCodeTags } from "../../util/replaceBackticksWithCodeTag";
 import { replaceMarksInUrls } from "../../util/replaceMarksInUrls";
 
@@ -11,7 +11,7 @@ interface AlgoliaSnippetProps {
 }
 
 export const AlgoliaSnippet: React.FC<AlgoliaSnippetProps> = ({ hit }) => {
-    const [mdx, setMdx] = useState<BundledMDX>();
+    const [mdx, setMdx] = useState<MarkdownText>();
     useEffect(() => {
         (async () => {
             const maybeHitSnippet =
