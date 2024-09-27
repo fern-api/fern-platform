@@ -8,6 +8,7 @@ import {
     convertDbAPIDefinitionToRead,
     kebabCase,
     titleCase,
+    visitDbNavigationTab,
     visitDiscriminatedUnion,
 } from "@fern-api/fdr-sdk";
 import { EndpointPathPart } from "@fern-api/fdr-sdk/src/client/APIV1Read";
@@ -138,7 +139,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
         const breadcrumbs: BreadcrumbsInfo[] = [
             {
                 title: page.title,
-                slug: page.urlSlug,
+                slug: page.fullSlug ? page.fullSlug.join("/") : page.urlSlug,
             },
         ];
         const { indexSegment } = context;
@@ -183,6 +184,68 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                 indexSegmentId: indexSegment.id,
             }),
         ]);
+    }
+
+    protected override generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(
+        config: DocsV1Db.UnversionedTabbedNavigationConfig,
+        context: NavigationContext,
+    ): AlgoliaSearchRecord[] {
+        const records =
+            config.tabsV2?.flatMap((tab) => {
+                switch (tab.type) {
+                    case "group":
+                        return tab.items.flatMap((item) =>
+                            this.generateAlgoliaSearchRecordsForNavigationItem(
+                                item,
+                                context.withPathPart({
+                                    name: tab.title,
+                                    urlSlug: tab.urlSlug,
+                                    skipUrlSlug: tab.skipUrlSlug,
+                                }),
+                            ),
+                        );
+                    case "changelog":
+                        return this.generateAlgoliaSearchRecordsForChangelogSection(
+                            tab,
+                            context.withPathPart({
+                                name: tab.title ?? "Changelog",
+                                urlSlug: tab.urlSlug,
+                                skipUrlSlug: undefined,
+                            }),
+                        ).concat(
+                            this.generateAlgoliaSearchRecordsForChangelogSectionV2(
+                                tab,
+                                context.withPathPart({
+                                    name: tab.title ?? "Changelog",
+                                    urlSlug: tab.urlSlug,
+                                    skipUrlSlug: undefined,
+                                }),
+                            ),
+                        );
+                    default:
+                        return [];
+                }
+            }) ??
+            config.tabs?.map((tab) =>
+                visitDbNavigationTab(tab, {
+                    group: (group) => {
+                        const tabRecords = group.items.map((item) =>
+                            this.generateAlgoliaSearchRecordsForNavigationItem(
+                                item,
+                                context.withPathPart({
+                                    name: tab.title,
+                                    urlSlug: group.urlSlug,
+                                    skipUrlSlug: undefined,
+                                }),
+                            ),
+                        );
+                        return tabRecords.flat(1);
+                    },
+                    link: () => [],
+                }),
+            ) ??
+            [];
+        return records.flat(1);
     }
 
     // Main Entrypoint Function

@@ -50,9 +50,8 @@ const SearchSection: React.FC<{
     refs: React.MutableRefObject<Map<string, HTMLAnchorElement>>;
     hoveredSearchHitId: string | null;
     setHoveredSearchHitId: (id: string) => void;
-    lastSection?: boolean;
-}> = ({ title, hits, expanded, setExpanded, refs, hoveredSearchHitId, setHoveredSearchHitId, lastSection }) => (
-    <>
+}> = ({ title, hits, expanded, setExpanded, refs, hoveredSearchHitId, setHoveredSearchHitId }) => (
+    <div className="pb-4">
         <div className="flex justify-between items-center">
             <div className="text-normal font-semibold pl-0.5">{title}</div>
             {hits.length > SEARCH_HITS_PER_SECTION && <ExpandButton expanded={expanded} setExpanded={setExpanded} />}
@@ -71,8 +70,7 @@ const SearchSection: React.FC<{
                 onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
             />
         ))}
-        {!lastSection && <Separator orientation="horizontal" decorative className="my-2 bg-accent" />}
-    </>
+    </div>
 );
 
 const MobileSearchSection: React.FC<{
@@ -282,7 +280,6 @@ export const SearchHits: React.FC = () => {
                     refs={refs}
                     hoveredSearchHitId={hoveredSearchHitId}
                     setHoveredSearchHitId={setHoveredSearchHitId}
-                    lastSection
                 />
             )}
         </FernScrollArea>
