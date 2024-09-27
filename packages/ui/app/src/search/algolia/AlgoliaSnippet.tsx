@@ -14,7 +14,11 @@ export const AlgoliaSnippet: React.FC<AlgoliaSnippetProps> = ({ hit }) => {
     const [mdx, setMdx] = useState<BundledMDX>();
     useEffect(() => {
         (async () => {
-            const maybeHitSnippet = hit._highlightResult?.content;
+            const maybeHitSnippet =
+                hit._highlightResult?.content ||
+                hit._highlightResult?.description ||
+                hit._highlightResult?.title ||
+                hit._highlightResult?.slug;
 
             if (maybeHitSnippet) {
                 let snippetToRender;

@@ -1,5 +1,5 @@
 export function replaceBackticksWithCodeTags(line: string): string {
-    return line.replace(/`([^`]+)`/g, (match, content) => {
+    return line.replace(/`([^`]+)`/g, (_, content) => {
         const escapedContent = content
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")

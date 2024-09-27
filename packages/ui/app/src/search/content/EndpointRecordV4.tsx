@@ -75,11 +75,20 @@ export const EndpointRecordV4: React.FC<EndpointRecordV4.Props> = ({ hit, isHove
                     Endpoint
                 </div>
             </div>
-            {hit.description && (
+            {
                 <div className="flex items-center justify-between">
-                    <AlgoliaSnippet hit={hit} />
+                    <div className="flex items-center justify-between">
+                        <span
+                            className={cn("line-clamp-1 text-start text-xs", {
+                                "t-accent-aaa": isHovered,
+                                "t-muted": !isHovered,
+                            })}
+                        >
+                            <AlgoliaSnippet hit={hit} />
+                        </span>
+                    </div>
                 </div>
-            )}
+            }
             <div className="flex items-center justify-between">
                 <span
                     className={cn("line-clamp-1 text-start text-xs", {

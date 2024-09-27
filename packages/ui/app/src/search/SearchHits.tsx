@@ -3,7 +3,7 @@ import { FernButton, FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 
-import { Xmark } from "iconoir-react";
+import { Minus, Xmark } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
@@ -25,16 +25,19 @@ const expandHits = (expanded: boolean, hits: SearchRecord[]) => {
     return expanded ? hits : hits.slice(0, SEARCH_HITS_PER_SECTION);
 };
 
-const ExpandButton: React.FC<{ setExpanded: (expanded: boolean) => void }> = ({ setExpanded }) => (
+const ExpandButton: React.FC<{ expanded: boolean; setExpanded: (expanded: boolean) => void }> = ({
+    expanded,
+    setExpanded,
+}) => (
     <div className="justify-end">
         <FernButton
             className="text-left"
             variant="minimal"
-            onClick={() => setExpanded(true)}
-            icon={<Xmark className="transition rotate-45" />}
+            onClick={() => setExpanded(!expanded)}
+            icon={expanded ? <Minus /> : <Xmark className="transition rotate-45" />}
             size="small"
         >
-            Show More
+            Show {expanded ? "Less" : "More"}
         </FernButton>
     </div>
 );
@@ -52,7 +55,7 @@ const SearchSection: React.FC<{
     <>
         <div className="flex justify-between items-center">
             <div className="text-normal font-semibold pl-0.5">{title}</div>
-            {hits.length > SEARCH_HITS_PER_SECTION && !expanded && <ExpandButton setExpanded={setExpanded} />}
+            {hits.length > SEARCH_HITS_PER_SECTION && <ExpandButton expanded={expanded} setExpanded={setExpanded} />}
         </div>
         <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
         {expandHits(expanded, hits).map((hit) => (
@@ -93,7 +96,7 @@ const MobileSearchSection: React.FC<{
                 hit={hit}
             />
         ))}
-        {!expanded && <ExpandButton setExpanded={setExpanded} />}
+        <ExpandButton expanded={expanded} setExpanded={setExpanded} />
     </>
 );
 
@@ -108,7 +111,6 @@ export const SearchHits: React.FC = () => {
     const [orderedHits, setOrderedHits] = useState<SearchRecord[]>([]);
     const [expandEndpoints, setExpandEndpoints] = useState(false);
     const [expandPages, setExpandPages] = useState(false);
-    const [expandFields, setExpandFields] = useState(false);
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -126,13 +128,13 @@ export const SearchHits: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        const { endpointHits, pageHits, fieldHits } = filterHits(hits);
-        setOrderedHits([
-            ...expandHits(expandEndpoints, endpointHits),
-            ...expandHits(expandPages, pageHits),
-            ...expandHits(expandFields, fieldHits),
-        ]);
-    }, [hits, expandEndpoints, expandPages, expandFields]);
+        setExpandEndpoints(false);
+        setExpandPages(false);
+    }, [hits]);
+    useEffect(() => {
+        const { endpointHits, pageHits } = filterHits(hits);
+        setOrderedHits([...expandHits(expandEndpoints, endpointHits), ...expandHits(expandPages, pageHits)]);
+    }, [hits, expandEndpoints, expandPages]);
 
     const hoveredSearchHit = useMemo(() => {
         return orderedHits
@@ -147,7 +149,6 @@ export const SearchHits: React.FC = () => {
         }
     }, [hits, isAiChatbotEnabledInPreview]);
 
-    // TODO (rohin): change this
     useKeyboardPress({
         key: "Up",
         onPress: () => {
@@ -170,7 +171,6 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
-    // TODO (rohin): change this
     useKeyboardPress({
         key: "Down",
         onPress: () => {
@@ -242,7 +242,7 @@ export const SearchHits: React.FC = () => {
         return null;
     }
 
-    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
+    const { endpointHits, pageHits } = filterHits(hits);
 
     return (
         <FernScrollArea
@@ -282,17 +282,6 @@ export const SearchHits: React.FC = () => {
                     refs={refs}
                     hoveredSearchHitId={hoveredSearchHitId}
                     setHoveredSearchHitId={setHoveredSearchHitId}
-                />
-            )}
-            {fieldHits.length > 0 && (
-                <SearchSection
-                    title="Fields"
-                    hits={fieldHits}
-                    expanded={expandFields}
-                    setExpanded={setExpandFields}
-                    refs={refs}
-                    hoveredSearchHitId={hoveredSearchHitId}
-                    setHoveredSearchHitId={setHoveredSearchHitId}
                     lastSection
                 />
             )}
@@ -306,7 +295,6 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
     const search = useInstantSearch();
     const [expandEndpoints, setExpandEndpoints] = useState(false);
     const [expandPages, setExpandPages] = useState(false);
-    const [expandFields, setExpandFields] = useState(false);
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -319,7 +307,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
         return <div className="justify t-muted flex w-full flex-col hits-center py-3">No results found</div>;
     }
 
-    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
+    const { endpointHits, pageHits } = filterHits(hits);
 
     return (
         <FernScrollArea rootClassName="min-h-[80vh]" className="mask-grad-top-4 px-2 pt-4">
@@ -352,15 +340,6 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                     refs={refs}
                 />
             )}
-            {fieldHits.length > 0 && (
-                <MobileSearchSection
-                    title="Pages"
-                    hits={fieldHits}
-                    expanded={expandFields}
-                    setExpanded={setExpandFields}
-                    refs={refs}
-                />
-            )}
         </FernScrollArea>
     );
 };
@@ -376,14 +355,15 @@ function filterHits(hits: SearchRecord[]) {
             "endpoint-v4",
             "webhook-v4",
             "websocket-v4",
+            "endpoint-field-v1",
+            "webhook-field-v1",
+            "websocket-field-v1",
         ]),
         pages: new Set(["page", "page-v2", "page-v3", "page-v4", "markdown-section-v1"]),
-        fields: new Set(["endpoint-field-v1", "webhook-field-v1", "websocket-field-v1"]),
     };
 
     const endpointHits = hits.filter((hit) => hitTypeMap["endpoints"].has(hit.type));
     const pageHits = hits.filter((hit) => hitTypeMap["pages"].has(hit.type));
-    const fieldHits = hits.filter((hit) => hitTypeMap["fields"].has(hit.type));
 
-    return { endpointHits, pageHits, fieldHits };
+    return { endpointHits, pageHits };
 }
