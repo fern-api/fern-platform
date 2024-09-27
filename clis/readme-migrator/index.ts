@@ -8,7 +8,6 @@ const imagePattern =
     /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b(?:[-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
 const altPattern = /^\s*"([^:]+)"$/g;
 const linkPattern = /link_url: \"([^"]+)\"/g;
-// const metaImage = /image: \[(.+)\]/g;
 
 async function ensureImagesFolder(): Promise<void> {
     const imagesFolder = path.resolve(`${__dirname}/assets`, "images");
@@ -84,7 +83,6 @@ async function paramsToTable(block: BlockParameters): Promise<string> {
     const alignments = block.align.map(() => ":--").join(" | ");
     table.push(`| ${alignments} |`);
 
-    // Data rows
     rows.forEach((row) => {
         table.push(`| ${row.join(" | ")} |`);
     });
@@ -120,7 +118,6 @@ async function convertToMarkdown(
         if (newline === "---") {
             if (collectingFrontmatter) {
                 if (frontmatter.includes("metadata")) {
-                    // handle metadata
                     frontmatter = frontmatter.replace("metadata:", "");
                     frontmatter = frontmatter.replaceAll(/  (\S*): (.*)/g, "og:$1: $2");
                     frontmatter = frontmatter.replace("  image: []", "");
@@ -134,7 +131,6 @@ async function convertToMarkdown(
 
                     if (frontmatter.includes("hidden")) {
                         if (frontmatter.includes("hidden: true")) {
-                            //handle hidden page
                             navigation += `${tabbed}  hidden: true\n`;
                         }
                     }
@@ -149,7 +145,6 @@ async function convertToMarkdown(
 
                 if (frontmatter.includes("hidden")) {
                     if (frontmatter.includes("hidden: true")) {
-                        //handle hidden page
                         navigation += `${tabbed}  hidden: true\n`;
                     }
                 }
@@ -204,7 +199,6 @@ async function convertToMarkdown(
                 collectingHtml = false;
             } else if (collectingParams) {
                 collectingParams = false;
-                // call param function
                 markdown += await paramsToTable(JSON.parse(paramData));
                 paramData = "";
             }
