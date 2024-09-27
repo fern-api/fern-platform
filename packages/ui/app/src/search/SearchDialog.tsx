@@ -14,6 +14,7 @@ import {
 } from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
 import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
+import { getFeatureFlagFilters } from "../util/getFeatureFlagFilters";
 import { SearchMobileHits } from "./SearchHits";
 import { AlgoliaSearchDialog } from "./algolia/AlgoliaSearchDialog";
 import { SearchMobileBox } from "./algolia/SearchBox";
@@ -90,12 +91,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 
         return (
             <InstantSearch searchClient={searchClient} indexName={indexName}>
-                {isNewSearchExperienceEnabled && (
-                    <Configure
-                        filters="type: 'endpoint-v4' OR type: 'websocket-v4' OR type: 'webhook-v4' OR type: 'page-v4' OR type: 'endpoint-field-v1' OR type: 'websocket-field-v1' OR type: 'webhook-field-v1' OR type: 'markdown-section-v1'"
-                        hitsPerPage={40}
-                    />
-                )}
+                <Configure filters={getFeatureFlagFilters(isNewSearchExperienceEnabled)} hitsPerPage={40} />
                 <SearchMobileBox ref={inputRef} placeholder={placeholder} className="mx-4 mt-4" />
                 <SearchMobileHits>{children}</SearchMobileHits>
             </InstantSearch>
