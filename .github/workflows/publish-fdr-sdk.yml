@@ -71,3 +71,4 @@ jobs:
           git_version="$(scripts/fdr-version.sh)"
           fern generate --api fdr --group fdr-cjs-sdk --version ${git_version} --log-level debug
           fern generate --api fdr --group generators-sdk --version ${git_version} --log-level debug
+          fern generate --api fdr --group paged-generators-sdk --version ${git_version} --log-level debug

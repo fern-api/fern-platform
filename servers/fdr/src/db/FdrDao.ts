@@ -5,6 +5,7 @@ import { IndexSegmentDaoImpl, type IndexSegmentDao } from "./docs/IndexSegmentDa
 import { CliVersionsDaoImpl } from "./generators/CliVersionsDao";
 import { GeneratorsDaoImpl } from "./generators/GeneratorDao";
 import { GeneratorVersionsDaoImpl } from "./generators/GeneratorVersionsDao";
+import { GitDaoImpl } from "./git/GitDao";
 import { DocsRegistrationDao } from "./registrations/DocsRegistrationDao";
 import { SdkDao, SdkDaoImpl } from "./sdk/SdkDao";
 import { SnippetAPIsDaoImpl, type SnippetAPIsDao } from "./snippetApis/SnippetAPIsDao";
@@ -23,6 +24,7 @@ export class FdrDao {
     private generatorsDao;
     private generatorVersionsDao;
     private cliVersionsDao;
+    private gitDao;
 
     constructor(prisma: PrismaClient) {
         this.docsV2Dao = new DocsV2DaoImpl(prisma);
@@ -36,6 +38,7 @@ export class FdrDao {
         this.generatorsDao = new GeneratorsDaoImpl(prisma);
         this.generatorVersionsDao = new GeneratorVersionsDaoImpl(prisma);
         this.cliVersionsDao = new CliVersionsDaoImpl(prisma);
+        this.gitDao = new GitDaoImpl(prisma);
     }
 
     public docsV2(): DocsV2Dao {
@@ -80,5 +83,9 @@ export class FdrDao {
 
     public cliVersions(): CliVersionsDaoImpl {
         return this.cliVersionsDao;
+    }
+
+    public git(): GitDaoImpl {
+        return this.gitDao;
     }
 }

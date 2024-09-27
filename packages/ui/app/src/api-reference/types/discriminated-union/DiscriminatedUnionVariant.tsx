@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { useCallback, useMemo } from "react";
@@ -40,7 +40,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
             type: "object",
             properties: [
                 {
-                    key: discriminant,
+                    key: APIV1Read.PropertyKey(discriminant),
                     valueShape: {
                         type: "literal",
                         value: {
@@ -72,7 +72,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 {
                     type: "objectFilter",
                     propertyName: discriminant,
-                    requiredValue: unionVariant.discriminantValue,
+                    requiredStringValue: unionVariant.discriminantValue,
                 },
             ],
         }),

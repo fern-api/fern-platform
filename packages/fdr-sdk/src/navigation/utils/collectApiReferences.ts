@@ -1,10 +1,8 @@
-import { FernNavigation } from "../generated";
-import { NavigationNode } from "../types/NavigationNode";
-import { traverseNavigation } from "./traverseNavigation";
+import { FernNavigation } from "../..";
 
-export function collectApiReferences(nav: NavigationNode): FernNavigation.ApiReferenceNode[] {
+export function collectApiReferences(nav: FernNavigation.NavigationNode): FernNavigation.ApiReferenceNode[] {
     const apiReferences: FernNavigation.ApiReferenceNode[] = [];
-    traverseNavigation(nav, (node) => {
+    FernNavigation.traverseNavigation(nav, (node) => {
         if (node.type === "apiReference") {
             apiReferences.push(node);
             return "skip";

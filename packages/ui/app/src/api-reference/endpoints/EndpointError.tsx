@@ -1,5 +1,5 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernCollapse } from "@fern-ui/components";
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
@@ -70,7 +70,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
             </div>
 
             {error.shape != null && (
-                <FernCollapse isOpen={isSelected} className="w-full">
+                <FernCollapse open={isSelected} className="w-full">
                     <div className="space-y-2 pt-2">
                         <div className="t-muted w-full text-start text-sm leading-7">
                             {`This error return ${renderTypeShorthand(error.shape, { withArticle: true }, types)}.`}

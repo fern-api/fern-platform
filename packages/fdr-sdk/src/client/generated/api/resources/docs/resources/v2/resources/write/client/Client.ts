@@ -14,8 +14,11 @@ export declare namespace Write {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,17 +31,17 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.write.startDocsRegister({
+     *     await client.docs.v2.write.startDocsRegister({
      *         domain: "string",
      *         customDomains: ["string"],
      *         authConfig: {
      *             type: "public"
      *         },
-     *         orgId: "string",
-     *         apiId: "string",
-     *         filepaths: ["string"],
+     *         orgId: FernRegistry.OrgId("string"),
+     *         apiId: FernRegistry.ApiId("string"),
+     *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
      *         images: [{
-     *                 filePath: "string",
+     *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
      *                 width: 1.1,
      *                 height: 1.1,
      *                 blurDataUrl: "string",
@@ -68,6 +71,7 @@ export class Write {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -106,15 +110,15 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.write.startDocsPreviewRegister({
+     *     await client.docs.v2.write.startDocsPreviewRegister({
      *         basePath: "string",
-     *         orgId: "string",
+     *         orgId: FernRegistry.OrgId("string"),
      *         authConfig: {
      *             type: "public"
      *         },
-     *         filepaths: ["string"],
+     *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")],
      *         images: [{
-     *                 filePath: "string",
+     *                 filePath: FernRegistry.docs.v1.write.FilePath("string"),
      *                 width: 1.1,
      *                 height: 1.1,
      *                 blurDataUrl: "string",
@@ -144,6 +148,7 @@ export class Write {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -181,17 +186,17 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.write.finishDocsRegister("string", {
+     *     await client.docs.v2.write.finishDocsRegister(FernRegistry.docs.v1.write.DocsRegistrationId("string"), {
      *         docsDefinition: {
      *             pages: {
      *                 "string": {
      *                     markdown: "string",
-     *                     editThisPageUrl: "string"
+     *                     editThisPageUrl: FernRegistry.Url("string")
      *                 }
      *             },
      *             config: {
      *                 title: "string",
-     *                 defaultLanguage: FernRegistry.docs.v1.commons.ProgrammingLanguage.Typescript,
+     *                 defaultLanguage: "typescript",
      *                 announcement: {
      *                     text: "string"
      *                 },
@@ -240,7 +245,7 @@ export class Write {
      *                             }
      *                         }],
      *                     landingPage: {
-     *                         id: "string",
+     *                         id: FernRegistry.PageId("string"),
      *                         title: "string",
      *                         icon: {
      *                             "key": "value"
@@ -266,8 +271,8 @@ export class Write {
      *                         }
      *                     }],
      *                 logoHeight: 1.1,
-     *                 logoHref: "string",
-     *                 favicon: "string",
+     *                 logoHref: FernRegistry.Url("string"),
+     *                 favicon: FernRegistry.FileId("string"),
      *                 metadata: {
      *                     og:site_name: "string",
      *                     og:title: "string",
@@ -299,7 +304,7 @@ export class Write {
      *                     },
      *                     twitter:site: "string",
      *                     twitter:url: "string",
-     *                     twitter:card: FernRegistry.docs.v1.commons.TwitterCardSetting.Summary,
+     *                     twitter:card: "summary",
      *                     noindex: true,
      *                     nofollow: true
      *                 },
@@ -338,10 +343,10 @@ export class Write {
      *                             "key": "value"
      *                         }
      *                     },
-     *                     searchbarPlacement: FernRegistry.docs.v1.commons.SearchbarPlacement.Header,
-     *                     tabsPlacement: FernRegistry.docs.v1.commons.TabsPlacement.Header,
-     *                     contentAlignment: FernRegistry.docs.v1.commons.ContentAlignment.Center,
-     *                     headerPosition: FernRegistry.docs.v1.commons.HeaderPosition.Fixed,
+     *                     searchbarPlacement: "HEADER",
+     *                     tabsPlacement: "HEADER",
+     *                     contentAlignment: "CENTER",
+     *                     headerPosition: "FIXED",
      *                     disableHeader: true
      *                 },
      *                 typographyV2: {
@@ -425,7 +430,7 @@ export class Write {
      *                             "key": "value"
      *                         }],
      *                     files: [{
-     *                             fileId: "string",
+     *                             fileId: FernRegistry.FileId("string"),
      *                             strategy: {
      *                                 "key": "value"
      *                             }
@@ -437,12 +442,12 @@ export class Write {
      *                 playground: {
      *                     oauth: true
      *                 },
-     *                 backgroundImage: "string",
+     *                 backgroundImage: FernRegistry.FileId("string"),
      *                 logoV2: {
-     *                     dark: "string",
-     *                     light: "string"
+     *                     dark: FernRegistry.FileId("string"),
+     *                     light: FernRegistry.FileId("string")
      *                 },
-     *                 logo: "string",
+     *                 logo: FernRegistry.FileId("string"),
      *                 colors: {
      *                     accentPrimary: {
      *                         r: 1,
@@ -464,15 +469,15 @@ export class Write {
      *                 typography: {
      *                     headingsFont: {
      *                         name: "string",
-     *                         fontFile: "string"
+     *                         fontFile: FernRegistry.FileId("string")
      *                     },
      *                     bodyFont: {
      *                         name: "string",
-     *                         fontFile: "string"
+     *                         fontFile: FernRegistry.FileId("string")
      *                     },
      *                     codeFont: {
      *                         name: "string",
-     *                         fontFile: "string"
+     *                         fontFile: FernRegistry.FileId("string")
      *                     }
      *                 }
      *             },
@@ -500,6 +505,7 @@ export class Write {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -535,8 +541,8 @@ export class Write {
      * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.docs.v2.write.reindexAlgoliaSearchRecords({
-     *         url: "string"
+     *     await client.docs.v2.write.reindexAlgoliaSearchRecords({
+     *         url: FernRegistry.Url("string")
      *     })
      */
     public async reindexAlgoliaSearchRecords(
@@ -556,6 +562,7 @@ export class Write {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,

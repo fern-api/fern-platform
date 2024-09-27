@@ -13,7 +13,7 @@ async function coChat(prompt: string): Promise<string> {
     return response.text;
 }
 
-export async function generateCommitMessage(diff: string): Promise<string> {
+export async function generateCommitMessage(diff: string, fallbackMessage: string): Promise<string> {
     if (diff === "") {
         return DEFAULT_GITHUB_MESSAGE;
     }
@@ -25,11 +25,18 @@ export async function generateCommitMessage(diff: string): Promise<string> {
     ${diff}
     \`\`\`
     `;
+    try {
+        return await coChat(prompt);
+    } catch (error) {
+        console.error(
+            `Call to Cohere failed generating commit message, with error: ${(error as Error).message}, using fallback message: ${fallbackMessage}`,
+        );
 
-    return coChat(prompt);
+        return fallbackMessage;
+    }
 }
 
-export async function generateChangelog(diff: string): Promise<string> {
+export async function generateChangelog(diff: string, fallbackMessage: string): Promise<string> {
     if (diff === "") {
         return DEFAULT_GITHUB_MESSAGE;
     }
@@ -216,5 +223,13 @@ export async function generateChangelog(diff: string): Promise<string> {
         \`\`\`
     `;
 
-    return coChat(prompt);
+    try {
+        return await coChat(prompt);
+    } catch (error) {
+        console.error(
+            `Call to Cohere failed writing the PR body, with error: ${(error as Error).message}, using fallback message: ${fallbackMessage}`,
+        );
+
+        return fallbackMessage;
+    }
 }

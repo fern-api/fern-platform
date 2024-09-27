@@ -1,10 +1,10 @@
 {
-  "name": "fern-dashboard",
+  "name": "@fern-ui/dashboard",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "install-dashboard": "pnpm --filter fern-dashboard install",
+    "install-dashboard": "pnpm --filter=@fern-ui/dashboard install",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "dev": "vite",

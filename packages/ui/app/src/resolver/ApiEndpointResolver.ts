@@ -1,11 +1,11 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-reference/examples/sortKeysByShape";
 import type { FeatureFlags } from "../atoms";
-import { serializeMdx } from "../mdx/bundler";
+import { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiTypeResolver } from "./ApiTypeResolver";
 import { resolveCodeSnippets } from "./resolveCodeSnippets";
@@ -42,6 +42,7 @@ export class ApiEndpointResolver {
         private resolvedTypes: Record<string, ResolvedTypeDefinition>,
         private featureFlags: FeatureFlags,
         private mdxOptions: FernSerializeMdxOptions | undefined,
+        private serializeMdx: MDX_SERIALIZER,
     ) {}
 
     async resolveEndpointDefinition(node: FernNavigation.EndpointNode): Promise<ResolvedEndpointDefinition> {
@@ -53,12 +54,12 @@ export class ApiEndpointResolver {
             endpoint.path.pathParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.typeResolver.resolveTypeReference(parameter.type),
-                    serializeMdx(parameter.description, {
+                    this.serializeMdx(parameter.description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);
                 return {
-                    key: parameter.key,
+                    key: APIV1Read.PropertyKey(parameter.key),
                     valueShape,
                     description,
                     availability: parameter.availability,
@@ -71,12 +72,12 @@ export class ApiEndpointResolver {
             endpoint.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.typeResolver.resolveTypeReference(parameter.type),
-                    serializeMdx(parameter.description, {
+                    this.serializeMdx(parameter.description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);
                 return {
-                    key: parameter.key,
+                    key: APIV1Read.PropertyKey(parameter.key),
                     valueShape,
                     description,
                     availability: parameter.availability,
@@ -89,12 +90,12 @@ export class ApiEndpointResolver {
             ...endpoint.headers.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.typeResolver.resolveTypeReference(header.type),
-                    serializeMdx(header.description, {
+                    this.serializeMdx(header.description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);
                 return {
-                    key: header.key,
+                    key: APIV1Read.PropertyKey(header.key),
                     valueShape,
                     description,
                     availability: header.availability,
@@ -104,12 +105,12 @@ export class ApiEndpointResolver {
             ...(this.holder.api.globalHeaders ?? []).map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.typeResolver.resolveTypeReference(header.type),
-                    serializeMdx(header.description, {
+                    this.serializeMdx(header.description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);
                 return {
-                    key: header.key,
+                    key: APIV1Read.PropertyKey(header.key),
                     valueShape,
                     description,
                     availability: header.availability,
@@ -122,9 +123,13 @@ export class ApiEndpointResolver {
             (endpoint.errorsV2 ?? []).map(async (error): Promise<ResolvedError> => {
                 const [shape, description] = await Promise.all([
                     error.type != null
-                        ? this.typeResolver.resolveTypeShape(undefined, error.type, undefined, undefined)
+                        ? this.typeResolver.resolveTypeShape({
+                              typeShape: error.type,
+                              id: `${endpoint.id}-${error.statusCode}-${error.name}`,
+                              name: error.name,
+                          })
                         : ({ type: "unknown" } as ResolvedTypeDefinition),
-                    serializeMdx(error.description, {
+                    this.serializeMdx(error.description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);
@@ -144,7 +149,7 @@ export class ApiEndpointResolver {
             }),
         );
 
-        const descriptionPromise = serializeMdx(endpoint.description, {
+        const descriptionPromise = this.serializeMdx(endpoint.description, {
             files: this.mdxOptions?.files,
         });
 
@@ -163,11 +168,11 @@ export class ApiEndpointResolver {
             if (pathPart.type === "literal") {
                 return pathPart;
             } else {
-                const parameter = pathParameters.find((parameter) => parameter.key === pathPart.value);
+                const parameter = pathParameters.find((parameter) => String(parameter.key) === String(pathPart.value));
                 if (parameter == null) {
                     return {
                         type: "pathParameter",
-                        key: pathPart.value,
+                        key: APIV1Read.PropertyKey(pathPart.value),
                         valueShape: {
                             type: "unknown",
                             availability: undefined,
@@ -190,7 +195,7 @@ export class ApiEndpointResolver {
         const toRet: ResolvedEndpointDefinition = {
             type: "endpoint",
             nodeId: node.id,
-            breadcrumbs: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
+            breadcrumb: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
             id: node.endpointId,
             slug: node.slug,
             description,
@@ -253,7 +258,7 @@ export class ApiEndpointResolver {
     async resolveRequestBody(request: APIV1Read.HttpRequest): Promise<ResolvedRequestBody> {
         const [shape, description] = await Promise.all([
             this.resolveRequestBodyShape(request.type),
-            serializeMdx(request.description, {
+            this.serializeMdx(request.description, {
                 files: this.mdxOptions?.files,
             }),
         ]);
@@ -268,7 +273,7 @@ export class ApiEndpointResolver {
     async resolveResponseBody(response: APIV1Read.HttpResponse): Promise<ResolvedResponseBody> {
         const [shape, description] = await Promise.all([
             this.resolveResponseBodyShape(response.type),
-            serializeMdx(response.description, {
+            this.serializeMdx(response.description, {
                 files: this.mdxOptions?.files,
             }),
         ]);
@@ -288,15 +293,17 @@ export class ApiEndpointResolver {
 
         for (const header of headers) {
             if (
-                header.key.toLowerCase() === "authorization" ||
-                header.key.toLowerCase().includes("api-key") ||
-                header.key.toLowerCase().includes("apikey")
+                APIV1Read.PropertyKey(header.key).toLowerCase() === "authorization" ||
+                APIV1Read.PropertyKey(header.key).toLowerCase().includes("api-key") ||
+                APIV1Read.PropertyKey(header.key).toLowerCase().includes("apikey")
             ) {
                 const auth: APIV1Read.ApiAuth = {
                     type: "header",
-                    headerWireValue: header.key,
+                    headerWireValue: APIV1Read.PropertyKey(header.key),
+                    nameOverride: undefined,
+                    prefix: undefined,
                 };
-                return { auth, headers: headers.filter((h) => h.key !== header.key) };
+                return { auth, headers: headers.filter((h) => h.key !== APIV1Read.PropertyKey(header.key)) };
             }
         }
 
@@ -311,9 +318,9 @@ export class ApiEndpointResolver {
         const pathParametersPromise = Promise.all(
             channel.path.pathParameters.map(
                 async (parameter): Promise<ResolvedObjectProperty> => ({
-                    key: parameter.key,
+                    key: APIV1Read.PropertyKey(parameter.key),
                     valueShape: await this.typeResolver.resolveTypeReference(parameter.type),
-                    description: await serializeMdx(parameter.description, {
+                    description: await this.serializeMdx(parameter.description, {
                         files: this.mdxOptions?.files,
                     }),
                     availability: parameter.availability,
@@ -325,12 +332,12 @@ export class ApiEndpointResolver {
             ...channel.headers.map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.typeResolver.resolveTypeReference(header.type),
-                    serializeMdx(header.description, {
+                    this.serializeMdx(header.description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);
                 return {
-                    key: header.key,
+                    key: APIV1Read.PropertyKey(header.key),
                     valueShape,
                     description,
                     availability: header.availability,
@@ -340,12 +347,12 @@ export class ApiEndpointResolver {
             ...(this.holder.api.globalHeaders ?? []).map(async (header): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.typeResolver.resolveTypeReference(header.type),
-                    serializeMdx(header.description, {
+                    this.serializeMdx(header.description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);
                 return {
-                    key: header.key,
+                    key: APIV1Read.PropertyKey(header.key),
                     valueShape,
                     description,
                     availability: header.availability,
@@ -357,12 +364,12 @@ export class ApiEndpointResolver {
             channel.queryParameters.map(async (parameter): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.typeResolver.resolveTypeReference(parameter.type),
-                    serializeMdx(parameter.description, {
+                    this.serializeMdx(parameter.description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);
                 return {
-                    key: parameter.key,
+                    key: APIV1Read.PropertyKey(parameter.key),
                     valueShape,
                     description,
                     availability: parameter.availability,
@@ -374,7 +381,7 @@ export class ApiEndpointResolver {
             channel.messages.map(async ({ type, body, origin, displayName, description, availability }) => {
                 const [resolvedBody, resolvedDescription] = await Promise.all([
                     this.resolvePayloadShape(body),
-                    serializeMdx(description, {
+                    this.serializeMdx(description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);
@@ -389,7 +396,7 @@ export class ApiEndpointResolver {
             }),
         );
 
-        const descriptionPromise = serializeMdx(channel.description, {
+        const descriptionPromise = this.serializeMdx(channel.description, {
             files: this.mdxOptions?.files,
         });
 
@@ -407,7 +414,7 @@ export class ApiEndpointResolver {
         return {
             type: "websocket",
             nodeId: node.id,
-            breadcrumbs: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
+            breadcrumb: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
             auth,
             environments: channel.environments,
             id: node.webSocketId,
@@ -421,7 +428,9 @@ export class ApiEndpointResolver {
                     if (pathPart.type === "literal") {
                         return { ...pathPart };
                     } else {
-                        const correspondingParameter = pathParameters.find((param) => param.key === pathPart.value);
+                        const correspondingParameter = pathParameters.find(
+                            (param) => String(param.key) === String(pathPart.value),
+                        );
                         if (correspondingParameter === undefined) {
                             // eslint-disable-next-line no-console
                             console.error(
@@ -450,15 +459,15 @@ export class ApiEndpointResolver {
         }
         const [payloadShape, description, headers] = await Promise.all([
             this.resolvePayloadShape(webhook.payload.type),
-            await serializeMdx(webhook.description, {
+            await this.serializeMdx(webhook.description, {
                 files: this.mdxOptions?.files,
             }),
             Promise.all(
                 webhook.headers.map(
                     async (header): Promise<ResolvedObjectProperty> => ({
-                        key: header.key,
+                        key: APIV1Read.PropertyKey(header.key),
                         valueShape: await this.typeResolver.resolveTypeReference(header.type),
-                        description: await serializeMdx(header.description, {
+                        description: await this.serializeMdx(header.description, {
                             files: this.mdxOptions?.files,
                         }),
                         availability: header.availability,
@@ -470,7 +479,7 @@ export class ApiEndpointResolver {
         return {
             type: "webhook",
             nodeId: node.id,
-            breadcrumbs: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
+            breadcrumb: FernNavigation.utils.createBreadcrumbs(this.collector.getParents(node.id)),
             title: node.title,
             description,
             availability: undefined,
@@ -482,7 +491,7 @@ export class ApiEndpointResolver {
             headers,
             payload: {
                 shape: payloadShape,
-                description: await serializeMdx(webhook.payload.description, {
+                description: await this.serializeMdx(webhook.payload.description, {
                     files: this.mdxOptions?.files,
                 }),
                 availability: undefined,
@@ -551,7 +560,7 @@ export class ApiEndpointResolver {
     async resolveFormData(formData: APIV1Read.FormDataRequest): Promise<ResolvedFormData> {
         return {
             type: "formData",
-            description: await serializeMdx(formData.description, {
+            description: await this.serializeMdx(formData.description, {
                 files: this.mdxOptions?.files,
             }),
             availability: formData.availability,
@@ -560,7 +569,7 @@ export class ApiEndpointResolver {
                 formData.properties.map(async (property): Promise<ResolvedFormDataRequestProperty> => {
                     switch (property.type) {
                         case "file": {
-                            const description = await serializeMdx(property.value.description, {
+                            const description = await this.serializeMdx(property.value.description, {
                                 files: this.mdxOptions?.files,
                             });
                             return {
@@ -574,7 +583,7 @@ export class ApiEndpointResolver {
                         }
                         case "bodyProperty": {
                             const [description, valueShape] = await Promise.all([
-                                serializeMdx(property.description, {
+                                this.serializeMdx(property.description, {
                                     files: this.mdxOptions?.files,
                                 }),
                                 this.typeResolver.resolveTypeReference(property.valueType),

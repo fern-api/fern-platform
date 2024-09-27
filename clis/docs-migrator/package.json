@@ -27,6 +27,7 @@
   "source": "src/index.ts",
   "module": "src/index.ts",
   "main": "src/index.ts",
+  "types": "src/index.ts",
   "dependencies": {
     "@fern-fern/docs-config": "^0.22.0",
     "@fern-ui/core-utils": "workspace:*",

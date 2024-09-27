@@ -1,11 +1,11 @@
-// eslint-disable-next-line import/no-internal-modules
+import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDataPathname";
+import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
+import { rewritePosthog } from "@/server/rewritePosthog";
+import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
+import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
-import { extractBuildId, extractNextDataPathname } from "./utils/extractNextDataPathname";
-import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "./utils/pageRoutes";
-import { rewritePosthog } from "./utils/rewritePosthog";
-import { getXFernHostEdge } from "./utils/xFernHost";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
@@ -14,6 +14,16 @@ export const middleware: NextMiddleware = async (request) => {
     const xFernHost = getXFernHostEdge(request);
     const nextUrl = request.nextUrl.clone();
     const headers = new Headers(request.headers);
+
+    /**
+     * Do not rewrite 404 and 500 pages
+     */
+    if (
+        removeTrailingSlash(request.nextUrl.pathname) === "/404" ||
+        removeTrailingSlash(request.nextUrl.pathname) === "/500"
+    ) {
+        return NextResponse.next();
+    }
 
     /**
      * Add x-fern-host header to the request
@@ -148,7 +158,7 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
+        "/((?!api/fern-docs|_next/static|_next/image|_next/data/:buildId/404.json|_next/data/:buildId/500.json|_vercel|favicon.ico).*)",
     ],
 };
 

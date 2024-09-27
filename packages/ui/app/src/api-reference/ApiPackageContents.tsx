@@ -24,7 +24,7 @@ export declare namespace ApiPackageContents {
         apiDefinition: ResolvedWithApiDefinition;
         isLastInParentPackage: boolean;
         anchorIdParts: readonly string[];
-        breadcrumbs?: readonly string[];
+        breadcrumb?: readonly string[];
     }
 }
 
@@ -35,13 +35,13 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
     apiDefinition,
     isLastInParentPackage,
     anchorIdParts,
-    breadcrumbs = EMPTY_ARRAY,
+    breadcrumb = EMPTY_ARRAY,
 }) => {
     const { items } = apiDefinition;
     const subpackageTitle = isResolvedSubpackage(apiDefinition) ? apiDefinition.title : undefined;
     const currentBreadcrumbs = useMemo(
-        () => (subpackageTitle != null ? [...breadcrumbs, subpackageTitle] : breadcrumbs),
-        [breadcrumbs, subpackageTitle],
+        () => (subpackageTitle != null ? [...breadcrumb, subpackageTitle] : breadcrumb),
+        [breadcrumb, subpackageTitle],
     );
 
     return (
@@ -82,7 +82,7 @@ const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
                                 apiDefinition={subpackage}
                                 isLastInParentPackage={isLastInParentPackage && idx === items.length - 1}
                                 anchorIdParts={anchorIdParts}
-                                breadcrumbs={currentBreadcrumbs}
+                                breadcrumb={currentBreadcrumbs}
                             />
                         ),
                         page: (page) => (

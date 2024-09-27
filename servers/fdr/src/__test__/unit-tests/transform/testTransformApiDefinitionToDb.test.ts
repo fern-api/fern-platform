@@ -1,4 +1,4 @@
-import { APIV1Write, SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
+import { APIV1Write, FdrAPI, SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
 import { resolve } from "path";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
@@ -46,7 +46,11 @@ describe("transformApiDefinitionToDb", () => {
             `${JSON.stringify(fixture)}`,
             async () => {
                 const apiDef = loadFdrApiDefinition(fixture);
-                const dbApiDefinition = convertAPIDefinitionToDb(apiDef, "id", EMPTY_SNIPPET_HOLDER);
+                const dbApiDefinition = convertAPIDefinitionToDb(
+                    apiDef,
+                    FdrAPI.ApiDefinitionId("id"),
+                    EMPTY_SNIPPET_HOLDER,
+                );
                 expect(dbApiDefinition).toMatchSnapshot();
             },
             90_000,

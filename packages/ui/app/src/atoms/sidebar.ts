@@ -24,7 +24,7 @@ export const SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM = atom((get) => {
         return childToParentsMap;
     }
 
-    FernNavigation.utils.traverseNavigation(sidebar, (node, _index, parents) => {
+    FernNavigation.traverseNavigation(sidebar, (node, _index, parents) => {
         childToParentsMap.set(
             node.id,
             parents.map((p) => p.id),
@@ -69,7 +69,7 @@ const INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM = atomWithDefault<{
     // the following was commented out because FDR stores `collapsed: false` by default. Another solution is needed.
     // const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
     // if (sidebar != null) {
-    //     FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+    //     FernNavigation.traverseNavigation(sidebar, (node) => {
     //         // TODO: check for api reference, etc.
     //         if (node.type === "section" && node.collapsed === false) {
     //             expandedNodes.add(node.id);
@@ -278,7 +278,7 @@ export const FORCE_ENABLE_SIDEBAR_ATOM = atom((get) => {
 
     // sidebar is always enabled if the header is disabled
     if (layout?.disableHeader) {
-        return false;
+        return true;
     }
 
     // sidebar is always enabled if vertical tabs are enabled

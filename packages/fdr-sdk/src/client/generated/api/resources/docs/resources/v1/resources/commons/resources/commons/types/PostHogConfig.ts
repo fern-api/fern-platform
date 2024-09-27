@@ -4,5 +4,5 @@
 
 export interface PostHogConfig {
     apiKey: string;
-    endpoint?: string;
+    endpoint: string | undefined;
 }

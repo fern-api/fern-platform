@@ -28,6 +28,7 @@ jobs:
       GITHUB_APP_WEBHOOK_SECRET: ${{ secrets.FERN_BOT_DEV_GITHUB_APP_WEBHOOK_SECRET }}
       FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
       CUSTOMER_ALERTS_SLACK_CHANNEL: "customer-upgrades-dev"
+      CUSTOMER_PULLS_SLACK_CHANNEL: "customer-pulls-dev"
       DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com"
       DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com"
       CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
@@ -64,6 +65,7 @@ jobs:
       CO_API_KEY: ${{ secrets.PROD_CO_API_KEY }}
       FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
       CUSTOMER_ALERTS_SLACK_CHANNEL: "customer-upgrades"
+      CUSTOMER_PULLS_SLACK_CHANNEL: "customer-pulls"
       REPO_TO_RUN_ON: ${{ github.event.inputs.repo }}
       CI: false
     steps:

@@ -1,3 +1,4 @@
+import { APIV1Write, DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { readFile } from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
 import { S3ServiceImpl } from "../../services/s3";
@@ -40,7 +41,7 @@ describe("S3 Service", () => {
             domain: "buildwithfern.com",
             time: "12340",
             isPrivate: false,
-            filepath: "deep",
+            filepath: DocsV1Write.FilePath("deep"),
         });
         console.log(startUploadDocsResponse.url);
         expect(true).toEqual(true);
@@ -51,10 +52,10 @@ describe("S3 Service", () => {
         expect(uploadDocsResponse.status).toEqual(200);
 
         const startUploadSourceResponse = await s3Service.createPresignedApiDefinitionSourceUploadUrlWithClient({
-            orgId: "fern-api",
-            apiId: "fern",
+            orgId: FdrAPI.OrgId("fern-api"),
+            apiId: FdrAPI.ApiId("fern"),
             time: "12340",
-            sourceId: uuidv4(),
+            sourceId: APIV1Write.SourceId(uuidv4()),
         });
         console.log(startUploadSourceResponse.url);
         expect(true).toEqual(true);

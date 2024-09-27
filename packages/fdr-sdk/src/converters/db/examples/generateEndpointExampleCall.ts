@@ -122,6 +122,7 @@ function generateBaseEndpointExample({
 
         name: undefined,
         requestBody: undefined,
+        responseBody: undefined,
         responseBodyV3: undefined,
         codeSamples: undefined,
         description: undefined,

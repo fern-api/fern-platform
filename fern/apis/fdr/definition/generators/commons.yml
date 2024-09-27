@@ -43,8 +43,14 @@ types:
     properties:
       type: ChangelogEntryType
       summary: string
-      upgradeNotes: optional<string>
+      links:
+        type: optional<list<string>>
+        docs: |
+          Any URLs that are relevant to the change, such as a PR or issue. This is optional for backcompat.
 
+          You do not always need to specify the URL as the CLI can fill it in with the current PR, but given you can choose to not
+          release within the same PR as the change is introduced, this should be specified for divorcing the two.
+      upgradeNotes: optional<string>
       # Keep a Changelog
       added: optional<list<string>>
       changed: optional<list<string>>

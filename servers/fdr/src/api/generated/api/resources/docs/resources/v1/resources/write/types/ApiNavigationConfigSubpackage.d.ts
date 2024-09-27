@@ -3,7 +3,7 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface ApiNavigationConfigSubpackage {
-    summaryPageId?: FernRegistry.docs.v1.commons.PageId;
-    subpackageId: FernRegistry.docs.v1.commons.SubpackageId;
+    summaryPageId: FernRegistry.PageId | undefined;
+    subpackageId: FernRegistry.api.v1.SubpackageId;
     items: FernRegistry.docs.v1.write.ApiNavigationConfigItem[];
 }

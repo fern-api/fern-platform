@@ -31,6 +31,7 @@ export const HttpMethodTag = memo<HttpMethodTag.Props>(({ method, active, size =
                     "w-10 font-bold": size === "sm",
                     "tracking-tighter": method === "STREAM",
                 },
+                "mt-0.5",
                 className,
             )}
             size={size}

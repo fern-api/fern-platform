@@ -23,7 +23,9 @@ env:
   DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com"
   FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
   CUSTOMER_ALERTS_SLACK_CHANNEL: "customer-upgrades-dev"
+  CUSTOMER_PULLS_SLACK_CHANNEL: "customer-pulls-dev"
   CO_API_KEY: ${{ secrets.DEV_CO_API_KEY }}
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
 jobs:
   deploy_dev:

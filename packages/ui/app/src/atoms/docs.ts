@@ -1,3 +1,4 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { atomWithReducer, useHydrateAtoms } from "jotai/utils";
 import type { PropsWithChildren, ReactNode } from "react";
@@ -31,9 +32,29 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isCohereTheme: false,
     isFileForgeHackEnabled: false,
     is404PageHidden: false,
+    isNewSearchExperienceEnabled: false,
 };
 
-const EMPTY_DOCS_STATE: DocsProps = {
+export const EMPTY_ANALYTICS_CONFIG: DocsV1Read.AnalyticsConfig = {
+    segment: undefined,
+    fullstory: undefined,
+    intercom: undefined,
+    posthog: undefined,
+    gtm: undefined,
+    ga4: undefined,
+    amplitude: undefined,
+    mixpanel: undefined,
+    hotjar: undefined,
+    koala: undefined,
+    logrocket: undefined,
+    pirsch: undefined,
+    plausible: undefined,
+    fathom: undefined,
+    clearbit: undefined,
+    heap: undefined,
+};
+
+export const EMPTY_DOCS_STATE: DocsProps = {
     announcement: undefined,
     baseUrl: {
         domain: "app.buildwithfern.com",
@@ -71,7 +92,7 @@ const EMPTY_DOCS_STATE: DocsProps = {
     apis: [],
     seo: {},
     analytics: undefined,
-    analyticsConfig: {},
+    analyticsConfig: EMPTY_ANALYTICS_CONFIG,
     fallback: {},
     theme: "default",
     user: undefined,

@@ -4,8 +4,9 @@ imports:
   algolia: ../../../algolia.yml
   rootCommons: ../../../commons.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
+  apiCommonsV1: ../../../api/v1/commons.yml
   commons: ../commons/commons.yml
-  navigation: ../../../navigation/__package__.yml
+  navigation: ../../../navigation/v1/__package__.yml
 
 service:
   base-path: /registry/docs
@@ -44,11 +45,11 @@ types:
 
   UrlFile:
     properties:
-      url: commons.Url
+      url: rootCommons.Url
 
   ImageFile:
     properties:
-      url: commons.Url
+      url: rootCommons.Url
       width: double
       height: double
       blurDataUrl: optional<string>
@@ -64,10 +65,10 @@ types:
   DocsDefinition:
     properties:
       algoliaSearchIndex: optional<algolia.AlgoliaSearchIndex>
-      pages: map<commons.PageId, PageContent>
+      pages: map<rootCommons.PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
-      files: map<commons.FileId, commons.Url>
-      filesV2: map<commons.FileId, File>
+      files: map<rootCommons.FileId, rootCommons.Url>
+      filesV2: map<rootCommons.FileId, File>
       jsFiles:
         type: optional<map<string, string>>
         docs: |
@@ -79,8 +80,8 @@ types:
 
   PageContent:
     properties:
-      markdown: string # eventually PageContent should just be a commons.FileId ?
-      editThisPageUrl: optional<commons.Url>
+      markdown: string # eventually PageContent should just be a rootCommons.FileId ?
+      editThisPageUrl: optional<rootCommons.Url>
 
   DocsConfig:
     properties:
@@ -95,8 +96,8 @@ types:
 
       # logo
       logoHeight: optional<Height>
-      logoHref: optional<commons.Url>
-      favicon: optional<commons.FileId>
+      logoHref: optional<rootCommons.Url>
+      favicon: optional<rootCommons.FileId>
 
       # seo
       metadata: optional<commons.MetadataConfig>
@@ -120,13 +121,13 @@ types:
 
       # deprecated
       # backgroundImage:
-      #   type: optional<commons.FileId>
+      #   type: optional<rootCommons.FileId>
       #   availability: deprecated
       # logoV2:
       #   type: optional<commons.ThemedFileId>
       #   availability: deprecated
       # logo:
-      #   type: optional<commons.FileId>
+      #   type: optional<rootCommons.FileId>
       #   availability: deprecated
       # colors:
       #   type: optional<commons.ColorsConfig>
@@ -146,8 +147,8 @@ types:
 
   ThemeConfig:
     properties:
-      logo: optional<commons.FileId>
-      backgroundImage: optional<commons.FileId>
+      logo: optional<rootCommons.FileId>
+      backgroundImage: optional<rootCommons.FileId>
       accentPrimary: commons.RgbaColor
       background: Background
       border: optional<commons.RgbaColor>
@@ -200,7 +201,7 @@ types:
     properties:
       title: string
       icon: optional<string>
-      url: commons.Url
+      url: rootCommons.Url
 
   UnversionedUntabbedNavigationConfig:
     properties:
@@ -215,15 +216,8 @@ types:
     properties:
       version: rootCommons.VersionId
       urlSlug: string
-      availability: optional<VersionAvailability>
+      availability: optional<rootCommons.Availability>
       config: UnversionedNavigationConfig
-
-  VersionAvailability:
-    enum:
-      - Stable
-      - GenerallyAvailable
-      - Deprecated
-      - Beta
 
   NavigationItem:
     union:
@@ -238,7 +232,7 @@ types:
   PageMetadata:
     extends: NavigationNodeMetadata
     properties:
-      id: commons.PageId
+      id: rootCommons.PageId
       title: string
 
   NavigationNodeMetadata:
@@ -252,7 +246,7 @@ types:
     properties:
       title: string
       icon: optional<string>
-      url: string
+      url: rootCommons.Url
 
   ApiSection:
     availability: deprecated
@@ -277,23 +271,23 @@ types:
   ApiNavigationConfigRoot:
     availability: deprecated
     properties:
-      summaryPageId: optional<commons.PageId>
+      summaryPageId: optional<rootCommons.PageId>
       items: list<ApiNavigationConfigItem>
 
   ApiNavigationConfigItem:
     availability: deprecated
     union:
       subpackage: ApiNavigationConfigSubpackage
-      endpointId: commons.EndpointId
-      websocketId: commons.WebSocketId
-      webhookId: commons.WebhookId
+      endpointId: rootCommons.EndpointId
+      websocketId: rootCommons.WebSocketId
+      webhookId: rootCommons.WebhookId
       page: PageMetadata
 
   ApiNavigationConfigSubpackage:
     availability: deprecated
     properties:
-      summaryPageId: optional<commons.PageId>
-      subpackageId: commons.SubpackageId
+      summaryPageId: optional<rootCommons.PageId>
+      subpackageId: apiCommonsV1.SubpackageId
       items: list<ApiNavigationConfigItem>
 
   ChangelogSection:
@@ -301,7 +295,7 @@ types:
     properties:
       title: optional<string>
       description: optional<string>
-      pageId: optional<commons.PageId>
+      pageId: optional<rootCommons.PageId>
       items: list<ChangelogItem>
 
   ChangelogSectionV3:
@@ -311,7 +305,7 @@ types:
   ChangelogItem:
     properties:
       date: date
-      pageId: commons.PageId
+      pageId: rootCommons.PageId
 
   DocsSection:
     extends: NavigationNodeMetadata
@@ -320,7 +314,7 @@ types:
       items: list<NavigationItem>
       skipUrlSlug: boolean
       collapsed: boolean
-      overviewPageId: optional<commons.PageId>
+      overviewPageId: optional<rootCommons.PageId>
 
   ApiArtifacts:
     properties:
@@ -329,7 +323,7 @@ types:
 
   PublishedPostmanCollection:
     properties:
-      url: string
+      url: rootCommons.Url
       githubRepo: optional<GitHubRepo>
 
   PublishedSdk:
@@ -359,7 +353,7 @@ types:
   GitHubRepo:
     properties:
       name: string
-      url: string
+      url: rootCommons.Url
 
 errors:
   DomainNotRegisteredError:

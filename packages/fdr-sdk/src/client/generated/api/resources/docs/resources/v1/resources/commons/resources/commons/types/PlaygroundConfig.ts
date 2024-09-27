@@ -3,5 +3,5 @@
  */
 
 export interface PlaygroundConfig {
-    oauth?: boolean;
+    oauth: boolean | undefined;
 }

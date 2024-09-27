@@ -68,11 +68,10 @@ FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
 
 ### Docs UI
 
-To build and run the NextJS docs UI, run either:
+To build and run the NextJS docs UI, run:
 
-- `pnpm --filter=@fern-ui/docs-bundle dev:fern-dev`. This compiles and runs a NextJS app that communicates with our dev cloud environment.
-
-- `pnpm --filter=@fern-ui/docs-bundle dev:fern-prod`. This compiles and runs a NextJS app that communicates with our cloud production environment.
+- `vercel pull`. This pulls the latest development environment variables from Vercel.
+- `vercel dev`. This compiles and runs a NextJS app that communicates with our cloud production environment.
 
 The frontend is served at `localhost:3000`. You can configure which docs are loaded by using `.env.local`:
 
@@ -84,6 +83,8 @@ The frontend is served at `localhost:3000`. You can configure which docs are loa
 
 # uncomment the next line when targeting the dev cloud environment
 # NEXT_PUBLIC_DOCS_DOMAIN=vellum.docs.dev.buildwithfern.com
+
+# paste all environment variables found in .vercel/.env.development.local here
 ```
 
 ## Testing in Staging

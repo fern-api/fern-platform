@@ -1,4 +1,4 @@
-import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ResolvedEndpointDefinition, resolveEnvironment } from "../resolver/types";
 
@@ -11,23 +11,6 @@ export type EndpointPathPart =
           type: "pathParameter";
           name: string;
       };
-
-export function getEndpointAvailabilityLabel(
-    availability: APIV1Read.Availability | DocsV1Read.VersionAvailability,
-): string {
-    switch (availability) {
-        case "Beta":
-            return "Beta";
-        case "Deprecated":
-            return "Deprecated";
-        case "GenerallyAvailable":
-            return "GA";
-        case "Stable":
-            return "Stable";
-        default:
-            return "Unknown";
-    }
-}
 
 export function getEndpointEnvironmentUrl(endpoint: ResolvedEndpointDefinition): string | undefined {
     return resolveEnvironment(endpoint)?.baseUrl;
@@ -53,6 +36,6 @@ export function getEndpointPathAsString(endpoint: APIV1Read.EndpointDefinition):
     );
 }
 
-export function getPathParameterAsString(pathParameterKey: APIV1Read.PathParameterKey): string {
+export function getPathParameterAsString(pathParameterKey: APIV1Read.PropertyKey): string {
     return `:${pathParameterKey}`;
 }

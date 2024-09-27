@@ -22,6 +22,6 @@ export declare namespace HttpRequestBodyShape {
     }
     interface FileUpload {
         type: "fileUpload";
-        value?: FernRegistry.api.v1.read.FormDataRequest;
+        value: FernRegistry.api.v1.read.FormDataRequest | undefined;
     }
 }

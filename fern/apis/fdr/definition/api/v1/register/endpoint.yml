@@ -1,25 +1,22 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
+  rootCommons: ../../../commons.yml
   type: type.yml
-  commons: commons.yml
+  commons: ../commons.yml
 
 types:
-  EnvironmentId: string
-
-  EndpointId: string
-
   EndpointDefinition:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
       auth: optional<boolean>
-      defaultEnvironment: optional<EnvironmentId>
-      environments: optional<list<Environment>>
-      method: HttpMethod
+      defaultEnvironment: optional<rootCommons.EnvironmentId>
+      environments: optional<list<commons.Environment>>
+      method: rootCommons.HttpMethod
       id:
-        type: EndpointId
+        type: rootCommons.EndpointId
         docs: This is the name of the endpoint.
       originalEndpointId:
         type: optional<string>
@@ -39,19 +36,6 @@ types:
       errorsV2: optional<list<ErrorDeclarationV2>>
       examples: list<ExampleEndpointCall>
 
-  Environment:
-    properties:
-      id: EnvironmentId
-      baseUrl: string
-
-  HttpMethod:
-    enum:
-      - GET
-      - POST
-      - PUT
-      - PATCH
-      - DELETE
-
   EndpointPath:
     properties:
       parts: list<EndpointPathPart>
@@ -60,17 +44,15 @@ types:
   EndpointPathPart:
     union:
       literal: string
-      pathParameter: PathParameterKey
+      pathParameter: rootCommons.PropertyKey
 
   PathParameter:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      key: PathParameterKey
+      key: rootCommons.PropertyKey
       type: type.TypeReference
-
-  PathParameterKey: string
 
   QueryParameter:
     extends:
@@ -194,7 +176,7 @@ types:
   StreamCondition:
     availability: deprecated
     union:
-      booleanRequestProperty: type.PropertyKey
+      booleanRequestProperty: rootCommons.PropertyKey
   # examples
 
   ExampleEndpointCall:
@@ -202,7 +184,7 @@ types:
     properties:
       name: optional<string>
       path: string
-      pathParameters: map<PathParameterKey, unknown>
+      pathParameters: map<rootCommons.PropertyKey, unknown>
       queryParameters: map<string, unknown>
       headers: map<string, unknown>
       requestBody:
@@ -246,9 +228,7 @@ types:
   FilenameWithData:
     properties:
       filename: string
-      data: FileId
-
-  FileId: string
+      data: rootCommons.FileId
 
   ExampleEndpointResponse:
     union:

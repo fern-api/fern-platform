@@ -1,7 +1,7 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import clsx from "clsx";
 import { NavArrowLeft, NavArrowRight } from "iconoir-react";
 import { Markdown } from "../mdx/Markdown";
-import { BundledMDX } from "../mdx/types";
 import { FernLinkCard } from "./FernLinkCard";
 
 export declare namespace BottomNavigationButton {
@@ -9,7 +9,7 @@ export declare namespace BottomNavigationButton {
         title: string;
         hint?: string;
         href: string;
-        excerpt?: BundledMDX;
+        excerpt?: FernDocs.MarkdownText;
         dir: "prev" | "next";
         className?: string;
     }

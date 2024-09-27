@@ -4,15 +4,13 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface WebSocketChannel
-    extends FernRegistry.api.v1.read.WithDescription,
-        FernRegistry.api.v1.read.WithAvailability {
+export interface WebSocketChannel extends FernRegistry.api.v1.WithDescription, FernRegistry.api.v1.WithAvailability {
     urlSlug: string;
-    id: FernRegistry.api.v1.read.WebSocketId;
+    id: FernRegistry.WebSocketId;
     auth: boolean;
-    name?: string;
-    defaultEnvironment?: FernRegistry.api.v1.read.EnvironmentId;
-    environments: FernRegistry.api.v1.read.Environment[];
+    name: string | undefined;
+    defaultEnvironment: FernRegistry.EnvironmentId | undefined;
+    environments: FernRegistry.api.v1.Environment[];
     path: FernRegistry.api.v1.read.EndpointPath;
     headers: FernRegistry.api.v1.read.Header[];
     queryParameters: FernRegistry.api.v1.read.QueryParameter[];

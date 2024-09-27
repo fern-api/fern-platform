@@ -3,5 +3,5 @@
  */
 
 export interface CssConfig {
-    inline?: string[];
+    inline: string[] | undefined;
 }

@@ -4,5 +4,5 @@
 
 export interface PythonPackage {
     package: string;
-    version?: string;
+    version: string | undefined;
 }

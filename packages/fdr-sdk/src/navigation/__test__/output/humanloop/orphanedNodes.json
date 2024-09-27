@@ -1,128 +1,122 @@
 [
   {
-    "id": "root..v4",
-    "type": "version",
-    "title": "v4.0",
-    "slug": ""
+    "id": "root..v5",
+    "slug": "docs",
+    "title": "v5.0",
+    "type": "version"
+  },
+  {
+    "id": "root..v5.uv.docs",
+    "slug": "docs",
+    "title": "Docs",
+    "type": "tab"
+  },
+  {
+    "id": "root..v5.uv.docs.docs.getting-started",
+    "slug": "docs",
+    "title": "Getting Started",
+    "type": "section"
+  },
+  {
+    "id": "root..v5.uv.api-reference.api-reference.introduction",
+    "slug": "docs/api-reference",
+    "title": "Introduction",
+    "type": "section"
+  },
+  {
+    "id": "root..v5.uv.api-reference",
+    "slug": "docs/api-reference",
+    "title": "API Reference",
+    "type": "tab"
+  },
+  {
+    "id": "root..v5.uv.docs",
+    "slug": "docs/v5",
+    "title": "Docs",
+    "type": "tab"
+  },
+  {
+    "id": "root..v5.uv.docs.docs.getting-started",
+    "slug": "docs/v5",
+    "title": "Getting Started",
+    "type": "section"
+  },
+  {
+    "id": "root..v5.uv.api-reference.api-reference.introduction",
+    "slug": "docs/v5/api-reference",
+    "title": "Introduction",
+    "type": "section"
+  },
+  {
+    "id": "root..v5.uv.api-reference",
+    "slug": "docs/v5/api-reference",
+    "title": "API Reference",
+    "type": "tab"
+  },
+  {
+    "id": "root..v4.uv.docs",
+    "slug": "docs/v4",
+    "title": "Docs",
+    "type": "tab"
   },
   {
     "id": "root..v4.uv.docs.docs.getting-started",
-    "type": "section",
+    "slug": "docs/v4",
     "title": "Getting Started",
-    "slug": "docs"
+    "type": "section"
   },
   {
-    "id": "root..v4.uv.docs.docs.guides.generate-and-logging",
-    "type": "section",
-    "title": "Generate and Logging",
-    "slug": "docs/guides"
+    "id": "root..v4.uv.docs.docs.guides.generate-and-log",
+    "slug": "docs/v4/guides",
+    "title": "Generate and Log",
+    "type": "section"
   },
   {
-    "id": "root..v4.uv.docs.docs.guides.run-an-experiment",
-    "type": "section",
-    "title": "Run an experiment",
-    "slug": "docs/guides"
+    "id": "root..v4.uv.docs.docs.guides.datasets",
+    "slug": "docs/v4/guides",
+    "title": "Datasets",
+    "type": "section"
   },
   {
-    "id": "root..v4.uv.docs.docs.guides.create-and-use-datasets",
-    "type": "section",
-    "title": "Create and use Datasets",
-    "slug": "docs/guides"
+    "id": "root..v4.uv.docs.docs.guides.experiments",
+    "slug": "docs/v4/guides",
+    "title": "Experiments",
+    "type": "section"
   },
   {
     "id": "root..v4.uv.docs.docs.guides.tools",
-    "type": "section",
+    "slug": "docs/v4/guides",
     "title": "Tools",
-    "slug": "docs/guides"
+    "type": "section"
   },
   {
     "id": "root..v4.uv.docs.docs.core-concepts",
-    "type": "section",
+    "slug": "docs/v4",
     "title": "Core concepts",
-    "slug": "docs"
+    "type": "section"
   },
   {
     "id": "root..v4.uv.docs.docs.examples",
-    "type": "section",
+    "slug": "docs/v4",
     "title": "Examples",
-    "slug": "docs"
+    "type": "section"
   },
   {
     "id": "root..v4.uv.docs.docs.references",
-    "type": "section",
+    "slug": "docs/v4",
     "title": "References",
-    "slug": "docs"
+    "type": "section"
   },
   {
-    "id": "root..v4.uv.docs/api-reference.docs/api-reference.introduction",
-    "type": "section",
+    "id": "root..v4.uv.api-reference.api-reference.introduction",
+    "slug": "docs/v4/api-reference",
     "title": "Introduction",
-    "slug": "docs/api-reference"
+    "type": "section"
   },
   {
-    "id": "root..v4.uv.docs/api-reference",
-    "type": "tab",
+    "id": "root..v4.uv.api-reference",
+    "slug": "docs/v4/api-reference",
     "title": "API Reference",
-    "slug": "docs/api-reference"
-  },
-  {
-    "id": "root..v4.uv.docs.docs.getting-started",
-    "type": "section",
-    "title": "Getting Started",
-    "slug": "v4/docs"
-  },
-  {
-    "id": "root..v4.uv.docs.docs.guides.generate-and-logging",
-    "type": "section",
-    "title": "Generate and Logging",
-    "slug": "v4/docs/guides"
-  },
-  {
-    "id": "root..v4.uv.docs.docs.guides.run-an-experiment",
-    "type": "section",
-    "title": "Run an experiment",
-    "slug": "v4/docs/guides"
-  },
-  {
-    "id": "root..v4.uv.docs.docs.guides.create-and-use-datasets",
-    "type": "section",
-    "title": "Create and use Datasets",
-    "slug": "v4/docs/guides"
-  },
-  {
-    "id": "root..v4.uv.docs.docs.guides.tools",
-    "type": "section",
-    "title": "Tools",
-    "slug": "v4/docs/guides"
-  },
-  {
-    "id": "root..v4.uv.docs.docs.core-concepts",
-    "type": "section",
-    "title": "Core concepts",
-    "slug": "v4/docs"
-  },
-  {
-    "id": "root..v4.uv.docs.docs.examples",
-    "type": "section",
-    "title": "Examples",
-    "slug": "v4/docs"
-  },
-  {
-    "id": "root..v4.uv.docs.docs.references",
-    "type": "section",
-    "title": "References",
-    "slug": "v4/docs"
-  },
-  {
-    "id": "root..v4.uv.docs/api-reference.docs/api-reference.introduction",
-    "type": "section",
-    "title": "Introduction",
-    "slug": "v4/docs/api-reference"
-  },
-  {
-    "id": "root..v4.uv.docs/api-reference",
-    "type": "tab",
-    "title": "API Reference",
-    "slug": "v4/docs/api-reference"
+    "type": "tab"
   }
 ]

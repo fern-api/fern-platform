@@ -1,5 +1,6 @@
+import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { createFetchRequester } from "@algolia/requester-fetch";
-import { Algolia } from "@fern-api/fdr-sdk/client/types";
+import { Algolia, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { assertNonNullish } from "@fern-ui/core-utils";
 import { getContentForSearchRecord, getSlugForSearchRecord, getTitleForSearchRecord } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
@@ -10,7 +11,6 @@ import { ChatMessage } from "cohere-ai/api";
 import { NextRequest } from "next/server";
 import { v4 } from "uuid";
 import { z } from "zod";
-import { getXFernHostEdge } from "../../../../utils/xFernHost";
 
 export const runtime = "edge";
 
@@ -80,7 +80,7 @@ export default async function handler(req: NextRequest): Promise<Response> {
     const cache = new ConversationCache(conversationId);
     const chatHistory = await cache.get();
 
-    const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url: docsUrl });
+    const docs = await provideRegistryService().docs.v2.read.getDocsForUrl({ url: FdrAPI.Url(docsUrl) });
     if (!docs.ok) {
         if (docs.error.error === "UnauthorizedError") {
             return new Response(null, { status: 401 });
@@ -106,7 +106,7 @@ export default async function handler(req: NextRequest): Promise<Response> {
         if (versionId == null) {
             return new Response(null, { status: 400 });
         }
-        indexSegmentId = docs.body.definition.search.value.indexSegmentsByVersionId[versionId]?.id;
+        indexSegmentId = docs.body.definition.search.value.indexSegmentsByVersionId[FdrAPI.VersionId(versionId)]?.id;
         if (indexSegmentId == null) {
             return new Response(null, { status: 404 });
         }

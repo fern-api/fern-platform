@@ -16,7 +16,9 @@ export interface Env {
     DEFAULT_VENUS_ORIGIN: string;
     DEFAULT_FDR_ORIGIN: string;
     CUSTOMER_ALERTS_SLACK_CHANNEL: string;
+    CUSTOMER_PULLS_SLACK_CHANNEL: string;
     FERNIE_SLACK_APP_TOKEN: string;
+    FERN_TOKEN: string;
 }
 
 export function evaluateEnv(): Env {
@@ -40,5 +42,7 @@ export function evaluateEnv(): Env {
         DEFAULT_FDR_ORIGIN: process?.env.DEFAULT_FDR_ORIGIN!,
         FERNIE_SLACK_APP_TOKEN: process?.env.FERNIE_SLACK_APP_TOKEN!,
         CUSTOMER_ALERTS_SLACK_CHANNEL: process?.env.CUSTOMER_ALERTS_SLACK_CHANNEL!,
+        CUSTOMER_PULLS_SLACK_CHANNEL: process?.env.CUSTOMER_PULLS_SLACK_CHANNEL!,
+        FERN_TOKEN: process?.env.FERN_TOKEN!,
     };
 }

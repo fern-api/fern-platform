@@ -7,7 +7,7 @@ import * as FernRegistry from "../../../../../../index";
 /**
  * @example
  *     {
- *         releaseTypes: [FernRegistry.generators.ReleaseType.Ga],
+ *         releaseTypes: ["GA"],
  *         irVersion: 1
  *     }
  */

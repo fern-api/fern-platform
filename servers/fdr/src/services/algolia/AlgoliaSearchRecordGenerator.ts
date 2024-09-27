@@ -1,4 +1,8 @@
 import {
+    APIV1Db,
+    APIV1Read,
+    Algolia,
+    DocsV1Db,
     DocsV1Read,
     FernNavigation,
     convertDbAPIDefinitionToRead,
@@ -10,7 +14,6 @@ import {
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
-import { APIV1Db, APIV1Read, DocsV1Db } from "../../api";
 import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
@@ -19,7 +22,7 @@ import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
 export class NavigationContext {
     #indexSegment: IndexSegment;
-    #pathParts: PathPart[];
+    #pathParts: Algolia.AlgoliaRecordPathPart[];
 
     /**
      * The path represented by context slugs.
@@ -40,7 +43,7 @@ export class NavigationContext {
 
     public constructor(
         public readonly indexSegment: IndexSegment,
-        pathParts: PathPart[],
+        pathParts: Algolia.AlgoliaRecordPathPart[],
     ) {
         this.#indexSegment = indexSegment;
         this.#pathParts = pathParts;
@@ -49,14 +52,14 @@ export class NavigationContext {
     /**
      * @returns A new `NavigationContext` instance.
      */
-    public withPathPart(pathPart: PathPart) {
+    public withPathPart(pathPart: Algolia.AlgoliaRecordPathPart) {
         return this.withPathParts([pathPart]);
     }
 
     /**
      * @returns A new `NavigationContext` instance.
      */
-    public withPathParts(pathParts: PathPart[]) {
+    public withPathParts(pathParts: Algolia.AlgoliaRecordPathPart[]) {
         return new NavigationContext(this.#indexSegment, [...this.#pathParts, ...pathParts]);
     }
 
@@ -76,7 +79,7 @@ export class NavigationContext {
 
         return new NavigationContext(
             this.#indexSegment,
-            slug.map((urlSlug) => ({ name: urlSlug, urlSlug })),
+            slug.map((urlSlug) => ({ name: urlSlug, urlSlug, skipUrlSlug: undefined })),
         );
     }
 }
@@ -87,7 +90,7 @@ interface AlgoliaSearchRecordGeneratorConfig {
 }
 
 export class AlgoliaSearchRecordGenerator {
-    public constructor(private readonly config: AlgoliaSearchRecordGeneratorConfig) {}
+    public constructor(protected readonly config: AlgoliaSearchRecordGeneratorConfig) {}
 
     public generateAlgoliaSearchRecordsForSpecificDocsVersion(
         navigationConfig: DocsV1Db.UnversionedNavigationConfig,
@@ -97,7 +100,7 @@ export class AlgoliaSearchRecordGenerator {
         return this.generateAlgoliaSearchRecordsForUnversionedNavigationConfig(navigationConfig, context);
     }
 
-    private generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
+    protected generateAlgoliaSearchRecordsForUnversionedNavigationConfig(
         config: DocsV1Db.UnversionedNavigationConfig,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
@@ -111,7 +114,7 @@ export class AlgoliaSearchRecordGenerator {
         });
     }
 
-    private generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(
+    protected generateAlgoliaSearchRecordsForUnversionedUntabbedNavigationConfig(
         config: DocsV1Db.UnversionedUntabbedNavigationConfig,
         context: NavigationContext,
     ) {
@@ -119,7 +122,7 @@ export class AlgoliaSearchRecordGenerator {
         return records.flat(1);
     }
 
-    private generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(
+    protected generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(
         config: DocsV1Db.UnversionedTabbedNavigationConfig,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
@@ -143,6 +146,7 @@ export class AlgoliaSearchRecordGenerator {
                             context.withPathPart({
                                 name: tab.title ?? "Changelog",
                                 urlSlug: tab.urlSlug,
+                                skipUrlSlug: undefined,
                             }),
                         );
                     default:
@@ -155,7 +159,11 @@ export class AlgoliaSearchRecordGenerator {
                         const tabRecords = group.items.map((item) =>
                             this.generateAlgoliaSearchRecordsForNavigationItem(
                                 item,
-                                context.withPathPart({ name: tab.title, urlSlug: group.urlSlug }),
+                                context.withPathPart({
+                                    name: tab.title,
+                                    urlSlug: group.urlSlug,
+                                    skipUrlSlug: undefined,
+                                }),
                             ),
                         );
                         return tabRecords.flat(1);
@@ -167,7 +175,7 @@ export class AlgoliaSearchRecordGenerator {
         return records.flat(1);
     }
 
-    private generateAlgoliaSearchRecordsForNavigationItem(
+    protected generateAlgoliaSearchRecordsForNavigationItem(
         item: DocsV1Db.NavigationItem,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
@@ -240,9 +248,11 @@ export class AlgoliaSearchRecordGenerator {
                     : context.withPathPart({
                           name: page.title,
                           urlSlug: page.urlSlug,
+                          skipUrlSlug: undefined,
                       });
             const processedContent = convertMarkdownToText(pageContent.markdown);
             const { indexSegment } = context;
+
             return [
                 compact({
                     type: "page-v2",
@@ -270,20 +280,20 @@ export class AlgoliaSearchRecordGenerator {
             return this.generateAlgoliaSearchRecordsForChangelogSection(item, context);
         } else if (item.type === "changelogV3") {
             return this.generateAlgoliaSearchRecordsForChangelogNode(
-                item.node as FernNavigation.ChangelogNode,
+                item.node as FernNavigation.V1.ChangelogNode,
                 context,
             );
         } else if (item.type === "apiV2") {
             return this.generateAlgoliaSearchRecordsForApiReferenceNode(
-                item.node as FernNavigation.ApiReferenceNode,
+                item.node as FernNavigation.V1.ApiReferenceNode,
                 context,
             );
         }
         assertNever(item);
     }
 
-    private generateAlgoliaSearchRecordsForApiReferenceNode(
-        root: FernNavigation.ApiReferenceNode,
+    protected generateAlgoliaSearchRecordsForApiReferenceNode(
+        root: FernNavigation.V1.ApiReferenceNode,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         const api = this.config.apiDefinitionsById.get(root.apiDefinitionId);
@@ -298,17 +308,19 @@ export class AlgoliaSearchRecordGenerator {
 
         const version =
             context.indexSegment.type === "versioned"
-                ? {
+                ? ({
                       id: context.indexSegment.version.id,
-                      slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
-                  }
+                      slug: FernNavigation.V1.Slug(
+                          context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                      ),
+                  } satisfies Algolia.AlgoliaRecordVersionV3)
                 : undefined;
 
-        function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): string[] {
+        function toBreadcrumbs(parents: FernNavigation.V1.NavigationNode[]): string[] {
             return [
                 ...breadcrumbs,
                 ...parents
-                    .filter(FernNavigation.hasMetadata)
+                    .filter(FernNavigation.V1.hasMetadata)
                     .filter((parent) =>
                         parent.type === "apiReference"
                             ? parent.hideTitle !== true
@@ -320,8 +332,8 @@ export class AlgoliaSearchRecordGenerator {
             ];
         }
 
-        FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
-            if (!FernNavigation.hasMetadata(node)) {
+        FernNavigation.V1.traverseNavigation(root, (node, _index, parents) => {
+            if (!FernNavigation.V1.hasMetadata(node)) {
                 return;
             }
 
@@ -329,7 +341,7 @@ export class AlgoliaSearchRecordGenerator {
                 return "skip";
             }
 
-            if (FernNavigation.isApiLeaf(node)) {
+            if (FernNavigation.V1.isApiLeaf(node)) {
                 visitDiscriminatedUnion(node)._visit({
                     endpoint: (node) => {
                         const endpoint = holder?.endpoints.get(node.endpointId);
@@ -463,6 +475,7 @@ export class AlgoliaSearchRecordGenerator {
                         }
 
                         const contents = [ws.description ?? ""];
+
                         const typeReferences: APIV1Read.TypeReference[] = [];
 
                         if (ws.headers.length > 0) {
@@ -505,6 +518,10 @@ export class AlgoliaSearchRecordGenerator {
                                     contents.push(message.description);
                                 }
                                 if (message.body.type === "reference") {
+                                    const anchorIdParts = [message.origin === "server" ? "receive" : "send"];
+                                    if (message.displayName != null) {
+                                        anchorIdParts.push(message.displayName);
+                                    }
                                     typeReferences.push(message.body.value);
                                     contents.push(`- ${this.stringifyTypeRef(message.body.value)}`);
                                 } else if (message.body.type === "object") {
@@ -602,8 +619,8 @@ export class AlgoliaSearchRecordGenerator {
                         );
                     },
                 });
-            } else if (FernNavigation.hasMarkdown(node)) {
-                const pageId = FernNavigation.utils.getPageId(node);
+            } else if (FernNavigation.V1.hasMarkdown(node)) {
+                const pageId = FernNavigation.V1.getPageId(node);
                 if (pageId == null) {
                     return;
                 }
@@ -614,7 +631,7 @@ export class AlgoliaSearchRecordGenerator {
                     return;
                 }
 
-                const frontmatter = getFrontmatter(md);
+                const { frontmatter } = getFrontmatter(md);
 
                 records.push(
                     compact({
@@ -635,7 +652,7 @@ export class AlgoliaSearchRecordGenerator {
         return records;
     }
 
-    private stringifyTypeRef(typeRef: APIV1Read.TypeReference): string {
+    protected stringifyTypeRef(typeRef: APIV1Read.TypeReference): string {
         return visitDiscriminatedUnion(typeRef)._visit({
             literal: (value) => value.value.value.toString(),
             id: (value) => value.value,
@@ -648,19 +665,20 @@ export class AlgoliaSearchRecordGenerator {
         });
     }
 
-    private collectReferencedTypesToContent(
+    protected collectReferencedTypesToContent(
         typeReferences: APIV1Read.TypeReference[],
         types: Record<string, APIV1Read.TypeDefinition>,
     ): string {
         let referencedTypes: ReferencedTypes = {};
 
         typeReferences.forEach((typeReference) => {
+            const allReferencedTypes = getAllReferencedTypes({
+                reference: typeReference,
+                types,
+            });
             referencedTypes = {
                 ...referencedTypes,
-                ...getAllReferencedTypes({
-                    reference: typeReference,
-                    types,
-                }),
+                ...allReferencedTypes,
             };
         });
 
@@ -726,8 +744,8 @@ export class AlgoliaSearchRecordGenerator {
         return contents.join("\n");
     }
 
-    private generateAlgoliaSearchRecordsForChangelogNode(
-        root: FernNavigation.ChangelogNode,
+    protected generateAlgoliaSearchRecordsForChangelogNode(
+        root: FernNavigation.V1.ChangelogNode,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         const records: AlgoliaSearchRecord[] = [];
@@ -738,15 +756,17 @@ export class AlgoliaSearchRecordGenerator {
             context.indexSegment.type === "versioned"
                 ? {
                       id: context.indexSegment.version.id,
-                      slug: context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                      slug: FernNavigation.V1.Slug(
+                          context.indexSegment.version.urlSlug ?? context.indexSegment.version.id,
+                      ),
                   }
                 : undefined;
 
-        function toBreadcrumbs(parents: FernNavigation.NavigationNode[]): string[] {
+        function toBreadcrumbs(parents: FernNavigation.V1.NavigationNode[]): string[] {
             return [
                 ...breadcrumbs,
                 ...parents
-                    .filter(FernNavigation.hasMetadata)
+                    .filter(FernNavigation.V1.hasMetadata)
                     .filter((parent) =>
                         parent.type === "apiReference"
                             ? parent.hideTitle !== true
@@ -758,8 +778,8 @@ export class AlgoliaSearchRecordGenerator {
             ];
         }
 
-        FernNavigation.utils.traverseNavigation(root, (node, _index, parents) => {
-            if (!FernNavigation.hasMetadata(node)) {
+        FernNavigation.V1.traverseNavigation(root, (node, _index, parents) => {
+            if (!FernNavigation.V1.hasMetadata(node)) {
                 return;
             }
 
@@ -767,8 +787,8 @@ export class AlgoliaSearchRecordGenerator {
                 return "skip";
             }
 
-            if (FernNavigation.hasMarkdown(node)) {
-                const pageId = FernNavigation.utils.getPageId(node);
+            if (FernNavigation.V1.hasMarkdown(node)) {
+                const pageId = FernNavigation.V1.getPageId(node);
                 if (pageId == null) {
                     return;
                 }
@@ -798,7 +818,7 @@ export class AlgoliaSearchRecordGenerator {
         return records;
     }
 
-    private generateAlgoliaSearchRecordsForChangelogSection(
+    protected generateAlgoliaSearchRecordsForChangelogSection(
         changelog: DocsV1Read.ChangelogSection,
         context: NavigationContext,
         fallbackTitle: string = "Changelog",
@@ -819,6 +839,7 @@ export class AlgoliaSearchRecordGenerator {
                     // TODO: parse from frontmatter?
                     name: title,
                     urlSlug,
+                    skipUrlSlug: undefined,
                 });
                 records.push(
                     compact({
@@ -846,7 +867,8 @@ export class AlgoliaSearchRecordGenerator {
             changelog.items.forEach((changelogItem) => {
                 const changelogItemContext = context.withPathPart({
                     name: `${title} - ${changelogItem.date}`,
-                    urlSlug, // changelogs are all under the same page
+                    urlSlug,
+                    skipUrlSlug: undefined,
                 });
 
                 const changelogPageContent = this.config.docsDefinition.pages[changelogItem.pageId];
@@ -883,7 +905,7 @@ export class AlgoliaSearchRecordGenerator {
         return records;
     }
 
-    private generateAlgoliaSearchRecordsForApiDefinition(
+    protected generateAlgoliaSearchRecordsForApiDefinition(
         apiDef: APIV1Db.DbApiDefinition,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
@@ -898,7 +920,7 @@ export class AlgoliaSearchRecordGenerator {
         });
 
         Object.entries(subpackages).forEach(([id, subpackage]) => {
-            const pathParts = subpackagePathParts[id];
+            const pathParts = subpackagePathParts[APIV1Db.SubpackageId(id)];
             if (pathParts == null) {
                 LOGGER.error("Excluding subpackage from search. Failed to find path parts for subpackage id=", id);
                 return;
@@ -915,7 +937,7 @@ export class AlgoliaSearchRecordGenerator {
         return records;
     }
 
-    private generateAlgoliaSearchRecordsForEndpointDefinition(
+    protected generateAlgoliaSearchRecordsForEndpointDefinition(
         endpointDef: APIV1Db.DbEndpointDefinition,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
@@ -924,6 +946,7 @@ export class AlgoliaSearchRecordGenerator {
             const endpointContext = context.withPathPart({
                 name: endpointDef.name ?? "",
                 urlSlug: endpointDef.urlSlug,
+                skipUrlSlug: undefined,
             });
             const { indexSegment } = context;
             records.push(
@@ -960,17 +983,17 @@ export class AlgoliaSearchRecordGenerator {
     }
 }
 
-interface PathPart {
-    name: string;
-    urlSlug: string;
-    skipUrlSlug?: boolean;
-}
+// interface PathPart {
+//     name: string;
+//     urlSlug: string;
+//     skipUrlSlug?: boolean;
+// }
 
 function getPathPartsBySubpackage({
     definition,
 }: {
     definition: APIV1Db.DbApiDefinition;
-}): Record<APIV1Read.SubpackageId, PathPart[]> {
+}): Record<APIV1Read.SubpackageId, Algolia.AlgoliaRecordPathPart[]> {
     return getPathPartsBySubpackageHelper({
         definition,
         subpackages: getSubpackagesMap({ definition, subpackages: definition.rootPackage.subpackages }),
@@ -985,9 +1008,9 @@ function getPathPartsBySubpackageHelper({
 }: {
     definition: APIV1Db.DbApiDefinition;
     subpackages: Record<APIV1Read.SubpackageId, APIV1Db.DbApiDefinitionSubpackage>;
-    pathParts: PathPart[];
-}): Record<APIV1Read.SubpackageId, PathPart[]> {
-    let result: Record<APIV1Read.SubpackageId, PathPart[]> = {};
+    pathParts: Algolia.AlgoliaRecordPathPart[];
+}): Record<APIV1Read.SubpackageId, Algolia.AlgoliaRecordPathPart[]> {
+    let result: Record<APIV1Read.SubpackageId, Algolia.AlgoliaRecordPathPart[]> = {};
     for (const [id, subpackage] of Object.entries(subpackages)) {
         if (subpackage.pointsTo != null) {
             const pointedToSubpackage = definition.subpackages[subpackage.pointsTo];
@@ -1010,8 +1033,15 @@ function getPathPartsBySubpackageHelper({
                 }),
             };
         } else {
-            const path: PathPart[] = [...pathParts, { name: subpackage.name, urlSlug: subpackage.urlSlug }];
-            result[id] = path;
+            const path: Algolia.AlgoliaRecordPathPart[] = [
+                ...pathParts,
+                {
+                    name: subpackage.name,
+                    urlSlug: subpackage.urlSlug,
+                    skipUrlSlug: undefined,
+                },
+            ];
+            result[APIV1Db.SubpackageId(id)] = path;
             result = {
                 ...result,
                 ...getPathPartsBySubpackageHelper({
@@ -1048,11 +1078,14 @@ interface Frontmatter {
     title?: string; // overrides sidebar title
 }
 
-export function getFrontmatter(content: string): Frontmatter {
+export function getFrontmatter(content: string): {
+    frontmatter: Frontmatter;
+    content: string;
+} {
     try {
         const gm = grayMatter(content);
-        return gm.data;
+        return { frontmatter: gm.data, content: gm.content };
     } catch (e) {
-        return {};
+        return { frontmatter: {}, content };
     }
 }

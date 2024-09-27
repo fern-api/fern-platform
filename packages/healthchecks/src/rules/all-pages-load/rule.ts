@@ -1,4 +1,4 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { Rule, RuleArgs, RuleResult } from "../runRules";
 
 export class AllPagesLoadRule implements Rule {
@@ -7,7 +7,7 @@ export class AllPagesLoadRule implements Rule {
 
     public async run({ fdr, url }: RuleArgs): Promise<RuleResult> {
         const getDocsForUrlResponse = await fdr.docs.v2.read.getDocsForUrl({
-            url,
+            url: FdrAPI.Url(url),
         });
         if (!getDocsForUrlResponse.ok) {
             return {
@@ -16,9 +16,9 @@ export class AllPagesLoadRule implements Rule {
                 message: `Failed to load docs for ${url} from FDR`,
             };
         }
-        const node = FernNavigation.utils.convertLoadDocsForUrlResponse(getDocsForUrlResponse.body);
-        const slugCollector = FernNavigation.NodeCollector.collect(node);
-        const urls = slugCollector.getPageSlugs().map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/${slug}`);
+        const node = FernNavigation.utils.toRootNode(getDocsForUrlResponse.body);
+        const collector = FernNavigation.NodeCollector.collect(node);
+        const urls = collector.pageSlugs.map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/${slug}`);
 
         const responses = await Promise.all(
             urls.map(async (url) => {

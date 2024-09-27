@@ -3,5 +3,5 @@
  */
 
 export interface BooleanType {
-    default?: boolean;
+    default: boolean | undefined;
 }

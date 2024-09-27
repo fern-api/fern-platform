@@ -6,7 +6,7 @@ import * as FernRegistry from "../../../../../index";
 
 export interface ReleaseRequest {
     version: string;
-    createdAt?: string;
-    isYanked?: FernRegistry.generators.Yank;
-    changelogEntry?: FernRegistry.generators.ChangelogEntry[];
+    createdAt: string | undefined;
+    isYanked: FernRegistry.generators.Yank | undefined;
+    changelogEntry: FernRegistry.generators.ChangelogEntry[] | undefined;
 }

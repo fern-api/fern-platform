@@ -1,6 +1,6 @@
 import type { APIV1Read } from "../client/types";
+import { FernNavigation } from "./..";
 import { ROOT_PACKAGE_ID } from "./consts";
-import { FernNavigation } from "./generated";
 import { isSubpackage } from "./utils/isSubpackage";
 
 export class ApiDefinitionHolder {

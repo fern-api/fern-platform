@@ -1,4 +1,5 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { JsonLd } from "@fern-ui/next-seo";
 import urljoin from "url-join";
@@ -13,11 +14,11 @@ export function getBreadcrumbList(
     pages: Record<string, DocsV1Read.PageContent>,
     parents: FernNavigation.NavigationNode[],
     node: FernNavigation.NavigationNodePage,
-): JsonLd.BreadcrumbListSchema {
+): FernDocs.JsonLdBreadcrumbList {
     let title = node.title;
 
     if (FernNavigation.isPage(node)) {
-        const pageId = FernNavigation.utils.getPageId(node);
+        const pageId = FernNavigation.getPageId(node);
         if (pageId != null) {
             const page = pages[pageId];
             if (page != null) {
@@ -25,13 +26,7 @@ export function getBreadcrumbList(
 
                 // if the frontmatter has a jsonld:breadcrumb, use that
                 if (frontmatter["jsonld:breadcrumb"] != null) {
-                    const breadcrumb = JsonLd.BreadcrumbListSchema.safeParse(frontmatter["jsonld:breadcrumb"]);
-                    if (breadcrumb.success) {
-                        return breadcrumb.data;
-                    } else {
-                        // eslint-disable-next-line no-console
-                        console.error("Invalid jsonld:breadcrumb", breadcrumb.error.toString());
-                    }
+                    return frontmatter["jsonld:breadcrumb"];
                 }
 
                 // override the title used in the breadcrumb's last item.
@@ -43,7 +38,7 @@ export function getBreadcrumbList(
         }
     }
 
-    const elements: JsonLd.ListElementSchema[] = [];
+    const elements: FernDocs.JsonLdBreadcrumbListElement[] = [];
     const visitedSlugs = new Set<string>();
 
     parents.forEach((parent) => {

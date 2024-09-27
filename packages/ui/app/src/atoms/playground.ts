@@ -1,4 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { captureMessage } from "@sentry/nextjs";
 import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -32,7 +33,7 @@ import {
     type ResolvedEndpointDefinition,
     type ResolvedWebSocketChannel,
 } from "../resolver/types";
-import { APIS_ATOM, FLATTENED_APIS_ATOM, useFlattenedApi } from "./apis";
+import { FLATTENED_APIS_ATOM, useFlattenedApi } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { HEADER_HEIGHT_ATOM } from "./layout";
@@ -44,10 +45,7 @@ import { IS_MOBILE_SCREEN_ATOM } from "./viewport";
 const PLAYGROUND_IS_OPEN_ATOM = atom(false);
 PLAYGROUND_IS_OPEN_ATOM.debugLabel = "PLAYGROUND_IS_OPEN_ATOM";
 
-export const HAS_PLAYGROUND_ATOM = atom(
-    (get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled && Object.keys(get(APIS_ATOM)).length > 0,
-);
-HAS_PLAYGROUND_ATOM.debugLabel = "HAS_PLAYGROUND_ATOM";
+export const IS_PLAYGROUND_ENABLED_ATOM = atom((get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled);
 
 export const MAX_PLAYGROUND_HEIGHT_ATOM = atom((get) => {
     const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM);
@@ -74,7 +72,7 @@ export const PLAYGROUND_NODE_ID = atom(
         }
         const nodes = get(NAVIGATION_NODES_ATOM);
         // return FernNavigation.NodeId(playgroundParam);
-        const node = nodes.slugMap.get(FernNavigation.utils.slugjoin(playgroundParam));
+        const node = nodes.slugMap.get(FernNavigation.slugjoin(playgroundParam));
         if (node == null || !FernNavigation.isApiLeaf(node)) {
             return get(PREV_PLAYGROUND_NODE_ID);
         }
@@ -115,10 +113,6 @@ PLAYGROUND_NODE.debugLabel = "PLAYGROUND_NODE";
 
 export const PREV_PLAYGROUND_NODE_ID = atom<FernNavigation.NodeId | undefined>(undefined);
 PREV_PLAYGROUND_NODE_ID.debugLabel = "PREV_PLAYGROUND_NODE_ID";
-
-export function useHasPlayground(): boolean {
-    return useAtomValue(HAS_PLAYGROUND_ATOM);
-}
 
 export function usePlaygroundNodeId(): FernNavigation.NodeId | undefined {
     return useAtomValue(PLAYGROUND_NODE_ID);
@@ -308,7 +302,7 @@ export function usePlaygroundEndpointFormState(
 ): [PlaygroundEndpointRequestFormState, Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(endpoint.nodeId);
     const formState = useAtomValue(playgroundFormStateFamily(endpoint.nodeId));
-    const types = useFlattenedApi(endpoint.apiDefinitionId)?.types ?? {};
+    const types = useFlattenedApi(endpoint.apiDefinitionId)?.types ?? EMPTY_OBJECT;
 
     return [
         formState?.type === "endpoint" ? formState : getInitialEndpointRequestFormState(endpoint, types),
@@ -326,7 +320,7 @@ export function usePlaygroundEndpointFormState(
                             : update;
                     set(formStateAtom, newFormState);
                 },
-                [formStateAtom, endpoint.nodeId],
+                [formStateAtom, endpoint, types],
             ),
         ),
     ];
@@ -337,7 +331,7 @@ export function usePlaygroundWebsocketFormState(
 ): [PlaygroundWebSocketRequestFormState, Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(channel.nodeId);
     const formState = useAtomValue(playgroundFormStateFamily(channel.nodeId));
-    const types = useFlattenedApi(channel.apiDefinitionId)?.types ?? {};
+    const types = useFlattenedApi(channel.apiDefinitionId)?.types ?? EMPTY_OBJECT;
 
     return [
         formState?.type === "websocket" ? formState : getInitialWebSocketRequestFormState(channel, types),
@@ -355,8 +349,13 @@ export function usePlaygroundWebsocketFormState(
                             : update;
                     set(formStateAtom, newFormState);
                 },
-                [formStateAtom, channel.nodeId],
+                [formStateAtom, channel, types],
             ),
         ),
     ];
 }
+
+export const PLAYGROUND_REQUEST_TYPE_ATOM = atomWithStorage<"curl" | "typescript" | "python">(
+    "api-playground-atom-alpha",
+    "curl",
+);

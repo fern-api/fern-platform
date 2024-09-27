@@ -1,21 +1,23 @@
-import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import type { FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { ColorScheme, FernTag } from "@fern-ui/components";
+import { getEndpointAvailabilityLabel } from "@fern-ui/fdr-utils";
 import React, { memo } from "react";
-import { getEndpointAvailabilityLabel } from "../../util/endpoint";
 
 export declare namespace EndpointAvailabilityTag {
     export type Props = React.PropsWithChildren<{
-        availability: APIV1Read.Availability | DocsV1Read.VersionAvailability;
+        availability: FdrAPI.Availability;
         className?: string;
         minimal?: boolean;
     }>;
 }
 
-const AVAILABILITY_COLOR_SCHEME: Record<APIV1Read.Availability | DocsV1Read.VersionAvailability, ColorScheme> = {
+const AVAILABILITY_COLOR_SCHEME: Record<FdrAPI.Availability, ColorScheme> = {
     GenerallyAvailable: "accent",
-    Beta: "amber",
-    Deprecated: "red",
+    InDevelopment: "gray",
+    Beta: "blue",
     Stable: "green",
+    PreRelease: "amber", // this is the pre-release badge color used by Github, so it's a good fit for pre-release
+    Deprecated: "red",
 };
 
 export const EndpointAvailabilityTag = memo<EndpointAvailabilityTag.Props>(function Core({

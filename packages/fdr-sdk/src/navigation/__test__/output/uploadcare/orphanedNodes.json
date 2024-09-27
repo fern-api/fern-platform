@@ -1,8 +1,8 @@
 [
   {
     "id": "root.uv.api.api.rest-api-v-0-7.subpackage_fileMetadata",
-    "type": "apiPackage",
+    "slug": "api/rest-api-v-0-7/file-metadata",
     "title": "File Metadata",
-    "slug": "api/rest-api-v-0-7/file-metadata"
+    "type": "apiPackage"
   }
 ]

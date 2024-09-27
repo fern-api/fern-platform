@@ -1,4 +1,4 @@
-import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
@@ -6,10 +6,32 @@ import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
+import { getToHref } from "../hooks/useHref";
 import { stringHasMarkdown } from "../mdx/common/util";
 import { getFrontmatter } from "../mdx/frontmatter";
 import { getFontExtension } from "../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
+
+const EMPTY_METADATA_CONFIG: DocsV1Read.MetadataConfig = {
+    "og:image": undefined,
+    "og:image:width": undefined,
+    "og:image:height": undefined,
+    "og:title": undefined,
+    "og:description": undefined,
+    "og:locale": undefined,
+    "og:url": undefined,
+    "og:site_name": undefined,
+    "twitter:handle": undefined,
+    "twitter:site": undefined,
+    "twitter:card": undefined,
+    "twitter:title": undefined,
+    "twitter:description": undefined,
+    "twitter:url": undefined,
+    "twitter:image": undefined,
+    "og:logo": undefined,
+    noindex: false,
+    nofollow: false,
+};
 
 function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1Read.File_>): DocsV1Read.File_ {
     return visitDiscriminatedUnion(fileOrUrl)._visit({
@@ -28,13 +50,9 @@ export function getSeoProps(
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
     apis: Record<string, APIV1Read.ApiDefinition>,
-    {
-        root,
-        node,
-        parents,
-        currentVersion,
-    }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
+    { node, parents }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
     isSeoDisabled: boolean,
+    isTrailingSlashEnabled: boolean,
 ): NextSeoProps {
     const additionalMetaTags: MetaTag[] = [];
     const additionalLinkTags: LinkTag[] = [];
@@ -48,17 +66,19 @@ export function getSeoProps(
         breadcrumbList: getBreadcrumbList(domain, pages, parents, node),
     };
 
-    // if the current version is the default version, the page is duplicated (/v1/page and /page).
-    // the canonical link should point to `/page`.
-    if (currentVersion != null && currentVersion.default) {
-        const canonicalSlug = FernNavigation.utils.toDefaultSlug(node.slug, root.slug, currentVersion.slug);
-        seo.canonical = `https://${domain}/${canonicalSlug}`;
-    }
+    /**
+     * The canonical url is self-referential unless there are multiple versions of the page.
+     * Canonical slugs are computed upstream, where duplicated markdown pages, and multi-version docs are both handled.
+     */
+    // TODO: set canonical domain in docs.yml
+    const toHref = getToHref(isTrailingSlashEnabled);
+    seo.canonical = toHref(node.canonicalSlug ?? node.slug, domain);
 
-    const pageId = FernNavigation.utils.getPageId(node);
+    const pageId = FernNavigation.getPageId(node);
 
-    let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? {};
+    let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? EMPTY_METADATA_CONFIG;
     let seoTitleFromMarkdownH1;
+    let frontmatterHeadline;
 
     if (pageId != null) {
         const page = pages[pageId];
@@ -74,14 +94,14 @@ export function getSeoProps(
                     if (typeof frontmatterImageVar === "string") {
                         ogMetadata["og:image"] ??= {
                             type: "url",
-                            value: frontmatterImageVar,
+                            value: APIV1Read.Url(frontmatterImageVar),
                         };
                     } else {
                         visitDiscriminatedUnion(frontmatterImageVar, "type")._visit({
                             fileId: (fileId) => {
                                 const realId = fileId.value.split(":")[1];
                                 if (realId != null) {
-                                    fileId.value = realId;
+                                    fileId.value = APIV1Read.FileId(realId);
                                     ogMetadata["og:image"] = fileId;
                                 }
                             },
@@ -95,8 +115,9 @@ export function getSeoProps(
             }
 
             seoTitleFromMarkdownH1 = extractHeadline(content);
+            frontmatterHeadline = frontmatter.headline;
 
-            seo.title ??= seoTitleFromMarkdownH1 ?? frontmatter.title;
+            seo.title ??= frontmatterHeadline ?? seoTitleFromMarkdownH1 ?? frontmatter.title;
             seo.description ??= frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
         }
     }
@@ -200,7 +221,7 @@ export function getSeoProps(
     seo.title ??= node.title;
     openGraph.siteName ??= title;
     if (title != null) {
-        seo.titleTemplate ??= seoTitleFromMarkdownH1 ?? `%s — ${title}`;
+        seo.titleTemplate ??= frontmatterHeadline ?? seoTitleFromMarkdownH1 ?? `%s — ${title}`;
     }
 
     if (favicon != null && files[favicon] != null) {
@@ -236,8 +257,12 @@ export function getSeoProps(
     seo.noindex = ogMetadata.noindex;
     seo.nofollow = ogMetadata.nofollow;
 
-    if (isSeoDisabled) {
+    // do not index the page if it is hidden, or has noindex set, or if SEO is disabled
+    if ((FernNavigation.hasMarkdown(node) && node.noindex) || node.hidden || isSeoDisabled) {
         seo.noindex = true;
+    }
+
+    if (isSeoDisabled) {
         seo.nofollow = true;
     }
 

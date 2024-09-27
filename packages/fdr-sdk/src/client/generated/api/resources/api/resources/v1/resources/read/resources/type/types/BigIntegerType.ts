@@ -3,5 +3,5 @@
  */
 
 export interface BigIntegerType {
-    default?: string;
+    default: string | undefined;
 }

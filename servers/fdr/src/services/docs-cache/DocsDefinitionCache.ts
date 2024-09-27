@@ -1,5 +1,7 @@
+import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { AuthType } from "@prisma/client";
-import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "../../api";
+import { InternalError, UnauthorizedError } from "../../api/generated/api";
+import { DomainNotRegisteredError } from "../../api/generated/api/resources/docs/resources/v2/resources/read";
 import { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
@@ -44,12 +46,18 @@ export interface DocsDefinitionCache {
 }
 
 /**
+ * The semantic version that the current version of FDR expects.
+ * Please bump this version if you would like to "clear" the cache.
+ */
+const SEMANTIC_VERSION = "v2";
+
+/**
  * All modifications to this type must be forward compatible.
  * In other words, only add optional properties.
  */
 export interface CachedDocsResponse {
     /** Adding a version to the cached response to allow for breaks in the future. */
-    version: "v2";
+    version: typeof SEMANTIC_VERSION;
     updatedTime: Date;
     response: DocsV2Read.LoadDocsForUrlResponse;
     dbFiles: Record<DocsV1Read.FileId, DocsV1Db.DbFileInfoV2>;
@@ -161,11 +169,11 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
     private async checkUserBelongsToOrg(url: URL, authorization: string | undefined): Promise<void> {
         if (authorization == null) {
-            throw new FdrAPI.UnauthorizedError("Authorization header is required");
+            throw new UnauthorizedError("Authorization header is required");
         }
         const orgId = await this.getOrganizationForUrl(url);
         if (orgId == null) {
-            throw new FdrAPI.InternalError("Cannot find organization for URL");
+            throw new InternalError("Cannot find organization for URL");
         }
         await this.app.services.auth.checkUserBelongsToOrg({
             authHeader: authorization,
@@ -246,10 +254,16 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
     }
 
     private async getDocsForUrlFromCache({ url }: { url: URL }): Promise<CachedDocsResponse | null> {
+        let record: CachedDocsResponse | null = null;
         if (this.redisDocsCache) {
-            return await this.redisDocsCache.get({ url });
+            record = await this.redisDocsCache.get({ url });
+        } else {
+            record = this.localDocsCache.get({ url }) ?? null;
         }
-        return this.localDocsCache.get({ url }) ?? null;
+        if (record != null && record.version !== SEMANTIC_VERSION) {
+            return null;
+        }
+        return record;
     }
 
     private async getDocsForUrlFromDatabase({ url }: { url: URL }): Promise<CachedDocsResponse> {
@@ -280,7 +294,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             // delegate to V1
             const v1Domain = url.hostname.match(DOCS_DOMAIN_REGX)?.[1];
             if (v1Domain == null) {
-                throw new DocsV2Read.DomainNotRegisteredError();
+                throw new DomainNotRegisteredError();
             }
             const v1Docs = await getDocsForDomain({ app: this.app, domain: v1Domain });
             return {

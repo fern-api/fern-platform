@@ -32,8 +32,8 @@ export interface LoadSnippetAPIsRequest {
 }
 
 export type SnippetTemplatesByEndpoint = Record<
-    FdrAPI.EndpointPath,
-    Record<FdrAPI.EndpointMethod, APIV1Read.EndpointSnippetTemplates>
+    FdrAPI.EndpointPathLiteral,
+    Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
 >;
 
 export type SnippetTemplatesByEndpointIdentifier = Record<string, APIV1Read.EndpointSnippetTemplates>;
@@ -96,6 +96,7 @@ export class GeneratorVersionsDaoImpl implements GeneratorVersionsDao {
             releaseType,
             nonce: noncifySemanticVersion(generatorRelease.version),
             createdAt: generatorRelease.createdAt != null ? new Date(generatorRelease.createdAt) : undefined,
+            tags: generatorRelease.tags,
         };
         await this.prisma.generatorRelease.upsert({
             where: {
@@ -260,7 +261,7 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
     }
 
     return {
-        generatorId: generatorRelease.generatorId,
+        generatorId: FdrAPI.generators.GeneratorId(generatorRelease.generatorId),
         version: generatorRelease.version,
         irVersion: generatorRelease.irVersion,
         releaseType: convertPrismaReleaseType(generatorRelease.releaseType),
@@ -274,5 +275,6 @@ function convertPrismaGeneratorRelease(generatorRelease: prisma.GeneratorRelease
         majorVersion: generatorRelease.major,
         isYanked: generatorRelease.isYanked != null ? (readBuffer(generatorRelease.isYanked) as Yank) : undefined,
         createdAt: generatorRelease.createdAt?.toISOString(),
+        tags: generatorRelease.tags,
     };
 }

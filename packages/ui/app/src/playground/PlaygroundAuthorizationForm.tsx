@@ -33,9 +33,9 @@ import { Callout } from "../mdx/components/callout";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
-import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
+import { PlaygroundEndpointForm } from "./endpoint/PlaygroundEndpointForm";
 import { PlaygroundAuthState } from "./types";
-import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils";
+import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils/oauth";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
@@ -169,6 +169,9 @@ function FoundOAuthReferencedEndpointForm({
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
+    /**
+     * TODO: turn this into a loadable (suspense)
+     */
     const oAuthClientCredentialLogin = async () => {
         setValue((prev) => ({ ...prev, isLoggingIn: true }));
         await oAuthClientCredentialReferencedEndpointLoginFlow({
@@ -548,7 +551,7 @@ export function PlaygroundAuthorizationFormCard({
                 />
             )}
 
-            <FernCollapse isOpen={isOpen.value}>
+            <FernCollapse open={isOpen.value}>
                 <div className="pt-4">
                     <div className="fern-dropdown max-h-full">
                         <PlaygroundAuthorizationForm auth={auth} closeContainer={isOpen.setFalse} disabled={disabled} />

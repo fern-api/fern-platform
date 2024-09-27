@@ -1,9 +1,10 @@
-import { convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
+import { DocsV1Write, FdrAPI, convertDocsDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Write, DocsV1WriteService, FdrAPI } from "../../../api";
+import { DocsV1WriteService } from "../../../api";
 import type { FdrApplication } from "../../../app";
 import { type S3DocsFileInfo } from "../../../services/s3";
 import { writeBuffer } from "../../../util";
+import { DocsRegistrationIdNotFound } from "../../../api/generated/api/resources/docs/resources/v1/resources/write/errors";
 
 const DOCS_REGISTRATIONS: Record<DocsV1Write.DocsRegistrationId, DocsRegistrationInfo> = {};
 
@@ -20,7 +21,7 @@ export function getDocsWriteService(app: FdrApplication): DocsV1WriteService {
                 authHeader: req.headers.authorization,
                 orgId: req.body.orgId,
             });
-            const docsRegistrationId = uuidv4();
+            const docsRegistrationId = DocsV1Write.DocsRegistrationId(uuidv4());
             const s3FileInfos = await app.services.s3.getPresignedDocsAssetsUploadUrls({
                 domain: req.body.domain,
                 filepaths: req.body.filepaths,
@@ -44,7 +45,7 @@ export function getDocsWriteService(app: FdrApplication): DocsV1WriteService {
         finishDocsRegister: async (req, res) => {
             const docsRegistrationInfo = DOCS_REGISTRATIONS[req.params.docsRegistrationId];
             if (docsRegistrationInfo == null) {
-                throw new DocsV1Write.DocsRegistrationIdNotFound();
+                throw new DocsRegistrationIdNotFound();
             }
             await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,

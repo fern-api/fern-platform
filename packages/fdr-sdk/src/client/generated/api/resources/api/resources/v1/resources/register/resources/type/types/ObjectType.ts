@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface ObjectType {
-    extends: FernRegistry.api.v1.register.TypeId[];
+    extends: FernRegistry.TypeId[];
     properties: FernRegistry.api.v1.register.ObjectProperty[];
 }

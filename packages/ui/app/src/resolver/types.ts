@@ -1,28 +1,28 @@
-import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
 import { UnreachableCaseError } from "ts-essentials";
 import { store } from "../atoms";
 import { SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
-import type { BundledMDX } from "../mdx/types";
 
 type WithoutQuestionMarks<T> = {
     [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
 };
 
-export type WithDescription = { description: BundledMDX | undefined };
+export type WithDescription = { description: FernDocs.MarkdownText | undefined };
 export type WithAvailability = { availability: APIV1Read.Availability | undefined };
 
 export interface WithMetadata {
-    description: BundledMDX | undefined;
+    description: FernDocs.MarkdownText | undefined;
     availability: APIV1Read.Availability | undefined;
 }
 
 export interface WithEndpointMetadata extends WithMetadata {
     title: string;
     nodeId: FernNavigation.NodeId;
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     apiDefinitionId: FdrAPI.ApiDefinitionId;
     slug: FernNavigation.Slug;
 }
@@ -86,7 +86,7 @@ export interface ResolvedPageMetadata {
     id: DocsV1Read.PageId;
     slug: FernNavigation.Slug;
     title: string;
-    markdown: BundledMDX;
+    markdown: FernDocs.MarkdownText;
 }
 
 export interface ResolvedNavigationItemApiSection
@@ -418,12 +418,20 @@ export declare namespace ResolvedEndpointPathParts {
     }
 }
 
-export function stringifyResolvedEndpointPathParts(pathParts: ResolvedEndpointPathParts[]): string {
-    return pathParts.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)).join("");
+export function stringifyResolvedEndpointPathParts(
+    pathParts: ResolvedEndpointPathParts[],
+): APIV1Read.EndpointPathLiteral {
+    return APIV1Read.EndpointPathLiteral(
+        pathParts.map((part) => (part.type === "literal" ? part.value : `:${part.key}`)).join(""),
+    );
 }
 
-export function stringifyResolvedEndpointPathPartsTemplate(pathParts: ResolvedEndpointPathParts[]): string {
-    return pathParts.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)).join("");
+export function stringifyResolvedEndpointPathPartsTemplate(
+    pathParts: ResolvedEndpointPathParts[],
+): APIV1Read.EndpointPathLiteral {
+    return APIV1Read.EndpointPathLiteral(
+        pathParts.map((part) => (part.type === "literal" ? part.value : `{${part.key}}`)).join(""),
+    );
 }
 
 export interface ResolvedWebSocketChannel extends WithEndpointMetadata {
@@ -735,7 +743,7 @@ export function unwrapOptional(
 export function unwrapDescription(
     valueShape: ResolvedTypeShape,
     types: Record<string, ResolvedTypeDefinition>,
-): BundledMDX | undefined {
+): FernDocs.MarkdownText | undefined {
     while (valueShape.type === "alias" || valueShape.type === "reference" || valueShape.type === "optional") {
         if (valueShape.type === "reference") {
             const nestedShape = types[valueShape.typeId];
@@ -769,7 +777,7 @@ export function unwrapDescription(
 export function getParameterDescription(
     parameter: ResolvedObjectProperty,
     types: Record<string, ResolvedTypeDefinition>,
-): BundledMDX | undefined {
+): FernDocs.MarkdownText | undefined {
     if (parameter.description != null) {
         return parameter.description;
     }

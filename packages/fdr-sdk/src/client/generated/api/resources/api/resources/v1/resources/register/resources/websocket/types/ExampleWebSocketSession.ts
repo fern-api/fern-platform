@@ -4,10 +4,10 @@
 
 import * as FernRegistry from "../../../../../../../../../index";
 
-export interface ExampleWebSocketSession extends FernRegistry.api.v1.register.WithDescription {
-    name?: string;
+export interface ExampleWebSocketSession extends FernRegistry.api.v1.WithDescription {
+    name: string | undefined;
     path: string;
-    pathParameters: Record<FernRegistry.api.v1.register.PathParameterKey, unknown>;
+    pathParameters: Record<FernRegistry.PropertyKey, unknown>;
     queryParameters: Record<string, unknown>;
     headers: Record<string, unknown>;
     messages: FernRegistry.api.v1.register.ExampleWebSocketMessage[];

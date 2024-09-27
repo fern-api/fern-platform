@@ -2,7 +2,24 @@ import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
 import { useEffect, useRef } from "react";
 import { useCallbackOne } from "use-memo-one";
+import { captureSentryError } from "../../analytics/sentry";
 import { SCROLL_BODY_ATOM } from "../../atoms";
+
+function toIdQuerySelector(id: string): string {
+    if (id.startsWith("#")) {
+        return id;
+    }
+
+    /**
+     * Escape leading digits with `\3` + trailing space to prevent it from being interpreted as a CSS escape sequence.
+     * https://mathiasbynens.be/notes/css-escapes
+     */
+    if (id.match(/^\d/)) {
+        return `#\\3${id[0]} ${id.slice(1)}`;
+    }
+
+    return `#${id}`;
+}
 
 /**
  *
@@ -40,6 +57,15 @@ export function useTableOfContentsObserver(ids: string[], setActiveId: (id: stri
             const rootTop = root instanceof Document ? 0 : root.getBoundingClientRect().top;
             const intersectionTop = scrollY + rootTop;
             const intersectionBottom = scrollY + rootTop + clientHeight;
+
+            // when the user scrolls to the very top of the page, set the anchorInView to the first anchor
+            if (scrollY === 0) {
+                const firstAnchor = ids[0];
+                if (firstAnchor) {
+                    setActiveId(firstAnchor);
+                }
+                return;
+            }
 
             // when the user scrolls to the very bottom of the page, set the anchorInView to the last anchor
             const lastAnchor = ids[ids.length - 1];
@@ -81,12 +107,21 @@ export function useTableOfContentsObserver(ids: string[], setActiveId: (id: stri
         fastdom.measure(() => {
             const scrollY = root instanceof Document ? window.scrollY : root.scrollTop;
             const top = root instanceof Document ? 0 : root.getBoundingClientRect().top;
-            idToYRef.current = Array.from(document.querySelectorAll(ids.map((id) => `#${id}`).join(", "))).reduce<
-                Record<string, number>
-            >((prev, curr) => {
-                prev[curr.id] = curr.getBoundingClientRect().top + scrollY - top;
-                return prev;
-            }, {});
+            try {
+                idToYRef.current = Array.from(
+                    document.querySelectorAll(
+                        ids
+                            .filter((id) => id.trim().length > 0)
+                            .map(toIdQuerySelector)
+                            .join(", "),
+                    ),
+                ).reduce<Record<string, number>>((prev, curr) => {
+                    prev[curr.id] = curr.getBoundingClientRect().top + scrollY - top;
+                    return prev;
+                }, {});
+            } catch (e) {
+                captureSentryError(e, { errorDescription: "Error measuring table of contents" });
+            }
         });
 
         take();

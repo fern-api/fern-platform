@@ -8,8 +8,8 @@ import * as FernRegistry from "../../../../../../../../index";
  * @example
  *     {
  *         domain: "string",
- *         orgId: "string",
- *         filepaths: ["string"]
+ *         orgId: FernRegistry.OrgId("string"),
+ *         filepaths: [FernRegistry.docs.v1.write.FilePath("string")]
  *     }
  */
 export interface StartDocsRegisterRequest {

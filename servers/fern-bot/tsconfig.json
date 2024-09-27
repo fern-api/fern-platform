@@ -31,5 +31,9 @@
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   },
-  "references": [{ "path": "../../packages/commons/github" }]
+  "references": [
+    {
+      "path": "../../packages/commons/github"
+    }
+  ]
 }

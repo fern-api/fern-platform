@@ -1,3 +1,4 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { PlaygroundEndpointRequestFormState } from "../../types";
@@ -9,14 +10,14 @@ describe("PlaygroundCodeSnippetBuilder", () => {
     const endpoint: ResolvedEndpointDefinition = {
         type: "endpoint",
         nodeId: FernNavigation.NodeId(""),
-        breadcrumbs: [],
-        id: "",
-        apiDefinitionId: "",
+        breadcrumb: [],
+        id: FernNavigation.EndpointId(""),
+        apiDefinitionId: FernNavigation.ApiDefinitionId(""),
         slug: FernNavigation.Slug(""),
         auth: undefined,
         availability: undefined,
         defaultEnvironment: {
-            id: "Prod",
+            id: FernNavigation.EnvironmentId("Prod"),
             baseUrl: "https://example.com",
         },
         environments: [],
@@ -25,11 +26,17 @@ describe("PlaygroundCodeSnippetBuilder", () => {
         path: [
             { type: "literal", value: "/test/" },
             {
-                key: "test",
+                key: APIV1Read.PropertyKey("test"),
                 type: "pathParameter",
                 valueShape: {
                     type: "primitive",
-                    value: { type: "string" },
+                    value: {
+                        type: "string",
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: undefined,
+                    },
                     description: undefined,
                     availability: undefined,
                 },
@@ -40,10 +47,16 @@ describe("PlaygroundCodeSnippetBuilder", () => {
         ],
         pathParameters: [
             {
-                key: "test",
+                key: APIV1Read.PropertyKey("test"),
                 valueShape: {
                     type: "primitive",
-                    value: { type: "string" },
+                    value: {
+                        type: "string",
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: undefined,
+                    },
                     description: undefined,
                     availability: undefined,
                 },

@@ -1,11 +1,11 @@
 import { noop } from "ts-essentials";
+import { FernNavigation } from "../..";
 import { visitDiscriminatedUnion } from "../../utils";
-import { hasMetadata, isLeaf, type NavigationBreadcrumbItem, type NavigationNode } from "../types";
 
-export function createBreadcrumbs(nodes: NavigationNode[]): readonly NavigationBreadcrumbItem[] {
-    const breadcrumb: NavigationBreadcrumbItem[] = [];
+export function createBreadcrumbs(nodes: FernNavigation.NavigationNode[]): FernNavigation.BreadcrumbItem[] {
+    const breadcrumb: FernNavigation.BreadcrumbItem[] = [];
     nodes.forEach((node) => {
-        if (!hasMetadata(node) || isLeaf(node)) {
+        if (!FernNavigation.hasMetadata(node) || FernNavigation.isLeaf(node)) {
             return;
         }
         visitDiscriminatedUnion(node)._visit({

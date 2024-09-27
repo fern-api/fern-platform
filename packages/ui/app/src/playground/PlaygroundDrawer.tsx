@@ -13,7 +13,6 @@ import { HEADER_HEIGHT_ATOM, useAtomEffect, useFlattenedApis, useSidebarNodes } 
 import {
     MAX_PLAYGROUND_HEIGHT_ATOM,
     PLAYGROUND_NODE_ID,
-    useHasPlayground,
     useIsPlaygroundOpen,
     usePlaygroundFormStateAtom,
     usePlaygroundNode,
@@ -22,14 +21,18 @@ import {
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { isEndpoint, isWebSocket, type ResolvedApiEndpointWithPackage } from "../resolver/types";
-import { PlaygroundEndpoint } from "./PlaygroundEndpoint";
-import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./PlaygroundEndpointSelectorContent";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
+import { PlaygroundEndpoint } from "./endpoint/PlaygroundEndpoint";
+import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./endpoint/PlaygroundEndpointSelectorContent";
+import { PlaygroundEndpointSkeleton } from "./endpoint/PlaygroundEndpointSkeleton";
 import { useResizeY } from "./useSplitPlane";
 
-export const PlaygroundDrawer = memo((): ReactElement | null => {
-    const hasPlayground = useHasPlayground();
+interface PlaygroundDrawerProps {
+    isLoading: boolean;
+}
+
+export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): ReactElement | null => {
     const selectionState = usePlaygroundNode();
     const apis = useFlattenedApis();
 
@@ -57,21 +60,27 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     const height = useMotionValue(useAtomValue(VIEWPORT_HEIGHT_ATOM));
 
     const setOffset = useAtomCallback(
-        useCallbackOne((get, _set, y: number) => {
-            const windowHeight = get(VIEWPORT_HEIGHT_ATOM);
-            const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM);
-            const headerHeight = get(HEADER_HEIGHT_ATOM);
-            const maxHeight = isMobileScreen ? windowHeight : windowHeight - headerHeight;
-            const newHeight = Math.min(windowHeight - y, maxHeight);
-            height.jump(newHeight, true);
-        }, []),
+        useCallbackOne(
+            (get, _set, y: number) => {
+                const windowHeight = get(VIEWPORT_HEIGHT_ATOM);
+                const isMobileScreen = get(IS_MOBILE_SCREEN_ATOM);
+                const headerHeight = get(HEADER_HEIGHT_ATOM);
+                const maxHeight = isMobileScreen ? windowHeight : windowHeight - headerHeight;
+                const newHeight = Math.min(windowHeight - y, maxHeight);
+                height.jump(newHeight, true);
+            },
+            [height],
+        ),
     );
 
     useAtomEffect(
-        useCallbackOne((get) => {
-            get(PLAYGROUND_NODE_ID);
-            void animate(height, get.peek(VIEWPORT_HEIGHT_ATOM));
-        }, []),
+        useCallbackOne(
+            (get) => {
+                get(PLAYGROUND_NODE_ID);
+                void animate(height, get.peek(VIEWPORT_HEIGHT_ATOM));
+            },
+            [height],
+        ),
     );
 
     const resizeY = useResizeY(setOffset);
@@ -115,15 +124,13 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
 
     const setFormState = useSetAtom(usePlaygroundFormStateAtom(selectionState?.id ?? FernNavigation.NodeId("")));
 
-    if (!hasPlayground || apiGroups.length === 0) {
-        return null;
-    }
-
     const renderContent = () =>
         selectionState?.type === "endpoint" && matchedEndpoint != null ? (
             <PlaygroundEndpoint endpoint={matchedEndpoint} types={types} />
         ) : selectionState?.type === "webSocket" && matchedWebSocket != null ? (
             <PlaygroundWebSocket websocket={matchedWebSocket} types={types} />
+        ) : isLoading ? (
+            <PlaygroundEndpointSkeleton />
         ) : (
             <div className="size-full flex flex-col items-center justify-center">
                 <ArrowLeft className="size-8 mb-2 t-muted" />

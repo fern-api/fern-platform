@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface OAuthClientCredentialsReferencedEndpoint {
-    endpointId: FernRegistry.api.v1.register.EndpointId;
-    accessTokenLocator: FernRegistry.api.v1.register.JqString;
+    endpointId: FernRegistry.EndpointId;
+    accessTokenLocator: FernRegistry.JqString;
 }

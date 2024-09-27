@@ -59,10 +59,13 @@ export class PlaygroundCodeSnippetResolver {
     private typescriptSdkResolver: SnippetTemplateResolver | undefined;
     private pythonRequestsResolver: SnippetTemplateResolver | undefined;
 
-    public resolve(lang: "curl" | "python" | "typescript", apiDefinition?: APIV1Read.ApiDefinition): string {
+    public resolve(
+        lang: "curl" | "python" | "typescript" | "javascript",
+        apiDefinition?: APIV1Read.ApiDefinition,
+    ): string {
         if (lang === "curl") {
             return this.toCurl();
-        } else if (lang === "typescript") {
+        } else if (lang === "typescript" || lang === "javascript") {
             return this.toTypescriptSdkSnippet(apiDefinition) ?? this.toTypescriptFetch();
         } else if (lang === "python") {
             return this.toPythonSdkSnippet(apiDefinition) ?? this.toPythonRequests();
@@ -102,7 +105,7 @@ export class PlaygroundCodeSnippetResolver {
         if (isSnippetTemplatesEnabled && endpoint.snippetTemplates != null) {
             if (endpoint.snippetTemplates.typescript != null) {
                 this.typescriptSdkResolver = new SnippetTemplateResolver({
-                    payload: convertToCustomSnippetPayload(formState),
+                    payload: convertToCustomSnippetPayload(formState, authState),
                     endpointSnippetTemplate: {
                         sdk: {
                             type: "typescript",
@@ -112,8 +115,11 @@ export class PlaygroundCodeSnippetResolver {
                         endpointId: {
                             path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
                             method: endpoint.method,
+                            identifierOverride: undefined,
                         },
                         snippetTemplate: endpoint.snippetTemplates.typescript,
+                        apiDefinitionId: undefined,
+                        additionalTemplates: undefined,
                     },
                     provideFdrClient: provideRegistryService,
                 });
@@ -121,7 +127,7 @@ export class PlaygroundCodeSnippetResolver {
 
             if (endpoint.snippetTemplates.python != null) {
                 this.pythonRequestsResolver = new SnippetTemplateResolver({
-                    payload: convertToCustomSnippetPayload(formState),
+                    payload: convertToCustomSnippetPayload(formState, authState),
                     endpointSnippetTemplate: {
                         sdk: {
                             type: "python",
@@ -131,8 +137,11 @@ export class PlaygroundCodeSnippetResolver {
                         endpointId: {
                             path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
                             method: endpoint.method,
+                            identifierOverride: undefined,
                         },
                         snippetTemplate: endpoint.snippetTemplates.python,
+                        apiDefinitionId: undefined,
+                        additionalTemplates: undefined,
                     },
                     provideFdrClient: provideRegistryService,
                 });

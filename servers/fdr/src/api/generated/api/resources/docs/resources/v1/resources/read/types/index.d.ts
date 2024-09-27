@@ -19,7 +19,6 @@ export * from "./NavigationTabLink";
 export * from "./UnversionedUntabbedNavigationConfig";
 export * from "./VersionedNavigationConfig";
 export * from "./VersionedNavigationConfigData";
-export * from "./VersionAvailability";
 export * from "./NavigationItem";
 export * from "./PageMetadata";
 export * from "./NavigationNodeMetadata";

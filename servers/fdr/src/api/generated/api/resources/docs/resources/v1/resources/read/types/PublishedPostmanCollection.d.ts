@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface PublishedPostmanCollection {
-    url: string;
-    githubRepo?: FernRegistry.docs.v1.read.GitHubRepo;
+    url: FernRegistry.Url;
+    githubRepo: FernRegistry.docs.v1.read.GitHubRepo | undefined;
 }

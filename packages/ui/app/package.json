@@ -7,31 +7,17 @@
     "directory": "packages/ui/app"
   },
   "private": true,
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
   "exports": {
-    "./bundlers": {
-      "default": "./src/mdx/bundlers/index.ts"
-    },
-    "./auth": {
-      "default": "./src/auth/index.ts"
-    },
-    ".": {
-      "default": "./src/index.ts"
-    }
+    "./bundlers": "./src/mdx/bundlers/index.ts",
+    "./auth": "./src/auth/index.ts",
+    ".": "./src/index.ts"
   },
   "sideEffects": [
     "*.css",
     "*.scss"
   ],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -65,11 +51,12 @@
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@radix-ui/react-visually-hidden": "^1.1.0",
     "@segment/snippet": "^5.2.1",
-    "@sentry/nextjs": "^7.105.0",
+    "@sentry/nextjs": "^8.30.0",
     "@shikijs/transformers": "^1.2.2",
     "@types/nprogress": "^0.2.3",
     "@vercel/edge-config": "^1.1.0",
@@ -95,6 +82,7 @@
     "jotai-effect": "^1.0.0",
     "jotai-location": "^0.5.5",
     "jsonpath": "^1.1.1",
+    "launchdarkly-js-client-sdk": "^3.4.0",
     "lodash-es": "^4.17.21",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-mdx-jsx": "^3.1.0",
@@ -106,7 +94,6 @@
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
     "parse-numeric-range": "^1.3.0",
-    "path-to-regexp": "^7.1.0",
     "posthog-js": "^1.154.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -170,6 +157,7 @@
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
     "eslint-plugin-storybook": "^0.8.0",
+    "instantsearch.js": "^4.63.0",
     "jsdom": "^24.0.0",
     "next-router-mock": "^0.9.13",
     "organize-imports-cli": "^0.10.0",

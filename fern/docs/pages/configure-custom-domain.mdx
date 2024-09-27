@@ -3,7 +3,7 @@ title: How to Configure a Custom Domain
 description: Learn about how to set up a subdomain or subpath for a customer's docs website.
 ---
 
-## Subdomain 
+## Subdomain
 
 <Steps>
   ### Step 1: Add to `docs.yml`
@@ -13,26 +13,31 @@ description: Learn about how to set up a subdomain or subpath for a customer's d
   custom-domain: docs.myorg.com
   ```
 
-  ### Step 2: Add the domain in Vercel
-  Visit https://vercel.com/buildwithfern/fern-prod/settings/domains and add the subdomain (e.g., docs.buildwithfern.com). 
+### Step 2: Add the domain in Vercel
 
-  ### Step 3: Send the DNS instructions to the customer
-  Vercel may ask for a TXT and will ask for a CNAME to be configured. Send this to our customer via Slack. 
+Visit https://vercel.com/buildwithfern/app.buildwithfern.com/settings/domains and add the subdomain (e.g., docs.buildwithfern.com).
+
+### Step 3: Send the DNS instructions to the customer
+
+Vercel may ask for a TXT and will ask for a CNAME to be configured. Send this to our customer via Slack.
 
 </Steps>
 
-## Subpath 
+## Subpath
 
 ### Step 1: Add to `docs.yml`
+
 Add the following `url` and `custom-domain` fields to the `docs.yml` file:
+
 ```yaml
 - url: myorg.docs.buildwithfern.com/docs
   custom-domain:
-    - fern.myorg.com/docs # host    
+    - fern.myorg.com/docs # host
     - myorg.com/docs # rewrite
 ```
 
-### Step 2: Add rewrite rules 
+### Step 2: Add rewrite rules
+
 We need to create two entries, one that matches the basepath `/docs`, and another that matches any subpaths `/docs/subpath`. This is important because the second rewrite only matches on /docs/ (with a trailing /).
 
 There are many options for deploying rewrite rules, and is highly dependent on your setup.
@@ -73,7 +78,7 @@ There are many options for deploying rewrite rules, and is highly dependent on y
         ```
     </Tab>
     <Tab title="Express/Node.js">
-        ```javascript 
+        ```javascript
         const express = require('express');
         const app = express();
 
@@ -109,10 +114,12 @@ There are many options for deploying rewrite rules, and is highly dependent on y
         urlpatterns = [
             path('docs', views.docs_redirect),
             path('docs/<str:path>', views.docs_path_redirect),
+
 ]
-        ```
-    </Tab>
-    <Tab title="AWS Cloudfront">
-    Setup an edge@lambda function to rewrite the path. [Instructions](https://serverlessrepo.aws.amazon.com/applications/us-east-1/418289889111/rewrite-url)
-    </Tab>
+```
+</Tab>
+<Tab title="AWS Cloudfront">
+Setup an edge@lambda function to rewrite the path. [Instructions](https://serverlessrepo.aws.amazon.com/applications/us-east-1/418289889111/rewrite-url)
+</Tab>
+
 </Tabs>

@@ -4,12 +4,13 @@ import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useMemo, useRef } from "react";
-import { InstantSearch, useInstantSearch } from "react-instantsearch";
+import { Configure, InstantSearch, useInstantSearch } from "react-instantsearch";
 import {
     CURRENT_VERSION_ATOM,
     IS_MOBILE_SCREEN_ATOM,
     POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM,
     SEARCH_DIALOG_OPEN_ATOM,
+    useFeatureFlags,
     useIsSearchDialogOpen,
     useSidebarNodes,
 } from "../../atoms";
@@ -91,8 +92,15 @@ function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSea
         () => createSearchPlaceholderWithVersion(activeVersion?.id, sidebar),
         [activeVersion, sidebar],
     );
+    const { isNewSearchExperienceEnabled } = useFeatureFlags();
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
+            {isNewSearchExperienceEnabled && (
+                <Configure
+                    filters="type: 'endpoint-v4' OR type: 'websocket-v4' OR type: 'webhook-v4' OR type: 'page-v4' OR type: 'endpoint-field-v1' OR type: 'websocket-field-v1' OR type: 'webhook-field-v1' OR type: 'markdown-section-v1'"
+                    hitsPerPage={40}
+                />
+            )}
             <div className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}

@@ -33,6 +33,6 @@ export declare namespace Snippet {
     }
 
     interface _Base {
-        exampleIdentifier?: string;
+        exampleIdentifier: string | undefined;
     }
 }

@@ -1,8 +1,10 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { once } from "lodash-es";
-import { serializeMdx } from "../mdx/bundler";
+import { MDX_SERIALIZER } from "../mdx/bundler";
 import { FernSerializeMdxOptions } from "../mdx/types";
+import { ApiDefinitionResolverCache } from "./ApiDefinitionResolver";
 import {
     NonOptionalTypeShapeWithReference,
     ResolvedObjectProperty,
@@ -13,42 +15,63 @@ import {
 
 export class ApiTypeResolver {
     public constructor(
+        private apiDefinitionId: APIV1Read.ApiDefinitionId,
         private types: Record<string, APIV1Read.TypeDefinition>,
         private mdxOptions: FernSerializeMdxOptions | undefined,
+        private serializeMdx: MDX_SERIALIZER,
+        private cache?: ApiDefinitionResolverCache,
     ) {}
 
     public resolve = once(async (): Promise<Record<string, ResolvedTypeDefinition>> => {
         return Object.fromEntries(
             await Promise.all(
                 Object.entries(this.types).map(async ([key, value]) => {
-                    return [key, await this.resolveTypeDefinition(value)];
+                    return [key, await this.resolveTypeDefinition(key, value)];
                 }),
             ),
         );
     });
 
-    public resolveTypeDefinition(typeDefinition: APIV1Read.TypeDefinition): Promise<ResolvedTypeDefinition> {
-        return this.resolveTypeShape(
-            typeDefinition.name,
-            typeDefinition.shape,
-            typeDefinition.description,
-            typeDefinition.availability,
-        );
+    public resolveTypeDefinition(
+        id: string,
+        typeDefinition: APIV1Read.TypeDefinition,
+    ): Promise<ResolvedTypeDefinition> {
+        return this.resolveTypeShape({
+            id,
+            name: typeDefinition.name,
+            typeShape: typeDefinition.shape,
+            description: typeDefinition.description,
+            availability: typeDefinition.availability,
+        });
     }
 
-    public resolveTypeShape(
-        name: string | undefined,
-        typeShape: APIV1Read.TypeShape,
-        description?: string,
-        availability?: APIV1Read.Availability,
-    ): Promise<ResolvedTypeDefinition> {
-        return visitDiscriminatedUnion(typeShape, "type")._visit<Promise<ResolvedTypeDefinition>>({
+    public async resolveTypeShape({
+        id,
+        name,
+        typeShape,
+        description,
+        availability,
+    }: {
+        id: string;
+        name: string | undefined;
+        typeShape: APIV1Read.TypeShape;
+        description?: string;
+        availability?: APIV1Read.Availability;
+    }): Promise<ResolvedTypeDefinition> {
+        const cached = await this.cache?.getResolvedTypeDeclaration({
+            apiDefinitionId: this.apiDefinitionId,
+            typeId: FernNavigation.TypeId(id),
+        });
+        if (cached != null) {
+            return cached;
+        }
+        const computed = await visitDiscriminatedUnion(typeShape, "type")._visit<Promise<ResolvedTypeDefinition>>({
             object: async (object) => ({
                 type: "object",
                 name,
                 extends: object.extends,
                 properties: await this.resolveObjectProperties(object),
-                description: await serializeMdx(description, {
+                description: await this.serializeMdx(description, {
                     files: this.mdxOptions?.files,
                 }),
                 availability,
@@ -59,13 +82,13 @@ export class ApiTypeResolver {
                 values: await Promise.all(
                     enum_.values.map(async (enumValue) => ({
                         value: enumValue.value,
-                        description: await serializeMdx(enumValue.description, {
+                        description: await this.serializeMdx(enumValue.description, {
                             files: this.mdxOptions?.files,
                         }),
                         availability: undefined,
                     })),
                 ),
-                description: await serializeMdx(description, {
+                description: await this.serializeMdx(description, {
                     files: this.mdxOptions?.files,
                 }),
                 availability,
@@ -78,13 +101,13 @@ export class ApiTypeResolver {
                     undiscriminatedUnion.variants.map(async (variant) => ({
                         displayName: variant.displayName,
                         shape: await this.resolveTypeReference(variant.type),
-                        description: await serializeMdx(variant.description, {
+                        description: await this.serializeMdx(variant.description, {
                             files: this.mdxOptions?.files,
                         }),
                         availability: variant.availability,
                     })),
                 ),
-                description: await serializeMdx(description, {
+                description: await this.serializeMdx(description, {
                     files: this.mdxOptions?.files,
                 }),
                 availability,
@@ -93,7 +116,7 @@ export class ApiTypeResolver {
                 type: "alias",
                 name,
                 shape: await this.resolveTypeReference(alias.value),
-                description: await serializeMdx(description, {
+                description: await this.serializeMdx(description, {
                     files: this.mdxOptions?.files,
                 }),
                 availability,
@@ -108,14 +131,14 @@ export class ApiTypeResolver {
                             discriminantValue: variant.discriminantValue,
                             extends: variant.additionalProperties.extends,
                             properties: await this.resolveObjectProperties(variant.additionalProperties),
-                            description: await serializeMdx(variant.description, {
+                            description: await this.serializeMdx(variant.description, {
                                 files: this.mdxOptions?.files,
                             }),
                             displayName: variant.displayName,
                             availability: variant.availability,
                         })),
                     ),
-                    description: await serializeMdx(description, {
+                    description: await this.serializeMdx(description, {
                         files: this.mdxOptions?.files,
                     }),
                     availability,
@@ -128,6 +151,12 @@ export class ApiTypeResolver {
                     description: undefined,
                 }),
         });
+        await this.cache?.putResolvedTypeDeclaration({
+            apiDefinitionId: this.apiDefinitionId,
+            type: computed,
+            typeId: FernNavigation.TypeId(id),
+        });
+        return computed;
     }
 
     private typeRefCache = new WeakMap<APIV1Read.TypeReference, Promise<ResolvedTypeShape>>();
@@ -200,7 +229,7 @@ export class ApiTypeResolver {
             object.properties.map(async (property): Promise<ResolvedObjectProperty> => {
                 const [valueShape, description] = await Promise.all([
                     this.resolveTypeReference(property.valueType),
-                    serializeMdx(property.description, {
+                    this.serializeMdx(property.description, {
                         files: this.mdxOptions?.files,
                     }),
                 ]);

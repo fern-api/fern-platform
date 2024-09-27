@@ -7,8 +7,8 @@ import * as FernRegistry from "../../../../index";
 /**
  * @example
  *     {
- *         orgId: "string",
- *         apiId: "string",
+ *         orgId: FernRegistry.OrgId("string"),
+ *         apiId: FernRegistry.ApiId("string"),
  *         snippets: {
  *             type: "typescript",
  *             sdk: {
@@ -20,8 +20,8 @@ import * as FernRegistry from "../../../../index";
  *                         client: "string"
  *                     },
  *                     endpoint: {
- *                         path: "string",
- *                         method: FernRegistry.EndpointMethod.Put,
+ *                         path: FernRegistry.EndpointPathLiteral("string"),
+ *                         method: "GET",
  *                         identifierOverride: "string"
  *                     },
  *                     exampleIdentifier: "string"

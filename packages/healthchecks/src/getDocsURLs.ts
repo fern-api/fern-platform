@@ -1,9 +1,28 @@
 import { VercelClient } from "@fern-fern/vercel";
 import { Domain } from "@fern-fern/vercel/api/resources/v9";
 
-const VERCEL = new VercelClient({
-    token: process.env.VERCEL_TOKEN ?? "",
-});
+function getVercelToken() {
+    if (!process.env.VERCEL_TOKEN) {
+        throw new Error("VERCEL_TOKEN is required");
+    }
+    return process.env.VERCEL_TOKEN;
+}
+
+function getVercelProjectId() {
+    if (!process.env.VERCEL_PROJECT_ID) {
+        throw new Error("VERCEL_PROJECT_ID is required");
+    }
+    return process.env.VERCEL_PROJECT_ID;
+}
+
+function getVercelTeamId() {
+    if (!process.env.VERCEL_ORG_ID) {
+        throw new Error("VERCEL_ORG_ID is required");
+    }
+    return process.env.VERCEL_ORG_ID;
+}
+
+const VERCEL = new VercelClient({ token: getVercelToken() });
 
 const CUSTOM_SUBPATHS = [
     // Commented out because was giving errors
@@ -19,9 +38,9 @@ const DOMAINS_TO_SKIP = ["app.buildwithfern.com", "api-docs.codecombat.com", "ap
  * Returns all the live fern docs urls
  */
 export async function getAllFernDocsWebsites(): Promise<string[]> {
-    const listDomainsResponse = await VERCEL.v9.domains.list("fern-prod", {
+    const listDomainsResponse = await VERCEL.v9.domains.list(getVercelProjectId(), {
         limit: 100,
-        teamId: "team_6FKOM5nw037hv8g2mTk3gaH7",
+        teamId: getVercelTeamId(),
         withGitRepoInfo: false,
     });
     const domainsConfigured = await Promise.all(
@@ -39,7 +58,7 @@ export async function getAllFernDocsWebsites(): Promise<string[]> {
 
 async function isDomainConfigured(customDomain: Domain) {
     const getConfigResponse = await VERCEL.v9.domains.getConfig(customDomain.name, {
-        teamId: "team_6FKOM5nw037hv8g2mTk3gaH7",
+        teamId: getVercelTeamId(),
     });
     return !getConfigResponse.misconfigured;
 }

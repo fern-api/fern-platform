@@ -9,15 +9,15 @@ export declare namespace ApiNavigationConfigItem {
     }
     interface EndpointId {
         type: "endpointId";
-        value: FernRegistry.docs.v1.commons.EndpointId;
+        value: FernRegistry.EndpointId;
     }
     interface WebsocketId {
         type: "websocketId";
-        value: FernRegistry.docs.v1.commons.WebSocketId;
+        value: FernRegistry.WebSocketId;
     }
     interface WebhookId {
         type: "webhookId";
-        value: FernRegistry.docs.v1.commons.WebhookId;
+        value: FernRegistry.WebhookId;
     }
     interface Page extends FernRegistry.docs.v1.read.PageMetadata {
         type: "page";

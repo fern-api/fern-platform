@@ -3,8 +3,8 @@
  */
 
 export interface StringType {
-    regex?: string;
-    minLength?: number;
-    maxLength?: number;
-    default?: string;
+    regex: string | undefined;
+    minLength: number | undefined;
+    maxLength: number | undefined;
+    default: string | undefined;
 }

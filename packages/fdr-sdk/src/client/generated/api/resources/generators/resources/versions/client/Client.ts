@@ -14,8 +14,11 @@ export declare namespace Versions {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -33,12 +36,12 @@ export class Versions {
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.getLatestGeneratorRelease({
-     *         generator: "string",
+     *     await client.generators.versions.getLatestGeneratorRelease({
+     *         generator: FernRegistry.generators.GeneratorId("string"),
      *         cliVersion: "string",
      *         irVersion: 1,
      *         generatorMajorVersion: 1,
-     *         releaseTypes: [FernRegistry.generators.ReleaseType.Ga]
+     *         releaseTypes: ["GA"]
      *     })
      */
     public async getLatestGeneratorRelease(
@@ -63,6 +66,7 @@ export class Versions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -99,7 +103,7 @@ export class Versions {
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.getChangelog("string", {
+     *     await client.generators.versions.getChangelog(FernRegistry.generators.GeneratorId("string"), {
      *         fromVersion: {
      *             type: "inclusive",
      *             value: "string"
@@ -133,6 +137,7 @@ export class Versions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -158,19 +163,18 @@ export class Versions {
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.upsertGeneratorRelease({
-     *         generatorId: "string",
-     *         irVersion: 1,
-     *         migration: "string",
-     *         customConfigSchema: "string",
+     *     await client.generators.versions.upsertGeneratorRelease({
      *         version: "string",
      *         createdAt: "2023-01-15",
      *         isYanked: {
      *             remediationVerision: "string"
      *         },
      *         changelogEntry: [{
-     *                 type: FernRegistry.generators.ChangelogEntryType.Fix,
+     *                 type: "fix",
      *                 summary: "string",
+     *                 links: {
+     *                     "key": "value"
+     *                 },
      *                 upgradeNotes: {
      *                     "key": "value"
      *                 },
@@ -189,7 +193,12 @@ export class Versions {
      *                 fixed: {
      *                     "key": "value"
      *                 }
-     *             }]
+     *             }],
+     *         generatorId: FernRegistry.generators.GeneratorId("string"),
+     *         irVersion: 1,
+     *         migration: "string",
+     *         customConfigSchema: "string",
+     *         tags: ["string"]
      *     })
      */
     public async upsertGeneratorRelease(
@@ -209,6 +218,7 @@ export class Versions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
@@ -245,7 +255,7 @@ export class Versions {
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.getGeneratorRelease("string", "string")
+     *     await client.generators.versions.getGeneratorRelease(FernRegistry.generators.GeneratorId("string"), "string")
      */
     public async getGeneratorRelease(
         generator: FernRegistry.generators.GeneratorId,
@@ -270,6 +280,7 @@ export class Versions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -305,7 +316,7 @@ export class Versions {
      * @param {Versions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fernRegistry.generators.versions.listGeneratorReleases("string", {
+     *     await client.generators.versions.listGeneratorReleases(FernRegistry.generators.GeneratorId("string"), {
      *         page: 1,
      *         pageSize: 1
      *     })
@@ -344,6 +355,7 @@ export class Versions {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

@@ -1,10 +1,9 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
 import { Markdown } from "../../mdx/Markdown";
-import type { BundledMDX } from "../../mdx/types";
 import {
     ResolvedFormDataRequestProperty,
     ResolvedRequestBody,
@@ -46,11 +45,11 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                 fallback={`This endpoint expects ${visitResolvedHttpRequestBodyShape<string>(requestBody.shape, {
                     formData: (formData) => {
                         const fileArrays = formData.properties.filter(
-                            (p) => p.type === "fileArray",
-                        ) as APIV1Read.FilePropertyArray[];
+                            (p): p is ResolvedFormDataRequestProperty.FileArrayProperty => p.type === "fileArray",
+                        );
                         const files = formData.properties.filter(
-                            (p) => p.type === "file",
-                        ) as APIV1Read.FilePropertySingle[];
+                            (p): p is ResolvedFormDataRequestProperty.FileProperty => p.type === "file",
+                        );
                         return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
                     },
                     bytes: (bytes) => `binary data${bytes.contentType != null ? ` of type ${bytes.contentType}` : ""}`,
@@ -118,7 +117,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 function getDescription(
     bodyProperty: ResolvedFormDataRequestProperty.BodyProperty,
     types: Record<string, ResolvedTypeDefinition>,
-): BundledMDX | undefined {
+): FernDocs.MarkdownText | undefined {
     if (bodyProperty.description != null) {
         return bodyProperty.description;
     }

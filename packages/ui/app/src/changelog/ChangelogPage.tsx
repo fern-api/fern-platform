@@ -1,4 +1,5 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import clsx from "clsx";
 import { atom, useAtomValue } from "jotai";
@@ -11,7 +12,6 @@ import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
 import { useToHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
-import { BundledMDX } from "../mdx/types";
 import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
@@ -22,7 +22,7 @@ function flattenChangelogEntries(page: DocsContent.ChangelogPage): FernNavigatio
 
 const CHANGELOG_PAGE_SIZE = 10;
 
-function getOverviewMdx(page: DocsContent.ChangelogPage): BundledMDX | undefined {
+function getOverviewMdx(page: DocsContent.ChangelogPage): FernDocs.MarkdownText | undefined {
     return page.node.overviewPageId != null ? page.pages[page.node.overviewPageId] : undefined;
 }
 
@@ -117,60 +117,58 @@ export function ChangelogPage({ content }: { content: DocsContent.ChangelogPage 
     }, [chunkedEntries.length, page]);
 
     return (
-        <div className="flex justify-between px-4 md:px-6 lg:px-8">
-            <div className={clsx("w-full min-w-0", { "pt-12 lg:pt-24": fullWidth, "pt-8": !fullWidth })}>
-                <main className={clsx("mx-auto max-w-screen-lg break-words", { "lg:ml-8": !fullWidth })}>
-                    <section className="flex pb-8">
-                        <ChangelogContentLayout>
-                            <PageHeader
-                                title={content.node.title}
-                                breadcrumbs={content.breadcrumbs}
-                                subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
-                            />
-                            <Markdown mdx={overview} />
-                        </ChangelogContentLayout>
-                    </section>
+        <div
+            className={clsx("fern-changelog", {
+                "full-width": fullWidth,
+            })}
+        >
+            <main>
+                <ChangelogContentLayout as="section" className="pb-8">
+                    <PageHeader
+                        title={content.node.title}
+                        breadcrumb={content.breadcrumb}
+                        subtitle={typeof overview !== "string" ? overview?.frontmatter.excerpt : undefined}
+                    />
+                    <Markdown mdx={overview} />
+                </ChangelogContentLayout>
 
-                    {entries.map((entry) => {
-                        const page = content.pages[entry.pageId];
-                        const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
-                        return (
-                            <Fragment key={entry.id}>
-                                <hr />
-                                <article id={entry.date} className="flex items-stretch py-8 lg:py-16">
-                                    <ChangelogContentLayout
-                                        stickyContent={<FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>}
-                                    >
-                                        <Markdown
-                                            title={
-                                                title != null ? (
-                                                    <h2>
-                                                        <FernLink href={toHref(entry.slug)} className="not-prose">
-                                                            {title}
-                                                        </FernLink>
-                                                    </h2>
-                                                ) : undefined
-                                            }
-                                            mdx={page}
-                                        />
-                                    </ChangelogContentLayout>
-                                </article>
-                            </Fragment>
-                        );
-                    })}
-
-                    {(prev != null || next != null) && (
-                        <div className="flex">
-                            <ChangelogContentLayout>
-                                <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
+                {entries.map((entry) => {
+                    const page = content.pages[entry.pageId];
+                    const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
+                    return (
+                        <Fragment key={entry.id}>
+                            <hr />
+                            <ChangelogContentLayout
+                                as="article"
+                                id={entry.date}
+                                stickyContent={<FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>}
+                            >
+                                <Markdown
+                                    title={
+                                        title != null ? (
+                                            <h2>
+                                                <FernLink href={toHref(entry.slug)} className="not-prose">
+                                                    {title}
+                                                </FernLink>
+                                            </h2>
+                                        ) : undefined
+                                    }
+                                    mdx={page}
+                                />
                             </ChangelogContentLayout>
-                        </div>
-                    )}
+                        </Fragment>
+                    );
+                })}
 
-                    <div className="h-48" />
-                    <BuiltWithFern className="w-fit mx-auto my-8" />
-                </main>
-            </div>
+                {(prev != null || next != null) && (
+                    <ChangelogContentLayout as="div">
+                        <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
+                    </ChangelogContentLayout>
+                )}
+
+                <div className="h-48" />
+                <BuiltWithFern className="w-fit mx-auto my-8" />
+            </main>
         </div>
     );
 }

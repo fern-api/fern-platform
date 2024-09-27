@@ -4,15 +4,16 @@ import { UnreachableCaseError } from "ts-essentials";
 
 export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: string | undefined): string {
     return visitSearchRecord<string>(record)._visit({
+        v4: (record) => record.slug,
         v3: (record) => record.slug,
         v2: (record) =>
-            FernNavigation.utils.slugjoin(
+            FernNavigation.slugjoin(
                 basePath || "/",
                 record.version?.urlSlug ?? "",
                 ...getLeadingPathForSearchRecord(record),
             ),
         v1: (record) =>
-            FernNavigation.utils.slugjoin(
+            FernNavigation.slugjoin(
                 basePath || "/",
                 record.versionSlug ?? "",
                 ...getLeadingPathForSearchRecord(record),
@@ -22,6 +23,7 @@ export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: 
 
 export function getTitleForSearchRecord(record: Algolia.AlgoliaRecord): string {
     return visitSearchRecord<string>(record)._visit({
+        v4: (record) => record.title,
         v3: (record) => record.title,
         v2: (record) =>
             record.type === "endpoint-v2"
@@ -33,6 +35,20 @@ export function getTitleForSearchRecord(record: Algolia.AlgoliaRecord): string {
 
 export function getContentForSearchRecord(record: Algolia.AlgoliaRecord): string | undefined {
     return visitSearchRecord<string | undefined>(record)._visit({
+        v4: (record) => {
+            switch (record.type) {
+                case "page-v4":
+                case "endpoint-v4":
+                case "websocket-v4":
+                case "webhook-v4":
+                case "endpoint-field-v1":
+                case "websocket-field-v1":
+                case "webhook-field-v1":
+                    return record.description;
+                case "markdown-section-v1":
+                    return record.content;
+            }
+        },
         v3: (record) => record.content ?? undefined,
         v2: (record) => (record.type === "page-v2" ? record.content : undefined),
         v1: () => undefined,
@@ -82,7 +98,7 @@ function createSearchPlaceholder(sidebar: FernNavigation.SidebarRootNode | undef
 
 function checkHasGuides(sidebar: FernNavigation.SidebarRootNode): boolean {
     let hasGuides = false;
-    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+    FernNavigation.traverseNavigation(sidebar, (node) => {
         if (node.type === "page") {
             hasGuides = true;
             return false;
@@ -97,7 +113,7 @@ function checkHasGuides(sidebar: FernNavigation.SidebarRootNode): boolean {
 
 function checkHasEndpoints(sidebar: FernNavigation.SidebarRootNode): boolean {
     let hasEndpoints = false;
-    FernNavigation.utils.traverseNavigation(sidebar, (node) => {
+    FernNavigation.traverseNavigation(sidebar, (node) => {
         if (node.type === "apiReference") {
             hasEndpoints = true;
             return false;
@@ -111,6 +127,17 @@ function checkHasEndpoints(sidebar: FernNavigation.SidebarRootNode): boolean {
 }
 
 interface SearchRecordVisitor<T> {
+    v4: (
+        record:
+            | Algolia.AlgoliaRecord.PageV4
+            | Algolia.AlgoliaRecord.EndpointV4
+            | Algolia.AlgoliaRecord.WebsocketV4
+            | Algolia.AlgoliaRecord.WebhookV4
+            | Algolia.AlgoliaRecord.EndpointFieldV1
+            | Algolia.AlgoliaRecord.WebsocketFieldV1
+            | Algolia.AlgoliaRecord.WebhookFieldV1
+            | Algolia.AlgoliaRecord.MarkdownSectionV1,
+    ) => T;
     v3: (
         record:
             | Algolia.AlgoliaRecord.PageV3
@@ -137,6 +164,15 @@ function visitSearchRecord<T>(record: Algolia.AlgoliaRecord): { _visit: (visitor
                 case "websocket-v3":
                 case "webhook-v3":
                     return visitor.v3(record);
+                case "page-v4":
+                case "endpoint-v4":
+                case "websocket-v4":
+                case "webhook-v4":
+                case "endpoint-field-v1":
+                case "webhook-field-v1":
+                case "websocket-field-v1":
+                case "markdown-section-v1":
+                    return visitor.v4(record);
                 default:
                     throw new UnreachableCaseError(record);
             }

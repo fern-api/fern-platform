@@ -1,5 +1,10 @@
 import {
+    APIV1Db,
+    APIV1Read,
     Algolia,
+    DocsV1Db,
+    DocsV1Read,
+    FdrAPI,
     convertDbAPIDefinitionToRead,
     convertDbDocsConfigToRead,
     migrateDocsDbDefinition,
@@ -7,7 +12,9 @@ import {
 } from "@fern-api/fdr-sdk";
 import { AuthType, type IndexSegment } from "@prisma/client";
 import { mapValues } from "lodash-es";
-import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read, DocsV1ReadService, FdrAPI } from "../../../api";
+import { DocsV1ReadService } from "../../../api";
+import { UnauthorizedError } from "../../../api/generated/api";
+import { DomainNotRegisteredError } from "../../../api/generated/api/resources/docs/resources/v1/resources/read";
 import type { FdrApplication } from "../../../app";
 import { LoadDocsDefinitionByUrlResponse } from "../../../db";
 import { readBuffer } from "../../../util";
@@ -46,13 +53,13 @@ export async function getDocsForDomain({
     ]);
 
     if (!docs) {
-        throw new DocsV1Read.DomainNotRegisteredError();
+        throw new DomainNotRegisteredError();
     }
     const docsDefinitionJson = readBuffer(docs.docsDefinition);
     const docsDbDefinition = migrateDocsDbDefinition(docsDefinitionJson);
 
     if (docsV2 != null && docsV2.authType !== AuthType.PUBLIC) {
-        throw new FdrAPI.UnauthorizedError("You must be authorized to view this documentation.");
+        throw new UnauthorizedError("You must be authorized to view this documentation.");
     }
 
     return {
@@ -62,10 +69,16 @@ export async function getDocsForDomain({
             docsV2:
                 docsV2 != null
                     ? {
-                          algoliaIndex: docsV2.algoliaIndex ?? undefined,
-                          orgId: docsV2.orgID,
+                          algoliaIndex:
+                              docsV2.algoliaIndex != null
+                                  ? FdrAPI.algolia.AlgoliaSearchIndex(docsV2.algoliaIndex)
+                                  : undefined,
+                          orgId: FdrAPI.OrgId(docsV2.orgID),
                           docsDefinition: migrateDocsDbDefinition(readBuffer(docsV2.docsDefinition)),
-                          docsConfigInstanceId: docsV2.docsConfigInstanceId,
+                          docsConfigInstanceId:
+                              docsV2.docsConfigInstanceId != null
+                                  ? FdrAPI.DocsConfigId(docsV2.docsConfigInstanceId)
+                                  : null,
                           indexSegmentIds: docsV2.indexSegmentIds as string[],
                           path: docsV2.path,
                           domain: docsV2.domain,
@@ -144,7 +157,7 @@ async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrA
                               alt: fileDbInfo.alt,
                           }
                         : { type: "url", url: s3DownloadUrl };
-                return [fileId, readFile];
+                return [DocsV1Read.FileId(fileId), readFile];
             },
         );
     } else {
@@ -154,7 +167,7 @@ async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrA
                     key: fileDbInfo.s3Key,
                     isPrivate: true, // for backcompat
                 });
-                return [fileId, { type: "url", url: s3DownloadUrl }];
+                return [DocsV1Read.FileId(fileId), { type: "url", url: s3DownloadUrl }];
             },
         );
     }
@@ -212,7 +225,7 @@ function getSearchInfoFromDocs({
                     // Since the docs are versioned, all referenced index segments will have a version
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     acc[indexSegment.version!] = {
-                        id: indexSegment.id,
+                        id: FdrAPI.IndexSegmentId(indexSegment.id),
                         searchApiKey,
                     };
                     return acc;
@@ -242,7 +255,7 @@ function getSearchInfoFromDocs({
                 value: {
                     type: "unversioned",
                     indexSegment: {
-                        id: indexSegment.id,
+                        id: FdrAPI.IndexSegmentId(indexSegment.id),
                         searchApiKey,
                     },
                 },

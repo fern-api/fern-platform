@@ -1,8 +1,7 @@
-import { migrateDocsDbDefinition } from "@fern-api/fdr-sdk";
+import { APIV1Db, Algolia, DocsV1Db, DocsV2Read, FdrAPI, migrateDocsDbDefinition } from "@fern-api/fdr-sdk";
 import { AuthType, PrismaClient } from "@prisma/client";
 import urljoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
-import { DocsV1Db, DocsV2Read } from "../../api";
 import { DocsRegistrationInfo } from "../../controllers/docs/v2/getDocsWriteV2Service";
 import type { IndexSegment } from "../../services/algolia";
 import { WithoutQuestionMarks, readBuffer, writeBuffer } from "../../util";
@@ -16,13 +15,13 @@ export interface StoreDocsDefinitionResponse {
 }
 
 export interface LoadDocsDefinitionByUrlResponse {
-    orgId: string;
+    orgId: FdrAPI.OrgId;
     domain: string;
     path: string;
-    algoliaIndex: string | undefined;
+    algoliaIndex: Algolia.AlgoliaSearchIndex | undefined;
     docsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3>;
     indexSegmentIds: string[];
-    docsConfigInstanceId: string | null;
+    docsConfigInstanceId: APIV1Db.DocsConfigId | null;
     updatedTime: Date;
     authType: AuthType;
     hasPublicS3Assets: boolean;
@@ -100,10 +99,12 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             return undefined;
         }
         return {
-            algoliaIndex: docsDomain.algoliaIndex ?? undefined,
-            orgId: docsDomain.orgID,
+            algoliaIndex:
+                docsDomain.algoliaIndex != null ? Algolia.AlgoliaSearchIndex(docsDomain.algoliaIndex) : undefined,
+            orgId: FdrAPI.OrgId(docsDomain.orgID),
             docsDefinition: migrateDocsDbDefinition(readBuffer(docsDomain.docsDefinition)),
-            docsConfigInstanceId: docsDomain.docsConfigInstanceId,
+            docsConfigInstanceId:
+                docsDomain.docsConfigInstanceId != null ? APIV1Db.DocsConfigId(docsDomain.docsConfigInstanceId) : null,
             indexSegmentIds: docsDomain.indexSegmentIds as IndexSegmentIds,
             path: docsDomain.path,
             domain: docsDomain.domain,
@@ -221,7 +222,7 @@ export class DocsV2DaoImpl implements DocsV2Dao {
                 (r): DocsV2Read.DocsDomainItem => ({
                     domain: r.domain,
                     basePath: r.path.length > 1 ? r.path : undefined,
-                    organizationId: r.orgID,
+                    organizationId: FdrAPI.OrgId(r.orgID),
                     updatedAt: r.updatedTime.toISOString(),
                 }),
             ),

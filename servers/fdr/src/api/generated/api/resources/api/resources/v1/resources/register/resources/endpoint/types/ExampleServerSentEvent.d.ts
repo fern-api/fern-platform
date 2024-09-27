@@ -3,5 +3,5 @@
  */
 export interface ExampleServerSentEvent {
     event: string;
-    data?: unknown;
+    data: unknown;
 }

@@ -13,7 +13,7 @@ import { BuiltWithFern } from "../../../sidebar/BuiltWithFern";
 import { toAttribute } from "../../plugins/utils";
 
 interface GuideLayoutProps {
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ReactNode | undefined;
     tableOfContents: TableOfContentsItem[] | undefined;
@@ -24,7 +24,7 @@ interface GuideLayoutProps {
 }
 
 interface GuideLayoutOpts {
-    breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     title: string;
     subtitle: ElementContent | undefined;
     tableOfContents: TableOfContentsItem[] | undefined;
@@ -35,7 +35,7 @@ interface GuideLayoutOpts {
 }
 
 export function GuideLayout({
-    breadcrumbs,
+    breadcrumb,
     title,
     tableOfContents,
     subtitle,
@@ -54,7 +54,7 @@ export function GuideLayout({
                 )}
             </aside>
             <article className="fern-layout-content max-w-content-width">
-                <PageHeader breadcrumbs={breadcrumbs} title={title} subtitle={subtitle} />
+                <PageHeader breadcrumb={breadcrumb} title={title} subtitle={subtitle} />
                 <div className="max-w-full fern-prose">{children}</div>
                 {(!hideFeedback || !hideNavLinks || editThisPageUrl != null) && (
                     <footer className="mt-12">

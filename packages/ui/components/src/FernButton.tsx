@@ -1,5 +1,5 @@
-import cn from "clsx";
-import { ComponentProps, forwardRef, PropsWithChildren, ReactElement, ReactNode, useRef } from "react";
+import cn, { clsx } from "clsx";
+import { ComponentProps, createElement, forwardRef, PropsWithChildren, ReactElement, ReactNode, useRef } from "react";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
 
@@ -20,6 +20,7 @@ export interface FernButtonSharedProps {
     // children replaces text
     text?: React.ReactNode;
     disableAutomaticTooltip?: boolean;
+    skeleton?: boolean;
 }
 
 export interface FernButtonProps
@@ -50,6 +51,7 @@ export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(functio
         full,
         rounded,
         disableAutomaticTooltip,
+        skeleton,
         ...buttonProps
     } = props;
     const buttonTextRef = useRef<HTMLSpanElement>(null);
@@ -60,7 +62,7 @@ export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(functio
         <button
             tabIndex={0}
             ref={ref}
-            disabled={disabled}
+            disabled={disabled || skeleton}
             data-state={active ? "on" : "off"}
             aria-disabled={disabled}
             aria-selected={active}
@@ -68,7 +70,7 @@ export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(functio
             {...buttonProps}
             className={getButtonClassName(props)}
             onClick={
-                props.onClick != null
+                props.onClick != null && !skeleton
                     ? (e) => {
                           if (disabled) {
                               e.preventDefault();
@@ -80,7 +82,7 @@ export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(functio
                     : undefined
             }
         >
-            {renderButtonContent(props, buttonTextRef)}
+            {createElement(ButtonContent, { ...props, buttonTextRef, className: skeleton ? "contents invisible" : "" })}
         </button>
     );
 
@@ -108,13 +110,22 @@ export const FernButtonGroup = forwardRef<HTMLSpanElement, ComponentProps<"div">
     );
 });
 
-export function renderButtonContent(
-    { icon: leftIcon, rightIcon, mono = false, text, children }: PropsWithChildren<FernButtonSharedProps>,
-    buttonTextRef?: React.RefObject<HTMLSpanElement>,
-): ReactElement {
+export function ButtonContent({
+    icon: leftIcon,
+    rightIcon,
+    mono = false,
+    text,
+    children,
+    buttonTextRef,
+    className,
+}: PropsWithChildren<
+    FernButtonSharedProps & {
+        buttonTextRef?: React.RefObject<HTMLSpanElement>;
+    }
+>): ReactElement {
     children = children ?? text;
     return (
-        <span className="fern-button-content">
+        <span className={clsx("fern-button-content", className)}>
             {renderIcon(leftIcon)}
             {children && (
                 <span

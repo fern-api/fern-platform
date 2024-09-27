@@ -1,6 +1,6 @@
-import { FernButtonSharedProps, getButtonClassName, renderButtonContent } from "@fern-ui/components";
+import { ButtonContent, FernButtonSharedProps, getButtonClassName } from "@fern-ui/components";
 import Link from "next/link";
-import { ComponentProps, PropsWithChildren, forwardRef } from "react";
+import { ComponentProps, PropsWithChildren, createElement, forwardRef } from "react";
 import { FernLink } from "./FernLink";
 
 interface FernLinkButtonProps extends ComponentProps<typeof Link>, PropsWithChildren<FernButtonSharedProps> {}
@@ -46,7 +46,7 @@ export const FernLinkButton = forwardRef<HTMLAnchorElement, FernLinkButtonProps>
                     : undefined
             }
         >
-            {renderButtonContent(props)}
+            {createElement(ButtonContent, { ...props, className: "" })}
         </FernLink>
     );
 });

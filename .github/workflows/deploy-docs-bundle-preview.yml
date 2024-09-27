@@ -1,0 +1,138 @@
+name: Preview @fern-ui/docs-bundle
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ignore:
+    runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.ignore.outputs.continue }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ignore unchanged files
+        id: ignore
+        uses: ./.github/actions/turbo-ignore
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          project: "app.buildwithfern.com"
+          package: "@fern-ui/docs-bundle"
+          environment: "preview"
+          branch: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+
+  deploy:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
+    runs-on: ubuntu-latest
+    environment:
+      name: Preview - app.buildwithfern.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    permissions: write-all # required for the pr-preview comment
+    steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # used for turbo-ignore
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+
+      - uses: ./.github/actions/install
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+          if [ -f deployment-url.txt ]; then
+            pnpm vercel-scripts preview.txt $(cat deployment-url.txt) --token=${{ secrets.VERCEL_TOKEN }}
+            echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment PR Preview
+        uses: thollander/actions-comment-pull-request@v2
+        if: github.event_name == 'pull_request' && steps.deploy.outputs.deployment_url
+        with:
+          filePath: preview.txt
+          comment_tag: pr_preview
+
+      - name: Analyze bundle
+        if: steps.deploy.outputs.deployment_url
+        run: pnpm --package=nextjs-bundle-analysis dlx report
+
+      - name: Upload analysis
+        if: steps.deploy.outputs.deployment_url
+        uses: actions/upload-artifact@v4
+        with:
+          name: analyze
+          path: packages/ui/docs-bundle/.next/analyze/
+
+      - name: Download base branch bundle stats
+        uses: dawidd6/action-download-artifact@v2
+        if: steps.deploy.outputs.deployment_url && success() && github.event.number
+        with:
+          workflow: nextjs_bundle_analysis.yml
+          branch: ${{ github.event.pull_request.base.ref }}
+          path: packages/ui/docs-bundle/.next/analyze/base
+
+      # https://infrequently.org/2021/03/the-performance-inequality-gap/
+      - name: Compare with base branch bundle
+        if: steps.deploy.outputs.deployment_url && success() && github.event.number
+        run: ls -laR packages/ui/docs-bundle/.next/analyze/base && pnpm --package=nextjs-bundle-analysis dlx compare
+
+      - name: Comment PR Bundle Analysis
+        if: steps.deploy.outputs.deployment_url && github.event_name == 'pull_request'
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          filePath: packages/ui/docs-bundle/.next/analyze/__bundle_analysis_comment.txt
+          comment_tag: bundle_analysis
+
+  deploy-dev:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
+    runs-on: ubuntu-latest
+    environment:
+      name: Preview - app-dev.buildwithfern.com
+      url: ${{ steps.deploy.outputs.deployment_url }}
+    outputs:
+      deployment_url: ${{ steps.deploy.outputs.deployment_url }}
+    steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+
+      - uses: ./.github/actions/install
+
+      - name: Build & Deploy to Vercel
+        id: deploy
+        run: |
+          pnpm vercel-scripts deploy app-dev.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+          echo "deployment_url=$(cat deployment-url.txt)" >> $GITHUB_OUTPUT
+
+  ete:
+    needs:
+      - ignore
+      - deploy # only runs on fern-prod
+    if: always()
+    runs-on: ubuntu-latest
+    permissions: write-all # required for the playwright-report-summary action
+    steps:
+      # if the job is ignored, skip the ETE test and exit 0 so that the this job can be used for merge protection
+      - uses: actions/checkout@v4
+        if: needs.deploy.outputs.deployment_url
+
+      - name: Run E2E tests
+        uses: ./.github/actions/ete-docs-bundle
+        if: needs.deploy.outputs.deployment_url
+        with:
+          deployment_url: ${{ needs.deploy.outputs.deployment_url }}
+          token: ${{ secrets.VERCEL_TOKEN }}
+          fern_token: ${{ secrets.FERN_TOKEN }}

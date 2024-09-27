@@ -1,13 +1,13 @@
 import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import type { BundledMDX } from "../mdx/types";
 import type { ResolvedApiEndpoint, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
 
 export declare namespace DocsContent {
     export interface Neighbor {
         slug: FernNavigation.Slug;
         title: string;
-        excerpt: BundledMDX | undefined;
+        excerpt: FernDocs.MarkdownText | undefined;
     }
 
     export interface Neighbors {
@@ -18,9 +18,9 @@ export declare namespace DocsContent {
     interface ChangelogPage {
         type: "changelog";
         title: string;
-        pages: Record<FernNavigation.PageId, BundledMDX>;
+        pages: Record<FernNavigation.PageId, FernDocs.MarkdownText>;
         node: FernNavigation.ChangelogNode;
-        breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
         slug: FernNavigation.Slug;
         anchorIds: Record<string, FernNavigation.PageId>;
         // neighbors: Neighbors;
@@ -28,8 +28,8 @@ export declare namespace DocsContent {
 
     interface ChangelogEntryPage extends Omit<FernNavigation.ChangelogEntryNode, "type"> {
         type: "changelog-entry";
-        page: BundledMDX;
-        breadcrumbs: readonly FernNavigation.NavigationBreadcrumbItem[];
+        page: FernDocs.MarkdownText;
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
         neighbors: Neighbors;
         changelogTitle: string;
         changelogSlug: FernNavigation.Slug;
@@ -39,7 +39,7 @@ export declare namespace DocsContent {
         type: "custom-markdown-page";
         slug: FernNavigation.Slug;
         title: string;
-        mdx: BundledMDX;
+        mdx: FernDocs.MarkdownText;
         neighbors: Neighbors;
         // TODO: downselect apis to only the fields we need
         apis: Record<string, ResolvedRootPackage>;

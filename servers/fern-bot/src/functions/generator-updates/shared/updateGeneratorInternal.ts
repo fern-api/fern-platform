@@ -1,46 +1,30 @@
 import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
-import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import { ChangelogResponse } from "@fern-fern/generators-sdk/api/resources/generators";
-import { execFernCli } from "@libs/fern";
+import { execFernCli, getGenerators, NO_API_FALLBACK_KEY } from "@libs/fern";
 import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit, type Repository } from "@libs/github/utilities";
 import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService";
-import yaml from "js-yaml";
 import { Octokit } from "octokit";
-import { SimpleGit } from "simple-git";
+import SemVer from "semver";
+import { CleanOptions, SimpleGit } from "simple-git";
 
-async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
-    const client = new FernVenusApiClient({ environment: venusUrl });
-
-    const response = await client.organization.get(FernVenusApi.OrganizationId(orgId));
-    console.log(`Organization response: ${JSON.stringify(response)}, orgId: ${orgId}.`);
-    if (!response.ok) {
-        throw new Error(`Organization ${orgId} not found`);
-    }
-
-    return response.body.isFernbotCanary;
-}
+const PR_BODY_LIMIT = 65000;
 
 async function getGeneratorChangelog(
     fdrUrl: string,
-    generator: string,
+    generatorId: string,
     from: string,
     to: string,
 ): Promise<ChangelogResponse[]> {
-    console.log(`Getting changelog for generator ${generator} from ${from} to ${to}.`);
+    console.log(`Getting changelog for generator ${generatorId} from ${from} to ${to}.`);
     const client = new FernRegistryClient({ environment: fdrUrl });
 
-    const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generator });
-    if (!generatorResponse.ok || generatorResponse.body == null) {
-        throw new Error(`Generator ${generator} not found`);
-    }
-
-    const response = await client.generators.versions.getChangelog(generatorResponse.body.id, {
+    const response = await client.generators.versions.getChangelog(generatorId, {
         fromVersion: { type: "exclusive", value: from },
         toVersion: { type: "inclusive", value: to },
     });
     if (!response.ok) {
-        throw new Error(`Changelog for generator ${generator} (from version: ${from} to: ${to}) not found`);
+        throw new Error(`Changelog for generator ${generatorId} (from version: ${from} to: ${to}) not found`);
     }
 
     return response.body.entries;
@@ -93,11 +77,17 @@ function formatChangelogResponses(previousVersion: string, changelogs: Changelog
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const prBodyTitle = `## Upgrading from \`${previousVersion}\` to \`${changelogs[0]!.version}\` - Changelog\n\n<dl>\n<dd>\n<ul>`;
-    let prBody = "";
+    let prBody = prBodyTitle;
+    const terminalString = "</ul>\n</dd>\n</dl>";
 
     // Get the first 5 changelogs
     for (const changelog of changelogs.slice(0, 5)) {
-        prBody += formatChangelogEntry(changelog);
+        const entry = formatChangelogEntry(changelog);
+        const terminate = terminateChangelog(prBody, entry, terminalString);
+        if (terminate != null) {
+            return terminate;
+        }
+        prBody += entry;
     }
 
     if (changelogs.length > 5) {
@@ -105,23 +95,25 @@ function formatChangelogResponses(previousVersion: string, changelogs: Changelog
         prBody += `<details>\n\t<summary><strong>${numChangelogsLeft} additional update${numChangelogsLeft > 1 ? "s" : ""}</strong>, see more</summary>\n\n<br/>\n\n`;
 
         for (const changelog of changelogs.slice(5)) {
-            prBody += "\t";
-            prBody += formatChangelogEntry(changelog);
+            let entry = "\t";
+            entry += formatChangelogEntry(changelog);
+
+            const terminate = terminateChangelog(prBody, entry, "</details>" + terminalString);
+            if (terminate != null) {
+                return terminate;
+            }
+            prBody += entry;
         }
         prBody += "</details>";
     }
-    return prBodyTitle + prBody + "</ul>\n</dd>\n</dl>";
+    return prBody + terminalString;
 }
 
-// This type is meant to mirror the data model for the `generator list` command
-// defined in the OSS repo.
-type GeneratorList = Record<string, Record<string, string[]>>;
-const NO_API_FALLBACK_KEY = "NO_API_FALLBACK";
-async function getGenerators(fullRepoPath: string): Promise<GeneratorList> {
-    // Note since this is multi-line, we do not call `cleanStdout` on it, but it should be parsed ok.
-    const response = await execFernCli(`generator list --api-fallback ${NO_API_FALLBACK_KEY}`, fullRepoPath);
-
-    return yaml.load(response.stdout) as GeneratorList;
+function terminateChangelog(prBody: string, newEntry: string, terminalString: string): string | undefined {
+    if (prBody.length + newEntry.length > PR_BODY_LIMIT) {
+        return prBody + terminalString;
+    }
+    return undefined;
 }
 
 // We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
@@ -136,7 +128,6 @@ export async function updateVersionInternal(
     repository: Repository,
     fernBotLoginName: string,
     fernBotLoginId: string,
-    venusUrl: string,
     fdrUrl: string,
     slackToken: string,
     slackChannel: string,
@@ -162,7 +153,7 @@ export async function updateVersionInternal(
         repository,
         git,
         branchName: "fern/update/cli",
-        prTitle: "Upgrade Fern CLI version",
+        prTitle: "Upgrade Fern CLI",
         upgradeAction: async () => {
             // Here we have to pipe yes to get through interactive prompts in the CLI
             const response = await execFernCli("upgrade", fullRepoPath, true);
@@ -179,18 +170,7 @@ export async function updateVersionInternal(
         maybeOrganization,
     });
 
-    try {
-        if (maybeOrganization == null) {
-            throw new Error("No organization was found, quitting before generator upgrades.");
-        } else if (!(await isOrganizationCanary(maybeOrganization, venusUrl))) {
-            console.log("Organization is not a fern-bot canary, skipping upgrade.");
-            return;
-        }
-    } catch (error) {
-        console.error("Could not determine if the repo owner was a fern-bot canary, quitting.");
-        throw error;
-    }
-
+    const client = new FernRegistryClient({ environment: fdrUrl });
     // Pull a branch of fern/update/<generator>/<api>:<group>
     // as well as fern/update/cli
     const generatorsList = await getGenerators(fullRepoPath);
@@ -205,6 +185,12 @@ export async function updateVersionInternal(
                 }
                 additionalName = `${generatorName.replace("fernapi/", "")}@${additionalName}`;
 
+                const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generator });
+                if (!generatorResponse.ok || generatorResponse.body == null) {
+                    throw new Error(`Generator ${generator} not found`);
+                }
+                const generatorEntity = generatorResponse.body;
+
                 // We could collect the promises here and await them at the end, but there aren't many you'd parallelize,
                 // and I think you'd outweigh that benefit by having to make several clones to manage the branches in isolation.
                 await handleSingleUpgrade({
@@ -212,7 +198,7 @@ export async function updateVersionInternal(
                     repository,
                     git,
                     branchName: `${branchName}${additionalName}`,
-                    prTitle: `Upgrade Fern Generator Version: (${additionalName})`,
+                    prTitle: `Upgrade Fern ${generatorEntity.displayName} Generator: (\`${groupName}\`)`,
                     upgradeAction: async ({ includeMajor }: { includeMajor?: boolean }) => {
                         let command = `generator upgrade --generator ${generatorName} --group ${groupName}`;
                         if (apiName !== NO_API_FALLBACK_KEY) {
@@ -228,7 +214,7 @@ export async function updateVersionInternal(
                     getPRBody: async (fromVersion, toVersion) => {
                         return formatChangelogResponses(
                             fromVersion,
-                            await getGeneratorChangelog(fdrUrl, generatorName, fromVersion, toVersion),
+                            await getGeneratorChangelog(fdrUrl, generatorEntity.id, fromVersion, toVersion),
                         );
                     },
                     getEntityVersion: async () => {
@@ -287,6 +273,15 @@ async function handleSingleUpgrade({
     const originDefaultBranch = `${DEFAULT_REMOTE_NAME}/${repository.default_branch}`;
     await getOrUpdateBranch(git, originDefaultBranch, branchName);
 
+    // Force reset the branch to the default branch
+    // This is mostly meant to allow repeating migrations (e.g. we ship a faulty CLI version + migration, if we did not reset the branch
+    // we'd never rerun the upgrade, now we reset everything and rerun the upgrade, thus rerunning the migration)
+    await git.fetch([DEFAULT_REMOTE_NAME]);
+    await git.reset(["--hard", originDefaultBranch]);
+    await git.clean(CleanOptions.FORCE, ["-d"]);
+    // Note we don't do this for API spec PRs as those invite users to update their API overrides file to match the API spec changes
+    // so we'd be blowing away their work if we reset the branch. CLI + generator upgrades should be safe to reset.
+
     // Perform the upgrade and get the new version you just upgraded to
     console.log(`Upgrading entity to latest version, from version: ${fromVersion}`);
     await upgradeAction({});
@@ -331,7 +326,16 @@ async function handleSingleUpgrade({
         console.log("Versions were the same, let's see if there's a new version across major versions.");
         await upgradeAction({ includeMajor: true });
         const toVersion = await getEntityVersion();
-        if (fromVersion !== toVersion) {
+        const parsedFrom = SemVer.parse(fromVersion);
+        const parsedTo = SemVer.parse(toVersion);
+        // Clean the branch back up, to remove any unstaged changes
+        await git.reset(["--hard"]);
+
+        if (parsedFrom == null || parsedTo == null) {
+            console.log("An invalid version was found, quitting", fromVersion, toVersion);
+            return;
+        }
+        if (parsedFrom.major < parsedTo.major) {
             slackClient.notifyMajorVersionUpgradeEncountered({
                 repoUrl: repository.html_url,
                 repoName: repository.full_name,
