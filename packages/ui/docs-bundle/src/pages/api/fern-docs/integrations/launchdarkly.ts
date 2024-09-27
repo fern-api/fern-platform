@@ -17,13 +17,13 @@ export default async function handler(req: NextRequest): Promise<NextResponse<La
     try {
         const config = (await get<Record<string, LaunchDarklyEdgeConfigSchema>>("launchdarkly"))?.[domain];
         if (config == null) {
-            return new NextResponse(null, { status: 404 });
+            return NextResponse.json({}, { status: 404 });
         }
 
         return NextResponse.json(config);
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        return new NextResponse(null, { status: 500 });
+        return NextResponse.json({}, { status: 500 });
     }
 }

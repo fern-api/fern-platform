@@ -2,7 +2,7 @@ import { captureException } from "@sentry/nextjs";
 import { atom, useAtomValue } from "jotai";
 import { loadable } from "jotai/utils";
 import * as LDClient from "launchdarkly-js-client-sdk";
-import { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren, ReactNode, useCallback, useEffect, useState } from "react";
 import { selectApiRoute } from "../../../hooks/useApiRoute";
 
 async function fetchClientSideId(route: string): Promise<string | undefined> {
@@ -12,37 +12,63 @@ async function fetchClientSideId(route: string): Promise<string | undefined> {
 
 // this is a singleton atom that initializes the LaunchDarkly client-side SDK
 const ldClientAtom = atom<Promise<LDClient.LDClient | undefined>>(async (get) => {
+    if (typeof window === "undefined") {
+        return undefined;
+    }
     const route = selectApiRoute(get, "/api/fern-docs/integrations/launchdarkly");
     const clientSideId = await fetchClientSideId(route);
-    return clientSideId ? LDClient.initialize(clientSideId, { kind: "user" }) : undefined;
+    if (!clientSideId) {
+        return undefined;
+    }
+
+    const client = LDClient.initialize(clientSideId, {
+        kind: "user",
+        anonymous: true,
+    });
+
+    await client.waitForInitialization();
+
+    return client;
 });
 
-const ldFlagsAtom = atom(async (get) => {
-    return get(ldClientAtom).then((client) => client?.allFlags() ?? {});
-});
-
-const useLaunchDarklyFlag = (flag: string | string[]): boolean => {
-    const ldFlags = useAtomValue(loadable(ldFlagsAtom));
-
-    if (ldFlags.state === "hasError") {
-        captureException(ldFlags.error);
+const useLaunchDarklyFlag = (flag: string): boolean => {
+    const loadableClient = useAtomValue(loadable(ldClientAtom));
+    const client = loadableClient.state === "hasData" ? loadableClient.data : undefined;
+    if (loadableClient.state === "hasError") {
+        captureException(loadableClient.error);
     }
 
-    if (ldFlags.state !== "hasData") {
-        return false;
-    }
+    const getFlagEnabled = useCallback(() => {
+        return client?.variation(flag, false) ?? false;
+    }, [client, flag]);
 
-    if (typeof flag === "string") {
-        return !!ldFlags.data[flag];
-    } else if (Array.isArray(flag) && flag.length > 0 && flag.every((flag) => typeof flag === "string")) {
-        return flag.every((flag) => !!ldFlags.data[flag]);
-    } else {
-        return false;
-    }
+    const [enabled, setEnabled] = useState(getFlagEnabled);
+
+    useEffect(() => {
+        setEnabled(getFlagEnabled());
+
+        if (!client) {
+            return;
+        }
+
+        const listener = () => {
+            setEnabled(getFlagEnabled());
+        };
+
+        client.on("ready", listener);
+        client.on("change", listener);
+
+        return () => {
+            client.off("ready", listener);
+            client.off("change", listener);
+        };
+    }, [client, flag, getFlagEnabled]);
+
+    return enabled;
 };
 
 export interface LaunchDarklyProps {
-    flag: string | string[];
+    flag: string;
 }
 
 export function LaunchDarkly({ flag, children }: PropsWithChildren<LaunchDarklyProps>): ReactNode {
