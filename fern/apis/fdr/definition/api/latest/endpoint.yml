@@ -18,6 +18,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithNamespace
     properties:
       id: rootCommons.EndpointId # or original endpoint id?
       method: rootCommons.HttpMethod
@@ -96,15 +97,15 @@ types:
   ExampleEndpointCall:
     extends: commons.WithDescription
     properties:
-      name: optional<string>
       path: string
-      pathParameters: map<rootCommons.PropertyKey, unknown>
-      queryParameters: map<rootCommons.PropertyKey, unknown>
-      headers: map<rootCommons.PropertyKey, unknown>
-      requestBody: optional<ExampleEndpointRequest>
       responseStatusCode: integer
+      name: optional<string>
+      pathParameters: optional<map<rootCommons.PropertyKey, unknown>>
+      queryParameters: optional<map<rootCommons.PropertyKey, unknown>>
+      headers: optional<map<rootCommons.PropertyKey, unknown>>
+      requestBody: optional<ExampleEndpointRequest>
       responseBody: optional<ExampleEndpointResponse>
-      snippets: list<CodeSnippet>
+      snippets: optional<map<Language, list<CodeSnippet>>>
 
   CodeSnippet:
     extends: commons.WithDescription

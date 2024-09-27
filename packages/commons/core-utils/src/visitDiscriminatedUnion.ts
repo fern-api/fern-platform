@@ -31,3 +31,5 @@ export function visitDiscriminatedUnion<T extends Record<Discriminant, string>, 
         },
     };
 }
+
+export default visitDiscriminatedUnion;

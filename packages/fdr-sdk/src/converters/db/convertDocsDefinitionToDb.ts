@@ -1,3 +1,4 @@
+import assertNever from "@fern-ui/core-utils/assertNever";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -10,7 +11,6 @@ import {
 } from "../../client";
 import { isNavigationTabLink } from "../../client/visitNavigationTab";
 import { kebabCase } from "../../utils";
-import { assertNever } from "../utils/assertNever";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
 export interface S3FileInfo {

@@ -94,10 +94,10 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
+      - ObjectType
     properties:
       discriminantValue: string
       displayName: optional<string>
-      additionalProperties: ObjectType
 
   FormDataRequest:
     extends:

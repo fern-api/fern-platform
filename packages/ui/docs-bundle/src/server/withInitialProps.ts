@@ -1,5 +1,5 @@
 import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
-import { visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";

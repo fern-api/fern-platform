@@ -1,5 +1,5 @@
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { noop } from "ts-essentials";
-import { visitDiscriminatedUnion } from "../../../utils";
 import { NavigationNode } from "./NavigationNode";
 
 const SKIP = "skip" as const;
