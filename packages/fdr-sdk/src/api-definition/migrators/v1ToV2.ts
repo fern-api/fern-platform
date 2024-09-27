@@ -1,4 +1,5 @@
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import { mapValues } from "lodash-es";
 import { APIV1Read } from "../../client";
 import { SupportedLanguage } from "../../client/generated/api/resources/api/resources/v1/resources/read/resources/endpoint/types/SupportedLanguage";
 import { ROOT_PACKAGE_ID } from "../../navigation/consts";
@@ -389,8 +390,36 @@ export class ApiDefinitionV1ToLatest {
                 snippets: undefined,
             };
 
-            if (toRet.requestBody) {
-                toRet.requestBody.value = sortKeysByShape(toRet.requestBody.value, endpoint.request?.body, this.types);
+            if (example.requestBodyV3) {
+                toRet.requestBody = visitDiscriminatedUnion(
+                    example.requestBodyV3,
+                )._visit<APIV1Read.ExampleEndpointRequest>({
+                    bytes: (value) => value,
+                    json: (value) => ({
+                        type: "json",
+                        value: sortKeysByShape(value.value, endpoint.request?.body, this.types),
+                    }),
+                    form: (value) => ({
+                        type: "form",
+                        value: mapValues(value.value, (formValue, key): APIV1Read.FormValue => {
+                            if (formValue.type === "json") {
+                                const shape =
+                                    endpoint.request?.body.type === "formData"
+                                        ? endpoint.request.body.fields.find(
+                                              (field): field is V2.FormDataField.Property =>
+                                                  field.key === key && field.type === "property",
+                                          )?.valueShape
+                                        : undefined;
+                                return {
+                                    type: "json",
+                                    value: sortKeysByShape(formValue.value, shape, this.types),
+                                };
+                            } else {
+                                return formValue;
+                            }
+                        }),
+                    }),
+                });
             }
 
             if (toRet.responseBody) {
@@ -401,7 +430,13 @@ export class ApiDefinitionV1ToLatest {
                 );
             }
 
-            toRet.snippets = this.migrateEndpointSnippets(endpoint, example, this.auth, this.flags);
+            toRet.snippets = this.migrateEndpointSnippets(
+                endpoint,
+                toRet,
+                example.codeSamples,
+                example.codeExamples,
+                this.flags,
+            );
 
             return toRet;
         });
@@ -545,8 +580,9 @@ export class ApiDefinitionV1ToLatest {
 
     migrateEndpointSnippets(
         endpoint: V2.EndpointDefinition,
-        example: APIV1Read.ExampleEndpointCall,
-        auth: APIV1Read.ApiAuth | undefined,
+        example: V2.ExampleEndpointCall,
+        codeSamples: APIV1Read.CustomCodeSample[],
+        codeExamples: APIV1Read.CodeExamples,
         flags: Flags,
     ): Record<string, V2.CodeSnippet[]> {
         const toRet: Record<string, V2.CodeSnippet[]> = {};
@@ -557,7 +593,7 @@ export class ApiDefinitionV1ToLatest {
         const userProvidedLanguages = new Set<string>();
 
         // Add user-provided code snippets
-        example.codeSamples.forEach((codeSample) => {
+        codeSamples.forEach((codeSample) => {
             const language = this.#cleanLanguage(codeSample.language);
             userProvidedLanguages.add(language);
 
@@ -583,12 +619,12 @@ export class ApiDefinitionV1ToLatest {
             });
         }
 
-        if (!userProvidedLanguages.has(SupportedLanguage.Python) && example.codeExamples.pythonSdk != null) {
+        if (!userProvidedLanguages.has(SupportedLanguage.Python) && codeExamples.pythonSdk != null) {
             push(SupportedLanguage.Python, {
                 name: undefined,
                 language: SupportedLanguage.Python,
-                install: example.codeExamples.pythonSdk.install,
-                code: example.codeExamples.pythonSdk.sync_client,
+                install: codeExamples.pythonSdk.install,
+                code: codeExamples.pythonSdk.sync_client,
                 generated: true,
                 description: undefined,
             });
@@ -599,35 +635,35 @@ export class ApiDefinitionV1ToLatest {
         if (
             !flags.alwaysEnableJavaScriptFetch &&
             !userProvidedLanguages.has(jsLang) &&
-            example.codeExamples.typescriptSdk != null
+            codeExamples.typescriptSdk != null
         ) {
             push(jsLang, {
                 name: `${jsLangName} SDK`,
                 language: jsLang,
-                install: example.codeExamples.typescriptSdk.install,
-                code: example.codeExamples.typescriptSdk.client,
+                install: codeExamples.typescriptSdk.install,
+                code: codeExamples.typescriptSdk.client,
                 generated: true,
                 description: undefined,
             });
         }
 
-        if (!userProvidedLanguages.has(SupportedLanguage.Go) && example.codeExamples.goSdk != null) {
+        if (!userProvidedLanguages.has(SupportedLanguage.Go) && codeExamples.goSdk != null) {
             push(SupportedLanguage.Go, {
                 name: undefined,
                 language: SupportedLanguage.Go,
-                install: example.codeExamples.goSdk.install,
-                code: example.codeExamples.goSdk.client,
+                install: codeExamples.goSdk.install,
+                code: codeExamples.goSdk.client,
                 generated: true,
                 description: undefined,
             });
         }
 
-        if (!userProvidedLanguages.has(SupportedLanguage.Ruby) && example.codeExamples.rubySdk != null) {
+        if (!userProvidedLanguages.has(SupportedLanguage.Ruby) && codeExamples.rubySdk != null) {
             push(SupportedLanguage.Ruby, {
                 name: undefined,
                 language: SupportedLanguage.Ruby,
-                install: example.codeExamples.rubySdk.install,
-                code: example.codeExamples.rubySdk.client,
+                install: codeExamples.rubySdk.install,
+                code: codeExamples.rubySdk.client,
                 generated: true,
                 description: undefined,
             });

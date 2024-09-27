@@ -111,7 +111,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -132,59 +132,59 @@
               "type": "json",
               "value": [
                 {
+                  "type": "INFERENCE",
                   "job_id": "job_id",
                   "request": {
-                    "callback_url": null,
                     "files": [
                       {
-                        "filename": "filename",
                         "md5sum": "md5sum",
+                        "filename": "filename",
                         "content_type": "content_type"
                       }
                     ],
                     "models": {
-                      "burst": {},
                       "face": {
-                        "descriptions": null,
-                        "facs": null,
                         "fps_pred": 3,
+                        "prob_threshold": 0.99,
                         "identify_faces": false,
                         "min_face_size": 60,
-                        "prob_threshold": 0.99,
+                        "facs": null,
+                        "descriptions": null,
                         "save_faces": false
                       },
-                      "facemesh": {},
+                      "burst": {},
+                      "prosody": {
+                        "granularity": "utterance",
+                        "window": null,
+                        "identify_speakers": false
+                      },
                       "language": {
                         "granularity": "word",
-                        "identify_speakers": false,
                         "sentiment": null,
-                        "toxicity": null
+                        "toxicity": null,
+                        "identify_speakers": false
                       },
                       "ner": {
                         "identify_speakers": false
                       },
-                      "prosody": {
-                        "granularity": "utterance",
-                        "identify_speakers": false,
-                        "window": null
-                      }
+                      "facemesh": {}
                     },
-                    "notify": true,
-                    "registry_files": [],
-                    "text": [],
                     "urls": [
                       "https://hume-tutorials.s3.amazonaws.com/faces.zip"
-                    ]
+                    ],
+                    "registry_files": [],
+                    "text": [],
+                    "callback_url": null,
+                    "notify": true
                   },
                   "state": {
+                    "status": "COMPLETED",
                     "created_timestamp_ms": 1712587158717,
                     "ended_timestamp_ms": 1712587159274,
                     "num_errors": 0,
                     "num_predictions": 10,
-                    "started_timestamp_ms": 1712587158800,
-                    "status": "COMPLETED"
+                    "started_timestamp_ms": 1712587158800
                   },
-                  "type": "INFERENCE",
                   "user_id": "user_id"
                 }
               ]
@@ -235,7 +235,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:InferenceBaseRequest"
@@ -245,7 +245,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:JobId"
@@ -335,7 +335,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:UnionJob"
@@ -405,49 +405,49 @@
                 "type": "INFERENCE",
                 "job_id": "job_id",
                 "request": {
-                  "callback_url": null,
                   "files": [],
                   "models": {
-                    "burst": {},
                     "face": {
-                      "descriptions": null,
-                      "facs": null,
                       "fps_pred": 3,
+                      "prob_threshold": 0.99,
                       "identify_faces": false,
                       "min_face_size": 60,
-                      "prob_threshold": 0.99,
+                      "facs": null,
+                      "descriptions": null,
                       "save_faces": false
                     },
-                    "facemesh": {},
+                    "burst": {},
+                    "prosody": {
+                      "granularity": "utterance",
+                      "window": null,
+                      "identify_speakers": false
+                    },
                     "language": {
                       "granularity": "word",
-                      "identify_speakers": false,
                       "sentiment": null,
-                      "toxicity": null
+                      "toxicity": null,
+                      "identify_speakers": false
                     },
                     "ner": {
                       "identify_speakers": false
                     },
-                    "prosody": {
-                      "granularity": "utterance",
-                      "identify_speakers": false,
-                      "window": null
-                    }
+                    "facemesh": {}
                   },
-                  "notify": true,
-                  "registry_files": [],
-                  "text": [],
                   "urls": [
                     "https://hume-tutorials.s3.amazonaws.com/faces.zip"
-                  ]
+                  ],
+                  "registry_files": [],
+                  "text": [],
+                  "callback_url": null,
+                  "notify": true
                 },
                 "state": {
+                  "status": "COMPLETED",
                   "created_timestamp_ms": 1712590457884,
                   "ended_timestamp_ms": 1712590462252,
                   "num_errors": 0,
                   "num_predictions": 10,
-                  "started_timestamp_ms": 1712590457995,
-                  "status": "COMPLETED"
+                  "started_timestamp_ms": 1712590457995
                 },
                 "user_id": "user_id"
               }
@@ -517,7 +517,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -902,7 +902,6 @@
           "contentType": "multipart/form-data",
           "body": {
             "type": "formData",
-            "name": "BatchStartInferenceJobFromLocalFileRequest",
             "fields": [
               {
                 "type": "property",
@@ -926,7 +925,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:JobId"
@@ -6273,7 +6272,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:FilePage"
@@ -6381,7 +6380,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -6394,7 +6393,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -6429,12 +6428,14 @@
                 {
                   "file": {
                     "id": "id",
+                    "user_id": "user_id",
+                    "data_type": "data_type",
+                    "is_sanitized": true,
+                    "is_owned_by_reader": true,
                     "name": "name",
                     "uri": "uri",
                     "upload_uri": "upload_uri",
                     "thumbnail_uri": "thumbnail_uri",
-                    "user_id": "user_id",
-                    "data_type": "data_type",
                     "created_on": 1,
                     "modified_on": 1,
                     "metadata": {
@@ -6442,8 +6443,6 @@
                     },
                     "hume_storage": true,
                     "hume_storage_upload_timestamp": 1,
-                    "is_sanitized": true,
-                    "is_owned_by_reader": true,
                     "is_linked_to_publicly_shared": true,
                     "is_linked_to_hume_model": true
                   },
@@ -6503,7 +6502,6 @@
           "contentType": "multipart/form-data",
           "body": {
             "type": "formData",
-            "name": "FilesUploadFileRequest",
             "fields": [
               {
                 "type": "file",
@@ -6521,7 +6519,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:FileWithAttributes"
@@ -6553,12 +6551,14 @@
               "value": {
                 "file": {
                   "id": "id",
+                  "user_id": "user_id",
+                  "data_type": "data_type",
+                  "is_sanitized": true,
+                  "is_owned_by_reader": true,
                   "name": "name",
                   "uri": "uri",
                   "upload_uri": "upload_uri",
                   "thumbnail_uri": "thumbnail_uri",
-                  "user_id": "user_id",
-                  "data_type": "data_type",
                   "created_on": 1,
                   "modified_on": 1,
                   "metadata": {
@@ -6566,8 +6566,6 @@
                   },
                   "hume_storage": true,
                   "hume_storage_upload_timestamp": 1,
-                  "is_sanitized": true,
-                  "is_owned_by_reader": true,
                   "is_linked_to_publicly_shared": true,
                   "is_linked_to_hume_model": true
                 },
@@ -6641,7 +6639,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:FileWithAttributes"
@@ -6662,12 +6660,14 @@
               "value": {
                 "file": {
                   "id": "id",
+                  "user_id": "user_id",
+                  "data_type": "data_type",
+                  "is_sanitized": true,
+                  "is_owned_by_reader": true,
                   "name": "name",
                   "uri": "uri",
                   "upload_uri": "upload_uri",
                   "thumbnail_uri": "thumbnail_uri",
-                  "user_id": "user_id",
-                  "data_type": "data_type",
                   "created_on": 1,
                   "modified_on": 1,
                   "metadata": {
@@ -6675,8 +6675,6 @@
                   },
                   "hume_storage": true,
                   "hume_storage_upload_timestamp": 1,
-                  "is_sanitized": true,
-                  "is_owned_by_reader": true,
                   "is_linked_to_publicly_shared": true,
                   "is_linked_to_hume_model": true
                 },
@@ -6830,7 +6828,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:FileWithAttributes"
@@ -6853,12 +6851,14 @@
               "value": {
                 "file": {
                   "id": "id",
+                  "user_id": "user_id",
+                  "data_type": "data_type",
+                  "is_sanitized": true,
+                  "is_owned_by_reader": true,
                   "name": "name",
                   "uri": "uri",
                   "upload_uri": "upload_uri",
                   "thumbnail_uri": "thumbnail_uri",
-                  "user_id": "user_id",
-                  "data_type": "data_type",
                   "created_on": 1,
                   "modified_on": 1,
                   "metadata": {
@@ -6866,8 +6866,6 @@
                   },
                   "hume_storage": true,
                   "hume_storage_upload_timestamp": 1,
-                  "is_sanitized": true,
-                  "is_owned_by_reader": true,
                   "is_linked_to_publicly_shared": true,
                   "is_linked_to_hume_model": true
                 },
@@ -7051,7 +7049,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:DatasetPage"
@@ -7070,8 +7068,8 @@
               "value": {
                 "content": [
                   {
-                    "id": "id",
                     "name": "name",
+                    "id": "id",
                     "latest_version": {
                       "id": "id",
                       "user_id": "user_id",
@@ -7164,7 +7162,6 @@
           "contentType": "multipart/form-data",
           "body": {
             "type": "formData",
-            "name": "DatasetsCreateDatasetRequest",
             "fields": [
               {
                 "type": "property",
@@ -7193,7 +7190,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnDataset"
@@ -7227,8 +7224,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "id": "id",
                 "name": "name",
+                "id": "id",
                 "latest_version": {
                   "id": "id",
                   "user_id": "user_id",
@@ -7312,7 +7309,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnDataset"
@@ -7331,8 +7328,8 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "id": "id",
                 "name": "name",
+                "id": "id",
                 "latest_version": {
                   "id": "id",
                   "user_id": "user_id",
@@ -7417,7 +7414,6 @@
           "contentType": "multipart/form-data",
           "body": {
             "type": "formData",
-            "name": "DatasetsCreateDatasetVersionRequest",
             "fields": [
               {
                 "type": "file",
@@ -7435,7 +7431,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -7471,8 +7467,8 @@
               "type": "json",
               "value": [
                 {
-                  "id": "id",
                   "name": "name",
+                  "id": "id",
                   "latest_version": {
                     "id": "id",
                     "user_id": "user_id",
@@ -7666,7 +7662,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:DatasetVersionPage"
@@ -7833,7 +7829,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -7953,7 +7949,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:DatasetLabels"
@@ -8089,7 +8085,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -8247,7 +8243,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ModelPage"
@@ -8273,6 +8269,7 @@
                     "total_stars": 1,
                     "model_is_starred_by_user": true,
                     "archived": true,
+                    "is_publicly_shared": true,
                     "latest_version": {
                       "id": "id",
                       "model_id": "model_id",
@@ -8281,8 +8278,7 @@
                       "source_uri": "source_uri",
                       "dataset_version_id": "dataset_version_id",
                       "created_on": 1
-                    },
-                    "is_publicly_shared": true
+                    }
                   }
                 ],
                 "pageable": {
@@ -8375,7 +8371,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ExternalModel"
@@ -8401,6 +8397,7 @@
                 "total_stars": 1,
                 "model_is_starred_by_user": true,
                 "archived": true,
+                "is_publicly_shared": true,
                 "latest_version": {
                   "id": "id",
                   "model_id": "model_id",
@@ -8423,8 +8420,7 @@
                   "target_feature": "target_feature",
                   "task_type": "task_type",
                   "training_job_id": "training_job_id"
-                },
-                "is_publicly_shared": true
+                }
               }
             },
             "snippets": {
@@ -8501,7 +8497,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ExternalModel"
@@ -8529,6 +8525,7 @@
                 "total_stars": 1,
                 "model_is_starred_by_user": true,
                 "archived": true,
+                "is_publicly_shared": true,
                 "latest_version": {
                   "id": "id",
                   "model_id": "model_id",
@@ -8551,8 +8548,7 @@
                   "target_feature": "target_feature",
                   "task_type": "task_type",
                   "training_job_id": "training_job_id"
-                },
-                "is_publicly_shared": true
+                }
               }
             },
             "snippets": {
@@ -8655,7 +8651,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "list",
               "itemShape": {
@@ -8777,7 +8773,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ExternalModelVersion"
@@ -8885,7 +8881,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "primitive",
               "value": {
@@ -8897,7 +8893,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ExternalModelVersion"
@@ -8993,7 +8989,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:TrainingBaseRequest"
@@ -9003,7 +8999,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:JobId"
@@ -9080,7 +9076,7 @@
         "request": {
           "contentType": "application/json",
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:TlInferenceBaseRequest"
@@ -9090,7 +9086,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:JobId"
@@ -14930,7 +14926,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnPagedUserDefinedTools"
@@ -14958,26 +14954,26 @@
                     "id": "d20827af-5d8d-4f66-b6b9-ce2e3e1ea2b2",
                     "version": 0,
                     "version_type": "FIXED",
-                    "version_description": "Fetches user's current location.",
                     "name": "get_current_location",
                     "created_on": 1715267200693,
                     "modified_on": 1715267200693,
+                    "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }}, \"required\": [\"location\"] }",
+                    "version_description": "Fetches user's current location.",
                     "fallback_content": "Unable to fetch location.",
-                    "description": "Fetches user's current location.",
-                    "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }}, \"required\": [\"location\"] }"
+                    "description": "Fetches user's current location."
                   },
                   {
                     "tool_type": "FUNCTION",
                     "id": "4442f3ea-9038-40e3-a2ce-1522b7de770f",
                     "version": 0,
                     "version_type": "FIXED",
-                    "version_description": "Fetches current weather and uses celsius or fahrenheit based on location of user.",
                     "name": "get_current_weather",
                     "created_on": 1715266126705,
                     "modified_on": 1715266126705,
+                    "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }",
+                    "version_description": "Fetches current weather and uses celsius or fahrenheit based on location of user.",
                     "fallback_content": "Unable to fetch location.",
-                    "description": "Fetches current weather and uses celsius or fahrenheit based on location of user.",
-                    "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }"
+                    "description": "Fetches current weather and uses celsius or fahrenheit based on location of user."
                   }
                 ]
               }
@@ -15092,7 +15088,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "optional",
               "shape": {
@@ -15126,13 +15122,13 @@
                 "id": "aa9b71c4-723c-47ff-9f83-1a1829e74376",
                 "version": 0,
                 "version_type": "FIXED",
-                "version_description": "Fetches current weather and uses celsius or fahrenheit based on location of user.",
                 "name": "get_current_weather",
                 "created_on": 1715275452390,
                 "modified_on": 1715275452390,
+                "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }",
+                "version_description": "Fetches current weather and uses celsius or fahrenheit based on location of user.",
                 "fallback_content": "Unable to fetch current weather.",
-                "description": "This tool is for getting the current weather.",
-                "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }"
+                "description": "This tool is for getting the current weather."
               }
             },
             "snippets": {
@@ -15234,7 +15230,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnPagedUserDefinedTools"
@@ -15261,13 +15257,13 @@
                     "id": "00183a3f-79ba-413d-9f3b-609864268bea",
                     "version": 1,
                     "version_type": "FIXED",
-                    "version_description": "Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.",
                     "name": "get_current_weather",
                     "created_on": 1715277014228,
                     "modified_on": 1715277602313,
+                    "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\", \"kelvin\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }",
+                    "version_description": "Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.",
                     "fallback_content": "Unable to fetch current weather.",
-                    "description": "This tool is for getting the current weather.",
-                    "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\", \"kelvin\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }"
+                    "description": "This tool is for getting the current weather."
                   }
                 ]
               }
@@ -15388,7 +15384,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "optional",
               "shape": {
@@ -15412,8 +15408,8 @@
               "value": {
                 "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\", \"kelvin\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }",
                 "version_description": "Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.",
-                "fallback_content": "Unable to fetch current weather.",
-                "description": "This tool is for getting the current weather."
+                "description": "This tool is for getting the current weather.",
+                "fallback_content": "Unable to fetch current weather."
               }
             },
             "responseBody": {
@@ -15423,20 +15419,20 @@
                 "id": "00183a3f-79ba-413d-9f3b-609864268bea",
                 "version": 1,
                 "version_type": "FIXED",
-                "version_description": "Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.",
                 "name": "get_current_weather",
                 "created_on": 1715277014228,
                 "modified_on": 1715277602313,
+                "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\", \"kelvin\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }",
+                "version_description": "Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.",
                 "fallback_content": "Unable to fetch current weather.",
-                "description": "This tool is for getting the current weather.",
-                "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\", \"kelvin\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }"
+                "description": "This tool is for getting the current weather."
               }
             },
             "snippets": {
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -X POST https://api.hume.ai/v0/evi/tools/00183a3f-79ba-413d-9f3b-609864268bea \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"parameters\": \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\", \\\"kelvin\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the users location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\",\n  \"version_description\": \"Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.\",\n  \"fallback_content\": \"Unable to fetch current weather.\",\n  \"description\": \"This tool is for getting the current weather.\"\n}'",
+                  "code": "curl -X POST https://api.hume.ai/v0/evi/tools/00183a3f-79ba-413d-9f3b-609864268bea \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"parameters\": \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\", \\\"kelvin\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the users location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\",\n  \"version_description\": \"Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.\",\n  \"description\": \"This tool is for getting the current weather.\",\n  \"fallback_content\": \"Unable to fetch current weather.\"\n}'",
                   "generated": true
                 }
               ],
@@ -15661,7 +15657,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "optional",
               "shape": {
@@ -15688,13 +15684,13 @@
                 "id": "00183a3f-79ba-413d-9f3b-609864268bea",
                 "version": 1,
                 "version_type": "FIXED",
-                "version_description": "Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.",
                 "name": "string",
                 "created_on": 1715277014228,
                 "modified_on": 1715277602313,
+                "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\", \"kelvin\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }",
+                "version_description": "Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.",
                 "fallback_content": "Unable to fetch current weather.",
-                "description": "This tool is for getting the current weather.",
-                "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\", \"kelvin\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }"
+                "description": "This tool is for getting the current weather."
               }
             },
             "snippets": {
@@ -15878,7 +15874,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "optional",
               "shape": {
@@ -15911,13 +15907,13 @@
                 "id": "00183a3f-79ba-413d-9f3b-609864268bea",
                 "version": 1,
                 "version_type": "FIXED",
-                "version_description": "Fetches current temperature, precipitation, wind speed, AQI, and other weather conditions. Uses Celsius, Fahrenheit, or kelvin depending on user's region.",
                 "name": "string",
                 "created_on": 1715277014228,
                 "modified_on": 1715277602313,
+                "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\", \"kelvin\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }",
+                "version_description": "Fetches current temperature, precipitation, wind speed, AQI, and other weather conditions. Uses Celsius, Fahrenheit, or kelvin depending on user's region.",
                 "fallback_content": "Unable to fetch current weather.",
-                "description": "This tool is for getting the current weather.",
-                "parameters": "{ \"type\": \"object\", \"properties\": { \"location\": { \"type\": \"string\", \"description\": \"The city and state, e.g. San Francisco, CA\" }, \"format\": { \"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\", \"kelvin\"], \"description\": \"The temperature unit to use. Infer this from the users location.\" } }, \"required\": [\"location\", \"format\"] }"
+                "description": "This tool is for getting the current weather."
               }
             },
             "snippets": {
@@ -16003,7 +15999,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnPagedPrompts"
@@ -16027,11 +16023,11 @@
                     "id": "id",
                     "version": 1,
                     "version_type": "version_type",
-                    "version_description": "version_description",
                     "name": "name",
                     "created_on": 1,
                     "modified_on": 1,
-                    "text": "text"
+                    "text": "text",
+                    "version_description": "version_description"
                   }
                 ]
               }
@@ -16120,7 +16116,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "optional",
               "shape": {
@@ -16150,11 +16146,11 @@
                 "id": "id",
                 "version": 1,
                 "version_type": "version_type",
-                "version_description": "version_description",
                 "name": "name",
                 "created_on": 1,
                 "modified_on": 1,
-                "text": "text"
+                "text": "text",
+                "version_description": "version_description"
               }
             },
             "snippets": {
@@ -16256,7 +16252,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnPagedPrompts"
@@ -16282,11 +16278,11 @@
                     "id": "id",
                     "version": 1,
                     "version_type": "version_type",
-                    "version_description": "version_description",
                     "name": "name",
                     "created_on": 1,
                     "modified_on": 1,
-                    "text": "text"
+                    "text": "text",
+                    "version_description": "version_description"
                   }
                 ]
               }
@@ -16381,7 +16377,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "optional",
               "shape": {
@@ -16412,11 +16408,11 @@
                 "id": "id",
                 "version": 1,
                 "version_type": "version_type",
-                "version_description": "version_description",
                 "name": "name",
                 "created_on": 1,
                 "modified_on": 1,
-                "text": "text"
+                "text": "text",
+                "version_description": "version_description"
               }
             },
             "snippets": {
@@ -16648,7 +16644,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "optional",
               "shape": {
@@ -16674,11 +16670,11 @@
                 "id": "id",
                 "version": 1,
                 "version_type": "version_type",
-                "version_description": "version_description",
                 "name": "name",
                 "created_on": 1,
                 "modified_on": 1,
-                "text": "text"
+                "text": "text",
+                "version_description": "version_description"
               }
             },
             "snippets": {
@@ -16862,7 +16858,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "optional",
               "shape": {
@@ -16892,11 +16888,11 @@
                 "id": "id",
                 "version": 1,
                 "version_type": "version_type",
-                "version_description": "version_description",
                 "name": "name",
                 "created_on": 1,
                 "modified_on": 1,
-                "text": "text"
+                "text": "text",
+                "version_description": "version_description"
               }
             },
             "snippets": {
@@ -16982,7 +16978,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnPagedConfigs"
@@ -17164,7 +17160,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnConfig"
@@ -17197,11 +17193,11 @@
                   "id": "id",
                   "version": 1,
                   "version_type": "version_type",
-                  "version_description": "version_description",
                   "name": "name",
                   "created_on": 1,
                   "modified_on": 1,
-                  "text": "text"
+                  "text": "text",
+                  "version_description": "version_description"
                 },
                 "voice": {
                   "provider": "provider",
@@ -17218,13 +17214,13 @@
                     "id": "id",
                     "version": 1,
                     "version_type": "version_type",
-                    "version_description": "version_description",
                     "name": "name",
                     "created_on": 1,
                     "modified_on": 1,
+                    "parameters": "parameters",
+                    "version_description": "version_description",
                     "fallback_content": "fallback_content",
-                    "description": "description",
-                    "parameters": "parameters"
+                    "description": "description"
                   }
                 ],
                 "builtin_tools": [
@@ -17335,7 +17331,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnPagedConfigs"
@@ -17525,7 +17521,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnConfig"
@@ -17558,11 +17554,11 @@
                   "id": "id",
                   "version": 1,
                   "version_type": "version_type",
-                  "version_description": "version_description",
                   "name": "name",
                   "created_on": 1,
                   "modified_on": 1,
-                  "text": "text"
+                  "text": "text",
+                  "version_description": "version_description"
                 },
                 "voice": {
                   "provider": "provider",
@@ -17579,13 +17575,13 @@
                     "id": "id",
                     "version": 1,
                     "version_type": "version_type",
-                    "version_description": "version_description",
                     "name": "name",
                     "created_on": 1,
                     "modified_on": 1,
+                    "parameters": "parameters",
+                    "version_description": "version_description",
                     "fallback_content": "fallback_content",
-                    "description": "description",
-                    "parameters": "parameters"
+                    "description": "description"
                   }
                 ],
                 "builtin_tools": [
@@ -17826,7 +17822,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnConfig"
@@ -17856,11 +17852,11 @@
                   "id": "id",
                   "version": 1,
                   "version_type": "version_type",
-                  "version_description": "version_description",
                   "name": "name",
                   "created_on": 1,
                   "modified_on": 1,
-                  "text": "text"
+                  "text": "text",
+                  "version_description": "version_description"
                 },
                 "voice": {
                   "provider": "provider",
@@ -17877,13 +17873,13 @@
                     "id": "id",
                     "version": 1,
                     "version_type": "version_type",
-                    "version_description": "version_description",
                     "name": "name",
                     "created_on": 1,
                     "modified_on": 1,
+                    "parameters": "parameters",
+                    "version_description": "version_description",
                     "fallback_content": "fallback_content",
-                    "description": "description",
-                    "parameters": "parameters"
+                    "description": "description"
                   }
                 ],
                 "builtin_tools": [
@@ -18076,7 +18072,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnConfig"
@@ -18110,11 +18106,11 @@
                   "id": "id",
                   "version": 1,
                   "version_type": "version_type",
-                  "version_description": "version_description",
                   "name": "name",
                   "created_on": 1,
                   "modified_on": 1,
-                  "text": "text"
+                  "text": "text",
+                  "version_description": "version_description"
                 },
                 "voice": {
                   "provider": "provider",
@@ -18131,13 +18127,13 @@
                     "id": "id",
                     "version": 1,
                     "version_type": "version_type",
-                    "version_description": "version_description",
                     "name": "name",
                     "created_on": 1,
                     "modified_on": 1,
+                    "parameters": "parameters",
+                    "version_description": "version_description",
                     "fallback_content": "fallback_content",
-                    "description": "description",
-                    "parameters": "parameters"
+                    "description": "description"
                   }
                 ],
                 "builtin_tools": [
@@ -18219,7 +18215,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnPagedChats"
@@ -18242,9 +18238,9 @@
                   {
                     "id": "id",
                     "chat_group_id": "chat_group_id",
-                    "tag": "tag",
                     "status": "status",
                     "start_timestamp": 1,
+                    "tag": "tag",
                     "end_timestamp": 1,
                     "event_count": 1,
                     "metadata": "metadata",
@@ -18341,7 +18337,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnChatPagedEvents"
@@ -18362,10 +18358,8 @@
               "value": {
                 "id": "id",
                 "chat_group_id": "chat_group_id",
-                "tag": "tag",
                 "status": "status",
                 "start_timestamp": 1,
-                "end_timestamp": 1,
                 "events_page": [
                   {
                     "id": "id",
@@ -18378,9 +18372,11 @@
                     "metadata": "metadata"
                   }
                 ],
-                "metadata": "metadata",
                 "page_number": 1,
                 "page_size": 1,
+                "tag": "tag",
+                "end_timestamp": 1,
+                "metadata": "metadata",
                 "config": {
                   "id": "id",
                   "version": 1
@@ -18457,7 +18453,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnPagedChatGroups"
@@ -18481,8 +18477,8 @@
                     "id": "id",
                     "first_start_timestamp": 1,
                     "most_recent_start_timestamp": 1,
-                    "most_recent_chat_id": "most_recent_chat_id",
                     "num_chats": 1,
+                    "most_recent_chat_id": "most_recent_chat_id",
                     "active": true
                   }
                 ]
@@ -18591,7 +18587,7 @@
         "response": {
           "statusCode": 200,
           "body": {
-            "type": "reference",
+            "type": "alias",
             "value": {
               "type": "id",
               "id": "type_:ReturnChatGroupPagedEvents"

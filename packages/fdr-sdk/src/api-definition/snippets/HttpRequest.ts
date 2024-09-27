@@ -2,7 +2,6 @@ import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion
 import { compact } from "lodash-es";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
-import { APIV1Read } from "../../client";
 import type * as Latest from "../latest";
 
 interface HttpRequestBodyJson {
@@ -53,7 +52,7 @@ export interface HttpRequest {
 // TODO: validate that global headers are also included in the example by CLI or FDR
 export function toHttpRequest(
     endpoint: Latest.EndpointDefinition,
-    example: APIV1Read.ExampleEndpointCall,
+    example: Latest.ExampleEndpointCall,
     auth: Latest.AuthScheme | undefined,
 ): HttpRequest {
     const environmentUrl = (
@@ -88,7 +87,7 @@ export function toHttpRequest(
         });
     }
 
-    const body: APIV1Read.ExampleEndpointRequest | undefined = example.requestBodyV3;
+    const body: Latest.ExampleEndpointRequest | undefined = example.requestBody;
 
     if (endpoint.request?.contentType != null) {
         headers["Content-Type"] = endpoint.request?.contentType;
@@ -105,7 +104,7 @@ export function toHttpRequest(
     return {
         method: endpoint.method,
         url,
-        searchParams: example.queryParameters,
+        searchParams: example.queryParameters ?? {},
         headers: JSON.parse(JSON.stringify(headers)),
         basicAuth,
         body:
