@@ -1,3 +1,4 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { NavigationContext } from "../../services/algolia/AlgoliaSearchRecordGenerator";
 
 describe("removeVersionFromFullSlug", () => {
@@ -6,10 +7,10 @@ describe("removeVersionFromFullSlug", () => {
         const result = new NavigationContext(
             {
                 type: "versioned",
-                id: "some navigation context id",
+                id: FdrAPI.IndexSegmentId("some navigation context id"),
                 searchApiKey: "search api key",
                 version: {
-                    id: "some id",
+                    id: FdrAPI.VersionId("some id"),
                     urlSlug: "v2",
                 },
             },
