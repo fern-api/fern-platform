@@ -1,7 +1,11 @@
-import type * as FernNavigation from "../navigation";
 import { LOOP_TOLERANCE } from "./const";
 import type * as Latest from "./latest";
 import { ApiTypeIdVisitor } from "./typeid-visitor";
+
+type NodeType =
+    | { type: "endpoint"; endpointId: Latest.EndpointId }
+    | { type: "webSocket"; webSocketId: Latest.WebSocketId }
+    | { type: "webhook"; webhookId: Latest.WebhookId };
 
 class ApiDefinitionPruner {
     static instances = new WeakMap<Latest.ApiDefinition, ApiDefinitionPruner>();
@@ -21,42 +25,55 @@ class ApiDefinitionPruner {
      * @param node of the navigation tree to prune the API definition to
      * @returns a new API definition that is the result of pruning the input API definition to the desired node
      */
-    public prune(node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode): Latest.ApiDefinition {
+    public prune(node: NodeType): Latest.ApiDefinition {
         const toRet: Latest.ApiDefinition = {
             ...this.api,
             endpoints: {},
             websockets: {},
             webhooks: {},
             types: {},
+            subpackages: {},
+            auths: {},
         };
+
+        const namespaces = new Set<Latest.SubpackageId>();
+        const authSchemes = new Set<Latest.AuthSchemeId>();
 
         if (node.type === "endpoint") {
             const found = this.api.endpoints[node.endpointId];
             if (found) {
                 toRet.endpoints[node.endpointId] = found;
-            }
-        } else if (node.type === "endpointPair") {
-            const stream = this.api.endpoints[node.stream.endpointId];
-            if (stream) {
-                toRet.endpoints[node.stream.endpointId] = stream;
-            }
-            const nonStream = this.api.endpoints[node.nonStream.endpointId];
-            if (nonStream) {
-                toRet.endpoints[node.nonStream.endpointId] = nonStream;
+                found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
+                found.auth?.forEach((authSchemeId) => authSchemes.add(authSchemeId));
             }
         } else if (node.type === "webSocket") {
             const found = this.api.websockets[node.webSocketId];
             if (found) {
                 toRet.websockets[node.webSocketId] = found;
+                found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
+                found.auth?.forEach((authSchemeId) => authSchemes.add(authSchemeId));
             }
         } else if (node.type === "webhook") {
             const found = this.api.webhooks[node.webhookId];
             if (found) {
                 toRet.webhooks[node.webhookId] = found;
+                found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
             }
         }
 
         toRet.types = this.pruneTypes(toRet);
+        namespaces.forEach((subpackageId) => {
+            const subpackage = this.api.subpackages[subpackageId];
+            if (subpackage) {
+                toRet.subpackages[subpackageId] = subpackage;
+            }
+        });
+        authSchemes.forEach((authSchemeId) => {
+            const authScheme = this.api.auths[authSchemeId];
+            if (authScheme) {
+                toRet.auths[authSchemeId] = authScheme;
+            }
+        });
 
         return toRet;
     }
@@ -121,9 +138,6 @@ class ApiDefinitionPruner {
     }
 }
 
-export function prune(
-    api: Latest.ApiDefinition,
-    node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
-): Latest.ApiDefinition {
+export function prune(api: Latest.ApiDefinition, node: NodeType): Latest.ApiDefinition {
     return ApiDefinitionPruner.from(api).prune(node);
 }

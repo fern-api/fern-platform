@@ -148,6 +148,8 @@ function selectDefaultValue(
         return defaultValue.value.value;
     } else if (shape?.type === "primitive") {
         return primitiveToDefault(shape.value);
+    } else if (shape?.type === "enum") {
+        return shape.default;
     } else {
         return undefined;
     }
@@ -170,7 +172,13 @@ export function unwrapObjectType(
     const descriptions: FernDocs.MarkdownText[] = [];
     const extendedProperties = object.extends.flatMap((typeId): Latest.ObjectProperty[] => {
         const typeDef = types[typeId];
+        if (typeDef?.description) {
+            descriptions.push(typeDef.description);
+        }
+
         const unwrapped = unwrapReference(typeDef?.shape, types);
+        unwrapped?.descriptions.forEach((description) => descriptions.push(description));
+
         // TODO: should we be able to extend discriminated and undiscriminated unions?
         if (unwrapped?.shape.type !== "object") {
             // eslint-disable-next-line no-console
@@ -178,6 +186,17 @@ export function unwrapObjectType(
             return [];
         }
         const extended = unwrapObjectType(unwrapped.shape, types);
+
+        // merge the availability of the extended object with the availability of the properties
+        extended.properties = extended.properties.map((property) => {
+            return {
+                ...property,
+                availability: coalesceAvailability(
+                    compact([typeDef?.availability, unwrapped.availability, property.availability]),
+                ),
+            };
+        });
+
         descriptions.push(...extended.descriptions);
 
         if (!unwrapped.isOptional) {
@@ -194,14 +213,9 @@ export function unwrapObjectType(
                     ? { ...property.valueShape, default: defaultProperty ?? property.valueShape.default }
                     : { type: "optional", shape: property.valueShape, default: defaultProperty };
 
-            // if the availability of the extended object is different from the property, we need to merge them
-            // and take the least stable availability
-            const availability = coalesceAvailability(compact([property.availability, unwrapped.availability]));
-
             return {
                 ...property,
                 valueShape,
-                availability,
             };
         });
     });

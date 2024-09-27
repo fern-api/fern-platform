@@ -1,3 +1,4 @@
+export * from "./async-visitor";
 export * from "./join";
 export * from "./latest";
 export * from "./migrators/v1ToV2";
