@@ -3,9 +3,8 @@ import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
 import type { BaseHit, Hit } from "instantsearch.js";
-import { Snippet } from "react-instantsearch";
 import { BreadcrumbsInfo } from "../../../../../fdr-sdk/src/client/FdrAPI";
-import { HttpMethodTag } from "../../components/HttpMethodTag";
+import { AlgoliaSnippet } from "../algolia/AlgoliaSnippet";
 import { SearchHitBreadCrumbsV3 } from "./SearchHitBreadCrumbsV3";
 
 export declare namespace FieldRecordV1 {
@@ -42,14 +41,12 @@ export const FieldRecordV1: React.FC<FieldRecordV1.Props> = ({ hit, isHovered })
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <div
-                    className={cn("line-clamp-1 flex gap-1 items-center text-sm text-start", {
+                    className={cn("line-clamp-1 flex gap-1 items-center text-base text-start", {
                         "t-muted": !isHovered,
                         "t-accent-aaa": isHovered,
                     })}
                 >
-                    <div>
-                        <span>{breadcrumbParts.relativelyQualifiedField}</span>
-                    </div>
+                    {breadcrumbParts.relativelyQualifiedField}
                 </div>
                 <div
                     className={cn("text-sm tracking-wide", {
@@ -62,22 +59,17 @@ export const FieldRecordV1: React.FC<FieldRecordV1.Props> = ({ hit, isHovered })
             </div>
             <div className="flex items-center justify-between">
                 <div
-                    className={cn("line-clamp-1 flex gap-1 items-center text-sm text-start", {
+                    className={cn("line-clamp-1 flex gap-1 items-center text-xs text-start", {
                         "t-muted": !isHovered,
                         "t-accent-aaa": isHovered,
                     })}
                 >
-                    <HttpMethodTag
-                        method={
-                            hit.type === "websocket-field-v1"
-                                ? "WSS"
-                                : hit.type === "endpoint-field-v1" && hit.isResponseStream
-                                  ? "STREAM"
-                                  : hit.method
-                        }
-                        active={isHovered}
-                    />
-                    <div className="space-x-0.5 font-mono">
+                    {hit.type === "websocket-field-v1"
+                        ? "WSS"
+                        : hit.type === "endpoint-field-v1" && hit.isResponseStream
+                          ? "STREAM"
+                          : hit.method}
+                    <div className="space-x-0.5 font-mono text-ellipsis">
                         {hit.endpointPath
                             .filter((p) => p.type !== "literal" || p.value !== "")
                             .map((p, idx) =>
@@ -86,7 +78,7 @@ export const FieldRecordV1: React.FC<FieldRecordV1.Props> = ({ hit, isHovered })
                                     pathParameter: (part) => (
                                         <span
                                             className={cn(
-                                                "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-sm",
+                                                "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-xs",
                                                 {
                                                     "bg-tag-default": !isHovered,
                                                     "bg-white/20 dark:bg-black/20": isHovered,
@@ -115,15 +107,7 @@ export const FieldRecordV1: React.FC<FieldRecordV1.Props> = ({ hit, isHovered })
                             "t-muted": !isHovered,
                         })}
                     >
-                        <Snippet
-                            attribute="description"
-                            hit={hit}
-                            className={cn("line-clamp-1 text-start text-xs", {
-                                "t-accent-aaa": isHovered,
-                                "t-muted": !isHovered,
-                            })}
-                            classNames={{ highlighted: "fern-highlight" }}
-                        />
+                        <AlgoliaSnippet hit={hit} />
                     </span>
                 </div>
             )}

@@ -19,22 +19,82 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 const COHERE_AI_HIT_ID = "cohere-ai-hit";
+const SEARCH_HITS_PER_SECTION = 3;
 
 const expandHits = (expanded: boolean, hits: SearchRecord[]) => {
-    return expanded ? hits : hits.slice(0, 3);
+    return expanded ? hits : hits.slice(0, SEARCH_HITS_PER_SECTION);
 };
 
 const ExpandButton: React.FC<{ setExpanded: (expanded: boolean) => void }> = ({ setExpanded }) => (
-    <div className="flex justify-center pt-2">
+    <div className="justify-end">
         <FernButton
             className="text-left"
             variant="minimal"
             onClick={() => setExpanded(true)}
             icon={<Xmark className="transition rotate-45" />}
+            size="small"
         >
             Show More
         </FernButton>
     </div>
+);
+
+const SearchSection: React.FC<{
+    title: string;
+    hits: SearchRecord[];
+    expanded: boolean;
+    setExpanded: (expanded: boolean) => void;
+    refs: React.MutableRefObject<Map<string, HTMLAnchorElement>>;
+    hoveredSearchHitId: string | null;
+    setHoveredSearchHitId: (id: string) => void;
+    lastSection?: boolean;
+}> = ({ title, hits, expanded, setExpanded, refs, hoveredSearchHitId, setHoveredSearchHitId, lastSection }) => (
+    <>
+        <div className="flex justify-between items-center">
+            <div className="text-normal font-semibold pl-0.5">{title}</div>
+            {hits.length > SEARCH_HITS_PER_SECTION && !expanded && <ExpandButton setExpanded={setExpanded} />}
+        </div>
+        <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+        {expandHits(expanded, hits).map((hit) => (
+            <SearchHit
+                setRef={(elem) => {
+                    if (elem != null) {
+                        refs.current.set(hit.objectID, elem);
+                    }
+                }}
+                key={hit.objectID}
+                hit={hit}
+                isHovered={hoveredSearchHitId === hit.objectID}
+                onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+            />
+        ))}
+        {!lastSection && <Separator orientation="horizontal" decorative className="my-2 bg-accent" />}
+    </>
+);
+
+const MobileSearchSection: React.FC<{
+    title: string;
+    hits: SearchRecord[];
+    expanded: boolean;
+    setExpanded: (expanded: boolean) => void;
+    refs: React.MutableRefObject<Map<string, HTMLAnchorElement>>;
+}> = ({ title, hits, expanded, setExpanded, refs }) => (
+    <>
+        <h3 className="text-lg font-semibold mt-4 pl-0.5">{title}</h3>
+        <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+        {expandHits(expanded, hits).map((hit) => (
+            <SearchHit
+                setRef={(elem) => {
+                    if (elem != null) {
+                        refs.current.set(hit.objectID, elem);
+                    }
+                }}
+                key={hit.objectID}
+                hit={hit}
+            />
+        ))}
+        {!expanded && <ExpandButton setExpanded={setExpanded} />}
+    </>
 );
 
 export const SearchHits: React.FC = () => {
@@ -202,65 +262,39 @@ export const SearchHits: React.FC = () => {
                     onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
                 />
             )}
-
             {endpointHits.length > 0 && (
-                <>
-                    <p className="text-normal font-semibold mb-2 pl-0.5">Endpoints</p>
-
-                    {expandHits(expandEndpoints, endpointHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                            isHovered={hoveredSearchHitId === hit.objectID}
-                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                        />
-                    ))}
-                    {!expandEndpoints && <ExpandButton setExpanded={setExpandEndpoints} />}
-                </>
+                <SearchSection
+                    title="Endpoints"
+                    hits={endpointHits}
+                    expanded={expandEndpoints}
+                    setExpanded={setExpandEndpoints}
+                    refs={refs}
+                    hoveredSearchHitId={hoveredSearchHitId}
+                    setHoveredSearchHitId={setHoveredSearchHitId}
+                />
             )}
             {pageHits.length > 0 && (
-                <>
-                    <p className="text-normal font-semibold mb-2 pl-0.5">Pages</p>
-                    {expandHits(expandPages, pageHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                            isHovered={hoveredSearchHitId === hit.objectID}
-                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                        />
-                    ))}
-                    {!expandPages && <ExpandButton setExpanded={setExpandPages} />}
-                </>
+                <SearchSection
+                    title="Pages"
+                    hits={pageHits}
+                    expanded={expandPages}
+                    setExpanded={setExpandPages}
+                    refs={refs}
+                    hoveredSearchHitId={hoveredSearchHitId}
+                    setHoveredSearchHitId={setHoveredSearchHitId}
+                />
             )}
-
             {fieldHits.length > 0 && (
-                <>
-                    <p className="text-normal font-semibold mb-2 pl-0.5">Fields</p>
-                    {expandHits(expandFields, fieldHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                            isHovered={hoveredSearchHitId === hit.objectID}
-                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                        />
-                    ))}
-                    {!expandFields && <ExpandButton setExpanded={setExpandFields} />}
-                </>
+                <SearchSection
+                    title="Fields"
+                    hits={fieldHits}
+                    expanded={expandFields}
+                    setExpanded={setExpandFields}
+                    refs={refs}
+                    hoveredSearchHitId={hoveredSearchHitId}
+                    setHoveredSearchHitId={setHoveredSearchHitId}
+                    lastSection
+                />
             )}
         </FernScrollArea>
     );
@@ -301,60 +335,31 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                 />
             )}
             {endpointHits.length > 0 && (
-                <>
-                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Endpoints</h3>
-                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {expandHits(expandEndpoints, endpointHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                        />
-                    ))}
-                    {!expandEndpoints && <ExpandButton setExpanded={setExpandEndpoints} />}
-                </>
+                <MobileSearchSection
+                    title="Endpoints"
+                    hits={endpointHits}
+                    expanded={expandEndpoints}
+                    setExpanded={setExpandEndpoints}
+                    refs={refs}
+                />
             )}
-
             {pageHits.length > 0 && (
-                <>
-                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Fields</h3>
-                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {expandHits(expandPages, pageHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                        />
-                    ))}
-                    {!expandPages && <ExpandButton setExpanded={setExpandPages} />}
-                </>
+                <MobileSearchSection
+                    title="Fields"
+                    hits={pageHits}
+                    expanded={expandPages}
+                    setExpanded={setExpandPages}
+                    refs={refs}
+                />
             )}
-
             {fieldHits.length > 0 && (
-                <>
-                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Pages</h3>
-                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {expandHits(expandFields, fieldHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                        />
-                    ))}
-                    {!expandFields && <ExpandButton setExpanded={setExpandFields} />}
-                </>
+                <MobileSearchSection
+                    title="Pages"
+                    hits={fieldHits}
+                    expanded={expandFields}
+                    setExpanded={setExpandFields}
+                    refs={refs}
+                />
             )}
         </FernScrollArea>
     );
