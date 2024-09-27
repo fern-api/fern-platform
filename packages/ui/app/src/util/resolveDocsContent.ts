@@ -212,12 +212,10 @@ export async function resolveDocsContent({
             };
         }
         const holder = FernNavigation.ApiDefinitionHolder.create(api);
-        const typeResolver = new ApiTypeResolver(api.types, mdxOptions, serializeMdx);
         const apiDefinition = await ApiDefinitionResolver.resolve(
             found.collector,
             apiReference,
             holder,
-            typeResolver,
             pages,
             mdxOptions,
             featureFlags,
@@ -299,14 +297,12 @@ async function resolveMarkdownPage(
                     ];
                 }
                 const holder = FernNavigation.ApiDefinitionHolder.create(definition);
-                const typeResolver = new ApiTypeResolver(definition.types, mdxOptions, serializeMdx);
                 return [
                     apiNode.title,
                     await ApiDefinitionResolver.resolve(
                         found.collector,
                         apiNode,
                         holder,
-                        typeResolver,
                         pages,
                         mdxOptions,
                         featureFlags,

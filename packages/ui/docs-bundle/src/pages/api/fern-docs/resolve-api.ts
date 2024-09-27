@@ -7,7 +7,6 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
 import {
     ApiDefinitionResolver,
-    ApiTypeResolver,
     provideRegistryService,
     serializeMdx,
     setMdxBundler,
@@ -88,18 +87,10 @@ const resolveApiHandler: NextApiHandler = async (
                 return;
             }
             const holder = ApiDefinitionHolder.create(api);
-            const typeResolver = new ApiTypeResolver(
-                api.types,
-                {
-                    files: docs.definition.jsFiles,
-                },
-                serializeMdxWithCaching,
-            );
             const resolved = ApiDefinitionResolver.resolve(
                 collector,
                 apiReference,
                 holder,
-                typeResolver,
                 docs.definition.pages,
                 { files: docs.definition.jsFiles },
                 featureFlags,

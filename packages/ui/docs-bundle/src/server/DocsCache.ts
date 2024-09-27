@@ -1,11 +1,17 @@
 import type { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { ApiDefinitionResolverCache, ResolvedApiPageMetadata, ResolvedEndpointDefinition } from "@fern-ui/ui";
+import {
+    ApiDefinitionResolverCache,
+    ResolvedApiPageMetadata,
+    ResolvedEndpointDefinition,
+    ResolvedTypeDefinition,
+} from "@fern-ui/ui";
 import { kv } from "@vercel/kv";
+import { ApiTypeResolverCache } from "../../../app/src/resolver/ApiTypeResolver";
 
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
 
-export class DocsKVCache implements ApiDefinitionResolverCache {
+export class DocsKVCache implements ApiDefinitionResolverCache, ApiTypeResolverCache {
     private static instance: Map<string, DocsKVCache>;
 
     private constructor(private domain: string) {}
@@ -94,5 +100,36 @@ export class DocsKVCache implements ApiDefinitionResolverCache {
         pageId: APIV1Read.PageId;
     }): string {
         return `${PREFIX}:${this.domain}:${apiDefinitionId}:api-page:${pageId}`;
+    }
+
+    async putResolvedTypeDeclaration({
+        apiDefinitionId,
+        typeId,
+        type,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        typeId: APIV1Read.TypeId;
+        type: ResolvedTypeDefinition;
+    }): Promise<void> {
+        await kv.set(this.getResolvedTypeId({ apiDefinitionId, typeId }), type);
+    }
+    async getResolvedTypeDeclaration({
+        apiDefinitionId,
+        typeId,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        typeId: APIV1Read.TypeId;
+    }): Promise<ResolvedTypeDefinition | null | undefined> {
+        return await kv.get(this.getResolvedTypeId({ apiDefinitionId, typeId }));
+    }
+
+    private getResolvedTypeId({
+        apiDefinitionId,
+        typeId,
+    }: {
+        apiDefinitionId: APIV1Read.ApiDefinitionId;
+        typeId: APIV1Read.TypeId;
+    }): string {
+        return `${PREFIX}:${this.domain}:${apiDefinitionId}:type:${typeId}`;
     }
 }
