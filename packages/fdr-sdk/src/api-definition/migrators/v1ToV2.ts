@@ -176,20 +176,21 @@ export class ApiDefinitionV1ToLatest {
         v1: APIV1Read.WebSocketChannel,
         namespace: V2.SubpackageId[],
     ): V2.WebSocketChannel => {
+        const messages = this.migrateChannelMessages(v1.messages);
         return {
             id,
             namespace,
             description: v1.description,
             availability: v1.availability,
             path: v1.path.parts.filter((part) => part.value !== ""),
-            messages: this.migrateChannelMessages(v1.messages),
+            messages,
             auth: v1.auth ? [AUTH_SCHEME_ID] : undefined,
             defaultEnvironment: v1.defaultEnvironment,
             environments: v1.environments,
             pathParameters: this.migrateParameters(v1.path.pathParameters),
             queryParameters: this.migrateParameters(v1.queryParameters),
             requestHeaders: this.migrateParameters(v1.headers),
-            examples: this.migrateChannelExamples(v1.examples),
+            examples: this.migrateChannelExamples(v1.examples, messages),
         };
     };
 
@@ -198,6 +199,7 @@ export class ApiDefinitionV1ToLatest {
         v1: APIV1Read.WebhookDefinition,
         namespace: V2.SubpackageId[],
     ): V2.WebhookDefinition => {
+        const payload = this.migrateWebhookPayload(v1.payload);
         return {
             id,
             namespace,
@@ -206,8 +208,11 @@ export class ApiDefinitionV1ToLatest {
             method: v1.method,
             path: v1.path,
             headers: this.migrateParameters(v1.headers),
-            payload: this.migrateWebhookPayload(v1.payload),
-            examples: v1.examples,
+            payload,
+            examples: v1.examples.map((example) => ({
+                ...example,
+                payload: sortKeysByShape(example.payload, payload.shape, this.types),
+            })),
         };
     };
 
@@ -328,6 +333,7 @@ export class ApiDefinitionV1ToLatest {
 
     migrateChannelExamples = (
         examples: APIV1Read.ExampleWebSocketSession[],
+        messages: V2.WebSocketMessage[],
     ): V2.ExampleWebSocketSession[] | undefined => {
         if (examples.length === 0) {
             return undefined;
@@ -340,7 +346,14 @@ export class ApiDefinitionV1ToLatest {
             pathParameters: example.pathParameters,
             queryParameters: example.queryParameters,
             requestHeaders: example.headers,
-            messages: example.messages,
+            messages: example.messages.map((example) => ({
+                ...example,
+                body: sortKeysByShape(
+                    example.body,
+                    messages.find((message) => message.type === example.type)?.body,
+                    this.types,
+                ),
+            })),
         }));
     };
 
@@ -399,14 +412,26 @@ export class ApiDefinitionV1ToLatest {
             return undefined;
         }
 
-        return errors.map((value) => ({
-            description: value.description,
-            availability: value.availability,
-            name: value.name,
-            statusCode: value.statusCode,
-            shape: value.type != null ? this.migrateTypeShape(value.type) : undefined,
-            examples: value.examples,
-        }));
+        return errors.map((value) => {
+            const shape = value.type != null ? this.migrateTypeShape(value.type) : undefined;
+            return {
+                description: value.description,
+                availability: value.availability,
+                name: value.name,
+                statusCode: value.statusCode,
+                shape,
+                examples: value.examples?.map(
+                    (example): APIV1Read.ErrorExample => ({
+                        description: example.description,
+                        name: example.name,
+                        responseBody: {
+                            type: "json" as const,
+                            value: sortKeysByShape(example.responseBody.value, shape, this.types),
+                        },
+                    }),
+                ),
+            };
+        });
     };
 
     migrateHttpResponse = (response: APIV1Read.HttpResponse | undefined): V2.HttpResponse | undefined => {
