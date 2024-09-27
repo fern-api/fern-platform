@@ -16,7 +16,8 @@ import { BreadcrumbsInfo } from "../../api/generated/api";
 import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
-import { AlgoliaSearchRecordGenerator, NavigationContext, getFrontmatter } from "./AlgoliaSearchRecordGenerator";
+import { AlgoliaSearchRecordGenerator, getFrontmatter } from "./AlgoliaSearchRecordGenerator";
+import { NavigationContext } from "./NavigationContext";
 import type { AlgoliaSearchRecord, IndexSegment, MarkdownNode, TypeReferenceWithMetadata } from "./types";
 
 export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator {
