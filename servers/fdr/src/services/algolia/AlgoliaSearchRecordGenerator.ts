@@ -17,7 +17,7 @@ import { compact } from "../../util/object";
 import { ReferencedTypes, getAllReferencedTypes } from "./getAllReferencedTypes";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
-class NavigationContext {
+export class NavigationContext {
     #indexSegment: IndexSegment;
     #pathParts: PathPart[];
 
@@ -64,9 +64,19 @@ class NavigationContext {
      * @returns A new `NavigationContext` instance.
      */
     public withFullSlug(fullSlug: string[]) {
+        // we check if the full slug starts with the version, to see if there would be duplicate versions in the slug
+        // as opposed to filtering out all (which would become chaotic if deeply in the slug)
+        // this is a patch fix, since we don't know where full slug is coming from. If more bugs are encountered,
+        // look into fdr to see where fullSlug comes from
+        const { indexSegment } = this;
+        const slug =
+            fullSlug[0] === (indexSegment.type === "versioned" && indexSegment.version.urlSlug)
+                ? fullSlug.slice(1)
+                : fullSlug;
+
         return new NavigationContext(
             this.#indexSegment,
-            fullSlug.map((urlSlug) => ({ name: urlSlug, urlSlug })),
+            slug.map((urlSlug) => ({ name: urlSlug, urlSlug })),
         );
     }
 }
