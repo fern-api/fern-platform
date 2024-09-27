@@ -1,6 +1,6 @@
 import isPlainObject from "@fern-ui/core-utils/isPlainObject";
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
-import { difference } from "lodash-es";
+import difference from "lodash-es/difference";
 import keyBy from "lodash-es/keyBy";
 import mapValues from "lodash-es/mapValues";
 import type * as Latest from "./latest";

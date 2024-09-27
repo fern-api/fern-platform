@@ -1,5 +1,5 @@
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
-import { compact } from "lodash-es";
+import compact from "lodash-es/compact";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
 import type * as Latest from "../latest";

@@ -44,6 +44,9 @@
     "ts-essentials": "^10.0.1",
     "url-join": "5.0.0"
   },
+  "peerDependencies": {
+    "lodash-es": ">=4"
+  },
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.24.3",
