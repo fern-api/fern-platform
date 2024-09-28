@@ -6,7 +6,6 @@ import * as FernGeneratorCli from "../../../index";
 
 /**
  * The language and its associated publish information (if any).
- *
  * This is used to generate badges, the installation guide, and determine what language to
  * use when surrounding the snippets in a code block.
  */

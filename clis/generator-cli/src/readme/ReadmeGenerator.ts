@@ -64,6 +64,9 @@ export class ReadmeGenerator {
         if (this.readmeConfig.language != null && this.readmeConfig.language.publishInfo != null) {
             blocks.push(this.generateInstallation({ language: this.readmeConfig.language }));
         }
+        if (this.readmeConfig.referenceMarkdownPath != null) {
+            blocks.push(this.generateReference({ referenceFile: this.readmeConfig.referenceMarkdownPath }));
+        }
 
         const coreFeatures = this.readmeConfig.features?.filter((feat) => !this.isAdvanced(feat)) ?? [];
         const advancedFeatures = this.readmeConfig.features?.filter((feat) => this.isAdvanced(feat)) ?? [];
@@ -240,6 +243,18 @@ export class ReadmeGenerator {
         writer.writeLine();
         return new Block({
             id: "DOCUMENTATION",
+            content: writer.toString(),
+        });
+    }
+
+    private generateReference({ referenceFile }: { referenceFile: string }): Block {
+        const writer = new StringWriter();
+        writer.writeLine("## Reference");
+        writer.writeLine();
+        writer.writeLine(`A full reference for this library is available [here](${referenceFile}).`);
+        writer.writeLine();
+        return new Block({
+            id: "REFERENCE",
             content: writer.toString(),
         });
     }

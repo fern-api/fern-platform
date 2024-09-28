@@ -5,26 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernGeneratorCli from "../../../../api/index";
 import * as core from "../../../../core";
-import { FeatureId } from "../../feature/types/FeatureId";
+import { FeatureSpec } from "../../feature/types/FeatureSpec";
 
 export const ReadmeFeature: core.serialization.ObjectSchema<
     serializers.ReadmeFeature.Raw,
     FernGeneratorCli.ReadmeFeature
-> = core.serialization.object({
-    id: FeatureId,
-    advanced: core.serialization.boolean().optional(),
-    description: core.serialization.string().optional(),
-    addendum: core.serialization.string().optional(),
-    snippets: core.serialization.list(core.serialization.string()).optional(),
-    snippetsAreOptional: core.serialization.boolean(),
-});
+> = core.serialization
+    .object({
+        snippets: core.serialization.list(core.serialization.string()).optional(),
+        snippetsAreOptional: core.serialization.boolean(),
+    })
+    .extend(FeatureSpec);
 
 export declare namespace ReadmeFeature {
-    interface Raw {
-        id: FeatureId.Raw;
-        advanced?: boolean | null;
-        description?: string | null;
-        addendum?: string | null;
+    interface Raw extends FeatureSpec.Raw {
         snippets?: string[] | null;
         snippetsAreOptional: boolean;
     }

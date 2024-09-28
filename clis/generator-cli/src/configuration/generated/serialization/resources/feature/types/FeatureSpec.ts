@@ -12,6 +12,7 @@ export const FeatureSpec: core.serialization.ObjectSchema<serializers.FeatureSpe
         id: FeatureId,
         description: core.serialization.string().optional(),
         addendum: core.serialization.string().optional(),
+        advanced: core.serialization.boolean().optional(),
     });
 
 export declare namespace FeatureSpec {
@@ -19,5 +20,6 @@ export declare namespace FeatureSpec {
         id: FeatureId.Raw;
         description?: string | null;
         addendum?: string | null;
+        advanced?: boolean | null;
     }
 }
