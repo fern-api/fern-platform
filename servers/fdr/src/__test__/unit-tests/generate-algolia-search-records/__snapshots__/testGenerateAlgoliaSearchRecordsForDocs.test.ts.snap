@@ -5,103 +5,83 @@ exports[`generateAlgoliaSearchRecordsForDocs > {"name":"candid"} 1`] = `
   {
     "breadcrumbs": [
       {
-        "slug": "our-products",
+        "slug": "introduction/our-products",
         "title": "Our Products",
       },
       {
-        "slug": "our-products",
-        "title": "Our Products",
-      },
-      {
-        "slug": "our-products#encounters",
+        "slug": "introduction/our-products#encounters",
         "title": "Encounters",
       },
     ],
     "content": "Candid's primary entry point for submitting encounter information is the [Encounters](../api-reference/encounters) endpoint. Candid uses
 the information sent to this endpoint to submit claims.",
     "indexSegmentId": "constant",
-    "slug": "our-products#encounters",
+    "slug": "introduction/our-products#encounters",
     "title": "Encounters",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "our-products",
+        "slug": "introduction/our-products",
         "title": "Our Products",
       },
       {
-        "slug": "our-products",
-        "title": "Our Products",
-      },
-      {
-        "slug": "our-products#eligibility",
+        "slug": "introduction/our-products#eligibility",
         "title": "Eligibility",
       },
     ],
     "content": "Candid's [Eligibility](../api-reference/eligibility) endpoint can be used to run real-time
 eligibility checks on patients to confirm active medical coverage and to understand the patient's benefits (co-pays, deductibles, etc).",
     "indexSegmentId": "constant",
-    "slug": "our-products#eligibility",
+    "slug": "introduction/our-products#eligibility",
     "title": "Eligibility",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "our-products",
+        "slug": "introduction/our-products",
         "title": "Our Products",
       },
       {
-        "slug": "our-products",
-        "title": "Our Products",
-      },
-      {
-        "slug": "our-products#exports",
+        "slug": "introduction/our-products#exports",
         "title": "Exports",
       },
     ],
     "content": "Candid's [Exports](../api-reference/exports) endpoints are used to programmatically download CSV
 exports of changes to a claim's status and associated metadata (e.g., service line amounts, patient and subscriber info, provider info).",
     "indexSegmentId": "constant",
-    "slug": "our-products#exports",
+    "slug": "introduction/our-products#exports",
     "title": "Exports",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "our-products",
+        "slug": "introduction/our-products",
         "title": "Our Products",
       },
       {
-        "slug": "our-products",
-        "title": "Our Products",
-      },
-      {
-        "slug": "our-products#tasks",
+        "slug": "introduction/our-products#tasks",
         "title": "Tasks",
       },
     ],
     "content": "Candid's [Tasks](../api-reference/tasks) endpoint can be used to embed Candid's Tasks in another system, like your integrated
 EMR partner.",
     "indexSegmentId": "constant",
-    "slug": "our-products#tasks",
+    "slug": "introduction/our-products#tasks",
     "title": "Tasks",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "our-products",
+        "slug": "introduction/our-products",
         "title": "Our Products",
       },
       {
-        "slug": "our-products",
-        "title": "Our Products",
-      },
-      {
-        "slug": "our-products#example-workflow-using-candids-products",
+        "slug": "introduction/our-products#example-workflow-using-candids-products",
         "title": "Example workflow using Candid's products",
       },
     ],
@@ -111,20 +91,15 @@ EMR partner.",
 4. [Exports](../api-reference/exports) are downloaded and processed daily. Patient payments are sent to collect the balance owed on finalized adjudicated claims based on this data.
 5. [Tasks](../api-reference/tasks) are synchronized with your system if you are not working them directly in the Candid app.",
     "indexSegmentId": "constant",
-    "slug": "our-products#example-workflow-using-candids-products",
+    "slug": "introduction/our-products#example-workflow-using-candids-products",
     "title": "Example workflow using Candid's products",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "our-products",
-        "title": "Our Products",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "",
     "indexSegmentId": "constant",
-    "slug": "our-products",
+    "slug": "introduction/our-products",
     "title": "Our Products",
     "type": "page-v4",
   },
@@ -183,11 +158,7 @@ EXAMPLE WORKFLOW USING CANDID'S PRODUCTS
   {
     "breadcrumbs": [
       {
-        "slug": "payer-information",
-        "title": "Payer Information",
-      },
-      {
-        "slug": "payer-information",
+        "slug": "introduction/payer-information",
         "title": "Payer Information",
       },
     ],
@@ -199,22 +170,18 @@ The \`cpid\` should be used in the \`tradingPartnerServiceId\` field of the [Eli
 
 When denoting a claim as self-pay, please use the \`responsible party\` field on the [Encounters](../api-reference/encounters) endpoint.",
     "indexSegmentId": "constant",
-    "slug": "payer-information",
+    "slug": "introduction/payer-information",
     "title": "Payer Information",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "payer-information",
+        "slug": "introduction/payer-information",
         "title": "Payer Information",
       },
       {
-        "slug": "payer-information",
-        "title": "Payer Information",
-      },
-      {
-        "slug": "payer-information#important",
+        "slug": "introduction/payer-information#important",
         "title": "IMPORTANT",
       },
     ],
@@ -226,17 +193,12 @@ View list of supported Payer IDs, Payer Names, and CPIDs or download a CSV here.
 
 ",
     "indexSegmentId": "constant",
-    "slug": "payer-information#important",
+    "slug": "introduction/payer-information#important",
     "title": "IMPORTANT",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "payer-information",
-        "title": "Payer Information",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Candid Health supports most payers. You can find a list of supported payers with their respective \`payer_id\`, \`payer_name\`, and \`cpid\` below.
 
 The \`payer_id\` and \`payer_name\` should be used in the corresponding subscriber\\'s insurance card information and when you use the [Encounters](../api-reference/encounters) endpoint.
@@ -247,7 +209,7 @@ When denoting a claim as self-pay, please use the \`responsible party\` field on
 
 ",
     "indexSegmentId": "constant",
-    "slug": "payer-information",
+    "slug": "introduction/payer-information",
     "title": "Payer Information",
     "type": "page-v4",
   },
@@ -292,33 +254,25 @@ View list of supported Payer IDs, Payer Names, and CPIDs or download a CSV here
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
     ],
     "content": "This page outlines how to use our Python and TypeScript SDKs to interact with our API.
 Specifically, you'll learn how to make a request to create an Encounter.",
     "indexSegmentId": "constant",
-    "slug": "getting-started",
+    "slug": "introduction/getting-started",
     "title": "Getting Started",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#prerequisites",
+        "slug": "introduction/getting-started#prerequisites",
         "title": "Prerequisites",
       },
     ],
@@ -326,22 +280,18 @@ Specifically, you'll learn how to make a request to create an Encounter.",
 - Candid Client ID
 - Candid Client Secret",
     "indexSegmentId": "constant",
-    "slug": "getting-started#prerequisites",
+    "slug": "introduction/getting-started#prerequisites",
     "title": "Prerequisites",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#installation",
+        "slug": "introduction/getting-started#installation",
         "title": "Installation",
       },
     ],
@@ -359,22 +309,18 @@ yarn add candidhealth   # or npm install, pnpm i, etc.
 
 ",
     "indexSegmentId": "constant",
-    "slug": "getting-started#installation",
+    "slug": "introduction/getting-started#installation",
     "title": "Installation",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#authentication",
+        "slug": "introduction/getting-started#authentication",
         "title": "Authentication",
       },
     ],
@@ -410,22 +356,18 @@ clientSecret: "YOUR_CLIENT_SECRET",
 
 Candid provides two environments, \`STAGING\` and \`PRODUCTION\`. Take care to pass the correct environment when creating your API client so that requests are routed correctly.",
     "indexSegmentId": "constant",
-    "slug": "getting-started#authentication",
+    "slug": "introduction/getting-started#authentication",
     "title": "Authentication",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#making-an-example-request",
+        "slug": "introduction/getting-started#making-an-example-request",
         "title": "Making an Example Request",
       },
     ],
@@ -558,22 +500,18 @@ benefitsAssignedToProvider: true,
 
 ",
     "indexSegmentId": "constant",
-    "slug": "getting-started#making-an-example-request",
+    "slug": "introduction/getting-started#making-an-example-request",
     "title": "Making an Example Request",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#error-handling",
+        "slug": "introduction/getting-started#error-handling",
         "title": "Error Handling",
       },
     ],
@@ -603,22 +541,18 @@ console.error(createEncounterResponse.error);
 
 ",
     "indexSegmentId": "constant",
-    "slug": "getting-started#error-handling",
+    "slug": "introduction/getting-started#error-handling",
     "title": "Error Handling",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#full-source-code",
+        "slug": "introduction/getting-started#full-source-code",
         "title": "Full Source Code",
       },
     ],
@@ -785,23 +719,18 @@ benefitsAssignedToProvider: true,
 
 ",
     "indexSegmentId": "constant",
-    "slug": "getting-started#full-source-code",
+    "slug": "introduction/getting-started#full-source-code",
     "title": "Full Source Code",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "This page outlines how to use our Python and TypeScript SDKs to interact with our API.
 Specifically, you'll learn how to make a request to create an Encounter.
 
 ",
     "indexSegmentId": "constant",
-    "slug": "getting-started",
+    "slug": "introduction/getting-started",
     "title": "Getting Started",
     "type": "page-v4",
   },
@@ -1074,11 +1003,7 @@ const createEncounterResponse = await client.encounters.v4.create({
   {
     "breadcrumbs": [
       {
-        "slug": "design-principles",
-        "title": "Design Principles",
-      },
-      {
-        "slug": "design-principles",
+        "slug": "api-principles/design-principles",
         "title": "Design Principles",
       },
     ],
@@ -1100,17 +1025,12 @@ Sometimes, you may find issues before we do. You may find places where we can do
 please let us know! We are always looking for ways to improve our API, and you can reach us by emailing
 support@joincandidhealth.com.",
     "indexSegmentId": "constant",
-    "slug": "design-principles",
+    "slug": "api-principles/design-principles",
     "title": "Design Principles",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "design-principles",
-        "title": "Design Principles",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "We strive to keep our API integration experience seamless. When making API design decisions, we do
 the following:
 - We aim to use the same APIs internally that you use. This allows us to catch errors early and to make sure
@@ -1131,7 +1051,7 @@ support@joincandidhealth.com.
 
 ",
     "indexSegmentId": "constant",
-    "slug": "design-principles",
+    "slug": "api-principles/design-principles",
     "title": "Design Principles",
     "type": "page-v4",
   },
@@ -1170,11 +1090,7 @@ support@joincandidhealth.com.
   {
     "breadcrumbs": [
       {
-        "slug": "development-lifecycle",
-        "title": "Development Lifecycle",
-      },
-      {
-        "slug": "development-lifecycle",
+        "slug": "api-principles/development-lifecycle",
         "title": "Development Lifecycle",
       },
     ],
@@ -1191,17 +1107,12 @@ basis, sometimes asking you to upgrade your client to resolve any issues.
 Our endpoint documentation will specify if the endpoint is incubating or deprecated. Otherwise, you can safely assume
 that it is available.",
     "indexSegmentId": "constant",
-    "slug": "development-lifecycle",
+    "slug": "api-principles/development-lifecycle",
     "title": "Development Lifecycle",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "development-lifecycle",
-        "title": "Development Lifecycle",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Endpoints in our API live in one of three states: incubating, available, and deprecated.
 
 - **Incubating**: Endpoints in this state can be used, but proceed with caution. We are still working on them, and
@@ -1217,7 +1128,7 @@ that it is available.
 
 ",
     "indexSegmentId": "constant",
-    "slug": "development-lifecycle",
+    "slug": "api-principles/development-lifecycle",
     "title": "Development Lifecycle",
     "type": "page-v4",
   },
@@ -1253,11 +1164,7 @@ available.",
   {
     "breadcrumbs": [
       {
-        "slug": "breaking-changes",
-        "title": "Breaking Changes",
-      },
-      {
-        "slug": "breaking-changes",
+        "slug": "api-principles/breaking-changes",
         "title": "Breaking Changes",
       },
     ],
@@ -1278,22 +1185,18 @@ We do this by sending an email to a breaking changes email list we keep.
 If you would like to be added to this list, please email
 [support@joincandidhealth.com](mailto:support@joincandidhealth.com).",
     "indexSegmentId": "constant",
-    "slug": "breaking-changes",
+    "slug": "api-principles/breaking-changes",
     "title": "Breaking Changes",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "breaking-changes",
+        "slug": "api-principles/breaking-changes",
         "title": "Breaking Changes",
       },
       {
-        "slug": "breaking-changes",
-        "title": "Breaking Changes",
-      },
-      {
-        "slug": "breaking-changes#what-is-a-breaking-change",
+        "slug": "api-principles/breaking-changes#what-is-a-breaking-change",
         "title": "What is a breaking change",
       },
     ],
@@ -1315,17 +1218,12 @@ Here are some examples of changes that we consider **breaking**:
 - Removing a required field on a response shape
 - Changing the data type of a field",
     "indexSegmentId": "constant",
-    "slug": "breaking-changes#what-is-a-breaking-change",
+    "slug": "api-principles/breaking-changes#what-is-a-breaking-change",
     "title": "What is a breaking change",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "breaking-changes",
-        "title": "Breaking Changes",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "We do our absolute best to avoid breaking changes in our API.
 However, sometimes we need to make changes to our API that
 will break existing clients. Here's how we recommend thinking
@@ -1345,7 +1243,7 @@ If you would like to be added to this list, please email
 
 ",
     "indexSegmentId": "constant",
-    "slug": "breaking-changes",
+    "slug": "api-principles/breaking-changes",
     "title": "Breaking Changes",
     "type": "page-v4",
   },
@@ -1398,15 +1296,11 @@ Here are some examples of changes that we consider breaking:
   {
     "breadcrumbs": [
       {
-        "slug": "conventions",
+        "slug": "api-principles/conventions",
         "title": "Conventions",
       },
       {
-        "slug": "conventions",
-        "title": "Conventions",
-      },
-      {
-        "slug": "conventions#type-aliases-branding",
+        "slug": "api-principles/conventions#type-aliases-branding",
         "title": "Type Aliases & Branding",
       },
     ],
@@ -1421,22 +1315,18 @@ Decimal objects.
 When using them in the API requests, these types all still serialize as JSON strings in the HTTP
 payload. However, if you are using our typed clients (SDK), the client will provide them to you as the branded type.",
     "indexSegmentId": "constant",
-    "slug": "conventions#type-aliases-branding",
+    "slug": "api-principles/conventions#type-aliases-branding",
     "title": "Type Aliases & Branding",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "conventions",
+        "slug": "api-principles/conventions",
         "title": "Conventions",
       },
       {
-        "slug": "conventions",
-        "title": "Conventions",
-      },
-      {
-        "slug": "conventions#pagination",
+        "slug": "api-principles/conventions#pagination",
         "title": "Pagination",
       },
     ],
@@ -1450,22 +1340,18 @@ next_page_token: PageToken | None
 prev_page_token: PageToken | None
 \`\`\`",
     "indexSegmentId": "constant",
-    "slug": "conventions#pagination",
+    "slug": "api-principles/conventions#pagination",
     "title": "Pagination",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "conventions",
+        "slug": "api-principles/conventions",
         "title": "Conventions",
       },
       {
-        "slug": "conventions",
-        "title": "Conventions",
-      },
-      {
-        "slug": "conventions#decimals",
+        "slug": "api-principles/conventions#decimals",
         "title": "Decimals",
       },
     ],
@@ -1473,22 +1359,18 @@ prev_page_token: PageToken | None
 which is a string alias type that represents a decimal number as a string. These decimal strings are parsed into the
 [Python Decimal class](https://docs.python.org/3/library/decimal.html#decimal-objects).",
     "indexSegmentId": "constant",
-    "slug": "conventions#decimals",
+    "slug": "api-principles/conventions#decimals",
     "title": "Decimals",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "conventions",
+        "slug": "api-principles/conventions",
         "title": "Conventions",
       },
       {
-        "slug": "conventions",
-        "title": "Conventions",
-      },
-      {
-        "slug": "conventions#unions",
+        "slug": "api-principles/conventions#unions",
         "title": "Unions",
       },
     ],
@@ -1499,20 +1381,15 @@ We also expect that it is a non-breaking change to add a new union member to a u
 handle a union field in a response, we expect you to gracefully handle an \`_other\` case. This allows us
 to better serve and improve our APIs at a quick velocity without breaking your code.",
     "indexSegmentId": "constant",
-    "slug": "conventions#unions",
+    "slug": "api-principles/conventions#unions",
     "title": "Unions",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "conventions",
-        "title": "Conventions",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "",
     "indexSegmentId": "constant",
-    "slug": "conventions",
+    "slug": "api-principles/conventions",
     "title": "Conventions",
     "type": "page-v4",
   },
@@ -2376,11 +2253,7 @@ exports[`generateAlgoliaSearchRecordsForDocs > {"name":"primer"} 1`] = `
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
     ],
@@ -2395,44 +2268,36 @@ Check out:
 
 Test the APIs yourself in our API Reference. Don't hesitate to reach out with any questions or feedback. You can email Primer directly at [support@primer.io](support@primer.io), or contact your Primer account manager.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "getting-started",
+    "slug": "introduction/getting-started",
     "title": "Getting Started",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#api-endpoint-deployments",
+        "slug": "introduction/getting-started#api-endpoint-deployments",
         "title": "API Endpoint Deployments",
       },
     ],
     "content": "- Sandbox: [https://api.sandbox.primer.io](https://api.sandbox.primer.io)
 - Production: [https://api.primer.io](https://api.primer.io)",
     "indexSegmentId": "v2.2-constant",
-    "slug": "getting-started#api-endpoint-deployments",
+    "slug": "introduction/getting-started#api-endpoint-deployments",
     "title": "API Endpoint Deployments",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#api-versions",
+        "slug": "introduction/getting-started#api-versions",
         "title": "API Versions",
       },
     ],
@@ -2445,42 +2310,33 @@ curl -X POST 'https://api.primer.io/' \\
 --header 'X-Api-Version: 2.2'
 \`\`\`",
     "indexSegmentId": "v2.2-constant",
-    "slug": "getting-started#api-versions",
+    "slug": "introduction/getting-started#api-versions",
     "title": "API Versions",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#api-versions",
+        "slug": "introduction/getting-started#api-versions",
         "title": "API Versions",
       },
       {
-        "slug": "getting-started#available-versions",
+        "slug": "introduction/getting-started#available-versions",
         "title": "Available Versions",
       },
     ],
     "content": "Read about the available versions of the APIs below on our [Changelog](https://apiref.primer.io/changelog).",
     "indexSegmentId": "v2.2-constant",
-    "slug": "getting-started#available-versions",
+    "slug": "introduction/getting-started#available-versions",
     "title": "Available Versions",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "The Primer API is used to manage Client Sessions, Payments and saved payment methods.
 All other actions are either managed in the Universal Checkout implementation or in the Dashboard.
 
@@ -2494,7 +2350,7 @@ Test the APIs yourself in our API Reference. Don't hesitate to reach out with an
 
 ",
     "indexSegmentId": "v2.2-constant",
-    "slug": "getting-started",
+    "slug": "introduction/getting-started",
     "title": "Getting Started",
     "type": "page-v4",
     "version": {
@@ -2560,11 +2416,7 @@ Read about the available versions of the APIs below on our Changelog [https://ap
   {
     "breadcrumbs": [
       {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-      {
-        "slug": "authentication",
+        "slug": "introduction/authentication",
         "title": "Authentication",
       },
     ],
@@ -2579,22 +2431,18 @@ curl -X POST 'https://api.primer.io/' \\
 --header 'X-Api-Key: '
 \`\`\`",
     "indexSegmentId": "v2.2-constant",
-    "slug": "authentication",
+    "slug": "introduction/authentication",
     "title": "Authentication",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "authentication",
+        "slug": "introduction/authentication",
         "title": "Authentication",
       },
       {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-      {
-        "slug": "authentication#managing-api-keys",
+        "slug": "introduction/authentication#managing-api-keys",
         "title": "Managing API Keys",
       },
     ],
@@ -2602,22 +2450,18 @@ curl -X POST 'https://api.primer.io/' \\
 
 You will be able to generate or revoke API keys and edit their respective scopes. Be aware that any changes to existing API keys will be reflected immediately and could cause unwanted side effects.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "authentication#managing-api-keys",
+    "slug": "introduction/authentication#managing-api-keys",
     "title": "Managing API Keys",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "authentication",
+        "slug": "introduction/authentication",
         "title": "Authentication",
       },
       {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-      {
-        "slug": "authentication#available-scopes",
+        "slug": "introduction/authentication#available-scopes",
         "title": "Available scopes",
       },
     ],
@@ -2633,17 +2477,12 @@ You will be able to generate or revoke API keys and edit their respective scopes
 | \`payment_instrument:read\`     | Read stored payment methods.                                                                                                                                                          |
 | \`payment_instrument:write\`    | Write stored payment methods.                                                                                                                                                         |",
     "indexSegmentId": "v2.2-constant",
-    "slug": "authentication#available-scopes",
+    "slug": "introduction/authentication#available-scopes",
     "title": "Available scopes",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Primer uses API keys to authenticate requests. You can manage API keys in the [Developers](https://sandbox-dashboard.primer.io/developers) area of the dashboard.
 
 As API keys carry many privileges such as _authorizing_ payments, it is important to keep them **private** and **secure**. Do not hardcode or share API keys (particularly in your source version control system), and they should only be used in your backend.
@@ -2657,7 +2496,7 @@ curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
 
 ",
     "indexSegmentId": "v2.2-constant",
-    "slug": "authentication",
+    "slug": "introduction/authentication",
     "title": "Authentication",
     "type": "page-v4",
     "version": {
@@ -2717,15 +2556,11 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
   {
     "breadcrumbs": [
       {
-        "slug": "api-responses",
+        "slug": "introduction/api-responses",
         "title": "API Responses",
       },
       {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-      {
-        "slug": "api-responses#status-codes",
+        "slug": "introduction/api-responses#status-codes",
         "title": "Status Codes",
       },
     ],
@@ -2742,22 +2577,18 @@ the Primer REST API.
 | \`409\`       | Entity Already Exists   |
 | \`422\`       | Input Validation Failed |",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-responses#status-codes",
+    "slug": "introduction/api-responses#status-codes",
     "title": "Status Codes",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-responses",
+        "slug": "introduction/api-responses",
         "title": "API Responses",
       },
       {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-      {
-        "slug": "api-responses#error-responses",
+        "slug": "introduction/api-responses#error-responses",
         "title": "Error Responses",
       },
     ],
@@ -2778,22 +2609,18 @@ The format of the payload for all errors is common. When an unsuccessful request
 
 All error payloads will be comprised of a unique \`errorId\` which you can use to identify the error, a human description \`description\`, and a \`diagnosticsId\` that you can quote when contacting the support team ([support@primer.io](mailto:support@primer.io)). In case of a badly formed request, Primer will also return additional \`validationErrors\`.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-responses#error-responses",
+    "slug": "introduction/api-responses#error-responses",
     "title": "Error Responses",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-responses",
+        "slug": "introduction/api-responses",
         "title": "API Responses",
       },
       {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-      {
-        "slug": "api-responses#payment-status",
+        "slug": "introduction/api-responses#payment-status",
         "title": "Payment Status",
       },
     ],
@@ -2812,20 +2639,15 @@ All error payloads will be comprised of a unique \`errorId\` which you can use t
 
 Don't hesitate to reach out with any questions or feedback. You can email Primer directly at [support@primer.io](mailto:support@primer.io), or contact your Primer account manager.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-responses#payment-status",
+    "slug": "introduction/api-responses#payment-status",
     "title": "Payment Status",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-responses",
+    "slug": "introduction/api-responses",
     "title": "API Responses",
     "type": "page-v4",
     "version": {
@@ -2904,11 +2726,7 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
   {
     "breadcrumbs": [
       {
-        "slug": "idempotency-key",
-        "title": "Idempotency Key",
-      },
-      {
-        "slug": "idempotency-key",
+        "slug": "introduction/idempotency-key",
         "title": "Idempotency Key",
       },
     ],
@@ -2934,17 +2752,12 @@ Keep in mind that a payment request resulting in a declined or failed payment is
 
 As a such, don't use anything too restrictive like an \`orderId\` for the idempotency key as multiple payment attempts and refunds can be made for a single order.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "idempotency-key",
+    "slug": "introduction/idempotency-key",
     "title": "Idempotency Key",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "idempotency-key",
-        "title": "Idempotency Key",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request without risking the user being charged or refunded multiple times.
 
 This is particularly useful when an API call fails due to the request being invalid, due to a network issue, or if Primer is momentarily unavailable.
@@ -2969,7 +2782,7 @@ As a such, don't use anything too restrictive like an \`orderId\` for the idempo
 
 ",
     "indexSegmentId": "v2.2-constant",
-    "slug": "idempotency-key",
+    "slug": "introduction/idempotency-key",
     "title": "Idempotency Key",
     "type": "page-v4",
     "version": {
@@ -3026,11 +2839,7 @@ be made for a single order.",
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
     ],
@@ -3040,43 +2849,35 @@ All of the endpoints below reference a \`connectionId\`. This is the unique Prim
 
 To identify the customer in the context of the loyalty provider, a \`customerId\` is also necessary.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "loyalty-transactions",
+    "slug": "introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#get-the-customer-balance",
+        "slug": "introduction/loyalty-transactions#get-the-customer-balance",
         "title": "Get the customer balance",
       },
     ],
     "content": "Call the [Loyalty Customers](https://apiref.primer.io/reference/get_loyalty_customer) endpoint, which includes the customer's balance. In future this object could contain further details.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "loyalty-transactions#get-the-customer-balance",
+    "slug": "introduction/loyalty-transactions#get-the-customer-balance",
     "title": "Get the customer balance",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#redeem-points",
+        "slug": "introduction/loyalty-transactions#redeem-points",
         "title": "Redeem points",
       },
     ],
@@ -3084,22 +2885,18 @@ To identify the customer in the context of the loyalty provider, a \`customerId\
 
 Provide an \`orderId\` to link multiple transactions together.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "loyalty-transactions#redeem-points",
+    "slug": "introduction/loyalty-transactions#redeem-points",
     "title": "Redeem points",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#refund-points",
+        "slug": "introduction/loyalty-transactions#refund-points",
         "title": "Refund points",
       },
     ],
@@ -3107,38 +2904,29 @@ Provide an \`orderId\` to link multiple transactions together.",
 
 Provide an \`orderId\` to link multiple transactions together.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "loyalty-transactions#refund-points",
+    "slug": "introduction/loyalty-transactions#refund-points",
     "title": "Refund points",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#get-a-list-of-transactions",
+        "slug": "introduction/loyalty-transactions#get-a-list-of-transactions",
         "title": "Get a list of transactions",
       },
     ],
     "content": "Call the [Loyalty Transactions](https://apiref.primer.io/reference/get_loyalty_transaction) endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by \`connectionId\`. You can also filter by \`customerId\` or \`orderId\`.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "loyalty-transactions#get-a-list-of-transactions",
+    "slug": "introduction/loyalty-transactions#get-a-list-of-transactions",
     "title": "Get a list of transactions",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a \`connectionId\`. This is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.
@@ -3147,7 +2935,7 @@ To identify the customer in the context of the loyalty provider, a \`customerId\
 
 ",
     "indexSegmentId": "v2.2-constant",
-    "slug": "loyalty-transactions",
+    "slug": "introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "type": "page-v4",
     "version": {
@@ -3213,32 +3001,24 @@ transactions. In most cases it makes sense to filter by connectionId. You can al
   {
     "breadcrumbs": [
       {
-        "slug": "api-migration-guide",
-        "title": "API Migration Guide",
-      },
-      {
-        "slug": "api-migration-guide",
+        "slug": "changelog/api-migration-guide",
         "title": "API Migration Guide",
       },
     ],
     "content": "We are continually introducing new functionality to the Primer Ecosystem, some of which requires additional inputs on our APIs. To make sure these changes don’t break any existing integrations, we roll them out safely using API Versions.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-migration-guide",
+    "slug": "changelog/api-migration-guide",
     "title": "API Migration Guide",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-migration-guide",
+        "slug": "changelog/api-migration-guide",
         "title": "API Migration Guide",
       },
       {
-        "slug": "api-migration-guide",
-        "title": "API Migration Guide",
-      },
-      {
-        "slug": "api-migration-guide#migrating-to-v-2-1",
+        "slug": "changelog/api-migration-guide#migrating-to-v-2-1",
         "title": "Migrating to v2.1",
       },
     ],
@@ -3246,22 +3026,18 @@ transactions. In most cases it makes sense to filter by connectionId. You can al
 
 The examples below only illustrate how to transition between the two versions of the endpoints, however you should read the latest API Reference linked above for details on the usage of the endpoints. Also read how to introduce API Versioning into your requests in the latest API Reference linked above.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-migration-guide#migrating-to-v-2-1",
+    "slug": "changelog/api-migration-guide#migrating-to-v-2-1",
     "title": "Migrating to v2.1",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-migration-guide",
+        "slug": "changelog/api-migration-guide",
         "title": "API Migration Guide",
       },
       {
-        "slug": "api-migration-guide",
-        "title": "API Migration Guide",
-      },
-      {
-        "slug": "api-migration-guide#client-session",
+        "slug": "changelog/api-migration-guide#client-session",
         "title": "Client Session",
       },
     ],
@@ -3324,26 +3100,22 @@ This is an example of a equivalent request in v2: \`POST /client-session\` with 
 }
 \`\`\`",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-migration-guide#client-session",
+    "slug": "changelog/api-migration-guide#client-session",
     "title": "Client Session",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-migration-guide",
+        "slug": "changelog/api-migration-guide",
         "title": "API Migration Guide",
       },
       {
-        "slug": "api-migration-guide",
-        "title": "API Migration Guide",
-      },
-      {
-        "slug": "api-migration-guide#client-session",
+        "slug": "changelog/api-migration-guide#client-session",
         "title": "Client Session",
       },
       {
-        "slug": "api-migration-guide#v-2-1",
+        "slug": "changelog/api-migration-guide#v-2-1",
         "title": "v2.1",
       },
     ],
@@ -3394,22 +3166,18 @@ This is an example of a equivalent request in v2: \`POST /client-session\` with 
 }
 \`\`\`",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-migration-guide#v-2-1",
+    "slug": "changelog/api-migration-guide#v-2-1",
     "title": "v2.1",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-migration-guide",
+        "slug": "changelog/api-migration-guide",
         "title": "API Migration Guide",
       },
       {
-        "slug": "api-migration-guide",
-        "title": "API Migration Guide",
-      },
-      {
-        "slug": "api-migration-guide#summary-of-the-v-2-1-changes",
+        "slug": "changelog/api-migration-guide#summary-of-the-v-2-1-changes",
         "title": "Summary of the v2.1 changes",
       },
     ],
@@ -3417,22 +3185,18 @@ This is an example of a equivalent request in v2: \`POST /client-session\` with 
 - \`lineItems\` is now a top-level element
 - \`amount\` has been removed. You should always specify \`lineItems\` and we would dynamically calculate the amount. See our [API Reference](https://apiref.primer.io/reference) for how we calculate the amount.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-migration-guide#summary-of-the-v-2-1-changes",
+    "slug": "changelog/api-migration-guide#summary-of-the-v-2-1-changes",
     "title": "Summary of the v2.1 changes",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-migration-guide",
+        "slug": "changelog/api-migration-guide",
         "title": "API Migration Guide",
       },
       {
-        "slug": "api-migration-guide",
-        "title": "API Migration Guide",
-      },
-      {
-        "slug": "api-migration-guide#create-a-payment",
+        "slug": "changelog/api-migration-guide#create-a-payment",
         "title": "Create a Payment",
       },
     ],
@@ -3537,44 +3301,35 @@ OR
 }
 \`\`\`",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-migration-guide#create-a-payment",
+    "slug": "changelog/api-migration-guide#create-a-payment",
     "title": "Create a Payment",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-migration-guide",
+        "slug": "changelog/api-migration-guide",
         "title": "API Migration Guide",
       },
       {
-        "slug": "api-migration-guide",
-        "title": "API Migration Guide",
-      },
-      {
-        "slug": "api-migration-guide#summary-of-the-v-2-1-changes",
+        "slug": "changelog/api-migration-guide#summary-of-the-v-2-1-changes",
         "title": "Summary of the v2.1 changes",
       },
     ],
     "content": "- \`order\` is now called \`orderDetails\`
 - \`lineItems\` is now a top-level element",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-migration-guide#summary-of-the-v-2-1-changes",
+    "slug": "changelog/api-migration-guide#summary-of-the-v-2-1-changes",
     "title": "Summary of the v2.1 changes",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "api-migration-guide",
-        "title": "API Migration Guide",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "We are continually introducing new functionality to the Primer Ecosystem, some of which requires additional inputs on our APIs. To make sure these changes don’t break any existing integrations, we roll them out safely using API Versions.
 
 ",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-migration-guide",
+    "slug": "changelog/api-migration-guide",
     "title": "API Migration Guide",
     "type": "page-v4",
     "version": {
@@ -3842,76 +3597,59 @@ SUMMARY OF THE V2.1 CHANGES
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2-2",
-        "title": "API v2.2",
-      },
-      {
-        "slug": "api-v-2-2",
+        "slug": "changelog/api-v-2-2",
         "title": "API v2.2",
       },
     ],
     "content": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API.
 You must set the \`X-Api-Version\` header to \`2.2\` to use v2.2 of the API.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2-2",
+    "slug": "changelog/api-v-2-2",
     "title": "API v2.2",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2-2",
+        "slug": "changelog/api-v-2-2",
         "title": "API v2.2",
       },
       {
-        "slug": "api-v-2-2",
-        "title": "API v2.2",
-      },
-      {
-        "slug": "api-v-2-2#client-session-api",
+        "slug": "changelog/api-v-2-2#client-session-api",
         "title": "Client Session API",
       },
     ],
     "content": "- Added \`order.lineItems.productData\` on the request and response",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2-2#client-session-api",
+    "slug": "changelog/api-v-2-2#client-session-api",
     "title": "Client Session API",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2-2",
+        "slug": "changelog/api-v-2-2",
         "title": "API v2.2",
       },
       {
-        "slug": "api-v-2-2",
-        "title": "API v2.2",
-      },
-      {
-        "slug": "api-v-2-2#payments-api",
+        "slug": "changelog/api-v-2-2#payments-api",
         "title": "Payments API",
       },
     ],
     "content": "- Added \`order.lineItems.productData\` on the request and response",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2-2#payments-api",
+    "slug": "changelog/api-v-2-2#payments-api",
     "title": "Payments API",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "api-v-2-2",
-        "title": "API v2.2",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API.
 You must set the \`X-Api-Version\` header to \`2.2\` to use v2.2 of the API.
 
 ",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2-2",
+    "slug": "changelog/api-v-2-2",
     "title": "API v2.2",
     "type": "page-v4",
     "version": {
@@ -3955,11 +3693,7 @@ PAYMENTS API
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2-1",
-        "title": "API v2.1",
-      },
-      {
-        "slug": "api-v-2-1",
+        "slug": "changelog/api-v-2-1",
         "title": "API v2.1",
       },
     ],
@@ -3968,22 +3702,18 @@ PAYMENTS API
 Starting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉
 Set the \`X-Api-Version\` header to \`2.1\` to use v2.1 of the API.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2-1",
+    "slug": "changelog/api-v-2-1",
     "title": "API v2.1",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2-1",
+        "slug": "changelog/api-v-2-1",
         "title": "API v2.1",
       },
       {
-        "slug": "api-v-2-1",
-        "title": "API v2.1",
-      },
-      {
-        "slug": "api-v-2-1#client-session-api",
+        "slug": "changelog/api-v-2-1#client-session-api",
         "title": "Client Session API",
       },
     ],
@@ -3993,22 +3723,18 @@ Set the \`X-Api-Version\` header to \`2.1\` to use v2.1 of the API.",
 - Added \`PATCH /client-session\` to update the content of a client session
 - Additional validation has been put in place to ensure that a \`currencyCode\` is always passed if any \`amount\` value is passed",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2-1#client-session-api",
+    "slug": "changelog/api-v-2-1#client-session-api",
     "title": "Client Session API",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2-1",
+        "slug": "changelog/api-v-2-1",
         "title": "API v2.1",
       },
       {
-        "slug": "api-v-2-1",
-        "title": "API v2.1",
-      },
-      {
-        "slug": "api-v-2-1#payments-api",
+        "slug": "changelog/api-v-2-1#payments-api",
         "title": "Payments API",
       },
     ],
@@ -4017,39 +3743,30 @@ Set the \`X-Api-Version\` header to \`2.1\` to use v2.1 of the API.",
 - \`amount\`, \`currencyCode\`, \`customerId\` and \`orderId\` are now required fields when making a payment with a vaulted token (i.e. a recurring payment).
 - When paying with a vaulted token, additional validation has been put in place to ensure the \`customerId\` matches the \`customerId\` associated with the vaulted token.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2-1#payments-api",
+    "slug": "changelog/api-v-2-1#payments-api",
     "title": "Payments API",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2-1",
+        "slug": "changelog/api-v-2-1",
         "title": "API v2.1",
       },
       {
-        "slug": "api-v-2-1",
-        "title": "API v2.1",
-      },
-      {
-        "slug": "api-v-2-1#payment-methods-api",
+        "slug": "changelog/api-v-2-1#payment-methods-api",
         "title": "Payment Methods API",
       },
     ],
     "content": "- Added verify in \`POST /payment-instruments/{paymentMethodToken}/vault\` to set whether or not the payment method token should be verified before vaulting
 - Added \`isVerified\` to the payment method response",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2-1#payment-methods-api",
+    "slug": "changelog/api-v-2-1#payment-methods-api",
     "title": "Payment Methods API",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "api-v-2-1",
-        "title": "API v2.1",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.
 
 Starting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉
@@ -4057,7 +3774,7 @@ Set the \`X-Api-Version\` header to \`2.1\` to use v2.1 of the API.
 
 ",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2-1",
+    "slug": "changelog/api-v-2-1",
     "title": "API v2.1",
     "type": "page-v4",
     "version": {
@@ -4120,32 +3837,24 @@ PAYMENT METHODS API
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2",
-        "title": "API v2",
-      },
-      {
-        "slug": "api-v-2",
+        "slug": "changelog/api-v-2",
         "title": "API v2",
       },
     ],
     "content": "Version 2 includes improvements to the Client Session API and the Payments API.",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2",
+    "slug": "changelog/api-v-2",
     "title": "API v2",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2",
+        "slug": "changelog/api-v-2",
         "title": "API v2",
       },
       {
-        "slug": "api-v-2",
-        "title": "API v2",
-      },
-      {
-        "slug": "api-v-2#client-session-api",
+        "slug": "changelog/api-v-2#client-session-api",
         "title": "Client Session API",
       },
     ],
@@ -4155,22 +3864,18 @@ PAYMENT METHODS API
 - All references to \`paymentInstrument\` from the previous Payments API version have been refactored to \`paymentMethod\` to be more consistent throughout
 - The customer \`billingAddress\` and \`shippingAddress\` fields are now all optional",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2#client-session-api",
+    "slug": "changelog/api-v-2#client-session-api",
     "title": "Client Session API",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-v-2",
+        "slug": "changelog/api-v-2",
         "title": "API v2",
       },
       {
-        "slug": "api-v-2",
-        "title": "API v2",
-      },
-      {
-        "slug": "api-v-2#payments-api",
+        "slug": "changelog/api-v-2#payments-api",
         "title": "Payments API",
       },
     ],
@@ -4183,22 +3888,17 @@ PAYMENT METHODS API
 - \`paymentMethodData\` in \`PaymentMethod\` responses (for card payment method types) all now contain a \`first6digits\` field in addition to the \`last4digits\` returned. This is an opt-in field, so it is \`null\` by default.
 - The customer \`billingAddress\` and \`shippingAddress\` fields are now all optional",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2#payments-api",
+    "slug": "changelog/api-v-2#payments-api",
     "title": "Payments API",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "api-v-2",
-        "title": "API v2",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Version 2 includes improvements to the Client Session API and the Payments API.
 
 ",
     "indexSegmentId": "v2.2-constant",
-    "slug": "api-v-2",
+    "slug": "changelog/api-v-2",
     "title": "API v2",
     "type": "page-v4",
     "version": {
@@ -5327,11 +5027,7 @@ Create a loyalty transaction. This is either a points redemption or a points ref
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
     ],
@@ -5346,44 +5042,36 @@ Check out:
 
 Test the APIs yourself in our API Reference. Don't hesitate to reach out with any questions or feedback. You can email Primer directly at [support@primer.io](support@primer.io), or contact your Primer account manager.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "getting-started",
+    "slug": "introduction/getting-started",
     "title": "Getting Started",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#api-endpoint-deployments",
+        "slug": "introduction/getting-started#api-endpoint-deployments",
         "title": "API Endpoint Deployments",
       },
     ],
     "content": "- Sandbox: [https://api.sandbox.primer.io](https://api.sandbox.primer.io)
 - Production: [https://api.primer.io](https://api.primer.io)",
     "indexSegmentId": "v2.1-constant",
-    "slug": "getting-started#api-endpoint-deployments",
+    "slug": "introduction/getting-started#api-endpoint-deployments",
     "title": "API Endpoint Deployments",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#api-versions",
+        "slug": "introduction/getting-started#api-versions",
         "title": "API Versions",
       },
     ],
@@ -5396,42 +5084,33 @@ curl -X POST 'https://api.primer.io/' \\
 --header 'X-Api-Version: 2.2'
 \`\`\`",
     "indexSegmentId": "v2.1-constant",
-    "slug": "getting-started#api-versions",
+    "slug": "introduction/getting-started#api-versions",
     "title": "API Versions",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#api-versions",
+        "slug": "introduction/getting-started#api-versions",
         "title": "API Versions",
       },
       {
-        "slug": "getting-started#available-versions",
+        "slug": "introduction/getting-started#available-versions",
         "title": "Available Versions",
       },
     ],
     "content": "Read about the available versions of the APIs below on our [Changelog](https://apiref.primer.io/changelog).",
     "indexSegmentId": "v2.1-constant",
-    "slug": "getting-started#available-versions",
+    "slug": "introduction/getting-started#available-versions",
     "title": "Available Versions",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "The Primer API is used to manage Client Sessions, Payments and saved payment methods.
 All other actions are either managed in the Universal Checkout implementation or in the Dashboard.
 
@@ -5445,7 +5124,7 @@ Test the APIs yourself in our API Reference. Don't hesitate to reach out with an
 
 ",
     "indexSegmentId": "v2.1-constant",
-    "slug": "getting-started",
+    "slug": "introduction/getting-started",
     "title": "Getting Started",
     "type": "page-v4",
     "version": {
@@ -5511,11 +5190,7 @@ Read about the available versions of the APIs below on our Changelog [https://ap
   {
     "breadcrumbs": [
       {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-      {
-        "slug": "authentication",
+        "slug": "introduction/authentication",
         "title": "Authentication",
       },
     ],
@@ -5530,22 +5205,18 @@ curl -X POST 'https://api.primer.io/' \\
 --header 'X-Api-Key: '
 \`\`\`",
     "indexSegmentId": "v2.1-constant",
-    "slug": "authentication",
+    "slug": "introduction/authentication",
     "title": "Authentication",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "authentication",
+        "slug": "introduction/authentication",
         "title": "Authentication",
       },
       {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-      {
-        "slug": "authentication#managing-api-keys",
+        "slug": "introduction/authentication#managing-api-keys",
         "title": "Managing API Keys",
       },
     ],
@@ -5553,22 +5224,18 @@ curl -X POST 'https://api.primer.io/' \\
 
 You will be able to generate or revoke API keys and edit their respective scopes. Be aware that any changes to existing API keys will be reflected immediately and could cause unwanted side effects.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "authentication#managing-api-keys",
+    "slug": "introduction/authentication#managing-api-keys",
     "title": "Managing API Keys",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "authentication",
+        "slug": "introduction/authentication",
         "title": "Authentication",
       },
       {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-      {
-        "slug": "authentication#available-scopes",
+        "slug": "introduction/authentication#available-scopes",
         "title": "Available scopes",
       },
     ],
@@ -5584,17 +5251,12 @@ You will be able to generate or revoke API keys and edit their respective scopes
 | \`payment_instrument:read\`     | Read stored payment methods.                                                                                                                                                          |
 | \`payment_instrument:write\`    | Write stored payment methods.                                                                                                                                                         |",
     "indexSegmentId": "v2.1-constant",
-    "slug": "authentication#available-scopes",
+    "slug": "introduction/authentication#available-scopes",
     "title": "Available scopes",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Primer uses API keys to authenticate requests. You can manage API keys in the [Developers](https://sandbox-dashboard.primer.io/developers) area of the dashboard.
 
 As API keys carry many privileges such as _authorizing_ payments, it is important to keep them **private** and **secure**. Do not hardcode or share API keys (particularly in your source version control system), and they should only be used in your backend.
@@ -5608,7 +5270,7 @@ curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
 
 ",
     "indexSegmentId": "v2.1-constant",
-    "slug": "authentication",
+    "slug": "introduction/authentication",
     "title": "Authentication",
     "type": "page-v4",
     "version": {
@@ -5668,15 +5330,11 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
   {
     "breadcrumbs": [
       {
-        "slug": "api-responses",
+        "slug": "introduction/api-responses",
         "title": "API Responses",
       },
       {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-      {
-        "slug": "api-responses#status-codes",
+        "slug": "introduction/api-responses#status-codes",
         "title": "Status Codes",
       },
     ],
@@ -5693,22 +5351,18 @@ the Primer REST API.
 | \`409\`       | Entity Already Exists   |
 | \`422\`       | Input Validation Failed |",
     "indexSegmentId": "v2.1-constant",
-    "slug": "api-responses#status-codes",
+    "slug": "introduction/api-responses#status-codes",
     "title": "Status Codes",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-responses",
+        "slug": "introduction/api-responses",
         "title": "API Responses",
       },
       {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-      {
-        "slug": "api-responses#error-responses",
+        "slug": "introduction/api-responses#error-responses",
         "title": "Error Responses",
       },
     ],
@@ -5729,22 +5383,18 @@ The format of the payload for all errors is common. When an unsuccessful request
 
 All error payloads will be comprised of a unique \`errorId\` which you can use to identify the error, a human description \`description\`, and a \`diagnosticsId\` that you can quote when contacting the support team ([support@primer.io](mailto:support@primer.io)). In case of a badly formed request, Primer will also return additional \`validationErrors\`.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "api-responses#error-responses",
+    "slug": "introduction/api-responses#error-responses",
     "title": "Error Responses",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-responses",
+        "slug": "introduction/api-responses",
         "title": "API Responses",
       },
       {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-      {
-        "slug": "api-responses#payment-status",
+        "slug": "introduction/api-responses#payment-status",
         "title": "Payment Status",
       },
     ],
@@ -5763,20 +5413,15 @@ All error payloads will be comprised of a unique \`errorId\` which you can use t
 
 Don't hesitate to reach out with any questions or feedback. You can email Primer directly at [support@primer.io](mailto:support@primer.io), or contact your Primer account manager.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "api-responses#payment-status",
+    "slug": "introduction/api-responses#payment-status",
     "title": "Payment Status",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "",
     "indexSegmentId": "v2.1-constant",
-    "slug": "api-responses",
+    "slug": "introduction/api-responses",
     "title": "API Responses",
     "type": "page-v4",
     "version": {
@@ -5855,11 +5500,7 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
   {
     "breadcrumbs": [
       {
-        "slug": "idempotency-key",
-        "title": "Idempotency Key",
-      },
-      {
-        "slug": "idempotency-key",
+        "slug": "introduction/idempotency-key",
         "title": "Idempotency Key",
       },
     ],
@@ -5885,17 +5526,12 @@ Keep in mind that a payment request resulting in a declined or failed payment is
 
 As a such, don't use anything too restrictive like an \`orderId\` for the idempotency key as multiple payment attempts and refunds can be made for a single order.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "idempotency-key",
+    "slug": "introduction/idempotency-key",
     "title": "Idempotency Key",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "idempotency-key",
-        "title": "Idempotency Key",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request without risking the user being charged or refunded multiple times.
 
 This is particularly useful when an API call fails due to the request being invalid, due to a network issue, or if Primer is momentarily unavailable.
@@ -5920,7 +5556,7 @@ As a such, don't use anything too restrictive like an \`orderId\` for the idempo
 
 ",
     "indexSegmentId": "v2.1-constant",
-    "slug": "idempotency-key",
+    "slug": "introduction/idempotency-key",
     "title": "Idempotency Key",
     "type": "page-v4",
     "version": {
@@ -5977,11 +5613,7 @@ be made for a single order.",
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
     ],
@@ -5991,43 +5623,35 @@ All of the endpoints below reference a \`connectionId\`. This is the unique Prim
 
 To identify the customer in the context of the loyalty provider, a \`customerId\` is also necessary.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "loyalty-transactions",
+    "slug": "introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#get-the-customer-balance",
+        "slug": "introduction/loyalty-transactions#get-the-customer-balance",
         "title": "Get the customer balance",
       },
     ],
     "content": "Call the [Loyalty Customers](https://apiref.primer.io/reference/get_loyalty_customer) endpoint, which includes the customer's balance. In future this object could contain further details.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "loyalty-transactions#get-the-customer-balance",
+    "slug": "introduction/loyalty-transactions#get-the-customer-balance",
     "title": "Get the customer balance",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#redeem-points",
+        "slug": "introduction/loyalty-transactions#redeem-points",
         "title": "Redeem points",
       },
     ],
@@ -6035,22 +5659,18 @@ To identify the customer in the context of the loyalty provider, a \`customerId\
 
 Provide an \`orderId\` to link multiple transactions together.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "loyalty-transactions#redeem-points",
+    "slug": "introduction/loyalty-transactions#redeem-points",
     "title": "Redeem points",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#refund-points",
+        "slug": "introduction/loyalty-transactions#refund-points",
         "title": "Refund points",
       },
     ],
@@ -6058,38 +5678,29 @@ Provide an \`orderId\` to link multiple transactions together.",
 
 Provide an \`orderId\` to link multiple transactions together.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "loyalty-transactions#refund-points",
+    "slug": "introduction/loyalty-transactions#refund-points",
     "title": "Refund points",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#get-a-list-of-transactions",
+        "slug": "introduction/loyalty-transactions#get-a-list-of-transactions",
         "title": "Get a list of transactions",
       },
     ],
     "content": "Call the [Loyalty Transactions](https://apiref.primer.io/reference/get_loyalty_transaction) endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by \`connectionId\`. You can also filter by \`customerId\` or \`orderId\`.",
     "indexSegmentId": "v2.1-constant",
-    "slug": "loyalty-transactions#get-a-list-of-transactions",
+    "slug": "introduction/loyalty-transactions#get-a-list-of-transactions",
     "title": "Get a list of transactions",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a \`connectionId\`. This is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.
@@ -6098,7 +5709,7 @@ To identify the customer in the context of the loyalty provider, a \`customerId\
 
 ",
     "indexSegmentId": "v2.1-constant",
-    "slug": "loyalty-transactions",
+    "slug": "introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "type": "page-v4",
     "version": {
@@ -6872,11 +6483,7 @@ If you try to vault an already vaulted token, you will get the existing vaulted 
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
     ],
@@ -6891,44 +6498,36 @@ Check out:
 
 Test the APIs yourself in our API Reference. Don't hesitate to reach out with any questions or feedback. You can email Primer directly at [support@primer.io](support@primer.io), or contact your Primer account manager.",
     "indexSegmentId": "v2-constant",
-    "slug": "getting-started",
+    "slug": "introduction/getting-started",
     "title": "Getting Started",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#api-endpoint-deployments",
+        "slug": "introduction/getting-started#api-endpoint-deployments",
         "title": "API Endpoint Deployments",
       },
     ],
     "content": "- Sandbox: [https://api.sandbox.primer.io](https://api.sandbox.primer.io)
 - Production: [https://api.primer.io](https://api.primer.io)",
     "indexSegmentId": "v2-constant",
-    "slug": "getting-started#api-endpoint-deployments",
+    "slug": "introduction/getting-started#api-endpoint-deployments",
     "title": "API Endpoint Deployments",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#api-versions",
+        "slug": "introduction/getting-started#api-versions",
         "title": "API Versions",
       },
     ],
@@ -6941,42 +6540,33 @@ curl -X POST 'https://api.primer.io/' \\
 --header 'X-Api-Version: 2.2'
 \`\`\`",
     "indexSegmentId": "v2-constant",
-    "slug": "getting-started#api-versions",
+    "slug": "introduction/getting-started#api-versions",
     "title": "API Versions",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "introduction/getting-started",
         "title": "Getting Started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-      {
-        "slug": "getting-started#api-versions",
+        "slug": "introduction/getting-started#api-versions",
         "title": "API Versions",
       },
       {
-        "slug": "getting-started#available-versions",
+        "slug": "introduction/getting-started#available-versions",
         "title": "Available Versions",
       },
     ],
     "content": "Read about the available versions of the APIs below on our [Changelog](https://apiref.primer.io/changelog).",
     "indexSegmentId": "v2-constant",
-    "slug": "getting-started#available-versions",
+    "slug": "introduction/getting-started#available-versions",
     "title": "Available Versions",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "getting-started",
-        "title": "Getting Started",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "The Primer API is used to manage Client Sessions, Payments and saved payment methods.
 All other actions are either managed in the Universal Checkout implementation or in the Dashboard.
 
@@ -6990,7 +6580,7 @@ Test the APIs yourself in our API Reference. Don't hesitate to reach out with an
 
 ",
     "indexSegmentId": "v2-constant",
-    "slug": "getting-started",
+    "slug": "introduction/getting-started",
     "title": "Getting Started",
     "type": "page-v4",
     "version": {
@@ -7056,11 +6646,7 @@ Read about the available versions of the APIs below on our Changelog [https://ap
   {
     "breadcrumbs": [
       {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-      {
-        "slug": "authentication",
+        "slug": "introduction/authentication",
         "title": "Authentication",
       },
     ],
@@ -7075,22 +6661,18 @@ curl -X POST 'https://api.primer.io/' \\
 --header 'X-Api-Key: '
 \`\`\`",
     "indexSegmentId": "v2-constant",
-    "slug": "authentication",
+    "slug": "introduction/authentication",
     "title": "Authentication",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "authentication",
+        "slug": "introduction/authentication",
         "title": "Authentication",
       },
       {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-      {
-        "slug": "authentication#managing-api-keys",
+        "slug": "introduction/authentication#managing-api-keys",
         "title": "Managing API Keys",
       },
     ],
@@ -7098,22 +6680,18 @@ curl -X POST 'https://api.primer.io/' \\
 
 You will be able to generate or revoke API keys and edit their respective scopes. Be aware that any changes to existing API keys will be reflected immediately and could cause unwanted side effects.",
     "indexSegmentId": "v2-constant",
-    "slug": "authentication#managing-api-keys",
+    "slug": "introduction/authentication#managing-api-keys",
     "title": "Managing API Keys",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "authentication",
+        "slug": "introduction/authentication",
         "title": "Authentication",
       },
       {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-      {
-        "slug": "authentication#available-scopes",
+        "slug": "introduction/authentication#available-scopes",
         "title": "Available scopes",
       },
     ],
@@ -7129,17 +6707,12 @@ You will be able to generate or revoke API keys and edit their respective scopes
 | \`payment_instrument:read\`     | Read stored payment methods.                                                                                                                                                          |
 | \`payment_instrument:write\`    | Write stored payment methods.                                                                                                                                                         |",
     "indexSegmentId": "v2-constant",
-    "slug": "authentication#available-scopes",
+    "slug": "introduction/authentication#available-scopes",
     "title": "Available scopes",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "authentication",
-        "title": "Authentication",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Primer uses API keys to authenticate requests. You can manage API keys in the [Developers](https://sandbox-dashboard.primer.io/developers) area of the dashboard.
 
 As API keys carry many privileges such as _authorizing_ payments, it is important to keep them **private** and **secure**. Do not hardcode or share API keys (particularly in your source version control system), and they should only be used in your backend.
@@ -7153,7 +6726,7 @@ curl -X POST 'https://api.primer.io/<ENDPOINT>' \\
 
 ",
     "indexSegmentId": "v2-constant",
-    "slug": "authentication",
+    "slug": "introduction/authentication",
     "title": "Authentication",
     "type": "page-v4",
     "version": {
@@ -7213,15 +6786,11 @@ Refund a payment. payment_instrument:read Read stored payment methods. payment_i
   {
     "breadcrumbs": [
       {
-        "slug": "api-responses",
+        "slug": "introduction/api-responses",
         "title": "API Responses",
       },
       {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-      {
-        "slug": "api-responses#status-codes",
+        "slug": "introduction/api-responses#status-codes",
         "title": "Status Codes",
       },
     ],
@@ -7238,22 +6807,18 @@ the Primer REST API.
 | \`409\`       | Entity Already Exists   |
 | \`422\`       | Input Validation Failed |",
     "indexSegmentId": "v2-constant",
-    "slug": "api-responses#status-codes",
+    "slug": "introduction/api-responses#status-codes",
     "title": "Status Codes",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-responses",
+        "slug": "introduction/api-responses",
         "title": "API Responses",
       },
       {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-      {
-        "slug": "api-responses#error-responses",
+        "slug": "introduction/api-responses#error-responses",
         "title": "Error Responses",
       },
     ],
@@ -7274,22 +6839,18 @@ The format of the payload for all errors is common. When an unsuccessful request
 
 All error payloads will be comprised of a unique \`errorId\` which you can use to identify the error, a human description \`description\`, and a \`diagnosticsId\` that you can quote when contacting the support team ([support@primer.io](mailto:support@primer.io)). In case of a badly formed request, Primer will also return additional \`validationErrors\`.",
     "indexSegmentId": "v2-constant",
-    "slug": "api-responses#error-responses",
+    "slug": "introduction/api-responses#error-responses",
     "title": "Error Responses",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "api-responses",
+        "slug": "introduction/api-responses",
         "title": "API Responses",
       },
       {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-      {
-        "slug": "api-responses#payment-status",
+        "slug": "introduction/api-responses#payment-status",
         "title": "Payment Status",
       },
     ],
@@ -7308,20 +6869,15 @@ All error payloads will be comprised of a unique \`errorId\` which you can use t
 
 Don't hesitate to reach out with any questions or feedback. You can email Primer directly at [support@primer.io](mailto:support@primer.io), or contact your Primer account manager.",
     "indexSegmentId": "v2-constant",
-    "slug": "api-responses#payment-status",
+    "slug": "introduction/api-responses#payment-status",
     "title": "Payment Status",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "api-responses",
-        "title": "API Responses",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "",
     "indexSegmentId": "v2-constant",
-    "slug": "api-responses",
+    "slug": "introduction/api-responses",
     "title": "API Responses",
     "type": "page-v4",
     "version": {
@@ -7400,11 +6956,7 @@ Don't hesitate to reach out with any questions or feedback. You can email Primer
   {
     "breadcrumbs": [
       {
-        "slug": "idempotency-key",
-        "title": "Idempotency Key",
-      },
-      {
-        "slug": "idempotency-key",
+        "slug": "introduction/idempotency-key",
         "title": "Idempotency Key",
       },
     ],
@@ -7430,17 +6982,12 @@ Keep in mind that a payment request resulting in a declined or failed payment is
 
 As a such, don't use anything too restrictive like an \`orderId\` for the idempotency key as multiple payment attempts and refunds can be made for a single order.",
     "indexSegmentId": "v2-constant",
-    "slug": "idempotency-key",
+    "slug": "introduction/idempotency-key",
     "title": "Idempotency Key",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "idempotency-key",
-        "title": "Idempotency Key",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Primer supports a request idempotency mechanism for our Payments API. This optional feature enables you to safely retry a request without risking the user being charged or refunded multiple times.
 
 This is particularly useful when an API call fails due to the request being invalid, due to a network issue, or if Primer is momentarily unavailable.
@@ -7465,7 +7012,7 @@ As a such, don't use anything too restrictive like an \`orderId\` for the idempo
 
 ",
     "indexSegmentId": "v2-constant",
-    "slug": "idempotency-key",
+    "slug": "introduction/idempotency-key",
     "title": "Idempotency Key",
     "type": "page-v4",
     "version": {
@@ -7522,11 +7069,7 @@ be made for a single order.",
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
     ],
@@ -7536,43 +7079,35 @@ All of the endpoints below reference a \`connectionId\`. This is the unique Prim
 
 To identify the customer in the context of the loyalty provider, a \`customerId\` is also necessary.",
     "indexSegmentId": "v2-constant",
-    "slug": "loyalty-transactions",
+    "slug": "introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#get-the-customer-balance",
+        "slug": "introduction/loyalty-transactions#get-the-customer-balance",
         "title": "Get the customer balance",
       },
     ],
     "content": "Call the [Loyalty Customers](https://apiref.primer.io/reference/get_loyalty_customer) endpoint, which includes the customer's balance. In future this object could contain further details.",
     "indexSegmentId": "v2-constant",
-    "slug": "loyalty-transactions#get-the-customer-balance",
+    "slug": "introduction/loyalty-transactions#get-the-customer-balance",
     "title": "Get the customer balance",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#redeem-points",
+        "slug": "introduction/loyalty-transactions#redeem-points",
         "title": "Redeem points",
       },
     ],
@@ -7580,22 +7115,18 @@ To identify the customer in the context of the loyalty provider, a \`customerId\
 
 Provide an \`orderId\` to link multiple transactions together.",
     "indexSegmentId": "v2-constant",
-    "slug": "loyalty-transactions#redeem-points",
+    "slug": "introduction/loyalty-transactions#redeem-points",
     "title": "Redeem points",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#refund-points",
+        "slug": "introduction/loyalty-transactions#refund-points",
         "title": "Refund points",
       },
     ],
@@ -7603,38 +7134,29 @@ Provide an \`orderId\` to link multiple transactions together.",
 
 Provide an \`orderId\` to link multiple transactions together.",
     "indexSegmentId": "v2-constant",
-    "slug": "loyalty-transactions#refund-points",
+    "slug": "introduction/loyalty-transactions#refund-points",
     "title": "Refund points",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "loyalty-transactions",
+        "slug": "introduction/loyalty-transactions",
         "title": "Loyalty Transactions",
       },
       {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-      {
-        "slug": "loyalty-transactions#get-a-list-of-transactions",
+        "slug": "introduction/loyalty-transactions#get-a-list-of-transactions",
         "title": "Get a list of transactions",
       },
     ],
     "content": "Call the [Loyalty Transactions](https://apiref.primer.io/reference/get_loyalty_transaction) endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by \`connectionId\`. You can also filter by \`customerId\` or \`orderId\`.",
     "indexSegmentId": "v2-constant",
-    "slug": "loyalty-transactions#get-a-list-of-transactions",
+    "slug": "introduction/loyalty-transactions#get-a-list-of-transactions",
     "title": "Get a list of transactions",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "loyalty-transactions",
-        "title": "Loyalty Transactions",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.
 
 All of the endpoints below reference a \`connectionId\`. This is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.
@@ -7643,7 +7165,7 @@ To identify the customer in the context of the loyalty provider, a \`customerId\
 
 ",
     "indexSegmentId": "v2-constant",
-    "slug": "loyalty-transactions",
+    "slug": "introduction/loyalty-transactions",
     "title": "Loyalty Transactions",
     "type": "page-v4",
     "version": {
@@ -8322,11 +7844,7 @@ exports[`generateAlgoliaSearchRecordsForDocs > {"name":"vellum"} 1`] = `
   {
     "breadcrumbs": [
       {
-        "slug": "prompt-template-syntax",
-        "title": "Prompt Template Syntax",
-      },
-      {
-        "slug": "prompt-template-syntax",
+        "slug": "help-center/prompts/prompt-template-syntax",
         "title": "Prompt Template Syntax",
       },
     ],
@@ -8344,22 +7862,18 @@ Vellum’s Prompt Syntax supports dynamically constructed
 prompts via [jinja templating](https://jinja.palletsprojects.com/en/3.1.x/templates/)
 and what we call “blocks.”",
     "indexSegmentId": "constant",
-    "slug": "prompt-template-syntax",
+    "slug": "help-center/prompts/prompt-template-syntax",
     "title": "Prompt Template Syntax",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "prompt-template-syntax",
+        "slug": "help-center/prompts/prompt-template-syntax",
         "title": "Prompt Template Syntax",
       },
       {
-        "slug": "prompt-template-syntax",
-        "title": "Prompt Template Syntax",
-      },
-      {
-        "slug": "prompt-template-syntax#jinja-templating",
+        "slug": "help-center/prompts/prompt-template-syntax#jinja-templating",
         "title": "Jinja Templating",
       },
     ],
@@ -8369,26 +7883,22 @@ Below are the most common things you’re likely to want to do,
 but you can find jinja’s complete documentation
 [here](https://jinja.palletsprojects.com/en/3.1.x/templates/).",
     "indexSegmentId": "constant",
-    "slug": "prompt-template-syntax#jinja-templating",
+    "slug": "help-center/prompts/prompt-template-syntax#jinja-templating",
     "title": "Jinja Templating",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "prompt-template-syntax",
+        "slug": "help-center/prompts/prompt-template-syntax",
         "title": "Prompt Template Syntax",
       },
       {
-        "slug": "prompt-template-syntax",
-        "title": "Prompt Template Syntax",
-      },
-      {
-        "slug": "prompt-template-syntax#jinja-templating",
+        "slug": "help-center/prompts/prompt-template-syntax#jinja-templating",
         "title": "Jinja Templating",
       },
       {
-        "slug": "prompt-template-syntax#variables",
+        "slug": "help-center/prompts/prompt-template-syntax#variables",
         "title": "Variables",
       },
     ],
@@ -8404,26 +7914,22 @@ You are a {{ personality_type }} AI assistant.
 Note that all variables are treated as strings!
 ",
     "indexSegmentId": "constant",
-    "slug": "prompt-template-syntax#variables",
+    "slug": "help-center/prompts/prompt-template-syntax#variables",
     "title": "Variables",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "prompt-template-syntax",
+        "slug": "help-center/prompts/prompt-template-syntax",
         "title": "Prompt Template Syntax",
       },
       {
-        "slug": "prompt-template-syntax",
-        "title": "Prompt Template Syntax",
-      },
-      {
-        "slug": "prompt-template-syntax#jinja-templating",
+        "slug": "help-center/prompts/prompt-template-syntax#jinja-templating",
         "title": "Jinja Templating",
       },
       {
-        "slug": "prompt-template-syntax#conditionals",
+        "slug": "help-center/prompts/prompt-template-syntax#conditionals",
         "title": "Conditionals",
       },
     ],
@@ -8440,26 +7946,22 @@ You end every message with a smiling emoji.
 \`\`\`
 ",
     "indexSegmentId": "constant",
-    "slug": "prompt-template-syntax#conditionals",
+    "slug": "help-center/prompts/prompt-template-syntax#conditionals",
     "title": "Conditionals",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "prompt-template-syntax",
+        "slug": "help-center/prompts/prompt-template-syntax",
         "title": "Prompt Template Syntax",
       },
       {
-        "slug": "prompt-template-syntax",
-        "title": "Prompt Template Syntax",
-      },
-      {
-        "slug": "prompt-template-syntax#jinja-templating",
+        "slug": "help-center/prompts/prompt-template-syntax#jinja-templating",
         "title": "Jinja Templating",
       },
       {
-        "slug": "prompt-template-syntax#comments",
+        "slug": "help-center/prompts/prompt-template-syntax#comments",
         "title": "Comments",
       },
     ],
@@ -8473,17 +7975,12 @@ Hello, world!
 \`\`\`
 ",
     "indexSegmentId": "constant",
-    "slug": "prompt-template-syntax#comments",
+    "slug": "help-center/prompts/prompt-template-syntax#comments",
     "title": "Comments",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "prompt-template-syntax",
-        "title": "Prompt Template Syntax",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "When using an LLM, you input a prompt and get back a completion.
 However, in order for a prompt to be reusable, you’ll want to
 be able to specify certain parts of it dynamically.
@@ -8500,7 +7997,7 @@ and what we call “blocks.”
 
 ",
     "indexSegmentId": "constant",
-    "slug": "prompt-template-syntax",
+    "slug": "help-center/prompts/prompt-template-syntax",
     "title": "Prompt Template Syntax",
     "type": "page-v4",
   },
@@ -8566,11 +8063,7 @@ You can use jinja to leave comments in your prompt that don’t use up any token
   {
     "breadcrumbs": [
       {
-        "slug": "playground-history-and-collaboration",
-        "title": "Playground History and Collaboration",
-      },
-      {
-        "slug": "playground-history-and-collaboration",
+        "slug": "help-center/prompts/playground-history-and-collaboration",
         "title": "Playground History and Collaboration",
       },
     ],
@@ -8578,22 +8071,18 @@ You can use jinja to leave comments in your prompt that don’t use up any token
 collaboration between multiple models and prompts. Save, tag,
 and share your work with ease using the features outlined below.",
     "indexSegmentId": "constant",
-    "slug": "playground-history-and-collaboration",
+    "slug": "help-center/prompts/playground-history-and-collaboration",
     "title": "Playground History and Collaboration",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "playground-history-and-collaboration",
+        "slug": "help-center/prompts/playground-history-and-collaboration",
         "title": "Playground History and Collaboration",
       },
       {
-        "slug": "playground-history-and-collaboration",
-        "title": "Playground History and Collaboration",
-      },
-      {
-        "slug": "playground-history-and-collaboration#history",
+        "slug": "help-center/prompts/playground-history-and-collaboration#history",
         "title": "History",
       },
     ],
@@ -8605,22 +8094,18 @@ will appear on the left side of your screen.
 
 ![Playground History](https://vellum-ai.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd638fb25-1fc2-4b3a-adeb-295f56837599%2FScreenshot_5_9_23__6_56_PM.png?table=block&id=d0a3d881-45a2-43fe-954a-d9c77e3641b1&spaceId=71c05e3e-272b-4acf-9889-90a304d95d06&width=2000&userId=&cache=v2)",
     "indexSegmentId": "constant",
-    "slug": "playground-history-and-collaboration#history",
+    "slug": "help-center/prompts/playground-history-and-collaboration#history",
     "title": "History",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "playground-history-and-collaboration",
+        "slug": "help-center/prompts/playground-history-and-collaboration",
         "title": "Playground History and Collaboration",
       },
       {
-        "slug": "playground-history-and-collaboration",
-        "title": "Playground History and Collaboration",
-      },
-      {
-        "slug": "playground-history-and-collaboration#save-collaboration-and-tags",
+        "slug": "help-center/prompts/playground-history-and-collaboration#save-collaboration-and-tags",
         "title": "Save, Collaboration, and Tags",
       },
     ],
@@ -8634,22 +8119,18 @@ and you can also tag them to keep better track of your work.
 
 ![Playground](https://vellum-ai.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc924c967-face-48d8-946f-29559ee35edf%2FScreenshot_5_9_23__7_20_PM.png?table=block&id=e5eed871-fcb8-4122-826c-3542801fc8ec&spaceId=71c05e3e-272b-4acf-9889-90a304d95d06&width=2000&userId=&cache=v2)",
     "indexSegmentId": "constant",
-    "slug": "playground-history-and-collaboration#save-collaboration-and-tags",
+    "slug": "help-center/prompts/playground-history-and-collaboration#save-collaboration-and-tags",
     "title": "Save, Collaboration, and Tags",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "playground-history-and-collaboration",
+        "slug": "help-center/prompts/playground-history-and-collaboration",
         "title": "Playground History and Collaboration",
       },
       {
-        "slug": "playground-history-and-collaboration",
-        "title": "Playground History and Collaboration",
-      },
-      {
-        "slug": "playground-history-and-collaboration#share-your-work",
+        "slug": "help-center/prompts/playground-history-and-collaboration#share-your-work",
         "title": "Share Your Work",
       },
     ],
@@ -8662,24 +8143,19 @@ at the top right of the page.
 With these powerful features, Vellum Playground makes it easy to collaborate,
 iterate, and share your work, all in one place.",
     "indexSegmentId": "constant",
-    "slug": "playground-history-and-collaboration#share-your-work",
+    "slug": "help-center/prompts/playground-history-and-collaboration#share-your-work",
     "title": "Share Your Work",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "playground-history-and-collaboration",
-        "title": "Playground History and Collaboration",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Vellum Playground is a powerful tool for rapid iteration and
 collaboration between multiple models and prompts. Save, tag,
 and share your work with ease using the features outlined below.
 
 ",
     "indexSegmentId": "constant",
-    "slug": "playground-history-and-collaboration",
+    "slug": "help-center/prompts/playground-history-and-collaboration",
     "title": "Playground History and Collaboration",
     "type": "page-v4",
   },
@@ -8743,33 +8219,25 @@ With these powerful features, Vellum Playground makes it easy to collaborate, it
   {
     "breadcrumbs": [
       {
-        "slug": "uploading-documents",
-        "title": "Uploading Documents",
-      },
-      {
-        "slug": "uploading-documents",
+        "slug": "help-center/documents/uploading-documents",
         "title": "Uploading Documents",
       },
     ],
     "content": "Any document that you want to query against should be uploaded ahead
 of time at [https://app.vellum.ai/document-indexes](https://app.vellum.ai/document-indexes).",
     "indexSegmentId": "constant",
-    "slug": "uploading-documents",
+    "slug": "help-center/documents/uploading-documents",
     "title": "Uploading Documents",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "uploading-documents",
+        "slug": "help-center/documents/uploading-documents",
         "title": "Uploading Documents",
       },
       {
-        "slug": "uploading-documents",
-        "title": "Uploading Documents",
-      },
-      {
-        "slug": "uploading-documents#what-is-a-document-index",
+        "slug": "help-center/documents/uploading-documents#what-is-a-document-index",
         "title": "What is a Document Index?",
       },
     ],
@@ -8781,22 +8249,18 @@ stored in one index. Here's how it looks in Vellum's UI:
 
 ![Document Index](https://vellum-ai.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F54b2e006-53eb-4d6a-8a90-e872d2e16426%2FScreen_Shot_2023-03-08_at_3.18.42_PM.png?table=block&id=28e4ab83-3f41-4971-b76e-d26bb9e62d53&spaceId=71c05e3e-272b-4acf-9889-90a304d95d06&width=2000&userId=&cache=v2)",
     "indexSegmentId": "constant",
-    "slug": "uploading-documents#what-is-a-document-index",
+    "slug": "help-center/documents/uploading-documents#what-is-a-document-index",
     "title": "What is a Document Index?",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "uploading-documents",
+        "slug": "help-center/documents/uploading-documents",
         "title": "Uploading Documents",
       },
       {
-        "slug": "uploading-documents",
-        "title": "Uploading Documents",
-      },
-      {
-        "slug": "uploading-documents#how-to-upload-documents",
+        "slug": "help-center/documents/uploading-documents#how-to-upload-documents",
         "title": "How to upload documents?",
       },
     ],
@@ -8812,23 +8276,18 @@ initially populated with the name of the file that you upload.
 
 **External ID** - As the contents of a document change and the old documents becomes out of date, you can submit the updated document for reindexing re-uploading it and specifying the same \\\`External ID\\\`.",
     "indexSegmentId": "constant",
-    "slug": "uploading-documents#how-to-upload-documents",
+    "slug": "help-center/documents/uploading-documents#how-to-upload-documents",
     "title": "How to upload documents?",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "uploading-documents",
-        "title": "Uploading Documents",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "Any document that you want to query against should be uploaded ahead
 of time at [https://app.vellum.ai/document-indexes](https://app.vellum.ai/document-indexes).
 
 ",
     "indexSegmentId": "constant",
-    "slug": "uploading-documents",
+    "slug": "help-center/documents/uploading-documents",
     "title": "Uploading Documents",
     "type": "page-v4",
   },
@@ -8883,11 +8342,7 @@ for reindexing re-uploading it and specifying the same \`External ID\`.",
   {
     "breadcrumbs": [
       {
-        "slug": "monitoring-production-traffic",
-        "title": "Monitoring production traffic",
-      },
-      {
-        "slug": "monitoring-production-traffic",
+        "slug": "help-center/deployments/monitoring-production-traffic",
         "title": "Monitoring production traffic",
       },
     ],
@@ -8910,17 +8365,12 @@ reach out and we can add it in!
 
 **Num LLM Provider Errors Over Time:** Number of errors from the LLM provider",
     "indexSegmentId": "constant",
-    "slug": "monitoring-production-traffic",
+    "slug": "help-center/deployments/monitoring-production-traffic",
     "title": "Monitoring production traffic",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "monitoring-production-traffic",
-        "title": "Monitoring production traffic",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "You can monitor production traffic of a Vellum Deployment through
 all the charts in the Monitoring tab. These charts can be filtered
 for various time ranges using the “Relative Date” button. This help
@@ -8942,7 +8392,7 @@ reach out and we can add it in!
 
 ",
     "indexSegmentId": "constant",
-    "slug": "monitoring-production-traffic",
+    "slug": "help-center/deployments/monitoring-production-traffic",
     "title": "Monitoring production traffic",
     "type": "page-v4",
   },
@@ -8987,15 +8437,11 @@ Num LLM Provider Errors Over Time: Number of errors from the LLM provider",
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "api-reference/introduction/getting-started",
         "title": "Getting started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting started",
-      },
-      {
-        "slug": "getting-started#welcome-%F0%9F%91%8B",
+        "slug": "api-reference/introduction/getting-started#welcome-%F0%9F%91%8B",
         "title": "Welcome 👋",
       },
     ],
@@ -9005,22 +8451,18 @@ as well as the parameters and responses that they accept and return.
 We will be exposing more and more of our APIs over time as they stabilize. If there is some action you can perform
 via the UI that you wish you could perform via API, please let us know and we can expose it here in an unstable state.",
     "indexSegmentId": "constant",
-    "slug": "getting-started#welcome-%F0%9F%91%8B",
+    "slug": "api-reference/introduction/getting-started#welcome-%F0%9F%91%8B",
     "title": "Welcome 👋",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "api-reference/introduction/getting-started",
         "title": "Getting started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting started",
-      },
-      {
-        "slug": "getting-started#api-stability",
+        "slug": "api-reference/introduction/getting-started#api-stability",
         "title": "API Stability",
       },
     ],
@@ -9030,22 +8472,18 @@ and
 Unstable
 tags to differentiate between those that are stable and those that are not.",
     "indexSegmentId": "constant",
-    "slug": "getting-started#api-stability",
+    "slug": "api-reference/introduction/getting-started#api-stability",
     "title": "API Stability",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "api-reference/introduction/getting-started",
         "title": "Getting started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting started",
-      },
-      {
-        "slug": "getting-started#base-urls",
+        "slug": "api-reference/introduction/getting-started#base-urls",
         "title": "Base URLs",
       },
     ],
@@ -9054,22 +8492,18 @@ the case, they will say so in their description.
 
 Unless otherwise specified, all endpoints use \`https://api.vellum.ai\` as their base URL.",
     "indexSegmentId": "constant",
-    "slug": "getting-started#base-urls",
+    "slug": "api-reference/introduction/getting-started#base-urls",
     "title": "Base URLs",
     "type": "markdown-section-v1",
   },
   {
     "breadcrumbs": [
       {
-        "slug": "getting-started",
+        "slug": "api-reference/introduction/getting-started",
         "title": "Getting started",
       },
       {
-        "slug": "getting-started",
-        "title": "Getting started",
-      },
-      {
-        "slug": "getting-started#official-api-clients",
+        "slug": "api-reference/introduction/getting-started#official-api-clients",
         "title": "Official API Clients:",
       },
     ],
@@ -9081,20 +8515,15 @@ with all stable endpoints. You can find them here:
 
 ",
     "indexSegmentId": "constant",
-    "slug": "getting-started#official-api-clients",
+    "slug": "api-reference/introduction/getting-started#official-api-clients",
     "title": "Official API Clients:",
     "type": "markdown-section-v1",
   },
   {
-    "breadcrumbs": [
-      {
-        "slug": "getting-started",
-        "title": "Getting started",
-      },
-    ],
+    "breadcrumbs": [],
     "description": "",
     "indexSegmentId": "constant",
-    "slug": "getting-started",
+    "slug": "api-reference/introduction/getting-started",
     "title": "Getting started",
     "type": "page-v4",
   },
