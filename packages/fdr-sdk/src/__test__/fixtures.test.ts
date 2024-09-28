@@ -2,6 +2,7 @@ import isPlainObject from "@fern-ui/core-utils/isPlainObject";
 import fs from "fs";
 import path from "path";
 import { FernNavigation } from "..";
+import * as ApiDefinition from "../api-definition";
 import { ApiDefinitionV1ToLatest } from "../api-definition/migrators/v1ToV2";
 import { NodeCollector } from "../navigation/NodeCollector";
 import { FernNavigationV1ToLatest } from "../navigation/migrators/v1ToV2";
@@ -15,11 +16,19 @@ function testNavigationConfigConverter(fixtureName: string): void {
     const v1 = FernNavigation.V1.toRootNode(fixture);
     const latest = FernNavigationV1ToLatest.create().root(v1);
 
+    const v2Apis = Object.values(fixture.definition.apis).map((api) =>
+        ApiDefinitionV1ToLatest.from(api, {
+            useJavaScriptAsTypeScript: false,
+            alwaysEnableJavaScriptFetch: false,
+            usesApplicationJsonInFormDataValue: false,
+        }).migrate(),
+    );
+
     // eslint-disable-next-line vitest/valid-title
     describe(fixtureName, () => {
         const collector = new NodeCollector(latest);
 
-        it("gets all urls from docs config", async () => {
+        it("gets all urls from docs config", () => {
             expect(JSON.stringify(sortObject(latest), undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/node.json`,
             );
@@ -60,19 +69,26 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 `output/${fixtureName}/versionNodes.json`,
             );
 
-            expect(
-                JSON.stringify(
-                    Object.values(fixture.definition.apis).map((api) =>
-                        ApiDefinitionV1ToLatest.from(api, {
-                            useJavaScriptAsTypeScript: false,
-                            alwaysEnableJavaScriptFetch: false,
-                            usesApplicationJsonInFormDataValue: false,
-                        }).migrate(),
-                    ),
-                    undefined,
-                    2,
-                ),
-            ).toMatchFileSnapshot(`output/${fixtureName}/apiDefinitions.json`);
+            expect(JSON.stringify(v2Apis, undefined, 2)).toMatchFileSnapshot(
+                `output/${fixtureName}/apiDefinitions.json`,
+            );
+        });
+
+        describe("transformer", () => {
+            it("should generate unique keys", async () => {
+                for (const api of Object.values(v2Apis)) {
+                    const keys: string[] = [];
+
+                    await ApiDefinition.Transformer.keys((key) => keys.push(key)).apiDefinition(api);
+
+                    expect(JSON.stringify(keys, undefined, 2)).toMatchFileSnapshot(
+                        `output/${fixtureName}/apiDefinitionKeys-${api.id}.json`,
+                    );
+
+                    // all keys must be unique
+                    expect(Array.from(new Set(keys)).length).toBe(keys.length);
+                }
+            });
         });
 
         it("should have unique canonical urls for each page", () => {
