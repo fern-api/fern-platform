@@ -137,14 +137,23 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
             return [];
         }
 
-        const slug = page.fullSlug && page.fullSlug.length > 0 ? page.fullSlug.join("/") : page.urlSlug;
+        const { indexSegment } = context;
+        const pageContext =
+            page.fullSlug != null
+                ? context.withFullSlug(page.fullSlug)
+                : context.withPathPart({
+                      name: page.title,
+                      urlSlug: page.urlSlug,
+                      skipUrlSlug: undefined,
+                  });
+
+        const slug = pageContext.path;
         const breadcrumbs: BreadcrumbsInfo[] = [
             {
                 title: page.title,
                 slug,
             },
         ];
-        const { indexSegment } = context;
 
         const markdownSectionRecords: AlgoliaSearchRecord[] = this.parseMarkdownItem(
             pageContent.markdown,
@@ -154,15 +163,6 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
             page.title,
         );
 
-        // TODO remove this after migration
-        const pageContext =
-            page.fullSlug != null
-                ? context.withFullSlug(page.fullSlug)
-                : context.withPathPart({
-                      name: page.title,
-                      urlSlug: page.urlSlug,
-                      skipUrlSlug: undefined,
-                  });
         const processedContent = convertMarkdownToText(pageContent.markdown);
 
         return markdownSectionRecords.concat([
