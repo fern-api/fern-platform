@@ -2,7 +2,7 @@ import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
 import { BaseHit, Hit } from "instantsearch.js";
-import { Snippet } from "react-instantsearch";
+import { AlgoliaSnippet } from "../algolia/AlgoliaSnippet";
 import { SearchHitBreadCrumbsV3 } from "./SearchHitBreadCrumbsV3";
 
 export declare namespace MarkdownSectionRecordV1 {
@@ -17,7 +17,7 @@ export const MarkdownSectionRecordV1: React.FC<MarkdownSectionRecordV1.Props> = 
         <div className="flex w-full flex-col space-y-1.5">
             <div className="flex justify-between">
                 <span
-                    className={cn("line-clamp-1 text-sm text-start", {
+                    className={cn("line-clamp-1 text-base text-start", {
                         "t-default": !isHovered,
                         "t-accent-aaa": isHovered,
                     })}
@@ -41,15 +41,7 @@ export const MarkdownSectionRecordV1: React.FC<MarkdownSectionRecordV1.Props> = 
                             "t-muted": !isHovered,
                         })}
                     >
-                        <Snippet
-                            attribute="content"
-                            hit={hit}
-                            className={cn("line-clamp-1 text-start text-xs", {
-                                "t-accent-aaa": isHovered,
-                                "t-muted": !isHovered,
-                            })}
-                            classNames={{ highlighted: "fern-highlight" }}
-                        />
+                        <AlgoliaSnippet hit={hit} />
                     </span>
                 </div>
             )}

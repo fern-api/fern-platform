@@ -3,7 +3,7 @@ import { FernButton, FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 
-import { Xmark } from "iconoir-react";
+import { Minus, Xmark } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
@@ -19,22 +19,83 @@ export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 const COHERE_AI_HIT_ID = "cohere-ai-hit";
+const SEARCH_HITS_PER_SECTION = 3;
 
 const expandHits = (expanded: boolean, hits: SearchRecord[]) => {
-    return expanded ? hits : hits.slice(0, 3);
+    return expanded ? hits : hits.slice(0, SEARCH_HITS_PER_SECTION);
 };
 
-const ExpandButton: React.FC<{ setExpanded: (expanded: boolean) => void }> = ({ setExpanded }) => (
-    <div className="flex justify-center pt-2">
+const ExpandButton: React.FC<{ expanded: boolean; setExpanded: (expanded: boolean) => void }> = ({
+    expanded,
+    setExpanded,
+}) => (
+    <div className="justify-end">
         <FernButton
             className="text-left"
             variant="minimal"
-            onClick={() => setExpanded(true)}
-            icon={<Xmark className="transition rotate-45" />}
+            onClick={() => setExpanded(!expanded)}
+            icon={expanded ? <Minus /> : <Xmark className="transition rotate-45" />}
+            size="small"
         >
-            Show More
+            Show {expanded ? "Less" : "More"}
         </FernButton>
     </div>
+);
+
+const SearchSection: React.FC<{
+    title: string;
+    hits: SearchRecord[];
+    expanded: boolean;
+    setExpanded: (expanded: boolean) => void;
+    refs: React.MutableRefObject<Map<string, HTMLAnchorElement>>;
+    hoveredSearchHitId: string | null;
+    setHoveredSearchHitId: (id: string) => void;
+}> = ({ title, hits, expanded, setExpanded, refs, hoveredSearchHitId, setHoveredSearchHitId }) => (
+    <div className="pb-4">
+        <div className="flex justify-between items-center">
+            <div className="text-normal font-semibold pl-0.5">{title}</div>
+            {hits.length > SEARCH_HITS_PER_SECTION && <ExpandButton expanded={expanded} setExpanded={setExpanded} />}
+        </div>
+        <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+        {expandHits(expanded, hits).map((hit) => (
+            <SearchHit
+                setRef={(elem) => {
+                    if (elem != null) {
+                        refs.current.set(hit.objectID, elem);
+                    }
+                }}
+                key={hit.objectID}
+                hit={hit}
+                isHovered={hoveredSearchHitId === hit.objectID}
+                onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
+            />
+        ))}
+    </div>
+);
+
+const MobileSearchSection: React.FC<{
+    title: string;
+    hits: SearchRecord[];
+    expanded: boolean;
+    setExpanded: (expanded: boolean) => void;
+    refs: React.MutableRefObject<Map<string, HTMLAnchorElement>>;
+}> = ({ title, hits, expanded, setExpanded, refs }) => (
+    <>
+        <h3 className="text-lg font-semibold mt-4 pl-0.5">{title}</h3>
+        <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+        {expandHits(expanded, hits).map((hit) => (
+            <SearchHit
+                setRef={(elem) => {
+                    if (elem != null) {
+                        refs.current.set(hit.objectID, elem);
+                    }
+                }}
+                key={hit.objectID}
+                hit={hit}
+            />
+        ))}
+        <ExpandButton expanded={expanded} setExpanded={setExpanded} />
+    </>
 );
 
 export const SearchHits: React.FC = () => {
@@ -48,7 +109,6 @@ export const SearchHits: React.FC = () => {
     const [orderedHits, setOrderedHits] = useState<SearchRecord[]>([]);
     const [expandEndpoints, setExpandEndpoints] = useState(false);
     const [expandPages, setExpandPages] = useState(false);
-    const [expandFields, setExpandFields] = useState(false);
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -66,13 +126,13 @@ export const SearchHits: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        const { endpointHits, pageHits, fieldHits } = filterHits(hits);
-        setOrderedHits([
-            ...expandHits(expandEndpoints, endpointHits),
-            ...expandHits(expandPages, pageHits),
-            ...expandHits(expandFields, fieldHits),
-        ]);
-    }, [hits, expandEndpoints, expandPages, expandFields]);
+        setExpandEndpoints(false);
+        setExpandPages(false);
+    }, [hits]);
+    useEffect(() => {
+        const { endpointHits, pageHits } = filterHits(hits);
+        setOrderedHits([...expandHits(expandEndpoints, endpointHits), ...expandHits(expandPages, pageHits)]);
+    }, [hits, expandEndpoints, expandPages]);
 
     const hoveredSearchHit = useMemo(() => {
         return orderedHits
@@ -87,7 +147,6 @@ export const SearchHits: React.FC = () => {
         }
     }, [hits, isAiChatbotEnabledInPreview]);
 
-    // TODO (rohin): change this
     useKeyboardPress({
         key: "Up",
         onPress: () => {
@@ -110,7 +169,6 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
-    // TODO (rohin): change this
     useKeyboardPress({
         key: "Down",
         onPress: () => {
@@ -182,7 +240,7 @@ export const SearchHits: React.FC = () => {
         return null;
     }
 
-    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
+    const { endpointHits, pageHits } = filterHits(hits);
 
     return (
         <FernScrollArea
@@ -202,65 +260,27 @@ export const SearchHits: React.FC = () => {
                     onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
                 />
             )}
-
             {endpointHits.length > 0 && (
-                <>
-                    <p className="text-normal font-semibold mb-2 pl-0.5">Endpoints</p>
-
-                    {expandHits(expandEndpoints, endpointHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                            isHovered={hoveredSearchHitId === hit.objectID}
-                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                        />
-                    ))}
-                    {!expandEndpoints && <ExpandButton setExpanded={setExpandEndpoints} />}
-                </>
+                <SearchSection
+                    title="Endpoints"
+                    hits={endpointHits}
+                    expanded={expandEndpoints}
+                    setExpanded={setExpandEndpoints}
+                    refs={refs}
+                    hoveredSearchHitId={hoveredSearchHitId}
+                    setHoveredSearchHitId={setHoveredSearchHitId}
+                />
             )}
             {pageHits.length > 0 && (
-                <>
-                    <p className="text-normal font-semibold mb-2 pl-0.5">Pages</p>
-                    {expandHits(expandPages, pageHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                            isHovered={hoveredSearchHitId === hit.objectID}
-                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                        />
-                    ))}
-                    {!expandPages && <ExpandButton setExpanded={setExpandPages} />}
-                </>
-            )}
-
-            {fieldHits.length > 0 && (
-                <>
-                    <p className="text-normal font-semibold mb-2 pl-0.5">Fields</p>
-                    {expandHits(expandFields, fieldHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                            isHovered={hoveredSearchHitId === hit.objectID}
-                            onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
-                        />
-                    ))}
-                    {!expandFields && <ExpandButton setExpanded={setExpandFields} />}
-                </>
+                <SearchSection
+                    title="Pages"
+                    hits={pageHits}
+                    expanded={expandPages}
+                    setExpanded={setExpandPages}
+                    refs={refs}
+                    hoveredSearchHitId={hoveredSearchHitId}
+                    setHoveredSearchHitId={setHoveredSearchHitId}
+                />
             )}
         </FernScrollArea>
     );
@@ -272,7 +292,6 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
     const search = useInstantSearch();
     const [expandEndpoints, setExpandEndpoints] = useState(false);
     const [expandPages, setExpandPages] = useState(false);
-    const [expandFields, setExpandFields] = useState(false);
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
@@ -285,7 +304,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
         return <div className="justify t-muted flex w-full flex-col hits-center py-3">No results found</div>;
     }
 
-    const { endpointHits, pageHits, fieldHits } = filterHits(hits);
+    const { endpointHits, pageHits } = filterHits(hits);
 
     return (
         <FernScrollArea rootClassName="min-h-[80vh]" className="mask-grad-top-4 px-2 pt-4">
@@ -301,60 +320,22 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                 />
             )}
             {endpointHits.length > 0 && (
-                <>
-                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Endpoints</h3>
-                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {expandHits(expandEndpoints, endpointHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                        />
-                    ))}
-                    {!expandEndpoints && <ExpandButton setExpanded={setExpandEndpoints} />}
-                </>
+                <MobileSearchSection
+                    title="Endpoints"
+                    hits={endpointHits}
+                    expanded={expandEndpoints}
+                    setExpanded={setExpandEndpoints}
+                    refs={refs}
+                />
             )}
-
             {pageHits.length > 0 && (
-                <>
-                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Fields</h3>
-                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {expandHits(expandPages, pageHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                        />
-                    ))}
-                    {!expandPages && <ExpandButton setExpanded={setExpandPages} />}
-                </>
-            )}
-
-            {fieldHits.length > 0 && (
-                <>
-                    <h3 className="text-lg font-semibold mt-4 pl-0.5">Pages</h3>
-                    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
-                    {expandHits(expandFields, fieldHits).map((hit) => (
-                        <SearchHit
-                            setRef={(elem) => {
-                                if (elem != null) {
-                                    refs.current.set(hit.objectID, elem);
-                                }
-                            }}
-                            key={hit.objectID}
-                            hit={hit}
-                        />
-                    ))}
-                    {!expandFields && <ExpandButton setExpanded={setExpandFields} />}
-                </>
+                <MobileSearchSection
+                    title="Fields"
+                    hits={pageHits}
+                    expanded={expandPages}
+                    setExpanded={setExpandPages}
+                    refs={refs}
+                />
             )}
         </FernScrollArea>
     );
@@ -371,14 +352,15 @@ function filterHits(hits: SearchRecord[]) {
             "endpoint-v4",
             "webhook-v4",
             "websocket-v4",
+            "endpoint-field-v1",
+            "webhook-field-v1",
+            "websocket-field-v1",
         ]),
         pages: new Set(["page", "page-v2", "page-v3", "page-v4", "markdown-section-v1"]),
-        fields: new Set(["endpoint-field-v1", "webhook-field-v1", "websocket-field-v1"]),
     };
 
     const endpointHits = hits.filter((hit) => hitTypeMap["endpoints"].has(hit.type));
     const pageHits = hits.filter((hit) => hitTypeMap["pages"].has(hit.type));
-    const fieldHits = hits.filter((hit) => hitTypeMap["fields"].has(hit.type));
 
-    return { endpointHits, pageHits, fieldHits };
+    return { endpointHits, pageHits };
 }

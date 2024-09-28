@@ -7,6 +7,7 @@ import {
     FernNavigation,
     convertDbAPIDefinitionToRead,
     kebabCase,
+    visitDbNavigationTab,
 } from "@fern-api/fdr-sdk";
 import { EndpointPathPart } from "@fern-api/fdr-sdk/src/client/APIV1Read";
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -15,7 +16,8 @@ import { BreadcrumbsInfo } from "../../api/generated/api";
 import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";
 import { compact } from "../../util/object";
-import { AlgoliaSearchRecordGenerator, NavigationContext, getFrontmatter } from "./AlgoliaSearchRecordGenerator";
+import { AlgoliaSearchRecordGenerator, getFrontmatter } from "./AlgoliaSearchRecordGenerator";
+import { NavigationContext } from "./NavigationContext";
 import type { AlgoliaSearchRecord, IndexSegment, MarkdownNode, TypeReferenceWithMetadata } from "./types";
 
 export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator {
@@ -134,10 +136,11 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
             return [];
         }
 
+        const slug = page.fullSlug && page.fullSlug.length > 0 ? page.fullSlug.join("/") : page.urlSlug;
         const breadcrumbs: BreadcrumbsInfo[] = [
             {
                 title: page.title,
-                slug: page.urlSlug,
+                slug,
             },
         ];
         const { indexSegment } = context;
@@ -146,7 +149,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
             pageContent.markdown,
             breadcrumbs,
             indexSegment,
-            page.urlSlug,
+            slug,
             page.title,
         );
 
@@ -184,45 +187,109 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
         ]);
     }
 
+    protected override generateAlgoliaSearchRecordsForUnversionedTabbedNavigationConfig(
+        config: DocsV1Db.UnversionedTabbedNavigationConfig,
+        context: NavigationContext,
+    ): AlgoliaSearchRecord[] {
+        const records =
+            config.tabsV2?.flatMap((tab) => {
+                switch (tab.type) {
+                    case "group":
+                        return tab.items.flatMap((item) =>
+                            this.generateAlgoliaSearchRecordsForNavigationItem(
+                                item,
+                                context.withPathPart({
+                                    name: tab.title,
+                                    urlSlug: tab.urlSlug,
+                                    skipUrlSlug: tab.skipUrlSlug,
+                                }),
+                            ),
+                        );
+                    case "changelog":
+                        return this.generateAlgoliaSearchRecordsForChangelogSection(
+                            tab,
+                            context.withPathPart({
+                                name: tab.title ?? "Changelog",
+                                urlSlug: tab.urlSlug,
+                                skipUrlSlug: undefined,
+                            }),
+                        ).concat(
+                            this.generateAlgoliaSearchRecordsForChangelogSectionV2(
+                                tab,
+                                context.withPathPart({
+                                    name: tab.title ?? "Changelog",
+                                    urlSlug: tab.urlSlug,
+                                    skipUrlSlug: undefined,
+                                }),
+                            ),
+                        );
+                    default:
+                        return [];
+                }
+            }) ??
+            config.tabs?.map((tab) =>
+                visitDbNavigationTab(tab, {
+                    group: (group) => {
+                        const tabRecords = group.items.map((item) =>
+                            this.generateAlgoliaSearchRecordsForNavigationItem(
+                                item,
+                                context.withPathPart({
+                                    name: tab.title,
+                                    urlSlug: group.urlSlug,
+                                    skipUrlSlug: undefined,
+                                }),
+                            ),
+                        );
+                        return tabRecords.flat(1);
+                    },
+                    link: () => [],
+                }),
+            ) ??
+            [];
+        return records.flat(1);
+    }
+
     // Main Entrypoint Function
     protected override generateAlgoliaSearchRecordsForNavigationItem(
         item: DocsV1Db.NavigationItem,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
-        if (item.type === "section") {
-            return this.generateAlgoliaSearchRecordsForSectionNavigationItem(item, context);
-        } else if (item.type === "api") {
-            return this.generateAlgoliaSectionRecordsForApiNavigationItem(item, context);
-        } else if (item.type === "page") {
-            return this.generateAlgoliaSectionRecordsForPageNavigationItem(item, context);
-        } else if (item.type === "link") {
-            return [];
-        } else if (item.type === "changelog") {
-            return this.generateAlgoliaSearchRecordsForChangelogSection(item, context).concat(
-                this.generateAlgoliaSearchRecordsForChangelogSectionV2(item, context),
-            );
-        } else if (item.type === "changelogV3") {
-            return this.generateAlgoliaSearchRecordsForChangelogNode(
-                item.node as FernNavigation.V1.ChangelogNode,
-                context,
-            ).concat(
-                this.generateAlgoliaSearchRecordsForChangelogNodeV2(
+        switch (item.type) {
+            case "section":
+                return this.generateAlgoliaSearchRecordsForSectionNavigationItem(item, context);
+            case "api":
+                return this.generateAlgoliaSectionRecordsForApiNavigationItem(item, context);
+            case "page":
+                return this.generateAlgoliaSectionRecordsForPageNavigationItem(item, context);
+            case "link":
+                return [];
+            case "changelog":
+                return this.generateAlgoliaSearchRecordsForChangelogSection(item, context).concat(
+                    this.generateAlgoliaSearchRecordsForChangelogSectionV2(item, context),
+                );
+            case "changelogV3":
+                return this.generateAlgoliaSearchRecordsForChangelogNode(
                     item.node as FernNavigation.V1.ChangelogNode,
                     context,
-                ),
-            );
-        } else if (item.type === "apiV2") {
-            return this.generateAlgoliaSearchRecordsForApiReferenceNode(
-                item.node as FernNavigation.V1.ApiReferenceNode,
-                context,
-            ).concat(
-                this.generateAlgoliaSearchRecordsForApiReferenceNodeV2(
+                ).concat(
+                    this.generateAlgoliaSearchRecordsForChangelogNodeV2(
+                        item.node as FernNavigation.V1.ChangelogNode,
+                        context,
+                    ),
+                );
+            case "apiV2":
+                return this.generateAlgoliaSearchRecordsForApiReferenceNode(
                     item.node as FernNavigation.V1.ApiReferenceNode,
                     context,
-                ),
-            );
+                ).concat(
+                    this.generateAlgoliaSearchRecordsForApiReferenceNodeV2(
+                        item.node as FernNavigation.V1.ApiReferenceNode,
+                        context,
+                    ),
+                );
+            default:
+                assertNever(item);
         }
-        assertNever(item);
     }
 
     protected addEndpointFieldAndMaybeTypeReferenceToAlgoliaSearchRecords(
@@ -417,7 +484,13 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
 
             if (FernNavigation.V1.isApiLeaf(node)) {
                 const indexSegmentId = context.indexSegment.id;
-                const breadcrumbs = toBreadcrumbs(baseBreadcrumbs, parents);
+                const breadcrumbs = toBreadcrumbs(
+                    baseBreadcrumbs.concat({
+                        title: node.title,
+                        slug: node.slug,
+                    }),
+                    parents,
+                );
                 visitDiscriminatedUnion(node)._visit({
                     endpoint: (node) => {
                         const endpoint = holder?.endpoints.get(node.endpointId);
@@ -443,7 +516,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     version,
                                     indexSegmentId,
                                     endpoint,
-                                    [node.title, "request", "header", header.key],
+                                    ["request", "header", header.key],
                                     node,
                                     breadcrumbs,
                                     header.type,
@@ -460,7 +533,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     version,
                                     indexSegmentId,
                                     endpoint,
-                                    [node.title, "request", "path", param.key],
+                                    ["request", "path", param.key],
                                     node,
                                     breadcrumbs,
                                     param.type,
@@ -477,7 +550,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     version,
                                     indexSegmentId,
                                     endpoint,
-                                    [node.title, "request", "query", param.key],
+                                    ["request", "query", param.key],
                                     node,
                                     breadcrumbs,
                                     param.type,
@@ -487,7 +560,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
 
                         if (endpoint.request != null) {
                             if (endpoint.request.type.type === "reference") {
-                                const anchorIdParts = [node.title, "request", "body"];
+                                const anchorIdParts = ["request", "body"];
                                 const slug = anchorIdToSlug(node, anchorIdParts);
                                 const fieldBreadcrumbs = breadcrumbs.concat(
                                     anchorIdParts.map((part) => ({ title: part, slug })),
@@ -515,7 +588,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                             version,
                                             indexSegmentId,
                                             endpoint,
-                                            [node.title, "request", "body", property.key],
+                                            ["request", "body", property.key],
                                             node,
                                             breadcrumbs,
                                             property.valueType,
@@ -531,7 +604,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                         version,
                                         indexSegmentId,
                                         endpoint,
-                                        [node.title, "request", "body", property.key],
+                                        ["request", "body", property.key],
                                         node,
                                         breadcrumbs,
                                         property.valueType,
@@ -542,7 +615,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
 
                         if (endpoint.response != null) {
                             if (endpoint.response.type.type === "reference") {
-                                const anchorIdParts = [node.title, "response", "body"];
+                                const anchorIdParts = ["response", "body"];
                                 const slug = anchorIdToSlug(node, anchorIdParts);
                                 const fieldBreadcrumbs = breadcrumbs.concat(
                                     anchorIdParts.map((part) => ({ title: part, slug })),
@@ -569,7 +642,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                         version,
                                         indexSegmentId,
                                         endpoint,
-                                        [node.title, "response", "body", property.key],
+                                        ["response", "body", property.key],
                                         node,
                                         breadcrumbs,
                                         property.valueType,
@@ -620,7 +693,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     version,
                                     indexSegmentId,
                                     ws,
-                                    [node.title, "request", "header", param.key],
+                                    ["request", "header", param.key],
                                     node,
                                     breadcrumbs,
                                     param.type,
@@ -637,7 +710,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     version,
                                     indexSegmentId,
                                     ws,
-                                    [node.title, "request", "path", param.key],
+                                    ["request", "path", param.key],
                                     node,
                                     breadcrumbs,
                                     param.type,
@@ -654,7 +727,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     version,
                                     indexSegmentId,
                                     ws,
-                                    [node.title, "request", "query", param.key],
+                                    ["request", "query", param.key],
                                     node,
                                     breadcrumbs,
                                     param.type,
@@ -762,7 +835,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     version,
                                     indexSegmentId,
                                     webhook,
-                                    [node.title, "request", "header", header.key],
+                                    ["request", "header", header.key],
                                     node,
                                     breadcrumbs,
                                     header.type,
@@ -771,7 +844,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                         }
 
                         if (webhook.payload.type.type === "reference") {
-                            const anchorIdParts = [node.title, "request", "body"];
+                            const anchorIdParts = ["request", "body"];
                             const slug = anchorIdToSlug(node, anchorIdParts);
                             const fieldBreadcrumbs = breadcrumbs.concat(
                                 anchorIdParts.map((part) => ({ title: part, slug })),
@@ -797,7 +870,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     version,
                                     indexSegmentId,
                                     webhook,
-                                    [node.title, "request", "body", property.key],
+                                    ["request", "body", property.key],
                                     node,
                                     breadcrumbs,
                                     property.valueType,

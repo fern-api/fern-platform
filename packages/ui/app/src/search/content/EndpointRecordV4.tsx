@@ -3,8 +3,8 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
 import type { Hit } from "instantsearch.js";
-import { Snippet } from "react-instantsearch";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
+import { AlgoliaSnippet } from "../algolia/AlgoliaSnippet";
 import { SearchHitBreadCrumbsV3 } from "./SearchHitBreadCrumbsV3";
 
 export declare namespace EndpointRecordV4 {
@@ -75,19 +75,20 @@ export const EndpointRecordV4: React.FC<EndpointRecordV4.Props> = ({ hit, isHove
                     Endpoint
                 </div>
             </div>
-            {hit.description && (
+            {
                 <div className="flex items-center justify-between">
-                    <Snippet
-                        attribute={"description"}
-                        hit={hit}
-                        className={cn("line-clamp-1 text-start text-xs", {
-                            "t-accent-aaa": isHovered,
-                            "t-muted": !isHovered,
-                        })}
-                        classNames={{ highlighted: "fern-highlight" }}
-                    />
+                    <div className="flex items-center justify-between">
+                        <span
+                            className={cn("line-clamp-1 text-start text-xs", {
+                                "t-accent-aaa": isHovered,
+                                "t-muted": !isHovered,
+                            })}
+                        >
+                            <AlgoliaSnippet hit={hit} />
+                        </span>
+                    </div>
                 </div>
-            )}
+            }
             <div className="flex items-center justify-between">
                 <span
                     className={cn("line-clamp-1 text-start text-xs", {
