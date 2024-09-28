@@ -43,4 +43,4 @@ types:
       id: FeatureId
       description: optional<string>
       addendum: optional<string>
-      advanced: optional<string>
+      advanced: optional<boolean>
