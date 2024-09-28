@@ -1,4 +1,4 @@
-import { default as CONFIG } from "./fixtures/empty-go/readme";
+import { default as CONFIG } from "./fixtures/reference-md/readme";
 import { testGenerateReadme } from "./testGenerateReadme";
 
 describe("reference-md", () => {
