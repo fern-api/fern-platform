@@ -14,6 +14,7 @@
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsup ./src/cli.ts --format cjs && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",

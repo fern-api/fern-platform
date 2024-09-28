@@ -1,18 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`basic-go > basic-go > generate readme 1`] = `
-"# Basic Go Library
+exports[`reference-md > reference-md > generate readme 1`] = `
+"# Empty Go Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
-[![go shield](https://img.shields.io/badge/go-docs-blue)](https://pkg.go.dev/github.com/basic/basic-go)
 
-The Basic Go library provides convenient access to the Basic API from Go.
-
-## Installation
-
-\`\`\`sh
-go get github.com/basic/basic-go
-\`\`\`
+The Empty Go library provides convenient access to the Empty API from Go.
 
 ## Contributing
 
