@@ -148,16 +148,10 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                   });
 
         const slug = pageContext.path;
-        const breadcrumbs: BreadcrumbsInfo[] = [
-            {
-                title: page.title,
-                slug,
-            },
-        ];
 
         const markdownSectionRecords: AlgoliaSearchRecord[] = this.parseMarkdownItem(
             pageContent.markdown,
-            breadcrumbs,
+            [],
             indexSegment,
             slug,
             page.title,
