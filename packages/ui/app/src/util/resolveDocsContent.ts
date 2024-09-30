@@ -79,6 +79,11 @@ export async function resolveDocsContent({
                 }
             }
         });
+        const allPages = Object.fromEntries(
+            Object.entries(pages).map(([key, value]) => {
+                return [key, value.markdown];
+            }),
+        );
         const pageRecords = (
             await Promise.all(
                 [...pageIds].map(async (pageId) => {
@@ -91,6 +96,7 @@ export async function resolveDocsContent({
                         markdown: await serializeMdx(pageContent.markdown, {
                             ...mdxOptions,
                             filename: pageId,
+                            files: { ...(mdxOptions?.files ?? {}), ...allPages },
                         }),
                         anchorTag: parseMarkdownPageToAnchorTag(pageContent.markdown),
                     };
