@@ -86,6 +86,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                     formState,
                     endpoint,
                     proxyEnvironment,
+                    playgroundEnvironment,
                     setValue: setOAuthValue,
                 },
             );
