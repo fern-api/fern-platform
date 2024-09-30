@@ -3,7 +3,7 @@ import { FernButton, FernDropdown, FernInput } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { useAtom } from "jotai";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { parse } from "url";
 import { PLAYGROUND_ENVIRONMENT_ATOM } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM, SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
@@ -14,7 +14,6 @@ interface MaybeEnvironmentDropdownProps {
     protocolTextStyle?: string;
     small?: boolean;
     environmentFilters?: APIV1Read.EnvironmentId[];
-    trailingPath?: boolean;
     editable?: boolean;
     isEditingEnvironment: useBooleanState.Return;
 }
@@ -25,13 +24,13 @@ export function MaybeEnvironmentDropdown({
     protocolTextStyle,
     small,
     environmentFilters,
-    trailingPath,
     editable,
     isEditingEnvironment,
 }: MaybeEnvironmentDropdownProps): ReactElement | null {
     const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
     const [playgroundEnvironment, setPlaygroundEnvironment] = useAtom(PLAYGROUND_ENVIRONMENT_ATOM);
+    const [inputValue, setInputValue] = useState<string | undefined>(undefined);
 
     const environmentIds = environmentFilters
         ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
@@ -40,25 +39,41 @@ export function MaybeEnvironmentDropdown({
     if (environmentFilters && selectedEnvironment && !environmentFilters.includes(selectedEnvironment.id)) {
         setSelectedEnvironmentId(environmentIds[0]);
     }
+
     const preParsedUrl = playgroundEnvironment ?? selectedEnvironment?.baseUrl;
     const url = preParsedUrl && parse(preParsedUrl);
 
-    const [inputValue, setInputValue] = useState(preParsedUrl);
-    const isValidInput = inputValue != null && inputValue !== "" && parse(inputValue).host != null;
+    useEffect(() => {
+        if (url && url.host && url.host !== "" && url.protocol && url.protocol !== "") {
+            setInputValue(preParsedUrl);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [playgroundEnvironment, selectedEnvironment]);
+
+    const isValidInput =
+        inputValue != null && inputValue !== "" && parse(inputValue).host != null && parse(inputValue).protocol != null;
+
+    const urlProtocol = url ? url.protocol : "";
+    const fullyQualifiedDomainAndBasePath = url ? `${url.host}${url.pathname}` : "";
 
     return (
         <>
             {isEditingEnvironment.value ? (
                 <FernInput
                     autoFocus={isEditingEnvironment.value}
-                    size={(inputValue?.length ?? 0) + 1}
+                    size={inputValue?.length ?? 0}
                     placeholder={inputValue}
                     value={inputValue}
                     onClick={(e) => {
                         e.stopPropagation();
                     }}
                     onValueChange={(value) => {
-                        if (value === "" || parse(value).host == null) {
+                        if (
+                            value === "" ||
+                            value == null ||
+                            parse(value).host == null ||
+                            parse(value).protocol == null
+                        ) {
                             setInputValue(value);
                         } else {
                             setInputValue(value);
@@ -66,13 +81,19 @@ export function MaybeEnvironmentDropdown({
                         }
                     }}
                     onKeyDown={(e) => {
-                        if ((e.key === "Enter" || e.key === "Escape") && isValidInput) {
-                            setInputValue(playgroundEnvironment);
+                        if (e.key === "Enter" && isValidInput) {
+                            if (playgroundEnvironment) {
+                                setInputValue(playgroundEnvironment);
+                            }
                             isEditingEnvironment.setFalse();
+                        } else if (e.key === "Escape") {
+                            setInputValue(playgroundEnvironment ?? selectedEnvironment?.baseUrl);
+                            isEditingEnvironment.setFalse();
+                            e.preventDefault();
                         }
                     }}
-                    className={isValidInput ? "" : "error"}
-                    inputClassName={"p-0 pl-2"}
+                    className={cn("p-0", isValidInput ? "" : "error", "h-auto")}
+                    inputClassName={cn("px-1", "py-0.5", "h-auto", "font-mono", small ? "text-xs" : "text-sm")}
                 />
             ) : (
                 <>
@@ -87,7 +108,6 @@ export function MaybeEnvironmentDropdown({
                                 }))}
                                 onValueChange={(value) => {
                                     setPlaygroundEnvironment(undefined);
-                                    setInputValue(value);
                                     setSelectedEnvironmentId(value);
                                 }}
                                 value={selectedEnvironmentId ?? selectedEnvironment?.id}
@@ -96,10 +116,10 @@ export function MaybeEnvironmentDropdown({
                                     className="py-0 px-1 h-auto"
                                     text={
                                         <span key="protocol" className="whitespace-nowrap max-sm:hidden">
-                                            {url && url.protocol && (
-                                                <span className={protocolTextStyle}>{`${url.protocol}//`}</span>
-                                            )}
-                                            <span className={urlTextStyle}>{(url && url.host) ?? ""}</span>
+                                            <span className={protocolTextStyle}>{`${urlProtocol}//`}</span>
+                                            <span className={urlTextStyle}>
+                                                {fullyQualifiedDomainAndBasePath ?? ""}
+                                            </span>
                                         </span>
                                     }
                                     size={small ? "small" : "normal"}
@@ -110,26 +130,25 @@ export function MaybeEnvironmentDropdown({
                             </FernDropdown>
                         ) : (
                             <span key="protocol" className="whitespace-nowrap max-sm:hidden font-mono">
-                                {url && url.protocol && (
-                                    <span
-                                        className={cn(protocolTextStyle, small ? "text-xs" : "text-sm")}
-                                    >{`${url.protocol}//`}</span>
-                                )}
                                 {editable ? (
                                     <FernButton
                                         variant="minimal"
                                         className={cn(urlTextStyle, "p-0", small ? "text-xs" : "text-sm")}
                                         onDoubleClick={isEditingEnvironment.setTrue}
                                     >
-                                        {(url && url.host) ?? ""}
+                                        {`${urlProtocol}//${fullyQualifiedDomainAndBasePath}`}
                                     </FernButton>
                                 ) : (
-                                    <span className={urlTextStyle}>{(url && url.host) ?? ""}</span>
+                                    <>
+                                        <span className={cn(protocolTextStyle, small ? "text-xs" : "text-sm")}>
+                                            {`${urlProtocol}//`}
+                                        </span>
+                                        <span className={urlTextStyle}>{fullyQualifiedDomainAndBasePath}</span>
+                                    </>
                                 )}
                             </span>
                         )}
                     </span>
-                    {trailingPath && url && url.pathname !== "/" && <span>{url.pathname}</span>}
                 </>
             )}
         </>

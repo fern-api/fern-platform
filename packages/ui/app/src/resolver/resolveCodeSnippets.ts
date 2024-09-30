@@ -35,7 +35,7 @@ export async function resolveCodeSnippets(
     isHttpSnippetsEnabled: boolean,
     useJavaScriptAsTypeScript: boolean,
     alwaysEnableJavaScriptFetch: boolean,
-    playgroundEnvironment: string | undefined,
+    playgroundEnvironment?: string,
 ): Promise<ResolvedCodeSnippet[]> {
     let toRet: ResolvedCodeSnippet[] = [];
 

@@ -64,7 +64,6 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                                 small
                                 urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
                                 protocolTextStyle="playground-endpoint-baseurl max-sm:hidden"
-                                trailingPath={true}
                                 editable
                                 isEditingEnvironment={isEditingEnvironment}
                             />

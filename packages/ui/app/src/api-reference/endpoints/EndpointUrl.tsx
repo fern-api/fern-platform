@@ -5,7 +5,6 @@ import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { noop } from "ts-essentials";
-import { parse } from "url";
 import { usePlaygroundEnvironment } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
@@ -40,24 +39,6 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
 
     const pathParts = useMemo(() => {
         const elements: (ReactElement | null)[] = [];
-        if (preParsedUrl) {
-            const url = parse(preParsedUrl);
-
-            !isEditingEnvironment.value &&
-                url.pathname?.split("/").forEach((part, i) => {
-                    if (part.trim().length === 0) {
-                        return;
-                    }
-                    elements.push(
-                        <span key={`separator-base-${i}`} className="text-faded">
-                            {"/"}
-                        </span>,
-                        <span key={`part-base-${i}`} className="whitespace-nowrap text-faded">
-                            {part}
-                        </span>,
-                    );
-                });
-        }
         path.forEach((part, i) => {
             visitDiscriminatedUnion(part)._visit({
                 literal: (literal) => {
@@ -91,7 +72,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
             });
         });
         return elements;
-    }, [path, preParsedUrl, isEditingEnvironment]);
+    }, [path]);
 
     return (
         <div ref={ref} className={cn("flex h-8 items-center gap-1 pr-2", className)}>
