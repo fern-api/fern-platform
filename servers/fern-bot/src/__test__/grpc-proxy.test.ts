@@ -126,7 +126,7 @@ it("invalid schema", async () => {
     });
 
     expect(response).not.toBe(null);
-    expect(response).toEqual(`Failure: failed to find service named "connectrpc.eliza.v1.ElizaService" in schema`);
+    expect(response).toEqual('Failure: failed to find service named "connectrpc.eliza.v1.ElizaService" in schema');
 
     const elizaResponse = response as ElizaResponse;
     expect(elizaResponse.sentence).toBe(undefined);
