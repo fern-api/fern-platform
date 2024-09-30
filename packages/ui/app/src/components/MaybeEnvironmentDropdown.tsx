@@ -133,13 +133,17 @@ export function MaybeEnvironmentDropdown({
                         ) : (
                             <span key="url" className="whitespace-nowrap max-sm:hidden font-mono">
                                 {editable ? (
-                                    <FernButton
-                                        variant="minimal"
-                                        className={cn(urlTextStyle, "p-0", small ? "text-xs" : "text-sm")}
+                                    <span
+                                        className={cn(
+                                            urlTextStyle,
+                                            "p-0",
+                                            small ? "text-xs" : "text-sm",
+                                            "hover:shadow-lg",
+                                        )}
                                         onDoubleClick={isEditingEnvironment.setTrue}
                                     >
                                         {`${urlProtocol}//${fullyQualifiedDomainAndBasePath}`}
-                                    </FernButton>
+                                    </span>
                                 ) : (
                                     <>
                                         <span className={cn(protocolTextStyle, small ? "text-xs" : "text-sm")}>

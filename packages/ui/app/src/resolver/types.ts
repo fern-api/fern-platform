@@ -4,6 +4,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { sortBy } from "lodash-es";
 import { UnreachableCaseError } from "ts-essentials";
+import { parse } from "url";
 import { store } from "../atoms";
 import { SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
 
@@ -809,8 +810,13 @@ export const resolveEnvironmentUrlInCodeSnippet = (
 ): string => {
     const urlToReplace = endpoint.environments.find((env) => requestCodeSnippet.includes(env.baseUrl))?.baseUrl;
     const resolvedEnvironment = resolveEnvironment(endpoint, selectedEnvironmentId);
+    const playgroundReplacement = playgroundEnvironment && parse(playgroundEnvironment);
     return urlToReplace && resolvedEnvironment
-        ? requestCodeSnippet.replace(urlToReplace, playgroundEnvironment ?? resolvedEnvironment.baseUrl)
+        ? requestCodeSnippet.replace(
+              urlToReplace,
+              (playgroundReplacement && `${playgroundReplacement.protocol}//${playgroundReplacement.host}`) ??
+                  resolvedEnvironment.baseUrl,
+          )
         : requestCodeSnippet;
 };
 
