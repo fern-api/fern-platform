@@ -11,6 +11,13 @@ service:
       request:
         body: ProxyRequest
       response: ProxyResponse
+    grpc:
+      path: /grpc
+      display-name: Proxy gRPC
+      method: POST
+      request:
+        body: GrpcProxyRequest
+      response: GrpcProxyResponse
     file:
       path: /file
       display-name: Proxy File

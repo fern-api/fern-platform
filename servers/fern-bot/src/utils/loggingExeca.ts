@@ -28,7 +28,7 @@ export async function loggingExeca(
         logLine = logLine.replaceAll(substitutionKey, substitutionValue);
     }
 
-    console.log(`+ ${logLine}`);
+    console.debug(`+ ${logLine}`);
     const command = execa(executable, args, execaOptions);
     if (!doNotPipeOutput) {
         command.stdout?.pipe(process.stdout);

@@ -1,3 +1,4 @@
+import tmp from "tmp-promise";
 import urlJoin from "url-join";
 import { createLoggingExecutable, LoggingExecutable } from "../utils/createLoggingExecutable";
 
@@ -34,9 +35,14 @@ export class Buf {
 
     public async curl({ request }: { request: Buf.CurlRequest }): Promise<Buf.CurlResponse> {
         const cli = await this.getOrInstall();
-        const content = await cli(this.getArgsForCurlRequest(request));
+        const response = await cli(this.getArgsForCurlRequest(request));
+        if (response.exitCode !== 0) {
+            return {
+                body: response.stderr,
+            };
+        }
         return {
-            body: content.stdout,
+            body: response.stdout,
         };
     }
 
@@ -44,24 +50,34 @@ export class Buf {
         if (this.cli) {
             return this.cli;
         }
-        this.cli = createLoggingExecutable("buf", {
+        const which = createLoggingExecutable("which", {
             cwd: process.cwd(),
         });
-        return this.install();
+        try {
+            await which(["buf"]);
+        } catch (err) {
+            console.log("buf is not installed");
+            return this.install();
+        }
+        this.cli = this.createBufExecutable();
+        return this.cli;
     }
 
     private async install(): Promise<LoggingExecutable> {
+        // Lambdas can only write into temporary directories.
+        const tmpDirPath = (await tmp.dir()).path;
+        process.env.NPM_CONFIG_CACHE = `${tmpDirPath}/.npm`;
+        process.env.HOME = tmpDirPath;
+
         const npm = createLoggingExecutable("npm", {
             cwd: process.cwd(),
         });
-        console.log(`Installing ${BUF_NPM_PACKAGE} ...`);
+        console.debug(`Installing ${BUF_NPM_PACKAGE} ...`);
         await npm(["install", "-f", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
 
-        const cli = createLoggingExecutable("buf", {
-            cwd: process.cwd(),
-        });
+        const cli = this.createBufExecutable();
         const version = await cli(["--version"]);
-        console.log(`Successfully installed ${BUF_NPM_PACKAGE} version ${version.stdout}`);
+        console.debug(`Successfully installed ${BUF_NPM_PACKAGE} version ${version.stdout}`);
 
         this.cli = cli;
         return cli;
@@ -70,21 +86,28 @@ export class Buf {
     private getArgsForCurlRequest(request: Buf.CurlRequest): string[] {
         const args = ["curl", this.getFullyQualifiedEndpoint(request)];
         for (const header of request.headers) {
-            args.push(...["-H", header]);
+            args.push(...["--header", header]);
         }
         if (request.schema != null) {
             args.push(...["--schema", request.schema]);
         }
         if (request.grpc) {
-            args.push("--grpc");
+            args.push(...["--protocol", "grpc"]);
         }
         if (request.body != null) {
-            args.push(...["-d", `'${JSON.stringify(request.body)}'`]);
+            args.push(...["--data", JSON.stringify(request.body)]);
         }
         return args;
     }
 
     private getFullyQualifiedEndpoint({ baseUrl, endpoint }: Buf.CurlRequest): string {
         return urlJoin(baseUrl, endpoint);
+    }
+
+    private createBufExecutable(): LoggingExecutable {
+        return createLoggingExecutable("buf", {
+            cwd: process.cwd(),
+            reject: false, // We want to capture stderr without throwing.
+        });
     }
 }
