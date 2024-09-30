@@ -54,47 +54,49 @@ export function MaybeEnvironmentDropdown({
         inputValue != null && inputValue !== "" && parse(inputValue).host != null && parse(inputValue).protocol != null;
 
     const urlProtocol = url ? url.protocol : "";
-    const fullyQualifiedDomainAndBasePath = url ? `${url.host}${url.pathname}` : "";
+    const fullyQualifiedDomainAndBasePath = url ? (url.pathname !== "/" ? `${url.host}${url.pathname}` : url.host) : "";
 
     return (
         <>
             {isEditingEnvironment.value ? (
-                <FernInput
-                    autoFocus={isEditingEnvironment.value}
-                    size={inputValue?.length ?? 0}
-                    placeholder={inputValue}
-                    value={inputValue}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                    }}
-                    onValueChange={(value) => {
-                        if (
-                            value === "" ||
-                            value == null ||
-                            parse(value).host == null ||
-                            parse(value).protocol == null
-                        ) {
-                            setInputValue(value);
-                        } else {
-                            setInputValue(value);
-                            setPlaygroundEnvironment(value);
-                        }
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" && isValidInput) {
-                            if (playgroundEnvironment) {
-                                setInputValue(playgroundEnvironment);
+                <span key="url" className="whitespace-nowrap max-sm:hidden font-mono">
+                    <FernInput
+                        autoFocus={isEditingEnvironment.value}
+                        size={inputValue?.length ?? 0}
+                        placeholder={inputValue}
+                        value={inputValue}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                        onValueChange={(value) => {
+                            if (
+                                value === "" ||
+                                value == null ||
+                                parse(value).host == null ||
+                                parse(value).protocol == null
+                            ) {
+                                setInputValue(value);
+                            } else {
+                                setInputValue(value);
+                                setPlaygroundEnvironment(value);
                             }
-                            isEditingEnvironment.setFalse();
-                        } else if (e.key === "Escape") {
-                            setInputValue(playgroundEnvironment ?? selectedEnvironment?.baseUrl);
-                            isEditingEnvironment.setFalse();
-                            e.preventDefault();
-                        }
-                    }}
-                    className={cn("p-0", isValidInput ? "" : "error", "h-auto")}
-                    inputClassName={cn("px-1", "py-0.5", "h-auto", "font-mono", small ? "text-xs" : "text-sm")}
-                />
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && isValidInput) {
+                                if (playgroundEnvironment) {
+                                    setInputValue(playgroundEnvironment);
+                                }
+                                isEditingEnvironment.setFalse();
+                            } else if (e.key === "Escape") {
+                                setInputValue(playgroundEnvironment ?? selectedEnvironment?.baseUrl);
+                                isEditingEnvironment.setFalse();
+                                e.preventDefault();
+                            }
+                        }}
+                        className={cn("p-0", isValidInput ? "" : "error", "h-auto", "flex flex-col")}
+                        inputClassName={cn("px-1", "py-0.5", "h-auto", "font-mono", small ? "text-xs" : "text-sm")}
+                    />
+                </span>
             ) : (
                 <>
                     <span className="max-sm:hidden">
@@ -129,7 +131,7 @@ export function MaybeEnvironmentDropdown({
                                 />
                             </FernDropdown>
                         ) : (
-                            <span key="protocol" className="whitespace-nowrap max-sm:hidden font-mono">
+                            <span key="url" className="whitespace-nowrap max-sm:hidden font-mono">
                                 {editable ? (
                                     <FernButton
                                         variant="minimal"

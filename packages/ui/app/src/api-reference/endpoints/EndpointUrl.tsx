@@ -24,7 +24,7 @@ export declare namespace EndpointUrl {
 
 // TODO: this component needs a refresh
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
-    { path, method, selectedEnvironment, large, className },
+    { path, method, selectedEnvironment, large, className, showEnvironment },
     parentRef,
 ) {
     const ref = useRef<HTMLDivElement>(null);
@@ -75,23 +75,13 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     }, [path]);
 
     return (
-        <div ref={ref} className={cn("flex h-8 items-center gap-1 pr-2", className)}>
+        <div ref={ref} className={cn("flex items-center gap-1 pr-2", className)}>
             <HttpMethodTag method={method} />
 
             <div className={cn("flex items-center")}>
                 <span
                     className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} py-0.5 px-1 rounded-md cursor-default`}
                 >
-                    <div className="whitespace-nowrap max-sm:hidden">
-                        <MaybeEnvironmentDropdown
-                            selectedEnvironment={selectedEnvironment}
-                            urlTextStyle="t-muted"
-                            protocolTextStyle="text-faded"
-                            isEditingEnvironment={isEditingEnvironment}
-                            editable
-                        />
-                    </div>
-                    {/* )} */}
                     <CopyToClipboardButton content={buildRequestUrl(preParsedUrl, path)}>
                         {(onClick) => (
                             <button
@@ -105,6 +95,17 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                         "text-sm": large,
                                     })}
                                 >
+                                    {showEnvironment && (
+                                        <span className="inline-flex whitespace-nowrap max-sm:hidden">
+                                            <MaybeEnvironmentDropdown
+                                                selectedEnvironment={selectedEnvironment}
+                                                urlTextStyle="t-muted"
+                                                protocolTextStyle="text-faded"
+                                                isEditingEnvironment={isEditingEnvironment}
+                                                editable
+                                            />
+                                        </span>
+                                    )}
                                     {pathParts}
                                 </span>
                             </button>

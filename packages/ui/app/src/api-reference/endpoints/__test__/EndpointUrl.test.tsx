@@ -35,7 +35,7 @@ describe("EndpointUrl", () => {
             />,
         );
 
-        expect(screen.getByRole("button").textContent).toBe("https://api.buildwithfern.com/testing/:id");
+        expect(screen.getAllByRole("button")?.[0]?.textContent).toBe("https://api.buildwithfern.com/testing/:id");
     });
 
     it("renders full environment with basepath", async () => {
@@ -51,6 +51,8 @@ describe("EndpointUrl", () => {
             />,
         );
 
-        expect(screen.getByRole("button").textContent).toBe("https://api.buildwithfern.com/with/basepath/testing/:id");
+        expect(screen.getAllByRole("button")?.[0]?.textContent).toBe(
+            "https://api.buildwithfern.com/with/basepath/testing/:id",
+        );
     });
 });
