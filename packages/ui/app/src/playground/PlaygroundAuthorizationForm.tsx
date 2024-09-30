@@ -1,3 +1,5 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { EndpointDefinition, TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import {
     FernButton,
@@ -30,7 +32,6 @@ import { useOAuthEndpoint } from "../atoms/oauth";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { Callout } from "../mdx/components/callout";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundEndpointForm } from "./endpoint/PlaygroundEndpointForm";
@@ -151,21 +152,23 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
 }
 
 function FoundOAuthReferencedEndpointForm({
+    node,
     oAuthEndpoint,
     types,
     oAuthClientCredentialsReferencedEndpoint,
     closeContainer,
     disabled,
 }: {
-    oAuthEndpoint: ResolvedEndpointDefinition;
-    types: Record<string, ResolvedTypeDefinition>;
+    node: FernNavigation.EndpointNode;
+    oAuthEndpoint: EndpointDefinition;
+    types: Record<string, TypeDefinition>;
     oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
     closeContainer: () => void;
     disabled?: boolean;
 }) {
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
-    const [formState, setFormState] = usePlaygroundEndpointFormState(oAuthEndpoint);
+    const [formState, setFormState] = usePlaygroundEndpointFormState(node, oAuthEndpoint);
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 

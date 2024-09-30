@@ -1,5 +1,5 @@
+import { EndpointDefinition, PathPart } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-ui/core-utils";
-import { ResolvedEndpointDefinition, ResolvedEndpointPathParts, resolveEnvironment } from "../../resolver/types";
 import { PlaygroundRequestFormState } from "../types";
 
 export function buildQueryParams(queryParameters: Record<string, unknown> | undefined): string {
@@ -15,12 +15,13 @@ export function buildQueryParams(queryParameters: Record<string, unknown> | unde
     return queryParams.size > 0 ? "?" + queryParams.toString() : "";
 }
 
-function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<string, unknown>): string {
+function buildPath(path: PathPart[], pathParameters?: Record<string, unknown>): string {
     return path
         .map((part) => {
             if (part.type === "pathParameter") {
-                const stateValue = unknownToString(pathParameters?.[part.key]);
-                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + part.key;
+                const key = part.value;
+                const stateValue = unknownToString(pathParameters?.[key]);
+                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + key;
             }
             return part.value;
         })
@@ -29,7 +30,7 @@ function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<st
 
 export function buildRequestUrl(
     baseUrl: string = "",
-    path: ResolvedEndpointPathParts[] = [],
+    path: PathPart[] = [],
     pathParameters: Record<string, unknown> = {},
     queryParameters: Record<string, unknown> = {},
 ): string {
@@ -37,13 +38,11 @@ export function buildRequestUrl(
 }
 
 export function buildEndpointUrl(
-    endpoint: ResolvedEndpointDefinition | undefined,
+    endpoint: EndpointDefinition | undefined,
     formState: PlaygroundRequestFormState | undefined,
 ): string {
-    return buildRequestUrl(
-        endpoint && resolveEnvironment(endpoint)?.baseUrl,
-        endpoint?.path,
-        formState?.pathParameters,
-        formState?.queryParameters,
-    );
+    const environment =
+        endpoint?.environments?.find((env) => env.id === endpoint.defaultEnvironment) ?? endpoint?.environments?.[0];
+
+    return buildRequestUrl(environment?.baseUrl, endpoint?.path, formState?.pathParameters, formState?.queryParameters);
 }

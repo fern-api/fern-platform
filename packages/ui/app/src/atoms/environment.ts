@@ -2,11 +2,11 @@ import type { APIV1Read } from "@fern-api/fdr-sdk";
 import { atom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { isEndpoint, isWebSocket } from "../resolver/types";
-import { FLATTENED_APIS_ATOM } from "./apis";
+import { DEPRECATED_FLATTENED_APIS_ATOM } from "./apis";
 
 // Capture all possible environments in a list, in useEffect at top level
 export const ALL_ENVIRONMENTS_ATOM = atom((get) => {
-    const flatApis = get(FLATTENED_APIS_ATOM);
+    const flatApis = get(DEPRECATED_FLATTENED_APIS_ATOM);
     const allEnvironmentIds = new Set<string>();
     Object.values(flatApis).forEach((api) => {
         api.endpoints.forEach((endpoint) => {

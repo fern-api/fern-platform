@@ -5,7 +5,7 @@ import { Markdown } from "../../mdx/Markdown";
 import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderDeprecatedTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointResponseSection {
     export interface Props {
@@ -106,7 +106,7 @@ function getResponseSummary({
     } else if (responseBody.shape.type === "streamCondition") {
         return "This endpoint returns a stream.";
     } else if (responseBody.shape.type === "stream") {
-        return `This endpoint returns a stream of ${renderTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}.`;
+        return `This endpoint returns a stream of ${renderDeprecatedTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}.`;
     }
-    return `This endpoint returns ${renderTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
+    return `This endpoint returns ${renderDeprecatedTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
 }

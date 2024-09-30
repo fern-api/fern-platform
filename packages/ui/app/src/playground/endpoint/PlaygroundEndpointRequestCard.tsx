@@ -9,18 +9,18 @@ import {
     useFeatureFlags,
 } from "../../atoms";
 import { useStandardProxyEnvironment } from "../../hooks/useStandardProxyEnvironment";
-import { ResolvedEndpointDefinition } from "../../resolver/types";
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";
 import { PlaygroundEndpointRequestFormState } from "../types";
+import { EndpointContext } from "../types/endpoint-context";
 
 interface PlaygroundEndpointRequestCardProps {
-    endpoint: ResolvedEndpointDefinition;
+    context: EndpointContext;
     formState: PlaygroundEndpointRequestFormState;
 }
 
 export function PlaygroundEndpointRequestCard({
-    endpoint,
+    context,
     formState,
 }: PlaygroundEndpointRequestCardProps): ReactElement {
     const { isSnippetTemplatesEnabled, isFileForgeHackEnabled } = useFeatureFlags();
@@ -66,7 +66,7 @@ export function PlaygroundEndpointRequestCard({
                     content={() => {
                         const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
                         const resolver = new PlaygroundCodeSnippetResolverBuilder(
-                            endpoint,
+                            context.endpoint,
                             isSnippetTemplatesEnabled,
                             isFileForgeHackEnabled,
                         ).create(authState, formState, proxyEnvironment, setOAuthValue);
@@ -75,7 +75,7 @@ export function PlaygroundEndpointRequestCard({
                     className="-mr-2"
                 />
             </div>
-            <PlaygroundRequestPreview endpoint={endpoint} formState={formState} requestType={requestType} />
+            <PlaygroundRequestPreview endpoint={context.endpoint} formState={formState} requestType={requestType} />
         </FernCard>
     );
 }

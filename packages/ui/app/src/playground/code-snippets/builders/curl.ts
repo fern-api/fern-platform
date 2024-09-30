@@ -1,7 +1,7 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty } from "lodash-es";
 import { stringifyHttpRequestExampleToCurl } from "../../../api-reference/examples/stringifyHttpRequestExampleToCurl";
-import { ResolvedExampleEndpointRequest, ResolvedFormValue } from "../../../resolver/types";
 import { convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest } from "../../types";
 import { PlaygroundCodeSnippetBuilder } from "./types";
 
@@ -23,18 +23,20 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
         });
     }
 
-    #convertFormStateToBody(): ResolvedExampleEndpointRequest | undefined {
+    #convertFormStateToBody(): APIV1Read.ExampleEndpointRequest | undefined {
         if (this.formState.body == null) {
             return undefined;
         }
-        return visitDiscriminatedUnion(this.formState.body, "type")._visit<ResolvedExampleEndpointRequest | undefined>({
+        return visitDiscriminatedUnion(this.formState.body, "type")._visit<
+            APIV1Read.ExampleEndpointRequest | undefined
+        >({
             json: ({ value }) => ({ type: "json", value }),
-            "form-data": ({ value }): ResolvedExampleEndpointRequest.Form | undefined => {
+            "form-data": ({ value }): APIV1Read.ExampleEndpointRequest.Form | undefined => {
                 const properties =
                     this.endpoint.requestBody?.shape.type === "formData"
                         ? this.endpoint.requestBody.shape.properties
                         : [];
-                const newValue: Record<string, ResolvedFormValue> = {};
+                const newValue: Record<string, APIV1Read.FormValue> = {};
                 for (const [key, v] of Object.entries(value)) {
                     const property = properties.find((property) => property.key === key);
                     const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(
@@ -51,7 +53,7 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
                 }
                 return { type: "form", value: newValue };
             },
-            "octet-stream": ({ value }): ResolvedExampleEndpointRequest.Bytes | undefined =>
+            "octet-stream": ({ value }): APIV1Read.ExampleEndpointRequest.Bytes | undefined =>
                 value != null ? { type: "bytes", fileName: value.name, value: undefined } : undefined,
             _other: () => undefined,
         });

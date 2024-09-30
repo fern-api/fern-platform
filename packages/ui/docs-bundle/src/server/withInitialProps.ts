@@ -1,6 +1,6 @@
 import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
@@ -13,8 +13,6 @@ import {
     provideRegistryService,
     renderThemeStylesheet,
     resolveDocsContent,
-    serializeMdx,
-    setMdxBundler,
 } from "@fern-ui/ui";
 import { getAPIKeyInjectionConfigNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
@@ -105,13 +103,12 @@ export async function withInitialProps({
         };
     }
 
-    setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
+    const serializeMdx = await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
 
     const content = await resolveDocsContent({
         found: node,
         apis: docs.definition.apis,
         pages: docs.definition.pages,
-        domain: docs.baseUrl.domain,
         featureFlags,
         mdxOptions: {
             files: docs.definition.jsFiles,

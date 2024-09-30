@@ -5,7 +5,7 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { mapValues } from "lodash-es";
-import { FC, ReactElement, useCallback, useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import { captureSentryError } from "../../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -19,11 +19,12 @@ import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { useApiRoute } from "../../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { getAppBuildwithfernCom } from "../../hooks/useStandardProxyEnvironment";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition, resolveEnvironment } from "../../resolver/types";
+import { resolveEnvironment } from "../../resolver/types";
 import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { ProxyRequest } from "../types";
+import { EndpointContext } from "../types/endpoint-context";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import {
     buildAuthHeaders,
@@ -35,20 +36,15 @@ import {
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
-interface PlaygroundEndpointProps {
-    endpoint: ResolvedEndpointDefinition;
-    types: Record<string, ResolvedTypeDefinition>;
-}
-
-export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, types }): ReactElement => {
-    const [formState, setFormState] = usePlaygroundEndpointFormState(endpoint);
+export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): ReactElement => {
+    const [formState, setFormState] = usePlaygroundEndpointFormState(context);
 
     const resetWithExample = useEventCallback(() => {
-        setFormState(getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], types));
+        setFormState(getInitialEndpointRequestFormStateWithExample(context, context.endpoint.examples?.[0]));
     });
 
     const resetWithoutExample = useEventCallback(() => {
-        setFormState(getInitialEndpointRequestFormState(endpoint, types));
+        setFormState(getInitialEndpointRequestFormState(context));
     });
 
     const basePath = useBasePath();
@@ -61,6 +57,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
 
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
+    const { node, endpoint, auth } = context;
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
             return;
@@ -70,12 +67,12 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
             const { capturePosthogEvent } = await import("../../analytics/posthog");
             capturePosthogEvent("api_playground_request_sent", {
                 endpointId: endpoint.id,
-                endpointName: endpoint.title,
+                endpointName: node.title,
                 method: endpoint.method,
-                docsRoute: `/${endpoint.slug}`,
+                docsRoute: `/${node.slug}`,
             });
             const authHeaders = buildAuthHeaders(
-                endpoint.auth,
+                auth,
                 store.get(PLAYGROUND_AUTH_STATE_ATOM),
                 {
                     redacted: false,
@@ -92,8 +89,8 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 ...mapValues(formState.headers ?? {}, (value) => unknownToString(value)),
             };
 
-            if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
-                headers["Content-Type"] = endpoint.requestBody.contentType;
+            if (endpoint.method !== "GET" && endpoint.request?.contentType != null) {
+                headers["Content-Type"] = endpoint.request.contentType;
             }
 
             const req: ProxyRequest = {
@@ -102,12 +99,12 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 headers,
                 body: await serializeFormStateBody(
                     uploadEnvironment,
-                    endpoint.requestBody?.shape,
+                    endpoint.request?.body,
                     formState.body,
                     usesApplicationJsonInFormDataValue,
                 ),
             };
-            if (endpoint.responseBody?.shape.type === "stream") {
+            if (endpoint.response?.body.type === "stream") {
                 const [res, stream] = await executeProxyStream(proxyEnvironment, req);
                 for await (const item of stream) {
                     setResponse((lastValue) =>
@@ -124,7 +121,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                         }),
                     );
                 }
-            } else if (endpoint.responseBody?.shape.type === "fileDownload") {
+            } else if (endpoint.response?.body.type === "fileDownload") {
                 const res = await executeProxyFile(proxyEnvironment, req);
                 setResponse(loaded(res));
             } else {
@@ -133,9 +130,9 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 if (res.type !== "stream") {
                     capturePosthogEvent("api_playground_request_received", {
                         endpointId: endpoint.id,
-                        endpointName: endpoint.title,
+                        endpointName: node.title,
                         method: endpoint.method,
-                        docsRoute: `/${endpoint.slug}`,
+                        docsRoute: `/${node.slug}`,
                         response: {
                             status: res.response.status,
                             statusText: res.response.statusText,
@@ -157,13 +154,23 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                     "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
                 data: {
                     endpointId: endpoint.id,
-                    endpointName: endpoint.title,
+                    endpointName: node.title,
                     method: endpoint.method,
-                    route: `/${endpoint.slug}`,
+                    route: `/${node.slug}`,
                 },
             });
         }
-    }, [endpoint, formState, proxyEnvironment, uploadEnvironment, usesApplicationJsonInFormDataValue, setOAuthValue]);
+    }, [
+        endpoint,
+        node.title,
+        node.slug,
+        auth,
+        formState,
+        proxyEnvironment,
+        setOAuthValue,
+        uploadEnvironment,
+        usesApplicationJsonInFormDataValue,
+    ]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
@@ -186,14 +193,13 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">
                     <PlaygroundEndpointContent
-                        endpoint={endpoint}
+                        context={context}
                         formState={formState}
                         setFormState={setFormState}
                         resetWithExample={resetWithExample}
                         resetWithoutExample={resetWithoutExample}
                         response={response}
                         sendRequest={sendRequest}
-                        types={types}
                     />
                 </div>
             </div>

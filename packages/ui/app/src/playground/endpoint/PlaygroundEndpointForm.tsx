@@ -1,32 +1,27 @@
+import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import titleCase from "@fern-ui/core-utils/titleCase";
+import { isEmpty } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedTypeDefinition,
-    dereferenceObjectProperties,
-    unwrapReference,
-    visitResolvedHttpRequestBodyShape,
-} from "../../resolver/types";
+import { dereferenceObjectProperties, unwrapReference } from "../../resolver/types";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "../form/PlaygroundTypeReferenceForm";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody } from "../types";
+import { EndpointContext } from "../types/endpoint-context";
 import { PlaygroundEndpointFormSection } from "./PlaygroundEndpointFormSection";
 import { PlaygroundEndpointMultipartForm } from "./PlaygroundEndpointMultipartForm";
 
 interface PlaygroundEndpointFormProps {
-    endpoint: ResolvedEndpointDefinition;
+    context: EndpointContext;
     formState: PlaygroundEndpointRequestFormState | undefined;
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
-    types: Record<string, ResolvedTypeDefinition>;
     ignoreHeaders?: boolean;
 }
 
 export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
-    endpoint,
+    context: { endpoint, types },
     formState,
     setFormState,
-    types,
     ignoreHeaders,
 }) => {
     const setHeaders = useCallback(
@@ -103,11 +98,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
     return (
         <>
-            {endpoint.headers.length > 0 && (
+            {!isEmpty(endpoint.requestHeaders) && (
                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Headers">
                     <PlaygroundObjectPropertiesForm
                         id="header"
-                        properties={endpoint.headers}
+                        properties={endpoint.requestHeaders ?? EMPTY_ARRAY}
                         onChange={setHeaders}
                         value={formState?.headers}
                         types={types}
@@ -115,11 +110,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 </PlaygroundEndpointFormSection>
             )}
 
-            {endpoint.pathParameters.length > 0 && (
+            {!isEmpty(endpoint.pathParameters) && (
                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Path Parameters">
                     <PlaygroundObjectPropertiesForm
                         id="path"
-                        properties={endpoint.pathParameters}
+                        properties={endpoint.pathParameters ?? EMPTY_ARRAY}
                         onChange={setPathParameters}
                         value={formState?.pathParameters}
                         types={types}
@@ -127,11 +122,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 </PlaygroundEndpointFormSection>
             )}
 
-            {endpoint.queryParameters.length > 0 && (
+            {!isEmpty(endpoint.queryParameters) && (
                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Query Parameters">
                     <PlaygroundObjectPropertiesForm
                         id="query"
-                        properties={endpoint.queryParameters}
+                        properties={endpoint.queryParameters ?? EMPTY_ARRAY}
                         onChange={setQueryParameters}
                         value={formState?.queryParameters}
                         types={types}
@@ -139,8 +134,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 </PlaygroundEndpointFormSection>
             )}
 
-            {endpoint.requestBody != null &&
-                visitResolvedHttpRequestBodyShape(endpoint.requestBody.shape, {
+            {endpoint.request?.body != null &&
+                visitDiscriminatedUnion(endpoint.request.body)._visit({
                     formData: (formData) => (
                         <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title={titleCase(formData.name)}>
                             <PlaygroundEndpointMultipartForm

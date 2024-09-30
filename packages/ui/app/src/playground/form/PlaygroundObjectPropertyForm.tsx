@@ -1,12 +1,12 @@
+import { ObjectProperty, TypeDefinition, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { PlusCircle } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
-import { renderTypeShorthandRoot } from "../../api-reference/types/type-shorthand/TypeShorthand";
-import { ResolvedObjectProperty, ResolvedTypeDefinition, unwrapOptional } from "../../resolver/types";
-import { castToRecord, getDefaultValueForType, isExpandable } from "../utils";
+import { renderDeprecatedTypeShorthandRoot } from "../../api-reference/types/type-shorthand/TypeShorthand";
+import { castToRecord, getEmptyValueForType, isExpandable } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
@@ -17,11 +17,11 @@ const ADD_ALL_KEY = "__FERN_ADD_ALL__" as const;
 
 interface PlaygroundObjectPropertyFormProps {
     id: string;
-    property: ResolvedObjectProperty;
+    property: ObjectProperty;
     onChange: (key: string, value: unknown) => void;
     value: unknown;
     expandByDefault?: boolean;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, TypeDefinition>;
     disabled?: boolean;
 }
 
@@ -62,7 +62,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         <PlaygroundTypeReferenceForm
             id={id}
             property={property}
-            shape={unwrapOptional(property.valueShape, types)}
+            shape={unwrapReference(property.valueShape, types).shape}
             onChange={handleChange}
             value={value}
             renderAsPanel={true}
@@ -76,11 +76,11 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
 
 interface PlaygroundObjectPropertiesFormProps {
     id: string;
-    properties: ResolvedObjectProperty[];
+    properties: readonly ObjectProperty[];
     onChange: (value: unknown) => void;
     value: unknown;
     indent?: boolean;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, TypeDefinition>;
     disabled?: boolean;
 }
 
@@ -120,7 +120,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                 type: "value",
                 value: property.key,
                 label: property.key,
-                helperText: renderTypeShorthandRoot(property.valueShape, types),
+                helperText: renderDeprecatedTypeShorthandRoot(property.valueShape, types),
                 labelClassName: "font-mono",
                 tooltip: property.description != null ? <Markdown size="xs" mdx={property.description} /> : undefined,
             }),
@@ -174,8 +174,8 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                             onChange((oldValue: unknown) => {
                                 const oldObject = castToRecord(oldValue);
                                 return hiddenProperties.reduce((acc, property) => {
-                                    const newValue = getDefaultValueForType(
-                                        unwrapOptional(property.valueShape, types),
+                                    const newValue = getEmptyValueForType(
+                                        unwrapReference(property.valueShape, types).shape,
                                         types,
                                     );
                                     return { ...acc, [property.key]: newValue };
@@ -190,7 +190,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                         }
                         onChangeObjectProperty(
                             property.key,
-                            getDefaultValueForType(unwrapOptional(property.valueShape, types), types) ?? "",
+                            getEmptyValueForType(unwrapReference(property.valueShape, types).shape, types) ?? "",
                         );
                     }}
                 >
@@ -215,6 +215,6 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
 
 PlaygroundObjectPropertiesForm.displayName = "PlaygroundObjectPropertiesForm";
 
-function shouldShowProperty(shape: ResolvedObjectProperty["valueShape"], value: unknown): boolean {
+function shouldShowProperty(shape: ObjectProperty["valueShape"], value: unknown): boolean {
     return shape.type !== "optional" || value !== undefined;
 }

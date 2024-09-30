@@ -1,17 +1,17 @@
+import { TypeDefinition, UndiscriminatedUnionType } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
 import { NavArrowDown } from "iconoir-react";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Markdown } from "../../mdx/Markdown";
-import { ResolvedTypeDefinition, ResolvedUndiscriminatedUnionShape } from "../../resolver/types";
-import { getDefaultValueForType, matchesTypeReference } from "../utils";
+import { getEmptyValueForType, matchesTypeReference } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 interface PlaygroundUniscriminatedUnionFormProps {
-    undiscriminatedUnion: ResolvedUndiscriminatedUnionShape;
+    undiscriminatedUnion: UndiscriminatedUnionType;
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, TypeDefinition>;
     disabled?: boolean;
 }
 
@@ -32,7 +32,7 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
             const variant = undiscriminatedUnion.variants[variantIdx];
             if (variantIdx !== internalSelectedVariant && variant != null) {
                 setInternalSelectedVariant(variantIdx);
-                onChange(getDefaultValueForType(variant.shape, types));
+                onChange(getEmptyValueForType(variant.shape, types));
             }
         },
         [internalSelectedVariant, onChange, types, undiscriminatedUnion.variants],

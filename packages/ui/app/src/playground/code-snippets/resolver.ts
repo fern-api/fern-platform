@@ -1,7 +1,8 @@
+import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { UnreachableCaseError } from "ts-essentials";
-import { ResolvedEndpointDefinition, stringifyResolvedEndpointPathPartsTemplate } from "../../resolver/types";
+import { stringifyResolvedEndpointPathPartsTemplate } from "../../resolver/types";
 import { provideRegistryService } from "../../services/registry";
 import { PlaygroundAuthState, PlaygroundEndpointRequestFormState } from "../types";
 import { buildAuthHeaders, convertToCustomSnippetPayload } from "../utils";
@@ -11,7 +12,7 @@ import { TypescriptFetchSnippetBuilder } from "./builders/typescript";
 
 export class PlaygroundCodeSnippetResolverBuilder {
     constructor(
-        private endpoint: ResolvedEndpointDefinition,
+        private endpoint: EndpointDefinition,
         private isSnippetTemplatesEnabled: boolean,
         private isFileForgeHackEnabled: boolean,
     ) {}
@@ -75,7 +76,7 @@ export class PlaygroundCodeSnippetResolver {
     }
 
     constructor(
-        public endpoint: ResolvedEndpointDefinition,
+        public endpoint: EndpointDefinition,
         authState: PlaygroundAuthState,
         private formState: PlaygroundEndpointRequestFormState,
         isAuthHeadersRedacted: boolean,

@@ -1,15 +1,15 @@
+import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { useAtom, useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
 import { PLAYGROUND_AUTH_STATE_ATOM, PLAYGROUND_AUTH_STATE_OAUTH_ATOM, useFeatureFlags } from "../atoms";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
-import { ResolvedEndpointDefinition } from "../resolver/types";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { useSnippet } from "./code-snippets/useSnippet";
 import { PlaygroundEndpointRequestFormState } from "./types";
 
 interface PlaygroundRequestPreviewProps {
-    endpoint: ResolvedEndpointDefinition;
+    endpoint: EndpointDefinition;
     formState: PlaygroundEndpointRequestFormState;
     requestType: "curl" | "typescript" | "python";
 }

@@ -1,12 +1,12 @@
+import { FormDataField, HttpRequestBodyShape } from "@fern-api/fdr-sdk/api-definition";
 import { assertNever, isNonNullish } from "@fern-ui/core-utils";
 import { compact } from "lodash-es";
-import { ResolvedFormDataRequestProperty, ResolvedHttpRequestBodyShape } from "../../resolver/types";
 import { blobToDataURL } from "../fetch-utils/blobToDataURL";
 import { PlaygroundFormStateBody, ProxyRequest, SerializableFile, SerializableFormDataEntryValue } from "../types";
 
 export async function serializeFormStateBody(
     environment: string,
-    shape: ResolvedHttpRequestBodyShape | undefined,
+    shape: HttpRequestBodyShape | undefined,
     body: PlaygroundFormStateBody | undefined,
     usesApplicationJsonInFormDataValue: boolean,
 ): Promise<ProxyRequest.SerializableBody | undefined> {
@@ -39,9 +39,9 @@ export async function serializeFormStateBody(
                         if (shape.type !== "formData") {
                             return undefined;
                         }
-                        const property = shape.properties.find((p) => p.key === key && p.type === "bodyProperty") as
-                            | ResolvedFormDataRequestProperty.BodyProperty
-                            | undefined;
+                        const property = shape.fields.find(
+                            (p): p is FormDataField.Property => p.key === key && p.type === "property",
+                        );
 
                         // check if the json value is a string and performa a safe parse operation to check if the json is stringified
                         if (typeof value.value === "string") {

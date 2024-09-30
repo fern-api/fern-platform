@@ -1,4 +1,4 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { Environment, EnvironmentId, HttpMethod, ObjectProperty, PathPart } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -9,18 +9,17 @@ import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
-import { ResolvedEndpointPathParts, ResolvedObjectProperty } from "../../resolver/types";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "../types";
 import { buildRequestUrl } from "../utils";
 
 interface PlaygroundEndpointPathProps {
-    method: APIV1Read.HttpMethod | undefined;
-    environment: APIV1Read.Environment | undefined;
-    environmentFilters: APIV1Read.EnvironmentId[] | undefined;
+    method: HttpMethod | undefined;
+    environment: Environment | undefined;
+    environmentFilters: EnvironmentId[] | undefined;
     formState: PlaygroundRequestFormState;
-    path: ResolvedEndpointPathParts[];
-    queryParameters: ResolvedObjectProperty[];
+    path: PathPart[];
+    queryParameters: ObjectProperty[] | undefined;
     sendRequest: () => void;
     sendRequestButtonLabel?: string;
     sendRequestIcon?: ReactNode;
@@ -66,7 +65,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                         return visitDiscriminatedUnion(part, "type")._visit({
                             literal: (literal) => <span key={idx}>{literal.value}</span>,
                             pathParameter: (pathParameter) => {
-                                const stateValue = unknownToString(formState.pathParameters[pathParameter.key]);
+                                const stateValue = unknownToString(formState.pathParameters[pathParameter.value]);
                                 return (
                                     <span
                                         key={idx}
@@ -76,14 +75,15 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                                             "t-accent font-semibold": stateValue.length > 0,
                                         })}
                                     >
-                                        {stateValue.length > 0 ? encodeURI(stateValue) : pathParameter.key}
+                                        {stateValue.length > 0 ? encodeURI(stateValue) : pathParameter.value}
                                     </span>
                                 );
                             },
                             _other: () => null,
                         });
                     })}
-                    {queryParameters.length > 0 &&
+                    {queryParameters &&
+                        queryParameters.length > 0 &&
                         Object.keys(omitBy(formState.queryParameters, isUndefined)).length > 0 &&
                         queryParameters
                             .filter((queryParameter) => {
