@@ -68,7 +68,7 @@ export class Buf {
     }
 
     private getArgsForCurlRequest(request: Buf.CurlRequest): string[] {
-        const args = [this.getFullyQualifiedEndpoint(request)];
+        const args = ["curl", this.getFullyQualifiedEndpoint(request)];
         for (const header of request.headers) {
             args.push(...["-H", header]);
         }
