@@ -5,7 +5,7 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { mapValues } from "lodash-es";
-import { FC, ReactElement, useCallback, useState } from "react";
+import { FC, ReactElement, useCallback, useMemo, useState } from "react";
 import { captureSentryError } from "../../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -21,10 +21,12 @@ import { useApiRoute } from "../../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { getAppBuildwithfernCom } from "../../hooks/useStandardProxyEnvironment";
 import { ResolvedEndpointDefinition, ResolvedTypeDefinition, resolveEnvironment } from "../../resolver/types";
+import { executeGrpc } from "../fetch-utils/executeGrpc";
 import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
-import type { ProxyRequest } from "../types";
+import { FernProxyClient } from "../fetch-utils/generated";
+import type { GrpcProxyRequest, ProxyRequest } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import {
     buildAuthHeaders,
@@ -60,6 +62,13 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
     const playgroundEnvironment = usePlaygroundEnvironment();
+
+    // TODO: remove this after Pinecone demo
+    const grpcClient = useMemo(() => {
+        return new FernProxyClient({
+            environment: "",
+        });
+    }, []);
 
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
@@ -178,11 +187,59 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
 
     // Figure out if GRPC endpoint
     const sendGrpcRequest = useCallback(async () => {
-        // TODOGRPC: Implement this
-        console.log(endpoint);
-    }, []);
-    console.log(endpoint);
-    console.log(grpcEndpoints);
+        if (endpoint == null) {
+            return;
+        }
+        setResponse(loading());
+        try {
+            const authHeaders = buildAuthHeaders(
+                endpoint.auth,
+                store.get(PLAYGROUND_AUTH_STATE_ATOM),
+                {
+                    redacted: false,
+                },
+                {
+                    formState,
+                    endpoint,
+                    proxyEnvironment,
+                    playgroundEnvironment,
+                    setValue: setOAuthValue,
+                },
+            );
+            const headers = {
+                ...authHeaders,
+                ...mapValues(formState.headers ?? {}, (value) => unknownToString(value)),
+            };
+
+            const req: GrpcProxyRequest = {
+                url: buildEndpointUrl(endpoint, formState, playgroundEnvironment),
+                endpointId: endpoint.id,
+                headers,
+                body: await serializeFormStateBody(
+                    uploadEnvironment,
+                    endpoint.requestBody?.shape,
+                    formState.body,
+                    usesApplicationJsonInFormDataValue,
+                ),
+            };
+
+            const res = await executeGrpc(grpcClient, req);
+            setResponse(loaded(res));
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+            setResponse(failed(e));
+        }
+    }, [
+        endpoint,
+        formState,
+        proxyEnvironment,
+        uploadEnvironment,
+        usesApplicationJsonInFormDataValue,
+        playgroundEnvironment,
+        setOAuthValue,
+        grpcClient,
+    ]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 

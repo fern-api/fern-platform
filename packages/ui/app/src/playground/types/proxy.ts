@@ -36,6 +36,17 @@ export declare namespace ProxyRequest {
     export type ProxyRequest = z.infer<typeof ProxyRequestSchema>;
 }
 
+// TODO: think about this after pinecone hack
+
+export const GrpcProxyRequestSchema = z.object({
+    url: z.string(),
+    endpointId: z.string(),
+    headers: z.record(z.string()),
+    body: SerializableBodySchema.optional(),
+});
+
+export type GrpcProxyRequest = z.infer<typeof GrpcProxyRequestSchema>;
+
 export declare namespace ProxyResponse {
     export interface SerializableResponse {
         readonly headers: Record<string, string>;
