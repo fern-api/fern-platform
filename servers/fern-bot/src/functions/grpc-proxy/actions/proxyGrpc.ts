@@ -1,9 +1,9 @@
+import { GrpcProxyRequest, GrpcProxyResponse, ProtobufSchema } from "@generated/api";
 import { Buf } from "@libs/buf";
+import { fetchAndUnzip } from "@utils/fetchAndUnzip";
 import { mkdir } from "fs/promises";
 import path from "path";
-import { fetchAndUnzip } from "src/utils/fetchAndUnzip";
 import tmp from "tmp-promise";
-import { GrpcProxyRequest, GrpcProxyResponse, ProtobufSchema } from "../../../generated/api";
 import { DEFAULT_PROTO_DIRECTORY, DEFAULT_PROTO_SOURCE_URL } from "./constants";
 
 interface Options {

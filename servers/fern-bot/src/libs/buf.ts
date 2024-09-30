@@ -1,6 +1,6 @@
+import { createLoggingExecutable, LoggingExecutable } from "@utils/createLoggingExecutable";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
-import { createLoggingExecutable, LoggingExecutable } from "../utils/createLoggingExecutable";
 
 const BUF_NPM_PACKAGE = "@bufbuild/buf";
 const BUF_VERSION = "1.42.0";
