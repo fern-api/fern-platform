@@ -130,7 +130,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     const selectedEnvironmentId = useSelectedEnvironmentId();
     const playgroundEnvironment = usePlaygroundEnvironment();
 
-    console.log(playgroundEnvironment);
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>
             {/* TODO: Replace this with a proper segmented control component */}
@@ -182,7 +181,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                code={resolveEnvironmentUrlInCodeSnippet(endpoint, requestCodeSnippet, playgroundEnvironment)}
+                code={resolveEnvironmentUrlInCodeSnippet(
+                    endpoint,
+                    requestCodeSnippet,
+                    playgroundEnvironment,
+                    undefined,
+                    true,
+                )}
                 language={selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}

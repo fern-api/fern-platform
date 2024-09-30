@@ -807,6 +807,7 @@ export const resolveEnvironmentUrlInCodeSnippet = (
     requestCodeSnippet: string,
     playgroundEnvironment: string | undefined,
     selectedEnvironmentId?: string,
+    includePath?: boolean,
 ): string => {
     const urlToReplace = endpoint.environments.find((env) => requestCodeSnippet.includes(env.baseUrl))?.baseUrl;
     const resolvedEnvironment = resolveEnvironment(endpoint, selectedEnvironmentId);
@@ -814,7 +815,8 @@ export const resolveEnvironmentUrlInCodeSnippet = (
     return urlToReplace && resolvedEnvironment
         ? requestCodeSnippet.replace(
               urlToReplace,
-              (playgroundReplacement && `${playgroundReplacement.protocol}//${playgroundReplacement.host}`) ??
+              (playgroundReplacement &&
+                  `${playgroundReplacement.protocol}//${playgroundReplacement.host}${includePath ? playgroundReplacement.pathname : ""}`) ??
                   resolvedEnvironment.baseUrl,
           )
         : requestCodeSnippet;
