@@ -28,7 +28,11 @@ export async function loggingExeca(
         logLine = logLine.replaceAll(substitutionKey, substitutionValue);
     }
 
+<<<<<<< HEAD
     console.debug(`+ ${logLine}`);
+=======
+    console.log(`+ ${logLine}`);
+>>>>>>> ed23f63d7 (feat(proxy): Add ability to call gRPC endpoints)
     const command = execa(executable, args, execaOptions);
     if (!doNotPipeOutput) {
         command.stdout?.pipe(process.stdout);
