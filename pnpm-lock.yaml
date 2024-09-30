@@ -875,6 +875,9 @@ importers:
 
   packages/fdr-sdk:
     dependencies:
+      '@fern-ui/core-utils':
+        specifier: workspace:*
+        version: link:../commons/core-utils
       dayjs:
         specifier: ^1.11.11
         version: 1.11.11
@@ -890,6 +893,9 @@ importers:
       js-base64:
         specifier: 3.7.7
         version: 3.7.7
+      lodash-es:
+        specifier: '>=4'
+        version: 4.17.21
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
@@ -2426,6 +2432,9 @@ importers:
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5
+      '@fern-ui/core-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/core-utils
       '@prisma/client':
         specifier: 5.13.0
         version: 5.13.0(prisma@5.13.0)

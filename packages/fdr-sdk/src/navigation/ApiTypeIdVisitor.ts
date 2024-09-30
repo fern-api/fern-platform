@@ -1,6 +1,6 @@
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { noop } from "ts-essentials";
 import type { APIV1Read } from "../client/types";
-import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
 
 export class ApiTypeIdVisitor {
     public static visitEndpointDefinition(

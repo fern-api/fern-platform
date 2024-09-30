@@ -87,24 +87,23 @@ types:
 
   DiscriminatedUnionType:
     properties:
-      discriminant: string
+      discriminant: rootCommons.PropertyKey
       variants: list<DiscriminatedUnionVariant>
 
   DiscriminatedUnionVariant:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
+      - ObjectType
     properties:
       discriminantValue: string
       displayName: optional<string>
-      additionalProperties: ObjectType
 
   FormDataRequest:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
     properties:
-      name: string
       fields: list<FormDataField>
 
   FormDataField:
@@ -114,7 +113,7 @@ types:
       property: FormDataProperty
 
   FormDataProperty:
-    extends: ObjectProperty
+    extends: ObjectProperty # has description and availability
     properties:
       contentType: optional<ContentType>
 

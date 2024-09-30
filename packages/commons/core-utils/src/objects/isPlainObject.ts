@@ -16,3 +16,5 @@ export function isPlainObject(value: unknown): value is Record<string, unknown> 
 function isObjectLike(value: unknown) {
     return typeof value === "object" && value != null;
 }
+
+export default isPlainObject;

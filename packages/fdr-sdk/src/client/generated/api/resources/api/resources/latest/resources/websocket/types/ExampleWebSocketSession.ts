@@ -5,10 +5,10 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface ExampleWebSocketSession extends FernRegistry.api.latest.WithDescription {
-    name: string | undefined;
     path: string;
-    pathParameters: Record<FernRegistry.PropertyKey, unknown>;
-    queryParameters: Record<FernRegistry.PropertyKey, unknown>;
-    requestHeaders: Record<FernRegistry.PropertyKey, unknown>;
-    messages: FernRegistry.api.latest.ExampleWebSocketMessage[];
+    name: string | undefined;
+    pathParameters: Record<FernRegistry.PropertyKey, unknown> | undefined;
+    queryParameters: Record<FernRegistry.PropertyKey, unknown> | undefined;
+    requestHeaders: Record<FernRegistry.PropertyKey, unknown> | undefined;
+    messages: FernRegistry.api.latest.ExampleWebSocketMessage[] | undefined;
 }

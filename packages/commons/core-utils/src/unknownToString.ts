@@ -10,3 +10,5 @@ export function unknownToString(value: unknown, { renderNull = false }: Opts = {
     }
     return JSON.stringify(value);
 }
+
+export default unknownToString;

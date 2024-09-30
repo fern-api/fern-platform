@@ -1,10 +1,12 @@
+import assertNever from "@fern-ui/core-utils/assertNever";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { FernNavigation } from "../../../..";
 import type { APIV1Read, DocsV1Read } from "../../../../client/types";
 import {
     visitReadNavigationConfig,
     visitUnversionedReadNavigationConfig,
 } from "../../../../client/visitReadNavigationConfig";
-import { assertNever, kebabCase, visitDiscriminatedUnion } from "../../../../utils";
+import { kebabCase } from "../../../../utils";
 import { ApiReferenceNavigationConverter } from "./ApiReferenceNavigationConverter";
 import { ChangelogNavigationConverter } from "./ChangelogConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";

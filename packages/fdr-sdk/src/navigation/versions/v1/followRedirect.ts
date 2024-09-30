@@ -1,5 +1,5 @@
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { FernNavigation } from "../../..";
-import { visitDiscriminatedUnion } from "../../../utils";
 import { hasMetadata } from "./NavigationNodeWithMetadata";
 
 export function followRedirect(

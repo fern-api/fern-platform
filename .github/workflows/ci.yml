@@ -63,6 +63,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Build components
+        run: pnpm turbo --filter=@fern-ui/components compile
+
       - name: Run Chromatic
         uses: chromaui/action@latest
         # Chromatic CI config: https://www.chromatic.com/docs/github-actions/

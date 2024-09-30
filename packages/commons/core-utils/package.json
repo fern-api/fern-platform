@@ -12,9 +12,37 @@
   ],
   "type": "module",
   "source": "src/index.ts",
-  "module": "src/index.ts",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "exports": {
+    "./assertNever": {
+      "types": "./src/assertNever.ts",
+      "default": "./dist/assertNever.js"
+    },
+    "./titleCase": {
+      "types": "./src/titleCase.ts",
+      "default": "./dist/titleCase.js"
+    },
+    "./unknownToString": {
+      "types": "./src/unknownToString.ts",
+      "default": "./dist/unknownToString.js"
+    },
+    "./visitDiscriminatedUnion": {
+      "types": "./src/visitDiscriminatedUnion.ts",
+      "default": "./dist/visitDiscriminatedUnion.js"
+    },
+    "./isPlainObject": {
+      "types": "./src/objects/isPlainObject.ts",
+      "default": "./dist/objects/isPlainObject.js"
+    },
+    "./identity": {
+      "types": "./src/identity.ts",
+      "default": "./dist/identity.js"
+    },
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",

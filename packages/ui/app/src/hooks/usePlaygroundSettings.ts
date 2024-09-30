@@ -1,5 +1,5 @@
-import { visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import { NavigationNode, NodeId, PlaygroundSettings } from "@fern-api/fdr-sdk/navigation";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { useIsPlaygroundOpen, useNavigationNodes, usePlaygroundNodeId } from "../atoms";
 
 export function usePlaygroundSettings(currentNodeId?: NodeId): PlaygroundSettings | undefined {

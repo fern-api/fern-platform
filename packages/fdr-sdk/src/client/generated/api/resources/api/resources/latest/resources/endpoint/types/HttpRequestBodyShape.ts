@@ -6,7 +6,7 @@ import * as FernRegistry from "../../../../../../../index";
 
 export type HttpRequestBodyShape =
     | FernRegistry.api.latest.HttpRequestBodyShape.Object_
-    | FernRegistry.api.latest.HttpRequestBodyShape.Reference
+    | FernRegistry.api.latest.HttpRequestBodyShape.Alias
     | FernRegistry.api.latest.HttpRequestBodyShape.Bytes
     | FernRegistry.api.latest.HttpRequestBodyShape.FormData;
 
@@ -15,8 +15,8 @@ export declare namespace HttpRequestBodyShape {
         type: "object";
     }
 
-    interface Reference {
-        type: "reference";
+    interface Alias {
+        type: "alias";
         value: FernRegistry.api.latest.TypeReference;
     }
 

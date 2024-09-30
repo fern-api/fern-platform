@@ -1,5 +1,6 @@
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { UnreachableCaseError } from "ts-essentials";
-import { FernNavigation, visitDiscriminatedUnion } from "../..";
+import { FernNavigation } from "../..";
 
 /**
  * This migration accounts for the following changes:

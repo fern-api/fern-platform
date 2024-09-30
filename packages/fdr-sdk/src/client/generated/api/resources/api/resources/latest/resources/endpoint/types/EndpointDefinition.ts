@@ -6,7 +6,8 @@ import * as FernRegistry from "../../../../../../../index";
 
 export interface EndpointDefinition
     extends FernRegistry.api.latest.WithDescription,
-        FernRegistry.api.latest.WithAvailability {
+        FernRegistry.api.latest.WithAvailability,
+        FernRegistry.api.latest.WithNamespace {
     id: FernRegistry.EndpointId;
     method: FernRegistry.HttpMethod;
     path: FernRegistry.api.latest.PathPart[];

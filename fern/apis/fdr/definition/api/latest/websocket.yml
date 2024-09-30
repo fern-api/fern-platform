@@ -18,6 +18,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithNamespace
     properties:
       id: rootCommons.WebSocketId
       path: list<commons.PathPart>
@@ -46,9 +47,9 @@ types:
   ExampleWebSocketSession:
     extends: commons.WithDescription
     properties:
-      name: optional<string>
       path: string
-      pathParameters: map<rootCommons.PropertyKey, unknown>
-      queryParameters: map<rootCommons.PropertyKey, unknown>
-      requestHeaders: map<rootCommons.PropertyKey, unknown>
-      messages: list<ExampleWebSocketMessage>
+      name: optional<string>
+      pathParameters: optional<map<rootCommons.PropertyKey, unknown>>
+      queryParameters: optional<map<rootCommons.PropertyKey, unknown>>
+      requestHeaders: optional<map<rootCommons.PropertyKey, unknown>>
+      messages: optional<list<ExampleWebSocketMessage>>

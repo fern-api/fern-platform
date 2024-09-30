@@ -6,11 +6,12 @@ import * as FernRegistry from "../../../../../../../index";
 
 export interface WebhookDefinition
     extends FernRegistry.api.latest.WithDescription,
-        FernRegistry.api.latest.WithAvailability {
+        FernRegistry.api.latest.WithAvailability,
+        FernRegistry.api.latest.WithNamespace {
     id: FernRegistry.WebhookId;
     method: FernRegistry.api.latest.WebhookHttpMethod;
     path: string[];
-    headers: FernRegistry.api.latest.ObjectProperty[];
-    payload: FernRegistry.api.latest.WebhookPayload;
-    examples: FernRegistry.api.v1.read.ExampleWebhookPayload[];
+    headers: FernRegistry.api.latest.ObjectProperty[] | undefined;
+    payload: FernRegistry.api.latest.WebhookPayload | undefined;
+    examples: FernRegistry.api.v1.read.ExampleWebhookPayload[] | undefined;
 }

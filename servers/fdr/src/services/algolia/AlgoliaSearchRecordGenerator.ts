@@ -6,11 +6,10 @@ import {
     DocsV1Read,
     FernNavigation,
     convertDbAPIDefinitionToRead,
-    titleCase,
     visitDbNavigationTab,
-    visitDiscriminatedUnion,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
+import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";

@@ -1,4 +1,4 @@
-import { visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { isPlainObject } from "@fern-ui/core-utils";
 import {
     ResolvedObjectProperty,

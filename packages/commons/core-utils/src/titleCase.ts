@@ -17,3 +17,5 @@ export function titleCase(name: string): string {
     const versionedTitle = titleCased.replace(/V\s(\d)/g, "V$1");
     return versionedTitle;
 }
+
+export default titleCase;
