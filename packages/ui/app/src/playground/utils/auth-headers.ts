@@ -59,6 +59,7 @@ export function buildAuthHeaders(
                                         formState,
                                         endpoint,
                                         proxyEnvironment,
+                                        playgroundEnvironment,
                                         setValue: setOAuthValue,
                                     } = oAuthClientCredentialReferencedEndpointLoginFlowProps;
                                     try {
@@ -69,6 +70,7 @@ export function buildAuthHeaders(
                                                 endpoint,
                                                 proxyEnvironment,
                                                 oAuthClientCredentialsReferencedEndpoint,
+                                                playgroundEnvironment,
                                                 setValue: setOAuthValue,
                                             }).catch(noop);
                                         }

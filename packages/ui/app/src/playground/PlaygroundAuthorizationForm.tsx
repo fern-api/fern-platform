@@ -25,6 +25,7 @@ import {
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
     usePlaygroundEndpointFormState,
+    usePlaygroundEnvironment,
 } from "../atoms";
 import { useOAuthEndpoint } from "../atoms/oauth";
 import { useApiRoute } from "../hooks/useApiRoute";
@@ -166,6 +167,7 @@ function FoundOAuthReferencedEndpointForm({
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
     const [formState, setFormState] = usePlaygroundEndpointFormState(oAuthEndpoint);
+    const playgroundEnvironment = usePlaygroundEnvironment();
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
@@ -179,6 +181,7 @@ function FoundOAuthReferencedEndpointForm({
             endpoint: oAuthEndpoint,
             proxyEnvironment,
             oAuthClientCredentialsReferencedEndpoint,
+            playgroundEnvironment,
             setValue,
             closeContainer,
             setDisplayFailedLogin,

@@ -8,9 +8,10 @@ export abstract class PlaygroundCodeSnippetBuilder {
         // TODO: make this more generic and easier to test by removing dependency on "ResolvedEndpointDefinition"
         protected endpoint: ResolvedEndpointDefinition,
         protected formState: PlaygroundEndpointRequestFormState,
+        protected playgroundEnvironment: string | undefined,
     ) {
         // TODO: wire through the environment from hook
-        this.url = buildEndpointUrl(endpoint, formState);
+        this.url = buildEndpointUrl(endpoint, formState, playgroundEnvironment);
     }
 
     public abstract build(): string;
