@@ -126,6 +126,7 @@ types:
   ProtobufSchema:
     union:
 <<<<<<< HEAD
+<<<<<<< HEAD
       remote: RemoteProtobufSchema
 
 =======
@@ -139,6 +140,10 @@ types:
         type: string
 
 >>>>>>> ed23f63d7 (feat(proxy): Add ability to call gRPC endpoints)
+=======
+      remote: RemoteProtobufSchema
+
+>>>>>>> 96e0ca99b (Simplify to just remote for now)
   RemoteProtobufSchema:
     properties:
       sourceUrl:
