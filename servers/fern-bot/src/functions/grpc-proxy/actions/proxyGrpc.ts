@@ -4,14 +4,23 @@ import path from "path";
 import { fetchAndUnzip } from "src/utils/fetchAndUnzip";
 import tmp from "tmp-promise";
 import { GrpcProxyRequest, GrpcProxyResponse, ProtobufSchema } from "../../../generated/api";
+import { DEFAULT_PROTO_DIRECTORY, DEFAULT_PROTO_SOURCE_URL } from "./constants";
 
-const PROTO_DIRECTORY = "proto";
+interface Options {
+    skipDefaultSchema?: boolean;
+}
 
-export async function proxyGrpcInternal({ request }: { request: GrpcProxyRequest }): Promise<GrpcProxyResponse> {
+export async function proxyGrpcInternal({
+    request,
+    options,
+}: {
+    request: GrpcProxyRequest;
+    options?: Options;
+}): Promise<GrpcProxyResponse> {
     const buf = new Buf();
     try {
         const response = await buf.curl({
-            request: await toCurlRequest(request),
+            request: await toCurlRequest({ request, options }),
         });
         return {
             body: response.body,
@@ -27,19 +36,30 @@ export async function proxyGrpcInternal({ request }: { request: GrpcProxyRequest
     }
 }
 
-async function toCurlRequest(event: GrpcProxyRequest): Promise<Buf.CurlRequest> {
+async function toCurlRequest({
+    request,
+    options,
+}: {
+    request: GrpcProxyRequest;
+    options?: Options;
+}): Promise<Buf.CurlRequest> {
     return {
-        baseUrl: event.baseUrl,
-        endpoint: getGrpcPathForEndpoint(event.endpoint),
-        headers: getCurlHeaders(event.headers),
-        schema: event.schema != null ? await fetchProtobufSchema(event.schema) : undefined,
+        baseUrl: request.baseUrl,
+        endpoint: getGrpcPathForEndpoint(request.endpoint),
+        headers: getCurlHeaders(request.headers),
+        schema:
+            request.schema != null
+                ? await fetchProtobufSchema(request.schema)
+                : !options?.skipDefaultSchema
+                  ? await fetchProtobufSchema({ type: "remote", sourceUrl: DEFAULT_PROTO_SOURCE_URL })
+                  : undefined,
         grpc: true,
-        body: event.body,
+        body: request.body,
     };
 }
 
 async function fetchProtobufSchema(schema: ProtobufSchema): Promise<string> {
-    const absolutePathToProtoDirectory = path.join((await tmp.dir()).path, PROTO_DIRECTORY);
+    const absolutePathToProtoDirectory = path.join((await tmp.dir()).path, DEFAULT_PROTO_DIRECTORY);
     console.debug(`mkdir ${absolutePathToProtoDirectory}`);
     await mkdir(absolutePathToProtoDirectory, { recursive: true });
 

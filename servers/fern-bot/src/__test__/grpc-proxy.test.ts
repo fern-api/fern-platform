@@ -16,6 +16,20 @@ interface CreateUserRequest {
     metadata: object;
 }
 
+interface UpsertRequest {
+    namespace: string;
+    vectors: Vector[];
+}
+
+interface UpsertResponse {
+    upsertedCount: number;
+}
+
+interface Vector {
+    id: string;
+    values: number[];
+}
+
 it("unary w/ gRPC server reflection", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
@@ -27,12 +41,72 @@ it("unary w/ gRPC server reflection", async () => {
                 sentence: "Feeling happy? Tell me more.",
             },
         },
+        skipDefaultSchema: true,
     });
 
     expect(response).not.toBe(null);
 
     const elizaResponse = response as ElizaResponse;
     expect(elizaResponse.sentence).not.toBe(null);
+});
+
+it.skip("unary w/ default schema", async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response = await proxyGrpc({
+        body: {
+            baseUrl: "https://serverless-test-gb6vrs7.svc.aped-4627-b74a.pinecone.io",
+            endpoint: "endpoint_index.upsert",
+            headers: { "Api-Key": process.env.PINECONE_API_KEY },
+            body: {
+                namespace: "test",
+                vectors: [
+                    {
+                        id: "v2",
+                        values: [0.1, 0.2, 0.3],
+                    },
+                    {
+                        id: "v3",
+                        values: [0.4, 0.5, 0.6],
+                    },
+                ] as Vector[],
+            } as UpsertRequest,
+        },
+    });
+
+    expect(response).not.toBe(null);
+
+    const upsertResponse = JSON.parse(response as string) as UpsertResponse;
+    expect(upsertResponse.upsertedCount).toBe(2);
+});
+
+it("unauthorized", async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response = await proxyGrpc({
+        body: {
+            baseUrl: "https://serverless-test-gb6vrs7.svc.aped-4627-b74a.pinecone.io",
+            endpoint: "endpoint_index.upsert",
+            headers: { Authorization: "Bearer invalid" },
+            body: {
+                namespace: "test",
+                vectors: [
+                    {
+                        id: "v2",
+                        values: [0.1, 0.2, 0.3],
+                    },
+                    {
+                        id: "v3",
+                        values: [0.4, 0.5, 0.6],
+                    },
+                ] as Vector[],
+            } as UpsertRequest,
+        },
+    });
+
+    expect(response).not.toBe(null);
+    expect(response).toEqual(`{
+   "code": "unauthenticated",
+   "message": "Unauthorized"
+}`);
 });
 
 it("invalid schema", async () => {
