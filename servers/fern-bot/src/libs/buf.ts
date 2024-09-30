@@ -141,7 +141,7 @@ export class Buf {
     }
 
     private getArgsForCurlRequest(request: Buf.CurlRequest): string[] {
-        const args = [this.getFullyQualifiedEndpoint(request)];
+        const args = ["curl", this.getFullyQualifiedEndpoint(request)];
         for (const header of request.headers) {
             args.push(...["-H", header]);
 >>>>>>> ed23f63d7 (feat(proxy): Add ability to call gRPC endpoints)
