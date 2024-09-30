@@ -1,5 +1,5 @@
-import { APIV1Read, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
-import { unknownToString } from "@fern-ui/core-utils";
+import { APIV1Read } from "@fern-api/fdr-sdk";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import jsonpath from "jsonpath";
 import { mapValues } from "lodash-es";
 import { ResolvedEndpointDefinition } from "../../resolver/types";

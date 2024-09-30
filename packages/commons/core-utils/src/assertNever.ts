@@ -4,3 +4,5 @@ export function assertNever(x: never): never {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export function assertNeverNoThrow(_: never): void {}
+
+export default assertNever;

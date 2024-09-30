@@ -7,6 +7,5 @@ import * as FernRegistry from "../../../../../../../index";
 export interface FormDataRequest
     extends FernRegistry.api.latest.WithDescription,
         FernRegistry.api.latest.WithAvailability {
-    name: string;
     fields: FernRegistry.api.latest.FormDataField[];
 }

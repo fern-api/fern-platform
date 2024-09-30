@@ -6,7 +6,7 @@ import * as FernRegistry from "../../../../../../../index";
 
 export type HttpResponseBodyShape =
     | FernRegistry.api.latest.HttpResponseBodyShape.Object_
-    | FernRegistry.api.latest.HttpResponseBodyShape.Reference
+    | FernRegistry.api.latest.HttpResponseBodyShape.Alias
     | FernRegistry.api.latest.HttpResponseBodyShape.FileDownload
     | FernRegistry.api.latest.HttpResponseBodyShape.StreamingText
     | FernRegistry.api.latest.HttpResponseBodyShape.Stream;
@@ -16,8 +16,8 @@ export declare namespace HttpResponseBodyShape {
         type: "object";
     }
 
-    interface Reference {
-        type: "reference";
+    interface Alias {
+        type: "alias";
         value: FernRegistry.api.latest.TypeReference;
     }
 

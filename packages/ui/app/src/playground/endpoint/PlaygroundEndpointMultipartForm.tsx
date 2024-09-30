@@ -1,9 +1,9 @@
-import { visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import { ReactElement, useCallback } from "react";
 import { ResolvedEndpointDefinition, ResolvedFormData, ResolvedTypeDefinition } from "../../resolver/types";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertyForm } from "../form/PlaygroundObjectPropertyForm";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormDataEntryValue, PlaygroundFormStateBody } from "../types";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 
 interface PlaygroundEndpointMultipartFormProps {
     endpoint: ResolvedEndpointDefinition;

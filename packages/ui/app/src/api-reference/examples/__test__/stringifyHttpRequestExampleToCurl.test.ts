@@ -1,10 +1,11 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ResolvedEndpointDefinition } from "../../../resolver/types";
 import { convertEndpointExampleToHttpRequestExample } from "../HttpRequestExample";
 import { stringifyHttpRequestExampleToCurl } from "../stringifyHttpRequestExampleToCurl";
 
 const MOCK_ENV = {
-    id: "",
+    id: FernNavigation.EnvironmentId(""),
     baseUrl: "https://api.example.com",
 };
 
@@ -12,13 +13,13 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     type: "endpoint",
     breadcrumb: [],
     nodeId: FernNavigation.NodeId(""),
-    id: "",
+    id: FernNavigation.EndpointId(""),
     // apiPackageId: "",
     slug: FernNavigation.Slug(""),
     auth: undefined,
     availability: undefined,
     defaultEnvironment: MOCK_ENV,
-    apiDefinitionId: "",
+    apiDefinitionId: FernNavigation.ApiDefinitionId(""),
     environments: [MOCK_ENV],
     method: "GET",
     title: "",
@@ -35,14 +36,26 @@ const MOCK_ENDPOINT: ResolvedEndpointDefinition = {
     stream: undefined,
 };
 
-const EMPTY_EXAMPLE = {
+const EMPTY_EXAMPLE: APIV1Read.ExampleEndpointCall = {
     pathParameters: {},
     queryParameters: {},
     headers: {},
     path: "/api",
     responseStatusCode: 0,
-    codeExamples: {},
+    codeExamples: {
+        nodeAxios: undefined,
+        pythonSdk: undefined,
+        typescriptSdk: undefined,
+        goSdk: undefined,
+        rubySdk: undefined,
+    },
     codeSamples: [],
+    name: undefined,
+    requestBody: undefined,
+    requestBodyV3: undefined,
+    responseBody: undefined,
+    responseBodyV3: undefined,
+    description: undefined,
 };
 
 function stringifyMockEndpoint(overrides: Partial<ResolvedEndpointDefinition> = {}): string {
@@ -53,12 +66,18 @@ function stringifyMockEndpoint(overrides: Partial<ResolvedEndpointDefinition> = 
 
 describe("stringifyHttpRequestExampleToCurl", () => {
     it("should render header authorization", () => {
-        expect(stringifyMockEndpoint({ auth: { type: "header", headerWireValue: "Authorization" } })).toMatchSnapshot();
+        expect(
+            stringifyMockEndpoint({
+                auth: { type: "header", headerWireValue: "Authorization", nameOverride: undefined, prefix: undefined },
+            }),
+        ).toMatchSnapshot();
     });
 
     it("should render header authorization with prefix", () => {
         expect(
-            stringifyMockEndpoint({ auth: { type: "header", headerWireValue: "Authorization", prefix: "Token" } }),
+            stringifyMockEndpoint({
+                auth: { type: "header", headerWireValue: "Authorization", prefix: "Token", nameOverride: undefined },
+            }),
         ).toMatchSnapshot();
     });
 
@@ -71,7 +90,7 @@ describe("stringifyHttpRequestExampleToCurl", () => {
     });
 
     it("should render bearer authorization", () => {
-        expect(stringifyMockEndpoint({ auth: { type: "bearerAuth" } })).toMatchSnapshot();
+        expect(stringifyMockEndpoint({ auth: { type: "bearerAuth", tokenName: undefined } })).toMatchSnapshot();
     });
 
     it("should render bearer authorization with custom token name", () => {
@@ -79,6 +98,8 @@ describe("stringifyHttpRequestExampleToCurl", () => {
     });
 
     it("should render basic authorization", () => {
-        expect(stringifyMockEndpoint({ auth: { type: "basicAuth" } })).toMatchSnapshot();
+        expect(
+            stringifyMockEndpoint({ auth: { type: "basicAuth", usernameName: undefined, passwordName: undefined } }),
+        ).toMatchSnapshot();
     });
 });

@@ -1,4 +1,4 @@
-import { titleCase } from "@fern-api/fdr-sdk";
+import titleCase from "@fern-ui/core-utils/titleCase";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import {
     ResolvedEndpointDefinition,

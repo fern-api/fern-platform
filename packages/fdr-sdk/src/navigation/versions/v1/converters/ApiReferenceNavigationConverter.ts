@@ -1,8 +1,9 @@
+import titleCase from "@fern-ui/core-utils/titleCase";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
 import { FernNavigation } from "../../../..";
 import { APIV1Read, DocsV1Read } from "../../../../client/types";
-import { titleCase, visitDiscriminatedUnion } from "../../../../utils";
 import { ApiDefinitionHolder } from "../../../ApiDefinitionHolder";
 import { ROOT_PACKAGE_ID } from "../../../consts";
 import { isSubpackage } from "../../../utils/isSubpackage";

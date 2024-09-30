@@ -1,7 +1,8 @@
+import assertNever from "@fern-ui/core-utils/assertNever";
+import titleCase from "@fern-ui/core-utils/titleCase";
 import isEqual from "fast-deep-equal";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
-import { kebabCase, titleCase } from "../../utils";
-import { assertNever } from "../utils/assertNever";
+import { kebabCase } from "../../utils";
 import {
     generateEndpointErrorExample,
     generateEndpointNonStreamResponseExample,
