@@ -131,7 +131,7 @@ functions:
 
   # gRPC proxy endpooint, exposed as an endpoint (not scheduled).
   proxyGrpc:
-    timeout: 900
+    timeout: 30
     memorySize: 5120
     ephemeralStorageSize: 10240
     handler: "src/functions/grpc-proxy/proxyGrpc.handler"
@@ -227,7 +227,7 @@ stepFunctions:
                           OutputPath: null
               - StartAt: UpdateFDRRepoDataBranch
                 States:
-                  UpdateGeneratorsBranch:
+                  UpdateFDRRepoDataBranch:
                     Type: Map
                     End: true
                     MaxConcurrency: 50
