@@ -36,6 +36,7 @@
     "serverless-step-functions": "^3.21.0",
     "simple-git": "^3.24.0",
     "tmp-promise": "^3.0.3",
+    "url-join": "^5.0.0",
     "zod": "^3.22.4",
     "semver": "^7.6.2"
   },
@@ -46,6 +47,7 @@
     "@types/aws-lambda": "^8.10.71",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^18.7.18",
+    "@types/url-join": "4.0.1",
     "esbuild": "0.20.2",
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^3.0.0",

@@ -4,7 +4,9 @@
     "baseUrl": ".",
     "paths": {
       "@functions/*": ["src/functions/*"],
-      "@libs/*": ["src/libs/*"]
+      "@generated/*": ["src/generated/*"],
+      "@libs/*": ["src/libs/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "lib": ["ESNext", "DOM"],
     "module": "esnext",

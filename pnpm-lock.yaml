@@ -2646,6 +2646,9 @@ importers:
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       zod:
         specifier: ^3.22.4
         version: 3.23.8
@@ -2671,6 +2674,9 @@ importers:
       '@types/semver':
         specifier: ^7.5.8
         version: 7.5.8
+      '@types/url-join':
+        specifier: 4.0.1
+        version: 4.0.1
       esbuild:
         specifier: 0.20.2
         version: 0.20.2
