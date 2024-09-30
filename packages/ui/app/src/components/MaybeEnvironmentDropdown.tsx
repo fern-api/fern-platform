@@ -68,6 +68,7 @@ export function MaybeEnvironmentDropdown({
                         onClick={(e) => {
                             e.stopPropagation();
                         }}
+                        onBlur={isEditingEnvironment.setFalse}
                         onValueChange={(value) => {
                             if (
                                 value === "" ||
