@@ -12,12 +12,3 @@ jspm_packages
 .env.local
 .env.dev
 .env.prod
-
-# Fern-generated files
-src/generated
-!src/generated/index.ts
-!src/generated/api/index.ts
-!src/generated/api/types/**
-!src/generated/errors/**
-!src/generated/serialization/index.ts
-!src/generated/serialization/types/**
