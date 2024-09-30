@@ -14,7 +14,7 @@ export type EndpointPathPart =
 
 export function getEndpointEnvironmentUrl(
     endpoint: ResolvedEndpointDefinition,
-    playgroundEnvironment: string | undefined,
+    playgroundEnvironment?: string | undefined,
 ): string | undefined {
     return playgroundEnvironment ?? resolveEnvironment(endpoint)?.baseUrl;
 }
