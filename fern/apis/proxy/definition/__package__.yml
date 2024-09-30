@@ -118,14 +118,7 @@ types:
 
   ProtobufSchema:
     union:
-      local: LocalProtobufSchema
       remote: RemoteProtobufSchema
-
-  LocalProtobufSchema:
-    properties:
-      filepath:
-        docs: The local filepath to the Protobuf schema files that define this API.
-        type: string
 
   RemoteProtobufSchema:
     properties:
