@@ -14,6 +14,7 @@ import {
     useBasePath,
     useFeatureFlags,
     usePlaygroundEndpointFormState,
+    usePlaygroundEnvironment,
 } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { useApiRoute } from "../../hooks/useApiRoute";
@@ -58,6 +59,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
+    const playgroundEnvironment = usePlaygroundEnvironment();
 
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
@@ -97,7 +99,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
             }
 
             const req: ProxyRequest = {
-                url: buildEndpointUrl(endpoint, formState),
+                url: buildEndpointUrl(endpoint, formState, playgroundEnvironment),
                 method: endpoint.method,
                 headers,
                 body: await serializeFormStateBody(
@@ -163,7 +165,15 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 },
             });
         }
-    }, [endpoint, formState, proxyEnvironment, uploadEnvironment, usesApplicationJsonInFormDataValue, setOAuthValue]);
+    }, [
+        endpoint,
+        formState,
+        proxyEnvironment,
+        uploadEnvironment,
+        usesApplicationJsonInFormDataValue,
+        playgroundEnvironment,
+        setOAuthValue,
+    ]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
 

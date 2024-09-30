@@ -1,11 +1,13 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { useBooleanState } from "@fern-ui/react-commons";
 import * as Dialog from "@radix-ui/react-dialog";
 import cn from "clsx";
 import { Xmark } from "iconoir-react";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
+import { usePlaygroundEnvironment } from "../../atoms";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
@@ -38,17 +40,21 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
     sendRequestIcon,
 }) => {
     const environmentIds = useAllEnvironmentIds();
+    const isEditingEnvironment = useBooleanState(false);
+    const playgroundEnvironment = usePlaygroundEnvironment();
 
     return (
         <div className="playground-endpoint">
             <div className="flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg bg-tag-default px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px] items-center">
                 {method != null && <HttpMethodTag method={method} className="playground-endpoint-method" />}
                 <span
-                    className={
+                    className={cn(
                         environment != null && environmentIds.length > 1
                             ? "playground-endpoint-url-with-switcher"
-                            : "playground-endpoint-url"
-                    }
+                            : "playground-endpoint-url",
+                        "flex flex-row w-full",
+                        "items-baseline",
+                    )}
                 >
                     <span className="playground-endpoint-baseurl max-sm:hidden">
                         {environment != null && (
@@ -59,6 +65,8 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                                 urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
                                 protocolTextStyle="playground-endpoint-baseurl max-sm:hidden"
                                 trailingPath={true}
+                                editable
+                                isEditingEnvironment={isEditingEnvironment}
                             />
                         )}
                     </span>
@@ -109,7 +117,12 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                 <CopyToClipboardButton
                     className="playground-endpoint-copy-button"
                     content={() =>
-                        buildRequestUrl(environment?.baseUrl, path, formState.pathParameters, formState.queryParameters)
+                        buildRequestUrl(
+                            playgroundEnvironment ?? environment?.baseUrl,
+                            path,
+                            formState.pathParameters,
+                            formState.queryParameters,
+                        )
                     }
                 />
             </div>

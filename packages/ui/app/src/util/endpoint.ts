@@ -12,8 +12,11 @@ export type EndpointPathPart =
           name: string;
       };
 
-export function getEndpointEnvironmentUrl(endpoint: ResolvedEndpointDefinition): string | undefined {
-    return resolveEnvironment(endpoint)?.baseUrl;
+export function getEndpointEnvironmentUrl(
+    endpoint: ResolvedEndpointDefinition,
+    playgroundEnvironment: string | undefined,
+): string | undefined {
+    return playgroundEnvironment ?? resolveEnvironment(endpoint)?.baseUrl;
 }
 
 export function getEndpointTitleAsString(endpoint: APIV1Read.EndpointDefinition): string {

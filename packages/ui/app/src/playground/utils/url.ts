@@ -39,9 +39,10 @@ export function buildRequestUrl(
 export function buildEndpointUrl(
     endpoint: ResolvedEndpointDefinition | undefined,
     formState: PlaygroundRequestFormState | undefined,
+    playgroundEnvironment: string | undefined,
 ): string {
     return buildRequestUrl(
-        endpoint && resolveEnvironment(endpoint)?.baseUrl,
+        playgroundEnvironment ?? (endpoint && resolveEnvironment(endpoint)?.baseUrl),
         endpoint?.path,
         formState?.pathParameters,
         formState?.queryParameters,

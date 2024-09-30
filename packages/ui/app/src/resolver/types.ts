@@ -804,12 +804,13 @@ export const resolveEnvironment = (
 export const resolveEnvironmentUrlInCodeSnippet = (
     endpoint: ResolvedEndpointDefinition,
     requestCodeSnippet: string,
+    playgroundEnvironment: string | undefined,
     selectedEnvironmentId?: string,
 ): string => {
     const urlToReplace = endpoint.environments.find((env) => requestCodeSnippet.includes(env.baseUrl))?.baseUrl;
     const resolvedEnvironment = resolveEnvironment(endpoint, selectedEnvironmentId);
     return urlToReplace && resolvedEnvironment
-        ? requestCodeSnippet.replace(urlToReplace, resolvedEnvironment.baseUrl)
+        ? requestCodeSnippet.replace(urlToReplace, playgroundEnvironment ?? resolvedEnvironment.baseUrl)
         : requestCodeSnippet;
 };
 
