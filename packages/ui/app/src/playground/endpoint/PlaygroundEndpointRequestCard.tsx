@@ -23,17 +23,22 @@ interface PlaygroundEndpointRequestCardProps {
 export function PlaygroundEndpointRequestCard({
     endpoint,
     formState,
-}: PlaygroundEndpointRequestCardProps): ReactElement {
+}: PlaygroundEndpointRequestCardProps): ReactElement | null {
     const { isSnippetTemplatesEnabled, isFileForgeHackEnabled } = useFeatureFlags();
     const [requestType, setRequestType] = useAtom(PLAYGROUND_REQUEST_TYPE_ATOM);
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
+<<<<<<< HEAD
     const playgroundEnvironment = usePlaygroundEnvironment();
     return (
+=======
+    // TODO: remove this after Pinecone demo
+    const { grpcEndpoints } = useFeatureFlags();
+    return !grpcEndpoints?.includes(endpoint.id) ? (
+>>>>>>> dd8ca25d4 (ui ready, adding call)
         <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
             <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
                 <span className="t-muted text-xs uppercase">Request</span>
-
                 <FernButtonGroup>
                     <FernButton
                         onClick={() => setRequestType("curl")}
@@ -63,7 +68,7 @@ export function PlaygroundEndpointRequestCard({
                         Python
                     </FernButton>
                 </FernButtonGroup>
-
+                )
                 <CopyToClipboardButton
                     content={() => {
                         const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
@@ -79,5 +84,5 @@ export function PlaygroundEndpointRequestCard({
             </div>
             <PlaygroundRequestPreview endpoint={endpoint} formState={formState} requestType={requestType} />
         </FernCard>
-    );
+    ) : null;
 }

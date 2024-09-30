@@ -21,36 +21,45 @@ export interface CodeExampleGroup {
 }
 
 // key is the language
-export function generateCodeExamples(examples: ResolvedExampleEndpointCall[]): CodeExampleGroup[] {
+export function generateCodeExamples(examples: ResolvedExampleEndpointCall[], grpc: boolean): CodeExampleGroup[] {
     const codeExamples = new Map<string, CodeExample[]>();
     examples.forEach((example, i) => {
         example.snippets.forEach((snippet, j) => {
-            codeExamples.set(snippet.language, [
-                ...(codeExamples.get(snippet.language) ?? []),
-                {
-                    key: `${snippet.language}-${i}/${j}`,
-                    exampleIndex: i,
-                    language: snippet.language,
-                    name: snippet.name ?? example.name ?? `Example ${i + 1}`,
-                    code: snippet.code,
-                    // hast: snippet.hast,
-                    install: snippet.install,
-                    exampleCall: example,
-                },
-            ]);
+            if (!grpc || snippet.language !== "curl") {
+                codeExamples.set(snippet.language, [
+                    ...(codeExamples.get(snippet.language) ?? []),
+                    {
+                        key: `${snippet.language}-${i}/${j}`,
+                        exampleIndex: i,
+                        language: snippet.language,
+                        name: snippet.name ?? example.name ?? `Example ${i + 1}`,
+                        code: snippet.code,
+                        // hast: snippet.hast,
+                        install: snippet.install,
+                        exampleCall: example,
+                    },
+                ]);
+            }
         });
     });
 
     // always keep curl at the top
     const curlExamples = codeExamples.get("curl");
     codeExamples.delete("curl");
-    return [
-        {
-            language: "curl",
-            languageDisplayName: "cURL",
-            icon: getIconForClient("curl"),
-            examples: [...(curlExamples ?? [])],
-        },
+
+    // TODO: remove after pinecone examples
+    const examplesByLanguage = grpc
+        ? []
+        : [
+              {
+                  language: "curl",
+                  languageDisplayName: "cURL",
+                  icon: getIconForClient("curl"),
+                  examples: [...(curlExamples ?? [])],
+              },
+          ];
+
+    return examplesByLanguage.concat([
         ...sortBy(
             Array.from(codeExamples.entries()).map(([language, examples]) => ({
                 language,
@@ -60,7 +69,7 @@ export function generateCodeExamples(examples: ResolvedExampleEndpointCall[]): C
             })),
             "language",
         ),
-    ];
+    ]);
 }
 
 function getIconForClient(clientId: string) {

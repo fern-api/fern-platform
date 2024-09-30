@@ -53,7 +53,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     });
 
     const basePath = useBasePath();
-    const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
+    const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom, grpcEndpoints } = useFeatureFlags();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
     const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
@@ -176,6 +176,14 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
         setOAuthValue,
     ]);
 
+    // Figure out if GRPC endpoint
+    const sendGrpcRequest = useCallback(async () => {
+        // TODOGRPC: Implement this
+        console.log(endpoint);
+    }, []);
+    console.log(endpoint);
+    console.log(grpcEndpoints);
+
     const selectedEnvironmentId = useSelectedEnvironmentId();
 
     const settings = usePlaygroundSettings();
@@ -187,7 +195,8 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                     <PlaygroundEndpointPath
                         method={endpoint.method}
                         formState={formState}
-                        sendRequest={sendRequest}
+                        // TODO: Remove this after pinecone demo, this is a temporary flag
+                        sendRequest={grpcEndpoints?.includes(endpoint.id) ? sendGrpcRequest : sendRequest}
                         environment={resolveEnvironment(endpoint, selectedEnvironmentId)}
                         environmentFilters={settings?.environments}
                         path={endpoint.path}
@@ -203,7 +212,8 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                         resetWithExample={resetWithExample}
                         resetWithoutExample={resetWithoutExample}
                         response={response}
-                        sendRequest={sendRequest}
+                        // TODO: Remove this after pinecone demo, this is a temporary flag
+                        sendRequest={grpcEndpoints?.includes(endpoint.id) ? sendGrpcRequest : sendRequest}
                         types={types}
                     />
                 </div>

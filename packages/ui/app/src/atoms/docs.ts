@@ -33,6 +33,8 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isFileForgeHackEnabled: false,
     is404PageHidden: false,
     isNewSearchExperienceEnabled: false,
+    // TODO: remove this after pinecone demo, this is a temporary flag
+    grpcEndpoints: [],
 };
 
 export const EMPTY_ANALYTICS_CONFIG: DocsV1Read.AnalyticsConfig = {
