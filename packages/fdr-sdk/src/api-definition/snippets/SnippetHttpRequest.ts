@@ -4,40 +4,43 @@ import { noop } from "ts-essentials";
 import urljoin from "url-join";
 import type * as Latest from "../latest";
 
-interface HttpRequestBodyJson {
+interface SnippetHttpRequestBodyJson {
     type: "json";
     value?: unknown;
 }
 
-interface HttpRequestBodyForm {
+interface SnippetHttpRequestBodyForm {
     type: "form";
-    value: Record<string, HttpRequestBodyFormValue>;
+    value: Record<string, SnippetHttpRequestBodyFormValue>;
 }
 
-interface HttpRequestBodyFormValueFilename {
+interface SnippetHttpRequestBodyFormValueFilename {
     type: "filename";
     filename: string;
     contentType: string | undefined;
 }
 
-interface HttpRequestBodyFormValueFilenames {
+interface SnippetHttpRequestBodyFormValueFilenames {
     type: "filenames";
-    files: Omit<HttpRequestBodyFormValueFilename, "type">[];
+    files: Omit<SnippetHttpRequestBodyFormValueFilename, "type">[];
 }
 
-type HttpRequestBodyFormValue =
-    | HttpRequestBodyJson
-    | HttpRequestBodyFormValueFilename
-    | HttpRequestBodyFormValueFilenames;
+export type SnippetHttpRequestBodyFormValue =
+    | SnippetHttpRequestBodyJson
+    | SnippetHttpRequestBodyFormValueFilename
+    | SnippetHttpRequestBodyFormValueFilenames;
 
-interface HttpRequestBodyBytes {
+interface SnippetHttpRequestBodyBytes {
     type: "bytes";
     filename: string;
 }
 
-type HttpRequestBody = HttpRequestBodyJson | HttpRequestBodyForm | HttpRequestBodyBytes;
+export type SnippetHttpRequestBody =
+    | SnippetHttpRequestBodyJson
+    | SnippetHttpRequestBodyForm
+    | SnippetHttpRequestBodyBytes;
 
-export interface HttpRequest {
+export interface SnippetHttpRequest {
     method: string;
     url: string;
     searchParams: Record<string, unknown>;
@@ -46,15 +49,15 @@ export interface HttpRequest {
         username: string;
         password: string;
     };
-    body: HttpRequestBody | undefined;
+    body: SnippetHttpRequestBody | undefined;
 }
 
 // TODO: validate that global headers are also included in the example by CLI or FDR
-export function toHttpRequest(
+export function toSnippetHttpRequest(
     endpoint: Latest.EndpointDefinition,
     example: Latest.ExampleEndpointCall,
     auth: Latest.AuthScheme | undefined,
-): HttpRequest {
+): SnippetHttpRequest {
     const environmentUrl = (
         endpoint.environments?.find((env) => env.id === endpoint.defaultEnvironment) ?? endpoint.environments?.[0]
     )?.baseUrl;
@@ -110,12 +113,12 @@ export function toHttpRequest(
         body:
             body == null
                 ? undefined
-                : visitDiscriminatedUnion(body)._visit<HttpRequestBody | undefined>({
+                : visitDiscriminatedUnion(body)._visit<SnippetHttpRequestBody | undefined>({
                       json: (value) => value,
                       form: (value) => {
-                          const toRet: Record<string, HttpRequestBodyFormValue> = {};
+                          const toRet: Record<string, SnippetHttpRequestBodyFormValue> = {};
                           for (const [key, val] of Object.entries(value.value)) {
-                              toRet[key] = visitDiscriminatedUnion(val)._visit<HttpRequestBodyFormValue>({
+                              toRet[key] = visitDiscriminatedUnion(val)._visit<SnippetHttpRequestBodyFormValue>({
                                   json: (value) => value,
                                   filename: (value) => ({
                                       type: "filename",

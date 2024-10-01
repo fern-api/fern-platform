@@ -5,8 +5,8 @@ import { SupportedLanguage } from "../../client/generated/api/resources/api/reso
 import { ROOT_PACKAGE_ID } from "../../navigation/consts";
 import { LOOP_TOLERANCE } from "../const";
 import * as V2 from "../latest";
+import { toSnippetHttpRequest } from "../snippets/SnippetHttpRequest";
 import { convertToCurl } from "../snippets/curl";
-import { toHttpRequest } from "../snippets/HttpRequest";
 import { sortKeysByShape } from "../sort-keys";
 
 interface Flags {
@@ -608,7 +608,7 @@ export class ApiDefinitionV1ToLatest {
         });
 
         if (!userProvidedLanguages.has(SupportedLanguage.Curl)) {
-            const code = convertToCurl(toHttpRequest(endpoint, example, this.auth), flags);
+            const code = convertToCurl(toSnippetHttpRequest(endpoint, example, this.auth), flags);
             push(SupportedLanguage.Curl, {
                 language: SupportedLanguage.Curl,
                 code,

@@ -1,7 +1,6 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { SnippetHttpRequest, SnippetHttpRequestBodyFormValue, convertToCurl } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty } from "lodash-es";
-import { stringifyHttpRequestExampleToCurl } from "../../../api-reference/examples/stringifyHttpRequestExampleToCurl";
 import { convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest } from "../../types";
 import { PlaygroundCodeSnippetBuilder } from "./types";
 
@@ -14,36 +13,29 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
     }
 
     public override build(): string {
-        return stringifyHttpRequestExampleToCurl({
-            method: this.endpoint.method,
-            url: this.url,
-            urlQueries: this.formState.queryParameters,
-            headers: this.formState.headers,
-            body: this.#convertFormStateToBody(),
-        });
+        return convertToCurl(
+            {
+                method: this.context.endpoint.method,
+                url: this.url,
+                searchParams: this.formState.queryParameters,
+                headers: this.formState.headers,
+                basicAuth: this.context.auth?.type === "basicAuth" ? this.authState.basicAuth : undefined,
+                body: this.#convertFormStateToBody(),
+            },
+            { usesApplicationJsonInFormDataValue: this.isFileForgeHackEnabled },
+        );
     }
 
-    #convertFormStateToBody(): APIV1Read.ExampleEndpointRequest | undefined {
+    #convertFormStateToBody(): SnippetHttpRequest["body"] {
         if (this.formState.body == null) {
             return undefined;
         }
-        return visitDiscriminatedUnion(this.formState.body, "type")._visit<
-            APIV1Read.ExampleEndpointRequest | undefined
-        >({
+        return visitDiscriminatedUnion(this.formState.body, "type")._visit<SnippetHttpRequest["body"]>({
             json: ({ value }) => ({ type: "json", value }),
-            "form-data": ({ value }): APIV1Read.ExampleEndpointRequest.Form | undefined => {
-                const properties =
-                    this.endpoint.requestBody?.shape.type === "formData"
-                        ? this.endpoint.requestBody.shape.properties
-                        : [];
-                const newValue: Record<string, APIV1Read.FormValue> = {};
+            "form-data": ({ value }) => {
+                const newValue: Record<string, SnippetHttpRequestBodyFormValue> = {};
                 for (const [key, v] of Object.entries(value)) {
-                    const property = properties.find((property) => property.key === key);
-                    const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(
-                        v,
-                        property,
-                        this.isFileForgeHackEnabled,
-                    );
+                    const convertedV = convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest(v);
                     if (convertedV != null) {
                         newValue[key] = convertedV;
                     }
@@ -53,8 +45,7 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
                 }
                 return { type: "form", value: newValue };
             },
-            "octet-stream": ({ value }): APIV1Read.ExampleEndpointRequest.Bytes | undefined =>
-                value != null ? { type: "bytes", fileName: value.name, value: undefined } : undefined,
+            "octet-stream": ({ value }) => (value != null ? { type: "bytes", filename: value.name } : undefined),
             _other: () => undefined,
         });
     }

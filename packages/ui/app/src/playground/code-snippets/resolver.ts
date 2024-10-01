@@ -1,7 +1,7 @@
+import { toCurlyBraceEndpointPathLiteral } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { UnreachableCaseError } from "ts-essentials";
-import { stringifyResolvedEndpointPathPartsTemplate } from "../../resolver/types";
 import { provideRegistryService } from "../../services/registry";
 import { PlaygroundAuthState, PlaygroundEndpointRequestFormState } from "../types";
 import { EndpointContext } from "../types/endpoint-context";
@@ -45,7 +45,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
         setOAuthValue: (value: (prev: any) => any) => void,
     ): PlaygroundCodeSnippetResolver {
         return new PlaygroundCodeSnippetResolver(
-            this.endpoint,
+            this.context,
             authState,
             formState,
             true,
@@ -80,8 +80,8 @@ export class PlaygroundCodeSnippetResolver {
     }
 
     constructor(
-        private context: EndpointContext,
-        authState: PlaygroundAuthState,
+        public context: EndpointContext,
+        private authState: PlaygroundAuthState,
         private formState: PlaygroundEndpointRequestFormState,
         isAuthHeadersRedacted: boolean,
         public isSnippetTemplatesEnabled: boolean,
@@ -120,7 +120,7 @@ export class PlaygroundCodeSnippetResolver {
                             version: "",
                         },
                         endpointId: {
-                            path: stringifyResolvedEndpointPathPartsTemplate(this.context.endpoint.path),
+                            path: toCurlyBraceEndpointPathLiteral(this.context.endpoint.path),
                             method: this.context.endpoint.method,
                             identifierOverride: undefined,
                         },
@@ -142,7 +142,7 @@ export class PlaygroundCodeSnippetResolver {
                             version: "",
                         },
                         endpointId: {
-                            path: stringifyResolvedEndpointPathPartsTemplate(this.context.endpoint.path),
+                            path: toCurlyBraceEndpointPathLiteral(this.context.endpoint.path),
                             method: this.context.endpoint.method,
                             identifierOverride: undefined,
                         },
@@ -158,7 +158,7 @@ export class PlaygroundCodeSnippetResolver {
 
     public toCurl(): string {
         const formState = { ...this.formState, headers: this.headers };
-        return new CurlSnippetBuilder(this.context.endpoint, formState, this.playgroundEnvironment)
+        return new CurlSnippetBuilder(this.context, formState, this.authState, this.playgroundEnvironment)
             .setFileForgeHackEnabled(this.isFileForgeHackEnabled)
             .build();
     }
@@ -172,12 +172,22 @@ export class PlaygroundCodeSnippetResolver {
         }
 
         const formState = { ...this.formState, headers };
-        return new TypescriptFetchSnippetBuilder(this.context.endpoint, formState, this.playgroundEnvironment).build();
+        return new TypescriptFetchSnippetBuilder(
+            this.context,
+            formState,
+            this.authState,
+            this.playgroundEnvironment,
+        ).build();
     }
 
     public toPythonRequests(): string {
         const formState = { ...this.formState, headers: this.headers };
-        return new PythonRequestSnippetBuilder(this.context.endpoint, formState, this.playgroundEnvironment).build();
+        return new PythonRequestSnippetBuilder(
+            this.context,
+            formState,
+            this.authState,
+            this.playgroundEnvironment,
+        ).build();
     }
 
     public toTypescriptSdkSnippet(apiDefinition?: APIV1Read.ApiDefinition): string | undefined {
