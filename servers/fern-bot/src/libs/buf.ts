@@ -114,7 +114,7 @@ export class Buf {
 
     private createBufExecutable(): CLI {
         return (args) => {
-            return execa("buf", args);
+            return execa("npx", ["buf", ...(args ?? [])]);
         };
     }
 }
