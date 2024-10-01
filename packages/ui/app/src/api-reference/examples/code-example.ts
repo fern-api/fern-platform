@@ -21,7 +21,10 @@ export interface CodeExampleGroup {
 }
 
 // key is the language
-export function generateCodeExamples(examples: ResolvedExampleEndpointCall[], grpc: boolean): CodeExampleGroup[] {
+export function generateCodeExamples(
+    examples: ResolvedExampleEndpointCall[],
+    grpc: boolean = false,
+): CodeExampleGroup[] {
     const codeExamples = new Map<string, CodeExample[]>();
     examples.forEach((example, i) => {
         example.snippets.forEach((snippet, j) => {
