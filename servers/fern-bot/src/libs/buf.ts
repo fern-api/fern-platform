@@ -79,13 +79,10 @@ export class Buf {
         process.env.NPM_CONFIG_PREFIX = tmpDirPath;
         // Re-install the CLI to ensure it's at the correct path, given the updated config
         await execa("npm", ["install", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
+        console.debug(`Successfully installed ${BUF_NPM_PACKAGE}`);
 
-        const cli = this.createBufExecutable();
-        const version = await cli(["--version"]);
-        console.debug(`Successfully installed ${BUF_NPM_PACKAGE} version ${version.stdout}`);
-
-        this.cli = cli;
-        return cli;
+        this.cli = this.createBufExecutable();
+        return this.cli;
     }
 
     private getArgsForCurlRequest(request: Buf.CurlRequest): string[] {
