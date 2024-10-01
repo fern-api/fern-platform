@@ -4,6 +4,7 @@ import { APIV1Read } from "../../client";
 import { SupportedLanguage } from "../../client/generated/api/resources/api/resources/v1/resources/read/resources/endpoint/types/SupportedLanguage";
 import { ROOT_PACKAGE_ID } from "../../navigation/consts";
 import { LOOP_TOLERANCE } from "../const";
+import { cleanLanguage } from "../lang";
 import * as V2 from "../latest";
 import { toSnippetHttpRequest } from "../snippets/SnippetHttpRequest";
 import { convertToCurl } from "../snippets/curl";
@@ -594,7 +595,7 @@ export class ApiDefinitionV1ToLatest {
 
         // Add user-provided code snippets
         codeSamples.forEach((codeSample) => {
-            const language = this.#cleanLanguage(codeSample.language);
+            const language = cleanLanguage(codeSample.language);
             userProvidedLanguages.add(language);
 
             push(language, {
@@ -670,26 +671,5 @@ export class ApiDefinitionV1ToLatest {
         }
 
         return toRet;
-    }
-
-    #cleanLanguage(language: string): string {
-        language = language.toLowerCase().trim();
-        if (["node", "nodejs", "js", "javascript"].includes(language)) {
-            return SupportedLanguage.Javascript;
-        }
-
-        if (["py", "python"].includes(language)) {
-            return SupportedLanguage.Python;
-        }
-
-        if (["ts", "typescript", "ts-node"].includes(language)) {
-            return SupportedLanguage.Typescript;
-        }
-
-        if (["go", "golang"].includes(language)) {
-            return SupportedLanguage.Go;
-        }
-
-        return language;
     }
 }

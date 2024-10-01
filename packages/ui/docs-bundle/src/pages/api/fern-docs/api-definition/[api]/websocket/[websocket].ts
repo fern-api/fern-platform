@@ -1,7 +1,6 @@
-import { resolveApiDefinitionDescriptions } from "@/server/resolveApiDefinitionDescriptions";
+import { ApiDefinitionLoader } from "@/server/ApiDefinitionLoader";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import { provideRegistryService } from "@fern-ui/ui";
 import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiResponse } from "next";
 import { getFeatureFlags } from "../../../feature-flags";
@@ -20,31 +19,21 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDe
         return;
     }
 
-    const apiDefinitionId = ApiDefinition.ApiDefinitionId(api);
-    const v1 = await provideRegistryService().api.v1.read.getApi(apiDefinitionId);
+    const flags = await getFeatureFlags(xFernHost);
+    const apiDefinition = await ApiDefinitionLoader.create(xFernHost, ApiDefinition.ApiDefinitionId(api))
+        .withFlags(flags)
+        .withPrune({ type: "webSocket", webSocketId: ApiDefinition.WebSocketId(websocket) })
+        .withResolveDescriptions()
+        .load();
 
-    if (!v1.ok) {
-        // eslint-disable-next-line no-console
-        console.error(v1.error);
-        if (v1.error.error === "ApiDoesNotExistError") {
-            res.status(404).end();
-        } else {
-            res.status(500).end();
-        }
-        return;
+    if (!apiDefinition) {
+        return res.status(404).end();
     }
 
-    const flags = await getFeatureFlags(xFernHost);
-    const definition = ApiDefinition.ApiDefinitionV1ToLatest.from(v1.body, flags).migrate();
+    // Cache the response in Vercel's Data Cache for 1 hour, and allow it to be served stale for up to 24 hours
+    res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400");
 
-    const pruned = ApiDefinition.prune(definition, {
-        type: "webSocket",
-        webSocketId: ApiDefinition.WebSocketId(websocket),
-    });
-
-    const transformed = await resolveApiDefinitionDescriptions(xFernHost, pruned, flags);
-
-    return res.status(200).json(transformed);
+    return res.status(200).json(apiDefinition);
 };
 
 export default resolveApiHandler;

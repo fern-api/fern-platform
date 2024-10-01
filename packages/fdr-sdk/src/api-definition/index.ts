@@ -1,5 +1,6 @@
 export * from "./endpoint-path-literal";
 export * from "./join";
+export * from "./lang";
 export * from "./latest";
 export * from "./migrators/v1ToV2";
 export * from "./prune";

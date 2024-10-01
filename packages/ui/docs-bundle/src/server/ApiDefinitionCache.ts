@@ -28,8 +28,8 @@ export class ApiDefinitionKVCache {
         return `${PREFIX}:${this.domain}:${this.api}:${key}`;
     }
 
-    private async getResolvedDescription(key: string): Promise<FernDocs.MarkdownText | undefined> {
-        return (await kv.get<FernDocs.MarkdownText>(this.createKey(key))) ?? undefined;
+    private async getResolvedDescription(key: string): Promise<FernDocs.MarkdownText | null> {
+        return kv.get<FernDocs.MarkdownText>(this.createKey(key));
     }
 
     private async setResolvedDescription(description: FernDocs.MarkdownText, key: string): Promise<void> {

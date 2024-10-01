@@ -51,8 +51,32 @@ export interface ApiDefinitionVisitor {
 }
 
 export class Transformer {
-    public static with(visitor: ApiDefinitionVisitor): Transformer {
-        return new Transformer(visitor);
+    public static with(visitor: Partial<ApiDefinitionVisitor>): Transformer {
+        return new Transformer({
+            EndpointDefinition: visitor.EndpointDefinition ?? identity,
+            HttpRequest: visitor.HttpRequest ?? identity,
+            HttpResponse: visitor.HttpResponse ?? identity,
+            ErrorResponse: visitor.ErrorResponse ?? identity,
+            ExampleEndpointCall: visitor.ExampleEndpointCall ?? identity,
+            CodeSnippet: visitor.CodeSnippet ?? identity,
+            ErrorExample: visitor.ErrorExample ?? identity,
+            WebhookDefinition: visitor.WebhookDefinition ?? identity,
+            WebhookPayload: visitor.WebhookPayload ?? identity,
+            WebSocketChannel: visitor.WebSocketChannel ?? identity,
+            WebSocketMessage: visitor.WebSocketMessage ?? identity,
+            ExampleWebSocketSession: visitor.ExampleWebSocketSession ?? identity,
+            TypeDefinition: visitor.TypeDefinition ?? identity,
+            TypeShape: visitor.TypeShape ?? identity,
+            ObjectType: visitor.ObjectType ?? identity,
+            ObjectProperty: visitor.ObjectProperty ?? identity,
+            EnumValue: visitor.EnumValue ?? identity,
+            UndiscriminatedUnionVariant: visitor.UndiscriminatedUnionVariant ?? identity,
+            DiscriminatedUnionVariant: visitor.DiscriminatedUnionVariant ?? identity,
+            FormDataRequest: visitor.FormDataRequest ?? identity,
+            FormDataField: visitor.FormDataField ?? identity,
+            FormDataFile: visitor.FormDataFile ?? identity,
+            FormDataFiles: visitor.FormDataFiles ?? identity,
+        });
     }
 
     public static descriptions(
@@ -89,10 +113,6 @@ export class Transformer {
             FormDataField: internalTransformer,
             FormDataFile: internalTransformer,
             FormDataFiles: internalTransformer,
-
-            // These types do not have descriptions
-            TypeShape: identity,
-            ObjectType: identity,
         });
     }
 
